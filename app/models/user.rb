@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_one :character
+
   attr_accessible :show_next_steps
 
   after_create :setup_profile!, :update_profile!

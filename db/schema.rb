@@ -9,7 +9,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090308082939) do
+ActiveRecord::Schema.define(:version => 20090308181144) do
+
+  create_table "characters", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.integer  "money",      :default => 1000
+    t.integer  "level",      :default => 1
+    t.integer  "experience", :default => 0
+    t.integer  "attack",     :default => 1
+    t.integer  "defence",    :default => 1
+    t.integer  "hp",         :default => 100
+    t.integer  "health",     :default => 100
+    t.integer  "ep",         :default => 10
+    t.integer  "energy",     :default => 10
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -31,6 +47,49 @@ ActiveRecord::Schema.define(:version => 20090308082939) do
   end
 
   add_index "facebook_templates", ["template_name"], :name => "index_facebook_templates_on_template_name", :unique => true
+
+  create_table "inventories", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "item_id"
+    t.integer  "amount",       :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "items", :force => true do |t|
+    t.integer  "level"
+    t.integer  "price"
+    t.string   "name"
+    t.integer  "attack"
+    t.integer  "defence"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "quests", :force => true do |t|
+    t.integer  "level"
+    t.string   "name"
+    t.string   "description"
+    t.string   "won_text"
+    t.string   "lost_text"
+    t.integer  "win_amount"
+    t.string   "winner_title"
+    t.integer  "ep_cost"
+    t.integer  "experience"
+    t.integer  "money_min"
+    t.integer  "money_max"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ranks", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "quest_id"
+    t.integer  "win_count",    :default => 0
+    t.integer  "defeat_count", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.integer  "facebook_id",     :limit => 8

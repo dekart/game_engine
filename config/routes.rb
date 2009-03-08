@@ -11,6 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   ) do |user|
   end
 
+  map.resources :quests
+
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
   map.resources :pages
