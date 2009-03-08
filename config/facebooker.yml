@@ -1,0 +1,42 @@
+# The api key, secret key, and canvas page name are required to get started
+# Tunnel configuration is only needed if you are going to use the facebooker:tunnel Rake tasks
+# Your callback url in Facebook should be set to http://public_host:public_port
+# If you're building a Facebook connect site, 
+#    change the value of set_asset_host_to_callback_url to false
+# To develop for the new profile design, add the following key..
+# api: new
+# remove the key or set it to anything else to use the old facebook design.
+# This should only be necessary until the final version of the new profile is released.
+
+development:
+  api_key: 8f9ae9c78512819c66259279ba97fb97
+  secret_key: 81fd40d9c3c7cf7faac91227a5ebdc44
+  canvas_page_name: blogbox-dev
+  callback_url: http://itvektor.ru:3300/
+  pretty_errors: true
+  set_asset_host_to_callback_url: true
+  tunnel:
+    public_host_username: dekart
+    public_host: itvektor.ru
+    public_port: 3300
+    local_port: 3300
+
+test:
+  api_key: 
+  secret_key: 
+  canvas_page_name: 
+  callback_url:
+  set_asset_host_to_callback_url: true
+  tunnel:
+    public_host_username: 
+    public_host: 
+    public_port: 4007
+    local_port: 3000
+
+production:
+  api_key: 996c9cfcd6dca109638beb61b8741de1
+  secret_key: 627f8623ea19912cf0634b660f9b1ed2
+  canvas_page_name: blog-box
+  callback_url: http://blogboxapp.com
+  set_asset_host_to_callback_url: true
+  

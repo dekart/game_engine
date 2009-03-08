@@ -1,0 +1,19 @@
+<div class="main_menu">
+  <% if current_user %>
+    <%= link_to("Customize", edit_user_path(current_user), :class => :customize) %>
+  <% else %>
+  <% end %>
+
+  <%= link_to("Home", root_path, :class => :home) %>
+</div>
+
+<%= reference("stylesheets/main.css.erb", dynamic_stylesheet_url(:main, :canvas => false)) %>
+
+<%= fb_success(flash[:success]) if flash[:success] %>
+<%= fb_error(flash[:error]) if flash[:error] %>
+
+<%= render :partial => "layouts/next_steps" %>
+
+<%= yield %>
+
+<%= fb_google_analytics("UA-111105-16") unless in_profile_tab? %>

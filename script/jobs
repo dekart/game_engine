@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'daemons'
+require 'optparse'
+require 'ostruct'
+
+# Daemons sets pwd to /, so we have to explicitly set RAILS_ROOT
+RAILS_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+
+
+module Delayed
+  class Command
+    def initialize(args)
+      @options = OpenStruct.new(:sleep => 5)
+
+      opts = OptionParser.new do |opts|
+        opts.banner = "Usage: #{File.basename($0)} [options] start|stop|restart|run"
+
+        opts.on('-h', '--help', 'Show this message') do
+          puts opts
+          exit 1
+        end
+        opts.on('-e', '--environment=NAME', 'Specifies the environment to run this delayed jobs under (test/development/production).') do |e|
+          ENV['RAILS_ENV'] = e
+        end
+      end
+      @args = opts.parse!(args)
+    end
+
+    def run
+      Daemons.run_proc('delayed_job', :dir => "#{RAILS_ROOT}/tmp/pids", :dir_mode => :normal, :ARGV => @args) do |*args|
+        require "#{RAILS_ROOT}/config/environment"
+
+        Delayed::Worker.new.start
+      end
+    end
+  end
+end
+
+Delayed::Command.new(ARGV).run

@@ -1,0 +1,15 @@
+<div id="next_steps">
+  <%= hide_block_link(:next_steps) if current_user.customized? %>
+
+  <h2>Next Steps:</h2>
+
+  <% unless current_user.customized? %>
+    <div class="step">
+      <%= link_to("Customize", edit_user_path(current_user)) %> your profile
+    </div>
+  <% end %>
+
+  <div class="step">
+    Know <%= link_to("how to promote your profile", invite_users_path) %>
+  </div>
+</div>

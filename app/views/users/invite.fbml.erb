@@ -1,0 +1,15 @@
+<%= title("Invite") %>
+
+<% content_for :invite_message do %>
+  Please visit my profile at <%= fb_app_name %>.
+
+  <%= fb_req_choice("Visit", root_url) %>
+<% end %>
+
+<% if request.post? %>
+  <%= fb_success("Your invitation has been sent!") %>
+<% end %>
+
+<% fb_request_form("Application", :invite_message, invite_users_path) do %>
+  <%= fb_multi_friend_selector "Send invitations to friends" %>
+<% end %>

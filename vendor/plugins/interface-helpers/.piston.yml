@@ -1,0 +1,8 @@
+--- 
+format: 1
+handler: 
+  commit: 9a085048b12446fb749afb677d55d287601a4a3f
+  branch: HEAD
+lock: 
+repository_url: git@tachila.ru:plugins/interface-helpers.git
+repository_class: Piston::Git::Repository
