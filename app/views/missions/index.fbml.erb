@@ -1,0 +1,20 @@
+<%= title("Missions") %>
+
+<table id="mission_list">
+  <% @missions.each do |mission| %>
+    <tr>
+      <td class="info">
+        <div class="name"><%= mission.name %></div>
+        <div class="description"><%= mission.description %></div>
+      </td>
+      <td class="details">
+        <div class="energy"><%= "-%d" % mission.ep_cost %></div>
+        <div class="experience"><%= "+%d" % mission.experience %></div>
+        <div class="money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
+      </td>
+      <td class="controls">
+        <%= link_to("Fulfill", fulfill_mission_path(mission)) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

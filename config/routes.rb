@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.root :controller => "users", :action => "show"
+  map.root :controller => "characters", :action => "index"
 
   map.resources(:users,
     :collection => { :invite => :any },
@@ -8,10 +8,9 @@ ActionController::Routing::Routes.draw do |map|
       :wide_profile_box => :any,
       :hide_block => :any
     }
-  ) do |user|
-  end
+  )
 
-  map.resources :quests
+  map.resources :missions, :member => {:fulfill => :post}
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 

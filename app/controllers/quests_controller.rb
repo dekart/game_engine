@@ -1,2 +1,0 @@
-class QuestsController < ApplicationController
-end

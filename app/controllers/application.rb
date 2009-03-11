@@ -2,8 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  before_filter :check_explicit_installation_requirement
-  before_filter :set_facebook_session
+  ensure_application_is_installed_by_facebook_user
   
   helper_method :current_user, :profile_user, :in_profile_tab?, :in_canvas?, :request_context
 

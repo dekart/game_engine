@@ -1,7 +1,7 @@
 namespace :app do
   desc "Bootstrap application data"
   task :bootstrap => :environment do
-    @quests = {
+    @missions = {
       "Дератизация" => {
         :level        => 1,
         :description  => "Гигантские крысы из подземелий Столицы начали нападать на мирных людей. Убейте всех крыс и спасите мирных жителей!",
@@ -16,8 +16,8 @@ namespace :app do
       }
     }
 
-    @quests.each_pair do |key, value|
-      Quest.find_or_create_by_name(key).update_attributes(value)
+    @missions.each_pair do |key, value|
+      Mission.find_or_create_by_name(key).update_attributes(value)
     end
   end
 end

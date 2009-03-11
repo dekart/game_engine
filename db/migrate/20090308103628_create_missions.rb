@@ -1,6 +1,6 @@
-class CreateQuests < ActiveRecord::Migration
+class CreateMissions < ActiveRecord::Migration
   def self.up
-    create_table :quests do |t|
+    create_table :missions do |t|
       t.integer :level
       
       t.string  :name
@@ -24,6 +24,6 @@ class CreateQuests < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :quests
+    drop_table :missions
   end
 end
