@@ -1,0 +1,7 @@
+<% fieldset do |f| %>
+  <%= f.field("Money", current_character.money) %>
+  <%= f.field("Experience", current_character.experience) %>
+  <%= f.field("Level", current_character.level) %>
+  <%= f.field("Health", "%d/%d" % [current_character.hp, current_character.health]) %>
+  <%= f.field("Energy", "%d/%d" % [current_character.ep, current_character.energy]) %>
+<% end %>

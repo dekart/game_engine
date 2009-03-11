@@ -4,13 +4,17 @@
 class ApplicationController < ActionController::Base
   ensure_application_is_installed_by_facebook_user
   
-  helper_method :current_user, :profile_user, :in_profile_tab?, :in_canvas?, :request_context
+  helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context
 
   helper :all
 
   rescue_from ActionController::RoutingError, :with => :redirect_to_root
 
   protected
+
+  def current_character
+    current_user.character
+  end
 
   def after_facebook_login_url
     request.path

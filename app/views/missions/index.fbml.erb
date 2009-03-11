@@ -12,8 +12,11 @@
         <div class="experience"><%= "+%d" % mission.experience %></div>
         <div class="money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
       </td>
+      <td class="completeness">
+        <%= "%d%%" % mission.completeness_for(current_character) %>
+      </td>
       <td class="controls">
-        <%= link_to("Fulfill", fulfill_mission_path(mission)) %>
+        <%= link_to("Fulfill", fulfill_mission_path(mission), :method => :post) if current_character.ep >= mission.ep_cost %>
       </td>
     </tr>
   <% end %>

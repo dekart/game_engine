@@ -5,6 +5,14 @@ class User < ActiveRecord::Base
 
   after_create :setup_profile!, :update_profile!
 
+  def initialize(*args)
+    super
+
+    self.create_character unless self.character
+
+    logger.debug self.character
+  end
+
   def setup_profile!
     Delayed::Job.enqueue Jobs::SetupProfile.new(self.id)
   end
