@@ -1,0 +1,9 @@
+<% if @success %>
+  <%= params[:attribute].capitalize %> was upgraded!
+
+  <script>
+    $('upgrade_<%= params[:attribute] %>').setTextValue('<%= current_character.attributes[params[:attribute]] %>');
+  </script>
+<% else %>
+  You cannot upgrade <%= params[:attribute] %> because you don't have enough points
+<% end %>

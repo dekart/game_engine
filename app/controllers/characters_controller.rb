@@ -4,11 +4,21 @@ class CharactersController < ApplicationController
 
   def upgrade
     if request.post?
-      if current_character.upgrade_attribute!(params[:attribute])
-        render :text => current_character.attributes[params[:attribute]]
-      else
-        render :text => "This attribute cannot be upgraded"
-      end
+      @success = current_character.upgrade_attribute!(params[:attribute])
+      
+      render :action => :upgrade_result, :layout => false
+    else
+      redirect_to character_path if current_character.points == 0
+    end
+  end
+
+  def show
+    @character = Character.find(params[:id])
+
+    if @character == current_character and !params[:public]
+      render :action => :show_private
+    else
+      render :action => :show_public
     end
   end
 end

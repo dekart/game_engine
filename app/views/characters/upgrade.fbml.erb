@@ -1,9 +1,18 @@
 <%= title("Upgrade") %>
 
+<div id="upgrade_result"></div>
+
 <table>
-  <tr>
-    <td>Attack</td>
-    <td id="upgrade_attack"><%= current_character.attack %></td>
-    <td><%= link_to_remote("+", :url => upgrade_character_url(current_character, :attribute => :attack, :canvas => false), :update => :upgrade_attack ) %></td>
-  </tr>
+  <% %w{attack defence health energy}.each do |attribute| %>
+    <tr>
+      <td><%= attribute.capitalize %></td>
+      <td id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
+      <td>
+        <%= link_to_remote("+",
+              :url    => upgrade_character_url(current_character, :attribute => attribute, :canvas => false),
+              :update => :upgrade_result
+            ) %>
+      </td>
+    </tr>
+  <% end %>
 </table>

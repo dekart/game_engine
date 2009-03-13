@@ -40,6 +40,8 @@ class Character < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       self.increment(name)
       self.decrement(:points)
+
+      self.save
     end
 
     return true

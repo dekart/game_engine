@@ -62,6 +62,7 @@ Ajax.Updater = function (container,url,options) {
   } else {
     this.ajax.responseType = Ajax.FBML;
     this.ajax.ondone = function(data) {
+      $('spinner').hide();
       $(container).setInnerFBML(data);
     }
   }
@@ -84,6 +85,9 @@ Ajax.Updater = function (container,url,options) {
       parameters[key]=val;
     }
   }
+
+  $('spinner').show();
+
   this.ajax.post(url,parameters); 
   if (options["onLoading"]) {
      options["onLoading"].call() 

@@ -1,0 +1,10 @@
+<% if @success %>
+  Well done!
+
+  <script>
+    Character.update(<%= current_character.to_json %>);
+  </script>
+
+<% else %>
+  You don't have enough energy to fulfill this mission. Take a rest.
+<% end %>

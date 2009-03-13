@@ -13,7 +13,7 @@ var Character = {
     $('character_energy').setTextValue(a.character.ep + "/" + a.character.energy);
 
     if(a.character.points > 0) {
-      $('character_points_link').setTextValue("+" + a.character.points + " points");
+      $('character_points_link').setTextValue("+" + a.character.points);
       $('character_points').setStyle({display: "inline"});
     }
   }

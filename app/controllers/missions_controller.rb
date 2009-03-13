@@ -6,10 +6,8 @@ class MissionsController < ApplicationController
   def fulfill
     @mission = Mission.find(params[:id])
 
-    if current_character.fulfill_mission!(@mission)
-      render :action => :fulfill_success, :layout => false
-    else
-      render :action => :fulfill_fail, :layout => false
-    end
+    @success = current_character.fulfill_mission!(@mission)
+
+    render :action => :fulfill, :layout => false
   end
 end

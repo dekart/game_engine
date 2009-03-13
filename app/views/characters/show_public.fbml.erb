@@ -1,0 +1,8 @@
+<h1 class="title"><%= "#{fb_name(@character.user, :possessive => true, :capitalize => true)} Profile" %></h1>
+
+<table>
+  <tr><td>Attack</td><td><%= @character.attack %></td></tr>
+  <tr><td>Defence</td><td><%= @character.defence %></td></tr>
+  <tr><td>Health</td><td><%= "%d/%d" % [@character.hp, @character.health] %></td></tr>
+  <tr><td>Energy</td><td><%= "%d/%d" % [@character.ep, @character.energy] %></td></tr>
+</table>
