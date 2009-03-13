@@ -1,5 +1,7 @@
 <%= title("Missions") %>
 
+<div id="mission_result"></div>
+
 <table id="mission_list">
   <% @missions.each do |mission| %>
     <tr>
@@ -16,7 +18,12 @@
         <%= "%d%%" % mission.completeness_for(current_character) %>
       </td>
       <td class="controls">
-        <%= link_to("Fulfill", fulfill_mission_path(mission), :method => :post) if current_character.ep >= mission.ep_cost %>
+        <%= link_to("Fulfill", "#", 
+              :clickrewriteid => :mission_result,
+              :clickrewriteurl => fulfill_mission_url(mission, :canvas => false),
+              :clickrewriteform => :dummy_form,
+              :clicktoshow => :spinner
+            ) if current_character.ep >= mission.ep_cost %>
       </td>
     </tr>
   <% end %>

@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
     }
   )
 
-  map.resources :characters
+  map.resources :characters, :member => {:upgrade => :any}
   map.resources :missions, :member => {:fulfill => :post}
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"

@@ -1,0 +1,9 @@
+<%= title("Upgrade") %>
+
+<table>
+  <tr>
+    <td>Attack</td>
+    <td id="upgrade_attack"><%= current_character.attack %></td>
+    <td><%= link_to_remote("+", :url => upgrade_character_url(current_character, :attribute => :attack, :canvas => false), :update => :upgrade_attack ) %></td>
+  </tr>
+</table>

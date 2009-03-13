@@ -9,6 +9,7 @@ class CreateCharacters < ActiveRecord::Migration
 
       t.integer :level,       :default => 1
       t.integer :experience,  :default => 0
+      t.integer :points,      :default => 0
 
       t.integer :attack,      :default => 1
       t.integer :defence,     :default => 1
