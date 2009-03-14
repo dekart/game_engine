@@ -34,4 +34,8 @@ class UsersController < ApplicationController
       render :action => :edit
     end
   end
+
+  def invite
+    flash[:success] = "Your invitation has been sent!" if request.post?
+  end
 end

@@ -1,16 +1,16 @@
 <div class="main_menu">
   <% if current_user %>
-    <%= link_to("Customize", edit_user_path(current_user), :class => :customize) %>
+    <%= link_to(fb_i("Settings"), edit_user_path(current_user), :class => :customize) %>
   <% else %>
   <% end %>
 
-  <%= link_to("Home", root_path, :class => :home) %>
+  <%= link_to(fb_i("Home"), root_path, :class => :home) %>
 </div>
 
 <%= reference("stylesheets/main.css.erb", dynamic_stylesheet_url(:main, :canvas => false)) %>
 
-<%= fb_success(flash[:success]) if flash[:success] %>
-<%= fb_error(flash[:error]) if flash[:error] %>
+<%= fb_success(fb_i(flash[:success])) if flash[:success] %>
+<%= fb_error(fb_i(flash[:error])) if flash[:error] %>
 
 <%= render :partial => "layouts/next_steps" %>
 
