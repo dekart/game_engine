@@ -63,7 +63,30 @@ module ApplicationHelper
     "http://www.facebook.com/profile.php?id=#{user.facebook_id}"
   end
 
+
   def title(text)
-    fb_title(text) + content_tag(:h1, h(text), :class => :title)
+    fb_title(text) + content_tag(:h1, text, :class => :title)
+  end
+
+  def fb_i(*args, &block)
+    options = args.extract_options!
+    tag = content_tag("fb:intl", block_given? ? capture(&block): args.shift, options)
+
+    if block_given?
+      concat(tag, block.binding)
+    else
+      return tag
+    end
+  end
+
+  def fb_it(name, *args, &block)
+    options = args.extract_options!.merge(:name => name)
+    tag = content_tag("fb:intl-token", block_given? ? capture(&block): args.shift, options)
+
+    if block_given?
+      concat(tag, block.binding)
+    else
+      return tag
+    end
   end
 end
