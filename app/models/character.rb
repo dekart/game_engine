@@ -5,11 +5,10 @@ class Character < ActiveRecord::Base
     LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
   end
 
-
   belongs_to :user
   has_many :ranks
   has_many :missions, :through => :ranks
-  has_many :inventories
+  has_many :inventories, :include => :item
   has_many :items, :through => :inventories
 
   attr_accessor :level_updated

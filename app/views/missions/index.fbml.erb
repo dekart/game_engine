@@ -3,6 +3,11 @@
 <div id="mission_result"></div>
 
 <table id="mission_list">
+  <tr>
+    <th>Description</th>
+    <th>Payout</th>
+    <th>Requires</th>
+  </tr>
   <% @missions.each do |mission| %>
     <tr>
       <td class="info">
@@ -10,10 +15,10 @@
         <div class="description"><%= mission.description %></div>
       </td>
       <td class="details">
-        <div class="energy"><%= "-%d" % mission.ep_cost %></div>
         <div class="experience"><%= "+%d" % mission.experience %></div>
         <div class="money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
       </td>
+      <td class="energy"><%= "-%d" % mission.ep_cost %></td>
       <td class="completeness">
         <%= "%d%%" % mission.completeness_for(current_character) %>
       </td>

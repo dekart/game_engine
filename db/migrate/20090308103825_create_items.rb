@@ -6,6 +6,7 @@ class CreateItems < ActiveRecord::Migration
       t.integer :price
 
       t.string  :name
+      t.string  :description
 
       t.integer :attack
       t.integer :defence

@@ -1,0 +1,5 @@
+<% if !@inventory.new_record? %>
+  You successfully bought <%= @item.name %> for <span class="money"><%= @item.price %></span>
+<% else %>
+  You don't have enough money
+<% end %>

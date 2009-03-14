@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(:version => 20090308181144) do
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.integer  "money",      :default => 1000
+    t.integer  "money",      :default => 100
     t.integer  "level",      :default => 1
     t.integer  "experience", :default => 0
     t.integer  "points",     :default => 0
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20090308181144) do
     t.integer  "level"
     t.integer  "price"
     t.string   "name"
+    t.string   "description"
     t.integer  "attack"
     t.integer  "defence"
     t.datetime "created_at"

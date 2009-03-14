@@ -1,0 +1,60 @@
+<%= title("Shop") %>
+
+<div id="shop_result"></div>
+
+<table id="shop">
+  <tr>
+    <th>Buy</th>
+    <th>Sell</th>
+  </tr>
+  <tr>
+    <td>
+      <table id="item_list">
+        <% @items.each do |item| %>
+          <tr>
+            <td class="info">
+              <div class="name"><%= item.name %></div>
+              <div class="description"><%= item.description %></div>
+            </td>
+            <td class="details">
+              <div class="attack"><%= item.attack %></div>
+              <div class="defence"><%= item.defence %></div>
+            </td>
+            <td class="price"><%= item.price %></td>
+            <td class="controls">
+              <%# if current_character.money >= item.price %>
+                <%= link_to_remote("Buy",
+                      :url => inventories_url(:item_id => item.id, :canvas => false),
+                      :update => :shop_result
+                    ) %>
+              <% #end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+    <td>
+      <table id="inventory_list">
+        <% current_character.inventories.find(:all, :order => "items.price").each do |inventory| %>
+          <tr>
+            <td class="info">
+              <div class="name"><%= inventory.name %></div>
+              <div class="description"><%= inventory.description %></div>
+            </td>
+            <td class="details">
+              <div class="attack"><%= inventory.attack %></div>
+              <div class="defence"><%= inventory.defence %></div>
+            </td>
+            <td class="price"><%= inventory.price %></td>
+            <td class="controls">
+              <%= link_to_remote("Sell",
+                    :url => inventory_url(inventory, :canvas => false, :_method => :delete),
+                    :update => :shop_result
+                  ) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>
