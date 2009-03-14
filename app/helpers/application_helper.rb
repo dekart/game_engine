@@ -62,8 +62,4 @@ module ApplicationHelper
   def fb_profile_url(user)
     "http://www.facebook.com/profile.php?id=#{user.facebook_id}"
   end
-
-  def title(text)
-    fb_title(text) + content_tag(:h1, h(text), :class => :title)
-  end
 end

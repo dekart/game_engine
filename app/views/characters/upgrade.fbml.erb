@@ -1,11 +1,11 @@
-<%= title("Upgrade") %>
+<%= title(fb_i("Upgrade")) %>
 
 <div id="upgrade_result"></div>
 
 <table>
   <% %w{attack defence health energy}.each do |attribute| %>
     <tr>
-      <td><%= attribute.capitalize %></td>
+      <td><%= fb_i(attribute.capitalize) %></td>
       <td id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
       <td>
         <%= link_to_remote("+",

@@ -1,1 +1,5 @@
-You've successfully sold <%= @inventory.item.name %> for <span class="money"><%= @inventory.price %></span>
+<% fb_i do %>
+  You've successfully sold {item_name} for {price}
+  <%= fb_it(:item_name, content_tag(:b, fb_i(@inventory.name))) %>
+  <%= fb_it(:price, content_tag(:span, @inventory.price, :class => :money)) %>
+<% end %>

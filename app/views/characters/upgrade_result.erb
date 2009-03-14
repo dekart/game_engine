@@ -1,9 +1,12 @@
 <% if @success %>
-  <%= params[:attribute].capitalize %> was upgraded!
+  <% fb_i do %>
+    You've successfully upgraded <%= params[:attribute] %> to {number}
+    <%= fb_it(:number, current_character.attributes[params[:attribute]]) %>
+  <% end %>
 
   <script>
     $('upgrade_<%= params[:attribute] %>').setTextValue('<%= current_character.attributes[params[:attribute]] %>');
   </script>
 <% else %>
-  You cannot upgrade <%= params[:attribute] %> because you don't have enough points
+  <%= fb_i("You cannot upgrade #{ params[:attribute] } because you don't have enough points") %>
 <% end %>

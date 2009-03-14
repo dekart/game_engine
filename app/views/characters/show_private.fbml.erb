@@ -1,8 +1,8 @@
-<%= title("My Profile") %>
+<%= title(fb_i("Your Profile")) %>
 
 <table>
-  <tr><td>Attack</td><td><%= @character.attack %></td></tr>
-  <tr><td>Defence</td><td><%= @character.defence %></td></tr>
-  <tr><td>Health</td><td><%= "%d/%d" % [@character.hp, @character.health] %></td></tr>
-  <tr><td>Energy</td><td><%= "%d/%d" % [@character.ep, @character.energy] %></td></tr>
+  <tr><td><%= fb_i("Attack") %></td><td><%= @character.attack %></td></tr>
+  <tr><td><%= fb_i("Defence") %></td><td><%= @character.defence %></td></tr>
+  <tr><td><%= fb_i("Health") %></td><td><%= "%d/%d" % [@character.hp, @character.health] %></td></tr>
+  <tr><td><%= fb_i("Energy") %></td><td><%= "%d/%d" % [@character.ep, @character.energy] %></td></tr>
 </table>

@@ -1,11 +1,11 @@
-<%= title("Shop") %>
+<%= title(fb_i("Shop")) %>
 
 <div id="shop_result"></div>
 
 <table id="shop">
   <tr>
-    <th>Buy</th>
-    <th>Sell</th>
+    <th><%= fb_i("Buy") %></th>
+    <th><%= fb_i("Sell") %></th>
   </tr>
   <tr>
     <td>
@@ -13,8 +13,8 @@
         <% @items.each do |item| %>
           <tr>
             <td class="info">
-              <div class="name"><%= item.name %></div>
-              <div class="description"><%= item.description %></div>
+              <div class="name"><%= fb_i(item.name) %></div>
+              <div class="description"><%= fb_i(item.description) %></div>
             </td>
             <td class="details">
               <div class="attack"><%= item.attack %></div>
@@ -22,12 +22,12 @@
             </td>
             <td class="price"><%= item.price %></td>
             <td class="controls">
-              <%# if current_character.money >= item.price %>
-                <%= link_to_remote("Buy",
+              <% if current_character.money >= item.price %>
+                <%= link_to_remote(fb_i("Buy"),
                       :url => inventories_url(:item_id => item.id, :canvas => false),
                       :update => :shop_result
                     ) %>
-              <% #end %>
+              <% end %>
             </td>
           </tr>
         <% end %>
@@ -47,7 +47,7 @@
             </td>
             <td class="price"><%= inventory.price %></td>
             <td class="controls">
-              <%= link_to_remote("Sell",
+              <%= link_to_remote(fb_i("Sell"),
                     :url => inventory_url(inventory, :canvas => false, :_method => :delete),
                     :update => :shop_result
                   ) %>

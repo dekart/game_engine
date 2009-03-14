@@ -1,10 +1,10 @@
 <% if @success %>
-  Well done!
+  <%= fb_i("Well done!") %>
+  <%= fb_i(@mission.won_text) %>
 
   <script>
     Character.update(<%= current_character.to_json %>);
   </script>
-
 <% else %>
-  You don't have enough energy to fulfill this mission. Take a rest.
+  <%= fb_i("You don't have enough energy to fulfill this mission. Take a rest.") %>
 <% end %>

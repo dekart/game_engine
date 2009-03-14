@@ -1,5 +1,12 @@
 <% if !@inventory.new_record? %>
-  You successfully bought <%= @item.name %> for <span class="money"><%= @item.price %></span>
+  <% fb_i do %>
+    You successfully bought {item_name} for {price}
+    <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
+    <%= fb_it(:price, content_tag(:span, @item.price, :class => :money)) %>
+  <% end %>
 <% else %>
-  You don't have enough money
+  <% fb_i do %>
+    You don't have enough money to buy {item_name}
+    <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
+  <% end %>
 <% end %>
