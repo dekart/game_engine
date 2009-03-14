@@ -80,8 +80,26 @@ module ApplicationHelper
   end
 
   def fb_it(name, *args, &block)
+    fb_named_tag("intl-token", name, *args, &block)
+  end
+
+  def fb_fa(name, *args, &block)
+    fb_named_tag("fbml-attribute", name, *args, &block)
+  end
+
+  def fb_tag(name, *args, &block)
+    fb_named_tag("tag", name, *args, &block)
+  end
+
+  def fb_ta(name, *args, &block)
+    fb_named_tag("tag-attribute", name, *args, &block)
+  end
+
+  protected
+
+  def fb_named_tag(tag, name, *args, &block)
     options = args.extract_options!.merge(:name => name)
-    tag = content_tag("fb:intl-token", block_given? ? capture(&block): args.shift, options)
+    tag = content_tag("fb:#{tag}", block_given? ? capture(&block): args.shift, options)
 
     if block_given?
       concat(tag, block.binding)
