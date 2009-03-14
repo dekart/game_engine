@@ -32,7 +32,7 @@ module ApplicationHelper
 
   def hide_block_link(id)
     content_tag(:form, hidden_field_tag(:block, id), :id => "#{id}_hide") +
-    link_to("Hide", hide_block_user_path(current_user),
+    link_to(fb_i("Hide"), hide_block_user_path(current_user),
       :clickrewriteid   => id,
       :clickrewriteurl  => hide_block_user_url(current_user, :canvas => false),
       :clickrewriteform => "#{id}_hide",
@@ -61,5 +61,31 @@ module ApplicationHelper
 
   def fb_profile_url(user)
     "http://www.facebook.com/profile.php?id=#{user.facebook_id}"
+  end
+
+  def title(text)
+    fb_title(text) + content_tag(:h1, text, :class => :title)
+  end
+
+  def fb_i(*args, &block)
+    options = args.extract_options!
+    tag = content_tag("fb:intl", block_given? ? capture(&block): args.shift, options)
+
+    if block_given?
+      concat(tag, block.binding)
+    else
+      return tag
+    end
+  end
+
+  def fb_it(name, *args, &block)
+    options = args.extract_options!.merge(:name => name)
+    tag = content_tag("fb:intl-token", block_given? ? capture(&block): args.shift, options)
+
+    if block_given?
+      concat(tag, block.binding)
+    else
+      return tag
+    end
   end
 end

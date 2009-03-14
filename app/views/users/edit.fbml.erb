@@ -1,7 +1,7 @@
-<%= title("Settings") %>
+<%= title(fb_i("Settings")) %>
 
 <% form_for(@user) do |form| %>
-  <%= form.check_box("Show 'Next Steps'", :show_next_steps) %>
+  <%= form.check_box(fb_i("Show 'Next Steps'"), :show_next_steps) %>
 
-  <%= submit_tag("Update") %>
+  <%= submit_tag(fb_i("Save")) %>
 <% end %>
