@@ -29,6 +29,16 @@ module ApplicationHelper
       block.binding
     )
   end
+  
+  def fb_custom_multi_friend_selector(*args, &block)
+    if block_given?
+      options = {:showborder => false, :max => 20}.merge(args.extract_options!)
+
+      concat(content_tag("fb:multi-friend-selector", capture(&block), options), block.binding)
+    else
+      return fb_multi_friend_selector(*args, &block)
+    end
+  end
 
   def hide_block_link(id)
     content_tag(:form, hidden_field_tag(:block, id), :id => "#{id}_hide") +
