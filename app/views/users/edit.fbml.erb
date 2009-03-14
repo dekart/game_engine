@@ -3,5 +3,8 @@
 <% form_for(@user) do |form| %>
   <%= form.check_box(fb_i("Show 'Next Steps'"), :show_next_steps) %>
 
-  <%= submit_tag(fb_i("Save")) %>
+  <% fb_tag(:input) do %>
+    <%= fb_ta(:type, :submit) %>
+    <%= fb_ta(:value, fb_i("Save")) %>
+  <% end %>
 <% end %>

@@ -1,7 +1,6 @@
 <h1 class="title">
   <% fb_i do %>
-    {username} Profile
-    <%= fb_it(:username, fb_name(@character.user, :possessive => true, :capitalize => true, :linked => false)) %>
+    <%= fb_name(@character.user, :possessive => true, :capitalize => true, :linked => false) %> Profile
   <% end %>
 </h1>
 
