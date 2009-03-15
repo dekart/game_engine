@@ -8,12 +8,48 @@ class Character < ActiveRecord::Base
   belongs_to :user
   has_many :ranks
   has_many :missions, :through => :ranks
-  has_many :inventories, :include => :item
+  has_many :inventories, :include => :item do
+    def attack
+      1
+    end
+
+    def defence
+      1
+    end
+  end
+  
   has_many :items, :through => :inventories
+
+  has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
+  has_many :defences, :class_name => "Fight", :foreign_key => :victim_id
+  has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
 
   attr_accessor :level_updated
 
   before_save :update_level_and_points
+
+  named_scope :victims_for, Proc.new{|attacker|
+    {
+      :conditions => [
+        %{
+          (level BETWEEN :low_level AND :high_level) AND
+          characters.id NOT IN (
+            SELECT fights.victim_id FROM fights WHERE attacker_id = :attacker_id AND winner_id = :attacker_id AND fights.created_at > :time_limit
+          ) AND
+          characters.id != :attacker_id
+        },
+        {
+          :low_level    => attacker.level,
+          :high_level   => attacker.level + 2,
+          :attacker_id  => attacker.id,
+          :time_limit   => 1.hour.ago
+        }
+      ],
+      :include  => :user,
+      :order    => "RAND()",
+      :limit    => 10
+    }
+  }
 
   def fulfill_mission!(mission)
     return false if self.ep < mission.ep_cost
@@ -37,13 +73,21 @@ class Character < ActiveRecord::Base
     return false unless %w{attack defence health energy}.include?(name.to_s) && self.points > 0
 
     ActiveRecord::Base.transaction do
-      self.increment(name)
+      self.increment(name, (name.to_sym == :health ? 5 : 1))
       self.decrement(:points)
 
       self.save
     end
 
     return true
+  end
+
+  def attack_points
+    self.attack + self.inventories.attack
+  end
+
+  def defence_points
+    self.defence + self.inventories.defence
   end
 
   protected

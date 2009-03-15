@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090308181144) do
+ActiveRecord::Schema.define(:version => 20090314190007) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(:version => 20090308181144) do
   end
 
   add_index "facebook_templates", ["template_name"], :name => "index_facebook_templates_on_template_name", :unique => true
+
+  create_table "fights", :force => true do |t|
+    t.integer  "attacker_id"
+    t.integer  "victim_id"
+    t.integer  "winner_id"
+    t.integer  "attacker_hp_loss"
+    t.integer  "victim_hp_loss"
+    t.integer  "experience"
+    t.integer  "money"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "inventories", :force => true do |t|
     t.integer  "character_id"

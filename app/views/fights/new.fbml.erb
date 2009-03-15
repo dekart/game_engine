@@ -1,0 +1,22 @@
+<%= title(fb_i("Fighting Arena")) %>
+
+<div id="fight_result"></div>
+
+<table id="victim_list">
+  <tr>
+    <th><%= fb_i("User") %></th>
+    <th><%= fb_i("Level") %></th>
+  </tr>
+  <% @victims.each do |victim| %>
+    <tr>
+      <td class="name"><%= link_to(character_name(victim), victim) %></td>
+      <td class="level"><%= victim.level %></td>
+      <td class="controls">
+        <%= link_to_remote(fb_i("Attack!"),
+              :url => fights_url(:victim_id => victim, :canvas => false),
+              :update => :fight_result
+            ) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

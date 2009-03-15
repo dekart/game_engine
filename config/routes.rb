@@ -14,6 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :missions, :member => {:fulfill => :post}
   map.resources :items
   map.resources :inventories
+  map.resources :fights
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
