@@ -27,7 +27,7 @@
                 </td>
                 <td class="price"><%= item.price %></td>
                 <td class="controls">
-                  <% if current_character.money >= item.price %>
+                  <% if current_character.basic_money >= item.price %>
                     <%= link_to_remote(fb_i("Buy"),
                           :url => inventories_url(:item_id => item.id, :canvas => false),
                           :update => :shop_result
@@ -57,7 +57,7 @@
                   <div class="attack"><%= inventory.attack %></div>
                   <div class="defence"><%= inventory.defence %></div>
                 </td>
-                <td class="price"><%= inventory.price %></td>
+                <td class="price"><%= inventory.sell_price %></td>
                 <td class="controls">
                   <%= link_to_remote(fb_i("Sell"),
                         :url => inventory_url(inventory, :canvas => false, :_method => :delete),
@@ -72,3 +72,5 @@
     </td>
   </tr>
 </table>
+
+<%= fb_super_rewards_iframe %>

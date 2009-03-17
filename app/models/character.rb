@@ -73,7 +73,7 @@ class Character < ActiveRecord::Base
 
       self.decrement(:ep, mission.ep_cost)
       self.increment(:experience, mission.experience)
-      self.increment(:money, mission.money)
+      self.increment(:basic_money, mission.money)
       self.save!
     end
 

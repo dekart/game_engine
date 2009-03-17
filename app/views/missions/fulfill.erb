@@ -6,10 +6,6 @@
     <%= fb_it(:experience_number, @mission.experience) %>
     <%= fb_it(:money_number, content_tag(:span, @mission.money, :class => :money)) %>
   <% end %>
-
-  <script>
-    Character.update(<%= current_character.to_json %>);
-  </script>
 <% else %>
   <% fb_i do %>
     You don't have enough energy. Take a rest until your energy will grow to {ep_number} points. 
@@ -18,3 +14,7 @@
     <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
   <% end %>
 <% end %>
+
+<script>
+  Character.update(<%= current_character.to_json %>);
+</script>

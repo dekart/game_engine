@@ -12,21 +12,21 @@ class Inventory < ActiveRecord::Base
 
   delegate :name, :description, :attack, :defence, :to => :item
   
-  def price
-    (self.item.price * 0.7).ceil
+  def sell_price
+    (self.item.price * 0.8).ceil
   end
   
   protected
 
   def enough_character_money?
-    self.errors.add(:character, "Not enough money") if self.character.money < self.item.price
+    self.errors.add(:character, "You don't have enough money to buy {item_name}") if self.character.basic_money < self.item.price
   end
 
   def charge_character
-    self.character.decrement!(:money, self.item.price)
+    self.character.decrement!(:basic_money, self.item.price)
   end
 
   def deposit_character
-    self.character.increment!(:money, self.price)
+    self.character.increment!(:basic_money, self.sell_price)
   end
 end

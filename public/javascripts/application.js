@@ -6,7 +6,8 @@ var Spinner = {
 
 var Character = {
   update: function(a){
-    $('character_money').setTextValue(a.character.money);
+    $('character_basic_money').setTextValue(a.character.basic_money);
+    $('character_vip_money').setTextValue(a.character.basic_money);
     $('character_experience').setTextValue(a.character.experience);
     $('character_level').setTextValue(a.character.level);
     $('character_health').setTextValue(a.character.hp + "/" + a.character.health);

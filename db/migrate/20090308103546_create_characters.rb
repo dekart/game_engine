@@ -5,7 +5,8 @@ class CreateCharacters < ActiveRecord::Migration
 
       t.string  :name
 
-      t.integer :money,       :default => 100
+      t.integer :basic_money, :default => 100
+      t.integer :vip_money,   :default => 0
 
       t.integer :level,       :default => 1
       t.integer :experience,  :default => 0

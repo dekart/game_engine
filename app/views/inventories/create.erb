@@ -6,7 +6,7 @@
   <% end %>
 <% else %>
   <% fb_i do %>
-    You don't have enough money to buy {item_name}
+    <%= @inventory.errors.on(:character) %>
     <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
   <% end %>
 <% end %>

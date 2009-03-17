@@ -1,4 +1,6 @@
 class CharactersController < ApplicationController
+  skip_before_filter :prepare_user_and_character, :only => :load_vip_money
+
   def index
   end
 
@@ -19,6 +21,16 @@ class CharactersController < ApplicationController
       render :action => :show_private
     else
       render :action => :show_public
+    end
+  end
+
+  def load_vip_money
+    if valid_super_rewards_request?
+      super_rewards_user.character.increment!(:vip_money, params[:new].to_i)
+
+      render :text => "1"
+    else
+      render :text => "0"
     end
   end
 end

@@ -1,16 +1,14 @@
 <table id="character">
   <tr>
-    <td><%= fb_i("Money") %></td><td id="character_money"><%= current_character.money %></td>
+    <td><%= fb_i("Money") %></td><td>
+      <span id="character_basic_money"><%= current_character.basic_money %></span>/<span id="character_vip_money"><%= current_character.basic_money %></span>
+    </td>
     <td><%= fb_i("Experience") %></td><td id="character_experience"><%= current_character.experience %></td>
     <td><%= fb_i("Level") %></td><td id="character_level"><%= current_character.level %></td>
+    <td id="character_points" <% if current_character.points == 0 %>style="display:none;"<% end %>>
+      (<%= link_to("+%d" % current_character.points, upgrade_character_path(current_character), :id => :character_points_link) %>)
+    </td>
     <td><%= fb_i("Health") %></td><td id="character_health"><%= "%d/%d" % [current_character.hp, current_character.health] %></td>
     <td><%= fb_i("Energy") %></td><td id="character_energy"><%= "%d/%d" % [current_character.ep, current_character.energy] %></td>
-    <td>
-      <%= link_to(fb_i("Profile"), character_path(current_character)) %>
-      
-      <span id="character_points" <% if current_character.points == 0 %>style="display:none;"<% end %>>
-        (<%= link_to("+%d" % current_character.points, upgrade_character_path(current_character), :id => :character_points_link) %>)
-      </span>
-    </td>
   </tr>
 </table>

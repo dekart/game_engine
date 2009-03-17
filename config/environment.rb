@@ -79,3 +79,5 @@ Rails::Initializer.run do |config|
 end
 
 WillPaginate::ViewHelpers.pagination_options.merge!(:next_label => "Older &raquo;", :previous_label => "&laquo; Newer")
+
+require "super_rewards"

@@ -22,14 +22,14 @@ class Fight < ActiveRecord::Base
     self.winner = attacker_won ? self.attacker : self.victim
 
     self.experience = self.loser.level
-    self.money = (self.loser.money.to_f * 0.10).ceil
+    self.money = (self.loser.basic_money.to_f * 0.10).ceil
   end
 
   def save_payout
     self.winner.increment(:experience, self.experience)
 
-    self.winner.increment(:money, self.money)
-    self.loser.decrement(:money, self.money)
+    self.winner.increment(:basic_money, self.money)
+    self.loser.decrement(:basic_money, self.money)
 
     self.attacker.decrement(:ep)
 

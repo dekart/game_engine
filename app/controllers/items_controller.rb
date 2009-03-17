@@ -3,4 +3,8 @@ class ItemsController < ApplicationController
     @items = Item.available_for(current_character)
     @inventories = current_character.inventories
   end
+
+  def vip
+    
+  end
 end
