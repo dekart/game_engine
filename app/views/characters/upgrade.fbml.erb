@@ -2,7 +2,7 @@
 
 <div id="upgrade_result"></div>
 
-<table>
+<table id="upgrade_list">
   <% %w{attack defence health energy}.each do |attribute| %>
     <tr>
       <td><%= fb_i(attribute.capitalize) %></td>
@@ -16,3 +16,8 @@
     </tr>
   <% end %>
 </table>
+
+<div id="upgrade_finished" style="display:none;">
+  <%= fb_i("You spent all your upgrade points.") %>
+  <%= link_to(fb_i("Go To Profile"), character_path(current_character)) %>
+</div>

@@ -2,21 +2,34 @@
 
 <div id="fight_result"></div>
 
-<table id="victim_list">
-  <tr>
-    <th><%= fb_i("User") %></th>
-    <th><%= fb_i("Level") %></th>
-  </tr>
-  <% @victims.each do |victim| %>
-    <% content_tag_for(:tr, victim) do %>
-      <td class="name"><%= link_to(character_name(victim), victim) %></td>
-      <td class="level"><%= victim.level %></td>
-      <td class="controls">
-        <%= link_to_remote(fb_i("Attack!"),
-              :url => fights_url(:victim_id => victim, :canvas => false),
-              :update => :fight_result
-            ) %>
-      </td>
-    <% end %>
+<% if current_character.weak? %>
+  <% fb_i do %>
+    You are too weak to fight! Take a rest until your health will grow to {hp_number} points.
+    You need to wait about {minute_number} minutes.
+    <%= fb_it(:hp_number, current_character.weakness_minimum) %>
+    <%= fb_it(:minute_number, (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil) %>
   <% end %>
-</table>
+<% else %>
+  <% if @victims.any? %>
+    <table id="victim_list">
+      <tr>
+        <th><%= fb_i("User") %></th>
+        <th><%= fb_i("Level") %></th>
+      </tr>
+      <% @victims.each do |victim| %>
+        <% content_tag_for(:tr, victim) do %>
+          <td class="name"><%= link_to(character_name(victim), victim) %></td>
+          <td class="level"><%= victim.level %></td>
+          <td class="controls">
+            <%= link_to_remote(fb_i("Attack!"),
+                  :url => fights_url(:victim_id => victim, :canvas => false),
+                  :update => :fight_result
+                ) %>
+          </td>
+        <% end %>
+      <% end %>
+    </table>
+  <% else %>
+    <%= fb_i("There is no opponents for you at this time") %>
+  <% end %>
+<% end %>

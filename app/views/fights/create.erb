@@ -5,7 +5,7 @@
       dealing {loser_damage} damage and taking {winner_damage} damage.
 
       <%= fb_it(:user_name, link_to(character_name(@fight.victim), @fight.victim)) %>
-      <%= fb_it(:money, @fight.money) %>
+      <%= fb_it(:money, content_tag(:span, @fight.money, :class => :money)) %>
       <%= fb_it(:experience_points, @fight.experience) %>
       <%= fb_it(:loser_damage, @fight.victim_hp_loss) %>
       <%= fb_it(:winner_damage, @fight.attacker_hp_loss) %>
@@ -16,7 +16,7 @@
   <% else %>
     <% fb_i do %>
       You LOST this battle! {user_name} took {money} from you and damaged you for {loser_damage}.
-      You damaged him for {winner_damage} points.
+      You damaged <%= fb_pronoun(@fight.victim, :objective => true) %> for {winner_damage} points.
 
       <%= fb_it(:user_name, link_to(character_name(@fight.victim), @fight.victim)) %>
       <%= fb_it(:money, @fight.money) %>

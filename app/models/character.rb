@@ -5,6 +5,11 @@ class Character < ActiveRecord::Base
     LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
   end
 
+  HP_REFILL_PERIOD = 2.minutes + 30.seconds
+  EP_REFILL_PERIOD = 5.minutes
+  HP_PER_REFILL = 1
+  EP_PER_REFILL = 1
+
   belongs_to :user
   has_many :ranks
   has_many :missions, :through => :ranks
@@ -32,7 +37,9 @@ class Character < ActiveRecord::Base
 
   attr_accessor :level_updated
 
+  before_create :refill_hp, :refill_ep
   before_save :update_level_and_points
+  before_save :schedule_hp_ep_refill
 
   named_scope :victims_for, Proc.new{|attacker|
     {
@@ -94,6 +101,72 @@ class Character < ActiveRecord::Base
     self.defence + self.inventories.defence
   end
 
+  def refill_hp(amount = nil, refilled_at = nil)
+    self.hp += amount || self.health
+
+    if self.hp >= self.health
+      self.hp = self.health
+      self.hp_refilled_at = nil
+    else
+      self.hp_refilled_at = refilled_at || Time.now
+    end
+  end
+
+  def refill_ep(amount = nil, refilled_at = nil)
+    self.ep += amount || self.energy
+
+    if self.ep >= self.energy
+      self.ep = self.energy
+      self.ep_refilled_at = nil
+    else
+      self.ep_refilled_at = refilled_at || Time.now
+    end
+  end
+
+  def refill_hp_and_ep!
+    if self.hp < self.health and Time.now - self.hp_refilled_at > HP_REFILL_PERIOD
+      refill_times = (Time.now - self.hp_refilled_at).to_i / HP_REFILL_PERIOD
+      
+      self.refill_hp(HP_PER_REFILL * refill_times, self.hp_refilled_at + refill_times * HP_REFILL_PERIOD)
+    end
+
+    if self.ep < self.energy and Time.now - self.ep_refilled_at > EP_REFILL_PERIOD
+      refill_times = (Time.now - self.ep_refilled_at).to_i / EP_REFILL_PERIOD
+
+      self.refill_ep(EP_PER_REFILL * refill_times, self.ep_refilled_at + refill_times * EP_REFILL_PERIOD)
+    end
+
+    self.save
+  end
+
+  def weak?
+    self.hp < self.weakness_minimum
+  end
+
+  def weakness_minimum
+    (self.health * 0.2).ceil
+  end
+
+  def hp_restore_time(restore_to = nil)
+    restore_to ||= self.health
+
+    if self.hp >= restore_to
+      return 0
+    else
+      (self.hp_refilled_at + ((restore_to - self.hp) / HP_PER_REFILL * HP_REFILL_PERIOD).to_i) - Time.now
+    end
+  end
+
+  def ep_restore_time(restore_to = nil)
+    restore_to ||= self.health
+
+    if self.ep >= restore_to
+      return 0
+    else
+      (self.ep_refilled_at + ((restore_to - self.ep) / EP_PER_REFILL * EP_REFILL_PERIOD).to_i) - Time.now
+    end
+  end
+  
   protected
 
   def update_level_and_points
@@ -103,5 +176,10 @@ class Character < ActiveRecord::Base
 
       self.level_updated = true
     end
+  end
+
+  def schedule_hp_ep_refill
+    self.hp_refilled_at = Time.now if self.hp_changed? and self.hp_was > self.hp
+    self.ep_refilled_at = Time.now if self.ep_changed? and self.ep_was > self.ep
   end
 end

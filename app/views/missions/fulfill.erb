@@ -1,10 +1,20 @@
 <% if @success %>
-  <%= fb_i("Well done!") %>
-  <%= fb_i(@mission.won_text) %>
+  <% fb_i do %>
+    Well done! {mission_success_text} You received {money_number} and {experience_number} experience points!
+    
+    <%= fb_it(:mission_success_text, @mission.won_text) %>
+    <%= fb_it(:experience_number, @mission.experience) %>
+    <%= fb_it(:money_number, content_tag(:span, @mission.money, :class => :money)) %>
+  <% end %>
 
   <script>
     Character.update(<%= current_character.to_json %>);
   </script>
 <% else %>
-  <%= fb_i("You don't have enough energy to fulfill this mission. Take a rest.") %>
+  <% fb_i do %>
+    You don't have enough energy. Take a rest until your energy will grow to {ep_number} points. 
+    You need to wait about {minute_number} minutes.
+    <%= fb_it(:ep_number, @mission.ep_cost) %>
+    <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
+  <% end %>
 <% end %>

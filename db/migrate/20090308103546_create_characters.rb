@@ -14,12 +14,15 @@ class CreateCharacters < ActiveRecord::Migration
       t.integer :attack,      :default => 1
       t.integer :defence,     :default => 1
 
-      t.integer :hp,          :default => 100
+      t.integer :hp,          :default => 0
       t.integer :health,      :default => 100
 
-      t.integer :ep,          :default => 10
+      t.integer :ep,          :default => 0
       t.integer :energy,      :default => 10
 
+      t.datetime :hp_refilled_at
+      t.datetime :ep_refilled_at
+      
       t.timestamps
     end
   end

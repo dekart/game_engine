@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  ensure_application_is_installed_by_facebook_user
+  before_filter :prepare_user_and_character
   
   helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context
 
@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, :with => :redirect_to_root
 
   protected
+
+  def prepare_user_and_character
+    ensure_application_is_installed_by_facebook_user
+    
+    current_character.refill_hp_and_ep!
+  end
 
   def current_character
     current_user.character
@@ -21,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_explicit_installation_requirement
-    params[:do_install] ? ensure_application_is_installed_by_facebook_user : true
+    params[:do_install] ? prepare_user_and_character : true
   end
 
   def current_user
