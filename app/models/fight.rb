@@ -5,6 +5,14 @@ class Fight < ActiveRecord::Base
   belongs_to :victim, :class_name => "Character"
   belongs_to :winner, :class_name => "Character"
 
+  named_scope :with_participant, Proc.new {|character|
+    {
+      :conditions => ["attacker_id = :id OR victim_id = :id", {:id => character.id}],
+      :order => "created_at DESC",
+      :include => [:attacker, :victim]
+    }
+  }
+
   before_create :calculate_fight
   after_create  :save_payout
 

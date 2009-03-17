@@ -1,1 +1,33 @@
-characters
+<%= title(fb_i("Overview")) %>
+
+<table>
+  <tr>
+    <th><%= fb_i("Latest Fights") %></th>
+    <th><%= fb_i("Profile") %></th>
+  </tr>
+  <tr>
+    <td>
+      <% if @latest_fights.any? %>
+        <table>
+        <% @latest_fights.each do |fight| %>
+          <tr>
+            <td><%= fb_profile_pic(fight.attacker.user) %></td>
+            <td><%= fight_description(fight) %></td>
+            <td><%= fb_profile_pic(fight.victim.user) %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% end %>
+    </td>
+    <td>
+      <table>
+        <tr><td><%= fb_i("Attack") %></td><td><%= current_character.attack %></td></tr>
+        <tr><td><%= fb_i("Defence") %></td><td><%= current_character.defence %></td></tr>
+        <tr><td><%= fb_i("Health") %></td><td><%= "%d/%d" % [current_character.hp, current_character.health] %></td></tr>
+        <tr><td><%= fb_i("Energy") %></td><td><%= "%d/%d" % [current_character.ep, current_character.energy] %></td></tr>
+      </table>
+
+      <%= link_to(fb_i("Full Profile"), character_path(current_character)) %>
+    </td>
+  </tr>
+</table>

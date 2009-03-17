@@ -2,6 +2,7 @@ class CharactersController < ApplicationController
   skip_before_filter :prepare_user_and_character, :only => :load_vip_money
 
   def index
+    @latest_fights = Fight.with_participant(current_character).find(:all, :limit => 10)
   end
 
   def upgrade
