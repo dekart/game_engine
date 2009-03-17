@@ -46,18 +46,32 @@ namespace :app do
       Mission.find_or_create_by_name(key).update_attributes(value)
     end
 
-    @items = {
+    @weapons = {
       "Дубинка" => {
         :level => 1,
         :description => "Тяжелая дубовая палка, оружие бедняков",
-        :price => 100,
+        :price => 50,
         :attack => 1,
-        :defence => 0
+        :defence => 1
       }
     }
 
-    @items.each_pair do |key, value|
-      Item.find_or_create_by_name(key).update_attributes(value)
+    @weapons.each_pair do |key, value|
+      Weapon.find_or_create_by_name(key).update_attributes(value)
+    end
+
+    @armors = {
+      "Кожанный жилет" => {
+        :level => 1,
+        :description => "Жилет из грубой бычьей кожи, закрывающий грудь и живот",
+        :price => 50,
+        :attack => 1,
+        :defence => 1
+      }
+    }
+
+    @armors.each_pair do |key, value|
+      Armor.find_or_create_by_name(key).update_attributes(value)
     end
   end
 end

@@ -1,11 +1,13 @@
 class FightsController < ApplicationController
   def new
-    @victims = Character.victims_for(current_character)
+    @victims = Character.victims_for(current_character).find(:all, :order => "RAND()", :limit => 10)
   end
 
   def create
-    @fight = current_character.attacks.create(:victim_id => params[:victim_id])
-
+    if @victim = Character.victims_for(current_character).find(:first, :conditions => {:id => params[:victim_id]})
+      @fight = current_character.attacks.create(:victim => @victim)
+    end
+    
     render :action => :create, :layout => false
   end
 end

@@ -44,7 +44,7 @@ class Fight < ActiveRecord::Base
     :dice => 10,
     :critical_failure => 1,
     :critical_success => 1,
-    :success => 6
+    :success => 5
   }
 
   def calculate_dices(attacker, victim)
@@ -98,6 +98,11 @@ class Fight < ActiveRecord::Base
     # Суммируем значения успешных бросков
     attack  = attack.summarize.to_f * attack_bonus
     defence = defence.summarize.to_f * defence_bonus
+
+    logger.debug "Attack: %f * %f = %f \nDefence Points: %f * %f = %f" % [
+      attack_points, attack_bonus, attack,
+      defence_points, defence_bonus, defence
+    ]
 
     return [attack >= defence, (attack / 2).ceil, (defence / 2).ceil]
   end

@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20090314190007) do
   end
 
   create_table "items", :force => true do |t|
+    t.string   "type",        :limit => 30
     t.integer  "level"
     t.integer  "price"
     t.string   "name"

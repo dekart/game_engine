@@ -2,6 +2,9 @@ class Inventory < ActiveRecord::Base
   belongs_to :character
   belongs_to :item
 
+  named_scope :weapons, {:conditions => "items.type = 'Weapon'", :include => :item}
+  named_scope :armors, {:conditions => "items.type = 'Armor'", :include => :item}
+
   validate_on_create :enough_character_money?
 
   after_create :charge_character

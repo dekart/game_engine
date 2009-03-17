@@ -10,49 +10,63 @@
   <tr>
     <td>
       <table id="item_list">
-        <% @items.each do |item| %>
-          <tr>
-            <td class="info">
-              <div class="name"><%= fb_i(item.name) %></div>
-              <div class="description"><%= fb_i(item.description) %></div>
-            </td>
-            <td class="details">
-              <div class="attack"><%= item.attack %></div>
-              <div class="defence"><%= item.defence %></div>
-            </td>
-            <td class="price"><%= item.price %></td>
-            <td class="controls">
-              <% if current_character.money >= item.price %>
-                <%= link_to_remote(fb_i("Buy"),
-                      :url => inventories_url(:item_id => item.id, :canvas => false),
-                      :update => :shop_result
-                    ) %>
-              <% end %>
-            </td>
-          </tr>
+        <% %w{weapons armors}.each do |type| %>
+          <% if @items.send(type).any? %>
+            <tr>
+              <th colspan="4"><%= fb_i(type.capitalize) %></th>
+            </tr>
+            <% @items.send(type).each do |item| %>
+              <tr>
+                <td class="info">
+                  <div class="name"><%= fb_i(item.name) %></div>
+                  <div class="description"><%= fb_i(item.description) %></div>
+                </td>
+                <td class="details">
+                  <div class="attack"><%= item.attack %></div>
+                  <div class="defence"><%= item.defence %></div>
+                </td>
+                <td class="price"><%= item.price %></td>
+                <td class="controls">
+                  <% if current_character.money >= item.price %>
+                    <%= link_to_remote(fb_i("Buy"),
+                          :url => inventories_url(:item_id => item.id, :canvas => false),
+                          :update => :shop_result
+                        ) %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
         <% end %>
       </table>
     </td>
     <td>
       <table id="inventory_list">
-        <% current_character.inventories.find(:all, :order => "items.price").each do |inventory| %>
-          <tr>
-            <td class="info">
-              <div class="name"><%= inventory.name %></div>
-              <div class="description"><%= inventory.description %></div>
-            </td>
-            <td class="details">
-              <div class="attack"><%= inventory.attack %></div>
-              <div class="defence"><%= inventory.defence %></div>
-            </td>
-            <td class="price"><%= inventory.price %></td>
-            <td class="controls">
-              <%= link_to_remote(fb_i("Sell"),
-                    :url => inventory_url(inventory, :canvas => false, :_method => :delete),
-                    :update => :shop_result
-                  ) %>
-            </td>
-          </tr>
+        <% %w{weapons armors}.each do |type| %>
+          <% if @inventories.send(type).any? %>
+            <tr>
+              <th colspan="4"><%= fb_i("Weapons") %></th>
+            </tr>
+            <% @inventories.send(type).each do |inventory| %>
+              <% content_tag_for(:tr, inventory) do %>
+                <td class="info">
+                  <div class="name"><%= inventory.name %></div>
+                  <div class="description"><%= inventory.description %></div>
+                </td>
+                <td class="details">
+                  <div class="attack"><%= inventory.attack %></div>
+                  <div class="defence"><%= inventory.defence %></div>
+                </td>
+                <td class="price"><%= inventory.price %></td>
+                <td class="controls">
+                  <%= link_to_remote(fb_i("Sell"),
+                        :url => inventory_url(inventory, :canvas => false, :_method => :delete),
+                        :update => :shop_result
+                      ) %>
+                </td>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
       </table>
     </td>

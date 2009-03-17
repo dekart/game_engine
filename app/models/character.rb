@@ -10,16 +10,22 @@ class Character < ActiveRecord::Base
   has_many :missions, :through => :ranks
   has_many :inventories, :include => :item do
     def attack
-      1
+      if most_powerful_weapon = self.weapons.find(:first, :order => "attack DESC")
+        return most_powerful_weapon.attack
+      else
+        return 0
+      end
     end
 
     def defence
-      1
+      if most_powerful_armor = self.armors.find(:first, :order => "defence DESC")
+        return most_powerful_armor.defence
+      else
+        return 0
+      end
     end
   end
   
-  has_many :items, :through => :inventories
-
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id
   has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
@@ -45,9 +51,7 @@ class Character < ActiveRecord::Base
           :time_limit   => 1.hour.ago
         }
       ],
-      :include  => :user,
-      :order    => "RAND()",
-      :limit    => 10
+      :include  => :user
     }
   }
 

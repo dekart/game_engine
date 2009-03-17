@@ -3,3 +3,6 @@
   <%= fb_it(:item_name, content_tag(:b, fb_i(@inventory.name))) %>
   <%= fb_it(:price, content_tag(:span, @inventory.price, :class => :money)) %>
 <% end %>
+<script>
+  $('inventory_<%= @inventory.id %>').hide()
+</script>
