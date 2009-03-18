@@ -6,3 +6,20 @@
   <tr><td><%= fb_i("Health") %></td><td><%= "%d/%d" % [@character.hp, @character.health] %></td></tr>
   <tr><td><%= fb_i("Energy") %></td><td><%= "%d/%d" % [@character.ep, @character.energy] %></td></tr>
 </table>
+
+
+<% if weapon = @character.inventories.weapons.first %>
+  <b><%= fb_i("Weapon") %></b>
+
+  <div>
+    <%= weapon.item.name %>
+  </div>
+<% end %>
+
+<% if armor = @character.inventories.armors.first %>
+  <b><%= fb_i("Armor") %></b>
+
+  <div>
+    <%= armor.item.name %>
+  </div>
+<% end %>

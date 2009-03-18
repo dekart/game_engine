@@ -15,7 +15,7 @@ class Character < ActiveRecord::Base
   has_many :missions, :through => :ranks
   has_many :inventories, :include => :item do
     def attack
-      if most_powerful_weapon = self.weapons.find(:first, :order => "attack DESC")
+      if most_powerful_weapon = self.weapons.first
         return most_powerful_weapon.attack
       else
         return 0
@@ -23,7 +23,7 @@ class Character < ActiveRecord::Base
     end
 
     def defence
-      if most_powerful_armor = self.armors.find(:first, :order => "defence DESC")
+      if most_powerful_armor = self.armors.first
         return most_powerful_armor.defence
       else
         return 0

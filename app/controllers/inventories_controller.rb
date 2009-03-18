@@ -14,4 +14,8 @@ class InventoriesController < ApplicationController
 
     render :action => :destroy, :layout => false
   end
+
+  def index
+    @inventories = current_character.inventories
+  end
 end

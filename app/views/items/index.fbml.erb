@@ -22,8 +22,9 @@
                   <div class="description"><%= fb_i(item.description) %></div>
                 </td>
                 <td class="details">
-                  <div class="attack"><%= item.attack %></div>
-                  <div class="defence"><%= item.defence %></div>
+                  <% %w{attack defence}.each do |attribute| %>
+                    <%= content_tag(:div, item.send(attribute), :class => attribute) if item.send(attribute) > 0 %>
+                  <% end %>
                 </td>
                 <td class="price"><%= item.price %></td>
                 <td class="controls">
@@ -45,7 +46,7 @@
         <% %w{weapons armors}.each do |type| %>
           <% if @inventories.send(type).any? %>
             <tr>
-              <th colspan="4"><%= fb_i("Weapons") %></th>
+              <th colspan="4"><%= fb_i(type.capitalize) %></th>
             </tr>
             <% @inventories.send(type).each do |inventory| %>
               <% content_tag_for(:tr, inventory) do %>
@@ -54,8 +55,9 @@
                   <div class="description"><%= inventory.description %></div>
                 </td>
                 <td class="details">
-                  <div class="attack"><%= inventory.attack %></div>
-                  <div class="defence"><%= inventory.defence %></div>
+                  <% %w{attack defence}.each do |attribute| %>
+                    <%= content_tag(:div, inventory.send(attribute), :class => attribute) if inventory.send(attribute) > 0 %>
+                  <% end %>
                 </td>
                 <td class="price"><%= inventory.sell_price %></td>
                 <td class="controls">
