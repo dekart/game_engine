@@ -1,20 +1,60 @@
-<% if @success %>
-  <% fb_i do %>
-    Well done! {mission_success_text} You received {money_number} and {experience_number} experience points!
-    
-    <%= fb_it(:mission_success_text, @mission.won_text) %>
-    <%= fb_it(:experience_number, @mission.experience) %>
-    <%= fb_it(:money_number, content_tag(:span, @mission.money, :class => :money)) %>
+<% if @rank %>
+  <p>
+    <%= fb_i("Well done!") %> <%= fb_i(@mission.won_text) %>
+  </p>
+
+  <div class="received">
+    <h3><%= fb_i("You received:") %></h3>
+    <ul>
+      <li>
+        <b><%= fb_i("Experience:") %></b>
+        <div class="experience"><%= @mission.experience %></div>
+      </li>
+      <li>
+        <b><%= fb_i("Money:") %></b>
+        <div class="basic_money"><%= @mission.money %></div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="spent">
+    <h3><%= fb_i("You spent") %></h3>
+    <ul>
+      <li>
+        <b><%= fb_i("Energy:") %></b>
+        <div class="energy"><%= @mission.experience %></div>
+      </li>
+    </ul>
+  </div>
+  
+  <% content_for :script do %>
+    Mission.setCompleteness(<%= @mission.id %>, '<%= @rank.completeness %>');
+  <% end %>
+
+  <% if @rank.completed? %>
+    <p>
+      <% fb_i do %>
+        Congratulations! You completed this mission and received new title: {title}!
+
+        <%= fb_it(:title, content_tag(:b, @mission.winner_title)) %>
+      <% end %>
+    </p>
+
+    <% content_for :script do %>
+      Mission.hideControls(<%= @mission.id %>);
+    <% end %>
   <% end %>
 <% else %>
-  <% fb_i do %>
-    You don't have enough energy. Take a rest until your energy will grow to {ep_number} points. 
-    You need to wait about {minute_number} minutes.
-    <%= fb_it(:ep_number, @mission.ep_cost) %>
-    <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
-  <% end %>
+  <p>
+    <% fb_i do %>
+      You don't have enough energy. Take a rest until your energy will grow to {ep_number} points.
+      You need to wait about {minute_number} minutes.
+      <%= fb_it(:ep_number, @mission.ep_cost) %>
+      <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
+    <% end %>
+  </p>
 <% end %>
 
-<script>
-  Character.update(<%= current_character.to_json %>);
-</script>
+<% content_for :script do %>
+  Mission.showResult();
+<% end %>

@@ -8,6 +8,6 @@ class FightsController < ApplicationController
       @fight = current_character.attacks.create(:victim => @victim)
     end
     
-    render :action => :create, :layout => false
+    render :action => :create, :layout => "ajax"
   end
 end

@@ -1,33 +1,39 @@
-<%= title(fb_i("Overview")) %>
+<div id="dashboard">
+  <div class="profile">
+    <%= link_to(fb_i("Profile Overview"), character_path(current_character), :class => :title) %>
 
-<table>
-  <tr>
-    <th><%= fb_i("Latest Fights") %></th>
-    <th><%= fb_i("Profile") %></th>
-  </tr>
-  <tr>
-    <td>
-      <% if @latest_fights.any? %>
-        <table>
-        <% @latest_fights.each do |fight| %>
-          <tr>
-            <td><%= fb_profile_pic(fight.attacker.user) %></td>
-            <td><%= fight_description(fight) %></td>
-            <td><%= fb_profile_pic(fight.victim.user) %></td>
-          </tr>
+    <ul>
+      <li>
+        <b><%= fb_i("Attack") %></b>
+        <div class="attack"><%= current_character.attack %></div>
+      </li>
+      <li>
+        <b><%= fb_i("Defence") %></b>
+        <div class="defence"><%= current_character.defence %></div>
+      </li>
+      <li>
+        <b><%= fb_i("Health") %></b>
+        <div class="health"><%= "%d/%d" % [current_character.hp, current_character.health] %></div>
+      </li>
+      <li>
+        <b><%= fb_i("Energy") %></b>
+        <div class="energy"><%= "%d/%d" % [current_character.ep, current_character.energy] %></div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="latest_fights">
+    <h3><%= fb_i("Latest Fights") %></h3>
+
+    <% if @latest_fights.any? %>
+      <% @latest_fights.each do |fight| %>
+        <% div_for(fight) do %>
+          <div class="attacker"><%= fb_profile_pic(fight.attacker.user) %></div>
+          <div class="victim"><%= fb_profile_pic(fight.victim.user) %></div>
+          <div class="description"><%= fight_description(fight) %></div>
         <% end %>
-        </table>
       <% end %>
-    </td>
-    <td>
-      <table>
-        <tr><td><%= fb_i("Attack") %></td><td><%= current_character.attack %></td></tr>
-        <tr><td><%= fb_i("Defence") %></td><td><%= current_character.defence %></td></tr>
-        <tr><td><%= fb_i("Health") %></td><td><%= "%d/%d" % [current_character.hp, current_character.health] %></td></tr>
-        <tr><td><%= fb_i("Energy") %></td><td><%= "%d/%d" % [current_character.ep, current_character.energy] %></td></tr>
       </table>
-
-      <%= link_to(fb_i("Full Profile"), character_path(current_character)) %>
-    </td>
-  </tr>
-</table>
+    <% end %>
+  </div>
+</div>ы

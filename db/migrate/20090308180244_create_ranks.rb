@@ -5,7 +5,7 @@ class CreateRanks < ActiveRecord::Migration
       t.integer :mission_id
 
       t.integer :win_count, :default => 0
-      t.integer :defeat_count, :default => 0
+      t.boolean :completed, :default => false
       
       t.timestamps
     end

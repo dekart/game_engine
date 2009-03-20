@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20090314190007) do
     t.integer  "character_id"
     t.integer  "mission_id"
     t.integer  "win_count",    :default => 0
-    t.integer  "defeat_count", :default => 0
+    t.boolean  "completed",    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

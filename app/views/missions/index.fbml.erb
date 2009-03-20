@@ -1,6 +1,6 @@
 <%= title(fb_i("Missions")) %>
 
-<div id="mission_result"></div>
+<div id="mission_result" style="display:none;"></div>
 
 <table id="mission_list">
   <tr>
@@ -9,7 +9,7 @@
     <th><%= fb_i("Requires") %></th>
   </tr>
   <% @missions.each do |mission| %>
-    <tr>
+    <% content_tag_for(:tr, mission) do %>
       <td class="info">
         <div class="name"><%= fb_i(mission.name) %></div>
         <div class="description"><%= fb_i(mission.description) %></div>
@@ -19,17 +19,16 @@
         <div class="money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
       </td>
       <td class="energy"><%= "-%d" % mission.ep_cost %></td>
-      <td class="completeness">
-        <%= "%d%%" % mission.completeness_for(current_character) %>
-      </td>
+      <% rank = mission.by(current_character) %>
+      <td class="completeness"><%= rank.completeness %></td>
       <td class="controls">
-        <% if current_character.ep >= mission.ep_cost %>
+        <% if current_character.ep >= mission.ep_cost and !rank.completed? %>
           <%= link_to_remote(fb_i("Fulfill"),
                 :url => fulfill_mission_url(mission, :canvas => false),
                 :update => :mission_result
               ) %>
         <% end %>
       </td>
-    </tr>
+    <% end %>
   <% end %>
 </table>

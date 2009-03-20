@@ -32,4 +32,8 @@ module ApplicationHelper
   def title(text)
     fb_title(text) + content_tag(:h1, text, :class => :title)
   end
+
+  def icon(name)
+    image_tag("icons/#{name}.gif", :alt => name.to_s.titleize)
+  end
 end

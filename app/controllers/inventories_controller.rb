@@ -4,7 +4,7 @@ class InventoriesController < ApplicationController
 
     @inventory = current_character.inventories.create(:item => @item)
 
-    render :action => :create, :layout => false
+    render :action => :create, :layout => "ajax"
   end
 
   def destroy
@@ -12,7 +12,7 @@ class InventoriesController < ApplicationController
 
     @inventory.destroy
 
-    render :action => :destroy, :layout => false
+    render :action => :destroy, :layout => "ajax"
   end
 
   def index

@@ -2,9 +2,9 @@
   <%= fight_description(@fight) %>
 
   <% if @fight.winner == current_character %>
-    <script>
+    <% content_for :script do %>
       $('character_<%= @victim.id %>').hide();
-    </script>
+    <% end %>
   <% else %>
     <%= link_to_remote(fb_i("Attack Again!"),
           :url => fights_url(:victim_id => @victim, :canvas => false),

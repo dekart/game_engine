@@ -5,8 +5,8 @@ class Mission < ActiveRecord::Base
     { :conditions => ["level <= ?", character.level], :order => :level }
   }
 
-  def completeness_for(character)
-    self.ranks.find_or_initialize_by_character_id(character.id).win_count.to_f / self.win_amount * 100
+  def by(character)
+    self.ranks.find_or_initialize_by_character_id(character.id)
   end
 
   def money

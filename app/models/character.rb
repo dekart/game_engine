@@ -65,7 +65,7 @@ class Character < ActiveRecord::Base
   def fulfill_mission!(mission)
     return false if self.ep < mission.ep_cost
 
-    rank = self.ranks.find_or_initialize_by_mission_id(mission.id)
+    rank = mission.by(self)
     
     self.class.transaction do
       rank.increment(:win_count)
@@ -77,7 +77,7 @@ class Character < ActiveRecord::Base
       self.save!
     end
 
-    return true
+    return rank
   end
 
   def upgrade_attribute!(name)

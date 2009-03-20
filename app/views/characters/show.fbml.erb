@@ -1,0 +1,37 @@
+<%= title(fb_i("Your Profile")) %>
+
+<% if @character == current_character %>
+<table>
+  <tr><td><%= fb_i("Attack") %></td><td class="attack"><%= @character.attack %></td></tr>
+  <tr><td><%= fb_i("Defence") %></td><td class="defence"><%= @character.defence %></td></tr>
+  <tr><td><%= fb_i("Health") %></td><td class="health"><%= "%d/%d" % [@character.hp, @character.health] %></td></tr>
+  <tr><td><%= fb_i("Energy") %></td><td class="energy"><%= "%d/%d" % [@character.ep, @character.energy] %></td></tr>
+  <tr><td><%= fb_i("Money") %></td><td class="basic_money"><%= @character.basic_money %></td></tr>
+  <tr><td><%= fb_i("Rubies") %></td><td class="vip_money"><%= @character.vip_money %></td></tr>
+</table>
+<% end %>
+
+<% if @character.ranks.completed.any? %>
+  <div class="ranks">
+    <h2><%= fb_i("Titles") %></h2>
+    <% @character.ranks.completed.each do |rank| %>
+      <%= content_tag(:div, rank.mission.winner_title, :class => :rank) %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if weapon = @character.inventories.weapons.first %>
+  <b><%= fb_i("Weapon") %></b>
+
+  <div>
+    <%= weapon.item.name %>
+  </div>
+<% end %>
+
+<% if armor = @character.inventories.armors.first %>
+  <b><%= fb_i("Armor") %></b>
+
+  <div>
+    <%= armor.item.name %>
+  </div>
+<% end %>
