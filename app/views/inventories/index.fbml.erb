@@ -9,13 +9,14 @@
         </tr>
         <% @inventories.send(type).each do |inventory| %>
           <% content_tag_for(:tr, inventory) do %>
+            <td class="picture"><%= image_tag(inventory.image.url(:small)) %></td>
             <td class="info">
               <div class="name"><%= inventory.name %></div>
               <div class="description"><%= inventory.description %></div>
             </td>
             <td class="details">
               <% %w{attack defence}.each do |attribute| %>
-                <%= content_tag(:div, inventory.send(attribute), :class => attribute) if inventory.send(attribute) > 0 %>
+                <%= content_tag(:div, inventory.send(attribute), :class => attribute) if inventory.send(attribute).to_i > 0 %>
               <% end %>
             </td>
           <% end %>

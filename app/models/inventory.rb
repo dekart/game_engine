@@ -18,7 +18,7 @@ class Inventory < ActiveRecord::Base
   after_create :charge_character
   after_destroy :deposit_character
 
-  delegate :name, :description, :attack, :defence, :to => :item
+  delegate :name, :description, :attack, :defence, :image, :to => :item
   
   def sell_price
     (self.item.price * 0.8).ceil

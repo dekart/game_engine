@@ -1,3 +1,7 @@
+def img(name)
+  File.open(File.join(RAILS_ROOT, "db", "pictures", "#{name}.jpg"))
+end
+
 namespace :app do
   desc "Bootstrap application data"
   task :bootstrap => :environment do
@@ -51,8 +55,14 @@ namespace :app do
         :level => 1,
         :description => "Тяжелая дубовая палка, оружие бедняков",
         :price => 50,
-        :attack => 1,
-        :defence => 1
+        :attack => 1
+      },
+      "Меч" => {
+        :level => 1,
+        :description => "Меч рядового солдата, выкованный армейскими кузнецами",
+        :price => 100,
+        :attack => 2,
+        :image => img("sword")
       }
     }
 
@@ -65,7 +75,6 @@ namespace :app do
         :level => 1,
         :description => "Жилет из грубой бычьей кожи, закрывающий грудь и живот",
         :price => 50,
-        :attack => 1,
         :defence => 1
       }
     }

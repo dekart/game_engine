@@ -73,13 +73,16 @@ ActiveRecord::Schema.define(:version => 20090314190007) do
   end
 
   create_table "items", :force => true do |t|
-    t.string   "type",        :limit => 30
+    t.string   "type",               :limit => 30
     t.integer  "level"
     t.integer  "price"
     t.string   "name"
     t.string   "description"
     t.integer  "attack"
     t.integer  "defence"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
