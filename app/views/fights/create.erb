@@ -1,4 +1,4 @@
-<% if @victim %>
+<% if !@fight.new_record? %>
   <% if @fight.winner == current_character %>
     <p class="success">
       <% fb_i do %>
@@ -111,10 +111,10 @@
           :url    => fights_url(:victim_id => @victim, :canvas => false),
           :update => :fight_result,
           :html   => {:class => :attack_again}
-        ) %>
+        ) if current_character.energy > 0 %>
   <% end %>
 <% else %>
-  <p><%= fb_i("You cannot attack this player!") %></p>
+  <p><%= fb_i(@fight.errors.on(:character)) %></p>
 <% end %>
 
 <% content_for :script do %>

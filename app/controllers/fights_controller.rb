@@ -4,9 +4,9 @@ class FightsController < ApplicationController
   end
 
   def create
-    if @victim = Character.victims_for(current_character).find(:first, :conditions => {:id => params[:victim_id]})
-      @fight = current_character.attacks.create(:victim => @victim)
-    end
+    @victim = Character.find(params[:victim_id])
+
+    @fight = current_character.attacks.create(:victim => @victim)
     
     render :action => :create, :layout => "ajax"
   end

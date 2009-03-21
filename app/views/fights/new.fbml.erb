@@ -11,6 +11,14 @@
     <%= fb_it(:minute_number, (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil) %>
   <% end %>
   </p>
+<% elsif current_character.ep == 0 %>
+  <p>
+    <% fb_i do %>
+      You don't have enough energy to fight! Take a rest until your energy will grow.
+      You need to wait about {minute_number} minutes.
+      <%= fb_it(:minute_number, (current_character.ep_restore_time(1) / 1.minute).ceil) %>
+    <% end %>
+  </p>
 <% else %>
   <% if @victims.any? %>
     <table id="victim_list" cellspacing="0">

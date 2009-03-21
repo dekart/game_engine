@@ -24,6 +24,20 @@ class Fight < ActiveRecord::Base
   
   protected
 
+  def validate
+    if self.attacker.ep == 0
+      self.errors.add(:character, "You don't have enough energy to fight. Take a rest!")
+    end
+
+    if Character.victims_for(self.attacker).find(:first, :conditions => {:id => self.victim.id}).nil?
+      self.errors.add(:character, "You cannot attack this user")
+    end
+
+    if self.attacker.weak?
+      self.errors.add(:character, "You are too weak to fight! Take a rest!")
+    end
+  end
+
   def calculate_fight
     attacker_won, self.victim_hp_loss, self.attacker_hp_loss = calculate_dices(self.attacker, self.victim)
 
