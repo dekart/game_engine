@@ -58,3 +58,12 @@ var Mission = {
     $('mission_result').show();
   }
 }
+
+var Fight = {
+  showResult: function(){
+    $('fight_result').show()
+  },
+  hideVictim: function(id){
+    $('character_' + id).hide();
+  }
+}

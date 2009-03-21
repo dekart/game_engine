@@ -1,17 +1,19 @@
 <%= title(fb_i("Fighting Arena")) %>
 
-<div id="fight_result"></div>
+<div id="fight_result" class="result" style="display:none"></div>
 
 <% if current_character.weak? %>
+  <p>
   <% fb_i do %>
     You are too weak to fight! Take a rest until your health will grow to {hp_number} points.
     You need to wait about {minute_number} minutes.
     <%= fb_it(:hp_number, current_character.weakness_minimum) %>
     <%= fb_it(:minute_number, (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil) %>
   <% end %>
+  </p>
 <% else %>
   <% if @victims.any? %>
-    <table id="victim_list">
+    <table id="victim_list" cellspacing="0">
       <tr>
         <th><%= fb_i("User") %></th>
         <th><%= fb_i("Level") %></th>
