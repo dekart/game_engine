@@ -3,40 +3,43 @@
     <%= fb_i("Well done!") %> <%= fb_i(@mission.won_text) %>
   </p>
 
-  <div class="received">
-    <h3><%= fb_i("You received:") %></h3>
-    <ul>
-      <li>
-        <b><%= fb_i("Experience:") %></b>
-        <div class="experience"><%= @mission.experience %></div>
-      </li>
-      <li>
-        <b><%= fb_i("Money:") %></b>
-        <div class="basic_money"><%= @mission.money %></div>
-      </li>
-    </ul>
-  </div>
-
-  <div class="spent">
-    <h3><%= fb_i("You spent") %></h3>
-    <ul>
-      <li>
-        <b><%= fb_i("Energy:") %></b>
-        <div class="energy"><%= @mission.experience %></div>
-      </li>
-    </ul>
-  </div>
+  <table>
+    <tr>
+      <td class="received">
+        <h3><%= fb_i("You received:") %></h3>
+        <ul>
+          <li class="experience">
+            <b><%= fb_i("Experience:") %></b>
+            <div><%= @mission.experience %></div>
+          </li>
+          <li class="basic_money">
+            <b><%= fb_i("Money:") %></b>
+            <div><%= @mission.money %></div>
+          </li>
+        </ul>
+      </td>
+      <td class="spent">
+        <h3><%= fb_i("You spent:") %></h3>
+        <ul>
+          <li class="energy">
+            <b><%= fb_i("Energy:") %></b>
+            <div><%= @mission.experience %></div>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </table
   
   <% content_for :script do %>
     Mission.setCompleteness(<%= @mission.id %>, '<%= @rank.completeness %>');
   <% end %>
 
-  <% if @rank.completed? %>
+  <% if !@rank.completed? %>
     <p>
       <% fb_i do %>
-        Congratulations! You completed this mission and received new title: {title}!
+        Congratulations! You completed this mission and received new title: {title}
 
-        <%= fb_it(:title, content_tag(:b, @mission.winner_title)) %>
+        <%= fb_it(:title, content_tag(:h3, @mission.winner_title, :class => :title)) %>
       <% end %>
     </p>
 

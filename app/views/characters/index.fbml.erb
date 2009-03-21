@@ -31,7 +31,7 @@
       <h3><%= fb_i("Latest Fights") %></h3>
 
       <% if @latest_fights.any? %>
-        <table>
+        <table cellspacing="0">
         <% @latest_fights.each do |fight| %>
           <% content_tag_for(:tr, fight) do %>
             <td class="attacker"><%= link_to(fb_profile_pic(fight.attacker.user, :linked => false), fight.attacker) %></td>

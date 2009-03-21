@@ -2,23 +2,26 @@
 
 <div id="mission_result" style="display:none;"></div>
 
-<table id="mission_list">
+<table id="mission_list" cellspacing="0">
   <tr>
-    <th><%= fb_i("Description") %></th>
+    <th></th>
     <th><%= fb_i("Payout") %></th>
     <th><%= fb_i("Requires") %></th>
+    <th><%= fb_i("Completeness") %></th>
   </tr>
   <% @missions.each do |mission| %>
     <% content_tag_for(:tr, mission) do %>
-      <td class="info">
+      <td class="details">
         <div class="name"><%= fb_i(mission.name) %></div>
         <div class="description"><%= fb_i(mission.description) %></div>
       </td>
-      <td class="details">
-        <div class="experience"><%= "+%d" % mission.experience %></div>
-        <div class="money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
+      <td class="payout">
+        <div class="experience"><%= mission.experience %></div>
+        <div class="basic_money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
       </td>
-      <td class="energy"><%= "-%d" % mission.ep_cost %></td>
+      <td class="requires">
+        <div class="energy"><%= mission.ep_cost %></div>
+      </td>
       <% rank = mission.by(current_character) %>
       <td class="completeness"><%= rank.completeness %></td>
       <td class="controls">
