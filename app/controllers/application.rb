@@ -13,9 +13,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def prepare_user_and_character
-    ensure_application_is_installed_by_facebook_user
-    
-    current_character.refill_hp_and_ep!
+    ensure_application_is_installed_by_facebook_user and current_character.refill_hp_and_ep!
   end
 
   def current_character

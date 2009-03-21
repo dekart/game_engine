@@ -1,39 +1,52 @@
-<div id="dashboard">
-  <div class="profile">
-    <%= link_to(fb_i("Profile Overview"), character_path(current_character), :class => :title) %>
+<table id="dashboard">
+  <tr>
+    <td class="profile">
+      <%= link_to(fb_i("Profile Overview"), character_path(current_character), :class => :title) %>
 
-    <ul>
-      <li>
-        <b><%= fb_i("Attack") %></b>
-        <div class="attack"><%= current_character.attack %></div>
-      </li>
-      <li>
-        <b><%= fb_i("Defence") %></b>
-        <div class="defence"><%= current_character.defence %></div>
-      </li>
-      <li>
-        <b><%= fb_i("Health") %></b>
-        <div class="health"><%= "%d/%d" % [current_character.hp, current_character.health] %></div>
-      </li>
-      <li>
-        <b><%= fb_i("Energy") %></b>
-        <div class="energy"><%= "%d/%d" % [current_character.ep, current_character.energy] %></div>
-      </li>
-    </ul>
-  </div>
+      <ul>
+        <li>
+          <b><%= fb_i("Attack") %></b>
+          <div class="attack"><%= current_character.attack %></div>
+        </li>
+        <li>
+          <b><%= fb_i("Defence") %></b>
+          <div class="defence"><%= current_character.defence %></div>
+        </li>
+        <li>
+          <b><%= fb_i("Health") %></b>
+          <div class="health"><%= "%d/%d" % [current_character.hp, current_character.health] %></div>
+        </li>
+        <li>
+          <b><%= fb_i("Energy") %></b>
+          <div class="energy"><%= "%d/%d" % [current_character.ep, current_character.energy] %></div>
+        </li>
+      </ul>
 
-  <div class="latest_fights">
-    <h3><%= fb_i("Latest Fights") %></h3>
+      <%= link_to(fb_i("Inventory"), inventories_path, :class => :title) %>
 
-    <% if @latest_fights.any? %>
-      <% @latest_fights.each do |fight| %>
-        <% div_for(fight) do %>
-          <div class="attacker"><%= fb_profile_pic(fight.attacker.user) %></div>
-          <div class="victim"><%= fb_profile_pic(fight.victim.user) %></div>
-          <div class="description"><%= fight_description(fight) %></div>
+      <p>Display inventory here!!!</p>
+    </td>
+
+    <td class="fights">
+      <h3><%= fb_i("Latest Fights") %></h3>
+
+      <% if @latest_fights.any? %>
+        <table>
+        <% @latest_fights.each do |fight| %>
+          <% content_tag_for(:tr, fight) do %>
+            <td class="attacker"><%= link_to(fb_profile_pic(fight.attacker.user, :linked => false), fight.attacker) %></td>
+            <td class="description">
+              <div class="time">
+                <%= distance_of_time_in_words_to_now(fight.created_at).capitalize %>
+              </div>
+
+              <div><%= fight_description(fight) %></div>
+            </td>
+            <td class="victim"><%= link_to(fb_profile_pic(fight.victim.user, :linked => false), fight.victim) %></td>
+          <% end %>
         <% end %>
+        </table>
       <% end %>
-      </table>
-    <% end %>
-  </div>
-</div>ы
+    </td>
+  </tr>
+</table>

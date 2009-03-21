@@ -1,15 +1,15 @@
 <style type="text/css">
   h1.title {font-size: 18px; color: #3B5998; margin: 15px 0px;}
-  h2 {font-size: 16px; color: #3B5998;}
+  h2,h3 {font-size: 16px; color: #3B5998;}
   td {vertical-align: top;}
 
-  #header {height: 65px; border-bottom: 1px solid gray;}
+  #header {height: 65px; border-bottom: 1px solid #d0d0d0;}
 
-  #main_menu {width: 330px; padding: 0 15px 0 0; float:left; border-right: 1px solid gray;}
+  #main_menu {width: 330px; padding: 0 15px 0 0; float:left; border-right: 1px solid #d0d0d0;}
     #main_menu li {float:left; width: 110px; display: block; height: 25px; margin: 0px; line-height: 25px; }
     #main_menu a {font-weight:bold; padding-left: 25px; background-position: 3px center; background-repeat: no-repeat; display: block; height: 25px;border: 1px solid white;}
     #main_menu a:hover {border: 1px solid #eeeeee;}
-    <% %w{home settings}.each do |attr| %>
+    <% %w{home settings profile missions fights inventory shop}.each do |attr| %>
       #main_menu a.<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
     <% end %>
     
@@ -49,8 +49,8 @@
   form .error {color: red; padding: 3px 0px;}
 
   #dashboard {margin-top: 15px;}
-  #dashboard .profile {width: 250px; float:right;}
-    #dashboard .profile .title {font-size: 13px; font-weight: bold;}
+  #dashboard .profile {width: 250px;}
+    #dashboard .profile .title {font-size: 15px; font-weight: bold;}
     #dashboard .profile ul {padding: 0; }
     #dashboard .profile li {display: block; clear:both;height: 25px; line-height: 25px;}
     #dashboard .profile li b {width: 60px;display:block; float: left}
@@ -58,4 +58,11 @@
     <% %w{attack defence health energy}.each do |attr| %>
       #dashboard .profile li .<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
     <% end %>
+  #dashboard .fights td {padding: 5px 0;}
+    #dashboard .fights .fight {clear: both; margin: 5px 0; border-bottom: 1px solid #d0d0d0;}
+    #dashboard .fights .attacker {width: 55px;}
+      #dashboard .fights .attacker img {border: 1px solid #d0d0d0;}
+    #dashboard .fights .victim {width: 55px;}
+      #dashboard .fights .victim img {border: 1px solid #d0d0d0;}
+    #dashboard .fights .time {font-weight: bold; margin-bottom: 5px;}
 </style>
