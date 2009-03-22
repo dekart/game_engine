@@ -150,21 +150,29 @@ class Character < ActiveRecord::Base
   def hp_restore_time(restore_to = nil)
     restore_to ||= self.health
 
-    if self.hp >= restore_to
+    if self.hp >= restore_to or self.hp_refilled_at.nil?
       return 0
     else
-      (self.hp_refilled_at + ((restore_to - self.hp) / HP_PER_REFILL * HP_REFILL_PERIOD).to_i) - Time.now
+      ((self.hp_refilled_at + ((restore_to - self.hp) / HP_PER_REFILL * HP_REFILL_PERIOD).to_i) - Time.now).to_i
     end
   end
 
   def ep_restore_time(restore_to = nil)
     restore_to ||= self.health
 
-    if self.ep >= restore_to
+    if self.ep >= restore_to or self.ep_refilled_at.nil?
       return 0
     else
-      (self.ep_refilled_at + ((restore_to - self.ep) / EP_PER_REFILL * EP_REFILL_PERIOD).to_i) - Time.now
+      ((self.ep_refilled_at + ((restore_to - self.ep) / EP_PER_REFILL * EP_REFILL_PERIOD).to_i) - Time.now).to_i
     end
+  end
+
+  def time_to_hp_restore
+    hp_restore_time(self.hp + 1)
+  end
+
+  def time_to_ep_restore
+    ep_restore_time(self.ep + 1)
   end
 
   def experience_to_next_level
@@ -173,6 +181,13 @@ class Character < ActiveRecord::Base
 
   def next_level_experience
     LEVELS[self.level]
+  end
+
+  def to_json(options = {})
+    super(
+      :only     => [:basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp, :points],
+      :methods  => [:next_level_experience, :time_to_hp_restore, :time_to_ep_restore]
+    )
   end
   
   protected

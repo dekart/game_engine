@@ -22,11 +22,13 @@
       #co .second b {width: 70px;}
     #co .third {width: 180px;}
       #co .third b {width: 50px;}
+      #co .third div {width: 52px;}
     #co div {float: left;height: 20px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
     <% %w{basic_money vip_money level experience health energy}.each do |attr| %>
       #co_<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
     <% end %>
     #co_points {padding-left: 3px !important;}
+    #co .timer {color: #b0b0b0;padding-left: 5px;}
 
   #next_steps {margin: 10px 5px; border: 1px solid #EC7000; padding: 8px; background-color: #FFFFD5;}
     #next_steps h2 {color: #EC7000; margin-bottom: 15px;}

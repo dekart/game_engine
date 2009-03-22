@@ -15,33 +15,36 @@
   <ul id="co">
     <li class="first">
       <b><%= fb_i("Money:") %></b>
-      <div id="co_basic_money"><%= current_character.basic_money %></div>
+      <div id="co_basic_money"></div>
     </li>
     <li class="second">
       <b><%= fb_i("Experience:") %></b>
-      <div id="co_experience"><%= "%d/%d" % [current_character.experience, current_character.next_level_experience] %></div>
+      <div id="co_experience"></div>
     </li>
     <li class="third">
       <b><%= fb_i("Health:") %></b>
-      <div id="co_health"><%= "%d/%d" % [current_character.hp, current_character.health] %></div>
+      <div id="co_health"></div>
+      <div id="co_health_timer" class="timer"></div>
     </li>
     <li class="first">
       <b><%= fb_i("Gems:") %></b>
-      <div id="co_vip_money"><%= current_character.vip_money %></div>
+      <div id="co_vip_money"></div>
     </li>
     <li class="second">
       <b><%= fb_i("Level:") %></b>
-      <div id="co_level"><%= current_character.level %></div>
-      <div id="co_points" <%= 'style="display:none;"' if current_character.points == 0 %>>
-        (<%= link_to("+%d" % current_character.points, upgrade_character_path(current_character), :id => :co_point_link) %>)
-      </div>
+      <div id="co_level"></div>
+      <div id="co_points" style="display:none">(<%= link_to("", upgrade_character_path(current_character), :id => :co_point_link) %>)</div>
     </li>
     <li class="third">
       <b><%= fb_i("Energy:") %></b>
-      <div id="co_energy"><%= "%d/%d" % [current_character.ep, current_character.energy] %></div>
+      <div id="co_energy"></div>
+      <div id="co_timer_energy" class="timer"></div>
     </li>
   </ul>
 </div>
+<script>
+  Character.update(<%= current_character.to_json %>)
+</script>
 
 <%= fb_success(fb_i(flash[:success])) if flash[:success] %>
 <%= fb_error(fb_i(flash[:error])) if flash[:error] %>

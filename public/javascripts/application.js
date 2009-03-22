@@ -43,7 +43,11 @@ var Character = {
     if(a.character.points > 0) {
       $("co_point_link").setTextValue("+" + a.character.points);
       $("co_points").show();
+    } else {
+      $("co_points").hide();
     }
+    Timer.start('co_timer_health', a.character.time_to_hp_restore);
+    Timer.start('co_timer_energy', a.character.time_to_ep_restore);
   }
 }
 
@@ -65,5 +69,50 @@ var Fight = {
   },
   hideVictim: function(id){
     $('character_' + id).hide();
+  }
+}
+
+var Timer = {
+  timers: {},
+  
+  format: function(value){
+    var minutes = Math.floor(value / 60);
+    var seconds = value - minutes * 60;
+
+    if(seconds < 10){
+      seconds = "0" + seconds;
+    }
+    return(minutes + ":" + seconds);
+  },
+  
+  update: function(id){
+    if(this.timers[id].value > 0){
+      $(id).setTextValue(Timer.format(this.timers[id].value));
+
+      this.timers[id].value = this.timers[id].value - 1;
+      
+      this.rerun(id);
+    }else{
+      $(id).setTextValue('');
+      
+      this.timers[id].running = false;
+    }
+  },
+  
+  rerun: function(id){
+    setTimeout(function() { Timer.update(id); }, 1000);
+    this.timers[id].running = true;
+  },
+
+  start: function(id, value){
+    if(this.timers[id]){
+      this.timers[id].value = value;
+    } else {
+      this.timers[id] = {value: value, running: false};
+    }
+
+    if(!this.timers[id].running){
+      this.rerun(id);
+    }
   }
 }

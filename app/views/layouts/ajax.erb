@@ -1,9 +1,5 @@
 <%= yield %>
 <script>
   <%= yield :script %>
-  Character.update(<%= 
-    current_character(true).to_json(
-      :only => [:basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp, :points],
-      :methods => [:next_level_experience]
-    ) %>);
+  Character.update(<%= current_character(true).to_json %>);
 </script>
