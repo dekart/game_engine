@@ -1,3 +1,5 @@
+var root_url;
+
 extend_instance(Element, {
   by_class: function(name){
     var result = [];
@@ -46,8 +48,15 @@ var Character = {
     } else {
       $("co_points").hide();
     }
-    Timer.start('co_timer_health', a.character.time_to_hp_restore);
-    Timer.start('co_timer_energy', a.character.time_to_ep_restore);
+    Timer.start('co_health_timer', a.character.time_to_hp_restore, this.updateFromRemote);
+    Timer.start('co_energy_timer', a.character.time_to_ep_restore, this.updateFromRemote);
+  },
+  updateFromRemote: function(){
+    new Ajax.Request(root_url + "characters/current", {
+      "onSuccess": function(data){
+        Character.update(data)
+      }
+    });
   }
 }
 
@@ -96,6 +105,10 @@ var Timer = {
       $(id).setTextValue('');
       
       this.timers[id].running = false;
+
+      if(this.timers[id].callback){
+        this.timers[id].callback();
+      }
     }
   },
   
@@ -104,11 +117,14 @@ var Timer = {
     this.timers[id].running = true;
   },
 
-  start: function(id, value){
+  start: function(id, value, callback){
+    if(value == 0){ return; }
+
     if(this.timers[id]){
       this.timers[id].value = value;
+      this.timers[id].callback = callback;
     } else {
-      this.timers[id] = {value: value, running: false};
+      this.timers[id] = {value: value, running: false, callback: callback};
     }
 
     if(!this.timers[id].running){

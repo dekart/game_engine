@@ -28,4 +28,8 @@ class CharactersController < ApplicationController
       render :text => "0"
     end
   end
+
+  def current
+    render :json => current_character
+  end
 end

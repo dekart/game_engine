@@ -1,4 +1,7 @@
 <%= javascript_include_tag "facebooker", "application" %>
+
+<script>root_url = '<%= root_url(:canvas => false) %>';</script>
+
 <%= reference("stylesheets/main.css.erb", dynamic_stylesheet_url(:main, :canvas => false)) %>
 
 <div id="spinner" style="display:none;">This is spinner!!!</div>
@@ -38,7 +41,7 @@
     <li class="third">
       <b><%= fb_i("Energy:") %></b>
       <div id="co_energy"></div>
-      <div id="co_timer_energy" class="timer"></div>
+      <div id="co_energy_timer" class="timer"></div>
     </li>
   </ul>
 </div>
