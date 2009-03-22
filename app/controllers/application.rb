@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
     ensure_application_is_installed_by_facebook_user and current_character.refill_hp_and_ep!
   end
 
-  def current_character
-    current_user.character
+  def current_character(force_reload = false)
+    current_user.character(force_reload)
   end
 
   def after_facebook_login_url

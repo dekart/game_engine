@@ -1,11 +1,14 @@
 <%= title(fb_i("Inventory")) %>
 
+<div id="inventory_result" class="result" style="display:none"></div>
+
 <% if @inventories.count != 0 %>
-  <table id="inventory_list">
+  <table id="inventory_list" cellspacing="0">
     <% %w{weapons armors}.each do |type| %>
       <% if @inventories.send(type).any? %>
         <tr>
-          <th colspan="4"><%= fb_i(type.capitalize) %></th>
+          <th colspan="3"><h3><%= fb_i(type.capitalize) %></h3></th>
+          <th><%= fb_i("Sell Price") %></th>
         </tr>
         <% @inventories.send(type).each do |inventory| %>
           <% content_tag_for(:tr, inventory) do %>
@@ -19,12 +22,20 @@
                 <%= content_tag(:div, inventory.send(attribute), :class => attribute) if inventory.send(attribute).to_i > 0 %>
               <% end %>
             </td>
+            <td class="sell">
+              <div class="basic_money"><%= inventory.sell_price %></div>
+            </td>
+            <td class="controls">
+              <%= link_to_remote("Sell for #{inventory.sell_price}", 
+                    :url    => inventory_url(inventory, :_method => :delete, :canvas => false),
+                    :update => :inventory_result
+                  ) %>
+            </td>
           <% end %>
         <% end %>
       <% end %>
     <% end %>
   </table>
 <% else %>
-  <%= fb_i("Your inventory is empty.") %>
-  <%= link_to("Go to Shop", items_path) %>
+  <p><%= fb_i("Your inventory is empty") %></p>
 <% end %>
