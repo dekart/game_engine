@@ -107,4 +107,21 @@
     #fight_result .attack_again:hover {background-color: #e0e0e0;}
     #fight_result .success {color:green;}
     #fight_result .fail {color: red;}
+
+  #item_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
+    #item_list .info {padding-right: 10px;}
+    #item_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+    #item_list .details {width: 70px;}
+      #item_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+      <% %w{attack defence}.each do |attr| %>
+        #item_list .details .<%= attr %>{background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
+      <% end %>
+    #item_list .requires {width: 50px;}
+      #item_list .requires div {line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+      #item_list .requires .basic_money{background-image: url(<%= image_path("icons/basic_money.gif") %>)}
+    #item_list .spacer {border:0;}
+    #item_list .controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("icons/basic_money.gif") %>) 3px center no-repeat;}
+    #item_list .controls a:hover {background-color: #e0e0e0;}
+
+  #shop_result {padding:0px 30px; background: url(<%= image_path("icons/basic_money.gif") %>) 5px 8px no-repeat;}
 </style>

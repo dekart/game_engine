@@ -1,80 +1,42 @@
 <%= title(fb_i("Shop")) %>
 
-<div id="shop_result"></div>
+<div id="shop_result" class="result" style="display:none;"></div>
 
-<table id="shop">
-  <tr>
-    <th><%= fb_i("Buy") %></th>
-    <th><%= fb_i("Sell") %></th>
-  </tr>
-  <tr>
-    <td>
-      <table id="item_list">
-        <% %w{weapons armors}.each do |type| %>
-          <% if @items.send(type).any? %>
-            <tr>
-              <th colspan="4"><%= fb_i(type.capitalize) %></th>
-            </tr>
-            <% @items.send(type).each do |item| %>
-              <tr>
-                <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
-                <td class="info">
-                  <div class="name"><%= fb_i(item.name) %></div>
-                  <div class="description"><%= fb_i(item.description) %></div>
-                </td>
-                <td class="details">
-                  <% %w{attack defence}.each do |attribute| %>
-                    <%= content_tag(:div, item.send(attribute), :class => attribute) if item.send(attribute).to_i > 0 %>
-                  <% end %>
-                </td>
-                <td class="price"><%= item.price %></td>
-                <td class="controls">
-                  <% if current_character.basic_money >= item.price %>
-                    <%= link_to_remote(fb_i("Buy"),
-                          :url => inventories_url(:item_id => item.id, :canvas => false),
-                          :update => :shop_result
-                        ) %>
-                  <% end %>
-                </td>
-              </tr>
+<table id="item_list" cellspacing="0">
+  <% %w{weapons armors}.each do |type| %>
+    <% if @items.send(type).any? %>
+      <tr>
+        <th colspan="3"><h3><%= fb_i(type.capitalize) %></h3></th>
+        <th><%= fb_i("Price") %></th>
+      </tr>
+      <% @items.send(type).each do |item| %>
+        <tr>
+          <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
+          <td class="info">
+            <div class="name"><%= fb_i(item.name) %></div>
+            <div class="description"><%= fb_i(item.description) %></div>
+          </td>
+          <td class="details">
+            <% %w{attack defence}.each do |attribute| %>
+              <%= content_tag(:div, item.send(attribute), :class => attribute) if item.send(attribute).to_i > 0 %>
             <% end %>
-          <% end %>
-        <% end %>
-      </table>
-    </td>
-    <td>
-      <table id="inventory_list">
-        <% %w{weapons armors}.each do |type| %>
-          <% if @inventories.send(type).any? %>
-            <tr>
-              <th colspan="4"><%= fb_i(type.capitalize) %></th>
-            </tr>
-            <% @inventories.send(type).each do |inventory| %>
-              <% content_tag_for(:tr, inventory) do %>
-                <td class="picture"><%= image_tag(inventory.image.url(:small)) %></td>
-                <td class="info">
-                  <div class="name"><%= inventory.name %></div>
-                  <div class="description"><%= inventory.description %></div>
-                </td>
-                <td class="details">
-                  <% %w{attack defence}.each do |attribute| %>
-                    <%= content_tag(:div, inventory.send(attribute), :class => attribute) if inventory.send(attribute).to_i > 0 %>
-                  <% end %>
-                </td>
-                <td class="price"><%= inventory.sell_price %></td>
-                <td class="controls">
-                  <%= link_to_remote(fb_i("Sell"),
-                        :url => inventory_url(inventory, :canvas => false, :_method => :delete),
-                        :update => :shop_result
-                      ) %>
-                </td>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </table>
-    </td>
-  </tr>
+          </td>
+          <td class="requires">
+            <div class="basic_money"><%= item.price %></div>
+          </td>
+          <td class="controls">
+            <%# if current_character.basic_money >= item.price %>
+              <%= link_to_remote(fb_i("Buy"),
+                    :url => inventories_url(:item_id => item.id, :canvas => false),
+                    :update => :shop_result
+                  ) %>
+            <%# end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    <tr><td colspan="5" class="spacer">&nbsp;</td></tr>
+  <% end %>
 </table>
 
-<%= fb_super_rewards_iframe %>
+<%#= fb_super_rewards_iframe %>

@@ -1,12 +1,27 @@
 <% if !@inventory.new_record? %>
+  <p>
   <% fb_i do %>
-    You successfully bought {item_name} for {price}
+    You successfully bought {item_name}
     <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
-    <%= fb_it(:price, content_tag(:span, @item.price, :class => :money)) %>
   <% end %>
+  </p>
+
+  <h3><%= fb_i("You spent:") %></h3>
+  <ul>
+    <li class="basic_money">
+      <b><%= fb_i("Money:") %></b>
+      <div><%= @item.price %></div>
+    </li>
+  </ul>
 <% else %>
-  <% fb_i do %>
-    <%= @inventory.errors.on(:character) %>
-    <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
-  <% end %>
+  <p>
+    <% fb_i do %>
+      <%= @inventory.errors.on(:character) %>
+      <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
+    <% end %>
+  </p>
+<% end %>
+
+<% content_for :script do %>
+  $('shop_result').show();
 <% end %>
