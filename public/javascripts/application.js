@@ -17,7 +17,6 @@ extend_instance(Element, {
     var result = [];
     var children = this.getChildNodes();
     for(i=0; i < children.length; i++){
-      console.log(children[i].getTagName());
       if(children[i].getTagName() == tag){
         extend_instance(children[i], Element);
         result.push(children[i])
@@ -131,4 +130,4 @@ var Timer = {
       this.rerun(id);
     }
   }
-}
+};

@@ -45,9 +45,6 @@
     </li>
   </ul>
 </div>
-<script>
-  Character.update(<%= current_character.to_json %>)
-</script>
 
 <%= fb_success(fb_i(flash[:success])) if flash[:success] %>
 <%= fb_error(fb_i(flash[:error])) if flash[:error] %>
@@ -56,4 +53,7 @@
 
 <%= yield %>
 
+<script>
+  Character.update(<%= current_character.to_json %>);
+</script>
 <%= fb_google_analytics("UA-111105-16") unless in_profile_tab? %>
