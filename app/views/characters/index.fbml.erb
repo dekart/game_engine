@@ -37,7 +37,7 @@
             <td class="attacker"><%= link_to(fb_profile_pic(fight.attacker.user, :linked => false), fight.attacker) %></td>
             <td class="description">
               <div class="time">
-                <%= distance_of_time_in_words_to_now(fight.created_at).capitalize %>
+                <%= distance_of_time_in_words_to_now(fight.created_at).capitalize %> ago:
               </div>
 
               <div><%= fight_description(fight) %></div>

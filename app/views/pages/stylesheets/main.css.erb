@@ -5,18 +5,22 @@
 
   #header {height: 65px; border-bottom: 1px solid #d0d0d0;}
 
-  #main_menu {width: 330px; padding: 0 15px 0 0; float:left; border-right: 1px solid #d0d0d0;}
-    #main_menu li {float:left; width: 110px; display: block; height: 25px; margin: 0px; line-height: 25px; }
+  #main_menu {width: 270px; padding: 0 15px 0 0; float:left; border-right: 1px solid #d0d0d0;}
+    #main_menu li {float:left; width: 90px; display: block; height: 25px; margin: 0px; line-height: 25px; }
     #main_menu a {font-weight:bold; padding-left: 25px; background-position: 3px center; background-repeat: no-repeat; display: block; height: 25px;border: 1px solid white;}
     #main_menu a:hover {border: 1px solid #eeeeee;}
     <% %w{home settings profile missions fights inventory shop}.each do |attr| %>
       #main_menu a.<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
     <% end %>
     
-  #co {width: 390px; float: right; padding:0;}
-    #co li {float:left; width: 130px; display: block; height: 25px; margin: 0px; line-height: 25px; }
-    #co b {display:block; float:left; width: 70px;}
+  #co {width: 460px; float: right; padding:0;}
+    #co li {float:left; width: 150px; display: block; height: 25px; margin: 0px; line-height: 25px; }
+    #co b {display:block; float:left;}
+    #co .first {width: 125px;}
       #co .first b {width: 50px;}
+    #co .second {width: 155px;}
+      #co .second b {width: 70px;}
+    #co .third {width: 180px;}
       #co .third b {width: 50px;}
     #co div {float: left;height: 20px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
     <% %w{basic_money vip_money level experience health energy}.each do |attr| %>
@@ -93,6 +97,8 @@
   #mission_result {padding:0px 30px 20px 30px; background: url(<%= image_path("icons/missions.gif") %>) 5px 8px no-repeat;}
     #mission_result .spent b {width: 55px;}
     #mission_result .title {line-height: 22px; padding-left: 23px; background: url(<%= image_path("icons/level.gif") %>) center left no-repeat;}
+    #mission_result .fulfill_again {display:block; padding-left: 25px;width: 90px; height: 25px; line-height: 25px; margin-bottom: 10px; border: 1px solid #3B5998; font-weight: bold;background: url(<%= image_path("icons/missions.gif") %>) 3px center no-repeat;}
+    #mission_result .fulfill_again:hover {background-color: #e0e0e0;}
 
   #victim_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;vertical-align:middle;}
     #victim_list .name{ width: 200px;}

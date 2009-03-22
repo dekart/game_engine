@@ -34,7 +34,7 @@
     Mission.setCompleteness(<%= @mission.id %>, '<%= @rank.completeness %>');
   <% end %>
 
-  <% if !@rank.completed? %>
+  <% if @rank.completed? %>
     <p>
       <% fb_i do %>
         Congratulations! You completed this mission and received new title: {title}
@@ -46,6 +46,12 @@
     <% content_for :script do %>
       Mission.hideControls(<%= @mission.id %>);
     <% end %>
+  <% else %>
+    <%= link_to_remote(fb_i("Fulfill Again!"),
+          :url => fulfill_mission_url(@mission, :canvas => false),
+          :update => :mission_result,
+          :html   => {:class => :fulfill_again}
+        ) if current_character.ep >= @mission.ep_cost %>
   <% end %>
 <% else %>
   <p>

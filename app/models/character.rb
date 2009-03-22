@@ -166,11 +166,19 @@ class Character < ActiveRecord::Base
       (self.ep_refilled_at + ((restore_to - self.ep) / EP_PER_REFILL * EP_REFILL_PERIOD).to_i) - Time.now
     end
   end
+
+  def experience_to_next_level
+    self.next_level_experience - self.experience
+  end
+
+  def next_level_experience
+    LEVELS[self.level]
+  end
   
   protected
 
   def update_level_and_points
-    if self.experience >= LEVELS[self.level]
+    if self.experience_to_next_level <= 0
       self.level  += 1
       self.points += 5
 

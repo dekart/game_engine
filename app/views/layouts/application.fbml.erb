@@ -19,7 +19,7 @@
     </li>
     <li class="second">
       <b><%= fb_i("Experience:") %></b>
-      <div id="co_experience"><%= current_character.experience %></div>
+      <div id="co_experience"><%= "%d/%d" % [current_character.experience, current_character.next_level_experience] %></div>
     </li>
     <li class="third">
       <b><%= fb_i("Health:") %></b>
