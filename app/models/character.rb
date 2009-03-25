@@ -84,7 +84,16 @@ class Character < ActiveRecord::Base
     return false unless %w{attack defence health energy}.include?(name.to_s) && self.points > 0
 
     ActiveRecord::Base.transaction do
-      self.increment(name, (name.to_sym == :health ? 5 : 1))
+      if name.to_sym == :health
+        self.increment(:health, 5)
+        self.increment(:hp, 5)
+      elsif name.to_sym == :energy
+        self.increment(:energy, 1)
+        self.increment(:ep, 1)
+      else
+        self.increment(name, 1)
+      end
+
       self.decrement(:points)
 
       self.save

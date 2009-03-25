@@ -1,8 +1,10 @@
 <% if @success %>
+  <p>
   <% fb_i do %>
     You've successfully upgraded <%= params[:attribute] %> to {number}
-    <%= fb_it(:number, current_character.attributes[params[:attribute]]) %>
+    <%= fb_it(:number, content_tag(:b, current_character.attributes[params[:attribute]])) %>
   <% end %>
+  </p>
 
   <% content_for :script do %>
     $('upgrade_<%= params[:attribute] %>').setTextValue('<%= current_character.attributes[params[:attribute]] %>');
@@ -10,8 +12,14 @@
     <% if current_character.points == 0 %>
       $('upgrade_list').hide();
       $('upgrade_finished').show();
+    <% else %>
+      $('upgrade_points').setTextValue('<%= current_character.points %>');
     <% end %>
   <% end %>
 <% else %>
-  <%= fb_i("You cannot upgrade #{ params[:attribute] } because you don't have enough points") %>
+  <p><%= fb_i("You cannot upgrade #{ params[:attribute] } because you don't have enough points") %></p>
+<% end %>
+
+<% content_for :script do %>
+  $('upgrade_result').show();
 <% end %>

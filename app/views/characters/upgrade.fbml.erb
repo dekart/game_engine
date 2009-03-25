@@ -1,14 +1,18 @@
 <%= title(fb_i("Upgrade")) %>
 
-<div id="upgrade_result"></div>
+<div class="result" id="upgrade_result" style="display:none"></div>
 
-<table id="upgrade_list">
+<table id="upgrade_list" cellspacing="0">
+  <tr class="points">
+    <td class="name"><%= fb_i("Upgrade Points") %></td>
+    <td class="value" id="upgrade_points"><%= current_character.points %></td>
+  </tr>
   <% %w{attack defence health energy}.each do |attribute| %>
     <tr>
-      <td><%= fb_i(attribute.capitalize) %></td>
-      <td id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
-      <td>
-        <%= link_to_remote("+",
+      <td class="name"><%= fb_i(attribute.capitalize) %></td>
+      <td class="value" id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
+      <td class="controls">
+        <%= link_to_remote(image_tag("icons/add.gif"),
               :url    => upgrade_character_url(current_character, :attribute => attribute, :canvas => false),
               :update => :upgrade_result
             ) %>
