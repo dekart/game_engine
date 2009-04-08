@@ -9,6 +9,7 @@ class CreateItems < ActiveRecord::Migration
 
       t.string  :name
       t.string  :description
+      t.string  :placements
 
       t.integer :attack
       t.integer :defence

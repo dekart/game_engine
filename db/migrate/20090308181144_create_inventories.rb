@@ -4,7 +4,7 @@ class CreateInventories < ActiveRecord::Migration
       t.integer :character_id
       t.integer :item_id
 
-      t.integer :amount, :default => 0
+      t.string  :placement
       
       t.timestamps
     end

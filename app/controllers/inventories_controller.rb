@@ -8,7 +8,7 @@ class InventoriesController < ApplicationController
   end
 
   def destroy
-    @inventory = Inventory.find(params[:id])
+    @inventory = current_character.inventories.find(params[:id])
 
     @inventory.destroy
 
@@ -17,5 +17,13 @@ class InventoriesController < ApplicationController
 
   def index
     @inventories = current_character.inventories
+  end
+
+  def apply
+    @inventory = current_character.inventories.find(params[:id])
+
+    @inventory.update_attribute(:placement, params[:placement])
+
+    render :partial => "inventories/placements", :locals => {:character => current_character}
   end
 end

@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20090314190007) do
   create_table "inventories", :force => true do |t|
     t.integer  "character_id"
     t.integer  "item_id"
-    t.integer  "amount",       :default => 0
+    t.string   "placement"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20090314190007) do
     t.integer  "price"
     t.string   "name"
     t.string   "description"
+    t.string   "placements"
     t.integer  "attack"
     t.integer  "defence"
     t.string   "image_file_name"

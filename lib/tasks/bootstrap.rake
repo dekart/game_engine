@@ -56,21 +56,24 @@ namespace :app do
         :description => "Тяжелая дубовая палка, оружие бедняков",
         :price => 50,
         :attack => 1,
-        :image => img("club")
+        :image => img("club"),
+        :placements => "left_hand,right_hand"
       },
       "Солдатский меч" => {
         :level => 1,
         :description => "Меч рядового солдата, выкованный армейскими кузнецами",
         :price => 100,
         :attack => 2,
-        :image => img("sword")
+        :image => img("sword"),
+        :placements => "left_hand,right_hand"
       },
       "Охотничий лук" => {
         :level => 1,
         :description => "Лук лесных охотников, простой и надежный",
         :price => 70,
         :attack => 2,
-        :image => img("bow")
+        :image => img("bow"),
+        :placements => "left_hand,right_hand"
       }
     }
 
@@ -83,7 +86,8 @@ namespace :app do
         :level => 1,
         :description => "Жилет из грубой бычьей кожи, закрывающий грудь и живот",
         :price => 50,
-        :defence => 1
+        :defence => 1,
+        :placements => "body"
       }
     }
 

@@ -2,6 +2,10 @@
 
 <div id="inventory_result" class="result" style="display:none"></div>
 
+<div id="inventory_placements">
+  <%= render(:partial => "inventories/placements", :locals => {:character => current_character}) %>
+</div>
+
 <% if @inventories.count != 0 %>
   <table id="inventory_list" cellspacing="0">
     <% %w{weapons armors}.each do |type| %>
@@ -26,9 +30,18 @@
               <div class="basic_money"><%= inventory.sell_price %></div>
             </td>
             <td class="controls">
+              <% inventory.possible_placements.each do |placement| %>
+                <%= link_to_remote("To #{placement.titleize}",
+                      :url    => apply_inventory_url(inventory, :placement => placement, :canvas => false),
+                      :update => :inventory_placements,
+                      :html   => {:class => :apply}
+                    ) %>
+              <% end %>
+              
               <%= link_to_remote("Sell for #{inventory.sell_price}", 
                     :url    => inventory_url(inventory, :_method => :delete, :canvas => false),
-                    :update => :inventory_result
+                    :update => :inventory_result,
+                    :html   => {:class => :sell}
                   ) %>
             </td>
           <% end %>
