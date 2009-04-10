@@ -16,6 +16,7 @@ class Character < ActiveRecord::Base
   has_many :ranks
   has_many :missions, :through => :ranks
   has_many :inventories, :include => :item
+  has_many :relations, :foreign_key => "source_id"
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id

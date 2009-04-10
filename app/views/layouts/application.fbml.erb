@@ -44,6 +44,7 @@
     <%= link_to(fb_i("Shop"), items_path, :class => :shop) %>
     <%= link_to(fb_i("Inventory"), inventories_path, :class => :inventory) %>
     <%= link_to(fb_i("Profile"), character_path(current_character), :class => :profile) %>
+    <%= link_to(fb_i("Alliance") + " (%d)" % current_character.relations.size, relations_path, :class => :alliance) %>
   </div>
 </div>
 

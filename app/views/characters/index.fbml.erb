@@ -13,7 +13,12 @@
         <table cellspacing="0">
           <% @alliance_invitations.each do |invitation| %>
             <tr>
-              <td class="name"><%= link_to(fb_name(invitation.sender, :linked => false), invitation.sender.character) %></td>
+              <td class="picture">
+                <%= link_to(fb_profile_pic(invitation.sender, :linked => false), invitation.sender.character) %>
+              </td>
+              <td class="name">
+                <%= link_to(fb_name(invitation.sender, :linked => false), invitation.sender.character) %>
+              </td>
               <td class="level"><%= fb_i("Level:") %> <%= invitation.sender.character.level %></td>
               <% content_tag_for(:td, invitation, :controls) do %>
                 <%= link_to_remote("Accept",
