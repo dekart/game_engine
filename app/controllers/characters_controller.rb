@@ -3,6 +3,7 @@ class CharactersController < ApplicationController
 
   def index
     @latest_fights = Fight.with_participant(current_character).find(:all, :limit => 10)
+    @alliance_invitations = Invitation.for_user(current_user).find(:all)
   end
 
   def upgrade

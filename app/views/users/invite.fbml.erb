@@ -1,8 +1,18 @@
-<%= title(fb_i("Invite")) %>
+<%= title(fb_i("Grow Your Alliance")) %>
+
+<% if @sent_invitations and @sent_invitations.any? %>
+  <div class="success">
+    <% fb_i do %>
+      You've successfully sent {amount} invitations to your friends!
+
+      <%= fb_it(:amount, @sent_invitations.size) %>
+    <% end %>
+  </div>
+<% end %>
 
 <% content_for :invite_message do %>
   <% fb_i do %>
-    Please visit my profile at <%= fb_app_name %>.
+    Please join my alliance in <%= fb_app_name %> game!
   <% end %>
 
   <% content_tag("fb:req-choice", :url => root_url) do%>
@@ -11,9 +21,9 @@
 <% end %>
 
 <% fb_request_form(nil, :invite_message, invite_users_path) do %>
-  <%= fb_fa(:type, fb_i("Application")) %>
+  <%= fb_fa(:type, fb_i("Alliance")) %>
   
   <% fb_custom_multi_friend_selector(nil) do %>
-    <%= fb_fa(:actiontext, fb_i("Send invitations to friends")) %>
+    <%= fb_fa(:actiontext, fb_i("Invite friends to join your Alliance")) %>
   <% end %>
 <% end %>

@@ -36,6 +36,16 @@ class UsersController < ApplicationController
   end
 
   def invite
-    flash[:success] = "Your invitation has been sent!" if request.post?
+    if request.post?
+      @sent_invitations = []
+      
+      Invitation.transaction do
+        params[:ids].each do |receiver|
+          invitation = current_user.invitations.create(:receiver_id => receiver)
+
+          @sent_invitations << invitation unless invitation.new_record?
+        end
+      end
+    end
   end
 end

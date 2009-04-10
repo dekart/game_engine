@@ -7,9 +7,32 @@
     </td>
 
     <td class="fights">
-      <h3><%= fb_i("Latest Fights") %></h3>
+      <% if @alliance_invitations.any? %>
+        <h3><%= fb_i("Alliance Invitations") %></h3>
+
+        <table cellspacing="0">
+          <% @alliance_invitations.each do |invitation| %>
+            <tr>
+              <td class="name"><%= link_to(fb_name(invitation.sender, :linked => false), invitation.sender.character) %></td>
+              <td class="level"><%= fb_i("Level:") %> <%= invitation.sender.character.level %></td>
+              <% content_tag_for(:td, invitation, :controls) do %>
+                <%= link_to_remote("Accept",
+                      :url    => accept_invitation_url(invitation, :canvas => false),
+                      :update => dom_id(invitation, :controls),
+                      :html   => {:class => :accept}) %>
+                <%= link_to_remote("Decline",
+                      :url    => decline_invitation_url(invitation, :canvas => false),
+                      :update => dom_id(invitation, :controls),
+                      :html   => {:class => :accept}) %>
+              <% end %>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
 
       <% if @latest_fights.any? %>
+        <h3><%= fb_i("Latest Fights") %></h3>
+
         <table cellspacing="0">
         <% @latest_fights.each do |fight| %>
           <% content_tag_for(:tr, fight) do %>

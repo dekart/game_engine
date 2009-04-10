@@ -15,6 +15,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :items
   map.resources :inventories, :member => {:apply => :any}
   map.resources :fights
+  map.resources :invitations, :member => {:accept => :any, :decline => :any}
+
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
