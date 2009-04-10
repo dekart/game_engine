@@ -26,19 +26,16 @@
                 <%= content_tag(:div, effect.value, :class => effect.name) %>
               <% end %>
             </td>
-            <td class="sell">
-              <div class="basic_money"><%= inventory.sell_price %></div>
-            </td>
             <td class="controls">
               <% inventory.possible_placements.each do |placement| %>
-                <%= link_to_remote("To #{placement.titleize}",
+                <%= link_to_remote(fb_i("To #{placement.titleize}"),
                       :url    => apply_inventory_url(inventory, :placement => placement, :canvas => false),
                       :update => :inventory_placements,
                       :html   => {:class => :apply}
                     ) %>
               <% end %>
               
-              <%= link_to_remote("Sell for #{inventory.sell_price}", 
+              <%= link_to_remote(fb_i("Sell for {amount}" + fb_it(:amount, inventory.sell_price)),
                     :url    => inventory_url(inventory, :_method => :delete, :canvas => false),
                     :update => :inventory_result,
                     :html   => {:class => :sell}
