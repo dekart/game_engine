@@ -8,10 +8,19 @@
 
   <h3><%= fb_i("You spent:") %></h3>
   <ul>
-    <li class="basic_money">
-      <b><%= fb_i("Money:") %></b>
-      <div><%= @item.price %></div>
-    </li>
+    <% if @item.basic_price.to_i > 0 %>
+      <li class="basic_money">
+        <b><%= fb_i("Money:") %></b>
+        <div><%= @item.basic_price %></div>
+      </li>
+    <% end %>
+    
+    <% if @item.vip_price.to_i > 0 %>
+      <li class="vip_money">
+        <b><%= fb_i("Gems:") %></b>
+        <div><%= @item.vip_price %></div>
+      </li>
+    <% end %>
   </ul>
 <% else %>
   <p>

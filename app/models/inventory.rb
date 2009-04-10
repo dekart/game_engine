@@ -25,7 +25,7 @@ class Inventory < ActiveRecord::Base
   delegate :name, :description, :image, :effects, :to => :item
   
   def sell_price
-    (self.item.price * 0.8).ceil
+    (self.item.basic_price * 0.8).ceil
   end
 
   def possible_placements
@@ -48,11 +48,16 @@ class Inventory < ActiveRecord::Base
   protected
 
   def enough_character_money?
-    self.errors.add(:character, "You don't have enough money to buy {item_name}") if self.character.basic_money < self.item.price
+    self.errors.add(:character, "You don't have enough money to buy {item_name}") unless self.character.can_buy?(item)
   end
 
   def charge_character
-    self.character.decrement!(:basic_money, self.item.price)
+    self.transaction do
+      self.character.decrement(:basic_money, self.item.basic_price) if self.item.basic_price.to_i > 0
+      self.character.decrement(:vip_money, self.item.vip_price) if self.item.vip_price.to_i > 0
+      
+      self.character.save!
+    end
   end
 
   def deposit_character

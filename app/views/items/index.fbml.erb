@@ -22,15 +22,17 @@
             <% end %>
           </td>
           <td class="requires">
-            <div class="basic_money"><%= item.price %></div>
+            <% %w{basic_price vip_price}.each do |attr| %>
+              <%= content_tag(:div, item.send(attr), :class => attr)  if item.send(attr).to_i > 0 %>
+            <% end %>
           </td>
           <td class="controls">
-            <%# if current_character.basic_money >= item.price %>
+            <% if current_character.can_buy?(item) %>
               <%= link_to_remote(fb_i("Buy"),
                     :url => inventories_url(:item_id => item.id, :canvas => false),
                     :update => :shop_result
                   ) %>
-            <%# end %>
+            <% end %>
           </td>
         </tr>
       <% end %>

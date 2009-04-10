@@ -54,7 +54,7 @@ namespace :app do
       "Дубинка" => {
         :level => 1,
         :description => "Тяжелая дубовая палка, оружие бедняков",
-        :price => 50,
+        :basic_price => 50,
         :effects => Effects::Collection.new(Effects::Attack.new(1)),
         :image => img("club"),
         :placements => "left_hand,right_hand"
@@ -62,7 +62,7 @@ namespace :app do
       "Солдатский меч" => {
         :level => 1,
         :description => "Меч рядового солдата, выкованный армейскими кузнецами",
-        :price => 100,
+        :basic_price => 100,
         :effects => Effects::Collection.new(Effects::Attack.new(2)),
         :image => img("sword"),
         :placements => "left_hand,right_hand"
@@ -70,7 +70,8 @@ namespace :app do
       "Охотничий лук" => {
         :level => 1,
         :description => "Лук лесных охотников, простой и надежный",
-        :price => 70,
+        :basic_price => 70,
+        :vip_price => 1,
         :effects => Effects::Collection.new(Effects::Attack.new(2)),
         :image => img("bow"),
         :placements => "left_hand,right_hand"
@@ -85,7 +86,7 @@ namespace :app do
       "Кожанный жилет" => {
         :level => 1,
         :description => "Жилет из грубой бычьей кожи, закрывающий грудь и живот",
-        :price => 50,
+        :basic_price => 50,
         :effects => Effects::Collection.new(Effects::Defence.new(2)),
         :placements => "body"
       }

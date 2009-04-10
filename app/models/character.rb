@@ -202,6 +202,10 @@ class Character < ActiveRecord::Base
     self[:inventory_effects] ||= Effects::Collection.new
   end
 
+  def can_buy?(item)
+    self.basic_money >= item.basic_price.to_i and self.vip_money >= item.vip_price.to_i
+  end
+
   protected
 
   def update_level_and_points
