@@ -1,17 +1,7 @@
-<table border="1">
-  <tr>
-    <td></td>
-    <td><%= inventory_placement(character, :head) %></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td><%= inventory_placement(character, :left_hand) %></td>
-    <td><%= inventory_placement(character, :body) %></td>
-    <td><%= inventory_placement(character, :right_hand) %></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><%= inventory_placement(character, :legs) %></td>
-    <td></td>
-  </tr>
-</table>
+<div id="placements">
+  <%= inventory_placement(character, :head) %>
+  <%= inventory_placement(character, :left_hand) %>
+  <%= inventory_placement(character, :right_hand) %>
+  <%= inventory_placement(character, :body) %>
+  <%= inventory_placement(character, :legs) %>
+</div>
