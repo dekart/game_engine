@@ -3,40 +3,7 @@
     <td class="profile">
       <%= link_to(fb_i("Profile Overview"), character_path(current_character), :class => :title) %>
 
-      <ul>
-        <li>
-          <b><%= fb_i("Attack") %></b>
-          <div class="attack">
-            <%= "%d (%d+%d)" % [
-                  current_character.attack_points,
-                  current_character.attack,
-                  current_character.inventory_effects[:attack].value
-                ] %>
-          </div>
-        </li>
-        <li>
-          <b><%= fb_i("Defence") %></b>
-          <div class="defence">
-            <%= "%d (%d+%d)" % [
-                  current_character.defence_points,
-                  current_character.defence,
-                  current_character.inventory_effects[:defence].value
-                ] %>
-          </div>
-        </li>
-        <li>
-          <b><%= fb_i("Health") %></b>
-          <div class="health"><%= "%d/%d" % [current_character.hp, current_character.health] %></div>
-        </li>
-        <li>
-          <b><%= fb_i("Energy") %></b>
-          <div class="energy"><%= "%d/%d" % [current_character.ep, current_character.energy] %></div>
-        </li>
-      </ul>
-
-      <%= link_to(fb_i("Inventory"), inventories_path, :class => :title) %>
-
-      <p>Display inventory here!!!</p>
+      <%= render :partial => "characters/attributes", :locals => {:character => current_character} %>
     </td>
 
     <td class="fights">

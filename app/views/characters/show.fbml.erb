@@ -1,10 +1,7 @@
-<%= title(fb_i("{username} Profile" + fb_it(:username, fb_name(@character.user, :possessive => true)))) %>
+<%= title(fb_i("#{fb_name(@character.user, :possessive => true, :capitalize => true)} Profile")) %>
 
 <div id="character">
-  <table class="attributes">
-    <tr><td><%= fb_i("Attack") %></td><td class="attack"><%= @character.attack_points %></td></tr>
-    <tr><td><%= fb_i("Defence") %></td><td class="defence"><%= @character.defence_points %></td></tr>
-  </table>
+  <%= render :partial => "characters/attributes", :locals => {:character => @character} %>
 
   <% if @character.ranks.completed.any? %>
     <div class="ranks">

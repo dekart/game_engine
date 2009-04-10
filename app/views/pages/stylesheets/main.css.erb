@@ -54,16 +54,17 @@
     form .fieldWithErrors textarea{border: 1px solid #ee5555;}
   form .error {color: red; padding: 3px 0px;}
 
+  .character_attributes {padding: 0; }
+    .character_attributes li {display: block; clear:both;height: 25px; line-height: 25px;}
+    .character_attributes li b {width: 60px;display:block; float: left}
+    .character_attributes li .value {float:left;padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+    <% %w{attack defence health energy basic_money vip_money}.each do |attr| %>
+      .character_attributes .<%= attr %> .value {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
+    <% end %>
+
   #dashboard {margin-top: 15px;}
   #dashboard .profile {width: 250px;}
     #dashboard .profile .title {font-size: 15px; font-weight: bold;}
-    #dashboard .profile ul {padding: 0; }
-    #dashboard .profile li {display: block; clear:both;height: 25px; line-height: 25px;}
-    #dashboard .profile li b {width: 60px;display:block; float: left}
-    #dashboard .profile li div {float:left;padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
-    <% %w{attack defence health energy}.each do |attr| %>
-      #dashboard .profile li .<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
-    <% end %>
   #dashboard .fights td {padding: 10px 0;border-bottom: 1px solid #d0d0d0;}
     #dashboard .fights .fight {clear: both; margin: 5px 0; }
     #dashboard .fights .attacker {width: 55px;}
