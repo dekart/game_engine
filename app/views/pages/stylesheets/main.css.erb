@@ -3,12 +3,11 @@
   h2,h3 {font-size: 16px; color: #3B5998;}
   td {vertical-align: top;}
 
-  #header {height: 65px; border-bottom: 1px solid #d0d0d0;}
+  #header {height: 100px; border-bottom: 1px solid #d0d0d0;}
 
-  #main_menu {width: 270px; padding: 0 15px 0 0; float:left; border-right: 1px solid #d0d0d0;}
-    #main_menu li {float:left; width: 90px; display: block; height: 25px; margin: 0px; line-height: 25px; }
-    #main_menu a {font-weight:bold; padding-left: 25px; background-position: 3px center; background-repeat: no-repeat; display: block; height: 25px;border: 1px solid white;}
-    #main_menu a:hover {border: 1px solid #eeeeee;}
+  #main_menu {display:block; clear:both; height: 25px; border-top: 1px solid #d0d0d0;}
+    #main_menu a {float:left; display: block; height: 25px; line-height: 25px; font-weight:bold; padding: 0 10px 0 30px; background-position: 8px center; background-repeat: no-repeat; border-left: 1px solid white; border-right: 1px solid white  }
+    #main_menu a:hover {border-color: #d0d0d0;}
     <% %w{home settings profile missions fights inventory shop}.each do |attr| %>
       #main_menu a.<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
     <% end %>

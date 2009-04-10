@@ -7,14 +7,6 @@
 <div id="spinner" style="display:none;">This is spinner!!!</div>
 
 <div id="header">
-  <ul id="main_menu">
-    <li><%= link_to(fb_i("Home"), root_path, :class => :home) %></li>
-    <li><%= link_to(fb_i("Missions"), missions_path, :class => :missions) %></li>
-    <li><%= link_to(fb_i("Inventory"), inventories_path, :class => :inventory) %></li>
-    <li><%= link_to(fb_i("Profile"), character_path(current_character), :class => :profile) %></li>
-    <li><%= link_to(fb_i("Fight"), new_fight_path, :class => :fights) %></li>
-    <li><%= link_to(fb_i("Shop"), items_path, :class => :shop) %></li>
-  </ul>
   <ul id="co">
     <li class="first">
       <b><%= fb_i("Money:") %></b>
@@ -44,6 +36,15 @@
       <div id="co_energy_timer" class="timer"></div>
     </li>
   </ul>
+
+  <div id="main_menu">
+    <%= link_to(fb_i("Home"), root_path, :class => :home) %>
+    <%= link_to(fb_i("Missions"), missions_path, :class => :missions) %>
+    <%= link_to(fb_i("Fight"), new_fight_path, :class => :fights) %>
+    <%= link_to(fb_i("Shop"), items_path, :class => :shop) %>
+    <%= link_to(fb_i("Inventory"), inventories_path, :class => :inventory) %>
+    <%= link_to(fb_i("Profile"), character_path(current_character), :class => :profile) %>
+  </div>
 </div>
 
 <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
