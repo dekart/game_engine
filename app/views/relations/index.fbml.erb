@@ -1,0 +1,19 @@
+<%= title(fb_i("Your Alliance")) %>
+
+<% if @relations.any? %>
+  <table id="alliance_members" cellspacing="0">
+    <% @relations.each do |relation| %>
+      <tr>
+        <td class="picture"><%= link_to(fb_profile_pic(relation.target.user, :linked => false), relation.target) %></td>
+        <td class="name"><%= link_to(fb_name(relation.target.user, :linked => false), relation.target) %></td>
+        <td class="level"><%= fb_i("Level:") %> <%= relation.target.level %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate(@relations) %>
+<% else %>
+  <div class="empty_set">
+    <%= fb_i("You don't have any members in your Alliance") %>
+  </div>
+<% end %>

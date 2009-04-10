@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(:version => 20090410163200) do
     t.datetime "updated_at"
   end
 
+  add_index "invitations", ["receiver_id", "accepted"], :name => "index_invitations_on_receiver_id_and_accepted"
+  add_index "invitations", ["sender_id"], :name => "index_invitations_on_sender_id"
+
   create_table "items", :force => true do |t|
     t.string   "type",               :limit => 30
     t.integer  "level"
@@ -128,6 +131,8 @@ ActiveRecord::Schema.define(:version => 20090410163200) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "relations", ["source_id", "target_id"], :name => "index_relations_on_source_id_and_target_id"
 
   create_table "users", :force => true do |t|
     t.integer  "facebook_id",     :limit => 8

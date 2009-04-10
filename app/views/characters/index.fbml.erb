@@ -6,11 +6,11 @@
       <%= render :partial => "characters/attributes", :locals => {:character => current_character} %>
     </td>
 
-    <td class="fights">
+    <td class="wall">
       <% if @alliance_invitations.any? %>
         <h3><%= fb_i("Alliance Invitations") %></h3>
 
-        <table cellspacing="0">
+        <table cellspacing="0" id="invitation_list">
           <% @alliance_invitations.each do |invitation| %>
             <tr>
               <td class="picture">
@@ -20,7 +20,7 @@
                 <%= link_to(fb_name(invitation.sender, :linked => false), invitation.sender.character) %>
               </td>
               <td class="level"><%= fb_i("Level:") %> <%= invitation.sender.character.level %></td>
-              <% content_tag_for(:td, invitation, :controls) do %>
+              <% content_tag(:td, :id => dom_id(invitation, :controls), :class => :controls) do %>
                 <%= link_to_remote("Accept",
                       :url    => accept_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
@@ -28,7 +28,7 @@
                 <%= link_to_remote("Decline",
                       :url    => decline_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
-                      :html   => {:class => :accept}) %>
+                      :html   => {:class => :decline}) %>
               <% end %>
             </tr>
           <% end %>
@@ -38,7 +38,7 @@
       <% if @latest_fights.any? %>
         <h3><%= fb_i("Latest Fights") %></h3>
 
-        <table cellspacing="0">
+        <table cellspacing="0" id="fight_list">
         <% @latest_fights.each do |fight| %>
           <% content_tag_for(:tr, fight) do %>
             <td class="attacker"><%= link_to(fb_profile_pic(fight.attacker.user, :linked => false), fight.attacker) %></td>
