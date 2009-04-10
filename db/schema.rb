@@ -14,17 +14,18 @@ ActiveRecord::Schema.define(:version => 20090314190007) do
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.integer  "basic_money",    :default => 100
-    t.integer  "vip_money",      :default => 0
-    t.integer  "level",          :default => 1
-    t.integer  "experience",     :default => 0
-    t.integer  "points",         :default => 0
-    t.integer  "attack",         :default => 1
-    t.integer  "defence",        :default => 1
-    t.integer  "hp",             :default => 0
-    t.integer  "health",         :default => 100
-    t.integer  "ep",             :default => 0
-    t.integer  "energy",         :default => 10
+    t.integer  "basic_money",       :default => 100
+    t.integer  "vip_money",         :default => 0
+    t.integer  "level",             :default => 1
+    t.integer  "experience",        :default => 0
+    t.integer  "points",            :default => 0
+    t.integer  "attack",            :default => 1
+    t.integer  "defence",           :default => 1
+    t.integer  "hp",                :default => 0
+    t.integer  "health",            :default => 100
+    t.integer  "ep",                :default => 0
+    t.integer  "energy",            :default => 10
+    t.text     "inventory_effects"
     t.datetime "hp_refilled_at"
     t.datetime "ep_refilled_at"
     t.datetime "created_at"
@@ -79,8 +80,7 @@ ActiveRecord::Schema.define(:version => 20090314190007) do
     t.string   "name"
     t.string   "description"
     t.string   "placements"
-    t.integer  "attack"
-    t.integer  "defence"
+    t.text     "effects"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"

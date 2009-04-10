@@ -17,8 +17,8 @@
             <div class="description"><%= fb_i(item.description) %></div>
           </td>
           <td class="details">
-            <% %w{attack defence}.each do |attribute| %>
-              <%= content_tag(:div, item.send(attribute), :class => attribute) if item.send(attribute).to_i > 0 %>
+            <% item.effects.each do |effect| %>
+              <%= content_tag(:div, effect.value, :class => effect.name) %>
             <% end %>
           </td>
           <td class="requires">

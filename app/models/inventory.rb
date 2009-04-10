@@ -7,12 +7,12 @@ class Inventory < ActiveRecord::Base
   named_scope :weapons, {
     :conditions => "items.type = 'Weapon'",
     :include    => :item,
-    :order      => "items.attack DESC"
+    :order      => "items.level ASC"
   }
   named_scope :armors, {
     :conditions => "items.type = 'Armor'",
     :include    => :item,
-    :order      => "items.defence DESC"
+    :order      => "items.level ASC"
   }
 
   named_scope :placed, { :conditions => "placement IS NOT NULL" }
@@ -21,9 +21,8 @@ class Inventory < ActiveRecord::Base
 
   after_create  :charge_character
   after_destroy :deposit_character
-  before_save   :cleanup_placement
 
-  delegate :name, :description, :attack, :defence, :image, :to => :item
+  delegate :name, :description, :image, :effects, :to => :item
   
   def sell_price
     (self.item.price * 0.8).ceil
@@ -31,6 +30,19 @@ class Inventory < ActiveRecord::Base
 
   def possible_placements
     self.item.placements.split(",")
+  end
+
+  def apply_to(placement)
+    if self.possible_placements.include?(placement.to_s)
+
+      self.class.transaction do
+        self.character.inventories.update_all('placement = NULL', ['placement = ?', self.placement])
+        
+        self.update_attribute(:placement, placement)
+
+        self.character.cache_inventory_effects
+      end
+    end
   end
   
   protected
@@ -45,11 +57,5 @@ class Inventory < ActiveRecord::Base
 
   def deposit_character
     self.character.increment!(:basic_money, self.sell_price)
-  end
-
-  def cleanup_placement
-    if self.placement_changed? and !self.placement.blank?
-      self.character.inventories.update_all('placement = NULL', ['placement = ?', self.placement])
-    end
   end
 end

@@ -1,3 +1,5 @@
+require "effects/base"
+
 class Character < ActiveRecord::Base
   LEVELS = [0]
 
@@ -13,29 +15,16 @@ class Character < ActiveRecord::Base
   belongs_to :user
   has_many :ranks
   has_many :missions, :through => :ranks
-  has_many :inventories, :include => :item do
-    def attack
-      if most_powerful_weapon = self.weapons.first
-        return most_powerful_weapon.attack
-      else
-        return 0
-      end
-    end
-
-    def defence
-      if most_powerful_armor = self.armors.first
-        return most_powerful_armor.defence
-      else
-        return 0
-      end
-    end
-  end
+  has_many :inventories, :include => :item
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id
   has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
 
   attr_accessor :level_updated
+
+  extend SerializeEffects
+  serialize_effects :inventory_effects
 
   before_create :refill_hp, :refill_ep
   before_save :update_level_and_points
@@ -103,11 +92,11 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    self.attack + self.inventories.attack
+    self.attack + self.inventory_effects[:attack].value
   end
 
   def defence_points
-    self.defence + self.inventories.defence
+    self.defence + self.inventory_effects[:attack].value
   end
 
   def refill_hp(amount = nil, refilled_at = nil)
@@ -198,7 +187,21 @@ class Character < ActiveRecord::Base
       :methods  => [:next_level_experience, :time_to_hp_restore, :time_to_ep_restore]
     )
   end
-  
+
+  def cache_inventory_effects
+    self.inventory_effects = Effects::Collection.new
+
+    self.inventories.placed.each do |item|
+      self.inventory_effects << item.effects
+    end
+
+    self.save
+  end
+
+  def inventory_effects
+    self[:inventory_effects] ||= Effects::Collection.new
+  end
+
   protected
 
   def update_level_and_points

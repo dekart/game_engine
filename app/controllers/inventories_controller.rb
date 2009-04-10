@@ -22,7 +22,7 @@ class InventoriesController < ApplicationController
   def apply
     @inventory = current_character.inventories.find(params[:id])
 
-    @inventory.update_attribute(:placement, params[:placement])
+    @inventory.apply_to(params[:placement])
 
     render :partial => "inventories/placements", :locals => {:character => current_character}
   end

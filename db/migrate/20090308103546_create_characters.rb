@@ -21,6 +21,8 @@ class CreateCharacters < ActiveRecord::Migration
       t.integer :ep,          :default => 0
       t.integer :energy,      :default => 10
 
+      t.text    :inventory_effects
+
       t.datetime :hp_refilled_at
       t.datetime :ep_refilled_at
       

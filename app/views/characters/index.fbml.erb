@@ -6,11 +6,23 @@
       <ul>
         <li>
           <b><%= fb_i("Attack") %></b>
-          <div class="attack"><%= current_character.attack %></div>
+          <div class="attack">
+            <%= "%d (%d+%d)" % [
+                  current_character.attack_points,
+                  current_character.attack,
+                  current_character.inventory_effects[:attack].value
+                ] %>
+          </div>
         </li>
         <li>
           <b><%= fb_i("Defence") %></b>
-          <div class="defence"><%= current_character.defence %></div>
+          <div class="defence">
+            <%= "%d (%d+%d)" % [
+                  current_character.defence_points,
+                  current_character.defence,
+                  current_character.inventory_effects[:defence].value
+                ] %>
+          </div>
         </li>
         <li>
           <b><%= fb_i("Health") %></b>

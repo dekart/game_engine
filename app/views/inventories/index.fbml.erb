@@ -22,8 +22,8 @@
               <div class="description"><%= inventory.description %></div>
             </td>
             <td class="details">
-              <% %w{attack defence}.each do |attribute| %>
-                <%= content_tag(:div, inventory.send(attribute), :class => attribute) if inventory.send(attribute).to_i > 0 %>
+              <% inventory.effects.each do |effect| %>
+                <%= content_tag(:div, effect.value, :class => effect.name) %>
               <% end %>
             </td>
             <td class="sell">
