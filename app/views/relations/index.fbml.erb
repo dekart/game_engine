@@ -1,5 +1,12 @@
 <%= title(fb_i("Your Alliance")) %>
 
+<div class="note">
+  <% fb_i do %>
+    Your alliance gives you additional attack and defence points. The more
+    members in your alliance, the more chances you have in every battle. 
+  <% end %>
+</div>
+
 <% if @relations.any? %>
   <table id="alliance_members" cellspacing="0">
     <% @relations.each do |relation| %>

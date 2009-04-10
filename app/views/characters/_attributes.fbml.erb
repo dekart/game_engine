@@ -2,20 +2,22 @@
   <li class="attack">
     <b><%= fb_i("Attack") %></b>
     <div class="value">
-      <%= "%d (%d+%d)" % [
+      <%= "%d (%d+%d+%d)" % [
             character.attack_points,
             character.attack,
-            character.inventory_effects[:attack].value
+            character.inventory_effects[:attack].value,
+            character.relations.size
           ] %>
     </div>
   </li>
   <li class="defence">
     <b><%= fb_i("Defence") %></b>
     <div class="value">
-      <%= "%d (%d+%d)" % [
+      <%= "%d (%d+%d+%d)" % [
             character.defence_points,
             character.defence,
-            character.inventory_effects[:defence].value
+            character.inventory_effects[:defence].value,
+            character.relations.size
           ] %>
     </div>
   </li>
