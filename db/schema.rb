@@ -21,13 +21,13 @@ ActiveRecord::Schema.define(:version => 20090410163200) do
     t.integer  "points",            :default => 0
     t.integer  "attack",            :default => 1
     t.integer  "defence",           :default => 1
-    t.integer  "hp",                :default => 0
+    t.integer  "hp",                :default => 100
     t.integer  "health",            :default => 100
-    t.integer  "ep",                :default => 0
+    t.integer  "ep",                :default => 10
     t.integer  "energy",            :default => 10
     t.text     "inventory_effects"
-    t.datetime "hp_refilled_at"
-    t.datetime "ep_refilled_at"
+    t.datetime "hp_updated_at"
+    t.datetime "ep_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

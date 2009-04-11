@@ -1,5 +1,5 @@
 class CharactersController < ApplicationController
-  skip_before_filter :prepare_user_and_character, :only => :load_vip_money
+  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => :load_vip_money
 
   def index
     @latest_fights = Fight.with_participant(current_character).find(:all, :limit => 10)
