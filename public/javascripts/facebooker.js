@@ -62,11 +62,12 @@ Ajax.Updater = function (container,url,options) {
   } else {
     this.ajax.responseType = Ajax.FBML;
     this.ajax.ondone = function(data) {
-      $('spinner').hide();
+      Spinner.hide();
       $(container).setInnerFBML(data);
     }
   }
   if (options["onFailure"]) {
+    Spinner.hide();
     this.ajax.onerror = options["onFailure"];
   }
 
@@ -86,7 +87,7 @@ Ajax.Updater = function (container,url,options) {
     }
   }
 
-  $('spinner').show();
+  Spinner.show();
 
   this.ajax.post(url,parameters); 
   if (options["onLoading"]) {

@@ -28,7 +28,10 @@ extend_instance(Element, {
 
 var Spinner = {
   hide: function(){
-    $('spinner').setStyle({display: "none"});
+    $('spinner').hide();
+  },
+  hide: function(){
+    $('spinner').show();
   }
 }
 
@@ -53,7 +56,8 @@ var Character = {
   updateFromRemote: function(){
     new Ajax.Request(root_url + "characters/current", {
       "onSuccess": function(data){
-        Character.update(data)
+        Spinner.hide();
+        Character.update(data);
       }
     });
   }
