@@ -4,8 +4,9 @@
   <%= render :partial => "characters/attributes", :locals => {:character => @character} %>
 
   <% if @character.ranks.completed.any? %>
-    <div class="ranks">
+    <div id="rank_list">
       <h2><%= fb_i("Titles") %></h2>
+      
       <% @character.ranks.completed.each do |rank| %>
         <%= content_tag(:div, rank.mission.title, :class => :rank) %>
       <% end %>
