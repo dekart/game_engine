@@ -8,9 +8,11 @@ class CreateMissions < ActiveRecord::Migration
 
       t.string  :won_text
       t.string  :lost_text
+      t.string  :complete_text
 
       t.integer :win_amount
-      t.string  :winner_title
+
+      t.string  :title
 
       t.integer :ep_cost
 

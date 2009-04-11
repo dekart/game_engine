@@ -30,7 +30,7 @@ var Spinner = {
   hide: function(){
     $('spinner').hide();
   },
-  hide: function(){
+  show: function(){
     $('spinner').show();
   }
 }

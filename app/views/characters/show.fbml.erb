@@ -7,7 +7,7 @@
     <div class="ranks">
       <h2><%= fb_i("Titles") %></h2>
       <% @character.ranks.completed.each do |rank| %>
-        <%= content_tag(:div, rank.mission.winner_title, :class => :rank) %>
+        <%= content_tag(:div, rank.mission.title, :class => :rank) %>
       <% end %>
     </div>
   <% end %>

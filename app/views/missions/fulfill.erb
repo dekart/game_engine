@@ -35,13 +35,15 @@
   <% end %>
 
   <% if @rank.completed? %>
-    <p>
-      <% fb_i do %>
-        Congratulations! You completed this mission and received new title: {title}
+    <h2><%= fb_i("Congratulations!") %></h2>
 
-        <%= fb_it(:title, content_tag(:h3, @mission.winner_title, :class => :title)) %>
-      <% end %>
+    <p>
+      <%= fb_i(@mission.complete_text) %>
+
+      <%= fb_i("You completed this mission and received new title:") %>
     </p>
+
+    <h3 class="title"><%= fb_i(@mission.title) %></h3>
 
     <% content_for :script do %>
       Mission.hideControls(<%= @mission.id %>);
