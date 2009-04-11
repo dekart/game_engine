@@ -4,7 +4,11 @@
 
 <%= reference("stylesheets/main.css.erb", dynamic_stylesheet_url(:main, :canvas => false)) %>
 
-<div id="spinner" style="display:none;">This is spinner!!!</div>
+<div id="spinner" style="display:none;">
+  <%= image_tag("spinner.gif", :alt => "Please wait...") %>
+
+  <%= fb_i("Please wait for a few seconds...") %>
+</div>
 
 <div id="header">
   <ul id="co">
