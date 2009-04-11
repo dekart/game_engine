@@ -48,7 +48,7 @@ class Character < ActiveRecord::Base
   restorable_attribute :ep, :energy, 5.minutes
 
   before_save :update_level_and_points
-  before_save :update_hp_and_ep
+#  before_save :update_hp_and_ep
 
   def fulfill_mission!(mission)
     return false if self.ep < mission.ep_cost
@@ -74,11 +74,11 @@ class Character < ActiveRecord::Base
 
     ActiveRecord::Base.transaction do
       if name.to_sym == :health
-        self.increment(:health, 5)
-        self.increment(:hp, 5)
+        self.health += 5
+        self.hp     += 5
       elsif name.to_sym == :energy
-        self.increment(:energy, 1)
-        self.increment(:ep, 1)
+        self.energy += 1
+        self.ep     += 1
       else
         self.increment(name, 1)
       end
@@ -150,9 +150,9 @@ class Character < ActiveRecord::Base
       self.level_updated = true
     end
   end
-
-  def update_hp_and_ep
-    self.hp_updated_at = Time.now if hp_changed?
-    self.ep_updated_at = Time.now if ep_changed?
-  end
+#
+#  def update_hp_and_ep
+#    self.hp_updated_at = Time.now if hp_changed?
+#    self.ep_updated_at = Time.now if ep_changed?
+#  end
 end

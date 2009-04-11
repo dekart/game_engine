@@ -17,6 +17,11 @@ module RestorableAttribute
       end
     end
 
+    define_method("#{name}=") do |value|
+      self[name] = value
+      self.send("#{name}_updated_at=", Time.now)
+    end
+
     define_method("#{name}_restore_time") do |restore_to|
       restore_to = self.send(limit) if restore_to > self.send(limit)
 

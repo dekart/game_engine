@@ -53,10 +53,10 @@ class Fight < ActiveRecord::Base
     self.winner.increment(:basic_money, self.money)
     self.loser.decrement(:basic_money, self.money)
 
-    self.attacker.decrement(:ep)
+    self.attacker.ep  -= 1
 
-    self.attacker.decrement(:hp, self.attacker_hp_loss)
-    self.victim.decrement(:hp, self.victim_hp_loss)
+    self.attacker.hp  -= self.attacker_hp_loss
+    self.victim.hp    -= self.victim_hp_loss
 
     self.attacker.save!
     self.victim.save!
