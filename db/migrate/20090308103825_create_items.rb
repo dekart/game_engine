@@ -1,7 +1,9 @@
 class CreateItems < ActiveRecord::Migration
   def self.up
     create_table :items do |t|
-      t.string :type, :limit => 30
+      t.string  :type, :limit => 30
+
+      t.string  :availability, :limit => 30, :default => "shop"
 
       t.integer :level
 

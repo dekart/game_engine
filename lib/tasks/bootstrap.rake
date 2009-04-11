@@ -74,6 +74,7 @@ namespace :app do
         :vip_price => 1,
         :effects => Effects::Collection.new(Effects::Attack.new(2)),
         :image => img("bow"),
+        :availability => "loot",
         :placements => "left_hand,right_hand"
       }
     }

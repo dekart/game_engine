@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20090410163200) do
 
   create_table "items", :force => true do |t|
     t.string   "type",               :limit => 30
+    t.string   "availability",       :limit => 30, :default => "shop"
     t.integer  "level"
     t.integer  "basic_price"
     t.integer  "vip_price"

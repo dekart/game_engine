@@ -16,4 +16,6 @@ class Item < ActiveRecord::Base
 
   named_scope :weapons, { :conditions => "type = 'Weapon'" }
   named_scope :armors,  { :conditions => "type = 'Armor'"  }
+
+  named_scope :shop, {:conditions => "availability = 'shop'"}
 end
