@@ -1,6 +1,5 @@
 module RestorableAttribute
   def restorable_attribute(name, limit, restore_period)
-
     define_method("#{name}_updated_at") do
       self["#{name}_updated_at"] || Time.now
     end
