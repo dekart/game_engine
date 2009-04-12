@@ -16,8 +16,6 @@ namespace :blogbox do
 
     desc "Update references"
     task :update_references => :environment do
-      Net::HTTP.get_response(URI.parse(Facebooker.facebooker_config["callback_url"]))
-
       Jobs::UpdateReferences.new.perform
     end
   end
