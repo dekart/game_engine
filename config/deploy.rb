@@ -56,12 +56,12 @@ namespace :deploy do
   end
 end
 
-["deploy:jobs:stop"].each do |t|
+[].each do |t| #"deploy:jobs:stop"
   before "deploy", t
   before "deploy:migrations", t
 end
 
-["deploy:jobs:start", "deploy:jobs:update_references", "deploy:cleanup"].each do |t|
+["deploy:jobs:update_references", "deploy:cleanup"].each do |t| #"deploy:jobs:start"
   after "deploy", t
   after "deploy:migrations", t
 end
