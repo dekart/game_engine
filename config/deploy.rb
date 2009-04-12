@@ -1,5 +1,5 @@
-set :application, "fb_app"
-set :repository,  "git@itvektor.#{application}.git"
+set :application, "sword"
+set :repository,  "git@itvektor.ru:facebook/knights.git"
 
 set :use_sudo, false
 

@@ -18,8 +18,8 @@ test:
 
 production:
   adapter: mysql
-  database: fb_app_production
+  database: sword_production
   host: localhost
-  username: root
-  password:
+  username: sword
+  password: alskdjf85hg
     

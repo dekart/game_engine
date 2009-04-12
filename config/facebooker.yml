@@ -34,9 +34,9 @@ test:
     local_port: 3000
 
 production:
-  api_key: 996c9cfcd6dca109638beb61b8741de1
-  secret_key: 627f8623ea19912cf0634b660f9b1ed2
-  canvas_page_name: blog-box
-  callback_url: http://blogboxapp.com
+  api_key: eccd02101c4a358ffe9590fdfa347954
+  secret_key: 1a7e8b3eb1e5d3999d54d286b5d1c5e4
+  canvas_page_name: sword-and-magic
+  callback_url: http://sword.it-vektor.ru
   set_asset_host_to_callback_url: true
   
