@@ -104,8 +104,7 @@ module Facebooker
  
           #returning gracefully if the cookies aren't set or have expired
           return unless parsed['session_key'] && parsed['user'] && parsed['expires'] && parsed['ss'] 
-          return unless Time.at(parsed['expires'].to_f) > Time.now || (parsed['expires'] == "0")
-          
+          return unless Time.at(parsed['expires'].to_s.to_f) > Time.now || (parsed['expires'] == "0")          
           #if we have the unexpired cookies, we'll throw an exception if the sig doesn't verify
           verify_signature(parsed,cookies[Facebooker.api_key])
           
@@ -220,7 +219,7 @@ module Facebooker
       end
       
       def request_is_facebook_ajax?
-        params["fb_sig_is_mockajax"]=="1" || params["fb_sig_is_ajax"]=="1"
+        params["fb_sig_is_mockajax"]=="1" || params["fb_sig_is_ajax"]=="1" || params["fb_sig_is_ajax"]==true || params["fb_sig_is_mockajax"]==true
       end
       def xml_http_request?
         request_is_facebook_ajax? || super
@@ -271,9 +270,9 @@ module Facebooker
       
       def set_facebook_request_format
         if request_is_facebook_ajax?
-          params[:format] = 'fbjs'
+          request.format = :fbjs
         elsif request_comes_from_facebook?
-          params[:format] = 'fbml'
+          request.format = :fbml
         end
       end
       

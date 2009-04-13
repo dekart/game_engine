@@ -54,32 +54,33 @@ module Facebooker
         def fb_login_button(*args)
 
           callback = args.first
-          options = args.second || {}
+          options = args[1] || {}
           options.merge!(:onlogin=>callback)if callback
 
           content_tag("fb:login-button",nil, options)
         end
-        def fb_login_and_redirect(url)
+
+        def fb_login_and_redirect(url, options = {})
           js = update_page do |page|
             page.redirect_to url
           end
-          content_tag("fb:login-button",nil,:onlogin=>js)
+          content_tag("fb:login-button",nil,options.merge(:onlogin=>js))
         end
         
         def fb_unconnected_friends_count
           content_tag "fb:unconnected-friends-count",nil
         end
         
-        def fb_logout_link(text,url)
+        def fb_logout_link(text,url,*args)
           js = update_page do |page|
             page.call "FB.Connect.logoutAndRedirect",url
           end
-          link_to_function text, js
+          link_to_function text, js, *args
         end
         
-        def fb_user_action(action)
+        def fb_user_action(action, user_message = "", prompt = "", callback = nil)
           update_page do |page|
-            page.call "FB.Connect.showFeedDialog",action.template_id,action.data,action.target_ids,action.body_general,nil,"FB.RequireConnect.promptConnect"
+            page.call "FB.Connect.showFeedDialog",action.template_id,action.data,action.target_ids,action.body_general,nil,page.literal("FB.RequireConnect.promptConnect"),callback,prompt,user_message
           end
         end
         
