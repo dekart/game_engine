@@ -74,6 +74,12 @@ module FacebookHelper
     fb_named_tag("tag-attribute", name, *args, &block)
   end
 
+  def link_to_feed_dialog(title, template_class, template_name, options = {})
+    bundle_id = Facebooker::Rails::Publisher::FacebookTemplate.bundle_id_for_class_and_method(template_class, template_name.to_s)
+
+    link_to_function(title, "Facebook.showFeedDialog(#{bundle_id}, #{options[:template_data].to_json}, '#{options[:body_general]}', #{options[:target_id] || "null"})", options[:html] || {})
+  end
+
   protected
 
   def fb_named_tag(tag, name, *args, &block)

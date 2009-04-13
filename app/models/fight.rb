@@ -29,7 +29,7 @@ class Fight < ActiveRecord::Base
 
     return self.winner == self.attacker ? self.victim : self.attacker
   end
-  
+
   protected
 
   def validate

@@ -1,5 +1,16 @@
 <% if !@fight.new_record? %>
   <% if @fight.winner == current_character %>
+    <%= link_to_feed_dialog("Publish to Profile", Publisher::Fight, :wall,
+          :target_id => @fight.victim.user.facebook_id,
+          :template_data => {
+            :money            => @fight.money,
+            :experience       => @fight.experience,
+            :attacker_hp_loss => @fight.attacker_hp_loss,
+            :victim_hp_loss   => @fight.victim_hp_loss
+          },
+          :html => {:class => :publish}
+        ) %>
+
     <p class="success">
       <% fb_i do %>
         You attacked {user_name} and WON the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
@@ -55,11 +66,17 @@
         </td>
       </tr>
     </table>
-    
+
     <% content_for :script do %>
       Fight.hideVictim(<%= @victim.id %>);
     <% end %>
   <% else %>
+    <%= link_to_remote(fb_i("Attack Again!"),
+          :url    => fights_url(:victim_id => @victim, :canvas => false),
+          :update => :fight_result,
+          :html   => {:class => :attack_again}
+        ) if current_character.energy > 0 %>
+
     <p class="fail">
       <% fb_i do %>
         You attacked {user_name} and LOST the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
@@ -106,12 +123,6 @@
         </td>
       </tr>
     </table>
-    
-    <%= link_to_remote(fb_i("Attack Again!"),
-          :url    => fights_url(:victim_id => @victim, :canvas => false),
-          :update => :fight_result,
-          :html   => {:class => :attack_again}
-        ) if current_character.energy > 0 %>
   <% end %>
 <% else %>
   <p><%= fb_i(@fight.errors.on(:character)) %></p>
