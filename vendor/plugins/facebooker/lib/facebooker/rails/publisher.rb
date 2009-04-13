@@ -224,12 +224,12 @@ module Facebooker
         attr_accessor :template_id
         attr_accessor :template_name
         attr_accessor :story_size
+        
         def target_ids=(val)
           @target_ids = val.is_a?(Array) ? val.join(",") : val
         end
         def data_hash
-          default_data = story_size.nil? ? {} : {:story_size=>story_size}
-          default_data.merge(data||{})
+          data||{}
         end
       end
       
@@ -320,7 +320,7 @@ module Facebooker
           self.href=href
         end
 
-        def to_json
+        def to_json(*args)
           "{\"src\":#{src.to_json}, \"href\":#{href.to_json}}"
         end
       end
@@ -377,7 +377,7 @@ module Facebooker
         when Ref
           Facebooker::Session.create.server_cache.set_ref_handle(_body.handle,_body.fbml)
         when UserAction
-          @from.session.publish_user_action(_body.template_id,_body.data_hash,_body.target_ids,_body.body_general)
+          @from.session.publish_user_action(_body.template_id,_body.data_hash,_body.target_ids,_body.body_general,_body.story_size)
         else
           raise UnspecifiedBodyType.new("You must specify a valid send_as")
         end
@@ -404,7 +404,10 @@ module Facebooker
         #only do this on Rails 2.1
 	      if ActionController::Base.respond_to?(:append_view_path)
   	      # only add the view path once
-	        ActionController::Base.append_view_path(controller_root) unless ActionController::Base.view_paths.include?(controller_root)
+  	      unless ActionController::Base.view_paths.include?(controller_root)
+	          ActionController::Base.append_view_path(controller_root) 
+	          ActionController::Base.append_view_path(controller_root+"/..") 
+	        end
 	      end
         returning ActionView::Base.new([template_root,controller_root], assigns, self) do |template|
           template.controller=self
@@ -471,7 +474,7 @@ module Facebooker
           case publisher._body
           when UserAction
             publisher._body.template_name = method
-            publisher._body.template_id = FacebookTemplate.bundle_id_for_class_and_method(self,method)
+            publisher._body.template_id ||= FacebookTemplate.bundle_id_for_class_and_method(self,method)
           end
           
           should_send ? publisher.send_message(method) : publisher._body

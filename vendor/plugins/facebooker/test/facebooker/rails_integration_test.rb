@@ -135,14 +135,23 @@ end
 # you can't use asset_recognize, because it can't pass parameters in to the requests
 class UrlRecognitionTests < Test::Unit::TestCase
   def test_detects_in_canvas
-    request = ActionController::TestRequest.new({"fb_sig_in_canvas"=>"1"}, {}, nil)
+    if Rails.version < '2.3'
+      request = ActionController::TestRequest.new({"fb_sig_in_canvas"=>"1"}, {}, nil)
+    else
+      request = ActionController::TestRequest.new
+      request.query_parameters[:fb_sig_in_canvas] = "1"
+    end
     request.path   = "/"
     ActionController::Routing::Routes.recognize(request)
     assert_equal({"controller"=>"facebook","action"=>"index"},request.path_parameters)
   end
   
   def test_routes_when_not_in_canvas
-    request = ActionController::TestRequest.new({}, {}, nil)
+    if Rails.version < '2.3'
+      request = ActionController::TestRequest.new({}, {}, nil)
+    else
+      request = ActionController::TestRequest.new
+    end
     request.path   = "/"
     ActionController::Routing::Routes.recognize(request)
     assert_equal({"controller"=>"plain_old_rails","action"=>"index"},request.path_parameters)
@@ -961,6 +970,10 @@ class RailsHelperTest < Test::Unit::TestCase
   def test_fb_logout_link
     assert_equal @h.fb_logout_link("Logout","My URL"),"<a href=\"#\" onclick=\"FB.Connect.logoutAndRedirect(&quot;My URL&quot;);; return false;\">Logout</a>"
   end
+  def test_fb_user_action
+    action = Facebooker::Rails::Publisher::UserAction.new
+    assert_equal @h.fb_user_action(action,"message","prompt"),"FB.Connect.showFeedDialog(null, null, null, null, null, FB.RequireConnect.promptConnect, null, \"prompt\", \"message\");"
+  end
   
   
   def test_fb_connect_javascript_tag
@@ -1105,30 +1118,28 @@ class RailsPrettyErrorsTest < Test::Unit::TestCase
   end
   
   def setup
+    Facebooker.apply_configuration('api_key'=>"1234", 'secret_key'=>"34278",'canvas_page_name'=>'mike','pretty_errors'=>true)
     @controller = ControllerWhichFails.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
   end
   
   def test_pretty_errors_disabled_success
-    Facebooker.facebooker_config.stubs(:[]).with('pretty_errors').returns(false)
     post :pass, facebook_params
     assert_response 200
   end
   
   def test_pretty_errors_disabled_error
-    Facebooker.facebooker_config.stubs(:[]).with('pretty_errors').returns(false)
+    Facebooker.apply_configuration('api_key'=>"1234", 'secret_key'=>"34278",'canvas_page_name'=>'mike','pretty_errors'=>false)
     post :fail, facebook_params
     assert_response :error
   end
   
   def test_pretty_errors_enabled_success
-    Facebooker.facebooker_config.stubs(:[]).with('pretty_errors').returns(true)
     post :pass, facebook_params
     assert_response 200
   end
   def test_pretty_errors_enabled_error
-    Facebooker.facebooker_config.stubs(:[]).with('pretty_errors').returns(true)
     post :fail, facebook_params
     assert_response 200
   end
@@ -1288,6 +1299,9 @@ class RailsRequestFormatTest < Test::Unit::TestCase
   end
   
   def setup
+    ENV['FACEBOOK_CANVAS_PATH'] ='facebook_app_name'
+    ENV['FACEBOOK_API_KEY'] = '1234567'
+    ENV['FACEBOOK_SECRET_KEY'] = '7654321'
     @controller = FacebookController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new

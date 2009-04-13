@@ -6,7 +6,15 @@ module Facebooker
   # other than the logged in user (if that's unallowed)
   class NonSessionUser < StandardError;  end
   class Session
+    
+    #
+    # Raised when a facebook session has expired.  This 
+    # happens when the timeout is reached, or when the
+    # user logs out of facebook
+    # can be handled with:
+    # rescue_from Facebooker::Session::SessionExpired, :with => :some_method_name
     class SessionExpired < StandardError; end
+
     class UnknownError < StandardError; end
     class ServiceUnavailable < StandardError; end
     class MaxRequestsDepleted < StandardError; end
@@ -48,6 +56,9 @@ module Facebooker
     class TooManyUnapprovedPhotosPending < StandardError; end
     class ExtendedPermissionRequired < StandardError; end
     class InvalidFriendList < StandardError; end
+    class UserUnRegistrationFailed < StandardError
+      attr_accessor :failed_users
+    end
     class UserRegistrationFailed < StandardError
       attr_accessor :failed_users
     end
@@ -360,10 +371,11 @@ module Facebooker
     # publish a previously rendered template bundle
     # see http://wiki.developers.facebook.com/index.php/Feed.publishUserAction
     #
-    def publish_user_action(bundle_id,data={},target_ids=nil,body_general=nil)
+    def publish_user_action(bundle_id,data={},target_ids=nil,body_general=nil,story_size=nil)
       parameters={:template_bundle_id=>bundle_id,:template_data=>data.to_json}
       parameters[:target_ids] = target_ids unless target_ids.blank?
       parameters[:body_general] = body_general unless body_general.blank?
+      parameters[:story_size] = story_size unless story_size.nil?
       post("facebook.feed.publishUserAction", parameters)
     end
     
@@ -516,7 +528,7 @@ module Facebooker
       base = params.delete(:base)
       Logging.log_fb_api(method, params) do
         add_facebook_params(params, method)
-        @session_key && params[:session_key] ||= @session_key
+        @session_key && params[:session_key] ||= @session_key unless params[:uid]
         service.post_file(params.merge(:base => base, :sig => signature_for(params.reject{|key, value| key.nil?})))
       end
     end

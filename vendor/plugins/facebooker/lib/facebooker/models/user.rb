@@ -245,17 +245,17 @@ module Facebooker
     #
     # This does not set profile actions, that should be done with profile_action=
     def profile_fbml=(markup)
-      set_profile_fbml(markup, nil, nil)
+      set_profile_fbml(markup, nil, nil, nil)
     end
     
     ##
     # Set the mobile profile FBML
     def mobile_fbml=(markup)
-      set_profile_fbml(nil, markup, nil)
+      set_profile_fbml(nil, markup, nil,nil)
     end
     
     def profile_action=(markup)
-      set_profile_fbml(nil, nil, markup)
+      set_profile_fbml(nil, nil, markup,nil)
     end
     
     def profile_main=(markup)
@@ -375,6 +375,41 @@ module Facebooker
           raise e
         end
         ret
+      end
+    end
+
+    # Get a count of unconnected friends
+    def getUnconnectedFriendsCount
+      session.post("facebook.connect.getUnconnectedFriendsCount")
+    end
+
+
+    # Unregister an array of email hashes
+    def self.unregister(email_hashes)
+      Facebooker::Session.create.post("facebook.connect.unregisterUsers",:email_hashes=>email_hashes.to_json) do |ret|
+        ret.each do |hash|
+          email_hashes.delete(hash)
+        end
+        unless email_hashes.empty?
+          e=Facebooker::Session::UserUnRegistrationFailed.new
+          e.failed_users = email_hashes
+          raise e
+        end
+        ret
+      end      
+    end
+    
+    # unregister an array of email addresses
+    def self.unregister_emails(emails)
+      emails_hash  = {}
+      emails.each {|e| emails_hash[hash_email(e)] = e}
+      begin 
+        unregister(emails_hash.keys).collect {|r| emails_hash[r]}
+      rescue
+        # re-raise with emails instead of hashes.
+        e = Facebooker::Session::UserUnRegistrationFailed.new
+        e.failed_users = $!.failed_users.collect { |f| emails_hash[f] }
+        raise e
       end
     end
     
