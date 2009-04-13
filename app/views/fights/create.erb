@@ -1,8 +1,8 @@
 <% if !@fight.new_record? %>
   <% if @fight.winner == current_character %>
-    <%= link_to_feed_dialog("Publish to Profile", Publisher::Fight, :wall,
-          :target_id => @fight.victim.user.facebook_id,
+    <%= link_to_feed_dialog("Publish to Profile", Publisher::Fight, :attack,
           :template_data => {
+            :victim           => fb_name(@fight.victim.user),
             :money            => @fight.money,
             :experience       => @fight.experience,
             :attacker_hp_loss => @fight.attacker_hp_loss,

@@ -104,8 +104,9 @@
   #mission_result {padding:0px 30px 20px 30px; background: url(<%= image_path("icons/missions.gif") %>) 5px 8px no-repeat;}
     #mission_result .spent b {width: 55px;}
     #mission_result .title {line-height: 22px; padding-left: 23px; background: url(<%= image_path("icons/level.gif") %>) center left no-repeat;}
-    #mission_result .fulfill_again {display:block; padding-left: 25px;width: 90px; height: 25px; line-height: 25px; margin-bottom: 10px; border: 1px solid #3B5998; font-weight: bold;background: url(<%= image_path("icons/missions.gif") %>) 3px center no-repeat;}
-    #mission_result .fulfill_again:hover {background-color: #e0e0e0;}
+    #mission_result .fulfill_again, #mission_result .publish {display:block; float:right; padding-left: 25px;width: 90px; height: 25px; line-height: 25px; margin-top: 10px; border: 1px solid #3B5998; font-weight: bold;background: url(<%= image_path("icons/missions.gif") %>) 3px center no-repeat;}
+    #mission_result .fulfill_again:hover, #mission_result .publish:hover {background-color: #e0e0e0;}
+      #mission_result .publish {background-image: url(<%= image_path("icons/publish.gif") %>); width: 120px;}
 
   #victim_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;vertical-align:middle;}
     #victim_list .name{ width: 200px;}

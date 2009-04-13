@@ -1,7 +1,37 @@
 <% if @rank %>
-  <p>
-    <%= fb_i("Well done!") %> <%= fb_i(@mission.won_text) %>
-  </p>
+  <% if @rank.completed? %>
+    <%= link_to_feed_dialog("Publish to Profile", Publisher::Mission, :completed,
+          :template_data => {
+            :title => @mission.title,
+            :mission => @mission.name
+          },
+          :html => {:class => :publish}
+        ) %>
+
+    <h2><%= fb_i("Congratulations!") %></h2>
+
+    <p>
+      <%= fb_i(@mission.complete_text) %>
+
+      <%= fb_i("You completed this mission and received new title:") %>
+    </p>
+
+    <h3 class="title"><%= fb_i(@mission.title) %></h3>
+
+    <% content_for :script do %>
+      Mission.hideControls(<%= @mission.id %>);
+    <% end %>
+  <% else %>
+    <%= link_to_remote(fb_i("Fulfill Again!"),
+          :url => fulfill_mission_url(@mission, :canvas => false),
+          :update => :mission_result,
+          :html   => {:class => :fulfill_again}
+        ) if current_character.ep >= @mission.ep_cost %>
+
+    <p>
+      <%= fb_i("Well done!") %> <%= fb_i(@mission.won_text) %>
+    </p>
+  <% end %>
 
   <table>
     <tr>
@@ -32,28 +62,6 @@
   
   <% content_for :script do %>
     Mission.setCompleteness(<%= @mission.id %>, '<%= @rank.completeness %>');
-  <% end %>
-
-  <% if @rank.completed? %>
-    <h2><%= fb_i("Congratulations!") %></h2>
-
-    <p>
-      <%= fb_i(@mission.complete_text) %>
-
-      <%= fb_i("You completed this mission and received new title:") %>
-    </p>
-
-    <h3 class="title"><%= fb_i(@mission.title) %></h3>
-
-    <% content_for :script do %>
-      Mission.hideControls(<%= @mission.id %>);
-    <% end %>
-  <% else %>
-    <%= link_to_remote(fb_i("Fulfill Again!"),
-          :url => fulfill_mission_url(@mission, :canvas => false),
-          :update => :mission_result,
-          :html   => {:class => :fulfill_again}
-        ) if current_character.ep >= @mission.ep_cost %>
   <% end %>
 <% else %>
   <p>
