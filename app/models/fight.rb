@@ -51,8 +51,8 @@ class Fight < ActiveRecord::Base
 
     self.winner = attacker_won ? self.attacker : self.victim
 
-    self.experience = rand((self.loser.level.to_f / 2).ceil)
-    self.money = rand((self.loser.basic_money.to_f * 0.10).ceil)
+    self.experience = rand((self.loser.level.to_f / 2).ceil).to_i
+    self.money = rand((self.loser.basic_money.to_f * 0.10).ceil).to_i
   end
 
   def save_payout
