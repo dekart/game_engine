@@ -4,6 +4,8 @@ module Publisher
       include ::ApplicationHelper
       include ::FacebookHelper
     end
+    
+    include FacebookHelper
 
     def notification(user, fight)
       send_as :notification
@@ -13,9 +15,9 @@ module Publisher
     end
 
     def wall_template
-      one_line_story_template "{*actor*} attacked {*target*} and WON the battle"
+      one_line_story_template "{*actor*} attacked {*target*} in #{link_to(fb_app_name, root_url(:canvas => true))} game and WON the battle"
       short_story_template(
-        "{*actor*} attacked {*target*} and WON the battle",
+        "{*actor*} attacked {*target*} in #{link_to(fb_app_name, root_url(:canvas => true))} game and WON the battle",
         "{*actor*} received +{*money*} money, +{*experience*} experience, and lost {*attacker_hp_loss*} health points.
          {*target*} received {*victim_hp_loss*} points of damage"
       )
