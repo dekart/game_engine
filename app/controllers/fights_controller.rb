@@ -6,8 +6,10 @@ class FightsController < ApplicationController
   def create
     @victim = Character.find(params[:victim_id])
 
-    @fight = current_character.attacks.create(:victim => @victim)
-    
+    if @fight = current_character.attacks.create(:victim => @victim)
+      Delayed::Job.enqueue Jobs::FightNotification.new(facebook_session, @fight.id)
+    end
+
     render :action => :create, :layout => "ajax"
   end
 end

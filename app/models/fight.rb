@@ -16,10 +16,18 @@ class Fight < ActiveRecord::Base
   before_create :calculate_fight
   after_create  :save_payout
 
+  def attacker_won?
+    self.winner == self.attacker
+  end
+
+  def victim_won?
+    self.winner == self.victim
+  end
+
   def loser
     return nil if self.winner.nil?
 
-    return winner == attacker ? victim : attacker
+    return self.winner == self.attacker ? self.victim : self.attacker
   end
   
   protected
