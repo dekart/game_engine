@@ -1,4 +1,4 @@
-<%= title(fb_i("Grow Your Alliance")) %>
+<%= title(fb_i("Recruit To Your Alliance")) %>
 
 <% if @sent_invitations and @sent_invitations.any? %>
   <div class="success">
@@ -12,11 +12,13 @@
 
 <% content_for :invite_message do %>
   <% fb_i do %>
-    Please join my alliance in <%= fb_app_name %> game!
+    <%= fb_name(current_user, :linked => :false) %> wants you to join <% fb_pronoun(current_user, :possessive => true) %>
+    alliance in <%= fb_app_name %>, a fantasy-style combat game played on Facebook.
+    Start out as a petty swordsmen and work your way up to be hero of a fantasy world.
   <% end %>
 
-  <% content_tag("fb:req-choice", :url => root_url) do%>
-    <%= fb_fa(:label, fb_i("Visit")) %>
+  <% content_tag("fb:req-choice", :url => character_url(current_character)) do%>
+    <%= fb_fa(:label, fb_i("Visit #{fb_name(current_user, :linked => false, :possessive => true)} Profile")) %>
   <% end %>
 <% end %>
 

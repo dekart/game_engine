@@ -1,10 +1,14 @@
 <%= title(fb_i("Your Alliance")) %>
 
 <div class="note">
-  <% fb_i do %>
-    Your alliance gives you additional attack and defence points. The more
-    members in your alliance, the more chances you have in every battle. 
-  <% end %>
+  <p>
+    <% fb_i do %>
+      Your alliance gives you additional attack and defence points. The more
+      members in your alliance, the more chances you have in every battle.
+    <% end %>
+  </p>
+
+  <%= link_to("Recruit to Alliance", invite_users_path, :id => :alliance_recruit) %>
 </div>
 
 <% if @relations.any? %>
