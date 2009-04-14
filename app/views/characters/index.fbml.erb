@@ -14,18 +14,18 @@
           <% @alliance_invitations.each do |invitation| %>
             <tr>
               <td class="picture">
-                <%= link_to(fb_profile_pic(invitation.sender, :linked => false), invitation.sender.character) %>
+                <%= character_picture_link(invitation.sender) %>
               </td>
               <td class="name">
-                <%= link_to(fb_name(invitation.sender, :linked => false), invitation.sender.character) %>
+                <%= character_name_link(invitation.sender) %>
               </td>
               <td class="level"><%= fb_i("Level:") %> <%= invitation.sender.character.level %></td>
               <% content_tag(:td, :id => dom_id(invitation, :controls), :class => :controls) do %>
-                <%= link_to_remote("Accept",
+                <%= link_to_remote(fb_i("Accept"),
                       :url    => accept_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
                       :html   => {:class => :accept}) %>
-                <%= link_to_remote("Decline",
+                <%= link_to_remote(fb_i("Decline"),
                       :url    => decline_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
                       :html   => {:class => :decline}) %>
@@ -41,7 +41,7 @@
         <table cellspacing="0" id="fight_list">
         <% @latest_fights.each do |fight| %>
           <% content_tag_for(:tr, fight) do %>
-            <td class="attacker"><%= link_to(fb_profile_pic(fight.attacker.user, :linked => false), fight.attacker) %></td>
+            <td class="attacker"><%= character_picture_link(fight.attacker) %></td>
             <td class="description">
               <div class="time">
                 <%= distance_of_time_in_words_to_now(fight.created_at).capitalize %> ago:
@@ -49,7 +49,7 @@
 
               <div><%= fight_description(fight) %></div>
             </td>
-            <td class="victim"><%= link_to(fb_profile_pic(fight.victim.user, :linked => false), fight.victim) %></td>
+            <td class="victim"><%= character_picture_link(fight.victim) %></td>
           <% end %>
         <% end %>
         </table>

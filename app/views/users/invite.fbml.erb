@@ -17,6 +17,10 @@
     Start out as a petty swordsmen and work your way up to be hero of a fantasy world.
   <% end %>
 
+  <% content_tag("fb:req-choice", :url => root_url) do%>
+    <%= fb_fa(:label, fb_i("Accept Invitation")) %>
+  <% end %>
+
   <% content_tag("fb:req-choice", :url => character_url(current_character)) do%>
     <%= fb_fa(:label, fb_i("Visit #{fb_name(current_user, :linked => false, :possessive => true)} Profile")) %>
   <% end %>

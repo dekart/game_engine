@@ -15,8 +15,8 @@
   <table id="alliance_members" cellspacing="0">
     <% @relations.each do |relation| %>
       <tr>
-        <td class="picture"><%= link_to(fb_profile_pic(relation.target.user, :linked => false), relation.target) %></td>
-        <td class="name"><%= link_to(fb_name(relation.target.user, :linked => false), relation.target) %></td>
+        <td class="picture"><%= character_picture_link(relation.target) %></td>
+        <td class="name"><%= character_name_link(relation.target) %></td>
         <td class="level"><%= fb_i("Level:") %> <%= relation.target.level %></td>
       </tr>
     <% end %>

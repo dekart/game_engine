@@ -23,12 +23,13 @@
   <% if @victims.any? %>
     <table id="victim_list" cellspacing="0">
       <tr>
-        <th><%= fb_i("User") %></th>
+        <th colspan="2"><%= fb_i("User") %></th>
         <th><%= fb_i("Level") %></th>
       </tr>
       <% @victims.each do |victim| %>
         <% content_tag_for(:tr, victim) do %>
-          <td class="name"><%= link_to(character_name(victim), victim) %></td>
+          <td class="picture"><%= character_picture_link(victim) %></td>
+          <td class="name"><%= character_name_link(victim) %></td>
           <td class="level"><%= victim.level %></td>
           <td class="controls">
             <%= link_to_remote(fb_i("Attack!"),

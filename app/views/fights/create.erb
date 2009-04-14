@@ -14,9 +14,7 @@
     <p class="success">
       <% fb_i do %>
         You attacked {user_name} and WON the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
-        <%= fb_it(:user_name, 
-              link_to(fb_name(@fight.victim.user, :linked => false), character_url(@fight.victim, :canvas => true))
-            ) %>
+        <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
       <% end %>
     </p>
 
@@ -52,9 +50,7 @@
           <h3>
             <% fb_i do %>
               {user_name} lost:
-              <%= fb_it(:user_name, 
-                    link_to(fb_name(@fight.victim.user, :linked => false), character_url(@fight.victim, :canvas => true))
-                  ) %>
+              <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
             <% end %>
           </h3>
           <ul>
@@ -80,9 +76,8 @@
     <p class="fail">
       <% fb_i do %>
         You attacked {user_name} and LOST the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
-        <%= fb_it(:user_name, 
-              link_to(fb_name(@fight.victim.user, :linked => false), character_url(@fight.victim, :canvas => true))
-            ) %>
+        
+        <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
       <% end %>
     </p>
 
@@ -109,9 +104,7 @@
           <h3>
             <% fb_i do %>
               {user_name} lost:
-              <%= fb_it(:user_name,
-                    link_to(fb_name(@fight.victim.user, :linked => false), character_url(@fight.victim, :canvas => true))
-                  ) %>
+              <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
             <% end %>
           </h3>
           <ul>
