@@ -48,26 +48,6 @@ class Character < ActiveRecord::Base
   restorable_attribute :ep, :energy, 5.minutes
 
   before_save :update_level_and_points
-#  before_save :update_hp_and_ep
-
-  def fulfill_mission!(mission)
-    return false if self.ep < mission.ep_cost
-
-    rank = mission.by(self)
-    
-    self.class.transaction do
-      rank.increment(:win_count)
-      rank.save!
-
-      self.ep -= mission.ep_cost
-      
-      self.increment(:experience, mission.experience)
-      self.increment(:basic_money, mission.money)
-      self.save!
-    end
-
-    return rank
-  end
 
   def upgrade_attribute!(name)
     return false unless %w{attack defence health energy}.include?(name.to_s) && self.points > 0

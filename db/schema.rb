@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090410163200) do
+ActiveRecord::Schema.define(:version => 20090417174054) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
@@ -105,8 +105,8 @@ ActiveRecord::Schema.define(:version => 20090410163200) do
     t.integer  "level"
     t.string   "name"
     t.string   "description"
-    t.string   "won_text"
-    t.string   "lost_text"
+    t.string   "success_text"
+    t.string   "failure_text"
     t.string   "complete_text"
     t.integer  "win_amount"
     t.string   "title"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20090410163200) do
     t.integer  "money_max"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "success_chance", :default => 100
   end
 
   create_table "ranks", :force => true do |t|

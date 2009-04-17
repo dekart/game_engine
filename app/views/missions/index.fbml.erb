@@ -22,7 +22,7 @@
       <td class="requires">
         <div class="energy"><%= mission.ep_cost %></div>
       </td>
-      <% rank = mission.by(current_character) %>
+      <% rank = mission.ranks.for_character(current_character) %>
       <td class="completeness"><%= rank.completeness %></td>
       <td class="controls">
         <% if current_character.ep >= mission.ep_cost and !rank.completed? %>

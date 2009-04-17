@@ -1,5 +1,5 @@
-<% if @rank %>
-  <% if @rank.completed? %>
+<% if @result.saved %>
+  <% if @result.rank.completed? %>
     <%= link_to_feed_dialog("Publish to Profile", Publisher::Mission, :completed,
           :template_data => {
             :title => @mission.title,
@@ -21,33 +21,50 @@
     <% content_for :script do %>
       Mission.hideControls(<%= @mission.id %>);
     <% end %>
-  <% else %>
-    <%= link_to_remote(fb_i("Fulfill Again!"),
+  <% elsif @result.success %>
+    <%= link_to_remote(fb_i("Continue!"),
           :url => fulfill_mission_url(@mission, :canvas => false),
           :update => :mission_result,
           :html   => {:class => :fulfill_again}
         ) if current_character.ep >= @mission.ep_cost %>
 
     <p>
-      <%= fb_i("Well done!") %> <%= fb_i(@mission.won_text) %>
+      <%= fb_i("Well done!") %> <%= fb_i(@mission.success_text) %>
+    </p>
+  <% else %>
+    <%= link_to_remote(fb_i("Try Again!"),
+          :url => fulfill_mission_url(@mission, :canvas => false),
+          :update => :mission_result,
+          :html   => {:class => :fulfill_again}
+        ) if current_character.ep >= @mission.ep_cost %>
+
+    <p>
+      <%= fb_i("Ouch!") %> <%= fb_i(@mission.failure_text) %>
     </p>
   <% end %>
-
+  
   <table>
     <tr>
-      <td class="received">
-        <h3><%= fb_i("You received:") %></h3>
-        <ul>
-          <li class="experience">
-            <b><%= fb_i("Experience:") %></b>
-            <div><%= @mission.experience %></div>
-          </li>
-          <li class="basic_money">
-            <b><%= fb_i("Money:") %></b>
-            <div><%= @mission.money %></div>
-          </li>
-        </ul>
-      </td>
+      <% if @result.received_something? %>
+        <td class="received">
+          <h3><%= fb_i("You received:") %></h3>
+          <ul>
+            <% if @result.experience %>
+              <li class="experience">
+                <b><%= fb_i("Experience:") %></b>
+                <div><%= @result.experience %></div>
+              </li>
+            <% end %>
+            
+            <% if @result.money %>
+              <li class="basic_money">
+                <b><%= fb_i("Money:") %></b>
+                <div><%= @result.money %></div>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      <% end %>
       <td class="spent">
         <h3><%= fb_i("You spent:") %></h3>
         <ul>
@@ -61,9 +78,9 @@
   </table>
   
   <% content_for :script do %>
-    Mission.setCompleteness(<%= @mission.id %>, '<%= @rank.completeness %>');
+    Mission.setCompleteness(<%= @mission.id %>, '<%= @result.rank.completeness %>');
   <% end %>
-<% else %>
+<% elsif !@result.enough_energy? %>
   <p>
     <% fb_i do %>
       You don't have enough energy. Take a rest until your energy will grow to {ep_number} points.

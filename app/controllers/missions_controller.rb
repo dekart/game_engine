@@ -6,7 +6,7 @@ class MissionsController < ApplicationController
   def fulfill
     @mission = Mission.find(params[:id])
 
-    @rank = current_character.fulfill_mission!(@mission)
+    @result = MissionResult.create(current_character, @mission)
 
     render :action => :fulfill, :layout => "ajax"
   end
