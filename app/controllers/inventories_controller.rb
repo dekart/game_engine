@@ -10,7 +10,7 @@ class InventoriesController < ApplicationController
   def destroy
     @inventory = current_character.inventories.find(params[:id])
 
-    @inventory.destroy
+    @inventory.sell
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -19,11 +19,19 @@ class InventoriesController < ApplicationController
     @inventories = current_character.inventories
   end
 
-  def apply
+  def place
     @inventory = current_character.inventories.find(params[:id])
 
-    @inventory.apply_to(params[:placement])
+    @inventory.place_to(params[:placement])
 
     render :partial => "inventories/placements", :locals => {:character => current_character}
+  end
+
+  def use
+    @inventory = current_character.inventories.find(params[:id])
+
+    @inventory.use
+
+    render :action => :use, :layout => "ajax"
   end
 end

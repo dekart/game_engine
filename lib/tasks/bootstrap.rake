@@ -99,5 +99,20 @@ namespace :app do
     @armors.each_pair do |key, value|
       Armor.find_or_create_by_name(key).update_attributes(value)
     end
+
+    @potions = {
+      "Small Healing Potion" => {
+        :level => 1,
+        :description => "Small potion of magic healing liquor. Heals up to 20 health points.",
+        :basic_price => 50,
+        :usable => true,
+        :usage_limit => 1,
+        :effects => Effects::Collection.new(Effects::RestoreHealth.new(20))
+      }
+    }
+
+    @potions.each_pair do |key, value|
+      Potion.find_or_create_by_name(key).update_attributes(value)
+    end
   end
 end

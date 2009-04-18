@@ -4,36 +4,28 @@ class Inventory < ActiveRecord::Base
   belongs_to :character
   belongs_to :item
 
-  named_scope :weapons, {
-    :conditions => "items.type = 'Weapon'",
-    :include    => :item,
-    :order      => "items.level ASC"
-  }
-  named_scope :armors, {
-    :conditions => "items.type = 'Armor'",
-    :include    => :item,
-    :order      => "items.level ASC"
-  }
+  Item::TYPES.each do |type|
+    named_scope type, {
+      :conditions => ["items.type = ?", type.classify],
+      :include    => :item,
+      :order      => "items.level ASC"
+    }
+  end
 
   named_scope :placed, { :conditions => "placement IS NOT NULL" }
 
   validate_on_create :enough_character_money?
 
   after_create  :charge_character
-  after_destroy :deposit_character
 
-  delegate :name, :description, :image, :effects, :to => :item
+  delegate :name, :description, :image, :effects, :placements, :placeable?, :usable?, :usage_limit, :to => :item
   
   def sell_price
     (self.item.basic_price * 0.8).ceil
   end
 
-  def possible_placements
-    self.item.placements.split(",")
-  end
-
-  def apply_to(placement)
-    if self.possible_placements.include?(placement.to_s)
+  def place_to(placement)
+    if self.placements.include?(placement.to_s)
 
       self.class.transaction do
         self.character.inventories.update_all('placement = NULL', ['placement = ?', self.placement])
@@ -42,6 +34,35 @@ class Inventory < ActiveRecord::Base
 
         self.character.cache_inventory_effects
       end
+    end
+  end
+
+  def uses_left
+    self.usage_limit - self.usage_count
+  end
+
+  def use
+    return unless self.usable?
+
+    self.transaction do
+      self.effects.apply(self.character)
+      self.character.save!
+
+      self.usage_count += 1
+
+      if self.uses_left == 0
+        self.destroy
+      else
+        self.save!
+      end
+    end
+  end
+
+  def sell
+    self.transaction do
+      self.character.increment!(:basic_money, self.sell_price)
+
+      self.destroy
     end
   end
   
@@ -58,9 +79,5 @@ class Inventory < ActiveRecord::Base
       
       self.character.save!
     end
-  end
-
-  def deposit_character
-    self.character.increment!(:basic_money, self.sell_price)
   end
 end

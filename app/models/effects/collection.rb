@@ -23,5 +23,11 @@ module Effects
         end
       end
     end
+
+    def apply(character)
+      self.each do |effect|
+        effect.apply(character)
+      end
+    end
   end
 end

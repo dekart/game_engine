@@ -8,7 +8,7 @@
 
 <% if @inventories.count != 0 %>
   <table id="inventory_list" cellspacing="0">
-    <% %w{weapons armors}.each do |type| %>
+    <% Item::TYPES.each do |type| %>
       <% if @inventories.send(type).any? %>
         <tr>
           <th colspan="3"><h3><%= fb_i(type.capitalize) %></h3></th>
@@ -27,13 +27,19 @@
               <% end %>
             </td>
             <td class="controls">
-              <% inventory.possible_placements.each do |placement| %>
+              <% inventory.placements.each do |placement| %>
                 <%= link_to_remote(fb_i("To #{placement.titleize}"),
-                      :url    => apply_inventory_url(inventory, :placement => placement, :canvas => false),
+                      :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
                       :update => :inventory_placements,
-                      :html   => {:class => :apply}
+                      :html   => {:class => :place}
                     ) %>
               <% end %>
+
+              <%= link_to_remote(inventory_use_label(inventory),
+                    :url    => use_inventory_url(inventory, :canvas => false),
+                    :update => :inventory_result,
+                    :html   => {:class => :use}
+                  ) if inventory.usable? %>
               
               <%= link_to_remote(fb_i("Sell for {amount}" + fb_it(:amount, inventory.sell_price)),
                     :url    => inventory_url(inventory, :_method => :delete, :canvas => false),

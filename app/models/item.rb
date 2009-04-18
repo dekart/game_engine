@@ -14,8 +14,19 @@ class Item < ActiveRecord::Base
     { :conditions => ["level <= ?", character.level], :order => :basic_price }
   }
 
-  named_scope :weapons, { :conditions => "type = 'Weapon'" }
-  named_scope :armors,  { :conditions => "type = 'Armor'"  }
+  TYPES = %w{weapons armors potions}
+
+  TYPES.each do |type|
+    named_scope type, { :conditions => ["type = ?", type.classify] }
+  end
 
   named_scope :shop, {:conditions => "availability = 'shop'"}
+
+  def placements
+    @placements ||= (self[:placements].blank? ? [] : self[:placements].split(","))
+  end
+
+  def placeable?
+    self.placements.any?
+  end
 end

@@ -1,0 +1,3 @@
+class Potion < Item
+
+end

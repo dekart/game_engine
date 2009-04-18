@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090417174054) do
+ActiveRecord::Schema.define(:version => 20090418133515) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20090417174054) do
     t.string   "placement"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "usage_count",  :default => 0
   end
 
   create_table "invitations", :force => true do |t|
@@ -99,6 +100,8 @@ ActiveRecord::Schema.define(:version => 20090417174054) do
     t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "usable"
+    t.integer  "usage_limit"
   end
 
   create_table "missions", :force => true do |t|

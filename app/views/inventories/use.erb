@@ -1,0 +1,35 @@
+<p>
+  <% fb_i do %>
+    You've successfully used {item}!
+
+    <%= fb_it(:item, fb_i(@inventory.name)) %>
+  <% end %>
+</p>
+
+<h3><%= fb_i("Effects:") %></h3>
+<ul>
+  <% @inventory.effects.each do |effect| %>
+    <% content_tag(:li, :class => effect.name) do %>
+      <b><%= fb_i("#{effect.name.titleize}:") %></b>
+      <div><%= effect.value %></div>
+    <% end %>
+  <% end %>
+</ul>
+
+<% if @inventory.frozen? %>
+  <p>
+    <% fb_i do %>
+      {item} ran out and now it's gone!
+
+      <%= fb_it(:item, fb_i(@inventory.name)) %>
+    <% end %>
+  </p>
+
+  <% content_for :script do %>
+    $('inventory_<%= @inventory.id %>').hide();
+  <% end %>
+<% end %>
+
+<% content_for :script do %>
+  $('inventory_result').show();
+<% end %>
