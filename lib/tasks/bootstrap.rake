@@ -186,12 +186,13 @@ namespace :app do
     end
 
     @armors = {
-      "Кожанный жилет" => {
-        :level => 1,
-        :description => "Жилет из грубой бычьей кожи, закрывающий грудь и живот",
-        :basic_price => 50,
-        :effects => Effects::Collection.new(Effects::Defence.new(2)),
-        :placements => "body"
+      "Wooden Shield" => {
+        :level        => 1,
+        :description  => "Simple wooden shield, almost useless in serious battle",
+        :basic_price  => 100,
+        :effects      => Effects::Collection.new(Effects::Defence.new(1)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 4")
       }
     }
 
