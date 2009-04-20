@@ -11,7 +11,7 @@ module Publisher
       send_as :notification
       recipients fight.victim.user
       from user
-      fbml "attacked you in <b><fb:application-name /></b> game and #{fight.attacker_won? ? "WON" : "LOST"}! #{link_to("Fight Back!", fight_url(fight))}"
+      fbml "attacked you in <b><fb:application-name /></b> game and #{fight.attacker_won? ? "WON" : "LOST"}!"
     end
 
     def attack_template
