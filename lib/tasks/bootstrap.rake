@@ -153,30 +153,52 @@ namespace :app do
     end
 
     @weapons = {
-      "Дубинка" => {
+      "Soldier Sword" => {
         :level => 1,
-        :description => "Тяжелая дубовая палка, оружие бедняков",
-        :basic_price => 50,
-        :effects => Effects::Collection.new(Effects::Attack.new(1)),
-        :image => img("club"),
-        :placements => "left_hand,right_hand"
-      },
-      "Солдатский меч" => {
-        :level => 1,
-        :description => "Меч рядового солдата, выкованный армейскими кузнецами",
+        :description => "",
         :basic_price => 100,
-        :effects => Effects::Collection.new(Effects::Attack.new(2)),
-        :image => img("sword"),
+        :effects => Effects::Collection.new(Effects::Attack.new(4)),
+        :image => img("weapon 100_n"),
         :placements => "left_hand,right_hand"
       },
-      "Охотничий лук" => {
+      "Trapper Bow" => {
         :level => 1,
-        :description => "Лук лесных охотников, простой и надежный",
+        :description => "",
+        :basic_price => 100,
+        :effects => Effects::Collection.new(Effects::Attack.new(3)),
+        :image => img("weapon 20_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Lumberjack Axe" => {
+        :level => 1,
+        :description => "",
         :basic_price => 70,
-        :vip_price => 1,
         :effects => Effects::Collection.new(Effects::Attack.new(2)),
-        :image => img("bow"),
-        :availability => "loot",
+        :image => img("weapon 25_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Battle Staff" => {
+        :level => 3,
+        :description => "",
+        :basic_price => 160,
+        :effects => Effects::Collection.new(Effects::Attack.new(4)),
+        :image => img("weapon 25_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Knife" => {
+        :level => 1,
+        :description => "",
+        :basic_price => 40,
+        :effects => Effects::Collection.new(Effects::Attack.new(1)),
+        :image => img("weapon 57_al"),
+        :placements => "left_hand,right_hand"
+      },
+      "Orc Hammer" => {
+        :level => 5,
+        :description => "",
+        :basic_price => 200,
+        :effects => Effects::Collection.new(Effects::Attack.new(6)),
+        :image => img("weapon 84_n"),
         :placements => "left_hand,right_hand"
       }
     }
@@ -188,11 +210,19 @@ namespace :app do
     @armors = {
       "Wooden Shield" => {
         :level        => 1,
-        :description  => "Simple wooden shield, almost useless in serious battle",
-        :basic_price  => 100,
+        :description  => "",
+        :basic_price  => 70,
         :effects      => Effects::Collection.new(Effects::Defence.new(1)),
         :placements   => "left_hand,right_hand",
         :image        => img("armor 4")
+      },
+      "Steel Helmet" => {
+        :level        => 1,
+        :description  => "",
+        :basic_price  => 90,
+        :effects      => Effects::Collection.new(Effects::Defence.new(2)),
+        :placements   => "head",
+        :image        => img("armor 6_i")
       }
     }
 
@@ -201,14 +231,22 @@ namespace :app do
     end
 
     @potions = {
-      "Small Healing Potion" => {
-        :level => 1,
-        :description => "Small potion of magic healing liquor. Heals up to 20 health points.",
-        :basic_price => 50,
-        :usable => true,
-        :usage_limit => 1,
-        :effects => Effects::Collection.new(Effects::RestoreHealth.new(20))
-      }
+      "Small Potion of Healing" => {
+        :level        => 1,
+        :description  => "Small potion of magic healing liquor. Heals up to 20 health points.",
+        :basic_price  => 50,
+        :usable       => true,
+        :usage_limit  => 1,
+        :effects      => Effects::Collection.new(Effects::RestoreHealth.new(20))
+      },
+#      "Small Potion of Refresh" => {
+#        :level        => 1,
+#        :description  => "Small potion of refreshing liquor. Heals up to 5 energy points.",
+#        :basic_price  => 50,
+#        :usable       => true,
+#        :usage_limit  => 1,
+#        :effects      => Effects::Collection.new(Effects::RestoreHealth.new(20))
+#      }
     }
 
     @potions.each_pair do |key, value|
