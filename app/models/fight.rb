@@ -51,7 +51,7 @@ class Fight < ActiveRecord::Base
 
     self.winner = attacker_won ? self.attacker : self.victim
 
-    self.experience = rand((self.loser.level.to_f / 2).ceil).to_i
+    self.experience = (rand(self.loser.level) * 0.5).ceil
     self.money = (rand(self.loser.basic_money) * 0.10).ceil
   end
 
