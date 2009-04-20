@@ -53,6 +53,7 @@ class Fight < ActiveRecord::Base
 
     self.experience = (rand(self.loser.level) * 0.5).ceil
     self.experience = 1 if self.experience == 0
+    
     self.money = (rand(self.loser.basic_money) * 0.10).ceil
   end
 
