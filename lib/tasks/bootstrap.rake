@@ -156,8 +156,8 @@ namespace :app do
       "Soldier Sword" => {
         :level => 1,
         :description => "",
-        :basic_price => 100,
-        :effects => Effects::Collection.new(Effects::Attack.new(4)),
+        :basic_price => 180,
+        :effects => Effects::Collection.new(Effects::Attack.new(4), Effects::Defence.new(1)),
         :image => img("weapon 100_n"),
         :placements => "left_hand,right_hand"
       },
@@ -196,8 +196,8 @@ namespace :app do
       "Orc Hammer" => {
         :level => 5,
         :description => "",
-        :basic_price => 200,
-        :effects => Effects::Collection.new(Effects::Attack.new(6)),
+        :basic_price => 220,
+        :effects => Effects::Collection.new(Effects::Attack.new(6), Effects::Defence.new(2)),
         :image => img("weapon 84_n"),
         :placements => "left_hand,right_hand"
       }
