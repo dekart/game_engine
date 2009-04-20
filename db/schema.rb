@@ -9,12 +9,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090418133515) do
+ActiveRecord::Schema.define(:version => 20090410163200) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.integer  "basic_money",       :default => 100
+    t.integer  "basic_money",       :default => 10
     t.integer  "vip_money",         :default => 0
     t.integer  "level",             :default => 1
     t.integer  "experience",        :default => 0
@@ -69,9 +69,9 @@ ActiveRecord::Schema.define(:version => 20090418133515) do
     t.integer  "character_id"
     t.integer  "item_id"
     t.string   "placement"
+    t.integer  "usage_count",  :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "usage_count",  :default => 0
   end
 
   create_table "invitations", :force => true do |t|
@@ -98,10 +98,10 @@ ActiveRecord::Schema.define(:version => 20090418133515) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.boolean  "usable"
     t.integer  "usage_limit"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "missions", :force => true do |t|
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20090418133515) do
     t.string   "failure_text"
     t.string   "complete_text"
     t.integer  "win_amount"
+    t.integer  "success_chance", :default => 100
     t.string   "title"
     t.integer  "ep_cost"
     t.integer  "experience"
@@ -119,7 +120,6 @@ ActiveRecord::Schema.define(:version => 20090418133515) do
     t.integer  "money_max"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "success_chance", :default => 100
   end
 
   create_table "ranks", :force => true do |t|

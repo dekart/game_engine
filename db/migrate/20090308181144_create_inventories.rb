@@ -5,6 +5,8 @@ class CreateInventories < ActiveRecord::Migration
       t.integer :item_id
 
       t.string  :placement
+
+      t.integer :usage_count, :default => 0
       
       t.timestamps
     end

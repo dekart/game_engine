@@ -20,6 +20,9 @@ class CreateItems < ActiveRecord::Migration
       t.string  :image_content_type
       t.integer :image_file_size
 
+      t.boolean :usable
+      t.integer :usage_limit
+
       t.timestamps
     end
   end

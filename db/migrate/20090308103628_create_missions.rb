@@ -6,11 +6,12 @@ class CreateMissions < ActiveRecord::Migration
       t.string  :name
       t.string  :description
 
-      t.string  :won_text
-      t.string  :lost_text
+      t.string  :success_text
+      t.string  :failure_text
       t.string  :complete_text
 
       t.integer :win_amount
+      t.integer :success_chance, :default => 100
 
       t.string  :title
 
