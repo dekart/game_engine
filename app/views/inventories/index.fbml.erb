@@ -12,14 +12,13 @@
       <% if @inventories.send(type).any? %>
         <tr>
           <th colspan="3"><h3><%= fb_i(type.capitalize) %></h3></th>
-          <th><%= fb_i("Sell Price") %></th>
         </tr>
         <% @inventories.send(type).each do |inventory| %>
           <% content_tag_for(:tr, inventory) do %>
             <td class="picture"><%= image_tag(inventory.image.url(:small)) %></td>
             <td class="info">
-              <div class="name"><%= inventory.name %></div>
-              <div class="description"><%= inventory.description %></div>
+              <div class="name"><%= fb_i(inventory.name) %></div>
+              <div class="description"><%= fb_i(inventory.description) %></div>
             </td>
             <td class="details">
               <% inventory.effects.each do |effect| %>
