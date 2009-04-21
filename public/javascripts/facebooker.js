@@ -1,4 +1,3 @@
-
 function $(element) {
   if (typeof element == "string") {
     element=document.getElementById(element);
@@ -51,6 +50,7 @@ Form.serialize = function(form_element) {
   return $(form_element).serialize();
 };
 
+var Ajax = {};
 Ajax.Updater = function (container,url,options) {
   this.container = container;
   this.url=url;
