@@ -54,6 +54,11 @@ namespace :deploy do
       run "cd #{current_path}; rake blogbox:jobs:update_references --trace"
     end
   end
+
+  desc "Bootstrap application data"
+  task :bootstrap, :roles => :app do
+    run "cd #{current_path}; rake app:bootstrap"
+  end
 end
 
 ["deploy:jobs:stop"].each do |t|
@@ -61,7 +66,7 @@ end
   before "deploy:migrations", t
 end
 
-["deploy:jobs:update_references", "deploy:jobs:start", "deploy:cleanup"].each do |t|
+["deploy:jobs:update_references", "deploy:bootstrap", "deploy:jobs:start", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
