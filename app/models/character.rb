@@ -72,11 +72,11 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    self.attack + self.inventory_effects[:attack].value
+    self.attack + self.inventory_effects[:attack].value + self.relations.size
   end
 
   def defence_points
-    self.defence + self.inventory_effects[:defence].value
+    self.defence + self.inventory_effects[:defence].value + self.relations.size
   end
 
   def weak?
