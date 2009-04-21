@@ -239,14 +239,14 @@ namespace :app do
         :usage_limit  => 1,
         :effects      => Effects::Collection.new(Effects::RestoreHealth.new(20))
       },
-#      "Small Potion of Refresh" => {
-#        :level        => 1,
-#        :description  => "Small potion of refreshing liquor. Heals up to 5 energy points.",
-#        :basic_price  => 50,
-#        :usable       => true,
-#        :usage_limit  => 1,
-#        :effects      => Effects::Collection.new(Effects::RestoreHealth.new(20))
-#      }
+      "Small Potion of Refresh" => {
+        :level        => 1,
+        :description  => "Small potion of refreshing liquor. Heals up to 5 energy points.",
+        :basic_price  => 50,
+        :usable       => true,
+        :usage_limit  => 1,
+        :effects      => Effects::Collection.new(Effects::RestoreEnergy.new(5))
+      }
     }
 
     @potions.each_pair do |key, value|
