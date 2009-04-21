@@ -9,7 +9,7 @@
   </tr>
   <% %w{attack defence health energy}.each do |attribute| %>
     <tr>
-      <td class="name"><%= fb_i(attribute.capitalize) %></td>
+      <td class="name"><%= fb_i("#{attribute.capitalize}:") %></td>
       <td class="value" id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
       <td class="controls">
         <%= link_to_remote(image_tag("icons/add.gif"),
