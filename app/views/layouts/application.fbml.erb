@@ -57,8 +57,6 @@
 <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
 <%= fb_i(fb_error(flash[:error])) if flash[:error] %>
 
-<%= render :partial => "layouts/next_steps" if current_user.show_next_steps? %>
-
 <%= yield %>
 
 <script>

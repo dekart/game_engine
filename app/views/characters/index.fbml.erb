@@ -7,6 +7,8 @@
     </td>
 
     <td class="wall">
+      <%= render :partial => "layouts/next_steps" if current_user.show_next_steps? %>
+
       <% if @alliance_invitations.any? %>
         <h3><%= fb_i("Alliance Invitations") %></h3>
 
