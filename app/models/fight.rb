@@ -128,15 +128,29 @@ class Fight < ActiveRecord::Base
       defence.pop
     end
 
-    # Суммируем значения успешных бросков
+    # Summarize successful dices
     attack  = attack.summarize.to_f * attack_bonus
     defence = defence.summarize.to_f * defence_bonus
 
-    logger.debug "Attack: %f * %f = %f \nDefence Points: %f * %f = %f" % [
-      attack_points, attack_bonus, attack,
-      defence_points, defence_bonus, defence
-    ]
+    # Make sure that both attack and defence are at least 1
+    attack = 1 if attack == 0
+    defence = 1 if defence == 0
 
-    return [attack >= defence, (attack / 2).ceil, (defence / 2).ceil]
+    logger.debug <<-CODE
+      Attack: #{attack_points} * #{attack_bonus} = #{attack} 
+      Defence Points: #{defence_points} * #{defence_bonus} = #{defence}
+CODE
+
+    attacker_won = (attack >= defence)
+
+    if attacker_won
+      attack_damage   = rand(victim.health) * 0.3
+      defence_damage  = rand(attack_damage * defence / attack)
+    else
+      defence_damage  = rand(attacker.health) * 0.3
+      attack_damage   = rand(defence_damage * attack / defence)
+    end
+
+    return [attacker_won, attack_damage.ceil, defence_damage.ceil]
   end
 end
