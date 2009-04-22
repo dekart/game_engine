@@ -25,7 +25,7 @@
     <% elsif @result.success %>
       <%= link_to_remote(fb_i("Continue!"),
             :url => fulfill_mission_url(@mission, :canvas => false),
-            :update => :mission_result,
+            :update => :result,
             :html   => {:class => "fulfill_again button"}
           ) if current_character.ep >= @mission.ep_cost %>
 
@@ -35,7 +35,7 @@
     <% else %>
       <%= link_to_remote(fb_i("Try Again!"),
             :url => fulfill_mission_url(@mission, :canvas => false),
-            :update => :mission_result,
+            :update => :result,
             :html   => {:class => "fulfill_again button"}
           ) if current_character.ep >= @mission.ep_cost %>
 
