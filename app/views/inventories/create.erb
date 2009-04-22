@@ -1,4 +1,6 @@
 <% if !@inventory.new_record? %>
+  <%= link_to(fb_i("Go To Inventory"), inventories_url(:canvas => true), :class => "inventory button") %>
+
   <p>
   <% fb_i do %>
     You successfully bought {item_name}
