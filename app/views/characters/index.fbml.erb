@@ -25,10 +25,10 @@
                       :url    => accept_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
                       :html   => {:class => :accept}) %>
-                <%= link_to_remote(fb_i("Decline"),
-                      :url    => decline_invitation_url(invitation, :canvas => false),
+                <%= link_to_remote(fb_i("Ignore"),
+                      :url    => ignore_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
-                      :html   => {:class => :decline}) %>
+                      :html   => {:class => :ignore}) %>
               <% end %>
             </tr>
           <% end %>

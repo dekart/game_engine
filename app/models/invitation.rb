@@ -31,7 +31,7 @@ class Invitation < ActiveRecord::Base
     end
   end
 
-  def decline!
+  def ignore!
     self.update_attribute(:accepted, :false)
   end
 end

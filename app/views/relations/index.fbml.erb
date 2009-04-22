@@ -18,6 +18,9 @@
         <td class="picture"><%= character_picture_link(relation.target) %></td>
         <td class="name"><%= character_name_link(relation.target) %></td>
         <td class="level"><%= fb_i("Level:") %> <%= relation.target.level %></td>
+        <td class="controls">
+          <%= link_to(fb_i("Break Alliance"), relation_path(relation.target), :method => :delete, :confirm => "Are you sure?", :class => :delete) %>
+        </td>
       </tr>
     <% end %>
   </table>

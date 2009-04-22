@@ -59,6 +59,9 @@
     form .fieldWithErrors textarea{border: 1px solid #ee5555;}
   form .error {color: red; padding: 3px 0px;}
 
+  .controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("1px.gif") %>) 3px center no-repeat; float: right; clear: both;}
+    .controls a:hover {background-color: #e0e0e0;}
+
   .character_attributes {padding: 0; }
     .character_attributes li {display: block; clear:both;height: 25px; line-height: 25px;}
     .character_attributes li b {width: 60px;display:block; float: left}
@@ -89,8 +92,7 @@
     <% end %>
     #mission_list .requires {width: 100px;}
       #mission_list .requires .energy {height: 25px;line-height: 25px;padding-left: 20px; background: url(<%= image_path("icons/energy.gif") %>) center left no-repeat;}
-    #mission_list .controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("icons/missions.gif") %>) 3px center no-repeat;}
-    #mission_list .controls a:hover {background-color: #e0e0e0;}
+    #mission_list .controls a { background-image: url(<%= image_path("icons/missions.gif") %>);}
 
   .result {font-size: 13px;margin-bottom:10px;border: 2px solid #3B5998;}
     .result td {padding-right: 40px;}
@@ -117,8 +119,7 @@
     #victim_list .picture {padding-right: 10px;}
     #victim_list .name{ width: 200px;}
     #victim_list .level {width: 50px;}
-    #victim_list .controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("icons/fights.gif") %>) 3px center no-repeat;}
-    #victim_list .controls a:hover {background-color: #e0e0e0;}
+    #victim_list .controls a {background-image: url(<%= image_path("icons/fights.gif") %>);}
 
   #fight_result {padding:0px 30px; background: url(<%= image_path("icons/fights.gif") %>) 5px 8px no-repeat;}
     #fight_result .lost b {width: 55px;}
@@ -146,8 +147,7 @@
       #item_list .requires .basic_price{background-image: url(<%= image_path("icons/basic_money.gif") %>)}
       #item_list .requires .vip_price{background-image: url(<%= image_path("icons/vip_money.gif") %>)}
     #item_list .spacer {border:0;}
-    #item_list .controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("icons/basic_money.gif") %>) 3px center no-repeat;}
-    #item_list .controls a:hover {background-color: #e0e0e0;}
+    #item_list .controls a {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
 
   #shop_result {padding:0px 30px; background: url(<%= image_path("icons/basic_money.gif") %>) 5px 8px no-repeat;}
 
@@ -162,11 +162,9 @@
       #inventory_list .details .restore_health{background-image: url(<%= image_path("icons/health.gif") %>)}
       #inventory_list .details .restore_energy{background-image: url(<%= image_path("icons/energy.gif") %>)}
     #inventory_list .spacer {border:0;}
-    #inventory_list .controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold;background-position: 3px center; background-repeat: no-repeat;}
-    #inventory_list .controls a:hover {background-color: #e0e0e0;}
-      #inventory_list .controls .sell {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
-      #inventory_list .controls .place {background-image: url(<%= image_path("icons/add.gif") %>);}
-      #inventory_list .controls .use {background-image: url(<%= image_path("icons/accept.gif") %>);}
+    #inventory_list .controls .sell {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
+    #inventory_list .controls .place {background-image: url(<%= image_path("icons/add.gif") %>);}
+    #inventory_list .controls .use {background-image: url(<%= image_path("icons/accept.gif") %>);}
 
   #inventory_result {padding:0px 30px; background: url(<%= image_path("icons/basic_money.gif") %>) 5px 8px no-repeat;}
 
@@ -184,16 +182,15 @@
     #invitation_list td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
     #invitation_list .picture {width: 55px;}
     #invitation_list .level {width: 70px;}
-    #invitation_list .controls a {padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: transparent 3px center no-repeat; }
-      #invitation_list .controls a:hover {background-color: #e0e0e0;}
-      #invitation_list .controls .accept {background-image: url(<%= image_path("icons/accept.gif") %>)}
-      #invitation_list .controls .decline {background-image: url(<%= image_path("icons/delete.gif") %>)}
+    #invitation_list .controls .accept {background-image: url(<%= image_path("icons/accept.gif") %>)}
+    #invitation_list .controls .ignore {background-image: url(<%= image_path("icons/delete.gif") %>)}
 
   #alliance_recruit { display:block; width: 130px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("icons/add.gif") %>) 3px center no-repeat;}
   #alliance_members {}
     #alliance_members td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
     #alliance_members .picture {width: 55px;}
     #alliance_members .level {width: 70px;}
+    #alliance_members .controls .delete {background-image: url(<%= image_path("icons/delete.gif") %>)}
 
   #placements {position: relative; width: 400px; height: 550px; background: url(<%= image_path("placements.gif") %>) no-repeat;}
     #placements .head {position:absolute; left: 161px; top:42px;}

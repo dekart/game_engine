@@ -7,11 +7,11 @@ class InvitationsController < ApplicationController
     render :action => :accept, :layout => false
   end
 
-  def decline
+  def ignore
     @invitation = Invitation.find(params[:id])
 
-    @invitation.decline!
+    @invitation.ignore!
 
-    render :action => :decline, :layout => false
+    render :action => :ignore, :layout => false
   end
 end
