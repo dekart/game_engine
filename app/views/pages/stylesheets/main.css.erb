@@ -168,13 +168,14 @@
 
   #inventory_result {padding:0px 30px; background: url(<%= image_path("icons/basic_money.gif") %>) 5px 8px no-repeat;}
 
-  #upgrade_list td{padding: 10px; height: 25px; line-height: 25px;}
+  #upgrade_list td{padding: 10px; vertical-align: middle;}
   #upgrade_list .points td{border-bottom: 1px solid #d0d0d0;}
   #upgrade_list .name {font-weight: bold;}
   #upgrade_list .value {padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
   <% %w{attack defence health energy}.each do |attr| %>
-    #upgrade_<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
+    #upgrade_<%= attr %> {background: url(<%= image_path("icons/#{attr}.gif") %>);}
   <% end %>
+  #upgrade_list .controls a {margin-top:0; background-image: url(<%= image_path("icons/add.gif") %>);}
 
   #upgrade_result {padding:0px 30px; background: url(<%= image_path("icons/add.gif") %>) 5px 8px no-repeat;}
 

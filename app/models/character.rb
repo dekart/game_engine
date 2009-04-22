@@ -7,6 +7,13 @@ class Character < ActiveRecord::Base
     LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
   end
 
+  UPGRADES = {
+    :attack   => 1,
+    :defence  => 1,
+    :health   => 5,
+    :energy   => 1
+  }
+
   belongs_to :user
   has_many :ranks
   has_many :missions, :through => :ranks
@@ -50,17 +57,20 @@ class Character < ActiveRecord::Base
   before_save :update_level_and_points
 
   def upgrade_attribute!(name)
-    return false unless %w{attack defence health energy}.include?(name.to_s) && self.points > 0
+    name = name.to_sym
+
+    return false unless UPGRADES.keys.include?(name) && self.points > 0
 
     ActiveRecord::Base.transaction do
-      if name.to_sym == :health
-        self.health += 5
-        self.hp     += 5
-      elsif name.to_sym == :energy
-        self.energy += 1
-        self.ep     += 1
+      case name
+      when :health
+        self.health += UPGRADES[:health]
+        self.hp     += UPGRADES[:health]
+      when :energy
+        self.energy += UPGRADES[:energy]
+        self.ep     += UPGRADES[:energy]
       else
-        self.increment(name, 1)
+        self.increment(name, UPGRADES[name.to_sym])
       end
 
       self.decrement(:points)

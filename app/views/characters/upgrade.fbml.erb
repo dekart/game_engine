@@ -12,7 +12,7 @@
       <td class="name"><%= fb_i("#{attribute.capitalize}:") %></td>
       <td class="value" id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
       <td class="controls">
-        <%= link_to_remote(image_tag("icons/add.gif"),
+        <%= link_to_remote(Character::UPGRADES[attribute.to_sym],
               :url    => upgrade_character_url(current_character, :attribute => attribute, :canvas => false),
               :update => :upgrade_result
             ) %>
