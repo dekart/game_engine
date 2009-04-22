@@ -182,7 +182,7 @@ namespace :app do
         :description => "",
         :basic_price => 160,
         :effects => Effects::Collection.new(Effects::Attack.new(4)),
-        :image => img("weapon 25_n"),
+        :image => img("weapon 27_n"),
         :placements => "left_hand,right_hand"
       },
       "Knife" => {
