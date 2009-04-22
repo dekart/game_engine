@@ -1,38 +1,40 @@
-<% if !@inventory.new_record? %>
-  <%= link_to(fb_i("Go To Inventory"), inventories_url(:canvas => true), :class => "inventory button") %>
+<div id="shop_result">
+  <% if !@inventory.new_record? %>
+    <%= link_to(fb_i("Go To Inventory"), inventories_url(:canvas => true), :class => "inventory button") %>
 
-  <p>
-  <% fb_i do %>
-    You successfully bought {item_name}
-    <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
-  <% end %>
-  </p>
-
-  <h3><%= fb_i("You spent:") %></h3>
-  <ul>
-    <% if @item.basic_price.to_i > 0 %>
-      <li class="basic_money">
-        <b><%= fb_i("Money:") %></b>
-        <div><%= @item.basic_price %></div>
-      </li>
-    <% end %>
-    
-    <% if @item.vip_price.to_i > 0 %>
-      <li class="vip_money">
-        <b><%= fb_i("Gems:") %></b>
-        <div><%= @item.vip_price %></div>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>
+    <p>
     <% fb_i do %>
-      <%= @inventory.errors.on(:character) %>
+      You successfully bought {item_name}
       <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
     <% end %>
-  </p>
-<% end %>
+    </p>
+
+    <h3><%= fb_i("You spent:") %></h3>
+    <ul>
+      <% if @item.basic_price.to_i > 0 %>
+        <li class="basic_money">
+          <b><%= fb_i("Money:") %></b>
+          <div><%= @item.basic_price %></div>
+        </li>
+      <% end %>
+
+      <% if @item.vip_price.to_i > 0 %>
+        <li class="vip_money">
+          <b><%= fb_i("Gems:") %></b>
+          <div><%= @item.vip_price %></div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>
+      <% fb_i do %>
+        <%= @inventory.errors.on(:character) %>
+        <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
+      <% end %>
+    </p>
+  <% end %>
+</div>
 
 <% content_for :script do %>
-  $('shop_result').show();
+  $('result').show();
 <% end %>

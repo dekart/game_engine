@@ -57,6 +57,8 @@
 <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
 <%= fb_i(fb_error(flash[:error])) if flash[:error] %>
 
+<div id="result" style="display:none"></div>
+
 <%= yield %>
 
 <script>

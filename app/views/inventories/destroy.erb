@@ -1,19 +1,21 @@
-<p>
-  <% fb_i do %>
-    You've successfully sold {item_name}!
-    <%= fb_it(:item_name, content_tag(:b, fb_i(@inventory.name))) %>
-  <% end %>
-</p>
+<div id="inventory_result">
+  <p>
+    <% fb_i do %>
+      You've successfully sold {item_name}!
+      <%= fb_it(:item_name, content_tag(:b, fb_i(@inventory.name))) %>
+    <% end %>
+  </p>
 
-<h3><%= fb_i("You received:") %></h3>
-<ul>
-  <li class="basic_money">
-    <b><%= fb_i("Money:") %></b>
-    <div><%= @inventory.sell_price %></div>
-  </li>
-</ul>
+  <h3><%= fb_i("You received:") %></h3>
+  <ul>
+    <li class="basic_money">
+      <b><%= fb_i("Money:") %></b>
+      <div><%= @inventory.sell_price %></div>
+    </li>
+  </ul>
+</div>
 
 <% content_for :script do %>
-  $('inventory_result').show();
+  $('result').show();
   $('inventory_<%= @inventory.id %>').hide();
 <% end %>

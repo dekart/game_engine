@@ -69,16 +69,10 @@ var Mission = {
   },
   hideControls: function(id){
     $('mission_' + id).by_class('controls')[0].setTextValue('');
-  },
-  showResult: function(){
-    $('mission_result').show();
   }
 }
 
 var Fight = {
-  showResult: function(){
-    $('fight_result').show()
-  },
   hideVictim: function(id){
     $('character_' + id).hide();
   }

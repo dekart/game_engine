@@ -1,7 +1,5 @@
 <%= title(fb_i("Shop")) %>
 
-<div id="shop_result" class="result" style="display:none;"></div>
-
 <table id="item_list" cellspacing="0">
   <% Item::TYPES.each do |type| %>
     <% if @items.send(type).any? %>
@@ -29,7 +27,7 @@
           <td class="controls">
             <%= link_to_remote(fb_i("Buy"),
                   :url => inventories_url(:item_id => item.id, :canvas => false),
-                  :update => :shop_result
+                  :update => :result
                 ) if current_character.can_buy?(item) %>
           </td>
         </tr>

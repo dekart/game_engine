@@ -1,7 +1,5 @@
 <%= title(fb_i("Upgrade")) %>
 
-<div class="result" id="upgrade_result" style="display:none"></div>
-
 <table id="upgrade_list" cellspacing="0">
   <tr class="points">
     <td class="name"><%= fb_i("Upgrade Points") %></td>
@@ -14,7 +12,7 @@
       <td class="controls">
         <%= link_to_remote(Character::UPGRADES[attribute.to_sym],
               :url    => upgrade_character_url(current_character, :attribute => attribute, :canvas => false),
-              :update => :upgrade_result
+              :update => :result
             ) %>
       </td>
     </tr>

@@ -1,126 +1,128 @@
-<% if !@fight.new_record? %>
-  <% if @fight.winner == current_character %>
-    <%= link_to_feed_dialog("Publish to Profile", Publisher::Fight, :attack,
-          :template_data => {
-            :victim           => fb_name(@fight.victim.user),
-            :money            => @fight.money,
-            :experience       => @fight.experience,
-            :attacker_hp_loss => @fight.attacker_hp_loss,
-            :victim_hp_loss   => @fight.victim_hp_loss
-          },
-          :html => {:class => "publish button"}
-        ) %>
+<div id="fight_result">
+  <% if !@fight.new_record? %>
+    <% if @fight.winner == current_character %>
+      <%= link_to_feed_dialog("Publish to Profile", Publisher::Fight, :attack,
+            :template_data => {
+              :victim           => fb_name(@fight.victim.user),
+              :money            => @fight.money,
+              :experience       => @fight.experience,
+              :attacker_hp_loss => @fight.attacker_hp_loss,
+              :victim_hp_loss   => @fight.victim_hp_loss
+            },
+            :html => {:class => "publish button"}
+          ) %>
 
-    <p class="success">
-      <% fb_i do %>
-        You attacked {user_name} and WON the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
-        <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
+      <p class="success">
+        <% fb_i do %>
+          You attacked {user_name} and WON the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
+          <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
+        <% end %>
+      </p>
+
+      <table>
+        <tr>
+          <td class="received">
+            <h3><%= fb_i("You received:") %></h3>
+            <ul>
+              <li class="experience">
+                <b><%= fb_i("Experience:") %></b>
+                <div><%= @fight.experience %></div>
+              </li>
+              <li class="basic_money">
+                <b><%= fb_i("Money:") %></b>
+                <div><%= @fight.money %></div>
+              </li>
+            </ul>
+          </td>
+          <td class="lost">
+            <h3><%= fb_i("You lost:") %></h3>
+            <ul>
+              <li class="energy">
+                <b><%= fb_i("Energy:") %></b>
+                <div>1</div>
+              </li>
+              <li class="health">
+                <b><%= fb_i("Health:") %></b>
+                <div><%= @fight.attacker_hp_loss %></div>
+              </li>
+            </ul>
+          </td>
+          <td class="victim_lost">
+            <h3>
+              <% fb_i do %>
+                {user_name} lost:
+                <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
+              <% end %>
+            </h3>
+            <ul>
+              <li class="health">
+                <b><%= fb_i("Health:") %></b>
+                <div><%= @fight.victim_hp_loss %></div>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+
+      <% content_for :script do %>
+        Fight.hideVictim(<%= @victim.id %>);
       <% end %>
-    </p>
+    <% else %>
+      <%= link_to_remote(fb_i("Attack Again!"),
+            :url    => fights_url(:victim_id => @victim, :canvas => false),
+            :update => :result,
+            :html   => {:class => "attack_again button"}
+          ) if current_character.energy > 0 %>
 
-    <table>
-      <tr>
-        <td class="received">
-          <h3><%= fb_i("You received:") %></h3>
-          <ul>
-            <li class="experience">
-              <b><%= fb_i("Experience:") %></b>
-              <div><%= @fight.experience %></div>
-            </li>
-            <li class="basic_money">
-              <b><%= fb_i("Money:") %></b>
-              <div><%= @fight.money %></div>
-            </li>
-          </ul>
-        </td>
-        <td class="lost">
-          <h3><%= fb_i("You lost:") %></h3>
-          <ul>
-            <li class="energy">
-              <b><%= fb_i("Energy:") %></b>
-              <div>1</div>
-            </li>
-            <li class="health">
-              <b><%= fb_i("Health:") %></b>
-              <div><%= @fight.attacker_hp_loss %></div>
-            </li>
-          </ul>
-        </td>
-        <td class="victim_lost">
-          <h3>
-            <% fb_i do %>
-              {user_name} lost:
-              <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
-            <% end %>
-          </h3>
-          <ul>
-            <li class="health">
-              <b><%= fb_i("Health:") %></b>
-              <div><%= @fight.victim_hp_loss %></div>
-            </li>
-          </ul>
-        </td>
-      </tr>
-    </table>
+      <p class="fail">
+        <% fb_i do %>
+          You attacked {user_name} and LOST the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
 
-    <% content_for :script do %>
-      Fight.hideVictim(<%= @victim.id %>);
+          <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
+        <% end %>
+      </p>
+
+      <table>
+        <tr>
+          <td class="lost">
+            <h3><%= fb_i("You lost:") %></h3>
+            <ul>
+              <li class="energy">
+                <b><%= fb_i("Energy:") %></b>
+                <div>1</div>
+              </li>
+              <li class="health">
+                <b><%= fb_i("Health:") %></b>
+                <div><%= @fight.attacker_hp_loss %></div>
+              </li>
+              <li class="basic_money">
+                <b><%= fb_i("Money:") %></b>
+                <div><%= @fight.money %></div>
+              </li>
+            </ul>
+          </td>
+          <td class="victim_lost">
+            <h3>
+              <% fb_i do %>
+                {user_name} lost:
+                <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
+              <% end %>
+            </h3>
+            <ul>
+              <li class="health">
+                <b><%= fb_i("Health:") %></b>
+                <div><%= @fight.victim_hp_loss %></div>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
     <% end %>
   <% else %>
-    <%= link_to_remote(fb_i("Attack Again!"),
-          :url    => fights_url(:victim_id => @victim, :canvas => false),
-          :update => :fight_result,
-          :html   => {:class => "attack_again button"}
-        ) if current_character.energy > 0 %>
-
-    <p class="fail">
-      <% fb_i do %>
-        You attacked {user_name} and LOST the battle against <%= fb_pronoun(@fight.victim.user, :objective => true) %>!
-        
-        <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
-      <% end %>
-    </p>
-
-    <table>
-      <tr>
-        <td class="lost">
-          <h3><%= fb_i("You lost:") %></h3>
-          <ul>
-            <li class="energy">
-              <b><%= fb_i("Energy:") %></b>
-              <div>1</div>
-            </li>
-            <li class="health">
-              <b><%= fb_i("Health:") %></b>
-              <div><%= @fight.attacker_hp_loss %></div>
-            </li>
-            <li class="basic_money">
-              <b><%= fb_i("Money:") %></b>
-              <div><%= @fight.money %></div>
-            </li>
-          </ul>
-        </td>
-        <td class="victim_lost">
-          <h3>
-            <% fb_i do %>
-              {user_name} lost:
-              <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
-            <% end %>
-          </h3>
-          <ul>
-            <li class="health">
-              <b><%= fb_i("Health:") %></b>
-              <div><%= @fight.victim_hp_loss %></div>
-            </li>
-          </ul>
-        </td>
-      </tr>
-    </table>
+    <p><%= fb_i(@fight.errors.on(:character)) %></p>
   <% end %>
-<% else %>
-  <p><%= fb_i(@fight.errors.on(:character)) %></p>
-<% end %>
+</div>
 
 <% content_for :script do %>
-  Fight.showResult();
+  $('result').show();
 <% end %>

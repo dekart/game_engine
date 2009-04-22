@@ -1,7 +1,5 @@
 <%= title(fb_i("Fighting Arena")) %>
 
-<div id="fight_result" class="result" style="display:none"></div>
-
 <% if current_character.weak? %>
   <p>
   <% fb_i do %>
@@ -34,7 +32,7 @@
           <td class="controls">
             <%= link_to_remote(fb_i("Attack!"),
                   :url => fights_url(:victim_id => victim, :canvas => false),
-                  :update => :fight_result
+                  :update => :result
                 ) %>
           </td>
         <% end %>

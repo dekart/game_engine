@@ -1,7 +1,5 @@
 <%= title(fb_i("Inventory")) %>
 
-<div id="inventory_result" class="result" style="display:none"></div>
-
 <div id="inventory_placements">
   <%= render(:partial => "inventories/placements", :locals => {:character => current_character}) %>
 </div>
@@ -36,13 +34,13 @@
 
               <%= link_to_remote(inventory_use_label(inventory),
                     :url    => use_inventory_url(inventory, :canvas => false),
-                    :update => :inventory_result,
+                    :update => :result,
                     :html   => {:class => :use}
                   ) if inventory.usable? %>
               
               <%= link_to_remote(fb_i("Sell for {amount}" + fb_it(:amount, inventory.sell_price)),
                     :url    => inventory_url(inventory, :_method => :delete, :canvas => false),
-                    :update => :inventory_result,
+                    :update => :result,
                     :html   => {:class => :sell}
                   ) %>
             </td>
