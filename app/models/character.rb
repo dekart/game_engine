@@ -140,9 +140,4 @@ class Character < ActiveRecord::Base
       self.level_updated = true
     end
   end
-#
-#  def update_hp_and_ep
-#    self.hp_updated_at = Time.now if hp_changed?
-#    self.ep_updated_at = Time.now if ep_changed?
-#  end
 end
