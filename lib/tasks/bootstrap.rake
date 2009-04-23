@@ -242,7 +242,8 @@ namespace :app do
       "Small Potion of Refresh" => {
         :level        => 1,
         :description  => "Small potion of refreshing liquor. Heals up to 5 energy points.",
-        :basic_price  => 50,
+        :basic_price  => 10,
+        :vip_price    => 1,
         :usable       => true,
         :usage_limit  => 1,
         :effects      => Effects::Collection.new(Effects::RestoreEnergy.new(5))
