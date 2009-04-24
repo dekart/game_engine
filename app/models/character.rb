@@ -131,7 +131,7 @@ class Character < ActiveRecord::Base
   end
 
   def can_attack?(victim)
-    self.class.victims_for(self).find(victim)
+    not self.class.victims_for(self).find_by_id(victim.id).nil?
   end
 
   protected
