@@ -74,7 +74,9 @@ var Mission = {
 
 var Fight = {
   hideVictim: function(id){
-    $('character_' + id).hide();
+    if($('character_' + id)){
+      $('character_' + id).hide();
+    }
   }
 }
 

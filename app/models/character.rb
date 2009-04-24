@@ -130,6 +130,10 @@ class Character < ActiveRecord::Base
     self.basic_money >= item.basic_price.to_i and self.vip_money >= item.vip_price.to_i
   end
 
+  def can_attack?(victim)
+    self.class.victims_for(self).find(victim)
+  end
+
   protected
 
   def update_level_and_points

@@ -1,6 +1,14 @@
 <%= title(fb_i("#{fb_name(@character.user, :possessive => true, :capitalize => true)} Profile")) %>
 
 <div id="character">
+  <div class="controls">
+    <%= link_to_remote(fb_i("Attack!"),
+                  :url => fights_url(:victim_id => @character, :canvas => false),
+                  :update => :result,
+                  :html => {:class => :attack}
+                ) if current_character.can_attack?(@character) %>
+  </div>
+
   <%= render :partial => "characters/attributes", :locals => {:character => @character} %>
 
   <% if @character.ranks.completed.any? %>
