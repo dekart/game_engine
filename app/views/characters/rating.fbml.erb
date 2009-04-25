@@ -1,0 +1,17 @@
+<%= title(fb_i("Rating")) %>
+
+<table id="rating">
+  <tr>
+    <th>#</th>
+    <th colspan="2"><%= fb_i("User") %></th>
+    <th><%= fb_i("Rating") %></th>
+  </tr>
+  <% @characters.each_with_index do |character, index| %>
+    <tr>
+      <td class="position"><%= index + 1 %></td>
+      <td class="picture"><%= character_picture_link(character) %></td>
+      <td class="name"><%= character_name_link(character) %></td>
+      <td class="rating"><%= character.rating %></td>
+    </tr>
+  <% end %>
+</table>

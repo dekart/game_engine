@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090424110617) do
+ActiveRecord::Schema.define(:version => 20090425172847) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20090424110617) do
     t.integer  "missions_succeeded", :default => 0
     t.integer  "missions_completed", :default => 0
     t.integer  "relations_count",    :default => 0
+    t.integer  "rating",             :default => 0
   end
 
   create_table "delayed_jobs", :force => true do |t|

@@ -144,4 +144,13 @@ class Character < ActiveRecord::Base
       self.level_updated = true
     end
   end
+
+  def recalculate_rating
+    self.rating = (
+      self.missions_completed * 500 +
+      self.relations_count    * 100 +
+      self.fights_won         * 10 +
+      self.missions_succeeded * 5
+    )
+  end
 end

@@ -33,4 +33,8 @@ class CharactersController < ApplicationController
   def current
     render :json => current_character
   end
+
+  def rating
+    @characters = Character.find(:all, :order => "rating DESC", :limit => 20)
+  end
 end
