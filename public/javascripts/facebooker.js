@@ -70,6 +70,10 @@ Ajax.Updater = function (container,url,options) {
     this.ajax.onerror = options["onFailure"];
   }
 
+  if(options["scrollToTop"] != false){
+    $('top_field').focus();
+  }
+
   // Yes, this is an excercise in undoing what we just did
   // FB doesn't provide encodeURI, but they will encode things passed as a hash
   // so we turn it into a string, esaping & and =

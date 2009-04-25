@@ -58,7 +58,8 @@ var Character = {
       "onSuccess": function(data){
         Spinner.hide();
         Character.update(data);
-      }
+      },
+      "scrollToTop": false
     });
   }
 }
