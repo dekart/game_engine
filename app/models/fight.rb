@@ -69,6 +69,9 @@ class Fight < ActiveRecord::Base
     self.attacker.hp  -= self.attacker_hp_loss
     self.victim.hp    -= self.victim_hp_loss
 
+    self.winner.increment(:fights_won)
+    self.loser.increment(:fights_lost)
+
     self.attacker.save!
     self.victim.save!
   end

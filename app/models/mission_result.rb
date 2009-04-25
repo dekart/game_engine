@@ -3,7 +3,8 @@ class MissionResult
 
   def self.create(*args)
     result = self.new(*args)
-    result.save!
+
+    result.save! unless result.rank.completed?
     
     return result
   end
@@ -29,6 +30,9 @@ class MissionResult
 
           @character.increment(:basic_money, @money)
           @character.increment(:experience, @experience)
+
+          @character.increment(:missions_succeeded)
+          @character.increment(:missions_completed) if @rank.completed?
         end
 
         @character.ep -= @mission.ep_cost

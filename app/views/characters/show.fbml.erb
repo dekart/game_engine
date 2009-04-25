@@ -9,17 +9,23 @@
                 ) if current_character.can_attack?(@character) %>
   </div>
 
-  <%= render :partial => "characters/attributes", :locals => {:character => @character} %>
+  <table width="100%">
+    <tr>
+      <td><%= render :partial => "characters/attributes", :locals => {:character => @character} %></td>
+      <td><%= render :partial => "characters/statistics", :locals => {:character => @character} %></td>
+      <td id="rank_list">
+        <% if @character.ranks.completed.any? %>
+          <% @character.ranks.completed.each do |rank| %>
+            <%= content_tag(:div, rank.mission.title, :class => :rank) %>
+          <% end %>
+        <% else %>
+          <%= fb_i("#{fb_name(@character.user, :firstnameonly => true, :capitalize => true, :linked => false)} don't have any titles yet") %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
 
-  <% if @character.ranks.completed.any? %>
-    <div id="rank_list">
-      <h2><%= fb_i("Titles") %></h2>
-      
-      <% @character.ranks.completed.each do |rank| %>
-        <%= content_tag(:div, rank.mission.title, :class => :rank) %>
-      <% end %>
-    </div>
-  <% end %>
+  <hr />
 
   <div class="placements">
     <%= render :partial => "inventories/placements", :locals => {:character => @character} %>

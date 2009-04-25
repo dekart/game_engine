@@ -1,42 +1,50 @@
-<ul class="character_attributes">
-  <li class="attack">
-    <b><%= fb_i("Attack:") %></b>
-    <div class="value">
+<table class="character_attributes">
+  <tr class="attack">
+    <th><%= fb_i("Attack:") %></th>
+    <td class="value">
       <%= "%d (%d+%d+%d)" % [
             character.attack_points,
             character.attack,
             character.inventory_effects[:attack].value,
             character.relations.size
           ] %>
-    </div>
-  </li>
-  <li class="defence">
-    <b><%= fb_i("Defence:") %></b>
-    <div class="value">
+    </td>
+  </tr>
+  <tr class="defence">
+    <th><%= fb_i("Defence:") %></th>
+    <td class="value">
       <%= "%d (%d+%d+%d)" % [
             character.defence_points,
             character.defence,
             character.inventory_effects[:defence].value,
             character.relations.size
           ] %>
-    </div>
-  </li>
+    </td>
+  </tr>
   <% if character == current_character %>
-  <li class="health">
-    <b><%= fb_i("Health:") %></b>
-    <div class="value"><%= "%d/%d" % [character.hp, character.health] %></div>
-  </li>
-  <li class="energy">
-    <b><%= fb_i("Energy:") %></b>
-    <div class="value"><%= "%d/%d" % [character.ep, character.energy] %></div>
-  </li>
-  <li class="basic_money">
-    <b><%= fb_i("Money:") %></b>
-    <div class="value"><%= character.basic_money %></div>
-  </li>
-  <li class="vip_money">
-    <b><%= fb_i("Gems:") %></b>
-    <div class="value"><%= character.vip_money %></div>
-  </li>
+  <tr class="health">
+    <th><%= fb_i("Health:") %></th>
+    <td class="value">
+      <%= "%d/%d" % [character.hp, character.health] %>
+    </td>
+  </tr>
+  <tr class="energy">
+    <th><%= fb_i("Energy:") %></th>
+    <td class="value">
+      <%= "%d/%d" % [character.ep, character.energy] %>
+    </td>
+  </tr>
+  <tr class="basic_money">
+    <th><%= fb_i("Money:") %></th>
+    <td class="value">
+      <%= character.basic_money %>
+    </td>
+  </tr>
+  <tr class="vip_money">
+    <th><%= fb_i("Gems:") %></th>
+    <td class="value">
+      <%= character.vip_money %>
+    </td>
+  </tr>
   <% end %>
-</ul>
+</table>

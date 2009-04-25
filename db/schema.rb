@@ -9,27 +9,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090410163200) do
+ActiveRecord::Schema.define(:version => 20090424110617) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.integer  "basic_money",       :default => 10
-    t.integer  "vip_money",         :default => 0
-    t.integer  "level",             :default => 1
-    t.integer  "experience",        :default => 0
-    t.integer  "points",            :default => 0
-    t.integer  "attack",            :default => 1
-    t.integer  "defence",           :default => 1
-    t.integer  "hp",                :default => 100
-    t.integer  "health",            :default => 100
-    t.integer  "ep",                :default => 10
-    t.integer  "energy",            :default => 10
+    t.integer  "basic_money",        :default => 10
+    t.integer  "vip_money",          :default => 0
+    t.integer  "level",              :default => 1
+    t.integer  "experience",         :default => 0
+    t.integer  "points",             :default => 0
+    t.integer  "attack",             :default => 1
+    t.integer  "defence",            :default => 1
+    t.integer  "hp",                 :default => 100
+    t.integer  "health",             :default => 100
+    t.integer  "ep",                 :default => 10
+    t.integer  "energy",             :default => 10
     t.text     "inventory_effects"
     t.datetime "hp_updated_at"
     t.datetime "ep_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "fights_won",         :default => 0
+    t.integer  "fights_lost",        :default => 0
+    t.integer  "missions_succeeded", :default => 0
+    t.integer  "missions_completed", :default => 0
+    t.integer  "relations_count",    :default => 0
   end
 
   create_table "delayed_jobs", :force => true do |t|

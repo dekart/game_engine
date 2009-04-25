@@ -1,6 +1,4 @@
-<%= javascript_include_tag "facebooker", "application" %>
-
-<script>root_url = '<%= root_url(:canvas => false) %>';</script>
+<fb:fbml>
 
 <%= reference("stylesheets/main.css.erb", dynamic_stylesheet_url(:main, :canvas => false)) %>
 
@@ -61,7 +59,13 @@
 
 <%= yield %>
 
-<script>
+<%= javascript_include_tag "facebooker", "application" %>
+
+<script type="text/javascript">
+  root_url = '<%= root_url(:canvas => false) %>';
+
   Character.update(<%= current_character.to_json %>);
 </script>
+
 <%#= fb_google_analytics("UA-111105-16") unless in_profile_tab? %>
+</fb:fbml>
