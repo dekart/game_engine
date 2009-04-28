@@ -86,7 +86,7 @@ class Fight < ActiveRecord::Base
   def calculate_dices(attacker, victim)
     attack_points = attacker.attack_points
     defence_points = victim.defence_points
-    attack_bonus = 1.1
+    attack_bonus = 1
     defence_bonus = 1
 
     # Считаем считаем наносимые повреждения
