@@ -79,7 +79,7 @@ class Fight < ActiveRecord::Base
   VTM = {
     :dice => 10,
     :critical_failure => 1,
-    :critical_success => 1,
+    :critical_success => 10,
     :success => 5
   }
 
