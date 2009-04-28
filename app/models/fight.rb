@@ -80,7 +80,7 @@ class Fight < ActiveRecord::Base
     :dice => 10,
     :critical_failure => 1,
     :critical_success => 10,
-    :success => 5
+    :success => 6
   }
 
   def calculate_dices(attacker, victim)
