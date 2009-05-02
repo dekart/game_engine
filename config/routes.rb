@@ -12,7 +12,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :characters, 
     :member => {:upgrade => :any},
-    :collection => {:load_vip_money => :any, :current => :any, :rating => :any}
+    :collection => {:load_vip_money => :any, :rating => :any}
   map.resources :missions, :member => {:fulfill => :post}
   map.resources :items
   map.resources :inventories, :member => {:place => :any, :use => :any}

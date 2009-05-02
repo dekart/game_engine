@@ -54,7 +54,7 @@ var Character = {
     Timer.start('co_energy_timer', a.character.time_to_ep_restore, this.updateFromRemote);
   },
   updateFromRemote: function(){
-    new Ajax.Request(root_url + "characters/current", {
+    new Ajax.Request(root_url + "character_status", {
       "onSuccess": function(data){
         Spinner.hide();
         Character.update(data);
