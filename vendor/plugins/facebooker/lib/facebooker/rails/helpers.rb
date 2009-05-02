@@ -1,16 +1,17 @@
 require 'action_pack'
+
 module Facebooker
   module Rails
-    
+
     # Facebook specific helpers for creating FBML
     # 
     # All helpers that take a user as a parameter will get the Facebook UID from the facebook_id attribute if it exists.
     # It will use to_s if the facebook_id attribute is not present.
     #
     module Helpers
-      
+
       include Facebooker::Rails::Helpers::FbConnect
-      
+
       # Create an fb:dialog
       # id must be a unique name e.g. "my_dialog"
       # cancel_button is true or false
@@ -43,6 +44,13 @@ module Facebooker
       end
       
       FB_DIALOG_BUTTON_VALID_OPTION_KEYS = [:close_dialog, :href, :form_id, :clickrewriteurl, :clickrewriteid, :clickrewriteform]
+      
+      def fb_show_feed_dialog(action, user_message = "", prompt = "", callback = nil)
+        update_page do |page|
+          page.call "Facebook.showFeedDialog",action.template_id,action.data,action.body_general,action.target_ids,callback,prompt,user_message
+        end
+      end
+      
       
       # Create an fb:request-form without a selector
       #
@@ -282,8 +290,9 @@ module Facebooker
       
       # Render an <fb:profile-pic> for the specified user.
       #
-      # You can optionally specify the size using the :size=> option.
-      # Valid sizes are :thumb, :small, :normal and :square
+      # You can optionally specify the size using the :size=> option.  Valid
+      # sizes are :thumb, :small, :normal and :square.  Or, you can specify
+      # width and height settings instead, just like an img tag.
       #
       # You can optionally specify whether or not to include the facebook icon
       # overlay using the :facebook_logo => true option. Default is false.
@@ -298,7 +307,7 @@ module Facebooker
       end
 
       FB_PROFILE_PIC_OPTION_KEYS_TO_TRANSFORM = {:facebook_logo => 'facebook-logo'}
-      FB_PROFILE_PIC_VALID_OPTION_KEYS = [:size, :linked, 'facebook-logo']
+      FB_PROFILE_PIC_VALID_OPTION_KEYS = [:size, :linked, 'facebook-logo', :width, :height]
             
       
       # Render an fb:photo tag.
