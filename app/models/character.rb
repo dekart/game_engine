@@ -54,7 +54,7 @@ class Character < ActiveRecord::Base
   restorable_attribute :hp, :health, 2.minutes + 30.seconds
   restorable_attribute :ep, :energy, 5.minutes
 
-  before_save :update_level_and_points
+  before_save :update_level_and_points, :recalculate_rating
 
   def upgrade_attribute!(name)
     name = name.to_sym
