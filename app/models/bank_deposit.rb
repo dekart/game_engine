@@ -11,7 +11,7 @@ class BankDeposit < BankOperation
 
   def move_money
     self.character.decrement(:basic_money, self.amount)
-    self.character.increment(:bank, self.amount)
+    self.character.increment(:bank, (self.amount * 0.9).ceil)
     self.character.save
   end
 end
