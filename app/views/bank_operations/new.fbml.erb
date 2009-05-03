@@ -1,6 +1,12 @@
 <%= title(fb_i("Treasury")) %>
 
-<h2><%= fb_i("Current Balance: {amount}" + fb_it(:amount, current_character.bank)) %></h2>
+<div id="bank_balance">
+  <% fb_i do %>
+    Current Balance: {amount}
+
+    <%= fb_it(:amount, content_tag(:span, current_character.bank, :class => :value)) %>
+  <% end %>
+</div>
 
 <table id="bank">
   <tr>
@@ -9,6 +15,8 @@
         <%= hidden_field_tag :type, "deposit" %>
 
         <%= f.text_field fb_i("Deposit"), :amount, :value => current_character.basic_money %>
+
+        <p><%= fb_i("A 10% laundering fee will be taken out of all incoming funds.") %></p>
 
         <% fb_tag(:input) do %>
           <%= fb_ta(:type, :submit) %>
@@ -21,6 +29,8 @@
         <%= hidden_field_tag :type, "withdraw" %>
 
         <%= f.text_field fb_i("Withdraw"), :amount %>
+
+        <p><%= fb_i("Withdrawing money to cash is free.") %></p>
 
         <% fb_tag(:input) do %>
           <%= fb_ta(:type, :submit) %>
