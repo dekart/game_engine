@@ -1,0 +1,32 @@
+<%= title(fb_i("Treasury")) %>
+
+<h2><%= fb_i("Current Balance: {amount}" + fb_it(:amount, current_character.bank)) %></h2>
+
+<table id="bank">
+  <tr>
+    <td>
+      <% form_for(:bank_operation, @deposit, :url => bank_operations_path) do |f| %>
+        <%= hidden_field_tag :type, "deposit" %>
+
+        <%= f.text_field fb_i("Deposit"), :amount, :value => current_character.basic_money %>
+
+        <% fb_tag(:input) do %>
+          <%= fb_ta(:type, :submit) %>
+          <%= fb_ta(:value, fb_i("Deposit")) %>
+        <% end %>
+      <% end %>
+    </td>
+    <td>
+      <% form_for(:bank_operation, @withdraw, :url => bank_operations_path) do |f| %>
+        <%= hidden_field_tag :type, "withdraw" %>
+
+        <%= f.text_field fb_i("Withdraw"), :amount %>
+
+        <% fb_tag(:input) do %>
+          <%= fb_ta(:type, :submit) %>
+          <%= fb_ta(:value, fb_i("Withdraw")) %>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+</table>

@@ -9,7 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090425172847) do
+ActiveRecord::Schema.define(:version => 20090502145351) do
+
+  create_table "bank_operations", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "amount"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
@@ -36,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20090425172847) do
     t.integer  "missions_completed", :default => 0
     t.integer  "relations_count",    :default => 0
     t.integer  "rating",             :default => 0
+    t.integer  "bank",               :default => 0
   end
 
   create_table "delayed_jobs", :force => true do |t|

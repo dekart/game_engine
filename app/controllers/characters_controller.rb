@@ -33,4 +33,12 @@ class CharactersController < ApplicationController
   def rating
     @characters = Character.find(:all, :order => "rating DESC", :limit => 20)
   end
+
+  def bank
+    if request.post?
+      if current_character.bank_operation(params[:operation])
+        flash[:success] = ""
+      end
+    end
+  end
 end
