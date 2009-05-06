@@ -2,4 +2,243 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      character:
+        level: "Level"
+        attack: "Attack"
+        defence: "Defence"
+        health: "Health"
+        energy: "Energy"
+        experience: "Experience"
+        basic_money: "Money"
+        vip_money: "Gems"
+        fights_won: "Fights Won"
+        fights_lost: "Fights Lost"
+        missions_succeeded: "Missions Succeded"
+        missions_completed: "Missions Completed"
+        relations_count: "Alliance Size"
+        points: "Upgrade Points"
+      user:
+        show_next_steps: "Show 'Next Steps'"
+    errors:
+      models:
+        bank_deposit:
+          amount:
+            not_enough: "You don't have that much cash"
+        bank_withdraw:
+          amount:
+            not_enough: "You don't have that much money at your balance"
+        fight:
+          character:
+            not_enough_energy: "You don't have enough energy to fight. Take a rest!"
+            cannot_attack: "You cannot attack this user"
+            too_weak: "You are too weak to fight! Take a rest!"
+        inventory:
+          character:
+            not_enough_money: "You don't have enough money to buy {item_name}"
+  effects:
+    attack:
+      name: "Attack"
+    defence:
+      name: "Defence"
+    restore_energy:
+      name: "Restore Energy"
+    restore_health:
+      name: "Restore Health"
+# Templates
+  layouts:
+    _next_steps:
+      title: "Next Steps"
+      links:
+        profile: "Customize your profile"
+        missions: "Fulfill missions"
+        fights: "Fight with other players"
+        invite: "Grow up your Alliance"
+    application:
+      spinner:
+        alt: "Please wait..."
+        text: "Please wait for a few seconds..."
+      main_menu:
+        home: "Home"
+        missions: "Missions"
+        fights: "Fight"
+        items: "Shop"
+        inventories: "Inventory"
+        character: "Profile"
+        relations: "Alliance"
+        rating: "Rating"
+  bank_operations:
+    new:
+      title: Treasury
+      current_balance: "Current Balance: {amount}"
+      deposit:
+        title: "Deposit"
+        note: "A 10% laundering fee will be taken out of all incoming funds."
+        submit: "Deposit"
+      withdraw:
+        title: "Withdraw"
+        note: "Withdrawing money to cash is free."
+        submit: "Withdraw"
+  characters:
+    index:
+      overview:
+        title: "Profile Overview"
+      invitations:
+        title: "Alliance Invitations"
+        accept: "Accept"
+        ignore: "Ignore"
+      fights:
+        title: "Latest Fights"
+    rating:
+      title: "Hall of Fame"
+      columns:
+        user: "User"
+        rating: "Rating"
+    show:
+      title: "{{user}} Profile"
+      controls:
+        attack: "Attack!"
+      titles:
+        empty_set: "{{user}} don't have any titles yet"
+    upgrade:
+      title: "Upgrade"
+      finished:
+        note: "You spent all your upgrade points."
+        link: "Go To Profile"
+    upgrade_result:
+      messages:
+        success: "You've successfully upgraded {{attribute}} to {number}"
+        not_enough_points: "You cannot upgrade {{attribute}} because you don't have enough points"
+  fights:
+    descriptions:
+      attack_won: "You attacked {victim} and WON the battle! You received {money}, +{experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
+      attack_lost: "You attacked {victim} and LOST the battle! You lost {money} and took {attacker_damage} points of damage. {victim} received {victim_damage} points of damage."
+      defence_won: "You was attacked by {attacker} and WON the battle!  You received {money}, +{experience_points} points of experience, and {victim_damage} points of damage. {attacker} was damaged for {attacker_damage} points"
+      defence_lost: "You was attacked by {attacker} and LOST the battle! You lost {money} and took {victim_damage} points of damage. {attacker} received {attacker_damage} points of damage."
+    create:
+      buttons:
+        publish: "Publish to Profile"
+        attack_again: "Attack Again!"
+      messages:
+        success: "You attacked {user_name} and WON the battle against {{pronoun}}!"
+        fail: "You attacked {user_name} and LOST the battle against {{pronoun}}!"
+      you_received:
+        title: "You received:"
+      you_lost:
+        title: "You lost:"
+      victim_lost:
+        title: "{user_name} lost:"
+    new:
+      title: "Fighting Arena"
+      messages:
+        too_weak: "You are too weak to fight! Take a rest until your health will grow to {hp_number} points. You need to wait about {minute_number} minutes."
+        not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {minute_number} minutes."
+      columns:
+        user: "User"
+        level: "Level"
+      buttons:
+        attack: "Attack!"
+      empty_set: "There are no opponents for you at this time."
+  inventories:
+    create:
+      buttons:
+        inventory: "Go To Inventory"
+      messages:
+        success: "You successfully bought {item_name}"
+      you_spent:
+        title: "You spent:"
+    destroy:
+      messages:
+        success: "You've successfully sold {item_name}!"
+      you_received:
+        title: "You received:"
+    index:
+      title: "Inventory"
+      buttons:
+        to_left_hand: "To Left Hand"
+        to_right_hand: "To Right Hand"
+        to_head: "To Head"
+        to_body: "To Body"
+        to_belt: "To Belt"
+        to_legs: "To Legs"
+        use:
+          base: "Use {usage_limit}"
+          unlimited: "(unlimited)"
+          limited: "({{left}}/{{limit}})"
+        sell: "Sell for {amount}"
+      empty_set: "Your inventory is empty"
+    use:
+      messages:
+        success: "You've successfully used {item}!"
+        item_gone: "{item} ran out and now it's gone!"
+      effects: "Effects:"
+  invitations:
+    accept:
+      message: "Invitation accepted! {user} became part of your alliance!"
+    ignore:
+      message: "Invitation ignored"
+  items:
+    index:
+      title: "Shop"
+      columns:
+        price: "Price"
+      buttons:
+        buy: "Buy"
+      buy_gems:
+        title: "Buy Gems"
+  missions:
+    fulfill:
+      buttons:
+        publish: "Publish to Profile"
+        continue: "Continue!"
+        try_again: "Try Again!"
+      completed:
+        title: "Congratulations!"
+        message: "You completed this mission and received new title:"
+      succeeded:
+        message: "Well done!"
+      not_enough_energy:
+        message: "You don't have enough energy. Take a rest until your energy will grow to {ep_number} points. You need to wait about {minute_number} minutes."
+      you_received:
+        title: "You received:"
+      you_spent:
+        title: "You spent:"
+    index:
+      title: "Missions"
+      columns:
+        payout: "Payout"
+        requires: "Requires"
+        progress: "Completeness"
+      buttons:
+        fulfill: "Fulfill"
+    helpers:
+      completed: "Completed!"
+  relations:
+    index:
+      title: "Your Alliance"
+      note:
+        text: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
+        button: "Recruit to Alliance"
+      buttons:
+        break: "Break Alliance"
+      break:
+        confirmation: "Are you sure?"
+      empty_set: "You don't have any members in your Alliance"
+  users:
+    edit:
+      title: "Settings"
+      submit: "Save"
+    invite:
+      title: "Recruit To Your Alliance"
+      success_message: "You've successfully sent {amount} invitations to your friends!"
+      invite:
+        title: "Alliance"
+        note: "Invite friends to join your Alliance"
+        message: "{{user}} wants you to join {{pronoun}} alliance in {{app_name}}, a fantasy-style combat game played on Facebook. Start out as a petty swordsmen and work your way up to be hero of a fantasy world."
+        buttons:
+          accept: "Accept Invitation"
+          visit_profile: "Visit {{user}} Profile"
+# Helpers
+  blocks:
+    hide: "Hide"

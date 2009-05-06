@@ -1,17 +1,17 @@
 <div id="inventory_result">
   <p>
     <% fb_i do %>
-      You've successfully used {item}!
+      <%= t(".messages.success") %>
 
       <%= fb_it(:item, fb_i(@inventory.name)) %>
     <% end %>
   </p>
 
-  <h3><%= fb_i("Effects:") %></h3>
+  <h3><%= fb_i(t(".effects")) %></h3>
   <ul>
     <% @inventory.effects.each do |effect| %>
       <% content_tag(:li, :class => effect.name) do %>
-        <b><%= fb_i("#{effect.name.titleize}:") %></b>
+        <b><%= fb_i(t("effects.#{effect.name}.name")) %></b>
         <div><%= effect.value %></div>
       <% end %>
     <% end %>
@@ -20,7 +20,7 @@
   <% if @inventory.frozen? %>
     <p>
       <% fb_i do %>
-        {item} ran out and now it's gone!
+        <%= t(".messages.item_gone") %>
 
         <%= fb_it(:item, fb_i(@inventory.name)) %>
       <% end %>

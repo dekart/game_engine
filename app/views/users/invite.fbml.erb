@@ -1,9 +1,9 @@
-<%= title(fb_i("Recruit To Your Alliance")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <% if @sent_invitations and @sent_invitations.any? %>
   <div class="success">
     <% fb_i do %>
-      You've successfully sent {amount} invitations to your friends!
+      <%= t(".success_message") %>
 
       <%= fb_it(:amount, @sent_invitations.size) %>
     <% end %>
@@ -11,25 +11,27 @@
 <% end %>
 
 <% content_for :invite_message do %>
-  <% fb_i do %>
-    <%= fb_name(current_user, :linked => :false) %> wants you to join <% fb_pronoun(current_user, :possessive => true) %>
-    alliance in <%= fb_app_name %>, a fantasy-style combat game played on Facebook.
-    Start out as a petty swordsmen and work your way up to be hero of a fantasy world.
-  <% end %>
+  <%= fb_i(
+        t(".invite.message",
+          :user     => fb_name(current_user, :linked => :false),
+          :pronoun  => fb_pronoun(current_user, :possessive => true),
+          :app_name => fb_app_name
+        )
+      ) %>
 
   <% content_tag("fb:req-choice", :url => root_url) do%>
-    <%= fb_fa(:label, fb_i("Accept Invitation")) %>
+    <%= fb_fa(:label, fb_i(t(".invite.buttons.accept"))) %>
   <% end %>
 
   <% content_tag("fb:req-choice", :url => character_url(current_character)) do%>
-    <%= fb_fa(:label, fb_i("Visit #{fb_name(current_user, :linked => false, :possessive => true)} Profile")) %>
+    <%= fb_fa(:label, fb_i(t(".invite.buttons.visit_profile", :user => fb_name(current_user, :linked => false, :possessive => true)))) %>
   <% end %>
 <% end %>
 
 <% fb_request_form(nil, :invite_message, invite_users_path) do %>
-  <%= fb_fa(:type, fb_i("Alliance")) %>
+  <%= fb_fa(:type, fb_i(t(".invite.title"))) %>
   
   <% fb_custom_multi_friend_selector(nil) do %>
-    <%= fb_fa(:actiontext, fb_i("Invite friends to join your Alliance")) %>
+    <%= fb_fa(:actiontext, fb_i(t(".invite.note"))) %>
   <% end %>
 <% end %>

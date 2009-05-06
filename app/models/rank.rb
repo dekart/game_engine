@@ -8,15 +8,11 @@ class Rank < ActiveRecord::Base
     :order      => "missions.level, missions.ep_cost"
    }
 
-  before_save :check_completeness
+  before_save :check_progress
   
-  def completeness
-    self.completed ? "Complete!" : "%d%%" % (self.win_count.to_f / self.mission.win_amount * 100)
-  end
-
   protected
 
-  def check_completeness
+  def check_progress
     self.completed = (self.win_count == self.mission.win_amount)
     
     return true

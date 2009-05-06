@@ -1,11 +1,11 @@
-<%= title(fb_i("Shop")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <table id="item_list" cellspacing="0">
   <% Item::TYPES.each do |type| %>
     <% if @items.send(type).any? %>
       <tr>
         <th colspan="3"><h3><%= fb_i(type.capitalize) %></h3></th>
-        <th><%= fb_i("Price") %></th>
+        <th><%= fb_i(t(".columns.price")) %></th>
       </tr>
       <% @items.send(type).each do |item| %>
         <tr>
@@ -25,7 +25,7 @@
             <% end %>
           </td>
           <td class="controls">
-            <%= link_to_remote(fb_i("Buy"),
+            <%= link_to_remote(fb_i(t(".buttons.buy")),
                   :url => inventories_url(:item_id => item.id, :canvas => false),
                   :update => :result
                 ) if current_character.can_buy?(item) %>
@@ -37,6 +37,6 @@
   <% end %>
 </table>
 
-<h2><%= fb_i("Buy Gems") %></h2>
+<h2><%= fb_i(t(".buy_gems.title")) %></h2>
 
 <%= fb_super_rewards_iframe %>

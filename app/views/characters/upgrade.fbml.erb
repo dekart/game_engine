@@ -1,13 +1,13 @@
-<%= title(fb_i("Upgrade")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <table id="upgrade_list" cellspacing="0">
   <tr class="points">
-    <td class="name"><%= fb_i("Upgrade Points") %></td>
+    <td class="name"><%= fb_i(Character.human_attribute_name("points")) %></td>
     <td class="value" id="upgrade_points"><%= current_character.points %></td>
   </tr>
   <% %w{attack defence health energy}.each do |attribute| %>
     <tr>
-      <td class="name"><%= fb_i("#{attribute.capitalize}:") %></td>
+      <td class="name"><%= fb_i(Character.human_attribute_name(attribute)) %></td>
       <td class="value" id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
       <td class="controls">
         <%= link_to_remote(Character::UPGRADES[attribute.to_sym],
@@ -20,6 +20,6 @@
 </table>
 
 <div id="upgrade_finished" style="display:none;">
-  <%= fb_i("You spent all your upgrade points.") %>
-  <%= link_to(fb_i("Go To Profile"), character_path(current_character)) %>
+  <%= fb_i(t(".finished.note")) %>
+  <%= link_to(fb_i(t(".finished.link")), character_path(current_character)) %>
 </div>

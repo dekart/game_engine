@@ -4,8 +4,7 @@ class BankDeposit < BankOperation
   protected
 
   def validate_on_create
-    if self.amount > self.character.basic_money
-      self.errors.add(:amount, "You don't have that much cash")
+    self.errors.add(:amount, :not_enough) if self.amount > self.character.basic_money
     end
   end
 

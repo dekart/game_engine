@@ -1,11 +1,11 @@
-<%= title(fb_i("Missions")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <table id="mission_list" cellspacing="0">
   <tr>
     <th></th>
-    <th><%= fb_i("Payout") %></th>
-    <th><%= fb_i("Requires") %></th>
-    <th><%= fb_i("Completeness") %></th>
+    <th><%= fb_i(t(".columns.payout")) %></th>
+    <th><%= fb_i(t(".columns.requires")) %></th>
+    <th><%= fb_i(t(".columns.progress")) %></th>
   </tr>
   <% @missions.each do |mission| %>
     <% content_tag_for(:tr, mission) do %>
@@ -21,10 +21,10 @@
         <div class="energy"><%= mission.ep_cost %></div>
       </td>
       <% rank = mission.ranks.for_character(current_character) %>
-      <td class="completeness"><%= rank.completeness %></td>
+      <td class="progress"><%= mission_progress(rank) %></td>
       <td class="controls">
         <% if current_character.ep >= mission.ep_cost and !rank.completed? %>
-          <%= link_to_remote(fb_i("Fulfill"),
+          <%= link_to_remote(fb_i(t(".buttons.fulfill")),
                 :url => fulfill_mission_url(mission, :canvas => false),
                 :update => :result
               ) %>

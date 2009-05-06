@@ -134,21 +134,6 @@ class Character < ActiveRecord::Base
     not self.class.victims_for(self).find_by_id(victim.id).nil?
   end
 
-  def bank_operation(name, amount)
-    case name
-    when "deposit"
-      deposit_to_bank(amount)
-    when "withdraw"
-      withdraw_from_bank(amount)
-    end
-  end
-
-  def deposit_to_bank(amount)
-    return false if self.basic_money < amount
-
-    
-  end
-
   protected
 
   def update_level_and_points

@@ -1,7 +1,7 @@
 <table id="dashboard">
   <tr>
     <td class="profile">
-      <%= link_to(fb_i("Profile Overview"), character_path(current_character), :class => :title) %>
+      <%= link_to(fb_i(t(".overview.title")), character_path(current_character), :class => :title) %>
 
       <%= render :partial => "characters/attributes", :locals => {:character => current_character} %>
     </td>
@@ -10,7 +10,7 @@
       <%= render :partial => "layouts/next_steps" if current_user.show_next_steps? %>
 
       <% if @alliance_invitations.any? %>
-        <h3><%= fb_i("Alliance Invitations") %></h3>
+        <h3><%= fb_i(t('.ivitations.title')) %></h3>
 
         <table cellspacing="0" id="invitation_list">
           <% @alliance_invitations.each do |invitation| %>
@@ -21,13 +21,16 @@
               <td class="name">
                 <%= character_name_link(invitation.sender) %>
               </td>
-              <td class="level"><%= fb_i("Level:") %> <%= invitation.sender.character.level %></td>
+              <td class="level">
+                <%= fb_i(Character.human_attribute_name("level")) %>
+                <%= invitation.sender.character.level %>
+              </td>
               <% content_tag(:td, :id => dom_id(invitation, :controls), :class => :controls) do %>
-                <%= link_to_remote(fb_i("Accept"),
+                <%= link_to_remote(fb_i(t('.ivitations.accept')),
                       :url    => accept_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
                       :html   => {:class => :accept}) %>
-                <%= link_to_remote(fb_i("Ignore"),
+                <%= link_to_remote(fb_i(t('.ivitations.ignore')),
                       :url    => ignore_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
                       :html   => {:class => :ignore}) %>
@@ -38,17 +41,14 @@
       <% end %>
 
       <% if @latest_fights.any? %>
-        <h3><%= fb_i("Latest Fights") %></h3>
+        <h3><%= fb_i(t(".fights.title")) %></h3>
 
         <table cellspacing="0" id="fight_list">
         <% @latest_fights.each do |fight| %>
           <% content_tag_for(:tr, fight) do %>
             <td class="attacker"><%= character_picture_link(fight.attacker) %></td>
             <td class="description">
-              <div class="time">
-                <%= distance_of_time_in_words_to_now(fight.created_at).capitalize %> ago:
-              </div>
-
+              <div class="time"><%= fb_time(fight.created_at) %>:</div>
               <div><%= fight_description(fight) %></div>
             </td>
             <td class="victim"><%= character_picture_link(fight.victim) %></td>

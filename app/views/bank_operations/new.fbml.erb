@@ -1,8 +1,8 @@
-<%= title(fb_i("Treasury")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <div id="bank_balance">
-  <% fb_i do %>
-    Current Balance: {amount}
+  <% fb_i() do %>
+    <%= t(".current_balance") %>
 
     <%= fb_it(:amount, content_tag(:span, current_character.bank, :class => :value)) %>
   <% end %>
@@ -14,13 +14,13 @@
       <% form_for(:bank_operation, @deposit, :url => bank_operations_path) do |f| %>
         <%= hidden_field_tag :type, "deposit" %>
 
-        <%= f.text_field fb_i("Deposit"), :amount, :value => current_character.basic_money %>
+        <%= f.text_field fb_i(t(".deposit.title")), :amount, :value => current_character.basic_money %>
 
-        <p><%= fb_i("A 10% laundering fee will be taken out of all incoming funds.") %></p>
+        <p><%= fb_i(t(".deposit.note")) %></p>
 
         <% fb_tag(:input) do %>
           <%= fb_ta(:type, :submit) %>
-          <%= fb_ta(:value, fb_i("Deposit")) %>
+          <%= fb_ta(:value, fb_i(t(".deposit.submit"))) %>
         <% end %>
       <% end %>
     </td>
@@ -28,13 +28,13 @@
       <% form_for(:bank_operation, @withdraw, :url => bank_operations_path) do |f| %>
         <%= hidden_field_tag :type, "withdraw" %>
 
-        <%= f.text_field fb_i("Withdraw"), :amount %>
+        <%= f.text_field fb_i(t(".withdraw.title")), :amount %>
 
-        <p><%= fb_i("Withdrawing money to cash is free.") %></p>
+        <p><%= fb_i(t(".withdraw.note")) %></p>
 
         <% fb_tag(:input) do %>
           <%= fb_ta(:type, :submit) %>
-          <%= fb_ta(:value, fb_i("Withdraw")) %>
+          <%= fb_ta(:value, fb_i(t(".withdraw.submit"))) %>
         <% end %>
       <% end %>
     </td>

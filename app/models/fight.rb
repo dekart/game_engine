@@ -34,15 +34,15 @@ class Fight < ActiveRecord::Base
 
   def validate
     if self.attacker.ep == 0
-      self.errors.add(:character, "You don't have enough energy to fight. Take a rest!")
+      self.errors.add(:character, :not_enough_energy)
     end
 
     if Character.victims_for(self.attacker).find(:first, :conditions => {:id => self.victim.id}).nil?
-      self.errors.add(:character, "You cannot attack this user")
+      self.errors.add(:character, :cannot_attack)
     end
 
     if self.attacker.weak?
-      self.errors.add(:character, "You are too weak to fight! Take a rest!")
+      self.errors.add(:character, :too_weak)
     end
   end
 

@@ -1,23 +1,23 @@
 <div id="next_steps">
   <%= hide_block_link(:next_steps) if current_user.customized? %>
 
-  <h2><%= fb_i("Next Steps") %></h2>
+  <h2><%= fb_i(t(".title")) %></h2>
 
   <% unless current_user.customized? %>
     <div class="step">
-      <%= link_to(fb_i("Customize your profile"), edit_user_path(current_user)) %>
+      <%= link_to(fb_i(t(".links.profile")), edit_user_path(current_user)) %>
     </div>
   <% end %>
 
   <div class="step">
-    <%= link_to(fb_i("Fulfill missions"), missions_path) %>
+    <%= link_to(fb_i(t(".links.missions")), missions_path) %>
   </div>
 
   <div class="step">
-    <%= link_to(fb_i("Fight with other players"), new_fight_path) %>
+    <%= link_to(fb_i(t(".links.fights")), new_fight_path) %>
   </div>
 
   <div class="step">
-    <%= link_to(fb_i("Grow up your Alliance"), invite_users_path) %>
+    <%= link_to(fb_i(t(".links.invite")), invite_users_path) %>
   </div>
 </div>

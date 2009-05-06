@@ -1,26 +1,27 @@
 <div id="shop_result">
   <% if !@inventory.new_record? %>
-    <%= link_to(fb_i("Go To Inventory"), inventories_url(:canvas => true), :class => "inventory button") %>
+    <%= link_to(fb_i(t(".buttons.inventory")), inventories_url(:canvas => true), :class => "inventory button") %>
 
     <p>
     <% fb_i do %>
-      You successfully bought {item_name}
+      <%= t(".messages.success") %>
+      
       <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
     <% end %>
     </p>
 
-    <h3><%= fb_i("You spent:") %></h3>
+    <h3><%= fb_i(t(".you_spent.title")) %></h3>
     <ul>
       <% if @item.basic_price.to_i > 0 %>
         <li class="basic_money">
-          <b><%= fb_i("Money:") %></b>
+          <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
           <div><%= @item.basic_price %></div>
         </li>
       <% end %>
 
       <% if @item.vip_price.to_i > 0 %>
         <li class="vip_money">
-          <b><%= fb_i("Gems:") %></b>
+          <b><%= fb_i(Character.human_attribute_name("vip_money")) %></b>
           <div><%= @item.vip_price %></div>
         </li>
       <% end %>

@@ -1,14 +1,11 @@
-<%= title(fb_i("Your Alliance")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <div class="note">
   <p>
-    <% fb_i do %>
-      Your alliance gives you additional attack and defence points. The more
-      members in your alliance, the more chances you have in every battle.
-    <% end %>
+    <%= fb_i(t(".note.text")) %>
   </p>
 
-  <%= link_to(fb_i("Recruit to Alliance"), invite_users_path, :id => :alliance_recruit) %>
+  <%= link_to(fb_i(t(".note.button")), invite_users_path, :id => :alliance_recruit) %>
 </div>
 
 <% if @relations.any? %>
@@ -17,9 +14,9 @@
       <tr>
         <td class="picture"><%= character_picture_link(relation.target) %></td>
         <td class="name"><%= character_name_link(relation.target) %></td>
-        <td class="level"><%= fb_i("Level:") %> <%= relation.target.level %></td>
+        <td class="level"><%= fb_i(Character.human_attribute_name("level")) %> <%= relation.target.level %></td>
         <td class="controls">
-          <%= link_to(fb_i("Break Alliance"), relation_path(relation.target), :method => :delete, :confirm => "Are you sure?", :class => :delete) %>
+          <%= link_to(fb_i(t(".buttons.break")), relation_path(relation.target), :method => :delete, :confirm => t(".break.confirmation"), :class => :delete) %>
         </td>
       </tr>
     <% end %>
@@ -28,6 +25,6 @@
   <%= will_paginate(@relations) %>
 <% else %>
   <div class="empty_set">
-    <%= fb_i("You don't have any members in your Alliance") %>
+    <%= fb_i(t(".empty_set")) %>
   </div>
 <% end %>

@@ -1,7 +1,7 @@
 <div id="mission_result">
   <% if @result.saved %>
     <% if @result.rank.completed? %>
-      <%= link_to_feed_dialog("Publish to Profile", Publisher::Mission, :completed,
+      <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Mission, :completed,
             :template_data => {
               :title => @mission.title,
               :mission => @mission.name
@@ -9,12 +9,12 @@
             :html => {:class => "publish button"}
           ) %>
 
-      <h2><%= fb_i("Congratulations!") %></h2>
+      <h2><%= fb_i(t(".completed.title")) %></h2>
 
       <p>
         <%= fb_i(@mission.complete_text) %>
 
-        <%= fb_i("You completed this mission and received new title:") %>
+        <%= fb_i(t(".completed.message")) %>
       </p>
 
       <h3 class="title"><%= fb_i(@mission.title) %></h3>
@@ -23,17 +23,17 @@
         Mission.hideControls(<%= @mission.id %>);
       <% end %>
     <% elsif @result.success %>
-      <%= link_to_remote(fb_i("Continue!"),
+      <%= link_to_remote(fb_i(t(".buttons.continue")),
             :url => fulfill_mission_url(@mission, :canvas => false),
             :update => :result,
             :html   => {:class => "fulfill_again button"}
           ) if current_character.ep >= @mission.ep_cost %>
 
       <p>
-        <%= fb_i("Well done!") %> <%= fb_i(@mission.success_text) %>
+        <%= fb_i(t(".succeeded.message")) %> <%= fb_i(@mission.success_text) %>
       </p>
     <% else %>
-      <%= link_to_remote(fb_i("Try Again!"),
+      <%= link_to_remote(fb_i(t(".buttons.try_again")),
             :url => fulfill_mission_url(@mission, :canvas => false),
             :update => :result,
             :html   => {:class => "fulfill_again button"}
@@ -48,18 +48,18 @@
       <tr>
         <% if @result.received_something? %>
           <td class="received">
-            <h3><%= fb_i("You received:") %></h3>
+            <h3><%= fb_i(t(".you_received.title")) %></h3>
             <ul>
               <% if @result.experience %>
                 <li class="experience">
-                  <b><%= fb_i("Experience:") %></b>
+                  <b><%= fb_i(Character.human_attribute_name("experience")) %></b>
                   <div><%= @result.experience %></div>
                 </li>
               <% end %>
 
               <% if @result.money %>
                 <li class="basic_money">
-                  <b><%= fb_i("Money:") %></b>
+                  <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
                   <div><%= @result.money %></div>
                 </li>
               <% end %>
@@ -67,10 +67,10 @@
           </td>
         <% end %>
         <td class="spent">
-          <h3><%= fb_i("You spent:") %></h3>
+          <h3><%= fb_i(t(".you_spent.title")) %></h3>
           <ul>
             <li class="energy">
-              <b><%= fb_i("Energy:") %></b>
+              <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
               <div><%= @mission.ep_cost %></div>
             </li>
           </ul>
@@ -79,13 +79,13 @@
     </table>
 
     <% content_for :script do %>
-      Mission.setCompleteness(<%= @mission.id %>, '<%= @result.rank.completeness %>');
+      Mission.setProgress(<%= @mission.id %>, '<%= mission_progress(@result.rank) %>');
     <% end %>
   <% elsif !@result.enough_energy? %>
     <p>
       <% fb_i do %>
-        You don't have enough energy. Take a rest until your energy will grow to {ep_number} points.
-        You need to wait about {minute_number} minutes.
+        <%= t(".not_enough_energy.message") %>
+        
         <%= fb_it(:ep_number, @mission.ep_cost) %>
         <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
       <% end %>

@@ -2,7 +2,8 @@
   <% if @success %>
     <p>
     <% fb_i do %>
-      You've successfully upgraded <%= params[:attribute] %> to {number}
+      <%= t(".messages.success", :attribute => Character.human_attribute_name(params[:attribute])) %>
+      
       <%= fb_it(:number, content_tag(:b, current_character.attributes[params[:attribute]])) %>
     <% end %>
     </p>
@@ -18,7 +19,9 @@
       <% end %>
     <% end %>
   <% else %>
-    <p><%= fb_i("You cannot upgrade #{ params[:attribute] } because you don't have enough points") %></p>
+    <p>
+      <%= fb_i(t(".messages.not_enough_points", :attribute => Character.human_attribute_name(params[:attribute]))) %>
+    </p>
   <% end %>
 </div>
 

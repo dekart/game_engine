@@ -1,10 +1,10 @@
-<%= title(fb_i("Fighting Arena")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <% if current_character.weak? %>
   <p>
   <% fb_i do %>
-    You are too weak to fight! Take a rest until your health will grow to {hp_number} points.
-    You need to wait about {minute_number} minutes.
+    <%= t(".messages.too_weak") %>
+    
     <%= fb_it(:hp_number, current_character.weakness_minimum) %>
     <%= fb_it(:minute_number, (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil) %>
   <% end %>
@@ -12,8 +12,8 @@
 <% elsif current_character.ep == 0 %>
   <p>
     <% fb_i do %>
-      You don't have enough energy to fight! Take a rest until your energy will grow.
-      You need to wait about {minute_number} minutes.
+      <%= t(".messages.not_enough_energy") %>
+      
       <%= fb_it(:minute_number, (current_character.ep_restore_time(1) / 1.minute).ceil) %>
     <% end %>
   </p>
@@ -21,8 +21,8 @@
   <% if @victims.any? %>
     <table id="victim_list" cellspacing="0">
       <tr>
-        <th colspan="2"><%= fb_i("User") %></th>
-        <th><%= fb_i("Level") %></th>
+        <th colspan="2"><%= fb_i(t(".columns.user")) %></th>
+        <th><%= fb_i(t(".columns.level")) %></th>
       </tr>
       <% @victims.each do |victim| %>
         <% content_tag_for(:tr, victim) do %>
@@ -30,7 +30,7 @@
           <td class="name"><%= character_name_link(victim) %></td>
           <td class="level"><%= victim.level %></td>
           <td class="controls">
-            <%= link_to_remote(fb_i("Attack!"),
+            <%= link_to_remote(fb_i(t(".buttons.attack")),
                   :url => fights_url(:victim_id => victim, :canvas => false),
                   :update => :result
                 ) %>
@@ -39,6 +39,6 @@
       <% end %>
     </table>
   <% else %>
-    <div class="empty_set"><%= fb_i("There is no opponents for you at this time.") %></div>
+    <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
   <% end %>
 <% end %>

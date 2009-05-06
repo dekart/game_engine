@@ -1,4 +1,4 @@
-<%= title(fb_i("Inventory")) %>
+<%= title(fb_i(t(".title"))) %>
 
 <div id="inventory_placements">
   <%= render(:partial => "inventories/placements", :locals => {:character => current_character}) %>
@@ -25,7 +25,7 @@
             </td>
             <td class="controls">
               <% inventory.placements.each do |placement| %>
-                <%= link_to_remote(fb_i("To #{placement.titleize}"),
+                <%= link_to_remote(fb_i(t(".buttons.to_#{placement}")),
                       :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
                       :update => :inventory_placements,
                       :html   => {:class => :place}
@@ -38,7 +38,7 @@
                     :html   => {:class => :use}
                   ) if inventory.usable? %>
               
-              <%= link_to_remote(fb_i("Sell for {amount}" + fb_it(:amount, inventory.sell_price)),
+              <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, inventory.sell_price)),
                     :url    => inventory_url(inventory, :_method => :delete, :canvas => false),
                     :update => :result,
                     :html   => {:class => :sell}
@@ -50,5 +50,5 @@
     <% end %>
   </table>
 <% else %>
-  <div class="empty_set"><%= fb_i("Your inventory is empty") %></div>
+  <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
 <% end %>

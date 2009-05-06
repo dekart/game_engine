@@ -1,15 +1,15 @@
 <div id="inventory_result">
   <p>
     <% fb_i do %>
-      You've successfully sold {item_name}!
+      <%= t(".messages.success") %>
       <%= fb_it(:item_name, content_tag(:b, fb_i(@inventory.name))) %>
     <% end %>
   </p>
 
-  <h3><%= fb_i("You received:") %></h3>
+  <h3><%= fb_i(t(".you_received.title")) %></h3>
   <ul>
     <li class="basic_money">
-      <b><%= fb_i("Money:") %></b>
+      <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
       <div><%= @inventory.sell_price %></div>
     </li>
   </ul>

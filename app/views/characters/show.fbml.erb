@@ -1,8 +1,8 @@
-<%= title(fb_i("#{fb_name(@character.user, :possessive => true, :capitalize => true)} Profile")) %>
+<%= title(fb_i(t(".title", :user => fb_name(@character.user, :possessive => true, :capitalize => true)))) %>
 
 <div id="character">
   <div class="controls">
-    <%= link_to_remote(fb_i("Attack!"),
+    <%= link_to_remote(fb_i(t(".controls.attack")),
                   :url => fights_url(:victim_id => @character, :canvas => false),
                   :update => :result,
                   :html => {:class => :attack}
@@ -19,7 +19,7 @@
             <%= content_tag(:div, rank.mission.title, :class => :rank) %>
           <% end %>
         <% else %>
-          <%= fb_i("#{fb_name(@character.user, :firstnameonly => true, :capitalize => true, :linked => false)} don't have any titles yet") %>
+          <%= fb_i(t(".titles.empty_set", :user => fb_name(@character.user, :firstnameonly => true, :capitalize => true, :linked => false))) %>
         <% end %>
       </td>
     </tr>

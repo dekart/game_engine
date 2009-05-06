@@ -65,8 +65,8 @@ var Character = {
 }
 
 var Mission = {
-  setCompleteness: function(id, value){
-    $('mission_' + id).by_class('completeness')[0].setTextValue(value);
+  setProgress: function(id, value){
+    $('mission_' + id).by_class('progress')[0].setTextValue(value);
   },
   hideControls: function(id){
     $('mission_' + id).by_class('controls')[0].setTextValue('');

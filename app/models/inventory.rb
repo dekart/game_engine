@@ -69,7 +69,7 @@ class Inventory < ActiveRecord::Base
   protected
 
   def enough_character_money?
-    self.errors.add(:character, "You don't have enough money to buy {item_name}") unless self.character.can_buy?(item)
+    self.errors.add(:character, :not_enough_money) unless self.character.can_buy?(self.item)
   end
 
   def charge_character
