@@ -48,7 +48,7 @@ en:
       name: "Restore Health"
 # Templates
   layouts:
-    _next_steps:
+    next_steps:
       title: "Next Steps"
       links:
         profile: "Customize your profile"
@@ -209,7 +209,7 @@ en:
       columns:
         payout: "Payout"
         requires: "Requires"
-        progress: "Completeness"
+        progress: "Progress"
       buttons:
         fulfill: "Fulfill"
     helpers:
