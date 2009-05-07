@@ -3,7 +3,7 @@ require "effects/base"
 class Character < ActiveRecord::Base
   LEVELS = [0]
 
-  70.times do |i|
+  200.times do |i|
     LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
   end
 

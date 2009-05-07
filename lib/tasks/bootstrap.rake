@@ -223,6 +223,179 @@ namespace :app do
         :effects      => Effects::Collection.new(Effects::Defence.new(2)),
         :placements   => "head",
         :image        => img("armor 6_i")
+      },
+      "Spearman Cap" => {
+        :level        => 5,
+        :description  => "",
+        :basic_price  => 500,
+        :effects      => Effects::Collection.new(Effects::Defence.new(5)),
+        :placements   => "head",
+        :image        => img("armor28")
+      },
+      "Goblin Shield" => {
+        :level        => 5,
+        :description  => "",
+        :basic_price  => 500,
+        :effects      => Effects::Collection.new(Effects::Defence.new(5)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 35")
+      },
+      "Soldier Shield" => {
+        :level        => 10,
+        :description  => "",
+        :basic_price  => 800,
+        :effects      => Effects::Collection.new(Effects::Defence.new(6)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 23")
+      },
+      "Large Soldier Shield" => {
+        :level        => 10,
+        :description  => "",
+        :basic_price  => 1200,
+        :effects      => Effects::Collection.new(Effects::Defence.new(8)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 29_1")
+      },
+      "Ogre Skin Helmet" => {
+        :level        => 10,
+        :description  => "",
+        :basic_price  => 1000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(7)),
+        :placements   => "head",
+        :image        => img("armor 8_al")
+      },
+      "Knight Armor" => {
+        :level        => 10,
+        :description  => "",
+        :basic_price  => 3500,
+        :vip_price    => 10,
+        :effects      => Effects::Collection.new(Effects::Defence.new(25)),
+        :placements   => "body",
+        :image        => img("armor3")
+      },
+      "Steel Shield" => {
+        :level        => 15,
+        :description  => "",
+        :basic_price  => 2000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(10)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 32")
+      },
+      "Centaur Stone Shield" => {
+        :level        => 15,
+        :description  => "",
+        :basic_price  => 3000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(12)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 33")
+      },
+      "Barbarian Helmet" => {
+        :level        => 15,
+        :description  => "",
+        :basic_price  => 6000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(15)),
+        :placements   => "head",
+        :image        => img("armor 38")
+      },
+      "Legionary Shield" => {
+        :level        => 15,
+        :description  => "",
+        :basic_price  => 3500,
+        :vip_price    => 5,
+        :effects      => Effects::Collection.new(Effects::Defence.new(15)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 25")
+      },
+      "Marble Shield" => {
+        :level        => 20,
+        :description  => "",
+        :basic_price  => 4500,
+        :effects      => Effects::Collection.new(Effects::Defence.new(18)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 29_2")
+      },
+      "Rough Silver Shield" => {
+        :level        => 20,
+        :description  => "",
+        :basic_price  => 8000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(24)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 39")
+      },
+      "Griffon Claw Shield" => {
+        :level        => 20,
+        :description  => "",
+        :basic_price  => 8000,
+        :vip_price    => 10,
+        :effects      => Effects::Collection.new(Effects::Defence.new(30)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 40")
+      },
+      "Roderick's Family Shield" => {
+        :level        => 25,
+        :description  => "",
+        :basic_price  => 15000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(30)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 41")
+      },
+      "Captain Helmet" => {
+        :level        => 25,
+        :description  => "",
+        :basic_price  => 12000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(20)),
+        :placements   => "head",
+        :image        => img("armor 19_n1")
+      },
+      "Cavalry Helmet" => {
+        :level        => 25,
+        :description  => "",
+        :basic_price  => 18000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(25)),
+        :placements   => "head",
+        :image        => img("armor 7_a")
+      },
+      "Assassin Helmet" => {
+        :level        => 25,
+        :description  => "",
+        :basic_price  => 15000,
+        :vip_price    => 20,
+        :effects      => Effects::Collection.new(Effects::Defence.new(30)),
+        :placements   => "head",
+        :image        => img("armor 34")
+      },
+      "Wolverine Shield" => {
+        :level        => 30,
+        :description  => "",
+        :basic_price  => 22000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(36)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 31")
+      },
+      "Knight Shield" => {
+        :level        => 30,
+        :description  => "",
+        :basic_price  => 27000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(40)),
+        :placements   => "left_hand,right_hand",
+        :image        => img("armor 5")
+      },
+      "Bodyguard Helmet" => {
+        :level        => 30,
+        :description  => "",
+        :basic_price  => 20000,
+        :effects      => Effects::Collection.new(Effects::Defence.new(30)),
+        :placements   => "head",
+        :image        => img("armor 16")
+      },
+      "General Helmet" => {
+        :level        => 30,
+        :description  => "",
+        :basic_price  => 23000,
+        :vip_price    => 10,
+        :effects      => Effects::Collection.new(Effects::Defence.new(38)),
+        :placements   => "head",
+        :image        => img("armor 12")
       }
     }
 
