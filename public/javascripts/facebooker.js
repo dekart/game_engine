@@ -90,6 +90,10 @@ Ajax.Updater = function (container,url,options) {
     }
   }
 
+  if(options["method"]){
+    parameters["_method"] = options["method"];
+  }
+
   Spinner.show();
 
   this.ajax.post(url,parameters); 
