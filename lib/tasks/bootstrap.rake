@@ -149,10 +149,20 @@ namespace :app do
     }
 
     @missions.each_pair do |key, value|
+      puts "Adding '#{key}'"
+
       Mission.find_or_create_by_name(key).update_attributes(value)
     end
 
     @weapons = {
+      "Knife" => {
+        :level => 1,
+        :description => "",
+        :basic_price => 40,
+        :effects => Effects::Collection.new(Effects::Attack.new(1)),
+        :image => img("weapon 57_al"),
+        :placements => "left_hand,right_hand"
+      },
       "Soldier Sword" => {
         :level => 1,
         :description => "",
@@ -185,12 +195,20 @@ namespace :app do
         :image => img("weapon 27_n"),
         :placements => "left_hand,right_hand"
       },
-      "Knife" => {
-        :level => 1,
+      "Iron Dagger" => {
+        :level => 3,
         :description => "",
-        :basic_price => 40,
-        :effects => Effects::Collection.new(Effects::Attack.new(1)),
-        :image => img("weapon 57_al"),
+        :basic_price => 170,
+        :effects => Effects::Collection.new(Effects::Attack.new(3), Effects::Defence.new(1)),
+        :image => img("weapon 108_1_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Halfling Bow" => {
+        :level => 3,
+        :description => "",
+        :basic_price => 200,
+        :effects => Effects::Collection.new(Effects::Attack.new(5)),
+        :image => img("weapon 176_2"),
         :placements => "left_hand,right_hand"
       },
       "Orc Hammer" => {
@@ -200,10 +218,176 @@ namespace :app do
         :effects => Effects::Collection.new(Effects::Attack.new(6), Effects::Defence.new(2)),
         :image => img("weapon 84_n"),
         :placements => "left_hand,right_hand"
-      }
+      },
+      "Black Steel Dagger" => {
+        :level => 5,
+        :description => "",
+        :basic_price => 700,
+        :effects => Effects::Collection.new(Effects::Attack.new(7), Effects::Defence.new(3)),
+        :image => img("weapon 55_m"),
+        :placements => "left_hand,right_hand"
+      },
+      "Guardian Sword" => {
+        :level => 5,
+        :description => "",
+        :basic_price => 1200,
+        :effects => Effects::Collection.new(Effects::Attack.new(9), Effects::Defence.new(3)),
+        :image => img("weapon 17_m"),
+        :placements => "left_hand,right_hand"
+      },
+      "Cloud Poleaxe" => {
+        :level => 5,
+        :description => "",
+        :basic_price => 1000,
+        :vip_price => 5,
+        :effects => Effects::Collection.new(Effects::Attack.new(13), Effects::Defence.new(5)),
+        :image => img("weapon 38_l"),
+        :placements => "left_hand,right_hand"
+      },
+      "Spear" => {
+        :level => 8,
+        :description => "",
+        :basic_price => 1800,
+        :effects => Effects::Collection.new(Effects::Attack.new(12), Effects::Defence.new(4)),
+        :image => img("weapon 62"),
+        :placements => "left_hand,right_hand"
+      },
+      "Goblin Broadsword" => {
+        :level => 8,
+        :description => "",
+        :basic_price => 2200,
+        :effects => Effects::Collection.new(Effects::Attack.new(14), Effects::Defence.new(4)),
+        :image => img("weapon 29_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Thick Dagger" => {
+        :level => 8,
+        :description => "",
+        :basic_price => 1800,
+        :effects => Effects::Collection.new(Effects::Attack.new(10), Effects::Defence.new(4)),
+        :image => img("weapon 3_l"),
+        :placements => "left_hand,right_hand"
+      },
+      "Centaur Bow" => {
+        :level => 8,
+        :description => "",
+        :basic_price => 2000,
+        :effects => Effects::Collection.new(Effects::Attack.new(12), Effects::Defence.new(5)),
+        :image => img("weapon 176_3"),
+        :placements => "left_hand,right_hand"
+      },
+      "Barbarian Hammer" => {
+        :level => 8,
+        :description => "",
+        :basic_price => 2000,
+        :vip_price => 10,
+        :effects => Effects::Collection.new(Effects::Attack.new(18), Effects::Defence.new(6)),
+        :image => img("weapon 26_l"),
+        :placements => "left_hand,right_hand"
+      },
+      "Mangena Root Staff" => {
+        :level => 10,
+        :description => "",
+        :basic_price => 3500,
+        :effects => Effects::Collection.new(Effects::Attack.new(16), Effects::Defence.new(6)),
+        :image => img("weapon 42_1_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Black Steel Sword" => {
+        :level => 10,
+        :description => "",
+        :basic_price => 4000,
+        :effects => Effects::Collection.new(Effects::Attack.new(18), Effects::Defence.new(5)),
+        :image => img("weapon 113_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Leaf Dagger" => {
+        :level => 10,
+        :description => "",
+        :basic_price => 2800,
+        :effects => Effects::Collection.new(Effects::Attack.new(14), Effects::Defence.new(4)),
+        :image => img("weapon 176_1"),
+        :placements => "left_hand,right_hand"
+      },
+      "Night Warrior Dagger" => {
+        :level => 15,
+        :description => "",
+        :basic_price => 4500,
+        :effects => Effects::Collection.new(Effects::Attack.new(20), Effects::Defence.new(6)),
+        :image => img("weapon 92_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Fine Steel Sword" => {
+        :level => 15,
+        :description => "",
+        :basic_price => 5200,
+        :effects => Effects::Collection.new(Effects::Attack.new(23), Effects::Defence.new(7)),
+        :image => img("weapon 110_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Long Spear" => {
+        :level => 15,
+        :description => "",
+        :basic_price => 6000,
+        :effects => Effects::Collection.new(Effects::Attack.new(20), Effects::Defence.new(9)),
+        :image => img("weapon 176_4"),
+        :placements => "left_hand,right_hand"
+      },
+      "Dwarf Flail" => {
+        :level => 15,
+        :description => "",
+        :basic_price => 6200,
+        :vip_price => 5,
+        :effects => Effects::Collection.new(Effects::Attack.new(30), Effects::Defence.new(10)),
+        :image => img("weapon 81_nn"),
+        :placements => "left_hand,right_hand"
+      },
+      "Pirate Broadsword" => {
+        :level => 20,
+        :description => "",
+        :basic_price => 8000,
+        :effects => Effects::Collection.new(Effects::Attack.new(28), Effects::Defence.new(10)),
+        :image => img("weapon 9"),
+        :placements => "left_hand,right_hand"
+      },
+      "Griffon Beak Dagger" => {
+        :level => 20,
+        :description => "",
+        :basic_price => 9000,
+        :effects => Effects::Collection.new(Effects::Attack.new(28), Effects::Defence.new(12)),
+        :image => img("weapon 139_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Steel Club" => {
+        :level => 20,
+        :description => "",
+        :basic_price => 9200,
+        :effects => Effects::Collection.new(Effects::Attack.new(31), Effects::Defence.new(9)),
+        :image => img("weapon 111_s"),
+        :placements => "left_hand,right_hand"
+      },
+      "Mercenary Halberd" => {
+        :level => 20,
+        :description => "",
+        :basic_price => 9800,
+        :effects => Effects::Collection.new(Effects::Attack.new(30), Effects::Defence.new(13)),
+        :image => img("weapon 120_n"),
+        :placements => "left_hand,right_hand"
+      },
+      "Werewolf Axe" => {
+        :level => 20,
+        :description => "",
+        :basic_price => 9500,
+        :vip_price => 10,
+        :effects => Effects::Collection.new(Effects::Attack.new(36), Effects::Defence.new(14)),
+        :image => img("weapon 79_m"),
+        :placements => "left_hand,right_hand"
+      },
     }
 
     @weapons.each_pair do |key, value|
+      puts "Adding '#{key}'"
+
       Weapon.find_or_create_by_name(key).update_attributes(value)
     end
 
@@ -400,6 +584,8 @@ namespace :app do
     }
 
     @armors.each_pair do |key, value|
+      puts "Adding '#{key}'"
+
       Armor.find_or_create_by_name(key).update_attributes(value)
     end
 
@@ -424,6 +610,8 @@ namespace :app do
     }
 
     @potions.each_pair do |key, value|
+      puts "Adding '#{key}'"
+
       Potion.find_or_create_by_name(key).update_attributes(value)
     end
   end
