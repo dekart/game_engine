@@ -27,7 +27,7 @@
             :url => fulfill_mission_url(@mission, :canvas => false),
             :update => :result,
             :html   => {:class => "fulfill_again button"}
-          ) if current_character.ep >= @mission.ep_cost %>
+          ) if current_character.can_fulfill?(@mission) %>
 
       <p>
         <%= fb_i(t(".succeeded.message")) %> <%= fb_i(@mission.success_text) %>
@@ -37,7 +37,7 @@
             :url => fulfill_mission_url(@mission, :canvas => false),
             :update => :result,
             :html   => {:class => "fulfill_again button"}
-          ) if current_character.ep >= @mission.ep_cost %>
+          ) if current_character.can_fulfill?(@mission) %>
 
       <p>
         <%= fb_i("Ouch!") %> <%= fb_i(@mission.failure_text) %>
@@ -79,7 +79,7 @@
     </table>
 
     <% content_for :script do %>
-      Mission.setProgress(<%= @mission.id %>, '<%= mission_progress(@result.rank) %>');
+      Mission.setProgress(<%= @mission.id %>, '<%= mission_progress(current_character, @mission) %>');
     <% end %>
   <% elsif !@result.enough_energy? %>
     <p>

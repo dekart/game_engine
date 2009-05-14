@@ -5,7 +5,7 @@ class Rank < ActiveRecord::Base
   named_scope :completed, {
     :conditions => {:completed => true},
     :include    => :mission,
-    :order      => "missions.level, missions.ep_cost"
+    :order      => "missions.level, missions.money_max"
    }
 
   before_save :check_progress

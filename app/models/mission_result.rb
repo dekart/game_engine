@@ -13,7 +13,7 @@ class MissionResult
     @character  = character
     @mission    = mission
 
-    @rank = mission.ranks.for_character(@character)
+    @rank = @character.rank_for_mission(@mission)
   end
 
   def save!

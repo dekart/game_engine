@@ -18,6 +18,7 @@ class Character < ActiveRecord::Base
   has_many :ranks
   has_many :missions, :through => :ranks
   has_many :inventories, :include => :item
+  has_many :items, :through => :inventories
   has_many :relations, :foreign_key => "source_id"
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
@@ -136,6 +137,16 @@ class Character < ActiveRecord::Base
 
   def can_attack?(victim)
     not self.class.victims_for(self).find_by_id(victim.id).nil?
+  end
+
+  def can_fulfill?(mission)
+    self.ep >= mission.ep_cost && 
+    mission.requirements.satisfies?(self) &&
+    !self.rank_for_mission(mission).completed?
+  end
+
+  def rank_for_mission(mission)
+    self.ranks.find_or_initialize_by_mission_id(mission.id)
   end
 
   protected

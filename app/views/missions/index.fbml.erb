@@ -4,7 +4,7 @@
   <tr>
     <th></th>
     <th><%= fb_i(t(".columns.payout")) %></th>
-    <th><%= fb_i(t(".columns.requires")) %></th>
+    <th colspan="2"><%= fb_i(t(".columns.requires")) %></th>
     <th><%= fb_i(t(".columns.progress")) %></th>
   </tr>
   <% @missions.each do |mission| %>
@@ -17,13 +17,13 @@
         <div class="experience"><%= mission.experience %></div>
         <div class="basic_money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
       </td>
+      <td class="requires"><div class="energy"><%= mission.ep_cost %></div></td>
       <td class="requires">
-        <div class="energy"><%= mission.ep_cost %></div>
+        <%= mission_requirements(mission) %>
       </td>
-      <% rank = mission.ranks.for_character(current_character) %>
-      <td class="progress"><%= mission_progress(rank) %></td>
+      <td class="progress"><%= mission_progress(current_character, mission) %></td>
       <td class="controls">
-        <% if current_character.ep >= mission.ep_cost and !rank.completed? %>
+        <% if current_character.can_fulfill?(mission) %>
           <%= link_to_remote(fb_i(t(".buttons.fulfill")),
                 :url => fulfill_mission_url(mission, :canvas => false),
                 :update => :result
