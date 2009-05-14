@@ -4,3 +4,4 @@ db/*.sqlite3
 db/schema.db
 public/stylesheets/*.css
 public/system
+nbproject
