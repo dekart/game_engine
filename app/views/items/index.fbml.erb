@@ -27,8 +27,14 @@
           <td class="controls">
             <%= link_to_remote(fb_i(t(".buttons.buy")),
                   :url => inventories_url(:item_id => item.id, :canvas => false),
-                  :update => :result
+                  :update => :result,
+                  :html => {:class => :buy}
                 ) if current_character.can_buy?(item) %>
+
+            <%= link_to(fb_i(t(".buttons.get_vip")),
+                  {:anchor => :buy_vip},
+                  {:class => :buy_vip}
+                ) if current_character.need_vip_money?(item)  %>
           </td>
         </tr>
       <% end %>
@@ -37,6 +43,7 @@
   <% end %>
 </table>
 
-<h2><%= fb_i(t(".buy_gems.title")) %></h2>
+<a name="buy_vip"></a>
+<h2><%= fb_i(t(".buy_vip.title")) %></h2>
 
 <%= fb_super_rewards_iframe %>

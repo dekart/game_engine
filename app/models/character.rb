@@ -130,6 +130,10 @@ class Character < ActiveRecord::Base
     self.basic_money >= item.basic_price.to_i and self.vip_money >= item.vip_price.to_i
   end
 
+  def need_vip_money?(item)
+    item.vip_price.to_i > 0 && self.vip_money < item.vip_price
+  end
+
   def can_attack?(victim)
     not self.class.victims_for(self).find_by_id(victim.id).nil?
   end

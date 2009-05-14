@@ -187,7 +187,8 @@ en:
         price: "Price"
       buttons:
         buy: "Buy"
-      buy_gems:
+        get_vip: "Get More Gems"
+      buy_vip:
         title: "Buy Gems"
   missions:
     fulfill:
