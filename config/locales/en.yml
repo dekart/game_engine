@@ -46,7 +46,7 @@ en:
       name: "Restore Energy"
     restore_health:
       name: "Restore Health"
-    increase_points:
+    upgrade:
       name: "Upgrade Points"
 # Templates
   layouts:

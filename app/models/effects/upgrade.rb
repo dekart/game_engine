@@ -1,5 +1,5 @@
 module Effects
-  class IncreasePoints < Base
+  class Upgrade < Base
     def apply(character)
       character.points += self.value
     end
