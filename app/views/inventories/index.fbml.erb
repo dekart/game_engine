@@ -25,11 +25,15 @@
             </td>
             <td class="controls">
               <% inventory.placements.each do |placement| %>
-                <%= link_to_remote(fb_i(t(".buttons.to_#{placement}")),
-                      :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
-                      :update => :inventory_placements,
-                      :html   => {:class => :place}
-                    ) %>
+                <% if inventory.placement == placement %>
+                  <div class="placement"><%= fb_i(t(".placements.#{placement}"))%></div>
+                <% else %>
+                  <%= link_to_remote(fb_i(t(".buttons.to_#{placement}")),
+                        :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
+                        :update => :inventory_placements,
+                        :html   => {:class => :place}
+                      ) %>
+                <% end %>
               <% end %>
 
               <%= link_to_remote(inventory_use_label(inventory),

@@ -173,6 +173,13 @@ en:
           unlimited: "(unlimited)"
           limited: "({{left}}/{{limit}})"
         sell: "Sell for {amount}"
+      placements:
+        left_hand: "In Left Hand"
+        right_hand: "In Left Hand"
+        head: "On Head"
+        body: "On Body"
+        belt: "On Belt"
+        legs: "On Legs"
       empty_set: "Your inventory is empty"
     use:
       messages:
