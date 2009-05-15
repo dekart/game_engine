@@ -1,4 +1,6 @@
 class Item < ActiveRecord::Base
+  extend SerializeWithPreload
+
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",

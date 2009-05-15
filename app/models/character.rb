@@ -1,4 +1,6 @@
 class Character < ActiveRecord::Base
+  extend SerializeWithPreload
+
   LEVELS = [0]
 
   200.times do |i|

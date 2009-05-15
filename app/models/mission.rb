@@ -1,4 +1,6 @@
 class Mission < ActiveRecord::Base
+  extend SerializeWithPreload
+  
   has_many :ranks
 
   named_scope :available_for, Proc.new {|character|
