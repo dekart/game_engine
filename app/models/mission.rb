@@ -5,6 +5,6 @@ class Mission < ActiveRecord::Base
     { :conditions => ["level <= ?", character.level], :order => :level }
   }
 
-  extend SerializeRequirements
-  serialize_requirements :requirements
+  serialize :requirements, Requirements::Collection
+  serialize :payouts, Payouts::Collection
 end

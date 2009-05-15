@@ -82,3 +82,5 @@ end
 WillPaginate::ViewHelpers.pagination_options.merge!(:next_label => "Older &raquo;", :previous_label => "&laquo; Newer")
 
 require "super_rewards"
+
+ActiveRecord::Base.extend(SerializeWithPreload)

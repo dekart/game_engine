@@ -3,7 +3,7 @@
 <table id="mission_list" cellspacing="0">
   <tr>
     <th></th>
-    <th><%= fb_i(t(".columns.payout")) %></th>
+    <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
     <th colspan="2"><%= fb_i(t(".columns.requires")) %></th>
     <th><%= fb_i(t(".columns.progress")) %></th>
   </tr>
@@ -17,6 +17,7 @@
         <div class="experience"><%= mission.experience %></div>
         <div class="basic_money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
       </td>
+      <td class="payout"><%= mission_payouts(mission) %></td>
       <td class="requires"><div class="energy"><%= mission.ep_cost %></div></td>
       <td class="requires">
         <%= mission_requirements(mission) %>

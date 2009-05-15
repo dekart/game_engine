@@ -1,5 +1,3 @@
-require "effects/base"
-
 class Character < ActiveRecord::Base
   LEVELS = [0]
 
@@ -48,8 +46,7 @@ class Character < ActiveRecord::Base
 
   attr_accessor :level_updated
 
-  extend SerializeEffects
-  serialize_effects :inventory_effects
+  serialize :inventory_effects, Effects::Collection
 
   extend RestorableAttribute
   restorable_attribute :hp, :health, 2.minutes + 30.seconds

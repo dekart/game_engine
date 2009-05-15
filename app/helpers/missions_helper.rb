@@ -18,4 +18,14 @@ module MissionsHelper
       end
     end
   end
+
+  def mission_payouts(mission)
+    returning result = "" do
+      mission.payouts.each do |payout|
+        next unless payout.options[:visible]
+
+        result << render(:partial => "missions/payouts/#{payout.name}", :locals => {:payout => payout})
+      end
+    end
+  end
 end

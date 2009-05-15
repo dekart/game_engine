@@ -9,14 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090514165727) do
-
-  create_table "applications", :force => true do |t|
-    t.integer "facebook_id",      :limit => 8
-    t.string  "api_key"
-    t.string  "secret_key"
-    t.string  "canvas_page_name"
-  end
+ActiveRecord::Schema.define(:version => 20090515152305) do
 
   create_table "bank_operations", :force => true do |t|
     t.integer  "character_id"
@@ -136,13 +129,14 @@ ActiveRecord::Schema.define(:version => 20090514165727) do
     t.integer  "win_amount"
     t.integer  "success_chance", :default => 100
     t.string   "title"
+    t.integer  "ep_cost"
     t.integer  "experience"
     t.integer  "money_min"
     t.integer  "money_max"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "ep_cost"
     t.text     "requirements"
+    t.text     "payouts"
   end
 
   create_table "ranks", :force => true do |t|

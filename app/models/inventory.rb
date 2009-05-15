@@ -14,12 +14,14 @@ class Inventory < ActiveRecord::Base
 
   named_scope :placed, { :conditions => "placement IS NOT NULL" }
 
+  delegate :name, :description, :image, :effects, :placements, :placeable?, :usable?, :usage_limit, :to => :item
+  
+  attr_accessor :free_of_charge
+
   validate_on_create :enough_character_money?
 
   after_create  :charge_character
 
-  delegate :name, :description, :image, :effects, :placements, :placeable?, :usable?, :usage_limit, :to => :item
-  
   def sell_price
     (self.item.basic_price * 0.8).ceil
   end
@@ -69,10 +71,14 @@ class Inventory < ActiveRecord::Base
   protected
 
   def enough_character_money?
+    return if self.free_of_charge
+    
     self.errors.add(:character, :not_enough_money) unless self.character.can_buy?(self.item)
   end
 
   def charge_character
+    return if self.free_of_charge
+
     self.transaction do
       self.character.decrement(:basic_money, self.item.basic_price) if self.item.basic_price.to_i > 0
       self.character.decrement(:vip_money, self.item.vip_price) if self.item.vip_price.to_i > 0

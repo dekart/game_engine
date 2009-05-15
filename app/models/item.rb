@@ -8,8 +8,7 @@ class Item < ActiveRecord::Base
       :belt   => "84x24#"
     }
 
-  extend SerializeEffects
-  serialize_effects :effects
+  serialize :effects, Effects::Collection
 
   named_scope :available_for, Proc.new {|character|
     { :conditions => ["level <= ?", character.level], :order => :basic_price }

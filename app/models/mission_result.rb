@@ -1,5 +1,5 @@
 class MissionResult
-  attr_reader :character, :mission, :rank, :success, :money, :experience, :saved
+  attr_reader :character, :mission, :rank, :success, :money, :experience, :saved, :payouts
 
   def self.create(*args)
     result = self.new(*args)
@@ -14,6 +14,8 @@ class MissionResult
     @mission    = mission
 
     @rank = @character.rank_for_mission(@mission)
+
+    @payouts = []
   end
 
   def save!
@@ -32,7 +34,14 @@ class MissionResult
           @character.increment(:experience, @experience)
 
           @character.increment(:missions_succeeded)
-          @character.increment(:missions_completed) if @rank.completed?
+
+          if @rank.completed?
+            @character.increment(:missions_completed)
+            
+            @payouts = @mission.payouts.apply(@character, :complete)
+          else
+            @payouts = @mission.payouts.apply(@character, :success)
+          end
         end
 
         @character.ep -= @mission.ep_cost
@@ -49,6 +58,6 @@ class MissionResult
   end
 
   def received_something?
-    !(@money.nil? && @experience.nil?)
+    !(@money.nil? && @experience.nil? && @payouts.empty?)
   end
 end
