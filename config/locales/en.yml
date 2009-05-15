@@ -24,19 +24,23 @@ en:
     errors:
       models:
         bank_deposit:
-          amount:
-            not_enough: "You don't have that much cash"
+          attributes:
+            amount:
+              not_enough: "You don't have that much cash"
         bank_withdraw:
-          amount:
-            not_enough: "You don't have that much money at your balance"
+          attributes:
+            amount:
+              not_enough: "You don't have that much money at your balance"
         fight:
-          character:
-            not_enough_energy: "You don't have enough energy to fight. Take a rest!"
-            cannot_attack: "You cannot attack this user"
-            too_weak: "You are too weak to fight! Take a rest!"
+          attributes:
+            character:
+              not_enough_energy: "You don't have enough energy to fight. Take a rest!"
+              cannot_attack: "You cannot attack this user"
+              too_weak: "You are too weak to fight! Take a rest!"
         inventory:
-          character:
-            not_enough_money: "You don't have enough money to buy {item_name}"
+          attributes:
+            character:
+              not_enough_money: "You don't have enough money to buy {item_name}"
   effects:
     attack:
       name: "Attack"
