@@ -17,9 +17,9 @@
         <div class="experience"><%= mission.experience %></div>
         <div class="basic_money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
       </td>
-      <td class="payout"><%= mission_payouts(mission) %></td>
+      <td class="payout_advanced"><%= mission_payouts(mission) %></td>
       <td class="requires"><div class="energy"><%= mission.ep_cost %></div></td>
-      <td class="requires">
+      <td class="requires_advanced">
         <%= mission_requirements(mission) %>
       </td>
       <td class="progress"><%= mission_progress(current_character, mission) %></td>
