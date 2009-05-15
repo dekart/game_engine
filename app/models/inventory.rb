@@ -27,10 +27,9 @@ class Inventory < ActiveRecord::Base
   end
 
   def place_to(placement)
-    if self.placements.include?(placement.to_s)
-
+    if self.placements.include?(placement.to_s) and placement != self.placement
       self.class.transaction do
-        self.character.inventories.update_all('placement = NULL', ['placement = ?', self.placement])
+        self.character.inventories.update_all('placement = NULL', ['placement = ?', placement])
         
         self.update_attribute(:placement, placement)
 
