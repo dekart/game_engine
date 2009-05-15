@@ -77,7 +77,17 @@ module FacebookHelper
   def link_to_feed_dialog(title, template_class, template_name, options = {})
     bundle_id = Facebooker::Rails::Publisher::FacebookTemplate.bundle_id_for_class_and_method(template_class, template_name.to_s)
 
-    link_to_function(title, "Facebook.showFeedDialog(#{bundle_id}, #{options[:template_data].to_json}, '#{options[:body_general]}', #{options[:target_id] || "null"})", options[:html] || {})
+    link_to_function(title, 
+      "Facebook.showFeedDialog(
+        #{bundle_id},
+        #{options[:template_data].reverse_merge(
+            :images => [{:src => image_path("logo_100x100.jpg"), :href => root_url(:canvas => true)}]
+          ).to_json},
+        '#{options[:body_general]}',
+        #{options[:target_id] || "null"}
+      )",
+      options[:html] || {}
+    )
   end
 
   protected
