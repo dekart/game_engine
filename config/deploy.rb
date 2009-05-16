@@ -66,7 +66,7 @@ end
   before "deploy:migrations", t
 end
 
-["deploy:jobs:update_references", "deploy:bootstrap", "deploy:jobs:start", "deploy:cleanup"].each do |t|
+["deploy:bootstrap", "deploy:jobs:update_references", "deploy:jobs:start", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
