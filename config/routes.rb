@@ -15,6 +15,9 @@ ActionController::Routing::Routes.draw do |map|
     :collection => {:load_vip_money => :any, :rating => :any}
   map.resources :missions, :member => {:fulfill => :post}
   map.resources :items
+  map.resources :item_groups do |group|
+    group.resources :items
+  end
   map.resources :inventories, :member => {:place => :any, :use => :any}
   map.resources :fights
   map.resources :invitations, :member => {:accept => :any, :ignore => :any}

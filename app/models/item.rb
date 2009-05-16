@@ -1,4 +1,6 @@
 class Item < ActiveRecord::Base
+  belongs_to :item_group
+
   extend SerializeWithPreload
 
   has_attached_file :image,
@@ -15,12 +17,6 @@ class Item < ActiveRecord::Base
   named_scope :available_for, Proc.new {|character|
     { :conditions => ["level <= ?", character.level], :order => :basic_price }
   }
-
-  TYPES = %w{weapons armors potions}
-
-  TYPES.each do |type|
-    named_scope type, { :conditions => ["type = ?", type.classify] }
-  end
 
   named_scope :shop, {:conditions => "availability = 'shop'"}
 

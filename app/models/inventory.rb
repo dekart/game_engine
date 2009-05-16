@@ -4,13 +4,13 @@ class Inventory < ActiveRecord::Base
   belongs_to :character
   belongs_to :item
 
-  Item::TYPES.each do |type|
-    named_scope type, {
-      :conditions => ["items.type = ?", type.classify],
+  named_scope :by_item_group, Proc.new{|group|
+    {
+      :conditions => ["items.item_group_id = ?", group.id],
       :include    => :item,
-      :order      => "items.level ASC"
+      :order      => "items.level ASC, item.basic_price ASC"
     }
-  end
+  }
 
   named_scope :placed, { :conditions => "placement IS NOT NULL" }
 

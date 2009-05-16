@@ -1,47 +1,50 @@
 <%= title(fb_i(t(".title"))) %>
 
-<table id="item_list" cellspacing="0">
-  <% Item::TYPES.each do |type| %>
-    <% if @items.send(type).any? %>
-      <tr>
-        <th colspan="3"><h3><%= fb_i(type.capitalize) %></h3></th>
-        <th><%= fb_i(t(".columns.price")) %></th>
-      </tr>
-      <% @items.send(type).each do |item| %>
-        <tr>
-          <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
-          <td class="info">
-            <div class="name"><%= fb_i(item.name) %></div>
-            <div class="description"><%= fb_i(item.description) %></div>
-          </td>
-          <td class="details">
-            <% item.effects.each do |effect| %>
-              <%= content_tag(:div, effect.value, :class => effect.name) %>
-            <% end %>
-          </td>
-          <td class="requires">
-            <% %w{basic_price vip_price}.each do |attr| %>
-              <%= content_tag(:div, item.send(attr), :class => attr)  if item.send(attr).to_i > 0 %>
-            <% end %>
-          </td>
-          <td class="controls">
-            <%= link_to_remote(fb_i(t(".buttons.buy")),
-                  :url => inventories_url(:item_id => item.id, :canvas => false),
-                  :update => :result,
-                  :html => {:class => :buy}
-                ) if current_character.can_buy?(item) %>
-
-            <%= link_to(fb_i(t(".buttons.get_vip")),
-                  {:anchor => :buy_vip},
-                  {:class => :buy_vip}
-                ) if current_character.need_vip_money?(item)  %>
-          </td>
-        </tr>
-      <% end %>
+<div id="item_groups">
+  <% ItemGroup.all.each do |group| %>
+    <% if group == @item_group %>
+      <b><%= fb_i(@item_group.name) %></b>
+    <% else %>
+      <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
     <% end %>
-    <tr><td colspan="5" class="spacer">&nbsp;</td></tr>
+  <% end %>
+</div>
+
+<table id="item_list" cellspacing="0">
+  <% @items.each do |item| %>
+    <tr>
+      <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
+      <td class="info">
+        <div class="name"><%= fb_i(item.name) %></div>
+        <div class="description"><%= fb_i(item.description) %></div>
+      </td>
+      <td class="details">
+        <% item.effects.each do |effect| %>
+          <%= content_tag(:div, effect.value, :class => effect.name) %>
+        <% end %>
+      </td>
+      <td class="requires">
+        <% %w{basic_price vip_price}.each do |attr| %>
+          <%= content_tag(:div, item.send(attr), :class => attr)  if item.send(attr).to_i > 0 %>
+        <% end %>
+      </td>
+      <td class="controls">
+        <%= link_to_remote(fb_i(t(".buttons.buy")),
+              :url => inventories_url(:item_id => item.id, :canvas => false),
+              :update => :result,
+              :html => {:class => :buy}
+            ) if current_character.can_buy?(item) %>
+
+        <%= link_to(fb_i(t(".buttons.get_vip")),
+              {:anchor => :buy_vip},
+              {:class => :buy_vip}
+            ) if current_character.need_vip_money?(item)  %>
+      </td>
+    </tr>
   <% end %>
 </table>
+
+<br />
 
 <a name="buy_vip"></a>
 <h2><%= fb_i(t(".buy_vip.title")) %></h2>

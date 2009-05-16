@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090515152305) do
+ActiveRecord::Schema.define(:version => 20090516132253) do
 
   create_table "bank_operations", :force => true do |t|
     t.integer  "character_id"
@@ -100,8 +100,14 @@ ActiveRecord::Schema.define(:version => 20090515152305) do
   add_index "invitations", ["receiver_id", "accepted"], :name => "index_invitations_on_receiver_id_and_accepted"
   add_index "invitations", ["sender_id"], :name => "index_invitations_on_sender_id"
 
+  create_table "item_groups", :force => true do |t|
+    t.string   "name"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "items", :force => true do |t|
-    t.string   "type",               :limit => 30
     t.string   "availability",       :limit => 30, :default => "shop"
     t.integer  "level"
     t.integer  "basic_price"
@@ -117,7 +123,10 @@ ActiveRecord::Schema.define(:version => 20090515152305) do
     t.integer  "usage_limit"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "item_group_id"
   end
+
+  add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
 
   create_table "missions", :force => true do |t|
     t.integer  "level"
