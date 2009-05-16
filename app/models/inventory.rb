@@ -8,7 +8,7 @@ class Inventory < ActiveRecord::Base
     {
       :conditions => ["items.item_group_id = ?", group.id],
       :include    => :item,
-      :order      => "items.level ASC, item.basic_price ASC"
+      :order      => "items.level ASC, items.basic_price ASC"
     }
   }
 
