@@ -87,13 +87,13 @@ en:
         note: "Withdrawing money to cash is free."
         submit: "Withdraw"
   characters:
+    invitations:
+      title: "Alliance Invitations"
+      accept: "Accept"
+      ignore: "Ignore"
     index:
       overview:
         title: "Profile Overview"
-      invitations:
-        title: "Alliance Invitations"
-        accept: "Accept"
-        ignore: "Ignore"
       fights:
         title: "Latest Fights"
     rating:
