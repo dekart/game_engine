@@ -5,7 +5,7 @@
     <% if group == @item_group %>
       <b><%= fb_i(@item_group.name) %></b>
     <% else %>
-      <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
+      <%= link_to(fb_i(group.name), item_group_items_path(:item_group_id => group.id)) %>
     <% end %>
   <% end %>
 </div>
