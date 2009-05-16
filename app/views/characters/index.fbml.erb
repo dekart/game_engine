@@ -10,7 +10,7 @@
       <%= render :partial => "layouts/next_steps" if current_user.show_next_steps? %>
 
       <% if @alliance_invitations.any? %>
-        <h3><%= fb_i(t('.ivitations.title')) %></h3>
+        <h3><%= fb_i(t('.invitations.title')) %></h3>
 
         <table cellspacing="0" id="invitation_list">
           <% @alliance_invitations.each do |invitation| %>
@@ -26,11 +26,11 @@
                 <%= invitation.sender.character.level %>
               </td>
               <% content_tag(:td, :id => dom_id(invitation, :controls), :class => :controls) do %>
-                <%= link_to_remote(fb_i(t('.ivitations.accept')),
+                <%= link_to_remote(fb_i(t('.invitations.accept')),
                       :url    => accept_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
                       :html   => {:class => :accept}) %>
-                <%= link_to_remote(fb_i(t('.ivitations.ignore')),
+                <%= link_to_remote(fb_i(t('.invitations.ignore')),
                       :url    => ignore_invitation_url(invitation, :canvas => false),
                       :update => dom_id(invitation, :controls),
                       :html   => {:class => :ignore}) %>
