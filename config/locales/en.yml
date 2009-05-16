@@ -175,7 +175,7 @@ en:
         sell: "Sell for {amount}"
       placements:
         left_hand: "In Left Hand"
-        right_hand: "In Left Hand"
+        right_hand: "In Right Hand"
         head: "On Head"
         body: "On Body"
         belt: "On Belt"
