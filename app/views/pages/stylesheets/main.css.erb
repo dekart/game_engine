@@ -8,31 +8,23 @@
   #spinner {position: absolute; top:150px; left: 300px; width: 150px; height: 50px; border: 1px solid #6D84B4; padding: 5px; background-color:white; z-index:1000;}
     #spinner img {float:left; margin-right: 10px;}
 
-  #header {height: 100px; border-bottom: 1px solid #d0d0d0;}
+  #header {border-bottom: 1px solid #d0d0d0;}
 
-  #main_menu {display:block; clear:both; height: 25px; border-top: 1px solid #d0d0d0;}
-    #main_menu a {float:left; display: block; height: 25px; line-height: 25px; font-weight:bold; padding: 0 10px 0 30px; background-position: 8px center; background-repeat: no-repeat; border-left: 1px solid white; border-right: 1px solid white  }
+  #main_menu {float:right;}
+    #main_menu a {display: block; height: 25px; line-height: 25px; font-weight:bold; padding: 0 10px 0 30px; background-position: 8px center; background-repeat: no-repeat; border: 1px solid white;}
     #main_menu a:hover {border-color: #d0d0d0;}
     <% %w{home settings profile missions fights inventory shop alliance rating}.each do |attr| %>
       #main_menu a.<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
     <% end %>
-    
-  #co {width: 460px; float: right; padding:0;}
-    #co li {float:left; width: 150px; display: block; height: 25px; margin: 0px; line-height: 25px; }
-    #co b {display:block; float:left;}
-    #co .first {width: 125px;}
-      #co .first b {width: 50px;}
-    #co .second {width: 155px;}
-      #co .second b {width: 70px;}
-    #co .third {width: 180px;}
-      #co .third b {width: 50px;}
-      #co .third div {width: 52px;}
-    #co div {float: left;height: 20px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+
+  #co {clear:both; border-top: 1px solid #d0d0d0;}
+    #co td { width: 150px;line-height: 25px; }
+    #co div {height: 20px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
     <% %w{basic_money vip_money level experience health energy}.each do |attr| %>
       #co_<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
     <% end %>
     #co_points {padding-left: 3px !important;}
-    #co .timer {color: #b0b0b0;padding-left: 5px;}
+    #co .timer {color: #b0b0b0; float:right; padding-right: 5px;}
 
   #next_steps {margin: 10px 5px; border: 1px solid #EC7000; padding: 8px; background-color: #FFFFD5;}
     #next_steps h2 {color: #EC7000; margin-bottom: 15px;}

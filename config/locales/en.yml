@@ -74,6 +74,8 @@ en:
         character: "Profile"
         relations: "Alliance"
         rating: "Rating"
+      character_overview:
+        bank: "Treasury"
   bank_operations:
     new:
       title: Treasury

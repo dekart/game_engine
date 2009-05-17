@@ -12,46 +12,59 @@
 <div id="header">
   <%= link_to(image_tag("logo_200x60.jpg", :alt => "Home"), root_path, :id => :logo) %>
 
-  <ul id="co">
-    <li class="first">
-      <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
-      <div id="co_basic_money"></div>
-    </li>
-    <li class="second">
-      <b><%= fb_i(Character.human_attribute_name("experience")) %></b>
-      <div id="co_experience"></div>
-    </li>
-    <li class="third">
-      <b><%= fb_i(Character.human_attribute_name("health")) %></b>
-      <div id="co_health"></div>
-      <div id="co_health_timer" class="timer"></div>
-    </li>
-    <li class="first">
-      <b><%= fb_i(Character.human_attribute_name("vip_money")) %></b>
-      <div id="co_vip_money"></div>
-    </li>
-    <li class="second">
-      <b><%= fb_i(Character.human_attribute_name("level")) %></b>
-      <div id="co_level"></div>
-      <div id="co_points" style="display:none">(<%= link_to("", upgrade_character_path(current_character), :id => :co_point_link) %>)</div>
-    </li>
-    <li class="third">
-      <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
-      <div id="co_energy"></div>
-      <div id="co_energy_timer" class="timer"></div>
-    </li>
-  </ul>
+  <table id="main_menu">
+    <tr>
+      <td>
+        <%= link_to(fb_i(t(".main_menu.home")), root_path, :class => :home) %>
+        <%= link_to(fb_i(t(".main_menu.character")), character_path(current_character), :class => :profile) %>
+      </td>
+      <td>
+        <%= link_to(fb_i(t(".main_menu.missions")), missions_path, :class => :missions) %>
+        <%= link_to(fb_i(t(".main_menu.fights")), new_fight_path, :class => :fights) %>
+      </td>
+      <td>
+        <%= link_to(fb_i(t(".main_menu.items")), items_path, :class => :shop) %>
+        <%= link_to(fb_i(t(".main_menu.inventories")), inventories_path, :class => :inventory) %>
+      </td>
+      <td>
+        <%= link_to(fb_i(t(".main_menu.relations")) + " (%d)" % current_character.relations.size, relations_path, :class => :alliance) %>
+        <%= link_to(fb_i(t(".main_menu.rating")), rating_characters_path, :class => :rating) %>
+      </td>
+    </tr>
+  </table>
 
-  <div id="main_menu">
-    <%= link_to(fb_i(t(".main_menu.home")), root_path, :class => :home) %>
-    <%= link_to(fb_i(t(".main_menu.missions")), missions_path, :class => :missions) %>
-    <%= link_to(fb_i(t(".main_menu.fights")), new_fight_path, :class => :fights) %>
-    <%= link_to(fb_i(t(".main_menu.items")), items_path, :class => :shop) %>
-    <%= link_to(fb_i(t(".main_menu.inventories")), inventories_path, :class => :inventory) %>
-    <%= link_to(fb_i(t(".main_menu.character")), character_path(current_character), :class => :profile) %>
-    <%= link_to(fb_i(t(".main_menu.relations")) + " (%d)" % current_character.relations.size, relations_path, :class => :alliance) %>
-    <%= link_to(fb_i(t(".main_menu.rating")), rating_characters_path, :class => :rating) %>
-  </div>
+  <table id="co">
+    <tr>
+      <td class="basic_money">
+        <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
+        (<%= link_to(fb_i(t(".character_overview.bank")), new_bank_operation_path) %>)
+        <div id="co_basic_money"></div>
+      </td>
+      <td>
+        <b><%= fb_i(Character.human_attribute_name("experience")) %></b>
+        <div id="co_experience"></div>
+      </td>
+      <td>
+        <b><%= fb_i(Character.human_attribute_name("health")) %></b>
+        <div id="co_health_timer" class="timer"></div>
+        <div id="co_health"></div>
+      </td>
+      <td>
+        <b><%= fb_i(Character.human_attribute_name("vip_money")) %></b>
+        <div id="co_vip_money"></div>
+      </td>
+      <td>
+        <b><%= fb_i(Character.human_attribute_name("level")) %></b>
+        <div id="co_level"></div>
+        <div id="co_points" style="display:none">(<%= link_to("", upgrade_character_path(current_character), :id => :co_point_link) %>)</div>
+      </td>
+      <td>
+        <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
+        <div id="co_energy_timer" class="timer"></div>
+        <div id="co_energy"></div>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
