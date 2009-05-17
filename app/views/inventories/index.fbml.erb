@@ -24,10 +24,12 @@
               <% end %>
             </td>
             <td class="controls">
+              <% unless inventory.placement.blank? %>
+                <div class="placement"><%= fb_i(t(".placements.#{inventory.placement}"))%></div>
+              <% end %>
+
               <% inventory.placements.each do |placement| %>
-                <% if inventory.placement == placement %>
-                  <div class="placement"><%= fb_i(t(".placements.#{placement}"))%></div>
-                <% else %>
+                <% unless inventory.placement == placement %>
                   <%= link_to_remote(fb_i(t(".buttons.to_#{placement}")),
                         :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
                         :update => :inventory_placements,
