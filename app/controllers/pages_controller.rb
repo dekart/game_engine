@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
   skip_before_filter :ensure_application_is_installed_by_facebook_user
 
+  caches_page :stylesheet
+  
   def show
     @@references ||= [] # Reference names
 

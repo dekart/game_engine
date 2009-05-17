@@ -1,0 +1,219 @@
+h1.title {font-size: 18px; color: #3B5998; margin: 15px 0px;}
+h2,h3 {font-size: 16px; color: #3B5998;}
+td {vertical-align: top;}
+
+#logo {float: left;}
+
+#spinner {position: absolute; top:150px; left: 300px; width: 150px; height: 50px; border: 1px solid #6D84B4; padding: 5px; background-color:white; z-index:1000;}
+  #spinner img {float:left; margin-right: 10px;}
+
+#header {border-bottom: 1px solid #d0d0d0;}
+
+#main_menu {float:right;}
+  #main_menu a {display: block; height: 25px; line-height: 25px; font-weight:bold; padding: 0 10px 0 30px; background-position: 8px center; background-repeat: no-repeat; border: 1px solid white;}
+  #main_menu a:hover {border-color: #d0d0d0;}
+  <% %w{home settings profile missions fights inventory shop alliance rating}.each do |attr| %>
+    #main_menu a.<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
+  <% end %>
+
+#co {clear:both; border-top: 1px solid #d0d0d0;}
+  #co td { width: 150px;line-height: 25px; }
+  #co div {height: 20px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+  <% %w{basic_money vip_money level experience health energy}.each do |attr| %>
+    #co_<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
+  <% end %>
+  #co_points {padding-left: 3px !important;}
+  #co .timer {color: #b0b0b0; float:right; padding-right: 5px;}
+
+#next_steps {margin: 10px 5px; border: 1px solid #EC7000; padding: 8px; background-color: #FFFFD5;}
+  #next_steps h2 {color: #EC7000; margin-bottom: 15px;}
+  #next_steps .step {font-size: 14px; font-weight: bold; margin-bottom: 15px; padding-left: 25px; background: transparent url(<%= image_path("icons/step.gif") %>) no-repeat top left; }
+  #next_steps .fbml_add_profile_button {margin-top: 10px;}
+  #next_steps .hide {float: right; padding-left: 14px; background: transparent url(<%= image_path("icons/hide.gif") %>) no-repeat center left;}
+
+.empty_set, .note {margin: 10px 5px; padding: 8px; border: 1px solid #D8DFEA;}
+.note {font-size: 14px;}
+
+.pagination {margin: 10px 0px; text-align: right;}
+  .pagination .disabled {display:none;}
+  .pagination a, .pagination span {border: 1px solid #3b5998; padding: 3px;}
+  .pagination a:hover {background-color: #d8dfea;}
+  .pagination .current {background-color: #d8dfea; font-weight:bold; color: #3b5998;}
+
+form .required {color: red; padding-left: 5px;}
+form .field {margin-bottom: 5px;}
+  form .field .label {margin-bottom: 3px;}
+  form .field label {color: #3b5998;}
+form .fieldWithErrors {display:inline;}
+  form .fieldWithErrors select{border: 1px solid #ee5555;}
+  form .fieldWithErrors input{border: 1px solid #ee5555;}
+  form .fieldWithErrors textarea{border: 1px solid #ee5555;}
+form .error {color: red; padding: 3px 0px;}
+
+.controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("1px.gif") %>) 3px center no-repeat; float: right; clear: both;}
+  .controls a:hover {background-color: #e0e0e0;}
+
+.character_attributes {padding: 0; }
+  .character_attributes tr {height: 25px; line-height: 25px;}
+  .character_attributes th {padding-right: 15px;}
+  .character_attributes .value {padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+  <% %w{attack defence health energy basic_money vip_money}.each do |attr| %>
+    .character_attributes .<%= attr %> .value {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
+  <% end %>
+
+.character_statistics tr {height: 25px; line-height: 25px;}
+  .character_statistics th {padding-right: 15px;}
+
+#dashboard {margin-top: 15px;}
+#dashboard .profile {width: 250px;}
+  #dashboard .profile .title {font-size: 15px; font-weight: bold;}
+
+#fight_list td {padding: 10px 0;border-bottom: 1px solid #d0d0d0;}
+  #fight_list .fight {clear: both; margin: 5px 0; }
+  #fight_list .attacker {width: 55px;}
+    #fight_list .attacker img {border: 1px solid #d0d0d0;}
+  #fight_list .victim {width: 55px;}
+    #fight_list .victim img {border: 1px solid #d0d0d0;}
+  #fight_list .time {font-weight: bold; margin-bottom: 5px;}
+  #fight_list .money {line-height: 20px; padding: 2px 0px 2px 20px; background: url(<%= image_path("icons/basic_money.gif") %>) left center no-repeat;}
+
+#mission_list td {padding: 10px 0px; border-bottom: 1px solid #d0d0d0;}
+  #mission_list .details {padding-right: 10px;}
+  #mission_list .details .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+  #mission_list .payout {width: 100px;}
+  <% %w{basic_money experience}.each do |attr| %>
+    #mission_list .payout .<%= attr %> {height: 25px;line-height: 25px;padding-left: 20px; background: url(<%= image_path("icons/#{attr}.gif") %>) center left no-repeat;}
+  <% end %>
+  #mission_list .requires {width: 100px;}
+    #mission_list .requires .energy {height: 25px;line-height: 25px;padding-left: 20px; background: url(<%= image_path("icons/energy.gif") %>) center left no-repeat;}
+  #mission_list .controls a { background-image: url(<%= image_path("icons/missions.gif") %>);}
+
+#item_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
+  #item_list .picture {padding-right: 10px;}
+  #item_list .info {padding-right: 10px;}
+  #item_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+  #item_list .details {width: 70px;}
+    #item_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+    <% %w{attack defence}.each do |attr| %>
+      #item_list .details .<%= attr %>{background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
+    <% end %>
+    #item_list .details .restore_health{background-image: url(<%= image_path("icons/health.gif") %>)}
+    #item_list .details .restore_energy{background-image: url(<%= image_path("icons/energy.gif") %>)}
+  #item_list .requires {width: 50px;}
+    #item_list .requires div {line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+    #item_list .requires .basic_price{background-image: url(<%= image_path("icons/basic_money.gif") %>)}
+    #item_list .requires .vip_price{background-image: url(<%= image_path("icons/vip_money.gif") %>)}
+  #item_list .spacer {border:0;}
+  #item_list .controls a.buy {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
+  #item_list .controls a.buy_vip {background-image: url(<%= image_path("icons/vip_money.gif") %>);}
+
+#inventory_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
+  #inventory_list .info {padding-right: 10px;}
+  #inventory_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+  #inventory_list .details {width: 70px;}
+    #inventory_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+    <% %w{attack defence}.each do |attr| %>
+      #inventory_list .details .<%= attr %>{background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
+    <% end %>
+    #inventory_list .details .restore_health{background-image: url(<%= image_path("icons/health.gif") %>)}
+    #inventory_list .details .restore_energy{background-image: url(<%= image_path("icons/energy.gif") %>)}
+  #inventory_list .spacer {border:0;}
+  #inventory_list .controls .placement {text-align:right; font-weight: bold; margin: 5px;}
+  #inventory_list .controls .sell {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
+  #inventory_list .controls .place {background-image: url(<%= image_path("icons/add.gif") %>);}
+  #inventory_list .controls .use {background-image: url(<%= image_path("icons/accept.gif") %>);}
+
+#upgrade_list td{padding: 10px; vertical-align: middle;}
+#upgrade_list .points td{border-bottom: 1px solid #d0d0d0;}
+#upgrade_list .name {font-weight: bold;}
+#upgrade_list .value {padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+<% %w{attack defence health energy}.each do |attr| %>
+  #upgrade_<%= attr %> {background: url(<%= image_path("icons/#{attr}.gif") %>);}
+<% end %>
+#upgrade_list .controls a {margin-top:0; background-image: url(<%= image_path("icons/add.gif") %>);}
+
+#victim_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;vertical-align:middle;}
+  #victim_list .picture {padding-right: 10px;}
+  #victim_list .name{ width: 200px;}
+  #victim_list .level {width: 50px;}
+  #victim_list .controls a {background-image: url(<%= image_path("icons/fights.gif") %>);}
+
+#invitation_list {width: 100%;}
+  #invitation_list td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
+  #invitation_list .picture {width: 55px;}
+  #invitation_list .level {width: 70px;}
+  #invitation_list .controls .accept {background-image: url(<%= image_path("icons/accept.gif") %>)}
+  #invitation_list .controls .ignore {background-image: url(<%= image_path("icons/delete.gif") %>)}
+
+#alliance_recruit { display:block; width: 130px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("icons/add.gif") %>) 3px center no-repeat;}
+#alliance_members {}
+  #alliance_members td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
+  #alliance_members .picture {width: 55px;}
+  #alliance_members .level {width: 70px;}
+  #alliance_members .controls .delete {background-image: url(<%= image_path("icons/delete.gif") %>)}
+
+#placements {position: relative; width: 400px; height: 550px; background: url(<%= image_path("placements.gif") %>) no-repeat;}
+  #placements .head {position:absolute; left: 161px; top:42px;}
+  #placements .right_hand {position:absolute; left: 9px; top:150px;}
+  #placements .left_hand {position:absolute; left: 267px; top:150px;}
+  #placements .body {position:absolute; left: 138px; top:120px;}
+  #placements .belt {position:absolute; left: 157px; top:246px;}
+  #placements .legs {position:absolute; left: 138px; top:400px;}
+
+#rank_list h2 {margin-bottom: 5px;}
+#rank_list .rank {padding: 3px 25px; background: url(<%= image_path("icons/level.gif") %>) 3px center no-repeat;}
+
+#result {font-size: 13px;margin:10px 0;border: 2px solid #3B5998; padding-bottom: 20px;}
+  #result td {padding-right: 40px;}
+  #result h2 {margin-top: 10px;}
+  #result h3 {font-size: 13px;}
+  #result p {font-size: 13px;}
+  #result ul{padding:0;}
+  #result li {display: block; height: 22px;line-height: 22px;}
+  #result li b {display: block; width: 75px; float:left;}
+  #result li div {float:left;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+  <% %w{experience basic_money energy health}.each do |attr| %>
+    #result .<%= attr %> div{background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
+  <% end %>
+  #result .restore_health div{background-image: url(<%= image_path("icons/health.gif") %>)}
+  #result .restore_energy div{background-image: url(<%= image_path("icons/energy.gif") %>)}
+  #result .button {display:block; float:right; padding: 0 5px 0 25px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold; background: url(<%= image_path("1px.gif") %>) 3px center no-repeat;}
+    #result .button:hover {background-color: #e0e0e0;}
+
+#mission_result {padding:0px 30px; background: url(<%= image_path("icons/missions.gif") %>) 5px 0px no-repeat;}
+  #mission_result .spent b {width: 55px;}
+  #mission_result .title {line-height: 22px; padding-left: 23px; background: url(<%= image_path("icons/level.gif") %>) center left no-repeat;}
+  #mission_result .fulfill_again {background-image: url(<%= image_path("icons/missions.gif") %>);}
+  #mission_result .publish {background-image: url(<%= image_path("icons/publish.gif") %>);}
+
+#fight_result {padding:0px 30px; background: url(<%= image_path("icons/fights.gif") %>) 5px 0px no-repeat;}
+  #fight_result .lost b {width: 55px;}
+  #fight_result .victim_lost b {width: 55px;}
+  #fight_result .success {color:green;}
+  #fight_result .fail {color: red;}
+  #fight_result .attack_again {background-image: url(<%= image_path("icons/fights.gif") %>);}
+  #fight_result .publish {background-image: url(<%= image_path("icons/publish.gif") %>); width: 120px;}
+
+#shop_result {padding:0px 30px; background: url(<%= image_path("icons/basic_money.gif") %>) 5px 0px no-repeat;}
+  #shop_result .inventory {background-image: url(<%= image_path("icons/inventory.gif") %>);}
+
+#inventory_result {padding:0px 30px; background: url(<%= image_path("icons/basic_money.gif") %>) 5px 0px no-repeat;}
+
+#upgrade_result {padding:0px 30px; background: url(<%= image_path("icons/add.gif") %>) 5px 0px no-repeat;}
+
+#character .controls {clear: both;}
+  #character .controls a {float: left;}
+    #character .controls .attack {background-image: url(<%= image_path("icons/fights.gif") %>);}
+
+#rating td {padding: 5px 10px; vertical-align:middle;}
+#rating th {text-align:center; border-bottom: 1px solid #e0e0e0;}
+#rating .position {font-size: 14px; font-weight: bold;}
+
+#bank {width:100%;}
+#bank_balance {font-size: 14px; padding: 10px 0;font-weight: bold;}
+  #bank_balance .value {padding-left: 20px; background: url(<%= image_path("icons/basic_money.gif") %>) center left no-repeat; font-weight: normal;}
+
+#item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin-bottom: 5px; height: 30px;}
+  #item_groups b {font-size: 16px; padding: 0 10px; line-height: 30px; height: 28px;display:block; float: left;}
+  #item_groups a {font-size: 14px; padding: 0 10px; line-height: 30px; height: 28px;font-weight: bold; border:1px solid white;display:block; float: left;}
+  #item_groups a:hover {border-left: 1px solid #D0D0D0;border-right: 1px solid #D0D0D0;}
