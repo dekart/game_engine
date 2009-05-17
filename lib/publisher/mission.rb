@@ -13,6 +13,9 @@ module Publisher
         "{*actor*} received \"{*title*}\" title in #{link_to(fb_app_name, root_url(:canvas => true))} game!",
         "{*actor*} completed \"{*mission*}\" mission and received \"{*title*}\" title in #{link_to(fb_app_name, root_url(:canvas => true))} game."
       )
+      action_links(
+        action_link("Play #{fb_app_name(:linked => false)} &raquo;", root_url)
+      )
     end
   end
 end

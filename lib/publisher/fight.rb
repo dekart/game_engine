@@ -21,6 +21,9 @@ module Publisher
         "{*actor*} received +{*money*} money, +{*experience*} experience, and lost {*attacker_hp_loss*} health points.
          {*victim*} received {*victim_hp_loss*} points of damage"
       )
+      action_links(
+        action_link("Play #{fb_app_name(:linked => false)} &raquo;", root_url)
+      )
     end
   end
 end
