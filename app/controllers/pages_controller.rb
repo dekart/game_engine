@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  before_filter :admin_required, :only => [:statistics]
+  
   def show
     @@references ||= [] # Reference names
 
