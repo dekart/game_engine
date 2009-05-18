@@ -17,8 +17,11 @@ var Element = {
   "hide": function () {
     this.setStyle("display","none")
   },
-  "show": function () {
-    this.setStyle("display","block")
+  "show": function (value) {
+    if(value == undefined){
+      value = "block";
+    }
+    this.setStyle("display",value)
   },
   "visible": function () {
     return (this.getStyle("display") != "none");

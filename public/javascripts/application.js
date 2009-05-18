@@ -46,7 +46,7 @@ var Character = {
 
     if(a.character.points > 0) {
       $("co_point_link").setTextValue("+" + a.character.points);
-      $("co_points").show();
+      $("co_points").show("inline");
     } else {
       $("co_points").hide();
     }
