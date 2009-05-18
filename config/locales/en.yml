@@ -120,9 +120,9 @@ en:
         not_enough_points: "You cannot upgrade {{attribute}} because you don't have enough points"
   fights:
     descriptions:
-      attack_won: "You attacked {victim} and WON the battle! You received {money}, +{experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
+      attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
       attack_lost: "You attacked {victim} and LOST the battle! You lost {money} and took {attacker_damage} points of damage. {victim} received {victim_damage} points of damage."
-      defence_won: "You was attacked by {attacker} and WON the battle!  You received {money}, +{experience_points} points of experience, and {victim_damage} points of damage. {attacker} was damaged for {attacker_damage} points"
+      defence_won: "You was attacked by {attacker} and WON the battle!  You received {money}, {experience_points} points of experience, and {victim_damage} points of damage. {attacker} was damaged for {attacker_damage} points"
       defence_lost: "You was attacked by {attacker} and LOST the battle! You lost {money} and took {victim_damage} points of damage. {attacker} received {attacker_damage} points of damage."
     create:
       buttons:

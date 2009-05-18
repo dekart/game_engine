@@ -71,12 +71,15 @@ form .error {color: red; padding: 3px 0px;}
 
 #fight_list td {padding: 10px 0;border-bottom: 1px solid #d0d0d0;}
   #fight_list .fight {clear: both; margin: 5px 0; }
-  #fight_list .attacker {width: 55px;}
+  #fight_list .attacker {width: 60px; text-align:left;}
     #fight_list .attacker img {border: 1px solid #d0d0d0;}
-  #fight_list .victim {width: 55px;}
+  #fight_list .victim {width: 60px; text-align:right;}
     #fight_list .victim img {border: 1px solid #d0d0d0;}
   #fight_list .time {font-weight: bold; margin-bottom: 5px;}
-  #fight_list .money {line-height: 20px; padding: 2px 0px 2px 20px; background: url(<%= image_path("icons/basic_money.gif") %>) left center no-repeat;}
+  #fight_list .attr {line-height: 20px; padding: 2px 0px 2px 20px; background-position: left center; background-repeat: no-repeat;font-weight:bold;}
+  <% %w{basic_money health experience}.each do |attr| %>
+    #fight_list .<%= attr %> { background-image: url(<%= image_path("icons/#{attr}.gif") %>) }
+  <% end %>
 
 #mission_list td {padding: 10px 0px; border-bottom: 1px solid #d0d0d0;}
   #mission_list .details {padding-right: 10px;}
