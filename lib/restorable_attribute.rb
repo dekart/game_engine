@@ -17,8 +17,9 @@ module RestorableAttribute
     end
 
     define_method("#{name}=") do |value|
+      compensation = restore_period - self.send("time_to_#{name}_restore")
       self[name] = value
-      self.send("#{name}_updated_at=", Time.now)
+      self.send("#{name}_updated_at=", Time.now - compensation)
     end
 
     define_method("#{name}_restore_time") do |restore_to|
