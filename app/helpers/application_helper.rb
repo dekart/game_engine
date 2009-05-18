@@ -32,4 +32,10 @@ module ApplicationHelper
   def title(text)
     fb_title(text) + content_tag(:h1, text, :class => :title)
   end
+
+  def admin_only(&block)
+    if in_canvas? && current_user && current_user.admin?
+      concat(capture(&block), block.binding)
+    end
+  end
 end
