@@ -30,4 +30,8 @@ class User < ActiveRecord::Base
   def touch!
     self.update_attribute(:updated_at, Time.now)
   end
+
+  def admin?
+    ADMINS.include?(self.facebook_id)
+  end
 end

@@ -36,4 +36,10 @@ module ApplicationHelper
   def icon(name)
     image_tag("icons/#{name}.gif", :alt => name.to_s.titleize)
   end
+
+  def admin_only(&block)
+    if in_canvas? && current_user && current_user.admin?
+      concat(capture(&block), block.binding)
+    end
+  end
 end
