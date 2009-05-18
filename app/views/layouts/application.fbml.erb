@@ -1,3 +1,9 @@
+<% admin_only do %>
+  <div class="controls" style="border: 1px solid orange;padding:5px;margin:5px;">
+    <%= link_to("Statistics", statistics_pages_path) %>
+  </div>
+<% end %>
+
 <div class="main_menu">
   <% if current_user %>
     <%= link_to(fb_i("Settings"), edit_user_path(current_user), :class => :customize) %>

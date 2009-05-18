@@ -1,0 +1,22 @@
+<table>
+  <tr>
+    <td>
+      <h2>Users</h2>
+      <table>
+        <tr><th>Total Users:</th><td><%= User.count %></td></tr>
+      </table>
+    </td>
+    <td>
+      <h2>Latest Users</h2>
+
+      <table>
+        <% User.find(:all, :order => "created_at DESC", :limit => 10).each do |user| %>
+          <tr>
+            <td><%= fb_profile_pic(user) %></td>
+            <td><%= fb_name(user) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>
