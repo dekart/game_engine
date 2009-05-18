@@ -3,6 +3,12 @@
 
   <input type="text" style="width: 1px; height: 1px; border:0px;" id="top_field"/>
 
+  <% admin_only do %>
+    <div style="border: 1px solid #0000ff; padding:5px; margin:5px;">
+      <%= link_to("Statistics", statistics_pages_path) %>
+    </div>
+  <% end %>
+
 <div id="spinner" style="display:none;">
   <%= image_tag("spinner.gif", :alt => t(".spinner.alt")) %>
 

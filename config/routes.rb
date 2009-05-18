@@ -26,7 +26,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
-  map.resources :pages
+  map.resources :pages, :collection => {:statistics => :any}
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

@@ -16,4 +16,7 @@ class PagesController < ApplicationController
       end
     end
   end
+
+  def statistics
+  end
 end
