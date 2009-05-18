@@ -67,4 +67,8 @@ class ApplicationController < ActionController::Base
   def default_url_options(options)
     in_page? && options[:canvas] != false ? {:fb_page_id => current_user.facebook_id} : {}
   end
+
+  def admin_required
+    redirect_to root_url and return false unless current_user.admin?
+  end
 end

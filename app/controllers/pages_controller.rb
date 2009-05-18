@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  skip_before_filter :ensure_application_is_installed_by_facebook_user
+  before_filter :admin_required, :only => [:statistics]
+  skip_before_filter :ensure_application_is_installed_by_facebook_user, :except => [:statistics]
 
   caches_page :stylesheet
   
