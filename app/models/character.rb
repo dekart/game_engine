@@ -51,8 +51,8 @@ class Character < ActiveRecord::Base
   serialize :inventory_effects, Effects::Collection
 
   extend RestorableAttribute
-  restorable_attribute :hp, :health, 2.minutes + 30.seconds
-  restorable_attribute :ep, :energy, 5.minutes
+  restorable_attribute :hp, :limit => :health, :restore_period => 2.minutes + 30.seconds
+  restorable_attribute :ep, :limit => :energy, :restore_period => 5.minutes
 
   before_save :update_level_and_points, :recalculate_rating
 
