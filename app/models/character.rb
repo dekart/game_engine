@@ -20,6 +20,7 @@ class Character < ActiveRecord::Base
   has_many :inventories, :include => :item
   has_many :items, :through => :inventories
   has_many :relations, :foreign_key => "source_id"
+  has_many :properties, :order => "property_type_id"
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id

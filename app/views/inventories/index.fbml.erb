@@ -4,7 +4,7 @@
   <%= render(:partial => "inventories/placements", :locals => {:character => current_character}) %>
 </div>
 
-<% if @inventories.count != 0 %>
+<% if @inventories.size > 0 %>
   <table id="inventory_list" cellspacing="0">
     <% ItemGroup.all.each do |group| %>
       <% if @inventories.by_item_group(group).any? %>

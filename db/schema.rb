@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090516132253) do
+ActiveRecord::Schema.define(:version => 20090518171538) do
 
   create_table "bank_operations", :force => true do |t|
     t.integer  "character_id"
@@ -22,29 +22,31 @@ ActiveRecord::Schema.define(:version => 20090516132253) do
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.integer  "basic_money",        :default => 10
-    t.integer  "vip_money",          :default => 0
-    t.integer  "level",              :default => 1
-    t.integer  "experience",         :default => 0
-    t.integer  "points",             :default => 0
-    t.integer  "attack",             :default => 1
-    t.integer  "defence",            :default => 1
-    t.integer  "hp",                 :default => 100
-    t.integer  "health",             :default => 100
-    t.integer  "ep",                 :default => 10
-    t.integer  "energy",             :default => 10
+    t.integer  "basic_money",            :default => 10
+    t.integer  "vip_money",              :default => 0
+    t.integer  "level",                  :default => 1
+    t.integer  "experience",             :default => 0
+    t.integer  "points",                 :default => 0
+    t.integer  "attack",                 :default => 1
+    t.integer  "defence",                :default => 1
+    t.integer  "hp",                     :default => 100
+    t.integer  "health",                 :default => 100
+    t.integer  "ep",                     :default => 10
+    t.integer  "energy",                 :default => 10
     t.text     "inventory_effects"
     t.datetime "hp_updated_at"
     t.datetime "ep_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "fights_won",         :default => 0
-    t.integer  "fights_lost",        :default => 0
-    t.integer  "missions_succeeded", :default => 0
-    t.integer  "missions_completed", :default => 0
-    t.integer  "relations_count",    :default => 0
-    t.integer  "rating",             :default => 0
-    t.integer  "bank",               :default => 0
+    t.integer  "fights_won",             :default => 0
+    t.integer  "fights_lost",            :default => 0
+    t.integer  "missions_succeeded",     :default => 0
+    t.integer  "missions_completed",     :default => 0
+    t.integer  "relations_count",        :default => 0
+    t.integer  "rating",                 :default => 0
+    t.integer  "bank",                   :default => 0
+    t.integer  "property_payout",        :default => 0
+    t.datetime "basic_money_updated_at"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -146,6 +148,30 @@ ActiveRecord::Schema.define(:version => 20090516132253) do
     t.datetime "updated_at"
     t.text     "requirements"
     t.text     "payouts"
+  end
+
+  create_table "properties", :force => true do |t|
+    t.integer  "property_type_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "property_types", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "availability",       :limit => 30, :default => "shop"
+    t.integer  "level"
+    t.integer  "basic_price"
+    t.integer  "vip_price"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.integer  "money_min"
+    t.integer  "money_max"
+    t.text     "requirements"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "ranks", :force => true do |t|

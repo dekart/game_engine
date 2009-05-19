@@ -1,0 +1,36 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div class="note">
+  <p>
+    <%= fb_i(t(".note.text")) %>
+  </p>
+
+  <%= link_to(fb_i(t(".note.button")), new_property_path, :id => :buy_properties) %>
+</div>
+
+<% if @properties.size > 0 %>
+  <table id="property_list" cellspacing="0">
+    <% @properties.each do |property| %>
+      <% content_tag_for(:tr, property) do %>
+        <td class="picture"><%= image_tag(property.image.url(:small)) %></td>
+        <td class="info">
+          <div class="name"><%= fb_i(property.name) %></div>
+          <div class="description"><%= fb_i(property.description) %></div>
+        </td>
+        <td class="income">
+          <div class="basic_money"><%= property.income %></div>
+        </td>
+        <td class="controls">
+          <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, property.sell_price)),
+                :url    => property_url(property, :canvas => false),
+                :method => :delete,
+                :update => :result,
+                :html   => {:class => :sell}
+              ) %>
+        </td>
+      <% end %>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
+<% end %>

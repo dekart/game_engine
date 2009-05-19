@@ -1,8 +1,8 @@
-<div id="inventory_result">
+<div id="property_result">
   <p>
     <% fb_i do %>
       <%= t(".messages.success") %>
-      <%= fb_it(:item_name, content_tag(:b, fb_i(@inventory.name))) %>
+      <%= fb_it(:property_name, content_tag(:b, fb_i(@property.name))) %>
     <% end %>
   </p>
 
@@ -10,12 +10,12 @@
   <ul>
     <li class="basic_money">
       <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
-      <div><%= @inventory.sell_price %></div>
+      <div><%= @property.sell_price %></div>
     </li>
   </ul>
 </div>
 
 <% content_for :script do %>
   $('result').show();
-  $('<%= dom_id(@inventory) %>').hide();
+  $('<%= dom_id(@property) %>').hide();
 <% end %>

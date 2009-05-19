@@ -23,6 +23,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :invitations, :member => {:accept => :any, :ignore => :any}
   map.resources :relations
   map.resources :bank_operations
+  map.resources :properties
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 

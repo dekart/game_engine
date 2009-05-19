@@ -42,4 +42,22 @@ module ApplicationHelper
       concat(capture(&block), block.binding)
     end
   end
+
+  def group_header(text, group_name = :main, &block)
+    @group_headers ||= {}
+
+    if @group_headers[group_name] != text
+      @group_headers[group_name] = text
+
+      if block_given?
+        yield(text)
+      else
+        return text
+      end
+    end
+  end
+
+  def reset_group_header(group_name)
+    @group_headers[group_name] = nil
+  end
 end

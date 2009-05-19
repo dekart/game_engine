@@ -1,0 +1,23 @@
+<%= title(fb_i(t(".title"))) %>
+
+<table id="property_type_list" cellspacing="0">
+  <% @property_types.each do |type| %>
+    <tr>
+      <td class="picture"><%= image_tag(type.image.url(:small)) %></td>
+      <td class="info">
+        <div class="name"><%= fb_i(type.name) %></div>
+        <div class="description"><%= fb_i(type.description) %></div>
+      </td>
+      <td class="income">
+        <div class="basic_money"><%= type.money_min %> - <%= type.money_max %></div>
+      </td>
+      <td class="controls">
+        <%= link_to_remote(fb_i(t(".buttons.buy")),
+              :url => properties_url(:property_type_id => type.id, :canvas => false),
+              :update => :result,
+              :html => {:class => :buy}
+            ) if current_character.can_buy?(type) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
