@@ -52,6 +52,7 @@ var Character = {
     }
     Timer.start('co_health_timer', a.character.time_to_hp_restore, this.updateFromRemote);
     Timer.start('co_energy_timer', a.character.time_to_ep_restore, this.updateFromRemote);
+    Timer.start('co_basic_money_timer', a.character.time_to_basic_money_restore, this.updateFromRemote);
   },
   updateFromRemote: function(){
     new Ajax.Request(root_url + "character_status", {

@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20090518171538) do
     t.integer  "relations_count",        :default => 0
     t.integer  "rating",                 :default => 0
     t.integer  "bank",                   :default => 0
-    t.integer  "property_payout",        :default => 0
+    t.integer  "property_income",        :default => 0
     t.datetime "basic_money_updated_at"
   end
 

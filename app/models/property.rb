@@ -9,6 +9,7 @@ class Property < ActiveRecord::Base
   validate_on_create :enough_character_money?
 
   after_create  :charge_character
+  after_save    :recalculate_character_income
 
   def sell_price
     (self.basic_price * 0.8).ceil
@@ -43,5 +44,9 @@ class Property < ActiveRecord::Base
 
       self.character.save!
     end
+  end
+
+  def recalculate_character_income
+    character.recalculate_income
   end
 end

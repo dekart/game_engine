@@ -54,6 +54,7 @@ class Character < ActiveRecord::Base
   extend RestorableAttribute
   restorable_attribute :hp, :limit => :health, :restore_period => 2.minutes + 30.seconds
   restorable_attribute :ep, :limit => :energy, :restore_period => 5.minutes
+  restorable_attribute :basic_money, :restore_period => 1.hour, :restore_rate => :property_income
 
   before_save :update_level_and_points, :recalculate_rating
 
@@ -109,7 +110,12 @@ class Character < ActiveRecord::Base
   def to_json(options = {})
     super(
       :only     => [:basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp, :points],
-      :methods  => [:next_level_experience, :time_to_hp_restore, :time_to_ep_restore]
+      :methods  => [
+        :next_level_experience,
+        :time_to_hp_restore,
+        :time_to_ep_restore,
+        :time_to_basic_money_restore
+      ]
     )
   end
 
@@ -147,6 +153,18 @@ class Character < ActiveRecord::Base
 
   def rank_for_mission(mission)
     self.ranks.find_or_initialize_by_mission_id(mission.id)
+  end
+
+  def recalculate_income
+    self.basic_money = self.basic_money
+
+    self.property_income = 0
+
+    self.properties.each do |property|
+      self.property_income += property.income
+    end
+
+    self.save
   end
 
   protected

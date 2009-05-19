@@ -48,6 +48,7 @@
       <td class="basic_money">
         <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
         (<%= link_to(fb_i(t(".character_overview.bank")), new_bank_operation_path) %>)
+        <div id="co_basic_money_timer" class="timer"></div>
         <div id="co_basic_money"></div>
       </td>
       <td>
