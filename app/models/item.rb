@@ -15,7 +15,10 @@ class Item < ActiveRecord::Base
   serialize :effects, Effects::Collection
 
   named_scope :available_for, Proc.new {|character|
-    { :conditions => ["level <= ?", character.level], :order => :basic_price }
+    {
+      :conditions => ["level <= ?", character.level],
+      :order      => :basic_price
+    }
   }
 
   named_scope :shop, {:conditions => "availability = 'shop'"}

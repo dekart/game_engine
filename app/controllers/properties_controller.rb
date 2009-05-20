@@ -1,6 +1,6 @@
 class PropertiesController < ApplicationController
   def new
-    @property_types = PropertyType.find(:all)
+    @property_types = PropertyType.available_for(current_character)
   end
 
   def create
