@@ -12,7 +12,7 @@ td {vertical-align: top;}
 #main_menu {float:right;}
   #main_menu a {display: block; height: 25px; line-height: 25px; font-weight:bold; padding: 0 10px 0 30px; background-position: 8px center; background-repeat: no-repeat; border: 1px solid white;}
   #main_menu a:hover {border-color: #d0d0d0;}
-  <% %w{home settings profile missions fights inventory shop alliance rating}.each do |attr| %>
+  <% %w{home settings profile missions fights inventory shop alliance rating properties}.each do |attr| %>
     #main_menu a.<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
   <% end %>
 
@@ -224,3 +224,21 @@ form .error {color: red; padding: 3px 0px;}
   #item_groups b {font-size: 16px; padding: 0 10px; line-height: 30px; height: 28px;display:block; float: left;}
   #item_groups a {font-size: 14px; padding: 0 10px; line-height: 30px; height: 28px;font-weight: bold; border:1px solid white;display:block; float: left;}
   #item_groups a:hover {border-left: 1px solid #D0D0D0;border-right: 1px solid #D0D0D0;}
+
+#property_list td{padding: 10px 10px 10px 0; border-bottom: 1px solid #d0d0d0;}
+  #property_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+  #property_list .income div {line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+  #property_list .income .basic_money{background-image: url(<%= image_path("icons/basic_money.gif") %>)}
+  #property_list .controls .sell {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
+
+#property_type_list td, #property_type_list th {padding: 10px 10px 10px 0; border-bottom: 1px solid #d0d0d0;}
+  #property_type_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+  #property_type_list .income div {line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+  #property_type_list .income .basic_money{background-image: url(<%= image_path("icons/basic_money.gif") %>)}
+  #property_type_list .requires {width: 50px;}
+    #property_type_list .requires div {line-height: 22px;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
+    #property_type_list .requires .basic_price{background-image: url(<%= image_path("icons/basic_money.gif") %>)}
+    #property_type_list .requires .vip_price{background-image: url(<%= image_path("icons/vip_money.gif") %>)}
+  #property_type_list .controls .buy {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
+
+#buy_properties { display:block; width: 130px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(<%= image_path("icons/properties.gif") %>) 3px center no-repeat;}

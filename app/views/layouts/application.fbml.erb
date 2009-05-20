@@ -37,7 +37,10 @@
         <%= link_to(fb_i(t(".main_menu.inventories")), inventories_path, :class => :inventory) %>
       </td>
       <td>
+        <%= link_to(fb_i(t(".main_menu.properties")), properties_path, :class => :properties) %>
         <%= link_to(fb_i(t(".main_menu.relations")) + " (%d)" % current_character.relations.size, relations_path, :class => :alliance) %>
+      </td>
+      <td>
         <%= link_to(fb_i(t(".main_menu.rating")), rating_characters_path, :class => :rating) %>
       </td>
     </tr>
