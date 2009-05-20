@@ -81,6 +81,7 @@ en:
         properties: "Properties"
       character_overview:
         bank: "Treasury"
+        buy_vip_money: "Get More"
   bank_operations:
     new:
       title: Treasury
@@ -123,6 +124,8 @@ en:
       messages:
         success: "You've successfully upgraded {{attribute}} to {number}"
         not_enough_points: "You cannot upgrade {{attribute}} because you don't have enough points"
+    buy_vip_money:
+      title: "Get More Gems"
   fights:
     descriptions:
       attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"

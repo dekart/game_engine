@@ -35,18 +35,10 @@
               :html => {:class => :buy}
             ) if current_character.can_buy?(item) %>
 
-        <%= link_to(fb_i(t(".buttons.get_vip")),
-              {:anchor => :buy_vip},
-              {:class => :buy_vip}
+        <%= link_to(fb_i(t(".buttons.get_vip")), buy_vip_money_path,
+              :class => :buy_vip
             ) if current_character.need_vip_money?(item)  %>
       </td>
     </tr>
   <% end %>
 </table>
-
-<br />
-
-<a name="buy_vip"></a>
-<h2><%= fb_i(t(".buy_vip.title")) %></h2>
-
-<%= fb_super_rewards_iframe %>
