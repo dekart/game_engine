@@ -1,7 +1,3 @@
-def img(name)
-  File.open(File.join(RAILS_ROOT, "db", "pictures", "samples", "#{name}.jpg"))
-end
-
 namespace :app do
   namespace :bootstrap do
     desc "Bootstrap sample application data"
@@ -64,7 +60,7 @@ namespace :app do
             :description => "",
             :basic_price => 40,
             :effects => Effects::Collection.new(Effects::Attack.new(1)),
-            :image => img("weapon_knife"),
+            :image => img("samples/weapon_knife"),
             :placements => "left_hand,right_hand"
           },
           "Cloud Poleaxe" => {
@@ -73,7 +69,7 @@ namespace :app do
             :basic_price => 1000,
             :vip_price => 5,
             :effects => Effects::Collection.new(Effects::Attack.new(13), Effects::Defence.new(5)),
-            :image => img("weapon_cloud_poleaxe"),
+            :image => img("samples/weapon_cloud_poleaxe"),
             :placements => "left_hand,right_hand"
           }
         }
@@ -98,7 +94,7 @@ namespace :app do
             :basic_price  => 70,
             :effects      => Effects::Collection.new(Effects::Defence.new(1)),
             :placements   => "left_hand,right_hand",
-            :image        => img("armor_wooden_shield")
+            :image        => img("samples/armor_wooden_shield")
           }
         }
 
@@ -123,7 +119,7 @@ namespace :app do
             :usable       => true,
             :usage_limit  => 1,
             :effects      => Effects::Collection.new(Effects::RestoreHealth.new(20)),
-            :image        => img("potion_of_healing")
+            :image        => img("samples/potion_of_healing")
           },
           "Small Potion of Refresh" => {
             :level        => 1,
@@ -133,7 +129,7 @@ namespace :app do
             :usable       => true,
             :usage_limit  => 1,
             :effects      => Effects::Collection.new(Effects::RestoreEnergy.new(5)),
-            :image        => img("potion_of_energy")
+            :image        => img("samples/potion_of_energy")
           },
           "Small Potion of Upgrade" => {
             :level        => 1,
@@ -143,7 +139,7 @@ namespace :app do
             :usable       => true,
             :usage_limit  => 1,
             :effects      => Effects::Collection.new(Effects::Upgrade.new(5)),
-            :image        => img("potion_of_upgrade")
+            :image        => img("samples/potion_of_upgrade")
           }
         }
 
@@ -165,7 +161,7 @@ namespace :app do
             :description  => "Small mill near town",
             :level        => 1,
             :basic_price  => 500,
-            :image        => img("property_mill"),
+            :image        => img("samples/property_mill"),
             :money_min    => 5,
             :money_max    => 20
           }
