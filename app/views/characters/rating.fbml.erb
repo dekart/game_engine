@@ -1,5 +1,11 @@
 <%= title(fb_i(t(".title"))) %>
 
+<div id="rating_position">
+  <b><%= t(".rating_position.label") %></b>
+
+  <span class="value"><%= current_character.rating_position %></span>
+</div>
+
 <table id="rating" cellspacing="0">
   <tr>
     <th>#</th>

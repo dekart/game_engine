@@ -106,6 +106,8 @@ en:
         title: "Latest Fights"
     rating:
       title: "Hall of Fame"
+      rating_position:
+        label: "Your Position:"
       columns:
         user: "User"
         rating: "Rating"

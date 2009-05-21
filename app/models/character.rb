@@ -167,6 +167,10 @@ class Character < ActiveRecord::Base
     self.save
   end
 
+  def rating_position
+    self.class.count(:conditions => ["rating > ?", self.rating]) + 1
+  end
+
   protected
 
   def update_level_and_points
