@@ -10,6 +10,7 @@ class Property < ActiveRecord::Base
 
   after_create  :charge_character
   after_save    :recalculate_character_income
+  after_destroy :recalculate_character_income
 
   def sell_price
     (self.basic_price * 0.8).ceil
