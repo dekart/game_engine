@@ -282,6 +282,8 @@ en:
       title: "My Properties"
       income:
         label: "Current Income:"
+      columns:
+        income: "Income"
       buttons:
         sell: "Sell for {amount}"
       empty_set: "You don't have any properties yet"

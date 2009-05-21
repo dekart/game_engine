@@ -15,6 +15,11 @@
   </div>
 
   <table id="property_list" cellspacing="0">
+    <tr>
+      <th colspan="2"></th>
+      <th><%= fb_i(t(".columns.income")) %></th>
+      <th></th>
+    </tr>
     <% @properties.each do |property| %>
       <% content_tag_for(:tr, property) do %>
         <td class="picture"><%= image_tag(property.image.url(:small)) %></td>
