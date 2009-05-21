@@ -9,6 +9,11 @@
 </div>
 
 <% if @properties.size > 0 %>
+  <div id="property_income">
+    <b><%= t(".income.label") %></b>
+    <span class="value"><%= current_character.property_income %></span>
+  </div>
+
   <table id="property_list" cellspacing="0">
     <% @properties.each do |property| %>
       <% content_tag_for(:tr, property) do %>

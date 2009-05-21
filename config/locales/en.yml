@@ -280,10 +280,11 @@ en:
         title: "You spent:"
     index:
       title: "My Properties"
+      income:
+        label: "Current Income:"
       buttons:
         sell: "Sell for {amount}"
       empty_set: "You don't have any properties yet"
-
       note:
         text: "Properties brings you hourly income." #  Assign managers to earn more from properties, assign guardians to protect your income from enemies.
         button: "Buy Properties"
