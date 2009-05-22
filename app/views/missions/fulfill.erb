@@ -64,12 +64,7 @@
                 </li>
               <% end %>
 
-              <% @result.payouts.each do |payout| %>
-                <%= render(
-                      :partial => "missions/received_payouts/#{payout.class.to_s.underscore}",
-                      :locals => {:payout => payout}
-                    ) %>
-              <% end %>
+              <%= mission_payouts_received(@result) %>
             </ul>
           </td>
         <% end %>

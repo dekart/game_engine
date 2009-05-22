@@ -10,12 +10,10 @@ module Payouts
     end
 
     def apply(character)
-      if options[:chance].nil? or (rand(100) <= options[:chance])
-        character.inventories.create(
-          :item           => self.item,
-          :free_of_charge => true
-        )
-      end
+      character.inventories.create(
+        :item           => self.item,
+        :free_of_charge => true
+      )
     end
   end
 end

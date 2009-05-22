@@ -37,7 +37,25 @@ namespace :app do
             :payouts        => Payouts::Collection.new(
               Payouts::Item.new(Item.find_by_name("Wooden Shield"), :apply_on => :complete)
             )
+          },
+          "Get VIP Money" => {
+            :level          => 1,
+            :description    => "This mission pays VIP money",
+            :success_text   => "You received VIP money!",
+            :failure_text   => "You failed to receive VIP money!",
+            :complete_text  => "you received all VIP money",
+            :win_amount     => 20,
+            :title          => "Rat Trapper",
+            :success_chance => 80,
+            :experience     => 1,
+            :money_min      => 8,
+            :money_max      => 15,
+            :ep_cost        => 1,
+            :payouts        => Payouts::Collection.new(
+              Payouts::VipMoney.new(10, :apply_on => :success, :chance => 80)
+            )
           }
+
         }
 
         @missions.each_pair do |key, value|

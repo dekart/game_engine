@@ -11,7 +11,10 @@ module Payouts
     def apply(character, trigger)
       returning result = [] do
         self.payouts.each do |payout|
-          result << payout.apply(character) if payout.options[:apply_on] == trigger
+          if payout.options[:apply_on] == trigger &&
+             (payout.options[:chance].nil? || (rand(100) <= payout.options[:chance]))
+            result << payout.apply(character)
+          end
         end
 
         result.compact!

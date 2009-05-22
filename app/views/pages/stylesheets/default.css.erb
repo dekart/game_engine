@@ -177,7 +177,7 @@ form .error {color: red; padding: 3px 0px;}
   #result li {display: block; height: 22px;line-height: 22px;}
   #result li b {display: block; width: 75px; float:left;}
   #result li div {float:left;height: 22px; padding-left: 20px; background-position: center left; background-repeat: no-repeat;}
-  <% %w{experience basic_money energy health}.each do |attr| %>
+  <% %w{experience basic_money energy health vip_money}.each do |attr| %>
     #result .<%= attr %> div{background-image: url(<%= image_path("icons/#{attr}.gif") %>)}
   <% end %>
     #result .restore_health div{background-image: url(<%= image_path("icons/health.gif") %>)}
