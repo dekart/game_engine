@@ -13,6 +13,8 @@ module Payouts
         self.payouts.each do |payout|
           result << payout.apply(character) if payout.options[:apply_on] == trigger
         end
+
+        result.compact!
       end
     end
   end
