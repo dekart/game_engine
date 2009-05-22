@@ -1,7 +1,7 @@
 <%= title(fb_i(t(".title"))) %>
 
 <div id="item_groups">
-  <% ItemGroup.all.each do |group| %>
+  <% ItemGroup.visible_in_shop.each do |group| %>
     <% if group == @item_group %>
       <b><%= fb_i(@item_group.name) %></b>
     <% else %>
