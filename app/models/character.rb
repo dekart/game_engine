@@ -14,6 +14,11 @@ class Character < ActiveRecord::Base
     :energy   => 1
   }
 
+  MONEY_EXCHANGE_RATE = {
+    :basic_money => 1000,
+    :vip_money   => 5
+  }
+
   belongs_to :user
   has_many :ranks
   has_many :missions, :through => :ranks
@@ -169,6 +174,21 @@ class Character < ActiveRecord::Base
 
   def rating_position
     self.class.count(:conditions => ["rating > ?", self.rating]) + 1
+  end
+
+  def can_exchange_money?
+    self.vip_money > MONEY_EXCHANGE_RATE[:vip_money]
+  end
+
+  def exchange_money!
+    return unless can_exchange_money?
+
+    self.class.transaction do
+      self.vip_money    -= MONEY_EXCHANGE_RATE[:vip_money]
+      self.basic_money  += MONEY_EXCHANGE_RATE[:basic_money]
+
+      self.save
+    end
   end
 
   protected

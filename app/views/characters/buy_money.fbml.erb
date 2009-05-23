@@ -1,0 +1,35 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div id="current_vip_money">
+  <% fb_i do %>
+    <%= t(".current.label") %>
+
+    <%= fb_it(:amount, content_tag(:span, current_character.vip_money, :class => :value)) %>
+  <% end %>
+</div>
+
+<table id="exchange_vip_money" cellspacing="0">
+  <tr>
+    <td class="name">
+      <% fb_i do %>
+        <%= t(".exchange.money.text") %>
+
+        <%= fb_it(:amount,
+              content_tag(:span, Character::MONEY_EXCHANGE_RATE[:basic_money], :class => :basic_money)
+            ) %>
+      <% end %>
+    </td>
+    <td class="vip_money"><%= Character::MONEY_EXCHANGE_RATE[:vip_money] %></td>
+    <td class="controls">
+      <%= link_to(t(".exchange.money.button"),
+            {:exchange => :money},
+            :method => :post
+          ) %>
+    </td>
+  </tr>
+</table>
+
+
+<h2><%= t(".get_more.title") %></h2>
+
+<%= fb_super_rewards_iframe %>

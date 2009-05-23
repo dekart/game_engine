@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.root :controller => "characters", :action => "index"
 
-  map.buy_vip_money "/characters/buy_vip_money", :controller => "characters", :action => "buy_vip_money"
+  map.buy_money "/characters/buy_money", :controller => "characters", :action => "buy_money"
 
   map.resources(:users,
     :collection => { :invite => :any },
