@@ -14,8 +14,6 @@ class MissionResult
     @mission    = mission
 
     @rank = @character.rank_for_mission(@mission)
-
-    @payouts = []
   end
 
   def save!
@@ -42,6 +40,8 @@ class MissionResult
           else
             @payouts = @mission.payouts.apply(@character, :success)
           end
+        else
+          @payouts = @mission.payouts.apply(@character, :failure)
         end
 
         @character.ep -= @mission.ep_cost
@@ -58,6 +58,6 @@ class MissionResult
   end
 
   def received_something?
-    !(@money.nil? && @experience.nil? && @payouts.empty?)
+    !(@money.nil? && @experience.nil? && @payouts.by_action(:received).empty?)
   end
 end

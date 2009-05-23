@@ -1,6 +1,6 @@
 module Payouts
   class Base
-    attr_accessor :value, :options
+    attr_accessor :value, :options, :action
 
     def initialize(value, options = {})
       @value    = value
@@ -13,6 +13,10 @@ module Payouts
 
     def apply(character)
       
+    end
+
+    def applicable?
+      self.options[:chance].nil? || (self.options[:chance] >= rand(100))
     end
   end
 end

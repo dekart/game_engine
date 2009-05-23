@@ -3,7 +3,7 @@ module Payouts
     def apply(character)
       character.vip_money += @value
 
-      return self
+      @action = :received
     end
   end
 end

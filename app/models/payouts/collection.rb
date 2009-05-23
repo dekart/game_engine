@@ -2,23 +2,26 @@ module Payouts
   class Collection
     attr_reader :payouts
 
-    delegate :each, :to => :payouts
+    delegate :each, :empty?, :to => :payouts
 
     def initialize(*payouts)
       @payouts = payouts
     end
 
     def apply(character, trigger)
-      returning result = [] do
+      returning result = Payouts::Collection.new do
         self.payouts.each do |payout|
-          if payout.options[:apply_on] == trigger &&
-             (payout.options[:chance].nil? || (rand(100) <= payout.options[:chance]))
-            result << payout.apply(character)
+          if payout.options[:apply_on] == trigger && payout.applicable?
+            payout.apply(character)
+
+            result.payouts << payout
           end
         end
-
-        result.compact!
       end
+    end
+
+    def by_action(action)
+      self.payouts.select{|p| p.action == action }
     end
   end
 end

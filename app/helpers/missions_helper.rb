@@ -29,9 +29,9 @@ module MissionsHelper
     end
   end
 
-  def mission_payouts_received(mission_result)
+  def mission_payouts_received(mission_result, action)
     returning result = "" do
-      mission_result.payouts.each do |payout|
+      mission_result.payouts.by_action(action).each do |payout|
         result << render(
           :partial  => "missions/received_payouts/#{payout.class.to_s.underscore.split("/").last}",
           :locals   => {:payout => payout}

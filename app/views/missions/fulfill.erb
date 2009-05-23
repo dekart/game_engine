@@ -64,7 +64,7 @@
                 </li>
               <% end %>
 
-              <%= mission_payouts_received(@result) %>
+              <%= mission_payouts_received(@result, :received) %>
             </ul>
           </td>
         <% end %>
@@ -75,6 +75,8 @@
               <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
               <div><%= @mission.ep_cost %></div>
             </li>
+
+            <%= mission_payouts_received(@result, :spent) %>
           </ul>
         </td>
       </tr>

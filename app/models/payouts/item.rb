@@ -10,10 +10,18 @@ module Payouts
     end
 
     def apply(character)
-      character.inventories.create(
-        :item           => self.item,
-        :free_of_charge => true
-      )
+      if options[:remove] and inventory = character.inventories.find_by_item_id(self.item.id)
+        inventory.destroy
+
+        @action = :spent
+      else
+        character.inventories.create(
+          :item           => self.item,
+          :free_of_charge => true
+        )
+
+        @action = :received
+      end
     end
   end
 end
