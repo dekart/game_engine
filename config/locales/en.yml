@@ -56,6 +56,7 @@ en:
       name: "Restore Health"
     upgrade:
       name: "Upgrade Points"
+
 # Templates
   layouts:
     next_steps:
@@ -260,6 +261,10 @@ en:
       break:
         confirmation: "Are you sure?"
       empty_set: "You don't have any members in your Alliance"
+      assignments:
+        title: "Assignments"
+        buttons:
+          promote: "Promote"
   users:
     edit:
       title: "Settings"
@@ -306,6 +311,22 @@ en:
         success: "You've successfully sold {property_name}!"
       you_received:
         title: "You received:"
+  assignments:
+    roles:
+      guardian:
+        title: "Guardian"
+        effect: "+{value} to defence"
+      fighter:
+        title: "Fighter"
+        effect: "+{value} to attack"
+    assignment:
+      buttons:
+        demote: "Demote"
+    new:
+      not_assigned:
+        title: "Not Assigned"
+      assigned:
+        title: "Reassign"
 # Helpers
   blocks:
     hide: "Hide"

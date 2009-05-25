@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090522183137) do
+ActiveRecord::Schema.define(:version => 20090525145807) do
+
+  create_table "assignments", :force => true do |t|
+    t.integer  "relation_id"
+    t.integer  "context_id"
+    t.string   "context_type"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bank_operations", :force => true do |t|
     t.integer  "character_id"

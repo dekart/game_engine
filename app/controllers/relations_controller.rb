@@ -4,9 +4,9 @@ class RelationsController < ApplicationController
   end
 
   def destroy
-    @target = Character.find(params[:id])
+    @target_character = Character.find(params[:id])
 
-    Relation.destroy_between(current_character, @target)
+    Relation.destroy_between(current_character, @target_character)
 
     redirect_to relations_path
   end

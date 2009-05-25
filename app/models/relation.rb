@@ -1,6 +1,14 @@
 class Relation < ActiveRecord::Base
-  belongs_to :source, :class_name => "Character", :counter_cache => true
-  belongs_to :target, :class_name => "Character"
+  belongs_to :source_character, :foreign_key => "source_id", :class_name => "Character", :counter_cache => true
+  belongs_to :target_character, :foreign_key => "target_id", :class_name => "Character"
+  has_one :assignment
+
+  named_scope :not_assigned,
+    :include    => [:assignment, :target_character],
+    :conditions => "assignments.id IS NULL"
+  named_scope :assigned, 
+    :include    => [:assignment, :target_character],
+    :conditions => "assignments.id IS NOT NULL"
 
   validates_uniqueness_of :target_id, :scope => :source_id
 

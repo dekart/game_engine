@@ -1,0 +1,47 @@
+<fb:js-string var="dialog_content">
+  <% form_for @assignment, :url => polymorphic_url([@assignment.context, @assignment], {:canvas => true}) do |f| %>
+    <%= f.hidden_field :role %>
+
+    <% if relations = current_character.relations.not_assigned and relations.any? %>
+      <h2><%= fb_i(t('.not_assigned.title')) %></h2>
+      
+      <table class="relations">
+        <% relations.each do |relation| %>
+          <tr>
+            <td><%= radio_button :assignment, :relation_id, relation.id %></td>
+            <td><%= character_picture(relation.target_character) %></td>
+            <td><%= character_name(relation.target_character) %></td>
+            <td><%= Character.human_attribute_name("level") %> <%= relation.target_character.level %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+
+    <% if relations = current_character.relations.assigned and relations.any? %>
+      <h2><%= fb_i(t('.assigned.title')) %></h2>
+
+      <table class="relations">
+        <% relations.each do |relation| %>
+          <tr>
+            <td><%= radio_button :assignment, :relation_id, relation.id %></td>
+            <td><%= character_picture(relation.target_character) %></td>
+            <td><%= character_name(relation.target_character) %></td>
+            <td><%= Character.human_attribute_name("level") %> <%= relation.target_character.level %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  <% end %>
+</fb:js-string>
+
+<fb:js-string var="dialog_title">Title</fb:js-string>
+
+<script>
+  var dialog = new Dialog(Dialog.DIALOG_POP);
+  dialog.onconfirm = function(){
+    $('new_assignment').submit();
+  };
+  dialog.showChoice(dialog_title, dialog_content);
+
+  
+</script>

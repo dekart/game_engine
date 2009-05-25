@@ -31,6 +31,8 @@ class Character < ActiveRecord::Base
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id
   has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
 
+  has_many :assignments, :as => :context, :extend => AssignmentExtension
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [
