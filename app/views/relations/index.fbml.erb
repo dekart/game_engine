@@ -11,15 +11,19 @@
 <% if @relations.any? %>
   <h2><%= fb_i(t(".assignments.title")) %></h2>
 
-  <table>
+  <table id="character_assignments" cellspacing="0" cellpadding="0">
     <tr>
-      <% %w{guardian fighter}.each do |role| %>
+      <% %w{attack defence energy health fight_income mission_income}.each do |role| %>
         <td>
           <b><%= fb_i(t("assignments.roles.#{role}.title")) %></b>
 
           <% if assignment = current_character.assignments.by_role(role) %>
             <%= render :partial => assignment %>
           <% else %>
+            <div class="description">
+              <%= fb_i(t("assignments.roles.#{role}.description")) %>
+            </div>
+            
             <div class="controls">
               <%= link_to_remote(fb_i(t(".assignments.buttons.promote")),
                     :url => new_character_assignment_url(current_character, :role => role, :canvas => false),
@@ -33,6 +37,8 @@
       <% end %>
     </tr>
   </table>
+
+  <h2><%= fb_i(t(".members.title")) %></h2>
 
   <table id="alliance_members" cellspacing="0">
     <% @relations.each do |relation| %>

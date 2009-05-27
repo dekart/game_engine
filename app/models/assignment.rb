@@ -3,14 +3,15 @@ class Assignment < ActiveRecord::Base
   belongs_to :relation
 
   validates_presence_of :context_id, :context_type, :relation_id
+  validates_uniqueness_of :role, :scope => [:context_id, :context_type]
 
   before_create :destroy_current_assignments
 
   def self.effect_value(context, character, role)
     case role.to_sym
-    when :guardian
+    when :defence
       character.defence
-    when :fighter
+    when :attack
       character.attack
     end
   end

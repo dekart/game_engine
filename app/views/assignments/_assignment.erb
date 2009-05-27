@@ -3,13 +3,7 @@
 
   <%= character_name_link(assignment.relation.target_character) %><br />
 
-  <div class="effect">
-    <% fb_i do %>
-      <%= t("assignments.roles.#{assignment.role}.effect") %>
-
-      <%= fb_it(:value, assignment.effect_value) %>
-    <% end %>
-  </div>
+  <div class="effect"><%= assignment_effect(assignment) %></div>
 
   <div class="controls">
     <%= link_to(fb_i(t(".buttons.demote")), assignment_path(assignment), 

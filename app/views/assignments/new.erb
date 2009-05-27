@@ -1,40 +1,40 @@
 <fb:js-string var="dialog_content">
   <% form_for @assignment, :url => polymorphic_url([@assignment.context, @assignment], {:canvas => true}) do |f| %>
     <%= f.hidden_field :role %>
+    <%= f.hidden_field :relation_id %>
+    <script>
+      function setAssignmentRelation(id){
+        if($('new_assignment').selectedRelation){
+          $('new_assignment').selectedRelation.removeClassName('selected');
+        }
 
-    <% if relations = current_character.relations.not_assigned and relations.any? %>
-      <h2><%= fb_i(t('.not_assigned.title')) %></h2>
-      
-      <table class="relations">
-        <% relations.each do |relation| %>
-          <tr>
-            <td><%= radio_button :assignment, :relation_id, relation.id %></td>
-            <td><%= character_picture(relation.target_character) %></td>
-            <td><%= character_name(relation.target_character) %></td>
-            <td><%= Character.human_attribute_name("level") %> <%= relation.target_character.level %></td>
-          </tr>
-        <% end %>
-      </table>
-    <% end %>
+        $('relation_' + id).addClassName('selected');
+        $('new_assignment').selectedRelation = $('relation_' + id);
 
-    <% if relations = current_character.relations.assigned and relations.any? %>
-      <h2><%= fb_i(t('.assigned.title')) %></h2>
+        $('assignment_relation_id').setValue(id);
+      }
+    </script>
 
-      <table class="relations">
-        <% relations.each do |relation| %>
-          <tr>
-            <td><%= radio_button :assignment, :relation_id, relation.id %></td>
-            <td><%= character_picture(relation.target_character) %></td>
-            <td><%= character_name(relation.target_character) %></td>
-            <td><%= Character.human_attribute_name("level") %> <%= relation.target_character.level %></td>
-          </tr>
-        <% end %>
-      </table>
+    <% %w{not_assigned assigned}.each do |filter| %>
+      <% if relations = current_character.relations.send(filter) and relations.any? %>
+        <h2><%= fb_i(t(".#{filter}.title")) %></h2>
+
+        <table class="relations" cellspacing="0" cellpadding="0">
+          <% relations.each do |relation| %>
+            <% content_tag_for :tr, relation do %>
+              <td class="picture"><%= link_to_function(character_picture(relation.target_character), "setAssignmentRelation(#{relation.id})") %></td>
+              <td class="name"><%= link_to_function(character_name(relation.target_character), "setAssignmentRelation(#{relation.id})") %></td>
+              <td class="level"><%= Character.human_attribute_name("level") %> <%= relation.target_character.level %></td>
+              <td class="effect"><%= assignment_effect(@assignment, relation) %></td>
+            <% end %>
+          <% end %>
+        </table>
+      <% end %>
     <% end %>
   <% end %>
 </fb:js-string>
 
-<fb:js-string var="dialog_title">Title</fb:js-string>
+<fb:js-string var="dialog_title"><%= fb_i(t(".title")) %></fb:js-string>
 
 <script>
   var dialog = new Dialog(Dialog.DIALOG_POP);
@@ -42,6 +42,4 @@
     $('new_assignment').submit();
   };
   dialog.showChoice(dialog_title, dialog_content);
-
-  
 </script>
