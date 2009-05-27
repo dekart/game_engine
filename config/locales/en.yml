@@ -317,28 +317,28 @@ en:
     roles:
       attack:
         title: "Fighter"
-        description: "Additional attack points"
-        effect: "+{value} to attack"
+        description: "Bonus to attack"
+        effect: "{value} bonus to attack"
       defence:
         title: "Guardian"
-        description: "Additional defence points"
+        description: "Bonus to defence"
         effect: "+{value} to defence"
       health:
         title: "Healer"
-        description: "Faster health restore"
-        effect: "+{value}% to health restore rate"
+        description: "Less damage from fight"
+        effect: "{value}% less damage from fight"
       energy:
-        title: "Priest"
-        description: "Faster energy restore"
-        effect: "+{value}% to energy restore rate"
+        title: "Scout"
+        description: "Less energy on missions"
+        effect: "-{value}% to energy restore rate"
       fight_income:
         title: "Raider"
-        description: "More money from fights"
-        effect: "+{value}% to income from fights"
+        description: "More money from fight"
+        effect: "{value}% more money from fights"
       mission_income:
         title: "Bagman"
         description: "More money from missions"
-        effect: "+{value}% to income from missions"
+        effect: "{value}% more money from missions"
     assignment:
       buttons:
         demote: "Demote"
