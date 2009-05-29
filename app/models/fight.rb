@@ -146,14 +146,17 @@ CODE
 
     attacker_won = (attack >= defence)
 
+    attacker_damage_reduce  = 0.01 * attacker.assignments.effect_value(:fight_damage)
+    victim_damage_reduce    = 0.01 * victim.assignments.effect_value(:fight_damage)
+
     if attacker_won
-      attack_damage   = rand(victim.health) * 0.3
-      defence_damage  = rand(attack_damage * defence / attack)
+      attack_damage   = rand(victim.health * 1000) * (0.3 - victim_damage_reduce)
+      defence_damage  = rand(attack_damage * defence / attack) * (1 - attacker_damage_reduce)
     else
-      defence_damage  = rand(attacker.health) * 0.3
-      attack_damage   = rand(defence_damage * attack / defence)
+      defence_damage  = rand(attacker.health * 1000) * (0.3 - attacker_damage_reduce)
+      attack_damage   = rand(defence_damage * attack / defence) * (1 - victim_damage_reduce)
     end
 
-    return [attacker_won, attack_damage.ceil, defence_damage.ceil]
+    return [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
   end
 end

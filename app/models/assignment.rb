@@ -17,6 +17,10 @@ class Assignment < ActiveRecord::Base
       chance = Math.log(character.level.to_f / 4)
 
       chance <= 0 ? 1 : chance.ceil
+    when :fight_damage
+      chance = 3.5 * Math.log(character.level)
+
+      chance <= 0 ? 1 : chance.ceil
     end
   end
   

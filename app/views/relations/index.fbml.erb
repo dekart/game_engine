@@ -13,7 +13,7 @@
 
   <table id="character_assignments" cellspacing="0" cellpadding="0">
     <tr>
-      <% %w{attack defence energy health fight_income mission_income}.each do |role| %>
+      <% %w{attack defence energy fight_damage fight_income mission_income}.each do |role| %>
         <td>
           <b><%= fb_i(t("assignments.roles.#{role}.title")) %></b>
 

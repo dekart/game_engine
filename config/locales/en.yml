@@ -324,7 +324,7 @@ en:
         title: "Guardian"
         description: "Bonus to defence"
         effect: "+{value} to defence"
-      health:
+      fight_damage:
         title: "Healer"
         description: "Reduce damage from fight"
         effect: "{value}% less damage from fight"
