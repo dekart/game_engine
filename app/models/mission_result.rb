@@ -1,5 +1,5 @@
 class MissionResult
-  attr_reader :character, :mission, :rank, :success, :money, :experience, :saved, :payouts
+  attr_reader :character, :mission, :rank, :success, :money, :experience, :saved, :payouts, :free_fulfillment
 
   def self.create(*args)
     result = self.new(*args)
@@ -44,8 +44,13 @@ class MissionResult
           @payouts = @mission.payouts.apply(@character, :failure)
         end
 
-        @character.ep -= @mission.ep_cost
+        # Checking if energy assignment encountered free fulfillment
+        @free_fulfillment = (@character.assignments.effect_value(:energy) > rand(100))
 
+        unless @free_fulfillment
+          @character.ep -= @mission.ep_cost
+        end
+        
         @character.save!
       end
 

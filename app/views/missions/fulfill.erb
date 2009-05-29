@@ -71,10 +71,25 @@
         <td class="spent">
           <h3><%= fb_i(t(".you_spent.title")) %></h3>
           <ul>
-            <li class="energy">
-              <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
-              <div><%= @mission.ep_cost %></div>
-            </li>
+            <% if @result.free_fulfillment %>
+              <li class="energy">
+                <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
+                <div class="zero">0</div>
+                <div class="relation">
+                  <% fb_i do %>
+                    <%= t(".you_spent.zero_energy") %>
+                    <%= fb_it(:user,
+                          character_name_link(current_character.assignments.by_role(:energy).relation.target_character)
+                        ) %>
+                  <% end %>
+                </div>
+              </li>
+            <% else %>
+              <li class="energy">
+                <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
+                <div><%= @mission.ep_cost %></div>
+              </li>
+            <% end %>
 
             <%= mission_payouts_received(@result, :spent) %>
           </ul>

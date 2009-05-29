@@ -240,6 +240,7 @@ en:
         title: "You received:"
       you_spent:
         title: "You spent:"
+        zero_energy: "{user} helped to save energy!"
     index:
       title: "Missions"
       columns:
@@ -325,12 +326,12 @@ en:
         effect: "+{value} to defence"
       health:
         title: "Healer"
-        description: "Less damage from fight"
+        description: "Reduce damage from fight"
         effect: "{value}% less damage from fight"
       energy:
         title: "Scout"
-        description: "Less energy on missions"
-        effect: "-{value}% to energy restore rate"
+        description: "Saves energy on missions"
+        effect: "{value}% chance to fulfill mission for free"
       fight_income:
         title: "Raider"
         description: "More money from fight"
