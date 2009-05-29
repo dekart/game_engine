@@ -1,25 +1,11 @@
 <table class="character_attributes">
   <tr class="attack">
     <th><%= fb_i(Character.human_attribute_name("attack")) %></th>
-    <td class="value">
-      <%= "%d (%d+%d+%d)" % [
-            character.attack_points,
-            character.attack,
-            character.inventory_effects[:attack].value,
-            character.relations.size
-          ] %>
-    </td>
+    <td class="value"><%= character.attack_points %></td>
   </tr>
   <tr class="defence">
     <th><%= fb_i(Character.human_attribute_name("defence")) %></th>
-    <td class="value">
-      <%= "%d (%d+%d+%d)" % [
-            character.defence_points,
-            character.defence,
-            character.inventory_effects[:defence].value,
-            character.relations.size
-          ] %>
-    </td>
+    <td class="value"><%= character.defence_points %></td>
   </tr>
   <% if character == current_character %>
   <tr class="health">
