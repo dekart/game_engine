@@ -53,9 +53,14 @@ class Fight < ActiveRecord::Base
 
     self.experience = (rand(self.loser.level) * 0.5).ceil
     self.experience = 1 if self.experience == 0
-    
-    self.money = self.loser.basic_money == 0 ? 0 : (rand(self.loser.basic_money) * 0.10).ceil
 
+    if self.loser.basic_money == 0
+      self.money = 0
+    else
+      fignt_money_bonus = 0.01 * self.winner.assignments.effect_value(:fight_income)
+
+      self.money = (rand(self.loser.basic_money) * (0.10 + fignt_money_bonus)).ceil
+    end
   end
 
   def save_payout

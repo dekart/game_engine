@@ -328,14 +328,14 @@ en:
         title: "Healer"
         description: "Reduce damage from fight"
         effect: "{value}% less damage from fight"
-      energy:
-        title: "Scout"
-        description: "Saves energy on missions"
-        effect: "{value}% chance to fulfill mission for free"
       fight_income:
         title: "Raider"
         description: "More money from fight"
         effect: "{value}% more money from fights"
+      mission_energy:
+        title: "Scout"
+        description: "Saves energy on missions"
+        effect: "{value}% chance to fulfill mission for free"
       mission_income:
         title: "Bagman"
         description: "More money from missions"
