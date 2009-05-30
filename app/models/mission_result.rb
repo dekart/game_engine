@@ -22,7 +22,9 @@ class MissionResult
 
       Rank.transaction do
         if @success
-          @money      = rand(@mission.money_max - @mission.money_min) + @mission.money_min
+          mission_money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)
+
+          @money      = ((rand(@mission.money_max - @mission.money_min) + @mission.money_min) * (1 + mission_money_bonus)).ceil
           @experience = self.mission.experience
 
           @rank.increment(:win_count)
@@ -47,9 +49,7 @@ class MissionResult
         # Checking if energy assignment encountered free fulfillment
         @free_fulfillment = (@character.assignments.effect_value(:mission_energy) > rand(100))
 
-        unless @free_fulfillment
-          @character.ep -= @mission.ep_cost
-        end
+        @character.ep -= @mission.ep_cost unless @free_fulfillment
         
         @character.save!
       end

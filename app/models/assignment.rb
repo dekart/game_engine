@@ -13,18 +13,14 @@ class Assignment < ActiveRecord::Base
       (character.own_attack_points * 0.2).ceil
     when :defence
       (character.own_defence_points * 0.2).ceil
-    when :mission_energy
-      chance = Math.log(character.level.to_f / 4)
-
-      chance <= 0 ? 1 : chance.ceil
     when :fight_damage
-      chance = 3.5 * Math.log(character.level)
-
-      chance <= 0 ? 1 : chance.ceil
+      log_percent(character.level, 3.5, 1)
     when :fight_income
-      chance = 2 * Math.log(character.level)
-
-      chance <= 0 ? 1 : chance.ceil
+      log_percent(character.level, 2, 1)
+    when :mission_energy
+      log_percent(character.level, 1, 4)
+    when :mission_income
+      log_percent(character.level, 4, 2)
     end
   end
   
@@ -38,5 +34,11 @@ class Assignment < ActiveRecord::Base
     self.class.find_all_by_relation_id(self.relation_id).each do |assignment|
       assignment.destroy
     end
+  end
+
+  def self.log_percent(parameter, multiplier, divider)
+    chance = multiplier * Math.log(parameter.to_f / divider)
+
+    chance <= 0 ? 1 : chance.ceil
   end
 end
