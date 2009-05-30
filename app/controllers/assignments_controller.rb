@@ -6,7 +6,11 @@ class AssignmentsController < ApplicationController
   end
 
   def create
-    @assignment = parents.last.assignments.create(params[:assignment])
+    @assignment = parents.last.assignments.build(params[:assignment])
+
+    if @assignment.save
+      Delayed::Job.enqueue Jobs::AssignmentNotification.new(facebook_session, @assignment.id)
+    end
 
     if @assignment.context.is_a?(Character)
       redirect_to relations_url
