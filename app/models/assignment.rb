@@ -13,7 +13,7 @@ class Assignment < ActiveRecord::Base
       (character.own_attack_points * 0.2).ceil
     when :defence
       (character.own_defence_points * 0.2).ceil
-    when :energy
+    when :mission_energy
       chance = Math.log(character.level.to_f / 4)
 
       chance <= 0 ? 1 : chance.ceil

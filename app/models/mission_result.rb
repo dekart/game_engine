@@ -45,7 +45,7 @@ class MissionResult
         end
 
         # Checking if energy assignment encountered free fulfillment
-        @free_fulfillment = (@character.assignments.effect_value(:energy) > rand(100))
+        @free_fulfillment = (@character.assignments.effect_value(:mission_energy) > rand(100))
 
         unless @free_fulfillment
           @character.ep -= @mission.ep_cost
