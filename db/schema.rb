@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090525145807) do
+ActiveRecord::Schema.define(:version => 20090530141502) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(:version => 20090525145807) do
     t.datetime "updated_at"
   end
 
+  add_index "assignments", ["context_id", "context_type"], :name => "index_assignments_on_context_id_and_context_type"
+  add_index "assignments", ["relation_id"], :name => "index_assignments_on_relation_id"
+
   create_table "bank_operations", :force => true do |t|
     t.integer  "character_id"
     t.integer  "amount"
@@ -27,6 +30,8 @@ ActiveRecord::Schema.define(:version => 20090525145807) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "bank_operations", ["character_id"], :name => "index_bank_operations_on_character_id"
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
@@ -57,6 +62,10 @@ ActiveRecord::Schema.define(:version => 20090525145807) do
     t.integer  "property_income",        :default => 0
     t.datetime "basic_money_updated_at"
   end
+
+  add_index "characters", ["level"], :name => "index_characters_on_level"
+  add_index "characters", ["rating"], :name => "index_characters_on_rating"
+  add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -91,6 +100,9 @@ ActiveRecord::Schema.define(:version => 20090525145807) do
     t.datetime "updated_at"
   end
 
+  add_index "fights", ["attacker_id", "winner_id"], :name => "index_fights_on_attacker_id_and_winner_id"
+  add_index "fights", ["victim_id"], :name => "index_fights_on_victim_id"
+
   create_table "inventories", :force => true do |t|
     t.integer  "character_id"
     t.integer  "item_id"
@@ -99,6 +111,8 @@ ActiveRecord::Schema.define(:version => 20090525145807) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "inventories", ["character_id", "placement"], :name => "index_inventories_on_character_id_and_placement"
 
   create_table "invitations", :force => true do |t|
     t.integer  "sender_id"
@@ -167,6 +181,8 @@ ActiveRecord::Schema.define(:version => 20090525145807) do
     t.datetime "updated_at"
   end
 
+  add_index "properties", ["character_id"], :name => "index_properties_on_character_id"
+
   create_table "property_types", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -192,6 +208,8 @@ ActiveRecord::Schema.define(:version => 20090525145807) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "ranks", ["character_id", "mission_id"], :name => "index_ranks_on_character_id_and_mission_id"
 
   create_table "relations", :force => true do |t|
     t.integer  "source_id"
