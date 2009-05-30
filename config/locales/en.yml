@@ -319,27 +319,39 @@ en:
       attack:
         title: "Fighter"
         description: "Bonus to attack"
-        effect: "{value} bonus to attack"
+        effect:
+          full: "+{value} to attack"
+          short: "+{value}"
       defence:
         title: "Guardian"
         description: "Bonus to defence"
-        effect: "+{value} to defence"
+        effect:
+          full: "+{value} to defence"
+          short: "+{value}"
       fight_damage:
         title: "Healer"
         description: "Reduce damage from fight"
-        effect: "{value}% less damage from fight"
+        effect:
+          full: "{value}% less damage from fight"
+          short: "-{value}%"
       fight_income:
         title: "Raider"
         description: "More money from fight"
-        effect: "{value}% more money from fights"
+        effect:
+          full: "{value}% more money from fights"
+          short: "+{value}%"
       mission_energy:
         title: "Scout"
         description: "Saves energy on missions"
-        effect: "{value}% chance to fulfill mission for free"
+        effect:
+          full: "{value}% chance to fulfill mission for free"
+          short: "{value}%"
       mission_income:
         title: "Bagman"
         description: "More money from missions"
-        effect: "{value}% more money from missions"
+        effect:
+          full: "{value}% more money from missions"
+          short: "+{value}%"
     assignment:
       buttons:
         demote: "Demote"
@@ -349,6 +361,8 @@ en:
         title: "Not Assigned"
       assigned:
         title: "Reassign"
+      columns:
+        user: "Alliance member"
 # Helpers
   blocks:
     hide: "Hide"
