@@ -1,7 +1,11 @@
 class User < ActiveRecord::Base
   has_one :character
 
-  has_many :invitations, :foreign_key => :sender_id
+  has_many :invitations, :foreign_key => :sender_id do
+    def facebook_ids
+      self.find(:all, :select => "invitations.receiver_id").collect{|i| i[:receiver_id].to_i }
+    end
+  end
 
   attr_accessible :show_next_steps
 

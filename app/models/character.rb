@@ -24,7 +24,11 @@ class Character < ActiveRecord::Base
   has_many :missions, :through => :ranks
   has_many :inventories, :include => :item
   has_many :items, :through => :inventories
-  has_many :relations, :foreign_key => "source_id"
+  has_many :relations, :foreign_key => "source_id" do
+    def facebook_ids
+      find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
+    end
+  end
   has_many :properties, :order => "property_type_id"
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
