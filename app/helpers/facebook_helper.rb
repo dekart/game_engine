@@ -81,7 +81,10 @@ module FacebookHelper
       "Facebook.showFeedDialog(
         #{bundle_id},
         #{options[:template_data].reverse_merge(
-            :images => [{:src => image_path("logo_100x100.jpg"), :href => root_url(:canvas => true)}]
+            :images => [
+              {:src => image_path("logo_100x100.jpg"), :href => root_url(:canvas => true)},
+              options[:images]
+            ].flatten
           ).to_json},
         '#{options[:body_general]}',
         #{options[:target_id] || "null"}

@@ -171,6 +171,7 @@ en:
   inventories:
     create:
       buttons:
+        publish: "Publish To Profile"
         inventory: "Go To Inventory"
       messages:
         success: "You successfully bought {item_name}"

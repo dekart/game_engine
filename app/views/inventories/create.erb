@@ -1,5 +1,15 @@
 <div id="shop_result">
   <% if !@inventory.new_record? %>
+    <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Item, :bought,
+            :template_data => {
+              :item           => fb_i(@item.name),
+            },
+            :html => {:class => "publish button"},
+            :images => {
+              :src  => image_path(@item.image.url(:medium)),
+              :href => item_group_items_url(@item.item_group, :canvas => true)
+            }
+          ) %>
     <%= link_to(fb_i(t(".buttons.inventory")), inventories_url(:canvas => true), :class => "inventory button") %>
 
     <p>
