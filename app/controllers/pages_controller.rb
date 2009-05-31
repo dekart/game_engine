@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   caches_page :stylesheet
   
   def show
-    @@references ||= [] # Reference names
+    @@references ||= %w{welcome_notification}
 
     render :action => params[:id], :layout => !@@references.include?(params[:id])
   end

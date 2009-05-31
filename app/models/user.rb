@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :show_next_steps
 
-  after_create :setup_profile!, :update_profile!
+  after_create :setup_profile!, :update_profile!, :deliver_welcome_message!
 
   def initialize(*args)
     super
@@ -37,5 +37,9 @@ class User < ActiveRecord::Base
 
   def admin?
     ADMINS.include?(self.facebook_id)
+  end
+
+  def deliver_welcome_message!
+    Delayed::Job.enqueue Jobs::WelcomeNotification.new(self.id)
   end
 end
