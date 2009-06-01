@@ -21,6 +21,7 @@ class Inventory < ActiveRecord::Base
   validate_on_create :enough_character_money?
 
   after_create  :charge_character
+  after_destroy :recache_character_effects
 
   def sell_price
     (self.item.basic_price * 0.8).ceil
@@ -33,7 +34,7 @@ class Inventory < ActiveRecord::Base
         
         self.update_attribute(:placement, placement)
 
-        self.character.cache_inventory_effects
+        self.recache_character_effects
       end
     end
   end
@@ -85,5 +86,9 @@ class Inventory < ActiveRecord::Base
       
       self.character.save!
     end
+  end
+
+  def recache_character_effects
+    self.character.cache_inventory_effects
   end
 end
