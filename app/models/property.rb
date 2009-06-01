@@ -18,7 +18,8 @@ class Property < ActiveRecord::Base
 
   def sell
     self.transaction do
-      self.character.increment!(:basic_money, self.sell_price)
+      self.character.basic_money += self.sell_price
+      self.save
 
       self.destroy
     end
@@ -40,8 +41,8 @@ class Property < ActiveRecord::Base
     return if self.free_of_charge
 
     self.transaction do
-      self.character.decrement(:basic_money, self.basic_price) if self.basic_price.to_i > 0
-      self.character.decrement(:vip_money, self.vip_price) if self.vip_price.to_i > 0
+      self.character.basic_money  -= self.basic_price if self.basic_price.to_i > 0
+      self.character.vip_money    -= self.vip_price if self.vip_price.to_i > 0
 
       self.character.save!
     end

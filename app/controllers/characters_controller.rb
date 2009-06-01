@@ -22,7 +22,9 @@ class CharactersController < ApplicationController
 
   def load_vip_money
     if valid_super_rewards_request?
-      super_rewards_user.character.increment!(:vip_money, params[:new].to_i)
+      @character = super_rewards_user.character
+      @character.vip_money += params[:new].to_i
+      @character.save
 
       render :text => "1"
     else

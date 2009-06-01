@@ -61,7 +61,8 @@ class Inventory < ActiveRecord::Base
 
   def sell
     self.transaction do
-      self.character.increment!(:basic_money, self.sell_price)
+      self.character.basic_money += self.sell_price
+      self.character.save!
 
       self.destroy
     end
@@ -79,8 +80,8 @@ class Inventory < ActiveRecord::Base
     return if self.free_of_charge
 
     self.transaction do
-      self.character.decrement(:basic_money, self.item.basic_price) if self.item.basic_price.to_i > 0
-      self.character.decrement(:vip_money, self.item.vip_price) if self.item.vip_price.to_i > 0
+      self.character.basic_money  -= self.item.basic_price if self.item.basic_price.to_i > 0
+      self.character.vip_money    -= self.item.vip_price if self.item.vip_price.to_i > 0
       
       self.character.save!
     end

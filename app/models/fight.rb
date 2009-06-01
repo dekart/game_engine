@@ -64,18 +64,18 @@ class Fight < ActiveRecord::Base
   end
 
   def save_payout
-    self.winner.increment(:experience, self.experience)
+    self.winner.experience += self.experience
 
-    self.winner.increment(:basic_money, self.money)
-    self.loser.decrement(:basic_money, self.money)
+    self.winner.basic_money += self.money
+    self.loser.basic_money  -= self.money
 
     self.attacker.ep  -= 1
 
     self.attacker.hp  -= self.attacker_hp_loss
     self.victim.hp    -= self.victim_hp_loss
 
-    self.winner.increment(:fights_won)
-    self.loser.increment(:fights_lost)
+    self.winner.fights_won += 1
+    self.loser.fights_lost += 1
 
     self.attacker.save!
     self.victim.save!

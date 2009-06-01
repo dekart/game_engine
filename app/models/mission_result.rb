@@ -27,16 +27,16 @@ class MissionResult
           @money      = ((rand(@mission.money_max - @mission.money_min) + @mission.money_min) * (1 + mission_money_bonus)).ceil
           @experience = self.mission.experience
 
-          @rank.increment(:win_count)
+          @rank.win_count += 1
           @rank.save!
 
-          @character.increment(:basic_money, @money)
-          @character.increment(:experience, @experience)
+          @character.basic_money += @money
+          @character.experience += @experience
 
-          @character.increment(:missions_succeeded)
+          @character.missions_succeeded += 1
 
           if @rank.completed?
-            @character.increment(:missions_completed)
+            @character.missions_completed += 1
             
             @payouts = @mission.payouts.apply(@character, :complete)
           else
