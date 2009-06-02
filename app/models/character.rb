@@ -49,7 +49,7 @@ class Character < ActiveRecord::Base
         },
         {
           :low_level    => attacker.level,
-          :high_level   => attacker.level + 2,
+          :high_level   => attacker.level + 5,
           :attacker_id  => attacker.id,
           :time_limit   => 1.hour.ago
         }
