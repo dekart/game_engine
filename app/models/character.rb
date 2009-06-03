@@ -28,6 +28,10 @@ class Character < ActiveRecord::Base
     def facebook_ids
       find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
     end
+
+    def established?(character)
+      find(:first, :conditions => ['target_id = ?', character.id])
+    end
   end
   has_many :properties, :order => "property_type_id"
   

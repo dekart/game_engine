@@ -214,6 +214,12 @@ en:
       message: "Invitation accepted! {user} became part of your alliance!"
     ignore:
       message: "Invitation ignored"
+    show:
+      title: "Alliance Invitation"
+      note: "This user invites you to join their Alliance"
+      controls:
+        accept: "Accept"
+        ignore: "Ignore"
   items:
     index:
       title: "Shop"
@@ -283,6 +289,10 @@ en:
         buttons:
           accept: "Accept Invitation"
           visit_profile: "Visit {{user}} Profile"
+      manual:
+        title: "Out Of Requests?"
+        note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. You can use this link to recruit more alliance members."
+        message: "Join my Alliance: {link}"
   properties:
     new:
       title: "Buy Properties"

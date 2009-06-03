@@ -35,3 +35,17 @@
     <%= fb_fa(:actiontext, fb_i(t(".invite.note"))) %>
   <% end %>
 <% end %>
+
+<h2><%= fb_i(t(".manual.title")) %></h2>
+
+<div class="note">
+  <%= fb_i(t(".manual.note")) %>
+  
+  <div id="manual_invitation">
+    <% fb_i do %>
+      <%= t(".manual.message") %>
+      <%= fb_it(:link, invitation_url(current_character.id)) %>
+    <% end %>
+  </div>
+</div>
+

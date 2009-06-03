@@ -1,0 +1,23 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div class="note"><%= fb_i(t(".note")) %></div>
+
+<table id="invitation">
+  <tr>
+    <td class="picture"><%= character_picture_link(@character) %></td>
+    <td class="name"><%= character_name_link(@character) %></td>
+    <td class="level">
+      <%= fb_i(Character.human_attribute_name("level")) %>
+      <%= @character.level %>
+    </td>
+    <td class="controls">
+      <%= link_to(fb_i(t('.controls.accept')), invitation_path(@character.id),
+            :method => :put,
+            :class  => :accept
+          ) %>
+      <%= link_to(fb_i(t('.controls.ignore')), root_path,
+            :class => :ignore
+          ) %>
+    </td>
+  </tr>
+</table>
