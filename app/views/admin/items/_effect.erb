@@ -1,0 +1,14 @@
+<div class="<%= effect.name %>">
+  <%= hidden_field_tag("item[effect_params][effect_#{effect.object_id}][type]", effect.name) %>
+
+  <%= label_tag "effect_#{effect.object_id}_value", t("effects.#{effect.name}.name") %>
+  
+  <%= text_field_tag("item[effect_params][effect_#{effect.object_id}][value]", effect.value,
+        :id => "effect_#{effect.object_id}_value"
+      ) %>
+
+  <%= link_to_function(
+        t("admin.items.form_fields.remove_effect"),
+        "$('effect_list').removeChild($('effect_#{effect.id}'))"
+      ) %>
+</div>

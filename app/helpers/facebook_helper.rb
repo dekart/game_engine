@@ -93,6 +93,13 @@ module FacebookHelper
     )
   end
 
+  def fb_js_string(name, &block)
+    concat(
+      content_tag("fb:js-string", capture(&block), :var => name),
+      block.binding
+    )
+  end
+
   protected
 
   def fb_named_tag(tag, name, *args, &block)

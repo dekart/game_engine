@@ -1,25 +1,29 @@
 module Effects
   class Collection
-    attr_reader :effects
+    attr_reader :items
 
-    delegate :each, :to => :effects
+    delegate :each, :to => :items
 
     def initialize(*effects)
-      @effects = effects
+      @items = effects
     end
 
     def [](key)
-      klass = "Effects::#{key.to_s.classify}".constantize
+      if key.is_a?(Numeric)
+        self.items[key]
+      else
+        klass = Effects::Base.by_name(key)
 
-      self.effects.find{|e| e.class == klass } || klass.new(0)
+        self.items.find{|e| e.class == klass } || klass.new(0)
+      end
     end
 
     def <<(collection)
-      collection.effects.each do |effect|
-        if existing = self.effects.find{|e| e.class == effect.class }
+      collection.items.each do |effect|
+        if existing = self.items.find{|e| e.class == effect.class }
           existing += effect
         else
-          self.effects << effect
+          self.items << effect
         end
       end
     end

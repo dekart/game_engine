@@ -1,0 +1,28 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_item_path) %>
+</div>
+
+<% if @items.any? %>
+  <table id="item_list">
+    <% @items.each do |item| %>
+      <% group_header item.item_group do |group| %>
+        <tr>
+          <th colspan="2"><%= group.name %></th>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="name"><%= link_to(item.name, edit_admin_item_path(item)) %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.delete"), admin_item_path(item),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

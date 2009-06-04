@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :item_groups, :member => {:move => :post}
+    admin.resources :items, :new => {:add_effect => :any}
   end
 
   map.root :controller => "characters", :action => "index"

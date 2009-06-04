@@ -5,6 +5,7 @@ en:
         title: "Item Groups"
         empty_set: "No item groups"
         controls:
+          new: "Add Group"
           move_up: "Move Up"
           move_down: "Move Down"
           delete: "Delete"
@@ -15,3 +16,20 @@ en:
       edit:
         title: "Edit Item Group"
         submit: "Update"
+    items:
+      index:
+        title: "Items"
+        empty_set: "No items"
+        controls:
+          new: "Add Item"
+          delete: "Delete"
+          delete_confirm: "Are you sure? This item will be also removed from all users!"
+      new:
+        title: "New Item"
+        submit: "Create"
+      edit:
+        title: "Edit Item"
+        submit: "Update"
+      form_fields:
+        add_effect: "Add Effect:"
+        remove_effect: "Remove"
