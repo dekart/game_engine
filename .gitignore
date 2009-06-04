@@ -5,3 +5,4 @@ db/schema.db
 public/stylesheets/*.css
 public/system
 nbproject
+test

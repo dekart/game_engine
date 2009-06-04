@@ -1,0 +1,26 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to("Add Group", new_admin_item_group_path) %>
+</div>
+
+<% if @groups.any? %>
+  <table id="item_group_list">
+    <% @groups.each do |group| %>
+    <tr>
+      <td class="name"><%= link_to(group.name, edit_admin_item_group_path(group)) %></td>
+      <td class="controls">
+        <%= link_to(t(".controls.move_up"), move_admin_item_group_path(group, :direction => :up),
+              :method => :post
+            ) unless group.first? %>
+        <%= link_to(t(".controls.move_down"), move_admin_item_group_path(group, :direction => :down),
+              :method => :post
+            ) unless group.last? %>
+        <%= link_to(t(".controls.delete"), admin_item_group_path(group), :method => :delete, :confirm => t(".controls.delete_confirm")) %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

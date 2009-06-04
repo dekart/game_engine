@@ -1,0 +1,9 @@
+<% admin_only do %>
+  <div style="border: 1px solid #0000ff; padding:5px; margin:5px;">
+    <%= link_to("Home", root_path) %>
+    
+    <%= link_to("Statistics", statistics_pages_path) %>
+
+    <%= link_to("Item Groups", admin_item_groups_path) %>
+  </div>
+<% end %>

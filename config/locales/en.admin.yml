@@ -1,0 +1,17 @@
+en:
+  admin:
+    item_groups:
+      index:
+        title: "Item Groups"
+        empty_set: "No item groups"
+        controls:
+          move_up: "Move Up"
+          move_down: "Move Down"
+          delete: "Delete"
+          delete_confirm: "Are you sure? All items linked to this group will be also deleted!"
+      new:
+        title: "New Item Group"
+        submit: "Create"
+      edit:
+        title: "Edit Item Group"
+        submit: "Update"

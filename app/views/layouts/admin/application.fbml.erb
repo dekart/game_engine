@@ -1,0 +1,19 @@
+<fb:fbml>
+  <% if Rails.env.development? %>
+    <style><%= render :file => "pages/stylesheets/admin.css.erb" %></style>
+
+    <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
+  <% else %>
+    <%= stylesheet_link_tag("admin.css?#{File.mtime(File.join(RAILS_ROOT, "app/views/pages/stylesheets/admin.css.erb")).to_i}") %>
+    
+    <%= javascript_include_tag "facebooker" %>
+  <% end %>
+
+  <%= render :partial => "layouts/admin/main_menu" %>
+      
+  <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
+  <%= fb_i(fb_error(flash[:error])) if flash[:error] %>
+
+  <%= yield %>
+
+</fb:fbml>

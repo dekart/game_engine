@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.namespace :admin do |admin|
+    admin.resources :item_groups, :member => {:move => :post}
+  end
+
   map.root :controller => "characters", :action => "index"
 
   map.buy_money "/characters/buy_money", :controller => "characters", :action => "buy_money"
