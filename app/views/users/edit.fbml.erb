@@ -1,7 +1,7 @@
 <%= title(fb_i(t(".title"))) %>
 
 <% form_for(@user) do |form| %>
-  <%= form.check_box(fb_i(User.human_attribute_name("show_next_steps")), :show_next_steps) %>
+  <%= form.check_box(:show_next_steps) %>
 
   <% fb_tag(:input) do %>
     <%= fb_ta(:type, :submit) %>
