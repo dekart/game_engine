@@ -1,4 +1,4 @@
-<div class="<%= payout.name %>">
+<div class="<%= payout.name %> serializable_item">
   <%= hidden_field_tag("mission[payouts][payout_#{payout.object_id}][type]", payout.name) %>
 
   <%= label_tag "payout_#{payout.object_id}_value", t("payouts.#{payout.name}.name") %>
@@ -7,6 +7,8 @@
         grouped_options_for_select(Item.to_grouped_dropdown, payout.value),
         :id => "payout_#{payout.object_id}_value"
       ) %>
+
+  <br />
 
   <%= render :partial => "admin/missions/payouts/common", :locals => {:payout => payout} %>
 </div>

@@ -1,4 +1,4 @@
-<div class="<%= requirement.name %>">
+<div class="<%= requirement.name %> serializable_item">
   <%= hidden_field_tag("mission[requirements][requirement_#{requirement.object_id}][type]", requirement.name) %>
 
   <%= label_tag "requirement_#{requirement.object_id}_value", t("requirements.#{requirement.name}.name") %>
@@ -7,6 +7,7 @@
         grouped_options_for_select(Item.to_grouped_dropdown, requirement.value),
         :id => "requirement_#{requirement.object_id}_value"
       ) %>
+  <br />
 
   <%= link_to_function(
         t("admin.missions.form_fields.remove"),

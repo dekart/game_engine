@@ -1,69 +1,76 @@
-<%= form.text_field :name, :required => true %>
-<%= form.text_area :description %>
+<table id="mission_fields">
+  <tr>
+    <td>
+      <%= form.text_field :name, :required => true %>
+      <%= form.text_area :description %>
 
-<%= form.text_area :success_text, :required => true %>
-<%= form.text_area :failure_text, :required => true %>
-<%= form.text_area :complete_text, :required => true %>
+      <%= form.text_area :success_text, :required => true, :rows => 5 %>
+      <%= form.text_area :failure_text, :required => true, :rows => 5 %>
+      <%= form.text_area :complete_text, :required => true, :rows => 5 %>
 
-<%= form.text_field :level, :required => true %>
+      <%= form.text_field :level, :required => true, :size => 3 %>
 
-<%= form.text_field :win_amount, :required => true %>
-<%= form.text_field :success_chance, :required => true %>
-<%= form.text_field :title, :required => true %>
+      <%= form.text_field :win_amount, :required => true, :size => 3 %>
+      <%= form.text_field :success_chance, :required => true, :size => 3 %>
+      <%= form.text_field :title, :required => true %>
 
-<%= form.text_field :ep_cost, :required => true %>
-<%= form.text_field :experience, :required => true %>
-<%= form.text_field :money_min, :required => true %>
-<%= form.text_field :money_max, :required => true %>
+      <%= form.text_field :ep_cost, :required => true, :size => 3 %>
+      <%= form.text_field :experience, :required => true, :size => 3 %>
+      <%= form.text_field :money_min, :required => true, :size => 3 %>
+      <%= form.text_field :money_max, :required => true, :size => 3 %>
+    </td>
+    <td>
+      <div class="serializable" id="requirement_list">
+        <h2><%= Mission.human_attribute_name("requirements") %></h2>
 
-<div class="requirements" id="requirement_list">
-  <h2><%= Mission.human_attribute_name("requirements") %></h2>
+        <div class="controls">
+          <b><%= t(".add_requirement") %></b>
 
-  <div>
-    <b><%= t(".add_requirement") %></b>
-    
-    <% Requirements::Base.types.each do |type| %>
-      <%= link_to_remote(t("requirements.#{type.requirement_name}.name"),
-            :url    => add_requirement_new_admin_mission_url(:type => type.requirement_name, :canvas => false),
-            :update => :result
-          ) %>
-    <% end %>
-  </div>
+          <% Requirements::Base.types.each do |type| %>
+            <%= link_to_remote(t("requirements.#{type.requirement_name}.name"),
+                  :url    => add_requirement_new_admin_mission_url(:type => type.requirement_name, :canvas => false),
+                  :update => :result
+                ) %>
+          <% end %>
+        </div>
 
-  <% form.object.requirements.each do |requirement| %>
-    <%= content_tag(:div,
-          render(
-            :partial  => "admin/missions/requirements/#{requirement.name}",
-            :locals   => {:requirement => requirement}
-          ),
-          :class  => "requirement",
-          :id     => "requirement_#{requirement.id}"
-        ) %>
-  <% end %>
-</div>
+        <% form.object.requirements.each do |requirement| %>
+          <%= content_tag(:div,
+                render(
+                  :partial  => "admin/missions/requirements/#{requirement.name}",
+                  :locals   => {:requirement => requirement}
+                ),
+                :class  => "requirement",
+                :id     => "requirement_#{requirement.id}"
+              ) %>
+        <% end %>
+      </div>
 
-<div class="payouts" id="payout_list">
-  <h2><%= Mission.human_attribute_name("payouts") %></h2>
+      <div class="serializable" id="payout_list">
+        <h2><%= Mission.human_attribute_name("payouts") %></h2>
 
-  <div>
-    <b><%= t(".add_payout") %></b>
+        <div class="controls">
+          <b><%= t(".add_payout") %></b>
 
-    <% Payouts::Base.types.each do |type| %>
-      <%= link_to_remote(t("payouts.#{type.payout_name}.name"),
-            :url    => add_payout_new_admin_mission_url(:type => type.payout_name, :canvas => false),
-            :update => :result
-          ) %>
-    <% end %>
-  </div>
+          <% Payouts::Base.types.each do |type| %>
+            <%= link_to_remote(t("payouts.#{type.payout_name}.name"),
+                  :url    => add_payout_new_admin_mission_url(:type => type.payout_name, :canvas => false),
+                  :update => :result
+                ) %>
+          <% end %>
+        </div>
 
-  <% form.object.payouts.each do |payout| %>
-    <%= content_tag(:div,
-          render(
-            :partial  => "admin/missions/payouts/#{payout.name}",
-            :locals   => {:payout => payout}
-          ),
-          :class  => "payout",
-          :id     => "payout_#{payout.id}"
-        ) %>
-  <% end %>
-</div>
+        <% form.object.payouts.each do |payout| %>
+          <%= content_tag(:div,
+                render(
+                  :partial  => "admin/missions/payouts/#{payout.name}",
+                  :locals   => {:payout => payout}
+                ),
+                :class  => "payout",
+                :id     => "payout_#{payout.id}"
+              ) %>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+</table>

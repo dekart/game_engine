@@ -1,36 +1,43 @@
-<%= form.select :item_group_id, ItemGroup.all.to_dropdown, :required => true %>
+<table id="item_fields">
+  <tr>
+    <td>
+      <%= form.select :item_group_id, ItemGroup.all.to_dropdown, :required => true %>
 
-<%= form.text_field :name, :required => true %>
-<%= form.text_area :description %>
+      <%= form.text_field :name, :required => true %>
+      <%= form.text_area :description %>
 
-<%= form.select :availability, %w{shop loot quest}, :required => true %>
+      <%= form.select :availability, %w{shop loot quest}, :required => true %>
 
-<%= form.text_field :level, :required => true %>
-<%= form.text_field :basic_price, :required => true %>
-<%= form.text_field :vip_price %>
-<%= form.select :placements, Inventory::PLACEMENTS.collect{|v| [v.to_s.humanize, v.to_s]}, {}, {:multiple => true} %>
-<%= form.check_box :usable %>
-<%= form.text_field :usage_limit %>
+      <%= form.text_field :level, :required => true, :size => 3 %>
+      <%= form.text_field :basic_price, :required => true, :size => 3 %>
+      <%= form.text_field :vip_price, :size => 3 %>
+      <%= form.select :placements, Inventory::PLACEMENTS.collect{|v| [v.to_s.humanize, v.to_s]}, {}, {:multiple => true} %>
+      <%= form.check_box :usable %>
+      <%= form.text_field :usage_limit, :size => 3 %>
+    </td>
+    <td>
+      <div class="serializable" id="effect_list">
+        <h2><%= Item.human_attribute_name("effects") %></h2>
 
-<div class="effects" id="effect_list">
-  <h2><%= Item.human_attribute_name("effects") %></h2>
+        <div class="controls">
+          <b><%= t(".add_effect") %></b>
 
-  <div>
-    <b><%= t(".add_effect") %></b>
-    
-    <% Effects::Base.types.each do |type| %>
-      <%= link_to_remote(t("effects.#{type.effect_name}.name"),
-            :url    => add_effect_new_admin_item_url(:type => type.effect_name, :canvas => false),
-            :update => :result
-          ) %>
-    <% end %>
-  </div>
+          <% Effects::Base.types.each do |type| %>
+            <%= link_to_remote(t("effects.#{type.effect_name}.name"),
+                  :url    => add_effect_new_admin_item_url(:type => type.effect_name, :canvas => false),
+                  :update => :result
+                ) %>
+          <% end %>
+        </div>
 
-  <% form.object.effects.each do |effect| %>
-    <%= content_tag(:div,
-          render(:partial => "effect", :locals => {:effect => effect}),
-          :class => "effect",
-          :id => "effect_#{effect.id}"
-        ) %>
-  <% end %>
-</div>
+        <% form.object.effects.each do |effect| %>
+          <%= content_tag(:div,
+                render(:partial => "effect", :locals => {:effect => effect}),
+                :class => "effect",
+                :id => "effect_#{effect.id}"
+              ) %>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+</table>

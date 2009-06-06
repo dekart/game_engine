@@ -1,11 +1,14 @@
-<div class="<%= payout.name %>">
+<div class="<%= payout.name %> serializable_item">
   <%= hidden_field_tag("mission[payouts][payout_#{payout.object_id}][type]", payout.name) %>
 
   <%= label_tag "payout_#{payout.object_id}_value", t("payouts.#{payout.name}.name") %>
 
   <%= text_field_tag("mission[payouts][payout_#{payout.object_id}][value]", payout.value,
-        :id => "payout_#{payout.object_id}_value"
+        :id => "payout_#{payout.object_id}_value",
+        :size => 5
       ) %>
+
+  <br />
 
   <%= render :partial => "admin/missions/payouts/common", :locals => {:payout => payout} %>
 </div>
