@@ -26,13 +26,11 @@
     <% end %>
   </div>
 
-  <% if form.object.effects %>
-    <% form.object.effects.each do |effect| %>
-      <%= content_tag(:div,
-            render(:partial => "effect", :locals => {:effect => effect}),
-            :class => "effect",
-            :id => "effect_#{effect.id}"
-          ) %>
-    <% end %>
+  <% form.object.effects.each do |effect| %>
+    <%= content_tag(:div,
+          render(:partial => "effect", :locals => {:effect => effect}),
+          :class => "effect",
+          :id => "effect_#{effect.id}"
+        ) %>
   <% end %>
 </div>

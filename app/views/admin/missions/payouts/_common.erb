@@ -1,0 +1,17 @@
+<%= label_tag "payout_#{payout.object_id}_options_apply_on", t("payouts.options.apply_on") %>
+
+<%= select_tag("mission[payouts][payout_#{payout.object_id}][options][apply_on]",
+        options_for_select(%w{success failure complete}, payout.options[:apply_on]),
+        :id => "payout_#{payout.object_id}_options_apply_on"
+      ) %>
+
+<%= label_tag "payout_#{payout.object_id}_options_chance", t("payouts.options.chance") %>
+
+<%= text_field_tag("mission[payouts][payout_#{payout.object_id}][options][chance]", payout.options[:chance],
+        :id => "payout_#{payout.object_id}_options_chance"
+      ) %>
+
+<%= link_to_function(
+      t("admin.missions.form_fields.remove"),
+      "$('payout_list').removeChild($('payout_#{payout.id}'))"
+    ) %>

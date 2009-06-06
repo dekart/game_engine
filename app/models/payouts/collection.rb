@@ -11,7 +11,7 @@ module Payouts
     def apply(character, trigger)
       returning result = Payouts::Collection.new do
         self.payouts.each do |payout|
-          if payout.options[:apply_on] == trigger && payout.applicable?
+          if payout.applicable?(trigger)
             payout.apply(character)
 
             result.payouts << payout

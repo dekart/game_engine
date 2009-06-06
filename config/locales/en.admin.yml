@@ -1,4 +1,10 @@
 en:
+  layouts:
+    admin:
+      application:
+        spinner:
+          alt: "Please wait..."
+          text: "Please wait for a few seconds..."
   admin:
     item_groups:
       index:
@@ -32,4 +38,23 @@ en:
         submit: "Update"
       form_fields:
         add_effect: "Add Effect:"
-        remove_effect: "Remove"
+      effect:
+        remove: "Remove"
+    missions:
+      index:
+        title: "Missions"
+        empty_set: "No missions"
+        controls:
+          new: "Add Mission"
+          delete: "Delete"
+          delete_confirm: "Are you sure? Mission results will be also removed from all users!"
+      new:
+        title: "New Mission"
+        submit: "Create"
+      edit:
+        title: "Edit Mission"
+        submit: "Update"
+      form_fields:
+        add_requirement: "Add Requirement:"
+        add_payout: "Add Payout:"
+        remove: "Remove"

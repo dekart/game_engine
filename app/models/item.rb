@@ -26,6 +26,14 @@ class Item < ActiveRecord::Base
   validates_presence_of :name, :item_group, :availability, :level, :basic_price
   validates_numericality_of :level, :basic_price, :vip_price, :usage_limit, :allow_blank => true
 
+  def self.to_grouped_dropdown
+    returning result = {} do
+      ItemGroup.all(:order => :position).each do |group|
+        result[group.name] = group.items.collect{|i| [i.name, i.id]}
+      end
+    end
+  end
+
   def placements
     @placements ||= (self[:placements].blank? ? [] : self[:placements].split(","))
   end
@@ -38,11 +46,19 @@ class Item < ActiveRecord::Base
     self.placements.any?
   end
 
-  def effect_params=(collection)
-    items = collection.values.collect do |effect|
-      Effects::Base.by_name(effect[:type]).new(effect[:value].to_i)
+  def effects
+    super || Effects::Collection.new
+  end
+
+  def effects=(collection)
+    unless collection.is_a?(Effects::Collection)
+      items = collection.values.collect do |effect|
+        Effects::Base.by_name(effect[:type]).new(effect[:value])
+      end
+      
+      collection = Effects::Collection.new(*items)
     end
 
-    self.effects = Effects::Collection.new(*items)
+    super(collection)
   end
 end

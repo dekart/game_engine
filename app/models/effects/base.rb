@@ -9,16 +9,16 @@ module Effects
       Effects::Base.types << base
     end
 
-    def initialize(value)
-      @value = value
-    end
-
     def self.effect_name
-      self.to_s.underscore.split("/").last
+      self.to_s.demodulize.underscore
     end
 
     def self.by_name(name)
       "Effects::#{name.to_s.classify}".constantize
+    end
+
+    def initialize(value)
+      @value = value.to_i
     end
 
     def name

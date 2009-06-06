@@ -1,0 +1,15 @@
+<div class="<%= requirement.name %>">
+  <%= hidden_field_tag("mission[requirements][requirement_#{requirement.object_id}][type]", requirement.name) %>
+
+  <%= label_tag "requirement_#{requirement.object_id}_value", t("requirements.#{requirement.name}.name") %>
+
+  <%= select_tag("mission[requirements][requirement_#{requirement.object_id}][value]",
+        grouped_options_for_select(Item.to_grouped_dropdown, requirement.value),
+        :id => "requirement_#{requirement.object_id}_value"
+      ) %>
+
+  <%= link_to_function(
+        t("admin.missions.form_fields.remove"),
+        "$('requirement_list').removeChild($('requirement_#{requirement.id}'))"
+      ) %>
+</div>

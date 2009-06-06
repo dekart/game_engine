@@ -1,0 +1,23 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_mission_path) %>
+</div>
+
+<% if @missions.any? %>
+  <table id="mission_list">
+    <% @missions.each do |mission| %>
+      <tr>
+        <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.delete"), admin_mission_path(mission),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

@@ -1,7 +1,7 @@
 module Payouts
   class Item < Base
     def initialize(item, options = {})
-      @value    = item.is_a?(::Item) ? item.id : item
+      @value    = item.is_a?(::Item) ? item.id : item.to_i
       @options  = options
     end
 

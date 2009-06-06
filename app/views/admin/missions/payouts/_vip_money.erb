@@ -1,0 +1,11 @@
+<div class="<%= payout.name %>">
+  <%= hidden_field_tag("mission[payouts][payout_#{payout.object_id}][type]", payout.name) %>
+
+  <%= label_tag "payout_#{payout.object_id}_value", t("payouts.#{payout.name}.name") %>
+
+  <%= text_field_tag("mission[payouts][payout_#{payout.object_id}][value]", payout.value,
+        :id => "payout_#{payout.object_id}_value"
+      ) %>
+
+  <%= render :partial => "admin/missions/payouts/common", :locals => {:payout => payout} %>
+</div>
