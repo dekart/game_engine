@@ -1,27 +1,27 @@
 module Payouts
   class Collection
-    attr_reader :payouts
+    attr_reader :items
 
-    delegate :each, :empty?, :to => :payouts
+    delegate :each, :empty?, :to => :items
 
     def initialize(*payouts)
-      @payouts = payouts
+      @items = payouts
     end
 
     def apply(character, trigger)
       returning result = Payouts::Collection.new do
-        self.payouts.each do |payout|
+        self.items.each do |payout|
           if payout.applicable?(trigger)
             payout.apply(character)
 
-            result.payouts << payout
+            result.items << payout
           end
         end
       end
     end
 
     def by_action(action)
-      self.payouts.select{|p| p.action == action }
+      self.items.select{|p| p.action == action }
     end
   end
 end

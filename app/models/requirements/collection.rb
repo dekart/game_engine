@@ -1,15 +1,15 @@
 module Requirements
   class Collection
-    attr_reader :requirements
+    attr_reader :items
 
-    delegate :each, :to => :requirements
+    delegate :each, :to => :items
 
     def initialize(*requirements)
-      @requirements = requirements
+      @items = requirements
     end
 
     def satisfies?(character)
-      self.requirements.find{|r| 
+      self.items.find{|r|
         not r.satisfies?(character)
       }.nil?
     end
