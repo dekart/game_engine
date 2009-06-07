@@ -14,7 +14,7 @@
       <% form_for(:bank_operation, @deposit, :url => bank_operations_path) do |f| %>
         <%= hidden_field_tag :type, "deposit" %>
 
-        <%= f.text_field fb_i(t(".deposit.title")), :amount, :value => current_character.basic_money %>
+        <%= f.text_field :amount, :value => current_character.basic_money, :label => fb_i(t(".deposit.title")) %>
 
         <p><%= fb_i(t(".deposit.note")) %></p>
 
@@ -28,7 +28,7 @@
       <% form_for(:bank_operation, @withdraw, :url => bank_operations_path) do |f| %>
         <%= hidden_field_tag :type, "withdraw" %>
 
-        <%= f.text_field fb_i(t(".withdraw.title")), :amount %>
+        <%= f.text_field :amount, :label => fb_i(t(".withdraw.title")) %>
 
         <p><%= fb_i(t(".withdraw.note")) %></p>
 
