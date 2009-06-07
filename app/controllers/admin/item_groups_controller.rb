@@ -1,4 +1,6 @@
 class Admin::ItemGroupsController < ApplicationController
+  before_filter :admin_required
+  
   layout "layouts/admin/application"
 
   def index
