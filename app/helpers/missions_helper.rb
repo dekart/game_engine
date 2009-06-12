@@ -16,7 +16,7 @@ module MissionsHelper
               fb_ta(:title, fb_i(requirement.item.name)) +
               fb_ta(:src, image_path(requirement.item.image.url(:icon)))
             ),
-            :class => "item" + (" not_satisfied" unless requirement.satisfies?(current_character))
+            :class => "item" + (requirement.satisfies?(current_character) ? "" : " not_satisfied")
           )
         end
       end
