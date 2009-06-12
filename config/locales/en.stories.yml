@@ -1,0 +1,31 @@
+en:
+  stories:
+    assignment:
+      notification:
+        text: "promoted you as {{pronoun}} {title} in {app}! {link}"
+        link: "Promote {{user}}"
+    fight:
+      notification:
+        text: "attacked you in {app} game and WON! {link}"
+        link: "Fight Back"
+      one_line: "attacked {*victim*} in {app} game and WON the battle"
+      short:
+        title: "{*actor*} attacked {*victim*} in {app} game and WON the battle!"
+        text: "{*actor*} received +{*money*} gold, +{*experience*} experience, and lost {*attacker_hp_loss*} health points. {*victim*} received {*victim_hp_loss*} points of damage"
+      action_link: "Play {app}"
+    invitation:
+      notification:
+        text: "joined your Alliance in {app}! {link}"
+        link: "View Alliance"
+    item:
+      one_line: "{*actor*} bought {*item*} in {app} game"
+      short:
+        title: "{*actor*} bought new item in {app}"
+        text: "{*actor*} bought {*item*} in {app}. Now {*actor*} is stronger than before!"
+      action_link: "Play {app}"
+    mission:
+      one_line: "completed \"{*mission*}\" mission in {app} game"
+      short:
+        title: "{*actor*} received \"{*title*}\" title in {app} game!"
+        text: "{*actor*} completed \"{*mission*}\" mission and received \"{*title*}\" title in {app} game."
+      action_link: "Play {app}"

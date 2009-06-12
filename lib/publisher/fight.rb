@@ -11,18 +11,29 @@ module Publisher
       send_as :notification
       recipients fight.victim.user
       from user
-      fbml "attacked you in #{link_to(fb_app_name(:linked => false), root_url)} game and #{fight.attacker_won? ? "WON" : "LOST"}!  #{link_to("Fight Back &raquo;", character_url(fight.attacker))}"
+      fbml fb_i(
+        I18n.t("stories.fight.notification.text") +
+        fb_it(:app, link_to(fb_app_name(:linked => false), root_url)) +
+        fb_it(:link, 
+          link_to(fb_i(I18n.t('stories.fight.notification.link')) + " &raquo;", character_url(fight.attacker))
+        )
+      )
     end
 
     def attack_template
-      one_line_story_template "{*actor*} attacked {*victim*} in #{link_to(fb_app_name(:linked => false), root_url)} game and WON the battle!"
+      one_line_story_template "{*actor*} " + fb_i(
+        I18n.t("stories.fight.one_line") +
+        fb_it(:app, link_to(fb_app_name(:linked => false), root_url))
+      )
       short_story_template(
-        "{*actor*} attacked {*victim*} in #{link_to(fb_app_name(:linked => false), root_url)} game and WON the battle!",
-        "{*actor*} received +{*money*} money, +{*experience*} experience, and lost {*attacker_hp_loss*} health points.
-         {*victim*} received {*victim_hp_loss*} points of damage"
+        fb_i(I18n.t("stories.fight.short.title") + fb_it(:app, link_to(fb_app_name(:linked => false), root_url))),
+        fb_i(I18n.t("stories.fight.short.text"))
       )
       action_links(
-        action_link("Play #{fb_app_name(:linked => false)} &raquo;", root_url)
+        action_link(
+          fb_i(I18n.t("stories.fight.action_link") + fb_it(:app, fb_app_name(:linked => false))) + " &raquo;",
+          root_url
+        )
       )
     end
   end

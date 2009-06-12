@@ -8,13 +8,19 @@ module Publisher
     include FacebookHelper
 
     def completed_template
-      one_line_story_template "{*actor*} completed \"{*mission*}\" mission in #{link_to(fb_app_name, root_url(:canvas => true))} game!"
+      one_line_story_template "{*actor*} " + fb_i(
+        I18n.t("stories.mission.one_line") +
+        fb_it(:app, link_to(fb_app_name, root_url(:canvas => true)))
+      )
       short_story_template(
-        "{*actor*} received \"{*title*}\" title in #{link_to(fb_app_name, root_url(:canvas => true))} game!",
-        "{*actor*} completed \"{*mission*}\" mission and received \"{*title*}\" title in #{link_to(fb_app_name, root_url(:canvas => true))} game."
+        fb_i(I18n.t("stories.mission.short.title") + fb_it(:app, link_to(fb_app_name, root_url(:canvas => true)))),
+        fb_i(I18n.t("stories.mission.short.text") + fb_it(:app, link_to(fb_app_name, root_url(:canvas => true))))
       )
       action_links(
-        action_link("Play #{fb_app_name(:linked => false)} &raquo;", root_url)
+        action_link(
+          fb_i(I18n.t("stories.mission.action_link") + fb_it(:app, fb_app_name(:linked => false))) + " &raquo;",
+          root_url
+        )
       )
     end
   end

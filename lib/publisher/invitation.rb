@@ -11,7 +11,11 @@ module Publisher
       send_as :notification
       recipients invitation.sender
       from user
-      fbml "joined your Alliance in #{link_to(fb_app_name(:linked => false), root_url)}! #{link_to("View Alliance &raquo;", relations_url)}"
+      fbml fb_i(
+        I18n.t("stories.invitation.notification.text") +
+        fb_it(:app, link_to(fb_app_name(:linked => false), root_url)) +
+        fb_it(:link, link_to(fb_i(I18n.t("stories.invitation.notification.link")) + " &raquo;", relations_url))
+      )
     end
   end
 end
