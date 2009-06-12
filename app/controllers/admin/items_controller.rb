@@ -18,7 +18,7 @@ class Admin::ItemsController < ApplicationController
     @item = Item.new(params[:item])
 
     if @item.save
-      redirect_to :action => :index
+      redirect_to admin_items_url(:canvas => true)
     else
       render :action => :new
     end
@@ -32,7 +32,7 @@ class Admin::ItemsController < ApplicationController
     @item = Item.find(params[:id])
 
     if @item.update_attributes(params[:item])
-      redirect_to :action => :index
+      redirect_to admin_items_url(:canvas => true)
     else
       render :action => :edit
     end

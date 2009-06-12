@@ -11,10 +11,11 @@
     <% @items.each do |item| %>
       <% group_header item.item_group do |group| %>
         <tr>
-          <th colspan="2"><%= group.name %></th>
+          <th colspan="3"><%= group.name %></th>
         </tr>
       <% end %>
       <tr>
+        <td class="image"><%= image_tag(item.image.url(:icon)) if item.image? %></td>
         <td class="name"><%= link_to(item.name, edit_admin_item_path(item)) %></td>
         <td class="controls">
           <%= link_to(t(".controls.delete"), admin_item_path(item),
