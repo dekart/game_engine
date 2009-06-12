@@ -29,6 +29,10 @@ class Property < ActiveRecord::Base
     self.money_min
   end
 
+  def owner
+    self.character
+  end
+
   protected
 
   def enough_character_money?

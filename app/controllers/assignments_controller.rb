@@ -12,9 +12,23 @@ class AssignmentsController < ApplicationController
       Delayed::Job.enqueue Jobs::AssignmentNotification.new(facebook_session, @assignment.id)
     end
 
-    if @assignment.context.is_a?(Character)
+    redirect_to_context(@assignment)
+  end
+
+  def destroy
+    @assignment = Assignment.find(params[:id])
+
+    @assignment.destroy if @assignment.context.owner == current_character
+
+    redirect_to_context(@assignment)
+  end
+
+  protected
+
+  def redirect_to_context(assignment)
+    if assignment.context.is_a?(Character)
       redirect_to relations_url
-    elsif @assignment.context.is_a?(Property)
+    elsif assignment.context.is_a?(Property)
       redirect_to properties_url
     end
   end

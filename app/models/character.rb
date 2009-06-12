@@ -209,6 +209,10 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def owner
+    self
+  end
+
   protected
 
   def update_level_and_points

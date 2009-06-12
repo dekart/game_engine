@@ -376,6 +376,7 @@ en:
     assignment:
       buttons:
         demote: "Demote"
+        demote_confirm: "Do you really want to demote this alliance member?"
     new:
       title: "Promote Alliance Member"
       not_assigned:

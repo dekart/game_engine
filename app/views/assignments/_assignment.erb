@@ -7,8 +7,9 @@
 
   <div class="controls">
     <%= link_to(fb_i(t(".buttons.demote")), assignment_path(assignment), 
-          :method => :delete,
-          :class  => :demote
+          :method   => :delete,
+          :class    => :demote,
+          :confirm  => fb_i(t(".buttons.demote_confirm"))
         ) %>
   </div>
 </div>
