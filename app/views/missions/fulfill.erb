@@ -79,7 +79,7 @@
                   <% fb_i do %>
                     <%= t(".you_spent.zero_energy") %>
                     <%= fb_it(:user,
-                          character_name_link(current_character.assignments.by_role(:energy).relation.target_character)
+                          character_name_link(current_character.assignments.by_role(:mission_energy).relation.target_character)
                         ) %>
                   <% end %>
                 </div>
