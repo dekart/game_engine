@@ -381,8 +381,10 @@ en:
       title: "Promote Alliance Member"
       not_assigned:
         title: "Not Assigned"
+        empty_set: "You have no free alliance members"
       assigned:
         title: "Reassign"
+        empty_set: "You have no assigned alliance members"
       columns:
         user: "Alliance member"
 # Helpers

@@ -1,27 +1,22 @@
 <fb:js-string var="dialog_content">
+  <% filters = %w{not_assigned assigned} %>
+  
   <% form_for @assignment, :url => polymorphic_url([@assignment.context, @assignment], {:canvas => true}) do |f| %>
     <%= f.hidden_field :role %>
     <%= f.hidden_field :relation_id %>
-    <script>
-      function setAssignmentRelation(id){
-        if($('new_assignment').selectedRelation){
-          $('new_assignment').selectedRelation.removeClassName('selected');
-        }
-
-        $('relation_' + id).addClassName('selected');
-        $('new_assignment').selectedRelation = $('relation_' + id);
-
-        $('assignment_relation_id').setValue(id);
-      }
-    </script>
 
     <table>
       <tr>
-        <% %w{not_assigned assigned}.each do |filter| %>
-          <% if relations = current_character.relations.send(filter) and relations.any? %>
-            <td>
-              <h2><%= fb_i(t(".#{filter}.title")) %></h2>
-
+        <td colspan="2" class="tab_titles">
+          <% filters.each do |filter| %>
+            <%= link_to_function(fb_i(t(".#{filter}.title")), "toggleAssignedTabTo('#{filter}')", :id => "#{filter}_title") %>
+          <% end %>
+        </td>
+      </tr>
+      <tr class="tabs">
+        <% filters.each do |filter| %>
+          <td id="<%= filter %>" class="hidden">
+            <% if relations = current_character.relations.send(filter) and relations.any? %>
               <table class="relations" cellspacing="0" cellpadding="0">
                 <tr>
                   <th colspan="3"><%= fb_i(t(".columns.user")) %></th>
@@ -36,8 +31,10 @@
                   <% end %>
                 <% end %>
               </table>
-            </td>
-          <% end %>
+            <% else %>
+            <div class="empty_set"><%= fb_i(t(".#{filter}.empty_set")) %></div>
+            <% end %>
+          </td>
         <% end %>
       </tr>
     </table>
@@ -47,9 +44,33 @@
 <fb:js-string var="dialog_title"><%= fb_i(t(".title")) %></fb:js-string>
 
 <script>
+  function setAssignmentRelation(id){
+    if($('new_assignment').selectedRelation){
+      $('new_assignment').selectedRelation.removeClassName('selected');
+    }
+
+    $('relation_' + id).addClassName('selected');
+    $('new_assignment').selectedRelation = $('relation_' + id);
+
+    $('assignment_relation_id').setValue(id);
+  }
+  function toggleAssignedTabTo(tab){
+    var filters = <%= filters.to_json %>;
+    for(i = 0; i < filters.length; i++){
+      if(filters[i] == tab){
+        $(filters[i]).removeClassName("hidden");
+        $(filters[i] + '_title').addClassName("selected");
+      }else{
+        $(filters[i]).addClassName("hidden");
+        $(filters[i] + '_title').removeClassName("selected");
+      }
+    }
+  }
+
   var dialog = new Dialog(Dialog.DIALOG_POP);
   dialog.onconfirm = function(){
     $('new_assignment').submit();
   };
   dialog.showChoice(dialog_title, dialog_content);
+  toggleAssignedTabTo('not_assigned');
 </script>
