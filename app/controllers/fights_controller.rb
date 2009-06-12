@@ -6,7 +6,7 @@ class FightsController < ApplicationController
   def create
     @victim = Character.find(params[:victim_id])
 
-    if @fight = current_character.attacks.create(:victim => @victim)
+    if @fight = current_character.attacks.create(:victim => @victim) and @fight.attacker_won?
       Delayed::Job.enqueue Jobs::FightNotification.new(facebook_session, @fight.id)
     end
 
