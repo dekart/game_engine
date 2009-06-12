@@ -275,16 +275,18 @@ en:
         text: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
         button: "Recruit to Alliance"
       empty_set: "You don't have any members in your Alliance"
-      assignments:
-        title: "Assignments"
-        buttons:
-          promote: "Promote"
       members:
         title: "Alliance Members"
       buttons:
         break: "Break Alliance"
       break:
-        confirmation: "Are you sure?"
+        confirmation: "Do you really want to break alliance with this member?"
+    assignments:
+      title: "Assignments"
+      buttons:
+        promote: "Promote"
+        demote: "Demote"
+        demote_confirm: "Do you really want to demote this alliance member?"
   users:
     edit:
       title: "Settings"
@@ -373,10 +375,6 @@ en:
         effect:
           full: "{value}% more money from missions"
           short: "+{value}%"
-    assignment:
-      buttons:
-        demote: "Demote"
-        demote_confirm: "Do you really want to demote this alliance member?"
     new:
       title: "Promote Alliance Member"
       not_assigned:

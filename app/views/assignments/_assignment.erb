@@ -1,15 +1,5 @@
 <div class="assignment">
-  <%= character_picture_link(assignment.relation.target_character) %><br />
-
-  <%= character_name_link(assignment.relation.target_character) %><br />
-
+  <div class="image"><%= character_picture_link(assignment.relation.target_character) %></div>
+  <div class="name"><%= character_name_link(assignment.relation.target_character) %></div>
   <div class="effect"><%= assignment_effect(assignment) %></div>
-
-  <div class="controls">
-    <%= link_to(fb_i(t(".buttons.demote")), assignment_path(assignment), 
-          :method   => :delete,
-          :class    => :demote,
-          :confirm  => fb_i(t(".buttons.demote_confirm"))
-        ) %>
-  </div>
 </div>

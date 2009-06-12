@@ -1,0 +1,34 @@
+<h2><%= fb_i(t(".title")) %></h2>
+
+<div id="character_assignments" cellspacing="0" cellpadding="0">
+  <% %w{attack defence fight_damage fight_income mission_energy mission_income}.each do |role| %>
+    <div class="context">
+      <b><%= fb_i(t("assignments.roles.#{role}.title")) %></b>
+
+      <% if assignment = current_character.assignments.by_role(role) %>
+        <div class="controls">
+          <%= link_to(fb_i(t(".buttons.demote")), assignment_path(assignment),
+                :method   => :delete,
+                :class    => :demote,
+                :confirm  => fb_i(t(".buttons.demote_confirm"))
+              ) %>
+        </div>
+
+        <%= render :partial => assignment %>
+      <% else %>
+        <div class="controls">
+          <%= link_to_remote(fb_i(t(".buttons.promote")),
+                :url => new_character_assignment_url(current_character, :role => role, :canvas => false),
+                :method => :get,
+                :update => :result,
+                :html => {:class => :promote}
+              ) %>
+        </div>
+      
+        <div class="description">
+          <%= fb_i(t("assignments.roles.#{role}.description")) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

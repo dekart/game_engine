@@ -251,12 +251,13 @@
   #exchange_vip_money .vip_money{line-height: 22px;height: 22px; padding: 5px 0 5px 20px; background: url(<%= image_path("icons/vip_money.gif") %>) center left no-repeat;}
   #exchange_vip_money .controls a{background-image: url(<%= image_path("icons/accept.gif") %>);}
 
-#character_assignments {width: 100%; margin: 15px 0;}
-  #character_assignments td {text-align:center;}
+#character_assignments {width: 250px; margin: 15px 0;}
   #character_assignments b {font-size: 12px; display:block; margin-bottom: 10px;}
-  #character_assignments .effect {font-weight: bold; display:block; margin-top: 5px;}
+  #character_assignments .context {padding-bottom: 5px; border-bottom: 1px solid #e0e0e0; margin-bottom: 10px;}
+  #character_assignments .effect {font-style: italic; font-size: 14px; margin-top: 5px;}
   #character_assignments .description {font-style: italic;}
-  #character_assignments .controls a {width: 50px; margin: 10px auto 0; float:none;}
+  #character_assignments .controls {float: right; margin-top: -25px; }
+  #character_assignments .controls a {width: 50px;}
   #character_assignments .controls .promote {background-image: url(<%= image_path("icons/accept.gif") %>);}
   #character_assignments .controls .demote {background-image: url(<%= image_path("icons/delete.gif") %>);}
 

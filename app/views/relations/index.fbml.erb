@@ -9,55 +9,33 @@
 </div>
 
 <% if @relations.any? %>
-  <h2><%= fb_i(t(".assignments.title")) %></h2>
-
-  <table id="character_assignments" cellspacing="0" cellpadding="0">
+  <table width="100%">
     <tr>
-      <% %w{attack defence fight_damage fight_income mission_energy mission_income}.each do |role| %>
-        <td>
-          <b><%= fb_i(t("assignments.roles.#{role}.title")) %></b>
+      <td>
+        <h2><%= fb_i(t(".members.title")) %></h2>
 
-          <% if assignment = current_character.assignments.by_role(role) %>
-            <%= render :partial => assignment %>
-          <% else %>
-            <div class="description">
-              <%= fb_i(t("assignments.roles.#{role}.description")) %>
-            </div>
-            
-            <div class="controls">
-              <%= link_to_remote(fb_i(t(".assignments.buttons.promote")),
-                    :url => new_character_assignment_url(current_character, :role => role, :canvas => false),
-                    :method => :get,
-                    :update => :result,
-                    :html => {:class => :promote}
-                  ) %>
-            </div>
+        <table id="alliance_members" cellspacing="0">
+          <% @relations.each do |relation| %>
+            <tr>
+              <td class="picture"><%= character_picture_link(relation.target_character) %></td>
+              <td class="name"><%= character_name_link(relation.target_character) %></td>
+              <td class="level"><%= fb_i(Character.human_attribute_name("level")) %> <%= relation.target_character.level %></td>
+              <td class="controls">
+                <%= link_to(fb_i(t(".buttons.break")), relation_path(relation.target_character),
+                      :method   => :delete,
+                      :confirm  => t(".break.confirmation"),
+                      :class    => :delete
+                    ) %>
+              </td>
+            </tr>
           <% end %>
-        </td>
-      <% end %>
+        </table>
+
+        <%= will_paginate(@relations) %>
+      </td>
+      <td><%= render :partial => "assignments" %></td>
     </tr>
   </table>
-
-  <h2><%= fb_i(t(".members.title")) %></h2>
-
-  <table id="alliance_members" cellspacing="0">
-    <% @relations.each do |relation| %>
-      <tr>
-        <td class="picture"><%= character_picture_link(relation.target_character) %></td>
-        <td class="name"><%= character_name_link(relation.target_character) %></td>
-        <td class="level"><%= fb_i(Character.human_attribute_name("level")) %> <%= relation.target_character.level %></td>
-        <td class="controls">
-          <%= link_to(fb_i(t(".buttons.break")), relation_path(relation.target_character), 
-                :method   => :delete,
-                :confirm  => t(".break.confirmation"),
-                :class    => :delete
-              ) %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-
-  <%= will_paginate(@relations) %>
 <% else %>
   <div class="empty_set">
     <%= fb_i(t(".empty_set")) %>
