@@ -1,7 +1,7 @@
 class Relation < ActiveRecord::Base
   belongs_to :source_character, :foreign_key => "source_id", :class_name => "Character", :counter_cache => true
   belongs_to :target_character, :foreign_key => "target_id", :class_name => "Character"
-  has_one :assignment
+  has_one :assignment, :dependent => :destroy
 
   named_scope :not_assigned,
     :include    => [:assignment, :target_character],
