@@ -5,6 +5,8 @@
 </div>
 
 <% if @items.any? %>
+  <%= will_paginate @items %>
+
   <table id="item_list">
     <% @items.each do |item| %>
       <% group_header item.item_group do |group| %>
@@ -23,6 +25,8 @@
       </tr>
     <% end %>
   </table>
+
+  <%= will_paginate @items %>
 <% else %>
   <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>
