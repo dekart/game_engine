@@ -1,9 +1,11 @@
 <table id="dashboard">
   <tr>
     <td class="profile">
-      <%= link_to(fb_i(t(".overview.title")), character_path(current_character), :class => :title) %>
+      <h3><%= link_to(fb_i(t(".overview.title")), character_path(current_character)) %></h3>
 
       <%= render :partial => "characters/attributes", :locals => {:character => current_character} %>
+
+      <%= render :partial => "layouts/fan_specials" if current_user.show_fan_specials? %>
     </td>
 
     <td class="wall">

@@ -20,7 +20,8 @@ en:
         relations_count: "Alliance Size"
         points: "Upgrade Points"
       user:
-        show_next_steps: "Show 'Next Steps'"
+        show_next_steps: "Show 'Next Steps' block"
+        show_fan_specials: "Show 'Fan Specials' block"
     errors:
       models:
         bank_deposit:
@@ -76,6 +77,10 @@ en:
         missions: "Fulfill missions"
         fights: "Fight with other players"
         invite: "Grow up your Alliance"
+    fan_specials:
+      title: "Fan Specials"
+      text: "{app} fans weekly receive free Gold, Gems, items, and other useful game stuff."
+      link: "Become Fan &raquo;"
     application:
       spinner:
         alt: "Please wait..."
