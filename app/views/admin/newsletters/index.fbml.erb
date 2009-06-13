@@ -1,0 +1,51 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_newsletter_path) %>
+</div>
+
+<% if @newsletters.any? %>
+  <%= will_paginate @newsletters %>
+
+  <table id="newsletter_list">
+    <tr>
+      <th><%= Newsletter.human_attribute_name("text") %></th>
+      <th><%= Newsletter.human_attribute_name("workflow_status") %></th>
+      <th><%= Newsletter.human_attribute_name("recipients") %></th>
+    </tr>
+    <% @newsletters.each do |newsletter| %>
+      <tr>
+        <td><%= newsletter.text %></td>
+        <td><%= newsletter.workflow_state.capitalize %></td>
+        <td>
+          <%= User.count - User.after(newsletter.last_recipient).count %>/<%= User.count %>
+        </td>
+        <td class="controls">
+          <% if newsletter.draft? %>
+            <%= link_to(t(".controls.edit"), edit_admin_newsletter_path(newsletter)) %>
+            <%= link_to(t(".controls.deliver"), deliver_admin_newsletter_path(newsletter),
+                  :method   => :post,
+                  :confirm  => t(".controls.deliver_confirm")
+                ) %>
+          <% elsif newsletter.delivering? %>
+            <%= link_to(t(".controls.pause"), pause_admin_newsletter_path(newsletter),
+                  :method   => :post,
+                  :confirm  => t(".controls.pause_confirm")
+                ) %>
+          <% end %>
+
+          <% unless newsletter.delivering? %>
+            <%= link_to(t(".controls.delete"), admin_newsletter_path(newsletter),
+                  :method   => :delete,
+                  :confirm  => t(".controls.delete_confirm")
+                ) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @newsletters %>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

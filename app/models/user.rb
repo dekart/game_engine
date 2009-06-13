@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  named_scope :after, Proc.new{|user|
+    {:conditions => ["id > ?", user.is_a?(User) ? user.id : user.to_i], :order => "id ASC"}
+  }
+  
   attr_accessible :show_next_steps
 
   after_create :setup_profile!, :update_profile!, :deliver_welcome_message!

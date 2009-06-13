@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090613133523) do
+ActiveRecord::Schema.define(:version => 20090613191152) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -172,6 +172,15 @@ ActiveRecord::Schema.define(:version => 20090613133523) do
     t.datetime "updated_at"
     t.text     "requirements"
     t.text     "payouts"
+  end
+
+  create_table "newsletters", :force => true do |t|
+    t.string   "text"
+    t.string   "workflow_state",    :limit => 20
+    t.integer  "last_recipient_id"
+    t.integer  "delivery_job_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "properties", :force => true do |t|

@@ -58,3 +58,22 @@ en:
         add_requirement: "Add Requirement:"
         add_payout: "Add Payout:"
         remove: "Remove"
+    newsletters:
+      index:
+        title: "Newsletters"
+        empty_set: "No newsletters"
+        controls:
+          new: "Add Newsletter"
+          edit: "Edit"
+          deliver: "Deliver"
+          deliver_confirm: "Start delivery?"
+          pause: "Pause"
+          pause_confirm: "Pause delivery?"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+      new:
+        title: "New Newsletter"
+        submit: "Create"
+      edit:
+        title: "Edit Newsletter"
+        submit: "Update"
