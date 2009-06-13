@@ -1,5 +1,15 @@
 <div id="property_result">
   <% if !@property.new_record? %>
+    <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Property, :bought,
+        :template_data => {
+          :property => fb_i(@property.name),
+        },
+        :html => {:class => "publish button"},
+        :images => {
+          :src  => image_path(@property.image.url(:small)),
+          :href => new_property_url(:canvas => true)
+        }
+      ) %>
     <%= link_to(fb_i(t(".buttons.properties")), properties_url(:canvas => true), :class => "properties button") %>
 
     <p>

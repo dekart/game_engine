@@ -315,6 +315,7 @@ en:
         buy: "Buy"
     create:
       buttons:
+        publish: "Publish to Profile"
         properties: "My Properties"
       messages:
         success: "You successfully bought {property_name}"

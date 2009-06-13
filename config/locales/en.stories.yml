@@ -29,3 +29,9 @@ en:
         title: "{*actor*} received \"{*title*}\" title in {{app}} game!"
         text: "{*actor*} completed \"{*mission*}\" mission and received \"{*title*}\" title in {{app}} game."
       action_link: "Play {{app}} &raquo;"
+    property:
+      one_line: "{*actor*} bought {*property*} in {{app}} game"
+      short:
+        title: "{*actor*} bought new property in {{app}}"
+        text: "{*actor*} bought {*property*} in {{app}}. Now {*actor*} earns more money!"
+      action_link: "Play {{app}} &raquo;"
