@@ -8,17 +8,16 @@ module Publisher
     include FacebookHelper
 
     def bought_template
-      one_line_story_template "{*actor*} " + fb_i(
-        I18n.t("stories.item.one_line") +
-        fb_it(:app, link_to(fb_app_name, root_url(:canvas => true)))
+      one_line_story_template I18n.t("stories.item.one_line", 
+        :app => link_to(fb_app_name, root_url(:canvas => true))
       )
       short_story_template(
-        fb_i(I18n.t("stories.item.short.title") + fb_it(:app, link_to(fb_app_name, root_url(:canvas => true)))),
-        fb_i(I18n.t("stories.item.short.text") + fb_it(:app, link_to(fb_app_name, root_url(:canvas => true))))
+        I18n.t("stories.item.short.title", :app => link_to(fb_app_name, root_url(:canvas => true))),
+        I18n.t("stories.item.short.text", :app => link_to(fb_app_name, root_url(:canvas => true)))
       )
       action_links(
         action_link(
-          fb_i(I18n.t("stories.item.action_link") + fb_it(:app, fb_app_name(:linked => false))) + " &raquo;",
+          I18n.t("stories.item.action_link", :app => link_to(fb_app_name, root_url(:canvas => true))),
           root_url
         )
       )
