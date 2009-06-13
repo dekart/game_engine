@@ -64,6 +64,7 @@ en:
     options:
       apply_on: "Apply on"
       chance: "Chance"
+      action: "Action"
     item:
       name: "Item"
     vip_money:

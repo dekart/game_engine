@@ -15,7 +15,14 @@
       ) %>
 <br />
 
+<%= label_tag "payout_#{payout.object_id}_action", t("payouts.options.action") %>
+
+<%= select_tag("mission[payouts][payout_#{payout.object_id}][options][action]", options_for_select(%w{add remove}, payout.options[:action]),
+        :id => "payout_#{payout.object_id}_options_action"
+      ) %>
+<br />
 <%= link_to_function(
       t("admin.missions.form_fields.remove"),
-      "$('payout_list').removeChild($('payout_#{payout.id}'))"
+      "$('payout_list').removeChild($('payout_#{payout.id}'))",
+      :class => :remove
     ) %>

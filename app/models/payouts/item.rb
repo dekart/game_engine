@@ -10,7 +10,7 @@ module Payouts
     end
 
     def apply(character)
-      if options[:remove] and inventory = character.inventories.find_by_item_id(self.item.id)
+      if options[:action] == "remove" and inventory = character.inventories.find_by_item_id(self.item.id)
         inventory.destroy
 
         @action = :spent
