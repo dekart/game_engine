@@ -11,12 +11,30 @@
     <% @items.each do |item| %>
       <% group_header item.item_group do |group| %>
         <tr>
-          <th colspan="3"><%= group.name %></th>
+          <th colspan="10" class="subheader"><%= group.name %></th>
+        </tr>
+        <tr>
+          <th><%= Item.human_attribute_name("image") %></th>
+          <th><%= Item.human_attribute_name("name") %></th>
+          <th><%= Item.human_attribute_name("availability") %></th>
+          <th><%= Item.human_attribute_name("level") %></th>
+          <th><%= Item.human_attribute_name("basic_price") %></th>
+          <th><%= Item.human_attribute_name("vip_price") %></th>
+          <th><%= Item.human_attribute_name("placements") %></th>
+          <th><%= Item.human_attribute_name("usable") %></th>
+          <th><%= Item.human_attribute_name("effects") %></th>
         </tr>
       <% end %>
       <tr>
         <td class="image"><%= image_tag(item.image.url(:icon)) if item.image? %></td>
         <td class="name"><%= link_to(item.name, edit_admin_item_path(item)) %></td>
+        <td class="availability"><%= item.availability %></td>
+        <td class="level"><%= item.level %></td>
+        <td class="basic_price"><%= item.basic_price %></td>
+        <td class="vip_price"><%= item.vip_price %></td>
+        <td class="placements"><%= item.placements.collect{|p| p.humanize}.join(", ") %></td>
+        <td class="usable"><%= item.usable %><%= ", #{item.usage_limit}" if item.usage_limit %></td>
+        <td class="effects"><%= item.effects.size %></td>
         <td class="controls">
           <%= link_to(t(".controls.delete"), admin_item_path(item),
                 :method   => :delete,

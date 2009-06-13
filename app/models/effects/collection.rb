@@ -2,7 +2,7 @@ module Effects
   class Collection
     attr_reader :items
 
-    delegate :each, :to => :items
+    delegate :each, :empty?, :size, :to => :items
 
     def initialize(*effects)
       @items = effects

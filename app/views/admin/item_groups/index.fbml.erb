@@ -6,16 +6,23 @@
 
 <% if @groups.any? %>
   <table id="item_group_list">
+    <tr>
+      <th><%= ItemGroup.human_attribute_name("name") %></th>
+      <th><%= ItemGroup.human_attribute_name("display_in_shop") %></th>
+      <th><%= ItemGroup.human_attribute_name("items") %></th>
+    </tr>
     <% @groups.each do |group| %>
       <tr>
         <td class="name"><%= link_to(group.name, edit_admin_item_group_path(group)) %></td>
+        <td class="display_in_shop"><%= group.display_in_shop %></td>
+        <td class="items"><%= group.items.size %></td>
         <td class="controls">
           <%= link_to(t(".controls.move_up"), move_admin_item_group_path(group, :direction => :up),
                 :method => :post
-              ) unless group.first? %>
+              ) %>
           <%= link_to(t(".controls.move_down"), move_admin_item_group_path(group, :direction => :down),
                 :method => :post
-              ) unless group.last? %>
+              ) %>
           <%= link_to(t(".controls.delete"), admin_item_group_path(group),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")

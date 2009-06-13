@@ -2,7 +2,7 @@ module Requirements
   class Collection
     attr_reader :items
 
-    delegate :each, :to => :items
+    delegate :each, :empty?, :size, :to => :items
 
     def initialize(*requirements)
       @items = requirements

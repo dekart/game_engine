@@ -8,9 +8,24 @@
   <%= will_paginate @missions %>
 
   <table id="mission_list">
+    <tr>
+      <th><%= Mission.human_attribute_name("name") %></th>
+      <th><%= Mission.human_attribute_name("level") %></th>
+      <th><%= Mission.human_attribute_name("ep_cost") %></th>
+      <th><%= Mission.human_attribute_name("experience") %></th>
+      <th><%= Mission.human_attribute_name("basic_money") %></th>
+      <th><%= Mission.human_attribute_name("requirements") %></th>
+      <th><%= Mission.human_attribute_name("payouts") %></th>
+    </tr>
     <% @missions.each do |mission| %>
       <tr>
         <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
+        <td class="level"><%= mission.level %></td>
+        <td class="ep_cost"><%= mission.ep_cost %></td>
+        <td class="experience"><%= mission.experience %></td>
+        <td class="basic_money"><%= mission.money_min %> - <%= mission.money_max %></td>
+        <td class="requirements"><%= mission.requirements.size %></td>
+        <td class="payouts"><%= mission.payouts.size %></td>
         <td class="controls">
           <%= link_to(t(".controls.delete"), admin_mission_path(mission),
                 :method   => :delete,
