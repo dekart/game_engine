@@ -229,7 +229,8 @@ class Character < ActiveRecord::Base
       self.missions_completed * 500 +
       self.relations_count    * 100 +
       self.fights_won         * 10 +
-      self.missions_succeeded * 5
+      self.missions_succeeded * 5 +
+      self.property_income
     )
   end
 end
