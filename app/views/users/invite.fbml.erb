@@ -1,13 +1,17 @@
 <%= title(fb_i(t(".title"))) %>
 
 <% if @sent_invitations and @sent_invitations.any? %>
-  <div class="success">
-    <% fb_i do %>
-      <%= t(".success_message") %>
+  <% content_for :result do %>
+    <div id="invitation_result">
+      <p>
+        <% fb_i do %>
+          <%= t(".success_message") %>
 
-      <%= fb_it(:amount, @sent_invitations.size) %>
-    <% end %>
-  </div>
+          <%= fb_it(:amount, @sent_invitations.size) %>
+        <% end %>
+      </p>
+    </div>
+  <% end %>
 <% end %>
 
 <% content_for :invite_message do %>
