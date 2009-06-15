@@ -48,10 +48,4 @@ class Admin::MissionsController < ApplicationController
 
     render :action => :add_requirement, :layout => "admin/ajax"
   end
-
-  def add_payout
-    @payout = Payouts::Base.by_name(params[:type]).new(nil)
-
-    render :action => :add_payout, :layout => "admin/ajax"
-  end
 end

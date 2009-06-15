@@ -1,0 +1,33 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_promotion_path) %>
+</div>
+
+<% if @promotions.any? %>
+  <%= will_paginate @promotions %>
+
+  <table id="promotion_list">
+    <tr>
+      <th><%= Promotion.human_attribute_name("text") %></th>
+      <th><%= Promotion.human_attribute_name("promotion_receips_count") %></th>
+    </tr>
+    <% @promotions.each do |promotion| %>
+      <tr>
+        <td><%= promotion.text %></td>
+        <td><%= promotion.promotion_receipts.size %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_promotion_path(promotion)) %>
+          <%= link_to(t(".controls.delete"), admin_promotion_path(promotion),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @promotions %>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

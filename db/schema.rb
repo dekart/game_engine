@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090615165017) do
+ActiveRecord::Schema.define(:version => 20090615172646) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -179,6 +179,22 @@ ActiveRecord::Schema.define(:version => 20090615165017) do
     t.string   "workflow_state",    :limit => 20
     t.integer  "last_recipient_id"
     t.integer  "delivery_job_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "promotion_receipts", :force => true do |t|
+    t.integer  "promotion_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "promotions", :force => true do |t|
+    t.string   "text"
+    t.text     "payouts"
+    t.datetime "valid_till"
+    t.integer  "promotion_receipts_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

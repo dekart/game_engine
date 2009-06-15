@@ -1,6 +1,6 @@
 <%= label_tag "payout_#{payout.object_id}_options_apply_on", t("payouts.options.apply_on") %>
 
-<%= select_tag("mission[payouts][payout_#{payout.object_id}][options][apply_on]",
+<%= select_tag("#{container}[payouts][payout_#{payout.object_id}][options][apply_on]",
         options_for_select(%w{success failure complete}, payout.options[:apply_on]),
         :id => "payout_#{payout.object_id}_options_apply_on"
       ) %>
@@ -9,7 +9,7 @@
 
 <%= label_tag "payout_#{payout.object_id}_options_chance", t("payouts.options.chance") %>
 
-<%= text_field_tag("mission[payouts][payout_#{payout.object_id}][options][chance]", payout.options[:chance],
+<%= text_field_tag("#{container}[payouts][payout_#{payout.object_id}][options][chance]", payout.options[:chance],
         :id => "payout_#{payout.object_id}_options_chance",
         :size => 3
       ) %>
@@ -17,12 +17,6 @@
 
 <%= label_tag "payout_#{payout.object_id}_action", t("payouts.options.action") %>
 
-<%= select_tag("mission[payouts][payout_#{payout.object_id}][options][action]", options_for_select(%w{add remove}, payout.options[:action]),
+<%= select_tag("#{container}[payouts][payout_#{payout.object_id}][options][action]", options_for_select(%w{add remove}, payout.options[:action]),
         :id => "payout_#{payout.object_id}_options_action"
       ) %>
-<br />
-<%= link_to_function(
-      t("admin.missions.form_fields.remove"),
-      "$('payout_list').removeChild($('payout_#{payout.id}'))",
-      :class => :remove
-    ) %>

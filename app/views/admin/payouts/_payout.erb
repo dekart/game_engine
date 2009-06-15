@@ -1,0 +1,17 @@
+<div class="payout" id="<%= payout.object_id %>">
+  <div class="<%= payout.name %> serializable_item">
+    <%= hidden_field_tag("#{container}[payouts][payout_#{payout.object_id}][type]", payout.name) %>
+
+    <%= link_to_function(
+          t(".remove"),
+          "$('payout_list').removeChild($('payout_#{payout.id}'))",
+          :class => :remove
+        ) %>
+
+    <%= render :partial => "admin/payouts/form_fields/#{payout.name}", :locals => {:payout => payout, :container => container} %>
+
+    <br />
+
+    <%= render :partial => "admin/payouts/form_fields/common", :locals => {:payout => payout, :container => container} %>
+  </div>
+</div>

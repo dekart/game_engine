@@ -17,6 +17,10 @@ ActionController::Routing::Routes.draw do |map|
         :deliver  => :post,
         :pause    => :post
       }
+
+    admin.resources :promotions
+
+    admin.resources :payouts, :only => [:new]
   end
 
   map.root :controller => "characters", :action => "index"

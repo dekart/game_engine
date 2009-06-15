@@ -56,8 +56,6 @@ en:
         submit: "Update"
       form_fields:
         add_requirement: "Add Requirement:"
-        add_payout: "Add Payout:"
-        remove: "Remove"
     newsletters:
       index:
         title: "Newsletters"
@@ -77,3 +75,23 @@ en:
       edit:
         title: "Edit Newsletter"
         submit: "Update"
+    promotions:
+      index:
+        title: "Promotions"
+        empty_set: "No promotions"
+        controls:
+          new: "Add Promotion"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+      new:
+        title: "New Promotion"
+        submit: "Create"
+      edit:
+        title: "Edit Promotion"
+        submit: "Update"
+    payouts:
+      collection:
+        add_payout: "Add Payout:"
+      payout:
+        remove: "Remove"

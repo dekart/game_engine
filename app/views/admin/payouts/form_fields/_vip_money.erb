@@ -1,0 +1,6 @@
+<%= label_tag "payout_#{payout.object_id}_value", t("payouts.#{payout.name}.name") %>
+
+<%= text_field_tag("#{container}[payouts][payout_#{payout.object_id}][value]", payout.value,
+      :id => "payout_#{payout.object_id}_value",
+      :size => 5
+    ) %>

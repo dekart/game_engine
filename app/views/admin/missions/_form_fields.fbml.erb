@@ -49,27 +49,7 @@
       <div class="serializable" id="payout_list">
         <h2><%= Mission.human_attribute_name("payouts") %></h2>
 
-        <div class="controls">
-          <b><%= t(".add_payout") %></b>
-
-          <% Payouts::Base.types.each do |type| %>
-            <%= link_to_remote(t("payouts.#{type.payout_name}.name"),
-                  :url    => add_payout_new_admin_mission_url(:type => type.payout_name, :canvas => false),
-                  :update => :result
-                ) %>
-          <% end %>
-        </div>
-
-        <% form.object.payouts.each do |payout| %>
-          <%= content_tag(:div,
-                render(
-                  :partial  => "admin/missions/payouts/#{payout.name}",
-                  :locals   => {:payout => payout}
-                ),
-                :class  => "payout",
-                :id     => "payout_#{payout.id}"
-              ) %>
-        <% end %>
+        <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
       </div>
     </td>
   </tr>

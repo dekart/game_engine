@@ -1,0 +1,6 @@
+<%= label_tag "payout_#{payout.object_id}_value", t("payouts.#{payout.name}.name") %>
+
+<%= select_tag("#{container}[payouts][payout_#{payout.object_id}][value]",
+      grouped_options_for_select(Item.to_grouped_dropdown, payout.value),
+      :id => "payout_#{payout.object_id}_value"
+    ) %>
