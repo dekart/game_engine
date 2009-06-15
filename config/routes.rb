@@ -54,6 +54,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :bank_operations
   map.resources :properties
 
+  map.resources :promotions, :only => :show
+
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
   map.resources :pages, :collection => {:statistics => :any}

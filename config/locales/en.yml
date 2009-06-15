@@ -392,6 +392,9 @@ en:
         empty_set: "You have no assigned alliance members"
       columns:
         user: "Alliance member"
+  promotions:
+    show:
+      you_received: "You received:"
 # Helpers
   blocks:
     hide: "Hide"

@@ -79,6 +79,7 @@ en:
       index:
         title: "Promotions"
         empty_set: "No promotions"
+        link: "Promotion Link"
         controls:
           new: "Add Promotion"
           edit: "Edit"

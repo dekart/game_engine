@@ -22,4 +22,18 @@ class Promotion < ActiveRecord::Base
 
     super(collection)
   end
+
+  def to_param
+    "#{self.id}-#{self.secret}"
+  end
+
+  def secret
+    Digest::MD5.hexdigest("#{self.id}-#{self.created_at}")[0..5]
+  end
+
+  def can_be_received?(character, secret)
+    (secret == self.secret) &&
+    (Time.now <= self.valid_till) &&
+    self.promotion_receipts.find_by_character_id(character.id).nil?
+  end
 end
