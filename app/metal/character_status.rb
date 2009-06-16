@@ -11,5 +11,7 @@ class CharacterStatus
     else
       [404, {"Content-Type" => "text/html"}, "Not Found"]
     end
+  ensure
+    ActiveRecord::Base.clear_active_connections!
   end
 end
