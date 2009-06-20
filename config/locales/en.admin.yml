@@ -1,6 +1,15 @@
 en:
   layouts:
     admin:
+      main_menu:
+        home: "Home"
+        item_groups: "Item Groups"
+        items: "Items"
+        mission_groups: "Mission Groups"
+        missions: "Missions"
+        statistics: "Statistics"
+        newsletter: "Newsletter"
+        promotions: "Promotions"
       application:
         spinner:
           alt: "Please wait..."
@@ -40,6 +49,20 @@ en:
         add_effect: "Add Effect:"
       effect:
         remove: "Remove"
+    mission_groups:
+      index:
+        title: "Mission Groups"
+        empty_set: "No mission groups"
+        controls:
+          new: "Add Group"
+          delete: "Delete"
+          delete_confirm: "Are you sure? All missions linked to this group will be unlinked and hidden from a list of available missions!"
+      new:
+        title: "New Mission Group"
+        submit: "Create"
+      edit:
+        title: "Edit Mission Group"
+        submit: "Update"
     missions:
       index:
         title: "Missions"

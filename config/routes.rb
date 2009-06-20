@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :items,
       :new => {:add_effect => :any}
 
+    admin.resources :mission_groups
     admin.resources :missions,
       :new => {
         :add_requirement => :any,

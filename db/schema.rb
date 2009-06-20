@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090615172646) do
+ActiveRecord::Schema.define(:version => 20090620135854) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -154,6 +154,13 @@ ActiveRecord::Schema.define(:version => 20090615172646) do
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
 
+  create_table "mission_groups", :force => true do |t|
+    t.string   "name"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "missions", :force => true do |t|
     t.integer  "level"
     t.string   "name"
@@ -162,7 +169,7 @@ ActiveRecord::Schema.define(:version => 20090615172646) do
     t.text     "failure_text"
     t.text     "complete_text"
     t.integer  "win_amount"
-    t.integer  "success_chance", :default => 100
+    t.integer  "success_chance",   :default => 100
     t.string   "title"
     t.integer  "ep_cost"
     t.integer  "experience"
@@ -172,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20090615172646) do
     t.datetime "updated_at"
     t.text     "requirements"
     t.text     "payouts"
+    t.integer  "mission_group_id"
   end
 
   create_table "newsletters", :force => true do |t|

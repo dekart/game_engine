@@ -1,13 +1,14 @@
 <% admin_only do %>
   <div id="admin_menu">
-    <%= link_to("Home", root_path) %>
+    <%= link_to(t(".home"), root_path) %>
     
-    <%= link_to("Item Groups", admin_item_groups_path) %>
-    <%= link_to("Items", admin_items_path) %>
-    <%= link_to("Missions", admin_missions_path) %>
+    <%= link_to(t(".item_groups"), admin_item_groups_path) %>
+    <%= link_to(t(".items"), admin_items_path) %>
+    <%= link_to(t(".mission_groups"), admin_mission_groups_path) %>
+    <%= link_to(t(".missions"), admin_missions_path) %>
 
-    <%= link_to("Statistics", statistics_pages_path) %>
-    <%= link_to("Newsletter", admin_newsletters_path) %>
-    <%= link_to("Promotions", admin_promotions_path) %>
+    <%= link_to(t(".statistics"), statistics_pages_path) %>
+    <%= link_to(t(".newsletter"), admin_newsletters_path) %>
+    <%= link_to(t(".promotions"), admin_promotions_path) %>
   </div>
 <% end %>

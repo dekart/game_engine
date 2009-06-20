@@ -1,13 +1,17 @@
 <%= title(fb_i(t(".title"))) %>
 
 <table id="mission_list" cellspacing="0">
-  <tr>
-    <th></th>
-    <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
-    <th><%= fb_i(t(".columns.requires")) %></th>
-    <th><%= fb_i(t(".columns.progress")) %></th>
-  </tr>
   <% @missions.each do |mission| %>
+    <% group_header mission.mission_group do |group| %>
+      <tr>
+        <th class="mission_group"><%= group.name %></th>
+        <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
+        <th><%= fb_i(t(".columns.requires")) %></th>
+        <th><%= fb_i(t(".columns.progress")) %></th>
+        <th></th>
+      </tr>
+    <% end %>
+      
     <% content_tag_for(:tr, mission) do %>
       <td class="details">
         <div class="name"><%= fb_i(mission.name) %></div>

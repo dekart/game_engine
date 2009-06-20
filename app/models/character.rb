@@ -20,7 +20,11 @@ class Character < ActiveRecord::Base
   }
 
   belongs_to :user
-  has_many :ranks
+  has_many :ranks do
+    def completed_mission_ids
+      find(:all, :select => "mission_id", :conditions => {:completed => true}).collect{|m| m[:mission_id]}
+    end
+  end
   has_many :missions, :through => :ranks
   has_many :inventories, :include => :item
   has_many :items, :through => :inventories

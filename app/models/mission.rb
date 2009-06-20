@@ -2,9 +2,20 @@ class Mission < ActiveRecord::Base
   extend SerializeWithPreload
   
   has_many :ranks
+  belongs_to :mission_group
 
   named_scope :available_for, Proc.new {|character|
-    { :conditions => ["level <= ?", character.level], :order => :level }
+    {
+      :include => :mission_group,
+      :conditions => [
+        "mission_groups.level <= :level",
+        {
+          :level => character.level,
+          :completed => character.ranks.completed_mission_ids
+        }
+      ],
+      :order => "mission_groups.level, mission_groups.id"
+    }
   }
 
   serialize :requirements, Requirements::Collection

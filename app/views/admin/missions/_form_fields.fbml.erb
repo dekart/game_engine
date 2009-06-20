@@ -1,6 +1,7 @@
 <table id="mission_fields">
   <tr>
     <td>
+      <%= form.select :mission_group_id, MissionGroup.all.to_dropdown, :required => true %>
       <%= form.text_field :name, :required => true %>
       <%= form.text_area :description %>
 
