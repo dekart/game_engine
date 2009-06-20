@@ -22,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :promotions
 
     admin.resources :payouts, :only => [:new]
+
+    admin.resources :statistics, :only => :index
   end
 
   map.root :controller => "characters", :action => "index"
@@ -59,7 +61,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
-  map.resources :pages, :collection => {:statistics => :any}
+  map.resources :pages
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

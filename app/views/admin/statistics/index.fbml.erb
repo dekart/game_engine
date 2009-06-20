@@ -1,0 +1,16 @@
+<div id="total_users">
+  <b><%= t(".total_users") %></b>
+  <h2><%= @total_users %></h2>
+</div>
+
+<h2><%= t(".latest_users") %></h2>
+
+<table>
+  <% @latest_users.each do |user| %>
+    <tr>
+      <td><%= l(user.created_at, :format => :short) %></td>
+      <td><%= fb_profile_pic(user) %></td>
+      <td><%= fb_name(user) %></td>
+    </tr>
+  <% end %>
+</table>

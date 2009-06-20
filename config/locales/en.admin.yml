@@ -119,3 +119,7 @@ en:
         add_payout: "Add Payout:"
       payout:
         remove: "Remove"
+    statistics:
+      index:
+        total_users: "Total Users"
+        latest_users: "Latest Users"
