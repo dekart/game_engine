@@ -69,6 +69,8 @@ en:
       name: "Item"
     vip_money:
       name: "Gems"
+    basic_money:
+      name: "Money"
 # Templates
   layouts:
     next_steps:
