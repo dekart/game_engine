@@ -8,10 +8,10 @@ class Mission < ActiveRecord::Base
     {
       :include => :mission_group,
       :conditions => [
-        "mission_groups.level <= :level",
+        "mission_groups.level <= :level AND missions.id NOT IN(:completed)",
         {
           :level => character.level,
-          :completed => character.ranks.completed_mission_ids
+          :completed => [character.ranks.completed_mission_ids, 0].flatten
         }
       ],
       :order => "mission_groups.level, mission_groups.id"

@@ -274,6 +274,7 @@ en:
         progress: "Progress"
       buttons:
         fulfill: "Fulfill"
+      empty_set: "You have no missions available at this time"
     helpers:
       completed: "Completed!"
   relations:
