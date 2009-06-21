@@ -18,6 +18,8 @@ class Character < ActiveRecord::Base
     :basic_money => 1000,
     :vip_money   => 5
   }
+  ENERGY_REFILL_RATE = 5
+  HEALTH_REFILL_RATE = 1
 
   belongs_to :user
   has_many :ranks do
@@ -203,16 +205,42 @@ class Character < ActiveRecord::Base
     self.class.count(:conditions => ["rating > ?", self.rating]) + 1
   end
 
-  def can_exchange_money?
-    self.vip_money > MONEY_EXCHANGE_RATE[:vip_money]
-  end
-
   def exchange_money!
-    return unless can_exchange_money?
+    return if self.vip_money < MONEY_EXCHANGE_RATE[:vip_money]
 
     self.class.transaction do
       self.vip_money    -= MONEY_EXCHANGE_RATE[:vip_money]
       self.basic_money  += MONEY_EXCHANGE_RATE[:basic_money]
+
+      self.save
+    end
+  end
+
+  def full_energy?
+    self.ep == self.energy
+  end
+
+  def refill_energy!(free = false)
+    return if full_energy? or (!free and vip_money < ENERGY_REFILL_RATE)
+
+    self.class.transaction do
+      self.ep = self.energy
+      self.vip_money -= ENERGY_REFILL_RATE unless free
+
+      self.save
+    end
+  end
+
+  def full_health?
+    self.hp == self.health
+  end
+
+  def refill_health!(free = false)
+    return if full_health? or (!free and vip_money < HEALTH_REFILL_RATE)
+
+    self.class.transaction do
+      self.hp = self.health
+      self.vip_money -= HEALTH_REFILL_RATE unless free
 
       self.save
     end

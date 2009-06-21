@@ -393,10 +393,17 @@ en:
       title: "Gem Market"
       current:
         label: "You have {amount} gems"
-      exchange:
-        money:
-          text: "Add {amount} gold to your account"
-          button: "Get More Gold"
+      exchange_money:
+        text: "Add {amount} gold to your account"
+        button: "Get More Gold"
+      refill_energy:
+        text: "Refill your energy"
+        button: "Refill"
+        full: "You have full energy"
+      refill_health:
+        text: "Refill your health"
+        button: "Refill"
+        full: "You have full health"
       get_more:
         title: "Get More Gems"
 

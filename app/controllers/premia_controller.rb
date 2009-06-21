@@ -7,4 +7,16 @@ class PremiaController < ApplicationController
 
     redirect_to :action => :show
   end
+
+  def refill_energy
+    current_character.refill_energy!
+
+    redirect_to :action => :show
+  end
+
+  def refill_health
+    current_character.refill_health!
+
+    redirect_to :action => :show
+  end
 end

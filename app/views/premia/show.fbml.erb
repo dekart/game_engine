@@ -12,7 +12,7 @@
   <tr>
     <td class="name">
       <% fb_i do %>
-        <%= t(".exchange.money.text") %>
+        <%= t(".exchange_money.text") %>
 
         <%= fb_it(:amount,
               content_tag(:span, Character::MONEY_EXCHANGE_RATE[:basic_money], :class => :basic_money)
@@ -21,7 +21,39 @@
     </td>
     <td class="vip_money"><%= Character::MONEY_EXCHANGE_RATE[:vip_money] %></td>
     <td class="controls">
-      <%= link_to(t(".exchange.money.button"), buy_money_premium_path, :method => :post) %>
+      <%= link_to(t(".exchange_money.button"), buy_money_premium_path, :method => :post) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="name">
+      <%= fb_i(t(".refill_energy.text")) %>
+    </td>
+    <td class="vip_money"><%= Character::ENERGY_REFILL_RATE %></td>
+    <td class="controls">
+      <% if current_character.full_energy? %>
+        <%= fb_i(t(".refill_energy.full")) %>
+      <% else %>
+        <%= link_to(t(".refill_energy.button"), refill_energy_premium_path,
+              :method => :post
+            ) %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="name">
+      <%= fb_i(t(".refill_health.text")) %>
+    </td>
+    <td class="vip_money"><%= Character::HEALTH_REFILL_RATE %></td>
+    <td class="controls">
+      <% if current_character.full_health? %>
+        <%= fb_i(t(".refill_health.full")) %>
+      <% else %>
+        <%= link_to(t(".refill_health.button"), refill_health_premium_path,
+              :method => :post
+            ) %>
+      <% end %>
     </td>
   </tr>
 </table>
