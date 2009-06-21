@@ -51,39 +51,40 @@
     </tr>
   </table>
 
-  <table id="co">
+  <table id="co" cellspacing="0">
     <tr>
       <td class="basic_money">
         <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
         (<%= link_to(fb_i(t(".character_overview.bank")), new_bank_operation_path) %>)
         <div id="co_basic_money_timer" class="timer"></div>
-        <div id="co_basic_money"></div>
+        <div id="co_basic_money" class="value"></div>
       </td>
-      <td>
+      <td class="vip_money">
         <b><%= fb_i(Character.human_attribute_name("vip_money")) %></b>
         (<%= link_to(fb_i(t(".character_overview.buy_vip_money")), buy_money_path) %>)
-        <div id="co_vip_money"></div>
+        <div id="co_vip_money" class="value"></div>
       </td>
-      <td>
+      <td class="health">
         <b><%= fb_i(Character.human_attribute_name("health")) %></b>
         <div id="co_health_timer" class="timer"></div>
-        <div id="co_health"></div>
+        <div id="co_health" class="value"></div>
       </td>
-      <td>
+      <td class="energy">
         <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
         <div id="co_energy_timer" class="timer"></div>
-        <div id="co_energy"></div>
+        <div id="co_energy" class="value"></div>
       </td>
-      <td>
+      <td class="experience">
         <b><%= fb_i(Character.human_attribute_name("experience")) %></b>
-        <div id="co_experience"></div>
+        <div id="co_experience_bar"><div id="co_experience_percentage"></div></div>
+        <div id="co_experience" class="value"></div>
       </td>
-      <td>
+      <td class="level">
         <b><%= fb_i(Character.human_attribute_name("level")) %></b>
         <span id="co_points" style="display:none;">
           (<%= link_to("", upgrade_character_path(current_character), :id => :co_point_link) %>)
         </span>
-        <div id="co_level"></div>
+        <div id="co_level" class="value"></div>
       </td>
     </tr>
   </table>

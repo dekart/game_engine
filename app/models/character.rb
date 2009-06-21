@@ -134,11 +134,16 @@ class Character < ActiveRecord::Base
     LEVELS[self.level]
   end
 
+  def level_progress_percentage
+    (100 - self.experience_to_next_level.to_f / (self.next_level_experience - LEVELS[self.level - 1]) * 100).round
+  end
+
   def to_json(options = {})
     super(
       :only     => [:basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp, :points],
       :methods  => [
         :next_level_experience,
+        :level_progress_percentage,
         :time_to_hp_restore,
         :time_to_ep_restore,
         :time_to_basic_money_restore

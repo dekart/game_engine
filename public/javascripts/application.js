@@ -40,6 +40,7 @@ var Character = {
     $("co_basic_money").setTextValue(a.character.basic_money);
     $("co_vip_money").setTextValue(a.character.vip_money);
     $("co_experience").setTextValue(a.character.experience + "/" + a.character.next_level_experience);
+    $("co_experience_percentage").setStyle({width: a.character.level_progress_percentage + "%"})
     $("co_level").setTextValue(a.character.level);
     $("co_health").setTextValue(a.character.hp + "/" + a.character.health);
     $("co_energy").setTextValue(a.character.ep + "/" + a.character.energy);
