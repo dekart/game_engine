@@ -21,10 +21,7 @@
     </td>
     <td class="vip_money"><%= Character::MONEY_EXCHANGE_RATE[:vip_money] %></td>
     <td class="controls">
-      <%= link_to(t(".exchange.money.button"),
-            {:exchange => :money},
-            :method => :post
-          ) %>
+      <%= link_to(t(".exchange.money.button"), buy_money_premium_path, :method => :post) %>
     </td>
   </tr>
 </table>

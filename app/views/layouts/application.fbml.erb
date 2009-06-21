@@ -38,7 +38,7 @@
       </td>
       <td>
         <%= link_to(fb_i(t(".main_menu.items")), items_path, :class => :shop) %>
-        <%= link_to(fb_i(t(".main_menu.vip")), buy_money_path, :class => :vip_money) %>
+        <%= link_to(fb_i(t(".main_menu.vip")), premium_path, :class => :vip_money) %>
       </td>
       <td>
         <%= link_to(fb_i(t(".main_menu.inventories")), inventories_path, :class => :inventory) %>
@@ -61,7 +61,7 @@
       </td>
       <td class="vip_money">
         <b><%= fb_i(Character.human_attribute_name("vip_money")) %></b>
-        (<%= link_to(fb_i(t(".character_overview.buy_vip_money")), buy_money_path) %>)
+        (<%= link_to(fb_i(t(".character_overview.buy_vip_money")), premium_path) %>)
         <div id="co_vip_money" class="value"></div>
       </td>
       <td class="health">

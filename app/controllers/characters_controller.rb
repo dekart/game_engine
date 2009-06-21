@@ -43,13 +43,4 @@ class CharactersController < ApplicationController
       end
     end
   end
-
-  def buy_money
-    if request.post?
-      case params[:exchange]
-      when "money"
-        current_character.exchange_money!
-      end
-    end
-  end
 end

@@ -146,16 +146,6 @@ en:
       messages:
         success: "You've successfully upgraded {{attribute}} to {number}"
         not_enough_points: "You cannot upgrade {{attribute}} because you don't have enough points"
-    buy_money:
-      title: "Gem Market"
-      current:
-        label: "You have {amount} gems"
-      exchange:
-        money:
-          text: "Add {amount} gold to your account"
-          button: "Get More Gold"
-      get_more:
-        title: "Get More Gems"
   fights:
     descriptions:
       attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
@@ -398,6 +388,18 @@ en:
   promotions:
     show:
       you_received: "You received:"
+  premia:
+    show:
+      title: "Gem Market"
+      current:
+        label: "You have {amount} gems"
+      exchange:
+        money:
+          text: "Add {amount} gold to your account"
+          button: "Get More Gold"
+      get_more:
+        title: "Get More Gems"
+
 # Helpers
   blocks:
     hide: "Hide"
