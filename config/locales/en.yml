@@ -84,6 +84,8 @@ en:
       title: "Fan Specials"
       text: "{app} fans weekly receive free Gold, Gems, items, and other useful game stuff."
       link: "Become Fan &raquo;"
+    bookmark:
+      text: "Don't forget to add {app} to your bookmarks!"
     application:
       spinner:
         alt: "Please wait..."
