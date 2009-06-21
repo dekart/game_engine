@@ -97,8 +97,12 @@
       </tr>
     </table>
 
+    <% fb_js_string :mission_progress do %>
+      <%= mission_progress(current_character, @mission) %>
+    <% end %>
+      
     <% content_for :script do %>
-      Mission.setProgress(<%= @mission.id %>, '<%= mission_progress(current_character, @mission) %>');
+      Mission.setProgress(<%= @mission.id %>, mission_progress);
     <% end %>
   <% elsif !@result.enough_energy? %>
     <p>

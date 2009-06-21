@@ -2,7 +2,20 @@ module MissionsHelper
   def mission_progress(character, mission)
     rank = character.rank_for_mission(mission)
     
-    rank.completed? ? t("missions.helpers.completed") : "%d%%" % (rank.win_count.to_f / rank.mission.win_amount * 100)
+    progress_text = rank.completed? ? t("missions.helpers.completed") : 
+
+    if rank.completed?
+      content_tag(:div, t("missions.helpers.completed"), :class => :text) +
+      content_tag(:div, "", :class => "bar completed")
+    else
+      percentage = (rank.win_count.to_f / rank.mission.win_amount * 100)
+
+      content_tag(:div, "%d%%" % percentage, :class => :text) +
+      content_tag(:div,
+        content_tag(:div, "", :class => :percentage, :style => "width: #{percentage}%"),
+        :class => :bar
+      )
+    end
   end
 
   def mission_requirements(mission)
