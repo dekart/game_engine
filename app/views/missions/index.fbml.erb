@@ -5,7 +5,7 @@
     <% @missions.each do |mission| %>
       <% group_header mission.mission_group do |group| %>
         <tr>
-          <th class="mission_group"><%= group.name %></th>
+          <th class="mission_group"><%= fb_i(group.name) %></th>
           <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
           <th><%= fb_i(t(".columns.requires")) %></th>
           <th><%= fb_i(t(".columns.progress")) %></th>
@@ -41,4 +41,18 @@
   </table>
 <% else %>
   <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
+<% end %>
+
+<% if next_group = MissionGroup.next_for(current_character).first %>
+  <div id="next_mission_group">
+    <h2><%= fb_i(next_group.name) %></h2>
+    
+    <p>
+      <% fb_i do %>
+        <%= t(".next_group") %>
+
+        <%= fb_it(:level, content_tag(:span, next_group.level, :class => :level)) %>
+      <% end %>
+    </p>
+  </div>
 <% end %>

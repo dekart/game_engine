@@ -267,6 +267,7 @@ en:
       buttons:
         fulfill: "Fulfill"
       empty_set: "You have no missions available at this time"
+      next_group: "Reach level {level} to open missions from this group"
     helpers:
       completed: "Completed!"
   relations:
