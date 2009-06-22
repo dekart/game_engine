@@ -75,22 +75,20 @@ module FacebookHelper
   end
 
   def link_to_feed_dialog(title, template_class, template_name, options = {})
-    bundle_id = Facebooker::Rails::Publisher::FacebookTemplate.bundle_id_for_class_and_method(template_class, template_name.to_s)
-
-    link_to_function(title, 
-      "Facebook.showFeedDialog(
-        #{bundle_id},
-        #{options[:template_data].reverse_merge(
-            :images => [
-              {:src => image_path("logo_100x100.jpg"), :href => root_url(:canvas => true)},
-              options[:images]
-            ].flatten
-          ).to_json},
-        '#{options[:body_general]}',
-        #{options[:target_id] || "null"}
-      )",
+    link_to_function(title,
+      show_feed_dialog(template_class, template_name, options.except(:html)),
       options[:html] || {}
     )
+  end
+
+  def show_feed_dialog(template_class, template_name, options = {})
+    bundle_id = Facebooker::Rails::Publisher::FacebookTemplate.bundle_id_for_class_and_method(template_class, template_name.to_s)
+
+    options[:template_data] ||= {}
+    options[:template_data][:images] ||= []
+    options[:template_data][:images].unshift({:src => image_path("logo_100x100.jpg"), :href => root_url})
+    
+    "Facebook.showFeedDialog(#{bundle_id}, #{options[:template_data].to_json}, '#{options[:body_general]}', #{options[:target_id] || "null"})"
   end
 
   def fb_js_string(name, content = nil, &block)

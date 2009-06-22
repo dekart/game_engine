@@ -3,8 +3,8 @@
     <% if @result.rank.completed? %>
       <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Mission, :completed,
             :template_data => {
-              :title => @mission.title,
-              :mission => @mission.name
+              :title    => @mission.title,
+              :mission  => @mission.name
             },
             :html => {:class => "publish button"}
           ) %>
@@ -21,6 +21,13 @@
 
       <% content_for :script do %>
         Mission.hideControls(<%= @mission.id %>);
+
+        <%= show_feed_dialog(Publisher::Mission, :completed,
+              :template_data => {
+                :title    => @mission.title,
+                :mission  => @mission.name
+              }
+            ) %>
       <% end %>
     <% elsif @result.success %>
       <%= link_to_remote(fb_i(t(".buttons.continue")),
