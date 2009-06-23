@@ -38,12 +38,14 @@ class UsersController < ApplicationController
   def invite
     if request.post?
       @sent_invitations = []
-      
-      Invitation.transaction do
-        params[:ids].each do |receiver|
-          invitation = current_user.invitations.create(:receiver_id => receiver)
 
-          @sent_invitations << invitation unless invitation.new_record?
+      if params[:ids]
+        Invitation.transaction do
+          params[:ids].each do |receiver|
+            invitation = current_user.invitations.create(:receiver_id => receiver)
+
+            @sent_invitations << invitation unless invitation.new_record?
+          end
         end
       end
     end
