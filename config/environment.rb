@@ -78,6 +78,6 @@ Rails::Initializer.run do |config|
   config.action_controller.cache_store = :mem_cache_store, "localhost"
 end
 
-WillPaginate::ViewHelpers.pagination_options.merge!(:next_label => "Older &raquo;", :previous_label => "&laquo; Newer")
+WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
 
 ADMINS = [682180971]
