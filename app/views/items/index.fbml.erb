@@ -10,37 +10,84 @@
   <% end %>
 </div>
 
-<table id="item_list" cellspacing="0">
-  <% @items.each do |item| %>
-    <tr>
-      <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
-      <td class="info">
-        <div class="name"><%= fb_i(item.name) %></div>
-        <div class="description"><%= fb_i(item.description) %></div>
-      </td>
-      <td class="details">
-        <% item.effects.each do |effect| %>
-          <%= content_tag(:div, effect.value, :class => effect.name) %>
+<table cellspacing="0" width="100%">
+  <tr>
+    <td id="basic_item_list">
+      <%= will_paginate @basic_items %>
+      
+      <table class="item_list" cellspacing="0">
+        <% @basic_items.each do |item| %>
+          <tr>
+            <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
+            <td class="info">
+              <div class="name"><%= fb_i(item.name) %></div>
+              <div class="description"><%= fb_i(item.description) %></div>
+            </td>
+            <td class="details">
+              <% item.effects.each do |effect| %>
+                <%= content_tag(:div, effect.value, :class => effect.name) %>
+              <% end %>
+            </td>
+            <td class="requires">
+              <% %w{basic_price vip_price}.each do |attr| %>
+                <%= content_tag(:div, item.send(attr), :class => attr)  if item.send(attr).to_i > 0 %>
+              <% end %>
+            </td>
+            <td class="controls">
+              <%= link_to_remote(fb_i(t(".buttons.buy")),
+                    :url => inventories_url(:item_id => item.id, :canvas => false),
+                    :update => :result,
+                    :html => {:class => :buy}
+                  ) if current_character.can_buy?(item) %>
+            </td>
+          </tr>
         <% end %>
-      </td>
-      <td class="requires">
-        <% %w{basic_price vip_price}.each do |attr| %>
-          <%= content_tag(:div, item.send(attr), :class => attr)  if item.send(attr).to_i > 0 %>
-        <% end %>
-      </td>
-      <td class="controls">
-        <%= link_to_remote(fb_i(t(".buttons.buy")),
-              :url => inventories_url(:item_id => item.id, :canvas => false),
-              :update => :result,
-              :html => {:class => :buy}
-            ) if current_character.can_buy?(item) %>
+      </table>
 
-        <%= link_to(fb_i(t(".buttons.get_vip")), premium_path,
-              :class => :buy_vip
-            ) if current_character.need_vip_money?(item)  %>
+      <%= will_paginate @basic_items %>
+    </td>
+
+    <% if @vip_items.any? %>
+      <td id="vip_item_list">
+        <h2><%= fb_i(t(".vip_items.title")) %></h2>
+
+        <div class="note"><%= fb_i(t(".vip_items.text")) %></div>
+
+        <table class="item_list" cellspacing="0">
+          <% @vip_items.each do |item| %>
+            <tr>
+              <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
+              <td class="info">
+                <div class="name"><%= fb_i(item.name) %></div>
+                <div class="description"><%= fb_i(item.description) %></div>
+              </td>
+              <td class="details">
+                <% item.effects.each do |effect| %>
+                  <%= content_tag(:div, effect.value, :class => effect.name) %>
+                <% end %>
+              </td>
+              <td class="requires">
+                <% %w{basic_price vip_price}.each do |attr| %>
+                  <%= content_tag(:div, item.send(attr), :class => attr)  if item.send(attr).to_i > 0 %>
+                <% end %>
+              </td>
+              <td class="controls">
+                <%= link_to_remote(fb_i(t(".buttons.buy")),
+                      :url => inventories_url(:item_id => item.id, :canvas => false),
+                      :update => :result,
+                      :html => {:class => :buy}
+                    ) if current_character.can_buy?(item) %>
+
+                <%= link_to(fb_i(t(".buttons.get_vip")), premium_path,
+                      :class => :buy_vip
+                    ) if current_character.need_vip_money?(item)  %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
       </td>
-    </tr>
-  <% end %>
+    <% end %>
+  </tr>
 </table>
 
 <%= render :partial => "premia/get_more_vip" %>

@@ -238,6 +238,9 @@ en:
       buttons:
         buy: "Buy"
         get_vip: "Get More Gems"
+      vip_items:
+        title: "Special Items"
+        text: "Special items are more powerfull and have additional effects"
   missions:
     fulfill:
       buttons:

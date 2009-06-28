@@ -22,6 +22,8 @@ class Item < ActiveRecord::Base
   }
 
   named_scope :shop, {:conditions => "availability = 'shop'"}
+  named_scope :vip, {:conditions => "vip_price > 0"}
+  named_scope :basic, {:conditions => "vip_price IS NULL or vip_price = 0"}
 
   validates_presence_of :name, :item_group, :availability, :level, :basic_price
   validates_numericality_of :level, :basic_price, :vip_price, :usage_limit, :allow_blank => true
