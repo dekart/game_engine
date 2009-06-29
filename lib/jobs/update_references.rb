@@ -1,6 +1,6 @@
 module Jobs
   class UpdateReferences
-    include Common
+    include Jobs::Common
 
     def perform
       Net::HTTP.get_response(URI.parse(Facebooker.facebooker_config["callback_url"]))

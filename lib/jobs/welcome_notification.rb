@@ -1,6 +1,6 @@
 module Jobs
   class WelcomeNotification < Struct.new(:user_id)
-    include Common
+    include Jobs::Common
 
     def perform
       return unless user = User.find_by_id(user_id)

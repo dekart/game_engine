@@ -1,6 +1,6 @@
 module Jobs
   class UpdateProfile < Struct.new(:user_id)
-    include Common
+    include Jobs::Common
 
     def perform
       user = User.find(user_id)

@@ -1,6 +1,6 @@
 module Jobs
   class SetupProfile < Struct.new(:user_id)
-    include Common
+    include Jobs::Common
 
     def perform
       Facebooker::Session.current = facebook_session
