@@ -1,6 +1,6 @@
 class RelationsController < ApplicationController
   def index
-    @relations = current_character.relations.paginate(:page => params[:page])
+    @relations = current_character.relations.paginate(:page => params[:page], :per_page => 10)
   end
 
   def destroy

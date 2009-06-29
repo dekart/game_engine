@@ -36,6 +36,8 @@
       <td><%= render :partial => "assignments" %></td>
     </tr>
   </table>
+
+  <%= will_paginate @relations %>
 <% else %>
   <div class="empty_set">
     <%= fb_i(t(".empty_set")) %>
