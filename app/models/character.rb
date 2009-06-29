@@ -256,6 +256,8 @@ class Character < ActiveRecord::Base
     if self.experience_to_next_level <= 0
       self.level  += 1
       self.points += 5
+      self.ep     = self.energy
+      self.hp     = self.health
 
       self.level_updated = true
     end
