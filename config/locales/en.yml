@@ -148,6 +148,12 @@ en:
       messages:
         success: "You've successfully upgraded {{attribute}} to {number}"
         not_enough_points: "You cannot upgrade {{attribute}} because you don't have enough points"
+    level_up:
+      title: "New Level!"
+      text: "You've gained enough experience to upgrade to new level! You received 5 upgrade points that you can spend to increase your attack, defence, energy, or health. Go to {upgrade} page and use your points as you wish. Additionally, your energy and health have been refilled."
+      upgrade_link: "upgrade"
+      buttons:
+        upgrade: "Upgrade"
   fights:
     descriptions:
       attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"

@@ -23,6 +23,10 @@ module CharactersHelper
     link_to(character_picture(character, picture_options), character_url(character, :canvas => true), link_options)
   end
 
+  def character_level_up_block
+    render(:partial => "characters/level_up") if current_character.level_updated
+  end
+
   protected
 
   def character_for(character_or_user)
