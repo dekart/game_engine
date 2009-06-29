@@ -8,7 +8,7 @@
   <%= link_to(fb_i(t(".note.button")), new_property_path, :id => :buy_properties) %>
 </div>
 
-<% if @properties.size > 0 %>
+<% if @properties.any? %>
   <div id="property_income">
     <b><%= t(".income.label") %></b>
     <span class="value"><%= current_character.property_income %></span>
@@ -41,6 +41,8 @@
       <% end %>
     <% end %>
   </table>
+
+  <%= will_paginate @properties %>
 <% else %>
   <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
 <% end %>

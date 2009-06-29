@@ -12,7 +12,7 @@ class PropertiesController < ApplicationController
   end
 
   def index
-    @properties = current_character.properties
+    @properties = current_character.properties.paginate(:page => params[:page])
   end
 
   def destroy
