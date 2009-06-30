@@ -4,7 +4,10 @@ class Admin::MissionsController < ApplicationController
   layout "layouts/admin/application"
 
   def index
-    @missions = Mission.all(:order => :level).paginate(:page => params[:page])
+    @missions = Mission.all(
+      :include  => :mission_group,
+      :order    => "mission_groups.level"
+    ).paginate(:page => params[:page])
   end
 
   def new

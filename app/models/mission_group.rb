@@ -3,8 +3,8 @@ class MissionGroup < ActiveRecord::Base
 
   named_scope :next_for, Proc.new{|character|
     {
-      :conditions => ["level > ?", character.level],
-      :order      => :level
+      :conditions => ["mission_groups.level > ?", character.level],
+      :order      => "mission_groups.level"
     }
   }
   validates_presence_of :name, :level
