@@ -1,0 +1,29 @@
+<div class="requirement" id="<%= requirement.object_id %>">
+  <div class="<%= requirement.name %> serializable_item">
+    <%= hidden_field_tag("#{container}[requirements][requirement_#{requirement.object_id}][type]", requirement.name) %>
+
+    <%= link_to_function(
+          t(".remove"),
+          "$('requirement_list').removeChild($('requirement_#{requirement.id}'))",
+          :class => :remove
+        ) %>
+
+    <%= render(
+          :partial  => "admin/requirements/form_fields/#{requirement.name}",
+          :locals   => {
+            :requirement  => requirement,
+            :container    => container
+          }
+        ) %>
+
+    <br />
+
+    <%= render(
+          :partial => "admin/requirements/form_fields/common",
+          :locals => {
+            :requirement  => requirement,
+            :container    => container
+          }
+        ) %>
+  </div>
+</div>

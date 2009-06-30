@@ -8,10 +8,22 @@
           :class => :remove
         ) %>
 
-    <%= render :partial => "admin/payouts/form_fields/#{payout.name}", :locals => {:payout => payout, :container => container} %>
+    <%= render(
+          :partial => "admin/payouts/form_fields/#{payout.name}",
+          :locals => {
+            :payout     => payout,
+            :container  => container
+          }
+        ) %>
 
     <br />
 
-    <%= render :partial => "admin/payouts/form_fields/common", :locals => {:payout => payout, :container => container} %>
+    <%= render(
+          :partial => "admin/payouts/form_fields/common",
+          :locals => {
+            :payout     => payout,
+            :container  => container
+          }
+        ) %>
   </div>
 </div>

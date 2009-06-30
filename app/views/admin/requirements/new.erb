@@ -1,0 +1,20 @@
+<% fb_js_string :requirement_fields do %>
+  <%= render(
+        :partial  => "admin/requirements/requirement",
+        :locals   => {
+          :requirement  => @requirement,
+          :container    => @container
+        }
+      ) %>
+<% end %>
+
+<% content_for :script do %>
+  var new_requirement = document.createElement("div");
+
+  new_requirement.
+    setId('requirement_<%= @requirement.object_id %>').
+    setClassName("requirement").
+    setInnerFBML(requirement_fields);
+
+  $('requirement_list').appendChild(new_requirement)
+<% end %>

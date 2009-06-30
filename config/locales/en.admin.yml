@@ -78,8 +78,6 @@ en:
       edit:
         title: "Edit Mission"
         submit: "Update"
-      form_fields:
-        add_requirement: "Add Requirement:"
     newsletters:
       index:
         title: "Newsletters"
@@ -119,6 +117,11 @@ en:
       collection:
         add_payout: "Add Payout:"
       payout:
+        remove: "Remove"
+    requirements:
+      collection:
+        add_requirement: "Add Requirement:"
+      requirement:
         remove: "Remove"
     statistics:
       index:

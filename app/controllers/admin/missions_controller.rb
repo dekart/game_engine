@@ -42,10 +42,4 @@ class Admin::MissionsController < ApplicationController
 
     redirect_to :action => :index
   end
-
-  def add_requirement
-    @requirement = Requirements::Base.by_name(params[:type]).new(nil)
-
-    render :action => :add_requirement, :layout => "admin/ajax"
-  end
 end
