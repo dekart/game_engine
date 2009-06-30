@@ -9,7 +9,7 @@ module FacebookPaginator
       
       returning @params = HashWithIndifferentAccess.new do
         @template.params.each_pair do |key, value|
-          @params[key] = nil if key.to_s.starts_with?("fb_sig")
+          @params[key] = value unless key.to_s.starts_with?("fb_sig")
         end
       end
     end
