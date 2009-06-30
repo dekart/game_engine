@@ -1,0 +1,19 @@
+<table id="item_fields">
+  <tr>
+    <td>
+      <%= form.text_field :name, :required => true %>
+      <%= form.text_area :description %>
+
+      <%= form.file_field :image,
+            :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : "") %>
+      
+      <%= form.select :availability, %w{shop quest}, :required => true %>
+
+      <%= form.text_field :level, :required => true, :size => 3 %>
+      <%= form.text_field :basic_price, :required => true, :size => 3 %>
+      <%= form.text_field :vip_price, :size => 3 %>
+      <%= form.text_field :money_min, :size => 3, :required => true %>
+      <%= form.text_field :money_max, :size => 3, :required => true %>
+    </td>
+  </tr>
+</table>

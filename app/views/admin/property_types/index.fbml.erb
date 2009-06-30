@@ -1,0 +1,42 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_property_type_path) %>
+</div>
+
+<% if @types.any? %>
+  <%= will_paginate @types %>
+
+  <table id="property_type_list">
+    <tr>
+      <th><%= PropertyType.human_attribute_name("image") %></th>
+      <th><%= PropertyType.human_attribute_name("name") %></th>
+      <th><%= PropertyType.human_attribute_name("availability") %></th>
+      <th><%= PropertyType.human_attribute_name("level") %></th>
+      <th><%= PropertyType.human_attribute_name("basic_price") %></th>
+      <th><%= PropertyType.human_attribute_name("vip_price") %></th>
+      <th><%= PropertyType.human_attribute_name("money") %></th>
+    </tr>
+    <% @types.each do |type| %>
+      <tr>
+        <td class="image"><%= image_tag(type.image.url(:icon)) if type.image? %></td>
+        <td class="name"><%= link_to(type.name, edit_admin_property_type_path(type)) %></td>
+        <td class="availability"><%= type.availability %></td>
+        <td class="level"><%= type.level %></td>
+        <td class="basic_price"><%= type.basic_price %></td>
+        <td class="vip_price"><%= type.vip_price %></td>
+        <td class="money"><%= type.money_min %> - <%= type.money_max %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.delete"), admin_property_type_path(type),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @types %>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

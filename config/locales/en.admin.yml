@@ -7,6 +7,7 @@ en:
         items: "Items"
         mission_groups: "Mission Groups"
         missions: "Missions"
+        property_types: "Property Types"
         statistics: "Statistics"
         newsletter: "Newsletter"
         promotions: "Promotions"
@@ -123,3 +124,17 @@ en:
       index:
         total_users: "Total Users"
         latest_users: "Latest Users"
+    property_types:
+      index:
+        title: "Property Types"
+        empty_set: "No property types"
+        controls:
+          new: "Add Property Type"
+          delete: "Delete"
+          delete_confirm: "Are you sure? Properties of this type will be also removed from all users!"
+      new:
+        title: "New Property Type"
+        submit: "Create"
+      edit:
+        title: "Edit Property Type"
+        submit: "Update"

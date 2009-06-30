@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
         :add_requirement => :any,
         :add_payout => :any
       }
+    admin.resources :property_types
       
     admin.resources :newsletters,
       :member => {
