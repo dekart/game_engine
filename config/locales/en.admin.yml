@@ -123,6 +123,11 @@ en:
         add_requirement: "Add Requirement:"
       requirement:
         remove: "Remove"
+    effects:
+      collection:
+        add_effect: "Add Effect:"
+      effect:
+        remove: "Remove"
     statistics:
       index:
         total_users: "Total Users"

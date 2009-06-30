@@ -22,24 +22,7 @@
       <div class="serializable" id="effect_list">
         <h2><%= Item.human_attribute_name("effects") %></h2>
 
-        <div class="controls">
-          <b><%= t(".add_effect") %></b>
-
-          <% Effects::Base.types.each do |type| %>
-            <%= link_to_remote(t("effects.#{type.effect_name}.name"),
-                  :url    => add_effect_new_admin_item_url(:type => type.effect_name, :canvas => false),
-                  :update => :result
-                ) %>
-          <% end %>
-        </div>
-
-        <% form.object.effects.each do |effect| %>
-          <%= content_tag(:div,
-                render(:partial => "effect", :locals => {:effect => effect}),
-                :class => "effect",
-                :id => "effect_#{effect.id}"
-              ) %>
-        <% end %>
+        <%= render :partial => "admin/effects/collection", :locals => {:form => form} %>
       </div>
     </td>
   </tr>

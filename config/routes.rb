@@ -3,9 +3,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :item_groups,
       :member => {:move => :post}
 
-    admin.resources :items,
-      :new => {:add_effect => :any}
-
+    admin.resources :items
     admin.resources :mission_groups
     admin.resources :missions
     admin.resources :property_types
@@ -20,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :payouts, :only => [:new]
     admin.resources :requirements, :only => [:new]
+    admin.resources :effects, :only => [:new]
 
     admin.resources :statistics, :only => :index
   end

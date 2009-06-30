@@ -1,0 +1,20 @@
+<% fb_js_string :effect_fields do %>
+  <%= render(
+        :partial  => "admin/effects/effect",
+        :locals   => {
+          :effect     => @effect,
+          :container  => @container
+        }
+      ) %>
+<% end %>
+
+<% content_for :script do %>
+  var new_effect = document.createElement("div");
+
+  new_effect.
+    setId('effect_<%= @effect.object_id %>').
+    setClassName("effect").
+    setInnerFBML(effect_fields);
+
+  $('effect_list').appendChild(new_effect)
+<% end %>

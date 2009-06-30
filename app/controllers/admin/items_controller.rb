@@ -45,10 +45,4 @@ class Admin::ItemsController < ApplicationController
 
     redirect_to :action => :index
   end
-
-  def add_effect
-    @effect = Effects::Base.by_name(params[:type]).new(nil)
-
-    render :action => :add_effect, :layout => "admin/ajax"
-  end
 end
