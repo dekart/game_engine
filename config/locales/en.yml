@@ -46,6 +46,7 @@ en:
           attributes:
             character:
               not_enough_money: "You don't have enough money to buy {property_name}"
+              too_much_properties: "You cannot buy properties anymore because you already have too many!"
   effects:
     attack:
       name: "Attack"

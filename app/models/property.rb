@@ -1,4 +1,6 @@
 class Property < ActiveRecord::Base
+  MAXIMUM_AMOUNT = 2000
+
   belongs_to :character
   belongs_to :property_type
 
@@ -6,7 +8,7 @@ class Property < ActiveRecord::Base
 
   attr_accessor :free_of_charge
 
-  validate_on_create :enough_character_money?
+  validate_on_create :enough_character_money?, :enough_property_slots?
 
   after_create  :charge_character
   after_save    :recalculate_character_income
@@ -34,6 +36,10 @@ class Property < ActiveRecord::Base
   end
 
   protected
+
+  def enough_property_slots?
+    self.errors.add(:character, :too_much_properties) if character.properties.size >= MAXIMUM_AMOUNT
+  end
 
   def enough_character_money?
     return if self.free_of_charge
