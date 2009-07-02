@@ -9,7 +9,7 @@
       <%= form.file_field :image,
             :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : "") %>
       
-      <%= form.select :availability, %w{shop loot quest}, :required => true %>
+      <%= form.select :availability, Item::AVAILABILITIES, :required => true %>
 
       <%= form.text_field :level, :required => true, :size => 3 %>
       <%= form.text_field :basic_price, :required => true, :size => 3 %>

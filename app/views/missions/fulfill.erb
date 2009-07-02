@@ -71,7 +71,7 @@
                 </li>
               <% end %>
 
-              <%= mission_payouts_received(@result, :received) %>
+              <%= mission_payouts_received(@result, :add) %>
             </ul>
           </td>
         <% end %>
@@ -98,7 +98,7 @@
               </li>
             <% end %>
 
-            <%= mission_payouts_received(@result, :spent) %>
+            <%= mission_payouts_received(@result, :remove) %>
           </ul>
         </td>
       </tr>

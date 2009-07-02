@@ -59,7 +59,7 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
   def field(field_name, field, options = {}, &block)
     code = ""
 
-    field_changes = object.changes[field_name.to_s]
+    field_changes = object.changes[field_name.to_s] if @options[:show_changes]
 
     (options[:order] || FIELD_ORDER).each do |part|
       code << (

@@ -1,8 +1,7 @@
 module Payouts
   class Item < Base
-    def initialize(item, options = {})
-      @value    = item.is_a?(::Item) ? item.id : item.to_i
-      @options  = options
+    def value=(value)
+      @value = value.is_a?(::Item) ? value.id : value.to_i
     end
 
     def item
@@ -10,19 +9,13 @@ module Payouts
     end
 
     def apply(character)
-      if options[:action] == "remove"
-        if inventory = character.inventories.find_by_item_id(self.item.id)
-          inventory.destroy
-
-          @action = :spent
-        end
+      if self.action == :remove and inventory = character.inventories.find_by_item_id(self.item.id)
+        inventory.destroy
       else
         character.inventories.create(
           :item           => self.item,
           :free_of_charge => true
         )
-
-        @action = :received
       end
     end
   end

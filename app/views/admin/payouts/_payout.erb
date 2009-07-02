@@ -8,22 +8,11 @@
           :class => :remove
         ) %>
 
-    <%= render(
-          :partial => "admin/payouts/form_fields/#{payout.name}",
-          :locals => {
-            :payout     => payout,
-            :container  => container
-          }
-        ) %>
+    <h3><%= t("payouts.#{payout.name}.name") %></h3>
 
-    <br />
-
-    <%= render(
-          :partial => "admin/payouts/form_fields/common",
-          :locals => {
-            :payout     => payout,
-            :container  => container
-          }
-        ) %>
+    <% fields_for "#{container}[payouts][payout_#{payout.object_id}]", payout do |form| %>
+      <%= form.fields "admin/payouts/form_fields/#{payout.name}" %>
+      <%= form.fields "admin/payouts/form_fields/common" %>
+    <% end %>
   </div>
 </div>

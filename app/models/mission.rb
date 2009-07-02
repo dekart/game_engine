@@ -44,7 +44,7 @@ class Mission < ActiveRecord::Base
   def payouts=(collection)
     unless collection.is_a?(Payouts::Collection)
       items = collection.values.collect do |payout|
-        Payouts::Base.by_name(payout[:type]).new(payout[:value], payout[:options])
+        Payouts::Base.by_name(payout[:type]).new(payout.except(:type))
       end
 
       collection = Payouts::Collection.new(*items)

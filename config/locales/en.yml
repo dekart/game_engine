@@ -72,6 +72,10 @@ en:
       name: "Gems"
     basic_money:
       name: "Money"
+    random_item:
+      name: "Random Item"
+      price_limit: "Price limit"
+      availability: "Availability"
 # Templates
   layouts:
     next_steps:

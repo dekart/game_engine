@@ -1,4 +1,6 @@
 class Item < ActiveRecord::Base
+  AVAILABILITIES = [:shop, :loot, :quest]
+
   belongs_to :item_group
 
   extend SerializeWithPreload
@@ -22,6 +24,7 @@ class Item < ActiveRecord::Base
   }
 
   named_scope :shop, {:conditions => "availability = 'shop'"}
+  named_scope :loot, {:conditions => "availability = 'loot'"}
   named_scope :vip, {:conditions => "vip_price > 0"}
   named_scope :basic, {:conditions => "vip_price IS NULL or vip_price = 0"}
 
