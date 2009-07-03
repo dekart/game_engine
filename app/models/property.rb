@@ -15,7 +15,7 @@ class Property < ActiveRecord::Base
   after_destroy :recalculate_character_income
 
   def sell_price
-    (self.basic_price * 0.8).ceil
+    (self.basic_price * 0.5).ceil
   end
 
   def sell

@@ -24,7 +24,7 @@ class Inventory < ActiveRecord::Base
   after_destroy :recache_character_effects
 
   def sell_price
-    (self.item.basic_price * 0.8).ceil
+    (self.item.basic_price * 0.5).ceil
   end
 
   def place_to(placement)
