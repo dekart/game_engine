@@ -20,33 +20,19 @@
         <% end %>
       </p>
 
-      <table>
+      <table class="payouts">
         <tr>
           <td class="received">
             <h3><%= fb_i(t(".you_received.title")) %></h3>
-            <ul>
-              <li class="experience">
-                <b><%= fb_i(Character.human_attribute_name("experience")) %></b>
-                <div><%= @fight.experience %></div>
-              </li>
-              <li class="basic_money">
-                <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
-                <div><%= @fight.money %></div>
-              </li>
-            </ul>
+
+            <%= payout(:experience, Character.human_attribute_name("experience"), @fight.experience) %>
+            <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @fight.money) %>
           </td>
           <td class="lost">
             <h3><%= fb_i(t(".you_lost.title")) %></h3>
-            <ul>
-              <li class="energy">
-                <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
-                <div>1</div>
-              </li>
-              <li class="health">
-                <b><%= fb_i(Character.human_attribute_name("health")) %></b>
-                <div><%= @fight.attacker_hp_loss %></div>
-              </li>
-            </ul>
+
+            <%= payout(:energy, Character.human_attribute_name("energy"), 1) %>
+            <%= payout(:health, Character.human_attribute_name("health"), @fight.attacker_hp_loss) %>
           </td>
           <td class="victim_lost">
             <h3>
@@ -56,12 +42,8 @@
                 <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
               <% end %>
             </h3>
-            <ul>
-              <li class="health">
-                <b><%= fb_i(Character.human_attribute_name("health")) %></b>
-                <div><%= @fight.victim_hp_loss %></div>
-              </li>
-            </ul>
+
+            <%= payout(:health, Character.human_attribute_name("health"), @fight.victim_hp_loss) %>
           </td>
         </tr>
       </table>

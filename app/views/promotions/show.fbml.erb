@@ -1,9 +1,11 @@
 <% content_for :result do %>
-<div id="promotion_result">
-  <p><%= fb_i(@promotion.text) %></p>
+  <div id="promotion_result">
+    <p><%= fb_i(@promotion.text) %></p>
 
-  <b><%= fb_i(t(".you_received")) %></b>
-  
-  <%= payout_list(@result, :add) %>
-</div>
+    <h3><%= fb_i(t(".you_received")) %></h3>
+
+    <div class="payouts">
+      <%= payout_list(@result, :add) %>
+    </div>
+  </div>
 <% end %>

@@ -51,55 +51,50 @@
       </p>
     <% end %>
 
-    <table>
+    <table class="payouts">
       <tr>
         <% if @result.received_something? %>
           <td class="received">
             <h3><%= fb_i(t(".you_received.title")) %></h3>
-            <ul>
-              <% if @result.experience %>
-                <li class="experience">
-                  <b><%= fb_i(Character.human_attribute_name("experience")) %></b>
-                  <div><%= @result.experience %></div>
-                </li>
-              <% end %>
+            
+            <% if @result.experience %>
+              <%= payout(:experience,
+                    Character.human_attribute_name("experience"),
+                    @result.experience
+                  ) %>
+            <% end %>
 
-              <% if @result.money %>
-                <li class="basic_money">
-                  <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
-                  <div><%= @result.money %></div>
-                </li>
-              <% end %>
+            <% if @result.money %>
+              <%= payout(:basic_money,
+                    Character.human_attribute_name("basic_money"),
+                    @result.money
+                  ) %>
+            <% end %>
 
-              <%= payout_list(@result, :add) %>
-            </ul>
+            <%= payout_list(@result, :add) %>
           </td>
         <% end %>
         <td class="spent">
           <h3><%= fb_i(t(".you_spent.title")) %></h3>
-          <ul>
-            <% if @result.free_fulfillment %>
-              <li class="energy">
-                <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
-                <div class="zero">0</div>
-                <div class="relation">
-                  <% fb_i do %>
-                    <%= t(".you_spent.zero_energy") %>
-                    <%= fb_it(:user,
-                          character_name_link(current_character.assignments.by_role(:mission_energy).relation.target_character)
-                        ) %>
-                  <% end %>
-                </div>
-              </li>
-            <% else %>
-              <li class="energy">
-                <b><%= fb_i(Character.human_attribute_name("energy")) %></b>
-                <div><%= @mission.ep_cost %></div>
-              </li>
-            <% end %>
 
-            <%= payout_list(@result, :remove) %>
-          </ul>
+          <% if @result.free_fulfillment %>
+            <% payout("energy zero", Character.human_attribute_name("energy"), 0) do %>
+              <span class="relation">
+                <% fb_i do %>
+                  <%= t(".you_spent.zero_energy") %>
+                  <%= fb_it(:user,
+                        character_name_link(
+                          current_character.assignments.by_role(:mission_energy).relation.target_character
+                        )
+                      ) %>
+                <% end %>
+              </span>
+            <% end %>
+          <% else %>
+            <%= payout(:energy, Character.human_attribute_name("energy"), @mission.ep_cost) %>
+          <% end %>
+          
+          <%= payout_list(@result, :remove) %>
         </td>
       </tr>
     </table>

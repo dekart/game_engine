@@ -1,3 +1,1 @@
-<div class="basic_money">
-  <%= payout.value %> <%= fb_i(Character.human_attribute_name("basic_money")) %>
-</div>
+<%= payout(:basic_money, Character.human_attribute_name("basic_money"), payout.value) %>
