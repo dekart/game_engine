@@ -8,14 +8,12 @@
   </p>
 
   <h3><%= fb_i(t(".effects")) %></h3>
-  <ul>
+
+  <div class="payouts">
     <% @inventory.effects.each do |effect| %>
-      <% content_tag(:li, :class => effect.name) do %>
-        <b><%= fb_i(t("effects.#{effect.name}.name")) %></b>
-        <div><%= effect.value %></div>
-      <% end %>
+      <%= payout(effect.name, t("effects.#{effect.name}.name"), effect.value) %>
     <% end %>
-  </ul>
+  </div>
 
   <% if @inventory.frozen? %>
     <p>

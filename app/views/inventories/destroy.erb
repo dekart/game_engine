@@ -7,12 +7,10 @@
   </p>
 
   <h3><%= fb_i(t(".you_received.title")) %></h3>
-  <ul>
-    <li class="basic_money">
-      <b><%= fb_i(Character.human_attribute_name("basic_money")) %></b>
-      <div><%= @inventory.sell_price %></div>
-    </li>
-  </ul>
+
+  <div class="payouts">
+    <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @inventory.sell_price) %>
+  </div>
 </div>
 
 <% content_for :script do %>
