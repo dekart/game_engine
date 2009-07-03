@@ -62,10 +62,6 @@ en:
     item:
       name: "Item"
   payouts:
-    options:
-      apply_on: "Apply on"
-      chance: "Chance"
-      action: "Action"
     item:
       name: "Item"
     vip_money:
@@ -74,8 +70,9 @@ en:
       name: "Money"
     random_item:
       name: "Random Item"
-      price_limit: "Price limit"
-      availability: "Availability"
+      attributes:
+        value: "Price limit"
+        allow_vip: "Allow items that cost gems"
 # Templates
   layouts:
     next_steps:

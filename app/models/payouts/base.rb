@@ -27,7 +27,7 @@ module Payouts
 
     def self.human_attribute_name(field)
       I18n.t(field,
-        :scope    => [:payouts, self.class.to_s.underscore, :attributes],
+        :scope    => [:payouts, self.to_s.demodulize.underscore, :attributes],
         :default  => I18n.t(field,
           :scope    => [:payouts, :base, :attributes],
           :default  => field.humanize

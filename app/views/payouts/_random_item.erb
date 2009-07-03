@@ -1,1 +1,3 @@
-<%= payout(:random_item, payout.item.name, image_tag(payout.item.image.url(:icon))) %>
+<% if payout.item %>
+  <%= payout(:random_item, payout.item.name, image_tag(payout.item.image.url(:icon))) %>
+<% end %>

@@ -1,2 +1,3 @@
-<%= form.text_field :value %>
-<%= form.select :availability, Item::AVAILABILITIES %>
+<%= form.text_field :value, :size => 5 %>
+<%= form.select :availability, Item::AVAILABILITIES, :include_blank => "-- Any --" %>
+<%= form.check_box :allow_vip %>
