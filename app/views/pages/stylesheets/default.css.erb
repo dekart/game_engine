@@ -10,14 +10,15 @@
   <% end %>
 
 #co {clear:both; border-top: 1px solid #d0d0d0; width: 100%}
-  #co td { width: 125px;line-height: 25px; padding-bottom: 5px;}
+  #co td {line-height: 25px; padding-bottom: 5px;}
   #co div.value {height: 20px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
   <% %w{basic_money vip_money level experience health energy}.each do |attr| %>
     #co_<%= attr %> {background-image: url(<%= image_path("icons/#{attr}.gif") %>);}
   <% end %>
   #co_points a {font-weight: bold;color:red;}
-  #co .timer {color: #b0b0b0; float:right; padding-right: 5px;}
-  #co .level {width: 100px;}
+  #co .timer {color: #b0b0b0; float:right; padding-right: 10px;}
+  #co .basic_money {width: 160px;}
+  #co .level {width: 70px;}
   #co .experience {width: 150px;}
     #co_experience_bar {border: 1px solid #d0d0d0; margin: -4px 10px -2px 0;}
       #co_experience_percentage {height: 4px; background-image: url(<%= image_path("progress.gif") %>);}
