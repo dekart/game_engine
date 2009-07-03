@@ -3,5 +3,6 @@ class BankOperation < ActiveRecord::Base
 
   attr_accessible :amount
 
+  validates_presence_of :amount
   validates_numericality_of :amount, :greater_than => 0, :only_integer => true
 end

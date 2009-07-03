@@ -4,7 +4,7 @@ class BankWithdraw < BankOperation
   protected
 
   def validate_on_create
-    self.errors.add(:amount, :not_enough) if self.amount > self.character.bank
+    self.errors.add(:amount, :not_enough) if self.amount && self.amount > self.character.bank
   end
 
   def move_money
