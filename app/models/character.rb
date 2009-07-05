@@ -269,7 +269,7 @@ class Character < ActiveRecord::Base
       self.relations_count    * 100 +
       self.fights_won         * 10 +
       self.missions_succeeded * 5 +
-      self.property_income
+      (self.property_income.to_f / (5 + self.property_income.to_f / 50000)).ceil
     )
   end
 end
