@@ -88,24 +88,23 @@ en:
       link: "Become Fan &raquo;"
     bookmark:
       text: "Don't forget to add {app} to your bookmarks!"
-    application:
-      spinner:
-        alt: "Please wait..."
-        text: "Please wait for a few seconds..."
-      main_menu:
-        home: "Home"
-        missions: "Missions"
-        fights: "Fight"
-        items: "Shop"
-        vip: "Gem Market"
-        inventories: "Inventory"
-        character: "Profile"
-        relations: "Alliance"
-        rating: "Rating"
-        properties: "Properties"
-      character_overview:
-        bank: "Treasury"
-        buy_vip_money: "Get More"
+    main_menu:
+      home: "Home"
+      missions: "Missions"
+      fights: "Fight"
+      items: "Shop"
+      vip: "Gem Market"
+      inventories: "Inventory"
+      character: "Profile"
+      relations: "Alliance"
+      rating: "Rating"
+      properties: "Properties"
+    spinner:
+      alt: "Please wait..."
+      text: "Please wait for a few seconds..."
+    character_overview:
+      bank: "Treasury"
+      premium: "Get More"
   bank_operations:
     new:
       title: Treasury
