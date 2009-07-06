@@ -244,7 +244,7 @@ en:
         price: "Price"
       buttons:
         buy: "Buy"
-        get_vip: "Get More Gems"
+        get_vip: "Get Gems"
       vip_items:
         title: "Special Items"
         text: "Special items are more powerfull and have additional effects"
