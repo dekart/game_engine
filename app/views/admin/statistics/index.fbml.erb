@@ -1,9 +1,10 @@
-<div id="total_users">
-  <b><%= t(".total_users") %></b>
-  <h2><%= @total_users %></h2>
-</div>
+<p id="total_users">
+  <b><%= t(".total_users") %></b>:
 
-<h2><%= t(".latest_users") %></h2>
+  <h2><%= @total_users %> (+<%= @last_day_users %> in last 24 hours)</h2>
+</p>
+
+<b><%= t(".latest_users") %></b>
 
 <table>
   <% @latest_users.each do |user| %>
