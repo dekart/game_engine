@@ -5,7 +5,7 @@ module Jobs
     def perform
       return unless newsletter = Newsletter.find_by_id(newsletter_id)
 
-      if users = User.after(newsletter.last_recipient).find(:all, :limit => 10) and users.any?
+      if users = User.after(newsletter.last_recipient).find(:all, :limit => 50) and users.any?
         facebook_session.send_notification(users, newsletter.text)
 
         newsletter.update_attribute(:last_recipient, users.last)
