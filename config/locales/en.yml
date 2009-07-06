@@ -421,6 +421,14 @@ en:
     get_more_vip:
       title: "Get More Gems"
       text: "You can earn gems by completing offers. Check offer list daily to complete new offers and receive gems every day. You can also buy as more gems as you need by Credit Card, PayPal, etc."
+    update:
+      messages:
+        success:
+          exchange_money: "Gold has been added to your character!"
+          refill_energy: "Now you have maximum energy!"
+          refill_health: "Now you have maximum health!"
+          buy_points: "Upgrade point has been added to your character!"
+        failure: "You don't have enough Gems"
 
 # Helpers
   blocks:

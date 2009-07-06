@@ -53,13 +53,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :promotions, :only => :show
 
-  map.resource :premium, 
-    :member => {
-      :buy_money      => :post,
-      :refill_energy  => :post,
-      :refill_health  => :post,
-      :buy_points     => :post
-    }
+  map.resource :premium
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
