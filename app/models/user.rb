@@ -46,4 +46,12 @@ class User < ActiveRecord::Base
   def deliver_welcome_message!
     Delayed::Job.enqueue Jobs::WelcomeNotification.new(self.id)
   end
+
+  def should_visit_invite_page?
+    self.invite_page_visited_at.nil? or self.invite_page_visited_at < Time.now - 24.hours
+  end
+
+  def invite_page_visited!
+    self.update_attribute(:invite_page_visited_at, Time.now)
+  end
 end

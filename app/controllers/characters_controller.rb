@@ -2,8 +2,12 @@ class CharactersController < ApplicationController
   skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => :load_vip_money
 
   def index
-    @latest_fights = Fight.with_participant(current_character).find(:all, :limit => 10)
-    @alliance_invitations = Invitation.for_user(current_user).find(:all)
+    if current_user.should_visit_invite_page?
+      redirect_to invite_users_path
+    else
+      @latest_fights = Fight.with_participant(current_character).find(:all, :limit => 10)
+      @alliance_invitations = Invitation.for_user(current_user).find(:all)
+    end
   end
 
   def upgrade

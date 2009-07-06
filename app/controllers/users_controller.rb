@@ -48,6 +48,10 @@ class UsersController < ApplicationController
           end
         end
       end
+    elsif params[:from_selector]
+      redirect_to root_path
+    else
+      current_user.invite_page_visited!
     end
   end
 end

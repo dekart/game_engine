@@ -38,7 +38,7 @@
   <% end %>
 <% end %>
 
-<% fb_request_form(nil, :invite_message, invite_users_path) do %>
+<% fb_request_form(nil, :invite_message, invite_users_path(:from_selector => true)) do %>
   <%= fb_fa(:type, fb_i(t(".invite.title"))) %>
   
   <% fb_custom_multi_friend_selector(:exclude_ids => (current_user.invitations.facebook_ids + current_character.relations.facebook_ids).uniq.join(",") ) do %>
