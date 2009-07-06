@@ -19,4 +19,10 @@ class PremiaController < ApplicationController
 
     redirect_to :action => :show
   end
+
+  def buy_points
+    current_character.buy_points!
+
+    redirect_to :action => :show
+  end
 end

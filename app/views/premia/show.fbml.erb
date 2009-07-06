@@ -8,7 +8,25 @@
   <% end %>
 </div>
 
-<table id="exchange_vip_money" cellspacing="0">
+<table id="premia" cellspacing="0">
+  <tr>
+    <td class="name">
+      <% fb_i do %>
+        <%= t(".buy_points.text") %>
+
+        <%= fb_it(:amount,
+              content_tag(:span, Character::BUY_POINTS_RATE[:points], :class => :points)
+            ) %>
+      <% end %>
+    </td>
+    <td class="vip_money"><%= Character::BUY_POINTS_RATE[:vip_money] %></td>
+    <td class="controls">
+      <%= link_to(t(".buy_points.button"), buy_points_premium_path,
+            :method => :post
+          ) %>
+    </td>
+  </tr>
+
   <tr>
     <td class="name">
       <% fb_i do %>

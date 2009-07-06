@@ -20,6 +20,10 @@ class Character < ActiveRecord::Base
   }
   ENERGY_REFILL_RATE = 5
   HEALTH_REFILL_RATE = 1
+  BUY_POINTS_RATE = {
+    :vip_money  => 5,
+    :points     => 5
+  }
 
   belongs_to :user
   has_many :ranks do
@@ -241,6 +245,17 @@ class Character < ActiveRecord::Base
     self.class.transaction do
       self.hp = self.health
       self.vip_money -= HEALTH_REFILL_RATE unless free
+
+      self.save
+    end
+  end
+
+  def buy_points!
+    return if self.vip_money < BUY_POINTS_RATE[:vip_money]
+
+    self.class.transaction do
+      self.vip_money  -= BUY_POINTS_RATE[:vip_money]
+      self.points     += BUY_POINTS_RATE[:points]
 
       self.save
     end

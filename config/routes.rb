@@ -57,7 +57,8 @@ ActionController::Routing::Routes.draw do |map|
     :member => {
       :buy_money      => :post,
       :refill_energy  => :post,
-      :refill_health  => :post
+      :refill_health  => :post,
+      :buy_points     => :post
     }
 
   map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"

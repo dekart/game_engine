@@ -405,8 +405,8 @@ en:
       current:
         label: "You have {amount} gems"
       exchange_money:
-        text: "Add {amount} gold to your account"
-        button: "Get More Gold"
+        text: "Add {amount} gold to your character"
+        button: "Add Gold"
       refill_energy:
         text: "Refill your energy"
         button: "Refill"
@@ -415,6 +415,9 @@ en:
         text: "Refill your health"
         button: "Refill"
         full: "You have full health"
+      buy_points:
+        text: "Add {amount} upgrade points to your character"
+        button: "Add Points"
     get_more_vip:
       title: "Get More Gems"
       text: "You can earn gems by completing offers. Check offer list daily to complete new offers and receive gems every day. You can also buy as more gems as you need by Credit Card, PayPal, etc."
