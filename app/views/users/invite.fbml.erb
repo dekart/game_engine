@@ -28,7 +28,13 @@
   <% end %>
 
   <% content_tag("fb:req-choice", :url => character_url(current_character)) do%>
-    <%= fb_fa(:label, fb_i(t(".invite.buttons.visit_profile", :user => fb_name(current_user, :linked => false, :possessive => true)))) %>
+    <%= fb_fa(:label, fb_i(t(".invite.buttons.visit_profile", 
+          :user => fb_name(current_user,
+            :linked         => false,
+            :possessive     => true,
+            :firstnameonly  => true
+          )))
+        ) %>
   <% end %>
 <% end %>
 
