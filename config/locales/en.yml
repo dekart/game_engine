@@ -307,10 +307,10 @@ en:
       invite:
         title: "Alliance"
         note: "Invite friends to join your Alliance"
-        message: "{{user}} wants you to join {{pronoun}} alliance in {{app_name}}, a fantasy-style combat game played on Facebook. Start out as a petty swordsmen and work your way up to be hero of a fantasy world."
+        message: "{{user}} wants you to join {{pronoun}} alliance in {{app_name}}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
         buttons:
-          accept: "Accept Invitation"
-          visit_profile: "Visit {{user}} Profile"
+          accept: "Play Now!"
+          visit_profile: "View {{user}} Character"
       manual:
         title: "Out Of Requests?"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. You can use this link to recruit more alliance members."
