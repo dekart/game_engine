@@ -38,6 +38,10 @@
   <% end %>
 <% end %>
 
+<div class="note">
+  <%= fb_i(t(".note")) %>
+</div>
+
 <% fb_request_form(nil, :invite_message, invite_users_path(:from_selector => true)) do %>
   <%= fb_fa(:type, fb_i(t(".invite.title"))) %>
   
