@@ -18,10 +18,10 @@ en:
         text: "joined your Alliance in {app}! {link}"
         link: "View Alliance"
     item:
-      one_line: "{*actor*} bought {*item*} in {{app}} game"
+      one_line: "{*actor*} bought a {*item*} in {{app}} game"
       short:
-        title: "{*actor*} bought new item in {{app}}"
-        text: "{*actor*} bought {*item*} in {{app}}. Now {*actor*} is stronger than before!"
+        title: "{*actor*} bought a new item in {{app}}"
+        text: "{*actor*} bought a {*item*} in {{app}}. Now {*actor*} is stronger than before!"
       action_link: "Play {{app}} &raquo;"
     mission:
       one_line: "{*actor*} completed \"{*mission*}\" mission in {{app}} game"
