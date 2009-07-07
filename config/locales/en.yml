@@ -84,8 +84,8 @@ en:
         invite: "Grow up your Alliance"
     fan_specials:
       title: "Fan Specials"
-      text: "{app} fans weekly receive free Gold, Gems, items, and other useful game stuff."
-      link: "Become Fan &raquo;"
+      text: "{app} fans periodically receive free Gold, Gems, weapons, and other useful game stuff!"
+      link: "Become Fan!"
     bookmark:
       text: "Don't forget to add {app} to your bookmarks!"
     main_menu:
