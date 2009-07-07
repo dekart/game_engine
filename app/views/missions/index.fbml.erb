@@ -5,7 +5,7 @@
     <% @missions.each do |mission| %>
       <% group_header mission.mission_group do |group| %>
         <tr>
-          <th class="mission_group"><%= fb_i(group.name) %></th>
+          <th class="mission_group" colspan="2"><%= fb_i(group.name) %></th>
           <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
           <th><%= fb_i(t(".columns.requires")) %></th>
           <th><%= fb_i(t(".columns.progress")) %></th>
@@ -14,6 +14,7 @@
       <% end %>
 
       <% content_tag_for(:tr, mission) do %>
+        <td class="image"><%= image_tag(mission.image.url(:small)) if mission.image? %></td>
         <td class="details">
           <div class="name"><%= fb_i(mission.name) %></div>
           <div class="description"><%= fb_i(mission.description) %></div>

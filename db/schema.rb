@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090706191918) do
+ActiveRecord::Schema.define(:version => 20090707075414) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(:version => 20090706191918) do
     t.text     "failure_text"
     t.text     "complete_text"
     t.integer  "win_amount"
-    t.integer  "success_chance",   :default => 100
+    t.integer  "success_chance",     :default => 100
     t.string   "title"
     t.integer  "ep_cost"
     t.integer  "experience"
@@ -179,6 +179,9 @@ ActiveRecord::Schema.define(:version => 20090706191918) do
     t.text     "requirements"
     t.text     "payouts"
     t.integer  "mission_group_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
   end
 
   create_table "newsletters", :force => true do |t|

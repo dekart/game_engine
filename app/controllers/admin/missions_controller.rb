@@ -18,7 +18,7 @@ class Admin::MissionsController < ApplicationController
     @mission = Mission.new(params[:mission])
 
     if @mission.save
-      redirect_to :action => :index
+      redirect_to admin_missions_url(:canvas => true)
     else
       render :action => :new
     end
@@ -32,7 +32,7 @@ class Admin::MissionsController < ApplicationController
     @mission = Mission.find(params[:id])
 
     if @mission.update_attributes(params[:mission])
-      redirect_to :action => :index
+      redirect_to admin_missions_url(:canvas => true)
     else
       render :action => :edit
     end

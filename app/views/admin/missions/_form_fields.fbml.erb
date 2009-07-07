@@ -9,6 +9,9 @@
       <%= form.text_area :failure_text, :required => true, :rows => 5 %>
       <%= form.text_area :complete_text, :required => true, :rows => 5 %>
       <%= form.text_field :title, :required => true %>
+      
+      <%= form.file_field :image,
+            :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : "") %>
 
       <%= form.text_field :win_amount, :required => true, :size => 3 %>
       <%= form.text_field :success_chance, :required => true, :size => 3 %>

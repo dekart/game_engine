@@ -4,6 +4,12 @@ class Mission < ActiveRecord::Base
   has_many :ranks
   belongs_to :mission_group
 
+  has_attached_file :image,
+    :styles => {
+      :icon   => "40x40#",
+      :small  => "120x120>"
+    }
+
   named_scope :available_for, Proc.new {|character|
     {
       :include => :mission_group,
