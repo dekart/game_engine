@@ -182,6 +182,7 @@ en:
       columns:
         user: "User"
         level: "Level"
+        relations: "Alliance"
       buttons:
         attack: "Attack!"
       empty_set: "There are no opponents for you at this time."

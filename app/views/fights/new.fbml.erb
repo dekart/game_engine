@@ -23,12 +23,18 @@
       <tr>
         <th colspan="2"><%= fb_i(t(".columns.user")) %></th>
         <th><%= fb_i(t(".columns.level")) %></th>
+        <th><%= fb_i(t(".columns.relations")) %></th>
       </tr>
       <% @victims.each do |victim| %>
         <% content_tag_for(:tr, victim) do %>
           <td class="picture"><%= character_picture_link(victim) %></td>
           <td class="name"><%= character_name_link(victim) %></td>
           <td class="level"><%= victim.level %></td>
+          <td class="relations">
+            <%= content_tag(:span, victim.relations.size,
+                  :class => (:larger if victim.relations.size > current_character.relations.size)
+                ) %>
+          </td>
           <td class="controls">
             <%= link_to_remote(fb_i(t(".buttons.attack")),
                   :url => fights_url(:victim_id => victim, :canvas => false),
