@@ -64,7 +64,7 @@
       <% if current_character.full_health? %>
         <%= fb_i(t(".refill_health.full")) %>
       <% else %>
-        <%= link_to(t(".refill_health.button"), premium_path(:type => :refill_health), :method => :post) %>
+        <%= link_to(t(".refill_health.button"), premium_path(:type => :refill_health), :method => :put) %>
       <% end %>
     </td>
   </tr>
