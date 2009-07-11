@@ -59,7 +59,16 @@ namespace :deploy do
   task :bootstrap, :roles => :app do
     run "cd #{current_path}; rake app:bootstrap"
   end
+
+  namespace :db do
+    desc "Backup database"
+    task :backup, :roles => :app do
+      run "cd #{current_path}; rake backup:db"
+    end
+  end
 end
+
+before "deploy:migrations", "deploy:db:backup"
 
 ["deploy:jobs:stop"].each do |t|
   before "deploy", t
