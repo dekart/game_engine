@@ -118,6 +118,8 @@ en:
         note: "Withdrawing money to cash is free."
         submit: "Withdraw"
   characters:
+    attributes:
+      bonus: "+{amount} from Alliance"
     invitations:
       title: "Alliance Invitations"
       accept: "Accept"

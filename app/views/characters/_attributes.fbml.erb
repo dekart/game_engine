@@ -1,36 +1,59 @@
 <table class="character_attributes">
-  <tr class="attack">
-    <th><%= fb_i(Character.human_attribute_name("attack")) %></th>
-    <td class="value"><%= character.own_attack_points %></td>
-  </tr>
-  <tr class="defence">
-    <th><%= fb_i(Character.human_attribute_name("defence")) %></th>
-    <td class="value"><%= character.own_defence_points %></td>
-  </tr>
   <% if character == current_character %>
-  <tr class="health">
-    <th><%= fb_i(Character.human_attribute_name("health")) %></th>
-    <td class="value">
-      <%= "%d/%d" % [character.hp, character.health] %>
-    </td>
-  </tr>
-  <tr class="energy">
-    <th><%= fb_i(Character.human_attribute_name("energy")) %></th>
-    <td class="value">
-      <%= "%d/%d" % [character.ep, character.energy] %>
-    </td>
-  </tr>
-  <tr class="basic_money">
-    <th><%= fb_i(Character.human_attribute_name("basic_money")) %></th>
-    <td class="value">
-      <%= character.basic_money %>
-    </td>
-  </tr>
-  <tr class="vip_money">
-    <th><%= fb_i(Character.human_attribute_name("vip_money")) %></th>
-    <td class="value">
-      <%= character.vip_money %>
-    </td>
-  </tr>
+    <tr class="attack">
+      <th><%= fb_i(Character.human_attribute_name("attack")) %></th>
+      <td class="value"><%= character.own_attack_points %></td>
+      <td class="bonus">
+        <% fb_i do %>
+          <%= t(".bonus") %>
+
+          <%= fb_it(:amount, content_tag(:span, character.relation_attack_points)) %>
+        <% end %>
+      </td>
+    </tr>
+    <tr class="defence">
+      <th><%= fb_i(Character.human_attribute_name("defence")) %></th>
+      <td class="value"><%= character.own_defence_points %></td>
+      <td class="bonus">
+        <% fb_i do %>
+          <%= t(".bonus") %>
+
+          <%= fb_it(:amount, content_tag(:span, character.relation_attack_points)) %>
+        <% end %>
+      </td>
+    </tr>
+    <tr class="health">
+      <th><%= fb_i(Character.human_attribute_name("health")) %></th>
+      <td class="value">
+        <%= "%d/%d" % [character.hp, character.health] %>
+      </td>
+    </tr>
+    <tr class="energy">
+      <th><%= fb_i(Character.human_attribute_name("energy")) %></th>
+      <td class="value">
+        <%= "%d/%d" % [character.ep, character.energy] %>
+      </td>
+    </tr>
+    <tr class="basic_money">
+      <th><%= fb_i(Character.human_attribute_name("basic_money")) %></th>
+      <td class="value">
+        <%= character.basic_money %>
+      </td>
+    </tr>
+    <tr class="vip_money">
+      <th><%= fb_i(Character.human_attribute_name("vip_money")) %></th>
+      <td class="value">
+        <%= character.vip_money %>
+      </td>
+    </tr>
+  <% else %>
+    <tr class="attack">
+      <th><%= fb_i(Character.human_attribute_name("attack")) %></th>
+      <td class="value"><%= character.own_attack_points %></td>
+    </tr>
+    <tr class="defence">
+      <th><%= fb_i(Character.human_attribute_name("defence")) %></th>
+      <td class="value"><%= character.own_defence_points %></td>
+    </tr>
   <% end %>
 </table>
