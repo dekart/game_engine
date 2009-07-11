@@ -103,6 +103,6 @@ class Inventory < ActiveRecord::Base
   end
 
   def recache_holder_effects
-    self.holder.cache_inventory_effects
+    self.holder.cache_inventory_effects if self.holder
   end
 end

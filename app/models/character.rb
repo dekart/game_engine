@@ -37,7 +37,7 @@ class Character < ActiveRecord::Base
   has_many :holded_inventories, :class_name => "Inventory", :as => :holder
   
   has_many :items, :through => :inventories
-  has_many :relations, :foreign_key => "source_id" do
+  has_many :relations, :foreign_key => "source_id", :include => :target_character do
     def facebook_ids
       find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
     end
