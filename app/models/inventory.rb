@@ -82,7 +82,7 @@ class Inventory < ActiveRecord::Base
       self.destroy
     end
   end
-  
+
   protected
 
   def enough_character_money?

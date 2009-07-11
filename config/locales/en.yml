@@ -231,6 +231,7 @@ en:
       effects: "Effects:"
     holders:
       relations: "Alliance Members:"
+      empty_set: "You don't have any members in your Alliance. Invite some friends to increase power of your army."
   invitations:
     accept:
       message: "Invitation accepted! {user} became part of your alliance!"

@@ -15,7 +15,7 @@ class Relation < ActiveRecord::Base
 
   validates_uniqueness_of :target_id, :scope => :source_id
 
-  after_destroy :recache_character_effects
+  after_destroy :displace_holded_inventories
 
   def self.destroy_between(c1, c2)
     self.transaction do
@@ -64,5 +64,11 @@ class Relation < ActiveRecord::Base
 
   def recache_character_effects
     self.source_character.cache_relation_effects
+  end
+
+  def displace_holded_inventories
+    self.holded_inventories.update_all("holder_id = NULL, holder_type = NULL, placement = NULL")
+
+    self.recache_character_effects
   end
 end

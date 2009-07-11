@@ -8,14 +8,22 @@
 
   <tr><th colspan="2"><%= fb_i(t(".relations")) %></th></tr>
 
-  <% current_character.relations.each do |relation| %>
-    <% content_tag_for :tr, relation, :class => :holder do %>
-      <td class="image"><%= character_picture(relation.target_character) %></td>
-      <td class="info">
-        <div class="name"><%= character_name(relation.target_character) %></div>
-        <div class="level"><%= fb_i(Character.human_attribute_name("level")) %> <%= relation.target_character.level %></div>
-      </td>
+  <% if current_character.relations.size > 0 %>
+    <% current_character.relations.each do |relation| %>
+      <% content_tag_for :tr, relation, :class => :holder do %>
+        <td class="image"><%= character_picture(relation.target_character) %></td>
+        <td class="info">
+          <div class="name"><%= character_name(relation.target_character) %></div>
+          <div class="level"><%= fb_i(Character.human_attribute_name("level")) %> <%= relation.target_character.level %></div>
+        </td>
+      <% end %>
     <% end %>
+  <% else %>
+    <tr>
+      <td colspan="2">
+        <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
+      </td>
+    </tr>
   <% end %>
 </table>
 
