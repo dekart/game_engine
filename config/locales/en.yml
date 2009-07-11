@@ -227,6 +227,8 @@ en:
         success: "You've successfully used {item}!"
         item_gone: "{item} ran out and now it's gone!"
       effects: "Effects:"
+    holders:
+      relations: "Alliance Members:"
   invitations:
     accept:
       message: "Invitation accepted! {user} became part of your alliance!"

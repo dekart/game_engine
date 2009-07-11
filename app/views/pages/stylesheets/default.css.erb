@@ -127,12 +127,14 @@
     #inventory_list .details .restore_energy{background-image: url(<%= image_path("icons/energy.gif") %>)}
     #inventory_list .details .upgrade{background-image: url(<%= image_path("icons/level.gif") %>)}
   #inventory_list .spacer {border:0;}
-  #inventory_list .controls .placement {text-align:right; font-weight: bold; margin: 5px;}
-  #inventory_list .controls .sell {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
-  #inventory_list .controls .place {background-image: url(<%= image_path("icons/add.gif") %>);}
-  #inventory_list .controls .use {background-image: url(<%= image_path("icons/accept.gif") %>);}
+  #inventory_list .controls {width: 120px;}
+    #inventory_list .controls .placement {text-align:right; font-weight: bold; margin: 5px;}
+    #inventory_list .controls .sell {background-image: url(<%= image_path("icons/basic_money.gif") %>);}
+    #inventory_list .controls .place {background-image: url(<%= image_path("icons/add.gif") %>);}
+    #inventory_list .controls .use {background-image: url(<%= image_path("icons/accept.gif") %>);}
 
 #inventory_holders {width: 200px;}
+  #inventory_holders th {padding: 30px 5px 10px 5px; border-right: 1px solid #d0d0d0;}
   #inventory_holders .holder td {padding: 5px; cursor: pointer;}
     #inventory_holders .holder .image {width: 55px;}
     #inventory_holders .holder .info {border-right: 1px solid #d0d0d0;}

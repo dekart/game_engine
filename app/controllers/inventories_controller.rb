@@ -16,19 +16,17 @@ class InventoriesController < ApplicationController
   end
 
   def index
-    @inventories = current_character.inventories
+    @inventories = current_character.inventories.available
   end
 
   def place
-    @relation = current_character.relations.find_by_id(params[:relation_id]) if params[:relation_id]
-
     @inventory = current_character.inventories.find(params[:id])
-    @inventory.place_to(params[:placement], @relation)
 
-    render(
-      :partial  => "inventories/placements",
-      :locals   => {:holder => @relation || current_character}
-    )
+    @holder = relation_or_current_character
+
+    @inventory.place_to(params[:placement], @holder)
+
+    render :action => :place, :layout => "ajax"
   end
 
   def use
@@ -40,9 +38,18 @@ class InventoriesController < ApplicationController
   end
 
   def placements
-    @holder = current_character.relations.find_by_id(params[:relation_id]) if params[:relation_id]
-    @holder ||= current_character
+    @holder = relation_or_current_character
 
     render :action => :placements, :layout => "ajax"
+  end
+
+  protected
+
+  def relation_or_current_character
+    if params[:relation_id].blank?
+      current_character
+    else
+      current_character.relations.find_by_id(params[:relation_id]) || current_character
+    end
   end
 end

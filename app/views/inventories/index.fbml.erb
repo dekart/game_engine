@@ -39,7 +39,7 @@
                         <%= link_to_remote(fb_i(t(".buttons.to_#{placement}")),
                               :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
                               :with   => "Inventory.Holders.getRequestParams()",
-                              :update => :inventory_placements,
+                              :update => :result,
                               :html   => {:class => :place}
                             ) %>
                       <% end %>

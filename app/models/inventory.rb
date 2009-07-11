@@ -12,6 +12,7 @@ class Inventory < ActiveRecord::Base
       :order      => "items.level ASC, items.basic_price ASC"
     }
   }
+  named_scope :available, :conditions => "holder_id IS NULL"
 
   delegate :name, :description, :image, :effects, :placements, :placeable?, :usable?, :usage_limit, :to => :item
   
@@ -26,9 +27,7 @@ class Inventory < ActiveRecord::Base
     (self.item.basic_price * 0.5).ceil
   end
 
-  def place_to(placement, relation = nil)
-    new_holder = relation || self.character
-    
+  def place_to(placement, new_holder)
     if self.placements.include?(placement.to_s) and placement != self.placement
       self.class.transaction do
 
@@ -39,7 +38,7 @@ class Inventory < ActiveRecord::Base
             {
               :p_id => placement,
               :h_id => new_holder.id,
-              :h_t  =>new_holder.class.to_s #FIXME We should use  inheritance column value used by activerecord itself instead of simple class name
+              :h_t  => new_holder.class.to_s #FIXME We should use  inheritance column value used by activerecord itself instead of simple class name
             }
           ]
         )

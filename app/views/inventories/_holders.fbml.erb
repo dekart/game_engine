@@ -6,6 +6,8 @@
     </td>
   </tr>
 
+  <tr><th colspan="2"><%= fb_i(t(".relations")) %></th></tr>
+
   <% current_character.relations.each do |relation| %>
     <% content_tag_for :tr, relation, :class => :holder do %>
       <td class="image"><%= character_picture(relation.target_character) %></td>
