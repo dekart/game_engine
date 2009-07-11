@@ -15,6 +15,8 @@
         <td class="info">
           <div class="name"><%= character_name(relation.target_character) %></div>
           <div class="level"><%= fb_i(Character.human_attribute_name("level")) %> <%= relation.target_character.level %></div>
+          <div class="attack"><%= fb_i(Character.human_attribute_name("attack")) %> <%= relation.attack_points %></div>
+          <div class="defence"><%= fb_i(Character.human_attribute_name("defence")) %> <%= relation.defence_points %></div>
         </td>
       <% end %>
     <% end %>

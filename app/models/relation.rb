@@ -62,6 +62,14 @@ class Relation < ActiveRecord::Base
     self.recache_character_effects
   end
 
+  def attack_points
+    self.inventory_effects[:attack].value
+  end
+
+  def defence_points
+    self.inventory_effects[:defence].value
+  end
+
   def recache_character_effects
     self.source_character.cache_relation_effects
   end
