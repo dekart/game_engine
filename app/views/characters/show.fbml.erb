@@ -28,6 +28,11 @@
   <hr />
 
   <div class="placements">
-    <%= render :partial => "inventories/placements", :locals => {:holder => @character} %>
+    <%= render(
+          :partial  => "inventories/placements",
+          :locals   => {
+            :holder => current_character.relations.established?(@character) ? current_character.relations.with(@character) : @character
+          }
+        ) %>
   </div>
 </div>
