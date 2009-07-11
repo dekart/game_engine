@@ -1,0 +1,8 @@
+<% fb_js_string :placements do %>
+  <%= render :partial => "inventories/placements", :locals => {:holder => @holder} %>
+<% end %>
+
+<% content_for :script do %>
+  $('inventory_placements').setInnerFBML(placements);
+  $('<%= dom_id(@inventory) %>').hide();
+<% end %>
