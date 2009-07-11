@@ -68,7 +68,7 @@ namespace :deploy do
   end
 end
 
-before "deploy:migrations", "deploy:db:backup"
+before "deploy:migrate", "deploy:db:backup"
 
 ["deploy:jobs:stop"].each do |t|
   before "deploy", t
