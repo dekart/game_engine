@@ -132,6 +132,16 @@
   #inventory_list .controls .place {background-image: url(<%= image_path("icons/add.gif") %>);}
   #inventory_list .controls .use {background-image: url(<%= image_path("icons/accept.gif") %>);}
 
+#inventory_holders {width: 200px;}
+  #inventory_holders .holder td {padding: 5px; cursor: pointer;}
+    #inventory_holders .holder .image {width: 55px;}
+    #inventory_holders .holder .info {border-right: 1px solid #d0d0d0;}
+    #inventory_holders .holder .name {font-weight: bold; color: #3B5998;}
+    #inventory_holders #self .name {font-size: 14px;}
+  #inventory_holders .current td {border-top: 1px solid #d0d0d0;border-bottom: 1px solid #d0d0d0; cursor: auto;}
+    #inventory_holders .current .image {border-left: 1px solid #d0d0d0;}
+    #inventory_holders .current .info {border-right: 1px solid white !important;}
+
 #upgrade_list td{padding: 10px; vertical-align: middle;}
 #upgrade_list .points td{border-bottom: 1px solid #d0d0d0;}
 #upgrade_list .name {font-weight: bold;}

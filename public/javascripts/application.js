@@ -134,3 +134,60 @@ var Timer = {
     }
   }
 };
+
+var Inventory = {
+  Holders: {
+    current: null,
+    getRequestParams: function(){
+      var id = this.current.getId();
+      
+      if(id != 'self'){ 
+        return 'relation_id=' + id.replace('relation_', '');
+      } else {
+        return '';
+      }
+    },
+    getHolders: function(){
+      return $('inventory_holders').getChildNodes()[0].getChildNodes();
+    },
+    initialize: function(){
+      var holders = this.getHolders();
+
+      for(var i = 0; i < holders.length; i++){
+        var h = holders[i];
+        
+        h.addEventListener('click', this.onClick);
+        
+        if(h.hasClassName('current')){ this.current = h; }
+      }
+      
+      if(this.current == null){ this.setCurrentHolder('self'); }
+    },
+    onClick: function(e){
+      var holder = e.target;
+      while(!holder.hasClassName('holder')){ holder = holder.getParentNode(); }
+      
+      Inventory.Holders.setCurrentHolder(holder.getId());
+      Inventory.Holders.loadPlacements();
+    },
+    loadPlacements: function(){
+      new Ajax.Updater('result',
+        root_url + 'inventories/placements?' + this.getRequestParams(),
+        {asynchronous:true, evalScripts:true, method:'get'}
+      );
+      return false;
+    },
+    setCurrentHolder: function(id){
+      var holders = this.getHolders();
+
+      for(var i = 0; i < holders.length; i++){
+        var h = holders[i];
+
+        h.removeClassName('current');
+      }
+
+      this.current = $(id)
+      this.current.addClassName('current');
+    }
+  }
+}

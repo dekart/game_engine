@@ -1,0 +1,8 @@
+<% fb_js_string :placements do %>
+  <%= render :partial => "inventories/placements", :locals => {:holder => @holder} %>
+<% end %>
+
+<% content_for :script do %>
+  $('inventory_placements').setInnerFBML(placements);
+  Inventory.Holders.setCurrentHolder('<%= @holder.is_a?(Character) ? "self" : dom_id(@holder) %>')
+<% end %>

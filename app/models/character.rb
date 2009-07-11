@@ -32,7 +32,10 @@ class Character < ActiveRecord::Base
     end
   end
   has_many :missions, :through => :ranks
-  has_many :inventories, :include => :item
+  
+  has_many :inventories, :include => :item, :order => "items.level, inventories.id"
+  has_many :holded_inventories, :class_name => "Inventory", :as => :holder
+  
   has_many :items, :through => :inventories
   has_many :relations, :foreign_key => "source_id" do
     def facebook_ids
@@ -75,6 +78,7 @@ class Character < ActiveRecord::Base
   attr_accessor :level_updated
 
   serialize :inventory_effects, Effects::Collection
+  serialize :relation_effects, Effects::Collection
 
   extend RestorableAttribute
   restorable_attribute :hp, :limit => :health, :restore_period => 2.minutes + 30.seconds
@@ -109,11 +113,11 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    self.own_attack_points + self.assignments.effect_value(:attack) + self.relations.size
+    self.own_attack_points + self.relation_effects[:attack].value + self.assignments.effect_value(:attack)
   end
 
   def defence_points
-    self.own_defence_points + self.assignments.effect_value(:defence) + self.relations.size
+    self.own_defence_points + self.relation_effects[:defence].value + self.assignments.effect_value(:defence)
   end
 
   def own_attack_points
@@ -157,18 +161,32 @@ class Character < ActiveRecord::Base
     )
   end
 
+  def inventory_effects
+    super || Effects::Collection.new
+  end
+
   def cache_inventory_effects
     self.inventory_effects = Effects::Collection.new
 
-    self.inventories.placed.each do |item|
+    self.holded_inventories.each do |item|
       self.inventory_effects << item.effects
     end
 
     self.save
   end
 
-  def inventory_effects
-    self[:inventory_effects] ||= Effects::Collection.new
+  def relation_effects
+    super || Effects::Collection.new
+  end
+
+  def cache_relation_effects
+    self.relation_effects = Effects::Collection.new
+
+    self.relations.each do |relation|
+      self.relation_effects << relation.inventory_effects
+    end
+
+    self.save
   end
 
   def can_buy?(item)

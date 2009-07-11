@@ -1,7 +1,8 @@
 class Relation < ActiveRecord::Base
-  belongs_to :source_character, :foreign_key => "source_id", :class_name => "Character", :counter_cache => true
-  belongs_to :target_character, :foreign_key => "target_id", :class_name => "Character"
-  has_one :assignment, :dependent => :destroy
+  belongs_to  :source_character, :foreign_key => "source_id", :class_name => "Character", :counter_cache => true
+  belongs_to  :target_character, :foreign_key => "target_id", :class_name => "Character"
+  has_one     :assignment, :dependent => :destroy
+  has_many    :holded_inventories, :class_name => "Inventory", :as => :holder
 
   named_scope :not_assigned,
     :include    => [:assignment, :target_character],
@@ -10,7 +11,11 @@ class Relation < ActiveRecord::Base
     :include    => [:assignment, :target_character],
     :conditions => "assignments.id IS NOT NULL"
 
+  serialize :inventory_effects, Effects::Collection
+
   validates_uniqueness_of :target_id, :scope => :source_id
+
+  after_destroy :recache_character_effects
 
   def self.destroy_between(c1, c2)
     self.transaction do
@@ -39,5 +44,25 @@ class Relation < ActiveRecord::Base
         invitation.destroy
       end
     end
+  end
+
+  def inventory_effects
+    super || Effects::Collection.new
+  end
+
+  def cache_inventory_effects
+    self.inventory_effects = Effects::Collection.new
+
+    self.holded_inventories.each do |item|
+      self.inventory_effects << item.effects
+    end
+
+    self.save
+
+    self.recache_character_effects
+  end
+
+  def recache_character_effects
+    self.source_character.cache_relation_effects
   end
 end

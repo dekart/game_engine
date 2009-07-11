@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090707075414) do
+ActiveRecord::Schema.define(:version => 20090711064110) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20090707075414) do
     t.integer  "bank",                   :default => 0
     t.integer  "property_income",        :default => 0
     t.datetime "basic_money_updated_at"
+    t.text     "relation_effects"
   end
 
   add_index "characters", ["level"], :name => "index_characters_on_level"
@@ -107,9 +108,11 @@ ActiveRecord::Schema.define(:version => 20090707075414) do
     t.integer  "character_id"
     t.integer  "item_id"
     t.string   "placement"
-    t.integer  "usage_count",  :default => 0
+    t.integer  "usage_count",                :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "holder_id"
+    t.string   "holder_type",  :limit => 50
   end
 
   add_index "inventories", ["character_id", "placement"], :name => "index_inventories_on_character_id_and_placement"
@@ -251,6 +254,7 @@ ActiveRecord::Schema.define(:version => 20090707075414) do
     t.integer  "target_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "inventory_effects"
   end
 
   add_index "relations", ["source_id", "target_id"], :name => "index_relations_on_source_id_and_target_id"

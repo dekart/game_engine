@@ -3,6 +3,7 @@ class Inventory < ActiveRecord::Base
 
   belongs_to :character
   belongs_to :item
+  belongs_to :holder, :polymorphic => true
 
   named_scope :by_item_group, Proc.new{|group|
     {
@@ -12,8 +13,6 @@ class Inventory < ActiveRecord::Base
     }
   }
 
-  named_scope :placed, { :conditions => "placement IS NOT NULL" }
-
   delegate :name, :description, :image, :effects, :placements, :placeable?, :usable?, :usage_limit, :to => :item
   
   attr_accessor :free_of_charge
@@ -21,20 +20,36 @@ class Inventory < ActiveRecord::Base
   validate_on_create :enough_character_money?
 
   after_create  :charge_character
-  after_destroy :recache_character_effects
+  after_destroy :recache_holder_effects
 
   def sell_price
     (self.item.basic_price * 0.5).ceil
   end
 
-  def place_to(placement)
+  def place_to(placement, relation = nil)
+    new_holder = relation || self.character
+    
     if self.placements.include?(placement.to_s) and placement != self.placement
       self.class.transaction do
-        self.character.inventories.update_all('placement = NULL', ['placement = ?', placement])
-        
-        self.update_attribute(:placement, placement)
 
-        self.recache_character_effects
+        self.character.inventories.update_all(
+          'placement = NULL, holder_id = NULL, holder_type = NULL',
+          [
+            'placement = :p_id AND holder_id = :h_id AND holder_type = :h_t',
+            {
+              :p_id => placement,
+              :h_id => new_holder.id,
+              :h_t  =>new_holder.class.to_s #FIXME We should use  inheritance column value used by activerecord itself instead of simple class name
+            }
+          ]
+        )
+        
+        self.update_attributes(
+          :placement  => placement,
+          :holder     => new_holder
+        )
+
+        self.recache_holder_effects
       end
     end
   end
@@ -88,7 +103,7 @@ class Inventory < ActiveRecord::Base
     end
   end
 
-  def recache_character_effects
-    self.character.cache_inventory_effects
+  def recache_holder_effects
+    self.holder.cache_inventory_effects
   end
 end
