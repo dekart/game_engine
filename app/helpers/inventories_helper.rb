@@ -3,10 +3,19 @@ module InventoriesHelper
     placement = placement.to_sym
     
     if inventory = character.holded_inventories.detect{|i| i.placement.to_sym == placement }
-      code = image_tag(inventory.item.image.url(image_size))
+      code = fb_tag(:img,
+        fb_ta(:src, image_path(inventory.image.url(image_size))) +
+        fb_ta(:alt, fb_i(inventory.name)) +
+        fb_ta(:title, fb_i(inventory.name))
+      )
       
       if options[:controls]
-        code << link_to_remote(image_tag("icons/delete.gif"),
+        code << link_to_remote(
+          fb_tag(:img,
+            fb_ta(:src, image_path("icons/delete.gif")) +
+            fb_ta(:alt, fb_i(t("inventories.placements.take_off"))) +
+            fb_ta(:title, fb_i(t("inventories.placements.take_off")))
+          ),
           :url => take_off_inventory_url(inventory, :canvas => false),
           :update => :result,
           :html => {:class => :take_off}
