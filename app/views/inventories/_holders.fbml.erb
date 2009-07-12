@@ -23,7 +23,11 @@
   <% else %>
     <tr>
       <td colspan="2">
-        <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
+        <div class="empty_set">
+          <%= fb_i(t(".empty_set.text")) %>
+
+          <%= link_to(t(".empty_set.invite"), invite_users_path, :class => :invite) %>
+        </div>
       </td>
     </tr>
   <% end %>
