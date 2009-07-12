@@ -7,65 +7,12 @@
     </td>
     <td>
       <div id="inventory_placements">
-        <%= render(:partial => "inventories/placements", :locals => {:holder => current_character}) %>
+        <%= inventory_placements_for(current_character) %>
       </div>
 
-      <% if @inventories.size > 0 %>
-        <table id="inventory_list" cellspacing="0">
-          <% ItemGroup.all.each do |group| %>
-            <% if @inventories.by_item_group(group).any? %>
-              <tr>
-                <th colspan="3"><h3><%= fb_i(group.name) %></h3></th>
-              </tr>
-              <% @inventories.by_item_group(group).each do |inventory| %>
-                <% content_tag_for(:tr, inventory) do %>
-                  <td class="picture"><%= image_tag(inventory.image.url(:small)) %></td>
-                  <td class="info">
-                    <div class="name"><%= fb_i(inventory.name) %></div>
-                    <div class="description"><%= fb_i(inventory.description) %></div>
-                  </td>
-                  <td class="details">
-                    <% inventory.effects.each do |effect| %>
-                      <%= content_tag(:div, effect.value, :class => effect.name) %>
-                    <% end %>
-                  </td>
-                  <td class="controls">
-                    <% unless inventory.placement.blank? %>
-                      <div class="placement"><%= fb_i(t(".placements.#{inventory.placement}"))%></div>
-                    <% end %>
-
-                    <% inventory.placements.each do |placement| %>
-                      <% unless inventory.placement == placement %>
-                        <%= link_to_remote(fb_i(t(".buttons.to_#{placement}")),
-                              :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
-                              :with   => "Inventory.Holders.getRequestParams()",
-                              :update => :result,
-                              :html   => {:class => :place}
-                            ) %>
-                      <% end %>
-                    <% end %>
-
-                    <%= link_to_remote(inventory_use_label(inventory),
-                          :url    => use_inventory_url(inventory, :canvas => false),
-                          :update => :result,
-                          :html   => {:class => :use}
-                        ) if inventory.usable? %>
-
-                    <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, inventory.sell_price)),
-                          :url    => inventory_url(inventory, :canvas => false),
-                          :method => :delete,
-                          :update => :result,
-                          :html   => {:class => :sell}
-                        ) %>
-                  </td>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </table>
-      <% else %>
-        <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
-      <% end %>
+      <div id="inventory_list">
+        <%= render :partial => "list", :locals => {:inventories => @inventories} %>
+      </div>
     </td>
   </tr>
 </table>

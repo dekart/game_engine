@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :items
   end
   map.resources :inventories, 
-    :member     => {:place => :any, :use => :any},
+    :member     => {:place => :any, :use => :any, :take_off => :post},
     :collection => {:placements => :any}
   map.resources :fights
   map.resources :invitations, :member => {:accept => :any, :ignore => :any}

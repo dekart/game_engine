@@ -1,5 +1,13 @@
 class Inventory < ActiveRecord::Base
   PLACEMENTS = [:head, :body, :left_hand, :right_hand, :belt, :legs]
+  PLACEMENT_IMAGES = {
+    :head       => :small,
+    :left_hand  => :medium,
+    :right_hand => :medium,
+    :body       => :medium,
+    :legs       => :medium,
+    :belt       => :belt
+  }
 
   belongs_to :character
   belongs_to :item
@@ -80,6 +88,13 @@ class Inventory < ActiveRecord::Base
       self.character.save!
 
       self.destroy
+    end
+  end
+
+  def take_off!
+    self.transaction do
+      self.update_attributes(:holder => nil, :placement => nil)
+      self.recache_holder_effects
     end
   end
 

@@ -204,6 +204,7 @@ en:
         title: "You received:"
     index:
       title: "Inventory"
+    list:
       buttons:
         to_left_hand: "To Left Hand"
         to_right_hand: "To Right Hand"
@@ -216,13 +217,6 @@ en:
           unlimited: "(unlimited)"
           limited: "({{left}}/{{limit}})"
         sell: "Sell for {amount}"
-      placements:
-        left_hand: "In Left Hand"
-        right_hand: "In Right Hand"
-        head: "On Head"
-        body: "On Body"
-        belt: "On Belt"
-        legs: "On Legs"
       empty_set: "Your inventory is empty"
     use:
       messages:

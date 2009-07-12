@@ -1,0 +1,12 @@
+<% fb_js_string :placements do %>
+  <%= inventory_placements_for(@holder) %>
+<% end %>
+
+<% fb_js_string :list do %>
+  <%= render :partial => "list", :locals => {:inventories => current_character.inventories.available} %>
+<% end %>
+
+<% content_for :script do %>
+  $('inventory_placements').setInnerFBML(placements);
+  $('inventory_list').setInnerFBML(list);
+<% end %>

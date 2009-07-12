@@ -1,5 +1,5 @@
 <% fb_js_string :placements do %>
-  <%= render :partial => "inventories/placements", :locals => {:holder => @holder} %>
+  <%= inventory_placements_for(@holder) %>
 <% end %>
 
 <% content_for :script do %>

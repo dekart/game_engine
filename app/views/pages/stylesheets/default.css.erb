@@ -175,12 +175,20 @@
   #alliance_members .controls .delete {background-image: url(<%= image_path("icons/delete.gif") %>)}
 
 #placements {position: relative; width: 400px; height: 510px; background: url(<%= image_path("placements.gif") %>) no-repeat;}
-  #placements .head {position:absolute; left: 155px; top:3px;}
-  #placements .right_hand {position:absolute; left: 3px; top:111px;}
-  #placements .left_hand {position:absolute; left: 261px; top:111px;}
-  #placements .body {position:absolute; left: 132px; top:81px;}
-  #placements .belt {position:absolute; left: 151px; top:207px;}
-  #placements .legs {position:absolute; left: 132px; top:361px;}
+  #placements span {position:absolute;}
+  #placements a {position:absolute; background-color: white; padding: 2px;border: 1px solid #3B5998; font-size: 0px;}
+  #placements .head {left: 155px; top:3px;}
+    #placements .head .take_off {top: -1px; border-left-color:white;}
+  #placements .right_hand {left: 3px; top:111px;}
+    #placements .right_hand .take_off {top: -16px; right: -1px; border-bottom-color:white;}
+  #placements .left_hand {left: 261px; top:111px;}
+    #placements .left_hand .take_off {top: -16px; right: -1px; border-bottom-color:white;}
+  #placements .body {left: 132px; top:81px;}
+    #placements .body .take_off {top: -16px; right: -1px; border-bottom-color:white;}
+  #placements .belt {left: 151px; top:207px;}
+    #placements .belt .take_off {top: -1px; border-left-color:white;}
+  #placements .legs {left: 132px; top:361px;}
+    #placements .legs .take_off {top: -1px; border-left-color:white;}
 
 #rank_list .rank {padding: 3px 25px; background: url(<%= image_path("icons/level.gif") %>) 3px center no-repeat;}
 

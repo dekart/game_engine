@@ -43,6 +43,16 @@ class InventoriesController < ApplicationController
     render :action => :placements, :layout => "ajax"
   end
 
+  def take_off
+    @inventory = current_character.inventories.find(params[:id])
+
+    @holder = @inventory.holder
+
+    @inventory.take_off!
+
+    render :action => :take_off, :layout => "ajax"
+  end
+
   protected
 
   def relation_or_current_character
