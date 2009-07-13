@@ -212,13 +212,13 @@ en:
         to_body: "To Body"
         to_belt: "To Belt"
         to_legs: "To Legs"
-        use:
-          base: "Use {usage_limit}"
-          unlimited: "(unlimited)"
-          limited: "({{left}}/{{limit}})"
         sell: "Sell for {amount}"
       empty_set: "Your inventory is empty"
     use:
+      button:
+        base: "Use {usage_limit}"
+        unlimited: "(unlimited)"
+        limited: "({{left}}/{{limit}})"
       messages:
         success: "You've successfully used {item}!"
         item_gone: "{item} ran out and now it's gone!"
