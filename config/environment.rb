@@ -81,6 +81,6 @@ end
 
 WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
 
-require "super_rewards"
+require "facebook_money"
 
 ADMINS = [682180971]

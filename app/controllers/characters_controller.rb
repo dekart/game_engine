@@ -25,14 +25,10 @@ class CharactersController < ApplicationController
   end
 
   def load_vip_money
-    if valid_super_rewards_request?
-      @character = super_rewards_user.character
-      @character.vip_money += params[:new].to_i
+    on_valid_facebook_money_request do
+      @character = facebook_money_user.character
+      @character.vip_money += facebook_money_amount
       @character.save
-
-      render :text => "1"
-    else
-      render :text => "0"
     end
   end
 

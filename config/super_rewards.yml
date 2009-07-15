@@ -1,7 +1,0 @@
-development:
-  h: ezhofm.26953024120
-  secret: 15228884664b8316b3bf1ac204d0e459
-
-production:
-  h: ezimgo.263278932549
-  secret: df6f88ef54354fc130319b0d56eacac2
