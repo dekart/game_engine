@@ -93,7 +93,10 @@ class Inventory < ActiveRecord::Base
 
   def take_off!
     self.transaction do
+      @previous_holder = self.holder
+      
       self.update_attributes(:holder => nil, :placement => nil)
+
       self.recache_holder_effects
     end
   end
@@ -118,6 +121,8 @@ class Inventory < ActiveRecord::Base
   end
 
   def recache_holder_effects
-    self.holder.cache_inventory_effects if self.holder
+    return unless recache = (self.holder || @previous_holder)
+
+    recache.cache_inventory_effects
   end
 end
