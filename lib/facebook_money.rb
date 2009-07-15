@@ -23,6 +23,10 @@ module FacebookMoney
         User.find_by_facebook_id(params[:uid])
       end
 
+      def amount(params)
+        params[:new].to_i
+      end
+
       def html_code(template, options = {})
         default_options = {
           :src          => "http://super.kitnmedia.com/super/offers?h=#{ FacebookMoney.config["key"] }",
@@ -55,6 +59,10 @@ module FacebookMoney
 
       def user(params)
         User.find_by_facebook_id(params[:uid])
+      end
+
+      def amount(params)
+        params[:amount].to_i
       end
 
       def html_code(template, options = {})
@@ -94,7 +102,7 @@ module FacebookMoney
     end
 
     def facebook_money_amount
-      params[:new].to_i
+      FacebookMoney.provider.amount(params)
     end
   end
 
