@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  INVITE_PAGE_VISIT_DELAY = 48.hours
+
   has_one :character
 
   has_many :invitations, :foreign_key => :sender_id do
@@ -48,7 +50,7 @@ class User < ActiveRecord::Base
   end
 
   def should_visit_invite_page?
-    self.invite_page_visited_at.nil? or self.invite_page_visited_at < Time.now - 24.hours
+    self.invite_page_visited_at.nil? or self.invite_page_visited_at < Time.now - INVITE_PAGE_VISIT_DELAY
   end
 
   def invite_page_visited!
