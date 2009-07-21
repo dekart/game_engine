@@ -84,10 +84,12 @@ module FacebookHelper
   def show_feed_dialog(template_class, template_name, options = {})
     bundle_id = Facebooker::Rails::Publisher::FacebookTemplate.bundle_id_for_class_and_method(template_class, template_name.to_s)
 
+    image_url = options[:image_url] || root_url(:canvas => true)
+
     options[:template_data] ||= {}
     options[:template_data][:images] ||= []
-    options[:template_data][:images].unshift({:src => image_path("logo_100x100.jpg"), :href => root_url(:canvas => true)})
-    options[:template_data][:images].push({:src => image_path("play_now_small.jpg"), :href => root_url(:canvas => true)})
+    options[:template_data][:images].unshift(:src => image_path("logo_100x100.jpg"), :href => image_url)
+    options[:template_data][:images].push(:src => image_path("play_now_small.jpg"), :href => image_url)
     
     "Facebook.showFeedDialog(#{bundle_id}, #{options[:template_data].to_json}, '#{options[:body_general]}', #{options[:target_id] || "null"})"
   end

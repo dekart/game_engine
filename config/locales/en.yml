@@ -318,8 +318,13 @@ en:
           visit_profile: "View {{user}} Character"
       manual:
         title: "Out Of Requests?"
-        note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. You can use this link to recruit more alliance members."
-        message: "Join my Alliance: {link}"
+        publish:
+          note: "You can invite your friends by publishing to your news feed - all your friends will see this message! Click the button below to post invitation message to your Feed:"
+          button: "Publish to Feed"
+          invite_link: "Join Now!"
+        copy_paste:
+          note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. You can use this link to recruit more alliance members."
+          invitation: "Join my Alliance: {link}"
   properties:
     new:
       title: "Buy Properties"

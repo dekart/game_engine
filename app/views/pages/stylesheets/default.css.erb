@@ -326,7 +326,10 @@
   #new_assignment .tab_titles .selected {font-weight: bold; font-size: 14px;}
   #new_assignment .tabs .hidden {display:none;}
 
-#manual_invitation {margin: 15px; font-weight: bold; font-size: 15px; color: #3B5998;}
+#manual_invitation {padding-left: 15px;}
+  #manual_invitation #copy_paste_invitation {margin: 15px 0; font-weight: bold; font-size: 15px; color: #3B5998;}
+  #manual_invitation .button {display:block; width: 100px; clear: right; margin: 10px 0; padding: 0 5px 0 25px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold; background: url(<%= image_path("icons/publish.gif") %>) 3px center no-repeat;}
+    #manual_invitation .button:hover {background-color: #e0e0e0;}
 
 #invitation {}
   #invitation td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}

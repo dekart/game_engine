@@ -42,24 +42,43 @@
   <%= fb_i(t(".note")) %>
 </div>
 
-<% fb_request_form(nil, :invite_message, invite_users_path(:from_selector => true)) do %>
-  <%= fb_fa(:type, fb_i(t(".invite.title"))) %>
-  
-  <% fb_custom_multi_friend_selector(:exclude_ids => (current_user.invitations.facebook_ids + current_character.relations.facebook_ids).uniq.join(",") ) do %>
-    <%= fb_fa(:actiontext, fb_i(t(".invite.note"))) %>
-  <% end %>
-<% end %>
+<table>
+  <tr>
+    <td id="request_invitation">
+      <% fb_request_form(nil, :invite_message, invite_users_path(:from_selector => true)) do %>
+        <%= fb_fa(:type, fb_i(t(".invite.title"))) %>
 
-<h2><%= fb_i(t(".manual.title")) %></h2>
+        <% fb_custom_multi_friend_selector(:exclude_ids => (current_user.invitations.facebook_ids + current_character.relations.facebook_ids).uniq.join(","), :condensed => true) do %>
+          <%= fb_fa(:actiontext, fb_i(t(".invite.note"))) %>
+        <% end %>
 
-<div class="note">
-  <%= fb_i(t(".manual.note")) %>
-  
-  <div id="manual_invitation">
-    <% fb_i do %>
-      <%= t(".manual.message") %>
-      <%= fb_it(:link, invitation_url(current_character.id)) %>
-    <% end %>
-  </div>
-</div>
+        <%= fb_request_form_submit %>
+      <% end %>
+    </td>
+    <td id="manual_invitation">
+      <h2><%= fb_i(t(".manual.title")) %></h2>
+      
+      <p><%= fb_i(t(".manual.publish.note")) %></p>
 
+      <div id="publish_invitation">
+        <%= link_to_feed_dialog(t(".manual.publish.button"), Publisher::Invitation, :invite,
+            :template_data => {
+              :pronoun      => fb_pronoun(current_user),
+              :invite_link  => content_tag(:b, link_to(t(".manual.publish.invite_link"), invitation_url(current_character.id))),
+            },
+            :image_url => invitation_url(current_character.id),
+            :html => {:class => :button}
+          ) %>
+      </div>
+
+      <p><%= fb_i(t(".manual.copy_paste.note")) %></p>
+
+      <div id="copy_paste_invitation">
+        <% fb_i do %>
+          <%= t(".manual.copy_paste.invitation") %>
+          <%= fb_it(:link, invitation_url(current_character.id)) %>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+</table>

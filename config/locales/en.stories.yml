@@ -14,6 +14,11 @@ en:
         text: "{*actor*} received +{*money*} gold, +{*experience*} experience, and lost {*attacker_hp_loss*} health points. {*victim*} received {*victim_hp_loss*} points of damage"
       action_link: "Play {{app}} &raquo;"
     invitation:
+      invite:
+        one_line: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}! {*invite_link*}"
+        short:
+          title: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}!"
+          text: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}! {*invite_link*}"
       notification:
         text: "joined your Alliance in {app}! {link}"
         link: "View Alliance"
