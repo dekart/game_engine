@@ -51,7 +51,7 @@ namespace :deploy do
 
     desc "Update references"
     task :update_references, :roles => :app do
-      run "cd #{current_path}; rake blogbox:jobs:update_references --trace"
+      run "cd #{current_path}; rake app:jobs:update_references --trace"
     end
   end
 end
