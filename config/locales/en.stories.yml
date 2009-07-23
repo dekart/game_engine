@@ -6,11 +6,11 @@ en:
         link: "Promote {{user}}"
     fight:
       notification:
-        text: "attacked you in {app} game and WON! {link}"
+        text: "attacked you in {app} and WON! {link}"
         link: "Fight Back"
-      one_line: "{*actor*} attacked {*victim*} in {{app}} game and WON the battle"
+      one_line: "{*actor*} attacked {*victim*} in {{app}} and WON the battle"
       short:
-        title: "{*actor*} attacked {*victim*} in {{app}} game and WON the battle!"
+        title: "{*actor*} attacked {*victim*} in {{app}} and WON the battle!"
         text: "{*actor*} received +{*money*} gold, +{*experience*} experience, and lost {*attacker_hp_loss*} health points. {*victim*} received {*victim_hp_loss*} points of damage"
       action_link: "Play {{app}} &raquo;"
     invitation:
@@ -23,19 +23,19 @@ en:
         text: "joined your Alliance in {app}! {link}"
         link: "View Alliance"
     item:
-      one_line: "{*actor*} bought a {*item*} in {{app}} game"
+      one_line: "{*actor*} bought a {*item*} in {{app}}"
       short:
         title: "{*actor*} bought a new item in {{app}}"
         text: "{*actor*} bought a {*item*} in {{app}}. Now {*actor*} is stronger than before!"
       action_link: "Play {{app}} &raquo;"
     mission:
-      one_line: "{*actor*} completed \"{*mission*}\" mission in {{app}} game"
+      one_line: "{*actor*} completed \"{*mission*}\" mission in {{app}}"
       short:
-        title: "{*actor*} received \"{*title*}\" title in {{app}} game!"
-        text: "{*actor*} completed \"{*mission*}\" mission and received \"{*title*}\" title in {{app}} game."
+        title: "{*actor*} received \"{*title*}\" title in {{app}}!"
+        text: "{*actor*} completed \"{*mission*}\" mission and received \"{*title*}\" title in {{app}}."
       action_link: "Play {{app}} &raquo;"
     property:
-      one_line: "{*actor*} bought {*property*} in {{app}} game"
+      one_line: "{*actor*} bought {*property*} in {{app}}"
       short:
         title: "{*actor*} bought new property in {{app}}"
         text: "{*actor*} bought {*property*} in {{app}}. Now {*actor*} earns more money!"
