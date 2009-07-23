@@ -232,7 +232,7 @@ class TestFacebooker < Test::Unit::TestCase
     photos = @session.get_photos([97503428461115590, 97503428461115573])
     assert_equal 2, photos.size
     assert_equal "Rooftop barbecues make me act funny", photos.first.caption
-    assert_equal 97503428461115590, photos[0].id
+    assert_equal "97503428461115590", photos[0].id
   end
 
   def test_can_get_photos_by_subject_and_album
@@ -485,7 +485,7 @@ class TestFacebooker < Test::Unit::TestCase
   def example_notifications_send_xml
     <<-XML
 <?xml version="1.0" encoding="UTF-8"?>
-<notifications_send_response xmlns="http://api.facebook.com/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://api.facebook.com/1.0/ http://api.facebook.com/1.0/facebook.xsd">http://www.facebook.com/send_email.php?from=211031&id=52</notifications_send_response>
+<notifications_send_response xmlns="http://api.facebook.com/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://api.facebook.com/1.0/ http://api.facebook.com/1.0/facebook.xsd">http://www.facebook.com/send_email.php?from=211031&amp;id=52</notifications_send_response>
     XML
   end
 
