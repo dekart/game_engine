@@ -10,7 +10,7 @@ module Facebooker
       include Model
       attr_accessor :message, :time, :status_id
     end
-    FIELDS = [:political, :pic_small, :name, :quotes, :is_app_user, :tv, :profile_update_time, :meeting_sex, :hs_info, :timezone, :relationship_status, :hometown_location, :about_me, :wall_count, :significant_other_id, :pic_big, :music, :work_history, :sex, :religion, :notes_count, :activities, :pic_square, :movies, :has_added_app, :education_history, :birthday, :first_name, :meeting_for, :last_name, :interests, :current_location, :pic, :books, :affiliations, :locale, :profile_url, :proxied_email, :email_hashes, :allowed_restrictions, :pic_with_logo, :pic_big_with_logo, :pic_small_with_logo, :pic_square_with_logo]
+    FIELDS = [:status, :political, :pic_small, :name, :quotes, :is_app_user, :tv, :profile_update_time, :meeting_sex, :hs_info, :timezone, :relationship_status, :hometown_location, :about_me, :wall_count, :significant_other_id, :pic_big, :music, :work_history, :sex, :religion, :notes_count, :activities, :pic_square, :movies, :has_added_app, :education_history, :birthday, :birthday_date, :first_name, :meeting_for, :last_name, :interests, :current_location, :pic, :books, :affiliations, :locale, :profile_url, :proxied_email, :email_hashes, :allowed_restrictions, :pic_with_logo, :pic_big_with_logo, :pic_small_with_logo, :pic_square_with_logo]
     STANDARD_FIELDS = [:uid, :first_name, :last_name, :name, :timezone, :birthday, :sex, :affiliations, :locale, :profile_url, :pic_square]
     populating_attr_accessor(*FIELDS)
     attr_reader :affiliations
@@ -69,47 +69,88 @@ module Facebooker
     # Set the list of friends, given an array of User objects.  If the list has been retrieved previously, will not set
     def friends=(list_of_friends,flid=nil)
       @friends_hash ||= {}
-     	flid=cast_to_friend_list_id(flid)
-     	#use __blank instead of nil so that this is cached
-     	cache_key = flid||"__blank"
-     	
+       flid=cast_to_friend_list_id(flid)
+       #use __blank instead of nil so that this is cached
+       cache_key = flid||"__blank"
+
       @friends_hash[cache_key] ||= list_of_friends
     end
     
     def cast_to_friend_list_id(flid)
       case flid
- 	    when String
- 	      list=friend_lists.detect {|f| f.name==flid}
- 	      raise Facebooker::Session::InvalidFriendList unless list
- 	      list.flid
- 	    when FriendList
- 	      flid.flid
- 	    else
- 	      flid
- 	    end
- 	  end
+       when String
+         list=friend_lists.detect {|f| f.name==flid}
+         raise Facebooker::Session::InvalidFriendList unless list
+         list.flid
+       when FriendList
+         flid.flid
+       else
+         flid
+       end
+     end
     ##
     # Retrieve friends
     def friends(flid = nil)
-     	@friends_hash ||= {}
-     	flid=cast_to_friend_list_id(flid)
-      
-     	#use __blank instead of nil so that this is cached
-     	cache_key = flid||"__blank"
-     	options = {:uid=>self.id}
-     	options[:flid] = flid unless flid.nil?
-     	@friends_hash[cache_key] ||= @session.post('facebook.friends.get', options,false).map do |uid|
+       @friends_hash ||= {}
+       flid=cast_to_friend_list_id(flid)
+
+       #use __blank instead of nil so that this is cached
+       cache_key = flid||"__blank"
+       options = {:uid=>self.id}
+       options[:flid] = flid unless flid.nil?
+       @friends_hash[cache_key] ||= @session.post('facebook.friends.get', options,false).map do |uid|
           User.new(uid, @session)
       end
       @friends_hash[cache_key]
     end
+
+    ###
+    # Publish a post into the stream on the user's Wall and News Feed.  This
+    # post also appears in the user's friend's streams.  The +publish_stream+
+    # extended permission must be granted in order to use this method.
+    #
+    # See: http://wiki.developers.facebook.com/index.php/Stream.publish
+    #
+    # +target+ can be the current user or some other user.
+    #
+    # Example:
+    #   # Publish a message to my own wall:
+    #   me.publish_to(me, :message => 'hello world')
+    #
+    #   # Publish to a friend's wall with an action link:
+    #   me.publish_to(my_friend,  :message => 'how are you?', :action_links => [
+    #     :text => 'my website',
+    #     :href => 'http://tenderlovemaking.com/'
+    #   ])
+    def publish_to target, options = {}
+      @session.post('facebook.stream.publish',
+                    :uid        => self.id,
+                    :target_id  => target.id,
+                    :message    => options[:message],
+                    :attachment => Facebooker.json_encode(options[:attachment]),
+                    :action_links => Facebooker.json_encode(options[:action_links])
+                   )
+    end
     
-     def friend_lists    
+    
+    ###
+    # Publish a comment on a post
+    #
+    # See: http://wiki.developers.facebook.com/index.php/Stream.addComment
+    #
+    # +post_id+ the post_id for the post that is being commented on
+    # +comment+ the text of the comment
+    def comment_on(post_id, comment)
+      @session.post('facebook.stream.addComment', {:post_id=>post_id, :comment=>comment})
+    end
+    
+
+     def friend_lists
        @friend_lists ||= @session.post('facebook.friends.getLists').map do |hash|
-         friend_list = FriendList.from_hash(hash)                               
-         friend_list.session = session                                          
-         friend_list                                                            
-       end                                                                      
+         friend_list = FriendList.from_hash(hash)
+         friend_list.session = session
+         friend_list
+       end
      end
     ###
     # Retrieve friends with user info populated
@@ -322,6 +363,12 @@ module Facebooker
     def has_permission?(ext_perm) # ext_perm = email, offline_access, status_update, photo_upload, create_listing, create_event, rsvp_event, sms
       session.post('facebook.users.hasAppPermission',:ext_perm=>ext_perm) == "1"
     end    
+    
+    ##
+    # Convenience method to check multiple permissions at once
+    def has_permissions?(ext_perms)
+      ext_perms.all?{|p| has_permission?(p)}
+    end            
     
     ##
     # Convenience method to send email to the current user

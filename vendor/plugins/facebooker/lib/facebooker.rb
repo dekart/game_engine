@@ -1,29 +1,33 @@
-begin
-  unless Object.const_defined?("ActiveSupport") and ActiveSupport.const_defined?("JSON")
-    require 'json'
-    module Facebooker
-      def self.json_decode(str)
-        JSON.parse(str)
-      end
+unless defined?(ActiveSupport) and defined?(ActiveSupport::JSON)
+  require 'json'
+  module Facebooker
+    def self.json_decode(str)
+      JSON.parse(str)
     end
-  else
-    module Facebooker
-      def self.json_decode(str)
-        ActiveSupport::JSON.decode(str)
-      end
+
+    def self.json_encode(o)
+      JSON.dump(o)
     end
   end
-rescue
-  require 'json'
+else
+  module Facebooker
+    def self.json_decode(str)
+      ActiveSupport::JSON.decode(str)
+    end
+
+    def self.json_encode(o)
+      ActiveSupport::JSON.encode(o)
+    end
+  end
 end
+
 require 'zlib'
 require 'digest/md5'
-
-
 
 module Facebooker
 
     @facebooker_configuration = {}
+    @raw_facebooker_configuration = {}
     @current_adapter = nil
     @set_asset_host_to_callback_url = true
     @path_prefix = nil
@@ -33,12 +37,12 @@ module Facebooker
 
     def load_configuration(facebooker_yaml_file)
       if File.exist?(facebooker_yaml_file)
+        @raw_facebooker_configuration = YAML.load(ERB.new(File.read(facebooker_yaml_file)).result)
         if defined? RAILS_ENV
-          config = YAML.load_file(facebooker_yaml_file)[RAILS_ENV] 
-        else
-          config = YAML.load_file(facebooker_yaml_file)           
+          @raw_facebooker_configuration = @raw_facebooker_configuration[RAILS_ENV]
         end
-        apply_configuration(config)
+        Thread.current[:fb_api_config] = @raw_facebooker_configuration unless Thread.current[:fb_api_config]
+        apply_configuration(@raw_facebooker_configuration)
       end
     end
 
@@ -62,6 +66,42 @@ module Facebooker
 
     def facebooker_config
       @facebooker_configuration
+    end
+
+    def with_application(api_key, &block)
+      config = fetch_config_for( api_key )
+
+      unless config
+        self.logger.info "Can't find facebooker config: '#{api_key}'" if self.logger
+        yield if block_given?
+        return
+      end
+
+      # Save the old config to handle nested activation. If no app context is
+      # set yet, use default app's configuration.
+      old = Thread.current[:fb_api_config] ? Thread.current[:fb_api_config].dup : @raw_facebooker_configuration
+
+      if block_given?
+        begin
+          self.logger.info "Swapping facebooker config: '#{api_key}'" if self.logger
+          Thread.current[:fb_api_config] = apply_configuration(config)
+          yield
+        ensure
+          Thread.current[:fb_api_config] = old if old
+          apply_configuration(Thread.current[:fb_api_config])
+        end
+      end
+    end
+
+    def fetch_config_for(api_key)
+      if @raw_facebooker_configuration['api_key'] == api_key
+        return @raw_facebooker_configuration
+      elsif @raw_facebooker_configuration['alternative_keys'] and
+            @raw_facebooker_configuration['alternative_keys'].keys.include?(api_key)
+        return @raw_facebooker_configuration['alternative_keys'][api_key].merge(
+                'api_key' => api_key )
+      end
+      return false
     end
 
     # TODO: This should be converted to attr_accessor, but we need to
@@ -146,6 +186,21 @@ require 'facebooker/logging'
 require 'facebooker/model'
 require 'facebooker/parser'
 require 'facebooker/service'
+require 'facebooker/service/base_service'
+#optional HTTP service adapters
+begin
+  require 'facebooker/service/curl_service' 
+rescue LoadError
+  nil
+end
+begin
+  require 'facebooker/service/typhoeus_service'
+  require 'facebooker/service/typhoeus_multi_service'
+rescue LoadError
+  nil
+end
+
+require 'facebooker/service/net_http_service'
 require 'facebooker/server_cache'
 require 'facebooker/data'
 require 'facebooker/admin'

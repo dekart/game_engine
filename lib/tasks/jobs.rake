@@ -1,4 +1,4 @@
-namespace :blogbox do
+namespace :app do
   namespace :jobs do
     desc "Re-setup user profiles"
     task :setup_profiles => :environment do

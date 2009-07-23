@@ -48,7 +48,7 @@ function encodeURIComponent(str) {
 
 var Form = {};
 Form.serialize = function(form_element) {
-  return $(form_element).serialize();
+  return  $(form_element).serialize();  
 };
 
 Ajax.Updater = function (container,url,options) {
@@ -69,22 +69,16 @@ Ajax.Updater = function (container,url,options) {
     this.ajax.onerror = options["onFailure"];
   }
 
-  // Yes, this is an excercise in undoing what we just did
-  // FB doesn't provide encodeURI, but they will encode things passed as a hash
-  // so we turn it into a string, esaping & and =
-  // then we split it all back out here
-  // this could be killed if encodeURIComponent was available
-  parameters={};
-  if (options['parameters']) {
-    pairs=options['parameters'].split('&'); 
-    for (var i=0; i<pairs.length; i++) {
-      kv=pairs[i].split('=');
-      key=kv[0].replace(/%3D/g,'=').replace(/%26/g,'&');
-      val=kv[1].replace(/%3D/g,'=').replace(/%26/g,'&');
-      parameters[key]=val;
-    }
+  if (!options['parameters']) {
+    options['parameters'] = {}
   }
-  this.ajax.post(url,parameters); 
+
+  // simulate other verbs over post
+  if (options['method']) {
+    options['parameters']['_method'] = options['method'];
+  }
+
+  this.ajax.post(url,options['parameters']); 
   if (options["onLoading"]) {
      options["onLoading"].call() 
   }
