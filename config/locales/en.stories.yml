@@ -40,3 +40,10 @@ en:
         title: "{*actor*} bought new property in {{app}}"
         text: "{*actor*} bought {*property*} in {{app}}. Now {*actor*} earns more money!"
       action_link: "Play {{app}} &raquo;"
+    character:
+      level_up:
+        one_line: "{*actor*} is gaining respect in his Alliance! {*pronoun*} just advanced to Level {*level*} in {{app}}"
+        short:
+          title: "{*actor*} is playing {{app}}!"
+          text: "{*actor*} is gaining respect in his Alliance! {*pronoun*} just advanced to Level {*level*} in {{app}}"
+        action_link: "Play {{app}} &raquo;"
