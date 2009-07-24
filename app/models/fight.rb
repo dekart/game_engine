@@ -47,7 +47,7 @@ class Fight < ActiveRecord::Base
   end
 
   def calculate_fight
-    attacker_won, self.victim_hp_loss, self.attacker_hp_loss = calculate_dices(self.attacker, self.victim)
+    attacker_won, self.victim_hp_loss, self.attacker_hp_loss = calculate_proportions(self.attacker, self.victim)
 
     self.winner = attacker_won ? self.attacker : self.victim
 
@@ -87,6 +87,36 @@ class Fight < ActiveRecord::Base
     :critical_success => 10,
     :success => 6
   }
+
+  def calculate_proportions(attacker, victim)
+    attack_points = attacker.attack_points
+    defence_points = victim.defence_points
+    attack_bonus = 1.0
+    defence_bonus = 1.0
+
+    attack = attack_points * attack_bonus * 50
+    defence = defence_points * defence_bonus * 50
+
+    logger.debug <<-CODE
+      Attack: #{attack_points} * #{attack_bonus} * 50 = #{attack}
+      Defence Points: #{defence_points} * #{defence_bonus} * 50 = #{defence}
+    CODE
+
+    attacker_won = (rand((attack + defence).to_i) >= defence)
+
+    attacker_damage_reduce  = 0.01 * attacker.assignments.effect_value(:fight_damage)
+    victim_damage_reduce    = 0.01 * victim.assignments.effect_value(:fight_damage)
+
+    if attacker_won
+      attack_damage   = rand(victim.health * 1000) * (0.5 - victim_damage_reduce)
+      defence_damage  = rand(attack_damage * defence / attack) * (1 - attacker_damage_reduce)
+    else
+      defence_damage  = rand(attacker.health * 1000) * (0.5 - attacker_damage_reduce)
+      attack_damage   = rand(defence_damage * attack / defence) * (1 - victim_damage_reduce)
+    end
+
+    return [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
+  end
 
   def calculate_dices(attacker, victim)
     attack_points = attacker.attack_points
