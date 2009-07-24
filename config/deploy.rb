@@ -87,7 +87,7 @@ before "deploy:migrations", "deploy:db:backup"
   before "deploy:migrations", t
 end
 
-["deploy:bootstrap", "deploy:jobs:update_references", "deploy:jobs:start", "deploy:cleanup"].each do |t|
+["deploy:bootstrap", "deploy:jobs:update_references", "deploy:jobs:start", "deploy:cleanup", "deploy:update_apache_config"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
