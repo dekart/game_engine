@@ -60,6 +60,18 @@ namespace :deploy do
     run "cd #{current_path}; rake app:bootstrap"
   end
 
+  desc "Updates apache virtual host config"
+  task :update_apache_config do
+    config = <<-CODE
+      <VirtualHost *>
+        ServerName swordnew.it-vektor.ru
+        DocumentRoot #{current_path}/public
+      </VirtualHost>
+    CODE
+
+    put(config, "#{shared_path}/apache_vhost.conf")
+  end
+
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :app do
@@ -68,7 +80,7 @@ namespace :deploy do
   end
 end
 
-before "deploy:migrate", "deploy:db:backup"
+before "deploy:migrations", "deploy:db:backup"
 
 ["deploy:jobs:stop"].each do |t|
   before "deploy", t
