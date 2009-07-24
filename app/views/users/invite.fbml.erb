@@ -63,7 +63,7 @@
       <div id="publish_invitation">
         <%= link_to_feed_dialog(t(".manual.publish.button"), Publisher::Invitation, :invite,
             :template_data => {
-              :pronoun      => fb_pronoun(current_user),
+              :pronoun      => fb_pronoun(current_user, :possessive => true, :useyou => false),
               :invite_link  => content_tag(:b, link_to(t(".manual.publish.invite_link"), invitation_url(current_character.id))),
             },
             :image_url => invitation_url(current_character.id),
