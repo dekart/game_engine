@@ -65,7 +65,11 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options(options)
-    in_page? && options[:canvas] != false ? {:fb_page_id => current_user.facebook_id} : {}
+    returning result = {} do
+      result[:fb_page_id] = current_user.facebook_id if in_page? && options[:canvas] != false
+      
+      result[:try_stylesheet] = params[:try_stylesheet] unless params[:try_stylesheet].blank?
+    end
   end
 
   def admin_required

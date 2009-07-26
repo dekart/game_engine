@@ -1,0 +1,33 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_stylesheet_path) %>
+</div>
+
+<% if @stylesheets.any? %>
+  <table id="stylesheet_list">
+    <tr>
+      <th><%= Stylesheet.human_attribute_name("name") %></th>
+      <th><%= Stylesheet.human_attribute_name("current") %></th>
+    </tr>
+    <% @stylesheets.each do |style| %>
+      <tr>
+        <td class="name"><%= link_to(style.name, edit_admin_stylesheet_path(style)) %></td>
+        <td class="current"><%= style.current %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.try"), root_path(:try_stylesheet => style), :target => :_blank) %>
+          <%= link_to(t(".controls.use"), use_admin_stylesheet_path(style),
+                :method   => :post,
+                :confirm  => t(".controls.use_confirm")
+              ) %>
+          <%= link_to(t(".controls.delete"), admin_stylesheet_path(style),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

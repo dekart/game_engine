@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :promotions
     admin.resources :statistics, :only => :index
+    admin.resources :stylesheets, :member => {:use => :post}
   end
 
   map.root :controller => "characters", :action => "index"
@@ -56,8 +57,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :promotions, :only => :show
 
   map.resource :premium
-
-  map.dynamic_stylesheet "/stylesheets/:id.css", :controller => "pages", :action => "stylesheet", :format => "css"
 
   map.resources :pages
   

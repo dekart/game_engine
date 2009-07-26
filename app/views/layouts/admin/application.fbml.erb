@@ -1,14 +1,11 @@
 <fb:fbml>
   <% if Rails.env.development? %>
-    <style><%= render :file => "pages/stylesheets/common.css.erb" %></style>
-    <style><%= render :file => "pages/stylesheets/admin.css.erb" %></style>
+    <style><%= File.read(File.join(RAILS_ROOT, "public", "stylesheets", "admin.css")) %></style>
 
-    <% %w{facebooker application}.each do |f| %>
-      <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "#{f}.js")) %></script>
-    <% end %>
+    <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
+    <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %></script>
   <% else %>
-    <%= stylesheet_link_tag("common.css?#{File.mtime(File.join(RAILS_ROOT, "app/views/pages/stylesheets/common.css.erb")).to_i}") %>
-    <%= stylesheet_link_tag("admin.css?#{File.mtime(File.join(RAILS_ROOT, "app/views/pages/stylesheets/admin.css.erb")).to_i}") %>
+    <%= stylesheet_link_tag("admin") %>
     
     <%= javascript_include_tag "facebooker", "application" %>
   <% end %>

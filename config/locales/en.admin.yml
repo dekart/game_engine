@@ -11,6 +11,7 @@ en:
         statistics: "Statistics"
         newsletter: "Newsletter"
         promotions: "Promotions"
+        stylesheets: "Stylesheets"
       application:
         spinner:
           alt: "Please wait..."
@@ -145,4 +146,21 @@ en:
         submit: "Create"
       edit:
         title: "Edit Property Type"
+        submit: "Update"
+    stylesheets:
+      index:
+        controls:
+          new: "Add Stylesheet"
+          try: "Try"
+          use: "Use"
+          use_confirm: "Please confirm that you want to apply this stylesheet to public interface. If you just want to check how it will look - click 'Try'"
+          delete: "Delete"
+          delete_confirm: "Are you sure you want to delete this stylesheet? This may affect application design!"
+        title: "Stylesheets"
+        empty_set: "No stylesheets"
+      new:
+        title: "New Stylesheet"
+        submit: "Create"
+      edit:
+        title: "Edit Stylesheet"
         submit: "Update"

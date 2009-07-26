@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090711064110) do
+ActiveRecord::Schema.define(:version => 20090726125613) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -258,6 +258,14 @@ ActiveRecord::Schema.define(:version => 20090711064110) do
   end
 
   add_index "relations", ["source_id", "target_id"], :name => "index_relations_on_source_id_and_target_id"
+
+  create_table "stylesheets", :force => true do |t|
+    t.string   "name"
+    t.text     "content"
+    t.boolean  "current"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.integer  "facebook_id",            :limit => 8
