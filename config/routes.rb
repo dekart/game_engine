@@ -59,6 +59,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :premium
 
   map.resources :pages
+
+  map.resources :stylesheets, :only => :show
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

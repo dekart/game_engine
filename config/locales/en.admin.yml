@@ -151,6 +151,7 @@ en:
       index:
         controls:
           new: "Add Stylesheet"
+          default: "View Default Stylesheet"
           try: "Try"
           use: "Use"
           use_confirm: "Please confirm that you want to apply this stylesheet to public interface. If you just want to check how it will look - click 'Try'"

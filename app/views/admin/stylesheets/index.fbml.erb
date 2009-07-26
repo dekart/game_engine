@@ -2,6 +2,7 @@
 
 <div class="controls">
   <%= link_to(t(".controls.new"), new_admin_stylesheet_path) %>
+  <%= link_to(t(".controls.default"), stylesheet_path("default")) %>
 </div>
 
 <% if @stylesheets.any? %>

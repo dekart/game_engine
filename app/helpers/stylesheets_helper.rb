@@ -2,8 +2,6 @@ module StylesheetsHelper
   def editable_stylesheet_link
     style = params[:try_stylesheet] ? Stylesheet.find(params[:try_stylesheet]) : Stylesheet.find_by_current(true)
 
-    default_stylesheet_path = File.join(RAILS_ROOT, "app", "views", "stylesheets", "default.css")
-
     if Rails.env.development?
       content_tag(:style, 
         format_stylesheet_content(style ? style.content : File.read(default_stylesheet_path))
@@ -29,5 +27,9 @@ module StylesheetsHelper
     end
 
     content
+  end
+
+  def default_stylesheet_path
+    File.join(RAILS_ROOT, "app", "views", "stylesheets", "default.css")
   end
 end
