@@ -14,6 +14,12 @@ class Admin::MissionsController < ApplicationController
     redirect_to new_admin_mission_group_path if MissionGroup.count == 0
 
     @mission = Mission.new
+
+    if params[:mission]
+      @mission.attributes = params[:mission]
+
+      @mission.valid?
+    end
   end
 
   def create
@@ -22,12 +28,18 @@ class Admin::MissionsController < ApplicationController
     if @mission.save
       redirect_to admin_missions_url(:canvas => true)
     else
-      render :action => :new
+      redirect_to new_admin_mission_url(:mission => params[:mission], :canvas => true)
     end
   end
 
   def edit
     @mission = Mission.find(params[:id])
+
+    if params[:mission]
+      @mission.attributes = params[:mission]
+
+      @mission.valid?
+    end
   end
 
   def update
@@ -36,7 +48,7 @@ class Admin::MissionsController < ApplicationController
     if @mission.update_attributes(params[:mission])
       redirect_to admin_missions_url(:canvas => true)
     else
-      render :action => :edit
+      redirect_to edit_admin_mission_url(:mission => params[:mission], :canvas => true)
     end
   end
 

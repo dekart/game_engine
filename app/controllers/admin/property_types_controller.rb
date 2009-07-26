@@ -9,6 +9,12 @@ class Admin::PropertyTypesController < ApplicationController
 
   def new
     @type = PropertyType.new
+
+    if params[:property_type]
+      @type.attributes = params[:property_type]
+      
+      @type.valid?
+    end
   end
 
   def create
@@ -17,12 +23,18 @@ class Admin::PropertyTypesController < ApplicationController
     if @type.save
       redirect_to admin_property_types_url(:canvas => true)
     else
-      render :action => :new
+      redirect_to new_admin_property_type_url(:property_type => params[:property_type], :canvas => true)
     end
   end
 
   def edit
     @type = PropertyType.find(params[:id])
+
+    if params[:property_type]
+      @type.attributes = params[:property_type]
+
+      @type.valid?
+    end
   end
 
   def update
@@ -31,7 +43,7 @@ class Admin::PropertyTypesController < ApplicationController
     if @type.update_attributes(params[:property_type])
       redirect_to admin_property_types_url(:canvas => true)
     else
-      render :action => :edit
+      redirect_to edit_admin_property_type_url(:property_type => params[:property_type], :canvas => true)
     end
   end
 

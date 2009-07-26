@@ -14,6 +14,12 @@ class Admin::ItemsController < ApplicationController
     redirect_to new_admin_item_group_path if ItemGroup.count == 0
     
     @item = Item.new
+
+    if params[:item]
+      @item.attributes = params[:item]
+      
+      @item.valid?
+    end
   end
 
   def create
@@ -22,12 +28,18 @@ class Admin::ItemsController < ApplicationController
     if @item.save
       redirect_to admin_items_url(:canvas => true)
     else
-      render :action => :new
+      redirect_to new_admin_item_url(:item => params[:item], :canvas => true)
     end
   end
 
   def edit
     @item = Item.find(params[:id])
+
+    if params[:item]
+      @item.attributes = params[:item]
+
+      @item.valid?
+    end
   end
 
   def update
@@ -36,7 +48,7 @@ class Admin::ItemsController < ApplicationController
     if @item.update_attributes(params[:item])
       redirect_to admin_items_url(:canvas => true)
     else
-      render :action => :edit
+      redirect_to edit_admin_item_url(:item => params[:item], :canvas => true)
     end
   end
 
