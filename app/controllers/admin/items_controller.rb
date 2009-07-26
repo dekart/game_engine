@@ -11,6 +11,8 @@ class Admin::ItemsController < ApplicationController
   end
 
   def new
+    redirect_to new_admin_item_group_path if ItemGroup.count == 0
+    
     @item = Item.new
   end
 

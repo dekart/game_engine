@@ -11,6 +11,8 @@ class Admin::MissionsController < ApplicationController
   end
 
   def new
+    redirect_to new_admin_mission_group_path if MissionGroup.count == 0
+
     @mission = Mission.new
   end
 
