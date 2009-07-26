@@ -14,6 +14,9 @@ class PropertyType < ActiveRecord::Base
 
   serialize :requirements, Requirements::Collection
 
+  validates_presence_of :name, :availability, :basic_price, :money_min, :money_max
+  validates_numericality_of :basic_price, :vip_price, :money_min, :money_max, :allow_nil => true
+
   def requirements
     super || Requirements::Collection.new
   end
