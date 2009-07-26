@@ -2,6 +2,7 @@ h1.title {font-size: 18px; color: #3B5998; margin: 15px 0px;}
 h2,h3 {font-size: 16px; color: #3B5998; margin-bottom: 7px;}
 td {vertical-align: top;}
 
+/* A block that got displayed during AJAX request */
 #spinner {position: absolute; top:150px; left: 300px; width: 150px; height: 50px; border: 1px solid #6D84B4; padding: 5px; background-color:white; z-index:1000;}
   #spinner img {float:left; margin-right: 10px;}
 
@@ -11,12 +12,14 @@ td {vertical-align: top;}
 .empty_set, .note {margin: 10px 0px; padding: 8px; border: 1px solid #D8DFEA;}
 .note {font-size: 14px;}
 
+/* Page Switcher */
 .pagination {margin: 10px 0px; text-align: right;}
   .pagination .disabled {display:none;}
   .pagination a, .pagination span {border: 1px solid #3b5998; padding: 3px;}
   .pagination a:hover {background-color: #d8dfea;}
   .pagination .current {background-color: #d8dfea; font-weight:bold; color: #3b5998;}
 
+/* Default form styles */
 form .required {color: red; padding-left: 5px;}
 form .field {margin-bottom: 5px;}
   form .field .label {margin-bottom: 3px;}
@@ -46,6 +49,7 @@ form .error {color: red; padding: 3px 0px;}
     #main_menu a.properties {background-image: url(icons/properties.gif);}
     #main_menu a.vip_money {background-image: url(icons/vip_money.gif);}
 
+/* Character overview block (below main menu) that displays user health, energy, experience, level, etc. */
 #co {clear:both; border-top: 1px solid #d0d0d0; width: 100%}
   #co td {line-height: 25px; padding-bottom: 5px;}
   #co div.value {height: 20px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
@@ -63,25 +67,29 @@ form .error {color: red; padding: 3px 0px;}
     #co_experience_bar {border: 1px solid #d0d0d0; margin: -4px 10px -2px 0;}
       #co_experience_percentage {height: 4px; background-image: url(progress.gif);font-size: 0px;}
 
+/* Generic block with 'Hide' link*/
 .block {margin: 10px 0px;padding: 8px;}
   .block h2 { margin-bottom: 15px;}
   .block .hide {float: right; padding-left: 14px; background: transparent url(icons/hide.gif) no-repeat center left;}
 
+/* Next Steps block*/
 #next_steps { border: 1px solid #EC7000; background-color: #FFFFD5;}
   #next_steps h2 {color: #EC7000;}
   #next_steps .step {font-size: 14px; font-weight: bold; margin-bottom: 15px; padding-left: 25px; background: transparent url(icons/step.gif) no-repeat top left; }
   #next_steps .fbml_add_profile_button {margin-top: 10px;}
 
+/* Fan Specials block */
 #fan_specials { border: 1px solid #3ebace; background-color: #f1f7fa;}
   #fan_specials h2 {color: #003f95;}
   #fan_specials .link {display: block; margin: 5px auto; width: 116px;}
-
 #bookmark {border: 1px solid #e0e0e0;}
   #bookmark img {vertical-align:middle; margin-left: 10px;}
   #bookmark p {font-weight: bold; margin: 0;}
+
 .controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; float: right; clear: both;}
   .controls a:hover {background-color: #e0e0e0;}
 
+/* A block of character attributes displayed at home page and at the profile page */
 .character_attributes {padding: 0; }
   .character_attributes tr {height: 25px; line-height: 25px;}
   .character_attributes th {padding-right: 15px;}
@@ -93,12 +101,14 @@ form .error {color: red; padding: 3px 0px;}
     .character_attributes .basic_money .value {background-image: url(icons/basic_money.gif);}
     .character_attributes .vip_money .value {background-image: url(icons/vip_money.gif);}
 
+/* Character stats displayd at profile page */
 .character_statistics tr {height: 25px; line-height: 25px;}
   .character_statistics th {padding-right: 15px;}
 
 #dashboard {width: 100%;}
   #dashboard .profile {width: 250px; padding-right: 10px;}
 
+/* A list of latest user fights displayed at home page */
 #fight_list td {padding: 10px 0;border-bottom: 1px solid #d0d0d0;}
   #fight_list .fight {clear: both; margin: 5px 0; }
   #fight_list .attacker {width: 60px; text-align:left;}
@@ -111,6 +121,7 @@ form .error {color: red; padding: 3px 0px;}
     #fight_list .health { background-image: url(icons/health.gif); }
     #fight_list .experience { background-image: url(icons/experience.gif); }
 
+/* Mission list displayed at Missions page */
 #mission_list {margin-top: -30px;}
 #mission_list th {padding: 40px 0px 10px; border-bottom: 1px solid #d0d0d0; }
   #mission_list .mission_group {font-size: 16px; color: #3B5998; font-weight: bold;}
@@ -130,10 +141,12 @@ form .error {color: red; padding: 3px 0px;}
     #mission_list .progress .completed {height: 10px; background-image: url(progress_completed.gif);}
   #mission_list .controls a { background-image: url(icons/missions.gif);}
 
+/* Announce of next missions displayed at Missions page */
 #next_mission_group {margin-top: 30px;}
   #next_mission_group p {border: 1px solid #d0d0d0; padding: 10px; }
   #next_mission_group .level {font-size: 14px; font-weight: bold;}
 
+/* Item list displayed at Shop page*/
 .item_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
   .item_list .picture {padding-right: 10px;}
   .item_list .info {padding-right: 10px;}
@@ -155,6 +168,7 @@ form .error {color: red; padding: 3px 0px;}
 #basic_item_list {padding-right: 10px;}
 #vip_item_list {width: 50%;}
 
+/* Item list displayed at Inventory page*/
 #inventory_list {margin-top: -50px;}
 #inventory_list th {padding-top: 50px;}
 #inventory_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
@@ -175,6 +189,7 @@ form .error {color: red; padding: 3px 0px;}
     #inventory_list .controls .place {background-image: url(icons/add.gif);}
     #inventory_list .controls .use {background-image: url(icons/accept.gif);}
 
+/* Character list displayed at the left of inventory list*/
 #inventory_holders {width: 200px;}
   #inventory_holders th {padding: 30px 5px 10px 5px; border-right: 1px solid #d0d0d0;}
   #inventory_holders .holder td {padding: 5px; cursor: pointer;}
@@ -188,6 +203,7 @@ form .error {color: red; padding: 3px 0px;}
   #inventory_holders .empty_set {padding-bottom: 25px;}
     #inventory_holders .empty_set .invite {float:right;display:block; margin-top: 7px; font-weight: bold;}
 
+/* Upgradeable attribute list displayed at Upgrade page*/
 #upgrade_list td{padding: 10px; vertical-align: middle;}
 #upgrade_list .points td{border-bottom: 1px solid #d0d0d0;}
 #upgrade_list .name {font-weight: bold;}
@@ -198,6 +214,7 @@ form .error {color: red; padding: 3px 0px;}
   #upgrade_energy {background: url(icons/energy.gif);}
 #upgrade_list .controls a {margin-top:0; background-image: url(icons/add.gif);}
 
+/* Opponent list displayed at Fight page */
 #victim_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;vertical-align:middle;}
   #victim_list .picture {padding-right: 10px;}
   #victim_list .name{ width: 200px;}
@@ -205,6 +222,7 @@ form .error {color: red; padding: 3px 0px;}
   #victim_list .relations .larger {color: red;}
   #victim_list .controls a {background-image: url(icons/fights.gif);}
 
+/* A list of invitations displayed at home page*/
 #invitation_list {width: 100%;}
   #invitation_list td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #invitation_list .picture {width: 55px;}
@@ -212,13 +230,17 @@ form .error {color: red; padding: 3px 0px;}
   #invitation_list .controls .accept {background-image: url(icons/accept.gif)}
   #invitation_list .controls .ignore {background-image: url(icons/delete.gif)}
 
+/* Recruit to Alliance button at Alliance page */
 #alliance_recruit { display:block; width: 130px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/add.gif) 3px center no-repeat;}
+
+/* Alliance member list at Alliance page*/
 #alliance_members {}
   #alliance_members td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #alliance_members .picture {width: 55px;}
   #alliance_members .level {width: 70px;}
   #alliance_members .controls .delete {background-image: url(icons/delete.gif)}
 
+/* A block with item placements displayed at the top of Inventory page*/
 #placements {position: relative; width: 400px; height: 510px; background: url(placements.gif) no-repeat;}
   #placements span {position:absolute;}
   #placements a {position:absolute; background-color: white; padding: 2px;border: 1px solid #3B5998; font-size: 0px;}
@@ -235,8 +257,10 @@ form .error {color: red; padding: 3px 0px;}
   #placements .legs {left: 132px; top:361px;}
     #placements .legs .take_off {top: -1px; border-left-color:white;}
 
+/* Received title list at the Profile page*/
 #rank_list .rank {padding: 3px 25px; background: url(icons/level.gif) 3px center no-repeat;}
 
+/* AJAX request results block*/
 #result {font-size: 13px;margin:10px 0;border: 2px solid #3B5998; padding: 10px 0 20px 0;}
   #result td {padding-right: 15px;}
   #result h2 {margin-top: 10px;}
@@ -259,6 +283,7 @@ form .error {color: red; padding: 3px 0px;}
     #result .button:hover {background-color: #e0e0e0;}
     #result .publish {background-image: url(icons/publish.gif);}
 
+/* Missions result block */
 #mission_result {padding:0px 30px; background: url(icons/missions.gif) 5px 0px no-repeat;}
   #mission_result .spent b {width: 55px;}
   #mission_result .spent .zero .value{font-weight: bold; color: green; font-size: 14px;}
@@ -266,6 +291,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .title {line-height: 22px; padding-left: 23px; background: url(icons/level.gif) center left no-repeat; font-size: 14px; margin-bottom: 15px;}
   #mission_result .fulfill_again {background-image: url(icons/missions.gif);}
 
+/* Fight result block */
 #fight_result {padding:0px 30px; background: url(icons/fights.gif) 5px 0px no-repeat;}
   #fight_result .lost b {width: 55px;}
   #fight_result .victim_lost b {width: 55px;}
@@ -273,17 +299,22 @@ form .error {color: red; padding: 3px 0px;}
   #fight_result .fail {color: red;}
   #fight_result .attack_again {background-image: url(icons/fights.gif);}
 
+/* Item purchase result block */
 #shop_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
   #shop_result .inventory {background-image: url(icons/inventory.gif);}
 
+/* Item assignment or usage result block */
 #inventory_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
 
+/* Character upgrade result block */
 #upgrade_result {padding:0px 30px; background: url(icons/add.gif) 5px 0px no-repeat;}
 
+/* Controls at the Profile page */
 #character .controls {clear: both;}
   #character .controls a {float: left;}
     #character .controls .attack {background-image: url(icons/fights.gif);}
 
+/* Character list at the Rating page*/
 #rating td {padding: 5px 10px; vertical-align:middle;}
 #rating th {text-align:center; border-bottom: 1px solid #e0e0e0;}
 #rating .current {background-color: #FFFFD5;}
@@ -292,18 +323,22 @@ form .error {color: red; padding: 3px 0px;}
   #rating .current .rating {border-right: 1px solid #EC7000;}
 #rating .position {font-size: 14px; font-weight: bold;}
 
+/* User's position in rating */
 #rating_position {margin: 10px 0;}
   #rating_position .value {padding-left: 5px;font-size: 16px; font-weight: bold; color: #3B5998;}
 
+/* Bank page */
 #bank {width:100%;}
 #bank_balance {font-size: 14px; padding: 10px 0;font-weight: bold;}
   #bank_balance .value {padding-left: 21px; background: url(icons/basic_money.gif) center left no-repeat; font-weight: normal;}
 
+/* Item group tabs at the Shop and Inventory pages */
 #item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin-bottom: 5px; height: 30px;}
   #item_groups b {font-size: 16px; padding: 0 10px; line-height: 30px; height: 28px;display:block; float: left;}
   #item_groups a {font-size: 14px; padding: 0 10px; line-height: 30px; height: 28px;font-weight: bold; border:1px solid white;display:block; float: left;}
   #item_groups a:hover {border-left: 1px solid #D0D0D0;border-right: 1px solid #D0D0D0;}
 
+/* Property list at the Properties page*/
 #property_list {width: 100%;}
   #property_list td{padding: 10px 10px 10px 0; border-bottom: 1px solid #d0d0d0;}
   #property_list .picture {width: 130px;}
@@ -314,6 +349,10 @@ form .error {color: red; padding: 3px 0px;}
   #property_list .controls {width: 110px;}
     #property_list .controls .sell {background-image: url(icons/basic_money.gif);}
 
+/* Buy Properties button */
+#buy_properties { display:block; width: 130px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/properties.gif) 3px center no-repeat;}
+
+/* Property type list at the Buy Properties page */
 #property_type_list {width: 100%;}
   #property_type_list td, #property_type_list th {padding: 10px 10px 10px 0; border-bottom: 1px solid #d0d0d0;}
   #property_type_list .picture {width: 130px;}
@@ -328,16 +367,18 @@ form .error {color: red; padding: 3px 0px;}
   #property_type_list .controls {width: 110px;}
     #property_type_list .controls .buy {background-image: url(icons/basic_money.gif);}
 
-#buy_properties { display:block; width: 130px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/properties.gif) 3px center no-repeat;}
-
+/* Property purchase or sale result block */
 #property_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
   #property_result .properties {background-image: url(icons/properties.gif);}
 
+/* Current property income block */
 #property_income .value{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(icons/basic_money.gif) center left no-repeat;}
 
+/* Current gems block at the Gem Market page */
 #current_vip_money {font-size: 14px; margin-bottom: 15px;}
 #current_vip_money .value{font-weight: bold; line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(icons/vip_money.gif) center left no-repeat;}
 
+/* A list of premium services at the Gem Market page */
 #premia {margin-bottom: 15px;}
   #premia td {vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #premia .name {width: 300px;}
@@ -346,6 +387,7 @@ form .error {color: red; padding: 3px 0px;}
   #premia .vip_money{line-height: 22px;height: 22px; padding: 5px 15px 5px 21px; background: url(icons/vip_money.gif) center left no-repeat;}
   #premia .controls a{background-image: url(icons/accept.gif);}
 
+/* Character assignment list at the Alliance page */
 #character_assignments {width: 250px; margin: 15px 0;}
   #character_assignments b {font-size: 12px; display:block; margin-bottom: 10px;}
   #character_assignments .context {padding-bottom: 5px; border-bottom: 1px solid #e0e0e0; margin-bottom: 10px;}
@@ -356,6 +398,7 @@ form .error {color: red; padding: 3px 0px;}
   #character_assignments .controls .promote {background-image: url(icons/accept.gif);}
   #character_assignments .controls .demote {background-image: url(icons/delete.gif);}
 
+/* Character assignment dialog */
 #new_assignment table {width: 100%;}
 #new_assignment .relations {margin-top: 10px; height: 200px; display: block; overflow: auto}
   #new_assignment .relations td{vertical-align: middle; padding: 2px;border-bottom: 1px solid #e0e0e0;}
@@ -370,11 +413,16 @@ form .error {color: red; padding: 3px 0px;}
   #new_assignment .tab_titles .selected {font-weight: bold; font-size: 14px;}
   #new_assignment .tabs .hidden {display:none;}
 
+/* Assignment result block */
+#promotion_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
+
+/* Manual invitation block at the Recruit to Alliance page*/
 #manual_invitation {padding-left: 15px;}
   #manual_invitation #copy_paste_invitation {margin: 15px 0; font-weight: bold; font-size: 15px; color: #3B5998;}
   #manual_invitation .button {display:block; width: 100px; clear: right; margin: 10px 0; padding: 0 5px 0 25px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold; background: url(icons/publish.gif) 3px center no-repeat;}
     #manual_invitation .button:hover {background-color: #e0e0e0;}
 
+/* Invitation block displayed when user clicks someone's invitation link */
 #invitation {}
   #invitation td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #invitation .picture {width: 55px;}
@@ -382,11 +430,11 @@ form .error {color: red; padding: 3px 0px;}
   #invitation .controls .accept {background-image: url(icons/accept.gif)}
   #invitation .controls .ignore {background-image: url(icons/delete.gif)}
 
+/* Invitation accept/decline result */
 #invitation_result {padding:0px 30px; background: url(icons/alliance.gif) 5px 0px no-repeat;}
-
-#promotion_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
 
 #get_more_vip {margin-top: 30px; }
 
+/* Level up block displayed in mission or fight results */
 #level_up {padding:0px 30px; background: url(icons/level.gif) 5px 0px no-repeat;}
   #level_up .upgrade {background-image: url(icons/add.gif);}
