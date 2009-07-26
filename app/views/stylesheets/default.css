@@ -30,7 +30,7 @@ form .fieldWithErrors {display:inline;}
   form .fieldWithErrors textarea{border: 1px solid #ee5555;}
 form .error {color: red; padding: 3px 0px;}
 
-#logo {float: left;}
+#logo {float: left; display:block; width: 200px; height: 75px; background: transparent url(logo_200x60.jpg) no-repeat;}
 
 #header {border-bottom: 1px solid #d0d0d0;}
 
