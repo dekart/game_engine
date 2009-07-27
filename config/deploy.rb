@@ -62,9 +62,11 @@ namespace :deploy do
 
   desc "Updates apache virtual host config"
   task :update_apache_config do
+    facebook_config = YAML.load_file(File.join(File.dirname(__FILE__), "facebooker.yml"))
+
     config = <<-CODE
       <VirtualHost *>
-        ServerName swordnew.it-vektor.ru
+        ServerName #{URI.parse(facebook_config["production"]["callback_url"]).host}
         DocumentRoot #{current_path}/public
       </VirtualHost>
     CODE
