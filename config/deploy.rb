@@ -1,3 +1,6 @@
+require "yaml"
+require "uri"
+
 set :application, "sword"
 set :repository,  "git@itvektor.ru:facebook/knights.git"
 
