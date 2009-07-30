@@ -23,6 +23,7 @@
 
     <%= render :partial => "layouts/main_menu" %>
     <%= render :partial => "layouts/character_overview" %>
+    <%= render(:partial => "layouts/tip") if current_user.show_tips? %>
   </div>
 
   <%= fb_i(fb_success(flash[:success])) if flash[:success] %>

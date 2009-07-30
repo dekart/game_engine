@@ -12,6 +12,7 @@ en:
         newsletter: "Newsletter"
         promotions: "Promotions"
         stylesheets: "Stylesheets"
+        tips: "Tips"
       application:
         spinner:
           alt: "Please wait..."
@@ -97,6 +98,21 @@ en:
         submit: "Create"
       edit:
         title: "Edit Newsletter"
+        submit: "Update"
+    tips:
+      index:
+        title: "Tips"
+        empty_set: "No tips"
+        controls:
+          new: "Add Tip"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+      new:
+        title: "New Tip"
+        submit: "Create"
+      edit:
+        title: "Edit Tip"
         submit: "Update"
     promotions:
       index:
