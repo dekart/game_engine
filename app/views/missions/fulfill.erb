@@ -96,6 +96,11 @@
           
           <%= payout_list(@result, :remove) %>
         </td>
+        <td class="progress">
+          <h3><%= fb_i(t(".progress.title")) %></h3>
+
+          <%= mission_progress(current_character, @mission) %>
+        </td>
       </tr>
     </table>
 

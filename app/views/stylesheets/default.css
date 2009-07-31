@@ -294,6 +294,11 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .spent .zero .relation {padding-left: 10px;}
   #mission_result .title {line-height: 22px; padding-left: 23px; background: url(icons/level.gif) center left no-repeat; font-size: 14px; margin-bottom: 15px;}
   #mission_result .fulfill_again {background-image: url(icons/missions.gif);}
+  #mission_result .progress .text {text-align:center;}
+  #mission_result .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
+    #mission_result .progress .percentage {height: 10px; font-size: 0px; background-image: url(progress.gif);}
+    #mission_result .progress .completed {height: 10px; background-image: url(progress_completed.gif);}
+
 
 /* Fight result block */
 #fight_result {padding:0px 30px; background: url(icons/fights.gif) 5px 0px no-repeat;}
