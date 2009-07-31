@@ -133,7 +133,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_list .details {padding-right: 10px;}
   #mission_list .details .name {font-size: 14px; margin-bottom: 5px;font-weight: bold;}
   #mission_list .payout {width: 100px;}
-    #mission_list .payoyt div {height: 25px;line-height: 25px;padding-left: 21px;}
+    #mission_list .payout div {height: 25px;line-height: 25px;padding-left: 21px;}
       #mission_list .payout .basic_money { background: url(icons/basic_money.gif) center left no-repeat;}
       #mission_list .payout .experience { background: url(icons/experience.gif) center left no-repeat;}
   #mission_list .requires {width: 100px;}
