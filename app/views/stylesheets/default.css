@@ -68,7 +68,7 @@ form .error {color: red; padding: 3px 0px;}
       #co_experience_percentage {height: 4px; background-image: url(progress.gif);font-size: 0px;}
 
 /* Tip block */
-#tip {padding: 10px; border-top: 1px solid #d0d0d0;}
+#tip {padding: 10px; border-top: 1px solid #d0d0d0; text-align:center;}
   #tip .label {font-weight: bold;}
 
 /* Generic block with 'Hide' link*/
