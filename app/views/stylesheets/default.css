@@ -151,6 +151,7 @@ form .error {color: red; padding: 3px 0px;}
   #next_mission_group .level {font-size: 14px; font-weight: bold;}
 
 /* Item list displayed at Shop page*/
+.item_list {width: 100%}
 .item_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
   .item_list .picture {padding-right: 10px;}
   .item_list .info {padding-right: 10px;}
