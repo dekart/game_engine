@@ -78,7 +78,7 @@
                       :html => {:class => :buy}
                     ) if current_character.can_buy?(item) %>
 
-                <%= link_to(fb_i(t(".buttons.get_vip")), premium_path,
+                <%= link_to(fb_i(t(".buttons.get_vip")), :anchor => :get_more,
                       :class => :buy_vip
                     ) if current_character.need_vip_money?(item)  %>
               </td>
@@ -90,4 +90,5 @@
   </tr>
 </table>
 
+<a name="#get_more"></a>
 <%= render :partial => "premia/get_more_vip" %>
