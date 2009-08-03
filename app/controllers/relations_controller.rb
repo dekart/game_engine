@@ -1,6 +1,10 @@
 class RelationsController < ApplicationController
   def index
-    @relations = current_character.relations.paginate(:page => params[:page], :per_page => 10)
+    if current_character.relations.size == 0
+      redirect_to invite_users_path
+    else
+      @relations = current_character.relations.paginate(:page => params[:page], :per_page => 10)
+    end
   end
 
   def destroy
