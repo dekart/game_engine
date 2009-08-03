@@ -120,6 +120,14 @@
         <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
       <% end %>
     </p>
+  <% elsif !@result.requirements_satisfied? %>
+    <p>
+      <%= fb_i(t(".requirements_not_satisfied.message")) %>
+      
+      <%= mission_requirements(@mission, :unsatisfied) %>
+    </p>
+  <% elsif @result.completed? %>
+    <p><%= fb_i(t(".already_completed.message")) %></p>
   <% end %>
 </div>
 

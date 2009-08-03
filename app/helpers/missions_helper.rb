@@ -18,9 +18,11 @@ module MissionsHelper
     end
   end
 
-  def mission_requirements(mission)
+  def mission_requirements(mission, filter = nil)
     returning result = "" do
       mission.requirements.each do |requirement|
+        next if filter == :unsatisfied and requirement.satisfies?(current_character)
+
         case requirement.name
         when "item"
           result << content_tag(:div,

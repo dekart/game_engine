@@ -267,6 +267,10 @@ en:
         message: "Well done!"
       not_enough_energy:
         message: "You don't have enough energy. Take a rest until your energy will grow to {ep_number} points. You need to wait about {minute_number} minutes."
+      already_completed:
+        message: "You already completed this mission"
+      requirements_not_satisfied:
+        message: "Some mission requirements are not satisfied:"
       you_received:
         title: "You received:"
       you_spent:

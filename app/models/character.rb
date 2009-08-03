@@ -214,9 +214,7 @@ class Character < ActiveRecord::Base
   end
 
   def can_fulfill?(mission)
-    self.ep >= mission.ep_cost && 
-    mission.requirements.satisfies?(self) &&
-    !self.rank_for_mission(mission).completed?
+    MissionResult.new(self, mission).valid?
   end
 
   def rank_for_mission(mission)

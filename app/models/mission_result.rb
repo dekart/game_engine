@@ -17,7 +17,7 @@ class MissionResult
   end
 
   def save!
-    if enough_energy?
+    if @character.can_fulfill?(@mission)
       @success = (rand(100) <= @mission.success_chance)
 
       Rank.transaction do
@@ -59,8 +59,20 @@ class MissionResult
     end
   end
 
+  def valid?
+    enough_energy? and !completed? and requirements_satisfied?
+  end
+
   def enough_energy?
     @character.ep >= @mission.ep_cost
+  end
+
+  def completed?
+    @character.rank_for_mission(@mission).completed?
+  end
+
+  def requirements_satisfied?
+    @mission.requirements.satisfies?(@character)
   end
 
   def received_something?
