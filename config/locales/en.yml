@@ -226,7 +226,7 @@ en:
         item_gone: "{item} ran out and now it's gone!"
       effects: "Effects:"
     holders:
-      relations: "Alliance Members:"
+      relations: "Equip Your Alliance:"
       empty_set:
         text: "You don't have any members in your Alliance! Invite some friends to increase power of your army."
         invite: "Invite &raquo;"
