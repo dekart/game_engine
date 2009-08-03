@@ -85,8 +85,8 @@ class Character < ActiveRecord::Base
   serialize :relation_effects, Effects::Collection
 
   extend RestorableAttribute
-  restorable_attribute :hp, :limit => :health, :restore_period => 2.minutes + 30.seconds
-  restorable_attribute :ep, :limit => :energy, :restore_period => 5.minutes
+  restorable_attribute :hp, :limit => :health, :restore_period => 1.minutes
+  restorable_attribute :ep, :limit => :energy, :restore_period => 2.minutes
   restorable_attribute :basic_money, :restore_period => 1.hour, :restore_rate => :property_income
 
   before_save :update_level_and_points, :recalculate_rating
