@@ -5,7 +5,11 @@ module Payouts
     end
     
     def apply(character)
-      character.basic_money += @value
+      if self.action == :remove
+        character.basic_money -= @value
+      else
+        character.basic_money += @value
+      end
     end
   end
 end
