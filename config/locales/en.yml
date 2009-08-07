@@ -73,6 +73,8 @@ en:
       attributes:
         value: "Price limit"
         allow_vip: "Allow items that cost gems"
+    health_point:
+      name: "Health Points"
 # Templates
   layouts:
     next_steps:
