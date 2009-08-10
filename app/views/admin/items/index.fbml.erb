@@ -23,6 +23,7 @@
           <th><%= Item.human_attribute_name("placements") %></th>
           <th><%= Item.human_attribute_name("usable") %></th>
           <th><%= Item.human_attribute_name("effects") %></th>
+          <th>Bought</th>
         </tr>
       <% end %>
       <tr>
@@ -35,6 +36,7 @@
         <td class="placements"><%= item.placements.collect{|p| p.humanize}.join(", ") %></td>
         <td class="usable"><%= item.usable %><%= ", #{item.usage_limit}" if item.usage_limit %></td>
         <td class="effects"><%= item.effects.size %></td>
+        <td class="bought"><%= item.inventories.count %></td>
         <td class="controls">
           <%= link_to(t(".controls.delete"), admin_item_path(item),
                 :method   => :delete,

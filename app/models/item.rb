@@ -1,7 +1,8 @@
 class Item < ActiveRecord::Base
   AVAILABILITIES = [:shop, :loot, :quest]
 
-  belongs_to :item_group
+  belongs_to  :item_group
+  has_many    :inventories
 
   extend SerializeWithPreload
 
