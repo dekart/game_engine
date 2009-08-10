@@ -19,7 +19,11 @@
   <% end %>
 </table>
 
-<div id="upgrade_finished" style="display:none;">
-  <%= fb_i(t(".finished.note")) %>
-  <%= link_to(fb_i(t(".finished.link")), character_path(current_character)) %>
+<div id="upgrade_finished" style="display:none;" class="note">
+  <% fb_i do %>
+    <%= t(".finished.note") %>
+
+    <%= fb_it(:profile, link_to(fb_i(t(".finished.profile")), character_path(current_character))) %>
+    <%= fb_it(:get_more, link_to(fb_i(t(".finished.get_more")), premium_path)) %>
+  <% end %>
 </div>

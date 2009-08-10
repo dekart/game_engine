@@ -149,8 +149,9 @@ en:
     upgrade:
       title: "Upgrade"
       finished:
-        note: "You spent all your upgrade points."
-        link: "Go To Profile"
+        note: "You spent all your upgrade points. Now you can {profile} or {get_more} to get more points"
+        profile: "go to profile"
+        get_more: "visit the Gem Market"
     upgrade_result:
       messages:
         success: "You've successfully upgraded {{attribute}} to {number}"

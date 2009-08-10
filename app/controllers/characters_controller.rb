@@ -15,8 +15,6 @@ class CharactersController < ApplicationController
       @success = current_character.upgrade_attribute!(params[:attribute])
       
       render :action => :upgrade_result, :layout => "ajax"
-    else
-      redirect_to character_path if current_character.points == 0
     end
   end
 
