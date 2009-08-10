@@ -14,22 +14,24 @@
 
   <%= render :partial => "layouts/admin/main_menu" %>
 
-  <input type="text" style="width: 1px; height: 1px; border:0px;" id="top_field"/>
+  <div id="content">
+    <input type="text" style="width: 1px; height: 1px; border:0px;" id="top_field"/>
 
-  <%= render :partial => "layouts/spinner" %>
+    <%= render :partial => "layouts/spinner" %>
 
-  <div id="header">
-    <%= link_to("&nbsp;", root_path, :id => :logo) %>
+    <div id="header">
+      <%= link_to("&nbsp;", root_path, :id => :logo) %>
 
-    <%= render :partial => "layouts/main_menu" %>
-    <%= render :partial => "layouts/character_overview" %>
-    <%= render(:partial => "layouts/tip") if current_user.show_tips? %>
+      <%= render :partial => "layouts/main_menu" %>
+      <%= render :partial => "layouts/character_overview" %>
+      <%= render(:partial => "layouts/tip") if current_user.show_tips? %>
+    </div>
+
+    <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
+    <%= fb_i(fb_error(flash[:error])) if flash[:error] %>
+
+    <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
+
+    <%= yield %>
   </div>
-
-  <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
-  <%= fb_i(fb_error(flash[:error])) if flash[:error] %>
-
-  <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
-
-  <%= yield %>
 </fb:fbml>
