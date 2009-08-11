@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  TIME_BEFORE_FIRST_INVITE_PAGE_VISIT = 1.hour
   INVITE_PAGE_VISIT_DELAY = 48.hours
 
   has_one :character
@@ -50,7 +51,7 @@ class User < ActiveRecord::Base
   end
 
   def should_visit_invite_page?
-    self.created_at < Time.now - 24.hours and
+    self.created_at < Time.now - TIME_BEFORE_FIRST_INVITE_PAGE_VISIT and
       (self.invite_page_visited_at.nil? or self.invite_page_visited_at < Time.now - INVITE_PAGE_VISIT_DELAY)
   end
 
