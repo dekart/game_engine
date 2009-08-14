@@ -1,4 +1,4 @@
-<% if not inventories.size > 0 %>
+<% if inventories.size > 0 %>
   <table cellspacing="0">
     <% ItemGroup.all.each do |group| %>
       <% if by_group = inventories.by_item_group(group) and by_group.any? %>
