@@ -4,7 +4,7 @@ class CharacterStatus
       request = Rack::Request.new(env)
 
       if user = User.find_by_facebook_id(request.params["fb_sig_user"])
-        [200, {"Content-Type" => "application/json"}, user.character.to_json]
+        [200, {"Content-Type" => "application/json"}, user.character.to_json_for_overview]
       else
         [404, {"Content-Type" => "text/html"}, "Not Found"]
       end

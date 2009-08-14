@@ -1,5 +1,5 @@
 <%= yield %>
 <script>
   <%= yield :script %>
-  Character.update(<%= current_character(true).to_json %>);
+  Character.update(<%= current_character(true).to_json_for_overview %>);
 </script>
