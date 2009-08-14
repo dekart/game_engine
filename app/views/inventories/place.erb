@@ -2,7 +2,11 @@
   <%= inventory_placements_for(@holder) %>
 <% end %>
 
+<% fb_js_string :list do %>
+  <%= render :partial => "list", :locals => {:inventories => current_character.inventories.available} %>
+<% end %>
+
 <% content_for :script do %>
   $('inventory_placements').setInnerFBML(placements);
-  $('<%= dom_id(@inventory) %>').hide();
+  $('inventory_list').setInnerFBML(list);
 <% end %>
