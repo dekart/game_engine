@@ -1,4 +1,4 @@
-<% if inventories.size > 0 %>
+<% if not inventories.size > 0 %>
   <table cellspacing="0">
     <% ItemGroup.all.each do |group| %>
       <% if by_group = inventories.by_item_group(group) and by_group.any? %>
@@ -46,5 +46,11 @@
     <% end %>
   </table>
 <% else %>
-  <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
+  <div class="empty_set">
+    <% fb_i do %>
+      <%= t(".empty_set.text") %>
+
+      <%= fb_it(:shop, link_to(fb_i(t(".empty_set.shop")), items_path)) %>
+    <% end %>
+  </div>
 <% end %>

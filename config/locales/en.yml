@@ -218,7 +218,9 @@ en:
         to_belt: "To Belt"
         to_legs: "To Legs"
         sell: "Sell for {amount}"
-      empty_set: "Your inventory is empty"
+      empty_set:
+        text: "Your inventory is empty. You can buy new items in the {shop}"
+        shop: "Shop"
     use:
       button:
         base: "Use {usage_limit}"
