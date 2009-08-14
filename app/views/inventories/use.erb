@@ -23,13 +23,14 @@
         <%= fb_it(:item, fb_i(@inventory.name)) %>
       <% end %>
     </p>
-
-    <% content_for :script do %>
-      $('inventory_<%= @inventory.id %>').hide();
-    <% end %>
   <% end %>
 </div>
 
+<% fb_js_string :list do %>
+  <%= render :partial => "list", :locals => {:inventories => current_character.inventories.available} %>
+<% end %>
+
 <% content_for :script do %>
   $('result').show();
+  $('inventory_list').setInnerFBML(list);
 <% end %>
