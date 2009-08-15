@@ -47,3 +47,9 @@ en:
           title: "{*actor*} is playing {{app}}!"
           text: "{*actor*} is gaining respect in his Alliance! {*pronoun*} just advanced to Level {*level*} in {{app}}"
         action_link: "Play {{app}} &raquo;"
+    help_request:
+      one_line: "{*actor*} requested help with the {*mission*} mission in {*app*}"
+      short:
+        title: "{*actor*} requested help with the {*mission*} mission in {*app*}"
+        text: "Help your friend with this mission to get bonus gold and experience"
+      help_link: "&raquo;&raquo; Help {{user}}! &laquo;&laquo;"

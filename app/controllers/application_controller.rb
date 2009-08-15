@@ -75,4 +75,8 @@ class ApplicationController < ActionController::Base
   def admin_required
     redirect_to root_url and return false unless current_user.admin?
   end
+
+  def friend?(user)
+    facebook_params["friends"].include?(user.facebook_id.to_s)
+  end
 end

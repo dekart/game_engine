@@ -193,3 +193,14 @@ var Inventory = {
     }
   }
 }
+
+var HelpRequest = {
+  create: function(mission_id){
+    new Ajax.Request(root_url + "help_requests", {
+      parameters: "mission_id=" + mission_id,
+      method: "POST",
+      "scrollToTop": false,
+      "showSpinner": false
+    });
+  }
+}

@@ -278,6 +278,8 @@ form .error {color: red; padding: 3px 0px;}
   #result h2 {margin-top: 10px;}
   #result h3 {font-size: 13px;}
   #result p {font-size: 13px; margin-top: 0;}
+  #result .success {color:green;}
+  #result .fail {color: red;}
   #result .payouts .label {float:left; width: 100px; font-weight: bold;margin-right: 5px;}
   #result .payouts .payout {line-height: 22px;min-height: 22px; height: 22px; clear: both; padding-bottom: 10px;}
   #result .payouts .value {float:left; line-height: 22px; padding: 0 0 10px 21px; background-position: left 3px; background-repeat: no-repeat;}
@@ -302,18 +304,19 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .spent .zero .relation {padding-left: 10px;}
   #mission_result .title {line-height: 22px; padding-left: 23px; background: url(icons/level.gif) center left no-repeat; font-size: 14px; margin-bottom: 15px;}
   #mission_result .fulfill_again {background-image: url(icons/missions.gif);}
+  #mission_result .request_help {background-image: url(icons/alliance.gif);}
   #mission_result .progress .text {text-align:center;}
   #mission_result .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_result .progress .percentage {height: 10px; font-size: 0px; background-image: url(progress.gif);}
     #mission_result .progress .completed {height: 10px; background-image: url(progress_completed.gif);}
 
+/* Mission help result block */
+#help_result {padding:0px 30px; background: url(icons/missions.gif) 5px 0px no-repeat;}
 
 /* Fight result block */
 #fight_result {padding:0px 30px; background: url(icons/fights.gif) 5px 0px no-repeat;}
   #fight_result .lost b {width: 55px;}
   #fight_result .victim_lost b {width: 55px;}
-  #fight_result .success {color:green;}
-  #fight_result .fail {color: red;}
   #fight_result .attack_again {background-image: url(icons/fights.gif);}
 
 /* Item purchase result block */

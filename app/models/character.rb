@@ -58,6 +58,14 @@ class Character < ActiveRecord::Base
 
   has_many :assignments, :as => :context, :extend => AssignmentExtension
 
+  has_many :help_requests do
+    def can_publish?
+      latest_request = self.latest
+
+      latest_request.nil? or latest_request.expired?
+    end
+  end
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [

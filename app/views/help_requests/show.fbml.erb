@@ -1,0 +1,29 @@
+<% content_for :result do %>
+  <div id="help_result">
+    <% if @help_request %>
+      <% if !@help_result.new_record? %>
+        <p class="success">
+          <% fb_i do %>
+            <%= t(".success") %>
+
+            <%= fb_it(:user, character_name_link(@help_request.character)) %>
+            <%= fb_it(:mission, @help_request.mission.name) %>
+          <% end %>
+        </p>
+
+        <div class="payouts">
+          <h3><%= fb_i(t(".you_received")) %></h3>
+
+          <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @help_result.money) %>
+          <%= payout(:experience, Character.human_attribute_name("experience"), @help_result.experience) %>
+        </div>
+      <% else %>
+        <p class="fail"><%= fb_i(@help_result.errors.full_messages.first) %></p>
+      <% end %>
+    <% else %>
+      <p class="fail"><%= fb_i(t(".failure.friends_only")) %></p>
+    <% end %>
+  </div>
+
+  <%= character_level_up_block %>
+<% end %>

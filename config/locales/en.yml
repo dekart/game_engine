@@ -47,6 +47,9 @@ en:
             character:
               not_enough_money: "You don't have enough money to buy {property_name}"
               too_much_properties: "You cannot buy properties anymore because you already have too many!"
+        help_result:
+          too_late: "You're too late! Next time try to help your friends within 24 hours."
+          already_helped: "You already helped your friend with this mission."
   effects:
     attack:
       name: "Attack"
@@ -259,8 +262,9 @@ en:
     fulfill:
       buttons:
         publish: "Brag About It"
-        continue: "Continue!"
+        continue: "Fulfill Again!"
         try_again: "Try Again!"
+        request_help: "Request Help & Earn Bonus"
       completed:
         title: "Congratulations!"
         message: "You completed this mission and received new title:"
@@ -448,7 +452,12 @@ en:
           refill_health: "Now you have maximum health!"
           buy_points: "Upgrade points have been added to your character!"
         failure: "You don't have enough Gems"
-
+  help_requests:
+    show:
+      success: "You successfully helped {user} to fulfill the {mission} mission!"
+      you_received: "You received:"
+      failure:
+        friends_only: "You cannot help players that are not your friends"
 # Helpers
   blocks:
     hide: "Hide"

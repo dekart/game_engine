@@ -24,7 +24,7 @@ class MissionResult
         if @success
           mission_money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)
 
-          @money      = ((rand(@mission.money_max - @mission.money_min) + @mission.money_min) * (1 + mission_money_bonus)).ceil
+          @money      = (@mission.money * (1 + mission_money_bonus)).ceil
           @experience = self.mission.experience
 
           @rank.win_count += 1

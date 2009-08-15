@@ -61,4 +61,8 @@ class Mission < ActiveRecord::Base
 
     super(collection)
   end
+
+  def money
+    rand(self.money_max - self.money_min) + self.money_min
+  end
 end

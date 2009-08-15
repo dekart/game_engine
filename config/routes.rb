@@ -62,6 +62,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :pages
 
   map.resources :stylesheets, :only => :show
+
+  map.resources :help_requests, :only => [:show, :create]
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

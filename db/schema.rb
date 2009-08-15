@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090730164626) do
+ActiveRecord::Schema.define(:version => 20090815112649) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -103,6 +103,24 @@ ActiveRecord::Schema.define(:version => 20090730164626) do
 
   add_index "fights", ["attacker_id", "winner_id"], :name => "index_fights_on_attacker_id_and_winner_id"
   add_index "fights", ["victim_id"], :name => "index_fights_on_victim_id"
+
+  create_table "help_requests", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "mission_id"
+    t.integer  "help_results_count", :default => 0
+    t.integer  "money",              :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "help_results", :force => true do |t|
+    t.integer  "help_request_id"
+    t.integer  "character_id"
+    t.integer  "money"
+    t.integer  "experience"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "inventories", :force => true do |t|
     t.integer  "character_id"

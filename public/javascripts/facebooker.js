@@ -97,7 +97,9 @@ Ajax.Updater = function (container,url,options) {
     parameters["_method"] = options["method"];
   }
 
-  Spinner.show();
+  if(options["showSpinner"] != false){
+    Spinner.show();
+  }
 
   this.ajax.post(url,parameters); 
   if (options["onLoading"]) {
