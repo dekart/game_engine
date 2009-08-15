@@ -1,6 +1,6 @@
 class HelpRequest < ActiveRecord::Base
-  EXPIRE_PERIOD = 1.minute#24.hours
-  DISPLAY_PERIOD = 1.minute#24.hours
+  EXPIRE_PERIOD = 24.hours
+  DISPLAY_PERIOD = 24.hours
   
   belongs_to  :character
   belongs_to  :mission
