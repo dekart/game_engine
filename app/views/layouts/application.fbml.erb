@@ -27,8 +27,9 @@
       <%= render(:partial => "layouts/tip") if current_user.show_tips? %>
     </div>
 
-    <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
-    <%= fb_i(fb_error(flash[:error])) if flash[:error] %>
+    <% flash_block do |message| %>
+      <%= fb_i(message) %>
+    <% end %>
 
     <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
 

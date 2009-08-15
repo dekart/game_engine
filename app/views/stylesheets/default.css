@@ -12,6 +12,12 @@ td {vertical-align: top;}
 .empty_set, .note {margin: 10px 0px; padding: 8px; border: 1px solid #D8DFEA;}
 .note {font-size: 14px;}
 
+/* Flash messages */
+#flash {height: 40px; line-height: 40px; text-align: center; font-size: 17px; font-weight: bold; margin: 5px 0;}
+  #flash.success {color: #338833; border: 1px solid #338833; background-color: #d0ffd0;}
+  #flash.error {color: #883333; border: 1px solid #883333; background-color: #ffd0d0;}
+  #flash.notice {color: #336788; border: 1px solid #336788; background-color: #d0efff;}
+
 /* Page Switcher */
 .pagination {margin: 10px 0px; text-align: right;}
   .pagination .disabled {display:none;}
