@@ -16,7 +16,7 @@
     <% content_tag(:tr, :class => ("current" if character == current_character)) do %>
       <td class="position"><%= index + 1 %></td>
       <td class="picture"><%= character_picture_link(character) %></td>
-      <td class="name"><%= character_name_link(character) %></td>
+      <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
       <td class="level"><%= Character.human_attribute_name("level") %> <%= character.level %></td>
       <td class="rating"><%= character.rating %></td>
     <% end %>
