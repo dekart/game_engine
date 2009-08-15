@@ -285,6 +285,7 @@ en:
         title: "Mission Progress"
     index:
       title: "Missions"
+      latest_help_request: "{friend_amount} of your friends helped you to fulfill the {mission} mission! You received {money_amount} Gold in total."
       columns:
         payout: "Payout"
         requires: "Requires"

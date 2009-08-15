@@ -131,6 +131,10 @@ form .error {color: red; padding: 3px 0px;}
     #fight_list .health { background-image: url(icons/health.gif); }
     #fight_list .experience { background-image: url(icons/experience.gif); }
 
+/* Latest help request block */
+#latest_help_request {padding: 10px; margin-bottom: 15px; border: 1px solid #e7e7e7; font-size: 12px;}
+  #latest_help_request .basic_money{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(icons/basic_money.gif) center left no-repeat; font-weight: bold;}
+  
 /* Mission list displayed at Missions page */
 #mission_list {margin-top: -30px;}
 #mission_list th {padding: 40px 0px 10px; border-bottom: 1px solid #d0d0d0; }

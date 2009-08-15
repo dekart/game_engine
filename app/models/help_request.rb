@@ -1,5 +1,6 @@
 class HelpRequest < ActiveRecord::Base
-  VALID_DURING = 1.minute#24.hours
+  EXPIRE_PERIOD = 1.minute#24.hours
+  DISPLAY_PERIOD = 1.minute#24.hours
   
   belongs_to  :character
   belongs_to  :mission
@@ -12,6 +13,18 @@ class HelpRequest < ActiveRecord::Base
   end
   
   def expired?
-    self.created_at < Time.now - VALID_DURING
+    Time.now > self.expire_at
+  end
+
+  def expire_at
+    self.created_at + EXPIRE_PERIOD
+  end
+
+  def stop_display_at
+    self.expire_at + DISPLAY_PERIOD
+  end
+
+  def should_be_displayed?
+    Time.now < self.stop_display_at && self.help_results.size > 0
   end
 end
