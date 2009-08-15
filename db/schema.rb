@@ -113,6 +113,8 @@ ActiveRecord::Schema.define(:version => 20090815112649) do
     t.datetime "updated_at"
   end
 
+  add_index "help_requests", ["character_id"], :name => "index_help_requests_on_character_id"
+
   create_table "help_results", :force => true do |t|
     t.integer  "help_request_id"
     t.integer  "character_id"
@@ -121,6 +123,8 @@ ActiveRecord::Schema.define(:version => 20090815112649) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "help_results", ["help_request_id", "character_id"], :name => "index_help_results_on_help_request_id_and_character_id"
 
   create_table "inventories", :force => true do |t|
     t.integer  "character_id"

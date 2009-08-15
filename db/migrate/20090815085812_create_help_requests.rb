@@ -9,6 +9,8 @@ class CreateHelpRequests < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :help_requests, :character_id
   end
 
   def self.down
