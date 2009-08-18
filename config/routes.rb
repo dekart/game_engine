@@ -22,6 +22,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :statistics, :only => :index
     admin.resources :stylesheets, :member => {:use => :post}
     admin.resources :tips
+    admin.resources :translations
   end
 
   map.root :controller => "characters", :action => "index"

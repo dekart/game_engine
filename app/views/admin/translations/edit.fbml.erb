@@ -1,0 +1,7 @@
+<%= title(t(".title")) %>
+
+<% form_for([:admin, @translation]) do |form| %>
+  <%= form.text_field :value, :required => true %>
+
+  <%= form.submit %>
+<% end %>

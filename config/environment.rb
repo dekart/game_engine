@@ -82,5 +82,8 @@ end
 WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
 
 require "facebook_money"
+require "i18n/backend/yaml_db"
+
+I18n.backend = I18n::Backend::YamlDb.new
 
 ADMINS = [682180971]

@@ -13,6 +13,7 @@ en:
         promotions: "Promotions"
         stylesheets: "Stylesheets"
         tips: "Tips"
+        translations: "Translations"
       application:
         spinner:
           alt: "Please wait..."
@@ -180,4 +181,13 @@ en:
         submit: "Create"
       edit:
         title: "Edit Stylesheet"
+        submit: "Update"
+    translations:
+      index:
+        title: "Translations"
+      new:
+        title: "New Custom Translation"
+        submit: "Create"
+      edit:
+        title: "Edit Custom Translation"
         submit: "Update"

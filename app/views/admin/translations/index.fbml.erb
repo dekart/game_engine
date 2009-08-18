@@ -1,0 +1,14 @@
+<%= title(t(".title")) %>
+
+<table id="translation_list">
+  <tr>
+    <th><%= Translation.human_attribute_name("key") %></th>
+    <th><%= Translation.human_attribute_name("value") %></th>
+  </tr>
+  <% @translations.each do |key, value| %>
+    <tr>
+      <td class="key"><%= h(key) %></td>
+      <td class="value"><%= link_to(h(value), new_admin_translation_path(:key => key)) %></td>
+    </tr>
+  <% end %>
+</table>
