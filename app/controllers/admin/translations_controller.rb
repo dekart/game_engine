@@ -1,6 +1,8 @@
 class Admin::TranslationsController < ApplicationController
   before_filter :admin_required
 
+  layout "layouts/admin/application"
+
   def index
     I18n.backend.send(:init_translations)
     
