@@ -1,6 +1,8 @@
 class Translation < ActiveRecord::Base
   validates_presence_of :key, :value
 
+  after_save :restart_server
+  
   def self.to_hash
     result = {}
 
@@ -25,5 +27,11 @@ class Translation < ActiveRecord::Base
       result = yield(result, item, index == key_parts.size - 1)
     end
     init
+  end
+
+  private
+
+  def restart_server
+    system("touch #{File.join(RAILS_ROOT, "tmp", "restart.txt")}")
   end
 end
