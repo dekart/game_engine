@@ -20,7 +20,7 @@ class TutorialsController < ApplicationController
   end
 
   def finish
-    current_character.update_attribute(:skip_tutorial, true)
+    current_user.update_attribute(:skip_tutorial, true)
 
     redirect_to root_path
   end
