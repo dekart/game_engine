@@ -25,6 +25,8 @@ class Character < ActiveRecord::Base
     :points     => 5
   }
 
+  FIGHT_WITH_INVITE_AVAILABLE_TILL = 5 # Maximum level where fight with invite is available
+
   belongs_to :user
   has_many :ranks do
     def completed_mission_ids
@@ -297,6 +299,10 @@ class Character < ActiveRecord::Base
 
   def owner
     self
+  end
+
+  def allow_fight_with_invite?
+    self.level <= FIGHT_WITH_INVITE_AVAILABLE_TILL
   end
 
   protected

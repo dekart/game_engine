@@ -3,10 +3,12 @@ class FightsController < ApplicationController
     @victims = Character.victims_for(current_character).find(:all, :order => "RAND()", :limit => 10)
 
     # Insert random non-registered friends
-    (@victims.size / 3 + 1).times do |i|
-      random_id = facebook_params["friends"][rand(facebook_params["friends"].size)]
+    if current_character.allow_fight_with_invite?
+      (@victims.size / 3 + 1).times do |i|
+        random_id = facebook_params["friends"][rand(facebook_params["friends"].size)]
 
-      @victims.insert(i * @victims.size / 3, random_id) unless User.find_by_facebook_id(random_id)
+        @victims.insert(i * @victims.size / 3, random_id) unless User.find_by_facebook_id(random_id)
+      end
     end
   end
 
