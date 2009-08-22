@@ -235,9 +235,10 @@ form .error {color: red; padding: 3px 0px;}
 #victim_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;vertical-align:middle;}
   #victim_list .picture {padding-right: 10px;}
   #victim_list .name{ width: 200px;}
-  #victim_list .level {width: 50px;}
+  #victim_list .level {width: 80px;}
   #victim_list .relations .larger {color: red;}
   #victim_list .controls a {background-image: url(icons/fights.gif);}
+  #victim_list .invitee {color: green;}
 
 /* A list of invitations displayed at home page*/
 #invitation_list {width: 100%;}

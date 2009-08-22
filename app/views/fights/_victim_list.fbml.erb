@@ -23,7 +23,7 @@
         </td>
       <% end %>
     <% else %>
-      <% content_tag :tr, :class => :character, :id => "character_#{victim}" do %>
+      <% content_tag :tr, :class => :invitee, :id => "character_#{victim}" do %>
         <td class="picture"><%= fb_profile_pic(victim, :linked => false) %></td>
         <td class="name"><%= fb_name(victim, :linked => false) %></td>
         <td class="level"><%= t(".invitee.level") %></td>
