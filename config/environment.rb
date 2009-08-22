@@ -58,14 +58,14 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_blogbox_session',
+    :session_key => '_game_engine_session',
     :secret      => 'ab08c85360590a72ea4c70ff82fcf09714f333ba13723cb9f477eb8f50c7dd4f3328ca981cc7ee2df27367f6daeedd29c51cb00fb5fc3bf146ab1e90ccb1f878'
   }
 
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with "rake db:sessions:create")
-  # config.action_controller.session_store = :active_record_store
+  config.action_controller.session_store = :mem_cache_store
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
