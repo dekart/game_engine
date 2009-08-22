@@ -13,6 +13,8 @@
 </div>
 
 <% content_for :script do %>
+  Character.onNewLevel();
+
   <%= show_feed_dialog(Publisher::Character, :level_up,
         :template_data => {
           :pronoun => fb_pronoun(current_user, :useyou => false, :capitalize => true),

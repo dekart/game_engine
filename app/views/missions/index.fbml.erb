@@ -25,31 +25,7 @@
         </tr>
       <% end %>
 
-      <% content_tag_for(:tr, mission) do %>
-        <td class="image"><%= image_tag(mission.image.url(:small)) if mission.image? %></td>
-        <td class="details">
-          <div class="name"><%= fb_i(mission.name) %></div>
-          <div class="description"><%= fb_i(mission.description) %></div>
-        </td>
-        <td class="payout">
-          <div class="experience"><%= mission.experience %></div>
-          <div class="basic_money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
-        </td>
-        <td class="payout_advanced"><%= mission_payouts(mission) %></td>
-        <td class="requires">
-          <div class="energy"><%= mission.ep_cost %></div>
-          <%= mission_requirements(mission) %>
-        </td>
-        <td class="progress"><%= mission_progress(current_character, mission) %></td>
-        <td class="controls">
-          <% if current_character.can_fulfill?(mission) %>
-            <%= link_to_remote(fb_i(t(".buttons.fulfill")),
-                  :url => fulfill_mission_url(mission, :canvas => false),
-                  :update => :result
-                ) %>
-          <% end %>
-        </td>
-      <% end %>
+      <%= render :partial => "mission", :locals => {:mission => mission} %>
     <% end %>
   </table>
 <% else %>

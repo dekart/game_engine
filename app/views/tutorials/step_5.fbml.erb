@@ -1,0 +1,18 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div id="tutorial" class="note nobutton">
+  <%= fb_i(t(".text")) %>
+
+  <%= link_to(fb_i(t(".next")), {:action => :finish}, {:class => :button}) %>
+</div>
+
+<%= render :partial => "characters/upgrade_list" %>
+
+<%= render :partial => "skip" %>
+
+<% javascript_tag do %>
+  Character.onUpgradeComplete = function(){
+    $('tutorial').removeClassName('nobutton');
+    $('upgrade_list').hide();
+  }
+<% end %>

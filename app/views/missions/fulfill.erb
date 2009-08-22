@@ -142,5 +142,9 @@
 <%= character_level_up_block %>
 
 <% content_for :script do %>
+  <% if @result.completed? %>
+    Mission.onComplete();
+  <% end %>
+  
   $('result').show();
 <% end %>

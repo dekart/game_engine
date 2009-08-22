@@ -1,0 +1,21 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div id="tutorial" class="note nobutton">
+  <%= fb_i(t(".text")) %>
+
+  <%= link_to(fb_i(t(".next")), {:action => :step_2}, {:class => :button}) %>
+</div>
+
+<table id="mission_list" cellspacing="0">
+  <%= render :partial => "missions/mission", :locals => {:mission => @mission} %>
+</table>
+
+<%= render :partial => "skip" %>
+
+<% javascript_tag do %>
+  Mission.onComplete = function(){
+    $('tutorial').removeClassName('nobutton');
+    $('result').addClassName('nobutton');
+    $('mission_list').hide();
+  }
+<% end %>

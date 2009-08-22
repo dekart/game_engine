@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090818185633) do
+ActiveRecord::Schema.define(:version => 20090820183834) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -311,6 +311,7 @@ ActiveRecord::Schema.define(:version => 20090818185633) do
     t.boolean  "show_bookmark",                       :default => true
     t.datetime "invite_page_visited_at"
     t.boolean  "show_tips",                           :default => true
+    t.boolean  "skip_tutorial"
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

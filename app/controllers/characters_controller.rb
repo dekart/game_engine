@@ -2,7 +2,9 @@ class CharactersController < ApplicationController
   skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => :load_vip_money
 
   def index
-    if current_user.should_visit_invite_page?
+    if !current_user.skip_tutorial?
+      redirect_to tutorial_path
+    elsif current_user.should_visit_invite_page?
       redirect_to invite_users_path
     else
       @latest_fights = Fight.with_participant(current_character).find(:all, :limit => 10)

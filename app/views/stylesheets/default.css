@@ -12,6 +12,8 @@ td {vertical-align: top;}
 .empty_set, .note {margin: 10px 0px; padding: 8px; border: 1px solid #D8DFEA;}
 .note {font-size: 14px;}
 
+.nobutton .button {display: none !important;}
+
 /* Flash messages */
 #flash {height: 40px; line-height: 40px; text-align: center; font-size: 17px; font-weight: bold; margin: 5px 0;}
   #flash.success {color: #338833; border: 1px solid #338833; background-color: #d0ffd0;}
@@ -136,8 +138,7 @@ form .error {color: red; padding: 3px 0px;}
   #latest_help_request .basic_money{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(icons/basic_money.gif) center left no-repeat; font-weight: bold;}
   
 /* Mission list displayed at Missions page */
-#mission_list {margin-top: -30px;}
-#mission_list th {padding: 40px 0px 10px; border-bottom: 1px solid #d0d0d0; }
+#mission_list th {padding: 10px 0px; border-bottom: 1px solid #d0d0d0; }
   #mission_list .mission_group {font-size: 16px; color: #3B5998; font-weight: bold;}
 #mission_list td {padding: 10px 0px; border-bottom: 1px solid #e7e7e7;}
   #mission_list .details {padding-right: 10px;}
@@ -275,6 +276,11 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Received title list at the Profile page*/
 #rank_list .rank {padding: 3px 25px; background: url(icons/level.gif) 3px center no-repeat;}
+
+/* Tutorial block */
+#tutorial {font-size: 15px;}
+  #tutorial .button {display:block; text-align: center; width: 100px; margin: 10px; padding: 0 5px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold;}
+#skip_tutorial {margin-top: 15px; text-align:right;}
 
 /* AJAX request results block*/
 #result {font-size: 13px;margin:10px 0;border: 2px solid #3B5998; padding: 10px 0 20px 0;}

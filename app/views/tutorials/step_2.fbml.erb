@@ -1,0 +1,21 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div id="tutorial" class="note nobutton">
+  <%= fb_i(t(".text")) %>
+
+  <%= link_to(fb_i(t(".next")), {:action => :step_3}, {:class => :button}) %>
+</div>
+
+<table id="item_list" class="item_list" cellspacing="0">
+  <%= render :partial => @item %>
+</table>
+
+<%= render :partial => "skip" %>
+
+<% javascript_tag do %>
+  Inventory.onPurchase = function(){
+    $('tutorial').removeClassName('nobutton');
+    $('result').addClassName('nobutton');
+    $('item_list').hide();
+  }
+<% end %>

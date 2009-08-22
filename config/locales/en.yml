@@ -189,13 +189,12 @@ en:
       messages:
         too_weak: "You are too weak to fight! Take a rest until your health will grow to {hp_number} points. You need to wait about {minute_number} minutes."
         not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {minute_number} minutes."
+      empty_set: "There are no opponents for you at this time."
+    victim_list:
       columns:
-        user: "User"
-        level: "Level"
         relations: "Alliance"
       buttons:
         attack: "Attack!"
-      empty_set: "There are no opponents for you at this time."
   inventories:
     create:
       buttons:
@@ -290,10 +289,11 @@ en:
         payout: "Payout"
         requires: "Requires"
         progress: "Progress"
-      buttons:
-        fulfill: "Fulfill"
       empty_set: "You have no missions available at this time"
       next_group: "Reach level {level} to open missions from this group"
+    mission:
+      buttons:
+        fulfill: "Fulfill"
     helpers:
       completed: "Completed!"
   relations:
@@ -459,6 +459,33 @@ en:
       you_received: "You received:"
       failure:
         friends_only: "You cannot help players that are not your friends"
+  tutorials:
+    skip:
+      skip: "Skip tutorial &raquo;"
+    show:
+      title: "Welcome!"
+      text: "So, you decided to become a Hero... Many people try, but only few succeed. First of all you should take some training to become a good warrior. Follow instructions, I'll show you what to do."
+      next: "Let's start! &raquo;"
+    step_1:
+      title: "Your First Mission"
+      text: "The best way to become famous is to fulfill missions. Take a look at the mission below. It's very simple and you'll be able to complete it easily."
+      next: "Continue &raquo;"
+    step_2:
+      title: "You Need a Weapon"
+      text: "Another way to become a Hero is to fight with people. But before you'll be able to fight, you need a weapon. This one is enough to start. Buy it and we'll proceed."
+      next: "Continue &raquo;"
+    step_3:
+      title: "Equipment"
+      text: "Ok, now you purchased a weapon. To use it you should equip your character. Add the weapon to one of your hands and you'll be ready to fight."
+      next: "Continue &raquo;"
+    step_4:
+      title: "Fight!"
+      text: "Attack other players to get experience and grab gold. You can attack only those people who have same or greater level. Try to kill opponents with higher level - you'll receive more experience. Attack opponents until you'll receive new level."
+      next: "Continue &raquo;"
+    step_5:
+      title: "Upgrade"
+      text: "Every time when you reach new level or complete a mission you receive Upgrade Points. You can use these points to increase your attack, defence, health, or energy. Upgrade all these attributes to build a balanced character."
+      next: "Finish &raquo;"
 # Helpers
   blocks:
     hide: "Hide"

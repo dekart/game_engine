@@ -1,0 +1,23 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div id="tutorial" class="note nobutton">
+  <%= fb_i(t(".text")) %>
+
+  <%= link_to(fb_i(t(".next")), {:action => :step_4}, {:class => :button}) %>
+</div>
+
+<div id="inventory_placements">
+  <%= inventory_placements_for(current_character) %>
+</div>
+
+<div id="inventory_list">
+  <%= render :partial => "inventories/list", :locals => {:inventories => @inventories} %>
+</div>
+
+<%= render :partial => "skip" %>
+
+<% javascript_tag do %>
+  Inventory.onEquip = function(){
+    $('tutorial').removeClassName('nobutton');
+  }
+<% end %>

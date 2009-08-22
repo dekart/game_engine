@@ -17,8 +17,7 @@
     $('upgrade_<%= params[:attribute] %>').setTextValue('<%= current_character.attributes[params[:attribute]] %>');
 
     <% if current_character.points == 0 %>
-      $('upgrade_list').hide();
-      $('upgrade_finished').show();
+      Character.onUpgradeComplete();
     <% else %>
       $('upgrade_points').setTextValue('<%= current_character.points %>');
     <% end %>

@@ -36,6 +36,9 @@ var Spinner = {
 }
 
 var Character = {
+  onNewLevel: function(){},
+  onUpgradeComplete: function(){},
+
   update: function(a){
     $("co_basic_money").setTextValue(a.character.basic_money);
     $("co_vip_money").setTextValue(a.character.vip_money);
@@ -69,6 +72,8 @@ var Character = {
 }
 
 var Mission = {
+  onComplete: function(){},
+
   setProgress: function(id, value){
     $('mission_' + id).by_class('progress')[0].setInnerFBML(value);
   },
@@ -138,15 +143,20 @@ var Timer = {
 };
 
 var Inventory = {
+  onPurchase: function(){},
+  onEquip: function(){},
+
   Holders: {
     current: null,
     getRequestParams: function(){
-      var id = this.current.getId();
-      
-      if(id != 'self'){ 
-        return 'relation_id=' + id.replace('relation_', '');
-      } else {
-        return '';
+      if(this.current){
+        var id = this.current.getId();
+
+        if(id != 'self'){
+          return 'relation_id=' + id.replace('relation_', '');
+        } else {
+          return '';
+        }
       }
     },
     getHolders: function(){
