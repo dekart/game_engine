@@ -5,21 +5,36 @@
     <th><%= fb_i(Character.human_attribute_name("relations_count")) %></th>
   </tr>
   <% victims.each do |victim| %>
-    <% content_tag_for(:tr, victim) do %>
-      <td class="picture"><%= character_picture_link(victim) %></td>
-      <td class="name"><%= character_name_link(victim) %></td>
-      <td class="level"><%= victim.level %></td>
-      <td class="relations">
-        <%= content_tag(:span, victim.relations.size,
-              :class => (:larger if victim.relations.size > current_character.relations.size)
-            ) %>
-      </td>
-      <td class="controls">
-        <%= link_to_remote(fb_i(t(".buttons.attack")),
-              :url => fights_url(:victim_id => victim, :canvas => false),
-              :update => :result
-            ) %>
-      </td>
+    <% if victim.is_a?(Character) %>
+      <% content_tag_for(:tr, victim) do %>
+        <td class="picture"><%= character_picture_link(victim) %></td>
+        <td class="name"><%= character_name_link(victim) %></td>
+        <td class="level"><%= victim.level %></td>
+        <td class="relations">
+          <%= content_tag(:span, victim.relations.size,
+                :class => (:larger if victim.relations.size > current_character.relations.size)
+              ) %>
+        </td>
+        <td class="controls">
+          <%= link_to_remote(fb_i(t(".attack")),
+                :url => fights_url(:victim_id => victim, :canvas => false),
+                :update => :result
+              ) %>
+        </td>
+      <% end %>
+    <% else %>
+      <% content_tag :tr, :class => :character, :id => "character_#{victim}" do %>
+        <td class="picture"><%= fb_profile_pic(victim, :linked => false) %></td>
+        <td class="name"><%= fb_name(victim, :linked => false) %></td>
+        <td class="level"><%= t(".invitee.level") %></td>
+        <td class="relations">0</td>
+        <td class="controls">
+          <%= link_to_remote(fb_i(t(".invitee.attack")),
+                :url => invite_fights_url(:victim_id => victim, :canvas => false),
+                :update => :result
+              ) %>
+        </td>
+      <% end %>
     <% end %>
   <% end %>
 </table>

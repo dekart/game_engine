@@ -1,0 +1,47 @@
+<div id="fight_result">
+  <p class="success">
+    <% fb_i do %>
+      <%= t(".message", :pronoun => fb_pronoun(@fight.victim, :objective => true)) %>
+
+      <%= fb_it(:user_name, fb_name(@fight.victim)) %>
+    <% end %>
+  </p>
+
+  <table class="payouts">
+    <tr>
+      <td class="received">
+        <h3><%= fb_i(t(".you_received.title")) %></h3>
+
+        <%= payout(:experience, Character.human_attribute_name("experience"), @fight.experience) %>
+        <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @fight.money) %>
+      </td>
+      <td class="lost">
+        <h3><%= fb_i(t(".you_lost.title")) %></h3>
+
+        <%= payout(:energy, Character.human_attribute_name("energy"), 1) %>
+        <%= payout(:health, Character.human_attribute_name("health"), @fight.attacker_hp_loss) %>
+      </td>
+      <td class="victim_lost">
+        <h3>
+          <% fb_i do %>
+            <%= t('.victim_lost.title') %>
+
+            <%= fb_it(:user_name, fb_name(@fight.victim)) %>
+          <% end %>
+        </h3>
+
+        <%= payout(:health, Character.human_attribute_name("health"), @fight.victim_hp_loss) %>
+      </td>
+    </tr>
+  </table>
+
+  <% content_for :script do %>
+    Fight.hideVictim('<%= @fight.victim %>');
+  <% end %>
+</div>
+
+<%= character_level_up_block %>
+
+<% content_for :script do %>
+  $('result').show();
+<% end %>

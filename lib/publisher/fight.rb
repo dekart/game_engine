@@ -20,6 +20,19 @@ module Publisher
       )
     end
 
+    def invitation(user, victim)
+      send_as :notification
+      recipients victim
+      from user
+      fbml fb_i(
+        I18n.t("stories.fight.invitation.text") +
+        fb_it(:app, link_to(fb_app_name(:linked => false), root_url)) +
+        fb_it(:link,
+          link_to(fb_i(I18n.t('stories.fight.invitation.link')), root_url)
+        )
+      )
+    end
+
     def attack_template
       one_line_story_template I18n.t("stories.fight.one_line", 
         :app => link_to(fb_app_name(:linked => false), root_url)
