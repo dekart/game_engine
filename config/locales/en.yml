@@ -250,6 +250,9 @@ en:
       controls:
         accept: "Accept"
         ignore: "Ignore"
+      messages:
+        only_friends: "Only friends can join your Alliance"
+        already_joined: "This user is already in your Alliance"
   items:
     index:
       title: "Shop"
