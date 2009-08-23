@@ -6,7 +6,13 @@
   <%= link_to(fb_i(t(".next")), {:action => :finish}, {:class => :button}) %>
 </div>
 
-<%= render :partial => "characters/upgrade_list" %>
+<% if current_character.points > 0 %>
+  <%= render :partial => "characters/upgrade_list" %>
+<% else %>
+  <% javascript_tag do %>
+    $('tutorial').removeClassName('nobutton');
+  <% end %>
+<% end %>
 
 <%= render :partial => "skip" %>
 

@@ -6,9 +6,15 @@
   <%= link_to(fb_i(t(".next")), {:action => :step_2}, {:class => :button}) %>
 </div>
 
-<table id="mission_list" cellspacing="0">
-  <%= render :partial => "missions/mission", :locals => {:mission => @mission} %>
-</table>
+<% if @mission %>
+  <table id="mission_list" cellspacing="0">
+    <%= render :partial => "missions/mission", :locals => {:mission => @mission} %>
+  </table>
+<% else %>
+  <% javascript_tag do %>
+    $('tutorial').removeClassName('nobutton');
+  <% end %>
+<% end %>
 
 <%= render :partial => "skip" %>
 

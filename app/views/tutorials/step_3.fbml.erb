@@ -6,13 +6,19 @@
   <%= link_to(fb_i(t(".next")), {:action => :step_4}, {:class => :button}) %>
 </div>
 
-<div id="inventory_placements">
-  <%= inventory_placements_for(current_character) %>
-</div>
+<% if @inventories.any? %>
+  <div id="inventory_placements">
+    <%= inventory_placements_for(current_character) %>
+  </div>
 
-<div id="inventory_list">
-  <%= render :partial => "inventories/list", :locals => {:inventories => @inventories} %>
-</div>
+  <div id="inventory_list">
+    <%= render :partial => "inventories/list", :locals => {:inventories => @inventories} %>
+  </div>
+<% else %>
+  <% javascript_tag do %>
+    $('tutorial').removeClassName('nobutton');
+  <% end %>
+<% end %>
 
 <%= render :partial => "skip" %>
 

@@ -6,7 +6,13 @@
   <%= link_to(fb_i(t(".next")), {:action => :step_5}, {:class => :button}) %>
 </div>
 
-<%= render :partial => "fights/victim_list", :locals => {:victims => @victims} %>
+<% if @victims.any? %>
+  <%= render :partial => "fights/victim_list", :locals => {:victims => @victims} %>
+<% else %>
+  <% javascript_tag do %>
+    $('tutorial').removeClassName('nobutton');
+  <% end %>
+<% end %>
 
 <%= render :partial => "skip" %>
 
