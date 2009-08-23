@@ -19,6 +19,7 @@ en:
         missions_completed: "Missions Completed"
         relations_count: "Alliance Size"
         points: "Upgrade Points"
+        rating: "Rating"
       user:
         show_next_steps: "Show 'Next Steps' block"
         show_fan_specials: "Show 'Fan Specials' block"
@@ -140,9 +141,6 @@ en:
       title: "Hall of Fame"
       rating_position:
         label: "Your Position:"
-      columns:
-        user: "User"
-        rating: "Rating"
     show:
       title: "{{user}} Profile"
       controls:

@@ -346,12 +346,12 @@ form .error {color: red; padding: 3px 0px;}
     #character .controls .attack {background-image: url(icons/fights.gif);}
 
 /* Character list at the Rating page*/
-#rating td {padding: 5px 10px; vertical-align:middle;}
+#rating td, #rating th {padding: 5px 10px; vertical-align:middle;}
 #rating th {text-align:center; border-bottom: 1px solid #e0e0e0;}
 #rating .current {background-color: #FFFFD5;}
   #rating .current td {border-top: 1px solid #EC7000; border-bottom: 1px solid #EC7000;}
   #rating .current .position {border-left: 1px solid #EC7000;}
-  #rating .current .rating {border-right: 1px solid #EC7000;}
+  #rating .current .missions_completed {border-right: 1px solid #EC7000;}
 #rating .position {font-size: 14px; font-weight: bold;}
 
 /* User's position in rating */
