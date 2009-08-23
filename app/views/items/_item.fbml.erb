@@ -1,4 +1,4 @@
-<tr>
+<% content_tag_for :tr, item, :class => item.availability do %>
   <td class="picture"><%= image_tag(item.image.url(:small)) %></td>
   <td class="info">
     <div class="name"><%= fb_i(item.name) %></div>
@@ -25,4 +25,4 @@
           :class => :buy_vip
         ) if current_character.need_vip_money?(item)  %>
   </td>
-</tr>
+<% end %>

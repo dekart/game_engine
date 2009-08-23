@@ -13,9 +13,9 @@
 <%= will_paginate @items %>
 
 <table class="item_list" cellspacing="0">
-  <% if @special_item %>
+  <% @special_items.each do |item| %>
     <tr class="special">
-      <%= render :partial => @special_item %>
+      <%= render :partial => item %>
     </tr>
   <% end %>
   <% @items.each do |item| %>

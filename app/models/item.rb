@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  AVAILABILITIES = [:shop, :loot, :quest]
+  AVAILABILITIES = [:shop, :special, :loot, :quest]
 
   belongs_to  :item_group
   has_many    :inventories
