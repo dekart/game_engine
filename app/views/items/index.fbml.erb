@@ -10,14 +10,17 @@
   <% end %>
 </div>
 
+<% if @special_items.any? %>
+  <table class="item_list" id="special_items">
+    <% @special_items.each do |item| %>
+      <%= render :partial => item %>
+    <% end %>
+  </table>
+<% end %>
+
 <%= will_paginate @items %>
 
 <table class="item_list" cellspacing="0">
-  <% @special_items.each do |item| %>
-    <tr class="special">
-      <%= render :partial => item %>
-    </tr>
-  <% end %>
   <% @items.each do |item| %>
     <%= render :partial => item %>
   <% end %>

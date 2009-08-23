@@ -181,10 +181,8 @@ form .error {color: red; padding: 3px 0px;}
   .item_list .spacer {border:0;}
   .item_list .controls a.buy {background-image: url(icons/basic_money.gif);}
   .item_list .controls a.buy_vip {background-image: url(icons/vip_money.gif);}
-.item_list .special {background-color: #FFFFD5;}
-  .item_list .special td {border-top: 1px solid #EC7000; border-bottom: 1px solid #EC7000;}
-  .item_list .special .picture {border-left: 1px solid #EC7000;}
-  .item_list .special .controls {border-right: 1px solid #EC7000;}
+
+#special_items {background-color: #FFFFD5; border: 1px solid #EC7000; margin-bottom: 10px}
 
 /* Item list displayed at Inventory page*/
 #inventory_list {margin-top: 20px;}
