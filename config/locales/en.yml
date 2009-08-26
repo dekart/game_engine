@@ -330,7 +330,7 @@ en:
       submit: "Save"
     invite:
       title: "Recruit To Your Alliance"
-      note: "Your Alliance gives you additional attack and defence points. The more friends will join your Alliance, the more chances you have in every battle. Recruit your friends to become stronger and fight better!"
+      note: "Your Alliance gives you additional attack and defence points. You can equip every of your friends with weapon and armor and fight together. The more friends will join your Alliance, the more chances you have in every battle. Recruit your friends to become stronger and fight better!"
       success_message: "You've successfully sent {amount} invitations to your friends!"
       invite:
         title: "Alliance"
