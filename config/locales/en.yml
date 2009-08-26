@@ -241,7 +241,7 @@ en:
     holders:
       relations: "Equip Your Alliance:"
       empty_set:
-        text: "You don't have any members in your Alliance! Invite some friends to increase power of your army."
+        text: "You don't have any members in your Alliance! Invite some friends to increase power of your army. You can equip every of your alliance members with weapon and armor."
         invite: "Invite &raquo;"
     placements:
       take_off: "Take off"
