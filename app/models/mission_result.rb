@@ -38,6 +38,7 @@ class MissionResult
           if @rank.completed?
             @character.missions_completed += 1
             @character.points += 1
+            @character.vip_money += 1
             
             @payouts = @mission.payouts.apply(@character, :complete)
           else
