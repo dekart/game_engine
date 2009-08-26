@@ -262,6 +262,7 @@ en:
   items:
     index:
       title: "Shop"
+      next_item: "Reach level {level} to open new {group}"
     item:
       buttons:
         buy: "Buy"

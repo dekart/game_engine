@@ -8,5 +8,7 @@ class ItemsController < ApplicationController
     )
     
     @special_items = @item_group.items.available_in(:special).available_for(current_character).all(:limit => 3, :order => "level DESC")
+
+    @next_item = @item_group.items.next_for(current_character).first
   end
 end

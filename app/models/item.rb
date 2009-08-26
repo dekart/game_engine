@@ -26,6 +26,12 @@ class Item < ActiveRecord::Base
   named_scope :available_in, Proc.new{|key|
     AVAILABILITIES.include?(key.to_sym) ? {:conditions => ["availability = ?", key.to_s]} : {}
   }
+  named_scope :next_for, Proc.new{|character|
+    {
+      :conditions => ["items.level > ?", character.level],
+      :order      => "items.level"
+    }
+  }
 
   named_scope :vip, {:conditions => "vip_price > 0"}
   named_scope :basic, {:conditions => "vip_price IS NULL or vip_price = 0"}
