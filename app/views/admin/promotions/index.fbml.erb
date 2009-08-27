@@ -9,14 +9,16 @@
 
   <table id="promotion_list">
     <tr>
-      <th><%= Promotion.human_attribute_name("text") %></th>
+      <th><%= Promotion.human_attribute_name("created_at") %></th>
       <th><%= Promotion.human_attribute_name("valid_till") %></th>
+      <th><%= Promotion.human_attribute_name("text") %></th>
       <th><%= Promotion.human_attribute_name("promotion_receips_count") %></th>
     </tr>
     <% @promotions.each do |promotion| %>
       <tr>
-        <td><%= promotion.text %></td>
+        <td><%= l(promotion.created_at, :format => :short) %></td>
         <td><%= content_tag(:span, l(promotion.valid_till, :format => :short), :class => (Time.now < promotion.valid_till ? :valid : :invalid)) %></td>
+        <td><%= promotion.text %></td>
         <td><%= promotion.promotion_receipts.size %></td>
         <td><%= link_to(t(".link"), promotion_url(promotion)) %></td>
         <td class="controls">

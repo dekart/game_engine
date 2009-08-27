@@ -9,12 +9,14 @@
 
   <table id="newsletter_list">
     <tr>
+      <th><%= Newsletter.human_attribute_name("created_at") %></th>
       <th><%= Newsletter.human_attribute_name("text") %></th>
       <th><%= Newsletter.human_attribute_name("workflow_status") %></th>
       <th><%= Newsletter.human_attribute_name("recipients") %></th>
     </tr>
     <% @newsletters.each do |newsletter| %>
       <tr>
+        <td><%= l(newsletter.created_at, :format => :short) %></td>
         <td><%= newsletter.text %></td>
         <td><%= newsletter.workflow_state.capitalize %></td>
         <td>
