@@ -22,7 +22,7 @@ class Inventory < ActiveRecord::Base
   }
   named_scope :available, :conditions => "holder_id IS NULL"
 
-  delegate :name, :description, :image, :effects, :placements, :placeable?, :usable?, :usage_limit, :to => :item
+  delegate :name, :description, :image, :image?, :effects, :placements, :placeable?, :usable?, :usage_limit, :to => :item
   
   attr_accessor :free_of_charge
 
