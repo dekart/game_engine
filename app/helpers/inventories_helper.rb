@@ -3,11 +3,15 @@ module InventoriesHelper
     placement = placement.to_sym
     
     if inventory = character.holded_inventories.detect{|i| i.placement.to_sym == placement }
-      code = fb_tag(:img,
-        fb_ta(:src, image_path(inventory.image.url(image_size))) +
-        fb_ta(:alt, fb_i(inventory.name)) +
-        fb_ta(:title, fb_i(inventory.name))
-      )
+      code = if inventory.image?
+        fb_tag(:img,
+          fb_ta(:src, image_path(inventory.image.url(image_size))) +
+          fb_ta(:alt, fb_i(inventory.name)) +
+          fb_ta(:title, fb_i(inventory.name))
+        )
+      else
+        inventory.name
+      end
       
       if options[:controls]
         code << link_to_remote(
