@@ -4,7 +4,7 @@ class Admin::NewslettersController < ApplicationController
   layout "layouts/admin/application"
 
   def index
-    @newsletters = Newsletter.paginate(:page => params[:page])
+    @newsletters = Newsletter.paginate(:page => params[:page], :order => "created_at DESC")
   end
 
   def new
