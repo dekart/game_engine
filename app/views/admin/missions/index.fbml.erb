@@ -11,7 +11,9 @@
     <% @missions.each do |mission| %>
       <% group_header mission.mission_group do |group| %>
         <tr>
-          <th colspan="10" class="subheader"><%= group.name %></th>
+          <th colspan="10" class="subheader">
+            <%= group.name %> (<%= MissionGroup.human_attribute_name("level") %> <%= group.level %>)
+          </th>
         </tr>
         <tr>
           <th><%= Mission.human_attribute_name("image") %></th>
