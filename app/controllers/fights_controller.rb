@@ -22,6 +22,23 @@ class FightsController < ApplicationController
     render :action => :create, :layout => "ajax"
   end
 
+  def respond
+    @cause = current_character.defences.find(params[:id])
+    @victim = @cause.attacker
+
+    @fight = Fight.create(
+      :attacker => current_character,
+      :victim   => @victim,
+      :cause    => @cause
+    )
+
+    if !@fight.new_record? and @fight.attacker_won?
+      Delayed::Job.enqueue Jobs::FightNotification.new(facebook_session, @fight.id)
+    end
+
+    render :action => :create, :layout => "ajax"
+  end
+
   def invite
     @victim = params[:victim_id]
 

@@ -137,6 +137,7 @@ en:
         title: "Profile Overview"
       fights:
         title: "Latest Fights"
+        respond: "Fight Back!"
     rating:
       title: "Hall of Fame"
       rating_position:

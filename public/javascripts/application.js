@@ -87,6 +87,11 @@ var Fight = {
     if($('character_' + id)){
       $('character_' + id).hide();
     }
+  },
+  hideCauseRespond: function(id){
+    if($('respond_fight_' + id)){
+      $('respond_fight_' + id).hide();
+    }
   }
 }
 

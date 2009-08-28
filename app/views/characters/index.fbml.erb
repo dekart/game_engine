@@ -28,6 +28,17 @@
             <td class="description">
               <div class="time"><%= fb_time(fight.created_at) %>:</div>
               <div><%= fight_description(fight) %></div>
+
+              <div class="controls">
+                <%= link_to_remote(fb_i(t(".fights.respond")),
+                      :url    => respond_fight_url(fight, :canvas => false),
+                      :update => :result,
+                      :html   => {
+                        :id     => dom_id(fight, :respond),
+                        :class  => "respond button"
+                      }
+                    ) if fight.victim == current_character and fight.respondable? %>
+              </div>
             </td>
             <td class="victim"><%= character_picture_link(fight.victim) %></td>
           <% end %>
