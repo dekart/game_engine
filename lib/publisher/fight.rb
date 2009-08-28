@@ -15,7 +15,7 @@ module Publisher
         I18n.t("stories.fight.notification.text") +
         fb_it(:app, link_to(fb_app_name(:linked => false), root_url)) +
         fb_it(:link, 
-          link_to(fb_i(I18n.t('stories.fight.notification.link')) + " &raquo;", character_url(fight.attacker))
+          link_to(fb_i(I18n.t('stories.fight.notification.link')), root_url)
         )
       )
     end

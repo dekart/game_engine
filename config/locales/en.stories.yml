@@ -7,10 +7,10 @@ en:
     fight:
       notification:
         text: "attacked you in {app} and WON! {link}"
-        link: "Fight Back"
+        link: "Fight Back!"
       invitation:
         text: "attacked you in {app} and WON! {link}"
-        link: "Fight Back &raquo;"
+        link: "Fight Back!"
       one_line: "{*actor*} attacked {*victim*} in {{app}} and WON the battle"
       short:
         title: "{*actor*} attacked {*victim*} in {{app}} and WON the battle!"
