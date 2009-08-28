@@ -26,6 +26,8 @@ class InventoriesController < ApplicationController
 
     @inventory.place_to(params[:placement], @holder)
 
+    current_character.reload
+
     render :action => :place, :layout => "ajax"
   end
 
