@@ -245,6 +245,12 @@ en:
         invite: "Invite &raquo;"
     placements:
       take_off: "Take off"
+    effects:
+      header: "Inventory Effects"
+      personal_attack: "Personal Attack"
+      personal_defence: "Personal Defence"
+      relation_attack: "Alliance Attack"
+      relation_defence: "Alliance Defence"
   invitations:
     accept:
       message: "Invitation accepted! {user} became part of your alliance!"

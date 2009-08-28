@@ -50,6 +50,8 @@ class InventoriesController < ApplicationController
 
     @inventory.take_off!
 
+    current_character.reload
+
     render :action => :take_off, :layout => "ajax"
   end
 

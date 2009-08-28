@@ -187,6 +187,9 @@ form .error {color: red; padding: 3px 0px;}
 #next_item {margin-top: 30px; border: 1px solid #d0d0d0; padding: 10px; font-size: 14px}
   #next_item .level {font-size: 14px; font-weight: bold;}
 
+/* Inventory container */
+#inventory {width: 100%;}
+
 /* Item list displayed at Inventory page*/
 #inventory_list {margin-top: 20px;}
 #inventory_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
@@ -208,7 +211,7 @@ form .error {color: red; padding: 3px 0px;}
     #inventory_list .controls .use {background-image: url(icons/accept.gif);}
 
 /* Character list displayed at the left of inventory list*/
-#inventory_holders {width: 200px;}
+#inventory_holders {width: 200px; float: left; margin-right: 20px;}
   #inventory_holders th {padding: 30px 5px 10px 5px; border-right: 1px solid #d0d0d0;}
   #inventory_holders .holder td {padding: 5px; cursor: pointer;}
     #inventory_holders .holder .image {width: 55px;}
@@ -220,6 +223,12 @@ form .error {color: red; padding: 3px 0px;}
     #inventory_holders .current .info {border-right: 1px solid white !important;}
   #inventory_holders .empty_set {padding-bottom: 25px;}
     #inventory_holders .empty_set .invite {float:right;display:block; margin-top: 7px; font-weight: bold;}
+
+/* Inventory effects block */
+#inventory_effects {float:right; }
+
+/* Inventory placements block */
+#inventory_placements {margin-left: 220px;}
 
 /* Upgradeable attribute list displayed at Upgrade page*/
 #upgrade_list td{padding: 10px; vertical-align: middle;}

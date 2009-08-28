@@ -1,18 +1,17 @@
 <%= title(fb_i(t(".title"))) %>
 
-<table>
-  <tr>
-    <td>
-      <%= render(:partial => "holders") %>
-    </td>
-    <td>
-      <div id="inventory_placements">
-        <%= inventory_placements_for(current_character) %>
-      </div>
+<div id="inventory">
+  <%= render(:partial => "holders") %>
 
-      <div id="inventory_list">
-        <%= render :partial => "list", :locals => {:inventories => @inventories} %>
-      </div>
-    </td>
-  </tr>
-</table>
+  <div id="inventory_effects">
+    <%= render :partial => "inventories/effects", :locals => {:character => current_character} %>
+  </div>
+
+  <div id="inventory_placements">
+    <%= inventory_placements_for(current_character) %>
+  </div>
+
+  <div id="inventory_list">
+    <%= render :partial => "list", :locals => {:inventories => @inventories} %>
+  </div>
+</div>
