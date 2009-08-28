@@ -211,7 +211,7 @@ form .error {color: red; padding: 3px 0px;}
     #inventory_list .controls .use {background-image: url(icons/accept.gif);}
 
 /* Character list displayed at the left of inventory list*/
-#inventory_holders {width: 200px; float: left; margin-right: 20px;}
+#inventory_holders {width: 200px; float: left; margin-right: 10px;}
   #inventory_holders th {padding: 30px 5px 10px 5px; border-right: 1px solid #d0d0d0;}
   #inventory_holders .holder td {padding: 5px; cursor: pointer;}
     #inventory_holders .holder .image {width: 55px;}
@@ -228,7 +228,7 @@ form .error {color: red; padding: 3px 0px;}
 #inventory_effects {float:right; }
 
 /* Inventory placements block */
-#inventory_placements {margin-left: 220px;}
+#inventory_placements {margin-left: 210px;}
 
 /* Upgradeable attribute list displayed at Upgrade page*/
 #upgrade_list td{padding: 10px; vertical-align: middle;}
