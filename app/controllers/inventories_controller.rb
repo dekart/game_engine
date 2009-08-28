@@ -1,6 +1,6 @@
 class InventoriesController < ApplicationController
   def create
-    @item = Item.available_in(:shop).find(params[:item_id])
+    @item = Item.available_for(current_character).find(params[:item_id])
 
     @inventory = current_character.inventories.create(:item => @item)
 
