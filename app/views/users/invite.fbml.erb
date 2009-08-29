@@ -63,6 +63,14 @@
     </td>
     <td id="manual_invitation">
       <h2><%= fb_i(t(".manual.title")) %></h2>
+
+      <div id="chat_invitation">
+        <p><%= fb_i(t(".manual.chat.note")) %></p>
+
+        <%= fb_chat_invite(
+              t(".manual.chat.invitation") + invitation_url(current_character.id)
+            ) %>
+      </div>
       
       <p><%= fb_i(t(".manual.publish.note")) %></p>
 

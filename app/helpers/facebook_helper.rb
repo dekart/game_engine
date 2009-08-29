@@ -129,6 +129,14 @@ module FacebookHelper
 	  end
   end
 
+  def fb_chat_invite(message, condensed = false, *exclude_ids)
+    content_tag("fb:chat-invite", "",
+      :msg          => message,
+      :condensed    => (condensed || nil),
+      :exclude_ids  => (exclude_ids.any? ? exclude_ids.join(",") : nil)
+    )
+  end
+
   protected
 
   def fb_named_tag(tag, name, *args, &block)
