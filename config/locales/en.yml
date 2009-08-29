@@ -348,11 +348,11 @@ en:
           accept: "Join {{user}} Alliance"
           visit_profile: "View {{user}} Character"
       manual:
-        title: "Out Of Requests?"
         chat:
           note: "You can invite your friends by sending them a chat message! Click on your friend names to send them your invitation message:"
           invitation: "Hey! Come join my Alliance in Sword&Magic!"
         publish:
+          title: "Out Of Requests?"
           note: "You can invite your friends by publishing to your news feed - all your friends will see this message! Click the button below to post invitation message to your Feed:"
           button: "Invite from Feed"
           invite_link: "Join Now!"

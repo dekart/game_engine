@@ -458,11 +458,13 @@ form .error {color: red; padding: 3px 0px;}
 /* Assignment result block */
 #promotion_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
 
-/* Manual invitation block at the Recruit to Alliance page*/
-#manual_invitation {padding-left: 15px;}
-  #manual_invitation #copy_paste_invitation {margin: 15px 0; font-weight: bold; font-size: 15px; color: #3B5998;}
-  #manual_invitation .button {display:block; width: 100px; clear: right; margin: 10px 0; padding: 0 5px 0 25px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold; background: url(icons/publish.gif) 3px center no-repeat;}
-    #manual_invitation .button:hover {background-color: #e0e0e0;}
+/* Invitation block at the Recruit to Alliance page*/
+#invitation_form td {vertical-align: top;}
+#invitation_form .invitation_type {padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #e0e0e0;}
+#invitation_form .invitation_text {margin: 15px 0; font-weight: bold; font-size: 15px; color: #3B5998;}
+#invitation_form .button {display:block; width: 100px; clear: right; margin: 10px 0; padding: 0 5px 0 25px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold; background: url(icons/publish.gif) 3px center no-repeat;}
+  #invitation_form .button:hover {background-color: #e0e0e0;}
+#invitation_form #manual_invitation {padding-left: 15px;width: 70%}
 
 /* Invitation block displayed when user clicks someone's invitation link */
 #invitation {}
