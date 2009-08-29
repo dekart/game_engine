@@ -1,8 +1,6 @@
 <%= title(t(".title")) %>
 
-<div class="controls">
-  <%= link_to(t(".controls.new"), new_admin_mission_path) %>
-</div>
+<%= render :partial => "controls" %>
 
 <% if @missions.any? %>
   <%= will_paginate @missions %>

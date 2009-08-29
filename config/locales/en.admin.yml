@@ -68,11 +68,14 @@ en:
         title: "Edit Mission Group"
         submit: "Update"
     missions:
+      controls:
+        index: "List"
+        balance: "Balance"
+        new: "Add Mission"
       index:
         title: "Missions"
         empty_set: "No missions"
         controls:
-          new: "Add Mission"
           delete: "Delete"
           delete_confirm: "Are you sure? Mission results will be also removed from all users!"
       new:
@@ -81,6 +84,8 @@ en:
       edit:
         title: "Edit Mission"
         submit: "Update"
+      balance:
+        title: "Mission Balance"
     newsletters:
       index:
         title: "Newsletters"

@@ -10,6 +10,13 @@ class Admin::MissionsController < ApplicationController
     ).paginate(:page => params[:page])
   end
 
+  def balance
+    @missions = Mission.all(
+      :include  => :mission_group,
+      :order    => "mission_groups.level"
+    )
+  end
+
   def new
     redirect_to new_admin_mission_group_path if MissionGroup.count == 0
 

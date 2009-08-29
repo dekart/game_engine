@@ -186,6 +186,12 @@ class Character < ActiveRecord::Base
     (100 - self.experience_to_next_level.to_f / (self.next_level_experience - LEVELS[self.level - 1]) * 100).round
   end
 
+  def self.level_for_experience(value)
+    LEVELS.each_with_index do |experience, level|
+      return level if experience >= value
+    end
+  end
+
   def to_json_for_overview(options = {})
     to_json(
       :only     => [:basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp, :points, :property_income],

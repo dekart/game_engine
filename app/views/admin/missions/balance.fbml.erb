@@ -1,0 +1,40 @@
+<%= title(t(".title")) %>
+
+<%= render :partial => "controls" %>
+
+<% if @missions.any? %>
+  <table id="mission_list">
+    <% total_experience = 0 %>
+    <tr>
+      <th><%= Mission.human_attribute_name("name") %></th>
+      <th><%= Mission.human_attribute_name("ep_cost") %></th>
+      <th><%= Mission.human_attribute_name("experience") %></th>
+      <th><%= Mission.human_attribute_name("basic_money") %></th>
+      <th><%= Mission.human_attribute_name("win_amount") %></th>
+      <th><%= Mission.human_attribute_name("mission_experience") %></th>
+      <th><%= Mission.human_attribute_name("total_experience") %></th>
+      <th><%= Mission.human_attribute_name("reached_level") %></th>
+    </tr>
+    <% @missions.each do |mission| %>
+      <% group_header mission.mission_group do |group| %>
+        <tr>
+          <th colspan="10" class="subheader">
+            <%= group.name %> (<%= MissionGroup.human_attribute_name("level") %> <%= group.level %>)
+          </th>
+        </tr>
+      <% end %>
+      <tr>
+        <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
+        <td class="ep_cost"><%= mission.ep_cost %></td>
+        <td class="experience"><%= mission.experience %></td>
+        <td class="basic_money"><%= mission.money_min %> - <%= mission.money_max %></td>
+        <td class="win_amount"><%= mission.win_amount %></td>
+        <td class="mission_experience"><%= mission_experience = mission.win_amount * mission.experience %></td>
+        <td class="total_experience"><%= total_experience += mission_experience %></td>
+        <td class="level"><%= Character.level_for_experience(total_experience) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

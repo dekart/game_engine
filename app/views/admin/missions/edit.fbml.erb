@@ -1,5 +1,7 @@
 <%= title(t(".title")) %>
 
+<%= render :partial => "controls" %>
+
 <% form_for [:admin, @mission], :url => admin_mission_url(@mission, :canvas => false), :html => {:multipart => true} do |form| %>
   <%= render :partial => "form_fields", :locals => {:form => form} %>
 
