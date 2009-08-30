@@ -15,11 +15,9 @@
   </td>
   <td class="progress"><%= mission_progress(current_character, mission) %></td>
   <td class="controls">
-    <% if current_character.can_fulfill?(mission) %>
-      <%= link_to_remote(fb_i(t(".buttons.fulfill")),
-            :url => fulfill_mission_url(mission, :canvas => false),
-            :update => :result
-          ) %>
-    <% end %>
+    <%= link_to_remote(fb_i(t(".buttons.fulfill")),
+          :url => fulfill_mission_url(mission, :canvas => false),
+          :update => :result
+        ) %>
   </td>
 <% end %>
