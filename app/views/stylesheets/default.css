@@ -342,7 +342,7 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Item purchase result block */
 #shop_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
-  #shop_result .inventory {background-image: url(icons/inventory.gif);}
+  #shop_result .inventory {background-image: url(icons/inventory.gif); width: 110px;}
 
 /* Item assignment or usage result block */
 #inventory_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
