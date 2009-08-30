@@ -222,8 +222,7 @@ form .error {color: red; padding: 3px 0px;}
   #inventory_holders .current td {border-top: 1px solid #d0d0d0;border-bottom: 1px solid #d0d0d0; cursor: auto;}
     #inventory_holders .current .image {border-left: 1px solid #d0d0d0;}
     #inventory_holders .current .info {border-right: 1px solid white !important;}
-  #inventory_holders .empty_set {padding-bottom: 25px;}
-    #inventory_holders .empty_set .invite {float:right;display:block; margin-top: 7px; font-weight: bold;}
+  #inventory_holders .empty_set .button { display:block; width: 110px; padding: 5px 5px 5px 25px; margin: 10px auto; border: 1px solid #3B5998; font-weight:bold; background: url(icons/add.gif) 3px center no-repeat;}
 
 /* Inventory effects block */
 #inventory_effects {float:right; }
