@@ -330,7 +330,8 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_result .progress .percentage {height: 10px; font-size: 0px; background-image: url(progress.gif);}
     #mission_result .progress .completed {height: 10px; background-image: url(progress_completed.gif);}
-
+  #mission_result .child_missions {margin: 15px 0;}
+    #mission_result .child_missions .child {line-height: 22px; padding-left: 23px; background: url(icons/missions.gif) center left no-repeat; margin-bottom: 15px;}
 /* Mission help result block */
 #help_result {padding:0px 30px; background: url(icons/missions.gif) 5px 0px no-repeat;}
 

@@ -4,6 +4,7 @@ class Mission < ActiveRecord::Base
   has_many    :ranks
   belongs_to  :mission_group
   belongs_to  :parent_mission, :class_name => "Mission"
+  has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id"
 
   has_attached_file :image,
     :styles => {

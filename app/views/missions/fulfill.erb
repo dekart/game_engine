@@ -19,6 +19,16 @@
 
       <h3 class="title"><%= fb_i(@mission.title) %></h3>
 
+      <% if @mission.child_missions.any? %>
+        <div class="child_missions">
+          <p><%= fb_i(t(".completed.child_missions")) %></p>
+
+          <% @mission.child_missions.each do |child| %>
+            <div class="child"><%= child.name %></div>
+          <% end %>
+        </div>
+      <% end %>
+
       <% content_for :script do %>
         Mission.hideControls(<%= @mission.id %>);
 
