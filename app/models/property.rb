@@ -23,6 +23,8 @@ class Property < ActiveRecord::Base
 
       self.destroy
     end
+
+    self.character.recalculate_income
   end
 
   def income

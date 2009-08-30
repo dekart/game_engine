@@ -28,7 +28,7 @@ class PropertiesController < ApplicationController
 
     goal(:property_sell, @property.property_type.id)
 
-    current_character.recalculate_income
+    current_character.reload
 
     render :action => :destroy, :layout => "ajax"
   end
