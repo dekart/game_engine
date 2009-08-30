@@ -12,7 +12,7 @@ class Promotion < ActiveRecord::Base
   end
 
   def payouts=(collection)
-    unless collection.is_a?(Payouts::Collection)
+    if collection and !collection.is_a?(Payouts::Collection)
       items = collection.values.collect do |payout|
         Payouts::Base.by_name(payout[:type]).new(payout.except(:type))
       end

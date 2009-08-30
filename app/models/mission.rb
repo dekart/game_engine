@@ -35,7 +35,7 @@ class Mission < ActiveRecord::Base
   end
 
   def requirements=(collection)
-    unless collection.is_a?(Requirements::Collection)
+    if collection and !collection.is_a?(Requirements::Collection)
       items = collection.values.collect do |requirement|
         Requirements::Base.by_name(requirement[:type]).new(requirement[:value])
       end
@@ -51,7 +51,7 @@ class Mission < ActiveRecord::Base
   end
 
   def payouts=(collection)
-    unless collection.is_a?(Payouts::Collection)
+    if collection and !collection.is_a?(Payouts::Collection)
       items = collection.values.collect do |payout|
         Payouts::Base.by_name(payout[:type]).new(payout.except(:type))
       end

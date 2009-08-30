@@ -45,7 +45,7 @@ class Admin::ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
 
-    if @item.update_attributes(params[:item])
+    if @item.update_attributes(params[:item].reverse_merge(:effects => nil))
       redirect_to admin_items_url(:canvas => true)
     else
       redirect_to edit_admin_item_url(:item => params[:item], :canvas => true)

@@ -64,7 +64,7 @@ class Item < ActiveRecord::Base
   end
 
   def effects=(collection)
-    unless collection.is_a?(Effects::Collection)
+    if collection and !collection.is_a?(Effects::Collection)
       items = collection.values.collect do |effect|
         Effects::Base.by_name(effect[:type]).new(effect[:value])
       end

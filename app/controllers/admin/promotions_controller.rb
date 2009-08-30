@@ -28,7 +28,7 @@ class Admin::PromotionsController < ApplicationController
   def update
     @promotion = Promotion.find(params[:id])
 
-    if @promotion.update_attributes(params[:promotion])
+    if @promotion.update_attributes(params[:promotion].reverse_merge(:payouts => nil))
       redirect_to admin_promotions_path
     else
       render :action => :edit

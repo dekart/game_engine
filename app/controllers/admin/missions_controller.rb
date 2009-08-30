@@ -52,7 +52,7 @@ class Admin::MissionsController < ApplicationController
   def update
     @mission = Mission.find(params[:id])
 
-    if @mission.update_attributes(params[:mission])
+    if @mission.update_attributes(params[:mission].reverse_merge(:requirements => nil, :payouts => nil))
       redirect_to admin_missions_url(:canvas => true)
     else
       redirect_to edit_admin_mission_url(:mission => params[:mission], :canvas => true)
