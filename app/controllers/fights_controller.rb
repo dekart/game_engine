@@ -15,8 +15,17 @@ class FightsController < ApplicationController
   def create
     @victim = Character.find(params[:victim_id])
 
-    if @fight = Fight.create(:attacker => current_character, :victim => @victim) and @fight.attacker_won?
-      Delayed::Job.enqueue Jobs::FightNotification.new(facebook_session, @fight.id)
+    @fight = Fight.create(
+      :attacker => current_character,
+      :victim   => @victim
+    )
+
+    unless @fight.new_record?
+      if @fight.attacker_won?
+        Delayed::Job.enqueue Jobs::FightNotification.new(facebook_session, @fight.id)
+      end
+
+      goal(:fight_attack, @victim.id)
     end
 
     render :action => :create, :layout => "ajax"
@@ -32,8 +41,12 @@ class FightsController < ApplicationController
       :cause    => @cause
     )
 
-    if !@fight.new_record? and @fight.attacker_won?
-      Delayed::Job.enqueue Jobs::FightNotification.new(facebook_session, @fight.id)
+    unless @fight.new_record?
+      if @fight.attacker_won?
+        Delayed::Job.enqueue Jobs::FightNotification.new(facebook_session, @fight.id)
+      end
+
+      goal(:fight_response, @victim.id)
     end
 
     render :action => :create, :layout => "ajax"
@@ -42,8 +55,12 @@ class FightsController < ApplicationController
   def invite
     @victim = params[:victim_id]
 
-    if @fight = FightWithInvite.create(:attacker => current_character, :victim => @victim)
+    @fight = FightWithInvite.create(:attacker => current_character, :victim => @victim)
+
+    unless @fight.new_record?
       Delayed::Job.enqueue Jobs::FightInviteNotification.new(facebook_session, @victim)
+
+      goal(:fight_invite, @victim)
     end
 
     render :action => :invite, :layout => "ajax"

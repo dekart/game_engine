@@ -79,4 +79,10 @@ class ApplicationController < ActionController::Base
   def friend?(user)
     facebook_params["friends"].include?(user.facebook_id.to_s)
   end
+
+  def goal(*args)
+    args.unshift(current_user.facebook_id) if current_user
+    
+    GoalLogger.log(*args)
+  end
 end

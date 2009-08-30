@@ -64,6 +64,10 @@ class MissionResult
     enough_energy? and !completed? and requirements_satisfied?
   end
 
+  def new_record?
+    !saved
+  end
+
   def enough_energy?
     @character.ep >= @mission.ep_cost
   end

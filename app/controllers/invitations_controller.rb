@@ -2,7 +2,11 @@ class InvitationsController < ApplicationController
   def accept
     @invitation = Invitation.find(params[:id])
 
-    send_notification(@invitation) if @invitation.accept!
+    if @invitation.accept!
+      send_notification(@invitation)
+
+      goal(:invitation_accept, @invitation.sender_id)
+    end
 
     render :action => :accept, :layout => false
   end
@@ -10,7 +14,9 @@ class InvitationsController < ApplicationController
   def ignore
     @invitation = Invitation.find(params[:id])
 
-    @invitation.ignore!
+    if @invitation.ignore!
+      goal(:invitation_ignore, @invitation.sender_id)
+    end
 
     render :action => :ignore, :layout => false
   end
@@ -37,7 +43,15 @@ class InvitationsController < ApplicationController
     Invitation.transaction do
       invitation = @character.user.invitations.build(:receiver_id => current_user.facebook_id)
 
-      send_notification(invitation) if invitation.save && invitation.accept!
+      if invitation.save
+        if invitation.accept!
+          send_notification(invitation)
+          
+          goal(:invitation_link_accept, @character.id)
+        else
+          goal(:invitation_link_ignore, @character.id)
+        end
+      end
     end
 
     redirect_to root_url

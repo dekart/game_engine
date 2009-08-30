@@ -12,6 +12,8 @@ class RelationsController < ApplicationController
 
     FriendRelation.destroy_between(current_character, @target_character)
 
+    goal(:relation_destroy, @target_character.id)
+
     redirect_to relations_path
   end
 end

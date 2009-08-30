@@ -9,6 +9,8 @@ class AssignmentsController < ApplicationController
     @assignment = parents.last.assignments.build(params[:assignment])
 
     if @assignment.save
+      goal(:assignment_promote, @assignment.role, @assignment.relation.id)
+
       Delayed::Job.enqueue Jobs::AssignmentNotification.new(facebook_session, @assignment.id)
     end
 
@@ -18,7 +20,11 @@ class AssignmentsController < ApplicationController
   def destroy
     @assignment = Assignment.find(params[:id])
 
-    @assignment.destroy if @assignment.context.owner == current_character
+    if @assignment.context.owner == current_character
+      @assignment.destroy
+
+      goal(:assignment_demote, @assignment.role, @assignment.relation.id)
+    end
 
     redirect_to_context(@assignment)
   end

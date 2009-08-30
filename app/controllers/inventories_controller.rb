@@ -4,6 +4,8 @@ class InventoriesController < ApplicationController
 
     @inventory = current_character.inventories.create(:item => @item)
 
+    goal(:item_buy, @item.id)
+
     render :action => :create, :layout => "ajax"
   end
 
@@ -11,6 +13,8 @@ class InventoriesController < ApplicationController
     @inventory = current_character.inventories.find(params[:id])
 
     @inventory.sell
+
+    goal(:item_sell, @inventory.item.id)
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -26,6 +30,8 @@ class InventoriesController < ApplicationController
 
     @inventory.place_to(params[:placement], @holder)
 
+    goal(:item_place, @inventory.item.id, params[:placement])
+
     current_character.reload
 
     render :action => :place, :layout => "ajax"
@@ -35,6 +41,8 @@ class InventoriesController < ApplicationController
     @inventory = current_character.inventories.find(params[:id])
 
     @inventory.use
+
+    goal(:item_use, @inventory.item.id)
 
     render :action => :use, :layout => "ajax"
   end
@@ -51,6 +59,8 @@ class InventoriesController < ApplicationController
     @holder = @inventory.holder
 
     @inventory.take_off!
+
+    goal(:item_take_off, @inventory.item.id)
 
     current_character.reload
 
