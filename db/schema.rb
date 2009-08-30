@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090830182707) do
+ActiveRecord::Schema.define(:version => 20090830191753) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(:version => 20090830182707) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "item_group_id"
+    t.boolean  "can_be_sold",                      :default => true
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"

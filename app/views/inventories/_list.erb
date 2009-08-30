@@ -38,7 +38,7 @@
                     :method => :delete,
                     :update => :result,
                     :html   => {:class => "sell button"}
-                  ) %>
+                  ) if inventory.can_be_sold? %>
             </td>
           <% end %>
         <% end %>
