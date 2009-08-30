@@ -19,7 +19,7 @@ class Property < ActiveRecord::Base
   def sell
     self.transaction do
       self.character.basic_money += self.sell_price
-      self.save
+      self.character.save
 
       self.destroy
     end
