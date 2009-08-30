@@ -3,6 +3,7 @@
     <td>
       <%= form.text_area :text, :required => true, :cols => 60, :rows => 5 %>
       <%= form.datetime_select :valid_till, :required => true %>
+      <%= form.check_box :forwardable %>
     </td>
     <td>
       <div class="serializable" id="payout_list">

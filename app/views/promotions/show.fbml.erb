@@ -7,5 +7,17 @@
     <div class="payouts">
       <%= payout_list(@result, :add) %>
     </div>
+
+    <% if @promotion.forwardable? %>
+      <div class="forward">
+        <h3><%= fb_i(t(".forward.title")) %></h3>
+
+        <p><%= fb_i(t(".forward.text") + fb_it(:app, fb_app_name)) %></p>
+
+        <%= fb_chat_invite(
+              t(".forward.invitation", :link => promotion_url(@promotion))
+            ) %>
+      </div>
+    <% end %>
   </div>
 <% end %>

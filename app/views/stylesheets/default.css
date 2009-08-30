@@ -456,6 +456,7 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Assignment result block */
 #promotion_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
+  #promotion_result .forward {margin-top: 25px;}
 
 /* Invitation block at the Recruit to Alliance page*/
 #invitation_form td {vertical-align: top;}
