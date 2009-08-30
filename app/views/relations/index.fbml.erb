@@ -1,11 +1,14 @@
 <%= title(fb_i(t(".title"))) %>
 
-<div class="note">
+<div class="note" id="alliance_recruit">
   <p>
     <%= fb_i(t(".note.text")) %>
   </p>
 
-  <%= link_to(fb_i(t(".note.button")), invite_users_path, :id => :alliance_recruit) %>
+  <div class="buttons">
+    <%= link_to(fb_i(t(".note.recruit")), invite_users_path, :class => :button) %>
+    <%= link_to(fb_i(t(".note.hire")), premium_path, :class => :button) %>
+  </div>
 </div>
 
 <% if @relations.any? %>
@@ -16,18 +19,7 @@
 
         <table id="alliance_members" cellspacing="0">
           <% @relations.each do |relation| %>
-            <tr>
-              <td class="picture"><%= character_picture_link(relation.target_character) %></td>
-              <td class="name"><%= character_name_link(relation.target_character) %></td>
-              <td class="level"><%= fb_i(Character.human_attribute_name("level")) %> <%= relation.target_character.level %></td>
-              <td class="controls">
-                <%= link_to(fb_i(t(".buttons.break")), relation_path(relation.target_character),
-                      :method   => :delete,
-                      :confirm  => t(".break.confirmation"),
-                      :class    => :delete
-                    ) %>
-              </td>
-            </tr>
+            <%= render :partial => "relations/#{relation.class.to_s.underscore}", :locals => {:relation => relation} %>
           <% end %>
         </table>
 

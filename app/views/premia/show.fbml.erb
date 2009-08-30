@@ -27,6 +27,16 @@
 
   <tr>
     <td class="name">
+      <%= fb_i(t(".hire_mercenary.text")) %>
+    </td>
+    <td class="vip_money"><%= Character::HIRE_MERCENARY_RATE %></td>
+    <td class="controls">
+      <%= link_to(t(".hire_mercenary.button"), premium_path(:type => :hire_mercenary), :method => :put) %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="name">
       <% fb_i do %>
         <%= t(".exchange_money.text") %>
 

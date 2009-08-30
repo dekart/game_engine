@@ -17,12 +17,12 @@ class Invitation < ActiveRecord::Base
   
   def accept!
     self.class.transaction do
-      Relation.create(
+      FriendRelation.create(
         :source_character => self.sender.character,
         :target_character => self.receiver.character
       )
 
-      Relation.create(
+      FriendRelation.create(
         :target_character => self.sender.character,
         :source_character => self.receiver.character
       )

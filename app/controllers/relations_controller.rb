@@ -10,7 +10,7 @@ class RelationsController < ApplicationController
   def destroy
     @target_character = Character.find(params[:id])
 
-    Relation.destroy_between(current_character, @target_character)
+    FriendRelation.destroy_between(current_character, @target_character)
 
     redirect_to relations_path
   end

@@ -26,6 +26,7 @@ class Character < ActiveRecord::Base
   }
 
   FIGHT_WITH_INVITE_AVAILABLE_TILL = 5 # Maximum level where fight with invite is available
+  HIRE_MERCENARY_RATE = 20
 
   belongs_to :user
   has_many :ranks do
@@ -39,7 +40,9 @@ class Character < ActiveRecord::Base
   has_many :holded_inventories, :class_name => "Inventory", :as => :holder
   
   has_many :items, :through => :inventories
-  has_many :relations, :foreign_key => "source_id", :include => :target_character do
+  
+  has_many :relations, :foreign_key => "source_id"
+  has_many :friend_relations, :foreign_key => "source_id", :include => :target_character do
     def facebook_ids
       find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
     end
@@ -52,6 +55,8 @@ class Character < ActiveRecord::Base
       !with(character).nil?
     end
   end
+  has_many :mercenary_relations, :foreign_key => "source_id"
+
   has_many :properties, :order => "property_type_id"
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
@@ -67,6 +72,7 @@ class Character < ActiveRecord::Base
       latest_request.nil? or latest_request.expired?
     end
   end
+
 
   named_scope :victims_for, Proc.new{|attacker|
     {
@@ -316,6 +322,17 @@ class Character < ActiveRecord::Base
       self.points     += BUY_POINTS_RATE[:points]
 
       self.save
+    end
+  end
+
+  def hire_mercenary!
+    return if self.vip_money < HIRE_MERCENARY_RATE
+
+    self.transaction do
+      self.vip_money -= HIRE_MERCENARY_RATE
+      
+      mercenary_relations.create!
+      save
     end
   end
 

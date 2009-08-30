@@ -318,10 +318,12 @@ en:
       title: "Your Alliance"
       note:
         text: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
-        button: "Recruit to Alliance"
+        recruit: "Recruit to Alliance"
+        hire: "Hire Mercenaries"
       empty_set: "You don't have any members in your Alliance"
       members:
         title: "Alliance Members"
+    friend_relation:
       buttons:
         break: "Break Alliance"
       break:
@@ -451,6 +453,9 @@ en:
       title: "Gem Market"
       current:
         label: "You have {amount} gems"
+      hire_mercenary:
+        text: "Hire mercenary to your Alliance"
+        button: "Hire"
       exchange_money:
         text: "Add {amount} gold to your character"
         button: "Add Gold"
@@ -475,6 +480,7 @@ en:
           refill_energy: "Now you have maximum energy!"
           refill_health: "Now you have maximum health!"
           buy_points: "Upgrade points have been added to your character!"
+          hire_mercenary: "You successfully hired new mercenary!"
         failure: "You don't have enough Gems"
   help_requests:
     show:

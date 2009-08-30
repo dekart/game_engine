@@ -20,7 +20,7 @@ class InvitationsController < ApplicationController
 
     if @character == current_character
       redirect_to root_url
-    elsif current_character.relations.established?(@character)
+    elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("invitations.show.messages.already_joined")
 
       redirect_to root_url

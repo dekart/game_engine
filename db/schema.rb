@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090828173018) do
+ActiveRecord::Schema.define(:version => 20090830071542) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -279,6 +279,8 @@ ActiveRecord::Schema.define(:version => 20090828173018) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "inventory_effects"
+    t.string   "type"
+    t.string   "name"
   end
 
   add_index "relations", ["source_id", "target_id"], :name => "index_relations_on_source_id_and_target_id"
