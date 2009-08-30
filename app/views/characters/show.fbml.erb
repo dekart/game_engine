@@ -5,7 +5,7 @@
     <%= link_to_remote(fb_i(t(".controls.attack")),
                   :url => fights_url(:victim_id => @character, :canvas => false),
                   :update => :result,
-                  :html => {:class => :attack}
+                  :html => {:class => "attack button"}
                 ) if current_character.can_attack?(@character) %>
   </div>
 

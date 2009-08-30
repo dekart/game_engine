@@ -13,11 +13,11 @@
         <%= link_to_remote(fb_i(t('.accept')),
               :url    => accept_invitation_url(invitation, :canvas => false),
               :update => dom_id(invitation, :controls),
-              :html   => {:class => :accept}) %>
+              :html   => {:class => "accept button"}) %>
         <%= link_to_remote(fb_i(t('.ignore')),
               :url    => ignore_invitation_url(invitation, :canvas => false),
               :update => dom_id(invitation, :controls),
-              :html   => {:class => :ignore}) %>
+              :html   => {:class => "ignore button"}) %>
       <% end %>
     </tr>
   <% end %>

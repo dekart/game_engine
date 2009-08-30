@@ -21,7 +21,10 @@
     </td>
     <td class="vip_money"><%= Character::BUY_POINTS_RATE[:vip_money] %></td>
     <td class="controls">
-      <%= link_to(t(".buy_points.button"), premium_path(:type => :buy_points), :method => :put) %>
+      <%= link_to(t(".buy_points.button"), premium_path(:type => :buy_points),
+            :method => :put,
+            :class  => :button
+          ) %>
     </td>
   </tr>
 
@@ -31,7 +34,10 @@
     </td>
     <td class="vip_money"><%= Character::HIRE_MERCENARY_RATE %></td>
     <td class="controls">
-      <%= link_to(t(".hire_mercenary.button"), premium_path(:type => :hire_mercenary), :method => :put) %>
+      <%= link_to(t(".hire_mercenary.button"), premium_path(:type => :hire_mercenary),
+            :method => :put,
+            :class  => :button
+          ) %>
     </td>
   </tr>
 
@@ -47,7 +53,10 @@
     </td>
     <td class="vip_money"><%= Character::MONEY_EXCHANGE_RATE[:vip_money] %></td>
     <td class="controls">
-      <%= link_to(t(".exchange_money.button"), premium_path(:type => :exchange_money), :method => :put) %>
+      <%= link_to(t(".exchange_money.button"), premium_path(:type => :exchange_money),
+            :method => :put,
+            :class  => :button
+          ) %>
     </td>
   </tr>
 
@@ -60,7 +69,10 @@
       <% if current_character.full_energy? %>
         <%= fb_i(t(".refill_energy.full")) %>
       <% else %>
-        <%= link_to(t(".refill_energy.button"), premium_path(:type => :refill_energy), :method => :put) %>
+        <%= link_to(t(".refill_energy.button"), premium_path(:type => :refill_energy),
+              :method => :put,
+              :class  => :button
+            ) %>
       <% end %>
     </td>
   </tr>
@@ -74,7 +86,10 @@
       <% if current_character.full_health? %>
         <%= fb_i(t(".refill_health.full")) %>
       <% else %>
-        <%= link_to(t(".refill_health.button"), premium_path(:type => :refill_health), :method => :put) %>
+        <%= link_to(t(".refill_health.button"), premium_path(:type => :refill_health),
+              :method => :put,
+              :class  => :button
+            ) %>
       <% end %>
     </td>
   </tr>

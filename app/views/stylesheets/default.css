@@ -13,7 +13,10 @@ td {vertical-align: top;}
 .note {font-size: 14px;}
 
 .nobutton .button {display: none !important;}
-
+.button { display:block; width: 100px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/1px.gif) 3px center no-repeat;}
+  .button:hover {background-color: #e0e0e0;}
+.controls .button { width: auto; margin: 5px; float: right; clear: both;}
+  
 /* Flash messages */
 #flash {height: 40px; line-height: 40px; text-align: center; font-size: 17px; font-weight: bold; margin: 5px 0;}
   #flash.success {color: #338833; border: 1px solid #338833; background-color: #d0ffd0;}
@@ -97,9 +100,6 @@ form .error {color: red; padding: 3px 0px;}
 #bookmark {border: 1px solid #e0e0e0;}
   #bookmark img {vertical-align:middle; margin-left: 10px;}
   #bookmark p {font-weight: bold; margin: 0;}
-
-.controls a {display: block; padding: 5px 5px 5px 25px; margin: 5px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; float: right; clear: both;}
-  .controls a:hover {background-color: #e0e0e0;}
 
 /* A block of character attributes displayed at home page and at the profile page */
 .character_attributes {padding: 0; }
@@ -222,7 +222,7 @@ form .error {color: red; padding: 3px 0px;}
   #inventory_holders .current td {border-top: 1px solid #d0d0d0;border-bottom: 1px solid #d0d0d0; cursor: auto;}
     #inventory_holders .current .image {border-left: 1px solid #d0d0d0;}
     #inventory_holders .current .info {border-right: 1px solid white !important;}
-  #inventory_holders .empty_set .button { display:block; width: 110px; padding: 5px 5px 5px 25px; margin: 10px auto; border: 1px solid #3B5998; font-weight:bold; background: url(icons/add.gif) 3px center no-repeat;}
+  #inventory_holders .empty_set .button { margin: 10px auto; background-image: url(icons/add.gif);}
 
 /* Inventory effects block */
 #inventory_effects {float:right; }
@@ -247,7 +247,7 @@ form .error {color: red; padding: 3px 0px;}
   #victim_list .name{ width: 200px;}
   #victim_list .level {width: 80px;}
   #victim_list .relations .larger {color: red;}
-  #victim_list .controls a {background-image: url(icons/fights.gif);}
+  #victim_list .controls .button {background-image: url(icons/fights.gif);}
   #victim_list .invitee {color: green;}
 
 /* A list of invitations displayed at home page*/
@@ -260,7 +260,7 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Recruit to Alliance button at Alliance page */
 #alliance_recruit .buttons {height: 30px;}
-  #alliance_recruit .button { float: left; display:block; width: 130px; padding: 5px 5px 5px 25px; margin-right: 15px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/add.gif) 3px center no-repeat;}
+  #alliance_recruit .button { float: left; width: 130px; margin-right: 15px; background-image: url(icons/add.gif);}
 
 /* Alliance member list at Alliance page*/
 #alliance_members {}
@@ -291,7 +291,7 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Tutorial block */
 #tutorial {font-size: 15px;}
-  #tutorial .button {display:block; text-align: center; width: 100px; margin: 10px; padding: 0 5px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold;}
+  #tutorial .button {text-align: center; width: 100px; margin: 10px; padding-left: 5px;}
 #skip_tutorial {margin-top: 15px; text-align:right;}
 
 /* AJAX request results block*/
@@ -315,8 +315,7 @@ form .error {color: red; padding: 3px 0px;}
     #result .upgrade .value{background-image: url(icons/level.gif)}
     #result .item .value,
       #result .random_item .value {padding-left: 0px;}
-  #result .button {display:block; float:right; clear: right; margin: 0 0 10px 10px; padding: 0 5px 0 25px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold; background: url(1px.gif) 3px center no-repeat;}
-    #result .button:hover {background-color: #e0e0e0;}
+  #result .button {float:right; clear: right; margin: 0 0 10px 10px;}
     #result .publish {background-image: url(icons/publish.gif);}
 
 /* Missions result block */
@@ -325,8 +324,8 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .spent .zero .value{font-weight: bold; color: green; font-size: 14px;}
   #mission_result .spent .zero .relation {padding-left: 10px;}
   #mission_result .title {line-height: 22px; padding-left: 23px; background: url(icons/level.gif) center left no-repeat; font-size: 14px; margin-bottom: 15px;}
-  #mission_result .fulfill_again {background-image: url(icons/missions.gif);}
-  #mission_result .request_help {background-image: url(icons/alliance.gif);}
+  #mission_result .fulfill_again {background-image: url(icons/missions.gif); width: 90px;}
+  #mission_result .request_help {background-image: url(icons/alliance.gif); width: 180px;}
   #mission_result .progress .text {text-align:center;}
   #mission_result .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_result .progress .percentage {height: 10px; font-size: 0px; background-image: url(progress.gif);}
@@ -392,7 +391,7 @@ form .error {color: red; padding: 3px 0px;}
     #property_list .controls .sell {background-image: url(icons/basic_money.gif);}
 
 /* Buy Properties button */
-#buy_properties { display:block; width: 130px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/properties.gif) 3px center no-repeat;}
+#buy_properties { width: 130px; background-image: url(icons/properties.gif);}
 
 /* Property type list at the Buy Properties page */
 #property_type_list {width: 100%;}
@@ -427,7 +426,7 @@ form .error {color: red; padding: 3px 0px;}
   #premia .basic_money{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(icons/basic_money.gif) center left no-repeat; font-weight: bold;}
   #premia .points{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(icons/level.gif) center left no-repeat; font-weight: bold;}
   #premia .vip_money{line-height: 22px;height: 22px; padding: 5px 15px 5px 21px; background: url(icons/vip_money.gif) center left no-repeat;}
-  #premia .controls a{background-image: url(icons/accept.gif);}
+  #premia .controls .button {background-image: url(icons/accept.gif); width: 70px;}
 
 /* Character assignment list at the Alliance page */
 #character_assignments {width: 250px; margin: 15px 0;}
@@ -462,8 +461,7 @@ form .error {color: red; padding: 3px 0px;}
 #invitation_form td {vertical-align: top;}
 #invitation_form .invitation_type {padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #e0e0e0;}
 #invitation_form .invitation_text {margin: 15px 0; font-weight: bold; font-size: 15px; color: #3B5998;}
-#invitation_form .button {display:block; width: 100px; clear: right; margin: 10px 0; padding: 0 5px 0 25px;height: 25px; line-height: 25px; border: 1px solid #3B5998; font-weight: bold; background: url(icons/publish.gif) 3px center no-repeat;}
-  #invitation_form .button:hover {background-color: #e0e0e0;}
+#invitation_form .button {clear: right; background-image: url(icons/publish.gif);}
 #invitation_form #manual_invitation {padding-left: 15px;width: 60%}
 #invitation_form #chat_invitation p {float:right; width: 200px;}
 

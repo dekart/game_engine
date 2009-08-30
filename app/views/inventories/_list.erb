@@ -23,21 +23,21 @@
                       :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
                       :with   => "Inventory.Holders.getRequestParams()",
                       :update => :result,
-                      :html   => {:class => :place}
+                      :html   => {:class => "place button"}
                     ) %>
               <% end %>
 
               <%= link_to_remote(inventory_use_label(inventory),
                     :url    => use_inventory_url(inventory, :canvas => false),
                     :update => :result,
-                    :html   => {:class => :use}
+                    :html   => {:class => "use button"}
                   ) if inventory.usable? %>
 
               <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, inventory.sell_price)),
                     :url    => inventory_url(inventory, :canvas => false),
                     :method => :delete,
                     :update => :result,
-                    :html   => {:class => :sell}
+                    :html   => {:class => "sell button"}
                   ) %>
             </td>
           <% end %>

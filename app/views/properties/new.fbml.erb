@@ -26,7 +26,7 @@
         <%= link_to_remote(fb_i(t(".buttons.buy")),
               :url => properties_url(:property_type_id => type.id, :canvas => false),
               :update => :result,
-              :html => {:class => :buy}
+              :html => {:class => "buy button"}
             ) if current_character.can_buy?(type) %>
       </td>
     </tr>

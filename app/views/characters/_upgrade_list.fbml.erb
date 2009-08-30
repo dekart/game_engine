@@ -10,7 +10,8 @@
       <td class="controls">
         <%= link_to_remote(Character::UPGRADES[attribute.to_sym],
               :url    => upgrade_character_url(current_character, :attribute => attribute, :canvas => false),
-              :update => :result
+              :update => :result,
+              :html   => {:class => :button}
             ) %>
       </td>
     </tr>

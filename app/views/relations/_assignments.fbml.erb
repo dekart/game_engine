@@ -9,7 +9,7 @@
         <div class="controls">
           <%= link_to(fb_i(t(".buttons.demote")), assignment_path(assignment),
                 :method   => :delete,
-                :class    => :demote,
+                :class    => "demote button",
                 :confirm  => fb_i(t(".buttons.demote_confirm"))
               ) %>
         </div>
@@ -21,7 +21,7 @@
                 :url => new_character_assignment_url(current_character, :role => role, :canvas => false),
                 :method => :get,
                 :update => :result,
-                :html => {:class => :promote}
+                :html => {:class => "promote button"}
               ) %>
         </div>
       
