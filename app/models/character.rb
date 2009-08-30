@@ -333,6 +333,7 @@ class Character < ActiveRecord::Base
     if self.experience_to_next_level <= 0
       self.level  += 1
       self.points += 5
+      self.vip_money += 1
       self.ep     = self.energy
       self.hp     = self.health
 
