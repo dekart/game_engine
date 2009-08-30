@@ -359,7 +359,7 @@ en:
       chat:
         title: "Invite by Chat"
         note: "You can invite your friends by sending them a chat message! Click on your friend names to send them your invitation link"
-        invitation: "Hey! Come join my Alliance in Sword&Magic!"
+        invitation: "Hey! Come join my Alliance in Sword&Magic! {{link}}"
       copy_paste:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. Or just send this message to your friends:"
