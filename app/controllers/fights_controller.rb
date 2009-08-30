@@ -57,11 +57,9 @@ class FightsController < ApplicationController
 
     @fight = FightWithInvite.create(:attacker => current_character, :victim => @victim)
 
-    unless @fight.new_record?
-      Delayed::Job.enqueue Jobs::FightInviteNotification.new(facebook_session, @victim)
+    Delayed::Job.enqueue Jobs::FightInviteNotification.new(facebook_session, @victim)
 
-      goal(:fight_invite, @victim)
-    end
+    goal(:fight_invite, @victim)
 
     render :action => :invite, :layout => "ajax"
   end
