@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090830162017) do
+ActiveRecord::Schema.define(:version => 20090830182707) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20090830162017) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
+    t.integer  "parent_mission_id"
   end
 
   create_table "newsletters", :force => true do |t|

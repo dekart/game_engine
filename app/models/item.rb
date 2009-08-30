@@ -39,14 +39,6 @@ class Item < ActiveRecord::Base
   validates_presence_of :name, :item_group, :availability, :level, :basic_price
   validates_numericality_of :level, :basic_price, :vip_price, :usage_limit, :allow_blank => true
 
-  def self.to_grouped_dropdown
-    returning result = {} do
-      ItemGroup.all(:order => :position).each do |group|
-        result[group.name] = group.items.collect{|i| [i.name, i.id]}
-      end
-    end
-  end
-
   def placements
     @placements ||= (self[:placements].blank? ? [] : self[:placements].split(","))
   end

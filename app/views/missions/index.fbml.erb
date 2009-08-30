@@ -25,7 +25,12 @@
         </tr>
       <% end %>
 
-      <%= render :partial => "mission", :locals => {:mission => mission} %>
+      <% if mission.visible_for?(current_character) %>
+        <%= render(
+              :partial  => "mission",
+              :locals   => {:mission => mission}
+            ) %>
+      <% end %>
     <% end %>
   </table>
 <% else %>

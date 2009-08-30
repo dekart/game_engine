@@ -1,8 +1,9 @@
 class Mission < ActiveRecord::Base
   extend SerializeWithPreload
   
-  has_many :ranks
-  belongs_to :mission_group
+  has_many    :ranks
+  belongs_to  :mission_group
+  belongs_to  :parent_mission, :class_name => "Mission"
 
   has_attached_file :image,
     :styles => {
@@ -29,6 +30,14 @@ class Mission < ActiveRecord::Base
 
   validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text, :title, :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max
   validates_numericality_of :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max, :allow_blank => true
+
+  def self.to_grouped_dropdown
+    returning result = {} do
+      MissionGroup.all(:order => :level).each do |group|
+        result[group.name] = group.missions.collect{|i| [i.name, i.id]}
+      end
+    end
+  end
 
   def requirements
     super || Requirements::Collection.new
@@ -64,5 +73,9 @@ class Mission < ActiveRecord::Base
 
   def money
     rand(self.money_max - self.money_min) + self.money_min
+  end
+
+  def visible_for?(character)
+    self.parent_mission.nil? or character.rank_for_mission(self.parent_mission).completed?
   end
 end
