@@ -36,7 +36,7 @@ class Character < ActiveRecord::Base
   end
   has_many :missions, :through => :ranks
   
-  has_many :inventories, :include => :item, :order => "items.level, items.id"
+  has_many :inventories, :include => :item
   has_many :holded_inventories, :class_name => "Inventory", :as => :holder
   
   has_many :items, :through => :inventories
