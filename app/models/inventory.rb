@@ -46,7 +46,7 @@ class Inventory < ActiveRecord::Base
             {
               :p_id => placement,
               :h_id => new_holder.id,
-              :h_t  => new_holder.class.to_s #FIXME We should use  inheritance column value used by activerecord itself instead of simple class name
+              :h_t  => new_holder.class.base_class.to_s
             }
           ]
         )
