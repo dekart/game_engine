@@ -13,7 +13,7 @@ td {vertical-align: top;}
 .note {font-size: 14px;}
 
 .nobutton .button {display: none !important;}
-.button { display:block; width: 100px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/1px.gif) 3px center no-repeat;}
+.button { display:block; width: 100px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(icons/1px.gif) 3px center no-repeat; white-space:nowrap;}
   .button:hover {background-color: #e0e0e0;}
 .controls .button { width: auto; margin: 5px; float: right; clear: both;}
   
