@@ -4,7 +4,7 @@ class Property < ActiveRecord::Base
   belongs_to :character
   belongs_to :property_type
 
-  delegate :name, :description, :image, :basic_price, :vip_price, :money_min, :money_max, :to => :property_type
+  delegate :name, :description, :image, :image?, :basic_price, :vip_price, :money_min, :money_max, :to => :property_type
 
   attr_accessor :free_of_charge
 

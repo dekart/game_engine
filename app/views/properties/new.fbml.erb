@@ -9,7 +9,7 @@
   </tr>
   <% @property_types.each do |type| %>
     <tr>
-      <td class="picture"><%= image_tag(type.image.url(:small)) %></td>
+      <td class="picture"><%= image_tag(type.image.url(:small)) if type.image? %></td>
       <td class="info">
         <div class="name"><%= fb_i(type.name) %></div>
         <div class="description"><%= fb_i(type.description) %></div>

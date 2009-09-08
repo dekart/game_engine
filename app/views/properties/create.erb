@@ -5,11 +5,12 @@
           :property => fb_i(@property.name),
         },
         :html => {:class => "publish button"},
-        :images => {
+        :images => @property.image? ? {
           :src  => image_path(@property.image.url(:small)),
           :href => new_property_url(:canvas => true)
-        }
+        } : nil
       ) %>
+  
     <%= link_to(fb_i(t(".buttons.properties")), properties_url(:canvas => true), :class => "properties button") %>
 
     <p>

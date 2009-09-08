@@ -22,7 +22,7 @@
     </tr>
     <% @properties.each do |property| %>
       <% content_tag_for(:tr, property) do %>
-        <td class="picture"><%= image_tag(property.image.url(:small)) %></td>
+        <td class="picture"><%= image_tag(property.image.url(:small)) if property.image? %></td>
         <td class="info">
           <div class="name"><%= fb_i(property.name) %></div>
           <div class="description"><%= fb_i(property.description) %></div>
