@@ -65,7 +65,7 @@
           ) if current_character.can_fulfill?(@mission) %>
 
       <p>
-        <%= fb_i("Ouch!") %> <%= fb_i(@mission.failure_text) %>
+        <%= fb_i(t(".failed.message")) %> <%= fb_i(@mission.failure_text) %>
       </p>
     <% end %>
 

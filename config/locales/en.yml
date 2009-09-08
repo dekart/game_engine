@@ -288,6 +288,8 @@ en:
         child_missions: "You also opened new missions:"
       succeeded:
         message: "Well done!"
+      failed:
+        message: "Ouch!"
       not_enough_energy:
         message: "You don't have enough energy. Take a rest until your energy will grow to {ep_number} points. You need to wait about {minute_number} minutes."
       already_completed:
