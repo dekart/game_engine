@@ -83,4 +83,11 @@ class MissionResult
   def received_something?
     !(@money.nil? && @experience.nil? && @payouts.by_action(:received).empty?)
   end
+
+  def success_text
+    texts = @mission.success_text.split(/\n+/)
+    texts.reject!{|t| t.blank? }
+
+    texts[(@rank.win_count % texts.size) - 1]
+  end
 end
