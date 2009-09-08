@@ -1,6 +1,6 @@
 class PropertiesController < ApplicationController
   def new
-    @property_types = PropertyType.available_for(current_character)
+    @property_types = PropertyType.available_in(:shop).available_for(current_character)
   end
 
   def create

@@ -1,4 +1,6 @@
 class PropertyType < ActiveRecord::Base
+  AVAILABILITIES = [:shop, :mission, :loot]
+
   has_many :properties, :dependent => :destroy
 
   has_attached_file :image,
@@ -6,6 +8,10 @@ class PropertyType < ActiveRecord::Base
       :icon   => "40x40#",
       :small  => "120x>"
     }
+    
+  named_scope :available_in, Proc.new{|key|
+    AVAILABILITIES.include?(key.to_sym) ? {:conditions => ["availability = ?", key.to_s]} : {}
+  }
 
   named_scope :available_for, Proc.new {|character|
     {
