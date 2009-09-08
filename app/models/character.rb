@@ -29,20 +29,20 @@ class Character < ActiveRecord::Base
   HIRE_MERCENARY_RATE = 20
 
   belongs_to :user
-  has_many :ranks do
+  has_many :ranks, :dependent => :delete_all do
     def completed_mission_ids
       find(:all, :select => "mission_id", :conditions => {:completed => true}).collect{|m| m.mission_id}
     end
   end
   has_many :missions, :through => :ranks
   
-  has_many :inventories, :include => :item
+  has_many :inventories, :include => :item, :dependent => :delete_all
   has_many :holded_inventories, :class_name => "Inventory", :as => :holder
   
   has_many :items, :through => :inventories
   
   has_many :relations, :foreign_key => "source_id"
-  has_many :friend_relations, :foreign_key => "source_id", :include => :target_character do
+  has_many :friend_relations, :foreign_key => "source_id", :include => :target_character, :dependent => :destroy do
     def facebook_ids
       find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
     end
@@ -55,24 +55,24 @@ class Character < ActiveRecord::Base
       !with(character).nil?
     end
   end
-  has_many :mercenary_relations, :foreign_key => "source_id"
+  has_many :reverse_friend_relations, :foreign_key => "target_id", :class_name => "FriendRelation", :dependent => :destroy
+  has_many :mercenary_relations, :foreign_key => "source_id", :dependent => :delete_all
 
-  has_many :properties, :order => "property_type_id"
+  has_many :properties, :order => "property_type_id", :dependent => :delete_all
   
-  has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id
-  has_many :defences, :class_name => "Fight", :foreign_key => :victim_id
+  has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id, :dependent => :delete_all
+  has_many :defences, :class_name => "Fight", :foreign_key => :victim_id, :dependent => :delete_all
   has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
 
-  has_many :assignments, :as => :context, :extend => AssignmentExtension
+  has_many :assignments, :as => :context, :extend => AssignmentExtension, :dependent => :delete_all
 
-  has_many :help_requests do
+  has_many :help_requests, :dependent => :destroy do
     def can_publish?
       latest_request = self.latest
 
       latest_request.nil? or latest_request.expired?
     end
   end
-
 
   named_scope :victims_for, Proc.new{|attacker|
     {
@@ -106,6 +106,7 @@ class Character < ActiveRecord::Base
   restorable_attribute :basic_money, :restore_period => 1.hour, :restore_rate => :property_income
 
   before_save :update_level_and_points, :recalculate_rating
+  after_destroy :delete_friend_relations
 
   def upgrade_attribute!(name)
     name = name.to_sym

@@ -1,10 +1,10 @@
 class Mission < ActiveRecord::Base
   extend SerializeWithPreload
   
-  has_many    :ranks
+  has_many    :ranks, :dependent => :delete_all
   belongs_to  :mission_group
   belongs_to  :parent_mission, :class_name => "Mission"
-  has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id"
+  has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
 
   has_attached_file :image,
     :styles => {

@@ -4,7 +4,7 @@ class HelpRequest < ActiveRecord::Base
   
   belongs_to  :character
   belongs_to  :mission
-  has_many    :help_results
+  has_many    :help_results, :dependent => :delete_all
 
   validates_presence_of :character, :mission
 

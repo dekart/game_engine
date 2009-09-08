@@ -2,7 +2,7 @@ class Item < ActiveRecord::Base
   AVAILABILITIES = [:shop, :special, :loot, :mission]
 
   belongs_to  :item_group
-  has_many    :inventories
+  has_many    :inventories, :dependent => :destroy
 
   extend SerializeWithPreload
 

@@ -1,5 +1,5 @@
 class MissionGroup < ActiveRecord::Base
-  has_many :missions, :dependent => :nullify
+  has_many :missions, :dependent => :destroy
 
   named_scope :next_for, Proc.new{|character|
     {

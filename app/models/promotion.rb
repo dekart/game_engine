@@ -1,7 +1,7 @@
 class Promotion < ActiveRecord::Base
   extend SerializeWithPreload
 
-  has_many :promotion_receipts
+  has_many :promotion_receipts, :dependent => :delete_all
 
   serialize :payouts, Payouts::Collection
   
