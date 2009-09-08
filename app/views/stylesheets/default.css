@@ -193,8 +193,7 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Item list displayed at Inventory page*/
 #inventory_list {margin-top: 20px;}
-#inventory_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
-  #inventory_list .info {padding-right: 10px;}
+#inventory_list td{padding: 10px; border-bottom: 1px solid #d0d0d0;}
   #inventory_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
   #inventory_list .details {width: 70px;}
     #inventory_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
