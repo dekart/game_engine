@@ -60,20 +60,4 @@ module ApplicationHelper
   def reset_group_header(group_name)
     @group_headers[group_name] = nil
   end
-
-  def flash_block(display_keys = [:success, :error, :notice], &block)
-    result = ""
-
-    display_keys.reject!{|key| flash[key].blank? }
-
-    display_keys.each do |key|
-      result << content_tag(:div,
-        block_given? ? capture(flash[key], &block) : flash[key],
-        :id     => :flash,
-        :class  => key
-      )
-    end
-
-    block_given? ? concat(result) : result
-  end
 end
