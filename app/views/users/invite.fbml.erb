@@ -87,16 +87,6 @@
       </div>
     </td>
     <td id="manual_invitation">
-      <div class="invitation_type" id="chat_invitation">
-        <h2><%= fb_i(t(".chat.title")) %></h2>
-        
-        <p><%= fb_i(t(".chat.note")) %></p>
-
-        <%= fb_chat_invite(
-              t(".chat.invitation", :link => invitation_url(current_character.invitation_key))
-            ) %>
-      </div>
-      
       <div class="invitation_type">
         <h2><%= fb_i(t(".copy_paste.title")) %></h2>
 
@@ -108,6 +98,16 @@
             <%= fb_it(:link, invitation_url(current_character.invitation_key)) %>
           <% end %>
         </p>
+      </div>
+
+      <div class="invitation_type" id="chat_invitation">
+        <h2><%= fb_i(t(".chat.title")) %></h2>
+        
+        <p><%= fb_i(t(".chat.note")) %></p>
+
+        <%= fb_chat_invite(
+              t(".chat.invitation", :link => invitation_url(current_character.invitation_key))
+            ) %>
       </div>
     </td>
   </tr>
