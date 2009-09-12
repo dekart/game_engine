@@ -68,6 +68,8 @@ en:
   payouts:
     item:
       name: "Item"
+    property:
+      name: "Property"
     vip_money:
       name: "Gems"
     basic_money:
