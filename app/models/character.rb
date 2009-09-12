@@ -345,6 +345,14 @@ class Character < ActiveRecord::Base
     self.level <= FIGHT_WITH_INVITE_AVAILABLE_TILL
   end
 
+  def secret
+    Digest::MD5.hexdigest("#{self.id}-#{self.created_at}")[0..5]
+  end
+
+  def invitation_key
+    "#{self.id}-#{self.secret}"
+  end
+
   protected
 
   def update_level_and_points

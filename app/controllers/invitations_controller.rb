@@ -22,16 +22,20 @@ class InvitationsController < ApplicationController
   end
 
   def show
-    @character = Character.find(params[:id])
+    @id, @secret = params[:id].split("-")
 
-    if @character == current_character
+    @character = Character.find(@id)
+
+    if @secret != @character.secret
+      unless friend?(@character.user)
+        flash[:error] = t("invitations.show.messages.only_friends")
+
+        redirect_to root_url
+      end
+    elsif @character == current_character
       redirect_to root_url
     elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("invitations.show.messages.already_joined")
-
-      redirect_to root_url
-    elsif not friend?(@character.user)
-      flash[:error] = t("invitations.show.messages.only_friends")
 
       redirect_to root_url
     end
