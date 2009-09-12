@@ -25,7 +25,7 @@ class Character < ActiveRecord::Base
     :points     => 5
   }
 
-  FIGHT_WITH_INVITE_AVAILABLE_TILL = 5 # Maximum level where fight with invite is available
+  FIGHT_WITH_INVITE_AVAILABLE_TILL = 10 # Maximum level where fight with invite is available
   HIRE_MERCENARY_RATE = 20
 
   belongs_to :user
