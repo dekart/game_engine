@@ -31,9 +31,13 @@ class Promotion < ActiveRecord::Base
     Digest::MD5.hexdigest("#{self.id}-#{self.created_at}")[0..5]
   end
 
+  def expired?
+    Time.now > self.valid_till
+  end
+
   def can_be_received?(character, secret)
     (secret == self.secret) &&
-    (Time.now <= self.valid_till) &&
+    !expired? &&
     self.promotion_receipts.find_by_character_id(character.id).nil?
   end
 end

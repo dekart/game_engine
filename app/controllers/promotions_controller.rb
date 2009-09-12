@@ -9,6 +9,12 @@ class PromotionsController < ApplicationController
 
       goal(:promotion_receipt, @promotion.id)
     else
+      if @promotion.expired?
+        flash[:notice] = t("promotions.show.expired")
+      else
+        flash[:notice] = t("promotions.show.already_used")
+      end
+      
       redirect_to root_url
     end
   end

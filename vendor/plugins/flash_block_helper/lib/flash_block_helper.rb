@@ -9,8 +9,9 @@ module FlashBlockHelper
 
     display_keys.each do |key|
       unless flash[key].blank?
-        result << content_tag(:div,
-          block_given? ? capture(flash[key], &block) : flash[key],
+        value = block_given? ? capture(flash[key], &block) : flash[key]
+
+        result << content_tag(:div, value,
           options.reverse_merge(:id => :flash, :class => key)
         )
       end
