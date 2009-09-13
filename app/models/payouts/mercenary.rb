@@ -7,12 +7,15 @@ module Payouts
     end
 
     def apply(character)
-      if self.action == :remove and mercenary = character.mercenary_relations.first
-        mercenary.destroy
-      else
-        @mercenaries = []
-        
-        @value.times do
+      @mercenaries = []
+
+      @value.times do
+        if self.action == :remove
+          mercenary = character.mercenary_relations.first
+          mercenary.destroy
+
+          @mercenaries << mercenary
+        else
           @mercenaries << character.mercenary_relations.create
         end
       end
