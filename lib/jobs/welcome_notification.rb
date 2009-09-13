@@ -3,11 +3,11 @@ module Jobs
     include Jobs::Common
 
     def perform
-      return unless user = User.find_by_id(user_id)
-
-      facebook_session.send_notification([user],
-        "<fb:ref url=\"#{app_path("pages/welcome_notification")}\" />"
-      )
+      if user = User.find_by_id(user_id)
+        facebook_session.send_notification([user],
+          "<fb:ref url=\"#{app_path("pages/welcome_notification")}\" />"
+        )
+      end
     end
   end
 end
