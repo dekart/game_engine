@@ -168,6 +168,7 @@ form .error {color: red; padding: 3px 0px;}
   .item_list .picture {padding-right: 10px;}
   .item_list .info {padding-right: 10px;}
   .item_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+  .item_list .info .placements {margin-top: 5px; font-style: italic;}
   .item_list .details {width: 40px;}
     .item_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
       .item_list .details .attack {background-image: url(icons/attack.gif);}

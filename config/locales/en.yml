@@ -81,6 +81,13 @@ en:
         allow_vip: "Allow items that cost gems"
     health_point:
       name: "Health Points"
+  placements:
+    left_hand: "Left Hand"
+    right_hand: "Right Hand"
+    head: "Head"
+    body: "Body"
+    belt: "Belt"
+    legs: "Legs"
 # Templates
   layouts:
     next_steps:
