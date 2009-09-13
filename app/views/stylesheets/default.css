@@ -151,6 +151,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_list .requires {width: 100px;}
     #mission_list .requires .energy {height: 25px;line-height: 25px;padding-left: 21px; background: url(icons/energy.gif) center left no-repeat;}
     #mission_list .requires .item {float:left;}
+    #mission_list .requires .not_satisfied {color: #ff5353; font-weight: bold;}
     #mission_list .requires .not_satisfied img{border: 3px solid #ff5353;}
   #mission_list .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_list .progress .percentage {height: 10px; font-size: 0px; background-image: url(progress.gif);}

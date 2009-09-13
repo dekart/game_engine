@@ -1,6 +1,1 @@
-<%= label_tag "requirement_#{requirement.object_id}_value", t("requirements.#{requirement.name}.name") %>
-
-<%= select_tag("mission[requirements][requirement_#{requirement.object_id}][value]",
-      grouped_options_for_select(Item.to_grouped_dropdown, requirement.value),
-      :id => "requirement_#{requirement.object_id}_value"
-    ) %>
+<%= form.grouped_select :value, Item.to_grouped_dropdown %>

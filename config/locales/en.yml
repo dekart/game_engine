@@ -65,6 +65,9 @@ en:
   requirements:
     item:
       name: "Item"
+    health:
+      name: "Health Points"
+      text: "{amount} Health Points"
   payouts:
     item:
       name: "Item"

@@ -23,17 +23,10 @@ module MissionsHelper
       mission.requirements.each do |requirement|
         next if filter == :unsatisfied and requirement.satisfies?(current_character)
 
-        case requirement.name
-        when "item"
-          result << content_tag(:div,
-            fb_tag(:img,
-              fb_ta(:alt, fb_i(requirement.item.name)) +
-              fb_ta(:title, fb_i(requirement.item.name)) +
-              fb_ta(:src, image_path(requirement.item.image.url(:icon)))
-            ),
-            :class => "item" + (requirement.satisfies?(current_character) ? "" : " not_satisfied")
-          )
-        end
+        result << render(
+          :partial => "requirements/#{requirement.name}", 
+          :locals => {:requirement => requirement, :satisfied => requirement.satisfies?(current_character)}
+        )
       end
     end
   end

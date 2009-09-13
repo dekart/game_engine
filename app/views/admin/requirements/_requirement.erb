@@ -8,22 +8,11 @@
           :class => :remove
         ) %>
 
-    <%= render(
-          :partial  => "admin/requirements/form_fields/#{requirement.name}",
-          :locals   => {
-            :requirement  => requirement,
-            :container    => container
-          }
-        ) %>
+    <h3><%= t("requirements.#{requirement.name}.name") %></h3>
 
-    <br />
-
-    <%= render(
-          :partial => "admin/requirements/form_fields/common",
-          :locals => {
-            :requirement  => requirement,
-            :container    => container
-          }
-        ) %>
+    <% fields_for "#{container}[requirements][requirement_#{requirement.object_id}]", requirement do |form| %>
+      <%= form.fields "admin/requirements/form_fields/#{requirement.name}" %>
+      <%= form.fields "admin/requirements/form_fields/common" %>
+    <% end %>
   </div>
 </div>

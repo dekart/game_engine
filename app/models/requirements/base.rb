@@ -1,5 +1,10 @@
 module Requirements
   class Base
+    class Errors
+      def on(*args)
+      end
+    end
+
     cattr_accessor :types
 
     attr_accessor :value
@@ -17,12 +22,26 @@ module Requirements
       "Requirements::#{name.to_s.classify}".constantize
     end
 
+    def self.human_attribute_name(field)
+      I18n.t(field,
+        :scope    => [:requirements, self.to_s.demodulize.underscore, :attributes],
+        :default  => I18n.t(field,
+          :scope    => [:requirements, :base, :attributes],
+          :default  => field.humanize
+        )
+      )
+    end
+
     def initialize(value)
       @value = value.to_i
     end
 
     def name
       self.class.requirement_name
+    end
+
+    def errors
+      Errors.new
     end
 
     def satisfies?(character)
