@@ -74,6 +74,9 @@ en:
     defence:
       name: "Defence"
       text: "{amount} Defence Points"
+    alliance:
+      name: "Alliance"
+      text: "{amount} Alliance Members"
   payouts:
     item:
       name: "Item"
