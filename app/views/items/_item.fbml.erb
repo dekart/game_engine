@@ -19,7 +19,7 @@
           :url => inventories_url(:item_id => item.id, :canvas => false),
           :update => :result,
           :html => {:class => "buy button"}
-        ) if current_character.can_buy?(item) %>
+        ) %>
 
     <%= link_to(fb_i(t(".buttons.get_vip")), premium_path,
           :class => "buy_vip button"
