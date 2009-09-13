@@ -18,6 +18,7 @@ en:
         missions_succeeded: "Missions Succeded"
         missions_completed: "Missions Completed"
         relations_count: "Alliance Size"
+        mercenaries: "Merce"
         points: "Upgrade Points"
         rating: "Rating"
       user:
@@ -93,6 +94,8 @@ en:
         allow_vip: "Allow items that cost gems"
     health_point:
       name: "Health Points"
+    mercenary:
+      name: "Mercenaries"
   placements:
     left_hand: "Left Hand"
     right_hand: "Right Hand"

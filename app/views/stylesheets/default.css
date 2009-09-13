@@ -316,6 +316,7 @@ form .error {color: red; padding: 3px 0px;}
     #result .upgrade .value{background-image: url(icons/level.gif)}
     #result .item .value,
       #result .random_item .value {padding-left: 0px;}
+    #result .mercenary .value{ background-image: url(icons/alliance.gif);}
   #result .button {float:right; clear: right; margin: 0 0 10px 10px;}
     #result .publish {background-image: url(icons/publish.gif);}
 
