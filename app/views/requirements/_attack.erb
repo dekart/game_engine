@@ -1,4 +1,4 @@
-<% content_tag :div, :class => "health #{ "not_satisfied" unless satisfied }" do %>
+<% content_tag :div, :class => "#{requirement.name} #{ "not_satisfied" unless satisfied }" do %>
   <% fb_i do %>
     <%= t(".text") %>
     <%= fb_it(:amount, requirement.value) %>

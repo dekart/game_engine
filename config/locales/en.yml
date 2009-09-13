@@ -65,9 +65,15 @@ en:
   requirements:
     item:
       name: "Item"
-    health:
+    health_point:
       name: "Health Points"
       text: "{amount} Health Points"
+    attack:
+      name: "Attack"
+      text: "{amount} Attack Points"
+    defence:
+      name: "Defence"
+      text: "{amount} Defence Points"
   payouts:
     item:
       name: "Item"

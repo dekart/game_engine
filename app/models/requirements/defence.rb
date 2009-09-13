@@ -1,11 +1,11 @@
 module Requirements
-  class Health < Base
+  class Defence < Base
     def initialize(value)
       @value = value.to_i
     end
 
     def satisfies?(character)
-      character.hp >= @value
+      character.defence >= @value
     end
   end
 end

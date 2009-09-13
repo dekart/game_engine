@@ -1,4 +1,4 @@
-<% content_tag :div, :class => "item #{ "not_satisfied" unless satisfied }" do %>
+<% content_tag :div, :class => "#{requirement.name} #{ "not_satisfied" unless satisfied }" do %>
   <% fb_tag :img do %>
     <%= fb_ta(:alt, fb_i(requirement.item.name)) %>
     <%= fb_ta(:title, fb_i(requirement.item.name)) %>
