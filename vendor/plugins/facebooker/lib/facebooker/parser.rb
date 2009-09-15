@@ -58,14 +58,14 @@ module Facebooker
     def self.element(name, data)
       data = data.body rescue data # either data or an HTTP response
       begin
-        xml = Nokogiri::XML(data.strip).at(name)
+        xml = Nokogiri::XML(data.strip)
         if node = xml.at(name)
           return node
         end
         if xml.root.name == name
           return xml.root
         end
-      rescue # Can't parse with Nokogiri
+      rescue NameError # Can't parse with Nokogiri
         doc = REXML::Document.new(data)
         doc.elements.each(name) do |element|
           return element
@@ -413,18 +413,19 @@ module Facebooker
   class FqlMultiquery < Parser#nodoc
     def self.process(data)
       root = element('fql_multiquery_response', data)
-      root.elements.collect do |elm|
-        [
-         elm.elements[1].text,
-          if elm.elements[2].elements[1].nil?
-            [] 
+      root.children.reject { |child| child.text? }.map do |elm|
+        elm.children.reject { |child| child.text? }.map do |query|
+          if 'name' == query.name
+            query.text
           else
-            [
-             elm.elements[2].elements[1].name,
-             array_of_hashes(elm.elements[2], elm.elements[2].elements[1].name)
-            ]
+            list = query.children.reject { |child| child.text? }
+            if list.length == 0
+              []
+            else
+              [list.first.name, array_of_hashes(query, list.first.name)]
+            end
           end
-        ]
+        end
       end
     end
   end
@@ -458,6 +459,12 @@ module Facebooker
       array_of_hashes(element('data_getCookie_response', data), 'cookies')
     end
   end
+  
+  class EventsRsvp < Parser#:nodoc:
+     def self.process(data)
+       element('events_rsvp_response', data).content.strip
+     end
+   end
 
   class EventsGet < Parser#:nodoc:
     def self.process(data)
@@ -661,6 +668,7 @@ module Facebooker
       'facebook.stream.publish' => StreamPublish,
       'facebook.stream.addComment' => StreamAddComment,      
       'facebook.events.get' => EventsGet,
+      'facebook.events.rsvp' => EventsRsvp,
       'facebook.groups.get' => GroupsGet,
       'facebook.events.getMembers' => EventMembersGet,
       'facebook.groups.getMembers' => GroupGetMembers,

@@ -3,11 +3,13 @@ module Facebooker
     module Helpers
       module FbConnect
         
-        def fb_connect_javascript_tag
+        def fb_connect_javascript_tag(options = {})
+          lang = "/#{options[:lang]}" if options[:lang]
+          # dont use the javascript_include_tag helper since it adds a .js at the end
           if request.ssl?
-            javascript_include_tag "https://www.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"
+            "<script src=\"https://www.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php#{lang}\" type=\"text/javascript\"></script>"
           else
-            javascript_include_tag "http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"
+            "<script src=\"http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php#{lang}\" type=\"text/javascript\"></script>"
           end
         end
         
@@ -31,9 +33,9 @@ module Facebooker
           end
 
           if request.ssl?
-            init_string = "FB.Facebook.init('#{Facebooker.api_key}','/xd_receiver_ssl.html', #{options[:app_settings]});"
+            init_string = "FB.init('#{Facebooker.api_key}','/xd_receiver_ssl.html', #{options[:app_settings]});"
           else
-            init_string = "FB.Facebook.init('#{Facebooker.api_key}','/xd_receiver.html', #{options[:app_settings]});"
+            init_string = "FB.init('#{Facebooker.api_key}','/xd_receiver.html', #{options[:app_settings]});"
           end
           unless required_features.blank?
              init_string = <<-FBML
@@ -107,8 +109,9 @@ module Facebooker
         end
         
         def fb_user_action(action, user_message = nil, prompt = "", callback = nil)
+          defaulted_callback = callback || "null"
           update_page do |page|
-            page.call("FB.Connect.showFeedDialog",action.template_id,action.data,action.target_ids,action.body_general,nil,page.literal("FB.RequireConnect.promptConnect"),callback,prompt,user_message.nil? ? nil : {:value=>user_message})
+            page.call("FB.Connect.showFeedDialog",action.template_id,action.data,action.target_ids,action.body_general,nil,page.literal("FB.RequireConnect.promptConnect"),page.literal(defaulted_callback),prompt,user_message.nil? ? nil : {:value=>user_message})
           end
         end
         
