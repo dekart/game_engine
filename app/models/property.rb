@@ -4,7 +4,7 @@ class Property < ActiveRecord::Base
   belongs_to :character
   belongs_to :property_type
 
-  delegate :name, :description, :image, :image?, :basic_price, :vip_price, :money_min, :money_max, :to => :property_type
+  delegate :name, :description, :image, :image?, :basic_price, :vip_price, :income, :to => :property_type
 
   attr_accessor :free_of_charge
 
@@ -27,8 +27,8 @@ class Property < ActiveRecord::Base
     self.character.recalculate_income
   end
 
-  def income
-    self.money_min
+  def total_income
+    self.income * self.amount
   end
 
   def owner

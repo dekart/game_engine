@@ -264,7 +264,7 @@ class Character < ActiveRecord::Base
     self.basic_money = self.basic_money
 
     self.property_income = self.properties.inject(0) do |result, property|
-      result += property.income
+      result += property.total_income
     end
 
     self.save

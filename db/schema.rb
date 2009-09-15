@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090830191753) do
+ActiveRecord::Schema.define(:version => 20090913151424) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -88,6 +88,16 @@ ActiveRecord::Schema.define(:version => 20090830191753) do
   end
 
   add_index "facebook_templates", ["template_name"], :name => "index_facebook_templates_on_template_name", :unique => true
+
+  create_table "feedbacks", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.string   "issue_type"
+    t.string   "subject"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fights", :force => true do |t|
     t.integer  "attacker_id"
@@ -244,6 +254,7 @@ ActiveRecord::Schema.define(:version => 20090830191753) do
     t.integer  "character_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "amount",           :default => 1
   end
 
   add_index "properties", ["character_id"], :name => "index_properties_on_character_id"
@@ -258,8 +269,7 @@ ActiveRecord::Schema.define(:version => 20090830191753) do
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
-    t.integer  "money_min"
-    t.integer  "money_max"
+    t.integer  "income"
     t.text     "requirements"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -292,6 +302,30 @@ ActiveRecord::Schema.define(:version => 20090830191753) do
     t.string   "name"
     t.text     "content"
     t.boolean  "current"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "survey_options", :force => true do |t|
+    t.integer  "survey_id"
+    t.string   "answer"
+    t.integer  "survey_results_count", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "survey_results", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "survey_id"
+    t.integer  "survey_option_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "surveys", :force => true do |t|
+    t.string   "question"
+    t.string   "workflow_state"
+    t.integer  "survey_results_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

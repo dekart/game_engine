@@ -1,16 +1,10 @@
 class PropertiesController < ApplicationController
-  def new
-    @property_types = PropertyType.available_in(:shop).available_for(current_character)
-  end
-
   def create
     @property_type = PropertyType.find(params[:property_type_id])
+    
+    @property = @property_type.buy(current_character)
 
-    @property = current_character.properties.create(:property_type => @property_type)
-
-    unless @property.new_record?
-      goal(:property_buy, @property_type.id)
-    end
+    goal(:property_buy, @property_type.id) if @property.valid?
 
     current_character.recalculate_income
     
@@ -18,6 +12,8 @@ class PropertiesController < ApplicationController
   end
 
   def index
+    @property_types = PropertyType.available_in(:shop).available_for(current_character)
+    
     @properties = current_character.properties.paginate(:page => params[:page])
   end
 
