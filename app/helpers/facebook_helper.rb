@@ -89,7 +89,6 @@ module FacebookHelper
     options[:template_data] ||= {}
     options[:template_data][:images] ||= []
     options[:template_data][:images].unshift(:src => image_path("logo_100x100.jpg"), :href => image_url)
-    options[:template_data][:images].push(:src => image_path("play_now_small.jpg"), :href => image_url)
     
     "Facebook.showFeedDialog(#{bundle_id}, #{options[:template_data].to_json}, '#{options[:body_general]}', #{options[:target_id] || "null"}, function(){#{options[:continuation]}})"
   end
