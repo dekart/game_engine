@@ -4,7 +4,7 @@ class FightWithInvite
   def self.create(options = {})
     fight = new(options[:attacker], options[:victim])
 
-    fight.save
+    fight.save if fight.valid?
 
     fight
   end
@@ -20,10 +20,19 @@ class FightWithInvite
     @attacker_hp_loss = rand((@victim_hp_loss * 0.8).ceil) + 1
   end
 
+  def valid?
+    @valid ||= enough_energy? and !@attacker.weak?
+  end
+
+  def enough_energy?
+    @attacker.ep > 0
+  end
+
   def save
     @attacker.basic_money += @money
     @attacker.experience  += @experience
     @attacker.hp          -= @attacker_hp_loss
+    @attacker.ep          -= 1
 
     @attacker.save
   end
