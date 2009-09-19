@@ -51,10 +51,12 @@ class Property < ActiveRecord::Base
         character.charge(basic_price * difference.abs, vip_price * difference.abs)
       end
     else # Selling properties, should deposit
-      self.money_return = sell_price * difference
-      
-      character.basic_money += self.money_return
-      character.save
+      if deposit_money
+        self.money_return = sell_price * difference
+
+        character.basic_money += self.money_return
+        character.save
+      end
     end
   end
 

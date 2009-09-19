@@ -71,11 +71,12 @@ class Character < ActiveRecord::Base
 
     def sell!(type, amount = 1)
       if property = find_by_property_type_id(type.id)
+        property.deposit_money = true
+        
         if property.amount > amount
           property.amount -= amount
           property.save
         else
-          property.deposit_money = true
           property.destroy
         end
 
@@ -103,6 +104,23 @@ class Character < ActiveRecord::Base
       proxy_owner.recalculate_income if property.save
 
       property
+    end
+
+    def take!(type, amount = 1)
+      if property = find_by_property_type_id(type.id)
+        if property.amount > amount
+          property.amount -= amount
+          property.save
+        else
+          property.destroy
+        end
+
+        proxy_owner.recalculate_income
+
+        property
+      else
+        false
+      end
     end
   end
   

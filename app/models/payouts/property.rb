@@ -9,13 +9,10 @@ module Payouts
     end
 
     def apply(character)
-      if self.action == :remove and property = character.properties.find_by_property_type_id(self.property_type.id)
-        property.destroy
+      if self.action == :remove
+        character.properties.take!(self.property_type)
       else
-        character.properties.create(
-          :property_type  => self.property_type,
-          :free_of_charge => true
-        )
+        character.properties.give!(self.property_type)
       end
     end
   end
