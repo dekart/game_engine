@@ -4,26 +4,15 @@ module HelpRequestsHelper
   end
 
   def help_request_dialog(mission)
-    help_link = help_request_url(current_character, :canvas => true)
+    help_url = help_request_url(current_character, :canvas => true)
 
     show_feed_dialog(Publisher::HelpRequest, :request,
       :template_data => {
         :mission => mission.name,
-        :app => link_to(fb_app_name(:linked => false), help_link)
+        :app => link_to(fb_app_name(:linked => false), help_url),
+        :help_url => help_url
       },
-      :body_general => content_tag(:b,
-        link_to(
-          t("stories.help_request.help_link", 
-            :user => fb_name(current_user,
-              :linked         => false,
-              :use_you        => false,
-              :firstnameonly  => true
-            )
-          ),
-          help_link
-        )
-      ),
-      :image_url => help_link,
+      :image_url => help_url,
       :continuation => "HelpRequest.create(#{mission.id})"
     )
   end

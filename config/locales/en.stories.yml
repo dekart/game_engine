@@ -18,10 +18,11 @@ en:
       action_link: "Play {{app}} &raquo;"
     invitation:
       invite:
-        one_line: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}! {*invite_link*}"
+        one_line: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}!"
         short:
           title: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}!"
-          text: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}! {*invite_link*}"
+          text: "Sword & Magic is a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of the fantasy world!"
+          link: "Join {*actor*}'s Alliance &raquo;"
       notification:
         text: "joined your Alliance in {app}! {link}"
         link: "View Alliance"
@@ -55,4 +56,4 @@ en:
       short:
         title: "{*actor*} requested help with the {*mission*} mission in {*app*}"
         text: "Help your friend with this mission to get bonus gold and experience"
-      help_link: "&raquo;&raquo; Help {{user}}! &laquo;&laquo;"
+        link: "Help {*actor*}! &raquo;"

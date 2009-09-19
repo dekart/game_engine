@@ -13,6 +13,9 @@ module Publisher
         I18n.t("stories.help_request.short.title"),
         I18n.t("stories.help_request.short.text")
       )
+      action_links(
+        action_link(I18n.t("stories.help_request.short.link"), "{*help_url*}")
+      )
     end
   end
 end
