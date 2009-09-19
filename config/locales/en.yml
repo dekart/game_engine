@@ -411,7 +411,9 @@ en:
       title: "My Properties"
       income:
         label: "Current Income:"
-      amount: "Owned: {amount}"
+      property:
+        income: "{amount} per hour"
+        amount: "Owned: {amount}"
       buttons:
         buy: "Buy"
         sell: "Sell"
@@ -420,6 +422,7 @@ en:
     destroy:
       messages:
         success: "You've successfully sold {property_name}!"
+        property_not_found: "This property is already sold"
       you_received:
         title: "You received:"
   assignments:

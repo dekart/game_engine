@@ -58,7 +58,53 @@ class Character < ActiveRecord::Base
   has_many :reverse_friend_relations, :foreign_key => "target_id", :class_name => "FriendRelation", :dependent => :destroy
   has_many :mercenary_relations, :foreign_key => "source_id", :dependent => :delete_all
 
-  has_many :properties, :order => "property_type_id", :dependent => :delete_all
+  has_many :properties, :order => "property_type_id", :dependent => :delete_all do
+    def buy!(type, amount = 1)
+      property = give(type, amount)
+
+      property.charge_money = true
+      
+      proxy_owner.recalculate_income if property.save
+
+      property
+    end
+
+    def sell!(type, amount = 1)
+      if property = find_by_property_type_id(type.id)
+        if property.amount > amount
+          property.amount -= amount
+          property.save
+        else
+          property.deposit_money = true
+          property.destroy
+        end
+
+        proxy_owner.recalculate_income
+
+        property
+      else
+        false
+      end
+    end
+
+    def give(type, amount = 1)
+      if property = find_by_property_type_id(type.id)
+        property.amount += amount
+      else
+        property = build(:property_type => type, :amount => amount)
+      end
+
+      property
+    end
+
+    def give!(type, amount = 1)
+      property = give(type, amount)
+      
+      proxy_owner.recalculate_income if property.save
+
+      property
+    end
+  end
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id, :dependent => :delete_all
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id, :dependent => :delete_all
@@ -351,6 +397,13 @@ class Character < ActiveRecord::Base
 
   def invitation_key
     "#{self.id}-#{self.secret}"
+  end
+
+  def charge(basic_amount, vip_amount)
+    self.basic_money  -= basic_amount if basic_amount > 0
+    self.vip_money    -= vip_amount if vip_amount > 0
+
+    self.save
   end
 
   protected

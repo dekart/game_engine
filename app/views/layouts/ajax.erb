@@ -1,5 +1,6 @@
 <%= yield %>
 <script>
   <%= yield :script %>
+    <% Rails.logger.debug "reload here" %>
   Character.update(<%= current_character(true).to_json_for_overview %>);
 </script>

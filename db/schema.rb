@@ -254,7 +254,7 @@ ActiveRecord::Schema.define(:version => 20090913151424) do
     t.integer  "character_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "amount",           :default => 1
+    t.integer  "amount",           :default => 0
   end
 
   add_index "properties", ["character_id"], :name => "index_properties_on_character_id"

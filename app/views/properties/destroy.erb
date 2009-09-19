@@ -1,19 +1,22 @@
 <div id="property_result">
-  <p>
-    <% fb_i do %>
-      <%= t(".messages.success") %>
-      <%= fb_it(:property_name, content_tag(:b, fb_i(@property.name))) %>
-    <% end %>
-  </p>
+  <% if @property %>
+    <p>
+      <% fb_i do %>
+        <%= t(".messages.success") %>
+        <%= fb_it(:property_name, content_tag(:b, fb_i(@property.name))) %>
+      <% end %>
+    </p>
 
-  <h3><%= fb_i(t(".you_received.title")) %></h3>
+    <h3><%= fb_i(t(".you_received.title")) %></h3>
 
-  <div class="payouts">
-     <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @property.sell_price) %>
-  </div>
+    <div class="payouts">
+       <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @property.money_return) %>
+    </div>
+  <% else %>
+    <%= fb_i(t(".messages.property_not_found")) %>
+  <% end %>
 </div>
 
 <% content_for :script do %>
   $('result').show();
-  $('<%= dom_id(@property) %>').hide();
 <% end %>

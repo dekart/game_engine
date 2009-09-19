@@ -1,6 +1,6 @@
 class AddAmountToProperties < ActiveRecord::Migration
   def self.up
-    add_column    :properties, :amount, :integer, :default => 1
+    add_column    :properties, :amount, :integer, :default => 0
     rename_column :property_types, :money_min, :income
     remove_column :property_types, :money_max
   end
