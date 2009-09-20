@@ -19,9 +19,8 @@
         <% end %>
       </td>
       <td class="requires">
-        <% %w{basic_price vip_price}.each do |attr| %>
-          <%= content_tag(:div, type.send(attr), :class => attr)  if type.send(attr) > 0 %>
-        <% end %>
+        <%= basic_price(type.basic_price) %>
+        <%= vip_price(type.vip_price) %>
       </td>
       <td class="owned">
         <% fb_i do %>
@@ -30,7 +29,6 @@
         <% end %>
       </td>
       <td class="controls">
-
         <%= link_to_remote(fb_i(t(".buttons.buy")),
               :url => properties_url(:property_type_id => type.id, :canvas => false),
               :update => :result,
@@ -41,7 +39,7 @@
               :method => :delete,
               :update => :result,
               :html   => {:class => "sell button"}
-            ) %>
+            ) if property and property.amount > 0 %>
       </td>
     <% end %>
   <% end %>

@@ -47,7 +47,8 @@ en:
         property:
           attributes:
             character:
-              not_enough_money: "You don't have enough money to buy {property_name}"
+              not_enough_basic_money: "You don't have enough gold to buy {property_name}."
+              not_enough_vip_money: "You don't have enough Gems to buy {property_name}."
               too_much_properties: "You cannot buy properties anymore because you already have too many!"
         help_result:
           too_late: "You're too late! Next time try to help your friends within 24 hours."
@@ -411,6 +412,7 @@ en:
       owned: "Owned: {amount}"
       buttons:
         buy: "Buy"
+        get_vip: "Earn Gems"
         sell: "Sell"
     destroy:
       messages:
@@ -476,6 +478,7 @@ en:
       already_used: "You already used this promotion link"
       expired: "This promotion link already expired"
   premia:
+    get_vip: "Earn Gems"
     show:
       title: "Gem Market"
       current:

@@ -393,6 +393,7 @@ form .error {color: red; padding: 3px 0px;}
   #property_list .requires div {line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
   #property_list .requires .basic_price{background-image: url(icons/basic_money.gif)}
   #property_list .requires .vip_price{background-image: url(icons/vip_money.gif)}
+#property_list .income .basic_money {line-height: 22px;height: 22px; padding: 3px 0 3px 21px; background: url(icons/basic_money.gif) center left no-repeat;}
 #property_list .controls {width: 110px;}
   #property_list .controls .buy {background-image: url(icons/basic_money.gif);}
   #property_list .controls .sell {background-image: url(icons/basic_money.gif);}

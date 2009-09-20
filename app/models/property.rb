@@ -36,8 +36,9 @@ class Property < ActiveRecord::Base
 
     difference = changes["amount"].last - changes["amount"].first
 
-    if difference > 0 and (character.basic_money < basic_price * difference or character.vip_money < vip_price * difference)
-      errors.add(:character, :not_enough_money)
+    if difference > 0
+      errors.add(:character, :not_enough_basic_money) if character.basic_money < basic_price * difference
+      errors.add(:character, :not_enough_vip_money) if character.vip_money < vip_price * difference
     end
   end
 

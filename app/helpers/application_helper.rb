@@ -60,4 +60,21 @@ module ApplicationHelper
   def reset_group_header(group_name)
     @group_headers[group_name] = nil
   end
+
+  def basic_price(value, tag = :div)
+    content_tag(tag, value, :class => :basic_price) if value.to_i > 0
+  end
+
+  def vip_price(value, tag = :div)
+    if value.to_i > 0
+      content_tag(tag,
+        if current_character.vip_money >= value.to_i
+          value
+        else
+          "%s (%s)" % [value, link_to(fb_i(t("premia.get_vip")), premium_path)]
+        end,
+        :class => :vip_price
+      )
+    end
+  end
 end
