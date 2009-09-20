@@ -24,11 +24,11 @@
     <h3><%= fb_i(t(".you_spent.title")) %></h3>
 
     <div class="payouts">
-      <% if @property.basic_price.to_i > 0 %>
+      <% if @property.basic_price > 0 %>
         <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @property.basic_price) %>
       <% end %>
 
-      <% if @property.vip_price.to_i > 0 %>
+      <% if @property.vip_price > 0 %>
         <%= payout(:vip_money, Character.human_attribute_name("vip_money"), @property.vip_price) %>
       <% end %>
     </div>
