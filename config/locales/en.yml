@@ -393,12 +393,6 @@ en:
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. Or just send this message to your friends:"
         invitation: "Join my Sword&Magic Alliance! {link}"
   properties:
-    new:
-      title: "Buy Properties"
-      columns:
-        income: "Income"
-        requires: "Requires"
-      buttons:
     create:
       buttons:
         publish: "Brag About It"
@@ -411,14 +405,13 @@ en:
       title: "My Properties"
       income:
         label: "Current Income:"
-      property:
-        income: "{amount} per hour"
-        amount: "Owned: {amount}"
+      note: "Properties brings you hourly income."
+    list:
+      income: "{amount} per hour"
+      owned: "Owned: {amount}"
       buttons:
         buy: "Buy"
         sell: "Sell"
-      empty_set: "You don't have any properties yet"
-      note: "Properties brings you hourly income." #  Assign managers to earn more from properties, assign guardians to protect your income from enemies.
     destroy:
       messages:
         success: "You've successfully sold {property_name}!"

@@ -5,56 +5,10 @@
 </div>
 
 <div id="property_income">
-  <b><%= t(".income.label") %></b>
-  <span class="value"><%= current_character.property_income %></span>
+  <b><%= fb_i(t(".income.label")) %></b>
+  <span class="value" id="property_income_value"><%= current_character.property_income %></span>
 </div>
 
-<table id="property_list" cellspacing="0">
-  <tr>
-    <th></th>
-    <th></th>
-    <th><%= PropertyType.human_attribute_name("income") %></th>
-    <th><%= Property.human_attribute_name("price") %></th>
-  </tr>
-  <% @property_types.each do |type| %>
-    <% property = @properties.detect{|p| p.property_type == type } %>
-    <% content_tag_for(:tr, type) do %>
-      <td class="picture"><%= image_tag(type.image.url(:small)) if type.image? %></td>
-      <td class="info">
-        <div class="name"><%= fb_i(type.name) %></div>
-        <div class="description"><%= fb_i(type.description) %></div>
-      </td>
-      <td class="income">
-        <% fb_i do %>
-          <%= t(".property.income") %>
-          <%= fb_it(:amount, content_tag(:span, type.income, :class => :basic_money)) %>
-        <% end %>
-      </td>
-      <td class="requires">
-        <% %w{basic_price vip_price}.each do |attr| %>
-          <%= content_tag(:div, type.send(attr), :class => attr)  if type.send(attr) > 0 %>
-        <% end %>
-      </td>
-      <td class="amount">
-        <% fb_i do %>
-          <%= t(".property.amount") %>
-          <%= fb_it(:amount, property ? property.amount : 0) %>
-        <% end %>
-      </td>
-      <td class="controls">
-
-        <%= link_to_remote(fb_i(t(".buttons.buy")),
-              :url => properties_url(:property_type_id => type.id, :canvas => false),
-              :update => :result,
-              :html => {:class => "buy button"}
-            ) %>
-        <%= link_to_remote(fb_i(t(".buttons.sell")),
-              :url    => property_url(type, :canvas => false),
-              :method => :delete,
-              :update => :result,
-              :html   => {:class => "sell button"}
-            ) %>
-      </td>
-    <% end %>
-  <% end %>
-</table>
+<div id="property_list">
+  <%= render :partial => "list", :locals => {:properties => @properties} %>
+</div>

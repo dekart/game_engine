@@ -42,6 +42,12 @@
   <% end %>
 </div>
 
+<% fb_js_string :list do %>
+  <%= render :partial => "list", :locals => {:properties => @properties} %>
+<% end %>
+
 <% content_for :script do %>
+  $('property_list').setInnerFBML(list);
+  $('property_income_value').setTextValue('<%= current_character.property_income %>')
   $('result').show();
 <% end %>
