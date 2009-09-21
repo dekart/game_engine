@@ -22,8 +22,6 @@ class User < ActiveRecord::Base
     super
 
     self.create_character unless self.character
-
-    logger.debug self.character
   end
 
   def setup_profile!
