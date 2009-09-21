@@ -8,7 +8,7 @@ class Property < ActiveRecord::Base
 
   attr_accessor :charge_money, :deposit_money, :money_return
 
-  validate_on_create :enough_character_money?, :enough_property_slots?
+  validate :enough_character_money?, :enough_property_slots?
 
   before_save :charge_or_deposit_character
   after_destroy :deposit_character
