@@ -5,7 +5,7 @@ module Requirements
     end
 
     def satisfies?(character)
-      character.defence >= @value
+      character.own_defence_points >= @value
     end
   end
 end
