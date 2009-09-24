@@ -86,6 +86,45 @@ module FacebookMoney
     end
   end
 
+  class Boomerang
+    class << self
+      def valid_request?(params)
+        digest = Digest::MD5.hexdigest("uid=#{params[:uid]}currency=#{params[:currency]}type=#{params[:type]}ref=#{params[:ref]}#{FacebookMoney.config["secret"]}")
+
+        Rails.logger.debug digest
+        
+        return digest == params[:sig] && !user(params).nil?
+      end
+
+      def user(params)
+        User.find_by_facebook_id(params[:uid])
+      end
+
+      def amount(params)
+        params[:currency].to_i
+      end
+
+      def html_code(template, options = {})
+        default_options = {
+          :src => "http://boomapi.com/api/?key=#{FacebookMoney.config["key"]}&uid=#{template.current_user.facebook_id}&widget=w1",
+          :frameborder  => 0,
+          :width        => 760,
+          :height       => 1750
+        }
+
+        template.content_tag("fb:iframe", "", default_options.merge(options))
+      end
+
+      def success_code
+        "OK"
+      end
+
+      def failure_code
+        "ERROR"
+      end
+    end
+  end
+
   module ControllerMethods
     def on_valid_facebook_money_request
       if FacebookMoney.provider.valid_request?(params)
