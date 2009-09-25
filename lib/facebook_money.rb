@@ -106,7 +106,7 @@ module FacebookMoney
 
       def html_code(template, options = {})
         default_options = {
-          :src => "http://boomapi.com/api/?key=#{FacebookMoney.config["key"]}&uid=#{template.current_user.facebook_id}&widget=w1",
+          :src => "http://boomapi.com/api/?key=#{FacebookMoney.config["key"]}&uid=#{template.current_user.facebook_id}&widget=#{FacebookMoney.config["widget"] || "w1"}",
           :frameborder  => 0,
           :width        => 760,
           :height       => 1750
