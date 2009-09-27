@@ -196,7 +196,7 @@ form .error {color: red; padding: 3px 0px;}
   #inventory .buttons .shop{background-image: url(icons/shop.gif);}
 
 /* Item list displayed at Inventory page*/
-#inventory_list {margin-top: 20px;}
+#inventory_list {margin-top: 10px;}
 #inventory_list td{padding: 10px; border-bottom: 1px solid #d0d0d0;}
   #inventory_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
   #inventory_list .effects {width: 70px;}
@@ -213,6 +213,9 @@ form .error {color: red; padding: 3px 0px;}
     #inventory_list .controls .use {background-image: url(icons/accept.gif);}
 
 /* Fight attributes block */
+#fight_attributes {margin: 10px 0; border-bottom: 1px solid #d0d0d0;}
+#fight_attributes table {width: 99%;}
+#fight_attributes th {font-size: 14px;}
 #fight_attributes .values div {display: inline; line-height: 22px;height: 22px; padding: 2px 5px 2px 21px; background-position: center left; background-repeat: no-repeat;}
 #fight_attributes .attack {background-image: url(icons/attack.gif);}
 #fight_attributes .defence {background-image: url(icons/defence.gif);}
@@ -347,7 +350,7 @@ form .error {color: red; padding: 3px 0px;}
   #bank_balance .value {padding-left: 21px; background: url(icons/basic_money.gif) center left no-repeat; font-weight: normal;}
 
 /* Item group tabs at the Shop and Inventory pages */
-#item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin-bottom: 5px; height: 30px;}
+#item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin: 10px 0 5px 0; height: 30px;}
   #item_groups b {font-size: 16px; padding: 0 10px; line-height: 30px; height: 28px;display:block; float: left;}
   #item_groups a {font-size: 14px; padding: 0 10px; line-height: 30px; height: 28px;font-weight: bold; border:1px solid white;display:block; float: left;}
   #item_groups a:hover {border-left: 1px solid #D0D0D0;border-right: 1px solid #D0D0D0;}

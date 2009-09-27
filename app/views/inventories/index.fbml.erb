@@ -1,3 +1,5 @@
+<%= render :partial => "characters/fight_attributes" %>
+
 <%= title(fb_i(t(".title"))) %>
 
 <div id="inventory">
@@ -5,8 +7,6 @@
     <%= link_to(fb_i(t(".shop")), items_path, :class => "shop button") %>
   </div>
   
-  <%= render :partial => "characters/fight_attributes" %>
-
   <div id="inventory_list">
     <%= render :partial => "list", :locals => {:inventories => @inventories} %>
   </div>
