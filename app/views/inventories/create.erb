@@ -41,8 +41,16 @@
   <% end %>
 </div>
 
+<% fb_js_string :fight_attributes do %>
+  <%= render :partial => "characters/fight_attributes" %>
+<% end %>
+
 <% content_for :script do %>
   Inventory.onPurchase();
+
+  if($('inventory_fight_attributes')){
+    $('inventory_fight_attributes').setInnerFBML(fight_attributes);
+  }
 
   $('result').show();
 <% end %>

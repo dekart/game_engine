@@ -28,6 +28,29 @@ namespace :app do
 
     desc "Group inventories"
     task :group_inventories => :environment do
+      puts "Processing item effects"
+      
+      Item.find_each do |item|
+        collection = Effects::Collection.new
+
+        item.effects.each do |effect|
+          if effect.is_a?(YAML::Object)
+            case effect.class
+            when "Effects::Attack"
+              item.attack = effect.ivars["value"]
+            when "Effects::Defence"
+              item.defence = effect.ivars["value"]
+            end
+          else
+            collection << Effects::Collection.new(effect)
+          end
+        end
+
+        item.effects = collection
+
+        item.save
+      end
+
       total = Character.count
 
       i = 1
@@ -49,30 +72,11 @@ namespace :app do
           end
 
           character.save
+          
+          character.inventories.calculate_used_in_fight!
         end
 
         i+= 1
-      end
-
-      Item.find_each do |item|
-        collection = Effects::Collection.new
-
-        item.effects.each do |effect|
-          if effect.is_a?(YAML::Object)
-            case effect.class
-            when "Effects::Attack"
-              item.attack = effect.ivars["value"]
-            when "Effects::Defence"
-              item.defence = effect.ivars["value"]
-            end
-          else
-            collection << Effects::Collection.new(effect)
-          end
-        end
-
-        item.effects = collection
-
-        item.save
       end
     end
   end
