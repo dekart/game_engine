@@ -6,14 +6,8 @@
   <%= link_to(fb_i(t(".next")), {:action => :step_4}, {:class => :button}) %>
 </div>
 
-<% if @inventories.any? %>
-  <div id="inventory_placements">
-    <%= inventory_placements_for(current_character) %>
-  </div>
-
-  <div id="inventory_list">
-    <%= render :partial => "inventories/list", :locals => {:inventories => @inventories} %>
-  </div>
+<% if @victims.any? %>
+  <%= render :partial => "fights/victim_list", :locals => {:victims => @victims} %>
 <% else %>
   <% javascript_tag do %>
     $('tutorial').removeClassName('nobutton');
@@ -23,7 +17,10 @@
 <%= render :partial => "skip" %>
 
 <% javascript_tag do %>
-  Inventory.onEquip = function(){
+  $('result').addClassName('nobutton');
+
+  Character.onNewLevel = function(){
     $('tutorial').removeClassName('nobutton');
+    $('victim_list').hide();
   }
 <% end %>

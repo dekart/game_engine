@@ -12,21 +12,15 @@ class TutorialsController < ApplicationController
   end
 
   def step_3
-    @inventories = current_character.inventories
+    @victims = Character.victims_for(current_character).all(:order => "RAND()", :limit => 5)
 
     goal(:tutorial_step_3)
   end
 
   def step_4
-    @victims = Character.victims_for(current_character).all(:order => "RAND()", :limit => 5)
-
-    goal(:tutorial_step_4)
-  end
-
-  def step_5
     # Upgrade list doesn't require any data
 
-    goal(:tutorial_step_5)
+    goal(:tutorial_step_4)
   end
 
   def finish

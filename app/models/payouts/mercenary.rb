@@ -11,8 +11,9 @@ module Payouts
 
       @value.times do
         if self.action == :remove
-          mercenary = character.mercenary_relations.first
-          mercenary.destroy
+          if mercenary = character.mercenary_relations.first
+            mercenary.destroy
+          end
 
           @mercenaries << mercenary
         else

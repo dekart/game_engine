@@ -29,11 +29,7 @@ class Character < ActiveRecord::Base
   HIRE_MERCENARY_RATE = 20
 
   belongs_to :user
-  has_many :ranks, :dependent => :delete_all do
-    def completed_mission_ids
-      find(:all, :select => "mission_id", :conditions => {:completed => true}).collect{|m| m.mission_id}
-    end
-  end
+  has_many :ranks, :dependent => :delete_all, :extend => Character::Ranks
   has_many :missions, :through => :ranks
   
   has_many :inventories,
@@ -44,19 +40,11 @@ class Character < ActiveRecord::Base
   has_many :items, :through => :inventories
   
   has_many :relations, :foreign_key => "source_id"
-  has_many :friend_relations, :foreign_key => "source_id", :include => :target_character, :dependent => :destroy do
-    def facebook_ids
-      find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
-    end
-
-    def with(character)
-      find(:first, :conditions => ['target_id = ?', character.id])
-    end
-
-    def established?(character)
-      !with(character).nil?
-    end
-  end
+  has_many :friend_relations, 
+    :foreign_key  => "source_id",
+    :include      => :target_character,
+    :dependent    => :destroy,
+    :extend       => Character::FriendRelations
   has_many :reverse_friend_relations, :foreign_key => "target_id", :class_name => "FriendRelation", :dependent => :destroy
   has_many :mercenary_relations, :foreign_key => "source_id", :dependent => :delete_all
 
@@ -69,15 +57,12 @@ class Character < ActiveRecord::Base
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id, :dependent => :delete_all
   has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
 
-  has_many :assignments, :as => :context, :extend => AssignmentExtension, :dependent => :delete_all
+  has_many :assignments,
+    :as         => :context,
+    :dependent  => :delete_all,
+    :extend     => Character::Assignments
 
-  has_many :help_requests, :dependent => :destroy do
-    def can_publish?
-      latest_request = self.latest
-
-      latest_request.nil? or latest_request.expired?
-    end
-  end
+  has_many :help_requests, :dependent => :destroy, :extend => Character::HelpRequests
 
   named_scope :victims_for, Proc.new{|attacker|
     {

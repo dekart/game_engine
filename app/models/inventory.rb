@@ -1,7 +1,6 @@
 class Inventory < ActiveRecord::Base
   belongs_to :character
   belongs_to :item
-  belongs_to :holder, :polymorphic => true
 
   named_scope :by_item_group, Proc.new{|group|
     {
@@ -91,11 +90,5 @@ class Inventory < ActiveRecord::Base
       character.basic_money += self.money_return
       character.save
     end
-  end
-
-  def recache_holder_effects
-    return unless recache = (self.holder || @previous_holder)
-
-    recache.cache_inventory_effects
   end
 end
