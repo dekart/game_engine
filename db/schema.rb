@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(:version => 20090927102009) do
     t.integer  "holder_id"
     t.string   "holder_type",  :limit => 50
     t.integer  "amount",                     :default => 0
+    t.integer  "use_in_fight",               :default => 0
   end
 
   add_index "inventories", ["character_id", "placement"], :name => "index_inventories_on_character_id_and_placement"

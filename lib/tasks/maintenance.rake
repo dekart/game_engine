@@ -28,7 +28,13 @@ namespace :app do
 
     desc "Group inventories"
     task :group_inventories => :environment do
+      total = Character.count
+
+      i = 1
+      
       Character.find_each do |character|
+        puts "Processing character #{i}/#{total}"
+        
         items = character.inventories.inject({}) do |result, inventory|
           result[inventory.item] ||= 0
           result[inventory.item] += 1
@@ -44,6 +50,8 @@ namespace :app do
 
           character.save
         end
+
+        i+= 1
       end
 
       Item.find_each do |item|
