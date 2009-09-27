@@ -206,6 +206,8 @@ form .error {color: red; padding: 3px 0px;}
       #inventory_list .effects .restore_health {background-image: url(icons/health.gif);}
       #inventory_list .effects .restore_energy {background-image: url(icons/energy.gif);}
       #inventory_list .effects .upgrade {background-image: url(icons/level.gif);}
+  #inventory_list .stats {width: 70px;}
+    #inventory_list .stats div {margin-bottom: 5px;}
   #inventory_list .spacer {border:0;}
   #inventory_list .controls {width: 90px;}
     #inventory_list .controls a {width: 87px;}
