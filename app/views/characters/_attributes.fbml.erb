@@ -2,23 +2,23 @@
   <% if character == current_character %>
     <tr class="attack">
       <th><%= fb_i(Character.human_attribute_name("attack")) %></th>
-      <td class="value"><%= character.own_attack_points %></td>
+      <td class="value"><%= character.attack %></td>
       <td class="bonus">
         <% fb_i do %>
           <%= t(".bonus") %>
 
-          <%= fb_it(:amount, content_tag(:span, character.relation_attack_points)) %>
+          <%= fb_it(:amount, content_tag(:span, character.inventory_attack_points)) %>
         <% end %>
       </td>
     </tr>
     <tr class="defence">
       <th><%= fb_i(Character.human_attribute_name("defence")) %></th>
-      <td class="value"><%= character.own_defence_points %></td>
+      <td class="value"><%= character.defence %></td>
       <td class="bonus">
         <% fb_i do %>
           <%= t(".bonus") %>
 
-          <%= fb_it(:amount, content_tag(:span, character.relation_defence_points)) %>
+          <%= fb_it(:amount, content_tag(:span, character.inventory_defence_points)) %>
         <% end %>
       </td>
     </tr>
@@ -49,11 +49,11 @@
   <% else %>
     <tr class="attack">
       <th><%= fb_i(Character.human_attribute_name("attack")) %></th>
-      <td class="value"><%= character.own_attack_points %></td>
+      <td class="value"><%= character.attack_points %></td>
     </tr>
     <tr class="defence">
       <th><%= fb_i(Character.human_attribute_name("defence")) %></th>
-      <td class="value"><%= character.own_defence_points %></td>
+      <td class="value"><%= character.defence_points %></td>
     </tr>
   <% end %>
 </table>

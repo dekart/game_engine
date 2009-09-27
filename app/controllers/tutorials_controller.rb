@@ -12,7 +12,7 @@ class TutorialsController < ApplicationController
   end
 
   def step_3
-    @inventories = current_character.inventories.available
+    @inventories = current_character.inventories
 
     goal(:tutorial_step_3)
   end

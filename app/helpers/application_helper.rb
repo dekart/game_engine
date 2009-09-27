@@ -77,4 +77,12 @@ module ApplicationHelper
       )
     end
   end
+
+  def attack(value, tag = :div)
+    content_tag(tag, value, :class => :attack) if value.to_i > 0
+  end
+
+  def defence(value, tag = :div)
+    content_tag(tag, value, :class => :defence) if value.to_i > 0
+  end
 end

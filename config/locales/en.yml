@@ -43,7 +43,8 @@ en:
         inventory:
           attributes:
             character:
-              not_enough_money: "You don't have enough money to buy {item_name}"
+              not_enough_basic_money: "You don't have enough gold to buy {item_name}."
+              not_enough_vip_money: "You don't have enough Gems to buy {item_name}."
         property:
           attributes:
             character:
@@ -97,13 +98,6 @@ en:
       name: "Health Points"
     mercenary:
       name: "Mercenaries"
-  placements:
-    left_hand: "Left Hand"
-    right_hand: "Right Hand"
-    head: "Head"
-    body: "Body"
-    belt: "Belt"
-    legs: "Legs"
 # Templates
   layouts:
     next_steps:
@@ -189,6 +183,11 @@ en:
       upgrade_link: "upgrade"
       buttons:
         upgrade: "Upgrade"
+    fight_attributes:
+      personal: "Your Skills"
+      relations: "Your Alliance"
+      offence: "Best Offence"
+      defence: "Best Defence"
   fights:
     descriptions:
       attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
@@ -243,7 +242,10 @@ en:
         title: "You received:"
     index:
       title: "Inventory"
+      shop: "Go to Shop"
     list:
+      owned: "Owned: {amount}"
+      used: "In use: {amount}"
       buttons:
         to_left_hand: "To Left Hand"
         to_right_hand: "To Right Hand"
@@ -272,12 +274,6 @@ en:
         hire: "Hire Mercenaries"
     placements:
       take_off: "Take off"
-    effects:
-      header: "Inventory Effects"
-      personal_attack: "Personal Attack"
-      personal_defence: "Personal Defence"
-      relation_attack: "Alliance Attack"
-      relation_defence: "Alliance Defence"
   invitations:
     accept:
       message: "Invitation accepted! {user} became part of your alliance!"
@@ -295,6 +291,7 @@ en:
   items:
     index:
       title: "Shop"
+      inventory: "Go to Inventory"
       next_item: "Reach level {level} to open new {group}"
     item:
       buttons:

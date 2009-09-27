@@ -10,9 +10,9 @@ class Assignment < ActiveRecord::Base
   def self.effect_value(context, character, role)
     case role.to_sym
     when :attack
-      (character.own_attack_points * 0.2).ceil
+      (character.attack * 0.2).ceil
     when :defence
-      (character.own_defence_points * 0.2).ceil
+      (character.defence * 0.2).ceil
     when :fight_damage
       log_percent(character.level, 3.5, 1)
     when :fight_income

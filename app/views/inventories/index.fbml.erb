@@ -1,15 +1,11 @@
 <%= title(fb_i(t(".title"))) %>
 
 <div id="inventory">
-  <%= render(:partial => "holders") %>
-
-  <div id="inventory_effects">
-    <%= render :partial => "inventories/effects", :locals => {:character => current_character} %>
+  <div class="buttons">
+    <%= link_to(fb_i(t(".shop")), items_path, :class => "shop button") %>
   </div>
-
-  <div id="inventory_placements">
-    <%= inventory_placements_for(current_character) %>
-  </div>
+  
+  <%= render :partial => "characters/fight_attributes" %>
 
   <div id="inventory_list">
     <%= render :partial => "list", :locals => {:inventories => @inventories} %>

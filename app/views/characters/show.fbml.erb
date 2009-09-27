@@ -24,14 +24,4 @@
       </td>
     </tr>
   </table>
-
-  <hr />
-
-  <div class="placements">
-    <% if current_character.friend_relations.established?(@character) %>
-      <%= inventory_placements_for(current_character.friend_relations.with(@character), :controls => false) %>
-    <% else %>
-      <%= inventory_placements_for(@character, :controls => false) %>
-    <% end %>
-  </div>
 </div>

@@ -3,13 +3,11 @@
   <td class="info">
     <div class="name"><%= fb_i(item.name) %></div>
     <div class="description"><%= fb_i(item.description) %></div>
-    <% if item.placements.any? %>
-      <div class="placements">
-        <%= item.placements.collect{|p| fb_i(t("placements.#{p}"))}.join(", ") %>
-      </div>
-    <% end %>
   </td>
   <td class="details">
+    <%= attack(item.attack) %>
+    <%= defence(item.attack) %>
+    
     <% item.effects.each do |effect| %>
       <%= content_tag(:div, effect.value, :class => effect.name) %>
     <% end %>

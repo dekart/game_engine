@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090913151424) do
+ActiveRecord::Schema.define(:version => 20090927102009) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20090913151424) do
     t.datetime "updated_at"
     t.integer  "holder_id"
     t.string   "holder_type",  :limit => 50
+    t.integer  "amount",                     :default => 0
   end
 
   add_index "inventories", ["character_id", "placement"], :name => "index_inventories_on_character_id_and_placement"
@@ -188,6 +189,8 @@ ActiveRecord::Schema.define(:version => 20090913151424) do
     t.datetime "updated_at"
     t.integer  "item_group_id"
     t.boolean  "can_be_sold",                      :default => true
+    t.integer  "attack",                           :default => 0
+    t.integer  "defence",                          :default => 0
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"

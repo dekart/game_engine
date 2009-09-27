@@ -47,16 +47,12 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def placements
-    @placements ||= (self[:placements].blank? ? [] : self[:placements].split(","))
+  def basic_price
+    self[:basic_price].to_i
   end
 
-  def placements=(value)
-    self[:placements] = value.is_a?(Array) ? value.join(",") : value
-  end
-
-  def placeable?
-    self.placements.any?
+  def vip_price
+    self[:vip_price].to_i
   end
 
   def effects

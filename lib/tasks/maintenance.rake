@@ -25,5 +25,47 @@ namespace :app do
         end
       end
     end
+
+    desc "Group inventories"
+    task :group_inventories => :environment do
+      Character.find_each do |character|
+        items = character.inventories.inject({}) do |result, inventory|
+          result[inventory.item] ||= 0
+          result[inventory.item] += 1
+          result
+        end
+
+        Character.transaction do
+          character.inventories.delete_all
+
+          items.each do |item, amount|
+            character.inventories.give(item, amount)
+          end
+
+          character.save
+        end
+      end
+
+      Item.find_each do |item|
+        collection = Effects::Collection.new
+
+        item.effects.each do |effect|
+          if effect.is_a?(YAML::Object)
+            case effect.class
+            when "Effects::Attack"
+              item.attack = effect.ivars["value"]
+            when "Effects::Defence"
+              item.defence = effect.ivars["value"]
+            end
+          else
+            collection << Effects::Collection.new(effect)
+          end
+        end
+
+        item.effects = collection
+
+        item.save
+      end
+    end
   end
 end

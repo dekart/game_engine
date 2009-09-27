@@ -14,10 +14,6 @@
       <%= form.text_field :level, :required => true, :size => 3 %>
       <%= form.text_field :basic_price, :required => true, :size => 3 %>
       <%= form.text_field :vip_price, :size => 3 %>
-      <%= form.select(:placements, Inventory::PLACEMENTS.collect{|v| [v.to_s.humanize, v.to_s]},
-            {:comment => "Hold 'Ctrl' to select more than one placement"},
-            {:multiple => true}
-          ) %>
       <%= form.check_box :usable %>
       <%= form.text_field :usage_limit, :size => 3 %>
       <%= form.check_box :can_be_sold %>
@@ -25,6 +21,9 @@
     <td>
       <div class="serializable" id="effect_list">
         <h2><%= Item.human_attribute_name("effects") %></h2>
+
+        <%= form.text_field :attack, :size => 3 %>
+        <%= form.text_field :defence, :size => 3 %>
 
         <%= render :partial => "admin/effects/collection", :locals => {:form => form} %>
       </div>

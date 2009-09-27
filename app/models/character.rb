@@ -36,8 +36,10 @@ class Character < ActiveRecord::Base
   end
   has_many :missions, :through => :ranks
   
-  has_many :inventories, :include => :item, :dependent => :delete_all
-  has_many :holded_inventories, :class_name => "Inventory", :as => :holder
+  has_many :inventories,
+    :include => :item,
+    :dependent => :delete_all,
+    :extend => Character::Inventories
   
   has_many :items, :through => :inventories
   
@@ -58,71 +60,10 @@ class Character < ActiveRecord::Base
   has_many :reverse_friend_relations, :foreign_key => "target_id", :class_name => "FriendRelation", :dependent => :destroy
   has_many :mercenary_relations, :foreign_key => "source_id", :dependent => :delete_all
 
-  has_many :properties, :order => "property_type_id", :dependent => :delete_all do
-    def buy!(type, amount = 1)
-      property = give(type, amount)
-
-      property.charge_money = true
-      
-      proxy_owner.recalculate_income if property.save
-
-      property
-    end
-
-    def sell!(type, amount = 1)
-      if property = find_by_property_type_id(type.id)
-        property.deposit_money = true
-        
-        if property.amount > amount
-          property.amount -= amount
-          property.save
-        else
-          property.destroy
-        end
-
-        proxy_owner.recalculate_income
-
-        property
-      else
-        false
-      end
-    end
-
-    def give(type, amount = 1)
-      if property = find_by_property_type_id(type.id)
-        property.amount += amount
-      else
-        property = build(:property_type => type, :amount => amount)
-      end
-
-      property
-    end
-
-    def give!(type, amount = 1)
-      property = give(type, amount)
-      
-      proxy_owner.recalculate_income if property.save
-
-      property
-    end
-
-    def take!(type, amount = 1)
-      if property = find_by_property_type_id(type.id)
-        if property.amount > amount
-          property.amount -= amount
-          property.save
-        else
-          property.destroy
-        end
-
-        proxy_owner.recalculate_income
-
-        property
-      else
-        false
-      end
-    end
-  end
+  has_many :properties,
+    :order => "property_type_id",
+    :dependent => :delete_all,
+    :extend => Character::Properties
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id, :dependent => :delete_all
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id, :dependent => :delete_all
@@ -198,43 +139,23 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    self.own_attack_points + self.relation_attack_points
+    self.attack + self.inventory_attack_points + self.assignments.effect_value(:attack)
   end
 
   def defence_points
-    self.own_defence_points + self.relation_defence_points
+    self.defence + self.inventory_defence_points + self.assignments.effect_value(:defence)
   end
 
   def inventory_attack_points
-    self.inventory_effects[:attack].value
+    self.inventories.used_in_fight.all.sum{|i|
+      i.use_in_fight * i.attack
+    }
   end
 
   def inventory_defence_points
-    self.inventory_effects[:defence].value
-  end
-
-  def own_attack_points
-    attack + inventory_attack_points
-  end
-  
-  def own_defence_points
-    defence + inventory_defence_points
-  end
-
-  def relation_inventory_attack_points
-    self.relation_effects[:attack].value
-  end
-
-  def relation_inventory_defence_points
-    self.relation_effects[:defence].value
-  end
-
-  def relation_attack_points
-    relation_inventory_attack_points + self.assignments.effect_value(:attack)
-  end
-
-  def relation_defence_points
-    relation_inventory_defence_points + self.assignments.effect_value(:defence)
+    self.inventories.used_in_fight.all.sum{|i|
+      i.use_in_fight * i.defence
+    }
   end
 
   def weak?
@@ -280,6 +201,7 @@ class Character < ActiveRecord::Base
     super || Effects::Collection.new
   end
 
+  # FIXME !!!
   def cache_inventory_effects
     self.inventory_effects = Effects::Collection.new
 

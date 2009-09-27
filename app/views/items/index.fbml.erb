@@ -1,40 +1,46 @@
 <%= title(fb_i(t(".title"))) %>
 
-<div id="item_groups">
-  <% ItemGroup.visible_in_shop.each do |group| %>
-    <% if group == @item_group %>
-      <b><%= fb_i(@item_group.name) %></b>
-    <% else %>
-      <%= link_to(fb_i(group.name), item_group_items_path(:item_group_id => group.id)) %>
-    <% end %>
-  <% end %>
-</div>
+<div id="items">
+  <div class="buttons">
+    <%= link_to(fb_i(t(".inventory")), inventories_path, :class => "inventory button") %>
+  </div>
 
-<% if @special_items.any? %>
-  <table class="item_list" id="special_items">
-    <% @special_items.each do |item| %>
+  <div id="item_groups">
+    <% ItemGroup.visible_in_shop.each do |group| %>
+      <% if group == @item_group %>
+        <b><%= fb_i(@item_group.name) %></b>
+      <% else %>
+        <%= link_to(fb_i(group.name), item_group_items_path(:item_group_id => group.id)) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if @special_items.any? %>
+    <table class="item_list" id="special_items">
+      <% @special_items.each do |item| %>
+        <%= render :partial => item %>
+      <% end %>
+    </table>
+  <% end %>
+
+  <%= will_paginate @items %>
+
+  <table class="item_list" cellspacing="0">
+    <% @items.each do |item| %>
       <%= render :partial => item %>
     <% end %>
   </table>
-<% end %>
 
-<%= will_paginate @items %>
+  <% if @next_item %>
+    <div id="next_item">
+      <% fb_i do %>
+        <%= t(".next_item") %>
 
-<table class="item_list" cellspacing="0">
-  <% @items.each do |item| %>
-    <%= render :partial => item %>
+        <%= fb_it(:level, content_tag(:span, @next_item.level, :class => :level)) %>
+        <%= fb_it(:group, content_tag(:span, @next_item.item_group.name.chars.downcase, :class => :weapon)) %>
+      <% end %>
+    </div>
   <% end %>
-</table>
 
-<% if @next_item %>
-  <div id="next_item">
-    <% fb_i do %>
-      <%= t(".next_item") %>
-
-      <%= fb_it(:level, content_tag(:span, @next_item.level, :class => :level)) %>
-      <%= fb_it(:group, content_tag(:span, @next_item.item_group.name.chars.downcase, :class => :weapon)) %>
-    <% end %>
-  </div>
-<% end %>
-
-<%= will_paginate @items %>
+  <%= will_paginate @items %>
+</div>
