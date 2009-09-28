@@ -23,7 +23,7 @@
         )
       ) %>
 
-  <% content_tag("fb:req-choice", :url => root_url) do%>
+  <% content_tag("fb:req-choice", :url => invitation_url(current_character.invitation_key)) do%>
     <%= fb_fa(:label, fb_i(t(".invite.buttons.accept",
           :user => fb_name(current_user,
             :linked         => false,
