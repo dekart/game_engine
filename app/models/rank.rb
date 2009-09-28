@@ -9,11 +9,15 @@ class Rank < ActiveRecord::Base
    }
 
   before_save :check_progress
+
+  def just_completed?
+    self.win_count == self.mission.win_amount
+  end
   
   protected
 
   def check_progress
-    self.completed = (self.win_count == self.mission.win_amount)
+    self.completed = (self.win_count >= self.mission.win_amount)
     
     return true
   end

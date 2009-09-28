@@ -4,7 +4,7 @@ class MissionResult
   def self.create(*args)
     result = self.new(*args)
 
-    result.save! unless result.rank.completed?
+    result.save! if result.mission.repeatable? or !result.rank.completed?
     
     return result
   end
@@ -35,7 +35,7 @@ class MissionResult
 
           @character.missions_succeeded += 1
 
-          if @rank.completed?
+          if @rank.just_completed?
             @character.missions_completed += 1
             @character.points += 1
             @character.vip_money += 1
@@ -61,7 +61,7 @@ class MissionResult
   end
 
   def valid?
-    enough_energy? and !completed? and requirements_satisfied?
+    enough_energy? and (mission.repeatable? or !rank.completed?) and requirements_satisfied?
   end
 
   def new_record?
@@ -70,10 +70,6 @@ class MissionResult
 
   def enough_energy?
     @character.ep >= @mission.ep_cost
-  end
-
-  def completed?
-    @character.rank_for_mission(@mission).completed?
   end
 
   def requirements_satisfied?

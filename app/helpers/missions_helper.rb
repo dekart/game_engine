@@ -1,8 +1,6 @@
 module MissionsHelper
   def mission_progress(character, mission)
     rank = character.rank_for_mission(mission)
-    
-    progress_text = rank.completed? ? t("missions.helpers.completed") : 
 
     if rank.completed?
       content_tag(:div, t("missions.helpers.completed"), :class => :text) +

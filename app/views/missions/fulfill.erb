@@ -1,6 +1,6 @@
 <div id="mission_result">
   <% if @result.saved %>
-    <% if @result.rank.completed? %>
+    <% if @result.rank.just_completed? %>
       <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Mission, :completed,
             :template_data => {
               :title    => @mission.title,
@@ -30,7 +30,9 @@
       <% end %>
 
       <% content_for :script do %>
-        Mission.hideControls(<%= @mission.id %>);
+        <% unless @mission.repeatable? %>
+          Mission.hideControls(<%= @mission.id %>);
+        <% end %>
 
         <%= show_feed_dialog(Publisher::Mission, :completed,
               :template_data => {
@@ -144,7 +146,7 @@
       
       <%= mission_requirements(@mission, :unsatisfied) %>
     </p>
-  <% elsif @result.completed? %>
+  <% elsif @result.rank.completed? %>
     <p><%= fb_i(t(".already_completed.message")) %></p>
   <% end %>
 </div>
@@ -152,7 +154,7 @@
 <%= character_level_up_block %>
 
 <% content_for :script do %>
-  <% if @result.completed? %>
+  <% if @result.rank.just_completed? %>
     Mission.onComplete();
   <% end %>
   

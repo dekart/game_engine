@@ -16,7 +16,7 @@ class Mission < ActiveRecord::Base
     {
       :include => :mission_group,
       :conditions => [
-        "mission_groups.level <= :level AND missions.id NOT IN(:completed)",
+        "mission_groups.level <= :level AND (missions.repeatable OR missions.id NOT IN(:completed))",
         {
           :level => character.level,
           :completed => [character.ranks.completed_mission_ids, 0].flatten

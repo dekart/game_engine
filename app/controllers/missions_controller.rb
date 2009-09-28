@@ -9,7 +9,7 @@ class MissionsController < ApplicationController
     @result = MissionResult.create(current_character, @mission)
 
     unless @result.new_record?
-      goal(@result.completed? ? :mission_complete : :mission_fulfill, @mission.id)
+      goal(@result.rank.just_completed? ? :mission_complete : :mission_fulfill, @mission.id)
     end
 
     render :action => :fulfill, :layout => "ajax"

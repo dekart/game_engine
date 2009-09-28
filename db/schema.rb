@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090927102009) do
+ActiveRecord::Schema.define(:version => 20090928161551) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(:version => 20090927102009) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.integer  "parent_mission_id"
+    t.boolean  "repeatable"
   end
 
   create_table "newsletters", :force => true do |t|
