@@ -8,6 +8,12 @@ class Admin::TranslationsController < ApplicationController
     
     @translations = translations_to_array(I18n.backend.send(:translations)[I18n.locale])
     @translations.sort!
+
+    @customizations = Translation.all(:order => "translations.key")
+
+    @translations.collect!{|key, value| 
+      [key, value, @customizations.find{|c| c.key == key }]
+    }
   end
 
   def new

@@ -1,14 +1,16 @@
 <%= title(t(".title")) %>
 
-<table id="translation_list">
+<table id="translation_list" cellspacing="0">
   <tr>
     <th><%= Translation.human_attribute_name("key") %></th>
     <th><%= Translation.human_attribute_name("value") %></th>
   </tr>
-  <% @translations.each do |key, value| %>
-    <tr>
+  <% @translations.each do |key, value, customization| %>
+    <% content_tag :tr, :class => (:customized if customization) do %>
       <td class="key"><%= h(key) %></td>
-      <td class="value"><%= link_to(h(value), new_admin_translation_path(:key => key)) %></td>
-    </tr>
+      <td class="value">
+        <%= link_to(h(value), customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key)) %>
+      </td>
+    <% end %>
   <% end %>
 </table>
