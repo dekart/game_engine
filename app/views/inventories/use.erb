@@ -27,7 +27,7 @@
 </div>
 
 <% fb_js_string :list do %>
-  <%= render :partial => "list", :locals => {:inventories => current_character.inventories.available} %>
+  <%= render :partial => "list", :locals => {:inventories => current_character.inventories} %>
 <% end %>
 
 <% content_for :script do %>

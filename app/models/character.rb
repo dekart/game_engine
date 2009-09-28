@@ -29,50 +29,40 @@ class Character < ActiveRecord::Base
   HIRE_MERCENARY_RATE = 20
 
   belongs_to :user
-  has_many :ranks, :dependent => :delete_all do
-    def completed_mission_ids
-      find(:all, :select => "mission_id", :conditions => {:completed => true}).collect{|m| m.mission_id}
-    end
-  end
+  has_many :ranks, :dependent => :delete_all, :extend => Character::Ranks
   has_many :missions, :through => :ranks
   
-  has_many :inventories, :include => :item, :dependent => :delete_all
-  has_many :holded_inventories, :class_name => "Inventory", :as => :holder
+  has_many :inventories,
+    :include => :item,
+    :dependent => :delete_all,
+    :extend => Character::Inventories
   
   has_many :items, :through => :inventories
   
   has_many :relations, :foreign_key => "source_id"
-  has_many :friend_relations, :foreign_key => "source_id", :include => :target_character, :dependent => :destroy do
-    def facebook_ids
-      find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
-    end
-
-    def with(character)
-      find(:first, :conditions => ['target_id = ?', character.id])
-    end
-
-    def established?(character)
-      !with(character).nil?
-    end
-  end
+  has_many :friend_relations, 
+    :foreign_key  => "source_id",
+    :include      => :target_character,
+    :dependent    => :destroy,
+    :extend       => Character::FriendRelations
   has_many :reverse_friend_relations, :foreign_key => "target_id", :class_name => "FriendRelation", :dependent => :destroy
   has_many :mercenary_relations, :foreign_key => "source_id", :dependent => :delete_all
 
-  has_many :properties, :order => "property_type_id", :dependent => :delete_all
+  has_many :properties,
+    :order => "property_type_id",
+    :dependent => :delete_all,
+    :extend => Character::Properties
   
   has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id, :dependent => :delete_all
   has_many :defences, :class_name => "Fight", :foreign_key => :victim_id, :dependent => :delete_all
   has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
 
-  has_many :assignments, :as => :context, :extend => AssignmentExtension, :dependent => :delete_all
+  has_many :assignments,
+    :as         => :context,
+    :dependent  => :delete_all,
+    :extend     => Character::Assignments
 
-  has_many :help_requests, :dependent => :destroy do
-    def can_publish?
-      latest_request = self.latest
-
-      latest_request.nil? or latest_request.expired?
-    end
-  end
+  has_many :help_requests, :dependent => :destroy, :extend => Character::HelpRequests
 
   named_scope :victims_for, Proc.new{|attacker|
     {
@@ -134,43 +124,23 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    self.own_attack_points + self.relation_attack_points
+    self.attack + self.inventory_attack_points + self.assignments.effect_value(:attack)
   end
 
   def defence_points
-    self.own_defence_points + self.relation_defence_points
+    self.defence + self.inventory_defence_points + self.assignments.effect_value(:defence)
   end
 
   def inventory_attack_points
-    self.inventory_effects[:attack].value
+    self.inventories.used_in_fight.all.sum{|i|
+      i.use_in_fight * i.attack
+    }
   end
 
   def inventory_defence_points
-    self.inventory_effects[:defence].value
-  end
-
-  def own_attack_points
-    attack + inventory_attack_points
-  end
-  
-  def own_defence_points
-    defence + inventory_defence_points
-  end
-
-  def relation_inventory_attack_points
-    self.relation_effects[:attack].value
-  end
-
-  def relation_inventory_defence_points
-    self.relation_effects[:defence].value
-  end
-
-  def relation_attack_points
-    relation_inventory_attack_points + self.assignments.effect_value(:attack)
-  end
-
-  def relation_defence_points
-    relation_inventory_defence_points + self.assignments.effect_value(:defence)
+    self.inventories.used_in_fight.all.sum{|i|
+      i.use_in_fight * i.defence
+    }
   end
 
   def weak?
@@ -216,6 +186,7 @@ class Character < ActiveRecord::Base
     super || Effects::Collection.new
   end
 
+  # FIXME !!!
   def cache_inventory_effects
     self.inventory_effects = Effects::Collection.new
 
@@ -264,7 +235,7 @@ class Character < ActiveRecord::Base
     self.basic_money = self.basic_money
 
     self.property_income = self.properties.inject(0) do |result, property|
-      result += property.income
+      result += property.total_income
     end
 
     self.save
@@ -351,6 +322,13 @@ class Character < ActiveRecord::Base
 
   def invitation_key
     "#{self.id}-#{self.secret}"
+  end
+
+  def charge(basic_amount, vip_amount)
+    self.basic_money  -= basic_amount if basic_amount > 0
+    self.vip_money    -= vip_amount if vip_amount > 0
+
+    self.save
   end
 
   protected

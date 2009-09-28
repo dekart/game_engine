@@ -13,7 +13,16 @@
   </div>
 </div>
 
+<% fb_js_string :list do %>
+  <%= render :partial => "list", :locals => {:inventories => current_character.inventories} %>
+<% end %>
+
+<% fb_js_string :fight_attributes do %>
+  <%= render :partial => "characters/fight_attributes" %>
+<% end %>
+
 <% content_for :script do %>
+  $('inventory_list').setInnerFBML(list);
+  $('inventory_fight_attributes').setInnerFBML(fight_attributes);
   $('result').show();
-  $('<%= dom_id(@inventory) %>').hide();
 <% end %>

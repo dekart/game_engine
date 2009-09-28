@@ -1,8 +1,0 @@
-<% fb_js_string :placements do %>
-  <%= inventory_placements_for(@holder) %>
-<% end %>
-
-<% content_for :script do %>
-  $('inventory_placements').setInnerFBML(placements);
-  Inventory.Holders.setCurrentHolder('<%= @holder.is_a?(Character) ? "self" : dom_id(@holder.becomes(Relation)) %>')
-<% end %>

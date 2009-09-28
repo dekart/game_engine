@@ -1,34 +1,28 @@
 class PropertiesController < ApplicationController
-  def new
-    @property_types = PropertyType.available_in(:shop).available_for(current_character)
-  end
-
   def create
     @property_type = PropertyType.find(params[:property_type_id])
+    
+    @property = current_character.properties.buy!(@property_type)
 
-    @property = current_character.properties.create(:property_type => @property_type)
+    goal(:property_buy, @property_type.id) if @property.valid?
 
-    unless @property.new_record?
-      goal(:property_buy, @property_type.id)
-    end
-
-    current_character.recalculate_income
+    @properties = current_character.properties
     
     render :action => :create, :layout => "ajax"
   end
 
   def index
-    @properties = current_character.properties.paginate(:page => params[:page])
+    @properties = current_character.properties
   end
 
   def destroy
-    @property = current_character.properties.find(params[:id])
+    @property_type = PropertyType.find(params[:id])
 
-    @property.sell
+    @property = current_character.properties.sell!(@property_type)
 
-    goal(:property_sell, @property.property_type.id)
+    goal(:property_sell, @property_type.id)
 
-    current_character.reload
+    @properties = current_character.properties
 
     render :action => :destroy, :layout => "ajax"
   end

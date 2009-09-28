@@ -3,11 +3,11 @@
 <div id="tutorial" class="note nobutton">
   <%= fb_i(t(".text")) %>
 
-  <%= link_to(fb_i(t(".next")), {:action => :step_5}, {:class => :button}) %>
+  <%= link_to(fb_i(t(".next")), {:action => :finish}, {:class => :button}) %>
 </div>
 
-<% if @victims.any? %>
-  <%= render :partial => "fights/victim_list", :locals => {:victims => @victims} %>
+<% if current_character.points > 0 %>
+  <%= render :partial => "characters/upgrade_list" %>
 <% else %>
   <% javascript_tag do %>
     $('tutorial').removeClassName('nobutton');
@@ -17,10 +17,8 @@
 <%= render :partial => "skip" %>
 
 <% javascript_tag do %>
-  $('result').addClassName('nobutton');
-
-  Character.onNewLevel = function(){
+  Character.onUpgradeComplete = function(){
     $('tutorial').removeClassName('nobutton');
-    $('victim_list').hide();
+    $('upgrade_list').hide();
   }
 <% end %>

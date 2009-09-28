@@ -1,0 +1,31 @@
+<div id="fight_attributes">
+  <table>
+    <tr>
+      <th><%= fb_i(t(".personal")) %></th>
+      <th><%= fb_i(t(".relations")) %></th>
+      <th><%= fb_i(t(".offence")) %></th>
+      <th><%= fb_i(t(".defence")) %></th>
+    </tr>
+    <tr>
+      <td class="values">
+        <%= attack(current_character.attack) %>
+        <%= defence(current_character.defence) %>
+      </td>
+      <td class="values">
+        <%= content_tag(:div, current_character.relations.size, :class => :relations) %>
+        <%= attack(current_character.inventory_attack_points) %>
+        <%= defence(current_character.inventory_defence_points) %>
+      </td>
+      <td class="inventories">
+        <% current_character.inventories.best_offence.each do |inventory| %>
+          <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+        <% end %>
+      </td>
+      <td class="inventories">
+        <% current_character.inventories.best_defence.each do |inventory| %>
+          <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+</div>

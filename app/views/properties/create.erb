@@ -1,5 +1,5 @@
 <div id="property_result">
-  <% if !@property.new_record? %>
+  <% if @property.valid? %>
     <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Property, :bought,
         :template_data => {
           :property => fb_i(@property.name),
@@ -24,11 +24,11 @@
     <h3><%= fb_i(t(".you_spent.title")) %></h3>
 
     <div class="payouts">
-      <% if @property.basic_price.to_i > 0 %>
+      <% if @property.basic_price > 0 %>
         <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @property.basic_price) %>
       <% end %>
 
-      <% if @property.vip_price.to_i > 0 %>
+      <% if @property.vip_price > 0 %>
         <%= payout(:vip_money, Character.human_attribute_name("vip_money"), @property.vip_price) %>
       <% end %>
     </div>
@@ -42,6 +42,12 @@
   <% end %>
 </div>
 
+<% fb_js_string :list do %>
+  <%= render :partial => "list", :locals => {:properties => @properties} %>
+<% end %>
+
 <% content_for :script do %>
+  $('property_list').setInnerFBML(list);
+  $('property_income_value').setTextValue('<%= current_character.property_income %>')
   $('result').show();
 <% end %>

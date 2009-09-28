@@ -15,7 +15,7 @@
       <th><%= PropertyType.human_attribute_name("level") %></th>
       <th><%= PropertyType.human_attribute_name("basic_price") %></th>
       <th><%= PropertyType.human_attribute_name("vip_price") %></th>
-      <th><%= PropertyType.human_attribute_name("money") %></th>
+      <th><%= PropertyType.human_attribute_name("income") %></th>
     </tr>
     <% @types.each do |type| %>
       <tr>
@@ -25,7 +25,7 @@
         <td class="level"><%= type.level %></td>
         <td class="basic_price"><%= type.basic_price %></td>
         <td class="vip_price"><%= type.vip_price %></td>
-        <td class="money"><%= type.money_min %> - <%= type.money_max %></td>
+        <td class="income"><%= type.income %></td>
         <td class="controls">
           <%= link_to(t(".controls.delete"), admin_property_type_path(type),
                 :method   => :delete,

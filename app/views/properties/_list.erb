@@ -1,0 +1,46 @@
+<table cellspacing="0">
+  <tr>
+    <th></th>
+    <th></th>
+    <th><%= PropertyType.human_attribute_name("income") %></th>
+    <th><%= Property.human_attribute_name("price") %></th>
+  </tr>
+  <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
+    <% content_tag_for(:tr, type) do %>
+      <td class="picture"><%= image_tag(type.image.url(:small)) if type.image? %></td>
+      <td class="info">
+        <div class="name"><%= fb_i(type.name) %></div>
+        <div class="description"><%= fb_i(type.description) %></div>
+      </td>
+      <td class="income">
+        <% fb_i do %>
+          <%= t(".income") %>
+          <%= fb_it(:amount, content_tag(:span, type.income, :class => :basic_money)) %>
+        <% end %>
+      </td>
+      <td class="requires">
+        <%= basic_price(type.basic_price) %>
+        <%= vip_price(type.vip_price) %>
+      </td>
+      <td class="owned">
+        <% fb_i do %>
+          <%= t(".owned") %>
+          <%= fb_it(:amount, property ? property.amount : 0) %>
+        <% end %>
+      </td>
+      <td class="controls">
+        <%= link_to_remote(fb_i(t(".buttons.buy")),
+              :url => properties_url(:property_type_id => type.id, :canvas => false),
+              :update => :result,
+              :html => {:class => "buy button"}
+            ) if type.availability == "shop" %>
+        <%= link_to_remote(fb_i(t(".buttons.sell")),
+              :url    => property_url(type, :canvas => false),
+              :method => :delete,
+              :update => :result,
+              :html   => {:class => "sell button"}
+            ) if property and property.amount > 0 %>
+      </td>
+    <% end %>
+  <% end %>
+</table>

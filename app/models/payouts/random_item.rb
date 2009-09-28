@@ -17,10 +17,7 @@ module Payouts
     end
 
     def apply(character)
-      character.inventories.create(
-        :item           => self.item,
-        :free_of_charge => true
-      )
+      character.inventories.give!(self.item)
     end
   end
 end

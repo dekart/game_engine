@@ -43,11 +43,13 @@ en:
         inventory:
           attributes:
             character:
-              not_enough_money: "You don't have enough money to buy {item_name}"
+              not_enough_basic_money: "You don't have enough gold to buy {item_name}."
+              not_enough_vip_money: "You don't have enough Gems to buy {item_name}."
         property:
           attributes:
             character:
-              not_enough_money: "You don't have enough money to buy {property_name}"
+              not_enough_basic_money: "You don't have enough gold to buy {property_name}."
+              not_enough_vip_money: "You don't have enough Gems to buy {property_name}."
               too_much_properties: "You cannot buy properties anymore because you already have too many!"
         help_result:
           too_late: "You're too late! Next time try to help your friends within 24 hours."
@@ -96,13 +98,6 @@ en:
       name: "Health Points"
     mercenary:
       name: "Mercenaries"
-  placements:
-    left_hand: "Left Hand"
-    right_hand: "Right Hand"
-    head: "Head"
-    body: "Body"
-    belt: "Belt"
-    legs: "Legs"
 # Templates
   layouts:
     next_steps:
@@ -188,6 +183,11 @@ en:
       upgrade_link: "upgrade"
       buttons:
         upgrade: "Upgrade"
+    fight_attributes:
+      personal: "Your Skills"
+      relations: "Your Alliance"
+      offence: "Best Offence"
+      defence: "Best Defence"
   fights:
     descriptions:
       attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
@@ -242,7 +242,10 @@ en:
         title: "You received:"
     index:
       title: "Inventory"
+      shop: "Go to Shop"
     list:
+      owned: "Owned: {amount}"
+      used: "In use: {amount}"
       buttons:
         to_left_hand: "To Left Hand"
         to_right_hand: "To Right Hand"
@@ -271,12 +274,6 @@ en:
         hire: "Hire Mercenaries"
     placements:
       take_off: "Take off"
-    effects:
-      header: "Inventory Effects"
-      personal_attack: "Personal Attack"
-      personal_defence: "Personal Defence"
-      relation_attack: "Alliance Attack"
-      relation_defence: "Alliance Defence"
   invitations:
     accept:
       message: "Invitation accepted! {user} became part of your alliance!"
@@ -294,6 +291,7 @@ en:
   items:
     index:
       title: "Shop"
+      inventory: "Go to Inventory"
       next_item: "Reach level {level} to open new {group}"
     item:
       buttons:
@@ -392,13 +390,6 @@ en:
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. Or just send this message to your friends:"
         invitation: "Join my Sword&Magic Alliance! {link}"
   properties:
-    new:
-      title: "Buy Properties"
-      columns:
-        income: "Income"
-        requires: "Requires"
-      buttons:
-        buy: "Buy"
     create:
       buttons:
         publish: "Brag About It"
@@ -411,17 +402,18 @@ en:
       title: "My Properties"
       income:
         label: "Current Income:"
-      columns:
-        income: "Income"
+      note: "Properties brings you hourly income."
+    list:
+      income: "{amount} per hour"
+      owned: "Owned: {amount}"
       buttons:
-        sell: "Sell for {amount}"
-      empty_set: "You don't have any properties yet"
-      note:
-        text: "Properties brings you hourly income." #  Assign managers to earn more from properties, assign guardians to protect your income from enemies.
-        button: "Buy Properties"
+        buy: "Buy"
+        get_vip: "Earn Gems"
+        sell: "Sell"
     destroy:
       messages:
         success: "You've successfully sold {property_name}!"
+        property_not_found: "This property is already sold"
       you_received:
         title: "You received:"
   assignments:
@@ -482,6 +474,7 @@ en:
       already_used: "You already used this promotion link"
       expired: "This promotion link already expired"
   premia:
+    get_vip: "Earn Gems"
     show:
       title: "Gem Market"
       current:
@@ -537,14 +530,10 @@ en:
       text: "Another way to become a Hero is to fight with people. But before you'll be able to fight, you need a weapon. This one is enough to start. Buy it and we'll proceed."
       next: "Continue &raquo;"
     step_3:
-      title: "Equipment"
-      text: "Ok, now you purchased a weapon. To use it you should equip your character. Add the weapon to one of your hands and you'll be ready to fight."
-      next: "Continue &raquo;"
-    step_4:
       title: "Fight!"
       text: "Attack other players to get experience and grab gold. You can attack only those people who have same or greater level. Try to kill opponents with higher level - you'll receive more experience. Attack opponents until you'll receive new level."
       next: "Continue &raquo;"
-    step_5:
+    step_4:
       title: "Upgrade"
       text: "Every time when you reach new level or complete a mission you receive Upgrade Points. You can use these points to increase your attack, defence, health, or energy. Upgrade all these attributes to build a balanced character."
       next: "Finish &raquo;"

@@ -1,7 +1,7 @@
 module Jobs
   class AssignmentNotification < Struct.new(:session, :assignment_id)
     def perform
-      if assignment = Assignment.find_by_id(assignment_id)
+      if assignment = Assignment.find_by_id(assignment_id) and assignment.created_at > Time.now - 15.minutes
         begin
           Publisher::Assignment.deliver_notification(session.user, assignment)
         rescue Facebooker::Session::TooManyUserActionCalls

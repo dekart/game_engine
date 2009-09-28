@@ -1,48 +1,14 @@
 <%= title(fb_i(t(".title"))) %>
 
 <div class="note">
-  <p>
-    <%= fb_i(t(".note.text")) %>
-  </p>
-
-  <%= link_to(fb_i(t(".note.button")), new_property_path, :id => :buy_properties, :class => :button) %>
+  <%= fb_i(t(".note")) %>
 </div>
 
-<% if @properties.any? %>
-  <div id="property_income">
-    <b><%= t(".income.label") %></b>
-    <span class="value"><%= current_character.property_income %></span>
-  </div>
+<div id="property_income">
+  <b><%= fb_i(t(".income.label")) %></b>
+  <span class="value" id="property_income_value"><%= current_character.property_income %></span>
+</div>
 
-  <table id="property_list" cellspacing="0">
-    <tr>
-      <th colspan="2"></th>
-      <th><%= fb_i(t(".columns.income")) %></th>
-      <th></th>
-    </tr>
-    <% @properties.each do |property| %>
-      <% content_tag_for(:tr, property) do %>
-        <td class="picture"><%= image_tag(property.image.url(:small)) if property.image? %></td>
-        <td class="info">
-          <div class="name"><%= fb_i(property.name) %></div>
-          <div class="description"><%= fb_i(property.description) %></div>
-        </td>
-        <td class="income">
-          <div class="basic_money"><%= property.income %></div>
-        </td>
-        <td class="controls">
-          <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, property.sell_price)),
-                :url    => property_url(property, :canvas => false),
-                :method => :delete,
-                :update => :result,
-                :html   => {:class => "sell button"}
-              ) %>
-        </td>
-      <% end %>
-    <% end %>
-  </table>
-
-  <%= will_paginate @properties %>
-<% else %>
-  <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
-<% end %>
+<div id="property_list">
+  <%= render :partial => "list", :locals => {:properties => @properties} %>
+</div>

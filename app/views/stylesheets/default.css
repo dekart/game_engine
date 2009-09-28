@@ -164,12 +164,13 @@ form .error {color: red; padding: 3px 0px;}
   #next_mission_group .level {font-size: 14px; font-weight: bold;}
 
 /* Item list displayed at Shop page*/
+#items .buttons .inventory {background-image: url(icons/inventory.gif);}
+
 .item_list {width: 100%}
 .item_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
   .item_list .picture {padding-right: 10px;}
   .item_list .info {padding-right: 10px;}
   .item_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
-  .item_list .info .placements {margin-top: 5px; font-style: italic;}
   .item_list .details {width: 40px;}
     .item_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
       .item_list .details .attack {background-image: url(icons/attack.gif);}
@@ -192,44 +193,35 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Inventory container */
 #inventory {width: 100%;}
+  #inventory .buttons .shop{background-image: url(icons/shop.gif);}
 
 /* Item list displayed at Inventory page*/
-#inventory_list {margin-top: 20px;}
+#inventory_list {margin-top: 10px;}
 #inventory_list td{padding: 10px; border-bottom: 1px solid #d0d0d0;}
   #inventory_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
-  #inventory_list .details {width: 70px;}
-    #inventory_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
-      #inventory_list .details .attack {background-image: url(icons/attack.gif);}
-      #inventory_list .details .defence {background-image: url(icons/defence.gif);}
-      #inventory_list .details .restore_health {background-image: url(icons/health.gif);}
-      #inventory_list .details .restore_energy {background-image: url(icons/energy.gif);}
-      #inventory_list .details .upgrade {background-image: url(icons/level.gif);}
+  #inventory_list .effects {width: 70px;}
+    #inventory_list .effects div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
+      #inventory_list .effects .attack {background-image: url(icons/attack.gif);}
+      #inventory_list .effects .defence {background-image: url(icons/defence.gif);}
+      #inventory_list .effects .restore_health {background-image: url(icons/health.gif);}
+      #inventory_list .effects .restore_energy {background-image: url(icons/energy.gif);}
+      #inventory_list .effects .upgrade {background-image: url(icons/level.gif);}
+  #inventory_list .stats {width: 70px;}
+    #inventory_list .stats div {margin-bottom: 5px;}
   #inventory_list .spacer {border:0;}
   #inventory_list .controls {width: 90px;}
     #inventory_list .controls a {width: 87px;}
-    #inventory_list .controls .placement {text-align:right; font-weight: bold; margin: 5px;}
     #inventory_list .controls .sell {background-image: url(icons/basic_money.gif);}
-    #inventory_list .controls .place {background-image: url(icons/add.gif);}
     #inventory_list .controls .use {background-image: url(icons/accept.gif);}
 
-/* Character list displayed at the left of inventory list*/
-#inventory_holders {width: 200px; float: left; margin-right: 10px;}
-  #inventory_holders th {padding: 30px 5px 10px 5px; border-right: 1px solid #d0d0d0;}
-  #inventory_holders .holder td {padding: 5px; cursor: pointer;}
-    #inventory_holders .holder .image {width: 55px;}
-    #inventory_holders .holder .info {border-right: 1px solid #d0d0d0;}
-    #inventory_holders .holder .name {font-weight: bold; color: #3B5998;}
-    #inventory_holders #self .name {font-size: 14px;}
-  #inventory_holders .current td {border-top: 1px solid #d0d0d0;border-bottom: 1px solid #d0d0d0; cursor: auto;}
-    #inventory_holders .current .image {border-left: 1px solid #d0d0d0;}
-    #inventory_holders .current .info {border-right: 1px solid white !important;}
-  #inventory_holders .empty_set .button { margin: 10px auto; background-image: url(icons/add.gif);}
-
-/* Inventory effects block */
-#inventory_effects {float:right; }
-
-/* Inventory placements block */
-#inventory_placements {margin-left: 210px;}
+/* Fight attributes block */
+#fight_attributes {margin: 10px 0; border-bottom: 1px solid #d0d0d0;}
+#fight_attributes table {width: 99%;}
+#fight_attributes th {font-size: 14px;}
+#fight_attributes .values div {display: inline; line-height: 22px;height: 22px; padding: 2px 5px 2px 21px; background-position: center left; background-repeat: no-repeat;}
+#fight_attributes .attack {background-image: url(icons/attack.gif);}
+#fight_attributes .defence {background-image: url(icons/defence.gif);}
+#fight_attributes .relations {background-image: url(icons/alliance.gif);}
 
 /* Upgradeable attribute list displayed at Upgrade page*/
 #upgrade_list td{padding: 10px; vertical-align: middle;}
@@ -269,23 +261,6 @@ form .error {color: red; padding: 3px 0px;}
   #alliance_members .picture {width: 55px;}
   #alliance_members .level {width: 70px;}
   #alliance_members .controls .delete {background-image: url(icons/delete.gif)}
-
-/* A block with item placements displayed at the top of Inventory page*/
-#placements {position: relative; width: 400px; height: 482px; background: url(placements.gif) no-repeat;}
-  #placements span {position:absolute;}
-  #placements a {position:absolute; background-color: white; padding: 2px;border: 1px solid #3B5998; font-size: 0px;}
-  #placements .head {left: 155px; top:3px;}
-    #placements .head .take_off {top: -1px; border-left-color:white;}
-  #placements .right_hand {left: 3px; top:111px;}
-    #placements .right_hand .take_off {top: -16px; right: -1px; border-bottom-color:white;}
-  #placements .left_hand {left: 261px; top:111px;}
-    #placements .left_hand .take_off {top: -16px; right: -1px; border-bottom-color:white;}
-  #placements .body {left: 132px; top:81px;}
-    #placements .body .take_off {top: -16px; right: -1px; border-bottom-color:white;}
-  #placements .belt {left: 151px; top:207px;}
-    #placements .belt .take_off {top: -1px; border-left-color:white;}
-  #placements .legs {left: 132px; top:361px;}
-    #placements .legs .take_off {top: -1px; border-left-color:white;}
 
 /* Received title list at the Profile page*/
 #rank_list .rank {padding: 3px 25px; background: url(icons/level.gif) 3px center no-repeat;}
@@ -377,21 +352,26 @@ form .error {color: red; padding: 3px 0px;}
   #bank_balance .value {padding-left: 21px; background: url(icons/basic_money.gif) center left no-repeat; font-weight: normal;}
 
 /* Item group tabs at the Shop and Inventory pages */
-#item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin-bottom: 5px; height: 30px;}
+#item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin: 10px 0 5px 0; height: 30px;}
   #item_groups b {font-size: 16px; padding: 0 10px; line-height: 30px; height: 28px;display:block; float: left;}
   #item_groups a {font-size: 14px; padding: 0 10px; line-height: 30px; height: 28px;font-weight: bold; border:1px solid white;display:block; float: left;}
   #item_groups a:hover {border-left: 1px solid #D0D0D0;border-right: 1px solid #D0D0D0;}
 
 /* Property list at the Properties page*/
-#property_list {width: 100%;}
-  #property_list td{padding: 10px 10px 10px 0; border-bottom: 1px solid #d0d0d0;}
-  #property_list .picture {width: 130px;}
-  #property_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
-  #property_list .income {width: 100px;}
-    #property_list .income div {line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
-    #property_list .income .basic_money{background-image: url(icons/basic_money.gif)}
-  #property_list .controls {width: 110px;}
-    #property_list .controls .sell {background-image: url(icons/basic_money.gif);}
+#property_list td{padding: 10px 10px 10px 0; border-bottom: 1px solid #d0d0d0;}
+#property_list .picture {width: 130px;}
+#property_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+#property_list .details {width: 100px;}
+  #property_list .details div {line-height: 22px;height: 22px; }
+  #property_list .details .basic_money{background: url(icons/basic_money.gif) center left no-repeat; padding-left: 21px;}
+#property_list .requires {width: 100px;}
+  #property_list .requires div {line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
+  #property_list .requires .basic_price{background-image: url(icons/basic_money.gif)}
+  #property_list .requires .vip_price{background-image: url(icons/vip_money.gif)}
+#property_list .income .basic_money {line-height: 22px;height: 22px; padding: 3px 0 3px 21px; background: url(icons/basic_money.gif) center left no-repeat;}
+#property_list .controls {width: 110px;}
+  #property_list .controls .buy {background-image: url(icons/basic_money.gif);}
+  #property_list .controls .sell {background-image: url(icons/basic_money.gif);}
 
 /* Buy Properties button */
 #buy_properties { width: 130px; background-image: url(icons/properties.gif);}
@@ -404,12 +384,8 @@ form .error {color: red; padding: 3px 0px;}
   #property_type_list .income {width: 100px;}
     #property_type_list .income div {line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
     #property_type_list .income .basic_money{background-image: url(icons/basic_money.gif)}
-  #property_type_list .requires {width: 100px;}
-    #property_type_list .requires div {line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
-    #property_type_list .requires .basic_price{background-image: url(icons/basic_money.gif)}
-    #property_type_list .requires .vip_price{background-image: url(icons/vip_money.gif)}
   #property_type_list .controls {width: 110px;}
-    #property_type_list .controls .buy {background-image: url(icons/basic_money.gif);}
+    
 
 /* Property purchase or sale result block */
 #property_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}

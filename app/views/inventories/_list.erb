@@ -12,21 +12,32 @@
               <div class="name"><%= fb_i(inventory.name) %></div>
               <div class="description"><%= fb_i(inventory.description) %></div>
             </td>
-            <td class="details">
+            <td class="effects">
+              <%= attack(inventory.attack) %>
+              <%= defence(inventory.defence) %>
+              
               <% inventory.effects.each do |effect| %>
                 <%= content_tag(:div, effect.value, :class => effect.name) %>
               <% end %>
             </td>
-            <td class="controls">
-              <% inventory.placements.each do |placement| %>
-                <%= link_to_remote(fb_i(t(".buttons.to_#{placement}")),
-                      :url    => place_inventory_url(inventory, :placement => placement, :canvas => false),
-                      :with   => "Inventory.Holders.getRequestParams()",
-                      :update => :result,
-                      :html   => {:class => "place button"}
-                    ) %>
-              <% end %>
+            <td class="stats">
+              <div class="owned">
+                <% fb_i do %>
+                  <%= t(".owned") %>
+                  <%= fb_it(:amount, inventory.amount) %>
+                <% end %>
+              </div>
 
+              <% if inventory.use_in_fight > 0 %>
+                <div class="used">
+                  <% fb_i do %>
+                    <%= t(".used") %>
+                    <%= fb_it(:amount, inventory.use_in_fight) %>
+                  <% end %>
+                </div>
+              <% end %>
+            </td>
+            <td class="controls">
               <%= link_to_remote(inventory_use_label(inventory),
                     :url    => use_inventory_url(inventory, :canvas => false),
                     :update => :result,
@@ -34,7 +45,7 @@
                   ) if inventory.usable? %>
 
               <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, inventory.sell_price)),
-                    :url    => inventory_url(inventory, :canvas => false),
+                    :url    => inventory_url(inventory.item, :canvas => false),
                     :method => :delete,
                     :update => :result,
                     :html   => {:class => "sell button"}

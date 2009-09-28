@@ -1,17 +1,6 @@
 class Inventory < ActiveRecord::Base
-  PLACEMENTS = [:head, :body, :left_hand, :right_hand, :belt, :legs]
-  PLACEMENT_IMAGES = {
-    :head       => :small,
-    :left_hand  => :medium,
-    :right_hand => :medium,
-    :body       => :medium,
-    :legs       => :medium,
-    :belt       => :belt
-  }
-
   belongs_to :character
   belongs_to :item
-  belongs_to :holder, :polymorphic => true
 
   named_scope :by_item_group, Proc.new{|group|
     {
@@ -20,45 +9,24 @@ class Inventory < ActiveRecord::Base
       :order      => "items.level ASC, items.basic_price ASC"
     }
   }
-  named_scope :available, :conditions => "holder_id IS NULL"
+  named_scope :used_in_fight, :conditions => "use_in_fight > 0"
 
-  delegate :name, :description, :image, :image?, :effects, :placements, :placeable?, :usable?, :usage_limit, :can_be_sold?, :to => :item
+  %w{
+    name description image image? basic_price vip_price attack defence effects
+    usable? usage_limit can_be_sold?
+  }.each do |attr|
+    delegate attr, :to => :item
+  end
   
-  attr_accessor :free_of_charge
+  attr_accessor :charge_money, :deposit_money, :money_return
 
-  validate_on_create :enough_character_money?
+  validate :enough_character_money?
 
-  after_create  :charge_character
-  after_destroy :recache_holder_effects
+  before_save :charge_or_deposit_character
+  after_destroy :deposit_character
 
   def sell_price
     (self.item.basic_price * 0.5).ceil
-  end
-
-  def place_to(placement, new_holder)
-    if self.placements.include?(placement.to_s) and placement != self.placement
-      self.class.transaction do
-
-        self.character.inventories.update_all(
-          'placement = NULL, holder_id = NULL, holder_type = NULL',
-          [
-            'placement = :p_id AND holder_id = :h_id AND holder_type = :h_t',
-            {
-              :p_id => placement,
-              :h_id => new_holder.id,
-              :h_t  => new_holder.class.base_class.to_s
-            }
-          ]
-        )
-        
-        self.update_attributes(
-          :placement  => placement,
-          :holder     => new_holder
-        )
-
-        self.recache_holder_effects
-      end
-    end
   end
 
   def uses_left
@@ -75,54 +43,52 @@ class Inventory < ActiveRecord::Base
       self.usage_count += 1
 
       if self.uses_left == 0
-        self.destroy
-      else
-        self.save!
+        self.character.inventories.take!(self.item)
+        self.usage_count = 0
       end
-    end
-  end
-
-  def sell
-    self.transaction do
-      self.character.basic_money += self.sell_price
-      self.character.save!
-
-      self.destroy
-    end
-  end
-
-  def take_off!
-    self.transaction do
-      @previous_holder = self.holder
       
-      self.update_attributes(:holder => nil, :placement => nil)
-
-      self.recache_holder_effects
+      self.save!
     end
   end
 
   protected
 
   def enough_character_money?
-    return if self.free_of_charge
+    return unless charge_money and changes["amount"]
     
-    self.errors.add(:character, :not_enough_money) unless self.character.can_buy?(self.item)
-  end
+    difference = changes["amount"].last - changes["amount"].first
 
-  def charge_character
-    return if self.free_of_charge
-
-    self.transaction do
-      self.character.basic_money  -= self.item.basic_price if self.item.basic_price.to_i > 0
-      self.character.vip_money    -= self.item.vip_price if self.item.vip_price.to_i > 0
-      
-      self.character.save!
+    if difference > 0
+      errors.add(:character, :not_enough_basic_money) if character.basic_money < basic_price * difference
+      errors.add(:character, :not_enough_vip_money) if character.vip_money < vip_price * difference
     end
   end
 
-  def recache_holder_effects
-    return unless recache = (self.holder || @previous_holder)
+  def charge_or_deposit_character
+    return unless changes["amount"]
 
-    recache.cache_inventory_effects
+    difference = changes["amount"].first - changes["amount"].last
+
+    if difference < 0 # Buying properties, should charge
+      if charge_money
+        character.charge(basic_price * difference.abs, vip_price * difference.abs)
+      end
+    else # Selling properties, should deposit
+      if deposit_money
+        self.money_return = sell_price * difference
+
+        character.basic_money += self.money_return
+        character.save
+      end
+    end
+  end
+
+  def deposit_character
+    if deposit_money
+      self.money_return = sell_price * amount
+
+      character.basic_money += self.money_return
+      character.save
+    end
   end
 end

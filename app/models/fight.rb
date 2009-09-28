@@ -108,11 +108,6 @@ class Fight < ActiveRecord::Base
     attack = attack_points * attack_bonus * 50
     defence = defence_points * defence_bonus * 50
 
-    logger.debug <<-CODE
-      Attack: #{attack_points} * #{attack_bonus} * 50 = #{attack}
-      Defence Points: #{defence_points} * #{defence_bonus} * 50 = #{defence}
-    CODE
-
     attacker_won = (rand((attack + defence).to_i) >= defence)
 
     if attacker_won

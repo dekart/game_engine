@@ -1,5 +1,5 @@
 <div id="shop_result">
-  <% if !@inventory.new_record? %>
+  <% if @inventory.valid? %>
     <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Item, :bought,
             :template_data => {
               :item           => fb_i(@item.name),
@@ -41,8 +41,16 @@
   <% end %>
 </div>
 
+<% fb_js_string :fight_attributes do %>
+  <%= render :partial => "characters/fight_attributes" %>
+<% end %>
+
 <% content_for :script do %>
   Inventory.onPurchase();
+
+  if($('inventory_fight_attributes')){
+    $('inventory_fight_attributes').setInnerFBML(fight_attributes);
+  }
 
   $('result').show();
 <% end %>
