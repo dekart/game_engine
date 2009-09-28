@@ -12,12 +12,12 @@ development:
   api_key: 8f9ae9c78512819c66259279ba97fb97
   secret_key: 81fd40d9c3c7cf7faac91227a5ebdc44
   canvas_page_name: blogbox-dev
-  callback_url: http://blogboxapp.com:3300
+  callback_url: http://itvektor.ru:3300
   pretty_errors: false
   set_asset_host_to_callback_url: true
   tunnel:
     public_host_username: dekart
-    public_host: blogboxapp.com
+    public_host: itvektor.ru
     public_port: 3300
     local_port: 3300
 
