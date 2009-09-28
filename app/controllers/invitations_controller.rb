@@ -45,16 +45,14 @@ class InvitationsController < ApplicationController
     @character = Character.find(params[:id])
     
     Invitation.transaction do
-      invitation = @character.user.invitations.build(:receiver_id => current_user.facebook_id)
+      invitation = @character.user.invitations.find_or_create_by_receiver_id(current_user.facebook_id)
 
-      if invitation.save
-        if invitation.accept!
-          send_notification(invitation)
-          
-          goal(:invitation_link_accept, @character.id)
-        else
-          goal(:invitation_link_ignore, @character.id)
-        end
+      if invitation.accept!
+        send_notification(invitation)
+
+        goal(:invitation_link_accept, @character.id)
+      else
+        goal(:invitation_link_ignore, @character.id)
       end
     end
 
