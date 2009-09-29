@@ -4,7 +4,12 @@ namespace :app do
     task :group_properties => :environment do
       property_types = PropertyType.all
 
+      total = Character.count
+      i = 1
+
       Character.find_each(:batch_size => 100) do |character|
+        puts "Processing character #{i}/#{total}"
+        
         properties = property_types.inject({}) do |result, type|
           count = character.properties.count(:conditions => ["property_type_id = ?", type.id])
           
@@ -23,6 +28,8 @@ namespace :app do
           
           character.recalculate_income
         end
+
+        i+= 1
       end
     end
 
