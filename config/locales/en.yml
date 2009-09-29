@@ -406,7 +406,6 @@ en:
     create:
       buttons:
         publish: "Brag About It"
-        properties: "My Properties"
       messages:
         success: "You successfully bought {property_name}"
       you_spent:
