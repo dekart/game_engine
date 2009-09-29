@@ -25,35 +25,37 @@ class Property < ActiveRecord::Base
     self.character
   end
 
+  def maximum_amount
+    self.property_type.purchase_limit || MAXIMUM_AMOUNT
+  end
+
   protected
 
   def enough_property_slots?
-    errors.add(:character, :too_much_properties) if character.properties.size >= MAXIMUM_AMOUNT
+    if buying? and amount > maximum_amount
+      errors.add(:character, :too_much_properties)
+    end
   end
 
   def enough_character_money?
     return unless charge_money and changes["amount"]
 
-    difference = changes["amount"].last - changes["amount"].first
-
-    if difference > 0
-      errors.add(:character, :not_enough_basic_money) if character.basic_money < basic_price * difference
-      errors.add(:character, :not_enough_vip_money) if character.vip_money < vip_price * difference
+    if buying?
+      errors.add(:character, :not_enough_basic_money) if character.basic_money < basic_price * buying_amount
+      errors.add(:character, :not_enough_vip_money) if character.vip_money < vip_price * buying_amount
     end
   end
 
   def charge_or_deposit_character
     return unless changes["amount"]
     
-    difference = changes["amount"].first - changes["amount"].last
-
-    if difference < 0 # Buying properties, should charge
+    if buying? # Buying properties, should charge
       if charge_money
-        character.charge(basic_price * difference.abs, vip_price * difference.abs)
+        character.charge(basic_price * buying_amount, vip_price * buying_amount)
       end
     else # Selling properties, should deposit
       if deposit_money
-        self.money_return = sell_price * difference
+        self.money_return = sell_price * selling_amount
 
         character.basic_money += self.money_return
         character.save
@@ -68,5 +70,21 @@ class Property < ActiveRecord::Base
       character.basic_money += self.money_return
       character.save
     end
+  end
+
+  def buying?
+    buying_amount > 0
+  end
+
+  def buying_amount
+    changes["amount"] ? changes["amount"].last - changes["amount"].first : 0
+  end
+
+  def selling?
+    selling_amount > 0
+  end
+
+  def selling_amount
+    changes["amount"] ? changes["amount"].first - changes["amount"].last : 0
   end
 end

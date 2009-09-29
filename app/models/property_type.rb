@@ -23,7 +23,7 @@ class PropertyType < ActiveRecord::Base
   serialize :requirements, Requirements::Collection
 
   validates_presence_of :name, :availability, :basic_price, :income
-  validates_numericality_of :basic_price, :vip_price, :income, :allow_nil => true
+  validates_numericality_of :basic_price, :vip_price, :income, :purchase_limit, :allow_nil => true
 
   def basic_price
     self[:basic_price].to_i
