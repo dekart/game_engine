@@ -1,7 +1,8 @@
 h1.title {font-size: 18px; color: #3B5998; margin: 15px 0px;}
 h2,h3 {font-size: 16px; color: #3B5998; margin-bottom: 7px;}
 td {vertical-align:middle; padding: 5px 3px; border-bottom: 1px solid #e0e0e0;}
-th {padding: 2px;}
+th {padding: 5px 3px; border-bottom: 1px solid #e0e0e0;}
+th.subheader {background-color: #f1f7fa;color: #3B5998;border: 0;}
 
 #spinner {position: absolute; top:150px; left: 300px; width: 150px; height: 50px; border: 1px solid #6D84B4; padding: 5px; background-color:white; z-index:1000;}
   #spinner img {float:left; margin-right: 10px;}
@@ -27,8 +28,6 @@ form .fieldWithErrors {display:inline;}
   form .fieldWithErrors input{border: 1px solid #ee5555;}
   form .fieldWithErrors textarea{border: 1px solid #ee5555;}
 form .error {color: red; padding: 3px 0px;}
-
-th.subheader {background-color: #f1f7fa;color: #3B5998;}
 
 form td {vertical-align: top;}
 form table {width: 100%;}
