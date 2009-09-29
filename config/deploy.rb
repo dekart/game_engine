@@ -98,5 +98,5 @@ end
 end
 
 ["deploy:update_apache_config", "deploy:jobs:start"].each do |t|
-  after "deploy:cold"
+  after "deploy:cold", t
 end
