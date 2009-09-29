@@ -232,6 +232,8 @@ class Character < ActiveRecord::Base
   end
 
   def recalculate_income
+    self.reload
+    
     self.basic_money = self.basic_money
 
     self.property_income = self.properties.inject(0) do |result, property|
