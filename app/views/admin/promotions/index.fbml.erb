@@ -7,20 +7,26 @@
 <% if @promotions.any? %>
   <%= will_paginate @promotions %>
 
-  <table id="promotion_list">
+  <table id="promotion_list" cellspacing="0">
     <tr>
       <th><%= Promotion.human_attribute_name("created_at") %></th>
       <th><%= Promotion.human_attribute_name("valid_till") %></th>
       <th><%= Promotion.human_attribute_name("text") %></th>
-      <th><%= Promotion.human_attribute_name("promotion_receips_count") %></th>
+      <th><%= Promotion.human_attribute_name("payouts") %></th>
+      <th><%= Promotion.human_attribute_name("receipts") %></th>
     </tr>
     <% @promotions.each do |promotion| %>
       <tr>
-        <td><%= l(promotion.created_at, :format => :short) %></td>
-        <td><%= content_tag(:span, l(promotion.valid_till, :format => :short), :class => (Time.now < promotion.valid_till ? :valid : :invalid)) %></td>
-        <td><%= promotion.text %></td>
-        <td><%= promotion.promotion_receipts.size %></td>
-        <td><%= link_to(t(".link"), promotion_url(promotion)) %></td>
+        <td class="created_at"><%= l(promotion.created_at, :format => :short) %></td>
+        <td class="valid_till"><%= content_tag(:span, l(promotion.valid_till, :format => :short), :class => (Time.now < promotion.valid_till ? :valid : :invalid)) %></td>
+        <td class="text"><%= promotion.text %></td>
+        <td class="promotions">
+          <% promotion.payouts.each do |payout| %>
+            <%= render :partial => "admin/payouts/preview/#{payout.name}", :locals => {:payout => payout} %>
+          <% end %>
+        </td>
+        <td class="receipts"><%= promotion.promotion_receipts.size %></td>
+        <td class="link"><%= link_to(t(".link"), promotion_url(promotion)) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_promotion_path(promotion)) %>
           <%= link_to(t(".controls.delete"), admin_promotion_path(promotion),
