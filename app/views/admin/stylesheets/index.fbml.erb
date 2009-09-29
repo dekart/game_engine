@@ -6,7 +6,7 @@
 </div>
 
 <% if @stylesheets.any? %>
-  <table id="stylesheet_list">
+  <table id="stylesheet_list" cellspacing="0">
     <tr>
       <th><%= Stylesheet.human_attribute_name("name") %></th>
       <th><%= Stylesheet.human_attribute_name("current") %></th>

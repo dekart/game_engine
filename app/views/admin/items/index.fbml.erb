@@ -7,7 +7,7 @@
 <% if @items.any? %>
   <%= will_paginate @items %>
 
-  <table id="item_list">
+  <table id="item_list" cellspacing="0">
     <% @items.each do |item| %>
       <% group_header item.item_group do |group| %>
         <tr>

@@ -7,7 +7,7 @@
 <% if @newsletters.any? %>
   <%= will_paginate @newsletters %>
 
-  <table id="newsletter_list">
+  <table id="newsletter_list" cellspacing="0">
     <tr>
       <th><%= Newsletter.human_attribute_name("created_at") %></th>
       <th><%= Newsletter.human_attribute_name("text") %></th>
