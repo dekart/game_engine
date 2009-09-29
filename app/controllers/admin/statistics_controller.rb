@@ -1,4 +1,8 @@
 class Admin::StatisticsController < ApplicationController
+  before_filter :admin_required
+
+  layout "layouts/admin/application"
+
   def index
     @total_users    = User.count
     @last_day_users = User.count(:conditions => ["created_at >= ?", 24.hours.ago])

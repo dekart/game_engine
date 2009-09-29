@@ -157,6 +157,7 @@ en:
         remove: "Remove"
     statistics:
       index:
+        title: "Statistics"
         total_users: "Total Users"
         latest_users: "Latest Users"
     property_types:
