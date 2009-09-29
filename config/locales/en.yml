@@ -210,6 +210,11 @@ en:
         title: "You lost:"
       victim_lost:
         title: "{user_name} lost:"
+      details:
+        vs: "VS."
+        defence_unknown: "???"
+        best_offence: "Your Best Offence:"
+        best_defence: "Their Best Defence:"
     invite:
       message: "You attacked {user_name} and WON the battle against {{pronoun}}!"
       you_received:

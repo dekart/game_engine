@@ -324,6 +324,30 @@ form .error {color: red; padding: 3px 0px;}
   #fight_result .lost b {width: 55px;}
   #fight_result .victim_lost b {width: 55px;}
   #fight_result .attack_again {background-image: url(icons/fights.gif);}
+  #fight_result .details {border-top: 1px solid #e0e0e0; padding-top: 10px; width: 730px; height: 160px; margin: 0px auto;}
+  #fight_result .details .attacker {width: 330px; height: 160px;float:left; text-align:right; }
+  #fight_result .details .attacker .character {height: 60px;font-size: 14px;}
+  #fight_result .details .attacker .character .name {font-weight: bold; }
+  #fight_result .details .attacker .character .picture {float: right; margin-left: 10px}
+  #fight_result .details .attacker .attributes {margin-left: auto; width: 200px; height: 30px}
+  #fight_result .details .attacker .attributes div {float:right; margin-left: 10px; padding-left: 20px; line-height: 22px; background-position: center left; background-repeat: no-repeat;}
+  #fight_result .details .attacker .attributes .attack {background-image: url(icons/attack.gif);}
+  #fight_result .details .attacker .attributes .relations {background-image: url(icons/alliance.gif);}
+  #fight_result .details .attacker .attributes .relations_attack {background-image: url(icons/attack.gif);}
+  #fight_result .details .attacker .best_items strong {display: block; margin-bottom: 5px; font-size: 14px;}
+  #fight_result .details .attacker .best_items img {margin-left: 10px;}
+  #fight_result .details .vs {width: 65px; float: left; height: 160px; text-align:center; font-weight: bold; font-size: 16px; line-height: 160px; vertical-align:middle;}
+  #fight_result .details .victim {width: 330px; float: left;}
+  #fight_result .details .victim .character {height: 60px;font-size: 14px;}
+  #fight_result .details .victim .character .name {font-weight: bold; }
+  #fight_result .details .victim .character .picture {float: left; margin-right: 10px}
+  #fight_result .details .victim .attributes {width: 200px; height: 30px;}
+  #fight_result .details .victim .attributes div {float:left; margin-left: 10px; padding-left: 20px; line-height: 22px; background-position: center left; background-repeat: no-repeat;}
+  #fight_result .details .victim .attributes .defence {background-image: url(icons/defence.gif);}
+  #fight_result .details .victim .attributes .relations {background-image: url(icons/alliance.gif);}
+  #fight_result .details .victim .attributes .relations_defence {background-image: url(icons/defence.gif);}
+  #fight_result .details .victim .best_items strong {display: block; margin-bottom: 5px; font-size: 14px;}
+  #fight_result .details .victim .best_items img {margin-right: 10px;}
 
 /* Item purchase result block */
 #shop_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}
