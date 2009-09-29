@@ -70,6 +70,7 @@ en:
   requirements:
     item:
       name: "Item"
+      amount: "X {{amount}}"
     health_point:
       name: "Health Points"
       text: "{amount} Health Points"

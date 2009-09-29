@@ -5,5 +5,5 @@
     <%= fb_ta(:src, image_path(requirement.item.image.url(:icon))) %>
   <% end %>
   
-  <div class="amount">X <%= requirement.amount %></div>
+  <div class="amount"><%= t(".amount", :amount => requirement.amount) %></div>
 <% end %>
