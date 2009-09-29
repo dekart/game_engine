@@ -55,7 +55,7 @@ ActionController::Routing::Routes.draw do |map|
     :member     => {:use => :any}
   map.resources :fights,
     :collection => {:invite => :post},
-    :member     => {:respond => :post}
+    :member     => {:respond => :post, :used_items => :post}
   map.resources :invitations, :member => {:accept => :any, :ignore => :any}
   map.resources :relations
   map.resources :bank_operations

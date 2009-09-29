@@ -325,9 +325,9 @@ form .error {color: red; padding: 3px 0px;}
   #fight_result .victim_lost b {width: 55px;}
   #fight_result .attack_again {background-image: url(icons/fights.gif);}
   #fight_result .details {border-top: 1px solid #e0e0e0; padding-top: 10px; width: 730px; height: 160px; margin: 0px auto;}
-  #fight_result .details .attacker {width: 330px; height: 160px;float:left; text-align:right; }
-  #fight_result .details .vs {width: 65px; float: left; height: 160px; text-align:center; font-weight: bold; font-size: 16px; line-height: 160px; vertical-align:middle;}
-  #fight_result .details .victim {width: 330px; float: left;}
+  #fight_result .details .attacker {width: 330px; text-align:right; }
+  #fight_result .details .vs {width: 65px; text-align:center; font-weight: bold; font-size: 16px; line-height: 160px; vertical-align:middle;}
+  #fight_result .details .victim {width: 330px;}
   #fight_result .details .character {height: 60px;font-size: 14px;}
   #fight_result .details .character .name {font-weight: bold; margin-bottom: 5px;}
   #fight_result .details .character .level {margin-top: 5px;}
@@ -349,6 +349,13 @@ form .error {color: red; padding: 3px 0px;}
   #fight_result .details .victim .attributes .relations {background-image: url(icons/alliance.gif);}
   #fight_result .details .victim .attributes .relations_defence {background-image: url(icons/defence.gif);}
   #fight_result .details .victim .best_items img {margin-right: 10px;}
+
+  #fight_result .item_details {text-align: center;border-top: 1px solid #e0e0e0; padding-top: 10px;}
+  #fight_result .item_details .items {text-align: left;}
+  #fight_result .item_details .items strong {display: block; margin-bottom: 5px;}
+  #fight_result .item_details .attacker {width: 330px;}
+  #fight_result .item_details .victim {padding-left: 65px;}
+  #fight_result .item_details .group {margin-bottom: 10px;}
 
 /* Item purchase result block */
 #shop_result {padding:0px 30px; background: url(icons/basic_money.gif) 5px 0px no-repeat;}

@@ -94,54 +94,57 @@
       </table>
     <% end %>
 
-    <div class="details">
-      <div class="attacker">
-        <div class="character">
-          <%= character_name_link(@fight.attacker, {:class => :name}, {:useyou => false}) %>
-          <%= character_picture_link(@fight.attacker, :class => :picture) %>
-          <div class="level">
-            <%= fb_i(Character.human_attribute_name("level")) %> <%= @fight.attacker.level %>
+    <table class="details" cellspacing="0">
+      <tr>
+        <td class="attacker">
+          <div class="character">
+            <%= character_name_link(@fight.attacker, {:class => :name}, {:useyou => false}) %>
+            <%= character_picture_link(@fight.attacker, :class => :picture) %>
+            <div class="level">
+              <%= fb_i(Character.human_attribute_name("level")) %> <%= @fight.attacker.level %>
+            </div>
           </div>
-        </div>
-        <div class="attributes">
-          <div class="relations_attack"><%= @fight.attacker.inventory_attack_points %></div>
-          <div class="relations"><%= @fight.attacker.relations.size %></div>
-          <div class="attack"><%= @fight.attacker.attack %></div>
-        </div>
-        <div class="best_items">
-          <strong><%= fb_i(t(".details.best_offence")) %></strong>
-
-          <% @fight.attacker.inventories.best_offence.each do |inventory| %>
-            <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
-          <% end %>
-        </div>
-      </div>
-      <div class="vs"><%= fb_i(t(".details.vs")) %></div>
-      <div class="victim">
-        <div class="character">
-          <%= character_name_link(@fight.victim, {:class => :name}, {:useyou => false}) %>
-          <%= character_picture_link(@fight.victim, :class => :picture) %>
-          <div class="level">
-            <%= fb_i(Character.human_attribute_name("level")) %> <%= @fight.victim.level %>
+          <div class="attributes">
+            <div class="relations_attack"><%= @fight.attacker.inventory_attack_points %></div>
+            <div class="relations"><%= @fight.attacker.relations.size %></div>
+            <div class="attack"><%= @fight.attacker.attack %></div>
           </div>
-        </div>
-        <div class="attributes">
-          <div class="relations_defence"><%= @fight.victim.inventory_defence_points %></div>
-          <div class="relations"><%= @fight.victim.relations.size %></div>
-          <div class="defence"><%= t(".details.defence_unknown") %></div>
-        </div>
-        <div class="best_items">
-          <strong><%= fb_i(t(".details.best_defence")) %></strong>
+          <div class="best_items">
+            <strong><%= fb_i(t(".details.best_offence")) %></strong>
 
-          <% @fight.victim.inventories.best_defence.each do |inventory| %>
-            <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
-          <% end %>
-        </div>
-        <div class="items">
-          
-        </div>
-      </div>
-    </div>
+            <% @fight.attacker.inventories.best_offence.each do |inventory| %>
+              <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+            <% end %>
+          </div>
+        </td>
+        <td class="vs"><%= fb_i(t(".details.vs")) %></td>
+        <td class="victim">
+          <div class="character">
+            <%= character_name_link(@fight.victim, {:class => :name}, {:useyou => false}) %>
+            <%= character_picture_link(@fight.victim, :class => :picture) %>
+            <div class="level">
+              <%= fb_i(Character.human_attribute_name("level")) %> <%= @fight.victim.level %>
+            </div>
+          </div>
+          <div class="attributes">
+            <div class="relations_defence"><%= @fight.victim.inventory_defence_points %></div>
+            <div class="relations"><%= @fight.victim.relations.size %></div>
+            <div class="defence"><%= t(".details.defence_unknown") %></div>
+          </div>
+          <div class="best_items">
+            <strong><%= fb_i(t(".details.best_defence")) %></strong>
+
+            <% @fight.victim.inventories.best_defence.each do |inventory| %>
+              <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <% content_tag(:div, :class => :item_details, :id => dom_id(@fight, :items)) do %>
+      <%= link_to_remote(fb_i(t(".show_items")), :url => used_items_fight_url(@fight, :canvas => false), :update => dom_id(@fight, :items)) %>
+    <% end %>
   <% else %>
     <p><%= fb_i(@fight.errors.on(:character)) %></p>
   <% end %>

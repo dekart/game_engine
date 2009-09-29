@@ -215,6 +215,11 @@ en:
         defence_unknown: "???"
         best_offence: "Your Best Offence:"
         best_defence: "Their Best Defence:"
+      show_items: "Show all items used"
+    used_items:
+      attacker: "Your items:"
+      victim: "Their items:"
+      item: "{{name}} x {{amount}}"
     invite:
       message: "You attacked {user_name} and WON the battle against {{pronoun}}!"
       you_received:

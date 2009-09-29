@@ -63,4 +63,10 @@ class FightsController < ApplicationController
 
     render :action => :invite, :layout => "ajax"
   end
+
+  def used_items
+    @fight = current_character.attacks.find(params[:id])
+
+    render :action => :used_items, :layout => "ajax"
+  end
 end
