@@ -1,7 +1,7 @@
 module Requirements
   class Attack < Base
     def satisfies?(character)
-      character.own_attack_points >= @value
+      character.attack >= @value
     end
   end
 end
