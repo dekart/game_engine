@@ -39,7 +39,7 @@ module ApplicationHelper
 
   def admin_only(&block)
     if in_canvas? && current_user && current_user.admin?
-      concat(capture(&block), block.binding)
+      concat(capture(&block))
     end
   end
 

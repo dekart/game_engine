@@ -24,8 +24,7 @@ module FacebookHelper
 
   def fb_if_section_not_added(section, &block)
     concat(
-      content_tag("fb:if-section-not-added", capture(&block), :section => section),
-      block.binding
+      content_tag("fb:if-section-not-added", capture(&block), :section => section)
     )
   end
 
@@ -33,7 +32,9 @@ module FacebookHelper
     if block_given?
       options = {:showborder => false, :max => 20}.merge(args.extract_options!)
 
-      concat(content_tag("fb:multi-friend-selector", capture(&block), options), block.binding)
+      concat(
+        content_tag("fb:multi-friend-selector", capture(&block), options)
+      )
     else
       return fb_multi_friend_selector(*args, &block)
     end
@@ -51,11 +52,7 @@ module FacebookHelper
     options = args.extract_options!
     tag = content_tag("fb:intl", block_given? ? capture(&block): args.shift, options)
 
-    if block_given?
-      concat(tag, block.binding)
-    else
-      return tag
-    end
+    block_given? ? concat(tag) : tag
   end
 
   def fb_it(name, *args, &block)
@@ -142,10 +139,6 @@ module FacebookHelper
     options = args.extract_options!.merge(:name => name)
     tag = content_tag("fb:#{tag}", block_given? ? capture(&block): args.shift, options)
 
-    if block_given?
-      concat(tag, block.binding)
-    else
-      return tag
-    end
+    block_given? ? concat(tag) : tag
   end
 end
