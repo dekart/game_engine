@@ -37,6 +37,7 @@ class Item < ActiveRecord::Base
   named_scope :basic, {:conditions => "vip_price IS NULL or vip_price = 0"}
 
   validates_presence_of :name, :item_group, :availability, :level, :basic_price
+  validates_presence_of :usage_limit, :if => :usable?
   validates_numericality_of :level, :basic_price, :vip_price, :usage_limit, :allow_blank => true
 
   def self.to_grouped_dropdown
