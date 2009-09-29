@@ -470,7 +470,7 @@ en:
       forward:
         title: "Send this bonus to your friends!"
         text: "You can send this bonus to your friends who also play or possibly will be interested in {app}. By clicking the link your friends will receive same bonus as you just received. Click on friend names to review and send message with the link:"
-        invita-tion: "I got a secret bonus link for Sword&Magic game! {{link}}"
+        invitation: "I got a secret bonus link for Sword&Magic game! {{link}}"
       already_used: "You already used this promotion link"
       expired: "This promotion link already expired"
   premia:
