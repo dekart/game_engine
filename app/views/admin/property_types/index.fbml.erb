@@ -27,6 +27,7 @@
         <td class="vip_price"><%= type.vip_price %></td>
         <td class="income"><%= type.income %></td>
         <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_property_type_path(type)) %>
           <%= link_to(t(".controls.delete"), admin_property_type_path(type),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")

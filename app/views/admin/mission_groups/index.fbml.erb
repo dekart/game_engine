@@ -17,6 +17,7 @@
         <td class="level"><%= group.level %></td>
         <td class="missions"><%= group.missions.size %></td>
         <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_mission_group_path(group)) %>
           <%= link_to(t(".controls.delete"), admin_mission_group_path(group),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")

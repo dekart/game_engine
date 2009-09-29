@@ -11,6 +11,9 @@
       <td class="value">
         <%= link_to(h(value), customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key)) %>
       </td>
+      <td class="controls">
+        <%= link_to(t(".controls.edit"), customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key)) %>
+      </td>
     <% end %>
   <% end %>
 </table>

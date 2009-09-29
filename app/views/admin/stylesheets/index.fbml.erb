@@ -16,6 +16,7 @@
         <td class="name"><%= link_to(style.name, edit_admin_stylesheet_path(style)) %></td>
         <td class="current"><%= style.current %></td>
         <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_stylesheet_path(style)) %>
           <%= link_to(t(".controls.try"), root_path(:try_stylesheet => style), :target => :_blank) %>
           <%= link_to(t(".controls.use"), use_admin_stylesheet_path(style),
                 :method   => :post,

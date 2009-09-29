@@ -17,6 +17,7 @@
         <td class="display_in_shop"><%= group.display_in_shop %></td>
         <td class="items"><%= group.items.size %></td>
         <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_item_group_path(group)) %>
           <%= link_to(t(".controls.move_up"), move_admin_item_group_path(group, :direction => :up),
                 :method => :post
               ) %>

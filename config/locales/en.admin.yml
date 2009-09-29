@@ -25,6 +25,7 @@ en:
         empty_set: "No item groups"
         controls:
           new: "Add Group"
+          edit: "Edit"
           move_up: "Move Up"
           move_down: "Move Down"
           delete: "Delete"
@@ -41,6 +42,7 @@ en:
         empty_set: "No items"
         controls:
           new: "Add Item"
+          edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? This item will be also removed from all users!"
       new:
@@ -59,6 +61,7 @@ en:
         empty_set: "No mission groups"
         controls:
           new: "Add Group"
+          edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? All missions linked to this group will be unlinked and hidden from a list of available missions!"
       new:
@@ -76,6 +79,7 @@ en:
         title: "Missions"
         empty_set: "No missions"
         controls:
+          edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? Mission results will be also removed from all users!"
       new:
@@ -161,6 +165,7 @@ en:
         empty_set: "No property types"
         controls:
           new: "Add Property Type"
+          edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? Properties of this type will be also removed from all users!"
       new:
@@ -174,6 +179,7 @@ en:
         controls:
           new: "Add Stylesheet"
           default: "View Default Stylesheet"
+          edit: "Edit"
           try: "Try"
           use: "Use"
           use_confirm: "Please confirm that you want to apply this stylesheet to public interface. If you just want to check how it will look - click 'Try'"
@@ -190,6 +196,8 @@ en:
     translations:
       index:
         title: "Translations"
+        controls:
+          edit: "Edit"
       new:
         title: "New Custom Translation"
         submit: "Create"
