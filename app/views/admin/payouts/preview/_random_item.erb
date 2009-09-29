@@ -1,0 +1,10 @@
+<% content_tag :div, :class => payout.name do %>
+  <%= "%s %d %s (%s %s %d%%)" % [
+        payout.availability,
+        payout.value,
+        payout.allow_vip ? "vip" : "basic",
+        payout.apply_on,
+        payout.action,
+        payout.chance
+      ] %>
+<% end %>

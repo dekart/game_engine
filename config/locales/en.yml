@@ -9,7 +9,9 @@ en:
         attack: "Attack"
         defence: "Defence"
         health: "Health"
+        hp: "Health Points"
         energy: "Energy"
+        ep: "Energy Points"
         experience: "Experience"
         basic_money: "Money"
         vip_money: "Gems"
@@ -18,7 +20,7 @@ en:
         missions_succeeded: "Missions Succeded"
         missions_completed: "Missions Completed"
         relations_count: "Alliance Size"
-        mercenaries: "Merce"
+        mercenaries: "Mercenaries"
         points: "Upgrade Points"
         rating: "Rating"
       user:

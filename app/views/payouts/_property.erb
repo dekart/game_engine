@@ -1,5 +1,3 @@
-<%= 
-  payout(:property,
-    payout.property_type.name,
-    (image_tag(payout.property_type.image.url(:icon)) if payout.property_type.image?)
-  ) %>
+<% content_tag :div, :class => payout.name do %>
+  <%= payout.property.name %>
+<% end %>

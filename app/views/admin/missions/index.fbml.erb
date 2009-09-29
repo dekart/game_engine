@@ -5,7 +5,7 @@
 <% if @missions.any? %>
   <%= will_paginate @missions %>
 
-  <table id="mission_list">
+  <table id="mission_list" cellspacing="0">
     <% @missions.each do |mission| %>
       <% group_header mission.mission_group do |group| %>
         <tr>
@@ -29,8 +29,16 @@
         <td class="ep_cost"><%= mission.ep_cost %></td>
         <td class="experience"><%= mission.experience %></td>
         <td class="basic_money"><%= mission.money_min %> - <%= mission.money_max %></td>
-        <td class="requirements"><%= mission.requirements.size %></td>
-        <td class="payouts"><%= mission.payouts.size %></td>
+        <td class="requirements">
+          <% mission.requirements.each do |requirement| %>
+            <%= render :partial => "admin/requirements/preview/#{requirement.name}", :locals => {:requirement => requirement} %>
+          <% end %>
+        </td>
+        <td class="payouts">
+          <% mission.payouts.each do |payout| %>
+            <%= render :partial => "admin/payouts/preview/#{payout.name}", :locals => {:payout => payout} %>
+          <% end %>
+        </td>
         <td class="controls">
           <%= link_to(t(".controls.delete"), admin_mission_path(mission),
                 :method   => :delete,

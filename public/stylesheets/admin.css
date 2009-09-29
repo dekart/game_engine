@@ -46,6 +46,7 @@ form .label, form .required {display:inline}
   .serializable_item .remove {float: right}
 
 #mission_list {width: 100%;}
+  #mission_list td {padding: 5px 2px; border-bottom: 1px solid #e0e0e0;}
   #mission_list .name {font-weight:bold;}
   #mission_list .controls a {display:block;}
 

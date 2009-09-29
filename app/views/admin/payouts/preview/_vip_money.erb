@@ -1,0 +1,9 @@
+<% content_tag :div, :class => payout.name do %>
+  <%= "%d %s (%s %s %d%%)" % [
+        payout.value,
+        Character.human_attribute_name("vip_money"),
+        payout.apply_on,
+        payout.action,
+        payout.chance
+      ] %>
+<% end %>

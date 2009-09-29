@@ -1,0 +1,8 @@
+<% content_tag :div, :class => payout.name do %>
+  <%= "%s (%s %s %d%%)" % [
+        payout.item.name,
+        payout.apply_on,
+        payout.action,
+        payout.chance
+      ] %>
+<% end %>
