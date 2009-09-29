@@ -92,11 +92,11 @@ before "deploy:migrations", "deploy:db:backup"
   before "deploy:migrations", t
 end
 
-["deploy:jobs:update_references", "deploy:cleanup"].each do |t|
+["deploy:update_apache_config", "deploy:jobs:start", "deploy:jobs:update_references", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
 
-["deploy:jobs:start", "deploy:update_apache_config"].each do |t|
+["deploy:update_apache_config", "deploy:jobs:start"].each do |t|
   after "deploy:cold"
 end
