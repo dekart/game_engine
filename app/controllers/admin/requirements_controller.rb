@@ -3,7 +3,7 @@ class Admin::RequirementsController < ApplicationController
 
   def new
     @container    = params[:container]
-    @requirement  = Requirements::Base.by_name(params[:type]).new(nil)
+    @requirement  = Requirements::Base.by_name(params[:type]).new
 
     render :action => :new, :layout => "admin/ajax"
   end

@@ -32,8 +32,8 @@ module Requirements
       )
     end
 
-    def initialize(value)
-      @value = value.to_i
+    def initialize(options = {})
+      @value = options[:value].to_i
     end
 
     def name

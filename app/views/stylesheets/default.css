@@ -150,7 +150,13 @@ form .error {color: red; padding: 3px 0px;}
       #mission_list .payout .experience { background: url(icons/experience.gif) center left no-repeat;}
   #mission_list .requires {width: 100px;}
     #mission_list .requires .energy {height: 25px;line-height: 25px;padding-left: 21px; background: url(icons/energy.gif) center left no-repeat;}
-    #mission_list .requires .item {float:left;}
+    #mission_list .requires .health,
+    #mission_list .requires .attack,
+    #mission_list .requires .defence,
+    #mission_list .requires .alliance,
+    #mission_list .requires .health_point {clear: both;}
+    #mission_list .requires .item {float:left; margin: 0 2px 2px 0;}
+    #mission_list .requires .item .amount {text-align: center;}
     #mission_list .requires .not_satisfied {color: #ff5353; font-weight: bold;}
     #mission_list .requires .not_satisfied img{border: 3px solid #ff5353;}
   #mission_list .progress .bar{width: 100px; border: 1px solid #d0d0d0;}

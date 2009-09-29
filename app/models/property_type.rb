@@ -40,7 +40,7 @@ class PropertyType < ActiveRecord::Base
   def requirements=(collection)
     unless collection.is_a?(Requirements::Collection)
       items = collection.values.collect do |requirement|
-        Requirements::Base.by_name(requirement[:type]).new(requirement[:value])
+        Requirements::Base.by_name(requirement[:type]).new(requirement)
       end
 
       collection = Requirements::Collection.new(*items)

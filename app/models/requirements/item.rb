@@ -1,15 +1,23 @@
 module Requirements
   class Item < Base
-    def initialize(item)
-      @value    = item.is_a?(::Item) ? item.id : item.to_i
+    def initialize(options = {})
+      super(options)
+
+      @amount = options[:amount].to_i
     end
 
     def item
       ::Item.find_by_id(self.value)
     end
 
+    def amount
+      @amount && @amount.to_i > 0 ? @amount : 1
+    end
+
     def satisfies?(character)
-      character.items.include?(self.item)
+      inventory = character.inventories.detect{|i| i.item == self.item }
+
+      inventory && inventory.amount >= amount
     end
   end
 end

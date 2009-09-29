@@ -4,4 +4,6 @@
     <%= fb_ta(:title, fb_i(requirement.item.name)) %>
     <%= fb_ta(:src, image_path(requirement.item.image.url(:icon))) %>
   <% end %>
+  
+  <div class="amount">X <%= requirement.amount %></div>
 <% end %>
