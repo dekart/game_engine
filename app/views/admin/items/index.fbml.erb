@@ -33,7 +33,11 @@
         <td class="basic_price"><%= item.basic_price %></td>
         <td class="vip_price"><%= item.vip_price %></td>
         <td class="usable"><%= item.usable %><%= ", #{item.usage_limit}" if item.usage_limit %></td>
-        <td class="effects"><%= item.effects.size %></td>
+        <td class="effects">
+          <% item.effects.each do |effect| %>
+            <%= render :partial => "admin/effects/preview/#{effect.name}", :locals => {:effect => effect} %>
+          <% end %>
+        </td>
         <td class="bought"><%= item.inventories.count %></td>
         <td class="controls">
           <%= link_to(t(".controls.delete"), admin_item_path(item),
