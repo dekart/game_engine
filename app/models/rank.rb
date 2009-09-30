@@ -6,9 +6,11 @@ class Rank < ActiveRecord::Base
     :conditions => {:completed => true},
     :include    => {:mission => :mission_group},
     :order      => "mission_groups.level, missions.money_max"
-   }
+  }
 
   before_save :check_progress
+
+  delegate :title, :to => :mission
 
   def just_completed?
     self.win_count == self.mission.win_amount

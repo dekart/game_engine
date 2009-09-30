@@ -24,6 +24,9 @@ class CharactersController < ApplicationController
 
   def show
     @character = Character.find(params[:id])
+
+    @ranks = @character.ranks.completed + @character.mission_group_ranks.completed
+    @ranks.reject!{|r| r.title.blank? }
   end
 
   def load_vip_money
