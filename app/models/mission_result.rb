@@ -1,5 +1,6 @@
 class MissionResult
-  attr_reader :character, :mission, :rank, :success, :money, :experience, :saved, :payouts, :free_fulfillment
+  attr_reader :character, :mission, :rank, :success, :money, :experience, :saved, 
+    :payouts, :free_fulfillment, :group, :group_rank, :group_payouts
 
   def self.create(*args)
     result = self.new(*args)
@@ -12,6 +13,7 @@ class MissionResult
   def initialize(character, mission)
     @character  = character
     @mission    = mission
+    @group      = mission.mission_group
 
     @rank = @character.rank_for_mission(@mission)
   end
@@ -39,6 +41,14 @@ class MissionResult
             @character.missions_completed += 1
             @character.points += 1
             @character.vip_money += 1
+
+            if @character.mission_groups.completed?(@group)
+              @group_rank = @character.mission_group_ranks.create(
+                :mission_group => @group
+              )
+              
+              @group_payouts = @group.payouts.apply(@character, :complete)
+            end
             
             @payouts = @mission.payouts.apply(@character, :complete)
           else

@@ -29,8 +29,22 @@ class Character < ActiveRecord::Base
   HIRE_MERCENARY_RATE = 20
 
   belongs_to :user
+  
   has_many :ranks, :dependent => :delete_all, :extend => Character::Ranks
   has_many :missions, :through => :ranks
+
+  has_many :mission_group_ranks, :dependent => :delete_all
+  has_many :mission_groups, :through => :mission_group_ranks do
+    def completed?(group)
+      if rank = proxy_owner.mission_group_ranks.find_by_mission_group_id(group.id)
+        rank.completed?
+      else
+        group.missions.count(
+          :conditions => ["missions.id NOT IN (?)", proxy_owner.ranks.completed_mission_ids]
+        ) == 0
+      end
+    end
+  end
   
   has_many :inventories,
     :include => :item,

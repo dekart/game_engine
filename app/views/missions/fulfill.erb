@@ -91,7 +91,7 @@
                   ) %>
             <% end %>
 
-            <%= payout_list(@result, :add) %>
+            <%= payout_list(@result.payouts, :add) %>
           </td>
         <% end %>
         <td class="spent">
@@ -114,7 +114,7 @@
             <%= payout(:energy, Character.human_attribute_name("energy"), @mission.ep_cost) %>
           <% end %>
           
-          <%= payout_list(@result, :remove) %>
+          <%= payout_list(@result.payouts, :remove) %>
         </td>
         <td class="progress">
           <h3><%= fb_i(t(".progress.title")) %></h3>
@@ -123,6 +123,10 @@
         </td>
       </tr>
     </table>
+
+    <% if @result.group_rank %>
+      <%= render :partial => "mission_groups/complete", :locals => {:mission_result => @result} %>
+    <% end %>
 
     <% fb_js_string :mission_progress do %>
       <%= mission_progress(current_character, @mission) %>

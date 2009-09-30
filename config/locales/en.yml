@@ -352,6 +352,12 @@ en:
         fulfill: "Fulfill"
     helpers:
       completed: "Completed!"
+  mission_groups:
+    complete:
+      title: "Mission Group Completed!"
+      message: "You completed all missions in this group!"
+      title_received: "You received new title:"
+      you_received: "You received:"
   relations:
     index:
       title: "Your Alliance"

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090929104457) do
+ActiveRecord::Schema.define(:version => 20090930174733) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(:version => 20090929104457) do
     t.integer  "user_id"
     t.string   "name"
     t.integer  "basic_money",            :default => 10
-    t.integer  "vip_money",              :default => 0
+    t.integer  "vip_money",              :default => 10
     t.integer  "level",                  :default => 1
     t.integer  "experience",             :default => 0
     t.integer  "points",                 :default => 0
@@ -196,11 +196,19 @@ ActiveRecord::Schema.define(:version => 20090929104457) do
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
 
+  create_table "mission_group_ranks", :force => true do |t|
+    t.integer "character_id"
+    t.integer "mission_group_id"
+    t.boolean "completed"
+  end
+
   create_table "mission_groups", :force => true do |t|
     t.string   "name"
     t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "payouts"
+    t.string   "title"
   end
 
   create_table "missions", :force => true do |t|

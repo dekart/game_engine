@@ -5,7 +5,7 @@
     <h3><%= fb_i(t(".you_received")) %></h3>
 
     <div class="payouts">
-      <%= payout_list(@result, :add) %>
+      <%= payout_list(@result.payouts, :add) %>
     </div>
 
     <% if @promotion.forwardable? %>

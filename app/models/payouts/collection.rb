@@ -2,7 +2,7 @@ module Payouts
   class Collection
     attr_reader :items
 
-    delegate :each, :empty?, :size, :to => :items
+    delegate :each, :empty?, :any?, :size, :to => :items
 
     def initialize(*payouts)
       @items = payouts
