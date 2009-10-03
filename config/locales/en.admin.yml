@@ -14,6 +14,7 @@ en:
         stylesheets: "Stylesheets"
         tips: "Tips"
         translations: "Translations"
+        configurations: "Configurations"
       application:
         spinner:
           alt: "Please wait..."
@@ -205,3 +206,21 @@ en:
       edit:
         title: "Edit Custom Translation"
         submit: "Update"
+    configurations:
+      edit:
+        title: "Edit Configuration"
+        submit: "Update"
+      form_fields:
+        assignment: "Alliance Members & Assignments"
+        bank: "Bank Operations"
+        character: "Character"
+        premium: "Premium Services"
+        fight: "Player-vs-Player Fights"
+        fight_with_invite: "Attack&Invite"
+        rating: "Rating"
+        help_request: "Help Requests"
+        inventory: "Inventory"
+        item: "Shop"
+        property: "Properties"
+        user: "User Options"
+        newsletter: "Nesletter Delivery"

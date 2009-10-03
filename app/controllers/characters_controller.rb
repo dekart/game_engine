@@ -8,7 +8,7 @@ class CharactersController < ApplicationController
       redirect_to invite_users_path
     else
       @latest_fights = Fight.with_participant(current_character).find(:all, 
-        :limit => Configuration[:character_latest_fights_show_limit]
+        :limit => Configuration[:fight_latest_show_limit]
       )
       @alliance_invitations = Invitation.for_user(current_user).find(:all)
     end

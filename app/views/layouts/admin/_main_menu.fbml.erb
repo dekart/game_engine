@@ -14,5 +14,6 @@
     <%= link_to(t(".stylesheets"), admin_stylesheets_path) %>
     <%= link_to(t(".tips"), admin_tips_path) %>
     <%= link_to(t(".translations"), admin_translations_path) %>
+    <%= link_to(t(".configurations"), edit_admin_configuration_path(Configuration.current)) %>
   </div>
 <% end %>

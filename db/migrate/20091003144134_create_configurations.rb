@@ -26,7 +26,6 @@ class CreateConfigurations < ActiveRecord::Migration
       t.integer :character_weakness_minimum,      :default => 20
       t.integer :character_points_per_upgrade,    :default => 5
       t.integer :character_vip_money_per_upgrade, :default => 0
-      t.integer :character_latest_fights_show_limit, :default => 10
 
       t.integer :premium_money_price,     :default => 5
       t.integer :premium_money_amount,    :default => 1000
@@ -45,6 +44,7 @@ class CreateConfigurations < ActiveRecord::Migration
       t.integer :fight_money_loot,            :default => 10
       t.integer :fight_max_loser_damage,      :default => 50
       t.integer :fight_max_winner_damage,     :default => 90
+      t.integer :fight_latest_show_limit, :default => 10
       t.boolean :fight_with_invite_allowed, :default => true
       t.integer :fight_with_invite_energy_required, :default => 1
       t.integer :fight_with_invite_max_level, :default => 20

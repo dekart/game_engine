@@ -28,6 +28,8 @@ form .fieldWithErrors {display:inline;}
   form .fieldWithErrors input{border: 1px solid #ee5555;}
   form .fieldWithErrors textarea{border: 1px solid #ee5555;}
 form .error {color: red; padding: 3px 0px;}
+form fieldset {margin-bottom: 10px;}
+  form fieldset legend {color: #3b5998; font-weight: bold; font-size: 14px;}
 
 form td {vertical-align: top;}
 form table {width: 100%;}
