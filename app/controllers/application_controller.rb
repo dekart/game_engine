@@ -61,7 +61,11 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_root
-    redirect_to root_url
+    if request.path.starts_with?("//")
+      redirect_to request.path.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
+    else
+      redirect_to root_url
+    end
   end
 
   def default_url_options(options)
