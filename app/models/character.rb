@@ -3,7 +3,7 @@ class Character < ActiveRecord::Base
 
   LEVELS = [0]
 
-  200.times do |i|
+  2000.times do |i|
     LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
   end
 
