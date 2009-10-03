@@ -333,7 +333,7 @@ form .error {color: red; padding: 3px 0px;}
   #fight_result .details .character {height: 60px;font-size: 14px;}
   #fight_result .details .character .name {font-weight: bold; margin-bottom: 5px;}
   #fight_result .details .character .level {margin-top: 5px;}
-  #fight_result .details .attributes {height: 30px;}
+  #fight_result .details .attributes {height: 30px; clear:both;}
   #fight_result .details .attributes div {padding-left: 20px; line-height: 22px; background-position: center left; background-repeat: no-repeat;}
   #fight_result .details .best_items strong {display: block; margin-bottom: 5px; font-size: 14px;}
 
