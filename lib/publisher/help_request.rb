@@ -8,10 +8,10 @@ module Publisher
     include FacebookHelper
 
     def self.template_data_for(context)
-      if context.is_a?(Mission)
-        {:mission => context.name}
-      else
+      if context.is_a?(Fight)
         {:level => context.victim.level}
+      else
+        {:mission => context.name}
       end
     end
 
