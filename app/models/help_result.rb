@@ -2,10 +2,14 @@ class HelpResult < ActiveRecord::Base
   belongs_to :help_request, :counter_cache => true
   belongs_to :character
 
+  delegate :context, :to => :help_request
+
   validate_on_create :check_expired_request, :check_already_helped
   
   before_create :calculate_payout
   after_create  :give_payout, :increment_request_money
+
+  attr_reader :fight
 
   protected
 
@@ -20,17 +24,32 @@ class HelpResult < ActiveRecord::Base
   end
 
   def calculate_payout
-    self.money      = (self.help_request.mission.money * 0.05).ceil
-    self.experience = (self.help_request.mission.experience * 0.1).ceil
+    if context.is_a?(Mission)
+      self.money      = (self.help_request.context.money * 0.05).ceil
+      self.experience = (self.help_request.context.experience * 0.10).ceil
+    elsif context.is_a?(Fight)
+      @fight = Fight.create(
+        :attacker => character,
+        :victim   => context.victim,
+        :cause    => help_request
+      )
+      
+      self.money      = @fight.attacker_won? ? (@fight.money * 0.10).ceil : 0
+      self.experience = @fight.attacker_won? ? (@fight.experience * 0.20).ceil : 0
+    end
   end
 
   def give_payout
-    self.character.basic_money  += self.money
-    self.character.experience   += self.experience
-    self.character.save
+    if context.is_a?(Mission)
+      self.character.basic_money  += self.money
+      self.character.experience   += self.experience
+      self.character.save
+    end
 
     self.help_request.character.basic_money += self.money
-    self.character.save
+    self.help_request.character.experience  += self.experience
+
+    self.help_request.character.save if self.help_request.character.changed?
   end
 
   def increment_request_money

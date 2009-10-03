@@ -5,8 +5,7 @@ class Fight < ActiveRecord::Base
   belongs_to :victim, :class_name => "Character"
   belongs_to :winner, :class_name => "Character"
 
-  belongs_to  :cause, :class_name => "Fight"
-  has_one     :response, :class_name => "Fight", :foreign_key => :cause_id
+  belongs_to  :cause, :polymorphic => true
 
   named_scope :with_participant, Proc.new {|character|
     {
@@ -33,12 +32,20 @@ class Fight < ActiveRecord::Base
     return self.winner == self.attacker ? self.victim : self.attacker
   end
 
-  def respondable?
-    self.attacker_won? and self.response.nil?
+  def is_response?
+    not cause.nil?
+  end
+
+  def response
+    self.class.first(:conditions => ["cause_id = ? AND cause_type = 'Fight'", self.id])
   end
 
   def responded?
-    !self.response.nil?
+    not response.nil?
+  end
+
+  def respondable?
+    attacker_won? and not responded?
   end
 
   protected
@@ -48,7 +55,7 @@ class Fight < ActiveRecord::Base
       self.errors.add(:character, :not_enough_energy)
     end
 
-    if self.responded? or (cause.nil? and Character.victims_for(self.attacker).find_by_id(self.victim.id).nil?)
+    if !is_response? and Character.victims_for(self.attacker).find_by_id(self.victim.id).nil?
       self.errors.add(:character, :cannot_attack)
     end
 

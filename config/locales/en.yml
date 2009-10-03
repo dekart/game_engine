@@ -201,6 +201,7 @@ en:
       buttons:
         publish: "Brag About It"
         attack_again: "Attack Again!"
+        request_help: "Ask Friends to Attack"
       messages:
         success: "You attacked {user_name} and WON the battle against {{pronoun}}!"
         fail: "You attacked {user_name} and LOST the battle against {{pronoun}}!"
@@ -230,6 +231,7 @@ en:
         title: "{user_name} lost:"
     new:
       title: "Fighting Arena"
+      latest_help_request: "{friend_amount} of your friends helped you to fight with {victim}! You received {money_amount} Gold in total."
       messages:
         too_weak: "You are too weak to fight! Take a rest until your health will grow to {hp_number} points. You need to wait about {minute_number} minutes."
         not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {minute_number} minutes."
@@ -530,8 +532,8 @@ en:
     show:
       success: "You successfully helped {user} to fulfill the {mission} mission!"
       you_received: "You received:"
-      failure:
-        friends_only: "You cannot help players that are not your friends"
+    friends_only:
+      message: "You cannot help players that are not your friends"
   tutorials:
     skip:
       skip: "Skip tutorial &raquo;"

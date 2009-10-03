@@ -11,6 +11,9 @@
             },
             :html => {:class => "publish button"}
           ) %>
+      <%= help_request_link(fb_i(t(".buttons.request_help")), @fight,
+            :class => "request_help button"
+          ) %>
 
       <p class="success">
         <% fb_i do %>
@@ -61,6 +64,9 @@
             :update => :result,
             :html   => {:class => "attack_again button"}
           ) if current_character.energy > 0 %>
+      <%= help_request_link(fb_i(t(".buttons.request_help")), @fight,
+            :class => "request_help button"
+          ) %>
 
       <p class="fail">
         <% fb_i do %>

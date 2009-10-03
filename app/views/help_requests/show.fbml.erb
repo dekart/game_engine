@@ -1,13 +1,13 @@
 <% content_for :result do %>
-  <div id="help_result">
-    <% if @help_request %>
+  <% if @help_request.context.is_a?(Mission) %>
+    <div id="help_result">
       <% if !@help_result.new_record? %>
         <p class="success">
           <% fb_i do %>
             <%= t(".success") %>
 
             <%= fb_it(:user, character_name_link(@help_request.character)) %>
-            <%= fb_it(:mission, @help_request.mission.name) %>
+            <%= fb_it(:mission, @help_request.context.name) %>
           <% end %>
         </p>
 
@@ -20,10 +20,10 @@
       <% else %>
         <p class="fail"><%= fb_i(@help_result.errors.full_messages.first) %></p>
       <% end %>
-    <% else %>
-      <p class="fail"><%= fb_i(t(".failure.friends_only")) %></p>
-    <% end %>
-  </div>
+    </div>
 
-  <%= character_level_up_block %>
+    <%= character_level_up_block %>
+  <% elsif @help_request.context.is_a?(Fight) %>
+    <%= render :file => "fights/create" %>
+  <% end %>
 <% end %>

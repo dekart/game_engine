@@ -3,13 +3,18 @@ class HelpRequest < ActiveRecord::Base
   DISPLAY_PERIOD = 24.hours
   
   belongs_to  :character
-  belongs_to  :mission
+  belongs_to  :context, :polymorphic => true
   has_many    :help_results, :dependent => :delete_all
 
-  validates_presence_of :character, :mission
+  validates_presence_of :character, :context
 
-  def self.latest
-    self.first(:order => "created_at DESC")
+  def self.latest(context_class)
+    self.first(
+      :conditions => [
+        "context_type = ?", context_class.is_a?(String) ? context_class.classify : context_class.to_s
+      ],
+      :order      => "created_at DESC"
+    )
   end
   
   def expired?

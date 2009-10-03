@@ -1,9 +1,11 @@
 class HelpRequestsController < ApplicationController
   def create
-    if current_character.help_requests.can_publish?
-      @help_request = current_character.help_requests.create!(:mission_id => params[:mission_id])
+    if current_character.help_requests.can_publish?(params[:context_type])
+      @context = params[:context_type].classify.constantize.find(params[:context_id])
+      
+      @help_request = current_character.help_requests.create!(:context => @context)
 
-      goal(:help_request, @help_request.mission_id)
+      goal(:help_request, @context.class.to_s, @context.id)
     end
 
     render :text => ""
@@ -13,11 +15,15 @@ class HelpRequestsController < ApplicationController
     @character = Character.find(params[:id])
 
     if friend?(@character.user)
-      @help_request = @character.help_requests.latest
+      @help_request = @character.help_requests.latest(params[:context])
       @help_result  = @help_request.help_results.create(:character => current_character)
 
-      unless @help_result.new_record?
-        goal(:help_response, @help_request.mission_id)
+      if @help_result.new_record?
+        render :action => "friends_only"
+      else
+        @fight = @help_result.fight if @help_request.context.is_a?(Fight)
+        
+        goal(:help_response, @help_request.context.class.to_s, @help_request.context.id)
       end
     end
   end

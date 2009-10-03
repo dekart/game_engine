@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090930174733) do
+ActiveRecord::Schema.define(:version => 20091003112203) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -99,6 +99,25 @@ ActiveRecord::Schema.define(:version => 20090930174733) do
     t.datetime "updated_at"
   end
 
+  create_table "fight_help_requests", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "victim_id"
+    t.integer  "results_count", :default => 0
+    t.integer  "money",         :default => 0
+    t.integer  "experience"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fight_help_results", :force => true do |t|
+    t.integer  "request_id"
+    t.integer  "character_id"
+    t.integer  "money"
+    t.integer  "experience"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "fights", :force => true do |t|
     t.integer  "attacker_id"
     t.integer  "victim_id"
@@ -110,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20090930174733) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "cause_id"
+    t.string   "cause_type",       :limit => 30
   end
 
   add_index "fights", ["attacker_id", "winner_id"], :name => "index_fights_on_attacker_id_and_winner_id"
@@ -118,11 +138,12 @@ ActiveRecord::Schema.define(:version => 20090930174733) do
 
   create_table "help_requests", :force => true do |t|
     t.integer  "character_id"
-    t.integer  "mission_id"
-    t.integer  "help_results_count", :default => 0
-    t.integer  "money",              :default => 0
+    t.integer  "context_id"
+    t.integer  "help_results_count",               :default => 0
+    t.integer  "money",                            :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "context_type",       :limit => 30
   end
 
   add_index "help_requests", ["character_id"], :name => "index_help_requests_on_character_id"

@@ -52,8 +52,15 @@ en:
           text: "{*actor*} is gaining respect in his Alliance! {*pronoun*} just advanced to Level {*level*} in {{app}}"
         action_link: "Play {{app}} &raquo;"
     help_request:
-      one_line: "{*actor*} requested help with the {*mission*} mission in {*app*}"
-      short:
-        title: "{*actor*} requested help with the {*mission*} mission in {*app*}"
-        text: "Help your friend with this mission to get bonus gold and experience"
-        link: "Help {*actor*}! &raquo;"
+      mission:
+        one_line: "{*actor*} requested help with the {*mission*} mission in {*app*}"
+        short:
+          title: "{*actor*} requested help with the {*mission*} mission in {*app*}"
+          text: "Help your friend with this mission to get bonus gold and experience!"
+          link: "Help {*actor*}! &raquo;"
+      fight:
+        one_line: "{*actor*} is offering a bounty for any friend who fights their {*level*} level enemy in {*app*}"
+        short:
+          title: "{*actor*} is offering a bounty for any friend who fights their {*level*} level enemy in {*app*}"
+          text: "Help your friend with this enemy to get bonus gold and experience!"
+          link: "Help {*actor*}! &raquo;"

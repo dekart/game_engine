@@ -152,9 +152,9 @@ var Inventory = {
 }
 
 var HelpRequest = {
-  create: function(mission_id){
+  create: function(context_id, context_type){
     new Ajax.Request(root_url + "help_requests", {
-      parameters: "mission_id=" + mission_id,
+      parameters: "context_id=" + context_id + "&context_type=" + context_type,
       method: "POST",
       "scrollToTop": false,
       "showSpinner": false
