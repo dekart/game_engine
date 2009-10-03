@@ -6,7 +6,9 @@
   </td>
   <td class="payout">
     <div class="experience"><%= mission.experience %></div>
-    <div class="basic_money"><%= "%d - %d" % [mission.money_min, mission.money_max] %></div>
+    <div class="basic_money">
+      <%= "%d - %d" % [number_to_currency(mission.money_min), number_to_currency(mission.money_max)] %>
+    </div>
   </td>
   <td class="payout_advanced"><%= mission_payouts(mission) %></td>
   <td class="requires">

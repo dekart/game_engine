@@ -14,8 +14,14 @@
         <div class="payouts">
           <h3><%= fb_i(t(".you_received")) %></h3>
 
-          <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @help_result.money) %>
-          <%= payout(:experience, Character.human_attribute_name("experience"), @help_result.experience) %>
+          <%= payout(:basic_money,
+                Character.human_attribute_name("basic_money"),
+                number_to_currency(@help_result.money)
+              ) %>
+          <%= payout(:experience,
+                Character.human_attribute_name("experience"),
+                @help_result.experience
+              ) %>
         </div>
       <% else %>
         <p class="fail"><%= fb_i(@help_result.errors.full_messages.first) %></p>

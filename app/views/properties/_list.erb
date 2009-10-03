@@ -15,7 +15,7 @@
       <td class="income">
         <% fb_i do %>
           <%= t(".income") %>
-          <%= fb_it(:amount, content_tag(:span, type.income, :class => :basic_money)) %>
+          <%= fb_it(:amount, content_tag(:span, number_to_currency(type.income), :class => :basic_money)) %>
         <% end %>
       </td>
       <td class="requires">

@@ -37,13 +37,13 @@
     <tr class="basic_money">
       <th><%= fb_i(Character.human_attribute_name("basic_money")) %></th>
       <td class="value">
-        <%= character.basic_money %>
+        <%= number_to_currency(character.basic_money) %>
       </td>
     </tr>
     <tr class="vip_money">
       <th><%= fb_i(Character.human_attribute_name("vip_money")) %></th>
       <td class="value">
-        <%= character.vip_money %>
+        <%= number_to_currency(character.vip_money) %>
       </td>
     </tr>
   <% else %>

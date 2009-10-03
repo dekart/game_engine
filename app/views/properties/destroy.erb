@@ -10,7 +10,10 @@
     <h3><%= fb_i(t(".you_received.title")) %></h3>
 
     <div class="payouts">
-       <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @property.money_return) %>
+      <%= payout(:basic_money,
+            Character.human_attribute_name("basic_money"),
+            number_to_currency(@property.money_return)
+          ) %>
     </div>
   <% else %>
     <%= fb_i(t(".messages.property_not_found")) %>

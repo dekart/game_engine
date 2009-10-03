@@ -4,7 +4,7 @@
       <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Fight, :attack,
             :template_data => {
               :victim           => fb_name(@fight.victim.user),
-              :money            => @fight.money,
+              :money            => number_to_currency(@fight.money),
               :experience       => @fight.experience,
               :attacker_hp_loss => @fight.attacker_hp_loss,
               :victim_hp_loss   => @fight.victim_hp_loss
@@ -29,7 +29,7 @@
             <h3><%= fb_i(t(".you_received.title")) %></h3>
 
             <%= payout(:experience, Character.human_attribute_name("experience"), @fight.experience) %>
-            <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @fight.money) %>
+            <%= payout(:basic_money, Character.human_attribute_name("basic_money"), number_to_currency(@fight.money)) %>
           </td>
           <td class="lost">
             <h3><%= fb_i(t(".you_lost.title")) %></h3>
@@ -83,7 +83,7 @@
 
             <%= payout(:energy, Character.human_attribute_name("energy"), 1) %>
             <%= payout(:health, Character.human_attribute_name("health"), @fight.attacker_hp_loss) %>
-            <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @fight.money) %>
+            <%= payout(:basic_money, Character.human_attribute_name("basic_money"), number_to_currency(@fight.money)) %>
           </td>
           <td class="victim_lost">
             <h3>

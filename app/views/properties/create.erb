@@ -23,11 +23,17 @@
 
     <div class="payouts">
       <% if @property.basic_price > 0 %>
-        <%= payout(:basic_money, Character.human_attribute_name("basic_money"), @property.basic_price) %>
+        <%= payout(:basic_money,
+              Character.human_attribute_name("basic_money"),
+              number_to_currency(@property.basic_price)
+            ) %>
       <% end %>
 
       <% if @property.vip_price > 0 %>
-        <%= payout(:vip_money, Character.human_attribute_name("vip_money"), @property.vip_price) %>
+        <%= payout(:vip_money,
+              Character.human_attribute_name("vip_money"),
+              number_to_currency(@property.vip_price)
+            ) %>
       <% end %>
     </div>
   <% else %>

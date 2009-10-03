@@ -4,7 +4,7 @@
   <% fb_i() do %>
     <%= t(".current_balance") %>
 
-    <%= fb_it(:amount, content_tag(:span, current_character.bank, :class => :value)) %>
+    <%= fb_it(:amount, content_tag(:span, number_to_currency(current_character.bank), :class => :value)) %>
   <% end %>
 </div>
 

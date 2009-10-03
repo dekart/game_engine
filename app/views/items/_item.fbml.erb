@@ -13,9 +13,8 @@
     <% end %>
   </td>
   <td class="requires">
-    <% %w{basic_price vip_price}.each do |attr| %>
-      <%= content_tag(:div, item.send(attr), :class => attr)  if item.send(attr).to_i > 0 %>
-    <% end %>
+    <%= basic_price(item.basic_price) %>
+    <%= vip_price(item.vip_price) %>
   </td>
   <td class="controls">
     <%= link_to_remote(fb_i(t(".buttons.buy")),

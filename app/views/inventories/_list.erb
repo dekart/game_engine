@@ -44,7 +44,7 @@
                     :html   => {:class => "use button"}
                   ) if inventory.usable? %>
 
-              <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, inventory.sell_price)),
+              <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:amount, number_to_currency(inventory.sell_price))),
                     :url    => inventory_url(inventory.item, :canvas => false),
                     :method => :delete,
                     :update => :result,

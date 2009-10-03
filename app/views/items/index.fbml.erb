@@ -41,7 +41,7 @@
         <%= t(".next_item") %>
 
         <%= fb_it(:level, content_tag(:span, @next_item.level, :class => :level)) %>
-        <%= fb_it(:group, content_tag(:span, @next_item.item_group.name.chars.downcase, :class => :weapon)) %>
+        <%= fb_it(:group, content_tag(:span, @next_item.item_group.name.mb_chars.downcase, :class => :weapon)) %>
       <% end %>
     </div>
   <% end %>

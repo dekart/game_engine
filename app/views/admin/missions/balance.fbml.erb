@@ -27,7 +27,9 @@
         <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
         <td class="ep_cost"><%= mission.ep_cost %></td>
         <td class="experience"><%= mission.experience %></td>
-        <td class="basic_money"><%= mission.money_min %> - <%= mission.money_max %></td>
+        <td class="basic_money">
+          <%= number_to_currency(mission.money_min) %> - <%= number_to_currency(mission.money_max) %>
+        </td>
         <td class="win_amount"><%= mission.win_amount %></td>
         <td class="mission_experience"><%= mission_experience = mission.win_amount * mission.experience %></td>
         <td class="total_experience"><%= total_experience += mission_experience %></td>

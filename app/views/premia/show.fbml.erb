@@ -4,7 +4,7 @@
   <% fb_i do %>
     <%= t(".current.label") %>
 
-    <%= fb_it(:amount, content_tag(:span, current_character.vip_money, :class => :value)) %>
+    <%= fb_it(:amount, content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)) %>
   <% end %>
 </div>
 
@@ -19,7 +19,7 @@
             ) %>
       <% end %>
     </td>
-    <td class="vip_money"><%= Character::BUY_POINTS_RATE[:vip_money] %></td>
+    <td class="vip_money"><%= number_to_currency(Character::BUY_POINTS_RATE[:vip_money]) %></td>
     <td class="controls">
       <%= link_to(t(".buy_points.button"), premium_path(:type => :buy_points),
             :method => :put,
@@ -32,7 +32,7 @@
     <td class="name">
       <%= fb_i(t(".hire_mercenary.text")) %>
     </td>
-    <td class="vip_money"><%= Character::HIRE_MERCENARY_RATE %></td>
+    <td class="vip_money"><%= number_to_currency(Character::HIRE_MERCENARY_RATE) %></td>
     <td class="controls">
       <%= link_to(t(".hire_mercenary.button"), premium_path(:type => :hire_mercenary),
             :method => :put,
@@ -47,11 +47,11 @@
         <%= t(".exchange_money.text") %>
 
         <%= fb_it(:amount,
-              content_tag(:span, Character::MONEY_EXCHANGE_RATE[:basic_money], :class => :basic_money)
+              content_tag(:span, number_to_currency(Character::MONEY_EXCHANGE_RATE[:basic_money]), :class => :basic_money)
             ) %>
       <% end %>
     </td>
-    <td class="vip_money"><%= Character::MONEY_EXCHANGE_RATE[:vip_money] %></td>
+    <td class="vip_money"><%= number_to_currency(Character::MONEY_EXCHANGE_RATE[:vip_money]) %></td>
     <td class="controls">
       <%= link_to(t(".exchange_money.button"), premium_path(:type => :exchange_money),
             :method => :put,
@@ -64,7 +64,7 @@
     <td class="name">
       <%= fb_i(t(".refill_energy.text")) %>
     </td>
-    <td class="vip_money"><%= Character::ENERGY_REFILL_RATE %></td>
+    <td class="vip_money"><%= number_to_currency(Character::ENERGY_REFILL_RATE) %></td>
     <td class="controls">
       <% if current_character.full_energy? %>
         <%= fb_i(t(".refill_energy.full")) %>
@@ -81,7 +81,7 @@
     <td class="name">
       <%= fb_i(t(".refill_health.text")) %>
     </td>
-    <td class="vip_money"><%= Character::HEALTH_REFILL_RATE %></td>
+    <td class="vip_money"><%= number_to_currency(Character::HEALTH_REFILL_RATE) %></td>
     <td class="controls">
       <% if current_character.full_health? %>
         <%= fb_i(t(".refill_health.full")) %>

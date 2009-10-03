@@ -89,7 +89,7 @@
             <% if @result.money %>
               <%= payout(:basic_money,
                     Character.human_attribute_name("basic_money"),
-                    @result.money
+                    number_to_currency(@result.money)
                   ) %>
             <% end %>
 

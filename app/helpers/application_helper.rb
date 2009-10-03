@@ -62,7 +62,7 @@ module ApplicationHelper
   end
 
   def basic_price(value, tag = :div)
-    content_tag(tag, value, :class => :basic_price) if value.to_i > 0
+    content_tag(tag, number_to_currency(value), :class => :basic_price) if value.to_i > 0
   end
 
   def vip_price(value, tag = :div)
@@ -71,7 +71,7 @@ module ApplicationHelper
         if current_character.vip_money >= value.to_i
           value
         else
-          "%s (%s)" % [value, link_to(fb_i(t("premia.get_vip")), premium_path)]
+          "%s (%s)" % [number_to_currency(value), link_to(fb_i(t("premia.get_vip")), premium_path)]
         end,
         :class => :vip_price
       )

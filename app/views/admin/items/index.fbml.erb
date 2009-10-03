@@ -30,8 +30,8 @@
         <td class="name"><%= link_to(item.name, edit_admin_item_path(item)) %></td>
         <td class="availability"><%= item.availability %></td>
         <td class="level"><%= item.level %></td>
-        <td class="basic_price"><%= item.basic_price %></td>
-        <td class="vip_price"><%= item.vip_price %></td>
+        <td class="basic_price"><%= number_to_currency(item.basic_price) %></td>
+        <td class="vip_price"><%= number_to_currency(item.vip_price) %></td>
         <td class="usable"><%= item.usable %><%= ", #{item.usage_limit}" if item.usage_limit %></td>
         <td class="effects">
           <% item.effects.each do |effect| %>

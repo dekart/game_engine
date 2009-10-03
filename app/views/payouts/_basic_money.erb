@@ -1,1 +1,4 @@
-<%= payout(:basic_money, Character.human_attribute_name("basic_money"), payout.value) %>
+<%= payout(:basic_money,
+      Character.human_attribute_name("basic_money"),
+      number_to_currency(payout.value)
+    ) %>
