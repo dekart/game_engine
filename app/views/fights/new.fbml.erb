@@ -23,12 +23,12 @@
     <%= fb_it(:minute_number, (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil) %>
   <% end %>
   </p>
-<% elsif current_character.ep == 0 %>
+<% elsif current_character.ep < Configuration[:fight_energy_required] %>
   <p>
     <% fb_i do %>
       <%= t(".messages.not_enough_energy") %>
       
-      <%= fb_it(:minute_number, (current_character.ep_restore_time(1) / 1.minute).ceil) %>
+      <%= fb_it(:minute_number, (current_character.ep_restore_time(Configuration[:fight_energy_required]) / 1.minute).ceil) %>
     <% end %>
   </p>
 <% else %>

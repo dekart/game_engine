@@ -146,7 +146,7 @@ en:
       current_balance: "Current Balance: {amount}"
       deposit:
         title: "Deposit"
-        note: "A 10% laundering fee will be taken out of all incoming funds."
+        note: "A {fee}% laundering fee will be taken out of all incoming funds."
         submit: "Deposit"
       withdraw:
         title: "Withdraw"
@@ -316,7 +316,6 @@ en:
     item:
       buttons:
         buy: "Buy"
-        get_vip: "Earn Gems"
   missions:
     fulfill:
       buttons:

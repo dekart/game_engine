@@ -4,10 +4,13 @@ class ItemsController < ApplicationController
 
     @items = @item_group.items.available_in(:shop).available_for(current_character).paginate(
       :page     => params[:page],
-      :per_page => 10
+      :per_page => Configuration[:item_show_basic]
     )
     
-    @special_items = @item_group.items.available_in(:special).available_for(current_character).all(:limit => 3, :order => "level DESC")
+    @special_items = @item_group.items.available_in(:special).available_for(current_character).all(
+      :limit => Configuration[:item_show_special],
+      :order => "level DESC"
+    )
 
     @next_item = @item_group.items.next_for(current_character).first
   end

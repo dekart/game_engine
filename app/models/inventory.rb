@@ -26,7 +26,7 @@ class Inventory < ActiveRecord::Base
   after_destroy :deposit_character
 
   def sell_price
-    (self.item.basic_price * 0.5).ceil
+    (self.item.basic_price * Configuration[:inventory_sell_price] * 0.01).ceil
   end
 
   def uses_left

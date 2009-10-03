@@ -1,6 +1,4 @@
 class Property < ActiveRecord::Base
-  MAXIMUM_AMOUNT = 2000
-
   belongs_to :character
   belongs_to :property_type
 
@@ -14,7 +12,7 @@ class Property < ActiveRecord::Base
   after_destroy :deposit_character
 
   def sell_price
-    (self.basic_price * 0.5).ceil
+    (self.basic_price * Configuration[:property_sell_price] * 0.01).ceil
   end
 
   def total_income
@@ -26,7 +24,7 @@ class Property < ActiveRecord::Base
   end
 
   def maximum_amount
-    self.property_type.purchase_limit || MAXIMUM_AMOUNT
+    self.property_type.purchase_limit || Configuration[:property_maximum_amount]
   end
 
   protected

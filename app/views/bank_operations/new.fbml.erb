@@ -16,7 +16,7 @@
 
         <%= f.text_field :amount, :value => current_character.basic_money, :label => fb_i(t(".deposit.title")) %>
 
-        <p><%= fb_i(t(".deposit.note")) %></p>
+        <p><%= fb_i(t(".deposit.note") + fb_it(:fee, Configuration[:bank_deposit_fee])) %></p>
 
         <% fb_tag(:input) do %>
           <%= fb_ta(:type, :submit) %>

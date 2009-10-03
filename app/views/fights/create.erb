@@ -28,14 +28,26 @@
           <td class="received">
             <h3><%= fb_i(t(".you_received.title")) %></h3>
 
-            <%= payout(:experience, Character.human_attribute_name("experience"), @fight.experience) %>
-            <%= payout(:basic_money, Character.human_attribute_name("basic_money"), number_to_currency(@fight.money)) %>
+            <%= payout(:experience,
+                  Character.human_attribute_name("experience"),
+                  @fight.experience
+                ) %>
+            <%= payout(:basic_money,
+                  Character.human_attribute_name("basic_money"),
+                  number_to_currency(@fight.money)
+                ) %>
           </td>
           <td class="lost">
             <h3><%= fb_i(t(".you_lost.title")) %></h3>
 
-            <%= payout(:energy, Character.human_attribute_name("energy"), 1) %>
-            <%= payout(:health, Character.human_attribute_name("health"), @fight.attacker_hp_loss) %>
+            <%= payout(:energy,
+                  Character.human_attribute_name("energy"),
+                  Configuration[:fight_energy_required]
+                ) %>
+            <%= payout(:health,
+                  Character.human_attribute_name("health"),
+                  @fight.attacker_hp_loss
+                ) %>
           </td>
           <td class="victim_lost">
             <h3>
@@ -46,7 +58,10 @@
               <% end %>
             </h3>
 
-            <%= payout(:health, Character.human_attribute_name("health"), @fight.victim_hp_loss) %>
+            <%= payout(:health,
+                  Character.human_attribute_name("health"),
+                  @fight.victim_hp_loss
+                ) %>
           </td>
         </tr>
       </table>
@@ -81,9 +96,18 @@
           <td class="lost">
             <h3><%= fb_i(t(".you_lost.title")) %></h3>
 
-            <%= payout(:energy, Character.human_attribute_name("energy"), 1) %>
-            <%= payout(:health, Character.human_attribute_name("health"), @fight.attacker_hp_loss) %>
-            <%= payout(:basic_money, Character.human_attribute_name("basic_money"), number_to_currency(@fight.money)) %>
+            <%= payout(:energy,
+                  Character.human_attribute_name("energy"),
+                  Configuration[:fight_energy_required]
+                ) %>
+            <%= payout(:health,
+                  Character.human_attribute_name("health"),
+                  @fight.attacker_hp_loss
+                ) %>
+            <%= payout(:basic_money,
+                  Character.human_attribute_name("basic_money"),
+                  number_to_currency(@fight.money)
+                ) %>
           </td>
           <td class="victim_lost">
             <h3>
@@ -94,7 +118,10 @@
               <% end %>
             </h3>
 
-            <%= payout(:health, Character.human_attribute_name("health"), @fight.victim_hp_loss) %>
+            <%= payout(:health,
+                  Character.human_attribute_name("health"),
+                  @fight.victim_hp_loss
+                ) %>
           </td>
         </tr>
       </table>
@@ -149,7 +176,10 @@
     </table>
 
     <% content_tag(:div, :class => :item_details, :id => dom_id(@fight, :items)) do %>
-      <%= link_to_remote(fb_i(t(".show_items")), :url => used_items_fight_url(@fight, :canvas => false), :update => dom_id(@fight, :items)) %>
+      <%= link_to_remote(fb_i(t(".show_items")), 
+            :url    => used_items_fight_url(@fight, :canvas => false),
+            :update => dom_id(@fight, :items)
+          ) %>
     <% end %>
   <% else %>
     <p><%= fb_i(@fight.errors.on(:character)) %></p>

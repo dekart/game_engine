@@ -3,7 +3,10 @@ class RelationsController < ApplicationController
     if current_character.relations.size == 0
       redirect_to invite_users_path
     else
-      @relations = current_character.relations.paginate(:page => params[:page], :per_page => 10)
+      @relations = current_character.relations.paginate(
+        :page     => params[:page],
+        :per_page => Configuration[:relation_show_limit]
+      )
     end
   end
 

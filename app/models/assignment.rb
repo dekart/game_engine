@@ -1,4 +1,6 @@
 class Assignment < ActiveRecord::Base
+  ROLES = %w{attack defence fight_damage fight_income mission_energy mission_income}
+
   belongs_to :context, :polymorphic => true
   belongs_to :relation
 
@@ -10,17 +12,29 @@ class Assignment < ActiveRecord::Base
   def self.effect_value(context, character, role)
     case role.to_sym
     when :attack
-      (character.attack * 0.2).ceil
+      (character.attack * Configuration[:assignment_attack_bonus] * 0.01).ceil
     when :defence
-      (character.defence * 0.2).ceil
+      (character.defence * Configuration[:assignment_defence_bonus] * 0.01).ceil
     when :fight_damage
-      log_percent(character.level, 3.5, 1)
+      log_percent(character.level,
+        Configuration[:assignment_fight_damage_multiplier],
+        Configuration[:assignment_fight_damage_divider]
+      )
     when :fight_income
-      log_percent(character.level, 2, 1)
+      log_percent(character.level,
+        Configuration[:assignment_fight_income_multiplier],
+        Configuration[:assignment_fight_income_divider]
+      )
     when :mission_energy
-      log_percent(character.level, 1, 4)
+      log_percent(character.level,
+        Configuration[:assignment_mission_energy_multiplier],
+        Configuration[:assignment_mission_energy_divider]
+      )
     when :mission_income
-      log_percent(character.level, 4, 2)
+      log_percent(character.level,
+        Configuration[:assignment_mission_income_multiplier],
+        Configuration[:assignment_mission_income_divider]
+      )
     end
   end
   

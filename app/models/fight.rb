@@ -51,7 +51,7 @@ class Fight < ActiveRecord::Base
   protected
 
   def validate
-    if self.attacker.ep == 0
+    if self.attacker.ep < Configuration[:fight_energy_required]
       self.errors.add(:character, :not_enough_energy)
     end
 
@@ -69,7 +69,7 @@ class Fight < ActiveRecord::Base
 
     self.winner = attacker_won ? self.attacker : self.victim
 
-    self.experience = (rand(self.loser.level) * 0.5).ceil
+    self.experience = (rand(self.loser.level) * Configuration[:fight_experience] * 0.01).ceil
     self.experience = 1 if self.experience == 0
 
     if self.loser.basic_money == 0
@@ -77,7 +77,7 @@ class Fight < ActiveRecord::Base
     else
       fignt_money_bonus = 0.01 * self.winner.assignments.effect_value(:fight_income)
 
-      self.money = (rand(self.loser.basic_money) * (0.10 + fignt_money_bonus)).ceil
+      self.money = (rand(self.loser.basic_money) * (Configuration[:fight_money_loot] * 0.01 + fignt_money_bonus)).ceil
     end
   end
 
@@ -87,7 +87,7 @@ class Fight < ActiveRecord::Base
     self.winner.basic_money += self.money
     self.loser.basic_money  -= self.money
 
-    self.attacker.ep  -= 1
+    self.attacker.ep  -= Configuration[:fight_energy_required]
 
     self.attacker.hp  -= self.attacker_hp_loss
     self.victim.hp    -= self.victim_hp_loss
@@ -98,13 +98,6 @@ class Fight < ActiveRecord::Base
     self.attacker.save!
     self.victim.save!
   end
-
-  VTM = {
-    :dice => 10,
-    :critical_failure => 1,
-    :critical_success => 10,
-    :success => 6
-  }
 
   def calculate_proportions(attacker, victim)
     attack_points = attacker.attack_points
@@ -120,17 +113,24 @@ class Fight < ActiveRecord::Base
     if attacker_won
       victim_damage_reduce    = 0.01 * victim.assignments.effect_value(:fight_damage)
 
-      attack_damage   = rand(victim.health * 1000) * 0.5 * (1 - victim_damage_reduce)
-      defence_damage  = rand(attack_damage * (attack > defence ? defence / attack : 0.9))
+      attack_damage   = rand(victim.health * 1000) * (1 - victim_damage_reduce) * Configuration[:fight_max_loser_damage] * 0.01
+      defence_damage  = rand(attack_damage * (attack > defence ? defence / attack : Configuration[:fight_max_winner_damage] * 0.01))
     else
       attacker_damage_reduce  = 0.01 * attacker.assignments.effect_value(:fight_damage)
 
-      defence_damage  = rand(attacker.health * 1000) * 0.5 * (1 - attacker_damage_reduce)
-      attack_damage   = rand(defence_damage * (defence > attack ? attack / defence : 0.9))
+      defence_damage  = rand(attacker.health * 1000) * Configuration[:fight_max_loser_damage] * 0.01 * (1 - attacker_damage_reduce)
+      attack_damage   = rand(defence_damage * (defence > attack ? attack / defence : Configuration[:fight_max_winner_damage] * 0.01))
     end
 
     return [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
   end
+
+  VTM = {
+    :dice => 10,
+    :critical_failure => 1,
+    :critical_success => 10,
+    :success => 6
+  }
 
   def calculate_dices(attacker, victim)
     attack_points = attacker.attack_points

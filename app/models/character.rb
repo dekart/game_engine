@@ -1,32 +1,14 @@
 class Character < ActiveRecord::Base
   extend SerializeWithPreload
-
+  extend RestorableAttribute
+  
   LEVELS = [0]
 
   2000.times do |i|
     LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
   end
 
-  UPGRADES = {
-    :attack   => 1,
-    :defence  => 1,
-    :health   => 5,
-    :energy   => 1
-  }
-
-  MONEY_EXCHANGE_RATE = {
-    :basic_money => 1000,
-    :vip_money   => 5
-  }
-  ENERGY_REFILL_RATE = 5
-  HEALTH_REFILL_RATE = 1
-  BUY_POINTS_RATE = {
-    :vip_money  => 5,
-    :points     => 5
-  }
-
-  FIGHT_WITH_INVITE_AVAILABLE_TILL = 10 # Maximum level where fight with invite is available
-  HIRE_MERCENARY_RATE = 20
+  UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy]
 
   belongs_to :user
   
@@ -59,24 +41,39 @@ class Character < ActiveRecord::Base
     :include      => :target_character,
     :dependent    => :destroy,
     :extend       => Character::FriendRelations
-  has_many :reverse_friend_relations, :foreign_key => "target_id", :class_name => "FriendRelation", :dependent => :destroy
-  has_many :mercenary_relations, :foreign_key => "source_id", :dependent => :delete_all
+  has_many :reverse_friend_relations, 
+    :foreign_key  => "target_id",
+    :class_name   => "FriendRelation",
+    :dependent    => :destroy
+  has_many :mercenary_relations, 
+    :foreign_key  => "source_id",
+    :dependent    => :delete_all
 
   has_many :properties,
-    :order => "property_type_id",
-    :dependent => :delete_all,
-    :extend => Character::Properties
+    :order      => "property_type_id",
+    :dependent  => :delete_all,
+    :extend     => Character::Properties
   
-  has_many :attacks, :class_name => "Fight", :foreign_key => :attacker_id, :dependent => :delete_all
-  has_many :defences, :class_name => "Fight", :foreign_key => :victim_id, :dependent => :delete_all
-  has_many :won_fights, :class_name => "Fight", :foreign_key => :winner_id
+  has_many :attacks, 
+    :class_name   => "Fight",
+    :foreign_key  => :attacker_id,
+    :dependent    => :delete_all
+  has_many :defences, 
+    :class_name   => "Fight",
+    :foreign_key  => :victim_id,
+    :dependent    => :delete_all
+  has_many :won_fights, 
+    :class_name   => "Fight",
+    :foreign_key  => :winner_id
 
   has_many :assignments,
     :as         => :context,
     :dependent  => :delete_all,
     :extend     => Character::Assignments
 
-  has_many :help_requests, :dependent => :destroy, :extend => Character::HelpRequests
+  has_many :help_requests, 
+    :dependent  => :destroy,
+    :extend     => Character::HelpRequests
 
   named_scope :victims_for, Proc.new{|attacker|
     {
@@ -89,10 +86,10 @@ class Character < ActiveRecord::Base
           characters.id != :attacker_id
         },
         {
-          :low_level    => attacker.level,
-          :high_level   => attacker.level + 5,
+          :low_level    => attacker.level + Configuration[:fight_victim_levels_lower],
+          :high_level   => attacker.level + Configuration[:fight_victim_levels_higher],
           :attacker_id  => attacker.id,
-          :time_limit   => 1.hour.ago
+          :time_limit   => Configuration[:fight_attack_repeat_delay].minutes.ago
         }
       ],
       :include  => :user
@@ -104,10 +101,15 @@ class Character < ActiveRecord::Base
   serialize :inventory_effects, Effects::Collection
   serialize :relation_effects, Effects::Collection
 
-  extend RestorableAttribute
-  restorable_attribute :hp, :limit => :health, :restore_period => 1.minutes
-  restorable_attribute :ep, :limit => :energy, :restore_period => 2.minutes
-  restorable_attribute :basic_money, :restore_period => 1.hour, :restore_rate => :property_income
+  restorable_attribute :hp,
+    :limit          => :health,
+    :restore_period => Configuration[:character_health_restore_period].seconds
+  restorable_attribute :ep, 
+    :limit => :energy,
+    :restore_period => Configuration[:character_energy_restore_period].seconds
+  restorable_attribute :basic_money, 
+    :restore_period => Configuration[:character_income_calculation_period].minutes,
+    :restore_rate   => :property_income
 
   before_save :update_level_and_points, :recalculate_rating
   after_destroy :delete_friend_relations
@@ -115,18 +117,18 @@ class Character < ActiveRecord::Base
   def upgrade_attribute!(name)
     name = name.to_sym
 
-    return false unless UPGRADES.keys.include?(name) && self.points > 0
+    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && self.points > 0
 
     ActiveRecord::Base.transaction do
       case name
       when :health
-        self.health += UPGRADES[:health]
-        self.hp     += UPGRADES[:health]
+        self.health += Configuration[:character_health_upgrade]
+        self.hp     += Configuration[:character_health_upgrade]
       when :energy
-        self.energy += UPGRADES[:energy]
-        self.ep     += UPGRADES[:energy]
+        self.energy += Configuration[:character_energy_upgrade]
+        self.ep     += Configuration[:character_energy_upgrade]
       else
-        self.increment(name, UPGRADES[name.to_sym])
+        self.increment(name, Configuration["character_#{name}_upgrade"])
       end
 
       self.decrement(:points)
@@ -162,7 +164,7 @@ class Character < ActiveRecord::Base
   end
 
   def weakness_minimum
-    (self.health * 0.2).ceil
+    (self.health * Configuration[:character_weakness_minimum] * 0.01).ceil
   end
 
   def experience_to_next_level
@@ -262,11 +264,11 @@ class Character < ActiveRecord::Base
   end
 
   def exchange_money!
-    return if self.vip_money < MONEY_EXCHANGE_RATE[:vip_money]
+    return if self.vip_money < Configuration[:premium_money_price]
 
     self.class.transaction do
-      self.vip_money    -= MONEY_EXCHANGE_RATE[:vip_money]
-      self.basic_money  += MONEY_EXCHANGE_RATE[:basic_money]
+      self.vip_money    -= Configuration[:premium_money_price]
+      self.basic_money  += Configuration[:premium_money_amount]
 
       self.save
     end
@@ -277,11 +279,11 @@ class Character < ActiveRecord::Base
   end
 
   def refill_energy!(free = false)
-    return if full_energy? or (!free and vip_money < ENERGY_REFILL_RATE)
+    return if full_energy? or (!free and vip_money < Configuration[:premium_energy_price])
 
     self.class.transaction do
       self.ep = self.energy
-      self.vip_money -= ENERGY_REFILL_RATE unless free
+      self.vip_money -= Configuration[:premium_energy_price] unless free
 
       self.save
     end
@@ -292,32 +294,32 @@ class Character < ActiveRecord::Base
   end
 
   def refill_health!(free = false)
-    return if full_health? or (!free and vip_money < HEALTH_REFILL_RATE)
+    return if full_health? or (!free and vip_money < Configuration[:premium_health_price])
 
     self.class.transaction do
       self.hp = self.health
-      self.vip_money -= HEALTH_REFILL_RATE unless free
+      self.vip_money -= Configuration[:premium_health_price] unless free
 
       self.save
     end
   end
 
   def buy_points!
-    return if self.vip_money < BUY_POINTS_RATE[:vip_money]
+    return if self.vip_money < Configuration[:premium_points_price]
 
     self.class.transaction do
-      self.vip_money  -= BUY_POINTS_RATE[:vip_money]
-      self.points     += BUY_POINTS_RATE[:points]
+      self.vip_money  -= Configuration[:premium_points_price]
+      self.points     += Configuration[:premium_points_amount]
 
       self.save
     end
   end
 
   def hire_mercenary!
-    return if self.vip_money < HIRE_MERCENARY_RATE
+    return if self.vip_money < Configuration[:premium_mercenary_price]
 
     self.transaction do
-      self.vip_money -= HIRE_MERCENARY_RATE
+      self.vip_money -= Configuration[:premium_mercenary_price]
       
       mercenary_relations.create!
       save
@@ -329,7 +331,8 @@ class Character < ActiveRecord::Base
   end
 
   def allow_fight_with_invite?
-    self.level <= FIGHT_WITH_INVITE_AVAILABLE_TILL
+    Configuration[:fight_with_invite_allowed] and
+      self.level <= Configuration[:fight_with_invite_max_level]
   end
 
   def secret
@@ -357,8 +360,10 @@ class Character < ActiveRecord::Base
 
   def update_level_and_points
     if self.experience_to_next_level <= 0
-      self.level  += 1
-      self.points += 5
+      self.level      += 1
+      
+      self.points     += Configuration[:character_points_per_upgrade]
+      self.vip_money  += Configuration[:character_vip_money_per_upgrade]
 
       self.ep     = self.energy
       self.hp     = self.health
@@ -369,11 +374,14 @@ class Character < ActiveRecord::Base
 
   def recalculate_rating
     self.rating = (
-      self.missions_completed * 500 +
-      self.relations_count    * 100 +
-      self.fights_won         * 10 +
-      self.missions_succeeded * 5 +
-      (self.property_income.to_f / (5 + self.property_income.to_f / 50000)).ceil
+      self.missions_completed * Configuration[:rating_missions_completed] +
+      self.relations_count    * Configuration[:rating_relations] +
+      self.fights_won         * Configuration[:rating_fights_won] +
+      self.missions_succeeded * Configuration[:rating_missions_succeeded] +
+      (
+        self.property_income.to_f /
+        (Configuration[:rating_income_divider] + self.property_income.to_f / Configuration[:rating_income_ceil])
+      ).ceil
     )
   end
 end

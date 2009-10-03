@@ -13,11 +13,14 @@ class FightWithInvite
     @attacker = attacker
     @victim   = victim_id
 
-    @experience = (attacker.level * 0.5).ceil
-    @money      = rand(attacker.level * 10) + attacker.level * 5
+    @experience = (attacker.level * Configuration[:fight_with_invite_experience] * 0.01).ceil
+    @money      = rand(attacker.level * Configuration[:fight_with_invite_money_max]) + attacker.level * Configuration[:fight_with_invite_money_min]
 
-    @victim_hp_loss = (rand(attacker.health * 0.25) + attacker.health * 0.1).ceil
-    @attacker_hp_loss = rand((@victim_hp_loss * 0.8).ceil) + 1
+    @victim_hp_loss = (
+      rand(attacker.health * Configuration[:fight_with_invite_victim_damage_max] * 0.01) +
+      attacker.health * Configuration[:fight_with_invite_victim_damage_min] * 0.01
+    ).ceil
+    @attacker_hp_loss = rand((@victim_hp_loss * Configuration[:fight_with_invite_attacker_damage] * 0.01).ceil) + 1
   end
 
   def valid?
@@ -25,14 +28,14 @@ class FightWithInvite
   end
 
   def enough_energy?
-    @attacker.ep > 0
+    @attacker.ep >= Configuration[:fight_with_invite_energy_required]
   end
 
   def save
     @attacker.basic_money += @money
     @attacker.experience  += @experience
     @attacker.hp          -= @attacker_hp_loss
-    @attacker.ep          -= 1
+    @attacker.ep          -= Configuration[:fight_with_invite_energy_required]
 
     @attacker.save
   end

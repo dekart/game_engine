@@ -7,7 +7,9 @@ class CharactersController < ApplicationController
     elsif current_user.should_visit_invite_page?
       redirect_to invite_users_path
     else
-      @latest_fights = Fight.with_participant(current_character).find(:all, :limit => 10)
+      @latest_fights = Fight.with_participant(current_character).find(:all, 
+        :limit => Configuration[:character_latest_fights_show_limit]
+      )
       @alliance_invitations = Invitation.for_user(current_user).find(:all)
     end
   end
@@ -37,7 +39,10 @@ class CharactersController < ApplicationController
   end
 
   def rating
-    @characters = Character.find(:all, :order => "rating DESC", :limit => 20)
+    @characters = Character.find(:all,
+      :order => "rating DESC",
+      :limit => Configuration[:rating_show_limit]
+    )
   end
 
   def bank

@@ -185,7 +185,7 @@ form .error {color: red; padding: 3px 0px;}
       .item_list .details .restore_health{background-image: url(icons/health.gif);}
       .item_list .details .restore_energy{background-image: url(icons/energy.gif);}
       .item_list .details .upgrade{background-image: url(icons/level.gif);}
-  .item_list .requires {width: 50px;}
+  .item_list .requires {width: 100px;}
     .item_list .requires div {line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
       .item_list .requires .basic_price{background-image: url(icons/basic_money.gif);}
       .item_list .requires .vip_price{background-image: url(icons/vip_money.gif);}

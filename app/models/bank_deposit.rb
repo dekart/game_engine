@@ -9,7 +9,7 @@ class BankDeposit < BankOperation
 
   def move_money
     self.character.basic_money -= self.amount
-    self.character.bank += (self.amount * 0.9).ceil
+    self.character.bank += (self.amount * (100 - Configuration[:bank_deposit_fee]) * 0.01).ceil
     self.character.save
   end
 end

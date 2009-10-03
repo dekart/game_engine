@@ -1,7 +1,7 @@
 <h2><%= fb_i(t(".title")) %></h2>
 
 <div id="character_assignments" cellspacing="0" cellpadding="0">
-  <% %w{attack defence fight_damage fight_income mission_energy mission_income}.each do |role| %>
+  <% Assignment::ROLES.each do |role| %>
     <div class="context">
       <b><%= fb_i(t("assignments.roles.#{role}.title")) %></b>
 

@@ -1,6 +1,9 @@
 class FightsController < ApplicationController
   def new
-    @victims = Character.victims_for(current_character).find(:all, :order => "RAND()", :limit => 10)
+    @victims = Character.victims_for(current_character).find(:all,
+      :order => "RAND()",
+      :limit => Configuration[:fight_victim_show_limit]
+    )
 
     # Insert random non-registered friends
     if current_character.allow_fight_with_invite?

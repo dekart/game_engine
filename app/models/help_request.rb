@@ -1,7 +1,4 @@
 class HelpRequest < ActiveRecord::Base
-  EXPIRE_PERIOD = 24.hours
-  DISPLAY_PERIOD = 24.hours
-  
   belongs_to  :character
   belongs_to  :context, :polymorphic => true
   has_many    :help_results, :dependent => :delete_all
@@ -22,11 +19,11 @@ class HelpRequest < ActiveRecord::Base
   end
 
   def expire_at
-    self.created_at + EXPIRE_PERIOD
+    self.created_at + Configuration[:help_request_expire_period]
   end
 
   def stop_display_at
-    self.expire_at + DISPLAY_PERIOD
+    self.expire_at + Configuration[:help_request_display_period]
   end
 
   def should_be_displayed?

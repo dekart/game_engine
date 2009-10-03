@@ -1,7 +1,4 @@
 class User < ActiveRecord::Base
-  TIME_BEFORE_FIRST_INVITE_PAGE_VISIT = 1.hour
-  INVITE_PAGE_VISIT_DELAY = 48.hours
-
   has_one :character
 
   has_many :invitations, :foreign_key => :sender_id do
@@ -24,6 +21,10 @@ class User < ActiveRecord::Base
     self.create_character unless self.character
   end
 
+  def skip_tutorial?
+    !(Configuration[:user_tutorial_enabled] and !self[:skip_tutorial])
+  end
+
   def setup_profile!
     Delayed::Job.enqueue Jobs::SetupProfile.new(self.id)
   end
@@ -41,7 +42,7 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    ADMINS.include?(self.facebook_id)
+    Configuration[:user_admins].split(/\s*,\s*/).include?(self.facebook_id.to_s)
   end
 
   def deliver_welcome_message!
@@ -49,8 +50,9 @@ class User < ActiveRecord::Base
   end
 
   def should_visit_invite_page?
-    self.created_at < Time.now - TIME_BEFORE_FIRST_INVITE_PAGE_VISIT and
-      (self.invite_page_visited_at.nil? or self.invite_page_visited_at < Time.now - INVITE_PAGE_VISIT_DELAY)
+    Configuration[:user_invite_page_redirect_enabled] and
+      self.created_at < Configuration[:user_invite_page_first_visit_delay].hours.ago and
+      (self.invite_page_visited_at.nil? or self.invite_page_visited_at < Configuration[:user_invite_page_recurrent_visit_delay].hours.ago)
   end
 
   def invite_page_visited!
