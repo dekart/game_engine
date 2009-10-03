@@ -14,12 +14,12 @@
       <td><%= render :partial => "characters/attributes", :locals => {:character => @character} %></td>
       <td><%= render :partial => "characters/statistics", :locals => {:character => @character} %></td>
       <td id="rank_list">
-        <% if @ranks.any? %>
-          <% @ranks.each do |rank| %>
-            <%= content_tag(:div, rank.title, :class => :rank) %>
+        <% if @character.titles.any? %>
+          <% @character.titles.each do |title| %>
+            <%= content_tag(:div, title, :class => :rank) %>
           <% end %>
         <% else %>
-          <%= fb_i(t(".titles.empty_set", :user => fb_name(@character.user, :firstnameonly => true, :capitalize => true, :linked => false))) %>
+          <%= fb_i(t(".titles.empty_set", :user => character_name(@character, :firstnameonly => true, :capitalize => true))) %>
         <% end %>
       </td>
     </tr>

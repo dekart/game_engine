@@ -9,7 +9,7 @@
       <%= form.text_area :success_text, :required => true, :rows => 5 %>
       <%= form.text_area :failure_text, :required => true, :rows => 5 %>
       <%= form.text_area :complete_text, :required => true, :rows => 5 %>
-      <%= form.text_field :title, :required => true %>
+      <%= form.text_field :title %>
       
       <%= form.file_field :image,
             :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : "") %>

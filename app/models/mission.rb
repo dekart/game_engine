@@ -29,7 +29,7 @@ class Mission < ActiveRecord::Base
   serialize :requirements, Requirements::Collection
   serialize :payouts, Payouts::Collection
 
-  validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text, :title, :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max
+  validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text, :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max
   validates_numericality_of :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max, :allow_blank => true
 
   def self.to_grouped_dropdown

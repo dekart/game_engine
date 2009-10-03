@@ -347,6 +347,12 @@ class Character < ActiveRecord::Base
     self.save
   end
 
+  def titles
+    (self.ranks.completed + self.mission_group_ranks.completed).collect do |rank|
+      rank.title unless rank.title.blank?
+    end.compact
+  end
+
   protected
 
   def update_level_and_points

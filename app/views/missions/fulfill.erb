@@ -13,11 +13,13 @@
 
       <p>
         <%= fb_i(@mission.complete_text) %>
-
-        <%= fb_i(t(".completed.message")) %>
       </p>
 
-      <h3 class="title"><%= fb_i(@mission.title) %></h3>
+      <% unless @mission.title.blank? %>
+        <p><%= fb_i(t(".completed.message")) %></p>
+
+        <h3 class="title"><%= fb_i(@mission.title) %></h3>
+      <% end %>
 
       <% if @mission.child_missions.any? %>
         <div class="child_missions">
