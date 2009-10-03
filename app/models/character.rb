@@ -1,6 +1,7 @@
 class Character < ActiveRecord::Base
   extend SerializeWithPreload
   extend RestorableAttribute
+  include ActionView::Helpers::NumberHelper 
   
   LEVELS = [0]
 
@@ -185,10 +186,20 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def formatted_basic_money
+    number_to_currency(basic_money)
+  end
+
+  def formatted_vip_money
+    number_to_currency(vip_money)
+  end
+
   def to_json_for_overview(options = {})
     to_json(
       :only     => [:basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp, :points, :property_income],
       :methods  => [
+        :formatted_basic_money,
+        :formatted_vip_money,
         :next_level_experience,
         :level_progress_percentage,
         :time_to_hp_restore,

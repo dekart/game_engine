@@ -40,8 +40,8 @@ var Character = {
   onUpgradeComplete: function(){},
 
   update: function(a){
-    $("co_basic_money").setTextValue(a.character.basic_money);
-    $("co_vip_money").setTextValue(a.character.vip_money);
+    $("co_basic_money").setTextValue(a.character.formatted_basic_money);
+    $("co_vip_money").setTextValue(a.character.formatted_vip_money);
     $("co_experience").setTextValue(a.character.experience + "/" + a.character.next_level_experience);
     $("co_experience_percentage").setStyle({width: a.character.level_progress_percentage + "%"})
     $("co_level").setTextValue(a.character.level);
