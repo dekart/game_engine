@@ -1,27 +1,11 @@
 class Promotion < ActiveRecord::Base
-  extend SerializeWithPreload
+  extend HasPayouts
 
   has_many :promotion_receipts, :dependent => :delete_all
 
-  serialize :payouts, Payouts::Collection
+  has_payouts
   
   validates_presence_of :text, :valid_till
-
-  def payouts
-    super || Payouts::Collection.new
-  end
-
-  def payouts=(collection)
-    if collection and !collection.is_a?(Payouts::Collection)
-      items = collection.values.collect do |payout|
-        Payouts::Base.by_name(payout[:type]).new(payout.except(:type))
-      end
-
-      collection = Payouts::Collection.new(*items)
-    end
-
-    super(collection)
-  end
 
   def to_param
     "#{self.id}-#{self.secret}"

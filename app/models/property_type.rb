@@ -20,8 +20,6 @@ class PropertyType < ActiveRecord::Base
     }
   }
 
-  serialize :requirements, Requirements::Collection
-
   validates_presence_of :name, :availability, :basic_price, :income
   validates_numericality_of :basic_price, :vip_price, :income, :purchase_limit, :allow_nil => true
 
@@ -31,21 +29,5 @@ class PropertyType < ActiveRecord::Base
 
   def vip_price
     self[:vip_price].to_i
-  end
-
-  def requirements
-    super || Requirements::Collection.new
-  end
-
-  def requirements=(collection)
-    unless collection.is_a?(Requirements::Collection)
-      items = collection.values.collect do |requirement|
-        Requirements::Base.by_name(requirement[:type]).new(requirement)
-      end
-
-      collection = Requirements::Collection.new(*items)
-    end
-
-    super(collection)
   end
 end
