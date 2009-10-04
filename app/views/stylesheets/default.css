@@ -318,7 +318,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .child_missions {margin: 15px 0;}
     #mission_result .child_missions .child {line-height: 22px; padding-left: 23px; background: url(icons/missions.gif) center left no-repeat; margin-bottom: 15px;}
 /* Mission help result block */
-#help_result {padding:0px 30px; background: url(icons/missions.gif) 5px 0px no-repeat;}
+#help_result {padding:0px 30px; background: url(icons/alliance.gif) 5px 0px no-repeat;}
 
 /* Fight result block */
 #fight_result {padding:0px 30px; background: url(icons/fights.gif) 5px 0px no-repeat;}

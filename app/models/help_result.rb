@@ -19,7 +19,7 @@ class HelpResult < ActiveRecord::Base
 
   def check_already_helped
     if self.help_request.help_results.find_by_character_id(self.character.id)
-      self.errors.add_to_base(:already_helped)
+      self.errors.add_to_base(:"already_helped_with_#{context.class.to_s.underscore}")
     end
   end
 

@@ -60,7 +60,8 @@ en:
               too_much_properties: "You cannot buy properties anymore because you already have too many!"
         help_result:
           too_late: "You're too late! Next time try to help your friends within 24 hours."
-          already_helped: "You already helped your friend with this mission."
+          already_helped_with_mission: "You already helped your friend with this mission."
+          already_helped_with_fight: "You already helped your friend to fight with this enemy."
   effects:
     attack:
       name: "Attack"
@@ -536,8 +537,8 @@ en:
     show:
       success: "You successfully helped {user} to fulfill the {mission} mission!"
       you_received: "You received:"
-    friends_only:
-      message: "You cannot help players that are not your friends"
+      friends_only:
+        message: "You cannot help players that are not your friends"
   tutorials:
     skip:
       skip: "Skip tutorial &raquo;"

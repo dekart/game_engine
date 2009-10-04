@@ -1,35 +1,43 @@
 <% content_for :result do %>
-  <% if @help_request.context.is_a?(Mission) %>
-    <div id="help_result">
-      <% if !@help_result.new_record? %>
-        <p class="success">
-          <% fb_i do %>
-            <%= t(".success") %>
+  <% if @help_result %>
+    <% if !@help_result.new_record? %>
+      <% if @help_request.context.is_a?(Mission) %>
+        <div id="mission_result">
+          <p class="success">
+            <% fb_i do %>
+              <%= t(".success") %>
 
-            <%= fb_it(:user, character_name_link(@help_request.character)) %>
-            <%= fb_it(:mission, @help_request.context.name) %>
-          <% end %>
-        </p>
+              <%= fb_it(:user, character_name_link(@help_request.character)) %>
+              <%= fb_it(:mission, content_tag(:strong, @help_request.context.name)) %>
+            <% end %>
+          </p>
 
-        <div class="payouts">
-          <h3><%= fb_i(t(".you_received")) %></h3>
+          <div class="payouts">
+            <h3><%= fb_i(t(".you_received")) %></h3>
 
-          <%= payout(:basic_money,
-                Character.human_attribute_name("basic_money"),
-                number_to_currency(@help_result.money)
-              ) %>
-          <%= payout(:experience,
-                Character.human_attribute_name("experience"),
-                @help_result.experience
-              ) %>
+            <%= payout(:basic_money,
+                  Character.human_attribute_name("basic_money"),
+                  number_to_currency(@help_result.money)
+                ) %>
+            <%= payout(:experience,
+                  Character.human_attribute_name("experience"),
+                  @help_result.experience
+                ) %>
+          </div>
         </div>
-      <% else %>
-        <p class="fail"><%= fb_i(@help_result.errors.full_messages.first) %></p>
-      <% end %>
-    </div>
 
-    <%= character_level_up_block %>
-  <% elsif @help_request.context.is_a?(Fight) %>
-    <%= render :file => "fights/create" %>
+        <%= character_level_up_block %>
+      <% elsif @help_request.context.is_a?(Fight) %>
+        <%= render :file => "fights/create" %>
+      <% end %>
+    <% else %>
+      <div id="help_result">
+        <p class="fail"><%= fb_i(@help_result.errors.full_messages.first) %></p>
+      </div>
+    <% end %>
+  <% else %>
+    <div id="help_result">
+      <p class="fail"><%= fb_i(t(".friends_only.message")) %></p>
+    </div>
   <% end %>
 <% end %>
