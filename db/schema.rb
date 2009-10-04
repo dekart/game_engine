@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091003144134) do
+ActiveRecord::Schema.define(:version => 20091004141310) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -333,6 +333,9 @@ ActiveRecord::Schema.define(:version => 20091003144134) do
     t.integer  "image_file_size"
     t.integer  "parent_mission_id"
     t.boolean  "repeatable"
+    t.boolean  "allow_loot"
+    t.integer  "loot_chance",        :default => 10
+    t.string   "loot_item_ids"
   end
 
   create_table "newsletters", :force => true do |t|

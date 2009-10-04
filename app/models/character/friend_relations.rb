@@ -11,5 +11,9 @@ class Character
     def established?(character)
       !with(character).nil?
     end
+
+    def random
+      first(:offset => rand(size)) if size > 0
+    end
   end
 end

@@ -48,7 +48,8 @@ class Character < ActiveRecord::Base
     :dependent    => :destroy
   has_many :mercenary_relations, 
     :foreign_key  => "source_id",
-    :dependent    => :delete_all
+    :dependent    => :delete_all,
+    :extend       => Character::MercenaryRelations
 
   has_many :properties,
     :order      => "property_type_id",

@@ -1,6 +1,6 @@
 class MissionResult
   attr_reader :character, :mission, :rank, :success, :money, :experience, :saved, 
-    :payouts, :free_fulfillment, :group, :group_rank, :group_payouts
+    :payouts, :free_fulfillment, :group, :group_rank, :group_payouts, :loot, :looter
 
   def self.create(*args)
     result = self.new(*args)
@@ -28,6 +28,8 @@ class MissionResult
 
           @money      = (@mission.money * (1 + mission_money_bonus)).ceil
           @experience = self.mission.experience
+          
+          calculate_loot
 
           @rank.win_count += 1
           @rank.save!
@@ -95,5 +97,21 @@ class MissionResult
     texts.reject!{|t| t.blank? }
 
     texts[(@rank.win_count % texts.size) - 1]
+  end
+
+  def calculate_loot
+    if @mission.allow_loot? and (rand(100) < @mission.loot_chance)
+      if @mission.loot_item_ids.any?
+        loot_items = Item.find(@mission.loot_item_ids)
+      else
+        loot_items = Item.available_for(@character).available_in(:loot).all
+      end
+
+      if @loot = loot_items[rand(loot_items.size)]
+        @looter = @character.friend_relations.random || @character.mercenary_relations.random
+
+        @character.inventories.give!(@loot)
+      end
+    end
   end
 end

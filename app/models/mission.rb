@@ -32,7 +32,7 @@ class Mission < ActiveRecord::Base
   has_payouts
 
   validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text, :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max
-  validates_numericality_of :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max, :allow_blank => true
+  validates_numericality_of :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max, :loot_chance, :allow_blank => true
 
   def self.to_grouped_dropdown
     returning result = {} do
@@ -48,5 +48,13 @@ class Mission < ActiveRecord::Base
 
   def visible_for?(character)
     self.parent_mission.nil? or character.rank_for_mission(self.parent_mission).completed?
+  end
+
+  def loot_item_ids=(value)
+    self[:loot_item_ids] = value.is_a?(Array) ? value.join(",") : value
+  end
+
+  def loot_item_ids
+    @loot_item_ids ||= self[:loot_item_ids] ? self[:loot_item_ids].split(",").collect{|i| i.to_i } : []
   end
 end
