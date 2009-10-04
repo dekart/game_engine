@@ -6,7 +6,9 @@
 
 <div id="property_income">
   <b><%= fb_i(t(".income.label")) %></b>
-  <span class="value" id="property_income_value"><%= current_character.property_income %></span>
+  <span class="value" id="property_income_value">
+    <%= number_to_currency(current_character.property_income) %>
+  </span>
 </div>
 
 <div id="property_list">

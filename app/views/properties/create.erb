@@ -52,6 +52,6 @@
 
 <% content_for :script do %>
   $('property_list').setInnerFBML(list);
-  $('property_income_value').setTextValue('<%= current_character.property_income %>')
+  $('property_income_value').setTextValue('<%= number_to_currency(current_character.property_income) %>')
   $('result').show();
 <% end %>
