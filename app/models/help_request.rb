@@ -19,11 +19,11 @@ class HelpRequest < ActiveRecord::Base
   end
 
   def expire_at
-    self.created_at + Configuration[:help_request_expire_period]
+    self.created_at + Configuration[:help_request_expire_period].hours
   end
 
   def stop_display_at
-    self.expire_at + Configuration[:help_request_display_period]
+    self.expire_at + Configuration[:help_request_display_period].hours
   end
 
   def should_be_displayed?
