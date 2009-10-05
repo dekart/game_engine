@@ -75,7 +75,10 @@ class Fight < ActiveRecord::Base
     else
       fignt_money_bonus = 0.01 * self.winner.assignments.effect_value(:fight_income)
 
-      self.money = (rand(self.loser.basic_money) * (Configuration[:fight_money_loot] * 0.01 + fignt_money_bonus)).ceil
+      self.money = [
+        (rand(self.loser.basic_money) * (Configuration[:fight_money_loot] * 0.01 + fignt_money_bonus)).ceil,
+        Configuration[:fight_max_money]
+      ].min
     end
   end
 
