@@ -1,6 +1,9 @@
 <% form.field_set t(".assignment") do %>
   <%
     [
+      :relation_show_limit,
+      :relation_max_alliance_size,
+      
       :assignment_attack_bonus,
       :assignment_defence_bonus,
       :assignment_fight_damage_multiplier,
@@ -11,8 +14,6 @@
       :assignment_mission_energy_divider,
       :assignment_mission_income_multiplier,
       :assignment_mission_income_divider,
-
-      :relation_show_limit
     ].each do |field| %>
     <%= form.text_field field, :size => 5 %>
   <% end %>

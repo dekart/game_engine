@@ -69,9 +69,14 @@ class Character
         proxy_owner.inventories.update_all "use_in_fight = 0"
 
         ItemGroup.all.each do |group|
-          items_to_use = proxy_owner.relations.size + 1
+          items_to_use = [proxy_owner.relations.size + 1, Configuration[:relation_max_alliance_size]].min
 
-          proxy_owner.inventories.by_item_group(group).all(:conditions => "attack + defence > 0", :order => "attack + defence DESC").each do |inventory|
+          items = proxy_owner.inventories.by_item_group(group).all(
+            :conditions => "attack + defence > 0",
+            :order      => "attack + defence DESC"
+          )
+          
+          items.each do |inventory|
             inventory.update_attribute(:use_in_fight,
               inventory.amount <= items_to_use ? inventory.amount : items_to_use
             )

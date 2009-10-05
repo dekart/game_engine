@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091004141310) do
+ActiveRecord::Schema.define(:version => 20091005053804) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -62,6 +62,9 @@ ActiveRecord::Schema.define(:version => 20091004141310) do
     t.integer  "property_income",        :default => 0
     t.datetime "basic_money_updated_at"
     t.text     "relation_effects"
+    t.integer  "stamina",                :default => 10
+    t.integer  "sp",                     :default => 10
+    t.datetime "sp_updated_at"
   end
 
   add_index "characters", ["level"], :name => "index_characters_on_level"
@@ -144,6 +147,11 @@ ActiveRecord::Schema.define(:version => 20091004141310) do
     t.integer  "newsletter_send_sleep",                  :default => 60
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "character_stamina_restore_period",       :default => 120
+    t.integer  "character_stamina_upgrade",              :default => 1
+    t.integer  "premium_stamina_price",                  :default => 5
+    t.integer  "character_health_point_price",           :default => 5
+    t.integer  "relation_max_alliance_size",             :default => 500
   end
 
   create_table "delayed_jobs", :force => true do |t|
