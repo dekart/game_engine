@@ -1,6 +1,13 @@
 class MissionsController < ApplicationController
   def index
-    @missions = Mission.available_for(current_character)
+    @current_mission_group = current_character.mission_groups.current(params[:mission_group_id])
+    
+    @mission_groups = MissionGroup.paginate(
+      :page     => MissionGroup.before(@current_mission_group).size / 4 + 1,
+      :per_page => 4
+    )
+    
+    @missions = @current_mission_group.missions.available_for(current_character)
   end
 
   def fulfill

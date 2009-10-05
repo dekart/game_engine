@@ -12,19 +12,26 @@
   </div>
 <% end %>
 
+<% if @mission_groups.any? %>
+  <%= render(
+        :partial  => "mission_groups/tabs",
+        :locals   => {
+          :groups   => @mission_groups,
+          :current  => @current_mission_group
+        }
+      ) %>
+<% end %>
+
 <% if @missions.any? %>
   <table id="mission_list" cellspacing="0">
+    <tr>
+      <th class="mission_group" colspan="2"><%= fb_i(Mission.human_name) %></th>
+      <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
+      <th><%= fb_i(t(".columns.requires")) %></th>
+      <th><%= fb_i(t(".columns.progress")) %></th>
+      <th></th>
+    </tr>
     <% @missions.each do |mission| %>
-      <% group_header mission.mission_group do |group| %>
-        <tr>
-          <th class="mission_group" colspan="2"><%= fb_i(group.name) %></th>
-          <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
-          <th><%= fb_i(t(".columns.requires")) %></th>
-          <th><%= fb_i(t(".columns.progress")) %></th>
-          <th></th>
-        </tr>
-      <% end %>
-
       <% if mission.visible_for?(current_character) %>
         <%= render(
               :partial  => "mission",
@@ -39,14 +46,10 @@
 
 <% if next_group = MissionGroup.next_for(current_character).first %>
   <div id="next_mission_group">
-    <h2><%= fb_i(next_group.name) %></h2>
-    
-    <p>
-      <% fb_i do %>
-        <%= t(".next_group") %>
+    <% fb_i do %>
+      <%= t(".next_group") %>
 
-        <%= fb_it(:level, content_tag(:span, next_group.level, :class => :level)) %>
-      <% end %>
-    </p>
+      <%= fb_it(:level, content_tag(:span, next_group.level, :class => :level)) %>
+    <% end %>
   </div>
 <% end %>

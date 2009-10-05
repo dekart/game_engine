@@ -139,6 +139,14 @@ form .error {color: red; padding: 3px 0px;}
   #latest_help_request .basic_money{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(icons/basic_money.gif) center left no-repeat; font-weight: bold;}
   
 /* Mission list displayed at Missions page */
+#mission_group_list {border-top: 1px solid #d0d0d0; border-bottom: 1px solid #d0d0d0; width: 100%}
+  #mission_group_list .previous,
+  #mission_group_list .next {width: 90px; text-align: center; padding: 5px 0;}
+  #mission_group_list .mission_group {text-align: center; padding: 5px 0;}
+  #mission_group_list .current {font-weight: bold; background-color: #e8ebf3;}
+  #mission_group_list .name {font-size: 14px;}
+  #mission_group_list .level {padding-top: 3px;}
+
 #mission_list th {padding: 10px 0px; border-bottom: 1px solid #d0d0d0; }
   #mission_list .mission_group {font-size: 16px; color: #3B5998; font-weight: bold;}
 #mission_list td {padding: 10px 0px; border-bottom: 1px solid #e7e7e7;}

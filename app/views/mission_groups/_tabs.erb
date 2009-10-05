@@ -1,0 +1,53 @@
+<table id="mission_group_list" cellspacing="0">
+  <tr>
+    <% if groups.previous_page and previous_group = groups.first.previous_group %>
+      <td class="previous">
+        <%= link_to(fb_i(t(".previous.name")), mission_group_missions_path(previous_group),
+              :class => :name
+            ) %>
+
+        <div class="level">
+          <% fb_i do %>
+            <%= t(".previous.level") %>
+
+            <%= fb_it(:level, previous_group.level) %>
+          <% end %>
+        </div>
+      </td>
+    <% end %>
+
+    <% groups.each do |group| %>
+      <% locked = group.locked?(current_character) %>
+
+      <% content_tag_for :td, group, :class => [(:locked if locked), (:current if group == current)].compact.join(" ") do %>
+        <%= link_to(fb_i(locked ? t(".locked") : group.name), mission_group_missions_path(group),
+              :class => :name
+            ) %>
+
+        <div class="level">
+          <% fb_i do %>
+            <%= t(".level") %>
+
+            <%= fb_it(:level, group.level) %>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if groups.next_page and next_group = groups.last.next_group %>
+      <td class="previous">
+        <%= link_to(fb_i(t(".next.name")), mission_group_missions_path(next_group),
+              :class => :name
+            ) %>
+
+        <div class="level">
+          <% fb_i do %>
+            <%= t(".next.level") %>
+
+            <%= fb_it(:level, next_group.level) %>
+          <% end %>
+        </div>
+      </td>
+    <% end %>
+  </tr>
+</table>

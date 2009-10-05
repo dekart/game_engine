@@ -8,6 +8,8 @@ en:
         unit: ""
         precision: 0
   activerecord:
+    models:
+      mission: "Mission"
     attributes:
       character:
         level: "Level"
@@ -313,7 +315,7 @@ en:
     index:
       title: "Shop"
       inventory: "Go to Inventory"
-      next_item: "Reach level {level} to open new {group}"
+      next_item: "Reach level {level} to unlock new missions"
     item:
       buttons:
         buy: "Buy"
@@ -367,6 +369,15 @@ en:
       message: "You completed all missions in this group!"
       title_received: "You received new title:"
       you_received: "You received:"
+    tabs:
+      level: "(Levels {level}+)"
+      locked: "Locked"
+      previous:
+        name: "&laquo; Previous"
+        level: "(Below Level {level})"
+      next:
+        name: "Next &raquo;"
+        level: "(Levels {level}+)"
   relations:
     index:
       title: "Your Alliance"
