@@ -5,7 +5,7 @@ class Character
         proxy_owner.update_attribute(:current_mission_group_id, new_group_id)
       end
 
-      group = MissionGroup.find(proxy_owner.current_mission_group_id) if proxy_owner.current_mission_group_id
+      group = MissionGroup.find_by_id(proxy_owner.current_mission_group_id) if proxy_owner.current_mission_group_id
       group ||= MissionGroup.first
     end
 
