@@ -7,9 +7,11 @@
 </div>
 
 <% if @mission %>
-  <table id="mission_list" cellspacing="0">
-    <%= render :partial => "missions/mission", :locals => {:mission => @mission} %>
-  </table>
+  <div id="mission_list">
+    <table  cellspacing="0">
+      <%= render :partial => "missions/mission", :locals => {:mission => @mission} %>
+    </table>
+  </div>
 <% else %>
   <% javascript_tag do %>
     $('tutorial').removeClassName('nobutton');

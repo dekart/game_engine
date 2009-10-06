@@ -193,8 +193,12 @@
     Mission.onComplete();
   <% end %>
 
-  $('mission_list').setInnerFBML(mission_list);
-  $('mission_group_list').setInnerFBML(mission_group_list);
+  if($('mission_list')){
+    $('mission_list').setInnerFBML(mission_list);
+  }
+  if($('mission_group_list')){
+    $('mission_group_list').setInnerFBML(mission_group_list);
+  }
   
   $('result').show();
 <% end %>
