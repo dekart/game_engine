@@ -1,7 +1,7 @@
 module Requirements
   class Alliance < Base
     def satisfies?(character)
-      character.relations.size >= @value
+      character.relations.effective_size >= @value
     end
   end
 end

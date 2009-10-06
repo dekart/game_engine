@@ -139,7 +139,7 @@
           </div>
           <div class="attributes">
             <div class="relations_attack"><%= @fight.attacker.inventory_attack_points %></div>
-            <div class="relations"><%= @fight.attacker.relations.size %></div>
+            <div class="relations"><%= @fight.attacker.relations.effective_size %></div>
             <div class="attack"><%= @fight.attacker.attack %></div>
           </div>
           <div class="best_items">
@@ -161,7 +161,7 @@
           </div>
           <div class="attributes">
             <div class="relations_defence"><%= @fight.victim.inventory_defence_points %></div>
-            <div class="relations"><%= @fight.victim.relations.size %></div>
+            <div class="relations"><%= @fight.victim.relations.effective_size %></div>
             <div class="defence"><%= t(".details.defence_unknown") %></div>
           </div>
           <div class="best_items">

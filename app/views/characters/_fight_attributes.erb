@@ -12,7 +12,7 @@
         <%= defence(current_character.defence) %>
       </td>
       <td class="values">
-        <%= content_tag(:div, current_character.relations.size, :class => :relations) %>
+        <%= content_tag(:div, current_character.relations.effective_size, :class => :relations) %>
         <%= attack(current_character.inventory_attack_points) %>
         <%= defence(current_character.inventory_defence_points) %>
       </td>

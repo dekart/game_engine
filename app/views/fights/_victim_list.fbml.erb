@@ -11,8 +11,8 @@
         <td class="name"><%= character_name_link(victim) %></td>
         <td class="level"><%= victim.level %></td>
         <td class="relations">
-          <%= content_tag(:span, victim.relations.size,
-                :class => (:larger if victim.relations.size > current_character.relations.size)
+          <%= content_tag(:span, victim.relations.effective_size,
+                :class => (:larger if victim.relations.effective_size > current_character.relations.effective_size)
               ) %>
         </td>
         <td class="controls">

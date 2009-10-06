@@ -45,7 +45,9 @@ class Character < ActiveRecord::Base
   
   has_many :items, :through => :inventories
   
-  has_many :relations, :foreign_key => "source_id"
+  has_many :relations, 
+    :foreign_key  => "source_id",
+    :extend       => Character::Relations
   has_many :friend_relations, 
     :foreign_key  => "source_id",
     :include      => :target_character,
