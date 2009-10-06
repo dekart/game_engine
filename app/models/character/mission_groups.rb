@@ -9,6 +9,13 @@ class Character
       group ||= MissionGroup.first
     end
 
+    def current_page
+      paginate(
+        :page     => before(current).size / Configuration[:mission_group_show_limit] + 1,
+        :per_page => Configuration[:mission_group_show_limit]
+      )
+    end
+
     def completed?(group)
       if rank = proxy_owner.mission_group_ranks.find_by_mission_group_id(group.id)
         rank.completed?

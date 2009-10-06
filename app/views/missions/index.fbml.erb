@@ -13,13 +13,15 @@
 <% end %>
 
 <% if @mission_groups.any? %>
-  <%= render(
-        :partial  => "mission_groups/tabs",
-        :locals   => {
-          :groups   => @mission_groups,
-          :current  => @current_mission_group
-        }
-      ) %>
+  <div id="mission_group_list">
+    <%= render(
+          :partial  => "mission_groups/tabs",
+          :locals   => {
+            :groups   => @mission_groups,
+            :current  => @current_mission_group
+          }
+        ) %>
+  </div>
 <% end %>
 
 <% if @missions.any? %>

@@ -1,7 +1,7 @@
 log/*
 tmp/*
 db/*.sqlite3
-db/schema.db
+db/schema.rb
 public/system
 nbproject
 test
