@@ -86,7 +86,7 @@ class Character < ActiveRecord::Base
           characters.id != :attacker_id
         },
         {
-          :low_level    => attacker.level + Configuration[:fight_victim_levels_lower],
+          :low_level    => attacker.level - Configuration[:fight_victim_levels_lower],
           :high_level   => attacker.level + Configuration[:fight_victim_levels_higher],
           :attacker_id  => attacker.id,
           :time_limit   => Configuration[:fight_attack_repeat_delay].minutes.ago
