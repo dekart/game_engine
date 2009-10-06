@@ -352,12 +352,12 @@ en:
     index:
       title: "Missions"
       latest_help_request: "{friend_amount} of your friends helped you to fulfill the {mission} mission! You received {money_amount} Gold in total."
-      columns:
-        payout: "Payout"
-        requires: "Requires"
-        progress: "Progress"
-      empty_set: "You have no missions available at this time"
       next_group: "Reach level {level} to open missions from this group"
+    list:
+      payout: "Payout"
+      requires: "Requires"
+      progress: "Progress"
+      empty_set: "You have no missions available at this time"
     mission:
       buttons:
         fulfill: "Fulfill"

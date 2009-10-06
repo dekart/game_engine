@@ -32,10 +32,6 @@
       <% end %>
 
       <% content_for :script do %>
-        <% unless @mission.repeatable? %>
-          Mission.hideControls(<%= @mission.id %>);
-        <% end %>
-
         <%= show_feed_dialog(Publisher::Mission, :completed,
               :template_data => {
                 :title    => @mission.title,
@@ -151,14 +147,6 @@
     <% if @result.group_rank %>
       <%= render :partial => "mission_groups/complete", :locals => {:mission_result => @result} %>
     <% end %>
-
-    <% fb_js_string :mission_progress do %>
-      <%= mission_progress(current_character, @mission) %>
-    <% end %>
-      
-    <% content_for :script do %>
-      Mission.setProgress(<%= @mission.id %>, mission_progress);
-    <% end %>
   <% elsif !@result.enough_energy? %>
     <p>
       <% fb_i do %>
@@ -179,12 +167,34 @@
   <% end %>
 </div>
 
+<% fb_js_string :mission_list do %>
+  <%= render(
+        :partial => "list",
+        :locals => {
+          :missions => current_character.missions.available
+        }
+      ) %>
+<% end %>
+
+<% fb_js_string :mission_group_list do %>
+  <%= render(
+        :partial => "mission_groups/tabs",
+        :locals => {
+          :groups   => current_character.mission_groups.current_page,
+          :current  => current_character.mission_groups.current
+        }
+      ) %>
+<% end %>
+
 <%= character_level_up_block %>
 
 <% content_for :script do %>
   <% if @result.rank.just_completed? %>
     Mission.onComplete();
   <% end %>
+
+  $('mission_list').setInnerFBML(mission_list);
+  $('mission_group_list').setInnerFBML(mission_group_list);
   
   $('result').show();
 <% end %>

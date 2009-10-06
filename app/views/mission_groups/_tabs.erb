@@ -2,7 +2,7 @@
   <tr>
     <% if groups.previous_page and previous_group = groups.first.previous_group %>
       <td class="previous">
-        <%= link_to(fb_i(t(".previous.name")), mission_group_missions_path(previous_group),
+        <%= link_to(fb_i(t(".previous.name")), mission_group_missions_url(previous_group, :canvas => true),
               :class => :name
             ) %>
 
@@ -20,7 +20,7 @@
       <% locked = group.locked?(current_character) %>
 
       <% content_tag_for :td, group, :class => [(:locked if locked), (:current if group == current)].compact.join(" ") do %>
-        <%= link_to(fb_i(locked ? t(".locked") : group.name), mission_group_missions_path(group),
+        <%= link_to(fb_i(locked ? t(".locked") : group.name), mission_group_missions_url(group, :canvas => true),
               :class => :name
             ) %>
 
@@ -36,7 +36,7 @@
 
     <% if groups.next_page and next_group = groups.last.next_group %>
       <td class="previous">
-        <%= link_to(fb_i(t(".next.name")), mission_group_missions_path(next_group),
+        <%= link_to(fb_i(t(".next.name")), mission_group_missions_url(next_group, :canvas => true),
               :class => :name
             ) %>
 

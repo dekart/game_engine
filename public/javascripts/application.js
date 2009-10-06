@@ -72,14 +72,7 @@ var Character = {
 }
 
 var Mission = {
-  onComplete: function(){},
-
-  setProgress: function(id, value){
-    $('mission_' + id).by_class('progress')[0].setInnerFBML(value);
-  },
-  hideControls: function(id){
-    $('mission_' + id).by_class('controls')[0].setTextValue('');
-  }
+  onComplete: function(){}
 }
 
 var Fight = {

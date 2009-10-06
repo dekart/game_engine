@@ -24,27 +24,9 @@
   </div>
 <% end %>
 
-<% if @missions.any? %>
-  <table id="mission_list" cellspacing="0">
-    <tr>
-      <th class="mission_group" colspan="2"><%= fb_i(Mission.human_name) %></th>
-      <th colspan="2"><%= fb_i(t(".columns.payout")) %></th>
-      <th><%= fb_i(t(".columns.requires")) %></th>
-      <th><%= fb_i(t(".columns.progress")) %></th>
-      <th></th>
-    </tr>
-    <% @missions.each do |mission| %>
-      <% if mission.visible_for?(current_character) %>
-        <%= render(
-              :partial  => "mission",
-              :locals   => {:mission => mission}
-            ) %>
-      <% end %>
-    <% end %>
-  </table>
-<% else %>
-  <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
-<% end %>
+<div id="mission_list">
+  <%= render :partial => "list", :locals => {:missions => @missions} %>
+</div>
 
 <% if next_group = MissionGroup.next_for(current_character).first %>
   <div id="next_mission_group">
