@@ -315,7 +315,7 @@ en:
     index:
       title: "Shop"
       inventory: "Go to Inventory"
-      next_item: "Reach level {level} to unlock new missions"
+      next_item: "Reach level {level} to unlock new items"
     item:
       buttons:
         buy: "Buy"

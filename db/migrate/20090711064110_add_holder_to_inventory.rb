@@ -3,8 +3,6 @@ class AddHolderToInventory < ActiveRecord::Migration
     add_column :inventories, :holder_id, :integer
     add_column :inventories, :holder_type, :string, :limit => 50
 
-    Inventory.update_all("holder_id = character_id, holder_type = 'Character'", "placement IS NOT NULL")
-
     add_column :relations, :inventory_effects, :text
     add_column :characters, :relation_effects, :text
   end

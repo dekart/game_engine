@@ -1,5 +1,40 @@
 namespace :app do
   namespace :maintenance do
+    desc "Recalculate character rating"
+    task :recalculate_rating => :environment do
+      Character.find_.each do |character|
+        character.send(:recalculate_rating)
+        character.save
+      end
+    end
+
+    desc "Mark all relations as friends"
+    task :mark_relations_as_friends => :environment do
+      Relation.update_all "type='FriendRelation'"
+    end
+
+    desc "Link all help requests to missions"
+    task :link_help_requests_to_missions => :environment do
+      HelpRequest.update_all("context_type = 'Mission'")
+      Fight.update_all("cause_type = 'Fight'", "cause_id IS NOT NULL")
+    end
+
+    desc "Link all help requests to missions"
+    task :remove_help_requests_not_missions => :environment do
+      HelpRequest.delete_all("context_type != 'Mission'")
+      Fight.delete_all("cause_type != 'Fight'")
+    end
+
+    desc "Add counter caches to character"
+    task :character_counter_caches => :environment do
+      Character.update_all("fights_won = (SELECT COUNT(*) FROM fights WHERE winner_id = characters.id)")
+      Character.update_all("fights_lost = (SELECT COUNT(*) FROM fights WHERE (attacker_id = characters.id OR victim_id = characters.id) AND winner_id != characters.id)")
+      Character.update_all("missions_succeeded = (SELECT sum(win_count) FROM ranks WHERE character_id = characters.id)")
+      Character.update_all("missions_completed = (SELECT count(*) FROM ranks WHERE character_id = characters.id AND completed = 1)")
+
+      Character.update_all("relations_count = (SELECT count(*) FROM relations WHERE source_id = characters.id)")
+    end
+
     desc "Group properties"
     task :group_properties => :environment do
       property_types = PropertyType.all
