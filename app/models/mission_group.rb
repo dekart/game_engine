@@ -22,6 +22,8 @@ class MissionGroup < ActiveRecord::Base
     }
   }
 
+  acts_as_dropdown :text => "name_with_level", :order => "level"
+
   has_payouts
 
   validates_presence_of :name, :level
@@ -37,5 +39,9 @@ class MissionGroup < ActiveRecord::Base
 
   def locked?(character)
     character.level < self.level
+  end
+
+  def name_with_level
+    "%s (%s %s)" % [name, Character.human_attribute_name("level"), level]
   end
 end
