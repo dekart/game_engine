@@ -8,16 +8,16 @@ class Admin::MissionGroupsController < ApplicationController
   end
 
   def new
-    @group = MissionGroup.new
+    @group = MissionGroup.new(params[:mission_group])
   end
 
   def create
     @group = MissionGroup.new(params[:mission_group])
 
     if @group.save
-      redirect_to :action => :index
+      redirect_to admin_mission_groups_url(:canvas => true)
     else
-      render :action => :new
+      new_admin_mission_group_url(:mission_group => params[:mission_group], :canvas => true)
     end
   end
 
@@ -29,9 +29,9 @@ class Admin::MissionGroupsController < ApplicationController
     @group = MissionGroup.find(params[:id])
 
     if @group.update_attributes(params[:mission_group])
-      redirect_to :action => :index
+      redirect_to admin_mission_groups_url(:canvas => true)
     else
-      render :action => :edit
+      edit_admin_mission_group_url(@group, :mission_group => params[:mission_group], :canvas => true)
     end
   end
 

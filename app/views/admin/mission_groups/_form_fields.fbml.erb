@@ -6,6 +6,9 @@
       <%= form.text_field :level, :size => 3, :required => true %>
 
       <%= form.text_field :title %>
+      
+      <%= form.file_field :image,
+            :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image.url) : "") %>
     </td>
     <td>
       <div class="serializable" id="payout_list">

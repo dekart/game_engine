@@ -24,6 +24,8 @@ class MissionGroup < ActiveRecord::Base
 
   acts_as_dropdown :text => "name_with_level", :order => "level"
 
+  has_attached_file :image
+
   has_payouts
 
   validates_presence_of :name, :level
