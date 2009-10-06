@@ -10,7 +10,7 @@ class Character
     end
 
     def current_page
-      paginate(
+      MissionGroup.paginate(
         :page     => before(current).size / Configuration[:mission_group_show_limit] + 1,
         :per_page => Configuration[:mission_group_show_limit]
       )
