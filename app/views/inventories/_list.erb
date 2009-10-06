@@ -7,7 +7,7 @@
         </tr>
         <% by_group.each do |inventory| %>
           <% content_tag_for(:tr, inventory) do %>
-            <td class="picture"><%= image_tag(inventory.image.url(:small)) if inventory.image? %></td>
+            <td class="picture"><%= item_image(inventory, :small) %></td>
             <td class="info">
               <div class="name"><%= fb_i(inventory.name) %></div>
               <div class="description"><%= fb_i(inventory.description) %></div>

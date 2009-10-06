@@ -1,9 +1,5 @@
 <% content_tag :div, :class => "#{requirement.name} #{ "not_satisfied" unless satisfied }" do %>
-  <% fb_tag :img do %>
-    <%= fb_ta(:alt, fb_i(requirement.item.name)) %>
-    <%= fb_ta(:title, fb_i(requirement.item.name)) %>
-    <%= fb_ta(:src, image_path(requirement.item.image.url(:icon))) %>
-  <% end %>
+  <%= item_image(requirement.item, :icon)%>
   
   <div class="amount"><%= t(".amount", :amount => requirement.amount) %></div>
 <% end %>

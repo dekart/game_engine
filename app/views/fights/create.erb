@@ -146,7 +146,7 @@
             <strong><%= fb_i(t(".details.best_offence")) %></strong>
 
             <% @fight.attacker.inventories.best_offence.each do |inventory| %>
-              <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+              <%= item_image(inventory, :icon) %>
             <% end %>
           </div>
         </td>
@@ -168,7 +168,7 @@
             <strong><%= fb_i(t(".details.best_defence")) %></strong>
 
             <% @fight.victim.inventories.best_defence.each do |inventory| %>
-              <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+              <%= item_image(inventory, :icon) %>
             <% end %>
           </div>
         </td>

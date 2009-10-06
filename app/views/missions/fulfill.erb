@@ -109,7 +109,7 @@
                   <% end %>
                 </div>
 
-                <%= image_tag(@result.loot.image.url(:icon)) if @result.loot.image? %>
+                <%= item_image(@result.loot, :icon) %>
               </div>
             <% end %>
           </td>

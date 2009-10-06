@@ -18,12 +18,12 @@
       </td>
       <td class="inventories">
         <% current_character.inventories.best_offence.each do |inventory| %>
-          <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+          <%= item_image(inventory, :icon) %>
         <% end %>
       </td>
       <td class="inventories">
         <% current_character.inventories.best_defence.each do |inventory| %>
-          <%= image_tag(inventory.image.url(:icon)) if inventory.image? %>
+          <%= item_image(inventory, :icon) %>
         <% end %>
       </td>
     </tr>

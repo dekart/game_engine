@@ -1,1 +1,1 @@
-<%= payout(:item, payout.item.name, (image_tag(payout.item.image.url(:icon)) if payout.item.image?)) %>
+<%= payout(:item, payout.item.name, item_image(payout.item,:icon)) %>

@@ -1,5 +1,5 @@
 <% content_tag_for :tr, item, :class => item.availability do %>
-  <td class="picture"><%= image_tag(item.image.url(:small)) if item.image? %></td>
+  <td class="picture"><%= item_image(item, :small) %></td>
   <td class="info">
     <div class="name"><%= fb_i(item.name) %></div>
     <div class="description"><%= fb_i(item.description) %></div>
