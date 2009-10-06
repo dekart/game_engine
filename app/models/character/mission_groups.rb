@@ -11,7 +11,7 @@ class Character
 
     def current_page
       MissionGroup.paginate(
-        :page     => (MissionGroup.before(current).size.to_f / Configuration[:mission_group_show_limit]).ceil,
+        :page     => [(MissionGroup.before(current).size.to_f / Configuration[:mission_group_show_limit]).ceil, 1].max,
         :per_page => Configuration[:mission_group_show_limit]
       )
     end
