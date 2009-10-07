@@ -112,7 +112,6 @@ class Character < ActiveRecord::Base
     :restore_rate   => :property_income
 
   before_save :update_level_and_points, :recalculate_rating
-  after_destroy :delete_friend_relations
 
   def upgrade_attribute!(name)
     name = name.to_sym

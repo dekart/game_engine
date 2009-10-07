@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_one :character
+  has_one :character, :dependent => :destroy
 
   has_many :invitations, :foreign_key => :sender_id do
     def facebook_ids
