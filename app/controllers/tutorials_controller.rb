@@ -1,4 +1,6 @@
 class TutorialsController < ApplicationController
+  helper_method :tutorial?
+
   def step_1
     @missions = Mission.available_for(current_character).all(:limit => 1)
 
@@ -29,5 +31,11 @@ class TutorialsController < ApplicationController
     goal(:tutorial_skip) if params[:premature]
 
     redirect_to root_path
+  end
+
+  protected
+
+  def tutorial?
+    true
   end
 end

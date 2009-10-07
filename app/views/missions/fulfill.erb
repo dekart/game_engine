@@ -41,7 +41,7 @@
       <% end %>
     <% elsif @result.success %>
       <%= link_to_remote(fb_i(t(".buttons.continue")),
-            :url => fulfill_mission_url(@mission, :canvas => false),
+            :url => fulfill_mission_url(@mission, :canvas => false, :tutorial => tutorial?),
             :update => :result,
             :html   => {:class => "fulfill_again button"}
           ) if current_character.can_fulfill?(@mission) %>

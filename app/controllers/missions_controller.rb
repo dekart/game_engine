@@ -1,4 +1,6 @@
 class MissionsController < ApplicationController
+  helper_method :tutorial?
+
   def index
     @current_mission_group = current_character.mission_groups.current(params[:mission_group_id])
     
@@ -24,5 +26,11 @@ class MissionsController < ApplicationController
     end
 
     render :action => :fulfill, :layout => "ajax"
+  end
+
+  protected
+
+  def tutorial?
+    params[:tutorial] == "true"
   end
 end
