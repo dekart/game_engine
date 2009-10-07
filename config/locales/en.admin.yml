@@ -83,6 +83,7 @@ en:
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? Mission results will be also removed from all users!"
+        random_loot: "Random Item"
       new:
         title: "New Mission"
         submit: "Create"

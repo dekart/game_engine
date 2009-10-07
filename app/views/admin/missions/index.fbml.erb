@@ -37,6 +37,17 @@
           <% end %>
         </td>
         <td class="payouts">
+          <% if mission.allow_loot? %>
+            <div class="item">
+              <%= "%s (%d%%) : %s" % [
+                    Mission.human_attribute_name("loot"),
+                    mission.loot_chance,
+                    mission.loot_items.any? ? mission.loot_items.collect{|i| i.name}.join(", ") : t(".random_loot")
+                  ] %>
+              <%=  %>
+            </div>
+          <% end %>
+
           <% mission.payouts.each do |payout| %>
             <%= render :partial => "admin/payouts/preview/#{payout.name}", :locals => {:payout => payout} %>
           <% end %>

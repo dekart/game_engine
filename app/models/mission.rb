@@ -50,6 +50,10 @@ class Mission < ActiveRecord::Base
     self.parent_mission.nil? or character.rank_for_mission(self.parent_mission).completed?
   end
 
+  def loot_items
+    Item.find(self.loot_item_ids)
+  end
+
   def loot_item_ids=(value)
     self[:loot_item_ids] = value.is_a?(Array) ? value.join(",") : value
   end
