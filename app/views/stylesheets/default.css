@@ -340,7 +340,7 @@ form .error {color: red; padding: 3px 0px;}
   #fight_result .details .attacker {width: 330px; text-align:right; }
   #fight_result .details .vs {width: 65px; text-align:center; font-weight: bold; font-size: 16px; line-height: 160px; vertical-align:middle;}
   #fight_result .details .victim {width: 330px;}
-  #fight_result .details .character {height: 60px;font-size: 14px;}
+  #fight_result .details .character {height: auto;font-size: 14px;}
   #fight_result .details .character .name {font-weight: bold; margin-bottom: 5px;}
   #fight_result .details .character .level {margin-top: 5px;}
   #fight_result .details .attributes {height: 30px; clear:both;}
