@@ -6,7 +6,7 @@ class FightsController < ApplicationController
     )
 
     # Insert random non-registered friends
-    if current_character.allow_fight_with_invite?
+    if current_character.allow_fight_with_invite? and facebook_params["friends"].any?
       (@victims.size / 3 + 1).times do |i|
         random_id = facebook_params["friends"][rand(facebook_params["friends"].size)]
 
