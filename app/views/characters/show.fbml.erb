@@ -2,11 +2,17 @@
 
 <div id="character">
   <div class="controls">
-    <%= link_to_remote(fb_i(t(".controls.attack")),
-                  :url => fights_url(:victim_id => @character, :canvas => false),
-                  :update => :result,
-                  :html => {:class => "attack button"}
-                ) if current_character.can_attack?(@character) %>
+    <% if @character == current_character %>
+      <%= link_to(fb_i(t(".controls.upgrade")), upgrade_character_path(@character),
+            :class => "upgrade button"
+          ) if current_character.points > 0 %>
+    <% else %>
+      <%= link_to_remote(fb_i(t(".controls.attack")),
+            :url => fights_url(:victim_id => @character, :canvas => false),
+            :update => :result,
+            :html => {:class => "attack button"}
+          ) if current_character.can_attack?(@character) %>
+    <% end %>
   </div>
 
   <table width="100%">

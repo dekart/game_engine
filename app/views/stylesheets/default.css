@@ -383,6 +383,7 @@ form .error {color: red; padding: 3px 0px;}
 #character .controls {clear: both;}
   #character .controls a {float: left;}
     #character .controls .attack {background-image: url(icons/fights.gif);}
+    #character .controls .upgrade {background-image: url(icons/add.gif);}
 
 /* Character list at the Rating page*/
 #rating td, #rating th {padding: 5px 10px; vertical-align:middle;}

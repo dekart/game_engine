@@ -175,6 +175,7 @@ en:
     show:
       title: "{{user}} Profile"
       controls:
+        upgrade: "Upgrade"
         attack: "Attack!"
       titles:
         empty_set: "{{user}} don't have any titles yet"
