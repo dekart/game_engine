@@ -311,8 +311,9 @@ form .error {color: red; padding: 3px 0px;}
       #result .random_item .value {padding-left: 0px;}
     #result .mercenary .value{ background-image: url(icons/alliance.gif);}
     #result .loot {clear: both;}
-  #result .button {float:right; clear: right; margin: 0 0 10px 10px;}
-    #result .publish {background-image: url(icons/publish.gif);}
+  #result .buttons {float:right;}
+    #result .button { clear: right; margin: 0 0 10px 10px;}
+      #result .publish {background-image: url(icons/publish.gif);}
 
 /* Missions result block */
 #mission_result {padding:0px 30px; background: url(icons/missions.gif) 5px 0px no-repeat;}
