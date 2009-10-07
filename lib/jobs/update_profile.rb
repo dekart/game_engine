@@ -3,10 +3,10 @@ module Jobs
     include Jobs::Common
 
     def perform
-      user = User.find(user_id)
-
-      facebook_session.server_cache.refresh_ref_url(app_path("users/" + user.id.to_s + "/narrow_profile_box.fbml"))
-      facebook_session.server_cache.refresh_ref_url(app_path("users/" + user.id.to_s + "/wide_profile_box.fbml"))
+      if user = User.find_by_id(user_id)
+        facebook_session.server_cache.refresh_ref_url(app_path("users/" + user.id.to_s + "/narrow_profile_box.fbml"))
+        facebook_session.server_cache.refresh_ref_url(app_path("users/" + user.id.to_s + "/wide_profile_box.fbml"))
+      end
     end
   end
 end
