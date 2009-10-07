@@ -306,9 +306,11 @@ form .error {color: red; padding: 3px 0px;}
     #result .restore_health .value{background-image: url(icons/health.gif)}
     #result .restore_energy .value{background-image: url(icons/energy.gif)}
     #result .upgrade .value{background-image: url(icons/level.gif)}
+    #result .item {height: 45px !important;}
     #result .item .value,
       #result .random_item .value {padding-left: 0px;}
     #result .mercenary .value{ background-image: url(icons/alliance.gif);}
+    #result .loot {clear: both;}
   #result .button {float:right; clear: right; margin: 0 0 10px 10px;}
     #result .publish {background-image: url(icons/publish.gif);}
 
@@ -320,7 +322,6 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .title {line-height: 22px; padding-left: 23px; background: url(icons/level.gif) center left no-repeat; font-size: 14px; margin-bottom: 15px;}
   #mission_result .fulfill_again {background-image: url(icons/missions.gif); width: 90px;}
   #mission_result .request_help {background-image: url(icons/alliance.gif); width: 180px;}
-  #mission_result .progress .text {text-align:center;}
   #mission_result .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_result .progress .percentage {height: 10px; font-size: 0px; background-image: url(progress.gif);}
     #mission_result .progress .completed {height: 10px; background-image: url(progress_completed.gif);}
