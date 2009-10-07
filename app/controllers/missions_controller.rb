@@ -16,6 +16,13 @@ class MissionsController < ApplicationController
       goal(@result.rank.just_completed? ? :mission_complete : :mission_fulfill, @mission.id)
     end
 
+    if params[:tutorial]
+      @missions = Mission.available_for(current_character).all(:limit => 1)
+    else
+      @missions = current_character.missions.available
+      @mission_groups = current_character.mission_groups.current_page
+    end
+
     render :action => :fulfill, :layout => "ajax"
   end
 end

@@ -18,7 +18,7 @@
   <td class="progress"><%= mission_progress(current_character, mission) %></td>
   <td class="controls">
     <%= link_to_remote(fb_i(t(".buttons.fulfill")),
-          :url    => fulfill_mission_url(mission, :canvas => false),
+          :url    => fulfill_mission_url(mission, :canvas => false, :tutorial => controller_name == "tutorials"),
           :update => :result,
           :html   => {:class => :button}
         ) %>

@@ -6,11 +6,9 @@
   <%= link_to(fb_i(t(".next")), {:action => :step_2}, {:class => :button}) %>
 </div>
 
-<% if @mission %>
+<% if @missions %>
   <div id="mission_list">
-    <table  cellspacing="0">
-      <%= render :partial => "missions/mission", :locals => {:mission => @mission} %>
-    </table>
+    <%= render :partial => "missions/list", :locals => {:missions => @missions} %>
   </div>
 <% else %>
   <% javascript_tag do %>

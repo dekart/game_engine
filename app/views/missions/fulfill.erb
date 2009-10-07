@@ -167,23 +167,39 @@
   <% end %>
 </div>
 
-<% fb_js_string :mission_list do %>
-  <%= render(
-        :partial => "list",
-        :locals => {
-          :missions => current_character.missions.available
-        }
-      ) %>
+<% if @missions %>
+  <% fb_js_string :mission_list do %>
+    <%= render(
+          :partial => "list",
+          :locals => {
+            :missions => @missions
+          }
+        ) %>
+  <% end %>
+
+  <% content_for :script do %>
+    if($('mission_list')){
+      $('mission_list').setInnerFBML(mission_list);
+    }
+  <% end %>
 <% end %>
 
-<% fb_js_string :mission_group_list do %>
-  <%= render(
-        :partial => "mission_groups/tabs",
-        :locals => {
-          :groups   => current_character.mission_groups.current_page,
-          :current  => current_character.mission_groups.current
-        }
-      ) %>
+<% if @mission_groups %>
+  <% fb_js_string :mission_group_list do %>
+    <%= render(
+          :partial => "mission_groups/tabs",
+          :locals => {
+            :groups   => @mission_groups,
+            :current  => current_character.mission_groups.current
+          }
+        ) %>
+  <% end %>
+
+  <% content_for :script do %>
+    if($('mission_group_list')){
+      $('mission_group_list').setInnerFBML(mission_group_list);
+    }
+  <% end %>
 <% end %>
 
 <%= character_level_up_block %>
@@ -193,12 +209,6 @@
     Mission.onComplete();
   <% end %>
 
-  if($('mission_list')){
-    $('mission_list').setInnerFBML(mission_list);
-  }
-  if($('mission_group_list')){
-    $('mission_group_list').setInnerFBML(mission_group_list);
-  }
   
   $('result').show();
 <% end %>

@@ -1,6 +1,6 @@
 class TutorialsController < ApplicationController
   def step_1
-    @mission = Mission.available_for(current_character).first
+    @missions = Mission.available_for(current_character).all(:limit => 1)
 
     goal(:tutorial_step_1)
   end
