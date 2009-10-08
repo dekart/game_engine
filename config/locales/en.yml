@@ -353,7 +353,7 @@ en:
     index:
       title: "Missions"
       latest_help_request: "{friend_amount} of your friends helped you to fulfill the {mission} mission! You received {money_amount} Gold in total."
-      next_group: "Reach level {level} to open missions from this group"
+      locked_group: "Reach level {level} to open missions from this group"
     list:
       payout: "Payout"
       requires: "Requires"

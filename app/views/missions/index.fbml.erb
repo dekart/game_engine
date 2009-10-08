@@ -25,15 +25,15 @@
 <% end %>
 
 <div id="mission_list">
-  <%= render :partial => "list", :locals => {:missions => @missions} %>
+  <% unless @current_mission_group.locked?(current_character) %>
+    <%= render :partial => "list", :locals => {:missions => @missions} %>
+  <% else %>
+    <div class="empty_set" id="next_mission_group">
+      <% fb_i do %>
+        <%= t(".locked_group") %>
+
+        <%= fb_it(:level, content_tag(:span, @current_mission_group.level, :class => :level)) %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
-
-<% if next_group = MissionGroup.next_for(current_character).first %>
-  <div id="next_mission_group">
-    <% fb_i do %>
-      <%= t(".next_group") %>
-
-      <%= fb_it(:level, content_tag(:span, next_group.level, :class => :level)) %>
-    <% end %>
-  </div>
-<% end %>
