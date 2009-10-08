@@ -180,3 +180,12 @@
     <%= form.text_field field, :size => 5 %>
   <% end %>
 <% end %>
+
+<% form.field_set t(".application") do %>
+  <%
+    [
+      :app_google_analytics_id
+    ].each do |field| %>
+    <%= form.text_field field, :size => 10 %>
+  <% end %>
+<% end %>

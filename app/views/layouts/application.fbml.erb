@@ -35,4 +35,6 @@
 
     <%= yield %>
   </div>
+
+  <%= fb_google_analytics(Configuration[:app_google_analytics_id]) unless Configuration[:app_google_analytics_id].blank? %>
 </fb:fbml>
