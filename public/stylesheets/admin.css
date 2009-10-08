@@ -59,6 +59,7 @@ form .label, form .required {display:inline}
 #promotion_list .valid {color: green;}
 #promotion_list .invalid {color: red;}
 
+#stylesheet_list .current {background-color: #fff1c6}
 #field_for_stylesheet_content textarea {width: 750px; height: 500px; font-family: monospace;}
 
 #translation_list .customized .key,

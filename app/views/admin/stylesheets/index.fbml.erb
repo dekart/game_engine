@@ -8,12 +8,20 @@
   <table id="stylesheet_list" cellspacing="0">
     <tr>
       <th><%= Stylesheet.human_attribute_name("name") %></th>
-      <th><%= Stylesheet.human_attribute_name("current") %></th>
+      <th><%= Stylesheet.human_attribute_name("created_at") %></th>
+      <th><%= Stylesheet.human_attribute_name("updated_at") %></th>
     </tr>
     <% @stylesheets.each do |style| %>
-      <tr>
-        <td class="name"><%= link_to(style.name, edit_admin_stylesheet_path(style)) %></td>
-        <td class="current"><%= style.current %></td>
+      <% content_tag(:tr, :class => (:current if style.current)) do %>
+        <td class="name">
+          <%= link_to(style.name, edit_admin_stylesheet_path(style)) %>
+          
+          <% if style.current %>
+            (<%= Stylesheet.human_attribute_name("current") %>)
+          <% end %>
+        </td>
+        <td class="created_at"><%= l(style.created_at, :format => :short) %></td>
+        <td class="updated_at"><%= l(style.updated_at, :format => :short) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_stylesheet_path(style)) %>
           <%= link_to(t(".controls.try"), root_path(:try_stylesheet => style), :target => :_blank) %>
@@ -26,7 +34,7 @@
                 :confirm  => t(".controls.delete_confirm")
               ) %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 <% else %>
