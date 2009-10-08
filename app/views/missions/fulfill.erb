@@ -58,15 +58,17 @@
         <%= fb_i(t(".succeeded.message")) %> <%= fb_i(@result.success_text) %>
       </p>
     <% else %>
-      <%= help_request_link(fb_i(t(".buttons.request_help")), @mission,
-            :class => "request_help button"
-          ) %>
-      
-      <%= link_to_remote(fb_i(t(".buttons.try_again")),
-            :url => fulfill_mission_url(@mission, :canvas => false),
-            :update => :result,
-            :html   => {:class => "fulfill_again button"}
-          ) if current_character.can_fulfill?(@mission) %>
+      <div class="buttons">
+        <%= help_request_link(fb_i(t(".buttons.request_help")), @mission,
+              :class => "request_help button"
+            ) %>
+
+        <%= link_to_remote(fb_i(t(".buttons.try_again")),
+              :url => fulfill_mission_url(@mission, :canvas => false),
+              :update => :result,
+              :html   => {:class => "fulfill_again button"}
+            ) if current_character.can_fulfill?(@mission) %>
+      </div>
 
       <p>
         <%= fb_i(t(".failed.message")) %> <%= fb_i(@mission.failure_text) %>
