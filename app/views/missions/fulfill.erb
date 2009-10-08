@@ -163,8 +163,10 @@
   <% elsif !@result.requirements_satisfied? %>
     <p>
       <%= fb_i(t(".requirements_not_satisfied.message")) %>
-      
-      <%= mission_requirements(@mission, :unsatisfied) %>
+
+      <div class="requirements clearfix">
+        <%= mission_requirements(@mission, :unsatisfied) %>
+      </div>
     </p>
   <% elsif @result.rank.completed? %>
     <p><%= fb_i(t(".already_completed.message")) %></p>

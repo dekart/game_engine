@@ -306,8 +306,8 @@ form .error {color: red; padding: 3px 0px;}
     #result .restore_health .value{background-image: url(icons/health.gif)}
     #result .restore_energy .value{background-image: url(icons/energy.gif)}
     #result .upgrade .value{background-image: url(icons/level.gif)}
-    #result .item {height: 45px !important;}
-    #result .item .value,
+    #result .payouts .item {height: 45px !important;}
+    #result .payouts .item .value,
       #result .random_item .value {padding-left: 0px;}
     #result .mercenary .value{ background-image: url(icons/alliance.gif);}
     #result .loot {clear: both;}
@@ -328,6 +328,13 @@ form .error {color: red; padding: 3px 0px;}
     #mission_result .progress .completed {height: 10px; background-image: url(progress_completed.gif);}
   #mission_result .child_missions {margin: 15px 0;}
     #mission_result .child_missions .child {line-height: 22px; padding-left: 23px; background: url(icons/missions.gif) center left no-repeat; margin-bottom: 15px;}
+  #mission_result .requirements .health,
+  #mission_result .requirements .attack,
+  #mission_result .requirements .defence,
+  #mission_result .requirements .alliance,
+  #mission_result .requirements .health_point {clear: both;}
+  #mission_result .requirements .item {float:left; margin: 0 10px 2px 0;}
+  #mission_result .requirements .item .amount {text-align: center;}
 /* Mission help result block */
 #help_result {padding:0px 30px; background: url(icons/alliance.gif) 5px 0px no-repeat;}
 
