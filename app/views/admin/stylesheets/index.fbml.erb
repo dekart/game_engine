@@ -2,7 +2,7 @@
 
 <div class="controls">
   <%= link_to(t(".controls.new"), new_admin_stylesheet_path) %>
-  <%= link_to(t(".controls.default"), stylesheet_url("default", :format => :css, :canvas => false)) %>
+  <%= link_to(t(".controls.default"), source_stylesheet_url(:default, :format => :css, :canvas => false)) %>
 </div>
 
 <% if @stylesheets.any? %>

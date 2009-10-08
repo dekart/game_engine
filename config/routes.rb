@@ -73,7 +73,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :pages
 
-  map.resources :stylesheets, :only => :show
+  map.resources :stylesheets, :only => :show, :member => {:source => :any}
 
   map.resources :help_requests, :only => [:show, :create]
   
