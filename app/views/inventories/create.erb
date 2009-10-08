@@ -8,10 +8,10 @@
               :html => {:class => "publish button"},
               :images => @item.image? ? {
                 :src  => image_path(@item.image.url(:medium)),
-                :href => item_group_items_url(@item.item_group, :canvas => true)
+                :href => item_group_items_url(@item.item_group)
               } : nil
             ) %>
-      <%= link_to(fb_i(t(".buttons.inventory")), inventories_url(:canvas => true), :class => "inventory button") %>
+      <%= link_to(fb_i(t(".buttons.inventory")), inventories_url, :class => "inventory button") %>
     </div>
 
     <p>

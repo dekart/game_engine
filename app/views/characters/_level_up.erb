@@ -1,5 +1,5 @@
 <div id="level_up">
-  <%= link_to(fb_i(t(".buttons.upgrade")), upgrade_character_url(current_character, :canvas => true), :class => "upgrade button") %>
+  <%= link_to(fb_i(t(".buttons.upgrade")), upgrade_character_url(current_character), :class => "upgrade button") %>
 
   <h2><%= fb_i(t(".title")) %></h2>
 
@@ -7,7 +7,7 @@
     <% fb_i do %>
       <%= t(".text") %>
     
-      <%= fb_it(:upgrade, link_to(fb_i(t(".upgrade_link")), upgrade_character_url(current_character, :canvas => true)))  %>
+      <%= fb_it(:upgrade, link_to(fb_i(t(".upgrade_link")), upgrade_character_url(current_character)))  %>
     <% end %>
   </div>
 </div>

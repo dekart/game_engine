@@ -8,7 +8,7 @@
           :html => {:class => "publish button"},
           :images => @property.image? ? {
             :src  => image_path(@property.image.url(:small)),
-            :href => new_property_url(:canvas => true)
+            :href => new_property_url
           } : nil
         ) %>
     </div>

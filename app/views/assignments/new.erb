@@ -1,7 +1,7 @@
 <fb:js-string var="dialog_content">
   <% filters = %w{not_assigned assigned} %>
   
-  <% form_for @assignment, :url => polymorphic_url([@assignment.context, @assignment], {:canvas => true}) do |f| %>
+  <% form_for @assignment, :url => polymorphic_url([@assignment.context, @assignment]) do |f| %>
     <%= f.hidden_field :role %>
     <%= f.hidden_field :relation_id %>
 
