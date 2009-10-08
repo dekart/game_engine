@@ -16,6 +16,7 @@
       <th><%= PropertyType.human_attribute_name("basic_price") %></th>
       <th><%= PropertyType.human_attribute_name("vip_price") %></th>
       <th><%= PropertyType.human_attribute_name("income") %></th>
+      <th><%= PropertyType.human_attribute_name("purchase_limit") %></th>
     </tr>
     <% @types.each do |type| %>
       <tr>
@@ -26,6 +27,13 @@
         <td class="basic_price"><%= number_to_currency(type.basic_price) %></td>
         <td class="vip_price"><%= number_to_currency(type.vip_price) %></td>
         <td class="income"><%= number_to_currency(type.income) %></td>
+        <td class="limit">
+          <% if type.purchase_limit %>
+            <%= type.purchase_limit %>
+          <% else %>
+            <span class="default"><%= Configuration[:property_maximum_amount] %></span>
+          <% end %>
+        </td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_property_type_path(type)) %>
           <%= link_to(t(".controls.delete"), admin_property_type_path(type),

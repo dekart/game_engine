@@ -64,3 +64,5 @@ form .label, form .required {display:inline}
 
 #translation_list .customized .key,
   #translation_list .customized .value a {font-weight: bold;}
+
+#property_type_list .default {color: #c0c0c0; font-style: italic;}
