@@ -2,7 +2,6 @@
 
 <div class="controls">
   <%= link_to(t(".controls.new"), new_admin_stylesheet_path) %>
-  <%= link_to(t(".controls.default"), source_stylesheet_url(:default, :format => :css, :canvas => false)) %>
 </div>
 
 <% if @stylesheets.any? %>
@@ -32,4 +31,15 @@
   </table>
 <% else %>
   <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>
+
+<div class="controls">
+  <%= link_to(t(".controls.default"), source_stylesheet_url(:default, :format => :css, :canvas => false)) %>
+</div>
+
+<% form_tag log_admin_stylesheet_path(:default) do %>
+  <%= label(:log, :since, t(".log.label")) %><br />
+  <%= date_select(:log, :since, :default => 7.days.ago) %>
+
+  <%= submit_tag t(".log.submit") %>
 <% end %>

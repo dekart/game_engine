@@ -1,4 +1,6 @@
 class Admin::StylesheetsController < ApplicationController
+  include StylesheetsHelper
+
   before_filter :admin_required
 
   layout "layouts/admin/application"
@@ -49,5 +51,9 @@ class Admin::StylesheetsController < ApplicationController
     @stylesheet.use!
 
     redirect_to :action => :index
+  end
+
+  def log
+    @log = %x{git log -p --since=#{params[:log]["since(1i)"]}-#{params[:log]["since(2i)"]}-#{params[:log]["since(3i)"]} #{default_stylesheet_path}}
   end
 end

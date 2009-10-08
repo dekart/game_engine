@@ -190,6 +190,9 @@ en:
           delete_confirm: "Are you sure you want to delete this stylesheet? This may affect application design!"
         title: "Stylesheets"
         empty_set: "No stylesheets"
+        log:
+          label: "Show default stylesheet change log since"
+          submit: "Show"
       new:
         title: "New Stylesheet"
         submit: "Create"
