@@ -12,7 +12,7 @@
     <div class="payouts">
       <%= payout(:basic_money,
             Character.human_attribute_name("basic_money"),
-            number_to_currency(@property.money_return)
+            number_to_currency(@property.basic_money)
           ) %>
     </div>
   <% else %>

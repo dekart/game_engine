@@ -30,6 +30,8 @@ en:
         mercenaries: "Mercenaries"
         points: "Upgrade Points"
         rating: "Rating"
+      property_type:
+        inflation: "Price increase per purchase"
       user:
         show_next_steps: "Show 'Next Steps' block"
         show_fan_specials: "Show 'Fan Specials' block"
@@ -448,7 +450,7 @@ en:
       buttons:
         buy: "Buy"
         get_vip: "Earn Gems"
-        sell: "Sell"
+        sell: "Sell for {price}"
     destroy:
       messages:
         success: "You've successfully sold {property_name}!"

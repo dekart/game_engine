@@ -19,7 +19,7 @@
         <% end %>
       </td>
       <td class="requires">
-        <%= basic_price(type.basic_price) %>
+        <%= basic_price(property ? type.inflated_price(property.amount + 1) : type.basic_price) %>
         <%= vip_price(type.vip_price) %>
       </td>
       <td class="owned">
@@ -34,12 +34,12 @@
               :update => :result,
               :html => {:class => "buy button"}
             ) if type.availability == "shop" %>
-        <%= link_to_remote(fb_i(t(".buttons.sell")),
+        <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:price, property.sell_price)),
               :url    => property_url(type, :canvas => false),
               :method => :delete,
               :update => :result,
               :html   => {:class => "sell button"}
-            ) if property and property.amount > 0 %>
+            ) if property %>
       </td>
     <% end %>
   <% end %>

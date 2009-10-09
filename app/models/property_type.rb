@@ -30,4 +30,8 @@ class PropertyType < ActiveRecord::Base
   def vip_price
     self[:vip_price].to_i
   end
+
+  def inflated_price(amount)
+    inflation ? basic_price + inflation * (amount - 1) : basic_price
+  end
 end

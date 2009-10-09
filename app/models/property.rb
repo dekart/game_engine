@@ -4,7 +4,7 @@ class Property < ActiveRecord::Base
 
   delegate :name, :description, :image, :image?, :basic_price, :vip_price, :income, :to => :property_type
 
-  attr_accessor :charge_money, :deposit_money, :money_return
+  attr_accessor :charge_money, :deposit_money, :basic_money, :vip_money
 
   validate :enough_character_money?, :enough_property_slots?
 
@@ -12,7 +12,7 @@ class Property < ActiveRecord::Base
   after_destroy :deposit_character
 
   def sell_price
-    (self.basic_price * Configuration[:property_sell_price] * 0.01).ceil
+    (property_type.inflated_price(amount) * Configuration[:property_sell_price] * 0.01).ceil
   end
 
   def total_income
@@ -49,23 +49,21 @@ class Property < ActiveRecord::Base
     
     if buying? # Buying properties, should charge
       if charge_money
-        character.charge(basic_price * buying_amount, vip_price * buying_amount)
+        self.basic_money = total_buy_price
+        self.vip_money = vip_price * buying_amount
+        Rails.logger.debug basic_money
+        character.charge(basic_money, vip_money)
       end
     else # Selling properties, should deposit
-      if deposit_money
-        self.money_return = sell_price * selling_amount
-
-        character.basic_money += self.money_return
-        character.save
-      end
+      deposit_character
     end
   end
 
   def deposit_character
     if deposit_money
-      self.money_return = sell_price * amount
+      self.basic_money = total_sell_price
 
-      character.basic_money += self.money_return
+      character.basic_money += self.basic_money
       character.save
     end
   end
@@ -78,11 +76,36 @@ class Property < ActiveRecord::Base
     changes["amount"] ? changes["amount"].last - changes["amount"].first : 0
   end
 
+  def total_buy_price
+    price = 0
+    
+    (changes["amount"].first + 1 .. changes["amount"].last).each do |amount|
+
+      price += property_type.inflated_price(amount)
+    end
+
+    price
+  end
+
   def selling?
     selling_amount > 0
   end
 
   def selling_amount
     changes["amount"] ? changes["amount"].first - changes["amount"].last : 0
+  end
+
+  def total_sell_price
+    if changes["amount"]
+      price = 0
+
+      (changes["amount"].last + 1 .. changes["amount"].first).each do |amount|
+        price += property_type.inflated_price(amount)
+      end
+    else
+      price = property_type.basic_price
+    end
+
+    (price  * Configuration[:property_sell_price] * 0.01).ceil
   end
 end
