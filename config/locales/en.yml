@@ -242,7 +242,6 @@ en:
         title: "{user_name} lost:"
     new:
       title: "Fighting Arena"
-      latest_help_request: "{friend_amount} of your friends helped you to fight with {victim}! You received {money_amount} Gold in total."
       messages:
         too_weak: "You are too weak to fight! Take a rest until your health will grow to {hp_number} points. You need to wait about {minute_number} minutes."
         not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {minute_number} minutes."
@@ -354,7 +353,6 @@ en:
         title: "Mission Progress"
     index:
       title: "Missions"
-      latest_help_request: "{friend_amount} of your friends helped you to fulfill the {mission} mission! You received {money_amount} Gold in total."
       locked_group: "Reach level {level} to open missions from this group"
     list:
       payout: "Payout"
@@ -555,6 +553,10 @@ en:
       you_received: "You received:"
       friends_only:
         message: "You cannot help players that are not your friends"
+    latest:
+      text:
+        fight: "{friend_amount} of your friends helped you to fight with {victim}! You earned {money_amount} Gold and {experience_amount} experience."
+        mission: "{friend_amount} of your friends helped you to fulfill the {mission} mission! You earned {money_amount} Gold and {experience_amount} experience."
   tutorials:
     skip:
       skip: "Skip tutorial &raquo;"

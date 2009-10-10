@@ -8,7 +8,7 @@ class HelpRequest < ActiveRecord::Base
   def self.latest(context_class)
     self.first(
       :conditions => [
-        "context_type = ?", context_class.is_a?(String) ? context_class.classify : context_class.to_s
+        "context_type = ?", context_class.is_a?(Class) ? context_class.to_s : context_class.to_s.classify
       ],
       :order      => "created_at DESC"
     )

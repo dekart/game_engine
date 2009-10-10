@@ -1,16 +1,6 @@
 <%= title(fb_i(t(".title"))) %>
 
-<% if help_request = current_character.help_requests.latest(Mission) and help_request.should_be_displayed? %>
-  <div id="latest_help_request">
-    <% fb_i do %>
-      <%= t(".latest_help_request") %>
-
-      <%= fb_it(:mission, help_request.context.name) %>
-      <%= fb_it(:friend_amount, content_tag(:strong, help_request.help_results.size)) %>
-      <%= fb_it(:money_amount, content_tag(:span, number_to_currency(help_request.money), :class => :basic_money)) %>
-    <% end %>
-  </div>
-<% end %>
+<%= render :partial => "help_requests/latest", :locals => {:context => :mission} %>
 
 <% if @mission_groups.any? %>
   <div id="mission_group_list">

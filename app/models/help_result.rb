@@ -7,7 +7,7 @@ class HelpResult < ActiveRecord::Base
   validate_on_create :check_expired_request, :check_already_helped
   
   before_create :calculate_payout
-  after_create  :give_payout, :increment_request_money
+  after_create  :give_payout, :increment_request_stats
 
   attr_reader :fight
 
@@ -54,7 +54,9 @@ class HelpResult < ActiveRecord::Base
     self.help_request.character.save if self.help_request.character.changed?
   end
 
-  def increment_request_money
-    self.help_request.increment!(:money, self.money)
+  def increment_request_stats
+    self.help_request.increment(:money, self.money)
+    self.help_request.increment(:experience, self.experience)
+    self.help_request.save!
   end
 end
