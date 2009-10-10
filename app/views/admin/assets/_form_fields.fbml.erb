@@ -1,0 +1,7 @@
+<%= form.text_field :alias, :required => true %>
+
+<%= form.file_field(:image,
+      :after_field => (
+        form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : ""
+      )
+    ) %>
