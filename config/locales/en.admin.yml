@@ -15,6 +15,7 @@ en:
         tips: "Tips"
         translations: "Translations"
         configurations: "Configurations"
+        assets: "Assets"
       application:
         spinner:
           alt: "Please wait..."
@@ -229,3 +230,19 @@ en:
         user: "User Options"
         newsletter: "Nesletter Delivery"
         application: "Global Application Settings"
+    assets:
+      index:
+        title: "Assets"
+        controls:
+          new: "Add Asset"
+          view: "View"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+        empty_set: "No assets"
+      new:
+        title: "New Asset"
+        submit: "Create"
+      edit:
+        title: "Edit Asset"
+        submit: "Update"

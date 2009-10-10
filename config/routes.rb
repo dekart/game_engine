@@ -24,6 +24,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :tips
     admin.resources :translations
     admin.resources :configurations
+    admin.resources :assets
   end
 
   map.root :controller => "characters", :action => "index"

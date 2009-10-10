@@ -29,7 +29,13 @@ module StylesheetsHelper
 
   def format_stylesheet_content(content)
     content.gsub!(/url\(([^)]+)\)/) do |match|
-      match.replace "url(#{image_path($1)})"
+      url = $1
+
+      if url =~ /^asset:(.*)/ and asset = Asset.find_by_alias($1)
+        url = asset.image.url
+      end
+      
+      match.replace "url(#{image_path(url)})"
     end
 
     content
