@@ -18,8 +18,6 @@ class CharactersController < ApplicationController
     if request.post?
       @success = current_character.upgrade_attribute!(params[:attribute])
 
-      goal(:upgrade, params[:attribute], current_character.attributes[params[:attribute]])
-      
       render :action => :upgrade_result, :layout => "ajax"
     end
   end
@@ -33,8 +31,6 @@ class CharactersController < ApplicationController
       @character = facebook_money_user.character
       @character.vip_money += facebook_money_amount
       @character.save
-
-      goal(facebook_money_user.facebook_id, :load_vip_money, facebook_money_amount)
     end
   end
 

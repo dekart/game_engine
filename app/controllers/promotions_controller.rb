@@ -6,8 +6,6 @@ class PromotionsController < ApplicationController
 
     if @promotion and @promotion.can_be_received?(current_character, secret)
       @result = @promotion.promotion_receipts.create(:character => current_character)
-
-      goal(:promotion_receipt, @promotion.id)
     else
       if @promotion.expired?
         flash[:notice] = t("promotions.show.expired")

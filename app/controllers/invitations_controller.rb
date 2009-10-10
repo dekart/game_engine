@@ -4,8 +4,6 @@ class InvitationsController < ApplicationController
 
     if @invitation.accept!
       send_notification(@invitation)
-
-      goal(:invitation_accept, @invitation.sender_id)
     end
 
     render :action => :accept, :layout => false
@@ -14,9 +12,7 @@ class InvitationsController < ApplicationController
   def ignore
     @invitation = Invitation.find(params[:id])
 
-    if @invitation.ignore!
-      goal(:invitation_ignore, @invitation.sender_id)
-    end
+    @invitation.ignore!
 
     render :action => :ignore, :layout => false
   end
@@ -49,10 +45,6 @@ class InvitationsController < ApplicationController
 
       if invitation.accept!
         send_notification(invitation)
-
-        goal(:invitation_link_accept, @character.id)
-      else
-        goal(:invitation_link_ignore, @character.id)
       end
     end
 

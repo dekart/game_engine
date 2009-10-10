@@ -21,8 +21,6 @@ class PremiaController < ApplicationController
 
     if @result
       flash[:success] = t("premia.update.messages.success.#{params[:type]}")
-
-      goal("premium_#{params[:type]}")
     else
       flash[:error] = t("premia.update.messages.failure")
     end

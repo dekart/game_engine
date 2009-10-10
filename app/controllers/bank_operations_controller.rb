@@ -14,8 +14,6 @@ class BankOperationsController < ApplicationController
 
     @operation.save
 
-    goal(@operation.class.to_s.underscore, @operation.amount)
-
     render :action => :new
   end
 end

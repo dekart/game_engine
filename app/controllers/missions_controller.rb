@@ -14,10 +14,6 @@ class MissionsController < ApplicationController
 
     @result = MissionResult.create(current_character, @mission)
 
-    unless @result.new_record?
-      goal(@result.rank.just_completed? ? :mission_complete : :mission_fulfill, @mission.id)
-    end
-
     if params[:tutorial]
       @missions = Mission.available_for(current_character).all(:limit => 1)
     else

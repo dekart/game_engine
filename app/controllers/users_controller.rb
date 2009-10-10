@@ -14,8 +14,6 @@ class UsersController < ApplicationController
 
     if current_user.respond_to?("show_#{ params[:block] }")
       current_user.update_attribute("show_#{ params[:block] }", false)
-
-      goal(:hide_block, params[:block])
     end
 
     render :text => "<!-- no data -->"
@@ -48,8 +46,6 @@ class UsersController < ApplicationController
 
             @sent_invitations << invitation unless invitation.new_record?
           end
-
-          goal(:invitation_send, @sent_invitations.size)
         end
       end
     elsif params[:from_selector]

@@ -4,8 +4,6 @@ class InventoriesController < ApplicationController
 
     @inventory = current_character.inventories.buy!(@item)
 
-    goal(:item_buy, @item.id)
-
     render :action => :create, :layout => "ajax"
   end
 
@@ -13,8 +11,6 @@ class InventoriesController < ApplicationController
     @item = Item.find(params[:id])
 
     @inventory = current_character.inventories.sell!(@item)
-
-    goal(:item_sell, @item.id)
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -27,8 +23,6 @@ class InventoriesController < ApplicationController
     @inventory = current_character.inventories.find(params[:id])
 
     @inventory.use
-
-    goal(:item_use, @inventory.item.id)
 
     render :action => :use, :layout => "ajax"
   end
