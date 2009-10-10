@@ -14,11 +14,7 @@
 
   <%= render :partial => "layouts/admin/main_menu" %>
 
-  <input type="text" style="width: 1px; height: 1px; border:0px;" id="top_field"/>
-
   <div id="content">
-    <%= render :partial => "layouts/spinner" %>
-
     <div id="header">
       <%= link_to("&nbsp;", root_path, :id => :logo) %>
 
@@ -30,6 +26,10 @@
     <% flash_block do |message| %>
       <%= fb_i(message) %>
     <% end %>
+
+    <input type="text" style="width: 1px; height: 1px; border:0px;" id="top_field"/>
+    
+    <%= render :partial => "layouts/spinner" %>
 
     <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
 
