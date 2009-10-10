@@ -2,6 +2,7 @@ class MissionGroup < ActiveRecord::Base
   extend HasPayouts
 
   has_many :missions, :dependent => :destroy
+  has_many :mission_group_ranks, :dependent => :delete_all
 
   default_scope :order => "mission_groups.level"
   
