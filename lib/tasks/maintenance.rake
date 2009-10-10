@@ -1,5 +1,27 @@
 namespace :app do
   namespace :maintenance do
+    desc "Move item, mission, and property images"
+    task :move_images_to_new_urls => :environment do
+      [Item, Mission, PropertyType, MissionGroup].each do |klass|
+        total = klass.count
+
+        klass.find_each do |item|
+          puts "Processing #{klass.to_s.humanize} #{item.id}/#{total}..."
+
+          if item.image?
+            old_file_name = File.join(RAILS_ROOT, "public", "system", "images", item.id.to_s, "original", item.image_file_name)
+
+            if File.file?(old_file_name)
+              item.image = File.open(old_file_name)
+              item.save!
+            else
+              puts "File not found: #{old_file_name}"
+            end
+          end
+        end
+      end
+    end
+
     desc "Recalculate character rating"
     task :recalculate_rating => :environment do
       Character.find_.each do |character|

@@ -77,6 +77,13 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
   config.action_controller.cache_store = :mem_cache_store, "localhost"
+
+  config.after_initialize do
+    Paperclip::Attachment.default_options.merge!(
+      :url  => "/:class/:id_partition/:style/:basename.:extension",
+      :path => ":rails_root/public/system/:class/:id_partition/:style/:basename.:extension"
+    )
+  end
 end
 
 WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
