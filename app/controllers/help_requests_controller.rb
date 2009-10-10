@@ -10,14 +10,14 @@ class HelpRequestsController < ApplicationController
   end
 
   def show
-    @character = Character.find(params[:id])
+    if @character = Character.find_by_id(params[:id])
+      if friend?(@character.user) and @help_request = @character.help_requests.latest(params[:context])
+        @help_result  = @help_request.help_results.create(:character => current_character)
 
-    if friend?(@character.user)
-      @help_request = @character.help_requests.latest(params[:context])
-
-      @help_result  = @help_request.help_results.create(:character => current_character)
-
-      @fight = @help_result.fight if @help_request.context.is_a?(Fight) and !@help_result.new_record?
+        @fight = @help_result.fight if @help_request.context.is_a?(Fight) and !@help_result.new_record?
+      end
+    else
+      redirect_to root_path
     end
   end
 end
