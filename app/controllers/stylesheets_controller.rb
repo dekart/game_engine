@@ -14,7 +14,7 @@ class StylesheetsController < ApplicationController
   end
 
   def source
-    @code = File.read(default_stylesheet_path)
+    @code = File.read(Stylesheet::DEFAULT_PATH)
 
     respond_to do |format|
       format.css do

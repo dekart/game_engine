@@ -80,7 +80,7 @@ Rails::Initializer.run do |config|
 
   config.after_initialize do
     Paperclip::Attachment.default_options.merge!(
-      :url  => "/:class/:id_partition/:style/:basename.:extension",
+      :url  => "/system/:class/:id_partition/:style/:basename.:extension",
       :path => ":rails_root/public/system/:class/:id_partition/:style/:basename.:extension"
     )
   end

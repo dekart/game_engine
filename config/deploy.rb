@@ -60,7 +60,7 @@ namespace :deploy do
 
   desc "Bootstrap application data"
   task :bootstrap, :roles => :app do
-    run "cd #{current_path}; rake app:bootstrap"
+    run "cd #{current_path}; rake app:bootstrap:assets"
   end
 
   desc "Updates apache virtual host config"
@@ -97,6 +97,6 @@ end
   after "deploy:migrations", t
 end
 
-["deploy:update_apache_config", "deploy:jobs:start"].each do |t|
+["app:bootstrap", "deploy:update_apache_config", "deploy:jobs:start"].each do |t|
   after "deploy:cold", t
 end

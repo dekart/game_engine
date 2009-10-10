@@ -9,7 +9,7 @@ module StylesheetsHelper
 
       if Rails.env.development?
         content_tag(:style,
-          format_stylesheet_content(style ? style.content : File.read(default_stylesheet_path))
+          format_stylesheet_content(style ? style.content : File.read(Stylesheet::DEFAULT_PATH))
         )
       else
         if style
@@ -21,7 +21,7 @@ module StylesheetsHelper
             )
           )
         else
-          stylesheet_link_tag("default.css?#{File.mtime(default_stylesheet_path)}")
+          stylesheet_link_tag("default.css?#{File.mtime(Stylesheet::DEFAULT_PATH).to_i}")
         end
       end
     end
@@ -39,9 +39,5 @@ module StylesheetsHelper
     end
 
     content
-  end
-
-  def default_stylesheet_path
-    File.join(RAILS_ROOT, "app", "views", "stylesheets", "default.css")
   end
 end

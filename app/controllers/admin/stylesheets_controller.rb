@@ -54,6 +54,6 @@ class Admin::StylesheetsController < ApplicationController
   end
 
   def log
-    @log = %x{git log -p --since=#{params[:log]["since(1i)"]}-#{params[:log]["since(2i)"]}-#{params[:log]["since(3i)"]} #{default_stylesheet_path}}
+    @log = %x{git log -p --since=#{params[:log]["since(1i)"]}-#{params[:log]["since(2i)"]}-#{params[:log]["since(3i)"]} #{Stylesheet::DEFAULT_PATH}}
   end
 end
