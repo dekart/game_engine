@@ -5,7 +5,7 @@
     <th><%= Translation.human_attribute_name("key") %></th>
     <th><%= Translation.human_attribute_name("value") %></th>
   </tr>
-  <% @translations[0..20].each do |key, value, customization| %>
+  <% @translations.each do |key, value, customization| %>
     <% content_tag :tr, :class => (:customized if customization) do %>
       <td class="key"><%= h(key) %></td>
       <% content_tag(:td, :id => translation_id(key), :class => :value) do %>
