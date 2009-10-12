@@ -17,35 +17,47 @@ class Admin::TranslationsController < ApplicationController
   end
 
   def new
-    if @translation = Translation.find_by_key(params[:key])
-      redirect_to [:edit, :admin, @translation]
-    else
-      @translation = Translation.new(:key => params[:key])
-    end
+    @translation = Translation.new(:key => params[:key])
+
+    I18n.backend.send(:init_translations)
+
+    @current_value = translations_to_array(I18n.backend.send(:translations)[I18n.locale]).assoc(params[:key]).last
+
+    render :action => :new, :layout => false
   end
 
   def create
     @translation = Translation.new(params[:translation])
 
     if @translation.save
-      redirect_to :action => :index
+      render :action => :show, :layout => false
     else
-      render :action => :new
+      render :action => :new, :layout => false
     end
   end
 
   def edit
     @translation = Translation.find(params[:id])
+
+    render :action => :edit, :layout => false
   end
 
   def update
     @translation = Translation.find(params[:id])
 
     if @translation.update_attributes(params[:translation])
-      redirect_to :action => :index
+      render :action => :show, :layout => false
     else
-      render :action => :edit
+      render :action => :edit, :layout => false
     end
+  end
+
+  def destroy
+    @translation = Translation.find(params[:id])
+
+    @translation.destroy
+
+    redirect_to :action => :index
   end
 
   protected

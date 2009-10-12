@@ -204,12 +204,12 @@ en:
       index:
         title: "Translations"
         controls:
-          edit: "Edit"
+          delete: "Reset to Default"
+          delete_confirm: "Are you sure?"
       new:
-        title: "New Custom Translation"
+        current_value: "Current Value: "
         submit: "Create"
       edit:
-        title: "Edit Custom Translation"
         submit: "Update"
     configurations:
       edit:

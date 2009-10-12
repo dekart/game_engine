@@ -5,14 +5,21 @@
     <th><%= Translation.human_attribute_name("key") %></th>
     <th><%= Translation.human_attribute_name("value") %></th>
   </tr>
-  <% @translations.each do |key, value, customization| %>
+  <% @translations[0..20].each do |key, value, customization| %>
     <% content_tag :tr, :class => (:customized if customization) do %>
       <td class="key"><%= h(key) %></td>
-      <td class="value">
-        <%= link_to(h(value), customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key)) %>
-      </td>
+      <% content_tag(:td, :id => translation_id(key), :class => :value) do %>
+        <%= link_to_remote(h(value),
+              :url    => customization ? edit_admin_translation_url(customization, :canvas => false) : new_admin_translation_url(:key => key, :canvas => false),
+              :method => :get,
+              :update => translation_id(key)
+            ) %>
+      <% end %>
       <td class="controls">
-        <%= link_to(t(".controls.edit"), customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key)) %>
+        <%= link_to(t(".controls.delete"), admin_translation_url(customization),
+              :method   => :delete,
+              :confirm  => t(".controls.delete_confirm")
+            ) if customization %>
       </td>
     <% end %>
   <% end %>

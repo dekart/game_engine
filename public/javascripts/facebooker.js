@@ -17,11 +17,8 @@ var Element = {
   "hide": function () {
     this.setStyle("display","none")
   },
-  "show": function (value) {
-    if(value == undefined){
-      value = "block";
-    }
-    this.setStyle("display",value)
+  "show": function () {
+    this.setStyle("display","block")
   },
   "visible": function () {
     return (this.getStyle("display") != "none");
@@ -35,7 +32,7 @@ var Element = {
   }
 };
 
-function encodeURIComponent(str) {
+function encodeURIComponent(str){
   if (typeof(str) == "string") {
     return str.replace(/=/g,'%3D').replace(/&/g,'%26');
   }
@@ -73,37 +70,26 @@ Ajax.Updater = function (container,url,options) {
     this.ajax.onerror = options["onFailure"];
   }
 
-  if(options["scrollToTop"] != false){
+  if (!options['parameters']) {
+    options['parameters'] = {}
+  }
+
+  // simulate other verbs over post
+  if (options['method']) {
+    options['parameters']['_method'] = options['method'];
+  }
+
+  if(options["scrollToTop"] != false && $('top_field')){
     $('top_field').focus();
-  }
-
-  // Yes, this is an excercise in undoing what we just did
-  // FB doesn't provide encodeURI, but they will encode things passed as a hash
-  // so we turn it into a string, esaping & and =
-  // then we split it all back out here
-  // this could be killed if encodeURIComponent was available
-  parameters={};
-  if (options['parameters']) {
-    pairs=options['parameters'].split('&'); 
-    for (var i=0; i<pairs.length; i++) {
-      kv=pairs[i].split('=');
-      key=kv[0].replace(/%3D/g,'=').replace(/%26/g,'&');
-      val=kv[1].replace(/%3D/g,'=').replace(/%26/g,'&');
-      parameters[key]=val;
-    }
-  }
-
-  if(options["method"]){
-    parameters["_method"] = options["method"];
   }
 
   if(options["showSpinner"] != false){
     Spinner.show();
   }
 
-  this.ajax.post(url,parameters); 
+  this.ajax.post(url,options['parameters']);
   if (options["onLoading"]) {
-     options["onLoading"].call() 
+     options["onLoading"].call()
   }
 };
 Ajax.Request = function(url,options) {

@@ -62,6 +62,7 @@ form .label, form .required {display:inline}
 #stylesheet_list .current {background-color: #fff1c6}
 #field_for_stylesheet_content textarea {width: 750px; height: 500px; font-family: monospace;}
 
+#translation_list {width: 100%;}
 #translation_list .customized .key,
   #translation_list .customized .value a {font-weight: bold;}
 

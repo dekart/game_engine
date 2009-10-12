@@ -2,6 +2,7 @@ class Translation < ActiveRecord::Base
   validates_presence_of :key, :value
 
   after_save :restart_server
+  after_destroy :restart_server
   
   def self.to_hash
     result = {}
