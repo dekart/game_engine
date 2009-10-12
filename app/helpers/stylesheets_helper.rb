@@ -31,8 +31,12 @@ module StylesheetsHelper
     content.gsub!(/url\(([^)]+)\)/) do |match|
       url = $1
 
-      if url =~ /^asset:(.*)/ and asset = Asset.find_by_alias($1)
-        url = asset.image.url
+      if url =~ /^asset:(.*)/
+        if asset = Asset.find_by_alias($1)
+          url = asset.image.url
+        else
+          url = "1px.gif"
+        end
       end
       
       match.replace "url(#{image_path(url)})"
