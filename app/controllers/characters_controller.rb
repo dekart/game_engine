@@ -4,6 +4,8 @@ class CharactersController < ApplicationController
   def index
     if !current_user.skip_tutorial?
       redirect_to tutorial_path
+    elsif current_user.should_visit_gift_page?
+      redirect_to new_gift_path
     elsif current_user.should_visit_invite_page?
       redirect_to invite_users_path
     else

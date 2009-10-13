@@ -48,6 +48,10 @@ module FacebookHelper
     "http://www.facebook.com/apps/application.php?api_key=#{Facebooker.facebooker_config["api_key"]}"
   end
 
+  def fb_app_requests_url
+    "http://www.facebook.com/reqs.php#confirm_#{Facebooker.facebooker_config["app_id"]}_0"
+  end
+
   def fb_i(*args, &block)
     options = args.extract_options!
     tag = content_tag("fb:intl", block_given? ? capture(&block): args.shift, options)

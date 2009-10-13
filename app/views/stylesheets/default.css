@@ -523,3 +523,16 @@ form .error {color: red; padding: 3px 0px;}
 /* Level up block displayed in mission or fight results */
 #level_up {padding:0px 30px; background: url(asset:icons_level) 5px 0px no-repeat;}
   #level_up .upgrade {background-image: url(asset:icons_add);}
+
+/* Gift result message */
+#gift_result {padding:0px 30px; background: url(asset:icons_inventory) 5px 0px no-repeat;}
+  #gift_result .pending {width: 140px; background-image: url(asset:icons_inventory);}
+  #gift_result .play_now {width: 80px; background-image: url(asset:icons_home);}
+  #gift_result .details td {padding: 0 15px;text-align:center; }
+  #gift_result .details .item {font-weight: bold;}
+  #gift_result .details .from {font-weight: bold; font-size: 16px; vertical-align: middle;}
+
+/* Gift sending form */
+#gift_form .items .item {float: left; width: 150px; height: 150px; text-align: center;}
+  #gift_form .items .item .name {font-weight: bold;}
+#gift_form .skip {width: 45px; float: right; background-image: url(asset:icons_home)}

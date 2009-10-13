@@ -58,4 +58,14 @@ class User < ActiveRecord::Base
   def invite_page_visited!
     self.update_attribute(:invite_page_visited_at, Time.now)
   end
+
+  def should_visit_gift_page?
+    Configuration[:gifting_enabled] and
+      self.created_at < Configuration[:gifting_page_first_visit_delay].hours.ago and
+      (self.gift_page_visited_at.nil? or self.gift_page_visited_at < Configuration[:gifting_page_recurrent_visit_delay].hours.ago)
+  end
+
+  def gift_page_visited!
+    self.update_attribute(:gift_page_visited_at, Time.now)
+  end
 end

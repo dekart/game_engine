@@ -75,6 +75,8 @@ class Character < ActiveRecord::Base
     :dependent  => :destroy,
     :extend     => Character::HelpRequests
 
+  has_many :gifts
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [
@@ -112,6 +114,16 @@ class Character < ActiveRecord::Base
     :restore_rate   => :property_income
 
   before_save :update_level_and_points, :recalculate_rating
+
+  def self.find_by_invitation_key(key)
+    id, secret = key.split("-")
+
+    if character = character.find_by_id(id) and secret == character.secret
+      character
+    else
+      nil
+    end
+  end
 
   def upgrade_attribute!(name)
     name = name.to_sym

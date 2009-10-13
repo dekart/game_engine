@@ -9,6 +9,7 @@
 # This should only be necessary until the final version of the new profile is released.
 
 development:
+  app_id: 57903479136
   api_key: 8f9ae9c78512819c66259279ba97fb97
   secret_key: 81fd40d9c3c7cf7faac91227a5ebdc44
   canvas_page_name: blogbox-dev
@@ -34,6 +35,7 @@ test:
     local_port: 3000
 
 production:
+  app_id: 81958551648
   api_key: eccd02101c4a358ffe9590fdfa347954
   secret_key: 1a7e8b3eb1e5d3999d54d286b5d1c5e4
   canvas_page_name: sword-and-magic

@@ -1,0 +1,36 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div id="gift_form">
+  <div class="note">
+    <%= fb_i(t(".note")) %>
+  </div>
+
+  <div class="friends">
+    <% content_for :gift_message do %>
+      <% fb_i do %>
+        <%= t(".request.message",
+              :user => fb_name(current_user, :linked => :false),
+              :app  => fb_app_name
+            ) %>
+
+        <%= fb_it(:item, fb_i(@gift.item.name)) %>
+      <% end %>
+
+      <% content_tag("fb:req-choice", :url => gift_url(@gift)) do%>
+        <%= fb_fa(:label, fb_i(t(".request.accept") + fb_it(:item, fb_i(@gift.item.name)))) %>
+      <% end %>
+    <% end %>
+
+    <% fb_request_form(nil, :gift_message, confirm_gift_path(@gift)) do %>
+      <%= fb_fa(:type, fb_i(t(".request.title"))) %>
+
+      <% fb_custom_multi_friend_selector(
+           :exclude_ids => @exclude_ids.join(",")
+         ) do %>
+        <%= fb_fa(:actiontext, fb_i(t(".request.note"))) %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= link_to(fb_i(t(".skip")), confirm_gift_path(@gift), :class => "skip button") %>
+</div>

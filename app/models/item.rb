@@ -1,7 +1,7 @@
 class Item < ActiveRecord::Base
   extend HasEffects
 
-  AVAILABILITIES = [:shop, :special, :loot, :mission]
+  AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
 
   belongs_to  :item_group
   has_many    :inventories, :dependent => :destroy

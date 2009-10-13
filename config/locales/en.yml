@@ -587,6 +587,30 @@ en:
       title: "Upgrade"
       text: "Every time when you reach new level or complete a mission you receive Upgrade Points. You can use these points to increase your attack, defence, health, or energy. Upgrade all these attributes to build a balanced character."
       next: "Finish &raquo;"
+  gifts:
+    new:
+      title: "Send Gifts to Your Alliance: Step 1"
+      note: "Please choose the item you want to send to your friends"
+      skip: "Skip"
+    create:
+      title: "Send Gifts to Your Alliance: Step 2"
+      note: "Please choose friends whom you want to send this gift"
+      skip: "Skip"
+      request:
+        title: "Gift"
+        message: "{{user}} has sent you a {item} in {{app}}! Click to accept gift."
+        accept: "Accept {item}"
+        note: "Send gifts to your Alliance"
+    confirm:
+      messages:
+        success: "Gifts has been sent to your alliance!"
+        failure: "An error occured while sending gift. Please contact application developer."
+    show:
+      success: "You've just received the gift:"
+      from: "From"
+      buttons:
+        receive_pending: "Receive Other Gifts"
+        play_now: "Play Now"
 # Helpers
   blocks:
     hide: "Hide"

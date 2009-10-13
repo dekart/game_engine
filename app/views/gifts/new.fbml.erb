@@ -1,0 +1,19 @@
+<%= title(fb_i(t(".title"))) %>
+
+<div id="gift_form">
+  <div class="note">
+    <%= fb_i(t(".note")) %>
+  </div>
+
+  <div class="items clearfix">
+    <% @items.each do |item| %>
+      <% div_for(item) do %>
+        <%= link_to(item_image(item, :small), gifts_path(:item_id => item.id), :method => :post) %>
+
+        <div class="name"><%= link_to(fb_i(item.name), gifts_path(:item_id => item.id), :method => :post) %></div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= link_to(fb_i(t(".skip")), root_path, :class => "skip button") %>
+</div>
