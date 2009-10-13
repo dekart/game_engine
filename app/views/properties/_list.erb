@@ -7,7 +7,7 @@
   </tr>
   <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
     <% content_tag_for(:tr, type) do %>
-      <td class="picture"><%= image_tag(type.image.url(:small)) if type.image? %></td>
+      <td class="picture"><%= property_image(type, :small) %></td>
       <td class="info">
         <div class="name"><%= fb_i(type.name) %></div>
         <div class="description"><%= fb_i(type.description) %></div>
