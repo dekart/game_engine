@@ -24,7 +24,7 @@ class CreateGifts < ActiveRecord::Migration
       t.boolean :gifting_enabled,                     :default => true
       t.integer :gifting_item_show_limit,             :default => 10
       t.integer :gifting_page_first_visit_delay,      :default => 1
-      t.integer :gifting_page_recurrent_visit_delay,  :default => 6
+      t.integer :gifting_page_recurrent_visit_delay,  :default => 24
     end
 
     change_table :users do |t|
