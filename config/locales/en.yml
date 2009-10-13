@@ -181,6 +181,13 @@ en:
         attack: "Attack!"
       titles:
         empty_set: "{{user}} don't have any titles yet"
+      items:
+        amount: "X {{amount}}"
+        empty_set: "No {{group}}"
+      properties:
+        title: "Properties"
+        amount: "X {{amount}}"
+        empty_set: "No properties"
     upgrade:
       title: "Upgrade"
       finished:

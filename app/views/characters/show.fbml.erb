@@ -30,4 +30,44 @@
       </td>
     </tr>
   </table>
+
+  <% ItemGroup.find_each do |group| %>
+    <div class="item_group">
+      <h2><%= fb_i(group.name) %></h2>
+
+      <% collection(@character.inventories.by_item_group(group),
+          :empty_set => fb_i(t(".items.empty_set", :group => group.name.mb_chars.downcase))
+         ) do |items| %>
+        <div class="items clearfix">
+          <% items.each do |inventory| %>
+            <div class="item">
+              <%= item_image(inventory, :small) %>
+
+              <% if @character == current_character %>
+                <div class="amount"><%= t(".items.amount", :amount => inventory.amount) %></div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="properties">
+    <h2><%= fb_i(t(".properties.title")) %></h2>
+    
+    <% collection(@character.properties, :empty_set => fb_i(t(".properties.empty_set"))) do |properties| %>
+      <div class="items clearfix">
+        <% properties.each do |property| %>
+          <div class="item">
+            <%= property_image(property, :small) %>
+
+            <% if @character == current_character %>
+              <div class="amount"><%= t(".properties.amount", :amount => property.amount) %></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

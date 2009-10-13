@@ -85,4 +85,26 @@ module ApplicationHelper
   def defence(value, tag = :div)
     content_tag(tag, value, :class => :defence) if value.to_i > 0
   end
+
+  def collection(*args, &block)
+    options = args.extract_options!
+
+    items = args.shift
+    has_elements = args.shift || items.any?
+
+    if has_elements
+      yield(items)
+    else
+      concat(
+        empty_set(options[:empty_set])
+      )
+    end
+  end
+
+  def empty_set(*args)
+    options = args.extract_options!
+    label = args.first
+
+    content_tag(:div, label || t(".empty_set", :default => t("common.empty_set")), options.reverse_merge(:class => :empty_set))
+  end
 end
