@@ -55,4 +55,8 @@ class Item < ActiveRecord::Base
   def vip_price
     self[:vip_price].to_i
   end
+
+  def availability
+    self[:availability].to_sym
+  end
 end

@@ -34,4 +34,8 @@ class PropertyType < ActiveRecord::Base
   def inflated_price(amount)
     inflation ? basic_price + inflation * (amount - 1) : basic_price
   end
+
+  def availability
+    self[:availability].to_sym
+  end
 end
