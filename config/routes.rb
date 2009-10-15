@@ -78,7 +78,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :help_requests, :only => [:show, :create]
 
-  map.resources :gifts, :member => {:confirm => :post}
+  map.resources :gifts, :member => {:confirm => :post, :change_group => :any}
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

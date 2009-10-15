@@ -595,15 +595,19 @@ en:
     create:
       title: "Send Gifts to Your Alliance: Step 2"
       gift:
-        title: "You're sending this gift:"
+        title: "You're sending:"
         change: "&laquo; Change"
       note: "Please choose friends whom you want to send this gift"
-      skip: "Skip"
+      groups:
+        all: "All Friends"
+        players: "{{app}} Friends"
+        non_players: "Facebook Friends"
       request:
         title: "Gift"
         message: "{{user}} has sent you a {item} in {{app}}! Click to accept gift."
         accept: "Accept {item}"
         note: "Send gifts to your Alliance"
+      skip: "Skip"
     confirm:
       messages:
         success: "Gifts has been sent to your alliance!"

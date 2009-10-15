@@ -20,16 +20,26 @@ class GiftsController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
+    item = Item.find_by_id(params[:item_id])
 
-    unless params[:gift_id]
-      @gift = current_character.gifts.create(:item => @item)
-    else
+    if params[:gift_id]
       @gift = Gift.find(params[:gift_id])
-      @gift.update_attributes(:item => @item)
+
+      @gift.update_attributes(:item => item) if item
+    else
+      @gift = current_character.gifts.create(:item => item)
     end
 
-    @exclude_ids = facebook_params["friends"].collect{|id| id.to_i } - current_character.friend_relations.facebook_ids
+    @group = params[:group] ? params[:group].to_sym : :all
+    
+    case @group
+    when :all
+      @exclude_ids = []
+    when :players
+      @exclude_ids = facebook_params["friends"].collect{|id| id.to_i } - current_character.friend_relations.facebook_ids
+    when :non_players
+      @exclude_ids = current_character.friend_relations.facebook_ids
+    end
   end
 
   def confirm

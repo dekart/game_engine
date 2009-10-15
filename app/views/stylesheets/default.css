@@ -533,8 +533,16 @@ form .error {color: red; padding: 3px 0px;}
   #gift_result .details .from {font-weight: bold; font-size: 16px; vertical-align: middle;}
 
 /* Gift sending form */
+#gift_form .skip {width: 45px; float: right; background-image: url(asset:icons_home)}
+
 #gift_form .item { width: 150px; text-align: center;}
   #gift_form .item .name {font-weight: bold;}
+
 #gift_form .items .item {float: left; height: 150px; }
-#gift_form .gift .item .name {margin-bottom: 10px;}
-#gift_form .skip {width: 45px; float: right; background-image: url(asset:icons_home)}
+
+#gift_form .gift {margin-bottom: 15px;}
+  #gift_form .gift .item .name {margin-bottom: 10px;}
+
+#gift_form .friend_groups {font-size: 14px; font-weight: bold;line-height: 30px;}
+  #gift_form .friend_groups a {padding: 5px; margin: 0 5px;}
+  #gift_form .friend_groups a.current {border:  1px solid #D0D0D0; color: #333333;}
