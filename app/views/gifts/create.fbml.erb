@@ -5,6 +5,18 @@
     <%= fb_i(t(".note")) %>
   </div>
 
+  <div class="gift">
+    <h2><%= fb_i(t(".gift.title")) %></h2>
+
+    <div class="item">
+      <%= item_image(@gift.item, :small) %>
+
+      <div class="name"><%= fb_i(@gift.item.name) %></div>
+
+      <%= link_to(fb_i(t(".gift.change")), edit_gift_path(@gift)) %>
+    </div>
+  </div>
+
   <div class="friends">
     <% content_for :gift_message do %>
       <% fb_i do %>

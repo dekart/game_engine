@@ -8,10 +8,26 @@ class GiftsController < ApplicationController
     )
   end
 
+  def edit
+    @gift = Gift.find(params[:id])
+
+    @items = Item.available_in(:gift).available_for(current_character).all(
+      :order => "items.level DESC",
+      :limit => Configuration[:gifting_item_show_limit]
+    )
+
+    render :action => :new
+  end
+
   def create
     @item = Item.find(params[:item_id])
 
-    @gift = current_character.gifts.create(:item => @item)
+    unless params[:gift_id]
+      @gift = current_character.gifts.create(:item => @item)
+    else
+      @gift = Gift.find(params[:gift_id])
+      @gift.update_attributes(:item => @item)
+    end
 
     @exclude_ids = facebook_params["friends"].collect{|id| id.to_i } - current_character.friend_relations.facebook_ids
   end

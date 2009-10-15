@@ -594,6 +594,9 @@ en:
       skip: "Skip"
     create:
       title: "Send Gifts to Your Alliance: Step 2"
+      gift:
+        title: "You're sending this gift:"
+        change: "&laquo; Change"
       note: "Please choose friends whom you want to send this gift"
       skip: "Skip"
       request:
@@ -609,7 +612,7 @@ en:
       success: "You've just received the gift:"
       from: "From"
       buttons:
-        receive_pending: "Receive Other Gifts"
+        accept_pending: "Accept Other Gifts"
         play_now: "Play Now"
 # Helpers
   blocks:

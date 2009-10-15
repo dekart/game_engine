@@ -8,12 +8,12 @@
   <div class="items clearfix">
     <% @items.each do |item| %>
       <% div_for(item) do %>
-        <%= link_to(item_image(item, :small), gifts_path(:item_id => item.id), :method => :post) %>
+        <%= link_to(item_image(item, :small), gifts_path(:gift_id => @gift.id, :item_id => item.id), :method => :post) %>
 
-        <div class="name"><%= link_to(fb_i(item.name), gifts_path(:item_id => item.id), :method => :post) %></div>
+        <div class="name"><%= link_to(fb_i(item.name), gifts_path(:gift_id => @gift.id, :item_id => item.id), :method => :post) %></div>
       <% end %>
     <% end %>
   </div>
 
-  <%= link_to(fb_i(t(".skip")), root_path, :class => "skip button") %>
+  <%= link_to(fb_i(t(".skip")), @gift.new_record? ? root_path : confirm_gift_path(@gift), :class => "skip button") %>
 </div>
