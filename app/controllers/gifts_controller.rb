@@ -1,6 +1,8 @@
 class GiftsController < ApplicationController
   def new
     current_user.gift_page_visited!
+
+    @gift = Gift.new
     
     @items = Item.available_in(:gift).available_for(current_character).all(
       :order => "items.level DESC",
