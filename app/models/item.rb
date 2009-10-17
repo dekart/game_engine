@@ -36,7 +36,7 @@ class Item < ActiveRecord::Base
 
   has_effects
 
-  validates_presence_of :name, :item_group, :availability, :level, :basic_price
+  validates_presence_of :name, :item_group, :availability, :level
   validates_presence_of :usage_limit, :if => :usable?
   validates_numericality_of :level, :basic_price, :vip_price, :usage_limit, :allow_blank => true
 

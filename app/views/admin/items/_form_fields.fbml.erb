@@ -12,7 +12,7 @@
       <%= form.select :availability, Item::AVAILABILITIES, :required => true %>
 
       <%= form.text_field :level, :required => true, :size => 3 %>
-      <%= form.text_field :basic_price, :required => true, :size => 3 %>
+      <%= form.text_field :basic_price, :size => 3 %>
       <%= form.text_field :vip_price, :size => 3 %>
       <%= form.check_box :usable %>
       <%= form.text_field :usage_limit, :size => 3 %>
