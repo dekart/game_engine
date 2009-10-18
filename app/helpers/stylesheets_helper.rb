@@ -32,14 +32,12 @@ module StylesheetsHelper
       url = $1
 
       if url =~ /^asset:(.*)/
-        if asset = Asset.find_by_alias($1)
-          url = asset.image.url
-        else
-          url = "1px.gif"
-        end
+        path = asset_image_path($1)
+      else
+        path = image_path(url)
       end
       
-      match.replace "url(#{image_path(url)})"
+      match.replace "url(#{path})"
     end
 
     content
