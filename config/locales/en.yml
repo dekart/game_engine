@@ -592,6 +592,7 @@ en:
       title: "Send Gifts to Your Alliance: Step 1"
       note: "Please choose the item you want to send to your friends"
       skip: "Skip"
+      empty_set: "There are no gifts available at this time"
     create:
       title: "Send Gifts to Your Alliance: Step 2"
       gift:
