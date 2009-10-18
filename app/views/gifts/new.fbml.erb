@@ -8,9 +8,15 @@
   <div class="items clearfix">
     <% @items.each do |item| %>
       <% div_for(item) do %>
-        <%= link_to(item_image(item, :small), gifts_path(:gift_id => @gift.id, :item_id => item.id), :method => :post) %>
+        <%= link_to(item_image(item, :small), polymorphic_path(@gift, :item_id => item.id), 
+              :method => @gift.new_record? ? :post : :put
+            ) %>
 
-        <div class="name"><%= link_to(fb_i(item.name), gifts_path(:gift_id => @gift.id, :item_id => item.id), :method => :post) %></div>
+        <div class="name">
+          <%= link_to(fb_i(item.name), polymorphic_path(@gift, :item_id => item.id),
+                :method => @gift.new_record? ? :post : :put
+              ) %>
+        </div>
       <% end %>
     <% end %>
   </div>

@@ -18,18 +18,18 @@
   </div>
 
   <div class="friend_groups">
-    <%= link_to(fb_i(t(".groups.all")), gifts_url(:gift_id => @gift, :group => :all),
-          :method => :post,
+    <%= link_to(fb_i(t(".groups.all")), gift_path(@gift, :group => :all),
+          :method => :put,
           :id => "group_all",
           :class => (:current if @group == :all)
         ) %>
-    <%= link_to(fb_i(t(".groups.players", :app => fb_app_name)), gifts_url(:gift_id => @gift, :group => :players),
-          :method => :post,
+    <%= link_to(fb_i(t(".groups.players", :app => fb_app_name)), gift_path(@gift, :group => :players),
+          :method => :put,
           :id => "group_players",
           :class => (:current if @group == :players)
         ) %>
-    <%= link_to(fb_i(t(".groups.non_players")), gifts_url(:gift_id => @gift, :group => :non_players),
-          :method => :post,
+    <%= link_to(fb_i(t(".groups.non_players")), gift_path(@gift, :group => :non_players),
+          :method => :put,
           :id => "group_non_players",
           :class => (:current if @group == :non_players)
         ) %>

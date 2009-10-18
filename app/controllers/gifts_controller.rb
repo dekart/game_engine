@@ -2,17 +2,8 @@ class GiftsController < ApplicationController
   def new
     current_user.gift_page_visited!
 
-    @gift = Gift.new
+    @gift ||= Gift.new
     
-    @items = Item.available_in(:gift).available_for(current_character).all(
-      :order => "items.level DESC",
-      :limit => Configuration[:gifting_item_show_limit]
-    )
-  end
-
-  def edit
-    @gift = Gift.find(params[:id])
-
     @items = Item.available_in(:gift).available_for(current_character).all(
       :order => "items.level DESC",
       :limit => Configuration[:gifting_item_show_limit]
@@ -21,14 +12,16 @@ class GiftsController < ApplicationController
     render :action => :new
   end
 
+  def edit
+    @gift = Gift.find(params[:id])
+
+    new
+  end
+
   def create
-    item = Item.find_by_id(params[:item_id])
+    unless @gift
+      item = Item.find_by_id(params[:item_id])
 
-    if params[:gift_id]
-      @gift = Gift.find(params[:gift_id])
-
-      @gift.update_attributes(:item => item) if item
-    else
       @gift = current_character.gifts.create(:item => item)
     end
 
@@ -42,6 +35,18 @@ class GiftsController < ApplicationController
     when :non_players
       @exclude_ids = current_character.friend_relations.facebook_ids
     end
+
+    render :action => :create
+  end
+
+  def update
+    @gift = Gift.find(params[:id])
+
+    if item = Item.find_by_id(params[:item_id])
+      @gift.update_attributes(:item => item)
+    end
+
+    create
   end
 
   def confirm
