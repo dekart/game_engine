@@ -11,19 +11,21 @@
       
       <%= form.select :availability, Item::AVAILABILITIES, :required => true %>
 
-      <%= form.text_field :level, :required => true, :size => 3 %>
-      <%= form.text_field :basic_price, :size => 3 %>
-      <%= form.text_field :vip_price, :size => 3 %>
-      <%= form.check_box :usable %>
-      <%= form.text_field :usage_limit, :size => 3 %>
+      <%= form.text_field :level, :required => true, :size => 6, :autocomplete => :off %>
+      
+      <%= form.text_field :basic_price, :size => 6, :autocomplete => :off %>
+      <%= form.text_field :vip_price, :size => 6, :autocomplete => :off %>
       <%= form.check_box :can_be_sold %>
+
+      <%= form.check_box :usable %>
+      <%= form.text_field :usage_limit, :size => 6, :autocomplete => :off %>
     </td>
     <td>
       <div class="serializable" id="effect_list">
         <h2><%= Item.human_attribute_name("effects") %></h2>
 
-        <%= form.text_field :attack, :size => 3 %>
-        <%= form.text_field :defence, :size => 3 %>
+        <%= form.text_field :attack, :size => 6, :autocomplete => :off %>
+        <%= form.text_field :defence, :size => 6, :autocomplete => :off %>
 
         <%= render :partial => "admin/effects/collection", :locals => {:form => form} %>
       </div>

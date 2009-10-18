@@ -2,5 +2,6 @@
 
 <%= text_field_tag("item[effects][effect_#{effect.object_id}][value]", effect.value,
       :id => "effect_#{effect.object_id}_value",
-      :size => 3
+      :size => 6,
+      :autocomplete => :off
     ) %>

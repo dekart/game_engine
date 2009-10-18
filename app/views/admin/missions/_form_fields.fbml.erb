@@ -14,14 +14,14 @@
       <%= form.file_field :image,
             :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : "") %>
 
-      <%= form.text_field :win_amount, :required => true, :size => 3, :autocomplete => :off %>
-      <%= form.text_field :success_chance, :required => true, :size => 3, :autocomplete => :off %>
+      <%= form.text_field :win_amount, :required => true, :size => 6, :autocomplete => :off %>
+      <%= form.text_field :success_chance, :required => true, :size => 6, :autocomplete => :off %>
       <%= form.check_box :repeatable %>
 
-      <%= form.text_field :ep_cost, :required => true, :size => 3, :autocomplete => :off %>
-      <%= form.text_field :experience, :required => true, :size => 3, :autocomplete => :off %>
-      <%= form.text_field :money_min, :required => true, :size => 3, :autocomplete => :off %>
-      <%= form.text_field :money_max, :required => true, :size => 3, :autocomplete => :off %>
+      <%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>
+      <%= form.text_field :experience, :required => true, :size => 6, :autocomplete => :off %>
+      <%= form.text_field :money_min, :required => true, :size => 6, :autocomplete => :off %>
+      <%= form.text_field :money_max, :required => true, :size => 6, :autocomplete => :off %>
     </td>
     <td>
       <div class="serializable" id="requirement_list">
@@ -34,7 +34,7 @@
         <h2><%= Mission.human_attribute_name("payouts") %></h2>
 
         <%= form.check_box :allow_loot %>
-        <%= form.text_field :loot_chance, :size => 3, :autocomplete => :off %>
+        <%= form.text_field :loot_chance, :size => 6, :autocomplete => :off %>
         <%= form.grouped_select :loot_item_ids, Item.to_grouped_dropdown, {}, {:multiple => true} %>
         
         <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
