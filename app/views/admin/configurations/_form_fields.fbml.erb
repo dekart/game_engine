@@ -151,6 +151,19 @@
   <% end %>
 <% end %>
 
+<% form.field_set t(".gifting") do %>
+  <%= form.check_box :gifting_enabled %>
+
+  <%
+    [
+      :gifting_item_show_limit,
+      :gifting_page_first_visit_delay,
+      :gifting_page_recurrent_visit_delay
+    ].each do |field| %>
+    <%= form.text_field field, :size => 5 %>
+  <% end %>
+<% end %>
+
 <% form.field_set t(".user") do %>
   <%
     [

@@ -227,6 +227,7 @@ en:
         inventory: "Inventory"
         item: "Shop"
         property: "Properties"
+        gifting: "Gifts"
         user: "User Options"
         newsletter: "Nesletter Delivery"
         application: "Global Application Settings"
