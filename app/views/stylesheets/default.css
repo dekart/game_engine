@@ -187,6 +187,8 @@ form .error {color: red; padding: 3px 0px;}
   .item_list .picture {padding-right: 10px;}
   .item_list .info {padding-right: 10px;}
   .item_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
+  .item_list .info .sale_limit,
+  .item_list .info .time_limit {color: red;}
   .item_list .details {width: 40px;}
     .item_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
       .item_list .details .attack {background-image: url(asset:icons_attack);}
