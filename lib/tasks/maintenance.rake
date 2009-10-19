@@ -1,5 +1,12 @@
 namespace :app do
   namespace :maintenance do
+    desc "Calculate owned_items"
+    task :calculate_owned_items => :environment do
+      Item.find_each do |item|
+        item.update_attribute(:owned, item.inventories.sum(:amount))
+      end
+    end
+
     desc "Move item, mission, and property images"
     task :move_images_to_new_urls => :environment do
       [Item, Mission, PropertyType, MissionGroup].each do |klass|

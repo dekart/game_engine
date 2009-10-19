@@ -6,6 +6,21 @@ class Item < ActiveRecord::Base
   belongs_to  :item_group
   has_many    :inventories, :dependent => :destroy
 
+  named_scope :available, Proc.new{
+    {
+      :conditions => [%{
+          (
+            items.available_till IS NULL OR
+            items.available_till > ?
+          ) AND (
+            items.limit IS NULL OR
+            items.limit > owned
+          )
+        },
+        Time.now
+      ]
+    }
+  }
   named_scope :available_for, Proc.new {|character|
     {
       :conditions => ["level <= ?", character.level],
@@ -58,5 +73,13 @@ class Item < ActiveRecord::Base
 
   def availability
     self[:availability].to_sym
+  end
+
+  def left
+    limit.to_i > 0 ? limit - owned : nil
+  end
+
+  def time_left
+    (available_till - Time.now).to_i
   end
 end

@@ -6,7 +6,7 @@ class TutorialsController < ApplicationController
   end
 
   def step_2
-    @item = Item.basic.available_in(:shop).available_for(current_character).first
+    @item = Item.available.basic.available_in(:shop).available_for(current_character).first
   end
 
   def step_3

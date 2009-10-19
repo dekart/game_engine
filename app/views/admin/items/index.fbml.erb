@@ -22,7 +22,7 @@
           <th><%= Item.human_attribute_name("vip_price") %></th>
           <th><%= Item.human_attribute_name("usable") %></th>
           <th><%= Item.human_attribute_name("effects") %></th>
-          <th>Bought</th>
+          <th><%= Item.human_attribute_name("owned") %></th>
         </tr>
       <% end %>
       <tr>
@@ -38,7 +38,7 @@
             <%= render :partial => "admin/effects/preview/#{effect.name}", :locals => {:effect => effect} %>
           <% end %>
         </td>
-        <td class="bought"><%= item.inventories.count %></td>
+        <td class="owned"><%= item.owned %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_item_path(item)) %>
           <%= link_to(t(".controls.delete"), admin_item_path(item),

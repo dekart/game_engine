@@ -13,7 +13,11 @@ class Character
     def give!(item, amount = 1)
       inventory = give(item, amount)
 
-      calculate_used_in_fight! if inventory.save
+      if inventory.save
+        Item.update_counters(item.id, :owned => amount)
+        
+        calculate_used_in_fight!
+      end
 
       inventory
     end
@@ -23,7 +27,11 @@ class Character
 
       inventory.charge_money = true
 
-      calculate_used_in_fight! if inventory.save
+      if inventory.save
+        Item.update_counters(item.id, :owned => amount)
+        
+        calculate_used_in_fight!
+      end
 
       inventory
     end
@@ -35,8 +43,12 @@ class Character
         if inventory.amount > amount
           inventory.amount -= amount
           inventory.save
+
+          Item.update_counters(item.id, :owned => - amount)
         else
           inventory.destroy
+
+          Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
         calculate_used_in_fight!
@@ -52,8 +64,12 @@ class Character
         if inventory.amount > amount
           inventory.amount -= amount
           inventory.save
+
+          Item.update_counters(item.id, :owned => - amount)
         else
           inventory.destroy
+
+          Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
         calculate_used_in_fight!

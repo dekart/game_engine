@@ -3,6 +3,28 @@
   <td class="info">
     <div class="name"><%= fb_i(item.name) %></div>
     <div class="description"><%= fb_i(item.description) %></div>
+    
+    <% if item.left %>
+      <div class="sale_limit">
+        <% fb_i do %>
+          <%= t(".sale_limit") %>
+
+          <%= fb_it(:amount, content_tag(:strong, item.left)) %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if item.available_till %>
+      <div class="time_limit">
+        <% fb_i do %>
+          <%= t(".time_limit") %>
+
+          <%= fb_it(:amount, content_tag(:strong, "", :id => dom_id(item, :timer))) %>
+        <% end %>
+      </div>
+
+      <script>Timer.start('<%= dom_id(item, :timer) %>', <%= item.time_left %>)</script>
+    <% end %>
   </td>
   <td class="details">
     <%= attack(item.attack) %>

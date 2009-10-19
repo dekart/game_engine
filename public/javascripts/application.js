@@ -92,13 +92,24 @@ var Timer = {
   timers: {},
   
   format: function(value){
-    var minutes = Math.floor(value / 60);
-    var seconds = value - minutes * 60;
+    var hours   = Math.floor(value / 3600);
+    var minutes = Math.floor((value - hours * 3600) / 60);
+    var seconds = value - hours * 3600 - minutes * 60;
+
+    var result;
+    if(hours > 0){
+      result = hours + ":" + minutes;
+    }else{
+      result = minutes
+    }
 
     if(seconds < 10){
-      seconds = "0" + seconds;
+      result = result + ":0" + seconds;
+    }else{
+      result = result + ":" + seconds;
     }
-    return(minutes + ":" + seconds);
+
+    return(result);
   },
   
   update: function(id){

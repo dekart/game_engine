@@ -326,6 +326,8 @@ en:
       inventory: "Go to Inventory"
       next_item: "Reach level {level} to unlock new items"
     item:
+      sale_limit: "Limited Sale: only {amount} left"
+      time_limit: "Time Left: {amount}"
       buttons:
         buy: "Buy"
   missions:

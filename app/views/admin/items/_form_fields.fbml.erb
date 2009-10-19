@@ -4,12 +4,14 @@
       <%= form.select :item_group_id, ItemGroup.all.to_dropdown, :required => true %>
 
       <%= form.text_field :name, :required => true %>
-      <%= form.text_area :description %>
+      <%= form.text_area :description, :rows => 5 %>
 
       <%= form.file_field :image,
             :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : "") %>
       
       <%= form.select :availability, Item::AVAILABILITIES, :required => true %>
+      <%= form.text_field :limit, :size => 6, :autocomplete => :off %>
+      <%= form.datetime_select :available_till, :prompt => true %>
 
       <%= form.text_field :level, :required => true, :size => 6, :autocomplete => :off %>
       
