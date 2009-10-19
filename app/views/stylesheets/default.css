@@ -535,10 +535,10 @@ form .error {color: red; padding: 3px 0px;}
 /* Gift sending form */
 #gift_form .skip {width: 45px; float: right; background-image: url(asset:icons_home)}
 
-#gift_form .item { width: 150px; text-align: center;}
+#gift_form .item { padding: 5px; width: 120px; text-align: center;}
   #gift_form .item .name {font-weight: bold;}
 
-#gift_form .items .item {float: left; height: 150px; }
+#gift_form .items .item {float: left; height: 120px; border: 1px solid #e0e0e0; margin: 3px;}
 
 #gift_form .gift {margin-bottom: 15px;}
   #gift_form .gift .item .name {margin-bottom: 10px;}
