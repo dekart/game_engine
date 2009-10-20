@@ -188,6 +188,8 @@ en:
         title: "Properties"
         amount: "X {{amount}}"
         empty_set: "No properties"
+      wall:
+        title: "{user} Wall"
     upgrade:
       title: "Upgrade"
       finished:

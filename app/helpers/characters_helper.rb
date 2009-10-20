@@ -27,6 +27,18 @@ module CharactersHelper
     render(:partial => "characters/level_up") if current_character.level_updated
   end
 
+  def character_wall(character)
+    fb_comments(
+      dom_id(character, :wall),               # xid
+      true,                                   # canpost
+      false,                                  # candelete
+      Configuration[:wall_posts_show_limit],  # numposts
+      :send_notification_uid  => character.user.facebook_id,
+      :showform               => true,
+      :callbackurl            => wall_character_url(character, :canvas => false)
+    )
+  end
+
   protected
 
   def character_for(character_or_user)

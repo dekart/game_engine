@@ -50,4 +50,10 @@ class CharactersController < ApplicationController
       end
     end
   end
+
+  def wall
+    @character = Character.find(params[:id])
+    
+    render :action => :wall, :layout => false
+  end
 end

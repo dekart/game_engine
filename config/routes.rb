@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   )
 
   map.resources(:characters,
-    :member => {:upgrade => :any},
+    :member => {:upgrade => :any, :wall => :any},
     :collection => {:load_vip_money => :any, :rating => :any}
   ) do |character|
     character.resources :assignments, :shallow => true
