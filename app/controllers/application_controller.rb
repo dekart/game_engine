@@ -27,9 +27,18 @@ class ApplicationController < ActionController::Base
   def current_user
     return if facebook_session.nil?
 
-    @current_user ||= User.find_or_create_by_facebook_id(
-       in_page? ? facebook_params["page_id"] : facebook_session.user.id
-    )
+    unless @current_user
+      facebook_id = in_page? ? facebook_params["page_id"] : facebook_session.user.id
+
+      unless @current_user = User.find_by_facebook_id(facebook_id)
+        @current_user = User.new
+        @current_user.facebook_id = facebook_id
+        @current_user.reference = params[:reference]
+        @current_user.save
+      end
+    end
+
+    @current_user
   end
 
   def request_context
