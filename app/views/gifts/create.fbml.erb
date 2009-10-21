@@ -46,7 +46,7 @@
         <%= fb_it(:item, fb_i(@gift.item.name)) %>
       <% end %>
 
-      <% content_tag("fb:req-choice", :url => gift_url(@gift)) do%>
+      <% content_tag("fb:req-choice", :url => gift_url(@gift, :reference => :gift)) do%>
         <%= fb_fa(:label, fb_i(t(".request.accept") + fb_it(:item, fb_i(@gift.item.name)))) %>
       <% end %>
     <% end %>

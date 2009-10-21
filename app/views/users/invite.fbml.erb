@@ -23,7 +23,7 @@
         )
       ) %>
 
-  <% content_tag("fb:req-choice", :url => invitation_url(current_character.invitation_key)) do%>
+  <% content_tag("fb:req-choice", :url => invitation_url(current_character.invitation_key, :reference => :invite_form_accept)) do%>
     <%= fb_fa(:label, fb_i(t(".invite.buttons.accept",
           :user => fb_name(current_user,
             :linked         => false,
@@ -33,7 +33,7 @@
         ))) %>
   <% end %>
 
-  <% content_tag("fb:req-choice", :url => character_url(current_character)) do%>
+  <% content_tag("fb:req-choice", :url => character_url(current_character, :reference => :invite_form_profile)) do%>
     <%= fb_fa(:label, fb_i(t(".invite.buttons.visit_profile", 
           :user => fb_name(current_user,
             :linked         => false,
@@ -79,9 +79,9 @@
         <%= link_to_feed_dialog(t(".publish.button"), Publisher::Invitation, :invite,
             :template_data => {
               :pronoun      => fb_pronoun(current_user, :possessive => true, :useyou => false),
-              :invite_url   => invitation_url(current_character.invitation_key)
+              :invite_url   => invitation_url(current_character.invitation_key, :reference => :invite_feed_link)
             },
-            :image_url => invitation_url(current_character.invitation_key),
+            :image_url => invitation_url(current_character.invitation_key, :reference => :invite_feed_image),
             :html => {:class => :button}
           ) %>
       </div>
@@ -95,7 +95,7 @@
         <p class="invitation_text">
           <% fb_i do %>
             <%= t(".copy_paste.invitation") %>
-            <%= fb_it(:link, invitation_url(current_character.invitation_key)) %>
+            <%= fb_it(:link, invitation_url(current_character.invitation_key, :reference => :invite_link)) %>
           <% end %>
         </p>
       </div>
@@ -106,7 +106,7 @@
         <p><%= fb_i(t(".chat.note")) %></p>
 
         <%= fb_chat_invite(
-              t(".chat.invitation", :link => invitation_url(current_character.invitation_key))
+              t(".chat.invitation", :link => invitation_url(current_character.invitation_key, :reference => :invite_chat))
             ) %>
       </div>
     </td>
