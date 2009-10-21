@@ -39,7 +39,7 @@ class Property < ActiveRecord::Base
     return unless charge_money and changes["amount"]
 
     if buying?
-      errors.add(:character, :not_enough_basic_money) if character.basic_money < basic_price * buying_amount
+      errors.add(:character, :not_enough_basic_money) if character.basic_money < total_buy_price
       errors.add(:character, :not_enough_vip_money) if character.vip_money < vip_price * buying_amount
     end
   end
@@ -49,9 +49,9 @@ class Property < ActiveRecord::Base
     
     if buying? # Buying properties, should charge
       if charge_money
-        self.basic_money = total_buy_price
-        self.vip_money = vip_price * buying_amount
-        Rails.logger.debug basic_money
+        self.basic_money  = total_buy_price
+        self.vip_money    = vip_price * buying_amount
+
         character.charge(basic_money, vip_money)
       end
     else # Selling properties, should deposit
