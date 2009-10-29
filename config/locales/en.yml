@@ -266,12 +266,12 @@ en:
         publish: "Brag About It"
         inventory: "Go To Inventory"
       messages:
-        success: "You successfully bought {item_name}"
+        success: "You successfully bought {amount} of {item_name}"
       you_spent:
         title: "You spent:"
     destroy:
       messages:
-        success: "You've successfully sold {item_name}!"
+        success: "You've successfully sold {amount} of {item_name}!"
       you_received:
         title: "You received:"
     index:
@@ -445,7 +445,7 @@ en:
       buttons:
         publish: "Brag About It"
       messages:
-        success: "You successfully bought {property_name}"
+        success: "You successfully bought {amount} of {property_name}"
       you_spent:
         title: "You spent:"
     index:
@@ -462,7 +462,7 @@ en:
         sell: "Sell for {price}"
     destroy:
       messages:
-        success: "You've successfully sold {property_name}!"
+        success: "You've successfully sold {amount} of {property_name}!"
         property_not_found: "This property is already sold"
       you_received:
         title: "You received:"

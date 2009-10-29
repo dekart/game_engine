@@ -38,4 +38,8 @@ class PropertyType < ActiveRecord::Base
   def availability
     self[:availability].to_sym
   end
+
+  def plural_name
+    self[:plural_name].blank? ? self.name.pluralize : self[:plural_name]
+  end
 end

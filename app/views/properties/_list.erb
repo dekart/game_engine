@@ -11,6 +11,12 @@
       <td class="info">
         <div class="name"><%= fb_i(type.name) %></div>
         <div class="description"><%= fb_i(type.description) %></div>
+        <div class="owned">
+          <% fb_i do %>
+            <%= t(".owned") %>
+            <%= fb_it(:amount, property ? property.amount : 0) %>
+          <% end %>
+        </div>
       </td>
       <td class="income">
         <% fb_i do %>
@@ -22,24 +28,31 @@
         <%= basic_price(property ? type.inflated_price(property.amount + 1) : type.basic_price) %>
         <%= vip_price(type.vip_price) %>
       </td>
-      <td class="owned">
-        <% fb_i do %>
-          <%= t(".owned") %>
-          <%= fb_it(:amount, property ? property.amount : 0) %>
-        <% end %>
-      </td>
       <td class="controls">
-        <%= link_to_remote(fb_i(t(".buttons.buy")),
-              :url => properties_url(:property_type_id => type.id, :canvas => false),
-              :update => :result,
-              :html => {:class => "buy button"}
-            ) %>
-        <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:price, property.sell_price)),
-              :url    => property_url(type, :canvas => false),
-              :method => :delete,
-              :update => :result,
-              :html   => {:class => "sell button"}
-            ) if property %>
+        <% form_tag "", :class => :clearfix do %>
+          <%= amount_select_tag %>
+        
+          <%= link_to_remote(fb_i(t(".buttons.buy")),
+                :url => properties_url(:property_type_id => type.id, :canvas => false),
+                :with => "this.getParentNode().serialize()",
+                :update => :result,
+                :html => {:class => "buy button"}
+              ) %>
+        <% end %>
+
+        <% if property %>
+          <% form_tag "", :class => :clearfix do %>
+            <%= amount_select_tag %>
+        
+            <%= link_to_remote(fb_i(t(".buttons.sell") + fb_it(:price, property.sell_price)),
+                  :url    => property_url(type, :canvas => false),
+                  :with   => "this.getParentNode().serialize()",
+                  :method => :delete,
+                  :update => :result,
+                  :html   => {:class => "sell button"}
+                ) %>
+          <% end %>
+        <% end %>
       </td>
     <% end %>
   <% end %>

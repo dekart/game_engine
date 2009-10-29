@@ -4,6 +4,8 @@
       <%= form.select :item_group_id, ItemGroup.all.to_dropdown, :required => true %>
 
       <%= form.text_field :name, :required => true %>
+      <%= form.text_field :plural_name %>
+      
       <%= form.text_area :description, :rows => 5 %>
 
       <%= form.file_field :image,

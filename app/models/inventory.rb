@@ -12,13 +12,13 @@ class Inventory < ActiveRecord::Base
   named_scope :used_in_fight, :conditions => "use_in_fight > 0"
 
   %w{
-    name description image image? basic_price vip_price attack defence effects
+    name plural_name description image image? basic_price vip_price attack defence effects
     usable? usage_limit can_be_sold?
   }.each do |attr|
     delegate attr, :to => :item
   end
   
-  attr_accessor :charge_money, :deposit_money, :money_return
+  attr_accessor :charge_money, :deposit_money, :basic_money, :vip_money
 
   validate :enough_character_money?
 
@@ -71,13 +71,16 @@ class Inventory < ActiveRecord::Base
 
     if difference < 0 # Buying properties, should charge
       if charge_money
-        character.charge(basic_price * difference.abs, vip_price * difference.abs)
+        self.basic_money = basic_price * difference.abs
+        self.vip_money = vip_price * difference.abs
+
+        character.charge(basic_money, vip_money)
       end
     else # Selling properties, should deposit
       if deposit_money
-        self.money_return = sell_price * difference
+        self.basic_money = sell_price * difference
 
-        character.basic_money += self.money_return
+        character.basic_money += self.basic_money
         character.save
       end
     end
@@ -85,9 +88,9 @@ class Inventory < ActiveRecord::Base
 
   def deposit_character
     if deposit_money
-      self.money_return = sell_price * amount
+      self.basic_money = sell_price * amount
 
-      character.basic_money += self.money_return
+      character.basic_money += self.basic_money
       character.save
     end
   end

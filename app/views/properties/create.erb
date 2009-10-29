@@ -16,8 +16,9 @@
     <p>
     <% fb_i do %>
       <%= t(".messages.success") %>
-      
-      <%= fb_it(:property_name, content_tag(:b, fb_i(@property.name))) %>
+
+      <%= fb_it(:amount, @amount) %>
+      <%= fb_it(:property_name, content_tag(:b, fb_i(@amount > 1 ? @property.plural_name : @property.name))) %>
     <% end %>
     </p>
 

@@ -201,6 +201,8 @@ form .error {color: red; padding: 3px 0px;}
       .item_list .requires .basic_price{background-image: url(asset:icons_basic_money);}
       .item_list .requires .vip_price{background-image: url(asset:icons_vip_money);}
   .item_list .spacer {border:0;}
+  .item_list .controls {text-align:right; width: 130px;}
+  .item_list .controls select {margin: 5px;}
   .item_list .controls a.buy {background-image: url(asset:icons_basic_money);}
   .item_list .controls a.buy_vip {background-image: url(asset:icons_vip_money);}
 
@@ -228,7 +230,8 @@ form .error {color: red; padding: 3px 0px;}
     #inventory_list .stats div {margin-bottom: 5px;}
   #inventory_list .spacer {border:0;}
   #inventory_list .controls {width: 90px;}
-    #inventory_list .controls a {width: 87px;}
+    #inventory_list .controls { width: 200px; text-align: right;}
+    #inventory_list .controls select {margin: 5px;}
     #inventory_list .controls .sell {background-image: url(asset:icons_basic_money);}
     #inventory_list .controls .use {background-image: url(asset:icons_accept);}
 
@@ -434,7 +437,9 @@ form .error {color: red; padding: 3px 0px;}
   #property_list .requires .basic_price{background-image: url(asset:icons_basic_money)}
   #property_list .requires .vip_price{background-image: url(asset:icons_vip_money)}
 #property_list .income .basic_money {line-height: 22px;height: 22px; padding: 3px 0 3px 21px; background: url(asset:icons_basic_money) center left no-repeat;}
-#property_list .controls {width: 110px;}
+#property_list .controls {width: 200px;}
+  #property_list .controls select {margin: 5px;}
+  #property_list .controls a {width: 100px;}
   #property_list .controls .buy {background-image: url(asset:icons_basic_money);}
   #property_list .controls .sell {background-image: url(asset:icons_basic_money);}
 

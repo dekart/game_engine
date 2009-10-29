@@ -17,8 +17,9 @@
     <p>
     <% fb_i do %>
       <%= t(".messages.success") %>
-      
-      <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
+
+      <%= fb_it(:amount, @amount) %>
+      <%= fb_it(:item_name, content_tag(:b, fb_i(@amount > 1 ? @item.plural_name : @item.name))) %>
     <% end %>
     </p>
 
@@ -28,14 +29,14 @@
       <% if @item.basic_price.to_i > 0 %>
         <%= payout(:basic_money, 
               Character.human_attribute_name("basic_money"),
-              number_to_currency(@item.basic_price)
+              number_to_currency(@inventory.basic_money)
             ) %>
       <% end %>
 
       <% if @item.vip_price.to_i > 0 %>
         <%= payout(:vip_money,
               Character.human_attribute_name("vip_money"),
-              number_to_currency(@item.vip_price)
+              number_to_currency(@inventory.vip_money)
             ) %>
       <% end %>
     </div>

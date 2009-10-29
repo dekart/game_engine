@@ -82,4 +82,8 @@ class Item < ActiveRecord::Base
   def time_left
     (available_till - Time.now).to_i
   end
+
+  def plural_name
+    self[:plural_name].blank? ? self.name.pluralize : self[:plural_name]
+  end
 end
