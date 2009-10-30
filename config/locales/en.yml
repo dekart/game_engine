@@ -61,7 +61,7 @@ en:
             character:
               not_enough_basic_money: "You don't have enough gold to buy {property_name}."
               not_enough_vip_money: "You don't have enough Gems to buy {property_name}."
-              too_much_properties: "You cannot buy properties anymore because you already have too many!"
+              too_much_properties: "You cannot buy {property_name} anymore because you already have too many! Try to purchase other types of properties."
         help_result:
           too_late: "You're too late! Next time try to help your friends within 24 hours."
           already_helped_with_mission: "You already helped your friend with this mission."
