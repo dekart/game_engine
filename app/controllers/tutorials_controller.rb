@@ -2,7 +2,11 @@ class TutorialsController < ApplicationController
   helper_method :tutorial?
 
   def step_1
-    @missions = Mission.available_for(current_character).all(:limit => 1)
+    if @mission_group = MissionGroup.first(:order => :level)
+      @missions = @mission_group.missions.all(:limit => 1)
+    else
+      @missions = []
+    end
   end
 
   def step_2

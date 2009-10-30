@@ -21,6 +21,6 @@
           :url    => fulfill_mission_url(mission, :canvas => false, :tutorial => tutorial?),
           :update => :result,
           :html   => {:class => :button}
-        ) %>
+        ) unless !mission.repeatable? && current_character.missions.completed?(mission) %>
   </td>
 <% end %>

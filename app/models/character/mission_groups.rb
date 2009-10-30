@@ -21,7 +21,7 @@ class Character
         rank.completed?
       else
         group.missions.count(
-          :conditions => ["missions.id NOT IN (?)", proxy_owner.ranks.completed_mission_ids]
+          :conditions => ["missions.id NOT IN (?)", proxy_owner.missions.completed_ids]
         ) == 0
       end
     end

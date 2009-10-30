@@ -8,20 +8,6 @@ class Mission < ActiveRecord::Base
   has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
   has_many    :help_requests, :as => :context, :dependent => :destroy
 
-  named_scope :available_for, Proc.new {|character|
-    {
-      :include => :mission_group,
-      :conditions => [
-        "mission_groups.level <= :level AND (missions.repeatable OR missions.id NOT IN(:completed))",
-        {
-          :level => character.level,
-          :completed => [character.ranks.completed_mission_ids, 0].flatten
-        }
-      ],
-      :order => "mission_groups.level, mission_groups.id"
-    }
-  }
-
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",

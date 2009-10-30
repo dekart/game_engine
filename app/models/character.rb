@@ -13,12 +13,8 @@ class Character < ActiveRecord::Base
 
   belongs_to :user
   
-  has_many :ranks, :dependent => :delete_all, :extend => Character::Ranks
-  has_many :missions, :through => :ranks do
-    def available
-      proxy_owner.mission_groups.current.missions.available_for(proxy_owner)
-    end
-  end
+  has_many :ranks, :dependent => :delete_all
+  has_many :missions, :through => :ranks, :extend => Character::Missions
 
   has_many :mission_group_ranks, :dependent => :delete_all
   has_many :mission_groups, 

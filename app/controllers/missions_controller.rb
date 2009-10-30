@@ -6,7 +6,7 @@ class MissionsController < ApplicationController
     
     @mission_groups = current_character.mission_groups.current_page
     
-    @missions = @current_mission_group.missions.available_for(current_character)
+    @missions = @current_mission_group.missions
   end
 
   def fulfill
@@ -15,9 +15,9 @@ class MissionsController < ApplicationController
     @result = MissionResult.create(current_character, @mission)
 
     if params[:tutorial]
-      @missions = Mission.available_for(current_character).all(:limit => 1)
+      @missions = [@mission]
     else
-      @missions = current_character.missions.available
+      @missions = current_character.mission_groups.current.missions
       @mission_groups = current_character.mission_groups.current_page
     end
 
