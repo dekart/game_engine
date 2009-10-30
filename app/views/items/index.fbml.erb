@@ -9,7 +9,7 @@
     <%= link_to(fb_i(t(".inventory")), inventories_path, :class => "inventory button") %>
   </div>
 
-  <div id="item_groups">
+  <div id="item_groups" class="clearfix">
     <% ItemGroup.visible_in_shop.each do |group| %>
       <% if group == @item_group %>
         <b><%= fb_i(@item_group.name) %></b>
