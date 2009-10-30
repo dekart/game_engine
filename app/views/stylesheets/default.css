@@ -420,7 +420,7 @@ form .error {color: red; padding: 3px 0px;}
   #bank_balance .value {padding-left: 21px; background: url(asset:icons_basic_money) center left no-repeat; font-weight: normal;}
 
 /* Item group tabs at the Shop and Inventory pages */
-#item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin: 10px 0 5px 0; height: 30px;}
+#item_groups {border-bottom: 1px solid #D0D0D0;border-top: 1px solid #D0D0D0;margin: 10px 0 5px 0;}
   #item_groups b {font-size: 16px; padding: 0 10px; line-height: 30px; height: 28px;display:block; float: left;}
   #item_groups a {font-size: 14px; padding: 0 10px; line-height: 30px; height: 28px;font-weight: bold; border:1px solid white;display:block; float: left;}
   #item_groups a:hover {border-left: 1px solid #D0D0D0;border-right: 1px solid #D0D0D0;}
