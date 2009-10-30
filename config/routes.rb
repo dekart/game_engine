@@ -79,7 +79,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :help_requests, :only => [:show, :create]
 
   map.resources :gifts,
-    :member => {:confirm => :post}
+    :member => {:confirm => :any}
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
