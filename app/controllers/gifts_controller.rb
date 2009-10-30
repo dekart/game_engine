@@ -9,7 +9,11 @@ class GiftsController < ApplicationController
       :limit => Configuration[:gifting_item_show_limit]
     )
 
-    render :action => :new
+    if @items.any?
+      render :action => :new
+    else
+      redirect_to root_path
+    end
   end
 
   def edit
