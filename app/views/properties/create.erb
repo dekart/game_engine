@@ -43,8 +43,9 @@
     <p>
       <% fb_i do %>
         <%= @property.errors.on(:character) %>
-      
-        <%= fb_it(:property_name, content_tag(:b, fb_i(@property.plural_name))) %>
+
+        <%= fb_it(:name, content_tag(:b, fb_i(@property.name))) %>
+        <%= fb_it(:plural_name, content_tag(:b, fb_i(@property.plural_name))) %>
       <% end %>
     </p>
   <% end %>
