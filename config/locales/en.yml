@@ -182,11 +182,11 @@ en:
       titles:
         empty_set: "{{user}} don't have any titles yet"
       items:
-        amount: "X {{amount}}"
+        amount: "{{name}} X&nbsp;{{amount}}"
         empty_set: "No {{group}}"
       properties:
         title: "Properties"
-        amount: "X {{amount}}"
+        amount: "{{name}} X&nbsp;{{amount}}"
         empty_set: "No properties"
       wall:
         title: "{user} Wall"

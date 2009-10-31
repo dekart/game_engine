@@ -47,7 +47,12 @@
                     <%= item_image(inventory, :small) %>
 
                     <% if @character == current_character %>
-                      <div class="amount"><%= t(".items.amount", :amount => inventory.amount) %></div>
+                      <div class="amount">
+                        <%= t(".items.amount",
+                              :name   => fb_i(inventory.name),
+                              :amount => inventory.amount
+                            ) %>
+                      </div>
                     <% end %>
                   </div>
                 <% end %>
@@ -66,7 +71,12 @@
                   <%= property_image(property, :small) %>
 
                   <% if @character == current_character %>
-                    <div class="amount"><%= t(".properties.amount", :amount => property.amount) %></div>
+                    <div class="amount">
+                      <%= t(".properties.amount",
+                            :name   => fb_i(property.name),
+                            :amount => property.amount
+                          ) %>
+                    </div>
                   <% end %>
                 </div>
               <% end %>
