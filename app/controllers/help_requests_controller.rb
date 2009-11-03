@@ -9,6 +9,8 @@ class HelpRequestsController < ApplicationController
     render :text => ""
   end
 
+  # FIXME This should work even if user haven't installed the application yet. Visited url should
+  # be stored to session, user signs up and see an option to go back and help his friend
   def show
     if @character = Character.find_by_id(params[:id])
       if friend?(@character.user) and @help_request = @character.help_requests.latest(params[:context])

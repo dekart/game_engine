@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :ensure_application_is_installed_by_facebook_user, :except => [:narrow_profile_box, :wide_profile_box]
+  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:narrow_profile_box, :wide_profile_box]
 
   %w{narrow_profile_box wide_profile_box}.each do |box|
     define_method(box) do
