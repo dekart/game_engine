@@ -1,6 +1,6 @@
 class CharactersController < ApplicationController
   skip_before_filter :check_character_personalization, :only => [:new, :create, :edit, :update]
-  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:load_vip_money, :new, :edit, :update]
+  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:load_vip_money, :new]
   before_filter :set_facebook_session, :only => [:edit, :update]
 
   def index
@@ -64,17 +64,23 @@ class CharactersController < ApplicationController
   end
 
   def create
-    update
+    @character = current_user.build_character(params[:character])
+
+    if @character.save
+      redirect_to root_path
+    else
+      render :action => :new
+    end
   end
 
   def edit
-    @character = current_character || Character.new
+    @character = current_character
 
     @character.personalize_from(facebook_session)
   end
 
   def update
-    @character = current_character || Character.new
+    @character = current_character
 
     if @character.update_attributes(params[:character])
       redirect_to root_path
