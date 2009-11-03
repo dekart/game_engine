@@ -37,7 +37,7 @@ class Mission < ActiveRecord::Base
   end
 
   def loot_items
-    Item.find(self.loot_item_ids)
+    Item.find_all_by_id(self.loot_item_ids)
   end
 
   def loot_item_ids=(value)
