@@ -1,5 +1,7 @@
 class CharactersController < ApplicationController
-  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => :load_vip_money
+  skip_before_filter :check_character_personalization, :only => [:new, :create, :edit, :update]
+  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:load_vip_money, :new, :edit, :update]
+  before_filter :set_facebook_session, :only => [:edit, :update]
 
   def index
     if !current_user.skip_tutorial?
@@ -55,5 +57,29 @@ class CharactersController < ApplicationController
     @character = Character.find(params[:id])
     
     render :action => :wall, :layout => false
+  end
+
+  def new
+    @character = Character.new
+  end
+
+  def create
+    update
+  end
+
+  def edit
+    @character = current_character
+
+    @character.personalize_from(facebook_session)
+  end
+
+  def update
+    @character = current_character
+
+    if @character.update_attributes(params[:character])
+      redirect_to root_path
+    else
+      render :action => :edit
+    end
   end
 end

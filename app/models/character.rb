@@ -94,6 +94,10 @@ class Character < ActiveRecord::Base
     }
   }
 
+  attr_accessible :name
+
+  validates_presence_of :name
+
   attr_accessor :level_updated
 
   serialize :inventory_effects, Effects::Collection
@@ -371,6 +375,16 @@ class Character < ActiveRecord::Base
     (self.ranks.completed + self.mission_group_ranks.completed).collect do |rank|
       rank.title unless rank.title.blank?
     end.compact
+  end
+
+  def personalized?
+    !self.name.blank?
+  end
+
+  def personalize_from(facebook_session)
+    profile_info = facebook_session.users([self.user.facebook_id], [:name]).first
+
+    self.name = profile_info.name if self.name.blank?
   end
 
   protected

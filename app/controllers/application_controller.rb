@@ -2,8 +2,11 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  before_filter :check_character_personalization
   before_filter :ensure_application_is_installed_by_facebook_user
   
+  layout :get_layout
+
   helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context
 
   helper :all
@@ -12,7 +15,19 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def check_character_personalization
+    set_facebook_session
+
+    if current_character
+      redirect_to edit_character_url(:current) unless current_character.personalized?
+    else
+      redirect_to new_character_url
+    end
+  end
+
   def current_character(force_reload = false)
+    return unless current_user
+    
     current_user.character(force_reload)
   end
 
@@ -91,5 +106,9 @@ class ApplicationController < ActionController::Base
 
   def friend?(user)
     facebook_params["friends"].include?(user.facebook_id.to_s)
+  end
+
+  def get_layout
+    current_user ? "application" : "unauthorized"
   end
 end

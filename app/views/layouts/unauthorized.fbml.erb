@@ -1,0 +1,24 @@
+<fb:fbml>
+  <script>
+    root_url = '<%= root_url(:canvas => false) %>';
+  </script>
+
+  <%= editable_stylesheet_link %>
+
+  <% if Rails.env.development? %>
+    <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
+    <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %></script>
+  <% else %>
+    <%= javascript_include_tag "facebooker", "application" %>
+  <% end %>
+
+  <div id="content">
+    <div id="header" class="clearfix">
+      <%= link_to("&nbsp;", root_path, :id => :logo) %>
+    </div>
+
+    <%= yield %>
+  </div>
+
+  <%= fb_google_analytics(Configuration[:app_google_analytics_id]) unless Configuration[:app_google_analytics_id].blank? %>
+</fb:fbml>

@@ -211,6 +211,12 @@ en:
       relations: "Your Alliance"
       offence: "Best Offence"
       defence: "Best Defence"
+    new:
+      title: "Setup Your Character"
+      submit: "Start Playing!"
+    edit:
+      title: "Update Your Character"
+      submit: "Save"
   fights:
     descriptions:
       attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
