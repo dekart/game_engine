@@ -68,13 +68,13 @@ class CharactersController < ApplicationController
   end
 
   def edit
-    @character = current_character
+    @character = current_character || Character.new
 
     @character.personalize_from(facebook_session)
   end
 
   def update
-    @character = current_character
+    @character = current_character || Character.new
 
     if @character.update_attributes(params[:character])
       redirect_to root_path
