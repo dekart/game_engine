@@ -109,6 +109,6 @@ class ApplicationController < ActionController::Base
   end
 
   def get_layout
-    current_character.nil? || currrent_character.new_record? ? "unauthorized" : "application"
+    current_character.nil? || current_character.new_record? ? "unauthorized" : "application"
   end
 end
