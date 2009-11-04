@@ -5,7 +5,11 @@
         <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Mission, :completed,
               :template_data => {
                 :title    => @mission.title,
-                :mission  => @mission.name
+                :mission  => @mission.name,
+                :images => @mission.image? ? [{
+                  :src  => image_path(@mission.image.url),
+                  :href => missions_url
+                }] : nil
               },
               :html => {:class => "publish button"}
             ) %>
@@ -37,7 +41,11 @@
         <%= show_feed_dialog(Publisher::Mission, :completed,
               :template_data => {
                 :title    => @mission.title,
-                :mission  => @mission.name
+                :mission  => @mission.name,
+                :images => @mission.image? ? [{
+                  :src  => image_path(@mission.image.url),
+                  :href => missions_url
+                }] : nil
               }
             ) %>
       <% end %>
