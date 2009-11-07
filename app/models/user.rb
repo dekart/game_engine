@@ -15,12 +15,6 @@ class User < ActiveRecord::Base
 
   after_create :setup_profile!, :update_profile!, :deliver_welcome_message!
 
-  def initialize(*args)
-    super
-
-    self.create_character unless self.character
-  end
-
   def skip_tutorial?
     !(Configuration[:user_tutorial_enabled] and !self[:skip_tutorial])
   end

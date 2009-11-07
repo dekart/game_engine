@@ -25,7 +25,7 @@
             <%= content_tag(:div, title, :class => :rank) %>
           <% end %>
         <% else %>
-          <%= fb_i(t(".titles.empty_set", :user => character_name(@character, :firstnameonly => true, :capitalize => true))) %>
+          <%= fb_i(t(".titles.empty_set", :user => character_name(@character, :firstnameonly => true, :capitalize => true, :useyou => true))) %>
         <% end %>
       </td>
     </tr>
