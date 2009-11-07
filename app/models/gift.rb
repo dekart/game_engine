@@ -5,7 +5,7 @@ class Gift < ActiveRecord::Base
   has_many :receipts, :class_name => "GiftReceipt"
 
   def recipient_ids
-    @recipient_ids ||= self.recipients.split(",").collect{|id| id.to_i }
+    @recipient_ids ||= self.recipients.blank? ? [] : self.recipients.split(",").collect{|id| id.to_i }
   end
 
   def can_receive?(character)
