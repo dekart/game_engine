@@ -1,3 +1,1 @@
-<% content_tag :div, :class => payout.name do %>
-  <%= payout.property_type.name %>
-<% end %>
+<%= payout(:item, payout.property_type.name, property_image(payout.property_type, :icon)) %>
