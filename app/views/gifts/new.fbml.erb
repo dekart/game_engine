@@ -6,21 +6,34 @@
   </div>
 
   <% collection(@items) do %>
-    <div class="items clearfix">
-      <% @items.each do |item| %>
-        <% div_for(item) do %>
-          <%= link_to(item_image(item, :small), polymorphic_path(@gift, :item_id => item.id),
-                :method => @gift.new_record? ? :post : :put
-              ) %>
+    <table class="items">
+      <% @items.each_slice(3) do |group| %>
+        <tr>
+          <% group.each do |item| %>
+            <% content_tag_for(:td, item) do %>
+              <%= link_to(item_image(item, :small), polymorphic_path(@gift, :item_id => item.id),
+                    :method => @gift.new_record? ? :post : :put
+                  ) %>
 
-          <div class="name">
-            <%= link_to(fb_i(item.name), polymorphic_path(@gift, :item_id => item.id),
-                  :method => @gift.new_record? ? :post : :put
-                ) %>
-          </div>
-        <% end %>
+              <div class="name">
+                <%= link_to(fb_i(item.name), polymorphic_path(@gift, :item_id => item.id),
+                      :method => @gift.new_record? ? :post : :put
+                    ) %>
+              </div>
+        
+              <div class="effects">
+                <%= attack(item.attack) %>
+                <%= defence(item.defence) %>
+
+                <% item.effects.each do |effect| %>
+                  <%= content_tag(:div, effect.value, :class => effect.name) %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </tr>
       <% end %>
-    </div>
+    </table>
   <% end %>
 
   <%= link_to(fb_i(t(".skip")), @gift.new_record? ? root_path : confirm_gift_path(@gift), :class => "skip button") %>

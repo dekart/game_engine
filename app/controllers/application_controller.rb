@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   helper :all
 
   rescue_from ActionController::RoutingError, :with => :redirect_to_root
+  rescue_from ActiveRecord::RecordNotFound, :with => :log_404_and_redirect
 
   protected
 
@@ -90,6 +91,12 @@ class ApplicationController < ActionController::Base
     else
       redirect_to root_url
     end
+  end
+
+  def log_404_and_redirect(exception)
+    log_error(exception)
+
+    redirect_to_root
   end
 
   def default_url_options(options)

@@ -13,6 +13,15 @@
 
       <div class="name"><%= fb_i(@gift.item.name) %></div>
 
+      <div class="effects">
+        <%= attack(@gift.item.attack) %>
+        <%= defence(@gift.item.defence) %>
+
+        <% @gift.item.effects.each do |effect| %>
+          <%= content_tag(:div, effect.value, :class => effect.name) %>
+        <% end %>
+      </div>
+      
       <%= link_to(fb_i(t(".gift.change")), edit_gift_path(@gift)) %>
     </div>
   </div>
