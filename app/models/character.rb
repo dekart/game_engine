@@ -96,8 +96,6 @@ class Character < ActiveRecord::Base
 
   attr_accessible :name
 
-  validates_presence_of :name
-
   attr_accessor :level_updated
 
   serialize :inventory_effects, Effects::Collection
