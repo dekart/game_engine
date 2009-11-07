@@ -1,5 +1,5 @@
 class CharactersController < ApplicationController
-  skip_before_filter :check_character_personalization, :only => [:new, :create]
+  skip_before_filter :check_character_personalization, :only => [:new, :create, :edit, :update]
   skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:load_vip_money, :new]
   before_filter :set_facebook_session, :only => [:new]
 
