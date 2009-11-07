@@ -2,7 +2,7 @@ class PropertiesController < ApplicationController
   def create
     @amount = params[:amount].to_i
     
-    @property_type = PropertyType.find(params[:property_type_id])
+    @property_type = PropertyType.available_in(:shop).available_for(current_character).find(params[:property_type_id])
     
     @property = current_character.properties.buy!(@property_type, @amount)
 

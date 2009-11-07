@@ -9,8 +9,16 @@ class PropertyType < ActiveRecord::Base
       :small  => "120x>"
     }
     
-  named_scope :available_in, Proc.new{|key|
-    AVAILABILITIES.include?(key.to_sym) ? {:conditions => ["availability = ?", key.to_s]} : {}
+  named_scope :available_in, Proc.new{|*keys|
+    valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys
+
+    if valid_keys.any?
+      valid_keys.collect!{|k| k.to_s }
+
+      {:conditions => ["property_types.availability IN (?)", valid_keys]}
+    else
+      {}
+    end
   }
 
   named_scope :available_for, Proc.new {|character|

@@ -27,8 +27,16 @@ class Item < ActiveRecord::Base
       :order      => :basic_price
     }
   }
-  named_scope :available_in, Proc.new{|key|
-    AVAILABILITIES.include?(key.to_sym) ? {:conditions => ["availability = ?", key.to_s]} : {}
+  named_scope :available_in, Proc.new{|*keys|
+    valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys
+
+    if valid_keys.any?
+      valid_keys.collect!{|k| k.to_s }
+      
+      {:conditions => ["items.availability IN (?)", valid_keys]}
+    else
+      {}
+    end
   }
   named_scope :next_for, Proc.new{|character|
     {
@@ -37,8 +45,8 @@ class Item < ActiveRecord::Base
     }
   }
 
-  named_scope :vip, {:conditions => "vip_price > 0"}
-  named_scope :basic, {:conditions => "vip_price IS NULL or vip_price = 0"}
+  named_scope :vip, {:conditions => "items.vip_price > 0"}
+  named_scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
 
   has_attached_file :image,
     :styles => {

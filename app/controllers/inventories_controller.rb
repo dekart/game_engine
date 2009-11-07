@@ -2,7 +2,7 @@ class InventoriesController < ApplicationController
   def create
     @amount = params[:amount].to_i
     
-    @item = Item.available.available_for(current_character).find(params[:item_id])
+    @item = Item.available.available_in(:shop, :special).available_for(current_character).find(params[:item_id])
 
     @inventory = current_character.inventories.buy!(@item, @amount)
 
