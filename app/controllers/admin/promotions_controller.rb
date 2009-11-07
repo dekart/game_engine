@@ -9,6 +9,7 @@ class Admin::PromotionsController < ApplicationController
 
   def new
     @promotion = Promotion.new
+    @promotion.valid_till = 7.days.from_now
   end
 
   def create
