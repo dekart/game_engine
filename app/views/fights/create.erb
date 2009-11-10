@@ -69,9 +69,7 @@
       </table>
 
       <% content_for :script do %>
-        <% if @fight.cause %>
-          Fight.hideCauseRespond(<%= @fight.cause.id %>);
-        <% else %>
+        <% unless @fight.cause %>
           Fight.hideVictim(<%= @victim.id %>);
         <% end %>
       <% end %>
@@ -193,5 +191,9 @@
 <%= character_level_up_block %>
 
 <% content_for :script do %>
+  <% if @fight.cause %>
+    Fight.hideCauseRespond(<%= @fight.cause.id %>);
+  <% end %>
+
   $('result').show();
 <% end %>
