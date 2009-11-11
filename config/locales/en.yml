@@ -125,6 +125,7 @@ en:
       text: "{app} fans periodically receive free Gold, Gems, weapons, and other useful game stuff!"
       link: "Become Fan!"
     bookmark:
+      title: "Bookmark"
       text: "Don't forget to add {app} to your bookmarks!"
     main_menu:
       home: "Home"
