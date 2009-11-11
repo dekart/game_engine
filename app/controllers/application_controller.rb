@@ -11,8 +11,10 @@ class ApplicationController < ActionController::Base
 
   helper :all
 
-  rescue_from ActionController::RoutingError, :with => :redirect_to_root
-  rescue_from ActiveRecord::RecordNotFound, :with => :log_404_and_redirect
+  rescue_from ActionController::RoutingError,
+    :with => :redirect_to_root
+  rescue_from ActiveRecord::RecordNotFound, ActionController::UnknownAction,
+    :with => :log_exception_and_redirect_to_root
 
   protected
 
@@ -93,7 +95,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def log_404_and_redirect(exception)
+  def log_exception_and_redirect_to_root(exception)
+    Rails.logger.fatal(params.inspect)
+    
     log_error(exception)
 
     redirect_to_root
