@@ -6,6 +6,7 @@
       <%= render :partial => "characters/attributes", :locals => {:character => current_character} %>
 
       <%= render :partial => "layouts/fan_specials" if current_user.show_fan_specials? %>
+      <%= render :partial => "layouts/bookmark" if current_user.show_bookmark? %>
     </td>
 
     <td class="wall">
@@ -48,5 +49,3 @@
     </td>
   </tr>
 </table>
-
-<%= render :partial => "layouts/bookmark" if current_user.show_bookmark? %>
