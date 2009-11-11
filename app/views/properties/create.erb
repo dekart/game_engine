@@ -4,10 +4,10 @@
       <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Property, :bought,
           :template_data => {
             :property => fb_i(@property.name),
-            :images => @property.image? ? {
+            :images => @property.image? ? [{
               :src  => image_path(@property.image.url),
               :href => new_property_url
-            } : nil
+            }] : nil
           },
           :html => {:class => "publish button"}
         ) %>
