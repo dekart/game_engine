@@ -1,6 +1,6 @@
 class CharactersController < ApplicationController
-  skip_before_filter :check_character_personalization, :only => [:new, :create, :edit, :update]
-  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:load_vip_money, :new]
+  skip_before_filter :check_character_personalization, :only => [:new, :create, :edit, :update, :load_vip_money]
+  skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:new, :load_vip_money]
   before_filter :set_facebook_session, :only => [:new]
 
   def index
