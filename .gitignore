@@ -5,3 +5,8 @@ db/schema.rb
 public/system
 nbproject
 test
+
+vendor/bundler_gems/gems
+vendor/bundler_gems/specifications
+vendor/bundler_gems/doc
+vendor/bundler_gems/environment.rb
