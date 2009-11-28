@@ -1,5 +1,10 @@
 namespace :app do
   namespace :maintenance do
+    desc "Set default values to owned items"
+    task :set_defaults_to_owned_items => :environment do
+      Item.update_all "owned = 0", "owned IS NULL"
+    end
+
     desc "Calculate owned_items"
     task :calculate_owned_items => :environment do
       Item.find_each do |item|
