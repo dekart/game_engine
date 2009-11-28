@@ -4,9 +4,7 @@
   <% content_for :result do %>
     <div id="invitation_result">
       <p>
-        <% fb_i do %>
-          <%= t(".success_message") %>
-
+        <% fb_i t(".success_message") do %>
           <%= fb_it(:amount, @sent_invitations.size) %>
         <% end %>
       </p>
@@ -93,8 +91,7 @@
         <p><%= fb_i(t(".copy_paste.note")) %></p>
 
         <p class="invitation_text">
-          <% fb_i do %>
-            <%= t(".copy_paste.invitation") %>
+          <% fb_i t(".copy_paste.invitation") do %>
             <%= fb_it(:link, invitation_url(current_character.invitation_key, :reference => :invite_link)) %>
           <% end %>
         </p>

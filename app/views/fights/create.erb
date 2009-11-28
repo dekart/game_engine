@@ -19,7 +19,7 @@
 
       <p class="success">
         <% fb_i do %>
-          <%= t(".messages.success", :pronoun => fb_pronoun(@fight.victim.user, :objective => true)) %>
+          <%= raw t(".messages.success", :pronoun => fb_pronoun(@fight.victim.user, :objective => true)) %>
           
           <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
         <% end %>
@@ -53,9 +53,7 @@
           </td>
           <td class="victim_lost">
             <h3>
-              <% fb_i do %>
-                <%= t('.victim_lost.title') %>
-                
+              <% fb_i t('.victim_lost.title') do %>
                 <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
               <% end %>
             </h3>
@@ -68,8 +66,8 @@
         </tr>
       </table>
 
-      <% content_for :script do %>
-        <% unless @fight.cause %>
+      <% unless @fight.cause %>
+        <% content_for :script do %>
           Fight.hideVictim(<%= @victim.id %>);
         <% end %>
       <% end %>
@@ -87,7 +85,7 @@
 
       <p class="fail">
         <% fb_i do %>
-          <%= t(".messages.fail", :pronoun => fb_pronoun(@fight.victim.user, :objective => true)) %>
+          <%= raw t(".messages.fail", :pronoun => fb_pronoun(@fight.victim.user, :objective => true)) %>
 
           <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
         <% end %>
@@ -113,9 +111,7 @@
           </td>
           <td class="victim_lost">
             <h3>
-              <% fb_i do %>
-                <%= t(".victim_lost.title") %>
-                
+              <% fb_i t(".victim_lost.title") do %>
                 <%= fb_it(:user_name, character_name_link(@fight.victim)) %>
               <% end %>
             </h3>

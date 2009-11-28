@@ -17,6 +17,8 @@ module FlashBlockHelper
       end
     end
 
+    result.html_safe!
+
     block_given? ? concat(result) : result
   end
 end

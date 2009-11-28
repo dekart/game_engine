@@ -1,8 +1,6 @@
 <div id="inventory_result">
   <p>
-    <% fb_i do %>
-      <%= t(".messages.success") %>
-
+    <% fb_i t(".messages.success") do %>
       <%= fb_it(:item, fb_i(@inventory.name)) %>
     <% end %>
   </p>
@@ -17,9 +15,7 @@
 
   <% if @inventory.frozen? %>
     <p>
-      <% fb_i do %>
-        <%= t(".messages.item_gone") %>
-
+      <% fb_i t(".messages.item_gone") do %>
         <%= fb_it(:item, fb_i(@inventory.name)) %>
       <% end %>
     </p>

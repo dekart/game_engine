@@ -6,9 +6,7 @@
   <h2><%= fb_i(t(".title")) %></h2>
 
   <div class="text">
-    <% fb_i do %>
-      <%= t(".text") %>
-    
+    <% fb_i t(".text") do %>
       <%= fb_it(:upgrade, link_to(fb_i(t(".upgrade_link")), upgrade_character_url(current_character)))  %>
     <% end %>
   </div>

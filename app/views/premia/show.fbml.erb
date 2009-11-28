@@ -1,9 +1,7 @@
 <%= title(fb_i(t(".title"))) %>
 
 <div id="current_vip_money">
-  <% fb_i do %>
-    <%= t(".current.label") %>
-
+  <% fb_i t(".current.label") do %>
     <%= fb_it(:amount, content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)) %>
   <% end %>
 </div>
@@ -11,9 +9,7 @@
 <table id="premia" cellspacing="0">
   <tr>
     <td class="name">
-      <% fb_i do %>
-        <%= t(".buy_points.text") %>
-
+      <% fb_i t(".buy_points.text") do %>
         <%= fb_it(:amount,
               content_tag(:span, Configuration[:premium_points_amount], :class => :points)
             ) %>
@@ -43,9 +39,7 @@
 
   <tr>
     <td class="name">
-      <% fb_i do %>
-        <%= t(".exchange_money.text") %>
-
+      <% fb_i t(".exchange_money.text") do %>
         <%= fb_it(:amount,
               content_tag(:span, number_to_currency(Configuration[:premium_money_amount]), :class => :basic_money)
             ) %>

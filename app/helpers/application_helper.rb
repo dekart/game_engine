@@ -7,7 +7,7 @@ module ApplicationHelper
       :clickrewriteurl  => hide_block_user_url(current_user, :canvas => false),
       :clickrewriteform => "#{id}_hide",
       :clicktohide      => id,
-      
+
       :class  => :hide
     )
   end
@@ -111,4 +111,6 @@ module ApplicationHelper
   def amount_select_tag
     select_tag(:amount, options_for_select((1..10).to_a))
   end
+
+  safe_helper :hide_block_link, :title
 end

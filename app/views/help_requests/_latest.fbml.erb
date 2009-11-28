@@ -1,8 +1,6 @@
 <% if help_request = current_character.help_requests.latest(context) and help_request.should_be_displayed? %>
   <div id="latest_help_request">
-    <% fb_i do %>
-      <%= t(".text.#{context}") %>
-
+    <% fb_i t(".text.#{context}") do %>
       <% if context == :mission %>
         <%= fb_it(:mission, content_tag(:strong, help_request.context.name)) %>
       <% else %>

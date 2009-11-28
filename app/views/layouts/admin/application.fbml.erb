@@ -1,9 +1,9 @@
 <fb:fbml>
   <% if Rails.env.development? %>
-    <style><%= File.read(File.join(RAILS_ROOT, "public", "stylesheets", "admin.css")) %></style>
+    <style><%= raw File.read(File.join(RAILS_ROOT, "public", "stylesheets", "admin.css")) %></style>
 
-    <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
-    <script><%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %></script>
+    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
+    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %></script>
   <% else %>
     <%= stylesheet_link_tag("admin") %>
     
@@ -12,7 +12,6 @@
 
   <%= render :partial => "layouts/admin/main_menu" %>
       
-  
   <div id="spinner" style="display:none;">
     <%= asset_image_tag("spinner", :alt => t(".spinner.alt")) %>
 

@@ -63,6 +63,7 @@ form .label, form .required {display:inline}
 #field_for_stylesheet_content textarea {width: 750px; height: 500px; font-family: monospace;}
 
 #translation_list {width: 100%;}
+#translation_list .key {width: 40%;}
 #translation_list .customized .key,
   #translation_list .customized .value a {font-weight: bold;}
 

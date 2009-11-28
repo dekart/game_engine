@@ -36,7 +36,7 @@ module FacebookHelper
         content_tag("fb:multi-friend-selector", capture(&block), options)
       )
     else
-      return fb_multi_friend_selector(*args, &block)
+      fb_multi_friend_selector(*args, &block)
     end
   end
 
@@ -54,7 +54,8 @@ module FacebookHelper
 
   def fb_i(*args, &block)
     options = args.extract_options!
-    tag = content_tag("fb:intl", block_given? ? capture(&block): args.shift, options)
+
+    tag = content_tag("fb:intl", "#{args.shift} #{capture(&block) if block_given?}", options)
 
     block_given? ? concat(tag) : tag
   end
@@ -93,6 +94,7 @@ module FacebookHelper
     
     "Facebook.showFeedDialog(#{bundle_id}, #{options[:template_data].to_json}, '#{options[:body_general]}', #{options[:target_id] || "null"}, function(){#{options[:continuation]}})"
   end
+  safe_helper :show_feed_dialog
 
   def fb_js_string(name, content = nil, &block)
     if block_given?

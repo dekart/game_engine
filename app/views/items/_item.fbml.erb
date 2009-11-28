@@ -6,9 +6,7 @@
     
     <% if item.left %>
       <div class="sale_limit">
-        <% fb_i do %>
-          <%= t(".sale_limit") %>
-
+        <% fb_i t(".sale_limit") do %>
           <%= fb_it(:amount, content_tag(:strong, item.left)) %>
         <% end %>
       </div>
@@ -16,9 +14,7 @@
 
     <% if item.available_till %>
       <div class="time_limit">
-        <% fb_i do %>
-          <%= t(".time_limit") %>
-
+        <% fb_i t(".time_limit") do %>
           <%= fb_it(:amount, content_tag(:strong, "", :id => dom_id(item, :timer))) %>
         <% end %>
       </div>

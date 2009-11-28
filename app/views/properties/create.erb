@@ -14,9 +14,7 @@
     </div>
   
     <p>
-    <% fb_i do %>
-      <%= t(".messages.success") %>
-
+    <% fb_i t(".messages.success") do %>
       <%= fb_it(:amount, @amount) %>
       <%= fb_it(:property_name, content_tag(:b, fb_i(@amount > 1 ? @property.plural_name : @property.name))) %>
     <% end %>
@@ -41,9 +39,7 @@
     </div>
   <% else %>
     <p>
-      <% fb_i do %>
-        <%= @property.errors.on(:character) %>
-
+      <% fb_i @property.errors.on(:character) do %>
         <%= fb_it(:name, content_tag(:b, fb_i(@property.name))) %>
         <%= fb_it(:plural_name, content_tag(:b, fb_i(@property.plural_name))) %>
       <% end %>

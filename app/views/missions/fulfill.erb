@@ -110,13 +110,13 @@
                 <div class="relation">
                   <% fb_i do %>
                     <% if @result.looter %>
-                      <%= t(".you_received.loot_with_looter") %>
+                      <%= raw t(".you_received.loot_with_looter") %>
 
                       <%= fb_it(:user, 
                             @result.looter.is_a?(FriendRelation) ? character_name_link(@result.looter.target_character) : @result.looter.name
                           ) %>
                     <% else %>
-                      <%= t(".you_received.loot_without_looter") %>
+                      <%= raw t(".you_received.loot_without_looter") %>
                     <% end %>
 
                     <%= fb_it(:item, content_tag(:strong, @result.loot.name)) %>
@@ -134,8 +134,7 @@
           <% if @result.free_fulfillment %>
             <% payout("energy zero", Character.human_attribute_name("energy"), 0) do %>
               <span class="relation">
-                <% fb_i do %>
-                  <%= t(".you_spent.zero_energy") %>
+                <% fb_i t(".you_spent.zero_energy") do %>
                   <%= fb_it(:user,
                         character_name_link(
                           current_character.assignments.by_role(:mission_energy).relation.target_character
@@ -163,9 +162,7 @@
     <% end %>
   <% elsif !@result.enough_energy? %>
     <p>
-      <% fb_i do %>
-        <%= t(".not_enough_energy.message") %>
-        
+      <% fb_i t(".not_enough_energy.message") do %>
         <%= fb_it(:ep_number, @mission.ep_cost) %>
         <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
       <% end %>
@@ -225,6 +222,5 @@
     Mission.onComplete();
   <% end %>
 
-  
   $('result').show();
 <% end %>

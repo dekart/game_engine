@@ -12,15 +12,13 @@
         <div class="name"><%= fb_i(type.name) %></div>
         <div class="description"><%= fb_i(type.description) %></div>
         <div class="owned">
-          <% fb_i do %>
-            <%= t(".owned") %>
+          <% fb_i t(".owned") do %>
             <%= fb_it(:amount, property ? property.amount : 0) %>
           <% end %>
         </div>
       </td>
       <td class="income">
-        <% fb_i do %>
-          <%= t(".income") %>
+        <% fb_i t(".income") do %>
           <%= fb_it(:amount, content_tag(:span, number_to_currency(type.income), :class => :basic_money)) %>
         <% end %>
       </td>

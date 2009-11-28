@@ -4,9 +4,7 @@
   <h2><%= fb_i(t(".title")) %></h2>
 
   <p>
-    <% fb_i do %>
-      <%= t(".text") %>
-
+    <% fb_i t(".text") do %>
       <%= fb_it(:app, fb_app_name) %>
     <% end %>
   </p>

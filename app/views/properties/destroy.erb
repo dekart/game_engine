@@ -1,9 +1,7 @@
 <div id="property_result">
   <% if @property %>
     <p>
-      <% fb_i do %>
-        <%= t(".messages.success") %>
-
+      <% fb_i t(".messages.success") do %>
         <%= fb_it(:amount, @amount) %>
         <%= fb_it(:property_name, content_tag(:b, fb_i(@amount > 1 ? @property.plural_name : @property.name))) %>
       <% end %>

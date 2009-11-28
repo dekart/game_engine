@@ -1,8 +1,6 @@
 <div id="inventory_result">
   <p>
-    <% fb_i do %>
-      <%= t(".messages.success") %>
-    
+    <% fb_i t(".messages.success") do %>
       <%= fb_it(:amount, @amount) %>
       <%= fb_it(:item_name, content_tag(:b, fb_i(@amount > 1 ? @inventory.plural_name : @inventory.name))) %>
     <% end %>

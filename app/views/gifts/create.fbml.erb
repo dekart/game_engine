@@ -47,7 +47,7 @@
   <div class="invitation_form">
     <% content_for :gift_message do %>
       <% fb_i do %>
-        <%= t(".request.message",
+        <%= raw t(".request.message",
               :user => fb_name(current_user, :linked => :false),
               :app  => fb_app_name
             ) %>

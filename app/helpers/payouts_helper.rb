@@ -20,4 +20,6 @@ module PayoutsHelper
 
     block_given? ? concat(result) : result
   end
+
+  safe_helper :payout_list
 end

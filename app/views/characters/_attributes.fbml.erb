@@ -4,9 +4,7 @@
       <th><%= fb_i(Character.human_attribute_name("attack")) %></th>
       <td class="value"><%= character.attack %></td>
       <td class="bonus">
-        <% fb_i do %>
-          <%= t(".bonus") %>
-
+        <% fb_i t(".bonus") do %>
           <%= fb_it(:amount, content_tag(:span, character.inventory_attack_points)) %>
         <% end %>
       </td>
@@ -15,9 +13,7 @@
       <th><%= fb_i(Character.human_attribute_name("defence")) %></th>
       <td class="value"><%= character.defence %></td>
       <td class="bonus">
-        <% fb_i do %>
-          <%= t(".bonus") %>
-
+        <% fb_i t(".bonus") do %>
           <%= fb_it(:amount, content_tag(:span, character.inventory_defence_points)) %>
         <% end %>
       </td>

@@ -87,9 +87,7 @@
       <% if Configuration[:wall_enabled] %>
       <td class="wall">
         <h2>
-          <% fb_i do %>
-            <%= t(".wall.title") %>
-
+          <% fb_i t(".wall.title") do %>
             <%= fb_it(:user, character_name(@character, :possessive => true, :capitalize => true)) %>
           <% end %>
         </h2>

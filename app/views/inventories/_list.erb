@@ -22,16 +22,14 @@
             </td>
             <td class="stats">
               <div class="owned">
-                <% fb_i do %>
-                  <%= t(".owned") %>
+                <% fb_i t(".owned") do %>
                   <%= fb_it(:amount, inventory.amount) %>
                 <% end %>
               </div>
 
               <% if inventory.use_in_fight > 0 %>
                 <div class="used">
-                  <% fb_i do %>
-                    <%= t(".used") %>
+                  <% fb_i t(".used") do %>
                     <%= fb_it(:amount, inventory.use_in_fight) %>
                   <% end %>
                 </div>
@@ -65,9 +63,7 @@
   </table>
 <% else %>
   <div class="empty_set">
-    <% fb_i do %>
-      <%= t(".empty_set.text") %>
-
+    <% fb_i t(".empty_set.text") do %>
       <%= fb_it(:shop, link_to(fb_i(t(".empty_set.shop")), items_path)) %>
     <% end %>
   </div>

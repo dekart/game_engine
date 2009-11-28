@@ -2,7 +2,7 @@
   <% if @success %>
     <p>
     <% fb_i do %>
-      <%= t(".messages.success", :attribute => Character.human_attribute_name(params[:attribute])) %>
+      <%= raw t(".messages.success", :attribute => Character.human_attribute_name(params[:attribute])) %>
       
       <%= fb_it(:number, content_tag(:b, current_character.attributes[params[:attribute]])) %>
     <% end %>

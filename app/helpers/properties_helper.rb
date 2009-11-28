@@ -10,6 +10,8 @@ module PropertiesHelper
       result << capture(type, property, &block)
     end
 
+    result.html_safe!
+
     concat(result)
   end
 

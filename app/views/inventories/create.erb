@@ -15,9 +15,7 @@
     </div>
 
     <p>
-    <% fb_i do %>
-      <%= t(".messages.success") %>
-
+    <% fb_i t(".messages.success") do %>
       <%= fb_it(:amount, @amount) %>
       <%= fb_it(:item_name, content_tag(:b, fb_i(@amount > 1 ? @item.plural_name : @item.name))) %>
     <% end %>
@@ -42,8 +40,7 @@
     </div>
   <% else %>
     <p>
-      <% fb_i do %>
-        <%= @inventory.errors.on(:character) %>
+      <% fb_i @inventory.errors.on(:character) do %>
         <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
       <% end %>
     </p>

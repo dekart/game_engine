@@ -4,9 +4,7 @@
       <% if @help_request.context.is_a?(Mission) %>
         <div id="mission_result">
           <p class="success">
-            <% fb_i do %>
-              <%= t(".success") %>
-
+            <% fb_i t(".success") do %>
               <%= fb_it(:user, character_name_link(@help_request.character)) %>
               <%= fb_it(:mission, content_tag(:strong, @help_request.context.name)) %>
             <% end %>

@@ -1,6 +1,5 @@
 <% content_tag :div, :class => "#{requirement.name} #{ "not_satisfied" unless satisfied }" do %>
-  <% fb_i do %>
-    <%= t(".text") %>
+  <% fb_i t(".text") do %>
     <%= fb_it(:amount, requirement.value) %>
   <% end %>
 <% end %>

@@ -3,9 +3,7 @@
 <%= render :partial => "upgrade_list" %>
 
 <div id="upgrade_finished" style="display:none;" class="note">
-  <% fb_i do %>
-    <%= t(".finished.note") %>
-
+  <% fb_i t(".finished.note") do %>
     <%= fb_it(:profile, link_to(fb_i(t(".finished.profile")), character_path(current_character))) %>
     <%= fb_it(:get_more, link_to(fb_i(t(".finished.get_more")), premium_path)) %>
   <% end %>

@@ -1,7 +1,7 @@
 module StylesheetsHelper
   def editable_stylesheet_link
     if params[:try_stylesheet] and style = Stylesheet.find_by_id(params[:try_stylesheet])
-      return content_tag(:style,
+      content_tag(:style,
         format_stylesheet_content(style.content)
       )
     else
@@ -42,4 +42,6 @@ module StylesheetsHelper
 
     content
   end
+
+  safe_helper :format_stylesheet_content
 end

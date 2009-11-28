@@ -6,18 +6,14 @@
 
 <% if current_character.weak? %>
   <p>
-  <% fb_i do %>
-    <%= t(".messages.too_weak") %>
-    
+  <% fb_i t(".messages.too_weak") do %>
     <%= fb_it(:hp_number, current_character.weakness_minimum) %>
     <%= fb_it(:minute_number, (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil) %>
   <% end %>
   </p>
 <% elsif current_character.ep < Configuration[:fight_energy_required] %>
   <p>
-    <% fb_i do %>
-      <%= t(".messages.not_enough_energy") %>
-      
+    <% fb_i t(".messages.not_enough_energy") do %>
       <%= fb_it(:minute_number, (current_character.ep_restore_time(Configuration[:fight_energy_required]) / 1.minute).ceil) %>
     <% end %>
   </p>

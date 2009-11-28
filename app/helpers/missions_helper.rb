@@ -41,4 +41,6 @@ module MissionsHelper
       end
     end
   end
+
+  safe_helper :mission_progress, :mission_requirements, :mission_payouts
 end

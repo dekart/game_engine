@@ -7,9 +7,7 @@
             ) %>
 
         <div class="level">
-          <% fb_i do %>
-            <%= t(".previous.level") %>
-
+          <% fb_i t(".previous.level") do %>
             <%= fb_it(:level, groups.first.level) %>
           <% end %>
         </div>
@@ -25,9 +23,7 @@
             ) %>
 
         <div class="level">
-          <% fb_i do %>
-            <%= t(".level") %>
-
+          <% fb_i t(".level") do %>
             <%= fb_it(:level, group.level) %>
           <% end %>
         </div>
@@ -41,9 +37,7 @@
             ) %>
 
         <div class="level">
-          <% fb_i do %>
-            <%= t(".next.level") %>
-
+          <% fb_i t(".next.level") do %>
             <%= fb_it(:level, next_group.level) %>
           <% end %>
         </div>
