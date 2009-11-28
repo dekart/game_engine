@@ -80,10 +80,10 @@ Rails::Initializer.run do |config|
       :url  => "/system/:class/:id_partition/:style/:basename.:extension",
       :path => ":rails_root/public/system/:class/:id_partition/:style/:basename.:extension"
     )
+
+    WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
   end
 end
-
-WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
 
 require "facebook_money"
 require "i18n/backend/yaml_db"
