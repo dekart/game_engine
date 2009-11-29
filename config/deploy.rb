@@ -83,9 +83,23 @@ namespace :deploy do
       run "cd #{current_path}; rake backup:db"
     end
   end
+
+  namespace :dependencies do
+    desc "Install bundler gem"
+    task :bundler, :roles => :app do
+      run "gem install bundler --source http://gemcutter.org"
+    end
+
+    desc "Install required gems"
+    task :gems, :roles => :app do
+      run "cd #{release_path}; gem bundle --only production"
+    end
+  end
 end
 
 before "deploy:migrations", "deploy:db:backup"
+before "deploy:cold", "deploy:dependencies:bundler"
+after "deploy:update_code", "deploy:dependencies:gems"
 
 ["deploy:jobs:stop"].each do |t|
   before "deploy", t
