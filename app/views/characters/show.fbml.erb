@@ -48,7 +48,7 @@
 
                     <% if @character == current_character %>
                       <div class="amount">
-                        <%= t(".items.amount",
+                        <%= raw t(".items.amount",
                               :name   => fb_i(inventory.name),
                               :amount => inventory.amount
                             ) %>
@@ -72,7 +72,7 @@
 
                   <% if @character == current_character %>
                     <div class="amount">
-                      <%= t(".properties.amount",
+                      <%= raw t(".properties.amount",
                             :name   => fb_i(property.name),
                             :amount => property.amount
                           ) %>
