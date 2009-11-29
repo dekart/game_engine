@@ -87,7 +87,12 @@ namespace :deploy do
   namespace :dependencies do
     desc "Install bundler gem"
     task :bundler, :roles => :app do
-      run "gem install bundler --source http://gemcutter.org"
+      run "gem install bundler --no-ri --no-rdoc --source http://gemcutter.org"
+    end
+
+    desc "Install Rails"
+    task :rails, :roles => :app do
+      run "gem install rails -v=2.3.5 --no-ri --no-rdoc"
     end
 
     desc "Install required gems"
@@ -98,8 +103,11 @@ namespace :deploy do
 end
 
 before "deploy:migrations", "deploy:db:backup"
-before "deploy:cold", "deploy:dependencies:bundler"
 after "deploy:update_code", "deploy:dependencies:gems"
+
+["deploy:dependencies:bundler", "deploy:dependencies:rails"].each do |t|
+  before "deploy_cold", t
+end
 
 ["deploy:jobs:stop"].each do |t|
   before "deploy", t
