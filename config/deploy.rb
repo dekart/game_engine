@@ -93,6 +93,7 @@ namespace :deploy do
     desc "Install Rails"
     task :rails, :roles => :app do
       run "gem install rails -v=2.3.5 --no-ri --no-rdoc"
+      run "gem install rack -v=1.0.1 --no-ri --no-rdoc"
     end
 
     desc "Install required gems"
@@ -102,17 +103,18 @@ namespace :deploy do
   end
 end
 
-before "deploy:migrations", "deploy:db:backup"
-after "deploy:update_code", "deploy:dependencies:gems"
-
 ["deploy:dependencies:bundler", "deploy:dependencies:rails"].each do |t|
-  before "deploy_cold", t
+  after "deploy:setup", t
 end
+
+before "deploy:migrations", "deploy:db:backup"
 
 ["deploy:jobs:stop"].each do |t|
   before "deploy", t
   before "deploy:migrations", t
 end
+
+after "deploy:update_code", "deploy:dependencies:gems"
 
 ["deploy:update_apache_config", "deploy:jobs:start", "deploy:jobs:update_references", "deploy:cleanup"].each do |t|
   after "deploy", t
