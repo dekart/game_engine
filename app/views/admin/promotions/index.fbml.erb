@@ -19,7 +19,7 @@
       <tr>
         <td class="created_at"><%= l(promotion.created_at, :format => :short) %></td>
         <td class="valid_till"><%= content_tag(:span, l(promotion.valid_till, :format => :short), :class => (Time.now < promotion.valid_till ? :valid : :invalid)) %></td>
-        <td class="text"><%= promotion.text %></td>
+        <td class="text"><%= raw promotion.text %></td>
         <td class="promotions">
           <% promotion.payouts.each do |payout| %>
             <%= render :partial => "admin/payouts/preview/#{payout.name}", :locals => {:payout => payout} %>

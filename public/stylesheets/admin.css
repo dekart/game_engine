@@ -12,6 +12,7 @@ th.subheader {background-color: #f1f7fa;color: #3B5998;border: 0;}
 
 .empty_set, .note {margin: 10px 0px; padding: 8px; border: 1px solid #D8DFEA;}
 .note {font-size: 14px;}
+.missing {color: red; font-style:italic;}
 
 .pagination {margin: 10px 0px; text-align: right;}
   .pagination .disabled {display:none;}

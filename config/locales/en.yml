@@ -96,8 +96,10 @@ en:
   payouts:
     item:
       name: "Item"
+      missing: "Missing item!"
     property:
       name: "Property"
+      missing: "Missing property type!"
     vip_money:
       name: "Gems"
     basic_money:

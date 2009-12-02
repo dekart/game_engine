@@ -1,3 +1,6 @@
 <% content_tag :div, :class => requirement.name do %>
-  <%= "%s X %s" % [requirement.item.name, requirement.amount] %>
+  <%= raw "%s X %s" % [
+        requirement.item ? requirement.item.name : content_tag(:span, t("payouts.item.missing"), :class => :missing),
+        requirement.amount
+      ] %>
 <% end %>
