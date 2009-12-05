@@ -111,7 +111,7 @@ before "deploy:migrations", "deploy:db:backup"
   before "deploy:migrations", t
 end
 
-after "deploy:update_code", "deploy:dependencies:gems"
+after "deploy:update_code", "deploy:dependencies:bundled_gems"
 
 ["deploy:update_apache_config", "deploy:jobs:start", "deploy:jobs:update_references", "deploy:cleanup"].each do |t|
   after "deploy", t
