@@ -85,25 +85,22 @@ namespace :deploy do
   end
 
   namespace :dependencies do
-    desc "Install bundler gem"
-    task :bundler, :roles => :app do
+    desc "Install environment gems"
+    task :system_gems, :roles => :app do
       run "gem install bundler --no-ri --no-rdoc --source http://gemcutter.org"
-    end
-
-    desc "Install Rails"
-    task :rails, :roles => :app do
       run "gem install rails -v=2.3.5 --no-ri --no-rdoc"
       run "gem install rack -v=1.0.1 --no-ri --no-rdoc"
+      run "gem install daemons --no-ri --no-rdoc"
     end
 
     desc "Install required gems"
-    task :gems, :roles => :app do
+    task :bundled_gems, :roles => :app do
       run "cd #{release_path}; gem bundle --only production"
     end
   end
 end
 
-["deploy:dependencies:bundler", "deploy:dependencies:rails"].each do |t|
+["deploy:dependencies:system_gems"].each do |t|
   after "deploy:setup", t
 end
 
