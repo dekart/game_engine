@@ -24,7 +24,7 @@ class TutorialsController < ApplicationController
   def finish
     current_user.update_attribute(:skip_tutorial, true)
 
-    redirect_to root_path
+    redirect_to missions_path
   end
 
   protected
