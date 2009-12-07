@@ -1,0 +1,15 @@
+<div class="buttons">
+  <%= help_request_link(fb_i(t(".buttons.request_help")), @mission,
+        :class => "request_help button"
+      ) %>
+
+  <%= link_to_remote(fb_i(t(".buttons.try_again")),
+        :url => fulfill_mission_url(@mission, :canvas => false),
+        :update => :result,
+        :html   => {:class => "fulfill_again button"}
+      ) if current_character.can_fulfill?(@mission) %>
+</div>
+
+<p>
+  <%= fb_i(t(".message")) %> <%= fb_i(@mission.failure_text) %>
+</p>

@@ -1,0 +1,48 @@
+<div class="buttons">
+  <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Mission, :completed,
+        :template_data => {
+          :title    => mission.title,
+          :mission  => mission.name,
+          :images => mission.image? ? [{
+            :src  => image_path(mission.image.url),
+            :href => missions_url
+          }] : nil
+        },
+        :html => {:class => "publish button"}
+      ) %>
+</div>
+
+<h2><%= fb_i(t(".title")) %></h2>
+
+<p>
+  <%= fb_i(mission.complete_text) %>
+</p>
+
+<% unless mission.title.blank? %>
+  <p><%= fb_i(t(".message")) %></p>
+
+  <h3 class="title"><%= fb_i(mission.title) %></h3>
+<% end %>
+
+<% if mission.child_missions.any? %>
+  <div class="child_missions">
+    <p><%= fb_i(t(".child_missions")) %></p>
+
+    <% mission.child_missions.each do |child| %>
+      <div class="child"><%= child.name %></div>
+    <% end %>
+  </div>
+<% end %>
+
+<% content_for :script do %>
+  <%= show_feed_dialog(Publisher::Mission, :completed,
+        :template_data => {
+          :title    => mission.title,
+          :mission  => mission.name,
+          :images => mission.image? ? [{
+            :src  => image_path(mission.image.url),
+            :href => missions_url
+          }] : nil
+        }
+      ) %>
+<% end %>
