@@ -38,10 +38,6 @@ class ApplicationController < ActionController::Base
     request.path
   end
 
-  def check_explicit_installation_requirement
-    params[:do_install] ? prepare_user_and_character : true
-  end
-
   def current_user
     return if facebook_session.nil?
 
