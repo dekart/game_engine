@@ -1,0 +1,72 @@
+<div class="buttons">
+  <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Fight, :attack,
+        :template_data => {
+          :victim           => fb_name(fight.victim.user),
+          :money            => number_to_currency(fight.money),
+          :experience       => fight.experience,
+          :attacker_hp_loss => fight.attacker_hp_loss,
+          :victim_hp_loss   => fight.victim_hp_loss
+        },
+        :html => {:class => "publish button"}
+      ) %>
+  
+  <%= help_request_link(fb_i(t(".buttons.request_help")), fight,
+        :class => "request_help button"
+      ) %>
+</div>
+
+<p class="success">
+  <% fb_i do %>
+    <%= raw t(".message", :pronoun => fb_pronoun(fight.victim.user, :objective => true)) %>
+
+    <%= fb_it(:user_name, character_name_link(fight.victim)) %>
+  <% end %>
+</p>
+
+<table class="payouts">
+  <tr>
+    <td class="received">
+      <h3><%= fb_i(t(".you_received")) %></h3>
+
+      <%= payout(:experience,
+            Character.human_attribute_name("experience"),
+            fight.experience
+          ) %>
+      
+      <%= payout(:basic_money,
+            Character.human_attribute_name("basic_money"),
+            number_to_currency(fight.money)
+          ) %>
+    </td>
+    <td class="lost">
+      <h3><%= fb_i(t(".you_lost")) %></h3>
+
+      <%= payout(:energy,
+            Character.human_attribute_name("energy"),
+            Configuration[:fight_energy_required]
+          ) %>
+      <%= payout(:health,
+            Character.human_attribute_name("health"),
+            fight.attacker_hp_loss
+          ) %>
+    </td>
+    <td class="victim_lost">
+      <h3>
+        <% fb_i t('.victim_lost') do %>
+          <%= fb_it(:user_name, character_name_link(fight.victim)) %>
+        <% end %>
+      </h3>
+
+      <%= payout(:health,
+            Character.human_attribute_name("health"),
+            fight.victim_hp_loss
+          ) %>
+    </td>
+  </tr>
+</table>
+
+<% unless fight.cause %>
+  <% content_for :script do %>
+    Fight.hideVictim(<%= @victim.id %>);
+  <% end %>
+<% end %>

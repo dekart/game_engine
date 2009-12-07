@@ -1,0 +1,52 @@
+<div class="buttons">
+  <%= link_to_remote(fb_i(t(".buttons.attack_again")),
+        :url    => fight.cause ? respond_fight_url(fight.cause, :canvas => false) : fights_url(:victim_id => @victim, :canvas => false),
+        :update => :result,
+        :html   => {:class => "attack_again button"}
+      ) if current_character.energy > 0 %>
+  
+  <%= help_request_link(fb_i(t(".buttons.request_help")), fight,
+        :class => "request_help button"
+      ) %>
+</div>
+
+<p class="fail">
+  <% fb_i do %>
+    <%= raw t(".message", :pronoun => fb_pronoun(fight.victim.user, :objective => true)) %>
+
+    <%= fb_it(:user_name, character_name_link(fight.victim)) %>
+  <% end %>
+</p>
+
+<table class="payouts">
+  <tr>
+    <td class="lost">
+      <h3><%= fb_i(t(".you_lost")) %></h3>
+
+      <%= payout(:energy,
+            Character.human_attribute_name("energy"),
+            Configuration[:fight_energy_required]
+          ) %>
+      <%= payout(:health,
+            Character.human_attribute_name("health"),
+            fight.attacker_hp_loss
+          ) %>
+      <%= payout(:basic_money,
+            Character.human_attribute_name("basic_money"),
+            number_to_currency(fight.money)
+          ) %>
+    </td>
+    <td class="victim_lost">
+      <h3>
+        <% fb_i t(".victim_lost") do %>
+          <%= fb_it(:user_name, character_name_link(fight.victim)) %>
+        <% end %>
+      </h3>
+
+      <%= payout(:health,
+            Character.human_attribute_name("health"),
+            fight.victim_hp_loss
+          ) %>
+    </td>
+  </tr>
+</table>
