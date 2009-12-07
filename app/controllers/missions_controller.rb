@@ -17,7 +17,10 @@ class MissionsController < ApplicationController
     if params[:tutorial]
       @missions = [@mission]
     else
-      @missions = current_character.mission_groups.current.missions
+      if @result.rank.just_completed?
+        @missions = current_character.mission_groups.current.missions
+      end
+      
       @mission_groups = current_character.mission_groups.current_page
     end
 

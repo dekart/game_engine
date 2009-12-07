@@ -46,3 +46,15 @@
         }
       ) %>
 <% end %>
+
+<% if missions %>
+  <%= fb_js_string :mission_list, render(:partial => "list", :locals => {:missions => missions}) %>
+
+  <% content_for :script do %>
+    var list = $('mission_list');
+
+    if(list){
+      list.setInnerFBML(mission_list);
+    }
+  <% end %>
+<% end %>

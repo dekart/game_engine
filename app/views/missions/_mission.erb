@@ -15,7 +15,7 @@
     <div class="energy"><%= mission.ep_cost %></div>
     <%= mission_requirements(mission) %>
   </td>
-  <td class="progress"><%= mission_progress(current_character, mission) %></td>
+  <td class="progress" id="<%= dom_id(mission, :progress) %>"><%= mission_progress(current_character, mission) %></td>
   <td class="controls">
     <%= link_to_remote(fb_i(t(".buttons.fulfill")),
           :url    => fulfill_mission_url(mission, :canvas => false, :tutorial => tutorial?),

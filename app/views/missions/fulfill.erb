@@ -1,7 +1,13 @@
 <div id="mission_result">
   <% if @result.saved %>
     <% if @result.rank.just_completed? %>
-      <%= render :partial => "missions/fulfill/completed", :locals => {:mission => @mission, :result => @result} %>
+      <%= render(
+            :partial  => "missions/fulfill/completed",
+            :locals   => {
+              :mission  => @mission,
+              :result   => @result,
+              :missions => @missions}
+          ) %>
     <% elsif @result.success %>
       <%= render :partial => "missions/fulfill/success", :locals => {:mission => @mission, :result => @result} %>
     <% else %>
@@ -32,23 +38,6 @@
     <p><%= fb_i(t(".already_completed.message")) %></p>
   <% end %>
 </div>
-
-<% if @missions %>
-  <% fb_js_string :mission_list do %>
-    <%= render(
-          :partial => "list",
-          :locals => {
-            :missions => @missions
-          }
-        ) %>
-  <% end %>
-
-  <% content_for :script do %>
-    if($('mission_list')){
-      $('mission_list').setInnerFBML(mission_list);
-    }
-  <% end %>
-<% end %>
 
 <% if @mission_groups %>
   <% fb_js_string :mission_group_list do %>
