@@ -15,6 +15,7 @@ module MissionsHelper
       )
     end
   end
+  safe_helper :mission_progress
 
   def mission_requirements(mission, filter = nil)
     returning result = "" do
@@ -28,6 +29,7 @@ module MissionsHelper
       end
     end
   end
+  safe_helper :mission_requirements
 
   def mission_payouts(mission)
     returning result = "" do
@@ -41,6 +43,5 @@ module MissionsHelper
       end
     end
   end
-
-  safe_helper :mission_progress, :mission_requirements, :mission_payouts
+  safe_helper :mission_payouts
 end

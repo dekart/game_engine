@@ -11,6 +11,7 @@ module ApplicationHelper
       :class  => :hide
     )
   end
+  safe_helper :hide_block_link
 
   def reference(id, reference_url = nil)
     if Rails.env == "development"
@@ -32,6 +33,7 @@ module ApplicationHelper
   def title(text)
     fb_title(text) + content_tag(:h1, text, :class => :title)
   end
+  safe_helper :title
 
   def icon(name)
     image_tag("icons/#{name}.gif", :alt => name.to_s.titleize)
@@ -111,6 +113,4 @@ module ApplicationHelper
   def amount_select_tag
     select_tag(:amount, options_for_select((1..10).to_a))
   end
-
-  safe_helper :hide_block_link, :title
 end

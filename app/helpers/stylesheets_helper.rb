@@ -42,6 +42,5 @@ module StylesheetsHelper
 
     content
   end
-
   safe_helper :format_stylesheet_content
 end

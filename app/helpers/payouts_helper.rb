@@ -9,6 +9,7 @@ module PayoutsHelper
       end
     end
   end
+  safe_helper :payout_list
 
   def payout(type, label, value, &block)
     result = content_tag(:div,
@@ -20,6 +21,4 @@ module PayoutsHelper
 
     block_given? ? concat(result) : result
   end
-
-  safe_helper :payout_list
 end
