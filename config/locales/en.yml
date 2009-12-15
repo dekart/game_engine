@@ -639,7 +639,9 @@ en:
         play_now: "Play Now"
   ratings:
     show:
-      title: "Hall of Fame"
+      title:
+        global: "Hall of Fame: Global"
+        relations: "Hall of Fame: Alliance"
 
       buttons:
         relations: "Alliance Rating"
