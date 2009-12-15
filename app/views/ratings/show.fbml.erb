@@ -1,5 +1,10 @@
 <%= title(fb_i(t(".title"))) %>
 
+<div class="buttons" id="rating_buttons">
+  <%= link_to(fb_i(t(".buttons.relations")), rating_path, :class => :button) %>
+  <%= link_to(fb_i(t(".buttons.global")), global_rating_path, :class => :button) %>
+</div>
+
 <h2><%= fb_i(t(".overall")) %></h2>
 
 <table class="rating" cellspacing="0">
@@ -26,7 +31,7 @@
     
   <% unless @total.include?(current_character) %>
     <tr class="current">
-      <td class="position"><%= current_character.rating_position(:rating) %></td>
+      <td class="position"><%= @rating_scope.rating_position(current_character, :rating) %></td>
       <td class="picture"><%= character_picture_link(current_character) %></td>
       <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
       <td class="level"><%= Character.human_attribute_name("level") %> <%= current_character.level %></td>
@@ -43,7 +48,7 @@
 <table class="rating" cellspacing="0">
   <tr>
     <th>#</th>
-    <th colspan="3"><%= fb_i(Character.human_name) %></th>
+    <th colspan="2"><%= fb_i(Character.human_name) %></th>
     <th><%= fb_i(Character.human_attribute_name("level")) %></th>
   </tr>
   <% @level.each_with_index do |character, index| %>
@@ -57,7 +62,7 @@
 
   <% unless @level.include?(current_character) %>
     <tr class="current">
-      <td class="position"><%= current_character.rating_position(:level) %></td>
+      <td class="position"><%= @rating_scope.rating_position(current_character, :level) %></td>
       <td class="picture"><%= character_picture_link(current_character) %></td>
       <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
       <td class="level last"><%= current_character.level %></td>
@@ -70,7 +75,7 @@
 <table class="rating" cellspacing="0">
   <tr>
     <th>#</th>
-    <th colspan="3"><%= fb_i(Character.human_name) %></th>
+    <th colspan="2"><%= fb_i(Character.human_name) %></th>
     <th><%= fb_i(Character.human_attribute_name("bank")) %></th>
   </tr>
   <% @bank.each_with_index do |character, index| %>
@@ -78,13 +83,13 @@
       <td class="position"><%= index + 1 %></td>
       <td class="picture"><%= character_picture_link(character) %></td>
       <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
-      <td class="bank"><%= number_to_currency(character.bank) %></td>
+      <td class="bank last"><%= number_to_currency(character.bank) %></td>
     </tr>
   <% end %>
 
   <% unless @bank.include?(current_character) %>
     <tr class="current">
-      <td class="position"><%= current_character.rating_position(:bank) %></td>
+      <td class="position"><%= @rating_scope.rating_position(current_character, :bank) %></td>
       <td class="picture"><%= character_picture_link(current_character) %></td>
       <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
       <td class="bank last"><%= number_to_currency(current_character.bank) %></td>
@@ -97,7 +102,7 @@
 <table class="rating" cellspacing="0">
   <tr>
     <th>#</th>
-    <th colspan="3"><%= fb_i(Character.human_name) %></th>
+    <th colspan="2"><%= fb_i(Character.human_name) %></th>
     <th><%= fb_i(Character.human_attribute_name("fights_won")) %></th>
   </tr>
   <% @fights.each_with_index do |character, index| %>
@@ -111,7 +116,7 @@
 
   <% unless @fights.include?(current_character) %>
     <tr class="current">
-      <td class="position"><%= current_character.rating_position(:fights_won) %></td>
+      <td class="position"><%= @rating_scope.rating_position(current_character, :fights_won) %></td>
       <td class="picture"><%= character_picture_link(current_character) %></td>
       <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
       <td class="fights_won last"><%= current_character.fights_won %></td>
@@ -124,7 +129,7 @@
 <table class="rating" cellspacing="0">
   <tr>
     <th>#</th>
-    <th colspan="3"><%= fb_i(Character.human_name) %></th>
+    <th colspan="2"><%= fb_i(Character.human_name) %></th>
     <th><%= fb_i(Character.human_attribute_name("missions_succeded")) %></th>
   </tr>
   <% @missions.each_with_index do |character, index| %>
@@ -138,7 +143,7 @@
 
   <% unless @missions.include?(current_character) %>
     <tr class="current">
-      <td class="position"><%= current_character.rating_position(:missions_succeeded) %></td>
+      <td class="position"><%= @rating_scope.rating_position(current_character, :missions_succeeded) %></td>
       <td class="picture"><%= character_picture_link(current_character) %></td>
       <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
       <td class="missions_succeeded last"><%= current_character.missions_succeeded %></td>
@@ -151,7 +156,7 @@
 <table class="rating" cellspacing="0">
   <tr>
     <th>#</th>
-    <th colspan="3"><%= fb_i(Character.human_name) %></th>
+    <th colspan="2"><%= fb_i(Character.human_name) %></th>
     <th><%= fb_i(Character.human_attribute_name("relations_count")) %></th>
   </tr>
   <% @relations.each_with_index do |character, index| %>
@@ -165,7 +170,7 @@
 
   <% unless @relations.include?(current_character) %>
     <tr class="current">
-      <td class="position"><%= current_character.rating_position(:relations_count) %></td>
+      <td class="position"><%= @rating_scope.rating_position(current_character, :relations_count) %></td>
       <td class="picture"><%= character_picture_link(current_character) %></td>
       <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
       <td class="relations_count last"><%= current_character.relations_count %></td>

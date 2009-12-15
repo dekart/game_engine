@@ -101,6 +101,10 @@ class Character < ActiveRecord::Base
     }
   }
 
+  named_scope :from_relations_of, Proc.new{|character|
+    
+  }
+
   attr_accessible :name
 
   attr_accessor :level_updated
@@ -128,6 +132,20 @@ class Character < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  def self.rating_position(character, field)
+    self.count(
+      :conditions => ["#{field} > ?", character.send(field)]
+    ) + 1
+  end
+
+  def self_and_relations
+    Character.scoped(
+      :conditions => {
+        :id => [id] + self.friend_relations.character_ids
+      }
+    )
   end
 
   def upgrade_attribute!(name)
@@ -283,10 +301,6 @@ class Character < ActiveRecord::Base
     end
 
     self.save
-  end
-
-  def rating_position(unit)
-    self.class.count(:conditions => ["#{unit} > ?", self.send(unit)]) + 1
   end
 
   def exchange_money!

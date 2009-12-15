@@ -18,7 +18,7 @@
     </td>
     <td>
       <%= link_to(fb_i(t(".relations")) + " (%d)" % current_character.relations.effective_size, relations_path, :class => :alliance) %>
-      <%= link_to(fb_i(t(".rating")), rating_characters_path, :class => :rating) %>
+      <%= link_to(fb_i(t(".rating")), rating_path, :class => :rating) %>
     </td>
   </tr>
 </table>

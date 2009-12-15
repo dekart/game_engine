@@ -44,7 +44,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources(:characters,
     :member => {:upgrade => :any, :wall => :any},
-    :collection => {:load_vip_money => :any, :rating => :any}
+    :collection => {:load_vip_money => :any}
   ) do |character|
     character.resources :assignments, :shallow => true
   end
@@ -71,6 +71,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :promotions, :only => :show
 
   map.resource :premium
+
+  map.resource :rating, :member => {:global => :any}
 
   map.resources :pages
 

@@ -173,15 +173,6 @@ en:
       fights:
         title: "Latest Fights"
         respond: "Fight Back!"
-    rating:
-      title: "Hall of Fame"
-
-      overall: "Overall Rating"
-      level: "Highest Level"
-      bank: "Wealthiest"
-      fights: "Most Wins"
-      missions: "Most Missions"
-      relations: "Strongest Alliance"
     show:
       title: "{{user}} Profile"
       controls:
@@ -646,6 +637,21 @@ en:
       buttons:
         accept_pending: "Accept Other Gifts"
         play_now: "Play Now"
+  ratings:
+    show:
+      title: "Hall of Fame"
+
+      buttons:
+        relations: "Alliance Rating"
+        global: "Global Rating"
+
+      overall: "Overall Rating"
+      level: "Highest Level"
+      bank: "Wealthiest"
+      fights: "Most Wins"
+      missions: "Most Missions"
+      relations: "Strongest Alliance"
+
 # Helpers
   blocks:
     hide: "Hide"

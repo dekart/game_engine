@@ -38,15 +38,6 @@ class CharactersController < ApplicationController
     end
   end
 
-  def rating
-    @total       = Character.rated_by(:rating)
-    @level       = Character.rated_by(:level)
-    @bank        = Character.rated_by(:bank)
-    @fights      = Character.rated_by(:fights_won)
-    @missions    = Character.rated_by(:missions_succeeded)
-    @relations   = Character.rated_by(:relations_count)
-  end
-
   def bank
     if request.post?
       if current_character.bank_operation(params[:operation])

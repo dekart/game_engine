@@ -1,5 +1,9 @@
 class Character
   module FriendRelations
+    def character_ids
+      all(:select => "target_id").collect{|r| r[:target_id] }
+    end
+
     def facebook_ids
       find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
     end
