@@ -39,10 +39,12 @@ class CharactersController < ApplicationController
   end
 
   def rating
-    @characters = Character.find(:all,
-      :order => "rating DESC",
-      :limit => Configuration[:rating_show_limit]
-    )
+    @total       = Character.rated_by(:rating)
+    @level       = Character.rated_by(:level)
+    @bank        = Character.rated_by(:bank)
+    @fights      = Character.rated_by(:fights_won)
+    @missions    = Character.rated_by(:missions_succeeded)
+    @relations   = Character.rated_by(:relations_count)
   end
 
   def bank

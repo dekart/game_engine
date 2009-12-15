@@ -175,8 +175,13 @@ en:
         respond: "Fight Back!"
     rating:
       title: "Hall of Fame"
-      rating_position:
-        label: "Your Position:"
+
+      overall: "Overall Rating"
+      level: "Highest Level"
+      bank: "Wealthiest"
+      fights: "Most Wins"
+      missions: "Most Missions"
+      relations: "Strongest Alliance"
     show:
       title: "{{user}} Profile"
       controls:

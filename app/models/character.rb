@@ -94,6 +94,13 @@ class Character < ActiveRecord::Base
     }
   }
 
+  named_scope :rated_by, Proc.new{|unit|
+    {
+      :order => "characters.#{unit} DESC",
+      :limit => Configuration[:rating_show_limit]
+    }
+  }
+
   attr_accessible :name
 
   attr_accessor :level_updated
@@ -278,8 +285,8 @@ class Character < ActiveRecord::Base
     self.save
   end
 
-  def rating_position
-    self.class.count(:conditions => ["rating > ?", self.rating]) + 1
+  def rating_position(unit)
+    self.class.count(:conditions => ["#{unit} > ?", self.send(unit)]) + 1
   end
 
   def exchange_money!
