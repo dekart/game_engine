@@ -17,7 +17,7 @@
     <% @newsletters.each do |newsletter| %>
       <tr>
         <td><%= l(newsletter.created_at, :format => :short) %></td>
-        <td><%= newsletter.text %></td>
+        <td><%= raw newsletter.text %></td>
         <td><%= newsletter.workflow_state.capitalize %></td>
         <td>
           <%= User.count - User.after(newsletter.last_recipient).count %>/<%= User.count %>
