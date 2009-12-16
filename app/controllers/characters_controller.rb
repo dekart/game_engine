@@ -54,16 +54,24 @@ class CharactersController < ApplicationController
   end
 
   def new
-    @character = Character.new
+    if current_character
+      redirect_to root_url
+    else
+      @character = Character.new
+    end
   end
 
   def create
-    @character = current_user.build_character(params[:character])
-
-    if @character.save
-      redirect_to root_path
+    if current_character
+      update
     else
-      render :action => :new
+      @character = current_user.build_character(params[:character])
+
+      if @character.save
+        redirect_to root_path
+      else
+        render :action => :new
+      end
     end
   end
 
@@ -86,6 +94,6 @@ class CharactersController < ApplicationController
   protected
 
   def check_character_non_existence
-    redirect_to root_url if current_character
+    
   end
 end
