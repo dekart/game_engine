@@ -2,9 +2,9 @@ class PromotionsController < ApplicationController
   def show
     id, secret = params[:id].split("-")
 
-    @promotion = Promotion.find_by_id(id)
+    @promotion = Promotion.find(id)
 
-    if @promotion and @promotion.can_be_received?(current_character, secret)
+    if @promotion.can_be_received?(current_character, secret)
       @result = @promotion.promotion_receipts.create(:character => current_character)
     else
       if @promotion.expired?
