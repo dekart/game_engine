@@ -1,7 +1,7 @@
 <%= title(fb_i(t(".title"))) %>
 
 <div id="bank_balance">
-  <% fb_i() do %>
+  <% fb_i do %>
     <%= t(".current_balance") %>
 
     <%= fb_it(:amount, content_tag(:span, number_to_currency(current_character.bank), :class => :value)) %>
