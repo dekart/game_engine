@@ -5,7 +5,9 @@ class Character
     end
 
     def facebook_ids
-      find(:all, :include => {:target_character => :user}).collect{|r| r.target_character.user.facebook_id}
+      all(:include => {:target_character => :user}).collect{|r| 
+        r.target_character.user.facebook_id
+      }
     end
 
     def with(character)
