@@ -2,6 +2,7 @@ class CharactersController < ApplicationController
   skip_before_filter :check_character_personalization, :only => [:new, :create, :edit, :update, :load_vip_money]
   skip_before_filter :ensure_application_is_installed_by_facebook_user, :only => [:new, :load_vip_money]
   before_filter :set_facebook_session, :only => [:new]
+  before_filter :check_character_non_existence, :only => [:new, :create]
 
   def index
     if !current_user.skip_tutorial?
@@ -53,8 +54,6 @@ class CharactersController < ApplicationController
   end
 
   def new
-    redirect_to root_url if current_character
-
     @character = Character.new
   end
 
@@ -82,5 +81,11 @@ class CharactersController < ApplicationController
     else
       render :action => :edit
     end
+  end
+
+  protected
+
+  def check_character_non_existence
+    redirect_to root_url if current_character
   end
 end
