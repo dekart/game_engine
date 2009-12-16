@@ -109,9 +109,6 @@ class Character < ActiveRecord::Base
 
   attr_accessor :level_updated
 
-  serialize :inventory_effects, Effects::Collection
-  serialize :relation_effects, Effects::Collection
-
   restorable_attribute :hp,
     :limit          => :health,
     :restore_period => Configuration[:character_health_restore_period].seconds
@@ -240,35 +237,6 @@ class Character < ActiveRecord::Base
         :time_to_basic_money_restore
       ]
     )
-  end
-
-  def inventory_effects
-    super || Effects::Collection.new
-  end
-
-  # FIXME !!!
-  def cache_inventory_effects
-    self.inventory_effects = Effects::Collection.new
-
-    self.holded_inventories.each do |item|
-      self.inventory_effects << item.effects
-    end
-
-    self.save
-  end
-
-  def relation_effects
-    super || Effects::Collection.new
-  end
-
-  def cache_relation_effects
-    self.relation_effects = Effects::Collection.new
-
-    self.relations.each do |relation|
-      self.relation_effects << relation.inventory_effects
-    end
-
-    self.save
   end
 
   def can_buy?(item)
