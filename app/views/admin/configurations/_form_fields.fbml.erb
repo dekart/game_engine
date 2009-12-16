@@ -96,12 +96,6 @@
 <% form.field_set t(".rating") do %>
   <%
     [
-      :rating_missions_completed,
-      :rating_relations,
-      :rating_fights_won,
-      :rating_missions_succeeded,
-      :rating_income_divider,
-      :rating_income_ceil,
       :rating_show_limit
     ].each do |field| %>
     <%= form.text_field field, :size => 5 %>

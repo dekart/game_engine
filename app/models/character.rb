@@ -122,7 +122,7 @@ class Character < ActiveRecord::Base
     :restore_period => Configuration[:character_income_calculation_period].minutes,
     :restore_rate   => :property_income
 
-  before_save :update_level_and_points, :recalculate_rating
+  before_save :update_level_and_points
 
   def self.find_by_invitation_key(key)
     id, secret = key.split("-")
@@ -420,18 +420,5 @@ class Character < ActiveRecord::Base
 
       self.level_updated = true
     end
-  end
-
-  def recalculate_rating
-    self.rating = (
-      self.missions_completed * Configuration[:rating_missions_completed] +
-      self.relations_count    * Configuration[:rating_relations] +
-      self.fights_won         * Configuration[:rating_fights_won] +
-      self.missions_succeeded * Configuration[:rating_missions_succeeded] +
-      (
-        self.property_income.to_f /
-        (Configuration[:rating_income_divider] + self.property_income.to_f / Configuration[:rating_income_ceil])
-      ).ceil
-    )
   end
 end

@@ -53,12 +53,6 @@ class Configuration < ActiveRecord::Base
     :fight_with_invite_victim_damage_min,
     :fight_with_invite_attacker_damage,
 
-    :rating_missions_completed,
-    :rating_relations,
-    :rating_fights_won,
-    :rating_missions_succeeded,
-    :rating_income_divider,
-    :rating_income_ceil,
     :rating_show_limit,
 
     :help_request_expire_period,
