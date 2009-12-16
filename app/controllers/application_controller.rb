@@ -29,9 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_character(force_reload = false)
-    return unless current_user
-    
-    current_user.character(force_reload)
+    current_user.character(force_reload) if current_user
   end
 
   def after_facebook_login_url
