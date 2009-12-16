@@ -410,6 +410,7 @@ en:
       note:
         text: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
         recruit: "Recruit to Alliance"
+        gift: "Send Gifts to Alliance"
         hire: "Hire Mercenaries"
       empty_set: "You don't have any members in your Alliance"
       members:

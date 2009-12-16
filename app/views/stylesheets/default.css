@@ -274,7 +274,7 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Recruit to Alliance button at Alliance page */
 #alliance_recruit .buttons {height: 30px;}
-  #alliance_recruit .button { float: left; width: 130px; margin-right: 15px; background-image: url(asset:icons_add);}
+  #alliance_recruit .button { float: left; width: auto; margin-right: 15px; background-image: url(asset:icons_add);}
 
 /* Alliance member list at Alliance page*/
 #alliance_members {}
@@ -484,7 +484,6 @@ form .error {color: red; padding: 3px 0px;}
   #character_assignments .effect {font-style: italic; font-size: 14px; margin-top: 5px;}
   #character_assignments .description {font-style: italic;}
   #character_assignments .controls {float: right; margin-top: -25px; }
-  #character_assignments .controls a {width: 50px;}
   #character_assignments .controls .promote {background-image: url(asset:icons_accept);}
   #character_assignments .controls .demote {background-image: url(asset:icons_delete);}
 
