@@ -26,14 +26,14 @@ class InvitationsController < ApplicationController
       unless friend?(@character.user)
         flash[:error] = t("invitations.show.messages.only_friends")
 
-        redirect_to root_url
+        redirect_to landing_path
       end
     elsif @character == current_character
-      redirect_to root_url
+      redirect_to landing_path
     elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("invitations.show.messages.already_joined")
 
-      redirect_to root_url
+      redirect_to landing_path
     end
   end
 
@@ -48,7 +48,7 @@ class InvitationsController < ApplicationController
       end
     end
 
-    redirect_to root_url
+    redirect_to landing_path
   end
 
   protected

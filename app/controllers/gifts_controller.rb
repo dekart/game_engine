@@ -12,7 +12,7 @@ class GiftsController < ApplicationController
     if @items.any?
       render :action => :new
     else
-      redirect_to root_path
+      redirect_to landing_path
     end
   end
 
@@ -66,14 +66,14 @@ class GiftsController < ApplicationController
       @gift.destroy
     end
 
-    redirect_to root_path
+    redirect_to landing_path
   end
 
   def show
     if @gift = Gift.find_by_id(params[:id]) and @gift.can_receive?(current_character)
       @gift_receipt = @gift.receipts.create(:character => current_character)
     else
-      redirect_to root_path
+      redirect_to landing_path
     end
   end
 end

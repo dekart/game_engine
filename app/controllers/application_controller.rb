@@ -12,11 +12,21 @@ class ApplicationController < ActionController::Base
   helper :all
 
   rescue_from ActionController::RoutingError,
-    :with => :redirect_to_root
+    :with => :redirect_to_landing_page
   rescue_from ActiveRecord::RecordNotFound, ActionController::UnknownAction,
-    :with => :log_exception_and_redirect_to_root
+    :with => :log_exception_and_redirect
 
   protected
+
+  def landing_path
+    if current_user.try(:should_visit_gift_page?)
+      new_gift_path
+    elsif current_user.try(:should_visit_invite_page?)
+      invite_users_path
+    else
+      root_path
+    end
+  end
 
   def check_character_existance
     set_facebook_session
@@ -29,7 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_facebook_login_url
-    request.path
+    request.request_uri
   end
 
   def current_user
@@ -82,11 +92,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def redirect_to_root
+  def redirect_to_landing_page
     if request.request_uri.starts_with?("//")
       new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
     else
-      new_url = root_url
+      new_url = landing_path
     end
 
     Rails.logger.fatal params.inspect
@@ -95,10 +105,10 @@ class ApplicationController < ActionController::Base
     redirect_to new_url
   end
 
-  def log_exception_and_redirect_to_root(exception)
+  def log_exception_and_redirect(exception)
     log_error(exception)
 
-    redirect_to_root
+    redirect_to_landing_page
   end
 
   def default_url_options(options)
@@ -110,7 +120,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    redirect_to root_url unless current_user.admin?
+    redirect_to landing_path unless current_user.admin?
   end
 
   def friend?(user)
