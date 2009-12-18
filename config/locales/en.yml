@@ -30,6 +30,7 @@ en:
         mercenaries: "Mercenaries"
         points: "Upgrade Points"
         rating: "Rating"
+        name: "Character Name"
       property_type:
         inflation: "Price increase per purchase"
       user:
@@ -211,8 +212,9 @@ en:
       offence: "Best Offence"
       defence: "Best Defence"
     new:
-      title: "Setup Your Character"
+      title: "First choose your character below..."
       submit: "Start Playing!"
+      note: "After clicking '{{submit}}' you'll be asked to install {{application}}. Click 'Allow' in the appeared window to start playing."
     edit:
       title: "Update Your Character"
       submit: "Save"
