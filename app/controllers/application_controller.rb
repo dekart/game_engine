@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  before_filter :check_character_personalization
+  before_filter :check_character_existance
   before_filter :ensure_application_is_installed_by_facebook_user
   
   layout :get_layout
@@ -18,14 +18,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def check_character_personalization
+  def check_character_existance
     set_facebook_session
 
-    if current_character
-      redirect_to edit_character_url(:current) unless current_character.personalized?
-    else
-      redirect_to new_character_url
-    end
+    redirect_to new_character_url unless current_character
   end
 
   def current_character(force_reload = false)

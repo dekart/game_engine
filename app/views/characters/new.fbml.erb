@@ -7,3 +7,7 @@
 
   <div class="note"><%= raw t(".note", :submit => t(".submit"), :application => fb_app_name) %></div>
 <% end %>
+
+<%= raw t(".already_registered.text", 
+      :skip_form => link_to(t(".already_registered.skip_form"), root_url, :requirelogin => 1)
+    ) %>
