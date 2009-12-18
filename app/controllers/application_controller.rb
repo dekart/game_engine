@@ -83,20 +83,19 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_root
-    if request.path.starts_with?("//")
-      new_url = request.path.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
+    if request.request_uri.starts_with?("//")
+      new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
     else
       new_url = root_url
     end
 
-    Rails.logger.fatal "Redirecting to #{new_url} from #{request.path}"
+    Rails.logger.fatal params.inspect
+    Rails.logger.fatal "Redirecting from #{request.method.to_s.upcase} #{request.request_uri} to #{new_url}"
 
     redirect_to new_url
   end
 
   def log_exception_and_redirect_to_root(exception)
-    Rails.logger.fatal(params.inspect)
-    
     log_error(exception)
 
     redirect_to_root
