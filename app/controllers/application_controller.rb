@@ -33,29 +33,31 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    return if facebook_session.nil?
+    @current_user ||= find_or_create_current_user if facebook_session
+  end
 
-    unless @current_user
-      facebook_id = in_page? ? facebook_params["page_id"] : facebook_session.user.id
+  def find_or_create_current_user
+    facebook_id = in_page? ? facebook_params["page_id"] : facebook_session.user.id
 
-      unless @current_user = User.find_by_facebook_id(facebook_id)
-        @current_user = User.new
-        @current_user.facebook_id = facebook_id
-        @current_user.reference = params[:reference]
-        @current_user.save
-      end
+    unless user = User.find_by_facebook_id(facebook_id)
+      user = User.new
+
+      user.facebook_id  = facebook_id
+      user.reference    = params[:reference]
+      
+      user.save!
     end
 
-    @current_user
+    user
   end
 
   def request_context
     if request_comes_from_facebook? && !facebook_params["in_profile_tab"].blank?
-      return :profile_tab
+      :profile_tab
     elsif request_comes_from_facebook? && !facebook_params["in_canvas"].blank?
-      return :canvas
+      :canvas
     else
-      return :else
+      :else
     end
   end
 
@@ -68,13 +70,16 @@ class ApplicationController < ActionController::Base
   end
 
   def in_page?
-    request_comes_from_facebook? && facebook_params["page_id"] && facebook_params["is_admin"] && facebook_params["page_added"]
+    request_comes_from_facebook? &&
+      facebook_params["page_id"] &&
+      facebook_params["is_admin"] &&
+      facebook_params["page_added"]
   end
 
   def profile_user
-    return if !in_profile_tab?
-
-    @profile_user ||= User.find_or_create_by_facebook_id(facebook_params["profile_user"])
+    if in_profile_tab?
+      @profile_user ||= User.find_or_create_by_facebook_id(facebook_params["profile_user"])
+    end
   end
 
   def redirect_to_root
@@ -106,7 +111,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    redirect_to root_url and return false unless current_user.admin?
+    redirect_to root_url unless current_user.admin?
   end
 
   def friend?(user)
@@ -114,6 +119,6 @@ class ApplicationController < ActionController::Base
   end
 
   def get_layout
-    current_character.nil? || current_character.new_record? ? "unauthorized" : "application"
+    (current_character.nil? || current_character.new_record?) ? "unauthorized" : "application"
   end
 end
