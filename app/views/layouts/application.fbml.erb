@@ -6,8 +6,11 @@
   <%= editable_stylesheet_link %>
 
   <% if Rails.env.development? %>
-    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
-    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %></script>
+    <script>
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %>
+
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %>
+    </script>
   <% else %>
     <%= javascript_include_tag "facebooker", "application" %>
   <% end %>

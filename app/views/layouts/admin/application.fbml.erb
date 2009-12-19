@@ -2,8 +2,11 @@
   <% if Rails.env.development? %>
     <style><%= raw File.read(File.join(RAILS_ROOT, "public", "stylesheets", "admin.css")) %></style>
 
-    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
-    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %></script>
+    <script>
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %>
+    
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %>
+    </script>
   <% else %>
     <%= stylesheet_link_tag("admin") %>
     
@@ -25,4 +28,5 @@
 
   <%= yield %>
 
+  <script><%= yield :script %></script>
 </fb:fbml>

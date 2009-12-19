@@ -9,7 +9,7 @@
   <% end %>
 </div>
 
-<% javascript_tag do %>
+<% content_for :script do %>
   Character.onUpgradeComplete = function(){
     $('upgrade_list').hide();
     $('upgrade_finished').show();
