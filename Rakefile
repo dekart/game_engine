@@ -8,3 +8,6 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+Rake.application.rake_require "tasks/facebooker"
+Rake.application.rake_require "tasks/tunnel"
