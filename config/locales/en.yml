@@ -11,6 +11,7 @@ en:
   activerecord:
     models:
       mission: "Mission"
+      mission_group: "Mission Group"
     attributes:
       character:
         level: "Level"

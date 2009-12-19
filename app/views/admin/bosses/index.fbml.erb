@@ -1,0 +1,33 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_boss_path) %>
+</div>
+
+<% if @bosses.any? %>
+  <table id="boss_list" cellspacing="0">
+    <tr>
+      <th><%= Boss.human_attribute_name("name") %></th>
+      <th><%= MissionGroup.human_name %></th>
+      <th><%= Boss.human_attribute_name("requirements") %></th>
+      <th><%= Boss.human_attribute_name("payouts") %></th>
+    </tr>
+    <% @bosses.each do |boss| %>
+      <tr>
+        <td class="name"><%= link_to(boss.name, edit_admin_boss_path(boss)) %></td>
+        <td class="mission_group"><%= boss.mission_group.name %></td>
+        <td class="requirements"><%= admin_requirements_preview(boss.requirements) %></td>
+        <td class="payouts"><%= admin_payouts_preview(boss.payouts) %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_boss_path(boss)) %>
+          <%= link_to(t(".controls.delete"), admin_boss_path(boss),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

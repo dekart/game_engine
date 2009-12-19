@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :items
     admin.resources :mission_groups
     admin.resources :missions, :collection => {:balance => :any}
+    admin.resources :bosses
     admin.resources :property_types
       
     admin.resources :payouts,       :only => [:new]

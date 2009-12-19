@@ -1,0 +1,25 @@
+<%= form.select :mission_group_id, MissionGroup.to_dropdown, :required => true %>
+
+<%= form.text_field :name, :required => true, :size => 50 %>
+<%= form.text_area :description, :cols => 80, :rows => 5 %>
+
+<%= form.file_field :image,
+      :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
+
+<%= form.text_field :health, :required => true, :size => 6, :autocomplete => :off %>
+
+<div class="serializable" id="requirement_list">
+  <h2><%= Boss.human_attribute_name("requirements") %></h2>
+
+  <%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>
+
+  <%= render :partial => "admin/requirements/collection", :locals => {:form => form} %>
+</div>
+
+<div class="serializable" id="payout_list">
+  <h2><%= Boss.human_attribute_name("payouts") %></h2>
+
+  <%= form.text_field :experience, :required => true, :size => 6, :autocomplete => :off %>
+
+  <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
+</div>

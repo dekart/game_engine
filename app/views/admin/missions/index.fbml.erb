@@ -32,9 +32,7 @@
           <%= number_to_currency(mission.money_min) %> - <%= number_to_currency(mission.money_max) %>
         </td>
         <td class="requirements">
-          <% mission.requirements.each do |requirement| %>
-            <%= render :partial => "admin/requirements/preview/#{requirement.name}", :locals => {:requirement => requirement} %>
-          <% end %>
+          <%= admin_requirements_preview(mission.requirements) %>
         </td>
         <td class="payouts">
           <% if mission.allow_loot? %>
@@ -48,9 +46,7 @@
             </div>
           <% end %>
 
-          <% mission.payouts.each do |payout| %>
-            <%= render :partial => "admin/payouts/preview/#{payout.name}", :locals => {:payout => payout} %>
-          <% end %>
+          <%= admin_payouts_preview(mission.payouts) %>
         </td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_mission_path(mission)) %>

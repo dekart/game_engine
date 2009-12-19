@@ -7,6 +7,7 @@ en:
         items: "Items"
         mission_groups: "Mission Groups"
         missions: "Missions"
+        bosses: "Bosses"
         property_types: "Property Types"
         statistics: "Statistics"
         newsletter: "Newsletter"
@@ -93,6 +94,21 @@ en:
         submit: "Update"
       balance:
         title: "Mission Balance"
+    bosses:
+      index:
+        title: "Bosses"
+        empty_set: "No bosses"
+        controls:
+          new: "Add Boss"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure? Boss fight results will be also removed from all users!"
+      new:
+        title: "New Boss"
+        submit: "Create"
+      edit:
+        title: "Edit Boss"
+        submit: "Update"
     newsletters:
       index:
         title: "Newsletters"
