@@ -13,7 +13,7 @@ class PromotionsController < ApplicationController
         flash[:notice] = t("promotions.show.already_used")
       end
       
-      redirect_to landing_url
+      redirect_to landing_path
     end
   end
 end
