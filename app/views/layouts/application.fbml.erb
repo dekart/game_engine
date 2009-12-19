@@ -33,7 +33,7 @@
 
     <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
 
-    <%= render "tutorials/block" unless current_user.skip_tutorial? %>
+    <%= render "tutorials/block" if current_user.show_tutorial? %>
 
     <%= yield %>
   </div>
