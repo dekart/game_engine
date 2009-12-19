@@ -32,7 +32,7 @@ module FacebookMoney
           :src          => "http://super.kitnmedia.com/super/offers?h=#{ FacebookMoney.config["key"] }",
           :frameborder  => 0,
           :width        => 728,
-          :height       => 2200,
+          :height       => 2700,
           :scrolling    => :no
         }
 
