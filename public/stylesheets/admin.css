@@ -39,13 +39,13 @@ form .label, form .required {display:inline}
 .controls {padding: 5px;}
   .controls a {line-height: 25px; margin-bottom: 5px; padding: 3px; border: 1px solid #3B5998; white-space:nowrap;}
 
-.serializable {margin: 0 0 15px 15px;}
-  .serializable .controls {margin: 10px 0;}
+.serializable {margin: 20px 0;}
+  .serializable .controls {margin: 10px 0; padding: 0;}
   .serializable .controls a {margin: 5px 0px;}
 
-.serializable_item {margin-bottom: 5px; padding-bottom: 5px; border-bottom: 1px solid #e0e0e0;}
-  .serializable_item label {display:block;}
-  .serializable_item .remove {float: right}
+.serializable_item {margin: 5px 0px; padding: 5px; border: 1px solid #e0e0e0;}
+  .serializable_item h4 {font-size: 15px; margin-bottom: 5px;}
+  .serializable_item .remove {float: right;}
 
 #mission_list {width: 100%;}
   #mission_list .name {font-weight:bold;}

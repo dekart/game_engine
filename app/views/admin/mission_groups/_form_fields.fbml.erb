@@ -1,21 +1,13 @@
-<table id="mission_group_fields">
-  <tr>
-    <td>
-      <%= form.text_field :name, :required => true %>
+<%= form.text_field :name, :required => true %>
 
-      <%= form.text_field :level, :size => 6, :required => true, :autocomplete => :off %>
+<%= form.text_field :level, :size => 6, :required => true, :autocomplete => :off %>
 
-      <%= form.text_field :title %>
-      
-      <%= form.file_field :image,
-            :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image.url) : "") %>
-    </td>
-    <td>
-      <div class="serializable" id="payout_list">
-        <h2><%= MissionGroup.human_attribute_name("payouts") %></h2>
+<%= form.file_field :image, :after_field => (image_tag(form.object.image.url) if form.object.image?) %>
 
-        <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
-      </div>
-    </td>
-  </tr>
-</table>
+<div class="serializable" id="payout_list">
+  <h2><%= MissionGroup.human_attribute_name("payouts") %></h2>
+
+  <%= form.text_field :title %>
+
+  <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
+</div>

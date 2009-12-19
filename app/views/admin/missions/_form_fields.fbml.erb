@@ -1,44 +1,40 @@
-<table id="mission_fields">
-  <tr>
-    <td>
-      <%= form.select :mission_group_id, MissionGroup.to_dropdown, :required => true %>
-      <%= form.select :parent_mission_id, Mission.all.to_dropdown, :include_blank => true %>
-      <%= form.text_field :name, :required => true %>
-      <%= form.text_area :description %>
+<%= form.select :mission_group_id, MissionGroup.to_dropdown, :required => true %>
 
-      <%= form.text_area :success_text, :required => true, :rows => 5 %>
-      <%= form.text_area :failure_text, :required => true, :rows => 5 %>
-      <%= form.text_area :complete_text, :required => true, :rows => 5 %>
-      <%= form.text_field :title %>
-      
-      <%= form.file_field :image,
-            :after_field => (form.object.image? ? content_tag(:div, "Current Image:") + image_tag(form.object.image(:small)) : "") %>
+<%= form.select :parent_mission_id, Mission.all.to_dropdown, :include_blank => true %>
 
-      <%= form.text_field :win_amount, :required => true, :size => 6, :autocomplete => :off %>
-      <%= form.text_field :success_chance, :required => true, :size => 6, :autocomplete => :off %>
-      <%= form.check_box :repeatable %>
+<%= form.text_field :name, :required => true, :size => 50 %>
+<%= form.text_area :description, :cols => 80, :rows => 5 %>
 
-      <%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>
-      <%= form.text_field :experience, :required => true, :size => 6, :autocomplete => :off %>
-      <%= form.text_field :money_min, :required => true, :size => 6, :autocomplete => :off %>
-      <%= form.text_field :money_max, :required => true, :size => 6, :autocomplete => :off %>
-    </td>
-    <td>
-      <div class="serializable" id="requirement_list">
-        <h2><%= Mission.human_attribute_name("requirements") %></h2>
+<%= form.text_area :success_text, :required => true, :cols => 80, :rows => 3 %>
+<%= form.text_area :failure_text, :required => true, :cols => 80, :rows => 3 %>
+<%= form.text_area :complete_text, :required => true, :cols => 80, :rows => 3 %>
 
-        <%= render :partial => "admin/requirements/collection", :locals => {:form => form} %>
-      </div>
+<%= form.file_field :image, :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
 
-      <div class="serializable" id="payout_list">
-        <h2><%= Mission.human_attribute_name("payouts") %></h2>
+<%= form.text_field :win_amount, :required => true, :size => 6, :autocomplete => :off %>
+<%= form.text_field :success_chance, :required => true, :size => 6, :autocomplete => :off %>
+<%= form.check_box :repeatable %>
 
-        <%= form.check_box :allow_loot %>
-        <%= form.text_field :loot_chance, :size => 6, :autocomplete => :off %>
-        <%= form.grouped_select :loot_item_ids, Item.to_grouped_dropdown, {}, {:multiple => true} %>
-        
-        <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
-      </div>
-    </td>
-  </tr>
-</table>
+<div class="serializable" id="requirement_list">
+  <h2><%= Mission.human_attribute_name("requirements") %></h2>
+
+  <%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>
+
+  <%= render :partial => "admin/requirements/collection", :locals => {:form => form} %>
+</div>
+
+<div class="serializable" id="payout_list">
+  <h2><%= Mission.human_attribute_name("payouts") %></h2>
+
+  <%= form.text_field :experience, :required => true, :size => 6, :autocomplete => :off %>
+  <%= form.text_field :money_min, :required => true, :size => 6, :autocomplete => :off %>
+  <%= form.text_field :money_max, :required => true, :size => 6, :autocomplete => :off %>
+
+  <%= form.text_field :title %>
+
+  <%= form.check_box :allow_loot %>
+  <%= form.text_field :loot_chance, :size => 6, :autocomplete => :off %>
+  <%= form.grouped_select :loot_item_ids, Item.to_grouped_dropdown, {}, {:multiple => true} %>
+
+  <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
+</div>

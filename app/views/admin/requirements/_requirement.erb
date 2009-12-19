@@ -8,7 +8,7 @@
           :class => :remove
         ) %>
 
-    <h3><%= t("requirements.#{requirement.name}.name") %></h3>
+    <h4><%= t("requirements.#{requirement.name}.name") %></h4>
 
     <% fields_for "#{container}[requirements][requirement_#{requirement.object_id}]", requirement do |form| %>
       <%= form.fields "admin/requirements/form_fields/#{requirement.name}" %>
