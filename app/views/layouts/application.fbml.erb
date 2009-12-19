@@ -23,6 +23,8 @@
       <%= render(:partial => "layouts/tip") if current_user.show_tips? %>
     </div>
 
+    <%= render "tutorials/block" unless current_user.skip_tutorial? %>
+
     <% flash_block do |message| %>
       <%= fb_i(message) %>
     <% end %>
