@@ -1,6 +1,12 @@
 class TutorialsController < ApplicationController
   helper_method :tutorial?
 
+  def show
+    @current_step = params[:id]
+    
+    render :partial => "tutorials/block", :layout => false
+  end
+  
   def step_1
     if @mission_group = MissionGroup.first(:order => :level)
       @missions = @mission_group.missions.all(:limit => 1)

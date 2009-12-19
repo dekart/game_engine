@@ -1,7 +1,13 @@
 module TutorialsHelper
-  def tutorial_step(controller, action, completed)
-    current = (controller_name == controller && action_name == action)
+  def tutorial_step(controller, action)
+    current = (controller_name == controller && action_name == action) || (@current_step == "#{controller}-#{action}")
     
-    yield(current, completed)
+    reload_function = remote_function(
+      :url    => tutorial_url("#{controller}-#{action}", :canvas => false),
+      :method => :get,
+      :update => :tutorial_container
+    )
+    
+    yield(current, reload_function)
   end
 end

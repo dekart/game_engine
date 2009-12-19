@@ -592,6 +592,7 @@ en:
     block:
       title: "Game Tutorial"
       completed: "Completed!"
+      continue: "Continue &raquo;"
       step_1:
         title: "Step 1: Your First Mission"
         text: "The best way to become strong and famous is to fulfill missions. Take a look at the mission below. It's very simple and you'll be able to complete it easily. Do it!"

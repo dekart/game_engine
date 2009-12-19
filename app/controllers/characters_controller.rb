@@ -7,7 +7,7 @@ class CharactersController < ApplicationController
     :only => [:new]
 
   def index
-    if landing_path != characters_path
+    if landing_path != root_path
       redirect_to landing_path
     else
       @latest_fights = Fight.with_participant(current_character).find(:all, 

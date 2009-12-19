@@ -1,0 +1,109 @@
+<% completed_mark = capture do %>
+  <span class="complete_mark"><%= t(".completed") %></span>
+<% end %>
+
+<div id="tutorial_container">
+  <div id="tutorial" class="block">
+    <%= hide_block_link(:tutorial) %>
+
+    <h2><%= fb_i(t(".title")) %></h2>
+
+    <ul>
+      <% tutorial_step("missions", "index") do |current, reload_tutorial| %>
+        <li class="step <%= "current" if current %> <%= "completed" if current_character.missions_completed != 0 %>">
+          <% if current %>
+            <strong><%= t(".step_1.title") %> <%= completed_mark %></strong>
+
+            <p><%= t(".step_1.text") %></p>
+
+            <%= link_to(t(".continue"), items_path, :class => "button continue") %>
+
+            <% content_for :script do %>
+              Mission.onComplete = function(){
+                <%= reload_tutorial %>
+              }
+            <% end %>
+          <% else %>
+            <%= link_to(t(".step_1.title"), missions_path) %> <%= completed_mark %>
+          <% end %>
+        </li>
+      <% end %>
+
+      <% tutorial_step("items", "index") do |current, reload_tutorial| %>
+        <li class="step <%= "current" if current %> <%= "completed" if current_character.inventories.count != 0 %>">
+          <% if current %>
+            <strong><%= t(".step_2.title") %> <%= completed_mark %></strong>
+
+            <p><%= t(".step_2.text") %></p>
+
+            <%= link_to(t(".continue"), new_fight_path, :class => "button continue") %>
+
+            <% content_for :script do %>
+              Inventory.onPurchase = function(){
+                <%= reload_tutorial %>
+              }
+            <% end %>
+          <% else %>
+            <%= link_to(t(".step_2.title"), items_path) %> <%= completed_mark %>
+          <% end %>
+        </li>
+      <% end %>
+
+      <% tutorial_step("fights", "new") do |current, reload_tutorial| %>
+        <li class="step <%= "current" if current %> <%= "completed" if current_character.level != 1 %>">
+          <% if current %>
+            <strong><%= t(".step_3.title") %> <%= completed_mark %></strong>
+
+            <p><%= t(".step_3.text") %></p>
+
+            <%= link_to(t(".continue"), upgrade_character_path(:current), :class => "button continue") %>
+
+            <% content_for :script do %>
+              Character.onNewLevel = function(){
+                <%= reload_tutorial %>
+              }
+            <% end %>
+          <% else %>
+            <%= link_to(t(".step_3.title"), new_fight_path) %> <%= completed_mark %>
+          <% end %>
+        </li>
+      <% end %>
+        
+      <% tutorial_step("characters", "upgrade") do |current, reload_tutorial| %>
+        <li class="step <%= "current" if current %> <%= "completed" if current_character.level != 1 && current_character.points == 0 %>">
+          <% if current %>
+            <strong><%= t(".step_4.title") %> <%= completed_mark %></strong>
+
+            <p><%= t(".step_4.text") %></p>
+
+            <%= link_to(t(".continue"), invite_users_path, :class => "button continue") %>
+            
+            <% content_for :script do %>
+              Character.onUpgradeCompleteWithoutTutorial = Character.onUpgradeComplete;
+
+              Character.onUpgradeComplete = function(){
+                <%= reload_tutorial %>
+              
+                Character.onUpgradeCompleteWithoutTutorial();
+              }
+            <% end %>
+          <% else %>
+            <%= link_to(t(".step_4.title"), upgrade_character_path(:current)) %> <%= completed_mark %>
+          <% end %>
+        </li>
+      <% end %>
+
+      <% tutorial_step("users", "invite") do |current, reload_tutorial| %>
+        <li class="step <%= "current" if current %> <%= "completed" if current_user.invitations.count != 0 %>">
+          <% if current %>
+            <strong><%= t(".step_5.title") %> <%= completed_mark %></strong>
+
+            <p><%= t(".step_5.text") %></p>
+          <% else %>
+            <%= link_to(t(".step_5.title"), invite_users_path) %> <%= completed_mark %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

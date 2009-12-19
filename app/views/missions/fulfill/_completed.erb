@@ -58,3 +58,9 @@
     }
   <% end %>
 <% end %>
+
+<% if result.rank.just_completed? %>
+  <% content_for :script do %>
+    Mission.onComplete();
+  <% end %>
+<% end %>

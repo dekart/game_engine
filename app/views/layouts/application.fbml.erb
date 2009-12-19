@@ -23,8 +23,6 @@
       <%= render(:partial => "layouts/tip") if current_user.show_tips? %>
     </div>
 
-    <%= render "tutorials/block" unless current_user.skip_tutorial? %>
-
     <% flash_block do |message| %>
       <%= fb_i(message) %>
     <% end %>
@@ -35,8 +33,12 @@
 
     <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
 
+    <%= render "tutorials/block" unless current_user.skip_tutorial? %>
+
     <%= yield %>
   </div>
 
+  <script><%= yield :script %></script>
+  
   <%= fb_google_analytics(Configuration[:app_google_analytics_id]) unless Configuration[:app_google_analytics_id].blank? %>
 </fb:fbml>

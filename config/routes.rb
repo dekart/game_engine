@@ -29,9 +29,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => "characters", :action => "index"
 
-  map.resource :tutorial, :member => {
-    :skip => :any
-  }
+  map.resources :tutorials#, :only => :show
 
   map.resources(:users,
     :collection => { :invite => :any },
