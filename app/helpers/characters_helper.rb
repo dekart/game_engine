@@ -8,7 +8,7 @@ module CharactersHelper
   def character_picture(character_or_user, options = {})
     character = character_for(character_or_user)
 
-    fb_profile_pic(character.user, {:linked => false}.merge(options))
+    fb_profile_pic(character.user, {:linked => false, :size => :square}.merge(options))
   end
 
   def character_name_link(character_or_user, link_options = {}, name_options = {})
