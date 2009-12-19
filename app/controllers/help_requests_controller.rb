@@ -19,7 +19,7 @@ class HelpRequestsController < ApplicationController
         @fight = @help_result.fight if @help_request.context.is_a?(Fight) and !@help_result.new_record?
       end
     else
-      redirect_to root_path
+      redirect_to landing_path
     end
   end
 end

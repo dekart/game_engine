@@ -19,7 +19,9 @@
         <% end %>
       </div>
 
-      <script>Timer.start('<%= dom_id(item, :timer) %>', <%= item.time_left %>)</script>
+      <% content_for :script do %> 
+        Timer.start('<%= dom_id(item, :timer) %>', <%= item.time_left %>)
+      <% end %>
     <% end %>
   </td>
   <td class="details">

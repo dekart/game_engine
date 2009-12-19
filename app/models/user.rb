@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
 
   after_create :setup_profile!, :update_profile!, :deliver_welcome_message!
 
-  def skip_tutorial?
-    !(Configuration[:user_tutorial_enabled] and !self[:skip_tutorial])
+  def show_tutorial?
+    Configuration[:user_tutorial_enabled] && self[:show_tutorial]
   end
 
   def setup_profile!

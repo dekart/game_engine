@@ -49,7 +49,7 @@ class UsersController < ApplicationController
         end
       end
     elsif params[:from_selector]
-      redirect_to root_path
+      redirect_to landing_path
     else
       current_user.invite_page_visited!
     end

@@ -287,9 +287,13 @@ form .error {color: red; padding: 3px 0px;}
 #rank_list .rank {padding: 3px 25px; background: url(asset:icons_level) 3px center no-repeat;}
 
 /* Tutorial block */
-#tutorial {font-size: 15px;}
-  #tutorial .button {text-align: center; width: 100px; margin: 10px; padding-left: 5px;}
-#skip_tutorial {margin-top: 15px; text-align:right;}
+#tutorial {border: 2px solid #BDC7D8; padding: 10px;}
+  #tutorial .step {margin-bottom: 5px;}
+  #tutorial .current {font-size: 15px;}
+  #tutorial .complete_mark {color: green; vertical-align: super; font-size: 10px; display:none;}
+  #tutorial .button {text-align: center; width: 100px; margin: 10px; padding-left: 5px; display:none;}
+  #tutorial .completed .complete_mark {display: inline;}
+  #tutorial .completed .button {display: block;}
 
 /* AJAX request results block*/
 #result {font-size: 13px;margin:10px 0;border: 2px solid #3B5998; padding: 10px 0 20px 0;}

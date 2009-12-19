@@ -6,8 +6,11 @@
   <%= editable_stylesheet_link %>
 
   <% if Rails.env.development? %>
-    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %></script>
-    <script><%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %></script>
+    <script>
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %>
+
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %>
+    </script>
   <% else %>
     <%= javascript_include_tag "facebooker", "application" %>
   <% end %>
@@ -33,8 +36,12 @@
 
     <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
 
+    <%= render "tutorials/block" if current_user.show_tutorial? %>
+
     <%= yield %>
   </div>
 
+  <script><%= yield :script %></script>
+  
   <%= fb_google_analytics(Configuration[:app_google_analytics_id]) unless Configuration[:app_google_analytics_id].blank? %>
 </fb:fbml>

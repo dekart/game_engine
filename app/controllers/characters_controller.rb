@@ -7,12 +7,8 @@ class CharactersController < ApplicationController
     :only => [:new]
 
   def index
-    if !current_user.skip_tutorial?
-      redirect_to tutorial_path
-    elsif current_user.should_visit_gift_page?
-      redirect_to new_gift_path
-    elsif current_user.should_visit_invite_page?
-      redirect_to invite_users_path
+    if landing_path != root_path
+      redirect_to landing_path
     else
       @latest_fights = Fight.with_participant(current_character).find(:all, 
         :limit => Configuration[:fight_latest_show_limit]
@@ -57,7 +53,7 @@ class CharactersController < ApplicationController
 
   def new
     if current_character
-      redirect_to root_url
+      redirect_to landing_path
     else
       @character = Character.new
     end
@@ -70,7 +66,7 @@ class CharactersController < ApplicationController
       @character = current_user.build_character(params[:character])
 
       if @character.save
-        redirect_to root_path
+        redirect_to landing_path
       else
         render :action => :new
       end
@@ -87,7 +83,7 @@ class CharactersController < ApplicationController
     @character = current_character
 
     if @character.update_attributes(params[:character])
-      redirect_to root_path
+      redirect_to landing_path
     else
       render :action => :edit
     end

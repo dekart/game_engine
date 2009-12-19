@@ -29,13 +29,13 @@
     <td class="level">
       <b><%= fb_i(Character.human_attribute_name("level")) %></b>
       <span id="co_points" style="display:none;">
-        (<%= link_to("", upgrade_character_path(current_character), :id => :co_point_link) %>)
+        (<%= link_to("", upgrade_character_path(:current), :id => :co_point_link) %>)
       </span>
       <div id="co_level" class="value"></div>
     </td>
   </tr>
 </table>
 
-<script type="text/javascript">
+<% content_for :script do %>
   Character.update(<%= raw current_character.to_json_for_overview %>);
-</script>
+<% end %>

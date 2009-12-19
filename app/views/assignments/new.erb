@@ -43,7 +43,7 @@
 
 <fb:js-string var="dialog_title"><%= fb_i(t(".title")) %></fb:js-string>
 
-<script>
+<% content_for :script do %>
   function setAssignmentRelation(id){
     if($('new_assignment').selectedRelation){
       $('new_assignment').selectedRelation.removeClassName('selected');
@@ -73,4 +73,4 @@
   };
   dialog.showChoice(dialog_title, dialog_content);
   toggleAssignedTabTo('not_assigned');
-</script>
+<% end %>

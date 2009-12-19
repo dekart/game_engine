@@ -6,7 +6,8 @@
             :locals   => {
               :mission  => @mission,
               :result   => @result,
-              :missions => @missions}
+              :missions => @missions
+            }
           ) %>
     <% elsif @result.success %>
       <%= render :partial => "missions/fulfill/success", :locals => {:mission => @mission, :result => @result} %>
@@ -60,9 +61,5 @@
 <%= character_level_up_block %>
 
 <% content_for :script do %>
-  <% if @result.rank.just_completed? %>
-    Mission.onComplete();
-  <% end %>
-
   $('result').show();
 <% end %>
