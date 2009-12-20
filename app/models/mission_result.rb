@@ -42,7 +42,6 @@ class MissionResult
           if @rank.just_completed?
             @character.missions_completed += 1
             @character.points += 1
-            @character.vip_money += 1
 
             if @character.mission_groups.completed?(@group)
               @group_rank = @character.mission_group_ranks.create(
