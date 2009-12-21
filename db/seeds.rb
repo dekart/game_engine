@@ -30,6 +30,7 @@ healing = potions.items.create!(
   :basic_price  => 100,
   :usable       => true,
   :usage_limit  => 1,
+  :image        => File.open(Rails.root.join("db", "pictures", "potion_of_healing.jpg")),
   :effects      => Effects::Collection.new(
     Effects::RestoreHealth.new(50)
   )
