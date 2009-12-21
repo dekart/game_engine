@@ -1,12 +1,4 @@
 class MissionsController < ApplicationController
-  def index
-    @current_mission_group = current_character.mission_groups.current(params[:mission_group_id])
-    
-    @mission_groups = current_character.mission_groups.current_page
-    
-    @missions = @current_mission_group.missions
-  end
-
   def fulfill
     @mission = Mission.find(params[:id])
 

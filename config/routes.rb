@@ -48,10 +48,8 @@ ActionController::Routing::Routes.draw do |map|
     character.resources :assignments, :shallow => true
   end
 
-  map.resources :mission_groups, :shallow => true do |group|
-    group.resources :missions, :only => :index
-  end
-  map.resources :missions, :member => {:fulfill => :post}
+  map.resources :missions, :only => [:fulfill], :member => {:fulfill => :post}
+  map.resources :mission_groups, :only => [:index, :show]
   
   map.resources :items
   map.resources :item_groups do |group|

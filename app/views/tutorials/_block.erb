@@ -9,7 +9,7 @@
     <h2><%= fb_i(t(".title")) %></h2>
 
     <ul>
-      <% tutorial_step("missions", "index") do |current, reload_tutorial| %>
+      <% tutorial_step("mission_groups", "index") do |current, reload_tutorial| %>
         <li class="step <%= "current" if current %> <%= "completed" if current_character.missions_completed != 0 %>">
           <% if current %>
             <strong><%= t(".step_1.title") %> <%= completed_mark %></strong>
@@ -24,7 +24,7 @@
               }
             <% end %>
           <% else %>
-            <%= link_to(t(".step_1.title"), missions_path) %> <%= completed_mark %>
+            <%= link_to(t(".step_1.title"), mission_groups_path) %> <%= completed_mark %>
           <% end %>
         </li>
       <% end %>
