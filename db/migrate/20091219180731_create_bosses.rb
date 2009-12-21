@@ -7,10 +7,12 @@ class CreateBosses < ActiveRecord::Migration
       t.text    :description
 
       t.integer :health
+      t.integer :attack
+      t.integer :defence
 
       t.integer :ep_cost
       t.integer :experience
-      
+
       t.text    :requirements
       t.text    :payouts
 

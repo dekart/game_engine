@@ -9,6 +9,9 @@
     <tr>
       <th><%= Boss.human_attribute_name("name") %></th>
       <th><%= MissionGroup.human_name %></th>
+      <th><%= Boss.human_attribute_name("health") %></th>
+      <th><%= Boss.human_attribute_name("attack") %></th>
+      <th><%= Boss.human_attribute_name("defence") %></th>
       <th><%= Boss.human_attribute_name("requirements") %></th>
       <th><%= Boss.human_attribute_name("payouts") %></th>
     </tr>
@@ -16,6 +19,9 @@
       <tr>
         <td class="name"><%= link_to(boss.name, edit_admin_boss_path(boss)) %></td>
         <td class="mission_group"><%= boss.mission_group.name %></td>
+        <td class="health"><%= boss.health %></td>
+        <td class="attack"><%= boss.attack %></td>
+        <td class="defence"><%= boss.defence %></td>
         <td class="requirements"><%= admin_requirements_preview(boss.requirements) %></td>
         <td class="payouts"><%= admin_payouts_preview(boss.payouts) %></td>
         <td class="controls">

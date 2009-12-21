@@ -7,6 +7,8 @@
       :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
 
 <%= form.text_field :health, :required => true, :size => 6, :autocomplete => :off %>
+<%= form.text_field :attack, :required => true, :size => 6, :autocomplete => :off %>
+<%= form.text_field :defence, :required => true, :size => 6, :autocomplete => :off %>
 
 <div class="serializable" id="requirement_list">
   <h2><%= Boss.human_attribute_name("requirements") %></h2>

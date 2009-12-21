@@ -8,7 +8,7 @@ class Admin::BossesController < ApplicationController
   end
 
   def new
-    redirect_to new_admin_boss_group_path if bossGroup.count == 0
+    redirect_to new_admin_boss_group_path if MissionGroup.count == 0
     
     @boss = Boss.new
 
