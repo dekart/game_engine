@@ -35,6 +35,18 @@ healing = potions.items.create!(
   )
 )
 
+upgrade = potions.items.create!(
+  :name         => "Potion of Upgrade",
+  :level        => 2,
+  :basic_price  => 50,
+  :vip_price    => 5,
+  :usable       => true,
+  :usage_limit  => 1,
+  :effects      => Effects::Collection.new(
+    Effects::Upgrade.new(5)
+  )
+)
+
 tutorial = MissionGroup.create!(:name => "Tutorial", :level => 1)
 
 tutorial.missions.create!(
@@ -124,6 +136,103 @@ adventurer.missions.create!(
   :money_max      => 35,
   :title          => "Policeman"
 )
+
+adventurer.missions.create!(
+  :name           => "Pixies",
+  :description    => "Pixies are not dangerous for humans, but nevertheless they are quite irritating – stealing minor things, food and sometimes, just for a joke, they would steal babies, which frightens the city inhabitants. Participation in the annual pixie hunt is a good opportunity for newbies.",
+  :success_text   => "You have managed to catch a pixie! But there are still plenty of these guys on the roofs.",
+  :failure_text   => "Pixie appeared to be more nimble than you thought him to be, it has just slipped from your hands.",
+  :complete_text  => "You have caught the last pixie! Even if some of these guys are left in the town, they hide pretty well.",
+  :win_amount     => 15,
+  :success_chance => 60,
+  :repeatable     => true,
+  :ep_cost        => 2,
+  :experience     => 2,
+  :money_min      => 15,
+  :money_max      => 25,
+  :title          => "Pixie Catcher",
+  :payouts        => Payouts::Collection.new(
+    Payouts::Item.new(:value => upgrade.id)
+  )
+)
+
+recruit = MissionGroup.create!(:name => "Recruit", :level => 5)
+
+recruit.missions.create!(
+  :name           => "Martial Tulnees",
+  :description    => "Tulnees tribe began to suppress the farmers of Gald vale, robbing their livestock and attacking the outward farms. You need to visit nearby villages and find the owners of the surrounding lands.",
+  :success_text   => "You visited one of Tulnees settlement and fought the strongest hunter. The tribe will not recover for a long while.",
+  :failure_text   => "You came to a settlement and barely escaped from there. The savages appeared to be quite an army.",
+  :complete_text  => "You came to the largest tribe settlement. The tribe leader having heard about your deeds, invited you to his hut. In the following conversation you got his promise not to attack the farmers.",
+  :win_amount     => 15,
+  :success_chance => 70,
+  :ep_cost        => 5,
+  :experience     => 5,
+  :money_min      => 35,
+  :money_max      => 60,
+  :title          => "Great Hunter"
+)
+
+recruit.missions.create!(
+  :name           => "Swamp Dragonflies",
+  :description    => "Amazing, sometimes frightening and dangerous creatures are constantly breeding in the old gloomy swamp near the Gold river rise. This year a pack of giant dragonflies flew out of it. The insects tend to bite everyone they see, so it is better to kill them.",
+  :success_text   => "You have killed a giant dragonfly! The more monsters you destroy, the better for local people it will be.",
+  :failure_text   => "A huge dragonfly almost bit off your head! How could you suppose that you are strong enough to deal with the creature?",
+  :complete_text  => "You have killed all giant dragonflies! Now everybody can admire the views in safety.",
+  :win_amount     => 5,
+  :success_chance => 60,
+  :ep_cost        => 6,
+  :experience     => 8,
+  :money_min      => 40,
+  :money_max      => 70,
+  :title          => "Dragonfly Hunter"
+)
+
+recruit.missions.create!(
+  :name           => "Wild Centaurs",
+  :description    => "Centaurs, half-wild creatures with cannibalistic habits, attack travelers and small villages around Eastern wasteland. Your task is to provide caravans’ passage alone these lands.",
+  :success_text   => "You have killed a fierce centaur! It was not a piece of cake, but you have won.",
+  :failure_text   => "You came across a centaur which is too strong for you. Now you're better find another opponent.",
+  :complete_text  => "You wiped the centaurs off the area! Now caravans may travel safely.",
+  :win_amount     => 12,
+  :success_chance => 60,
+  :ep_cost        => 8,
+  :experience     => 12,
+  :money_min      => 50,
+  :money_max      => 100,
+  :title          => "Centaur Killer"
+)
+
+recruit.missions.create!(
+  :name           => "Goblins’ Caves",
+  :description    => "Goblins, settled in Ifen mountains, often steal people and make them work in emerald mines. Regular army sometimes checks several caves, but they cannot embrace all settlements. You need to check the caves where patrols did not get.",
+  :success_text   => "You have visited a goblins’ cave and found several men there. You managed to free them.",
+  :failure_text   => "The very moment you have entered a settlement, someone attempted to kill you. They were stronger and you had to retreat.",
+  :complete_text  => "You have checked through all the settlements marked on the map. Well done!",
+  :win_amount     => 15,
+  :success_chance => 70,
+  :ep_cost        => 4,
+  :experience     => 4,
+  :money_min      => 25,
+  :money_max      => 45,
+  :title          => "Goblin Suppressor"
+)
+
+recruit.missions.create!(
+  :name           => "Baron Vagra’s Ring",
+  :description    => "Baron Vagra, being young and flippant, played away his family ring to centurion. Now baron is old and to legally form his will and leave heritage to his son, he needs to stamp the document with the family insignia. Find the ring and give it back to baron.",
+  :success_text   => "You got on the trail of an old soldier in a village, but unfortunately the man you are seeking had moved long ago. You’ve got to continue your search.",
+  :failure_text   => "Someone told you about a man looking like the one you lok for. But you’ve met him and he is not the one you need.",
+  :complete_text  => "You asked about an old soldier and people showed you a road to a farm where an old man lived. You met a lame old man there. At first he didn’t understand your question, but then he remembered the ring, brought it out and gave it to you, asking only to tell some words to baron. But when you delivered the ring to baron, you didn’t dare to tell him these words. ",
+  :win_amount     => 12,
+  :success_chance => 75,
+  :ep_cost        => 4,
+  :experience     => 3,
+  :money_min      => 20,
+  :money_max      => 65,
+  :title          => "Baron Assistant"
+)
+
 
 mill = PropertyType.create!(
   :name         => "Windmill",
