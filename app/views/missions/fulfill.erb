@@ -28,13 +28,11 @@
       <% end %>
     </p>
   <% elsif !@result.requirements_satisfied? %>
-    <p>
-      <%= fb_i(t(".requirements_not_satisfied.message")) %>
+    <p><%= fb_i(t(".requirements_not_satisfied.message")) %></p>
 
-      <div class="requirements clearfix">
-        <%= mission_requirements(@mission, :unsatisfied) %>
-      </div>
-    </p>
+    <div class="requirements clearfix">
+      <%= mission_requirements(@mission, :unsatisfied) %>
+    </div>
   <% elsif @result.rank.completed? %>
     <p><%= fb_i(t(".already_completed.message")) %></p>
   <% end %>

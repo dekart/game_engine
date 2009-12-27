@@ -6,6 +6,8 @@ module ItemsHelper
         fb_ta(:alt, fb_i(item.name)) + 
         fb_ta(:title, fb_i(item.name))
       )
+    else
+      fb_i(item.name)
     end
   end
 end

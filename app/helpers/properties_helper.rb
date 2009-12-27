@@ -22,6 +22,8 @@ module PropertiesHelper
         fb_ta(:alt, fb_i(property.name)) +
         fb_ta(:title, fb_i(property.name))
       )
+    else
+      fb_i(property.name)
     end
   end
 end
