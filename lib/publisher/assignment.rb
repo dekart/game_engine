@@ -12,7 +12,7 @@ module Publisher
       recipients assignment.relation.target_character.user
       from user
       fbml fb_i(
-        I18n.t("stories.assignment.notification.text",
+        I18n.t("notifications.assignment.text",
           :pronoun  => fb_pronoun(user, :possessive => true, :useyou => false)
         ) +
         fb_it(:title, content_tag(:b, fb_i(I18n.t("assignments.roles.#{assignment.role}.title")))) +
@@ -20,7 +20,7 @@ module Publisher
         fb_it(:link,
           link_to(
             fb_i(
-              I18n.t("stories.assignment.notification.link",
+              I18n.t("notifications.assignment.link",
                 :user => fb_name(user, :linked => false, :firstnameonly => true, :useyou => false)
               )
             ) + " &raquo;", relations_url

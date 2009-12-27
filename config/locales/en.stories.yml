@@ -22,19 +22,17 @@ en:
       description: "{{app}} is a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of the fantasy world!"
     inventory:
       title: "{*actor*} just bought the {{item}} in {{app}}!"
-# Old stories
+
+  notifications:
     assignment:
-      notification:
-        text: "promoted you as {{pronoun}} {title} in {app}! {link}"
-        link: "Promote {{user}}"
+      text: "promoted you as {{pronoun}} {title} in {app}! {link}"
+      link: "Promote {{user}}"
     fight:
-      notification:
-        text: "attacked you in {app} and WON! {link}"
-        link: "Fight Back!"
-      invitation:
-        text: "attacked you in {app} and WON! {link}"
-        link: "Fight Back!"
+      text: "attacked you in {app} and WON! {link}"
+      link: "Fight Back!"
+    fight_with_invite:
+      text: "attacked you in {app} and WON! {link}"
+      link: "Fight Back!"
     invitation:
-      notification:
-        text: "joined your Alliance in {app}! {link}"
-        link: "View Alliance"
+      text: "joined your Alliance in {app}! {link}"
+      link: "View Alliance"

@@ -24,19 +24,4 @@ module PropertiesHelper
       )
     end
   end
-
-  def property_stream_dialog(property)
-    show_stream_dialog(
-      :attachment => {
-        :caption => t("stories.property.title", :property => property.name, :app => t("app_name")),
-        :media => property.image? ? [
-          {
-            :type => "image",
-            :src  => image_path(property.image.url),
-            :href => new_property_url
-          }
-        ] : nil
-      }
-    )
-  end
 end

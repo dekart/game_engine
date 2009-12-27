@@ -1,6 +1,8 @@
 <div id="level_up">
   <div class="buttons">
-    <%= link_to(fb_i(t(".buttons.upgrade")), upgrade_character_url(current_character), :class => "upgrade button") %>
+    <%= link_to(fb_i(t(".buttons.upgrade")), upgrade_character_url(current_character), 
+          :class => "upgrade button"
+        ) %>
   </div>
 
   <h2><%= fb_i(t(".title")) %></h2>
@@ -15,9 +17,5 @@
 <% content_for :script do %>
   Character.onNewLevel();
 
-  <%= show_stream_dialog(
-        :attachment => {
-          :caption => t("stories.level_up.title", :level => current_character.level, :app => t("app_name"))
-        }
-      ) %>
+  <%= character_level_up_stream_dialog %>
 <% end %>

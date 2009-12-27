@@ -1,9 +1,6 @@
 <div class="buttons">
-  <%= link_to_stream_dialog(t(".buttons.publish"),
-        :caption => t("stories.fight.title", :level => Fight.last.victim.level, :app => t("app_name")),
-        :html => {
-          :class => "publish button"
-        }
+  <%= link_to_function(t(".buttons.publish"), fight_stream_dialog(fight),
+        :class => "publish button"
       ) %>
   
   <%= help_request_link(fb_i(t(".buttons.request_help")), fight,
