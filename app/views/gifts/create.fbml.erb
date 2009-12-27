@@ -27,21 +27,13 @@
   </div>
 
   <div class="friend_groups">
-    <%= link_to(fb_i(t(".groups.all")), gift_path(@gift, :group => :all),
-          :method => :put,
-          :id => "group_all",
-          :class => (:current if @group == :all)
-        ) %>
-    <%= link_to(fb_i(t(".groups.players", :app => fb_app_name)), gift_path(@gift, :group => :players),
-          :method => :put,
-          :id => "group_players",
-          :class => (:current if @group == :players)
-        ) %>
-    <%= link_to(fb_i(t(".groups.non_players")), gift_path(@gift, :group => :non_players),
-          :method => :put,
-          :id => "group_non_players",
-          :class => (:current if @group == :non_players)
-        ) %>
+    <% %w{all players non_players}.each do |type| %>
+      <%= link_to(fb_i(t(".groups.#{type}", :app => fb_app_name)), gift_path(@gift, :group => type),
+            :method => :put,
+            :id     => "group_#{type}",
+            :class  => (:current if @group == type.to_sym)
+          ) %>
+    <% end %>
   </div>
 
   <div class="invitation_form">
@@ -63,9 +55,7 @@
     <% fb_request_form(nil, :gift_message, confirm_gift_path(@gift)) do %>
       <%= fb_fa(:type, fb_i(t(".request.title"))) %>
 
-      <% fb_custom_multi_friend_selector(
-           :exclude_ids => @exclude_ids.join(",")
-         ) do %>
+      <% fb_custom_multi_friend_selector(:exclude_ids => @exclude_ids.join(",")) do %>
         <%= fb_fa(:actiontext, fb_i(t(".request.note"))) %>
       <% end %>
     <% end %>
