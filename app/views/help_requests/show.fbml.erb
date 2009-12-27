@@ -23,11 +23,11 @@
                 ) %>
           </div>
         </div>
-
-        <%= character_level_up_block %>
       <% elsif @help_request.context.is_a?(Fight) %>
         <%= render :file => "fights/create" %>
       <% end %>
+
+      <%= character_level_up_block %>
     <% else %>
       <div id="help_result">
         <p class="fail"><%= fb_i(@help_result.errors.full_messages.first) %></p>
