@@ -21,7 +21,7 @@ module StylesheetsHelper
             )
           )
         else
-          stylesheet_link_tag("default.css?#{File.mtime(Stylesheet::DEFAULT_PATH).to_i}")
+          stylesheet_link_tag("#{File.basename(Stylesheet::DEFAULT_PATH)}?#{File.mtime(Stylesheet::DEFAULT_PATH).to_i}")
         end
       end
     end
