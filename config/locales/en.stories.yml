@@ -26,13 +26,13 @@ en:
   notifications:
     assignment:
       text: "promoted you as {{pronoun}} {title} in {app}! {link}"
-      link: "Promote {{user}}"
+      link: "Promote {{user}} &raquo;"
     fight:
-      text: "attacked you in {app} and WON! {link}"
+      text: "attacked you in {app}! You LOST the battle! {link}"
       link: "Fight Back!"
     fight_with_invite:
-      text: "attacked you in {app} and WON! {link}"
+      text: "attacked you in {app}! You LOST the battle! {link}"
       link: "Fight Back!"
     invitation:
       text: "joined your Alliance in {app}! {link}"
-      link: "View Alliance"
+      link: "Manage Alliance &raquo;"

@@ -23,7 +23,7 @@ module Publisher
               I18n.t("notifications.assignment.link",
                 :user => fb_name(user, :linked => false, :firstnameonly => true, :useyou => false)
               )
-            ) + " &raquo;", relations_url
+            ), relations_url
           )
         )
       )

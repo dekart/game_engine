@@ -12,9 +12,9 @@ module Publisher
       recipients invitation.sender
       from user
       fbml fb_i(
-        I18n.t("stories.invitation.notification.text") +
+        I18n.t("notifications.invitation.text") +
         fb_it(:app, link_to(fb_app_name(:linked => false), root_url)) +
-        fb_it(:link, link_to(fb_i(I18n.t("stories.invitation.notification.link")) + " &raquo;", relations_url))
+        fb_it(:link, link_to(fb_i(I18n.t("notifications.invitation.link")), relations_url))
       )
     end
   end
