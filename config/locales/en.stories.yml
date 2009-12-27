@@ -1,5 +1,28 @@
 en:
   stories:
+    default:
+      action_link: "Play {{app}} &raquo;"
+    fight:
+      title: "{*actor*} WON fight against {{level}} level opponent in {{app}}!"
+    help_request:
+      fight:
+        title: "{*actor*} is offering a bounty for any friend who fights their {{level}} level enemy in {{app}}!"
+      mission:
+        title: "{*actor*} requested help with the {{mission}} mission in {{app}}!"
+        description: "Help your friend with this mission to get bonus gold and experience!"
+      action_link: "Help {*actor*}!"
+    level_up:
+      title: "{*actor*} just advanced to Level {{level}} in {{app}}!"
+    mission:
+      title: "{*actor*} completed \"{{mission}}\" mission in {{app}}!"
+    property:
+      title: "{*actor*} bought {{property}} in {{app}}. Now {*actor*} earns more money!"
+    invitation:
+      title: "{*actor*} invites you to join their Alliance in {{app}}!"
+      description: "{{app}} is a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of the fantasy world!"
+    inventory:
+      title: "{*actor*} just bought the {{item}} in {{app}}!"
+# Old stories
     assignment:
       notification:
         text: "promoted you as {{pronoun}} {title} in {app}! {link}"
@@ -11,56 +34,7 @@ en:
       invitation:
         text: "attacked you in {app} and WON! {link}"
         link: "Fight Back!"
-      one_line: "{*actor*} attacked {*victim*} in {{app}} and WON the battle"
-      short:
-        title: "{*actor*} attacked {*victim*} in {{app}} and WON the battle!"
-        text: "{*actor*} received +{*money*} gold, +{*experience*} experience, and lost {*attacker_hp_loss*} health points. {*victim*} received {*victim_hp_loss*} points of damage"
-      action_link: "Play {{app}} &raquo;"
     invitation:
-      invite:
-        one_line: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}!"
-        short:
-          title: "{*actor*} invites you to join {*pronoun*} Alliance in {{app}}!"
-          text: "Sword & Magic is a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of the fantasy world!"
-          link: "Join {*actor*}'s Alliance &raquo;"
       notification:
         text: "joined your Alliance in {app}! {link}"
         link: "View Alliance"
-    item:
-      one_line: "{*actor*} bought a {*item*} in {{app}}"
-      short:
-        title: "{*actor*} bought a new item in {{app}}"
-        text: "{*actor*} bought a {*item*} in {{app}}. Now {*actor*} is stronger than before!"
-      action_link: "Play {{app}} &raquo;"
-    mission:
-      one_line: "{*actor*} completed \"{*mission*}\" mission in {{app}}"
-      short:
-        title: "{*actor*} received \"{*title*}\" title in {{app}}!"
-        text: "{*actor*} completed \"{*mission*}\" mission and received \"{*title*}\" title in {{app}}."
-      action_link: "Play {{app}} &raquo;"
-    property:
-      one_line: "{*actor*} bought {*property*} in {{app}}"
-      short:
-        title: "{*actor*} bought new property in {{app}}"
-        text: "{*actor*} bought {*property*} in {{app}}. Now {*actor*} earns more money!"
-      action_link: "Play {{app}} &raquo;"
-    character:
-      level_up:
-        one_line: "{*actor*} is gaining respect in his Alliance! {*pronoun*} just advanced to Level {*level*} in {{app}}"
-        short:
-          title: "{*actor*} is playing {{app}}!"
-          text: "{*actor*} is gaining respect in his Alliance! {*pronoun*} just advanced to Level {*level*} in {{app}}"
-        action_link: "Play {{app}} &raquo;"
-    help_request:
-      mission:
-        one_line: "{*actor*} requested help with the {*mission*} mission in {*app*}"
-        short:
-          title: "{*actor*} requested help with the {*mission*} mission in {*app*}"
-          text: "Help your friend with this mission to get bonus gold and experience!"
-          link: "Help {*actor*}! &raquo;"
-      fight:
-        one_line: "{*actor*} is offering a bounty for any friend who fights their {*level*} level enemy in {*app*}"
-        short:
-          title: "{*actor*} is offering a bounty for any friend who fights their {*level*} level enemy in {*app*}"
-          text: "Help your friend with this enemy to get bonus gold and experience!"
-          link: "Help {*actor*}! &raquo;"

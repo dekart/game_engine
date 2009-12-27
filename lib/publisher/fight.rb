@@ -32,21 +32,5 @@ module Publisher
         )
       )
     end
-
-    def attack_template
-      one_line_story_template I18n.t("stories.fight.one_line", 
-        :app => link_to(fb_app_name(:linked => false), root_url)
-      )
-      short_story_template(
-        I18n.t("stories.fight.short.title", :app => link_to(fb_app_name(:linked => false), root_url)),
-        I18n.t("stories.fight.short.text")
-      )
-      action_links(
-        action_link(
-          I18n.t("stories.fight.action_link", :app => fb_app_name(:linked => false)),
-          root_url
-        )
-      )
-    end
   end
 end

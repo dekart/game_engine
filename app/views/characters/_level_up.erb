@@ -15,10 +15,9 @@
 <% content_for :script do %>
   Character.onNewLevel();
 
-  <%= show_feed_dialog(Publisher::Character, :level_up,
-        :template_data => {
-          :pronoun => fb_pronoun(current_user, :useyou => false, :capitalize => true),
-          :level   => current_character.level
+  <%= show_stream_dialog(
+        :attachment => {
+          :caption => t("stories.level_up.title", :level => current_character.level, :app => t("app_name"))
         }
       ) %>
 <% end %>

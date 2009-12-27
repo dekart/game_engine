@@ -44,4 +44,19 @@ module MissionsHelper
     end
   end
   safe_helper :mission_payouts
+
+  def mission_complete_stream_dialog(mission)
+    show_stream_dialog(
+      :attachment => {
+        :caption => t("stories.mission.title", :mission => mission.name, :app => t("app_name")),
+        :media => mission.image? ? [
+          {
+            :type => "image",
+            :src => image_path(mission.image.url),
+            :href => missions_url
+          }
+        ] : nil
+      }
+    )
+  end
 end

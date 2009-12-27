@@ -74,14 +74,9 @@
 
         <p><%= fb_i(t(".publish.note")) %></p>
 
-        <%= link_to_feed_dialog(t(".publish.button"), Publisher::Invitation, :invite,
-            :template_data => {
-              :pronoun      => fb_pronoun(current_user, :possessive => true, :useyou => false),
-              :invite_url   => invitation_url(current_character.invitation_key, :reference => :invite_feed_link)
-            },
-            :image_url => invitation_url(current_character.invitation_key, :reference => :invite_feed_image),
-            :html => {:class => :button}
-          ) %>
+        <%= link_to_function(t(".publish.button"), invitation_stream_dialog,
+              :class => :button
+            ) %>
       </div>
     </td>
     <td id="manual_invitation">

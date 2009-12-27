@@ -12,7 +12,7 @@ class Inventory < ActiveRecord::Base
   named_scope :used_in_fight, :conditions => "use_in_fight > 0"
 
   %w{
-    name plural_name description image image? basic_price vip_price attack defence effects
+    item_group  name plural_name description image image? basic_price vip_price attack defence effects
     usable? usage_limit can_be_sold?
   }.each do |attr|
     delegate attr, :to => :item

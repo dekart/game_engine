@@ -76,25 +76,43 @@ module FacebookHelper
     fb_named_tag("tag-attribute", name, *args, &block)
   end
 
-  def link_to_feed_dialog(title, template_class, template_name, options = {})
-    link_to_function(title,
-      show_feed_dialog(template_class, template_name, options.except(:html)),
-      options[:html] || {}
-    )
+  def show_stream_dialog(options = {})
+    "Facebook.streamPublish('', %s, %s, %s, %s, %s)" % [
+      options[:attachment].reverse_merge(:media => default_stream_media).to_json,
+      (options[:action_links] || default_stream_action_links).to_json,
+      options[:target_id] || "null",
+      options[:user_prompt] || "null",
+      stream_callback_function(options)
+    ]
+  end
+  safe_helper :show_stream_dialog
+
+  def default_stream_action_links(url = nil)
+    [
+      {
+        :text => t("stories.default.action_link", :app => t("app_name")),
+        :href => url || root_url(:canvas => true)
+      }
+    ]
   end
 
-  def show_feed_dialog(template_class, template_name, options = {})
-    bundle_id = Facebooker::Rails::Publisher::FacebookTemplate.bundle_id_for_class_and_method(template_class, template_name.to_s)
-
-    image_url = options[:image_url] || root_url(:canvas => true)
-
-    options[:template_data] ||= {}
-    options[:template_data][:images] ||= []
-    options[:template_data][:images].unshift(:src => asset_image_path("logo_100x100"), :href => image_url)
-    
-    "Facebook.showFeedDialog(#{bundle_id}, #{options[:template_data].to_json}, '#{options[:body_general]}', #{options[:target_id] || "null"}, function(){#{options[:continuation]}})"
+  def default_stream_media(url = nil)
+    [
+      {
+        :type => "image",
+        :src  => asset_image_path("logo_stream"),
+        :href => url || root_url(:canvas => true)
+      }
+    ]
   end
-  safe_helper :show_feed_dialog
+
+  def stream_callback_function(options = {})
+    "function(post_id, exception, data){ if(post_id != 'null'){#{options[:success]}} else {#{options[:failure]}}; }"
+  end
+
+  def link_to_stream_dialog(title, options = {})
+    link_to_function(title, show_stream_dialog(options), options.delete(:html) || {})
+  end
 
   def fb_js_string(name, content = nil, &block)
     if block_given?

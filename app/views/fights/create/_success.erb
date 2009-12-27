@@ -1,13 +1,9 @@
 <div class="buttons">
-  <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Fight, :attack,
-        :template_data => {
-          :victim           => fb_name(fight.victim.user),
-          :money            => number_to_currency(fight.money),
-          :experience       => fight.experience,
-          :attacker_hp_loss => fight.attacker_hp_loss,
-          :victim_hp_loss   => fight.victim_hp_loss
-        },
-        :html => {:class => "publish button"}
+  <%= link_to_stream_dialog(t(".buttons.publish"),
+        :caption => t("stories.fight.title", :level => Fight.last.victim.level, :app => t("app_name")),
+        :html => {
+          :class => "publish button"
+        }
       ) %>
   
   <%= help_request_link(fb_i(t(".buttons.request_help")), fight,

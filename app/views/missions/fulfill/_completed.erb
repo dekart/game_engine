@@ -1,13 +1,6 @@
 <div class="buttons">
-  <%= link_to_feed_dialog(t(".buttons.publish"), Publisher::Mission, :completed,
-        :template_data => {
-          :title    => mission.title,
-          :mission  => mission.name,
-          :images => mission.image? ? [{
-            :src  => image_path(mission.image.url),
-            :href => missions_url
-          }] : nil
-        },
+  <%= link_to_function(t(".buttons.publish"),
+        mission_complete_stream_dialog(mission),
         :html => {:class => "publish button"}
       ) %>
 </div>
@@ -35,16 +28,7 @@
 <% end %>
 
 <% content_for :script do %>
-  <%= show_feed_dialog(Publisher::Mission, :completed,
-        :template_data => {
-          :title    => mission.title,
-          :mission  => mission.name,
-          :images => mission.image? ? [{
-            :src  => image_path(mission.image.url),
-            :href => missions_url
-          }] : nil
-        }
-      ) %>
+  <%= mission_complete_stream_dialog(mission) %>
 <% end %>
 
 <% if missions %>
