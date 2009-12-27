@@ -12,18 +12,16 @@
       <%= fb_i(t(".messages.not_enough_points", :attribute => Character.human_attribute_name(params[:attribute]))) %>
     </p>
   <% end %>
-
-  <% content_for :script do %>
-    $('upgrade_<%= params[:attribute] %>').setTextValue('<%= current_character.attributes[params[:attribute]] %>');
-
-    <% if current_character.points == 0 %>
-      Character.onUpgradeComplete();
-    <% else %>
-      $('upgrade_points').setTextValue('<%= current_character.points %>');
-    <% end %>
-  <% end %>
 </div>
 
 <% content_for :script do %>
+  $('upgrade_<%= params[:attribute] %>').setTextValue('<%= current_character.attributes[params[:attribute]] %>');
+
+  <% if current_character.points == 0 %>
+    Character.onUpgradeComplete();
+  <% else %>
+    $('upgrade_points').setTextValue('<%= current_character.points %>');
+  <% end %>
+
   $('result').show();
 <% end %>
