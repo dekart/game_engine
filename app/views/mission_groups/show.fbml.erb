@@ -12,14 +12,21 @@
       ) %>
 </div>
 
-<div id="mission_list">
-  <% unless @mission_group.locked?(current_character) %>
+
+<% unless @mission_group.locked?(current_character) %>
+  <div id="boss_list">
+    <% @mission_group.bosses.each do |boss| %>
+      <%= render "bosses/boss", :boss => boss %>
+    <% end %>
+  </div>
+
+  <div id="mission_list">
     <%= render "missions/list", :missions => @mission_group.missions %>
-  <% else %>
-    <div class="empty_set" id="next_mission_group">
-      <% fb_i t(".locked_group") do %>
-        <%= fb_it(:level, content_tag(:span, @mission_group.level, :class => :level)) %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <div class="empty_set" id="next_mission_group">
+    <% fb_i t(".locked_group") do %>
+      <%= fb_it(:level, content_tag(:span, @mission_group.level, :class => :level)) %>
+    <% end %>
+  </div>
+<% end %>

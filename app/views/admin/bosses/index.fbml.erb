@@ -7,6 +7,7 @@
 <% if @bosses.any? %>
   <table id="boss_list" cellspacing="0">
     <tr>
+      <th><%= Boss.human_attribute_name("image") %></th>
       <th><%= Boss.human_attribute_name("name") %></th>
       <th><%= MissionGroup.human_name %></th>
       <th><%= Boss.human_attribute_name("health") %></th>
@@ -17,6 +18,7 @@
     </tr>
     <% @bosses.each do |boss| %>
       <tr>
+        <td class="image"><%= image_tag(boss.image.url(:icon)) if boss.image? %></td>
         <td class="name"><%= link_to(boss.name, edit_admin_boss_path(boss)) %></td>
         <td class="mission_group"><%= boss.mission_group.name %></td>
         <td class="health"><%= boss.health %></td>

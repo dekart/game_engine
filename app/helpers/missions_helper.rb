@@ -31,13 +31,13 @@ module MissionsHelper
   end
   safe_helper :mission_requirements
 
-  def mission_payouts(mission)
+  def mission_payouts(mission, display_all = true)
     returning result = "" do
       mission.payouts.each do |payout|
-        next unless payout.visible
+        next unless display_all || payout.visible
         
         result << render(
-          :partial  => "missions/payouts/#{payout.name}",
+          :partial  => "payouts/#{payout.name}",
           :locals   => {:payout => payout}
         )
       end

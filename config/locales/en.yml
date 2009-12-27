@@ -393,6 +393,12 @@ en:
         fulfill: "Fulfill"
     helpers:
       completed: "Completed!"
+  bosses:
+    boss:
+      payouts: "Payouts:"
+      requirements: "Requirements:"
+      buttons:
+        attack: "Attack!"
   mission_groups:
     show:
       title: "Missions"
