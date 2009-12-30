@@ -60,7 +60,7 @@ namespace :deploy do
 
   desc "Bootstrap application data"
   task :bootstrap, :roles => :app do
-    run "cd #{current_path}; rake app:bootstrap:assets"
+    run "cd #{current_path}; rake db:seed app:bootstrap:assets"
   end
 
   desc "Updates apache virtual host config"
