@@ -43,7 +43,7 @@ namespace :deploy do
       config = <<-CODE
         RAILS_ENV=#{rails_env}
 
-        * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_job' | wc -l` -le 2 && ./script/delayed_job >> ./log/delayed_job.log 2>&1
+        * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_job' | wc -l` -le 3 && #{current_path}/script/delayed_job >> #{shared_path}/log/delayed_job.log 2>&1
       CODE
 
       put(config, "#{shared_path}/crontab.conf")
