@@ -37,19 +37,15 @@ namespace :deploy do
   end
 
   namespace :jobs do
-    desc "Start background jobs"
-    task :start, :roles => :app do
-      run "cd #{current_path}; ./script/jobs -e production start"
-    end
+    desc "Install cron jobs"
+    task :install_cron do
+      config = <<-CODE
+        * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_worker' | wc -l` -le 2 && ./script/delayed_worker >> ./log/delayed.log 2>&1
+      CODE
 
-    desc "Stop background jobs"
-    task :stop, :roles => :app do
-      run "cd #{current_path}; ./script/jobs -e production stop"
-    end
+      put(config, "#{shared_path}/crontab.conf")
 
-    desc "Start background jobs"
-    task :restart, :roles => :app do
-      run "cd #{current_path}; ./script/jobs -e production restart"
+      run "crontab #{shared_path}/crontab.conf"
     end
 
     desc "Update references"
@@ -106,14 +102,9 @@ end
 
 before "deploy:migrations", "deploy:db:backup"
 
-["deploy:jobs:stop"].each do |t|
-  before "deploy", t
-  before "deploy:migrations", t
-end
-
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 
-["deploy:update_apache_config", "deploy:jobs:start", "deploy:jobs:update_references", "deploy:cleanup"].each do |t|
+["deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:jobs:update_references", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
