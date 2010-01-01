@@ -40,7 +40,7 @@ namespace :deploy do
     desc "Install cron jobs"
     task :install_cron do
       config = <<-CODE
-        * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_worker' | wc -l` -le 2 && ./script/delayed_worker >> ./log/delayed.log 2>&1
+        * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_job' | wc -l` -le 2 && ./script/delayed_job >> ./log/delayed_job.log 2>&1
       CODE
 
       put(config, "#{shared_path}/crontab.conf")
