@@ -18,6 +18,7 @@ set :scm, "git"
 set :branch, "master"
 set :deploy_via, :remote_cache
 
+set :rails_env, "production"
 default_environment["RAILS_ENV"] = "production"
 
 namespace :deploy do
@@ -40,6 +41,8 @@ namespace :deploy do
     desc "Install cron jobs"
     task :install_cron do
       config = <<-CODE
+        RAILS_ENV=#{rails_env}
+
         * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_job' | wc -l` -le 2 && ./script/delayed_job >> ./log/delayed_job.log 2>&1
       CODE
 
