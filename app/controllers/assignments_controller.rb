@@ -2,7 +2,7 @@ class AssignmentsController < ApplicationController
   def new
     @assignment = parents.last.assignments.build(:role => params[:role])
     
-    render :action => :new, :layout => false
+    render :action => :new, :layout => "ajax"
   end
 
   def create
