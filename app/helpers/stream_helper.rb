@@ -99,7 +99,7 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(mission.image.url),
-          :href => missions_url
+          :href => mission_groups_url
         }
       ]
     end
