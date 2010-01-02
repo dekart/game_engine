@@ -1,11 +1,13 @@
 <div id="shop_result">
   <% if @inventory.valid? %>
     <div class="buttons">
-      <%= link_to_function(t(".buttons.publish"), inventory_stream_dialog(@inventory),
+      <%= link_to_function(button(:publish), inventory_stream_dialog(@inventory),
             :class => "publish button"
           ) %>
       
-      <%= link_to(fb_i(t(".buttons.inventory")), inventories_url, :class => "inventory button") %>
+      <%= link_to(button(:inventory), inventories_url, 
+            :class => "inventory button"
+          ) %>
     </div>
 
     <p>

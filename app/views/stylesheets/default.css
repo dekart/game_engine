@@ -96,7 +96,7 @@ form .error {color: red; padding: 3px 0px;}
 /* Fan Specials block */
 #fan_specials { border: 1px solid #3ebace; background-color: #f1f7fa;}
   #fan_specials h2 {color: #003f95;}
-  #fan_specials .link {display: block; margin: 5px auto; width: 116px;}
+  #fan_specials .button {display: block; margin: 5px auto; width: 116px; text-align: center;}
 #bookmark {border: 1px solid #e0e0e0;}
   #bookmark img {vertical-align:middle; margin-left: 10px;}
   #bookmark p {font-weight: bold; margin: 0;}

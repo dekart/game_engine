@@ -3,11 +3,11 @@
 <div id="character">
   <div class="controls">
     <% if @character == current_character %>
-      <%= link_to(fb_i(t(".controls.upgrade")), upgrade_character_path(@character),
+      <%= link_to(button(:upgrade), upgrade_character_path(@character),
             :class => "upgrade button"
           ) if current_character.points > 0 %>
     <% else %>
-      <%= link_to_remote(fb_i(t(".controls.attack")),
+      <%= link_to_remote(button(:attack),
             :url => fights_url(:victim_id => @character, :canvas => false),
             :update => :result,
             :html => {:class => "attack button"}

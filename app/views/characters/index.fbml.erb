@@ -22,29 +22,7 @@
       <% if @latest_fights.any? %>
         <h3><%= fb_i(t(".fights.title")) %></h3>
 
-        <table cellspacing="0" id="fight_list">
-        <% @latest_fights.each do |fight| %>
-          <% content_tag_for(:tr, fight) do %>
-            <td class="attacker"><%= character_picture_link(fight.attacker) %></td>
-            <td class="description">
-              <div class="time"><%= fb_time(fight.created_at) %>:</div>
-              <div><%= fight_description(fight) %></div>
-
-              <div class="controls">
-                <%= link_to_remote(fb_i(t(".fights.respond")),
-                      :url    => respond_fight_url(fight, :canvas => false),
-                      :update => :result,
-                      :html   => {
-                        :id     => dom_id(fight, :respond),
-                        :class  => "respond button"
-                      }
-                    ) if fight.victim == current_character and fight.respondable? %>
-              </div>
-            </td>
-            <td class="victim"><%= character_picture_link(fight.victim) %></td>
-          <% end %>
-        <% end %>
-        </table>
+        <%= render "fights/latest", :fights => @latest_fights %>
       <% end %>
     </td>
   </tr>

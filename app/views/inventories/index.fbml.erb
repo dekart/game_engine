@@ -6,7 +6,9 @@
 
 <div id="inventory">
   <div class="buttons">
-    <%= link_to(fb_i(t(".shop")), items_path, :class => "shop button") %>
+    <%= link_to(button(:shop), items_path, 
+          :class => "shop button"
+        ) %>
   </div>
   
   <div id="inventory_list">

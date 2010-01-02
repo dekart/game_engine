@@ -40,11 +40,12 @@
     <% form_tag "", :class => :clearfix do %>
       <%= amount_select_tag %>
 
-      <%= link_to_remote(fb_i(t(".buttons.buy")),
+      <%= link_to_remote(button(:buy),
             :url => inventories_url(:item_id => item.id, :canvas => false),
             :update => :result,
             :with => "this.getParentNode().serialize()", 
-            :html => {:class => "buy button"}) %>
+            :html => {:class => "buy button"}
+          ) %>
     <% end %>
   </td>
 <% end %>

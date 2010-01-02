@@ -36,5 +36,7 @@
     </table>
   <% end %>
 
-  <%= link_to(fb_i(t(".skip")), @gift.new_record? ? root_path : confirm_gift_path(@gift), :class => "skip button") %>
+  <%= link_to(button(:skip), @gift.new_record? ? root_path : confirm_gift_path(@gift), 
+        :class => "skip button"
+      ) %>
 </div>

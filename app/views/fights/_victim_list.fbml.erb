@@ -18,7 +18,7 @@
           <% end %>
         </td>
         <td class="controls">
-          <%= link_to_remote(fb_i(t(".attack")),
+          <%= link_to_remote(button(:attack),
                 :url    => fights_url(:victim_id => victim.id, :canvas => false),
                 :update => :result,
                 :html   => {:class => :button}
@@ -32,7 +32,7 @@
         <td class="level"><%= t(".invitee.level") %></td>
         <td class="relations">0</td>
         <td class="controls">
-          <%= link_to_remote(fb_i(t(".invitee.attack")),
+          <%= link_to_remote(button(:attack_and_invite),
                 :url    => invite_fights_url(:victim_id => victim, :canvas => false),
                 :update => :result,
                 :html   => {:class => :button}

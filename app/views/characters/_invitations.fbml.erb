@@ -10,14 +10,16 @@
         <%= invitation.sender.character.level %>
       </td>
       <% content_tag(:td, :id => dom_id(invitation, :controls), :class => :controls) do %>
-        <%= link_to_remote(fb_i(t('.accept')),
+        <%= link_to_remote(button(:accept),
               :url    => accept_invitation_url(invitation, :canvas => false),
               :update => dom_id(invitation, :controls),
-              :html   => {:class => "accept button"}) %>
-        <%= link_to_remote(fb_i(t('.ignore')),
+              :html   => {:class => "accept button"}
+            ) %>
+        <%= link_to_remote(button(:ignore),
               :url    => ignore_invitation_url(invitation, :canvas => false),
               :update => dom_id(invitation, :controls),
-              :html   => {:class => "ignore button"}) %>
+              :html   => {:class => "ignore button"}
+            ) %>
       <% end %>
     </tr>
   <% end %>

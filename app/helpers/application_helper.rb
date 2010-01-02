@@ -114,13 +114,14 @@ module ApplicationHelper
     select_tag(:amount, options_for_select((1..10).to_a))
   end
 
-  def button(key)
+  def button(key, options = {})
     asset_key = "buttons_#{scope_key_by_partial(".#{key}").gsub(/\./, "_")}"
+    label = key.is_a?(String) ? t(key, options) : t(".buttons.#{key}", options)
 
     if asset = Asset[asset_key]
-      image_tag(asset.image.url, :alt => t(".buttons.#{key}"))
+      image_tag(asset.image.url, :alt => label)
     else
-      content_tag(:span, t(".buttons.#{key}"))
+      content_tag(:span, label)
     end
   end
 end

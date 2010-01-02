@@ -1,9 +1,9 @@
 <div class="buttons">
-  <%= help_request_link(fb_i(t(".buttons.request_help")), @mission,
+  <%= help_request_link(button(:request_help), @mission,
         :class => "request_help button"
       ) %>
 
-  <%= link_to_remote(fb_i(t(".buttons.try_again")),
+  <%= link_to_remote(button(:try_again),
         :url => fulfill_mission_url(@mission, :canvas => false),
         :update => :result,
         :html   => {:class => "fulfill_again button"}

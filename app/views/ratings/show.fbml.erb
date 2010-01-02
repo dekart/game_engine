@@ -2,13 +2,13 @@
   <%= title(fb_i(t(".title.global"))) %>
 
   <div class="buttons" id="rating_buttons">
-    <%= link_to(fb_i(t(".buttons.relations")), rating_path, :class => :button) %>
+    <%= link_to(button(:relations), rating_path, :class => :button) %>
   </div>
 <% else %>
   <%= title(fb_i(t(".title.relations"))) %>
 
   <div class="buttons" id="rating_buttons">
-    <%= link_to(fb_i(t(".buttons.global")), global_rating_path, :class => :button) %>
+    <%= link_to(button(:global), global_rating_path, :class => :button) %>
   </div>
 <% end %>
 

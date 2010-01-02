@@ -11,11 +11,11 @@
       <%= @character.level %>
     </td>
     <td class="controls">
-      <%= link_to(fb_i(t('.controls.accept')), invitation_path(@character.id),
+      <%= link_to(button(:accept), invitation_path(@character.id),
             :method => :put,
             :class  => "accept button"
           ) %>
-      <%= link_to(fb_i(t('.controls.ignore')), root_path,
+      <%= link_to(button(:ignore), root_path,
             :class => "ignore button"
           ) %>
     </td>

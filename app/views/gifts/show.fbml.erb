@@ -1,8 +1,8 @@
 <% content_for :result do %>
   <div id="gift_result">
     <div class="buttons">
-      <%= link_to(fb_i(t(".buttons.accept_pending")), fb_app_requests_url, :class => "pending button") %>
-      <%= link_to(fb_i(t(".buttons.play_now")), root_path, :class => "play_now button") %>
+      <%= link_to(button(:accept_pending), fb_app_requests_url, :class => "pending button") %>
+      <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
     </div>
     
     <p><%= fb_i(t(".success")) %></p>

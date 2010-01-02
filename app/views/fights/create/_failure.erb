@@ -1,11 +1,11 @@
 <div class="buttons">
-  <%= link_to_remote(fb_i(t(".buttons.attack_again")),
+  <%= link_to_remote(button(:attack_again),
         :url    => fight.cause ? respond_fight_url(fight.cause, :canvas => false) : fights_url(:victim_id => @victim, :canvas => false),
         :update => :result,
         :html   => {:class => "attack_again button"}
       ) if current_character.energy > 0 %>
   
-  <%= help_request_link(fb_i(t(".buttons.request_help")), fight,
+  <%= help_request_link(button(:request_help), fight,
         :class => "request_help button"
       ) %>
 </div>

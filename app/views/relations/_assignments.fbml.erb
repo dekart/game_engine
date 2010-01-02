@@ -7,7 +7,7 @@
 
       <% if assignment = current_character.assignments.by_role(role) %>
         <div class="controls">
-          <%= link_to(fb_i(t(".buttons.demote")), assignment_path(assignment),
+          <%= link_to(button(:demote), assignment_path(assignment),
                 :method   => :delete,
                 :class    => "demote button",
                 :confirm  => fb_i(t(".buttons.demote_confirm"))
@@ -17,7 +17,7 @@
         <%= render :partial => assignment %>
       <% else %>
         <div class="controls">
-          <%= link_to_remote(fb_i(t(".buttons.promote")),
+          <%= link_to_remote(button(:promote),
                 :url => new_character_assignment_url(current_character, :role => role, :canvas => false),
                 :method => :get,
                 :update => :result,

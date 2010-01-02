@@ -128,7 +128,8 @@ en:
     fan_specials:
       title: "Fan Specials"
       text: "{app} fans periodically receive free Gold, Gems, weapons, and other useful game stuff!"
-      link: "Become Fan!"
+      buttons:
+        become_fan: "Become Fan!"
     bookmark:
       title: "Bookmark"
       text: "Don't forget to add {app} to your bookmarks!"
@@ -168,17 +169,17 @@ en:
       bonus: "+{amount} from Alliance"
     invitations:
       title: "Alliance Invitations"
-      accept: "Accept"
-      ignore: "Ignore"
+      buttons:
+        accept: "Accept"
+        ignore: "Ignore"
     index:
       overview:
         title: "Profile Overview"
       fights:
         title: "Latest Fights"
-        respond: "Fight Back!"
     show:
       title: "{{user}} Profile"
-      controls:
+      buttons:
         upgrade: "Upgrade"
         attack: "Attack!"
       titles:
@@ -229,6 +230,9 @@ en:
       attack_lost: "You attacked {victim} and LOST the battle! You lost {money} and took {attacker_damage} points of damage. {victim} received {victim_damage} points of damage."
       defence_won: "You were attacked by {attacker} and WON the battle!  You received {money}, {experience_points} points of experience, and {victim_damage} points of damage. {attacker} was damaged for {attacker_damage} points"
       defence_lost: "You were attacked by {attacker} and LOST the battle! You lost {money} and took {victim_damage} points of damage. {attacker} received {attacker_damage} points of damage."
+    latest:
+      buttons:
+        respond: "Fight Back!"
     create:
       success:
         buttons:
@@ -270,10 +274,11 @@ en:
         not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {minute_number} minutes."
       empty_set: "There are no opponents for you at this time."
     victim_list:
-      attack: "Attack!"
+      buttons:
+        attack: "Attack!"
+        attack_and_invite: "Attack & Invite!"
       invitee:
         level: "Fresh Meat"
-        attack: "Attack & Invite!"
   inventories:
     create:
       buttons:
@@ -290,7 +295,8 @@ en:
         title: "You received:"
     index:
       title: "Inventory"
-      shop: "Go to Shop"
+      buttons:
+        shop: "Go to Shop"
     list:
       owned: "Owned: {amount}"
       used: "In use: {amount}"
@@ -301,7 +307,7 @@ en:
         to_body: "To Body"
         to_belt: "To Belt"
         to_legs: "To Legs"
-        sell: "Sell for {amount}"
+        sell: "Sell for {{price}}"
       empty_set:
         text: "Your inventory is empty. You can buy new items in the {shop}"
         shop: "Shop"
@@ -330,7 +336,7 @@ en:
     show:
       title: "Alliance Invitation"
       note: "This user invites you to join their Alliance"
-      controls:
+      buttons:
         accept: "Accept"
         ignore: "Ignore"
       messages:
@@ -339,8 +345,9 @@ en:
   items:
     index:
       title: "Shop"
-      inventory: "Go to Inventory"
       next_item: "Reach level {level} to unlock new items"
+      buttons:
+        inventory: "Go to Inventory"
     item:
       sale_limit: "Limited Sale: only {amount} left"
       time_limit: "Time Left: {amount}"
@@ -420,8 +427,8 @@ en:
   relations:
     index:
       title: "Your Alliance"
-      note:
-        text: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
+      note: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
+      buttons:
         recruit: "Recruit to Alliance"
         gift: "Send Gifts to Alliance"
         hire: "Hire Mercenaries"
@@ -487,7 +494,7 @@ en:
       buttons:
         buy: "Buy"
         get_vip: "Earn Gems"
-        sell: "Sell for {price}"
+        sell: "Sell for {{price}}"
     destroy:
       messages:
         success: "You've successfully sold {amount} of {property_name}!"
@@ -600,7 +607,8 @@ en:
     block:
       title: "Game Tutorial"
       completed: "Completed!"
-      continue: "Continue &raquo;"
+      buttons:
+        continue: "Continue &raquo;"
       step_1:
         title: "Step 1: Your First Mission"
         text: "The best way to become strong and famous is to fulfill missions. Take a look at the mission below. It's very simple and you'll be able to complete it easily. Do it!"
@@ -620,8 +628,9 @@ en:
     new:
       title: "Send Gifts to Your Alliance: Step 1"
       note: "Please choose the item you want to send to your friends"
-      skip: "Skip"
       empty_set: "There are no gifts available at this time"
+      buttons:
+        skip: "Skip"
     create:
       title: "Send Gifts to Your Alliance: Step 2"
       gift:
@@ -637,7 +646,8 @@ en:
         message: "{{user}} has sent you a {item} in {{app}}! Click to accept gift."
         accept: "Accept {item}"
         note: "Send gifts to your Alliance"
-      skip: "Skip"
+      buttons:
+        skip: "Skip"
     confirm:
       messages:
         success: "Gifts has been sent to your alliance!"
