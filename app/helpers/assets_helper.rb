@@ -1,6 +1,6 @@
 module AssetsHelper
   def asset_image_path(asset_alias)
-    if asset = Asset.find_by_alias(asset_alias)
+    if asset = Asset[asset_alias]
       url = asset.image.url
     else
       url = "1px.gif"

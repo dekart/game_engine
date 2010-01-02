@@ -7,6 +7,12 @@ class Asset < ActiveRecord::Base
   after_save :touch_stylesheets
   after_destroy :touch_stylesheets
 
+  class << self
+    def [](value)
+      find_by_alias(value.to_s)
+    end
+  end
+  
   protected
 
   def touch_stylesheets
