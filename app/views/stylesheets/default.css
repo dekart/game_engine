@@ -13,8 +13,9 @@ td {vertical-align: top;}
 .note {font-size: 14px;}
 
 .nobutton .button {display: none !important;}
-.button { display:block; width: 100px; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; white-space:nowrap;}
-  .button:hover {background-color: #e0e0e0;}
+.button {display:block; width: 130px;}
+.button span{ display:block; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; white-space:nowrap;}
+  .button:hover span{background-color: #e0e0e0;}
 .controls .button { width: auto; margin: 5px; float: right; clear: both;}
   
 /* Flash messages */
@@ -132,7 +133,7 @@ form .error {color: red; padding: 3px 0px;}
     #fight_list .basic_money { background-image: url(asset:icons_basic_money); }
     #fight_list .health { background-image: url(asset:icons_health); }
     #fight_list .experience { background-image: url(asset:icons_experience); }
-  #fight_list .respond {background-image: url(asset:icons_attack); }
+  #fight_list .respond span {background-image: url(asset:icons_attack); }
 
 /* Latest help request block */
 #latest_help_request {padding: 10px; margin-bottom: 15px; border: 1px solid #e7e7e7; font-size: 12px;}
@@ -172,7 +173,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_list .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_list .progress .percentage {height: 10px; font-size: 0px; background-image: url(asset:progress);}
     #mission_list .progress .completed {height: 10px; background-image: url(asset:progress_completed);}
-  #mission_list .controls a { background-image: url(asset:icons_missions);}
+  #mission_list .controls a span { background-image: url(asset:icons_missions);}
 
 /* Announce of next missions displayed at Missions page */
 #next_mission_group {margin-top: 30px;}
@@ -180,7 +181,8 @@ form .error {color: red; padding: 3px 0px;}
   #next_mission_group .level {font-size: 14px; font-weight: bold;}
 
 /* Item list displayed at Shop page*/
-#items .buttons .inventory {background-image: url(asset:icons_inventory);}
+#items .buttons .inventory {width: 140px;}
+  #items .buttons .inventory span {background-image: url(asset:icons_inventory);}
 
 .item_list {width: 100%}
 .item_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
@@ -203,8 +205,8 @@ form .error {color: red; padding: 3px 0px;}
   .item_list .spacer {border:0;}
   .item_list .controls {text-align:right; width: 130px;}
   .item_list .controls select {margin: 5px;}
-  .item_list .controls a.buy {background-image: url(asset:icons_basic_money);}
-  .item_list .controls a.buy_vip {background-image: url(asset:icons_vip_money);}
+  .item_list .controls a.buy span {background-image: url(asset:icons_basic_money);}
+  .item_list .controls a.buy_vip span {background-image: url(asset:icons_vip_money);}
 
 #special_items {background-color: #FFFFD5; border: 1px solid #EC7000; margin-bottom: 10px}
 
@@ -213,7 +215,7 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Inventory container */
 #inventory {width: 100%;}
-  #inventory .buttons .shop{background-image: url(asset:icons_shop);}
+  #inventory .buttons .shop span {background-image: url(asset:icons_shop);}
 
 /* Item list displayed at Inventory page*/
 #inventory_list {margin-top: 10px;}
@@ -232,8 +234,8 @@ form .error {color: red; padding: 3px 0px;}
   #inventory_list .controls {width: 90px;}
     #inventory_list .controls { width: 200px; text-align: right;}
     #inventory_list .controls select {margin: 5px;}
-    #inventory_list .controls .sell {background-image: url(asset:icons_basic_money);}
-    #inventory_list .controls .use {background-image: url(asset:icons_accept);}
+    #inventory_list .controls .sell span {background-image: url(asset:icons_basic_money);}
+    #inventory_list .controls .use span {background-image: url(asset:icons_accept);}
 
 /* Fight attributes block */
 #fight_attributes {margin: 10px 0; border-bottom: 1px solid #d0d0d0;}
@@ -253,7 +255,7 @@ form .error {color: red; padding: 3px 0px;}
   #upgrade_defence {background: url(asset:icons_defence);}
   #upgrade_health {background: url(asset:icons_health);}
   #upgrade_energy {background: url(asset:icons_energy);}
-#upgrade_list .controls a {margin-top:0; background-image: url(asset:icons_add);}
+#upgrade_list .controls a span {margin-top:0; background-image: url(asset:icons_add);}
 
 /* Opponent list displayed at Fight page */
 #victim_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;vertical-align:middle;}
@@ -261,7 +263,7 @@ form .error {color: red; padding: 3px 0px;}
   #victim_list .name{ width: 200px;}
   #victim_list .level {width: 80px;}
   #victim_list .relations .larger {color: red;}
-  #victim_list .controls .button {background-image: url(asset:icons_fights);}
+  #victim_list .controls .button span {background-image: url(asset:icons_fights);}
   #victim_list .invitee {color: green;}
 
 /* A list of invitations displayed at home page*/
@@ -269,19 +271,20 @@ form .error {color: red; padding: 3px 0px;}
   #invitation_list td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #invitation_list .picture {width: 55px;}
   #invitation_list .level {width: 70px;}
-  #invitation_list .controls .accept {background-image: url(asset:icons_accept)}
-  #invitation_list .controls .ignore {background-image: url(asset:icons_delete)}
+  #invitation_list .controls .accept span {background-image: url(asset:icons_accept)}
+  #invitation_list .controls .ignore span {background-image: url(asset:icons_delete)}
 
 /* Recruit to Alliance button at Alliance page */
 #alliance_recruit .buttons {height: 30px;}
-  #alliance_recruit .button { float: left; width: auto; margin-right: 15px; background-image: url(asset:icons_add);}
+  #alliance_recruit .button {float: left; width: auto; margin-right: 15px;}
+    #alliance_recruit .button span {background-image: url(asset:icons_add);}
 
 /* Alliance member list at Alliance page*/
 #alliance_members {}
   #alliance_members td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #alliance_members .picture {width: 55px;}
   #alliance_members .level {width: 70px;}
-  #alliance_members .controls .delete {background-image: url(asset:icons_delete)}
+  #alliance_members .controls .delete span {background-image: url(asset:icons_delete)}
 
 /* Received title list at the Profile page*/
 #rank_list .rank {padding: 3px 25px; background: url(asset:icons_level) 3px center no-repeat;}
@@ -291,7 +294,7 @@ form .error {color: red; padding: 3px 0px;}
   #tutorial .step {margin-bottom: 5px;}
   #tutorial .current {font-size: 15px;}
   #tutorial .complete_mark {color: green; vertical-align: super; font-size: 10px; display:none;}
-  #tutorial .button {text-align: center; width: 100px; margin: 10px; padding-left: 5px; display:none;}
+  #tutorial .button {text-align: center; width: 130px; margin: 10px; padding-left: 5px; display:none;}
   #tutorial .completed .complete_mark {display: inline;}
   #tutorial .completed .button {display: block;}
 
@@ -322,7 +325,7 @@ form .error {color: red; padding: 3px 0px;}
     #result .loot {clear: both;}
   #result .buttons {float:right;}
     #result .button { clear: right; margin: 0 0 10px 10px;}
-      #result .publish {background-image: url(asset:icons_publish);}
+      #result .publish span {background-image: url(asset:icons_publish);}
 
 /* Missions result block */
 #mission_result {padding:0px 30px; background: url(asset:icons_missions) 5px 0px no-repeat;}
@@ -330,8 +333,10 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .spent .zero .value{font-weight: bold; color: green; font-size: 14px;}
   #mission_result .spent .zero .relation {padding-left: 10px;}
   #mission_result .title {line-height: 22px; padding-left: 23px; background: url(asset:icons_level) center left no-repeat; font-size: 14px; margin-bottom: 15px;}
-  #mission_result .fulfill_again {background-image: url(asset:icons_missions); width: 90px;}
-  #mission_result .request_help {background-image: url(asset:icons_alliance); width: 180px;}
+  #mission_result .fulfill_again {width: 120px;}
+    #mission_result .fulfill_again span {background-image: url(asset:icons_missions);}
+  #mission_result .request_help {width: 230px;}
+    #mission_result .request_help span {background-image: url(asset:icons_alliance); }
   #mission_result .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_result .progress .percentage {height: 10px; font-size: 0px; background-image: url(asset:progress);}
     #mission_result .progress .completed {height: 10px; background-image: url(asset:progress_completed);}
@@ -344,6 +349,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_result .requirements .health_point {clear: both;}
   #mission_result .requirements .item {float:left; margin: 0 10px 2px 0;}
   #mission_result .requirements .item .amount {text-align: center;}
+  
 /* Mission help result block */
 #help_result {padding:0px 30px; background: url(asset:icons_alliance) 5px 0px no-repeat;}
 
@@ -351,8 +357,9 @@ form .error {color: red; padding: 3px 0px;}
 #fight_result {padding:0px 30px; background: url(asset:icons_fights) 5px 0px no-repeat;}
   #fight_result .lost b {width: 55px;}
   #fight_result .victim_lost b {width: 55px;}
-  #fight_result .attack_again {background-image: url(asset:icons_fights);}
-  #fight_result .request_help {background-image: url(asset:icons_alliance); width: 140px;}
+  #fight_result .attack_again span {background-image: url(asset:icons_fights);}
+  #fight_result .request_help {width: 190px;}
+    #fight_result .request_help span {background-image: url(asset:icons_alliance);}
   #fight_result .details {border-top: 1px solid #e0e0e0; padding-top: 10px; width: 730px; height: 160px; margin: 0px auto;}
   #fight_result .details .attacker {width: 330px; text-align:right; }
   #fight_result .details .vs {width: 65px; text-align:center; font-weight: bold; font-size: 16px; line-height: 160px; vertical-align:middle;}
@@ -388,7 +395,8 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Item purchase result block */
 #shop_result {padding:0px 30px; background: url(asset:icons_basic_money) 5px 0px no-repeat;}
-  #shop_result .inventory {background-image: url(asset:icons_inventory); width: 110px;}
+  #shop_result .inventory {width: 150px;}
+    #shop_result .inventory span {background-image: url(asset:icons_inventory);}
 
 /* Item assignment or usage result block */
 #inventory_result {padding:0px 30px; background: url(asset:icons_basic_money) 5px 0px no-repeat;}
@@ -399,8 +407,8 @@ form .error {color: red; padding: 3px 0px;}
 /* Controls at the Profile page */
 #character .controls {clear: both;}
   #character .controls a {float: left;}
-    #character .controls .attack {background-image: url(asset:icons_fights);}
-    #character .controls .upgrade {background-image: url(asset:icons_add);}
+    #character .controls .attack span {background-image: url(asset:icons_fights);}
+    #character .controls .upgrade span {background-image: url(asset:icons_add);}
 #character .item_group .item {float: left; width: 85px; height: 135px; text-align: center; font-weight: bold;}
 #character .properties .item {float: left; width: 130px; height: 170px; text-align: center; font-weight: bold;}
 #character .wall {width: 315px; padding-left: 5px;}
@@ -416,7 +424,7 @@ form .error {color: red; padding: 3px 0px;}
 .rating .position {font-size: 14px; font-weight: bold;}
 
 #rating_buttons {height: 60px;}
-  #rating_buttons .button { float: left; width: 130px; margin-right: 15px; background-image: url(asset:icons_rating);}
+  #rating_buttons .button span { float: left; width: 130px; margin-right: 15px; background-image: url(asset:icons_rating);}
 
 /* Bank page */
 #bank {width:100%;}
@@ -443,12 +451,12 @@ form .error {color: red; padding: 3px 0px;}
 #property_list .income .basic_money {line-height: 22px;height: 22px; padding: 3px 0 3px 21px; background: url(asset:icons_basic_money) center left no-repeat;}
 #property_list .controls {width: 200px;}
   #property_list .controls select {margin: 5px;}
-  #property_list .controls a {width: 100px;}
-  #property_list .controls .buy {background-image: url(asset:icons_basic_money);}
-  #property_list .controls .sell {background-image: url(asset:icons_basic_money);}
+  #property_list .controls a {width: auto;}
+  #property_list .controls .buy span {background-image: url(asset:icons_basic_money);}
+  #property_list .controls .sell span {background-image: url(asset:icons_basic_money);}
 
 /* Buy Properties button */
-#buy_properties { width: 130px; background-image: url(asset:icons_properties);}
+#buy_properties span { width: 130px; background-image: url(asset:icons_properties);}
 
 /* Property type list at the Buy Properties page */
 #property_type_list {width: 100%;}
@@ -479,7 +487,7 @@ form .error {color: red; padding: 3px 0px;}
   #premia .basic_money{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(asset:icons_basic_money) center left no-repeat; font-weight: bold;}
   #premia .points{line-height: 22px;height: 22px; padding: 5px 0 5px 21px; background: url(asset:icons_level) center left no-repeat; font-weight: bold;}
   #premia .vip_money{line-height: 22px;height: 22px; padding: 5px 15px 5px 21px; background: url(asset:icons_vip_money) center left no-repeat;}
-  #premia .controls .button {background-image: url(asset:icons_accept); width: 70px;}
+  #premia .controls .button span {background-image: url(asset:icons_accept); width: 70px;}
 
 /* Character assignment list at the Alliance page */
 #character_assignments {width: 250px; margin: 15px 0;}
@@ -488,8 +496,8 @@ form .error {color: red; padding: 3px 0px;}
   #character_assignments .effect {font-style: italic; font-size: 14px; margin-top: 5px;}
   #character_assignments .description {font-style: italic;}
   #character_assignments .controls {float: right; margin-top: -25px; }
-  #character_assignments .controls .promote {background-image: url(asset:icons_accept);}
-  #character_assignments .controls .demote {background-image: url(asset:icons_delete);}
+    #character_assignments .controls .promote span {background-image: url(asset:icons_accept);}
+    #character_assignments .controls .demote span {background-image: url(asset:icons_delete);}
 
 /* Character assignment dialog */
 #new_assignment table {width: 100%;}
@@ -514,7 +522,7 @@ form .error {color: red; padding: 3px 0px;}
 #invitation_form td {vertical-align: top;}
 #invitation_form .invitation_type {padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #e0e0e0;}
 #invitation_form .invitation_text {margin: 15px; font-weight: bold; font-size: 15px; color: #3B5998;}
-#invitation_form .button {clear: right; background-image: url(asset:icons_publish);}
+#invitation_form .button span {clear: right; background-image: url(asset:icons_publish);}
 #invitation_form #request_invitation {width: 315px; padding-right: 15px;}
 #invitation_form #chat_invitation p {float:right; width: 200px;}
 
@@ -523,8 +531,8 @@ form .error {color: red; padding: 3px 0px;}
   #invitation td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #invitation .picture {width: 55px;}
   #invitation .level {width: 70px;}
-  #invitation .controls .accept {background-image: url(asset:icons_accept)}
-  #invitation .controls .ignore {background-image: url(asset:icons_delete)}
+  #invitation .controls .accept span {background-image: url(asset:icons_accept)}
+  #invitation .controls .ignore span {background-image: url(asset:icons_delete)}
 
 /* Invitation accept/decline result */
 #invitation_result {padding:0px 30px; background: url(asset:icons_alliance) 5px 0px no-repeat;}
@@ -533,18 +541,18 @@ form .error {color: red; padding: 3px 0px;}
 
 /* Level up block displayed in mission or fight results */
 #level_up {padding:0px 30px; background: url(asset:icons_level) 5px 0px no-repeat;}
-  #level_up .upgrade {background-image: url(asset:icons_add);}
+  #level_up .upgrade span {background-image: url(asset:icons_add);}
 
 /* Gift result message */
 #gift_result {padding:0px 30px; background: url(asset:icons_inventory) 5px 0px no-repeat;}
-  #gift_result .pending {width: 140px; background-image: url(asset:icons_inventory);}
-  #gift_result .play_now {width: 80px; background-image: url(asset:icons_home);}
+  #gift_result .pending span {width: 140px; background-image: url(asset:icons_inventory);}
+  #gift_result .play_now span {width: 80px; background-image: url(asset:icons_home);}
   #gift_result .details td {padding: 0 15px;text-align:center; }
   #gift_result .details .item {font-weight: bold;}
   #gift_result .details .from {font-weight: bold; font-size: 16px; vertical-align: middle;}
 
 /* Gift sending form */
-#gift_form .skip {width: 45px; float: right; background-image: url(asset:icons_home)}
+#gift_form .skip span {width: 45px; float: right; background-image: url(asset:icons_home)}
 
 #gift_form .item { padding: 5px; width: 120px; text-align: center;}
   #gift_form .item .name {font-weight: bold;}
