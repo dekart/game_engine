@@ -2,6 +2,7 @@ en:
   layouts:
     admin:
       main_menu:
+        title: "Admin Menu"
         home: "Home"
         item_groups: "Item Groups"
         items: "Items"

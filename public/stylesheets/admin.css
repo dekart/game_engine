@@ -8,7 +8,7 @@ th.subheader {background-color: #f1f7fa;color: #3B5998;border: 0;}
   #spinner img {float:left; margin-right: 10px;}
 
 #admin_menu {margin: 10px; padding: 10px; border: 1px solid green;}
-  #admin_menu a { margin: 0 5px; }
+  #admin_menu a { margin-right: 10px; }
 
 .empty_set, .note {margin: 10px 0px; padding: 8px; border: 1px solid #D8DFEA;}
 .note {font-size: 14px;}

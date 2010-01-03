@@ -1,5 +1,7 @@
 <% admin_only do %>
   <div id="admin_menu">
+    <h2><%= t(".title") %></h2>
+
     <%= link_to(t(".home"), root_path) %>
     
     <%= link_to(t(".item_groups"), admin_item_groups_path) %>
