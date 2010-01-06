@@ -4,20 +4,20 @@
   <%= fb_i(t(".message")) %>
 </p>
 
-<% unless mission_result.group.title.blank? %>
+<% unless result.mission_group.title.blank? %>
   <p>
     <%= fb_i(t(".title_received")) %>
   </p>
   
-  <h3 class="title"><%= fb_i(mission_result.group.title) %></h3>
+  <h3 class="title"><%= fb_i(result.mission_group.title) %></h3>
 <% end %>
 
-<% if mission_result.group_payouts.any? %>
+<% if result.group_payouts.try(:any?) %>
   <div class="payouts">
     <div class="received">
       <h3><%= fb_i(t(".you_received")) %></h3>
 
-      <%= payout_list(mission_result.group_payouts, :add) %>
+      <%= payout_list(result.group_payouts, :add) %>
     </td>
   </div>
 <% end %>

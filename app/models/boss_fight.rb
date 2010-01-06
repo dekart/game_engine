@@ -23,9 +23,9 @@ class BossFight < ActiveRecord::Base
     end
   end
 
-  attr_reader :winner, :boss_hp_loss, :character_hp_loss, :payouts
+  attr_reader :winner, :boss_hp_loss, :character_hp_loss, :payouts, :group_rank, :group_payouts
 
-  delegate :experience, :ep_cost, :to => :boss
+  delegate :experience, :ep_cost, :mission_group, :to => :boss
 
   before_create :get_energy_from_character
   
@@ -47,6 +47,8 @@ class BossFight < ActiveRecord::Base
           @payouts = boss.payouts.apply(character, :complete)
 
           self.win!
+
+          @group_rank, @group_payouts = character.mission_groups.check_completion!(boss.mission_group)
         elsif character_lost?
           @payouts = boss.payouts.apply(character, :failure)
 

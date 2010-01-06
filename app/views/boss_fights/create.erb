@@ -3,6 +3,8 @@
     <%= render "boss_fights/create/#{@fight.state}", :fight => @fight %>
 
     <%= render("boss_fights/create/payouts", :fight => @fight) if @fight.lost_something? || @fight.received_something? %>
+
+    <%= render("mission_groups/complete", :result => @fight) if @fight.group_rank.try(:just_created?) %>
   <% else %>
     <p><%= fb_i(@fight.errors.on(:character)) %></p>
   <% end %>

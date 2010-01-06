@@ -9,7 +9,7 @@ class MissionGroupRank < ActiveRecord::Base
    }
 
   before_create :set_completed
-  after_create  :apply_payouts
+  after_create  :apply_payouts, :assign_just_created
 
   delegate :title, :to => :mission_group
 
@@ -19,6 +19,10 @@ class MissionGroupRank < ActiveRecord::Base
     self.new_record? ? (missions_completed? && bosses_completed?) : self[:completed]
   end
 
+  def just_created?
+    @just_created
+  end
+
   protected
 
   def missions_completed?
@@ -26,7 +30,7 @@ class MissionGroupRank < ActiveRecord::Base
   end
 
   def bosses_completed?
-    true
+    (mission_group.boss_ids - character.boss_fights.won_boss_ids).empty?
   end
 
   def set_completed
@@ -35,5 +39,9 @@ class MissionGroupRank < ActiveRecord::Base
 
   def apply_payouts
     @payouts = mission_group.payouts.apply(character, :complete)
+  end
+
+  def assign_just_created
+    @just_created = true
   end
 end

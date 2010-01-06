@@ -17,8 +17,8 @@
 
     <%= render :partial => "missions/fulfill/payouts", :locals => {:mission => @mission, :result => @result} %>
 
-    <% if @result.group_rank && @result.group_rank.completed? %>
-      <%= render :partial => "mission_groups/complete", :locals => {:mission_result => @result} %>
+    <% if @result.group_rank.try(:just_created?) %>
+      <%= render :partial => "mission_groups/complete", :locals => {:result => @result} %>
     <% end %>
   <% elsif !@result.enough_energy? %>
     <p>
