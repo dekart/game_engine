@@ -8,11 +8,7 @@ module MissionsHelper
     else
       percentage = (rank.win_count.to_f / rank.mission.win_amount * 100)
 
-      content_tag(:div, "%d%%" % percentage, :class => :text) +
-      content_tag(:div,
-        content_tag(:div, "", :class => :percentage, :style => "width: #{percentage}%"),
-        :class => :bar
-      )
+      percentage_bar(percentage, "%d%" % percentage)
     end
   end
   safe_helper :mission_progress

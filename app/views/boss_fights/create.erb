@@ -1,0 +1,15 @@
+<div id="boss_fight_result">
+  <% if @fight.valid? %>
+    <%= render "boss_fights/create/#{@fight.workflow_state}", :fight => @fight %>
+
+    <%= render("boss_fights/create/payouts", :fight => @fight) if @fight.lost_something? || @fight.received_something? %>
+  <% else %>
+    <p><%= fb_i(@fight.errors.on(:character)) %></p>
+  <% end %>
+</div>
+
+<%= character_level_up_block %>
+
+<% content_for :script do %>
+  $('result').show();
+<% end %>

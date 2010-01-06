@@ -113,14 +113,22 @@ var Timer = {
   },
   
   update: function(id){
+    var element = $(id);
+
+    if(element == null){
+      this.timers[id].running = false;
+      
+      return
+    }
+
     if(this.timers[id].value > 0){
-      $(id).setTextValue(Timer.format(this.timers[id].value));
+      element.setTextValue(Timer.format(this.timers[id].value));
 
       this.timers[id].value = this.timers[id].value - 1;
       
       this.rerun(id);
     }else{
-      $(id).setTextValue('');
+      element.setTextValue('');
       
       this.timers[id].running = false;
 
@@ -165,3 +173,13 @@ var HelpRequest = {
     });
   }
 };
+
+var BossFight = {
+  hideReminder: function(id){
+    $('boss_fight_block').removeChild($(id));
+    
+    if($('boss_fight_block').by_class('boss_fight').length == 0){
+      $('boss_fight_block').hide();
+    }
+  }
+}

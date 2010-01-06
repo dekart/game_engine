@@ -10,6 +10,8 @@
 <%= form.text_field :attack, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.text_field :defence, :required => true, :size => 6, :autocomplete => :off %>
 
+<%= form.text_field :time_limit, :required => true, :size => 4, :after_field => t(".hours") %>
+
 <div class="serializable" id="requirement_list">
   <h2><%= Boss.human_attribute_name("requirements") %></h2>
 

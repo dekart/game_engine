@@ -69,6 +69,11 @@ en:
           too_late: "You're too late! Next time try to help your friends within 24 hours."
           already_helped_with_mission: "You already helped your friend with this mission."
           already_helped_with_fight: "You already helped your friend to fight with this enemy."
+        boss_fight:
+          attributes:
+            character:
+              not_enough_energy: "You don't have enough energy to fight. Take a rest!"
+              too_weak: "You are too weak to fight! Take a rest!"
   effects:
     attack:
       name: "Attack"
@@ -400,12 +405,43 @@ en:
         fulfill: "Fulfill"
     helpers:
       completed: "Completed!"
-  bosses:
+      
+  boss_fights:
+    block:
+      text: "You're currently fighting with {{boss}}."
+      time_left: "Time left: {{value}}"
+      buttons:
+        attack: "Attack!"
     boss:
       payouts: "Payouts:"
       requirements: "Requirements:"
       buttons:
         attack: "Attack!"
+    create:
+      progress:
+        time_left: "Time Left: {{value}}"
+        messages:
+          character: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
+          boss: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
+        buttons:
+          attack: "Attack!"
+      lost:
+        messages:
+          result: "You lost the battle against {{boss}}!"
+          character: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
+          boss: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
+      won:
+        messages:
+          result: "You defeated {{boss}}!"
+          character: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
+          boss: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
+      expired:
+        messages:
+          result: "You missed your chance to defeat {{boss}}!"
+      payouts:
+        you_received: "You received:"
+        you_lost: "You lost:"
+
   mission_groups:
     show:
       title: "Missions"

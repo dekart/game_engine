@@ -94,6 +94,14 @@ class Configuration < ActiveRecord::Base
     first
   end
 
+  def boss_max_loser_damage
+    50
+  end
+
+  def boss_max_winner_damage
+    1
+  end
+
   private
 
   def restart_server

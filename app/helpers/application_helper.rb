@@ -124,4 +124,15 @@ module ApplicationHelper
       content_tag(:span, label)
     end
   end
+
+  def percentage_bar(percentage, label = nil)
+    returning result = "" do
+      result << content_tag(:div, label, :class => :text) if label
+      result << content_tag(:div,
+        content_tag(:div, "", :class => :percentage, :style => "width: %.4f%" % percentage),
+        :class => :bar
+      )
+    end
+  end
+  safe_helper :percentage_bar
 end

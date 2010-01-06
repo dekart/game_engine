@@ -1,0 +1,49 @@
+<table class="details lost">
+  <tr>
+    <td class="character">
+      <h1><%= character_name(fight.character, :capitalize => true) %></h1>
+
+      <%= character_picture(fight.character, :size => :small) %>
+
+      <%= character_health_bar(fight.character) %>
+
+      <div class="message">
+        <%= raw t(".messages.character",
+              :attacker => content_tag(:span, character_name(fight.character, :capitalize => true),
+                :class => :attacker
+              ),
+              :victim   => content_tag(:span, fight.boss.name, :class => :victim),
+              :damage   => content_tag(:span, fight.boss_hp_loss, :class => :damage)
+            ) %>
+      </div>
+    </td>
+    <td>
+      <div class="vs">VS.</div>
+
+      <div class="message">
+        <%= raw t(".messages.result",
+              :boss => content_tag(:span, fight.boss.name, :class => :boss)
+            ) %>
+      </div>
+    </td>
+    <td class="boss">
+      <h1><%= fight.boss.name %></h1>
+
+      <%= image_tag(fight.boss.image.url(:normal)) if fight.boss.image? %>
+
+      <%= boss_fight_health_bar(fight) %>
+
+      <div class="message">
+        <%= raw t(".messages.boss",
+              :attacker => content_tag(:span, fight.boss.name, :class => :attacker),
+              :victim   => content_tag(:span, character_name(fight.character), :class => :victim),
+              :damage   => content_tag(:span, fight.character_hp_loss, :class => :damage)
+            ) %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<% content_for :script do %>
+  BossFight.hideReminder('<%= dom_id(fight) %>')
+<% end %>

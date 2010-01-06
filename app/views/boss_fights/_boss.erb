@@ -22,7 +22,11 @@
       </div>
 
       <div class="buttons">
-        <%= link_to(fb_i(t(".buttons.attack")), boss_path(boss), :class => "button attack") %>
+        <%= link_to_remote(button(:attack),
+              :url    => boss_fights_url(:boss_id => boss, :canvas => false),
+              :update => :result,
+              :html   => {:class => "button attack"}
+            ) %>
       </div>
     </td>
   </tr>

@@ -52,8 +52,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :missions, 
     :only   => :fulfill,
     :member => {:fulfill => :post}
-  map.resources :bosses,
-    :only   => :show
+  map.resources :boss_fights,
+    :only => [:create, :update]
   
   map.resources :items
   map.resources :item_groups do |group|

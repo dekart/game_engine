@@ -88,7 +88,7 @@ class MissionResult
   end
 
   def received_something?
-    !(@money.nil? && @experience.nil? && @payouts.by_action(:received).empty?)
+    !(@money.nil? && @experience.nil? && @payouts.by_action(:add).empty?)
   end
 
   def success_text

@@ -1,0 +1,31 @@
+<table class="details expired">
+  <tr>
+    <td class="character">
+      <h1><%= character_name(fight.character, :capitalize => true) %></h1>
+
+      <%= character_picture(fight.character, :size => :small) %>
+
+      <%= character_health_bar(fight.character) %>
+    </td>
+    <td>
+      <div class="vs">VS.</div>
+
+      <div class="message">
+        <%= raw t(".messages.result",
+              :boss => content_tag(:span, fight.boss.name, :class => :boss)
+            ) %>
+      </div>
+    </td>
+    <td class="boss">
+      <h1><%= fight.boss.name %></h1>
+
+      <%= image_tag(fight.boss.image.url(:normal)) if fight.boss.image? %>
+
+      <%= boss_fight_health_bar(fight) %>
+    </td>
+  </tr>
+</table>
+
+<% content_for :script do %>
+  BossFight.hideReminder('<%= dom_id(fight) %>')
+<% end %>

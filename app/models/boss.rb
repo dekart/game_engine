@@ -7,7 +7,8 @@ class Boss < ActiveRecord::Base
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",
-      :small  => "200x200>"
+      :small  => "100x100>",
+      :normal => "200x200>"
     }
 
   has_requirements

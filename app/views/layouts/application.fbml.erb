@@ -36,7 +36,11 @@
 
     <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
 
-    <%= render "tutorials/block" if current_user.show_tutorial? %>
+    <% if current_character.boss_fights.in_progress.any? %>
+      <%= render "boss_fights/block", :fights => current_character.boss_fights.in_progress %>
+    <% elsif current_user.show_tutorial? %>
+      <%= render "tutorials/block" %>
+    <% end %>
 
     <%= yield %>
   </div>

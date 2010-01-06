@@ -1,5 +1,7 @@
 module PayoutsHelper
   def payout_list(payouts, action)
+    return unless payouts
+
     returning result = "" do
       payouts.by_action(action).each do |payout|
         result << render(

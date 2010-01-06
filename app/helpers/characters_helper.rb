@@ -39,6 +39,12 @@ module CharactersHelper
     )
   end
 
+  def character_health_bar(character)
+    percentage = character.hp.to_f / character.health * 100
+
+    percentage_bar(percentage, "%d/%d" % [character.hp, character.health])
+  end
+
   protected
 
   def character_for(character_or_user)

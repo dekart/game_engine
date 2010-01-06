@@ -73,6 +73,9 @@ class Character < ActiveRecord::Base
 
   has_many :gifts
 
+  has_many :boss_fights,
+    :extend => Character::BossFights
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [
