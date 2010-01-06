@@ -8,13 +8,20 @@ class MissionGroupRank < ActiveRecord::Base
     :order      => "mission_groups.level"
    }
 
-  before_save :set_completed
+  before_create :set_completed
+  after_create  :apply_payouts
 
   delegate :title, :to => :mission_group
+
+  attr_reader :payouts
 
   protected
 
   def set_completed
     self.completed = true
+  end
+
+  def apply_payouts
+    @payouts = mission_group.payouts.apply(character, :complete)
   end
 end

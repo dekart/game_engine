@@ -43,15 +43,9 @@ class MissionResult
             @character.missions_completed += 1
             @character.points += 1
 
-            if @character.mission_groups.completed?(@group)
-              @group_rank = @character.mission_group_ranks.create(
-                :mission_group => @group
-              )
-              
-              @group_payouts = @group.payouts.apply(@character, :complete)
-            end
-            
             @payouts = @mission.payouts.apply(@character, :complete)
+
+            @group_rank, @group_payouts = @character.mission_groups.check_completion!(@group)
           else
             @payouts = @mission.payouts.apply(@character, :success)
           end

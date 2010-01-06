@@ -16,8 +16,26 @@ class Character
       )
     end
 
+    def check_completion!(group)
+      rank = rank_for(group)
+
+      if completed?(group)
+        rank ||= proxy_owner.mission_group_ranks.create(
+          :mission_group => group
+        )
+
+        [rank, rank.payouts]
+      else
+        rank
+      end
+    end
+
+    def rank_for(group)
+      proxy_owner.mission_group_ranks.find_by_mission_group_id(group.id)
+    end
+
     def completed?(group)
-      if rank = proxy_owner.mission_group_ranks.find_by_mission_group_id(group.id)
+      if rank = rank_for(group)
         rank.completed?
       else
         group.missions.count(
