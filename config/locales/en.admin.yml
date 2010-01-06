@@ -111,7 +111,7 @@ en:
         title: "Edit Boss"
         submit: "Update"
       form_fields:
-        hours: "hours"
+        minutes: "minutes"
     newsletters:
       index:
         title: "Newsletters"

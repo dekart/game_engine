@@ -29,9 +29,15 @@
             ) %>
       </div>
 
-      <div class="timer">
-        <%= raw t(".time_left", :value => content_tag(:span, "", :id => :boss_fight_time_left)) %>
-      </div>
+      <% if fight.time_limit? %>
+        <div class="timer">
+          <%= raw t(".time_left", :value => content_tag(:span, "", :id => :boss_fight_time_left)) %>
+        </div>
+
+        <% content_for :script do %>
+          Timer.start('boss_fight_time_left', <%= fight.time_left %>)
+        <% end %>
+      <% end %>
     </td>
     <td class="boss">
       <h1><%= fight.boss.name %></h1>
@@ -50,7 +56,3 @@
     </td>
   </tr>
 </table>
-
-<% content_for :script do %>
-  Timer.start('boss_fight_time_left', <%= fight.time_left %>)
-<% end %>

@@ -15,14 +15,16 @@
       <div class="text">
         <%= raw t(".text", :boss => fight.boss.name) %>
       </div>
-      
-      <div class="timer">
-        <%= raw t(".time_left", :value => content_tag(:span, "", :id => dom_id(fight, :timer))) %>
-      </div>
-    <% end %>
 
-    <% content_for :script do %>
-      Timer.start('<%= dom_id(fight, :timer) %>', <%= fight.time_left %>);
+      <% if fight.time_limit? %>
+        <div class="timer">
+          <%= raw t(".time_left", :value => content_tag(:span, "", :id => dom_id(fight, :timer))) %>
+        </div>
+
+        <% content_for :script do %>
+          Timer.start('<%= dom_id(fight, :timer) %>', <%= fight.time_left %>);
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
 </div>

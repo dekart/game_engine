@@ -25,7 +25,7 @@ class BossFight < ActiveRecord::Base
 
   attr_reader :winner, :boss_hp_loss, :character_hp_loss, :payouts, :group_rank, :group_payouts
 
-  delegate :experience, :ep_cost, :mission_group, :to => :boss
+  delegate :experience, :ep_cost, :mission_group, :time_limit?, :to => :boss
 
   before_create :get_energy_from_character
   

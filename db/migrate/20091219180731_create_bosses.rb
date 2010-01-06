@@ -20,7 +20,7 @@ class CreateBosses < ActiveRecord::Migration
       t.string  :image_content_type
       t.integer :image_file_size
 
-      t.integer :time_limit, :default => 48
+      t.integer :time_limit, :default => 60
 
       t.timestamps
     end

@@ -14,6 +14,10 @@ class Boss < ActiveRecord::Base
   has_requirements
   has_payouts
 
-  validates_presence_of     :mission_group, :name, :health
-  validates_numericality_of :health, :allow_blank => true
+  validates_presence_of     :mission_group, :name, :health, :attack, :defence, :ep_cost, :experience
+  validates_numericality_of :health, :attack, :defence, :ep_cost, :time_limit, :experience, :allow_blank => true
+
+  def time_limit?
+    time_limit.to_i > 0
+  end
 end
