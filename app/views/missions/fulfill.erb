@@ -1,24 +1,21 @@
 <div id="mission_result">
   <% if @result.saved %>
     <% if @result.rank.just_completed? %>
-      <%= render(
-            :partial  => "missions/fulfill/completed",
-            :locals   => {
-              :mission  => @mission,
-              :result   => @result,
-              :missions => @missions
-            }
+      <%= render("missions/fulfill/completed",
+            :mission  => @mission,
+            :result   => @result,
+            :missions => @missions
           ) %>
     <% elsif @result.success %>
-      <%= render :partial => "missions/fulfill/success", :locals => {:mission => @mission, :result => @result} %>
+      <%= render "missions/fulfill/success", :mission => @mission, :result => @result %>
     <% else %>
-      <%= render :partial => "missions/fulfill/failure", :locals => {:mission => @mission, :result => @result} %>
+      <%= render "missions/fulfill/failure", :mission => @mission, :result => @result %>
     <% end %>
 
-    <%= render :partial => "missions/fulfill/payouts", :locals => {:mission => @mission, :result => @result} %>
+    <%= render "missions/fulfill/payouts", :mission => @mission, :result => @result %>
 
     <% if @result.group_rank.try(:just_created?) %>
-      <%= render :partial => "mission_groups/complete", :locals => {:result => @result} %>
+      <%= render "mission_groups/complete", :result => @result %>
     <% end %>
   <% elsif !@result.enough_energy? %>
     <p>
@@ -40,12 +37,9 @@
 
 <% if @mission_groups %>
   <% fb_js_string :mission_group_list do %>
-    <%= render(
-          :partial => "mission_groups/tabs",
-          :locals => {
-            :groups   => @mission_groups,
-            :current  => current_character.mission_groups.current
-          }
+    <%= render("mission_groups/tabs",
+          :groups   => @mission_groups,
+          :current  => current_character.mission_groups.current
         ) %>
   <% end %>
 
