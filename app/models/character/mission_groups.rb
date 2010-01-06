@@ -19,10 +19,8 @@ class Character
     def check_completion!(group)
       rank = rank_for(group)
 
-      if completed?(group)
-        rank ||= proxy_owner.mission_group_ranks.create(
-          :mission_group => group
-        )
+      if rank.completed?
+        rank.save!
 
         [rank, rank.payouts]
       else
@@ -31,17 +29,12 @@ class Character
     end
 
     def rank_for(group)
-      proxy_owner.mission_group_ranks.find_by_mission_group_id(group.id)
-    end
-
-    def completed?(group)
-      if rank = rank_for(group)
-        rank.completed?
-      else
-        group.missions.count(
-          :conditions => ["missions.id NOT IN (?)", proxy_owner.missions.completed_ids]
-        ) == 0
-      end
+      # Rank instance is created from class except of association to avoid rank creation when saving character
+      proxy_owner.mission_group_ranks.find_by_mission_group_id(group.id) ||
+        MissionGroupRank.new(
+          :character      => proxy_owner,
+          :mission_group  => group
+        )
     end
   end
 end

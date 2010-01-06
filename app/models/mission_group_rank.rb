@@ -15,7 +15,19 @@ class MissionGroupRank < ActiveRecord::Base
 
   attr_reader :payouts
 
+  def completed?
+    self.new_record? ? (missions_completed? && bosses_completed?) : self[:completed]
+  end
+
   protected
+
+  def missions_completed?
+    (mission_group.mission_ids - character.missions.completed_ids).empty?
+  end
+
+  def bosses_completed?
+    true
+  end
 
   def set_completed
     self.completed = true
