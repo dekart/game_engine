@@ -2,7 +2,7 @@
 
 <%= title(fb_i(t(".title"))) %>
 
-<%= render :partial => "help_requests/latest", :locals => {:context => :fight} %>
+<%= latest_help_request_for(:fight) %>
 
 <% if current_character.weak? %>
   <p>

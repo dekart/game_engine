@@ -1,15 +1,13 @@
-<% if help_request = current_character.help_requests.latest(context) and help_request.should_be_displayed? %>
-  <div id="latest_help_request">
-    <% fb_i t(".text.#{context}") do %>
-      <% if context == :mission %>
-        <%= fb_it(:mission, content_tag(:strong, help_request.context.name)) %>
-      <% else %>
-        <%= fb_it(:victim, character_name_link(help_request.context.victim)) %>
-      <% end %>
-    
-      <%= fb_it(:friend_amount, content_tag(:strong, help_request.help_results.size)) %>
-      <%= fb_it(:money_amount, content_tag(:span, number_to_currency(help_request.money), :class => :basic_money)) %>
-      <%= fb_it(:experience_amount, content_tag(:span, help_request.experience, :class => :experience)) %>
+<div id="latest_help_request">
+  <% fb_i t(".text.#{context}") do %>
+    <% if context == :mission %>
+      <%= fb_it(:mission, content_tag(:strong, help_request.context.name)) %>
+    <% else %>
+      <%= fb_it(:victim, character_name_link(help_request.context.victim)) %>
     <% end %>
-  </div>
-<% end %>
+
+    <%= fb_it(:friend_amount, content_tag(:strong, help_request.help_results.size)) %>
+    <%= fb_it(:money_amount, content_tag(:span, number_to_currency(help_request.money), :class => :basic_money)) %>
+    <%= fb_it(:experience_amount, content_tag(:span, help_request.experience, :class => :experience)) %>
+  <% end %>
+</div>

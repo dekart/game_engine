@@ -1,6 +1,6 @@
 <%= title(fb_i(t(".title"))) %>
 
-<%= render :partial => "help_requests/latest", :locals => {:context => :mission} %>
+<%= latest_help_request_for(:mission) %>
 
 <div id="mission_group_list">
   <%= render(
