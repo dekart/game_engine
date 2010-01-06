@@ -3,20 +3,24 @@ class BossFight < ActiveRecord::Base
   belongs_to :character
 
   named_scope :latest, :order => "created_at DESC"
-  named_scope :in_progress, :conditions => "workflow_state = 'progress'"
 
-  include Workflow
-
-  workflow do
-    state :progress do
-      event :won!,      :transitions_to => :won
-      event :lost!,     :transitions_to => :lost
-      event :expire!,   :transitions_to => :lost
-    end
-
+  state_machine :initial => :progress do
+    state :progress
     state :won
     state :lost
     state :expired
+
+    event :win do
+      transition :progress => :won
+    end
+
+    event :lose do
+      transition :progress => :lost
+    end
+    
+    event :expire do
+      transition :progress => :expired
+    end
   end
 
   attr_reader :winner, :boss_hp_loss, :character_hp_loss, :payouts
@@ -42,14 +46,14 @@ class BossFight < ActiveRecord::Base
 
           @payouts = boss.payouts.apply(character, :complete)
 
-          self.won!
+          self.win!
         elsif character_lost?
           @payouts = boss.payouts.apply(character, :failure)
 
-          self.lost!
+          self.lose!
         end
 
-        save!
+        save
         character.save!
       end
     end
@@ -59,9 +63,9 @@ class BossFight < ActiveRecord::Base
     self.class.transaction do
       @payouts = boss.payouts.apply(character, :failure)
 
-      self.expire!
+      expire!
 
-      save!
+      save
       character.save!
     end
   end

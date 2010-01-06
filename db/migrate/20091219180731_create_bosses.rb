@@ -33,7 +33,7 @@ class CreateBosses < ActiveRecord::Migration
       
       t.datetime  :expire_at
 
-      t.string  :workflow_state, :limit => 50
+      t.string    :state, :limit => 50
 
       t.timestamps
     end
