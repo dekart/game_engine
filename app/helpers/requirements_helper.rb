@@ -32,4 +32,17 @@ module RequirementsHelper
       satisfied
     )
   end
+
+  def vip_money_requirement(value)
+    requirement(:vip_money,
+      "%s (%s)" %[
+        t("requirements.attribute.text",
+          :amount => content_tag(:span, number_to_currency(value), :class => :value),
+          :name   => Character.human_attribute_name("vip_money")
+        ),
+        link_to(fb_i(t("premia.get_vip")), premium_path)
+      ],
+      current_character.vip_money >= value
+    )
+  end
 end
