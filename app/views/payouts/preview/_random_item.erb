@@ -1,5 +1,3 @@
-<% if payout.item %>
-  <%= payout_preview(:random_item, item_image(payout.item, :icon),
-        :label => payout.item.name
-      ) %>
-<% end %>
+<%= payout_preview(:item, asset_image_tag(:random_item),
+      :label => t("payouts.random_item.name")
+    ) %>

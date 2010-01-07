@@ -155,7 +155,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_list .image img {margin-right: 10px;}
   #mission_list .details {padding-right: 10px;}
   #mission_list .details .name {font-size: 14px; margin-bottom: 5px;font-weight: bold;}
-  #mission_list .payout_preview {width: 100px;}
+  #mission_list .payout_preview {width: 200px;}
   #mission_list .requires {width: 100px;}
     #mission_list .requires .energy {height: 25px;line-height: 25px;padding-left: 21px; background: url(asset:icons_energy) center left no-repeat;}
     #mission_list .requires .health,
@@ -570,10 +570,22 @@ form .error {color: red; padding: 3px 0px;}
   #gift_form .friend_groups a {padding: 5px; margin: 0 5px;}
   #gift_form .friend_groups a.current {border:  1px solid #D0D0D0; color: #333333;}
 
-.payout_preview .payout {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat;}
+.payout_preview .payout {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat; clear: both;}
+  .payout_preview .payout .value {font-weight: bold; margin-right: 3px;}
   .payout_preview .basic_money { background-image: url(asset:icons_basic_money);}
+  .payout_preview .vip_money { background-image: url(asset:icons_vip_money);}
+  .payout_preview .health { background-image: url(asset:icons_health);}
+  .payout_preview .energy { background-image: url(asset:icons_energy);}
   .payout_preview .experience { background-image: url(asset:icons_experience);}
-
+  .payout_preview .mercenaries { background-image: url(asset:icons_alliance);}
+  .payout_preview .item,
+  .payout_preview .property {line-height: 40px; height: 40px !important; padding-left: 0;}
+    .payout_preview .item .value,
+    .payout_preview .property .value {display: block; float:left; margin-right: 5px;}
+    .payout_preview .item .label,
+    .payout_preview .property .label {vertical-align:middle;}
+    .payout_preview .item .name,
+    .payout_preview .property .name {font-weight: bold;}
 
 #boss_list .boss {margin-top: 15px; border: 2px solid #BDC7D8; padding: 10px; width: 100%;}
   #boss_list .boss .image {width: 220px;}

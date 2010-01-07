@@ -7,8 +7,6 @@
   <td class="payout_preview">
     <%= payout_preview(:experience, mission.experience) %>
     <%= payout_preview(:basic_money, mission_money(mission)) %>
-  </td>
-  <td class="payout_advanced">
     <%= payout_list(mission.payouts, :add, :preview) %>
   </td>
   <td class="requires">

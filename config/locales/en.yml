@@ -105,9 +105,11 @@ en:
     item:
       name: "Item"
       missing: "Missing item!"
+      label: "{{name}} X {{amount}}"
     property:
       name: "Property"
       missing: "Missing property type!"
+      label: "{{name}} X {{amount}}"
     vip_money:
       name: "Gems"
     basic_money:

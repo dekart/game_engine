@@ -4,16 +4,23 @@ module Payouts
       @value = value.is_a?(::Item) ? value.id : value.to_i
     end
 
+    def amount=(value)
+      @amount = value.to_i
+    end
+
+    def amount
+      @amount || 1
+    end
+
     def item
       ::Item.find_by_id(self.value)
     end
 
     def apply(character)
-      if self.action == :remove
-        character.inventories.take!(self.item)
+      if action == :remove
+        character.inventories.take!(item, amount)
       else
-
-        character.inventories.give!(self.item)
+        character.inventories.give!(item, amount)
       end
     end
   end

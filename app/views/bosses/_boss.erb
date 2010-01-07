@@ -7,7 +7,7 @@
       <h2><%= fb_i(boss.name) %></h2>
       <div class="description"><%= boss.description %></div>
 
-      <div class="payout payout_preview">
+      <div class="payout_preview clearfix">
         <h4><%= fb_i(t(".payout")) %></h4>
 
         <%= payout_preview(:experience, boss.experience) %>
@@ -15,7 +15,7 @@
         <%= payout_list(boss.payouts, :add, :preview) %>
       </div>
 
-      <div class="requirements">
+      <div class="requirements clearfix">
         <h4><%= fb_i(t(".requirements")) %></h4>
 
         <%= attribute_requirement(:energy, boss.ep_cost, current_character.ep >= boss.ep_cost) %>

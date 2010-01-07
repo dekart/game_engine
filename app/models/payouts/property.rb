@@ -4,15 +4,23 @@ module Payouts
       @value = value.is_a?(::PropertyType) ? value.id : value.to_i
     end
 
+    def amount=(value)
+      @amount = value.to_i
+    end
+
+    def amount
+      @amount || 1
+    end
+
     def property_type
       ::PropertyType.find_by_id(self.value)
     end
 
     def apply(character)
-      if self.action == :remove
-        character.properties.take!(self.property_type)
+      if action == :remove
+        character.properties.take!(property_type, amount)
       else
-        character.properties.give!(self.property_type)
+        character.properties.give!(property_type, amount)
       end
     end
   end
