@@ -202,13 +202,10 @@ form .error {color: red; padding: 3px 0px;}
 #inventory_list {margin-top: 10px;}
 #inventory_list td{padding: 10px; border-bottom: 1px solid #d0d0d0;}
   #inventory_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
-  #inventory_list .effects {width: 70px;}
-    #inventory_list .effects div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
-      #inventory_list .effects .attack {background-image: url(asset:icons_attack);}
-      #inventory_list .effects .defence {background-image: url(asset:icons_defence);}
-      #inventory_list .effects .restore_health {background-image: url(asset:icons_health);}
-      #inventory_list .effects .restore_energy {background-image: url(asset:icons_energy);}
-      #inventory_list .effects .upgrade {background-image: url(asset:icons_level);}
+  #inventory_list .payout_preview {padding-right: 10px;}
+    #inventory_list .payout_preview .restore_health {background-image: url(asset:icons_health);}
+    #inventory_list .payout_preview .restore_energy {background-image: url(asset:icons_energy);}
+    #inventory_list .payout_preview .upgrade {background-image: url(asset:icons_level);}
   #inventory_list .stats {width: 70px;}
     #inventory_list .stats div {margin-bottom: 5px;}
   #inventory_list .spacer {border:0;}

@@ -12,12 +12,12 @@
               <div class="name"><%= fb_i(inventory.name) %></div>
               <div class="description"><%= fb_i(inventory.description) %></div>
             </td>
-            <td class="effects">
-              <%= attack(inventory.attack) %>
-              <%= defence(inventory.defence) %>
-              
+            <td class="payout_preview">
+              <%= payout_preview(:attack, "+%d" % inventory.attack) if inventory.attack > 0 %>
+              <%= payout_preview(:defence, "+%d" % inventory.defence) if inventory.defence > 0 %>
+
               <% inventory.effects.each do |effect| %>
-                <%= content_tag(:div, effect.value, :class => effect.name) %>
+                <%= payout_preview(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
               <% end %>
             </td>
             <td class="stats">
