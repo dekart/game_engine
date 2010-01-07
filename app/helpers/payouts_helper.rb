@@ -4,6 +4,8 @@ module PayoutsHelper
 
     returning result = "" do
       payouts.by_action(action).each do |payout|
+        next unless payout.visible
+        
         result << render("payouts/#{format}/#{payout.class.to_s.underscore.split("/").last}",
           :payout => payout
         )

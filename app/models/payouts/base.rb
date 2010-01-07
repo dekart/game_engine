@@ -80,5 +80,9 @@ module Payouts
     def action=(value)
       @action = value.to_sym
     end
+
+    def visible=(value)
+      @visible = (value.to_i == 1)
+    end
   end
 end
