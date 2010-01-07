@@ -7,18 +7,20 @@
       <h2><%= fb_i(boss.name) %></h2>
       <div class="description"><%= boss.description %></div>
 
-      <div class="payouts">
-        <h4><%= fb_i(t(".payouts")) %></h4>
+      <div class="payout payout_preview">
+        <h4><%= fb_i(t(".payout")) %></h4>
+
+        <%= payout_preview(:experience, boss.experience) %>
         
-        <div class="experience"><%= boss.experience %></div>
-        <%= mission_payouts(boss) %>
+        <%= payout_list(boss.payouts, :add, :preview) %>
       </div>
 
       <div class="requirements">
         <h4><%= fb_i(t(".requirements")) %></h4>
 
-        <div class="energy"><%= boss.ep_cost %></div>
-        <%= mission_requirements(boss) %>
+        <%= attribute_requirement(:energy, boss.ep_cost, current_character.ep >= boss.ep_cost) %>
+
+        <%= requirement_list(boss.requirements) %>
       </div>
 
       <div class="buttons">

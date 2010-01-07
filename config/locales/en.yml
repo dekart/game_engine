@@ -405,16 +405,17 @@ en:
         fulfill: "Fulfill"
     helpers:
       completed: "Completed!"
-      
+
+  bosses:
+    boss:
+      payout: "Payout:"
+      requirements: "Requirements:"
+      buttons:
+        attack: "Attack!"
   boss_fights:
     block:
       text: "You're currently fighting with {{boss}}."
       time_left: "Time left: {{value}}"
-      buttons:
-        attack: "Attack!"
-    boss:
-      payouts: "Payouts:"
-      requirements: "Requirements:"
       buttons:
         attack: "Attack!"
     create:

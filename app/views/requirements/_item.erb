@@ -1,4 +1,4 @@
-<% content_tag :div, :class => "#{requirement.name} #{ "not_satisfied" unless satisfied }" do %>
+<% requirement(requirement.name, satisfied) do %>
   <%= link_to(item_image(requirement.item, :icon), item_group_items_path(requirement.item.item_group)) %>
   
   <div class="amount"><%= t(".amount", :amount => requirement.amount) %></div>

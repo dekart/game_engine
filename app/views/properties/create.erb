@@ -16,19 +16,8 @@
     <h3><%= fb_i(t(".you_spent.title")) %></h3>
 
     <div class="payouts">
-      <% if @property.basic_price > 0 %>
-        <%= payout(:basic_money,
-              Character.human_attribute_name("basic_money"),
-              number_to_currency(@property.basic_money)
-            ) %>
-      <% end %>
-
-      <% if @property.vip_price > 0 %>
-        <%= payout(:vip_money,
-              Character.human_attribute_name("vip_money"),
-              number_to_currency(@property.vip_money)
-            ) %>
-      <% end %>
+      <%= payout(:basic_money, number_to_currency(@property.basic_money)) if @property.basic_price > 0 %>
+      <%= payout(:vip_money, number_to_currency(@property.vip_money)) if @property.vip_price > 0 %>
     </div>
   <% else %>
     <p>

@@ -155,10 +155,7 @@ form .error {color: red; padding: 3px 0px;}
   #mission_list .image img {margin-right: 10px;}
   #mission_list .details {padding-right: 10px;}
   #mission_list .details .name {font-size: 14px; margin-bottom: 5px;font-weight: bold;}
-  #mission_list .payout {width: 100px;}
-    #mission_list .payout div {height: 25px;line-height: 25px;padding-left: 21px;}
-      #mission_list .payout .basic_money { background: url(asset:icons_basic_money) center left no-repeat;}
-      #mission_list .payout .experience { background: url(asset:icons_experience) center left no-repeat;}
+  #mission_list .payout_preview {width: 100px;}
   #mission_list .requires {width: 100px;}
     #mission_list .requires .energy {height: 25px;line-height: 25px;padding-left: 21px; background: url(asset:icons_energy) center left no-repeat;}
     #mission_list .requires .health,
@@ -326,6 +323,13 @@ form .error {color: red; padding: 3px 0px;}
   #result .buttons {float:right;}
     #result .button { clear: right; margin: 0 0 10px 10px;}
       #result .publish span {background-image: url(asset:icons_publish);}
+  #result .requirements .health,
+  #result .requirements .attack,
+  #result .requirements .defence,
+  #result .requirements .alliance,
+  #result .requirements .health_point {clear: both;}
+  #result .requirements .item {float:left; margin: 0 10px 2px 0;}
+  #result .requirements .item .amount {text-align: center;}
 
 /* Missions result block */
 #mission_result {padding:0px 30px; background: url(asset:icons_missions) 5px 0px no-repeat;}
@@ -342,13 +346,6 @@ form .error {color: red; padding: 3px 0px;}
     #mission_result .progress .completed {height: 10px; background-image: url(asset:progress_completed);}
   #mission_result .child_missions {margin: 15px 0;}
     #mission_result .child_missions .child {line-height: 22px; padding-left: 23px; background: url(asset:icons_missions) center left no-repeat; margin-bottom: 15px;}
-  #mission_result .requirements .health,
-  #mission_result .requirements .attack,
-  #mission_result .requirements .defence,
-  #mission_result .requirements .alliance,
-  #mission_result .requirements .health_point {clear: both;}
-  #mission_result .requirements .item {float:left; margin: 0 10px 2px 0;}
-  #mission_result .requirements .item .amount {text-align: center;}
   
 /* Mission help result block */
 #help_result {padding:0px 30px; background: url(asset:icons_alliance) 5px 0px no-repeat;}
@@ -572,3 +569,11 @@ form .error {color: red; padding: 3px 0px;}
 #gift_form .friend_groups {font-size: 14px; font-weight: bold;line-height: 30px;}
   #gift_form .friend_groups a {padding: 5px; margin: 0 5px;}
   #gift_form .friend_groups a.current {border:  1px solid #D0D0D0; color: #333333;}
+
+.payout_preview .payout {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat;}
+  .payout_preview .basic_money { background-image: url(asset:icons_basic_money);}
+  .payout_preview .experience { background-image: url(asset:icons_experience);}
+
+
+#boss_list .boss {margin-top: 15px; border: 2px solid #BDC7D8; padding: 10px; width: 100%;}
+  #boss_list .boss .image {width: 220px;}

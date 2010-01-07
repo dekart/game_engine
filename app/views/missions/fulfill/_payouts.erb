@@ -4,15 +4,9 @@
       <td class="received">
         <h3><%= fb_i(t(".you_received.title")) %></h3>
 
-        <%= payout(:experience,
-              Character.human_attribute_name("experience"),
-              result.experience
-            ) if result.experience %>
+        <%= payout(:experience, result.experience) if result.experience %>
 
-        <%= payout(:basic_money,
-              Character.human_attribute_name("basic_money"),
-              number_to_currency(result.money)
-            ) if result.money %>
+        <%= payout(:basic_money, number_to_currency(result.money)) if result.money %>
 
         <%= payout_list(result.payouts, :add) %>
 
@@ -44,7 +38,7 @@
       <h3><%= fb_i(t(".you_spent.title")) %></h3>
 
       <% if result.free_fulfillment %>
-        <% payout("energy zero", Character.human_attribute_name("energy"), 0) do %>
+        <% payout("energy zero", 0, :label => Character.human_attribute_name("energy")) do %>
           <span class="relation">
             <% fb_i t(".you_spent.zero_energy") do %>
               <%= fb_it(:user,
@@ -56,7 +50,7 @@
           </span>
         <% end %>
       <% else %>
-        <%= payout(:energy, Character.human_attribute_name("energy"), mission.ep_cost) %>
+        <%= payout(:energy, mission.ep_cost) %>
       <% end %>
 
       <%= payout_list(result.payouts, :remove) %>

@@ -2,10 +2,7 @@
   <div class="payouts">
     <h3><%= t(".you_received") %></h3>
 
-    <%= payout(:experience,
-          Character.human_attribute_name("experience"),
-          fight.experience
-        ) if fight.won? %>
+    <%= payout(:experience, fight.experience) if fight.won? %>
 
     <%= payout_list(fight.payouts, :add) %>
   </div>
@@ -15,10 +12,7 @@
   <div class="payouts">
     <h3><%= t(".you_lost") %></h3>
 
-    <%= payout(:energy,
-        Character.human_attribute_name("energy"),
-        fight.ep_cost
-      ) if fight.lost? || fight.expired? %>
+    <%= payout(:energy, fight.ep_cost) if fight.lost? || fight.expired? %>
 
     <%= payout_list(fight.payouts, :remove) %>
   </div>

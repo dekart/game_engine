@@ -4,16 +4,17 @@
     <div class="name"><%= fb_i(mission.name) %></div>
     <div class="description"><%= fb_i(mission.description) %></div>
   </td>
-  <td class="payout">
-    <div class="experience"><%= mission.experience %></div>
-    <div class="basic_money">
-      <%= "%s - %s" % [number_to_currency(mission.money_min), number_to_currency(mission.money_max)] %>
-    </div>
+  <td class="payout_preview">
+    <%= payout_preview(:experience, mission.experience) %>
+    <%= payout_preview(:basic_money, mission_money(mission)) %>
   </td>
-  <td class="payout_advanced"><%= mission_payouts(mission) %></td>
+  <td class="payout_advanced">
+    <%= payout_list(mission.payouts, :add, :preview) %>
+  </td>
   <td class="requires">
-    <div class="energy"><%= mission.ep_cost %></div>
-    <%= mission_requirements(mission) %>
+    <%= attribute_requirement(:energy, mission.ep_cost, current_character.ep >= mission.ep_cost) %>
+
+    <%= requirement_list(mission.requirements) %>
   </td>
   <td class="progress" id="<%= dom_id(mission, :progress) %>"><%= mission_progress(current_character, mission) %></td>
   <td class="controls">

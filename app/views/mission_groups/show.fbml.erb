@@ -12,16 +12,15 @@
       ) %>
 </div>
 
-
 <% unless @mission_group.locked?(current_character) %>
-  <div id="boss_list">
-    <% @mission_group.bosses.each do |boss| %>
-      <%= render "boss_fights/boss", :boss => boss %>
-    <% end %>
-  </div>
-
   <div id="mission_list">
     <%= render "missions/list", :missions => @mission_group.missions %>
+  </div>
+
+  <div id="boss_list">
+    <% @mission_group.bosses.each do |boss| %>
+      <%= render "bosses/boss", :boss => boss %>
+    <% end %>
   </div>
 <% else %>
   <div class="empty_set" id="next_mission_group">

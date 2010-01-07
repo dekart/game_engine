@@ -13,31 +13,7 @@ module MissionsHelper
   end
   safe_helper :mission_progress
 
-  def mission_requirements(mission, filter = nil)
-    returning result = "" do
-      mission.requirements.each do |requirement|
-        next if filter == :unsatisfied and requirement.satisfies?(current_character)
-
-        result << render(
-          :partial => "requirements/#{requirement.name}", 
-          :locals => {:requirement => requirement, :satisfied => requirement.satisfies?(current_character)}
-        )
-      end
-    end
+  def mission_money(mission)
+    "%s - %s" % [number_to_currency(mission.money_min), number_to_currency(mission.money_max)]
   end
-  safe_helper :mission_requirements
-
-  def mission_payouts(mission, display_all = true)
-    returning result = "" do
-      mission.payouts.each do |payout|
-        next unless display_all || payout.visible
-        
-        result << render(
-          :partial  => "payouts/#{payout.name}",
-          :locals   => {:payout => payout}
-        )
-      end
-    end
-  end
-  safe_helper :mission_payouts
 end

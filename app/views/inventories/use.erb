@@ -9,7 +9,7 @@
 
   <div class="payouts">
     <% @inventory.effects.each do |effect| %>
-      <%= payout(effect.name, t("effects.#{effect.name}.name"), effect.value) %>
+      <%= payout(effect.name, effect.value, :label => t("effects.#{effect.name}.name")) %>
     <% end %>
   </div>
 
