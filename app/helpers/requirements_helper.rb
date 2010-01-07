@@ -16,7 +16,7 @@ module RequirementsHelper
   def requirement(*args, &block)
     type      = args.shift
     value     = block_given? ? capture(&block) : args.shift
-    satisfied = args.shift || true
+    satisfied = args.first
 
     result = content_tag(:div, value, :class => "requirement #{type} #{"not_satisfied" unless satisfied}")
 
@@ -25,8 +25,10 @@ module RequirementsHelper
 
   def attribute_requirement(attribute, value, satisfied = true)
     requirement(attribute,
-      content_tag(:span, value, :class => :value) +
-      content_tag(:span, Character.human_attribute_name(attribute.to_s)),
+      t("requirements.attribute.text",
+        :amount => content_tag(:span, value, :class => :value),
+        :name   => Character.human_attribute_name(attribute.to_s)
+      ),
       satisfied
     )
   end

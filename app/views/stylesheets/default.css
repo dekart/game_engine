@@ -155,18 +155,8 @@ form .error {color: red; padding: 3px 0px;}
   #mission_list .image img {margin-right: 10px;}
   #mission_list .details {padding-right: 10px;}
   #mission_list .details .name {font-size: 14px; margin-bottom: 5px;font-weight: bold;}
-  #mission_list .payout_preview {width: 200px;}
-  #mission_list .requires {width: 100px;}
-    #mission_list .requires .energy {height: 25px;line-height: 25px;padding-left: 21px; background: url(asset:icons_energy) center left no-repeat;}
-    #mission_list .requires .health,
-    #mission_list .requires .attack,
-    #mission_list .requires .defence,
-    #mission_list .requires .alliance,
-    #mission_list .requires .health_point {clear: both;}
-    #mission_list .requires .item {float:left; margin: 0 2px 2px 0;}
-    #mission_list .requires .item .amount {text-align: center;}
-    #mission_list .requires .not_satisfied {color: #ff5353; font-weight: bold;}
-    #mission_list .requires .not_satisfied img{border: 3px solid #ff5353;}
+  #mission_list .payout_preview {padding-right: 10px;}
+  #mission_list .requirements {padding-right: 10px;}
   #mission_list .progress .bar{width: 100px; border: 1px solid #d0d0d0;}
     #mission_list .progress .percentage {height: 10px; font-size: 0px; background-image: url(asset:progress);}
     #mission_list .progress .completed {height: 10px; background-image: url(asset:progress_completed);}
@@ -188,17 +178,11 @@ form .error {color: red; padding: 3px 0px;}
   .item_list .info .name {font-size: 15px; margin-bottom: 5px;font-weight: bold;}
   .item_list .info .sale_limit,
   .item_list .info .time_limit {color: red;}
-  .item_list .details {width: 40px;}
-    .item_list .details div {font-weight:bold;line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
-      .item_list .details .attack {background-image: url(asset:icons_attack);}
-      .item_list .details .defence {background-image: url(asset:icons_defence);}
-      .item_list .details .restore_health{background-image: url(asset:icons_health);}
-      .item_list .details .restore_energy{background-image: url(asset:icons_energy);}
-      .item_list .details .upgrade{background-image: url(asset:icons_level);}
-  .item_list .requires {width: 100px;}
-    .item_list .requires div {line-height: 22px;height: 22px; padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
-      .item_list .requires .basic_price{background-image: url(asset:icons_basic_money);}
-      .item_list .requires .vip_price{background-image: url(asset:icons_vip_money);}
+  .item_list .payout_preview {padding-right: 10px;}
+    .item_list .payout_preview .restore_health{background-image: url(asset:icons_health);}
+    .item_list .payout_preview .restore_energy{background-image: url(asset:icons_energy);}
+    .item_list .payout_preview .upgrade{background-image: url(asset:icons_level);}
+  .item_list .requirements {padding-right: 10px;}
   .item_list .spacer {border:0;}
   .item_list .controls {text-align:right; width: 130px;}
   .item_list .controls select {margin: 5px;}
@@ -578,6 +562,8 @@ form .error {color: red; padding: 3px 0px;}
   .payout_preview .energy { background-image: url(asset:icons_energy);}
   .payout_preview .experience { background-image: url(asset:icons_experience);}
   .payout_preview .mercenaries { background-image: url(asset:icons_alliance);}
+  .payout_preview .attack { background-image: url(asset:icons_attack);}
+  .payout_preview .defence { background-image: url(asset:icons_defence);}
   .payout_preview .item,
   .payout_preview .property {line-height: 40px; height: 40px !important; padding-left: 0;}
     .payout_preview .item .value,
@@ -586,6 +572,22 @@ form .error {color: red; padding: 3px 0px;}
     .payout_preview .property .label {vertical-align:middle;}
     .payout_preview .item .name,
     .payout_preview .property .name {font-weight: bold;}
+
+.requirements .requirement {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat; clear: both;}
+  .requirements .value {font-weight: bold;}
+  .requirements .basic_money { background-image: url(asset:icons_basic_money);}
+  .requirements .vip_money { background-image: url(asset:icons_vip_money);}
+  .requirements .energy { background-image: url(asset:icons_energy);}
+  .requirements .health_point { background-image: url(asset:icons_health);}
+  .requirements .attack { background-image: url(asset:icons_attack);}
+  .requirements .defence { background-image: url(asset:icons_defence);}
+  .requirements .alliance { background-image: url(asset:icons_alliance);}
+  .requirements .item {line-height: 40px; height: 40px !important; padding-left: 0;}
+    .requirements .item .image {display: block; float:left; margin-right: 5px;}
+    .requirements .item .label {vertical-align:middle;}
+.requirements .not_satisfied {color: #ff5353; font-weight: bold;}
+  .requirements .not_satisfied img{border: 3px solid #ff5353;}
+
 
 #boss_list .boss {margin-top: 15px; border: 2px solid #BDC7D8; padding: 10px; width: 100%;}
   #boss_list .boss .image {width: 220px;}

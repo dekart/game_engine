@@ -75,10 +75,6 @@ en:
               not_enough_energy: "You don't have enough energy to fight. Take a rest!"
               too_weak: "You are too weak to fight! Take a rest!"
   effects:
-    attack:
-      name: "Attack"
-    defence:
-      name: "Defence"
     restore_energy:
       name: "Restore Energy"
     restore_health:
@@ -86,21 +82,23 @@ en:
     upgrade:
       name: "Upgrade Points"
   requirements:
+    attribute:
+      text: "{{amount}} {{name}}"
     item:
       name: "Item"
-      amount: "X {{amount}}"
+      text: "{{name}} X {{amount}}"
     health_point:
       name: "Health Points"
-      text: "{amount} Health Points"
+      text: "{{amount}} Health Points"
     attack:
       name: "Attack"
-      text: "{amount} Attack Points"
+      text: "{{amount}} Attack Points"
     defence:
       name: "Defence"
-      text: "{amount} Defence Points"
+      text: "{{amount}} Defence Points"
     alliance:
       name: "Alliance"
-      text: "{amount} Alliance Members"
+      text: "{{amount}} Alliance Members"
   payouts:
     item:
       name: "Item"

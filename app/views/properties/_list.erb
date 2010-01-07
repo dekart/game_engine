@@ -22,9 +22,11 @@
           <%= fb_it(:amount, content_tag(:span, number_to_currency(type.income), :class => :basic_money)) %>
         <% end %>
       </td>
-      <td class="requires">
-        <%= basic_price(property ? type.inflated_price(property.amount + 1) : type.basic_price) %>
-        <%= vip_price(type.vip_price) %>
+      <td class="requirements">
+        <%= attribute_requirement(:basic_money, 
+              number_to_currency(property ? type.inflated_price(property.amount + 1) : type.basic_price)
+            ) if type.basic_price > 0 %>
+        <%= attribute_requirement(:vip_money, type.vip_price) if type.vip_price > 0 %>
       </td>
       <td class="controls">
         <% form_tag "", :class => :clearfix do %>

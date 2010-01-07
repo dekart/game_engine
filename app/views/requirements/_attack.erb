@@ -1,5 +1,4 @@
-<% requirement(requirement.name, satisfied) do %>
-  <% fb_i t(".text") do %>
-    <%= fb_it(:amount, requirement.value) %>
-  <% end %>
-<% end %>
+<%= requirement(requirement.name,
+      t(".text", :amount => content_tag(:span, requirement.value, :class => :value)),
+      satisfied
+    ) %>

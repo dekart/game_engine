@@ -9,7 +9,7 @@
     <%= payout_preview(:basic_money, mission_money(mission)) %>
     <%= payout_list(mission.payouts, :add, :preview) %>
   </td>
-  <td class="requires">
+  <td class="requirements">
     <%= attribute_requirement(:energy, mission.ep_cost, current_character.ep >= mission.ep_cost) %>
 
     <%= requirement_list(mission.requirements) %>

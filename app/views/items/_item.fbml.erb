@@ -24,17 +24,17 @@
       <% end %>
     <% end %>
   </td>
-  <td class="details">
-    <%= attack(item.attack) %>
-    <%= defence(item.defence) %>
+  <td class="payout_preview">
+    <%= payout_preview(:attack, "+%d" % item.attack) if item.attack > 0 %>
+    <%= payout_preview(:defence, "+%d" % item.defence) if item.defence > 0 %>
     
     <% item.effects.each do |effect| %>
-      <%= content_tag(:div, effect.value, :class => effect.name) %>
+      <%= payout_preview(effect.name, effect.value, :label => t("effects.#{effect.name}.name")) %>
     <% end %>
   </td>
-  <td class="requires">
-    <%= basic_price(item.basic_price) %>
-    <%= vip_price(item.vip_price) %>
+  <td class="requirements">
+    <%= attribute_requirement(:basic_money, number_to_currency(item.basic_price)) if item.basic_price > 0 %>
+    <%= attribute_requirement(:vip_money, number_to_currency(item.vip_price)) if item.vip_price > 0 %>
   </td>
   <td class="controls">
     <% form_tag "", :class => :clearfix do %>
