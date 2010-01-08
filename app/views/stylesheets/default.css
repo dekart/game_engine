@@ -549,7 +549,7 @@ form .error {color: red; padding: 3px 0px;}
   #gift_form .friend_groups a {padding: 5px; margin: 0 5px;}
   #gift_form .friend_groups a.current {border:  1px solid #D0D0D0; color: #333333;}
 
-.payout_preview .payout {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat; clear: both;}
+.payout_preview .payout {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat; clear: both; white-space: nowrap;}
   .payout_preview .payout .value {font-weight: bold; margin-right: 3px;}
   .payout_preview .basic_money { background-image: url(asset:icons_basic_money);}
   .payout_preview .vip_money { background-image: url(asset:icons_vip_money);}
@@ -568,7 +568,7 @@ form .error {color: red; padding: 3px 0px;}
     .payout_preview .item .name,
     .payout_preview .property .name {font-weight: bold;}
 
-.requirements .requirement {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat; clear: both;}
+.requirements .requirement {height: 25px;line-height: 25px;padding-left: 21px; background-position: left; background-repeat: no-repeat; clear: both; white-space: nowrap;}
   .requirements .value {font-weight: bold;}
   .requirements .basic_money { background-image: url(asset:icons_basic_money);}
   .requirements .vip_money { background-image: url(asset:icons_vip_money);}
