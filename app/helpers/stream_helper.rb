@@ -107,6 +107,24 @@ module StreamHelper
     stream_dialog(:attachment => attachment)
   end
 
+  def boss_defeated_stream_dialog(boss)
+    attachment = {
+      :caption => t("stories.boss.title", :boss => boss.name, :app => t("app_name"))
+    }
+
+    if boss.image?
+      attachment[:media] = [
+        {
+          :type => "image",
+          :src  => image_path(boss.image.url),
+          :href => mission_groups_url
+        }
+      ]
+    end
+
+    stream_dialog(:attachment => attachment)
+  end
+
   def help_request_stream_dialog(context)
     context_type = context.class.to_s.underscore
 

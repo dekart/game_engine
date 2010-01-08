@@ -241,7 +241,7 @@ en:
     create:
       success:
         buttons:
-          publish: "Brag About It"
+          publish: "Brag About It!"
           request_help: "Ask Friends to Attack"
         message: "You attacked {user_name} and WON the battle against {{pronoun}}!"
         you_received: "You received:"
@@ -287,7 +287,7 @@ en:
   inventories:
     create:
       buttons:
-        publish: "Brag About It"
+        publish: "Brag About It!"
         inventory: "Go To Inventory"
       messages:
         success: "You successfully bought {amount} of {item_name}"
@@ -365,7 +365,7 @@ en:
         message: "You completed this mission and received new title:"
         child_missions: "You also opened new missions:"
         buttons:
-          publish: "Brag About It"
+          publish: "Brag About It!"
       success:
         message: "Well done!"
         buttons:
@@ -436,6 +436,8 @@ en:
           result: "You defeated {{boss}}!"
           character: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
           boss: "{{attacker}} attacked {{victim}} and did {{damage}} damage"
+        buttons:
+          publish: "Brag About It!"
       expired:
         messages:
           result: "You missed your chance to defeat {{boss}}!"
@@ -515,7 +517,7 @@ en:
   properties:
     create:
       buttons:
-        publish: "Brag About It"
+        publish: "Brag About It!"
       messages:
         success: "You successfully bought {amount} of {property_name}"
       you_spent:

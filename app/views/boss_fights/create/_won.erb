@@ -22,6 +22,12 @@
               :boss => content_tag(:span, fight.boss.name, :class => :boss)
             ) %>
       </div>
+
+      <div class="buttons">
+        <%= link_to_function(button(:publish), boss_defeated_stream_dialog(fight.boss),
+              :class => "publish button"
+            ) %>
+      </div>
     </td>
     <td class="boss">
       <%= render("boss_fights/create/boss",
