@@ -1,6 +1,23 @@
 facebook_config = YAML.load_file(Rails.root.join("config", "facebooker.yml"))[Rails.env]
 
+puts "Seeding configuration..."
+
 Configuration.create! if Configuration.count == 0
+
+puts "Seeding assets..."
+
+asset_folder = File.join(RAILS_ROOT, "public", "images")
+
+Dir[File.join(asset_folder, "**", "*")].each do |file_name|
+  if File.file?(file_name)
+    Asset.create(
+      :alias => file_name.sub(asset_folder + "/", "").sub(File.extname(file_name), "").gsub("/", "_"),
+      :image => File.open(file_name)
+    )
+  end
+end
+
+puts "Seeding items..."
 
 weapons = ItemGroup.create!(:name => "Weapons")
 
@@ -47,6 +64,8 @@ upgrade = potions.items.create!(
     Effects::Upgrade.new(5)
   )
 )
+
+puts "Seeding missions..."
 
 tutorial = MissionGroup.create!(:name => "Tutorial", :level => 1)
 
@@ -234,6 +253,7 @@ recruit.missions.create!(
   :title          => "Baron Assistant"
 )
 
+puts "Seeding properties..."
 
 mill = PropertyType.create!(
   :name         => "Windmill",
@@ -244,6 +264,8 @@ mill = PropertyType.create!(
   :image        => File.open(Rails.root.join("db", "pictures", "mill.jpg"))
 )
 
+puts "Seeding tips..."
+
 Tip.create!(
   :text => "Put your money to the <a href=\"/#{facebook_config["canvas_page_name"]}/bank_operations/new\">Treasure</a> and no one will be able to grab it in the fight"
 )
@@ -251,3 +273,5 @@ Tip.create!(
 Tip.create!(
   :text => "Properties give you hourly income. Purchase <a href=\"/#{facebook_config["canvas_page_name"]}/properties/new\">more properties</a> to get more money in the future."
 )
+
+puts "Seed complete!"
