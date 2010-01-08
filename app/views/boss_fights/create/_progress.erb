@@ -28,7 +28,9 @@
 
       <% if fight.time_limit? %>
         <div class="timer">
-          <%= raw t(".time_left", :value => content_tag(:span, "", :id => :boss_fight_time_left)) %>
+          <%= raw t(".time_left", 
+                :value => content_tag(:span, "", :id => :boss_fight_time_left, :class => :value)
+              ) %>
         </div>
 
         <% content_for :script do %>

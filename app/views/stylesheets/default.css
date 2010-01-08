@@ -613,10 +613,13 @@ form .error {color: red; padding: 3px 0px;}
       #boss_fight_result .details .character .message .victim,
         #boss_fight_result .details .boss .message .attacker {color: red;}
     #boss_fight_result .details .buttons {float: none;}
+      #boss_fight_result .details .buttons .button {margin-left: 0;}
       #boss_fight_result .details .buttons .attack span {background-image: url(asset:icons_fights);}
   #boss_fight_result .progress .progress_bar {width: 100px;}
   #boss_fight_result .middle .result {font-size: 16px;}
     #boss_fight_result .middle .result span {font-weight: bold;}
+  #boss_fight_result .timer {margin-top: 10px; font-weight: bold;}
+    #boss_fight_result .timer .value {font-weight: normal;}
 
   #boss_fight_result .lost .result,
     #boss_fight_result .expired .result {color: red;}
