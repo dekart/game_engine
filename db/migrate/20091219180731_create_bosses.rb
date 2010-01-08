@@ -37,10 +37,20 @@ class CreateBosses < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    change_table :configurations do |t|
+      t.integer :boss_max_loser_damage, :default => 10
+      t.integer :boss_max_winner_damage, :default => 10
+    end
   end
 
   def self.down
     drop_table :bosses
     drop_table :boss_fights
+
+    change_table :configurations do |t|
+      t.remove :boss_max_loser_damage
+      t.remove :boss_max_winner_damage
+    end
   end
 end

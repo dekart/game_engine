@@ -56,6 +56,16 @@
   <% end %>
 <% end %>
 
+<% form.field_set t(".boss") do %>
+  <%
+    [
+      :boss_max_loser_damage,
+      :boss_max_winner_damage
+    ].each do |field| %>
+    <%= form.text_field field, :size => 5 %>
+  <% end %>
+<% end %>
+
 <% form.field_set t(".fight") do %>
   <%
     [

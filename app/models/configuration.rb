@@ -76,7 +76,10 @@ class Configuration < ActiveRecord::Base
     :relation_show_limit,
 
     :newsletter_recipients_per_send,
-    :newsletter_send_sleep
+    :newsletter_send_sleep,
+
+    :boss_max_loser_damage,
+    :boss_max_winner_damage
   ].each do |field|
     validates_presence_of field
     validates_numericality_of field
