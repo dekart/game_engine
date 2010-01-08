@@ -17,7 +17,7 @@ module Payouts
     end
 
     def apply(character)
-      character.inventories.give!(self.item)
+      character.inventories.give!(item) if item
     end
   end
 end

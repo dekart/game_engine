@@ -7,21 +7,25 @@
       <h2><%= fb_i(boss.name) %></h2>
       <div class="description"><%= boss.description %></div>
 
-      <div class="payout_preview clearfix">
-        <h4><%= fb_i(t(".payout")) %></h4>
+      <table class="details">
+        <tr>
+          <td class="payout_preview">
+            <h4><%= fb_i(t(".payout")) %></h4>
 
-        <%= payout_preview(:experience, boss.experience) %>
-        
-        <%= payout_list(boss.payouts, :add, :preview) %>
-      </div>
+            <%= payout_preview(:experience, boss.experience) %>
 
-      <div class="requirements clearfix">
-        <h4><%= fb_i(t(".requirements")) %></h4>
+            <%= payout_list(boss.payouts, :add, :preview) %>
+          </td>
 
-        <%= attribute_requirement(:energy, boss.ep_cost, current_character.ep >= boss.ep_cost) %>
+          <td class="requirements">
+            <h4><%= fb_i(t(".requirements")) %></h4>
 
-        <%= requirement_list(boss.requirements) %>
-      </div>
+            <%= attribute_requirement(:energy, boss.ep_cost, current_character.ep >= boss.ep_cost) %>
+
+            <%= requirement_list(boss.requirements) %>
+          </td>
+        </tr>
+      </table>
 
       <div class="buttons">
         <%= link_to_remote(button(:attack),

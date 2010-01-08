@@ -1,11 +1,10 @@
 <table class="details lost">
   <tr>
     <td class="character">
-      <h1><%= character_name(fight.character, :capitalize => true) %></h1>
-
-      <%= character_picture(fight.character, :size => :small) %>
-
-      <%= character_health_bar(fight.character) %>
+      <%= render("boss_fights/create/character",
+            :fight    => fight,
+            :picture  => :small
+          ) %>
 
       <div class="message">
         <%= raw t(".messages.character",
@@ -17,21 +16,18 @@
             ) %>
       </div>
     </td>
-    <td>
-      <div class="vs">VS.</div>
-
-      <div class="message">
+    <td class="middle">
+      <div class="result">
         <%= raw t(".messages.result",
               :boss => content_tag(:span, fight.boss.name, :class => :boss)
             ) %>
       </div>
     </td>
     <td class="boss">
-      <h1><%= fight.boss.name %></h1>
-
-      <%= image_tag(fight.boss.image.url(:normal)) if fight.boss.image? %>
-
-      <%= boss_fight_health_bar(fight) %>
+      <%= render("boss_fights/create/boss",
+            :fight    => fight,
+            :picture  => :normal
+          ) %>
 
       <div class="message">
         <%= raw t(".messages.boss",

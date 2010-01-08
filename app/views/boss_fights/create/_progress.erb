@@ -1,12 +1,11 @@
 <table class="details progress">
   <tr>
     <td class="character">
-      <h1><%= character_name(fight.character, :capitalize => true) %></h1>
-
-      <%= character_picture(fight.character, :size => :small) %>
-
-      <%= character_health_bar(fight.character) %>
-
+      <%= render("boss_fights/create/character",
+            :fight    => fight,
+            :picture  => :small
+          ) %>
+      
       <div class="message">
         <%= raw t(".messages.character",
               :attacker => content_tag(:span, character_name(fight.character, :capitalize => true),
@@ -17,9 +16,7 @@
             ) %>
       </div>
     </td>
-    <td>
-      <div class="vs">VS.</div>
-
+    <td class="middle">
       <div class="buttons">
         <%= link_to_remote(button(:attack),
               :url    => boss_fight_url(fight, :canvas => false),
@@ -40,11 +37,10 @@
       <% end %>
     </td>
     <td class="boss">
-      <h1><%= fight.boss.name %></h1>
-
-      <%= image_tag(fight.boss.image.url(:small)) if fight.boss.image? %>
-
-      <%= boss_fight_health_bar(fight) %>
+      <%= render("boss_fights/create/boss",
+            :fight    => fight,
+            :picture  => :small
+          ) %>
 
       <div class="message">
         <%= raw t(".messages.boss",

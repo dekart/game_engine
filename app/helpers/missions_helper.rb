@@ -4,7 +4,7 @@ module MissionsHelper
 
     if rank.completed?
       content_tag(:div, t("missions.helpers.completed"), :class => :text) +
-      content_tag(:div, "", :class => "bar completed")
+      content_tag(:div, content_tag(:div, "", :class => "completed"), :class => :progress_bar)
     else
       percentage = (rank.win_count.to_f / rank.mission.win_amount * 100)
 

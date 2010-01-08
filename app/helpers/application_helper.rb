@@ -113,7 +113,7 @@ module ApplicationHelper
       result << content_tag(:div, label, :class => :text) if label
       result << content_tag(:div,
         content_tag(:div, "", :class => :percentage, :style => "width: %.4f%" % percentage),
-        :class => :bar
+        :class => :progress_bar
       )
     end
   end

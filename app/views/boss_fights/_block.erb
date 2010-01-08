@@ -1,6 +1,6 @@
 <div id="boss_fight_block">
   <% fights.each do |fight| %>
-    <% div_for fight do %>
+    <% div_for fight, :class => :clearfix do %>
       <div class="buttons">
         <%= link_to_remote(button(:attack),
               :url    => boss_fight_url(fight, :canvas => false),
@@ -10,15 +10,19 @@
             ) %>
       </div>
       
-      <%= image_tag(fight.boss.image.url(:small)) if fight.boss.image? %>
+      <div class="image"><%= image_tag(fight.boss.image.url(:small)) if fight.boss.image? %></div>
 
       <div class="text">
-        <%= raw t(".text", :boss => fight.boss.name) %>
+        <%= raw t(".text", 
+              :boss => content_tag(:span, fight.boss.name, :class => :name)
+            ) %>
       </div>
 
       <% if fight.time_limit? %>
         <div class="timer">
-          <%= raw t(".time_left", :value => content_tag(:span, "", :id => dom_id(fight, :timer))) %>
+          <%= raw t(".time_left", 
+                :value => content_tag(:span, "", :id => dom_id(fight, :timer), :class => :value)
+              ) %>
         </div>
 
         <% content_for :script do %>
