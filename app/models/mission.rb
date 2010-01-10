@@ -15,7 +15,8 @@ class Mission < ActiveRecord::Base
     }
 
   has_requirements
-  has_payouts
+  has_payouts :success, :failure, :complete,
+    :default_event => :complete
 
   validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text, :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max
   validates_numericality_of :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max, :loot_chance, :allow_blank => true

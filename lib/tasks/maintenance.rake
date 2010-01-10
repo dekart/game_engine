@@ -1,5 +1,16 @@
 namespace :app do
   namespace :maintenance do
+    desc "Update payout triggers"
+    task :update_payout_events => :environment do
+      Promotion.all.each do |pr|
+        pr.payouts.each do |p|
+          p.apply_on = :success
+        end
+
+        pr.save
+      end
+    end
+
     desc "Set default values to owned items"
     task :set_defaults_to_owned_items => :environment do
       Item.update_all "owned = 0", "owned IS NULL"

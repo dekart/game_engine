@@ -1,5 +1,8 @@
 <% fb_js_string :payout_fields do %>
-  <%= render :partial => "admin/payouts/payout", :locals => {:payout => @payout, :container => @container} %>
+  <%= render("admin/payouts/payout",
+        :payout     => @payout,
+        :container  => @container
+      ) %>
 <% end %>
 
 <% content_for :script do %>

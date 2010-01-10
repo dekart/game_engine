@@ -28,7 +28,7 @@ class MissionGroup < ActiveRecord::Base
 
   has_attached_file :image
 
-  has_payouts
+  has_payouts :complete
 
   validates_presence_of :name, :level
   validates_numericality_of :level, :allow_nil => true

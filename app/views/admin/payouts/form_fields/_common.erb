@@ -1,4 +1,4 @@
-<%= form.select :apply_on, Payouts::Base::EVENTS %>
+<%= form.select :apply_on, container.payout_events %>
 <%= form.text_field :chance, :size => 6, :autocomplete => :off %>
 <%= form.select :action, Payouts::Base::ACTIONS %>
 <%= form.check_box :visible %>

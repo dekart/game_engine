@@ -1,6 +1,6 @@
 <div class="payout" id="<%= payout.object_id %>">
   <div class="<%= payout.name %> serializable_item">
-    <%= hidden_field_tag("#{container}[payouts][payout_#{payout.object_id}][type]", payout.name) %>
+    <%= hidden_field_tag("#{container.to_s.underscore}[payouts][payout_#{payout.object_id}][type]", payout.name) %>
 
     <%= link_to_function(
           t(".remove"),
@@ -10,9 +10,13 @@
 
     <h4><%= t("payouts.#{payout.name}.name") %></h4>
 
-    <% fields_for "#{container}[payouts][payout_#{payout.object_id}]", payout do |form| %>
-      <%= form.fields "admin/payouts/form_fields/#{payout.name}" %>
-      <%= form.fields "admin/payouts/form_fields/common" %>
+    <% fields_for "#{container.to_s.underscore}[payouts][payout_#{payout.object_id}]", payout do |form| %>
+      <table>
+        <tr>
+          <td><%= render "admin/payouts/form_fields/#{payout.name}", :form => form, :container => container %></td>
+          <td width="50%"><%= render "admin/payouts/form_fields/common", :form => form, :container => container %></td>
+        </tr>
+      </table>
     <% end %>
   </div>
 </div>

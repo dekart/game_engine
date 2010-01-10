@@ -5,7 +5,6 @@ module Payouts
       end
     end
 
-    EVENTS  = [:success, :failure, :complete]
     ACTIONS = [:add, :remove]
     
     cattr_accessor :types

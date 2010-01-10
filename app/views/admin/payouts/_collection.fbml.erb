@@ -20,7 +20,7 @@
             :partial  => "admin/payouts/payout",
             :locals   => {
               :payout     => payout,
-              :container  => form.object_name
+              :container  => form.object.class
             }
           ),
           :class  => "payout",
