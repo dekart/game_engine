@@ -72,6 +72,7 @@ en:
         boss_fight:
           attributes:
             character:
+              already_won: "You already defeated this boss!"
               not_enough_energy: "You don't have enough energy to fight. Take a rest!"
               too_weak: "You are too weak to fight! Take a rest!"
   effects:

@@ -1,5 +1,9 @@
 class Character
   module BossFights
+    def won?(boss)
+      won_boss_ids.include?(boss.id)
+    end
+
     def won_boss_ids
       with_state(:won).all(:select => "DISTINCT boss_id").collect{|f| f.boss_id }
     end

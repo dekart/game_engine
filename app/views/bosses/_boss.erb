@@ -32,7 +32,7 @@
               :url    => boss_fights_url(:boss_id => boss, :canvas => false),
               :update => :result,
               :html   => {:class => "button attack"}
-            ) %>
+            ) if boss.repeatable || !current_character.boss_fights.won?(boss) %>
       </div>
     </td>
   </tr>

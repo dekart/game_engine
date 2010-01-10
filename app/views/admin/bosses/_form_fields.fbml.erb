@@ -12,6 +12,8 @@
 
 <%= form.text_field :time_limit, :size => 4, :after_field => t(".minutes") %>
 
+<%= form.check_box :repeatable %>
+
 <div class="serializable" id="requirement_list">
   <h2><%= Boss.human_attribute_name("requirements") %></h2>
 

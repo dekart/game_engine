@@ -99,9 +99,11 @@ class BossFight < ActiveRecord::Base
   protected
 
   def validate_on_create
-    self.errors.add(:character, :not_enough_energy) if character.ep < ep_cost
+    errors.add(:character, :already_won) if !boss.repeatable && character.boss_fights.won?(boss)
+    
+    errors.add(:character, :not_enough_energy) if character.ep < ep_cost
 
-    self.errors.add(:character, :too_weak) if character.weak?
+    errors.add(:character, :too_weak) if character.weak?
   end
 
   def get_energy_from_character
