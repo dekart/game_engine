@@ -441,7 +441,7 @@ en:
           publish: "Brag About It!"
       expired:
         messages:
-          result: "You missed your chance to defeat {{boss}}!"
+          result: "Time is up! You missed your chance to defeat {{boss}}!"
       payouts:
         you_received: "You received:"
         you_lost: "You lost:"

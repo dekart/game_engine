@@ -26,7 +26,13 @@
         </div>
 
         <% content_for :script do %>
-          Timer.start('<%= dom_id(fight, :timer) %>', <%= fight.time_left %>);
+          Timer.start('<%= dom_id(fight, :timer) %>', <%= fight.time_left %>, function(){
+            <%= remote_function(
+                  :url    => boss_fight_url(fight, :canvas => false),
+                  :method => :put,
+                  :update => :result
+                ) %>
+          });
         <% end %>
       <% end %>
     <% end %>
