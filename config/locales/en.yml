@@ -122,6 +122,8 @@ en:
       name: "Health Points"
     mercenary:
       name: "Mercenaries"
+    experience:
+      name: "Experience"
 # Templates
   layouts:
     next_steps:
