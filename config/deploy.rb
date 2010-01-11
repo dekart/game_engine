@@ -112,6 +112,6 @@ after "deploy:update_code", "deploy:dependencies:bundled_gems"
   after "deploy:migrations", t
 end
 
-["deploy:bootstrap", "deploy:update_apache_config", "deploy:jobs:start"].each do |t|
+["deploy:bootstrap", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
   after "deploy:cold", t
 end
