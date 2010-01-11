@@ -29,7 +29,7 @@ module FacebookMoney
 
       def html_code(template, options = {})
         default_options = {
-          :src          => "http://super.kitnmedia.com/super/offers?h=#{ FacebookMoney.config["key"] }",
+          :src          => "http://www.superrewards-offers.com/super/offers?h=#{ FacebookMoney.config["key"] }",
           :frameborder  => 0,
           :width        => 728,
           :height       => 2700,
