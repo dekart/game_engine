@@ -47,10 +47,14 @@ class MissionResult
 
             @group_rank, @group_payouts = @character.mission_groups.check_completion!(@mission_group)
           else
-            @payouts = @mission.payouts.apply(@character, :success)
+            @payouts = @mission.payouts.apply(@character,
+              @rank.completed? ? :repeat_success : :success
+            )
           end
         else
-          @payouts = @mission.payouts.apply(@character, :failure)
+          @payouts = @mission.payouts.apply(@character,
+            @rank.completed? ? :repeat_failure : :failure
+          )
         end
 
         # Checking if energy assignment encountered free fulfillment
