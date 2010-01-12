@@ -32,7 +32,7 @@ class BossFight < ActiveRecord::Base
   def perform!
     if time_left <= 0
       perform_expire!
-    elsif valid?
+    elsif progress? && valid?
       attacker_won, @boss_hp_loss, @character_hp_loss = calculate_proportions
 
       @winner = attacker_won ? character : boss
