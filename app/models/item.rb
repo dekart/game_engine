@@ -71,6 +71,14 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def attack
+    self[:attack].to_i
+  end
+
+  def defence
+    self[:defence].to_i
+  end
+
   def basic_price
     self[:basic_price].to_i
   end
