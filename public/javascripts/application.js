@@ -176,10 +176,12 @@ var HelpRequest = {
 
 var BossFight = {
   hideReminder: function(id){
-    $('boss_fight_block').removeChild($(id));
-    
-    if($('boss_fight_block').by_class('boss_fight').length == 0){
-      $('boss_fight_block').hide();
+    if($('boss_fight_block')){
+      $('boss_fight_block').removeChild($(id));
+
+      if($('boss_fight_block').by_class('boss_fight').length == 0){
+        $('boss_fight_block').hide();
+      }
     }
   }
 }
