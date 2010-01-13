@@ -43,16 +43,16 @@ en:
         bank_deposit:
           attributes:
             amount:
-              not_enough: "You don't have that much gold"
+              not_enough: "You don't have enough gold"
         bank_withdraw:
           attributes:
             amount:
-              not_enough: "You don't have that much money at your balance"
+              not_enough: "You don't have enough money in your balance"
         fight:
           attributes:
             character:
               not_enough_energy: "You don't have enough energy to fight. Take a rest!"
-              cannot_attack: "You cannot attack this user"
+              cannot_attack: "You cannot attack this player"
               too_weak: "You are too weak to fight! Take a rest!"
         inventory:
           attributes:
@@ -64,11 +64,11 @@ en:
             character:
               not_enough_basic_money: "You don't have enough gold to buy a {name}."
               not_enough_vip_money: "You don't have enough Gems to buy a {name}."
-              too_much_properties: "You cannot buy {plural_name} anymore because you already have too many! Try to purchase other types of properties."
+              too_much_properties: "You cannot buy any more {plural_name} because you already have too many! Try to purchase other types of properties."
         help_result:
           too_late: "You're too late! Next time try to help your friends within 24 hours."
           already_helped_with_mission: "You already helped your friend with this mission."
-          already_helped_with_fight: "You already helped your friend to fight with this enemy."
+          already_helped_with_fight: "You already helped your friend fight this enemy."
         boss_fight:
           attributes:
             character:
@@ -132,10 +132,10 @@ en:
         profile: "Customize your profile"
         missions: "Fulfill missions"
         fights: "Fight with other players"
-        invite: "Grow up your Alliance"
+        invite: "Grow your Alliance"
     fan_specials:
       title: "Fan Specials"
-      text: "{app} fans periodically receive free Gold, Gems, weapons, and other useful game stuff!"
+      text: "{app} fans periodically receive free Gold, Gems, weapons, and other useful game items!"
       buttons:
         become_fan: "Become Fan!"
     bookmark:
@@ -166,7 +166,7 @@ en:
       current_balance: "Current Balance: {amount}"
       deposit:
         title: "Deposit"
-        note: "A {fee}% laundering fee will be taken out of all incoming funds."
+        note: "A {fee}% processing fee will be taken out of all incoming funds."
         submit: "Deposit"
       withdraw:
         title: "Withdraw"
@@ -331,7 +331,7 @@ en:
     holders:
       relations: "Equip Your Alliance:"
       empty_set:
-        text: "You don't have any members in your Alliance! Invite some friends or hire mercenaries to increase power of your army. Alliance members hve their own weapon and armor slots which you can use to increase your attack and defence."
+        text: "You don't have any members in your Alliance! Invite some friends or hire mercenaries to increase power of your army. Alliance members have their own weapon and armor slots which you can use to increase your attack and defence."
         invite: "Recruit to Alliance"
         hire: "Hire Mercenaries"
     placements:
@@ -494,7 +494,7 @@ en:
       submit: "Save"
     invite:
       title: "Recruit To Your Alliance"
-      note: "Your Alliance gives you additional attack and defence points. You can equip every of your friends with weapon and armor and fight together. The more friends will join your Alliance, the more chances you have in every battle. Recruit your friends to become stronger and fight better!"
+      note: "Your Alliance gives you additional attack and defence points. You can equip each of your friends with weapon and armor and fight together. The more friends who join your Alliance, the more chances you have to win battle. Recruit your friends to become stronger and fight better!"
       success_message: "You've successfully sent {amount} invitations to your friends!"
       invite:
         title: "Alliance"
@@ -507,16 +507,16 @@ en:
         title: "Send Invites"
       publish:
         title: "Out Of Requests?"
-        note: "You can invite your friends by publishing to your news feed - all your friends will see this message! Click the button below to post invitation message to your Feed:"
+        note: "You can invite your friends by publishing to your news feed - all your friends will see this message! Click the button below to post an invitation message to your Feed:"
         button: "Invite from Feed"
       chat:
         title: "Invite by Chat"
         note: "You can invite your friends by sending them a chat message! Click on your friend names to send them your invitation link"
-        invitation: "Hey! Come join my Alliance in Sword&Magic! {{link}}"
+        invitation: "Hey! Come join my Alliance in {{app}}! {{link}}"
       copy_paste:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. Or just send this message to your friends:"
-        invitation: "Join my Sword&Magic Alliance! {link}"
+        invitation: "Join my {app} Alliance! {link}"
   properties:
     create:
       buttons:
@@ -559,9 +559,9 @@ en:
           short: "+{value}"
       fight_damage:
         title: "Healer"
-        description: "Reduce damage from fight"
+        description: "Reduce damage from fights"
         effect:
-          full: "{value}% less damage from fight"
+          full: "{value}% less damage from fights"
           short: "-{value}%"
       fight_income:
         title: "Raider"
@@ -596,8 +596,8 @@ en:
       you_received: "You received:"
       forward:
         title: "Send this bonus to your friends!"
-        text: "You can send this bonus to your friends who also play or possibly will be interested in {app}. By clicking the link your friends will receive same bonus as you just received. Click on friend names to review and send message with the link:"
-        invitation: "I got a secret bonus link for Sword&Magic game! {{link}}"
+        text: "You can send this bonus to your friends who also play or possibly will be interested in {app}. By clicking the link your friends will receive the same bonus you just received. Click on friend names to review and send message with the link:"
+        invitation: "I got a secret bonus link for {{app}}! {{link}}"
       already_used: "You already used this promotion link"
       expired: "This promotion link already expired"
   premia:
@@ -607,7 +607,7 @@ en:
       current:
         label: "You have {amount} gems"
       hire_mercenary:
-        text: "Hire mercenary to your Alliance"
+        text: "Hire a mercenary to your Alliance"
         button: "Hire"
       exchange_money:
         text: "Add {amount} gold to your character"
@@ -625,11 +625,11 @@ en:
         button: "Add Points"
     get_more_vip:
       title: "How to Get More Gems"
-      text: "You can earn gems by completing offers. Check offer list daily to complete new offers and receive gems every day. You can also buy as more gems as you need using Credit Card, PayPal, etc."
+      text: "You can earn gems by completing offers. Check the offer list daily to complete new offers and receive gems every day. You can also buy as many gems as you need using a credit card, PayPal, etc."
     update:
       messages:
         success:
-          exchange_money: "Gold has been added to your character!"
+          exchange_money: "Gold have been added to your character!"
           refill_energy: "Now you have maximum energy!"
           refill_health: "Now you have maximum health!"
           buy_points: "Upgrade points have been added to your character!"
@@ -656,13 +656,13 @@ en:
         text: "The best way to become strong and famous is to fulfill missions. Take a look at the mission below. It's very simple and you'll be able to complete it easily. Do it!"
       step_2:
         title: "Step 2: Purchase a Weapon"
-        text: "You should be ready to fight with other people. But before you'll decide to attack someone, you need a weapon. This one is enough to start. Buy it and we'll proceed."
+        text: "You should be ready to fight with other players. But before you'll decide to attack someone, you need a weapon. This one is enough to start. Buy it and we'll proceed."
       step_3:
         title: "Step 3: Fight!"
-        text: "Attack other players to get experience and grab gold. You can attack only those people who have same or greater level. Try to kill opponents with higher level - you'll receive more experience. Attack opponents until you receive an upgrade."
+        text: "Attack other players to earn experience and gold. You can only attack people whose level is the same as yours or higher. Try to kill opponents with a higher level - you'll receive more experience. Attack opponents until you reach a new level."
       step_4:
         title: "Step 4: Upgrade Your Character"
-        text: "Every time when you reach a new level or complete a mission you receive Upgrade Points. You can use these points to improve your attack and defence skills, health, or energy. Upgrade all these attributes to build a balanced character."
+        text: "Every time you reach a new level or complete a mission you receive Upgrade Points. You can use these points to improve your attack and defence skills, health, or energy. Upgrade all these attributes to build a balanced character."
       step_5:
         title: "Step 5: Strengthen Your Alliance"
         text: "The more people you have in your Alliance the more chances you have in every battle. You also can promote your friends to certain posisitons and get additional bonuses. Invite some of your friends to make your Alliance stronger!"

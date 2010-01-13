@@ -87,6 +87,7 @@
 
         <p class="invitation_text">
           <% fb_i t(".copy_paste.invitation") do %>
+            <%= fb_it(:app, fb_app_name) %>
             <%= fb_it(:link, invitation_url(current_character.invitation_key, :reference => :invite_link)) %>
           <% end %>
         </p>
@@ -98,7 +99,7 @@
         <p><%= fb_i(t(".chat.note")) %></p>
 
         <%= fb_chat_invite(
-              t(".chat.invitation", :link => invitation_url(current_character.invitation_key, :reference => :invite_chat))
+              t(".chat.invitation", :app => t("app_name"), :link => invitation_url(current_character.invitation_key, :reference => :invite_chat))
             ) %>
       </div>
     </td>

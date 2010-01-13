@@ -15,7 +15,7 @@
         <p><%= fb_i(t(".forward.text") + fb_it(:app, fb_app_name)) %></p>
 
         <%= fb_chat_invite(
-              t(".forward.invitation", :link => promotion_url(@promotion))
+              t(".forward.invitation", :app => t("app_name"), :link => promotion_url(@promotion))
             ) %>
       </div>
     <% end %>
