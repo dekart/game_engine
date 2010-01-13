@@ -122,7 +122,9 @@ module FacebookHelper
   protected
 
   def fb_named_tag(tag, name, *args, &block)
-    options = args.extract_options!.merge(:name => name)
+    options = args.extract_options!
+    options.merge!(:name => name)
+    
     tag = content_tag("fb:#{tag}", block_given? ? capture(&block): args.shift, options)
 
     block_given? ? concat(tag) : tag
