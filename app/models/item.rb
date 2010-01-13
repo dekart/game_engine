@@ -66,7 +66,9 @@ class Item < ActiveRecord::Base
   def self.to_grouped_dropdown
     returning result = {} do
       ItemGroup.all(:order => :position).each do |group|
-        result[group.name] = group.items.collect{|i| [i.name, i.id]}
+        result[group.name] = group.items.collect{|i| 
+          ["%s (%s)" % [i.name, i.availability], i.id]
+        }
       end
     end
   end
