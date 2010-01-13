@@ -22,6 +22,7 @@ en:
     invitation:
       title: "{*actor*} invites you to join their Alliance in {{app}}!"
       description: "{{app}} is a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of the fantasy world!"
+      action_link: "Join Alliance!"
     inventory:
       title: "{*actor*} just bought the {{item}} in {{app}}!"
 
