@@ -164,7 +164,7 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(property.image.url),
-          :href => new_property_url
+          :href => properties_url
         }
       ]
     end
