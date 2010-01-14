@@ -6,7 +6,7 @@ module HelpRequestsHelper
   end
 
   def latest_help_request_for(context)
-    help_request = current_character.help_requests.latest(:mission)
+    help_request = current_character.help_requests.latest(context)
 
     if help_request.try(:should_be_displayed?)
       render("help_requests/latest",
