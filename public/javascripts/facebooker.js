@@ -82,12 +82,12 @@ Ajax.Updater = function (container,url,options) {
     options['parameters']['_method'] = options['method'];
   }
 
-  if(options["scrollToTop"] != false && $('top_field')){
-    $('top_field').focus();
-  }
-
   if(options["showSpinner"] != false){
     Spinner.show();
+  }
+
+  if(options["scrollToTop"] != false && $('top_field')){
+    $('top_field').focus();
   }
 
   this.ajax.post(url,options['parameters']);

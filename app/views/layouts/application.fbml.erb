@@ -30,9 +30,7 @@
       <%= fb_i(message) %>
     <% end %>
 
-    <input type="text" style="width: 1px; height: 1px; border:0px;" id="top_field"/>
-    
-    <%= render :partial => "layouts/spinner" %>
+    <%= render "layouts/spinner" %>
 
     <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
 
