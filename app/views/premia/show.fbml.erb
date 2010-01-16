@@ -15,7 +15,9 @@
             ) %>
       <% end %>
     </td>
-    <td class="vip_money"><%= number_to_currency(Configuration[:premium_points_price]) %></td>
+    <td class="vip_money">
+      <div class=value><%= number_to_currency(Configuration[:premium_points_price]) %></div>
+    </td>
     <td class="controls">
       <%= link_to(button(".buy_points.button"), premium_path(:type => :buy_points),
             :method => :put,
@@ -28,7 +30,9 @@
     <td class="name">
       <%= fb_i(t(".hire_mercenary.text")) %>
     </td>
-    <td class="vip_money"><%= number_to_currency(Configuration[:premium_mercenary_price]) %></td>
+    <td class="vip_money">
+      <div class="value"><%= number_to_currency(Configuration[:premium_mercenary_price]) %></div>
+    </td>
     <td class="controls">
       <%= link_to(button(".hire_mercenary.button"), premium_path(:type => :hire_mercenary),
             :method => :put,
@@ -45,7 +49,9 @@
             ) %>
       <% end %>
     </td>
-    <td class="vip_money"><%= number_to_currency(Configuration[:premium_money_price]) %></td>
+    <td class="vip_money">
+      <div class=value><%= number_to_currency(Configuration[:premium_money_price]) %></div>
+    </td>
     <td class="controls">
       <%= link_to(button(".exchange_money.button"), premium_path(:type => :exchange_money),
             :method => :put,
@@ -58,7 +64,9 @@
     <td class="name">
       <%= fb_i(t(".refill_energy.text")) %>
     </td>
-    <td class="vip_money"><%= number_to_currency(Configuration[:premium_energy_price]) %></td>
+    <td class="vip_money">
+      <div class=value><%= number_to_currency(Configuration[:premium_energy_price]) %></div>
+    </td>
     <td class="controls">
       <% if current_character.full_energy? %>
         <%= fb_i(t(".refill_energy.full")) %>
@@ -75,7 +83,9 @@
     <td class="name">
       <%= fb_i(t(".refill_health.text")) %>
     </td>
-    <td class="vip_money"><%= number_to_currency(Configuration[:premium_health_price]) %></td>
+    <td class="vip_money">
+      <div class=value><%= number_to_currency(Configuration[:premium_health_price]) %></div>
+    </td>
     <td class="controls">
       <% if current_character.full_health? %>
         <%= fb_i(t(".refill_health.full")) %>
