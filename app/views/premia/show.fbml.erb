@@ -19,7 +19,7 @@
       <div class=value><%= number_to_currency(Configuration[:premium_points_price]) %></div>
     </td>
     <td class="controls">
-      <%= link_to(button(".buy_points.button"), premium_path(:type => :buy_points),
+      <%= link_to(button(t(".buy_points.button")), premium_path(:type => :buy_points),
             :method => :put,
             :class  => :button
           ) %>
@@ -34,7 +34,7 @@
       <div class="value"><%= number_to_currency(Configuration[:premium_mercenary_price]) %></div>
     </td>
     <td class="controls">
-      <%= link_to(button(".hire_mercenary.button"), premium_path(:type => :hire_mercenary),
+      <%= link_to(button(t(".hire_mercenary.button")), premium_path(:type => :hire_mercenary),
             :method => :put,
             :class  => :button
           ) %>
@@ -53,7 +53,7 @@
       <div class=value><%= number_to_currency(Configuration[:premium_money_price]) %></div>
     </td>
     <td class="controls">
-      <%= link_to(button(".exchange_money.button"), premium_path(:type => :exchange_money),
+      <%= link_to(button(t(".exchange_money.button")), premium_path(:type => :exchange_money),
             :method => :put,
             :class  => :button
           ) %>
@@ -71,7 +71,7 @@
       <% if current_character.full_energy? %>
         <%= fb_i(t(".refill_energy.full")) %>
       <% else %>
-        <%= link_to(button(".refill_energy.button"), premium_path(:type => :refill_energy),
+        <%= link_to(button(t(".refill_energy.button")), premium_path(:type => :refill_energy),
               :method => :put,
               :class  => :button
             ) %>
@@ -90,7 +90,7 @@
       <% if current_character.full_health? %>
         <%= fb_i(t(".refill_health.full")) %>
       <% else %>
-        <%= link_to(button(".refill_health.button"), premium_path(:type => :refill_health),
+        <%= link_to(button(t(".refill_health.button")), premium_path(:type => :refill_health),
               :method => :put,
               :class  => :button
             ) %>

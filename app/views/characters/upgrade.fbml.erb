@@ -10,7 +10,7 @@
       <td class="name"><%= fb_i(Character.human_attribute_name(attribute.to_s)) %></td>
       <td class="value" id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
       <td class="controls">
-        <%= link_to_remote(button(Configuration["character_#{attribute}_upgrade"]),
+        <%= link_to_remote(button(Configuration["character_#{attribute}_upgrade"], :disable_asset => true),
               :url    => upgrade_character_url(current_character, :attribute => attribute, :canvas => false),
               :update => :result,
               :html   => {:class => :button}
