@@ -6,7 +6,7 @@
   </div>
 
   <% collection(@items) do %>
-    <table class="items">
+    <table class="items" cellspacing="0" cellpadding="0">
       <% @items.each_slice(3) do |group| %>
         <tr>
           <% group.each do |item| %>

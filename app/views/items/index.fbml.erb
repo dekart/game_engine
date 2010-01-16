@@ -20,7 +20,7 @@
   </div>
 
   <% if @special_items.any? %>
-    <table class="item_list" id="special_items" cellspacing="0">
+    <table class="item_list" id="special_items" cellspacing="0" cellpadding="0">
       <% @special_items.each do |item| %>
         <%= render :partial => item %>
       <% end %>
@@ -29,7 +29,7 @@
 
   <%= will_paginate @items %>
 
-  <table class="item_list" cellspacing="0">
+  <table class="item_list" cellspacing="0" cellpadding="0">
     <% @items.each do |item| %>
       <%= render :partial => item %>
     <% end %>

@@ -15,7 +15,7 @@
     <% end %>
   </div>
 
-  <table width="100%">
+  <table width="100%" cellspacing="0" cellpadding="0">
     <tr>
       <td><%= render :partial => "characters/attributes", :locals => {:character => @character} %></td>
       <td><%= render :partial => "characters/statistics", :locals => {:character => @character} %></td>
@@ -31,7 +31,7 @@
     </tr>
   </table>
 
-  <table width="100%">
+  <table width="100%" cellspacing="0" cellpadding="0">
     <tr>
       <td>
         <% ItemGroup.find_each do |group| %>

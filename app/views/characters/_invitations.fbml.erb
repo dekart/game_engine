@@ -1,6 +1,6 @@
 <h3><%= fb_i(t('.title')) %></h3>
 
-<table cellspacing="0" id="invitation_list">
+<table id="invitation_list" cellspacing="0" cellpadding="0">
   <% invitations.each do |invitation| %>
     <tr>
       <td class="picture"><%= character_picture_link(invitation.sender) %></td>

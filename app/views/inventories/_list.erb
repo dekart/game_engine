@@ -1,5 +1,5 @@
 <% if inventories.size > 0 %>
-  <table cellspacing="0">
+  <table cellspacing="0" cellpadding="0">
     <% ItemGroup.all.each do |group| %>
       <% if by_group = inventories.by_item_group(group) and by_group.any? %>
         <tr>

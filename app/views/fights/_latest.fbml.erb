@@ -1,4 +1,4 @@
-<table cellspacing="0" id="fight_list">
+<table id="fight_list" cellspacing="0" cellpadding="0">
   <% fights.each do |fight| %>
     <% content_tag_for(:tr, fight) do %>
       <td class="attacker"><%= character_picture_link(fight.attacker) %></td>
