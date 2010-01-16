@@ -10,7 +10,7 @@
 
     <ul>
       <% tutorial_step("mission_groups", "index") do |current, reload_tutorial| %>
-        <li class="step <%= "current" if current %> <%= "completed" if current_character.missions_completed != 0 %>">
+        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.missions_completed != 0 %>">
           <% if current %>
             <strong><%= t(".step_1.title") %> <%= completed_mark %></strong>
 
@@ -30,7 +30,7 @@
       <% end %>
 
       <% tutorial_step("items", "index") do |current, reload_tutorial| %>
-        <li class="step <%= "current" if current %> <%= "completed" if current_character.inventories.count != 0 %>">
+        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.inventories.count != 0 %>">
           <% if current %>
             <strong><%= t(".step_2.title") %> <%= completed_mark %></strong>
 
@@ -50,7 +50,7 @@
       <% end %>
 
       <% tutorial_step("fights", "new") do |current, reload_tutorial| %>
-        <li class="step <%= "current" if current %> <%= "completed" if current_character.level != 1 %>">
+        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.level != 1 %>">
           <% if current %>
             <strong><%= t(".step_3.title") %> <%= completed_mark %></strong>
 
@@ -70,7 +70,7 @@
       <% end %>
         
       <% tutorial_step("characters", "upgrade") do |current, reload_tutorial| %>
-        <li class="step <%= "current" if current %> <%= "completed" if current_character.level != 1 && current_character.points == 0 %>">
+        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.level != 1 && current_character.points == 0 %>">
           <% if current %>
             <strong><%= t(".step_4.title") %> <%= completed_mark %></strong>
 
@@ -94,7 +94,7 @@
       <% end %>
 
       <% tutorial_step("users", "invite") do |current, reload_tutorial| %>
-        <li class="step <%= "current" if current %> <%= "completed" if current_user.invitations.count != 0 %>">
+        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_user.invitations.count != 0 %>">
           <% if current %>
             <strong><%= t(".step_5.title") %> <%= completed_mark %></strong>
 
