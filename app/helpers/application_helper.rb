@@ -13,23 +13,6 @@ module ApplicationHelper
   end
   safe_helper :hide_block_link
 
-  def reference(id, reference_url = nil)
-    if Rails.env == "development"
-      controller.send(:render_to_string, :template => "pages/#{id}", :layout => false)
-    else
-      fb_ref(
-        :url => reference_url || url_for(
-          :controller => "pages",
-          :action     => "show",
-          :id         => id,
-          :format     => :fbml,
-          :only_path  => false,
-          :canvas     => false
-        )
-      )
-    end
-  end
-
   def title(text)
     fb_title(text) + content_tag(:h1, text, :class => :title)
   end

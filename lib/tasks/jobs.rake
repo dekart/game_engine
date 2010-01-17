@@ -13,10 +13,5 @@ namespace :app do
         Delayed::Job.enqueue Jobs::UpdateProfile.new(user.id)
       end
     end
-
-    desc "Update references"
-    task :update_references => :environment do
-      Jobs::UpdateReferences.new.perform
-    end
   end
 end

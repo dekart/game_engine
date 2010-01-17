@@ -51,11 +51,6 @@ namespace :deploy do
 
       run "crontab #{shared_path}/crontab.conf"
     end
-
-    desc "Update references"
-    task :update_references, :roles => :app do
-      run "cd #{current_path}; rake app:jobs:update_references --trace"
-    end
   end
 
   desc "Bootstrap application data"
@@ -108,7 +103,7 @@ before "deploy:migrations", "deploy:db:backup"
 
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 
-["deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:jobs:update_references", "deploy:cleanup"].each do |t|
+["deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end

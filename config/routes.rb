@@ -75,8 +75,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :rating, :member => {:global => :any}
 
-  map.resources :pages
-
   map.resources :stylesheets, :only => :show, :member => {:source => :any}
 
   map.resources :help_requests, :only => [:show, :create]
