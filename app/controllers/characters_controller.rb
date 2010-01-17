@@ -7,8 +7,8 @@ class CharactersController < ApplicationController
     :only => [:new]
 
   def index
-    if landing_path != root_path
-      redirect_to landing_path
+    if landing_url != root_url
+      redirect_to landing_url
     else
       @latest_fights = Fight.with_participant(current_character).find(:all, 
         :limit => Configuration[:fight_latest_show_limit]
@@ -53,7 +53,7 @@ class CharactersController < ApplicationController
 
   def new
     if current_character
-      redirect_to landing_path
+      redirect_to landing_url
     else
       @character = Character.new
     end
@@ -66,7 +66,7 @@ class CharactersController < ApplicationController
       @character = current_user.build_character(params[:character])
 
       if @character.save
-        redirect_to landing_path
+        redirect_to landing_url
       else
         render :action => :new
       end
@@ -83,7 +83,7 @@ class CharactersController < ApplicationController
     @character = current_character
 
     if @character.update_attributes(params[:character])
-      redirect_to landing_path
+      redirect_to landing_url
     else
       render :action => :edit
     end

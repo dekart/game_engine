@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def landing_path
+  def landing_url
     if current_user.try(:should_visit_gift_page?)
       new_gift_url(:canvas => true)
     elsif current_user.try(:should_visit_invite_page?)
@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
     if request.request_uri.starts_with?("//")
       new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
     else
-      new_url = landing_path
+      new_url = landing_url
     end
 
     Rails.logger.fatal params.inspect
@@ -120,7 +120,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    redirect_to landing_path unless current_user.admin?
+    redirect_to landing_url unless current_user.admin?
   end
 
   def friend?(user)
