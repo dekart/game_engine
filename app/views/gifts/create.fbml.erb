@@ -1,17 +1,15 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <div id="gift_form" class="clearfix">
-  <div class="note">
-    <%= fb_i(t(".note")) %>
-  </div>
+  <div class="note"><%= t(".note") %></div>
 
   <div class="gift">
-    <h2><%= fb_i(t(".gift.title")) %></h2>
+    <h2><%= t(".gift.title") %></h2>
 
     <div class="item">
       <%= item_image(@gift.item, :small) %>
 
-      <div class="name"><%= fb_i(@gift.item.name) %></div>
+      <div class="name"><%= @gift.item.name %></div>
 
       <div class="effects">
         <%= attack(@gift.item.attack) %>
@@ -22,13 +20,13 @@
         <% end %>
       </div>
       
-      <%= link_to(fb_i(t(".gift.change")), edit_gift_path(@gift)) %>
+      <%= link_to(t(".gift.change"), edit_gift_path(@gift)) %>
     </div>
   </div>
 
   <div class="friend_groups">
     <% %w{all players non_players}.each do |type| %>
-      <%= link_to(fb_i(t(".groups.#{type}", :app => fb_app_name)), gift_path(@gift, :group => type),
+      <%= link_to(t(".groups.#{type}", :app => fb_app_name), gift_path(@gift, :group => type),
             :method => :put,
             :id     => "group_#{type}",
             :class  => (:current if @group == type.to_sym)
@@ -38,26 +36,22 @@
 
   <div class="invitation_form">
     <% content_for :gift_message do %>
-      <% fb_i do %>
-        <%= raw t(".request.message",
-              :user => fb_name(current_user, :linked => :false),
-              :app  => fb_app_name
-            ) %>
+      <%= raw t(".request.message",
+            :user => fb_name(current_user, :linked => :false),
+            :app  => fb_app_name,
+            :item => @gift.item.name
+          ) %>
 
-        <%= fb_it(:item, fb_i(@gift.item.name)) %>
-      <% end %>
-
-      <% content_tag("fb:req-choice", :url => gift_url(@gift, :reference => :gift)) do%>
-        <%= fb_fa(:label, fb_i(t(".request.accept") + fb_it(:item, fb_i(@gift.item.name)))) %>
-      <% end %>
+      <%= fb_req_choice(
+            t(".request.accept", :item => @gift.item.name),
+            gift_url(@gift, :reference => :gift)
+          ) %>
     <% end %>
 
-    <% fb_request_form(nil, :gift_message, confirm_gift_path(@gift)) do %>
-      <%= fb_fa(:type, fb_i(t(".request.title"))) %>
-
-      <% fb_custom_multi_friend_selector(:exclude_ids => @exclude_ids.join(",")) do %>
-        <%= fb_fa(:actiontext, fb_i(t(".request.note"))) %>
-      <% end %>
+    <% fb_request_form(t(".request.title"), :gift_message, confirm_gift_path(@gift)) do %>
+      <%= fb_multi_friend_selector(t(".request.note"), 
+            :exclude_ids => @exclude_ids.join(",")
+          ) %>
     <% end %>
   </div>
 

@@ -2,7 +2,7 @@
   <tr>
     <% if result.received_something? %>
       <td class="received">
-        <h3><%= fb_i(t(".you_received.title")) %></h3>
+        <h3><%= t(".you_received.title") %></h3>
 
         <%= payout(:experience, result.experience) if result.experience %>
 
@@ -13,18 +13,17 @@
         <% if result.loot %>
           <div class="loot">
             <div class="relation">
-              <% fb_i do %>
-                <% if result.looter %>
-                  <%= raw t(".you_received.loot_with_looter") %>
-
-                  <%= fb_it(:user,
+              <% if result.looter %>
+                <%= raw t(".you_received.loot_with_looter",
+                      :user => (
                         result.looter.is_a?(FriendRelation) ? character_name_link(result.looter.target_character) : result.looter.name
-                      ) %>
-                <% else %>
-                  <%= raw t(".you_received.loot_without_looter") %>
-                <% end %>
-
-                <%= fb_it(:item, content_tag(:strong, result.loot.name)) %>
+                      ),
+                      :item => content_tag(:strong, result.loot.name)
+                    ) %>
+              <% else %>
+                <%= raw t(".you_received.loot_without_looter",
+                      :item => content_tag(:strong, result.loot.name)
+                    ) %>
               <% end %>
             </div>
 
@@ -35,18 +34,16 @@
     <% end %>
       
     <td class="spent">
-      <h3><%= fb_i(t(".you_spent.title")) %></h3>
+      <h3><%= t(".you_spent.title") %></h3>
 
       <% if result.free_fulfillment %>
         <% payout("energy zero", 0, :label => Character.human_attribute_name("energy")) do %>
           <span class="relation">
-            <% fb_i t(".you_spent.zero_energy") do %>
-              <%= fb_it(:user,
-                    character_name_link(
-                      current_character.assignments.by_role(:mission_energy).relation.target_character
-                    )
-                  ) %>
-            <% end %>
+            <%= raw t(".you_spent.zero_energy",
+                  :user => character_name_link(
+                    current_character.assignments.by_role(:mission_energy).relation.target_character
+                  )
+                ) %>
           </span>
         <% end %>
       <% else %>
@@ -56,7 +53,7 @@
       <%= payout_list(result.payouts, :remove) %>
     </td>
     <td class="progress">
-      <h3><%= fb_i(t(".progress.title")) %></h3>
+      <h3><%= t(".progress.title") %></h3>
 
       <%= mission_progress(current_character, mission) %>
     </td>

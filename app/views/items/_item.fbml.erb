@@ -1,22 +1,22 @@
 <% content_tag_for :tr, item, :class => item.availability do %>
   <td class="picture"><%= item_image(item, :small) %></td>
   <td class="info">
-    <div class="name"><%= fb_i(item.name) %></div>
-    <div class="description"><%= fb_i(item.description) %></div>
+    <div class="name"><%= item.name %></div>
+    <div class="description"><%= item.description %></div>
     
     <% if item.left %>
       <div class="sale_limit">
-        <% fb_i t(".sale_limit") do %>
-          <%= fb_it(:amount, content_tag(:strong, item.left)) %>
-        <% end %>
+        <%= raw t(".sale_limit",
+              :amount => content_tag(:strong, item.left)
+            ) %>
       </div>
     <% end %>
 
     <% if item.available_till %>
       <div class="time_limit">
-        <% fb_i t(".time_limit") do %>
-          <%= fb_it(:amount, content_tag(:strong, "", :id => dom_id(item, :timer))) %>
-        <% end %>
+        <%= raw t(".time_limit",
+              :amount => content_tag(:strong, "", :id => dom_id(item, :timer))
+            ) %>
       </div>
 
       <% content_for :script do %> 
@@ -41,10 +41,10 @@
       <%= amount_select_tag %>
 
       <%= link_to_remote(button(:buy),
-            :url => inventories_url(:item_id => item.id, :canvas => false),
+            :url    => inventories_url(:item_id => item.id, :canvas => false),
             :update => :result,
-            :with => "this.getParentNode().serialize()", 
-            :html => {:class => "buy button"}
+            :with   => "this.getParentNode().serialize()",
+            :html   => {:class => "buy button"}
           ) %>
     <% end %>
   </td>

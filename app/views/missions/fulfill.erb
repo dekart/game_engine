@@ -19,19 +19,19 @@
     <% end %>
   <% elsif !@result.enough_energy? %>
     <p>
-      <% fb_i t(".not_enough_energy.message") do %>
-        <%= fb_it(:ep_number, @mission.ep_cost) %>
-        <%= fb_it(:minute_number, (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil) %>
-      <% end %>
+      <%= raw t(".not_enough_energy.message",
+            :ep_number      => @mission.ep_cost,
+            :minute_number  => (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil
+          ) %>
     </p>
   <% elsif !@result.requirements_satisfied? %>
-    <p><%= fb_i(t(".requirements_not_satisfied.message")) %></p>
+    <p><%= t(".requirements_not_satisfied.message") %></p>
 
     <div class="requirements clearfix">
       <%= requirement_list(@mission.requirements, :unsatisfied) %>
     </div>
   <% elsif @result.rank.completed? %>
-    <p><%= fb_i(t(".already_completed.message")) %></p>
+    <p><%= t(".already_completed.message") %></p>
   <% end %>
 </div>
 

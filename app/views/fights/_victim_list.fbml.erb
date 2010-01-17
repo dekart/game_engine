@@ -1,8 +1,8 @@
 <table id="victim_list" cellspacing="0" cellpadding="0">
   <tr>
-    <th colspan="2"><%= fb_i(Character.human_name) %></th>
-    <th><%= fb_i(Character.human_attribute_name("level")) %></th>
-    <th><%= fb_i(Character.human_attribute_name("relations_count")) %></th>
+    <th colspan="2"><%= Character.human_name %></th>
+    <th><%= Character.human_attribute_name("level") %></th>
+    <th><%= Character.human_attribute_name("relations_count") %></th>
   </tr>
   <% victims.each do |victim| %>
     <% if victim.is_a?(Character) %>

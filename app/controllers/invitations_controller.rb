@@ -14,7 +14,7 @@ class InvitationsController < ApplicationController
 
     @invitation.ignore!
 
-    render :action => :ignore, :layout => false
+    render :text => t("invitations.ignore.message"), :layout => false
   end
 
   def show

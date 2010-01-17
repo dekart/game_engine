@@ -2,7 +2,7 @@
   <%= render :partial => "characters/fight_attributes" %>
 </div>
 
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <div id="items">
   <div class="buttons">
@@ -12,9 +12,9 @@
   <div id="item_groups" class="clearfix">
     <% ItemGroup.visible_in_shop.each do |group| %>
       <% if group == @item_group %>
-        <b><%= fb_i(@item_group.name) %></b>
+        <b><%= @item_group.name %></b>
       <% else %>
-        <%= link_to(fb_i(group.name), item_group_items_path(:item_group_id => group.id)) %>
+        <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
       <% end %>
     <% end %>
   </div>
@@ -37,10 +37,10 @@
 
   <% if @next_item %>
     <div id="next_item">
-      <% fb_i t(".next_item") do %>
-        <%= fb_it(:level, content_tag(:span, @next_item.level, :class => :level)) %>
-        <%= fb_it(:group, content_tag(:span, @next_item.item_group.name.mb_chars.downcase, :class => :weapon)) %>
-      <% end %>
+      <%= raw t(".next_item",
+            :level => content_tag(:span, @next_item.level, :class => :level),
+            :group => content_tag(:span, @next_item.item_group.name.mb_chars.downcase, :class => :weapon)
+          ) %>
     </div>
   <% end %>
 

@@ -8,7 +8,7 @@
 
     <%= render :partial => "fights/create/details", :locals => {:fight => @fight} %>
   <% else %>
-    <p><%= fb_i(@fight.errors.on(:character)) %></p>
+    <p><%= @fight.errors.on(:character) %></p>
   <% end %>
 </div>
 

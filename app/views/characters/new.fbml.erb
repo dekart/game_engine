@@ -1,11 +1,16 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <% form_for @character, :html => {:requirelogin => 1} do |form| %>
   <%= form.fields %>
 
   <%= form.submit %>
 
-  <div class="note"><%= raw t(".note", :submit => t(".submit"), :application => fb_app_name) %></div>
+  <div class="note">
+    <%= raw t(".note",
+          :submit => t(".submit"),
+          :application => fb_app_name
+        ) %>
+  </div>
 <% end %>
 
 <%= raw t(".already_registered.text", 

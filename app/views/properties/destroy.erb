@@ -1,19 +1,19 @@
 <div id="property_result">
   <% if @property %>
     <p>
-      <% fb_i t(".messages.success") do %>
-        <%= fb_it(:amount, @amount) %>
-        <%= fb_it(:property_name, content_tag(:b, fb_i(@amount > 1 ? @property.plural_name : @property.name))) %>
-      <% end %>
+      <%= raw t(".messages.success",
+            :amount         => @amount,
+            :property_name  => content_tag(:b, @amount > 1 ? @property.plural_name : @property.name)
+          ) %>
     </p>
 
-    <h3><%= fb_i(t(".you_received.title")) %></h3>
+    <h3><%= t(".you_received.title") %></h3>
 
     <div class="payouts">
       <%= payout(:basic_money, number_to_currency(@property.basic_money)) %>
     </div>
   <% else %>
-    <%= fb_i(t(".messages.property_not_found")) %>
+    <%= t(".messages.property_not_found") %>
   <% end %>
 </div>
 

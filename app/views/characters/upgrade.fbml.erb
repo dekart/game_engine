@@ -1,13 +1,13 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <table id="upgrade_list" cellspacing="0" cellpadding="0">
   <tr class="points">
-    <td class="name"><%= fb_i(Character.human_attribute_name("points")) %></td>
+    <td class="name"><%= Character.human_attribute_name("points") %></td>
     <td class="value" id="upgrade_points"><%= current_character.points %></td>
   </tr>
   <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
     <tr>
-      <td class="name"><%= fb_i(Character.human_attribute_name(attribute.to_s)) %></td>
+      <td class="name"><%= Character.human_attribute_name(attribute.to_s) %></td>
       <td class="value" id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
       <td class="controls">
         <%= link_to_remote(button(Configuration["character_#{attribute}_upgrade"], :disable_asset => true),
@@ -21,10 +21,10 @@
 </table>
 
 <div id="upgrade_finished" style="display:none;" class="note">
-  <% fb_i t(".finished.note") do %>
-    <%= fb_it(:profile, link_to(fb_i(t(".finished.profile")), character_path(current_character))) %>
-    <%= fb_it(:get_more, link_to(fb_i(t(".finished.get_more")), premium_path)) %>
-  <% end %>
+  <%= raw t(".finished.note",
+        :profile  => link_to(t(".finished.profile"), character_path(current_character)),
+        :get_more => link_to(t(".finished.get_more"), premium_path)
+      ) %>
 </div>
 
 <% content_for :script do %>

@@ -1,27 +1,27 @@
 <table class="items" cellspacing="0" cellpadding="0">
   <tr>
     <td class="attacker">
-      <h3><%= fb_i(t(".attacker")) %></h3>
+      <h3><%= t(".attacker") %></h3>
 
       <% ItemGroup.all.each do |group| %>
         <div class="group">
-          <strong><%= fb_i(group.name) %></strong>
+          <strong><%= group.name %></strong>
 
           <%= raw @fight.attacker.inventories.by_item_group(group).used_in_fight.collect{|i|
-                t(".item", :name => fb_i(i.name), :amount => i.use_in_fight)
+                t(".item", :name => i.name, :amount => i.use_in_fight)
               }.join(", ") %>
         </div>
       <% end %>
     </td>
     <td class="victim">
-      <h3><%= fb_i(t(".victim")) %></h3>
+      <h3><%= t(".victim") %></h3>
 
       <% ItemGroup.all.each do |group| %>
         <div class="group">
-          <strong><%= fb_i(group.name) %></strong>
+          <strong><%= group.name %></strong>
 
           <%= raw @fight.victim.inventories.by_item_group(group).used_in_fight.collect{|i|
-                t(".item", :name => fb_i(i.name), :amount => i.use_in_fight)
+                t(".item", :name => i.name, :amount => i.use_in_fight)
               }.join(", ") %>
         </div>
       <% end %>

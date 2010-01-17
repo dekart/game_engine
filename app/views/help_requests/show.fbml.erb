@@ -4,14 +4,14 @@
       <% if @help_request.context.is_a?(Mission) %>
         <div id="mission_result">
           <p class="success">
-            <% fb_i t(".success") do %>
-              <%= fb_it(:user, character_name_link(@help_request.character)) %>
-              <%= fb_it(:mission, content_tag(:strong, @help_request.context.name)) %>
-            <% end %>
+            <%= raw t(".success",
+                  :user     => character_name_link(@help_request.character),
+                  :mission  => content_tag(:strong, @help_request.context.name)
+                ) %>
           </p>
 
           <div class="payouts">
-            <h3><%= fb_i(t(".you_received")) %></h3>
+            <h3><%= t(".you_received") %></h3>
 
             <%= payout(:basic_money, number_to_currency(@help_result.money)) %>
             <%= payout(:experience, @help_result.experience) %>
@@ -24,12 +24,12 @@
       <%= character_level_up_block %>
     <% else %>
       <div id="help_result">
-        <p class="fail"><%= fb_i(@help_result.errors.full_messages.first) %></p>
+        <p class="fail"><%= @help_result.errors.full_messages.first %></p>
       </div>
     <% end %>
   <% else %>
     <div id="help_result">
-      <p class="fail"><%= fb_i(t(".friends_only.message")) %></p>
+      <p class="fail"><%= t(".friends_only.message") %></p>
     </div>
   <% end %>
 <% end %>

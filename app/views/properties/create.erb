@@ -7,25 +7,20 @@
     </div>
   
     <p>
-    <% fb_i t(".messages.success") do %>
-      <%= fb_it(:amount, @amount) %>
-      <%= fb_it(:property_name, content_tag(:b, fb_i(@amount > 1 ? @property.plural_name : @property.name))) %>
-    <% end %>
+      <%= raw t(".messages.success",
+            :amount         => @amount,
+            :property_name  => content_tag(:b, @amount > 1 ? @property.plural_name : @property.name)
+          ) %>
     </p>
 
-    <h3><%= fb_i(t(".you_spent.title")) %></h3>
+    <h3><%= t(".you_spent.title") %></h3>
 
     <div class="payouts">
       <%= payout(:basic_money, number_to_currency(@property.basic_money)) if @property.basic_price > 0 %>
       <%= payout(:vip_money, number_to_currency(@property.vip_money)) if @property.vip_price > 0 %>
     </div>
   <% else %>
-    <p>
-      <% fb_i @property.errors.on(:character) do %>
-        <%= fb_it(:name, content_tag(:b, fb_i(@property.name))) %>
-        <%= fb_it(:plural_name, content_tag(:b, fb_i(@property.plural_name))) %>
-      <% end %>
-    </p>
+    <p><%= @property.errors.on(:character) %></p>
   <% end %>
 </div>
 

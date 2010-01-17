@@ -1,16 +1,16 @@
-<h2><%= fb_i(t(".title")) %></h2>
+<h2><%= t(".title") %></h2>
 
 <div id="character_assignments" cellspacing="0" cellpadding="0">
   <% Assignment::ROLES.each do |role| %>
     <div class="context">
-      <b><%= fb_i(t("assignments.roles.#{role}.title")) %></b>
+      <b><%= t("assignments.roles.#{role}.title") %></b>
 
       <% if assignment = current_character.assignments.by_role(role) %>
         <div class="controls">
           <%= link_to(button(:demote), assignment_path(assignment),
                 :method   => :delete,
                 :class    => "demote button",
-                :confirm  => fb_i(t(".buttons.demote_confirm"))
+                :confirm  => t(".buttons.demote_confirm")
               ) %>
         </div>
 
@@ -18,15 +18,15 @@
       <% else %>
         <div class="controls">
           <%= link_to_remote(button(:promote),
-                :url => new_character_assignment_url(current_character, :role => role, :canvas => false),
+                :url    => new_character_assignment_url(current_character, :role => role, :canvas => false),
                 :method => :get,
                 :update => :result,
-                :html => {:class => "promote button"}
+                :html   => {:class => "promote button"}
               ) %>
         </div>
       
         <div class="description">
-          <%= fb_i(t("assignments.roles.#{role}.description")) %>
+          <%= t("assignments.roles.#{role}.description") %>
         </div>
       <% end %>
     </div>

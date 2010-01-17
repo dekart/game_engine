@@ -1,9 +1,7 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <div class="note" id="alliance_recruit">
-  <p>
-    <%= fb_i(t(".note")) %>
-  </p>
+  <p><%= t(".note") %></p>
 
   <div class="buttons">
     <%= link_to(button(:recruit), invite_users_path, :class => :button) %>
@@ -12,11 +10,11 @@
   </div>
 </div>
 
-<% if @relations.any? %>
+<% collection(@relations) do %>
   <table width="100%" cellspacing="0" cellpadding="0">
     <tr>
       <td>
-        <h2><%= fb_i(t(".members.title")) %></h2>
+        <h2><%= t(".members.title") %></h2>
 
         <table id="alliance_members"  cellspacing="0" cellpadding="0">
           <% @relations.each do |relation| %>
@@ -29,8 +27,4 @@
       <td><%= render :partial => "assignments" %></td>
     </tr>
   </table>
-<% else %>
-  <div class="empty_set">
-    <%= fb_i(t(".empty_set")) %>
-  </div>
 <% end %>

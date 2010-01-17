@@ -1,21 +1,21 @@
-<h2><%= fb_i(t(".title")) %></h2>
+<h2><%= t(".title") %></h2>
 
 <p>
-  <%= fb_i(t(".message")) %>
+  <%= t(".message") %>
 </p>
 
 <% unless result.mission_group.title.blank? %>
   <p>
-    <%= fb_i(t(".title_received")) %>
+    <%= t(".title_received") %>
   </p>
   
-  <h3 class="title"><%= fb_i(result.mission_group.title) %></h3>
+  <h3 class="title"><%= result.mission_group.title %></h3>
 <% end %>
 
 <% if result.group_payouts.try(:any?) %>
   <div class="payouts">
     <div class="received">
-      <h3><%= fb_i(t(".you_received")) %></h3>
+      <h3><%= t(".you_received") %></h3>
 
       <%= payout_list(result.group_payouts, :add) %>
     </td>

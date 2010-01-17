@@ -1,8 +1,8 @@
 <% content_for :result do %>
   <div id="promotion_result">
-    <p><%= fb_i(@promotion.text) %></p>
+    <p><%= @promotion.text %></p>
 
-    <h3><%= fb_i(t(".you_received")) %></h3>
+    <h3><%= t(".you_received") %></h3>
 
     <div class="payouts">
       <%= payout_list(@result.payouts, :add) %>
@@ -10,9 +10,9 @@
 
     <% if @promotion.forwardable? %>
       <div class="forward">
-        <h3><%= fb_i(t(".forward.title")) %></h3>
+        <h3><%= t(".forward.title") %></h3>
 
-        <p><%= fb_i(t(".forward.text") + fb_it(:app, fb_app_name)) %></p>
+        <p><%= raw t(".forward.text", :app => fb_app_name) %></p>
 
         <%= fb_chat_invite(
               t(".forward.invitation", :app => t("app_name"), :link => promotion_url(@promotion))

@@ -4,21 +4,21 @@
       ) %>
 </div>
 
-<h2><%= fb_i(t(".title")) %></h2>
+<h2><%= t(".title") %></h2>
 
 <p>
-  <%= fb_i(mission.complete_text) %>
+  <%= mission.complete_text %>
 </p>
 
 <% unless mission.title.blank? %>
-  <p><%= fb_i(t(".message")) %></p>
+  <p><%= t(".message") %></p>
 
-  <h3 class="title"><%= fb_i(mission.title) %></h3>
+  <h3 class="title"><%= mission.title %></h3>
 <% end %>
 
 <% if mission.child_missions.any? %>
   <div class="child_missions">
-    <p><%= fb_i(t(".child_missions")) %></p>
+    <p><%= t(".child_missions") %></p>
 
     <% mission.child_missions.each do |child| %>
       <div class="child"><%= child.name %></div>

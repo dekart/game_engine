@@ -4,13 +4,13 @@
       <%= image_tag(boss.image.url(:normal)) if boss.image? %>
     </td>
     <td class="info">
-      <h2><%= fb_i(boss.name) %></h2>
+      <h2><%= boss.name %></h2>
       <div class="description"><%= boss.description %></div>
 
       <table class="details" cellspacing="0" cellpadding="0">
         <tr>
           <td class="payout_preview">
-            <h4><%= fb_i(t(".payout")) %></h4>
+            <h4><%= t(".payout") %></h4>
 
             <%= payout_preview(:experience, boss.experience) %>
 
@@ -18,7 +18,7 @@
           </td>
 
           <td class="requirements">
-            <h4><%= fb_i(t(".requirements")) %></h4>
+            <h4><%= t(".requirements") %></h4>
 
             <%= attribute_requirement(:energy, boss.ep_cost, current_character.ep >= boss.ep_cost) %>
 

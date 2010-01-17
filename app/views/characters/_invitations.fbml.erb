@@ -1,4 +1,4 @@
-<h3><%= fb_i(t('.title')) %></h3>
+<h3><%= t('.title') %></h3>
 
 <table id="invitation_list" cellspacing="0" cellpadding="0">
   <% invitations.each do |invitation| %>
@@ -6,8 +6,8 @@
       <td class="picture"><%= character_picture_link(invitation.sender) %></td>
       <td class="name"><%= character_name_link(invitation.sender) %></td>
       <td class="level">
-        <%= fb_i(Character.human_attribute_name("level")) %>
-        <%= invitation.sender.character.level %>
+        <span class="label"><%= Character.human_attribute_name("level") %></span>
+        <span class="value"><%= invitation.sender.character.level %></span>
       </td>
       <% content_tag(:td, :id => dom_id(invitation, :controls), :class => :controls) do %>
         <%= link_to_remote(button(:accept),

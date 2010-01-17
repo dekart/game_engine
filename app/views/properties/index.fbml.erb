@@ -1,11 +1,10 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
-<div class="note">
-  <%= fb_i(t(".note")) %>
-</div>
+<div class="note"><%= t(".note") %></div>
 
 <div id="property_income">
-  <b><%= fb_i(t(".income.label")) %></b>
+  <b><%= t(".income.label") %></b>
+  
   <span class="value" id="property_income_value">
     <%= number_to_currency(current_character.property_income) %>
   </span>

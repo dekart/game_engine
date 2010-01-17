@@ -1,22 +1,20 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <div id="current_vip_money">
-  <% fb_i t(".current.label") do %>
-    <%= fb_it(:amount, content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)) %>
-  <% end %>
+  <%= raw t(".current.label",
+        :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
+      ) %>
 </div>
 
 <table id="premia" cellspacing="0" cellpadding="0">
   <tr>
     <td class="name">
-      <% fb_i t(".buy_points.text") do %>
-        <%= fb_it(:amount,
-              content_tag(:span, Configuration[:premium_points_amount], :class => :points)
-            ) %>
-      <% end %>
+      <%= raw t(".buy_points.text",
+            :amount => content_tag(:span, Configuration[:premium_points_amount], :class => :points)
+          ) %>
     </td>
     <td class="vip_money">
-      <div class=value><%= number_to_currency(Configuration[:premium_points_price]) %></div>
+      <div class="value"><%= number_to_currency(Configuration[:premium_points_price]) %></div>
     </td>
     <td class="controls">
       <%= link_to(button(t(".buy_points.button")), premium_path(:type => :buy_points),
@@ -27,9 +25,7 @@
   </tr>
 
   <tr>
-    <td class="name">
-      <%= fb_i(t(".hire_mercenary.text")) %>
-    </td>
+    <td class="name"><%= t(".hire_mercenary.text") %></td>
     <td class="vip_money">
       <div class="value"><%= number_to_currency(Configuration[:premium_mercenary_price]) %></div>
     </td>
@@ -43,14 +39,12 @@
 
   <tr>
     <td class="name">
-      <% fb_i t(".exchange_money.text") do %>
-        <%= fb_it(:amount,
-              content_tag(:span, number_to_currency(Configuration[:premium_money_amount]), :class => :basic_money)
-            ) %>
-      <% end %>
+      <%= raw t(".exchange_money.text",
+            :amount => content_tag(:span, number_to_currency(Configuration[:premium_money_amount]), :class => :basic_money)
+          ) %>
     </td>
     <td class="vip_money">
-      <div class=value><%= number_to_currency(Configuration[:premium_money_price]) %></div>
+      <div class="value"><%= number_to_currency(Configuration[:premium_money_price]) %></div>
     </td>
     <td class="controls">
       <%= link_to(button(t(".exchange_money.button")), premium_path(:type => :exchange_money),
@@ -61,15 +55,13 @@
   </tr>
 
   <tr>
-    <td class="name">
-      <%= fb_i(t(".refill_energy.text")) %>
-    </td>
+    <td class="name"><%= t(".refill_energy.text") %></td>
     <td class="vip_money">
-      <div class=value><%= number_to_currency(Configuration[:premium_energy_price]) %></div>
+      <div class="value"><%= number_to_currency(Configuration[:premium_energy_price]) %></div>
     </td>
     <td class="controls">
       <% if current_character.full_energy? %>
-        <%= fb_i(t(".refill_energy.full")) %>
+        <%= t(".refill_energy.full") %>
       <% else %>
         <%= link_to(button(t(".refill_energy.button")), premium_path(:type => :refill_energy),
               :method => :put,
@@ -80,15 +72,13 @@
   </tr>
 
   <tr>
-    <td class="name">
-      <%= fb_i(t(".refill_health.text")) %>
-    </td>
+    <td class="name"><%= t(".refill_health.text") %></td>
     <td class="vip_money">
-      <div class=value><%= number_to_currency(Configuration[:premium_health_price]) %></div>
+      <div class="value"><%= number_to_currency(Configuration[:premium_health_price]) %></div>
     </td>
     <td class="controls">
       <% if current_character.full_health? %>
-        <%= fb_i(t(".refill_health.full")) %>
+        <%= t(".refill_health.full") %>
       <% else %>
         <%= link_to(button(t(".refill_health.button")), premium_path(:type => :refill_health),
               :method => :put,

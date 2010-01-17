@@ -11,13 +11,13 @@
     </div>
 
     <p>
-    <% fb_i t(".messages.success") do %>
-      <%= fb_it(:amount, @amount) %>
-      <%= fb_it(:item_name, content_tag(:b, fb_i(@amount > 1 ? @item.plural_name : @item.name))) %>
-    <% end %>
+      <%= raw t(".messages.success",
+            :amount     => @amount,
+            :item_name  => content_tag(:b, @amount > 1 ? @item.plural_name : @item.name)
+          ) %>
     </p>
 
-    <h3><%= fb_i(t(".you_spent.title")) %></h3>
+    <h3><%= t(".you_spent.title") %></h3>
 
     <div class="payouts">
       <% if @item.basic_price.to_i > 0 %>
@@ -29,11 +29,7 @@
       <% end %>
     </div>
   <% else %>
-    <p>
-      <% fb_i @inventory.errors.on(:character) do %>
-        <%= fb_it(:item_name, content_tag(:b, fb_i(@item.name))) %>
-      <% end %>
-    </p>
+    <p><%= @inventory.errors.on(:character) %></p>
   <% end %>
 </div>
 

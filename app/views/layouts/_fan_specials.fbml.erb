@@ -1,12 +1,10 @@
 <div id="fan_specials" class="block">
   <%= hide_block_link(:fan_specials) %>
 
-  <h2><%= fb_i(t(".title")) %></h2>
+  <h2><%= t(".title") %></h2>
 
   <p>
-    <% fb_i t(".text") do %>
-      <%= fb_it(:app, fb_app_name) %>
-    <% end %>
+    <%= raw t(".text", :app => fb_app_name)  %>
   </p>
 
   <%= link_to(button(:become_fan), fb_app_page_url, :class => "button") %>

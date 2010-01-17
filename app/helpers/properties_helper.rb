@@ -17,13 +17,9 @@ module PropertiesHelper
 
   def property_image(property, format)
     if property.image?
-      fb_tag(:img,
-        fb_ta(:src, image_path(property.image.url(format))) +
-        fb_ta(:alt, fb_i(property.name)) +
-        fb_ta(:title, fb_i(property.name))
-      )
+      image_tag(property.image.url(format), :alt => property.name, :title => property.name)
     else
-      fb_i(property.name)
+      property.name
     end
   end
 end

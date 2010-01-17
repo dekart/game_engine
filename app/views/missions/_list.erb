@@ -1,10 +1,10 @@
-<% if missions.any? %>
+<% collection(missions) do %>
   <table cellspacing="0" cellpadding="0">
     <tr>
-      <th class="mission_group" colspan="2"><%= fb_i(Mission.human_name) %></th>
-      <th><%= fb_i(t(".payout")) %></th>
-      <th><%= fb_i(t(".requires")) %></th>
-      <th><%= fb_i(t(".progress")) %></th>
+      <th class="mission_group" colspan="2"><%= Mission.human_name %></th>
+      <th><%= t(".payout") %></th>
+      <th><%= t(".requires") %></th>
+      <th><%= t(".progress") %></th>
       <th></th>
     </tr>
     <% missions.each do |mission| %>
@@ -16,6 +16,4 @@
       <% end %>
     <% end %>
   </table>
-<% else %>
-  <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
 <% end %>

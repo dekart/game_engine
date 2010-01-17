@@ -1,26 +1,24 @@
 <%= render :partial => "characters/fight_attributes" %>
 
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <%= latest_help_request_for(:fight) %>
 
 <% if current_character.weak? %>
   <p>
-  <% fb_i t(".messages.too_weak") do %>
-    <%= fb_it(:hp_number, current_character.weakness_minimum) %>
-    <%= fb_it(:minute_number, (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil) %>
-  <% end %>
+    <%= raw t(".messages.too_weak",
+          :hp_number      => current_character.weakness_minimum,
+          :minute_number  => (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil
+        ) %>
   </p>
 <% elsif current_character.ep < Configuration[:fight_energy_required] %>
   <p>
-    <% fb_i t(".messages.not_enough_energy") do %>
-      <%= fb_it(:minute_number, (current_character.ep_restore_time(Configuration[:fight_energy_required]) / 1.minute).ceil) %>
-    <% end %>
+    <%= raw t(".messages.not_enough_energy",
+          :minute_number => (current_character.ep_restore_time(Configuration[:fight_energy_required]) / 1.minute).ceil
+        ) %>
   </p>
 <% else %>
-  <% if @victims.any? %>
+  <% collection(@victims) do %>
     <%= render :partial => "victim_list", :locals => {:victims => @victims} %>
-  <% else %>
-    <div class="empty_set"><%= fb_i(t(".empty_set")) %></div>
   <% end %>
 <% end %>

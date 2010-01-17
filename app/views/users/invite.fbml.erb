@@ -1,78 +1,67 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <% if @sent_invitations and @sent_invitations.any? %>
   <% content_for :result do %>
     <div id="invitation_result">
-      <p>
-        <% fb_i t(".success_message") do %>
-          <%= fb_it(:amount, @sent_invitations.size) %>
-        <% end %>
-      </p>
+      <p><%= t(".success_message", :amount => @sent_invitations.size) %></p>
     </div>
   <% end %>
 <% end %>
 
 <% content_for :invite_message do %>
-  <%= fb_i(
-        t(".invite.message",
-          :user     => fb_name(current_user, :linked => :false),
-          :pronoun  => fb_pronoun(current_user, :possessive => true),
-          :app_name => fb_app_name
-        )
+  <%= raw t(".invite.message",
+        :user     => fb_name(current_user, :linked => :false),
+        :pronoun  => fb_pronoun(current_user, :possessive => true),
+        :app_name => fb_app_name
       ) %>
 
-  <% content_tag("fb:req-choice", :url => invitation_url(current_character.invitation_key, :reference => :invite_form_accept)) do%>
-    <%= fb_fa(:label, fb_i(t(".invite.buttons.accept",
+  <%= fb_req_choice(
+        t(".invite.buttons.accept",
           :user => fb_name(current_user,
             :linked         => false,
             :possessive     => true,
             :firstnameonly  => true
           )
-        ))) %>
-  <% end %>
+        ),
+        invitation_url(current_character.invitation_key, :reference => :invite_form_accept)
+      ) %>
 
-  <% content_tag("fb:req-choice", :url => character_url(current_character, :reference => :invite_form_profile)) do%>
-    <%= fb_fa(:label, fb_i(t(".invite.buttons.visit_profile", 
+  <%= fb_req_choice(
+        t(".invite.buttons.visit_profile",
           :user => fb_name(current_user,
             :linked         => false,
             :possessive     => true,
             :firstnameonly  => true
-          )))
-        ) %>
-  <% end %>
+          )
+        ),
+        character_url(current_character, :reference => :invite_form_profile)
+      ) %>
 <% end %>
 
-<div class="note">
-  <%= fb_i(t(".note")) %>
-</div>
+<div class="note"><%= t(".note") %></div>
 
 <table id="invitation_form" cellspacing="0" cellpadding="0">
   <tr>
     <td id="request_invitation">
       <div class="invitation_type">
-        <h2><%= fb_i(t(".request.title")) %></h2>
+        <h2><%= t(".request.title") %></h2>
 
-        <% fb_request_form(nil, :invite_message, invite_users_path(:from_selector => true)) do %>
-          <%= fb_fa(:type, fb_i(t(".invite.title"))) %>
-
-          <% fb_custom_multi_friend_selector(
-               :exclude_ids => (
-                 current_user.invitations.facebook_ids +
-                 current_character.friend_relations.facebook_ids
-               ).uniq.join(","),
-               :condensed   => true
-             ) do %>
-            <%= fb_fa(:actiontext, fb_i(t(".invite.note"))) %>
-          <% end %>
+        <% fb_request_form(t(".invite.title"), :invite_message, invite_users_path(:from_selector => true)) do %>
+          <%= fb_multi_friend_selector_condensed(t(".invite.note"),
+                :exclude_ids => (
+                   current_user.invitations.facebook_ids +
+                   current_character.friend_relations.facebook_ids
+                ).uniq.join(",")
+              ) %>
 
           <%= fb_request_form_submit %>
         <% end %>
       </div>
 
       <div class="invitation_type">
-        <h2><%= fb_i(t(".publish.title")) %></h2>
+        <h2><%= t(".publish.title") %></h2>
 
-        <p><%= fb_i(t(".publish.note")) %></p>
+        <p><%= t(".publish.note") %></p>
 
         <%= link_to_function(button(t(".publish.button")), invitation_stream_dialog,
               :class => :button
@@ -81,25 +70,28 @@
     </td>
     <td id="manual_invitation">
       <div class="invitation_type">
-        <h2><%= fb_i(t(".copy_paste.title")) %></h2>
+        <h2><%= t(".copy_paste.title") %></h2>
 
-        <p><%= fb_i(t(".copy_paste.note")) %></p>
+        <p><%= t(".copy_paste.note") %></p>
 
         <p class="invitation_text">
-          <% fb_i t(".copy_paste.invitation") do %>
-            <%= fb_it(:app, fb_app_name) %>
-            <%= fb_it(:link, invitation_url(current_character.invitation_key, :reference => :invite_link)) %>
-          <% end %>
+          <%= raw t(".copy_paste.invitation",
+                :app  => fb_app_name,
+                :link => invitation_url(current_character.invitation_key, :reference => :invite_link)
+              ) %>
         </p>
       </div>
 
       <div class="invitation_type" id="chat_invitation">
-        <h2><%= fb_i(t(".chat.title")) %></h2>
+        <h2><%= t(".chat.title") %></h2>
         
-        <p><%= fb_i(t(".chat.note")) %></p>
+        <p><%= t(".chat.note") %></p>
 
         <%= fb_chat_invite(
-              t(".chat.invitation", :app => t("app_name"), :link => invitation_url(current_character.invitation_key, :reference => :invite_chat))
+              t(".chat.invitation",
+                :app  => t("app_name"),
+                :link => invitation_url(current_character.invitation_key, :reference => :invite_chat)
+              )
             ) %>
       </div>
     </td>

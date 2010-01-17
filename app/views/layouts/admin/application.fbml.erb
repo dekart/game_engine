@@ -18,11 +18,11 @@
   <div id="spinner" style="display:none;">
     <%= asset_image_tag("spinner", :alt => t(".spinner.alt")) %>
 
-    <%= fb_i(t(".spinner.text")) %>
+    <%= t(".spinner.text") %>
   </div>
 
-  <%= fb_i(fb_success(flash[:success])) if flash[:success] %>
-  <%= fb_i(fb_error(flash[:error])) if flash[:error] %>
+  <%= fb_success(flash[:success]) if flash[:success] %>
+  <%= fb_error(flash[:error]) if flash[:error] %>
 
   <div id="result" style="display:none"></div>
 

@@ -1,10 +1,10 @@
 <div id="fight_attributes">
   <table cellspacing="0" cellpadding="0">
     <tr>
-      <th><%= fb_i(t(".personal")) %></th>
-      <th><%= fb_i(t(".relations")) %></th>
-      <th><%= fb_i(t(".offence")) %></th>
-      <th><%= fb_i(t(".defence")) %></th>
+      <th><%= t(".personal") %></th>
+      <th><%= t(".relations") %></th>
+      <th><%= t(".offence") %></th>
+      <th><%= t(".defence") %></th>
     </tr>
     <tr>
       <td class="values">
@@ -12,7 +12,8 @@
         <%= defence(current_character.defence) %>
       </td>
       <td class="values">
-        <%= content_tag(:div, current_character.relations.effective_size, :class => :relations) %>
+        <div class="relations"><%= current_character.relations.effective_size %></div>
+        
         <%= attack(current_character.inventory_attack_points) %>
         <%= defence(current_character.inventory_defence_points) %>
       </td>

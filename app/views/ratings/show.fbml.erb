@@ -1,11 +1,11 @@
 <% if action_name == "global" %>
-  <%= title(fb_i(t(".title.global"))) %>
+  <%= title(t(".title.global")) %>
 
   <div class="buttons" id="rating_buttons">
     <%= link_to(button(:relations), rating_path, :class => :button) %>
   </div>
 <% else %>
-  <%= title(fb_i(t(".title.relations"))) %>
+  <%= title(t(".title.relations")) %>
 
   <div class="buttons" id="rating_buttons">
     <%= link_to(button(:global), global_rating_path, :class => :button) %>
@@ -15,13 +15,13 @@
 <table cellspacing="0" cellpadding="0">
   <tr>
     <td>
-      <h2><%= fb_i(t(".level")) %></h2>
+      <h2><%= t(".level") %></h2>
 
       <table class="rating" cellspacing="0" cellpadding="0">
         <tr>
           <th>#</th>
-          <th colspan="2"><%= fb_i(Character.human_name) %></th>
-          <th><%= fb_i(Character.human_attribute_name("level")) %></th>
+          <th colspan="2"><%= Character.human_name %></th>
+          <th><%= Character.human_attribute_name("level") %></th>
         </tr>
         <% @level.each_with_index do |character, index| %>
           <tr <% if character == current_character %>class="current"<% end %>>
@@ -45,13 +45,13 @@
 
     <td>
 
-      <h2><%= fb_i(t(".bank")) %></h2>
+      <h2><%= t(".bank") %></h2>
 
       <table class="rating" cellspacing="0" cellpadding="0">
         <tr>
           <th>#</th>
-          <th colspan="2"><%= fb_i(Character.human_name) %></th>
-          <th><%= fb_i(Character.human_attribute_name("bank")) %></th>
+          <th colspan="2"><%= Character.human_name %></th>
+          <th><%= Character.human_attribute_name("bank") %></th>
         </tr>
         <% @bank.each_with_index do |character, index| %>
           <tr <% if character == current_character %>class="current"<% end %>>
@@ -76,13 +76,13 @@
   </tr>
   <tr>
     <td>
-      <h2><%= fb_i(t(".fights")) %></h2>
+      <h2><%= t(".fights") %></h2>
 
       <table class="rating" cellspacing="0" cellpadding="0">
         <tr>
           <th>#</th>
-          <th colspan="2"><%= fb_i(Character.human_name) %></th>
-          <th><%= fb_i(Character.human_attribute_name("fights_won")) %></th>
+          <th colspan="2"><%= Character.human_name %></th>
+          <th><%= Character.human_attribute_name("fights_won") %></th>
         </tr>
         <% @fights.each_with_index do |character, index| %>
           <tr <% if character == current_character %>class="current"<% end %>>
@@ -106,13 +106,13 @@
 
     <td>
 
-      <h2><%= fb_i(t(".missions")) %></h2>
+      <h2><%= t(".missions") %></h2>
 
       <table class="rating" cellspacing="0" cellpadding="0">
         <tr>
           <th>#</th>
-          <th colspan="2"><%= fb_i(Character.human_name) %></th>
-          <th><%= fb_i(Character.human_attribute_name("missions_succeded")) %></th>
+          <th colspan="2"><%= Character.human_name %></th>
+          <th><%= Character.human_attribute_name("missions_succeded") %></th>
         </tr>
         <% @missions.each_with_index do |character, index| %>
           <tr <% if character == current_character %>class="current"<% end %>>
@@ -137,13 +137,13 @@
   <tr>
     <td>
 
-      <h2><%= fb_i(t(".relations")) %></h2>
+      <h2><%= t(".relations") %></h2>
 
       <table class="rating" cellspacing="0" cellpadding="0">
         <tr>
           <th>#</th>
-          <th colspan="2"><%= fb_i(Character.human_name) %></th>
-          <th><%= fb_i(Character.human_attribute_name("relations_count")) %></th>
+          <th colspan="2"><%= Character.human_name %></th>
+          <th><%= Character.human_attribute_name("relations_count") %></th>
         </tr>
         <% @relations.each_with_index do |character, index| %>
           <tr <% if character == current_character %>class="current"<% end %>>

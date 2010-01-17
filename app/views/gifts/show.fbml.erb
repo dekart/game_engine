@@ -5,16 +5,16 @@
       <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
     </div>
     
-    <p><%= fb_i(t(".success")) %></p>
+    <p><%= t(".success") %></p>
 
     <table class="details" cellspacing="0" cellpadding="0">
       <tr>
         <td class="item">
           <%= item_image(@gift.item, :small) %>
 
-          <div class="name"><%= fb_i(@gift.item.name) %></div>
+          <div class="name"><%= @gift.item.name %></div>
         </td>
-        <td class="from"><%= fb_i(t(".from")) %></td>
+        <td class="from"><%= t(".from") %></td>
         <td class="sender">
           <%= character_picture_link(@gift.character, {}, {:size => :small}) %><br />
           <%= character_name_link(@gift.character) %>

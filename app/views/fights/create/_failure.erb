@@ -11,28 +11,23 @@
 </div>
 
 <p class="fail">
-  <% fb_i do %>
-    <%= raw t(".message", :pronoun => fb_pronoun(fight.victim.user, :objective => true)) %>
-
-    <%= fb_it(:user_name, character_name_link(fight.victim)) %>
-  <% end %>
+  <%= raw t(".message",
+        :pronoun    => fb_pronoun(fight.victim.user, :objective => true),
+        :user_name  => character_name_link(fight.victim)
+      ) %>
 </p>
 
 <table class="payouts" cellspacing="0" cellpadding="0">
   <tr>
     <td class="lost">
-      <h3><%= fb_i(t(".you_lost")) %></h3>
+      <h3><%= t(".you_lost") %></h3>
 
       <%= payout(:energy, Configuration[:fight_energy_required]) %>
       <%= payout(:health, fight.attacker_hp_loss) %>
       <%= payout(:basic_money, number_to_currency(fight.money)) %>
     </td>
     <td class="victim_lost">
-      <h3>
-        <% fb_i t(".victim_lost") do %>
-          <%= fb_it(:user_name, character_name_link(fight.victim)) %>
-        <% end %>
-      </h3>
+      <h3><%= raw t(".victim_lost", :user_name => character_name_link(fight.victim)) %></h3>
 
       <%= payout(:health, fight.victim_hp_loss) %>
     </td>

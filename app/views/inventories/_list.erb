@@ -3,14 +3,14 @@
     <% ItemGroup.all.each do |group| %>
       <% if by_group = inventories.by_item_group(group) and by_group.any? %>
         <tr>
-          <th colspan="3"><h3><%= fb_i(group.name) %></h3></th>
+          <th colspan="3"><h3><%= group.name %></h3></th>
         </tr>
         <% by_group.each do |inventory| %>
           <% content_tag_for(:tr, inventory) do %>
             <td class="picture"><%= item_image(inventory, :small) %></td>
             <td class="info">
-              <div class="name"><%= fb_i(inventory.name) %></div>
-              <div class="description"><%= fb_i(inventory.description) %></div>
+              <div class="name"><%= inventory.name %></div>
+              <div class="description"><%= inventory.description %></div>
             </td>
             <td class="payout_preview">
               <%= payout_preview(:attack, "+%d" % inventory.attack) if inventory.attack > 0 %>
@@ -22,16 +22,16 @@
             </td>
             <td class="stats">
               <div class="owned">
-                <% fb_i t(".owned") do %>
-                  <%= fb_it(:amount, inventory.amount) %>
-                <% end %>
+                <%= raw t(".owned",
+                      :amount => content_tag(:span, inventory.amount, :class => :value)
+                    ) %>
               </div>
 
               <% if inventory.use_in_fight > 0 %>
                 <div class="used">
-                  <% fb_i t(".used") do %>
-                    <%= fb_it(:amount, inventory.use_in_fight) %>
-                  <% end %>
+                  <%= raw t(".used",
+                        :amount => content_tag(:span, inventory.use_in_fight, :class => :value)
+                      ) %>
                 </div>
               <% end %>
             </td>
@@ -63,8 +63,8 @@
   </table>
 <% else %>
   <div class="empty_set">
-    <% fb_i t(".empty_set.text") do %>
-      <%= fb_it(:shop, link_to(fb_i(t(".empty_set.shop")), items_path)) %>
-    <% end %>
+    <%= raw t(".empty_set.text",
+          :shop => link_to(t(".empty_set.shop"), items_path)
+        ) %>
   </div>
 <% end %>

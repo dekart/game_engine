@@ -247,6 +247,7 @@ form .error {color: red; padding: 3px 0px;}
   #invitation_list td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #invitation_list .picture {width: 55px;}
   #invitation_list .level {width: 70px;}
+    #invitation_list .level .value {font-weight: bold;}
   #invitation_list .controls .accept span {background-image: url(asset:icons_accept)}
   #invitation_list .controls .ignore span {background-image: url(asset:icons_delete)}
 
@@ -481,6 +482,7 @@ form .error {color: red; padding: 3px 0px;}
   #new_assignment .relations .picture {width: 60px;}
   #new_assignment .relations .relations .name {padding-right: 10px;}
   #new_assignment .relations .level {width: 60px}
+    #new_assignment .relations .level .value {font-weight: bold;}
   #new_assignment .relations .selected {background-color: #FFFFD5;font-weight: bold;}
     #new_assignment .relations .selected td {border-top: 1px solid #EC7000; border-bottom: 1px solid #EC7000;}
     #new_assignment .relations .selected .picture {border-left: 1px solid #EC7000;}
@@ -506,6 +508,7 @@ form .error {color: red; padding: 3px 0px;}
   #invitation td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #invitation .picture {width: 55px;}
   #invitation .level {width: 70px;}
+    #invitation .level .value {font-weight: bold;}
   #invitation .controls .accept span {background-image: url(asset:icons_accept)}
   #invitation .controls .ignore span {background-image: url(asset:icons_delete)}
 

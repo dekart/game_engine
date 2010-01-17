@@ -6,8 +6,8 @@
         <%= character_picture_link(fight.attacker, {:class => :picture}, {:size => :small}) %>
 
         <div class="level">
-          <%= fb_i(Character.human_attribute_name("level")) %>
-          <%= fight.attacker.level %>
+          <span class="label"><%= Character.human_attribute_name("level") %></span>
+          <span class="value"><%= fight.attacker.level %></span>
         </div>
       </div>
       <div class="attributes">
@@ -16,22 +16,22 @@
         <div class="attack"><%= fight.attacker.attack %></div>
       </div>
       <div class="best_items">
-        <strong><%= fb_i(t(".best_offence")) %></strong>
+        <strong><%= t(".best_offence") %></strong>
 
         <% fight.attacker.inventories.best_offence.each do |inventory| %>
           <%= item_image(inventory, :icon) %>
         <% end %>
       </div>
     </td>
-    <td class="vs"><%= fb_i(t(".vs")) %></td>
+    <td class="vs"><%= t(".vs") %></td>
     <td class="victim">
       <div class="character">
         <%= character_name_link(fight.victim, {:class => :name}, {:useyou => false}) %>
         <%= character_picture_link(fight.victim, {:class => :picture}, {:size => :small}) %>
 
         <div class="level">
-          <%= fb_i(Character.human_attribute_name("level")) %>
-          <%= fight.victim.level %>
+          <span class="label"><%= Character.human_attribute_name("level") %></span>
+          <span class="value"><%= fight.victim.level %></span>
         </div>
       </div>
       <div class="attributes">
@@ -40,7 +40,7 @@
         <div class="defence"><%= t(".defence_unknown") %></div>
       </div>
       <div class="best_items">
-        <strong><%= fb_i(t(".best_defence")) %></strong>
+        <strong><%= t(".best_defence") %></strong>
 
         <% fight.victim.inventories.best_defence.each do |inventory| %>
           <%= item_image(inventory, :icon) %>
@@ -51,7 +51,7 @@
 </table>
 
 <% content_tag(:div, :class => :item_details, :id => dom_id(fight, :items)) do %>
-  <%= link_to_remote(fb_i(t(".show_items")),
+  <%= link_to_remote(t(".show_items"),
         :url    => used_items_fight_url(fight, :canvas => false),
         :update => dom_id(fight, :items)
       ) %>

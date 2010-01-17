@@ -26,9 +26,7 @@
       <%= render(:partial => "layouts/tip") if current_user.show_tips? %>
     </div>
 
-    <% flash_block do |message| %>
-      <%= fb_i(message) %>
-    <% end %>
+    <%= flash_block %>
 
     <%= render "layouts/spinner" %>
 

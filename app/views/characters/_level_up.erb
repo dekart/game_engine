@@ -5,12 +5,12 @@
         ) %>
   </div>
 
-  <h2><%= fb_i(t(".title")) %></h2>
+  <h2><%= t(".title") %></h2>
 
   <div class="text">
-    <% fb_i t(".text") do %>
-      <%= fb_it(:upgrade, link_to(fb_i(t(".upgrade_link")), upgrade_character_url(current_character)))  %>
-    <% end %>
+    <%=raw t(".text",
+          :upgrade => link_to(t(".upgrade_link"), upgrade_character_url(current_character))
+        ) %>
   </div>
 </div>
 

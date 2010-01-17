@@ -40,7 +40,7 @@ module RequirementsHelper
           :amount => content_tag(:span, number_to_currency(value), :class => :value),
           :name   => Character.human_attribute_name("vip_money")
         ),
-        link_to(fb_i(t("premia.get_vip")), premium_path)
+        link_to(t("premia.get_vip"), premium_path)
       ],
       current_character.vip_money >= value
     )

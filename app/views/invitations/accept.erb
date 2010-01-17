@@ -1,3 +1,1 @@
-<% fb_i t(".message") do %>
-  <%= fb_it(:user, character_name(@invitation.sender)) %>
-<% end %>
+<%=raw t(".message", :user => character_name(@invitation.sender)) %>

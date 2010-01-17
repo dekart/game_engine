@@ -1,15 +1,14 @@
 <div id="upgrade_result">
   <% if @success %>
     <p>
-    <% fb_i do %>
-      <%= raw t(".messages.success", :attribute => Character.human_attribute_name(params[:attribute])) %>
-      
-      <%= fb_it(:number, content_tag(:b, current_character.attributes[params[:attribute]])) %>
-    <% end %>
+      <%= raw t(".messages.success",
+            :attribute  => Character.human_attribute_name(params[:attribute]),
+            :number     => content_tag(:b, current_character.attributes[params[:attribute]])
+          ) %>
     </p>
   <% else %>
     <p>
-      <%= fb_i(t(".messages.not_enough_points", :attribute => Character.human_attribute_name(params[:attribute]))) %>
+      <%= t(".messages.not_enough_points", :attribute => Character.human_attribute_name(params[:attribute])) %>
     </p>
   <% end %>
 </div>

@@ -1,9 +1,7 @@
-<%= title(fb_i(t(".title"))) %>
+<%= title(t(".title")) %>
 
 <div id="gift_form" class="clearfix">
-  <div class="note">
-    <%= fb_i(t(".note")) %>
-  </div>
+  <div class="note"><%= t(".note") %></div>
 
   <% collection(@items) do %>
     <table class="items" cellspacing="0" cellpadding="0">
@@ -16,7 +14,7 @@
                   ) %>
 
               <div class="name">
-                <%= link_to(fb_i(item.name), polymorphic_path(@gift, :item_id => item.id),
+                <%= link_to(item.name, polymorphic_path(@gift, :item_id => item.id),
                       :method => @gift.new_record? ? :post : :put
                     ) %>
               </div>

@@ -2,7 +2,7 @@
 module ApplicationHelper
   def hide_block_link(id)
     content_tag(:form, hidden_field_tag(:block, id), :id => "#{id}_hide") +
-    link_to(fb_i(t("blocks.hide")), hide_block_user_path(current_user),
+    link_to(t("blocks.hide"), hide_block_user_path(current_user),
       :clickrewriteid   => id,
       :clickrewriteurl  => hide_block_user_url(current_user, :canvas => false),
       :clickrewriteform => "#{id}_hide",

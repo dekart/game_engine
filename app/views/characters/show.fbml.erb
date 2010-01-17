@@ -1,4 +1,8 @@
-<%= title(fb_i(t(".title", :user => fb_name(@character.user, :possessive => true, :capitalize => true)))) %>
+<%= title(
+      t(".title",
+        :user => fb_name(@character.user, :possessive => true, :capitalize => true)
+      )
+    ) %>
 
 <div id="character">
   <div class="controls">
@@ -25,7 +29,7 @@
             <%= content_tag(:div, title, :class => :rank) %>
           <% end %>
         <% else %>
-          <%= fb_i(t(".titles.empty_set", :user => character_name(@character, :firstnameonly => true, :capitalize => true, :useyou => true))) %>
+          <%=raw t(".titles.empty_set", :user => character_name(@character, :firstnameonly => true, :capitalize => true, :useyou => true)) %>
         <% end %>
       </td>
     </tr>
@@ -36,10 +40,10 @@
       <td>
         <% ItemGroup.find_each do |group| %>
           <div class="item_group">
-            <h2><%= fb_i(group.name) %></h2>
+            <h2><%= group.name %></h2>
 
             <% collection(@character.inventories.by_item_group(group),
-                :empty_set => fb_i(t(".items.empty_set", :group => group.name.mb_chars.downcase))
+                :empty_set => t(".items.empty_set", :group => group.name.mb_chars.downcase)
                ) do |items| %>
               <div class="items clearfix">
                 <% items.each do |inventory| %>
@@ -49,7 +53,7 @@
                     <% if @character == current_character %>
                       <div class="amount">
                         <%= raw t(".items.amount",
-                              :name   => fb_i(inventory.name),
+                              :name   => inventory.name,
                               :amount => inventory.amount
                             ) %>
                       </div>
@@ -62,9 +66,9 @@
         <% end %>
 
         <div class="properties">
-          <h2><%= fb_i(t(".properties.title")) %></h2>
+          <h2><%= t(".properties.title") %></h2>
 
-          <% collection(@character.properties, :empty_set => fb_i(t(".properties.empty_set"))) do |properties| %>
+          <% collection(@character.properties, :empty_set => t(".properties.empty_set")) do |properties| %>
             <div class="items clearfix">
               <% properties.each do |property| %>
                 <div class="item">
@@ -73,7 +77,7 @@
                   <% if @character == current_character %>
                     <div class="amount">
                       <%= raw t(".properties.amount",
-                            :name   => fb_i(property.name),
+                            :name   => property.name,
                             :amount => property.amount
                           ) %>
                     </div>
@@ -87,9 +91,9 @@
       <% if Configuration[:wall_enabled] %>
       <td class="wall">
         <h2>
-          <% fb_i t(".wall.title") do %>
-            <%= fb_it(:user, character_name(@character, :possessive => true, :capitalize => true)) %>
-          <% end %>
+          <%= raw t(".wall.title",
+                :user => character_name(@character, :possessive => true, :capitalize => true)
+              ) %>
         </h2>
         
         <%= character_wall(@character) %>
