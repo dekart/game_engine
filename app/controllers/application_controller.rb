@@ -20,11 +20,11 @@ class ApplicationController < ActionController::Base
 
   def landing_path
     if current_user.try(:should_visit_gift_page?)
-      new_gift_path
+      new_gift_url(:canvas => true)
     elsif current_user.try(:should_visit_invite_page?)
-      invite_users_path
+      invite_users_url(:canvas => true)
     else
-      root_path
+      root_url(:canvas => true)
     end
   end
 
