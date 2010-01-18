@@ -135,12 +135,12 @@ en:
         invite: "Grow your Alliance"
     fan_specials:
       title: "Fan Specials"
-      text: "{app} fans periodically receive free Gold, Gems, weapons, and other useful game items!"
+      text: "{{app}} fans periodically receive free Gold, Gems, weapons, and other useful game items!"
       buttons:
         become_fan: "Become Fan!"
     bookmark:
       title: "Bookmark"
-      text: "Don't forget to add {app} to your bookmarks!"
+      text: "Don't forget to add {{app}} to your bookmarks!"
     main_menu:
       home: "Home"
       missions: "Missions"
@@ -163,10 +163,10 @@ en:
   bank_operations:
     new:
       title: Treasury
-      current_balance: "Current Balance: {amount}"
+      current_balance: "Current Balance: {{amount}}"
       deposit:
         title: "Deposit"
-        note: "A {fee}% processing fee will be taken out of all incoming funds."
+        note: "A {{fee}}% processing fee will be taken out of all incoming funds."
         submit: "Deposit"
       withdraw:
         title: "Withdraw"
@@ -174,7 +174,7 @@ en:
         submit: "Withdraw"
   characters:
     attributes:
-      bonus: "+{amount} from Alliance"
+      bonus: "+{{amount}} from Alliance"
     invitations:
       title: "Alliance Invitations"
       buttons:
@@ -200,20 +200,20 @@ en:
         amount: "{{name}} X&nbsp;{{amount}}"
         empty_set: "No properties"
       wall:
-        title: "{user} Wall"
+        title: "{{user}} Wall"
     upgrade:
       title: "Upgrade"
       finished:
-        note: "You spent all your upgrade points. Now you can {profile} or {get_more} to get more points"
+        note: "You spent all your upgrade points. Now you can {{profile}} or {{get_more}} to get more points"
         profile: "go to profile"
         get_more: "visit the Gem Market"
     upgrade_result:
       messages:
-        success: "You've successfully upgraded {{attribute}} to {number}"
+        success: "You've successfully upgraded {{attribute}} to {{number}}"
         not_enough_points: "You cannot upgrade {{attribute}} because you don't have enough points"
     level_up:
       title: "New Level!"
-      text: "You've gained enough experience to upgrade to new level! You received 5 upgrade points that you can spend to increase your attack, defence, energy, or health. Go to {upgrade} page and use your points as you wish. Additionally, your energy and health have been refilled."
+      text: "You've gained enough experience to upgrade to new level! You received 5 upgrade points that you can spend to increase your attack, defence, energy, or health. Go to {{upgrade}} page and use your points as you wish. Additionally, your energy and health have been refilled."
       upgrade_link: "upgrade"
       buttons:
         upgrade: "Upgrade"
@@ -234,10 +234,10 @@ en:
       submit: "Save"
   fights:
     descriptions:
-      attack_won: "You attacked {victim} and WON the battle! You received {money}, {experience_points} points of experience, and {attacker_damage} points of damage. {victim} was damaged for {victim_damage} points"
-      attack_lost: "You attacked {victim} and LOST the battle! You lost {money} and took {attacker_damage} points of damage. {victim} received {victim_damage} points of damage."
-      defence_won: "You were attacked by {attacker} and WON the battle!  You received {money}, {experience_points} points of experience, and {victim_damage} points of damage. {attacker} was damaged for {attacker_damage} points"
-      defence_lost: "You were attacked by {attacker} and LOST the battle! You lost {money} and took {victim_damage} points of damage. {attacker} received {attacker_damage} points of damage."
+      attack_won: "You attacked {{victim}} and WON the battle! You received {{money}}, {{experience_points}} points of experience, and {{attacker_damage}} points of damage. {{victim}} was damaged for {{victim_damage}} points"
+      attack_lost: "You attacked {{victim}} and LOST the battle! You lost {{money}} and took {{attacker_damage}} points of damage. {{victim}} received {{victim_damage}} points of damage."
+      defence_won: "You were attacked by {{attacker}} and WON the battle!  You received {{money}}, {{experience_points}} points of experience, and {{victim_damage}} points of damage. {{attacker}} was damaged for {{attacker_damage}} points"
+      defence_lost: "You were attacked by {{attacker}} and LOST the battle! You lost {{money}} and took {{victim_damage}} points of damage. {{attacker}} received {{attacker_damage}} points of damage."
     latest:
       buttons:
         respond: "Fight Back!"
@@ -246,17 +246,17 @@ en:
         buttons:
           publish: "Brag About It!"
           request_help: "Ask Friends to Attack"
-        message: "You attacked {user_name} and WON the battle against {{pronoun}}!"
+        message: "You attacked {{user_name}} and WON the battle against {{pronoun}}!"
         you_received: "You received:"
         you_lost: "You lost:"
-        victim_lost: "{user_name} lost:"
+        victim_lost: "{{user_name}} lost:"
       failure:
         buttons:
           attack_again: "Attack Again!"
           request_help: "Ask Friends to Attack"
-        message: "You attacked {user_name} and LOST the battle against {{pronoun}}!"
+        message: "You attacked {{user_name}} and LOST the battle against {{pronoun}}!"
         you_lost: "You lost:"
-        victim_lost: "{user_name} lost:"
+        victim_lost: "{{user_name}} lost:"
       details:
         vs: "VS."
         defence_unknown: "???"
@@ -268,18 +268,18 @@ en:
       victim: "Their items:"
       item: "{{name}} x {{amount}}"
     invite:
-      message: "You attacked {user_name} and WON the battle against {{pronoun}}!"
+      message: "You attacked {{user_name}} and WON the battle against {{pronoun}}!"
       you_received:
         title: "You received:"
       you_lost:
         title: "You lost:"
       victim_lost:
-        title: "{user_name} lost:"
+        title: "{{user_name}} lost:"
     new:
       title: "Fighting Arena"
       messages:
-        too_weak: "You are too weak to fight! Take a rest until your health will grow to {hp_number} points. You need to wait about {minute_number} minutes."
-        not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {minute_number} minutes."
+        too_weak: "You are too weak to fight! Take a rest until your health will grow to {{hp_number}} points. You need to wait about {{minute_number}} minutes."
+        not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {{minute_number}} minutes."
       empty_set: "There are no opponents for you at this time."
     victim_list:
       buttons:
@@ -293,12 +293,12 @@ en:
         publish: "Brag About It!"
         inventory: "Go To Inventory"
       messages:
-        success: "You successfully bought {amount} of {item_name}"
+        success: "You successfully bought {{amount}} of {{item_name}}"
       you_spent:
         title: "You spent:"
     destroy:
       messages:
-        success: "You've successfully sold {amount} of {item_name}!"
+        success: "You've successfully sold {{amount}} of {{item_name}}!"
       you_received:
         title: "You received:"
     index:
@@ -306,8 +306,8 @@ en:
       buttons:
         shop: "Go to Shop"
     list:
-      owned: "Owned: {amount}"
-      used: "In use: {amount}"
+      owned: "Owned: {{amount}}"
+      used: "In use: {{amount}}"
       buttons:
         to_left_hand: "To Left Hand"
         to_right_hand: "To Right Hand"
@@ -317,16 +317,16 @@ en:
         to_legs: "To Legs"
         sell: "Sell for {{price}}"
       empty_set:
-        text: "Your inventory is empty. You can buy new items in the {shop}"
+        text: "Your inventory is empty. You can buy new items in the {{shop}}"
         shop: "Shop"
     use:
       button:
-        base: "Use {usage_limit}"
+        base: "Use {{usage_limit}}"
         unlimited: "(unlimited)"
         limited: "({{left}}/{{limit}})"
       messages:
-        success: "You've successfully used {item}!"
-        item_gone: "{item} ran out and now it's gone!"
+        success: "You've successfully used {{item}}!"
+        item_gone: "{{item}} ran out and now it's gone!"
       effects: "Effects:"
     holders:
       relations: "Equip Your Alliance:"
@@ -338,7 +338,7 @@ en:
       take_off: "Take off"
   invitations:
     accept:
-      message: "Invitation accepted! {user} became part of your alliance!"
+      message: "Invitation accepted! {{user}} became part of your alliance!"
     ignore:
       message: "Invitation ignored"
     show:
@@ -353,12 +353,12 @@ en:
   items:
     index:
       title: "Shop"
-      next_item: "Reach level {level} to unlock new items"
+      next_item: "Reach level {{level}} to unlock new items"
       buttons:
         inventory: "Go to Inventory"
     item:
-      sale_limit: "Limited Sale: only {amount} left"
-      time_limit: "Time Left: {amount}"
+      sale_limit: "Limited Sale: only {{amount}} left"
+      time_limit: "Time Left: {{amount}}"
       buttons:
         buy: "Buy"
   missions:
@@ -384,16 +384,16 @@ en:
       payouts:
         you_received:
           title: "You received:"
-          loot_with_looter: "{user} gained the {item} for you!"
-          loot_without_looter: "You gained the {item}!"
+          loot_with_looter: "{{user}} gained the {{item}} for you!"
+          loot_without_looter: "You gained the {{item}}!"
         you_spent:
           title: "You spent:"
-          zero_energy: "{user} helped to save energy!"
+          zero_energy: "{{user}} helped to save energy!"
         progress:
           title: "Mission Progress"
 
       not_enough_energy:
-        message: "You don't have enough energy. Take a rest until your energy will grow to {ep_number} points. You need to wait about {minute_number} minutes."
+        message: "You don't have enough energy. Take a rest until your energy will grow to {{ep_number}} points. You need to wait about {{minute_number}} minutes."
       already_completed:
         message: "You already completed this mission"
       requirements_not_satisfied:
@@ -451,21 +451,21 @@ en:
   mission_groups:
     show:
       title: "Missions"
-      locked_group: "Reach level {level} to open missions from this group"
+      locked_group: "Reach level {{level}} to open missions from this group"
     complete:
       title: "Mission Group Completed!"
       message: "You completed all missions in this group!"
       title_received: "You received new title:"
       you_received: "You received:"
     tabs:
-      level: "(Levels {level}+)"
+      level: "(Levels {{level}}+)"
       locked: "Locked"
       previous:
         name: "&laquo; Previous"
-        level: "(Below Level {level})"
+        level: "(Below Level {{level}})"
       next:
         name: "Next &raquo;"
-        level: "(Levels {level}+)"
+        level: "(Levels {{level}}+)"
   relations:
     index:
       title: "Your Alliance"
@@ -495,7 +495,7 @@ en:
     invite:
       title: "Recruit To Your Alliance"
       note: "Your Alliance gives you additional attack and defence points. You can equip each of your friends with weapon and armor and fight together. The more friends who join your Alliance, the more chances you have to win battle. Recruit your friends to become stronger and fight better!"
-      success_message: "You've successfully sent {amount} invitations to your friends!"
+      success_message: "You've successfully sent {{amount}} invitations to your friends!"
       invite:
         title: "Alliance"
         note: "Invite friends to join your Alliance"
@@ -516,13 +516,13 @@ en:
       copy_paste:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. Or just send this message to your friends:"
-        invitation: "Join my {app} Alliance! {link}"
+        invitation: "Join my {{app}} Alliance! {{link}}"
   properties:
     create:
       buttons:
         publish: "Brag About It!"
       messages:
-        success: "You successfully bought {amount} of {property_name}"
+        success: "You successfully bought {{amount}} of {{property_name}}"
       you_spent:
         title: "You spent:"
     index:
@@ -531,15 +531,15 @@ en:
         label: "Current Income:"
       note: "Properties bring you hourly income."
     list:
-      income: "{amount} per hour"
-      owned: "Owned: {amount}"
+      income: "{{amount}} per hour"
+      owned: "Owned: {{amount}}"
       buttons:
         buy: "Buy"
         get_vip: "Earn Gems"
         sell: "Sell for {{price}}"
     destroy:
       messages:
-        success: "You've successfully sold {amount} of {property_name}!"
+        success: "You've successfully sold {{amount}} of {{property_name}}!"
         property_not_found: "This property is already sold"
       you_received:
         title: "You received:"
@@ -549,38 +549,38 @@ en:
         title: "Fighter"
         description: "Bonus to attack"
         effect:
-          full: "+{value} to attack"
-          short: "+{value}"
+          full: "+{{value}} to attack"
+          short: "+{{value}}"
       defence:
         title: "Guardian"
         description: "Bonus to defence"
         effect:
-          full: "+{value} to defence"
-          short: "+{value}"
+          full: "+{{value}} to defence"
+          short: "+{{value}}"
       fight_damage:
         title: "Healer"
         description: "Reduce damage from fights"
         effect:
-          full: "{value}% less damage from fights"
-          short: "-{value}%"
+          full: "{{value}}% less damage from fights"
+          short: "-{{value}}%"
       fight_income:
         title: "Raider"
         description: "More money from fight"
         effect:
-          full: "{value}% more money from fights"
-          short: "+{value}%"
+          full: "{{value}}% more money from fights"
+          short: "+{{value}}%"
       mission_energy:
         title: "Scout"
         description: "Saves energy on missions"
         effect:
-          full: "{value}% chance to fulfill mission for free"
-          short: "{value}%"
+          full: "{{value}}% chance to fulfill mission for free"
+          short: "{{value}}%"
       mission_income:
         title: "Bagman"
         description: "More money from missions"
         effect:
-          full: "{value}% more money from missions"
-          short: "+{value}%"
+          full: "{{value}}% more money from missions"
+          short: "+{{value}}%"
     new:
       title: "Promote Alliance Member"
       not_assigned:
@@ -596,7 +596,7 @@ en:
       you_received: "You received:"
       forward:
         title: "Send this bonus to your friends!"
-        text: "You can send this bonus to your friends who also play or possibly will be interested in {app}. By clicking the link your friends will receive the same bonus you just received. Click on friend names to review and send message with the link:"
+        text: "You can send this bonus to your friends who also play or possibly will be interested in {{app}}. By clicking the link your friends will receive the same bonus you just received. Click on friend names to review and send message with the link:"
         invitation: "I got a secret bonus link for {{app}}! {{link}}"
       already_used: "You already used this promotion link"
       expired: "This promotion link already expired"
@@ -605,12 +605,12 @@ en:
     show:
       title: "Gem Market"
       current:
-        label: "You have {amount} gems"
+        label: "You have {{amount}} gems"
       hire_mercenary:
         text: "Hire a mercenary to your Alliance"
         button: "Hire"
       exchange_money:
-        text: "Add {amount} gold to your character"
+        text: "Add {{amount}} gold to your character"
         button: "Add Gold"
       refill_energy:
         text: "Refill your energy"
@@ -621,7 +621,7 @@ en:
         button: "Refill"
         full: "You have full health"
       buy_points:
-        text: "Add {amount} upgrade points to your character"
+        text: "Add {{amount}} upgrade points to your character"
         button: "Add Points"
     get_more_vip:
       title: "How to Get More Gems"
@@ -637,14 +637,14 @@ en:
         failure: "You don't have enough Gems"
   help_requests:
     show:
-      success: "You successfully helped {user} to fulfill the {mission} mission!"
+      success: "You successfully helped {{user}} to fulfill the {{mission}} mission!"
       you_received: "You received:"
       friends_only:
         message: "You cannot help players that are not your friends"
     latest:
       text:
-        fight: "{friend_amount} of your friends helped you to fight with {victim}! You earned {money_amount} Gold and {experience_amount} experience."
-        mission: "{friend_amount} of your friends helped you to fulfill the {mission} mission! You earned {money_amount} Gold and {experience_amount} experience."
+        fight: "{{friend_amount}} of your friends helped you to fight with {{victim}}! You earned {{money_amount}} Gold and {{experience_amount}} experience."
+        mission: "{{friend_amount}} of your friends helped you to fulfill the {{mission}} mission! You earned {{money_amount}} Gold and {{experience_amount}} experience."
   tutorials:
     block:
       title: "Game Tutorial"
@@ -685,8 +685,8 @@ en:
         non_players: "Facebook Friends"
       request:
         title: "Gift"
-        message: "{{user}} has sent you a {item} in {{app}}! Click to accept gift."
-        accept: "Accept {item}"
+        message: "{{user}} has sent you a {{item}} in {{app}}! Click to accept gift."
+        accept: "Accept {{item}}"
         note: "Send gifts to your Alliance"
       buttons:
         skip: "Skip"
