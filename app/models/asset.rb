@@ -9,7 +9,9 @@ class Asset < ActiveRecord::Base
 
   class << self
     def [](value)
-      find_by_alias(value.to_s)
+      logger.silence do
+        find_by_alias(value.to_s)
+      end
     end
   end
   
