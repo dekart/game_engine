@@ -46,8 +46,10 @@
       <div class="invitation_type">
         <h2><%= t(".request.title") %></h2>
 
+        <p><%= t(".invite.note") %></p>
+        
         <% fb_request_form(t(".invite.title"), :invite_message, invite_users_path(:from_selector => true)) do %>
-          <%= fb_multi_friend_selector_condensed(t(".invite.note"),
+          <%= fb_multi_friend_selector_condensed(
                 :exclude_ids => (
                    current_user.invitations.facebook_ids +
                    current_character.friend_relations.facebook_ids
