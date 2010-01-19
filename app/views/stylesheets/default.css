@@ -151,7 +151,7 @@ form .error {color: red; padding: 3px 0px;}
 #mission_list th {padding: 10px 0px; border-bottom: 1px solid #d0d0d0; }
   #mission_list .mission_group {font-size: 16px; color: #3B5998; font-weight: bold;}
 #mission_list td {padding: 10px 0px; border-bottom: 1px solid #e7e7e7;}
-  #mission_list .image img {margin-right: 10px;}
+  #mission_list td.image img {margin-right: 10px;}
   #mission_list .details {padding-right: 10px;}
   #mission_list .details .name {font-size: 14px; margin-bottom: 5px;font-weight: bold;}
   #mission_list .payout_preview {padding-right: 10px;}
