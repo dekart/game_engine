@@ -36,12 +36,6 @@
               <% end %>
             </td>
             <td class="controls">
-              <%= link_to_remote(inventory_use_label(inventory),
-                    :url    => use_inventory_url(inventory, :canvas => false),
-                    :update => :result,
-                    :html   => {:class => "use button"}
-                  ) if inventory.usable? %>
-
               <% if inventory.can_be_sold? %>
                 <% form_tag "", :class => :clearfix do %>
                   <%= amount_select_tag %>
@@ -55,6 +49,12 @@
                       ) %>
                 <% end %>
               <% end %>
+              
+              <%= link_to_remote(button(inventory_use_label(inventory)),
+                    :url    => use_inventory_url(inventory, :canvas => false),
+                    :update => :result,
+                    :html   => {:class => "use button"}
+                  ) if inventory.usable? %>
             </td>
           <% end %>
         <% end %>

@@ -9,9 +9,7 @@ module InventoriesHelper
       )
     end
 
-    t("inventories.use.button.base",
-      :usage_label => limit_label
-    )
+    t("inventories.use.button.base", :limit => limit_label)
   end
   safe_helper :inventory_use_label
 end

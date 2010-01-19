@@ -321,7 +321,7 @@ en:
         shop: "Shop"
     use:
       button:
-        base: "Use {{usage_limit}}"
+        base: "Use {{limit}}"
         unlimited: "(unlimited)"
         limited: "({{left}}/{{limit}})"
       messages:
