@@ -53,7 +53,7 @@ class Fight < ActiveRecord::Base
       self.errors.add(:character, :not_enough_energy)
     end
 
-    if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or (!is_response? and Character.victims_for(self.attacker).find_by_id(self.victim.id).nil?)
+    if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or (!is_response? and Character.victims_for(self.attacker).find_by_id(self.victim.id).nil?) or (attacker == victim)
       self.errors.add(:character, :cannot_attack)
     end
 
