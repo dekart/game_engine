@@ -1,5 +1,18 @@
 namespace :app do
   namespace :maintenance do
+    desc "Update translation strings to use interpolations"
+    task :translations_to_interpolations => :environment do
+      puts "Modifying interpolations for #{Translation.count} translations..."
+
+      Translation.find_each do |t|
+        t.value = t.value.gsub(/([^\{]|\A)\{([^\{])/, "\\1{{\\2")
+        t.value = t.value.gsub(/([^\}])\}([^\}]|\Z)/, "\\1}}\\2")
+        t.save!
+      end
+
+      puts "Done!"
+    end
+
     desc "Update payout triggers"
     task :update_payout_events => :environment do
       Promotion.all.each do |pr|
