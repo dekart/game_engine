@@ -150,7 +150,7 @@
             <td class="position"><%= index + 1 %></td>
             <td class="picture"><%= character_picture_link(character) %></td>
             <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
-            <td class="relations_count last"><%= character.relations_count %></td>
+            <td class="relations_count last"><%= character.relations.effective_size %></td>
           </tr>
         <% end %>
 
@@ -159,7 +159,7 @@
             <td class="position"><%= @rating_scope.rating_position(current_character, :relations_count) %></td>
             <td class="picture"><%= character_picture_link(current_character) %></td>
             <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
-            <td class="relations_count last"><%= current_character.relations_count %></td>
+            <td class="relations_count last"><%= current_character.relations.effective_size %></td>
           </tr>
         <% end %>
       </table>
