@@ -59,8 +59,8 @@ class Inventory < ActiveRecord::Base
     difference = changes["amount"].last - changes["amount"].first
 
     if difference > 0
-      errors.add(:character, :not_enough_basic_money) if character.basic_money < basic_price * difference
-      errors.add(:character, :not_enough_vip_money) if character.vip_money < vip_price * difference
+      errors.add(:character, :not_enough_basic_money, :name => name) if character.basic_money < basic_price * difference
+      errors.add(:character, :not_enough_vip_money, :name => name) if character.vip_money < vip_price * difference
     end
   end
 

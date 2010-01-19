@@ -31,7 +31,7 @@ class Property < ActiveRecord::Base
 
   def enough_property_slots?
     if buying? and amount > maximum_amount
-      errors.add(:character, :too_much_properties)
+      errors.add(:character, :too_much_properties, :plural_name => plural_name)
     end
   end
 
@@ -39,8 +39,8 @@ class Property < ActiveRecord::Base
     return unless charge_money and changes["amount"]
 
     if buying?
-      errors.add(:character, :not_enough_basic_money) if character.basic_money < total_buy_price
-      errors.add(:character, :not_enough_vip_money) if character.vip_money < vip_price * buying_amount
+      errors.add(:character, :not_enough_basic_money, :name => name) if character.basic_money < total_buy_price
+      errors.add(:character, :not_enough_vip_money, :name => name) if character.vip_money < vip_price * buying_amount
     end
   end
 
