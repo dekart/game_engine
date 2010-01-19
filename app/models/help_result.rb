@@ -4,8 +4,6 @@ class HelpResult < ActiveRecord::Base
 
   delegate :context, :to => :help_request
 
-  validate_on_create :check_expired_request, :check_already_helped
-  
   before_create :calculate_payout
   after_create  :give_payout, :increment_request_stats
 
@@ -13,18 +11,18 @@ class HelpResult < ActiveRecord::Base
 
   protected
 
-  def check_expired_request
+  def validate_on_create
     self.errors.add_to_base(:too_late) if self.help_request.expired?
-  end
 
-  def check_already_helped
-    Rails.logger.debug self.help_request.inspect
-    
     if self.help_request.help_results.find_by_character_id(self.character.id)
       self.errors.add_to_base(:"already_helped_with_#{context.class.to_s.underscore}")
     end
-  end
 
+    if context.is_a?(Fight) and context.victim == character
+      errors.add_to_base(:cannot_attack_self)
+    end
+  end
+  
   def calculate_payout
     if context.is_a?(Mission)
       self.money      = (self.help_request.context.money * Configuration[:help_request_mission_money] * 0.01).ceil
