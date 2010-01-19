@@ -57,8 +57,8 @@ en:
         inventory:
           attributes:
             character:
-              not_enough_basic_money: "You don't have enough gold to buy {{name}}."
-              not_enough_vip_money: "You don't have enough Gems to buy {{name}}."
+              not_enough_basic_money: "You don't have enough gold to buy a {{name}}."
+              not_enough_vip_money: "You don't have enough Gems to buy a {{name}}."
         property:
           attributes:
             character:
