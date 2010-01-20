@@ -2,6 +2,16 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include ExceptionLogging
+
+  filter_parameter_logging do |key, value|
+    if key == "fb_sig_friends"
+      count = value.blank? ? 0 : value.count(",") + 1
+
+      value.replace "[#{count} friends]"
+    end
+  end
+  
   before_filter :check_character_existance
   before_filter :ensure_application_is_installed_by_facebook_user
   
@@ -10,11 +20,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context
 
   helper :all
-
-  rescue_from ActionController::RoutingError,
-    :with => :redirect_to_landing_page
-  rescue_from ActiveRecord::RecordNotFound, ActionController::UnknownAction,
-    :with => :log_exception_and_redirect
 
   protected
 
@@ -98,9 +103,6 @@ class ApplicationController < ActionController::Base
     else
       new_url = landing_url
     end
-
-    Rails.logger.fatal params.inspect
-    Rails.logger.fatal "Redirecting from #{request.method.to_s.upcase} #{request.request_uri} to #{new_url}"
 
     redirect_to new_url
   end
