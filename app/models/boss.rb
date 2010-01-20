@@ -2,7 +2,10 @@ class Boss < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
 
-  belongs_to :mission_group
+  belongs_to  :mission_group
+  
+  has_many    :boss_fights,
+    :dependent => :delete_all
   
   has_attached_file :image,
     :styles => {
