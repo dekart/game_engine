@@ -8,7 +8,8 @@
       <% @items.each_slice(3) do |group| %>
         <tr>
           <% group.each do |item| %>
-            <% content_tag_for(:td, item) do %>
+          <td>
+            <% div_for(item) do %>
               <%= link_to(item_image(item, :small), polymorphic_path(@gift, :item_id => item.id),
                     :method => @gift.new_record? ? :post : :put
                   ) %>
@@ -28,13 +29,16 @@
                 <% end %>
               </div>
             <% end %>
+          </td>
           <% end %>
         </tr>
       <% end %>
     </table>
   <% end %>
 
-  <%= link_to(button(:skip), @gift.new_record? ? root_path : confirm_gift_path(@gift), 
-        :class => "skip button"
-      ) %>
+  <div class="buttons">
+    <%= link_to(button(:skip), @gift.new_record? ? root_path : confirm_gift_path(@gift),
+          :class => "skip button"
+        ) %>
+  </div>
 </div>

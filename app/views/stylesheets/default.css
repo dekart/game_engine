@@ -531,12 +531,12 @@ form .error {color: red; padding: 3px 0px;}
   #gift_result .details .from {font-weight: bold; font-size: 16px; vertical-align: middle;}
 
 /* Gift sending form */
-#gift_form .skip span {width: 45px; float: right; background-image: url(asset:icons_home)}
+#gift_form .buttons {float: right;}
+  #gift_form .buttons .skip {width: 70px;}
+    #gift_form .buttons .skip span {background-image: url(asset:icons_home)}
 
-#gift_form .item { padding: 5px; width: 120px; text-align: center;}
+#gift_form .item { padding: 5px; width: 120px; text-align: center; border: 1px solid #e0e0e0;}
   #gift_form .item .name {font-weight: bold;}
-
-#gift_form .items .item { border: 1px solid #e0e0e0; margin: 3px;}
   #gift_form .item .effects {margin-top: 5px;}
   #gift_form .item .effects div {display: inline; font-weight:bold;line-height: 26px;height: 26px; padding: 1px 0px 1px 21px; background-position: center left; background-repeat: no-repeat;}
     #gift_form .item .effects .attack {background-image: url(asset:icons_attack);}
@@ -544,6 +544,8 @@ form .error {color: red; padding: 3px 0px;}
     #gift_form .item .effects .restore_health{background-image: url(asset:icons_health);}
     #gift_form .item .effects .restore_energy{background-image: url(asset:icons_energy);}
     #gift_form .item .effects .upgrade{background-image: url(asset:icons_level);}
+
+#gift_form .items .item {margin: 0 10px 10px 0;}
 
 #gift_form .gift {margin-bottom: 15px;}
   #gift_form .gift .item .name {margin-bottom: 10px;}
