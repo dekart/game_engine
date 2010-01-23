@@ -14,7 +14,7 @@ module Jobs
 
         newsletter.update_attribute(:last_recipient, users.last)
 
-        newsletter.delivery_job = Delayed::Job.enqueue(self.class.new(newsletter.id), 0, Configuration[:newsletter_send_sleep].seconds.from_now)
+        newsletter.schedule_delivery(Configuration[:newsletter_send_sleep].seconds.from_now)
       else
         newsletter.finish_delivery!
       end

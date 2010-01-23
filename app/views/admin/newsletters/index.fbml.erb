@@ -11,25 +11,30 @@
     <tr>
       <th><%= Newsletter.human_attribute_name("created_at") %></th>
       <th><%= Newsletter.human_attribute_name("text") %></th>
-      <th><%= Newsletter.human_attribute_name("workflow_status") %></th>
+      <th><%= Newsletter.human_attribute_name("state") %></th>
       <th><%= Newsletter.human_attribute_name("recipients") %></th>
     </tr>
     <% @newsletters.each do |newsletter| %>
       <tr>
         <td><%= l(newsletter.created_at, :format => :short) %></td>
         <td><%= raw newsletter.text %></td>
-        <td><%= newsletter.workflow_state.capitalize %></td>
+        <td><%= newsletter.state.capitalize %></td>
         <td>
           <%= User.count - User.after(newsletter.last_recipient).count %>/<%= User.count %>
         </td>
         <td class="controls">
           <% if newsletter.draft? %>
             <%= link_to(t(".controls.edit"), edit_admin_newsletter_path(newsletter)) %>
+          <% end %>
+
+          <% if newsletter.can_start_delivery? %>
             <%= link_to(t(".controls.deliver"), deliver_admin_newsletter_path(newsletter),
                   :method   => :post,
                   :confirm  => t(".controls.deliver_confirm")
                 ) %>
-          <% elsif newsletter.delivering? %>
+          <% end %>
+
+          <% if newsletter.can_pause_delivery? %>
             <%= link_to(t(".controls.pause"), pause_admin_newsletter_path(newsletter),
                   :method   => :post,
                   :confirm  => t(".controls.pause_confirm")

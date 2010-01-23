@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  include ExceptionLogging
+  include ExceptionLogging if Rails.env.production?
 
   filter_parameter_logging do |key, value|
     if key == "fb_sig_friends"
