@@ -2,7 +2,7 @@
   <td class="picture"><%= character_picture_link(relation.target_character) %></td>
   <td class="name"><%= character_name_link(relation.target_character) %></td>
   <td class="level">
-    <span class="label"><%= Character.human_attribute_name("level")) %></span>
+    <span class="label"><%= Character.human_attribute_name("level") %></span>
     <span class="value"><%= relation.target_character.level %></span>
   </td>
   <td class="controls">
