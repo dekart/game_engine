@@ -12,7 +12,7 @@
       <div class="forward">
         <h3><%= t(".forward.title") %></h3>
 
-        <p><%= raw t(".forward.text", :app => fb_app_name) %></p>
+        <p><%= raw t(".forward.text", :app => t("app_name")) %></p>
 
         <%= fb_chat_invite(
               t(".forward.invitation", :app => t("app_name"), :link => promotion_url(@promotion))

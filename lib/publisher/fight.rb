@@ -12,7 +12,7 @@ module Publisher
       recipients fight.victim.user
       from user
       fbml I18n.t("notifications.fight.text",
-        :app  => link_to(fb_app_name(:linked => false), root_url),
+        :app  => link_to(I18n.t("app_name"), root_url),
         :link => link_to(I18n.t('notifications.fight.link'), root_url)
       )
     end
@@ -22,7 +22,7 @@ module Publisher
       recipients victim
       from user
       fbml I18n.t("notifications.fight_with_invite.text",
-        :app  => link_to(fb_app_name(:linked => false), root_url),
+        :app  => link_to(I18n.t("app_name"), root_url),
         :link => link_to(I18n.t('notifications.fight_with_invite.link'), root_url)
       )
     end

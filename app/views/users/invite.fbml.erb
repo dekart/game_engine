@@ -12,7 +12,7 @@
   <%= raw t(".invite.message",
         :user     => fb_name(current_user, :linked => :false),
         :pronoun  => fb_pronoun(current_user, :possessive => true),
-        :app_name => fb_app_name
+        :app_name => t("app_name")
       ) %>
 
   <%= fb_custom_req_choice(
@@ -78,7 +78,7 @@
 
         <p class="invitation_text">
           <%= raw t(".copy_paste.invitation",
-                :app  => fb_app_name,
+                :app  => t("app_name"),
                 :link => invitation_url(current_character.invitation_key, :reference => :invite_link)
               ) %>
         </p>

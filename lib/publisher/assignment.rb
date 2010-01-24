@@ -14,7 +14,7 @@ module Publisher
       fbml I18n.t("notifications.assignment.text",
         :pronoun  => fb_pronoun(user, :possessive => true, :useyou => false),
         :title    => content_tag(:b, I18n.t("assignments.roles.#{assignment.role}.title")),
-        :app      => link_to(fb_app_name(:linked => false), root_url),
+        :app      => link_to(I18n.t("app_name"), root_url),
         :link     => link_to(
           I18n.t("notifications.assignment.link",
             :user => fb_name(user, :linked => false, :firstnameonly => true, :useyou => false)

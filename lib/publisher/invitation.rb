@@ -12,7 +12,7 @@ module Publisher
       recipients invitation.sender
       from user
       fbml I18n.t("notifications.invitation.text",
-        :app  => link_to(fb_app_name(:linked => false), root_url),
+        :app  => link_to(I18n.t("app_name"), root_url),
         :link => link_to(I18n.t("notifications.invitation.link"), relations_url)
       )
     end

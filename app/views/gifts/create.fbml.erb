@@ -26,7 +26,7 @@
 
   <div class="friend_groups">
     <% %w{all players non_players}.each do |type| %>
-      <%= link_to(t(".groups.#{type}", :app => fb_app_name), gift_path(@gift, :group => type),
+      <%= link_to(t(".groups.#{type}", :app => t("app_name")), gift_path(@gift, :group => type),
             :method => :put,
             :id     => "group_#{type}",
             :class  => (:current if @group == type.to_sym)
@@ -38,7 +38,7 @@
     <% content_for :gift_message do %>
       <%= raw t(".request.message",
             :user => fb_name(current_user, :linked => :false),
-            :app  => fb_app_name,
+            :app  => t("app_name"),
             :item => @gift.item.name
           ) %>
 
