@@ -6,12 +6,12 @@ class Character
       end
 
       group = MissionGroup.find_by_id(proxy_owner.current_mission_group_id) if proxy_owner.current_mission_group_id
-      group ||= MissionGroup.first
+      group ||= MissionGroup.with_state(:visible).first
     end
 
     def current_page
-      MissionGroup.paginate(
-        :page     => (MissionGroup.before(current).size.to_f / Configuration[:mission_group_show_limit]).floor + 1,
+      MissionGroup.with_state(:visible).paginate(
+        :page     => (MissionGroup.with_state(:visible).before(current).size.to_f / Configuration[:mission_group_show_limit]).floor + 1,
         :per_page => Configuration[:mission_group_show_limit]
       )
     end

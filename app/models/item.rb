@@ -48,17 +48,17 @@ class Item < ActiveRecord::Base
   named_scope :vip, {:conditions => "items.vip_price > 0"}
   named_scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
 
-  state_machine :initial => :draft do
-    state :draft
+  state_machine :initial => :hidden do
+    state :hidden
     state :visible
     state :deleted
 
     event :publish do
-      transition :draft => :visible
+      transition :hidden => :visible
     end
 
     event :hide do
-      transition :visible => :draft
+      transition :visible => :hidden
     end
 
     event :mark_deleted do

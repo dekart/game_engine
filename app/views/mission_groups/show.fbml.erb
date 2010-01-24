@@ -14,11 +14,11 @@
 
 <% unless @mission_group.locked?(current_character) %>
   <div id="mission_list">
-    <%= render "missions/list", :missions => @mission_group.missions %>
+    <%= render "missions/list", :missions => @missions %>
   </div>
 
   <div id="boss_list">
-    <% @mission_group.bosses.each do |boss| %>
+    <% @bosses.each do |boss| %>
       <%= render "bosses/boss", :boss => boss %>
     <% end %>
   </div>

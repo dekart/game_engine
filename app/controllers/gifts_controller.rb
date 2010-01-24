@@ -4,7 +4,7 @@ class GiftsController < ApplicationController
 
     @gift ||= Gift.new
     
-    @items = Item.available.available_in(:gift).available_for(current_character).all(
+    @items = Item.with_state(:visible).available.available_in(:gift).available_for(current_character).all(
       :order => "items.level DESC",
       :limit => Configuration[:gifting_item_show_limit]
     )

@@ -28,17 +28,17 @@ class PropertyType < ActiveRecord::Base
     }
   }
 
-  state_machine :initial => :draft do
-    state :draft
+  state_machine :initial => :hidden do
+    state :hidden
     state :visible
     state :deleted
 
     event :publish do
-      transition :draft => :visible
+      transition :hidden => :visible
     end
 
     event :hide do
-      transition :visible => :draft
+      transition :visible => :hidden
     end
 
     event :mark_deleted do

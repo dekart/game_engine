@@ -5,7 +5,7 @@ class MissionsController < ApplicationController
     @result = MissionResult.create(current_character, @mission)
 
     if @result.rank.just_completed?
-      @missions = current_character.mission_groups.current.missions
+      @missions = current_character.mission_groups.current.missions.with_state(:visible)
     end
 
     @mission_groups = current_character.mission_groups.current_page

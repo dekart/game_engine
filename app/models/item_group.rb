@@ -5,17 +5,17 @@ class ItemGroup < ActiveRecord::Base
 
   named_scope :visible_in_shop, :conditions => "display_in_shop = 1", :order => "position"
 
-  state_machine :initial => :draft do
-    state :draft
+  state_machine :initial => :hidden do
+    state :hidden
     state :visible
     state :deleted
 
     event :publish do
-      transition :draft => :visible
+      transition :hidden => :visible
     end
 
     event :hide do
-      transition :visible => :draft
+      transition :visible => :hidden
     end
 
     event :mark_deleted do

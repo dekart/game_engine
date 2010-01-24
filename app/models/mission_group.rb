@@ -24,17 +24,17 @@ class MissionGroup < ActiveRecord::Base
     }
   }
 
-  state_machine :initial => :draft do
-    state :draft
+  state_machine :initial => :hidden do
+    state :hidden
     state :visible
     state :deleted
 
     event :publish do
-      transition :draft => :visible
+      transition :hidden => :visible
     end
 
     event :hide do
-      transition :visible => :draft
+      transition :visible => :hidden
     end
 
     event :mark_deleted do
@@ -52,11 +52,11 @@ class MissionGroup < ActiveRecord::Base
   validates_numericality_of :level, :allow_nil => true
 
   def previous_group
-    self.class.before(self).first(:order => "mission_groups.level DESC")
+    self.class.with_state(:visible).before(self).first(:order => "mission_groups.level DESC")
   end
 
   def next_group
-    self.class.after(self).first(:order => "mission_groups.level")
+    self.class.with_state(:visible).after(self).first(:order => "mission_groups.level")
   end
 
   def locked?(character)

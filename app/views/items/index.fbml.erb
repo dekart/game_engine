@@ -10,9 +10,9 @@
   </div>
 
   <div id="item_groups" class="clearfix">
-    <% ItemGroup.visible_in_shop.each do |group| %>
-      <% if group == @item_group %>
-        <b><%= @item_group.name %></b>
+    <% @item_groups.each do |group| %>
+      <% if group == @current_group %>
+        <b><%= group.name %></b>
       <% else %>
         <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
       <% end %>
