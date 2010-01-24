@@ -15,18 +15,7 @@
         :app_name => fb_app_name
       ) %>
 
-  <%= fb_req_choice(
-        t(".invite.buttons.accept",
-          :user => fb_name(current_user,
-            :linked         => false,
-            :possessive     => true,
-            :firstnameonly  => true
-          )
-        ),
-        invitation_url(current_character.invitation_key, :reference => :invite_form_accept)
-      ) %>
-
-  <%= fb_req_choice(
+  <%= fb_custom_req_choice(
         t(".invite.buttons.visit_profile",
           :user => fb_name(current_user,
             :linked         => false,
@@ -35,6 +24,17 @@
           )
         ),
         character_url(current_character, :reference => :invite_form_profile)
+      ) %>
+
+  <%= fb_custom_req_choice(
+        t(".invite.buttons.accept",
+          :user => fb_name(current_user,
+            :linked         => false,
+            :possessive     => true,
+            :firstnameonly  => true
+          )
+        ),
+        invitation_url(current_character.invitation_key, :reference => :invite_form_accept)
       ) %>
 <% end %>
 

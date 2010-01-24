@@ -28,16 +28,8 @@ module FacebookHelper
     )
   end
 
-  def fb_custom_multi_friend_selector(*args, &block)
-    if block_given?
-      options = {:showborder => false, :max => 20}.merge(args.extract_options!)
-
-      concat(
-        content_tag("fb:multi-friend-selector", capture(&block), options)
-      )
-    else
-      fb_multi_friend_selector(*args, &block)
-    end
+  def fb_custom_req_choice(label, url)
+    content_tag("fb:req-choice", fb_fa(:label, label), :url => url)
   end
 
   def fb_profile_url(user)
