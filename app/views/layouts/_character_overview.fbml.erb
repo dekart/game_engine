@@ -2,23 +2,23 @@
   <tr>
     <td class="basic_money">
       <b><%= Character.human_attribute_name("basic_money") %></b>
-      (<%= link_to(t(".bank"), new_bank_operation_path) %>)
-      <div id="co_basic_money_timer" class="timer"></div>
+      <span id="co_basic_money_timer" class="timer"></span>
       <div id="co_basic_money" class="value"></div>
+      <%= link_to(t(".bank"), new_bank_operation_path) %>
     </td>
     <td class="vip_money">
       <b><%= Character.human_attribute_name("vip_money") %></b>
-      (<%= link_to(t(".premium"), premium_path) %>)
       <div id="co_vip_money" class="value"></div>
+      <%= link_to(t(".premium"), premium_path) %>
     </td>
     <td class="health">
       <b><%= Character.human_attribute_name("health") %></b>
-      <div id="co_health_timer" class="timer"></div>
+      <span id="co_health_timer" class="timer"></span>
       <div id="co_health" class="value"></div>
     </td>
     <td class="energy">
       <b><%= Character.human_attribute_name("energy") %></b>
-      <div id="co_energy_timer" class="timer"></div>
+      <span id="co_energy_timer" class="timer"></span>
       <div id="co_energy" class="value"></div>
     </td>
     <td class="experience">
@@ -28,10 +28,11 @@
     </td>
     <td class="level">
       <b><%= Character.human_attribute_name("level") %></b>
-      <span id="co_points" style="display:none;">
-        (<%= link_to("", upgrade_character_path(:current), :id => :co_point_link) %>)
-      </span>
       <div id="co_level" class="value"></div>
+      <%= link_to(t(".upgrade"), upgrade_character_path(:current),
+            :id     => :co_point_link,
+            :style  => "display:none;"
+          ) %>
     </td>
   </tr>
 </table>

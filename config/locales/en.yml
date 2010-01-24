@@ -159,6 +159,7 @@ en:
     character_overview:
       bank: "Treasury"
       premium: "Get More"
+      upgrade: "Upgrade!"
     tip:
       label: "Tip:"
   bank_operations:

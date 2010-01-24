@@ -72,8 +72,8 @@ form .error {color: red; padding: 3px 0px;}
     #co_experience {background-image: url(asset:icons_experience);}
     #co_health {background-image: url(asset:icons_health);}
     #co_energy {background-image: url(asset:icons_energy);}
-  #co_points a {font-weight: bold;color:red;}
-  #co .timer {color: #b0b0b0; float:right; padding-right: 10px;}
+  #co_point_link {font-weight: bold;color:red;}
+  #co .timer {color: #b0b0b0; padding-left: 10px;}
   #co .basic_money {width: 160px;}
   #co .level {width: 80px;}
   #co .experience {width: 150px;}

@@ -49,10 +49,9 @@ var Character = {
     $("co_energy").setTextValue(a.character.ep + "/" + a.character.energy);
 
     if(a.character.points > 0) {
-      $("co_point_link").setTextValue("+" + a.character.points);
-      $("co_points").show("inline");
+      $("co_point_link").show();
     } else {
-      $("co_points").hide();
+      $("co_point_link").hide();
     }
     if(a.character.property_income > 0){
       Timer.start('co_basic_money_timer', a.character.time_to_basic_money_restore, this.updateFromRemote);
