@@ -4,7 +4,7 @@ class Admin::BossesController < ApplicationController
   layout "layouts/admin/application"
 
   def index
-    @bosses = Boss.paginate(:page => params[:page])
+    @bosses = Boss.without_state(:deleted).paginate(:page => params[:page])
   end
 
   def new
@@ -49,11 +49,27 @@ class Admin::BossesController < ApplicationController
     end
   end
 
+  def publish
+    @boss = Boss.find(params[:id])
+
+    @boss.publish if @boss.can_publish?
+
+    redirect_to admin_bosses_path
+  end
+
+  def hide
+    @boss = Boss.find(params[:id])
+
+    @boss.hide if @boss.can_hide?
+
+    redirect_to admin_bosses_path
+  end
+
   def destroy
     @boss = Boss.find(params[:id])
 
-    @boss.destroy
+    @boss.mark_deleted if @boss.can_mark_deleted?
 
-    redirect_to :action => :index
+    redirect_to admin_bosses_path
   end
 end

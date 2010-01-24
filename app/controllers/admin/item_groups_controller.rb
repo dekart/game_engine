@@ -35,12 +35,28 @@ class Admin::ItemGroupsController < ApplicationController
     end
   end
 
+  def publish
+    @group = ItemGroup.find(params[:id])
+
+    @group.publish if @group.can_publish?
+
+    redirect_to admin_item_groups_path
+  end
+
+  def hide
+    @group = ItemGroup.find(params[:id])
+
+    @group.hide if @group.can_hide?
+
+    redirect_to admin_item_groups_path
+  end
+
   def destroy
     @group = ItemGroup.find(params[:id])
 
-    @group.destroy
+    @group.mark_deleted if @group.can_mark_deleted?
 
-    redirect_to :action => :index
+    redirect_to admin_item_groups_path
   end
 
   def move

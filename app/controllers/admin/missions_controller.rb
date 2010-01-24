@@ -4,7 +4,7 @@ class Admin::MissionsController < ApplicationController
   layout "layouts/admin/application"
 
   def index
-    @missions = Mission.all(
+    @missions = Mission.without_state(:deleted).all(
       :include  => :mission_group,
       :order    => "mission_groups.level"
     ).paginate(:page => params[:page])
@@ -59,11 +59,27 @@ class Admin::MissionsController < ApplicationController
     end
   end
 
+  def publish
+    @mission = Mission.find(params[:id])
+
+    @mission.publish if @mission.can_publish?
+
+    redirect_to admin_missions_path
+  end
+
+  def hide
+    @mission = Mission.find(params[:id])
+
+    @mission.hide if @mission.can_hide?
+
+    redirect_to admin_missions_path
+  end
+
   def destroy
     @mission = Mission.find(params[:id])
 
-    @mission.destroy
+    @mission.mark_deleted if @mission.can_mark_deleted?
 
-    redirect_to :action => :index
+    redirect_to admin_missions_path
   end
 end

@@ -15,6 +15,7 @@
       <th><%= Boss.human_attribute_name("defence") %></th>
       <th><%= Boss.human_attribute_name("requirements") %></th>
       <th><%= Boss.human_attribute_name("payouts") %></th>
+      <th><%= Boss.human_attribute_name("state") %></th>
     </tr>
     <% @bosses.each do |boss| %>
       <tr>
@@ -26,12 +27,20 @@
         <td class="defence"><%= boss.defence %></td>
         <td class="requirements"><%= admin_requirements_preview(boss.requirements) %></td>
         <td class="payouts"><%= admin_payouts_preview(boss.payouts) %></td>
+        <td class="state"><%= boss.state %></div>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_boss_path(boss)) %>
+          <%= link_to(t(".controls.publish"), publish_admin_boss_path(boss),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              ) if boss.can_publish? %>
+          <%= link_to(t(".controls.hide"), hide_admin_boss_path(boss),
+                :method => :put
+              ) if boss.can_hide? %>
           <%= link_to(t(".controls.delete"), admin_boss_path(boss),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")
-              ) %>
+              ) if boss.can_mark_deleted? %>
         </td>
       </tr>
     <% end %>

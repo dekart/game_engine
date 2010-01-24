@@ -28,6 +28,24 @@ class PropertyType < ActiveRecord::Base
     }
   }
 
+  state_machine :initial => :draft do
+    state :draft
+    state :visible
+    state :deleted
+
+    event :publish do
+      transition :draft => :visible
+    end
+
+    event :hide do
+      transition :visible => :draft
+    end
+
+    event :mark_deleted do
+      transition(any - [:deleted] => :deleted)
+    end
+  end
+
   validates_presence_of :name, :availability, :basic_price, :income
   validates_numericality_of :basic_price, :vip_price, :income, :purchase_limit, :allow_nil => true
 

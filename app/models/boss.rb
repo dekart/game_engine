@@ -3,9 +3,26 @@ class Boss < ActiveRecord::Base
   extend HasRequirements
 
   belongs_to  :mission_group
-  
   has_many    :boss_fights,
     :dependent => :delete_all
+
+  state_machine :initial => :draft do
+    state :draft
+    state :visible
+    state :deleted
+
+    event :publish do
+      transition :draft => :visible
+    end
+
+    event :hide do
+      transition :visible => :draft
+    end
+
+    event :mark_deleted do
+      transition(any - [:deleted] => :deleted)
+    end
+  end
   
   has_attached_file :image,
     :styles => {

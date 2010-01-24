@@ -4,9 +4,9 @@ class Admin::ItemsController < ApplicationController
   layout "layouts/admin/application"
 
   def index
-    @items = Item.all(
-      :include => :item_group,
-      :order => "item_groups.position, items.basic_price"
+    @items = Item.without_state(:deleted).all(
+      :include  => :item_group,
+      :order    => "item_groups.position, items.basic_price"
     ).paginate(:page => params[:page])
   end
 
@@ -52,11 +52,27 @@ class Admin::ItemsController < ApplicationController
     end
   end
 
+  def publish
+    @item = Item.find(params[:id])
+
+    @item.publish if @item.can_publish?
+
+    redirect_to admin_items_path
+  end
+
+  def hide
+    @item = Item.find(params[:id])
+
+    @item.hide if @item.can_hide?
+
+    redirect_to admin_items_path
+  end
+
   def destroy
     @item = Item.find(params[:id])
 
-    @item.destroy
+    @item.mark_deleted if @item.can_mark_deleted?
 
-    redirect_to :action => :index
+    redirect_to admin_items_path
   end
 end

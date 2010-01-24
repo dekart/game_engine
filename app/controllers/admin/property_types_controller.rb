@@ -4,7 +4,7 @@ class Admin::PropertyTypesController < ApplicationController
   layout "layouts/admin/application"
 
   def index
-    @types = PropertyType.paginate(:page => params[:page])
+    @types = PropertyType.without_state(:deleted).paginate(:page => params[:page])
   end
 
   def new
@@ -47,11 +47,27 @@ class Admin::PropertyTypesController < ApplicationController
     end
   end
 
+  def publish
+    @type = PropertyType.find(params[:id])
+
+    @type.publish if @type.can_publish?
+
+    redirect_to admin_property_types_url
+  end
+
+  def hide
+    @type = PropertyType.find(params[:id])
+
+    @type.hide if @type.can_hide?
+
+    redirect_to admin_property_types_url
+  end
+
   def destroy
     @type = PropertyType.find(params[:id])
 
-    @type.destroy
+    @type.mark_deleted if @type.can_mark_deleted?
 
-    redirect_to :action => :index
+    redirect_to admin_property_types_url
   end
 end

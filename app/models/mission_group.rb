@@ -24,6 +24,24 @@ class MissionGroup < ActiveRecord::Base
     }
   }
 
+  state_machine :initial => :draft do
+    state :draft
+    state :visible
+    state :deleted
+
+    event :publish do
+      transition :draft => :visible
+    end
+
+    event :hide do
+      transition :visible => :draft
+    end
+
+    event :mark_deleted do
+      transition(any - [:deleted] => :deleted)
+    end
+  end
+
   acts_as_dropdown :text => "name_with_level", :order => "level"
 
   has_attached_file :image

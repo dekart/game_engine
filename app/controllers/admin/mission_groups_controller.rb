@@ -4,7 +4,7 @@ class Admin::MissionGroupsController < ApplicationController
   layout "layouts/admin/application"
 
   def index
-    @groups = MissionGroup.all(:order => :level)
+    @groups = MissionGroup.without_state(:deleted).all(:order => :level)
   end
 
   def new
@@ -35,11 +35,27 @@ class Admin::MissionGroupsController < ApplicationController
     end
   end
 
+  def publish
+    @group = MissionGroup.find(params[:id])
+
+    @group.publish if @group.can_publish?
+
+    redirect_to admin_mission_groups_url
+  end
+
+  def hide
+    @group = MissionGroup.find(params[:id])
+
+    @group.hide if @group.can_hide?
+
+    redirect_to admin_mission_groups_url
+  end
+
   def destroy
     @group = MissionGroup.find(params[:id])
 
-    @group.destroy
+    @group.mark_deleted if @group.can_mark_deleted?
 
-    redirect_to :action => :index
+    redirect_to admin_mission_groups_url
   end
 end

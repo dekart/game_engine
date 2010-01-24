@@ -34,6 +34,9 @@ en:
           move_down: "Move Down"
           delete: "Delete"
           delete_confirm: "Are you sure? All items linked to this group will be also deleted!"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this group visible to players?"
+          hide: "Hide"
       new:
         title: "New Item Group"
         submit: "Create"
@@ -49,6 +52,9 @@ en:
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? This item will be also removed from all users!"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this item visible to players?"
+          hide: "Hide"
       new:
         title: "New Item"
         submit: "Create"
@@ -68,6 +74,9 @@ en:
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? All missions linked to this group will be unlinked and hidden from a list of available missions!"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this group visible to players?"
+          hide: "Hide"
       new:
         title: "New Mission Group"
         submit: "Create"
@@ -86,6 +95,9 @@ en:
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? Mission results will be also removed from all users!"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this mission visible to players?"
+          hide: "Hide"
         random_loot: "Random Item"
       new:
         title: "New Mission"
@@ -104,6 +116,9 @@ en:
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? Boss fight results will be also removed from all users!"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this boss visible to players?"
+          hide: "Hide"
       new:
         title: "New Boss"
         submit: "Create"
@@ -191,6 +206,9 @@ en:
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? Properties of this type will be also removed from all users!"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this property type visible to players?"
+          hide: "Hide"
       new:
         title: "New Property Type"
         submit: "Create"

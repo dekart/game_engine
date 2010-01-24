@@ -8,6 +8,24 @@ class Mission < ActiveRecord::Base
   has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
   has_many    :help_requests, :as => :context, :dependent => :destroy
 
+  state_machine :initial => :draft do
+    state :draft
+    state :visible
+    state :deleted
+
+    event :publish do
+      transition :draft => :visible
+    end
+
+    event :hide do
+      transition :visible => :draft
+    end
+
+    event :mark_deleted do
+      transition(any - [:deleted] => :deleted)
+    end
+  end
+
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",

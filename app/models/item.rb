@@ -48,6 +48,24 @@ class Item < ActiveRecord::Base
   named_scope :vip, {:conditions => "items.vip_price > 0"}
   named_scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
 
+  state_machine :initial => :draft do
+    state :draft
+    state :visible
+    state :deleted
+
+    event :publish do
+      transition :draft => :visible
+    end
+
+    event :hide do
+      transition :visible => :draft
+    end
+
+    event :mark_deleted do
+      transition(any - [:deleted] => :deleted)
+    end
+  end
+
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",

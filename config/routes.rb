@@ -1,13 +1,38 @@
 ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :item_groups,
-      :member => {:move => :post}
+      :member => {
+        :move     => :put,
+        :publish  => :put,
+        :hide     => :put
+      }
 
-    admin.resources :items
-    admin.resources :mission_groups
-    admin.resources :missions, :collection => {:balance => :any}
-    admin.resources :bosses
-    admin.resources :property_types
+    admin.resources :items,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+    admin.resources :mission_groups,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+    admin.resources :missions, 
+      :collection => {:balance => :any},
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+    admin.resources :bosses,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+    admin.resources :property_types,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
       
     admin.resources :payouts,       :only => [:new]
     admin.resources :requirements,  :only => [:new]

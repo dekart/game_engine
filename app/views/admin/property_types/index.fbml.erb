@@ -17,6 +17,7 @@
       <th><%= PropertyType.human_attribute_name("vip_price") %></th>
       <th><%= PropertyType.human_attribute_name("income") %></th>
       <th><%= PropertyType.human_attribute_name("purchase_limit") %></th>
+      <th><%= PropertyType.human_attribute_name("state") %></th>
     </tr>
     <% @types.each do |type| %>
       <tr>
@@ -34,12 +35,20 @@
             <span class="default"><%= Configuration[:property_maximum_amount] %></span>
           <% end %>
         </td>
+        <td class="state"><%= type.state %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_property_type_path(type)) %>
+          <%= link_to(t(".controls.publish"), publish_admin_property_type_path(type),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              ) if type.can_publish? %>
+          <%= link_to(t(".controls.hide"), hide_admin_property_type_path(type),
+                :method => :put
+              ) if type.can_hide? %>
           <%= link_to(t(".controls.delete"), admin_property_type_path(type),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")
-              ) %>
+              ) if type.can_mark_deleted? %>
         </td>
       </tr>
     <% end %>

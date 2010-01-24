@@ -21,6 +21,7 @@
           <th><%= Mission.human_attribute_name("basic_money") %></th>
           <th><%= Mission.human_attribute_name("requirements") %></th>
           <th><%= Mission.human_attribute_name("payouts") %></th>
+          <th><%= Mission.human_attribute_name("state") %></th>
         </tr>
       <% end %>
       <tr>
@@ -48,12 +49,20 @@
 
           <%= admin_payouts_preview(mission.payouts) %>
         </td>
+        <td class="state"><%= mission.state %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_mission_path(mission)) %>
+          <%= link_to(t(".controls.publish"), publish_admin_mission_path(mission),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              ) if mission.can_publish? %>
+          <%= link_to(t(".controls.hide"), hide_admin_mission_path(mission),
+                :method => :put
+              ) if mission.can_hide? %>
           <%= link_to(t(".controls.delete"), admin_mission_path(mission),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")
-              ) %>
+              ) if mission.can_mark_deleted? %>
         </td>
       </tr>
     <% end %>
