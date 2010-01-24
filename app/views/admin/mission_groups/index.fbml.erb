@@ -17,7 +17,7 @@
         <td class="name"><%= link_to(group.name, edit_admin_mission_group_path(group)) %></td>
         <td class="level"><%= group.level %></td>
         <td class="missions"><%= group.missions.size %></td>
-        <td class="state"><%= group.state %></td>
+        <td class="state"><%= admin_state(group) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_mission_group_path(group)) %>
           <%= link_to(t(".controls.publish"), publish_admin_mission_group_path(group),

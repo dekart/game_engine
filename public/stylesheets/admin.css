@@ -39,6 +39,11 @@ form .label, form .required {display:inline}
 .controls {padding: 5px;}
   .controls a {line-height: 25px; margin-bottom: 5px; padding: 3px; border: 1px solid #3B5998; white-space:nowrap;}
 
+.state .hidden, .state .draft {color: red;}
+.state .visible, .state .delivered {color: green;}
+.state .delivering {color: blue;}
+.state .paused {color: orange;}
+
 .serializable {margin: 20px 0;}
   .serializable .controls {margin: 10px 0; padding: 0;}
   .serializable .controls a {margin: 5px 0px;}

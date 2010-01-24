@@ -11,17 +11,17 @@
     <tr>
       <th><%= Newsletter.human_attribute_name("created_at") %></th>
       <th><%= Newsletter.human_attribute_name("text") %></th>
-      <th><%= Newsletter.human_attribute_name("state") %></th>
       <th><%= Newsletter.human_attribute_name("recipients") %></th>
+      <th><%= Newsletter.human_attribute_name("state") %></th>
     </tr>
     <% @newsletters.each do |newsletter| %>
       <tr>
-        <td><%= l(newsletter.created_at, :format => :short) %></td>
-        <td><%= raw newsletter.text %></td>
-        <td><%= newsletter.state.capitalize %></td>
-        <td>
+        <td class="created_at"><%= l(newsletter.created_at, :format => :short) %></td>
+        <td class="text"><%= raw newsletter.text %></td>
+        <td class="recipients">
           <%= User.count - User.after(newsletter.last_recipient).count %>/<%= User.count %>
         </td>
+        <td class="state"><%= admin_state(newsletter) %></td>
         <td class="controls">
           <% if newsletter.draft? %>
             <%= link_to(t(".controls.edit"), edit_admin_newsletter_path(newsletter)) %>

@@ -35,7 +35,7 @@
             <span class="default"><%= Configuration[:property_maximum_amount] %></span>
           <% end %>
         </td>
-        <td class="state"><%= type.state %></td>
+        <td class="state"><%= admin_state(type) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_property_type_path(type)) %>
           <%= link_to(t(".controls.publish"), publish_admin_property_type_path(type),

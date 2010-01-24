@@ -52,7 +52,7 @@
           <% end %>
         </td>
         <td class="owned"><%= item.owned %></td>
-        <td class="state"><%= item.state %></td>
+        <td class="state"><%= admin_state(item) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_item_path(item)) %>
           <%= link_to(t(".controls.publish"), publish_admin_item_path(item),
