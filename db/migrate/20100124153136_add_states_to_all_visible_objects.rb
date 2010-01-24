@@ -4,9 +4,9 @@ class AddStatesToAllVisibleObjects < ActiveRecord::Migration
   def self.up
     TABLES.each do |t|
       add_column t, :state, :string, :limit => 30
-
-      t.classify.constantize.update_all "state = 'visible'"
     end
+
+    puts "\nRun rake app:maintenance:set_default_states to update default states\n\n"
   end
 
   def self.down

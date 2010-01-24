@@ -1,5 +1,12 @@
 namespace :app do
   namespace :maintenance do
+    desc "Set default states to objects"
+    task :set_default_states => :environment do
+      %w{bosses item_groups items mission_groups missions property_types}.each do |t|
+        t.classify.constantize.update_all "state = 'visible'"
+      end
+    end
+
     desc "Update translation strings to use interpolations"
     task :translations_to_interpolations => :environment do
       puts "Modifying interpolations for #{Translation.count} translations..."
