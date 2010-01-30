@@ -1,0 +1,7 @@
+<%= title(t(".title")) %>
+
+<% form_for [:admin, @character_type], :url => admin_character_type_url(@character_type, :canvas => false), :html => {:multipart => true} do |form| %>
+  <%= render :partial => "form_fields", :locals => {:form => form} %>
+
+  <%= submit_tag t(".submit") %>
+<% end %>

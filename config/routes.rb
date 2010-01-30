@@ -51,6 +51,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :translations
     admin.resources :configurations
     admin.resources :assets
+
+    admin.resources :character_types,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
   end
 
   map.root :controller => "characters", :action => "index"

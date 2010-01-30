@@ -1,0 +1,38 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_character_type_path) %>
+</div>
+
+<% if @character_types.any? %>
+  <table id="character_type_list" cellspacing="0">
+    <tr>
+      <th><%= CharacterType.human_attribute_name("image") %></th>
+      <th><%= CharacterType.human_attribute_name("name") %></th>
+      <th><%= CharacterType.human_attribute_name("state") %></th>
+    </tr>
+    <% @character_types.each do |type| %>
+      <tr>
+        <td class="image"><%= image_tag(type.image.url(:icon)) if type.image? %></td>
+        <td class="name"><%= link_to(type.name, edit_admin_character_type_path(type)) %></td>
+        <td class="state"><%= admin_state(type) %></div>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_character_type_path(type)) %>
+          <%= link_to(t(".controls.publish"), publish_admin_character_type_path(type),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              ) if type.can_publish? %>
+          <%= link_to(t(".controls.hide"), hide_admin_character_type_path(type),
+                :method => :put
+              ) if type.can_hide? %>
+          <%= link_to(t(".controls.delete"), admin_character_type_path(type),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) if type.can_mark_deleted? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>
