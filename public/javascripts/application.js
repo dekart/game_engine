@@ -67,6 +67,16 @@ var Character = {
       },
       "scrollToTop": false
     });
+  },
+  setCharacterType: function(id){
+    var previous = $('character_type_' + $('character_character_type_id').getValue());
+    if(previous){
+      previous.removeClassName('selected');
+    }
+
+    $('character_character_type_id').setValue(id);
+
+    $('character_type_' + id).addClassName('selected');
   }
 }
 

@@ -19,6 +19,8 @@ class CreateCharacterTypes < ActiveRecord::Migration
 
       t.string  :state, :limit => 30
 
+      t.integer :characters_count
+
       t.timestamps
     end
 

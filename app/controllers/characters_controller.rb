@@ -65,6 +65,8 @@ class CharactersController < ApplicationController
     else
       @character = current_user.build_character(params[:character])
 
+      @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
+
       if @character.save
         redirect_to landing_url
       else
@@ -82,7 +84,10 @@ class CharactersController < ApplicationController
   def update
     @character = current_character
 
-    if @character.update_attributes(params[:character])
+    @character.attributes = params[:character]
+    @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
+
+    if @character.save
       redirect_to landing_url
     else
       render :action => :edit

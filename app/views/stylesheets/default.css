@@ -632,3 +632,9 @@ form .error {color: red; padding: 3px 0px;}
   #boss_fight_result .won .result {color: green;}
 
   #boss_fight_result .payouts {margin-top: 20px;}
+
+#character_types {margin-bottom: 10px;}
+  #character_types .character_type {display: block; width: 125px; text-align: center; text-decoration: none; float: left; margin: 10px 10px 0 0; font-weight: bold; padding: 2px; border: 1px solid #e0e0e0;}
+    #character_types .character_type:hover {border: 1px solid #3B5998;}
+    #character_types .character_type .name {display: block; margin-bottom: 5px;}
+  #character_types .selected {border: 2px solid #3B5998 !important; padding: 1px !important;}

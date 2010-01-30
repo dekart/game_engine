@@ -40,6 +40,10 @@ en:
         show_fan_specials: "Show 'Fan Specials' block"
     errors:
       models:
+        character:
+          attributes:
+            character_type:
+              blank: "You must choose character type"
         bank_deposit:
           attributes:
             amount:

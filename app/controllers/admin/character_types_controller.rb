@@ -40,7 +40,7 @@ class Admin::CharacterTypesController < ApplicationController
   def update
     @character_type = CharacterType.find(params[:id])
 
-    if @character_type.update_attributes(params[:character_type].reverse_merge(:requirements => nil, :payouts => nil))
+    if @character_type.update_attributes(params[:character_type])
       redirect_to admin_character_types_url(:canvas => true)
     else
       redirect_to edit_admin_character_type_url(:character_type => params[:character_type], :canvas => true)

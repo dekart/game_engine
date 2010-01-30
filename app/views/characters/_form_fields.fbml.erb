@@ -1,1 +1,23 @@
+<% unless form.object.character_type %>
+  <%= form.hidden_field :character_type_id %>
+
+  <% types = capture do %>
+    <div id="character_types" class="clearfix">
+      <% CharacterType.with_state(:visible).each do |type| %>
+        <% link_text = capture do %>
+          <span class="name"><%= type.name %></span>
+          <%= image_tag(type.image.url(:small)) if type.image? %>
+        <% end %>
+
+        <%= link_to_function(link_text.strip, "Character.setCharacterType(#{type.id})",
+              :id     => dom_id(type),
+              :class  => :character_type
+            ) %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.field :character_type, types %>
+<% end %>
+
 <%= form.text_field :name %>

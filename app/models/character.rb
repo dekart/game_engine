@@ -12,6 +12,7 @@ class Character < ActiveRecord::Base
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy]
 
   belongs_to :user
+  belongs_to :character_type, :counter_cache => true
   
   has_many :ranks, :dependent => :delete_all
   has_many :missions, :through => :ranks, :extend => Character::Missions
@@ -122,7 +123,10 @@ class Character < ActiveRecord::Base
     :restore_period => Configuration[:character_income_calculation_period].minutes,
     :restore_rate   => :property_income
 
-  before_save :update_level_and_points
+  before_create :apply_character_type_defaults
+  before_save   :update_level_and_points
+
+  validates_presence_of :character_type, :on => :create
 
   def self.find_by_invitation_key(key)
     id, secret = key.split("-")
@@ -367,10 +371,6 @@ class Character < ActiveRecord::Base
     end.compact
   end
 
-  def personalized?
-    !self.name.blank?
-  end
-
   def personalize_from(facebook_session)
     profile_info = facebook_session.users([self.user.facebook_id], [:name]).first
 
@@ -391,5 +391,14 @@ class Character < ActiveRecord::Base
 
       self.level_updated = true
     end
+  end
+
+  def apply_character_type_defaults
+    self.attack       = character_type.attack
+    self.defence      = character_type.defence
+    self.health       = character_type.health
+    self.energy       = character_type.energy
+    self.basic_money  = character_type.attack
+    self.vip_money    = character_type.attack
   end
 end

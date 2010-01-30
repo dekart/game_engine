@@ -7,9 +7,9 @@
 
   <% if Rails.env.development? %>
     <script>
-      <%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %>
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %>
         
-      <%= File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %>
+      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %>
     </script>
   <% else %>
     <%= javascript_include_tag "facebooker", "application" %>

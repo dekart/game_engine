@@ -82,7 +82,7 @@ class Configuration < ActiveRecord::Base
     :boss_max_winner_damage
   ].each do |field|
     validates_presence_of field
-    validates_numericality_of field
+    validates_numericality_of field, :allow_nil => true
   end
 
   validates_presence_of :user_admins
