@@ -274,4 +274,44 @@ Tip.create!(
   :text => "Properties give you hourly income. Purchase <a href=\"/#{facebook_config["canvas_page_name"]}/properties/new\">more properties</a> to get more money in the future."
 )
 
+puts "Seeding character types"
+
+CharacterType.create(
+  :name         => "Warrior",
+  :attack       => 1,
+  :defence      => 1,
+  :health       => 100,
+  :energy       => 100,
+  :basic_money  => 10,
+  :vip_money    => 0
+)
+
+CharacterType.create(
+  :name         => "Ranger",
+  :attack       => 1,
+  :defence      => 1,
+  :health       => 100,
+  :energy       => 100,
+  :basic_money  => 10,
+  :vip_money    => 0
+)
+
+CharacterType.create(
+  :name         => "Trader",
+  :attack       => 1,
+  :defence      => 1,
+  :health       => 100,
+  :energy       => 100,
+  :basic_money  => 10,
+  :vip_money    => 0
+)
+
+puts "Publishing seeded data..."
+
+[MissionGroup, Mission, ItemGroup, Item, Boss, PropertyType, CharacterType].each do |model|
+  model.all.each do |record|
+    record.publish
+  end
+end
+
 puts "Seed complete!"
