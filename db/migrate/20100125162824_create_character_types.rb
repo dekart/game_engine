@@ -11,7 +11,7 @@ class CreateCharacterTypes < ActiveRecord::Migration
       t.integer :defence,     :default => 1
 
       t.integer :health,      :default => 100
-      t.integer :energy,      :default => 100
+      t.integer :energy,      :default => 10
 
       t.string  :image_file_name
       t.string  :image_content_type
