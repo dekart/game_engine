@@ -281,7 +281,7 @@ CharacterType.create(
   :attack       => 1,
   :defence      => 1,
   :health       => 100,
-  :energy       => 100,
+  :energy       => 10,
   :basic_money  => 10,
   :vip_money    => 0
 )
@@ -291,7 +291,7 @@ CharacterType.create(
   :attack       => 1,
   :defence      => 1,
   :health       => 100,
-  :energy       => 100,
+  :energy       => 10,
   :basic_money  => 10,
   :vip_money    => 0
 )
@@ -301,7 +301,7 @@ CharacterType.create(
   :attack       => 1,
   :defence      => 1,
   :health       => 100,
-  :energy       => 100,
+  :energy       => 10,
   :basic_money  => 10,
   :vip_money    => 0
 )
