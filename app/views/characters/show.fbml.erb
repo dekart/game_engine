@@ -1,6 +1,10 @@
 <%= title(
       t(".title",
-        :user => fb_name(@character.user, :possessive => true, :capitalize => true)
+        :user => character_name(@character, 
+          :possessive => true,
+          :capitalize => true,
+          :useyou     => true
+        )
       )
     ) %>
 

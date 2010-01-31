@@ -2,7 +2,11 @@ module CharactersHelper
   def character_name(character_or_user, options = {})
     character = character_for(character_or_user)
 
-    character.name.blank? ? fb_name(character.user, {:linked => false}.merge(options)) : character.name
+    if character.name.blank? or (option[:useyou] and character == current_character)
+      fb_name(character.user, {:linked => false}.merge(options))
+    else
+      character.name
+    end
   end
 
   def character_picture(character_or_user, options = {})
