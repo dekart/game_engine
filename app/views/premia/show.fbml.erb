@@ -72,6 +72,23 @@
   </tr>
 
   <tr>
+    <td class="name"><%= t(".refill_stamina.text") %></td>
+    <td class="vip_money">
+      <div class="value"><%= number_to_currency(Configuration[:premium_stamina_price]) %></div>
+    </td>
+    <td class="controls">
+      <% if current_character.full_stamina? %>
+        <%= t(".refill_stamina.full") %>
+      <% else %>
+        <%= link_to(button(t(".refill_stamina.button")), premium_path(:type => :refill_stamina),
+              :method => :put,
+              :class  => :button
+            ) %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
     <td class="name"><%= t(".refill_health.text") %></td>
     <td class="vip_money">
       <div class="value"><%= number_to_currency(Configuration[:premium_health_price]) %></div>

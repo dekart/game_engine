@@ -24,18 +24,18 @@ class FightWithInvite
   end
 
   def valid?
-    @valid ||= enough_energy? and !@attacker.weak?
+    @valid ||= enough_stamina? and !@attacker.weak?
   end
 
-  def enough_energy?
-    @attacker.ep >= Configuration[:fight_with_invite_energy_required]
+  def enough_stamina?
+    @attacker.sp >= Configuration[:fight_with_invite_stamina_required]
   end
 
   def save
     @attacker.basic_money += @money
     @attacker.experience  += @experience
     @attacker.hp          -= @attacker_hp_loss
-    @attacker.ep          -= Configuration[:fight_with_invite_energy_required]
+    @attacker.sp          -= Configuration[:fight_with_invite_stamina_required]
 
     @attacker.save
   end

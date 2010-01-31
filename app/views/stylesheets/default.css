@@ -15,7 +15,7 @@ td {vertical-align: top;}
 
 .nobutton .button {display: none !important;}
 .button {display:block; width: 130px;}
-.button span{ display:block; padding: 5px 5px 5px 25px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; white-space:nowrap;}
+.button span{ display:block; padding: 5px 5px 5px 20px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; white-space:nowrap;}
   .button:hover span{background-color: #e0e0e0;}
 .controls .button { width: auto; margin: 5px; float: right; clear: both;}
   
@@ -72,6 +72,7 @@ form .error {color: red; padding: 3px 0px;}
     #co_experience {background-image: url(asset:icons_experience);}
     #co_health {background-image: url(asset:icons_health);}
     #co_energy {background-image: url(asset:icons_energy);}
+    #co_stamina {background-image: url(asset:icons_stamina);}
   #co_point_link {font-weight: bold;color:red;}
   #co .timer {color: #b0b0b0; padding-left: 10px;}
   #co .basic_money {width: 160px;}
@@ -223,7 +224,7 @@ form .error {color: red; padding: 3px 0px;}
 #fight_attributes .relations {background-image: url(asset:icons_alliance);}
 
 /* Upgradeable attribute list displayed at Upgrade page*/
-#upgrade_list td{padding: 10px; vertical-align: middle;}
+#upgrade_list td{padding: 5px; vertical-align: middle;}
 #upgrade_list .points td{border-bottom: 1px solid #d0d0d0;}
 #upgrade_list .name {font-weight: bold;}
 #upgrade_list .value {padding-left: 21px; background-position: center left; background-repeat: no-repeat;}
@@ -231,6 +232,7 @@ form .error {color: red; padding: 3px 0px;}
   #upgrade_defence {background: url(asset:icons_defence);}
   #upgrade_health {background: url(asset:icons_health);}
   #upgrade_energy {background: url(asset:icons_energy);}
+  #upgrade_stamina {background: url(asset:icons_stamina);}
 #upgrade_list .controls a span {margin-top:0; background-image: url(asset:icons_add);}
 
 /* Opponent list displayed at Fight page */
@@ -290,6 +292,7 @@ form .error {color: red; padding: 3px 0px;}
     #result .experience .value{background-image: url(asset:icons_experience)}
     #result .basic_money .value{background-image: url(asset:icons_basic_money)}
     #result .energy .value{background-image: url(asset:icons_energy)}
+    #result .stamina .value{background-image: url(asset:icons_stamina)}
     #result .health .value{background-image: url(asset:icons_health)}
     #result .vip_money .value{background-image: url(asset:icons_vip_money)}
     #result .restore_health .value{background-image: url(asset:icons_health)}

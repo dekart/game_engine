@@ -49,8 +49,8 @@ class Fight < ActiveRecord::Base
   protected
 
   def validate
-    if self.attacker.ep < Configuration[:fight_energy_required]
-      self.errors.add(:character, :not_enough_energy)
+    if self.attacker.sp < Configuration[:fight_stamina_required]
+      self.errors.add(:character, :not_enough_stamina)
     end
 
     if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or (!is_response? and Character.victims_for(self.attacker).find_by_id(self.victim.id).nil?) or (attacker == victim)
@@ -88,7 +88,7 @@ class Fight < ActiveRecord::Base
     self.winner.basic_money += self.money
     self.loser.basic_money  -= self.money
 
-    self.attacker.ep  -= Configuration[:fight_energy_required]
+    self.attacker.sp  -= Configuration[:fight_stamina_required]
 
     self.attacker.hp  -= self.attacker_hp_loss
     self.victim.hp    -= self.victim_hp_loss

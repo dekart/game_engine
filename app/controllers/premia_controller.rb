@@ -13,6 +13,8 @@ class PremiaController < ApplicationController
         current_character.refill_energy!
       when :refill_health
         current_character.refill_health!
+      when :refill_stamina
+        current_character.refill_stamina!
       when :hire_mercenary
         current_character.hire_mercenary!
       else

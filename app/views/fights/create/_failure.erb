@@ -22,7 +22,7 @@
     <td class="lost">
       <h3><%= t(".you_lost") %></h3>
 
-      <%= payout(:energy, Configuration[:fight_energy_required]) %>
+      <%= payout(:stamina, Configuration[:fight_stamina_required]) %>
       <%= payout(:health, fight.attacker_hp_loss) %>
       <%= payout(:basic_money, number_to_currency(fight.money)) %>
     </td>

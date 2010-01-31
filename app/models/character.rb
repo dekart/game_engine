@@ -9,7 +9,7 @@ class Character < ActiveRecord::Base
     LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
   end
 
-  UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy]
+  UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
   belongs_to :user
   belongs_to :character_type, :counter_cache => true
@@ -117,8 +117,11 @@ class Character < ActiveRecord::Base
     :limit          => :health,
     :restore_period => Configuration[:character_health_restore_period].seconds
   restorable_attribute :ep, 
-    :limit => :energy,
+    :limit          => :energy,
     :restore_period => Configuration[:character_energy_restore_period].seconds
+  restorable_attribute :sp,
+    :limit          => :stamina,
+    :restore_period => Configuration[:character_stamina_restore_period].seconds
   restorable_attribute :basic_money, 
     :restore_period => Configuration[:character_income_calculation_period].minutes,
     :restore_rate   => :property_income
@@ -165,11 +168,14 @@ class Character < ActiveRecord::Base
       when :energy
         self.energy += Configuration[:character_energy_upgrade]
         self.ep     += Configuration[:character_energy_upgrade]
+      when :stamina
+        self.stamina  += Configuration[:character_stamina_upgrade]
+        self.sp       += Configuration[:character_stamina_upgrade]
       else
         self.increment(name, Configuration["character_#{name}_upgrade"])
       end
 
-      self.decrement(:points)
+      self.decrement(:points, Configuration["character_#{name}_upgrade_points"])
 
       self.save
     end
@@ -233,7 +239,10 @@ class Character < ActiveRecord::Base
 
   def to_json_for_overview(options = {})
     to_json(
-      :only     => [:basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp, :points, :property_income],
+      :only     => [
+        :basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp,
+        :stamina, :sp, :points, :property_income
+      ],
       :methods  => [
         :formatted_basic_money,
         :formatted_vip_money,
@@ -241,6 +250,7 @@ class Character < ActiveRecord::Base
         :level_progress_percentage,
         :time_to_hp_restore,
         :time_to_ep_restore,
+        :time_to_sp_restore,
         :time_to_basic_money_restore
       ]
     )
@@ -314,6 +324,21 @@ class Character < ActiveRecord::Base
     self.class.transaction do
       self.hp = self.health
       self.vip_money -= Configuration[:premium_health_price] unless free
+
+      self.save
+    end
+  end
+
+  def full_stamina?
+    self.sp == self.stamina
+  end
+
+  def refill_stamina!(free = false)
+    return if full_stamina? or (!free and vip_money < Configuration[:premium_stamina_price])
+
+    self.class.transaction do
+      self.sp = self.health
+      self.vip_money -= Configuration[:premium_stamina_price] unless free
 
       self.save
     end

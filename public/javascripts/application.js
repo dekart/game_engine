@@ -47,6 +47,7 @@ var Character = {
     $("co_level").setTextValue(a.character.level);
     $("co_health").setTextValue(a.character.hp + "/" + a.character.health);
     $("co_energy").setTextValue(a.character.ep + "/" + a.character.energy);
+    $("co_stamina").setTextValue(a.character.sp + "/" + a.character.stamina);
 
     if(a.character.points > 0) {
       $("co_point_link").show();
@@ -58,6 +59,7 @@ var Character = {
     }
     Timer.start('co_health_timer', a.character.time_to_hp_restore, this.updateFromRemote);
     Timer.start('co_energy_timer', a.character.time_to_ep_restore, this.updateFromRemote);
+    Timer.start('co_stamina_timer', a.character.time_to_sp_restore, this.updateFromRemote);
   },
   updateFromRemote: function(){
     new Ajax.Request(root_url + "character_status", {

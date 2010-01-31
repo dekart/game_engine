@@ -55,7 +55,7 @@ en:
         fight:
           attributes:
             character:
-              not_enough_energy: "You don't have enough energy to fight. Take a rest!"
+              not_enough_stamina: "You don't have enough stamina to fight. Take a rest!"
               cannot_attack: "You cannot attack this player"
               too_weak: "You are too weak to fight! Take a rest!"
         inventory:
@@ -213,6 +213,9 @@ en:
         note: "You spent all your upgrade points. Now you can {{profile}} or {{get_more}} to get more points"
         profile: "go to profile"
         get_more: "visit the Gem Market"
+      points:
+        one: "1 upgrade point"
+        other: "{{count}} upgrade points"
     upgrade_result:
       messages:
         success: "You've successfully upgraded {{attribute}} to {{number}}"
@@ -285,7 +288,7 @@ en:
       title: "Fighting Arena"
       messages:
         too_weak: "You are too weak to fight! Take a rest until your health will grow to {{hp_number}} points. You need to wait about {{minute_number}} minutes."
-        not_enough_energy: "You don't have enough energy to fight! Take a rest until your energy will grow. You need to wait about {{minute_number}} minutes."
+        not_enough_stamina: "You don't have enough stamina to fight! Take a rest until your stamina will grow. You need to wait about {{minute_number}} minutes."
       empty_set: "There are no opponents for you at this time."
     victim_list:
       buttons:
@@ -626,6 +629,10 @@ en:
         text: "Refill your health"
         button: "Refill"
         full: "You have full health"
+      refill_stamina:
+        text: "Refill your stamina"
+        button: "Refill"
+        full: "You have full stamina"
       buy_points:
         text: "Add {{amount}} upgrade points to your character"
         button: "Add Points"
@@ -638,6 +645,7 @@ en:
           exchange_money: "Gold have been added to your character!"
           refill_energy: "Now you have maximum energy!"
           refill_health: "Now you have maximum health!"
+          refill_stamina: "Now you have maximum stamina!"
           buy_points: "Upgrade points have been added to your character!"
           hire_mercenary: "You successfully hired new mercenary!"
         failure: "You don't have enough Gems"

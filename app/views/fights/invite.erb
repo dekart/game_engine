@@ -18,7 +18,7 @@
         <td class="lost">
           <h3><%= t(".you_lost.title") %></h3>
 
-          <%= payout(:energy, Configuration[:fight_with_invite_energy_required]) %>
+          <%= payout(:stamina, Configuration[:fight_with_invite_stamina_required]) %>
           <%= payout(:health, @fight.attacker_hp_loss) %>
         </td>
         <td class="victim_lost">
@@ -34,8 +34,8 @@
     <% end %>
   <% elsif @fight.attacker.weak? %>
     <p><%= t("activerecord.errors.models.fight.attributes.character.too_weak") %></p>
-  <% elsif not @fight.enough_energy? %>
-    <p><%= t("activerecord.errors.models.fight.attributes.character.not_enough_energy") %></p>
+  <% elsif not @fight.enough_stamina? %>
+    <p><%= t("activerecord.errors.models.fight.attributes.character.not_enough_stamina") %></p>
   <% end %>
 </div>
 

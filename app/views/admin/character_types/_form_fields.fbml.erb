@@ -4,6 +4,6 @@
 <%= form.file_field :image,
       :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
 
-<% %w{attack defence health energy basic_money vip_money}.each do |attribute| %>
+<% %w{attack defence health energy stamina basic_money vip_money}.each do |attribute| %>
   <%= form.text_field attribute, :required => true, :size => 6, :autocomplete => :off %>
 <% end %>

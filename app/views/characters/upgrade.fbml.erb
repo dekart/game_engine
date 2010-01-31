@@ -16,6 +16,7 @@
               :html   => {:class => :button}
             ) %>
       </td>
+      <td class="points"><%= t(".points", :count => Configuration["character_#{attribute}_upgrade_points"]) %></td>
     </tr>
   <% end %>
 </table>
