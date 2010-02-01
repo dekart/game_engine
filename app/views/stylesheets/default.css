@@ -75,9 +75,9 @@ form .error {color: red; padding: 3px 0px;}
     #co_stamina {background-image: url(asset:icons_stamina);}
   #co_point_link {font-weight: bold;color:red;}
   #co .timer {color: #b0b0b0; padding-left: 10px;}
-  #co .basic_money {width: 160px;}
+  #co .basic_money {width: 140px;}
   #co .level {width: 80px;}
-  #co .experience {width: 150px;}
+  #co .experience {width: 120px;}
     #co_experience_bar {border: 1px solid #d0d0d0; margin: -4px 10px -2px 0;}
       #co_experience_percentage {height: 4px; background-image: url(asset:progress);font-size: 0px;}
 
