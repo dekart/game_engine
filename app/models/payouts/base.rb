@@ -11,27 +11,29 @@ module Payouts
 
     attr_accessor :value, :visible
 
-    def self.inherited(base)
-      Payouts::Base.types ||= []
-      Payouts::Base.types << base
-    end
+    class << self
+      def inherited(base)
+        Payouts::Base.types ||= []
+        Payouts::Base.types << base
+      end
 
-    def self.payout_name
-      self.to_s.demodulize.underscore
-    end
+      def payout_name
+        self.to_s.demodulize.underscore
+      end
 
-    def self.by_name(name)
-      "Payouts::#{name.to_s.classify}".constantize
-    end
+      def by_name(name)
+        "Payouts::#{name.to_s.classify}".constantize
+      end
 
-    def self.human_attribute_name(field)
-      I18n.t(field,
-        :scope    => [:payouts, self.to_s.demodulize.underscore, :attributes],
-        :default  => I18n.t(field,
-          :scope    => [:payouts, :base, :attributes],
-          :default  => field.humanize
+      def human_attribute_name(field)
+        I18n.t(field,
+          :scope    => [:payouts, self.to_s.demodulize.underscore, :attributes],
+          :default  => I18n.t(field,
+            :scope    => [:payouts, :base, :attributes],
+            :default  => field.humanize
+          )
         )
-      )
+      end
     end
 
     def initialize(attributes = {})

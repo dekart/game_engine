@@ -1,14 +1,16 @@
 require "digest/md5"
 
 module FacebookMoney
-  def self.config
-    @@config ||= YAML.load_file(File.join(RAILS_ROOT, "config", "facebook_money.yml"))
+  class << self
+    def config
+      @@config ||= YAML.load_file(File.join(RAILS_ROOT, "config", "facebook_money.yml"))
 
-    return @@config[RAILS_ENV || "development"]
-  end
+      return @@config[RAILS_ENV || "development"]
+    end
 
-  def self.provider
-    @@provider ||= "FacebookMoney::#{self.config["provider"].classify}".constantize
+    def provider
+      @@provider ||= "FacebookMoney::#{self.config["provider"].classify}".constantize
+    end
   end
 
   class SuperReward

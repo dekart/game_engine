@@ -4,17 +4,19 @@ module Effects
     
     attr_accessor :value
 
-    def self.inherited(base)
-      Effects::Base.types ||= []
-      Effects::Base.types << base
-    end
+    class << self
+      def inherited(base)
+        Effects::Base.types ||= []
+        Effects::Base.types << base
+      end
 
-    def self.effect_name
-      self.to_s.demodulize.underscore
-    end
+      def effect_name
+        self.to_s.demodulize.underscore
+      end
 
-    def self.by_name(name)
-      "Effects::#{name.to_s.classify}".constantize
+      def by_name(name)
+        "Effects::#{name.to_s.classify}".constantize
+      end
     end
 
     def initialize(value)

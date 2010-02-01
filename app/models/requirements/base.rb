@@ -9,27 +9,29 @@ module Requirements
 
     attr_accessor :value
 
-    def self.inherited(base)
-      Requirements::Base.types ||= []
-      Requirements::Base.types << base
-    end
+    class << self
+      def inherited(base)
+        Requirements::Base.types ||= []
+        Requirements::Base.types << base
+      end
 
-    def self.requirement_name
-      self.to_s.demodulize.underscore
-    end
+      def requirement_name
+        self.to_s.demodulize.underscore
+      end
 
-    def self.by_name(name)
-      "Requirements::#{name.to_s.classify}".constantize
-    end
+      def by_name(name)
+        "Requirements::#{name.to_s.classify}".constantize
+      end
 
-    def self.human_attribute_name(field)
-      I18n.t(field,
-        :scope    => [:requirements, self.to_s.demodulize.underscore, :attributes],
-        :default  => I18n.t(field,
-          :scope    => [:requirements, :base, :attributes],
-          :default  => field.humanize
+      def human_attribute_name(field)
+        I18n.t(field,
+          :scope    => [:requirements, self.to_s.demodulize.underscore, :attributes],
+          :default  => I18n.t(field,
+            :scope    => [:requirements, :base, :attributes],
+            :default  => field.humanize
+          )
         )
-      )
+      end
     end
 
     def initialize(options = {})

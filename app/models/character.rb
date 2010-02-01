@@ -131,20 +131,28 @@ class Character < ActiveRecord::Base
 
   validates_presence_of :character_type, :on => :create
 
-  def self.find_by_invitation_key(key)
-    id, secret = key.split("-")
+  class << self
+    def find_by_invitation_key(key)
+      id, secret = key.split("-")
 
-    if character = character.find_by_id(id) and secret == character.secret
-      character
-    else
-      nil
+      if character = character.find_by_id(id) and secret == character.secret
+        character
+      else
+        nil
+      end
     end
-  end
 
-  def self.rating_position(character, field)
-    self.count(
-      :conditions => ["#{field} > ?", character.send(field)]
-    ) + 1
+    def rating_position(character, field)
+      self.count(
+        :conditions => ["#{field} > ?", character.send(field)]
+      ) + 1
+    end
+
+    def level_for_experience(value)
+      LEVELS.each_with_index do |experience, level|
+        return level if experience >= value
+      end
+    end
   end
 
   def self_and_relations
@@ -221,12 +229,6 @@ class Character < ActiveRecord::Base
 
   def level_progress_percentage
     (100 - self.experience_to_next_level.to_f / (self.next_level_experience - LEVELS[self.level - 1]) * 100).round
-  end
-
-  def self.level_for_experience(value)
-    LEVELS.each_with_index do |experience, level|
-      return level if experience >= value
-    end
   end
 
   def formatted_basic_money

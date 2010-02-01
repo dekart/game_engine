@@ -91,12 +91,14 @@ class Configuration < ActiveRecord::Base
 
   after_save :restart_server
 
-  def self.[](key)
-    first.send(key)
-  end
+  class << self
+    def [](key)
+      first.send(key)
+    end
 
-  def self.current
-    first
+    def current
+      first
+    end
   end
 
   def boss_max_loser_damage
