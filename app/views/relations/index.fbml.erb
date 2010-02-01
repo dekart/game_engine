@@ -4,21 +4,21 @@
 
 <div class="note"><%= t(".note") %></div>
 
-<% collection(@relations) do %>
-  <table width="100%" cellspacing="0" cellpadding="0">
-    <tr>
-      <td>
-        <h2><%= t(".members.title") %></h2>
+<table width="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td id="alliance_members">
+      <h2><%= t(".members.title") %></h2>
 
-        <table id="alliance_members"  cellspacing="0" cellpadding="0">
+      <% collection(@relations) do %>
+        <table class="relations" cellspacing="0" cellpadding="0">
           <% @relations.each do |relation| %>
             <%= render :partial => "relations/#{relation.class.to_s.underscore}", :locals => {:relation => relation} %>
           <% end %>
         </table>
 
         <%= will_paginate(@relations) %>
-      </td>
-      <td><%= render :partial => "assignments" %></td>
-    </tr>
-  </table>
-<% end %>
+      <% end %>
+    </td>
+    <td><%= render :partial => "assignments" %></td>
+  </tr>
+</table>

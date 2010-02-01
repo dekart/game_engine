@@ -263,7 +263,7 @@ form .error {color: red; padding: 3px 0px;}
     #alliance_buttons .mercenaries span {background-image: url(asset:icons_add);}
 
 /* Alliance member list at Alliance page*/
-#alliance_members {}
+#alliance_members {padding-right: 10px;}
   #alliance_members td {padding: 5px;vertical-align:middle; border-bottom: 1px solid #d0d0d0;}
   #alliance_members .picture {width: 55px;}
   #alliance_members .level {width: 70px;}
