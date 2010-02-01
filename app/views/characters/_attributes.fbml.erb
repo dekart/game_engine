@@ -36,6 +36,12 @@
         <%= "%d/%d" % [character.ep, character.energy] %>
       </td>
     </tr>
+    <tr class="stamina">
+      <th><%= Character.human_attribute_name("stamina") %></th>
+      <td class="value">
+        <%= "%d/%d" % [character.sp, character.stamina] %>
+      </td>
+    </tr>
     <tr class="basic_money">
       <th><%= Character.human_attribute_name("basic_money") %></th>
       <td class="value">

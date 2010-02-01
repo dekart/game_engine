@@ -113,6 +113,7 @@ form .error {color: red; padding: 3px 0px;}
     .character_attributes .defence .value {background-image: url(asset:icons_defence);}
     .character_attributes .health .value {background-image: url(asset:icons_health);}
     .character_attributes .energy .value {background-image: url(asset:icons_energy);}
+    .character_attributes .stamina .value {background-image: url(asset:icons_stamina);}
     .character_attributes .basic_money .value {background-image: url(asset:icons_basic_money);}
     .character_attributes .vip_money .value {background-image: url(asset:icons_vip_money);}
 
