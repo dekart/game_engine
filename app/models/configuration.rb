@@ -93,7 +93,9 @@ class Configuration < ActiveRecord::Base
 
   class << self
     def [](key)
-      first.send(key)
+      logger.silence do
+        first.send(key)
+      end
     end
 
     def current
