@@ -1,14 +1,8 @@
 <%= title(t(".title")) %>
 
-<div class="note" id="alliance_recruit">
-  <p><%= t(".note") %></p>
+<%= render "relations/buttons", :current => :relations %>
 
-  <div class="buttons">
-    <%= link_to(button(:recruit), invite_users_path, :class => :button) %>
-    <%= link_to(button(:hire), premium_path, :class => :button) %>
-    <%= link_to(button(:gift), new_gift_path, :class => :button) %>
-  </div>
-</div>
+<div class="note"><%= t(".note") %></div>
 
 <% collection(@relations) do %>
   <table width="100%" cellspacing="0" cellpadding="0">

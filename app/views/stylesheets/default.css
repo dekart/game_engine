@@ -15,7 +15,7 @@ td {vertical-align: top;}
 
 .nobutton .button {display: none !important;}
 .button {display:block; width: 130px;}
-.button span{ display:block; padding: 5px 5px 5px 20px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; white-space:nowrap;}
+.button span{ display:block; padding: 5px 5px 5px 22px; border: 1px solid #3B5998; font-weight:bold; background: url(1px.gif) 3px center no-repeat; white-space:nowrap;}
   .button:hover span{background-color: #e0e0e0;}
 .controls .button { width: auto; margin: 5px; float: right; clear: both;}
   
@@ -255,9 +255,12 @@ form .error {color: red; padding: 3px 0px;}
   #invitation_list .controls .ignore span {background-image: url(asset:icons_delete)}
 
 /* Recruit to Alliance button at Alliance page */
-#alliance_recruit .buttons {height: 30px;}
-  #alliance_recruit .button {float: left; width: auto; margin-right: 15px;}
-    #alliance_recruit .button span {background-image: url(asset:icons_add);}
+#alliance_buttons {height: 30px;}
+  #alliance_buttons .button {float: left; width: auto; margin-right: 15px;}
+    #alliance_buttons .relations span {background-image: url(asset:icons_alliance);}
+    #alliance_buttons .invite span {background-image: url(asset:icons_add);}
+    #alliance_buttons .gifts span {background-image: url(asset:icons_gift);}
+    #alliance_buttons .mercenaries span {background-image: url(asset:icons_add);}
 
 /* Alliance member list at Alliance page*/
 #alliance_members {}

@@ -1,6 +1,6 @@
 class RelationsController < ApplicationController
   def index
-    if current_character.relations.size == 0
+    if current_character.relations.size == 0 and params[:noredirect].nil?
       redirect_to invite_users_path
     else
       @relations = current_character.relations.paginate(

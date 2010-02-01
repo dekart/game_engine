@@ -479,10 +479,6 @@ en:
     index:
       title: "Your Alliance"
       note: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
-      buttons:
-        recruit: "Recruit to Alliance"
-        gift: "Send Gifts to Alliance"
-        hire: "Hire Mercenaries"
       empty_set: "You don't have any members in your Alliance"
       members:
         title: "Alliance Members"
@@ -497,6 +493,12 @@ en:
         promote: "Promote"
         demote: "Demote"
         demote_confirm: "Do you really want to demote this alliance member?"
+    buttons:
+      buttons:
+        relations: "My Alliance"
+        recruit: "Recruit to Alliance"
+        gift: "Send Gifts to Alliance"
+        hire: "Hire Mercenaries"
   users:
     edit:
       title: "Settings"

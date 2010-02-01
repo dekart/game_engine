@@ -1,8 +1,10 @@
 <%= title(t(".title")) %>
 
-<div id="gift_form" class="clearfix">
-  <div class="note"><%= t(".note") %></div>
+<%= render "relations/buttons", :current => :gifts %>
 
+<div class="note"><%= t(".note") %></div>
+
+<div id="gift_form" class="clearfix">
   <div class="gift">
     <h2><%= t(".gift.title") %></h2>
 
