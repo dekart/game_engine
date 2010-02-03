@@ -5,7 +5,7 @@
       :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
 
 <% form.field_set t(".basic_attributes") do %>
-  <% %w{attack defence health energy stamina basic_money vip_money}.each do |attribute| %>
+  <% CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute| %>
     <%= form.text_field attribute, :required => true, :size => 6, :autocomplete => :off %>
   <% end %>
 <% end %>

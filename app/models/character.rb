@@ -441,8 +441,12 @@ class Character < ActiveRecord::Base
   end
 
   def apply_character_type_defaults
-    %w{attack defence health energy basic_money vip_money}.each do |attribute|
+    CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute|
       self.send("#{attribute}=", character_type.send(attribute))
     end
+
+    self.hp = self.health
+    self.ep = self.energy
+    self.sp = self.stamina
   end
 end
