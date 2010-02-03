@@ -105,10 +105,6 @@ class Character < ActiveRecord::Base
     }
   }
 
-  named_scope :from_relations_of, Proc.new{|character|
-    
-  }
-
   attr_accessible :name
 
   attr_accessor :level_updated
