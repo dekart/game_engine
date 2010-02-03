@@ -3,7 +3,9 @@ class ItemGroup < ActiveRecord::Base
 
   acts_as_list
 
-  named_scope :visible_in_shop, :conditions => "display_in_shop = 1", :order => "position"
+  named_scope :visible_in_shop,
+    :conditions => "display_in_shop = 1",
+    :order      => "position"
 
   state_machine :initial => :hidden do
     state :hidden

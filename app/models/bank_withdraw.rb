@@ -8,8 +8,9 @@ class BankWithdraw < BankOperation
   end
 
   def move_money
-    self.character.basic_money += self.amount
-    self.character.bank -= self.amount
+    self.character.basic_money  += self.amount
+    self.character.bank         -= self.amount
+
     self.character.save
   end
 end

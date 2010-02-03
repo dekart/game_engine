@@ -115,10 +115,10 @@ class BossFight < ActiveRecord::Base
   end
 
   def calculate_proportions
-    attack_points = character.attack
-    defence_points = boss.defence
-    attack_bonus = 1.0
-    defence_bonus = 1.0
+    attack_points   = character.attack
+    defence_points  = boss.defence
+    attack_bonus    = 1.0
+    defence_bonus   = 1.0
 
     attack = attack_points * attack_bonus * 50
     defence = defence_points * defence_bonus * 50

@@ -8,7 +8,10 @@ class User < ActiveRecord::Base
   end
 
   named_scope :after, Proc.new{|user|
-    {:conditions => ["id > ?", user.is_a?(User) ? user.id : user.to_i], :order => "id ASC"}
+    {
+      :conditions => ["id > ?", user.is_a?(User) ? user.id : user.to_i],
+      :order      => "id ASC"
+    }
   }
   
   attr_accessible :show_next_steps

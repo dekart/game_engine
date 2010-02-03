@@ -12,10 +12,14 @@ class Character < ActiveRecord::Base
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
   belongs_to :user
-  belongs_to :character_type, :counter_cache => true
+  belongs_to :character_type,
+    :counter_cache => true
   
-  has_many :ranks, :dependent => :delete_all
-  has_many :missions, :through => :ranks, :extend => Character::Missions
+  has_many :ranks,
+    :dependent => :delete_all
+  has_many :missions, 
+    :through  => :ranks,
+    :extend   => Character::Missions
 
   has_many :mission_group_ranks, :dependent => :delete_all
   has_many :mission_groups, 
@@ -23,9 +27,9 @@ class Character < ActiveRecord::Base
     :extend   => Character::MissionGroups
   
   has_many :inventories,
-    :include => :item,
-    :dependent => :delete_all,
-    :extend => Character::Inventories
+    :include    => :item,
+    :dependent  => :delete_all,
+    :extend     => Character::Inventories
   
   has_many :items, :through => :inventories
   

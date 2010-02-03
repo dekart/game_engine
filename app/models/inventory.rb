@@ -44,6 +44,7 @@ class Inventory < ActiveRecord::Base
 
       if self.uses_left == 0
         self.character.inventories.take!(self.item)
+        
         self.usage_count = 0
       end
       

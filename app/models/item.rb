@@ -91,20 +91,10 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def attack
-    self[:attack].to_i
-  end
-
-  def defence
-    self[:defence].to_i
-  end
-
-  def basic_price
-    self[:basic_price].to_i
-  end
-
-  def vip_price
-    self[:vip_price].to_i
+  %w{attack defence basic_price vip_price}.each do |attribute|
+    define_method(attribute) do
+      self[attribute].to_i
+    end
   end
 
   def availability

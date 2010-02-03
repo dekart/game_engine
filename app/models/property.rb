@@ -64,6 +64,7 @@ class Property < ActiveRecord::Base
       self.basic_money = total_sell_price
 
       character.basic_money += self.basic_money
+
       character.save
     end
   end
@@ -78,9 +79,8 @@ class Property < ActiveRecord::Base
 
   def total_buy_price
     price = 0
-    
-    (changes["amount"].first + 1 .. changes["amount"].last).each do |amount|
 
+    (changes["amount"].first + 1).upto(changes["amount"].last) do |amount|
       price += property_type.inflated_price(amount)
     end
 
@@ -99,7 +99,7 @@ class Property < ActiveRecord::Base
     if changes["amount"]
       price = 0
 
-      (changes["amount"].last + 1 .. changes["amount"].first).each do |amount|
+      changes["amount"].first.downto(changes["amount"].last + 1) do |amount|
         price += property_type.inflated_price(amount)
       end
     else

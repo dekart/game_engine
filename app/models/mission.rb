@@ -64,6 +64,6 @@ class Mission < ActiveRecord::Base
   end
 
   def loot_item_ids
-    @loot_item_ids ||= self[:loot_item_ids] ? self[:loot_item_ids].split(",").collect{|i| i.to_i } : []
+    @loot_item_ids ||= self[:loot_item_ids].to_s.split(",").collect{|i| i.to_i }
   end
 end

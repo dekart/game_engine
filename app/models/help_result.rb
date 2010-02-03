@@ -55,6 +55,7 @@ class HelpResult < ActiveRecord::Base
   def increment_request_stats
     self.help_request.increment(:money, self.money)
     self.help_request.increment(:experience, self.experience)
+    
     self.help_request.save!
   end
 end
