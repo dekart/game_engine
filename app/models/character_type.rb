@@ -26,7 +26,7 @@ class CharacterType < ActiveRecord::Base
       :small  => "120x120>"
     }
 
-  validates_presence_of :name, :attack, :defence, :health, :energy, :basic_money, :vip_money
-  validates_numericality_of :attack, :defence, :health, :energy, :basic_money, :vip_money,
+  validates_presence_of [:name] + APPLICABLE_ATTRIBUTES + BONUSES
+  validates_numericality_of APPLICABLE_ATTRIBUTES + BONUSES,
     :allow_nil => true
 end
