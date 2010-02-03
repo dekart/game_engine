@@ -1,5 +1,6 @@
 class CharacterType < ActiveRecord::Base
   APPLICABLE_ATTRIBUTES = %w{attack defence health energy stamina basic_money vip_money points}
+  BONUSES = %w{health_restore_bonus energy_restore_bonus stamina_restore_bonus income_period_bonus}
 
   state_machine :initial => :hidden do
     state :hidden

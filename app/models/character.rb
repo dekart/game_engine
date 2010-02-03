@@ -408,20 +408,10 @@ class Character < ActiveRecord::Base
     self.name = profile_info.name if self.name.blank?
   end
 
-  def health_restore_bonus
-    character_type.try(:health_restore_bonus)
-  end
-
-  def energy_restore_bonus
-    character_type.try(:energy_restore_bonus)
-  end
-
-  def stamina_restore_bonus
-    character_type.try(:stamina_restore_bonus)
-  end
-
-  def income_period_bonus
-    character_type.try(:income_period_bonus)
+  CharacterType::BONUSES.each do |bonus|
+    define_method(bonus) do
+      character_type.try(bonus)
+    end
   end
 
   protected
