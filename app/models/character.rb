@@ -170,7 +170,7 @@ class Character < ActiveRecord::Base
   def upgrade_attribute!(name)
     name = name.to_sym
 
-    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && self.points > 0
+    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && self.points >= Configuration["character_#{name}_upgrade_points"]
 
     ActiveRecord::Base.transaction do
       case name
@@ -187,7 +187,7 @@ class Character < ActiveRecord::Base
         self.increment(name, Configuration["character_#{name}_upgrade"])
       end
 
-      self.decrement(:points, Configuration["character_#{name}_upgrade_points"])
+      self.points -= Configuration["character_#{name}_upgrade_points"]
 
       self.save
     end
