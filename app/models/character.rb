@@ -115,16 +115,20 @@ class Character < ActiveRecord::Base
 
   restorable_attribute :hp,
     :limit          => :health,
-    :restore_period => Configuration[:character_health_restore_period].seconds
+    :restore_period => Configuration[:character_health_restore_period].seconds,
+    :restore_bonus  => :health_restore_bonus
   restorable_attribute :ep, 
     :limit          => :energy,
-    :restore_period => Configuration[:character_energy_restore_period].seconds
+    :restore_period => Configuration[:character_energy_restore_period].seconds,
+    :restore_bonus  => :energy_restore_bonus
   restorable_attribute :sp,
     :limit          => :stamina,
-    :restore_period => Configuration[:character_stamina_restore_period].seconds
+    :restore_period => Configuration[:character_stamina_restore_period].seconds,
+    :restore_bonus  => :stamina_restore_bonus
   restorable_attribute :basic_money, 
     :restore_period => Configuration[:character_income_calculation_period].minutes,
-    :restore_rate   => :property_income
+    :restore_rate   => :property_income,
+    :restore_bonus  => :income_period_bonus
 
   before_create :apply_character_type_defaults
   before_save   :update_level_and_points
@@ -404,6 +408,22 @@ class Character < ActiveRecord::Base
     self.name = profile_info.name if self.name.blank?
   end
 
+  def health_restore_bonus
+    character_type.try(:health_restore_bonus)
+  end
+
+  def energy_restore_bonus
+    character_type.try(:energy_restore_bonus)
+  end
+
+  def stamina_restore_bonus
+    character_type.try(:stamina_restore_bonus)
+  end
+
+  def income_period_bonus
+    character_type.try(:income_period_bonus)
+  end
+
   protected
 
   def update_level_and_points
@@ -421,11 +441,8 @@ class Character < ActiveRecord::Base
   end
 
   def apply_character_type_defaults
-    self.attack       = character_type.attack
-    self.defence      = character_type.defence
-    self.health       = character_type.health
-    self.energy       = character_type.energy
-    self.basic_money  = character_type.attack
-    self.vip_money    = character_type.attack
+    %w{attack defence health energy basic_money vip_money}.each do |attribute|
+      self.send("#{attribute}=", character_type.send(attribute))
+    end
   end
 end

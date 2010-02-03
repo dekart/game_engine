@@ -38,6 +38,11 @@ en:
       user:
         show_next_steps: "Show 'Next Steps' block"
         show_fan_specials: "Show 'Fan Specials' block"
+      character_type:
+        health_restore_bonus: "Decrease of health restore period, %"
+        energy_restore_bonus: "Decrease of energy restore period, %"
+        stamina_restore_bonus: "Decrease of stamina restore period, %"
+        income_period_bonus: "Decrease of income recalculation period, %"
     errors:
       models:
         character:

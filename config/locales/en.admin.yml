@@ -304,3 +304,6 @@ en:
       edit:
         title: "Edit Character Type"
         submit: "Update"
+      form_fields:
+        basic_attributes: "Basic Attributes"
+        bonuses: "Bonuses"

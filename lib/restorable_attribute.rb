@@ -19,11 +19,18 @@ module RestorableAttribute
     end
 
     def restore_period
-      if @options[:restore_period].is_a?(Symbol)
-        @container.send(@options[:restore_period])
-      else
-        @options[:restore_period] || 5.minutes
+      value = @options[:restore_period].is_a?(Symbol) ? @container.send(@options[:restore_period]) : @options[:restore_period]
+      value ||= 5.minutes
+
+      if restore_bonus
+        value = (value * (100 - restore_bonus).to_f / 100).to_i
       end
+
+      value
+    end
+
+    def restore_bonus
+      @options[:restore_bonus].is_a?(Symbol) ? @container.send(@options[:restore_bonus]) : @options[:restore_bonus]
     end
 
     def limit

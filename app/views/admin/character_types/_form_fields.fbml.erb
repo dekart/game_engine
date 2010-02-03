@@ -4,6 +4,14 @@
 <%= form.file_field :image,
       :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
 
-<% %w{attack defence health energy stamina basic_money vip_money}.each do |attribute| %>
-  <%= form.text_field attribute, :required => true, :size => 6, :autocomplete => :off %>
+<% form.field_set t(".basic_attributes") do %>
+  <% %w{attack defence health energy stamina basic_money vip_money}.each do |attribute| %>
+    <%= form.text_field attribute, :required => true, :size => 6, :autocomplete => :off %>
+  <% end %>
+<% end %>
+
+<% form.field_set t(".bonuses") do %>
+  <% %w{health_restore_bonus energy_restore_bonus stamina_restore_bonus income_period_bonus}.each do |attribute| %>
+    <%= form.text_field attribute, :size => 6, :autocomplete => :off %>
+  <% end %>
 <% end %>
