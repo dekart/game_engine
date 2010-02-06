@@ -13,7 +13,10 @@ class CharactersController < ApplicationController
       @latest_fights = Fight.with_participant(current_character).find(:all, 
         :limit => Configuration[:fight_latest_show_limit]
       )
+
       @alliance_invitations = Invitation.for_user(current_user).find(:all)
+
+      @special_items = Item.with_state(:visible).available.available_in(:special).available_for(current_character).all(:limit => 2)
     end
   end
 

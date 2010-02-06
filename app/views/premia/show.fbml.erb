@@ -6,6 +6,10 @@
       ) %>
 </div>
 
+<% if @special_items.any? %>
+  <%= render "items/specials", :items => @special_items %>
+<% end %>
+
 <table id="premia" cellspacing="0" cellpadding="0">
   <tr>
     <td class="name">

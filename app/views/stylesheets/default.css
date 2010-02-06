@@ -187,9 +187,21 @@ form .error {color: red; padding: 3px 0px;}
   .item_list .controls {text-align:right; width: 130px;}
   .item_list .controls select {margin: 5px;}
   .item_list .controls a.buy span {background-image: url(asset:icons_basic_money);}
-  .item_list .controls a.buy_vip span {background-image: url(asset:icons_vip_money);}
 
-#special_items {background-color: #FFFFD5; border: 1px solid #EC7000; margin-bottom: 10px}
+#special_items {border: 2px solid #EC7000; margin-bottom: 10px; padding: 10px;}
+  #special_items .items {width: 100%;}
+  #special_items .name {font-weight: bold; font-size: 14px; margin-bottom: 5px;}
+  #special_items .picture {float: left; margin-right: 10px;}
+  #special_items .requirements {margin-left: 80px;}
+    #special_items .requirements .requirement {clear: none;}
+  #special_items .payout_preview {margin-left: 80px;}
+    #special_items .payout_preview .payout {clear: none;}
+  #special_items .controls {float: left; clear:both}
+    #special_items .controls select {margin: 5px; float: left;}
+    #special_items .controls .button {float: left; clear: none;}
+    #special_items .controls .buy span {background-image: url(asset:icons_basic_money);}
+  #special_items .sale_limit,
+    #special_items .time_limit {color: red;}
 
 #next_item {margin-top: 30px; border: 1px solid #d0d0d0; padding: 10px; font-size: 14px}
   #next_item .level {font-size: 14px; font-weight: bold;}

@@ -1,5 +1,6 @@
 class PremiaController < ApplicationController
   def show
+    @special_items = Item.with_state(:visible).available.available_in(:special).available_for(current_character).all(:limit => 2)
   end
 
   def update

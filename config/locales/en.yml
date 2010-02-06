@@ -371,7 +371,13 @@ en:
       buttons:
         inventory: "Go to Inventory"
     item:
-      sale_limit: "Limited Sale: only {{amount}} left"
+      sale_limit: "Only {{amount}} left!"
+      time_limit: "Time Left: {{amount}}"
+      buttons:
+        buy: "Buy"
+    specials:
+      header: "Limited Time Offers"
+      sale_limit: "Only {{amount}} left!"
       time_limit: "Time Left: {{amount}}"
       buttons:
         buy: "Buy"

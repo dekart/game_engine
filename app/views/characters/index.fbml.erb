@@ -19,6 +19,10 @@
             ) %>
       <% end %>
 
+      <% if @special_items.any? %>
+        <%= render "items/specials", :items => @special_items %>
+      <% end %>
+
       <% if @latest_fights.any? %>
         <h3><%= t(".fights.title") %></h3>
 
