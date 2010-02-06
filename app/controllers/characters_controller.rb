@@ -16,7 +16,10 @@ class CharactersController < ApplicationController
 
       @alliance_invitations = Invitation.for_user(current_user).find(:all)
 
-      @special_items = Item.with_state(:visible).available.available_in(:special).available_for(current_character).all(:limit => 2)
+      @special_items = Item.with_state(:visible).available.available_in(:special).available_for(current_character).all(
+        :limit => 2,
+        :order => "RAND()"
+      )
     end
   end
 
