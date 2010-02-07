@@ -82,10 +82,21 @@ namespace :deploy do
   namespace :dependencies do
     desc "Install environment gems"
     task :system_gems, :roles => :app do
-      run "gem install bundler --no-ri --no-rdoc --source http://gemcutter.org"
-      run "gem install rails -v=2.3.5 --no-ri --no-rdoc"
-      run "gem install rack -v=1.0.1 --no-ri --no-rdoc"
-      run "gem install daemons --no-ri --no-rdoc"
+      config = YAML.dump(
+        :verbose        => true,
+        "gem"           => "--no-ri --no-rdoc",
+        :bulk_threshold => 1000,
+        :sources        => %w{http://gemcutter.org http://gems.rubyforge.org http://gems.github.com},
+        :benchmark      => false,
+        :backtrace      => false,
+        :update_sources => true
+      )
+
+      put(config, ".gemrc")
+
+      run "gem install bundler -v=0.8.1"
+      run "gem install rails -v=2.3.5"
+      run "gem install rack -v=1.0.1"
     end
 
     desc "Install required gems"
