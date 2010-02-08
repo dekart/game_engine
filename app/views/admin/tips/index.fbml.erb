@@ -9,7 +9,8 @@
 
   <table id="tip_list" cellspacing="0">
     <tr>
-      <th><%= Newsletter.human_attribute_name("text") %></th>
+      <th><%= Tip.human_attribute_name("text") %></th>
+      <th></th>
     </tr>
     <% @tips.each do |tip| %>
       <tr>

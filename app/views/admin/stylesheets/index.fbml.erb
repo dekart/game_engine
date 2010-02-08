@@ -10,6 +10,7 @@
       <th><%= Stylesheet.human_attribute_name("name") %></th>
       <th><%= Stylesheet.human_attribute_name("created_at") %></th>
       <th><%= Stylesheet.human_attribute_name("updated_at") %></th>
+      <th></th>
     </tr>
     <% @stylesheets.each do |style| %>
       <% content_tag(:tr, :class => (:current if style.current)) do %>

@@ -1,11 +1,14 @@
 <%= title(t(".title")) %>
 
 <table id="translation_list" cellspacing="0">
-  <tr>
-    <th><%= Translation.human_attribute_name("key") %></th>
-    <th><%= Translation.human_attribute_name("value") %></th>
-  </tr>
   <% @translations.each do |key, value, customization| %>
+    <% group_header key.split(".").first do |group| %>
+      <tr><td class="splitter">&nbsp;</td></tr>
+      <tr>
+        <th colspan="3" class="subheader"><%= group.humanize %></th>
+      </tr>
+    <% end %>
+      
     <% content_tag :tr, :class => (:customized if customization) do %>
       <td class="key"><%= key.gsub(/\./, " ") %></td>
       <% content_tag(:td, :id => translation_id(key), :class => :value) do %>

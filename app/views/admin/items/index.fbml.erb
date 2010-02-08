@@ -11,7 +11,7 @@
     <% @items.each do |item| %>
       <% group_header item.item_group do |group| %>
         <tr>
-          <th colspan="10" class="subheader"><%= group.name %></th>
+          <th colspan="11" class="subheader"><%= group.name %></th>
         </tr>
         <tr>
           <th><%= Item.human_attribute_name("image") %></th>
@@ -24,6 +24,7 @@
           <th><%= Item.human_attribute_name("effects") %></th>
           <th><%= Item.human_attribute_name("owned") %></th>
           <th><%= Item.human_attribute_name("state") %></th>
+          <th></th>
         </tr>
       <% end %>
       <tr>

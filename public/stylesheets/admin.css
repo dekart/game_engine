@@ -1,8 +1,8 @@
 h1.title {font-size: 18px; color: #3B5998; margin: 15px 0px;}
 h2,h3 {font-size: 16px; color: #3B5998; margin-bottom: 7px;}
-td {vertical-align:middle; padding: 5px 3px; border-bottom: 1px solid #e0e0e0;}
-th {padding: 5px 3px; border-bottom: 1px solid #e0e0e0;}
-th.subheader {background-color: #f1f7fa;color: #3B5998;border: 0;}
+td {vertical-align:middle; padding: 5px 3px; border-top: 1px solid #e0e0e0;}
+th {padding: 5px 3px; border-top: 1px solid #e0e0e0;}
+th.subheader {background-color: #f1f7fa;color: #3B5998;border-top: 1px solid #8da7e0;}
 
 #spinner {position: absolute; top:150px; left: 300px; width: 150px; height: 50px; border: 1px solid #6D84B4; padding: 5px; background-color:white; z-index:1000;}
   #spinner img {float:left; margin-right: 10px;}
@@ -69,6 +69,7 @@ form .label, form .required {display:inline}
 #field_for_stylesheet_content textarea {width: 750px; height: 500px; font-family: monospace;}
 
 #translation_list {width: 100%;}
+#translation_list .splitter {border: 0; }
 #translation_list .key {width: 40%;}
 #translation_list .customized .key,
   #translation_list .customized .value a {font-weight: bold;}
