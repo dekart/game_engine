@@ -1,8 +1,4 @@
-class Admin::ItemsController < ApplicationController
-  before_filter :admin_required
-  
-  layout "layouts/admin/application"
-
+class Admin::ItemsController < Admin::BaseController
   def index
     @items = Item.without_state(:deleted).all(
       :include  => :item_group,

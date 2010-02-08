@@ -1,8 +1,4 @@
-class Admin::CharacterTypesController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::CharacterTypesController < Admin::BaseController
   def index
     @character_types = CharacterType.without_state(:deleted)
   end

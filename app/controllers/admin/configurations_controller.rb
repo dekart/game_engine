@@ -1,8 +1,4 @@
-class Admin::ConfigurationsController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::ConfigurationsController < Admin::BaseController
   def edit
     @configuration = Configuration.find(params[:id])
   end

@@ -1,8 +1,4 @@
-class Admin::AssetsController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::AssetsController < Admin::BaseController
   def index
     @assets = Asset.paginate(:order => :alias, :page => params[:page], :per_page => 100)
   end

@@ -1,8 +1,4 @@
-class Admin::PropertyTypesController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::PropertyTypesController < Admin::BaseController
   def index
     @types = PropertyType.without_state(:deleted).paginate(:page => params[:page])
   end

@@ -1,8 +1,4 @@
-class Admin::ItemGroupsController < ApplicationController
-  before_filter :admin_required
-  
-  layout "layouts/admin/application"
-
+class Admin::ItemGroupsController < Admin::BaseController
   def index
     @groups = ItemGroup.all(:order => :position)
   end

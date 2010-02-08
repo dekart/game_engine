@@ -1,6 +1,6 @@
 en:
-  layouts:
-    admin:
+  admin:
+    layouts:
       main_menu:
         title: "Admin Menu"
         home: "Home"
@@ -23,7 +23,6 @@ en:
         spinner:
           alt: "Please wait..."
           text: "Please wait for a few seconds..."
-  admin:
     item_groups:
       index:
         title: "Item Groups"

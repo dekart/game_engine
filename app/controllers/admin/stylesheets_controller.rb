@@ -1,9 +1,5 @@
-class Admin::StylesheetsController < ApplicationController
+class Admin::StylesheetsController < Admin::BaseController
   include StylesheetsHelper
-
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
 
   def index
     @stylesheets = Stylesheet.all

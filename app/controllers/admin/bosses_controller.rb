@@ -1,8 +1,4 @@
-class Admin::BossesController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::BossesController < Admin::BaseController
   def index
     @bosses = Boss.without_state(:deleted).paginate(:page => params[:page])
   end

@@ -1,8 +1,4 @@
-class Admin::MissionGroupsController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::MissionGroupsController < Admin::BaseController
   def index
     @groups = MissionGroup.without_state(:deleted).all(:order => :level)
   end

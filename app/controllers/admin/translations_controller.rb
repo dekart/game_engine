@@ -1,8 +1,4 @@
-class Admin::TranslationsController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::TranslationsController < Admin::BaseController
   def index
     I18n.backend.send(:init_translations)
     
@@ -11,6 +7,8 @@ class Admin::TranslationsController < ApplicationController
 
     @customizations = Translation.all(:order => "translations.key")
 
+    @translations.reject!{|key, value| key.starts_with?("admin") }
+    
     @translations.collect!{|key, value| 
       [key, value, @customizations.find{|c| c.key == key }]
     }

@@ -1,6 +1,4 @@
-class Admin::PayoutsController < ApplicationController
-  before_filter :admin_required
-
+class Admin::PayoutsController < Admin::BaseController
   def new
     @container = params[:container].camelcase.constantize
     
@@ -8,6 +6,6 @@ class Admin::PayoutsController < ApplicationController
       :apply_on => @container.payout_options[:default_event]
     )
 
-    render :action => :new, :layout => "admin/ajax"
+    render :layout => :ajax_layout
   end
 end

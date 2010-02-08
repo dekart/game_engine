@@ -1,8 +1,4 @@
-class Admin::MissionsController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::MissionsController < Admin::BaseController
   def index
     @missions = Mission.without_state(:deleted).all(
       :include  => :mission_group,

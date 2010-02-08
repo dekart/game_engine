@@ -1,8 +1,4 @@
-class Admin::PromotionsController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::PromotionsController < Admin::BaseController
   def index
     @promotions = Promotion.paginate(:page => params[:page], :order => "created_at DESC")
   end

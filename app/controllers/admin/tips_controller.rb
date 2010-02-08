@@ -1,8 +1,4 @@
-class Admin::TipsController < ApplicationController
-  before_filter :admin_required
-
-  layout "layouts/admin/application"
-
+class Admin::TipsController < Admin::BaseController
   def index
     @tips = Tip.paginate(:page => params[:page])
   end

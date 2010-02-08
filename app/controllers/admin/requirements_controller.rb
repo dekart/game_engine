@@ -1,10 +1,8 @@
-class Admin::RequirementsController < ApplicationController
-  before_filter :admin_required
-
+class Admin::RequirementsController < Admin::BaseController
   def new
     @container    = params[:container]
     @requirement  = Requirements::Base.by_name(params[:type]).new
 
-    render :action => :new, :layout => "admin/ajax"
+    render :layout => :ajax_layout
   end
 end
