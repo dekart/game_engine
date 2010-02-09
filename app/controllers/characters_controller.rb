@@ -5,6 +5,8 @@ class CharactersController < ApplicationController
     :only => [:new, :load_vip_money]
   before_filter :set_facebook_session,
     :only => [:new]
+  before_filter :fetch_character_types,
+    :only => [:new, :create, :edit, :update]
 
   def index
     if landing_url != root_url
@@ -98,5 +100,11 @@ class CharactersController < ApplicationController
     else
       render :action => :edit
     end
+  end
+
+  protected
+
+  def fetch_character_types
+    @character_types = CharacterType.with_state(:visible).all
   end
 end

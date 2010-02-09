@@ -1,4 +1,4 @@
-<%= title(t(".title")) %>
+<%= title(t(".title", :app => t("app_name"))) %>
 
 <% form_for @character, :html => {:requirelogin => 1} do |form| %>
   <%= form.fields %>
@@ -6,13 +6,18 @@
   <%= form.submit %>
 
   <div class="note">
-    <%= raw t(".note",
-          :submit => t(".submit"),
-          :application => t("app_name")
-        ) %>
+    <p>
+      <%= raw t(".note",
+            :submit => t(".submit"),
+            :application => t("app_name")
+          ) %>
+    </p>
+
+    <p>
+      <%= raw t(".already_registered.text",
+            :skip_form => link_to(t(".already_registered.skip_form"), root_url, :requirelogin => 1)
+          ) %>
+    </p>
   </div>
 <% end %>
 
-<%= raw t(".already_registered.text", 
-      :skip_form => link_to(t(".already_registered.skip_form"), root_url, :requirelogin => 1)
-    ) %>

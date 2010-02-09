@@ -652,6 +652,10 @@ form .error {color: red; padding: 3px 0px;}
 
   #boss_fight_result .payouts {margin-top: 20px;}
 
+#new_character .field {margin-bottom: 10px;}
+#new_character .label {font-size: 16px;}
+#new_character .note {font-size: 12px;}
+
 #character_types {margin-bottom: 10px;}
   #character_types .character_type {display: block; width: 125px; text-align: center; text-decoration: none; float: left; margin: 10px 10px 0 0; font-weight: bold; padding: 2px; border: 1px solid #e0e0e0;}
     #character_types .character_type:hover {border: 1px solid #3B5998;}

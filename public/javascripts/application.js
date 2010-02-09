@@ -71,14 +71,20 @@ var Character = {
     });
   },
   setCharacterType: function(id){
-    var previous = $('character_type_' + $('character_character_type_id').getValue());
-    if(previous){
-      previous.removeClassName('selected');
-    }
+    var previous_id = $('character_character_type_id').getValue()
+    var previous    = $('character_type_' + previous_id);
+    if(previous) previous.removeClassName('selected');
+
+    var previous_description = $('description_character_type_' + previous_id);
+    if(previous_description) previous_description.hide();
 
     $('character_character_type_id').setValue(id);
 
     $('character_type_' + id).addClassName('selected');
+
+    if($('description_character_type_' + id)){
+      $('description_character_type_' + id).show();
+    }
   }
 }
 

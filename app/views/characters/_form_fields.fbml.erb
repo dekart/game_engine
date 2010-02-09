@@ -1,9 +1,9 @@
-<% unless form.object.character_type %>
+<% if form.object.new_record? or form.object.character_type.nil? %>
   <%= form.hidden_field :character_type_id %>
 
   <% types = capture do %>
     <div id="character_types" class="clearfix">
-      <% CharacterType.with_state(:visible).each do |type| %>
+      <% @character_types.each do |type| %>
         <% link_text = capture do %>
           <span class="name"><%= type.name %></span>
           <%= image_tag(type.image.url(:small)) if type.image? %>
@@ -17,7 +17,25 @@
     </div>
   <% end %>
 
-  <%= form.field :character_type, types %>
+  <% type_descriptions = capture do %>
+    <div id="character_type_descriptions">
+      <% @character_types.each do |type| %>
+        <% if type.description.present? %>
+          <% content_tag :div, :class => :description, :id => dom_id(type, :description), :style => "display:none;" do %>
+            <%= type.description %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form.field :character_type, types, :after_field => type_descriptions, :label => t(".labels.character_type") %>
+
+  <% if type = form.object.character_type || @character_types.first %>
+    <% content_for :script do %>
+      Character.setCharacterType(<%= type.id %>)
+    <% end %>
+  <% end %>
 <% end %>
 
-<%= form.text_field :name %>
+<%= form.text_field :name, :label => t(".labels.name") %>

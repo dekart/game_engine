@@ -237,7 +237,7 @@ en:
       offence: "Best Offence"
       defence: "Best Defence"
     new:
-      title: "First choose your character below..."
+      title: "Welcome to {{app}}!"
       submit: "Start Playing!"
       note: "After clicking '{{submit}}' you'll be asked to install {{application}}. Click 'Allow' in the appeared window to start playing."
       already_registered:
@@ -246,6 +246,10 @@ en:
     edit:
       title: "Update Your Character"
       submit: "Save"
+    form_fields:
+      labels:
+        character_type: "Choose Your Class:"
+        name: "Enter Your Nickname:"
   fights:
     descriptions:
       attack_won: "You attacked {{victim}} and WON the battle! You received {{money}}, {{experience_points}} points of experience, and {{attacker_damage}} points of damage. {{victim}} was damaged for {{victim_damage}} points"
