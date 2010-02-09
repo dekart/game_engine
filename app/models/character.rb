@@ -109,6 +109,8 @@ class Character < ActiveRecord::Base
     }
   }
 
+  serialize :placements
+
   attr_accessible :name
 
   attr_accessor :level_updated
@@ -412,6 +414,14 @@ class Character < ActiveRecord::Base
     define_method(bonus) do
       character_type.try(bonus)
     end
+  end
+
+  def equipment
+    @equipment ||= Character::Equipment.new(self)
+  end
+
+  def placements
+    self[:placements] ||= {}
   end
 
   protected

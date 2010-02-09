@@ -30,4 +30,18 @@ class InventoriesController < ApplicationController
 
     render :action => :use, :layout => "ajax"
   end
+
+  def equip
+    @inventory = current_character.inventories.find(params[:id])
+
+    current_character.equipment.equip!(@inventory, params[:placement])
+
+    render :layout => "ajax"
+  end
+
+  def unequip
+    @inventory = current_character.inventories.find(params[:id])
+
+    current_character.equipment.unequip!(@inventory, params[:placement])
+  end
 end

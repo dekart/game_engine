@@ -81,12 +81,14 @@ class Item < ActiveRecord::Base
   validates_presence_of :usage_limit, :if => :usable?
   validates_numericality_of :level, :basic_price, :vip_price, :usage_limit, :allow_blank => true
 
-  def self.to_grouped_dropdown
-    returning result = {} do
-      ItemGroup.all(:order => :position).each do |group|
-        result[group.name] = group.items.collect{|i| 
-          ["%s (%s)" % [i.name, i.availability], i.id]
-        }
+  class << self
+    def to_grouped_dropdown
+      returning result = {} do
+        ItemGroup.all(:order => :position).each do |group|
+          result[group.name] = group.items.collect{|i|
+            ["%s (%s)" % [i.name, i.availability], i.id]
+          }
+        end
       end
     end
   end
@@ -111,5 +113,21 @@ class Item < ActiveRecord::Base
 
   def plural_name
     self[:plural_name].blank? ? self.name.pluralize : self[:plural_name]
+  end
+
+  def placements
+    self[:placements].to_s.split(",").collect{|p| p.to_sym }
+  end
+
+  def placements=(value)
+    value = value.to_s.split(",") unless value.is_a?(Array)
+
+    self[:placements] = value.any? ? value.join(",") : nil
+  end
+
+  def placement_options_for_select
+    placements.collect{|p|
+      [Character::Equipment.placement_name(p), p]
+    }
   end
 end

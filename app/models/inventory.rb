@@ -9,11 +9,10 @@ class Inventory < ActiveRecord::Base
       :order      => "items.level ASC, items.basic_price ASC"
     }
   }
-  named_scope :used_in_fight, :conditions => "use_in_fight > 0"
 
   %w{
     item_group  name plural_name description image image? basic_price vip_price attack defence effects
-    usable? usage_limit can_be_sold?
+    usable? usage_limit can_be_sold? placements placement_options_for_select
   }.each do |attr|
     delegate attr, :to => :item
   end
@@ -50,6 +49,10 @@ class Inventory < ActiveRecord::Base
       
       self.save!
     end
+  end
+
+  def amount_available_for_equipment
+    amount - equipped
   end
 
   protected

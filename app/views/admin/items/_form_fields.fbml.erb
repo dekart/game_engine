@@ -7,6 +7,16 @@
 
 <%= form.file_field :image, :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
 
+<% placements = capture do %>
+  <% Item::PLACEMENTS.each do |p| %>
+    <div>
+      <%= check_box_tag "#{form.object_name}[placements][]", p, form.object.placements.include?(p), :id => "placement_#{p}" %>
+      <%= label_tag "placement_#{p}", t("items.placements.#{p}") %>
+    </div>
+  <% end %>
+<% end %>
+<%= form.field :placements, placements %>
+
 <%= form.select :availability, Item::AVAILABILITIES, :required => true %>
 <%= form.text_field :limit, :size => 6, :autocomplete => :off %>
 <%= form.datetime_select :available_till, :prompt => true %>

@@ -1,0 +1,16 @@
+<div id="placements">
+  <% current_character.placements.each_key do |placement| %>
+    <% content_tag(:div, :class => placement) do %>
+      <% current_character.equipment.inventories(placement).each do |inventory| %>
+        <% content_tag :div, :class => :inventory do %>
+          <%= link_to_remote("x",
+                :url    => unequip_inventory_url(inventory, :placement => placement, :canvas => false),
+                :update => :result,
+                :html   => {:class => :remove}
+              ) %>
+          <%= item_image(inventory, :small) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

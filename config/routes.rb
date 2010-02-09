@@ -90,8 +90,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :item_groups do |group|
     group.resources :items
   end
-  map.resources :inventories, 
-    :member     => {:use => :any}
+  map.resources :inventories,
+    :collection => {:equipment => :any},
+    :member     => {
+      :use      => :any,
+      :equip    => :post,
+      :unequip  => :post
+    }
   map.resources :fights,
     :collection => {:invite => :post},
     :member     => {:respond => :post, :used_items => :post}

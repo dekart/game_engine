@@ -184,6 +184,12 @@ en:
         note: "Withdrawing money to cash is free."
         submit: "Withdraw"
   characters:
+    placements:
+      left_hand: "Left Hand"
+      right_hand: "Right Hand"
+      head: "Head"
+      body: "Body"
+      additional: "Bag"
     attributes:
       bonus: "+{{amount}} from Alliance"
     invitations:
@@ -323,6 +329,7 @@ en:
       title: "Inventory"
       buttons:
         shop: "Go to Shop"
+        equipment: "Equip Character"
     list:
       owned: "Owned: {{amount}}"
       used: "In use: {{amount}}"
@@ -346,14 +353,14 @@ en:
         success: "You've successfully used {{item}}!"
         item_gone: "{{item}} ran out and now it's gone!"
       effects: "Effects:"
-    holders:
-      relations: "Equip Your Alliance:"
-      empty_set:
-        text: "You don't have any members in your Alliance! Invite some friends or hire mercenaries to increase power of your army. Alliance members have their own weapon and armor slots which you can use to increase your attack and defence."
-        invite: "Recruit to Alliance"
-        hire: "Hire Mercenaries"
-    placements:
-      take_off: "Take off"
+    equipment:
+      title: "Your Equipment"
+    available:
+      header: "Unused Items"
+      amount: "Available for use: {{count}}"
+      assign_to: "Put to {{placement}}"
+      buttons:
+        assign: "Assign"
   invitations:
     accept:
       message: "Invitation accepted! {{user}} became part of your alliance!"

@@ -1,5 +1,11 @@
 class Character
   module Inventories
+    def available_for_equipment
+      self.all.select{|i|
+        i.amount_available_for_equipment > 0
+      }
+    end
+
     def give(item, amount = 1)
       if inventory = find_by_item_id(item.id)
         inventory.amount += amount
@@ -16,7 +22,7 @@ class Character
       if inventory.save
         Item.update_counters(item.id, :owned => amount)
         
-        calculate_used_in_fight!
+        #calculate_used_in_fight!
       end
 
       inventory
@@ -30,7 +36,7 @@ class Character
       if inventory.save
         Item.update_counters(item.id, :owned => amount)
         
-        calculate_used_in_fight!
+        #calculate_used_in_fight!
       end
 
       inventory
@@ -51,7 +57,7 @@ class Character
           Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
-        calculate_used_in_fight!
+        #calculate_used_in_fight!
 
         inventory
       else
@@ -72,7 +78,7 @@ class Character
           Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
-        calculate_used_in_fight!
+        #calculate_used_in_fight!
 
         inventory
       else
