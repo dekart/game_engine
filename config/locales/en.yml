@@ -249,7 +249,7 @@ en:
     form_fields:
       labels:
         character_type: "Choose Your Class:"
-        name: "Enter Your Nickname:"
+        name: "Enter Your Nickname (optional):"
   fights:
     descriptions:
       attack_won: "You attacked {{victim}} and WON the battle! You received {{money}}, {{experience_points}} points of experience, and {{attacker_damage}} points of damage. {{victim}} was damaged for {{victim_damage}} points"
