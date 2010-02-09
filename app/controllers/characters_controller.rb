@@ -64,6 +64,7 @@ class CharactersController < ApplicationController
       redirect_to landing_url
     else
       @character = Character.new
+      @character.name ||= Configuration[:character_default_name]
     end
   end
 

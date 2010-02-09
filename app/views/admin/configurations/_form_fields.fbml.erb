@@ -24,6 +24,8 @@
 <% end %>
 
 <% form.field_set t(".character") do %>
+  <%= form.text_field :character_default_name %>
+
   <%
     [
       :character_attack_upgrade,
