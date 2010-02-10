@@ -18,7 +18,10 @@ class MovePlacementsToCharacter < ActiveRecord::Migration
     end
 
     change_table :inventories do |t|
-      t.string :placement
+      t.string  :placement
+      t.integer :use_in_fight, :default => 0
+
+      t.remove :equipped
     end
   end
 end
