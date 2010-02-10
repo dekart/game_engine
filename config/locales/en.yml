@@ -355,7 +355,7 @@ en:
       effects: "Effects:"
     equipment:
       title: "Your Equipment"
-    available:
+    available_for_equipment:
       header: "Unused Items"
       amount: "Available for use: {{count}}"
       assign_to: "Put to {{placement}}"

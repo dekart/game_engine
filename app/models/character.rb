@@ -206,15 +206,11 @@ class Character < ActiveRecord::Base
   end
 
   def inventory_attack_points
-    self.inventories.used_in_fight.all.sum{|i|
-      i.use_in_fight * i.attack
-    }
+    inventories.equipped.all.sum{|i| i.equipped * i.attack }
   end
 
   def inventory_defence_points
-    self.inventories.used_in_fight.all.sum{|i|
-      i.use_in_fight * i.defence
-    }
+    inventories.equipped.all.sum{|i| i.equipped * i.defence }
   end
 
   def weak?

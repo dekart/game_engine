@@ -8,10 +8,10 @@
 <%= form.file_field :image, :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
 
 <% placements = capture do %>
-  <% Item::PLACEMENTS.each do |p| %>
+  <% Character::Equipment::PLACEMENTS.each do |p| %>
     <div>
       <%= check_box_tag "#{form.object_name}[placements][]", p, form.object.placements.include?(p), :id => "placement_#{p}" %>
-      <%= label_tag "placement_#{p}", t("items.placements.#{p}") %>
+      <%= label_tag "placement_#{p}",Character::Equipment.placement_name(p) %>
     </div>
   <% end %>
 <% end %>

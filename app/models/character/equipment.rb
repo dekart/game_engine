@@ -13,72 +13,116 @@ class Character::Equipment
 
   def inventories(placement = nil)
     ids = placement ? @character.placements[placement.to_sym] : @character.placements.collect{|key, value| value}.flatten
+    ids ||= []
+    
+    if ids.any?
+      inventories = Inventory.find(ids)
 
-    ids.any? ? Inventory.find(ids) : []
+      ids.collect do |id|
+        inventories.detect{|inventory| inventory.id == id}
+      end
+    else
+      ids
+    end
   end
 
-  def enough_room?(placement)
-    placement_capacity(placement) >= placement_usage(placement)
+  def equip(inventory, placement)
+    placement = placement.to_sym
+
+    return unless inventory.placements.include?(placement)
+
+    if placement_free_space(placement) > 0 and inventory.amount_available_for_equipment > 0
+      inventory.increment(:equipped)
+
+      @character.placements[placement] ||= []
+      @character.placements[placement] << inventory.id
+    end
+  end
+
+  def equip!(inventory, placement)
+    Character.transaction do
+      equip(inventory, placement)
+
+      inventory.save!
+      @character.save!
+    end
+  end
+
+  def auto_equip!(inventory)
+    inventory.amount_available_for_equipment.times do
+      if placement = (placements_with_free_space & inventory.placements).first
+        equip(inventory, placement)
+      else
+        break
+      end
+      puts "i"
+    end
+
+    Character.transaction do
+      inventory.save!
+      @character.save!
+    end
+  end
+
+  def unequip(inventory, placement)
+    placement = placement.to_sym
+
+    if @character.placements[placement] and index = @character.placements[placement].index(inventory.id)
+      inventory.decrement(:equipped) unless inventory.frozen?
+
+      @character.placements[placement].delete_at(index)
+    end
+  end
+
+  def unequip!(inventory, placement)
+    Character.transaction do
+      unequip(inventory, placement)
+
+      inventory.save!
+      @character.save!
+    end
+  end
+
+  def auto_unequip!(inventory)
+    amount_to_unequip = inventory.destroyed? ? inventory.amount : (inventory.equipped - inventory.amount)
+    
+    return if amount_to_unequip <= 0
+
+    amount_to_unequip.times do
+      if placement = placements_with(inventory).last
+        unequip(inventory, placement)
+      else
+        break
+      end
+    end
+
+    Character.transaction do
+      inventory.save! unless inventory.destroyed?
+      @character.save!
+    end
+  end
+
+  def placements_with_free_space
+    PLACEMENTS.select{|placement| placement_free_space(placement) > 0 }
+  end
+
+  def placement_free_space(placement)
+    placement_capacity(placement) - placement_usage(placement)
   end
 
   def placement_capacity(placement)
     if placement == :additional
-      1 # calculate bag ccapacity here
+      10 # calculate bag capacity here
     else
       1
     end
   end
 
+  def placements_with(inventory)
+    PLACEMENTS.select{|placement| @character.placements[placement].try(:include?, inventory.id) }
+  end
+
   def placement_usage(placement)
-    Array(@character.placements[placement]).size
-  end
-
-  def equip!(inventory, placement)
-    placement = placement.to_sym
-
-    return unless inventory.placements.include?(placement)
-
-    if enough_room?(placement) and inventory.amount_available_for_equipment > 0
-      Inventory.transaction do
-        inventory.increment!(:equipped)
-
-        @character.placements[placement] ||= []
-        @character.placements[placement] << inventory.id
-        
-        @character.save!
-      end
-    end
-  end
-
-  def unequip!(inventory, placement = nil)
-    if placement
-      placement = placement.to_sym
-
-      return unless inventory.placements.include?(placement)
-
-      Inventory.transaction do
-        inventory.decrement!(:equipped)
-
-        if @character.placements[placement]
-          @character.placements[placement].delete(inventory.id)
-          
-          @character.save!
-        end
-      end
-    else
-      Inventory.transaction do
-        count = 0
-
-        @character.placements.each do |placement, ids|
-          count += ids.count(inventory.id)
-          
-          ids.delete(inventory.id)
-        end
-
-        inventory.decrease!(:equipped, count)
-        
-        @character.save!
-      end
-    end
+    @character.placements[placement].try(:size).to_i
   end
 end

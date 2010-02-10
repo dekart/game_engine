@@ -9,6 +9,7 @@ class Inventory < ActiveRecord::Base
       :order      => "items.level ASC, items.basic_price ASC"
     }
   }
+  named_scope :equipped, :conditions => "equipped > 0"
 
   %w{
     item_group  name plural_name description image image? basic_price vip_price attack defence effects

@@ -1,0 +1,13 @@
+<% fb_js_string :inventories do %>
+  <%= render "available_for_equipment" %>
+<% end %>
+
+<% fb_js_string :placements do %>
+  <%= render "placements", :character => current_character %>
+<% end %>
+
+
+<% content_for :script do %>
+  $('equipment_inventories').setInnerFBML(inventories);
+  $('equipment_placements').setInnerFBML(placements);
+<% end %>

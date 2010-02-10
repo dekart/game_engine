@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <td>
-      <%= render "available" %>
+    <td id="equipment_inventories">
+      <%= render "available_for_equipment" %>
     </td>
-    <td>
-      <%= render "placements" %>
+    <td id="equipment_placements">
+      <%= render "placements", :character => current_character %>
     </td>
   </tr>
 </table>

@@ -27,10 +27,10 @@
                     ) %>
               </div>
 
-              <% if inventory.use_in_fight > 0 %>
+              <% if inventory.equipped > 0 %>
                 <div class="used">
                   <%= raw t(".used",
-                        :amount => content_tag(:span, inventory.use_in_fight, :class => :value)
+                        :amount => content_tag(:span, inventory.equipped, :class => :value)
                       ) %>
                 </div>
               <% end %>

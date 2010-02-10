@@ -22,7 +22,7 @@ class Character
       if inventory.save
         Item.update_counters(item.id, :owned => amount)
         
-        #calculate_used_in_fight!
+        proxy_owner.equipment.auto_equip!(inventory)
       end
 
       inventory
@@ -35,8 +35,8 @@ class Character
 
       if inventory.save
         Item.update_counters(item.id, :owned => amount)
-        
-        #calculate_used_in_fight!
+
+        proxy_owner.equipment.auto_equip!(inventory)
       end
 
       inventory
@@ -57,7 +57,7 @@ class Character
           Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
-        #calculate_used_in_fight!
+        proxy_owner.equipment.auto_unequip!(inventory)
 
         inventory
       else
@@ -78,7 +78,7 @@ class Character
           Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
-        #calculate_used_in_fight!
+        proxy_owner.equipment.auto_unequip!(inventory)
 
         inventory
       else
@@ -86,35 +86,10 @@ class Character
       end
     end
 
-    def calculate_used_in_fight!
-      transaction do
-        proxy_owner.inventories.update_all "use_in_fight = 0"
-
-        ItemGroup.all.each do |group|
-          items_to_use = [proxy_owner.relations.effective_size, Configuration[:relation_max_alliance_size]].min
-
-          items = proxy_owner.inventories.by_item_group(group).all(
-            :conditions => "attack + defence > 0",
-            :order      => "attack + defence DESC"
-          )
-          
-          items.each do |inventory|
-            inventory.update_attribute(:use_in_fight,
-              inventory.amount <= items_to_use ? inventory.amount : items_to_use
-            )
-            
-            items_to_use -= inventory.amount
-
-            break if items_to_use <= 0
-          end
-        end
-      end
-    end
-
     def best_offence
       returning result = [] do
         ItemGroup.all.each do |group|
-          result << proxy_owner.inventories.by_item_group(group).first(
+          result << proxy_owner.inventories.by_item_group(group).equipped.first(
             :conditions => "attack > 0",
             :order      => "attack DESC"
           )
@@ -127,7 +102,7 @@ class Character
     def best_defence
       returning result = [] do
         ItemGroup.all.each do |group|
-          result << proxy_owner.inventories.by_item_group(group).first(
+          result << proxy_owner.inventories.by_item_group(group).equipped.first(
             :conditions => "defence > 0",
             :order      => "defence DESC"
           )

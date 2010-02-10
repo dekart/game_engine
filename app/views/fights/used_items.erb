@@ -7,8 +7,8 @@
         <div class="group">
           <strong><%= group.name %></strong>
 
-          <%= raw @fight.attacker.inventories.by_item_group(group).used_in_fight.collect{|i|
-                t(".item", :name => i.name, :amount => i.use_in_fight)
+          <%= raw @fight.attacker.inventories.by_item_group(group).equipped.collect{|i|
+                t(".item", :name => i.name, :amount => i.equipped)
               }.join(", ") %>
         </div>
       <% end %>
@@ -20,8 +20,8 @@
         <div class="group">
           <strong><%= group.name %></strong>
 
-          <%= raw @fight.victim.inventories.by_item_group(group).used_in_fight.collect{|i|
-                t(".item", :name => i.name, :amount => i.use_in_fight)
+          <%= raw @fight.victim.inventories.by_item_group(group).equipped.collect{|i|
+                t(".item", :name => i.name, :amount => i.equipped)
               }.join(", ") %>
         </div>
       <% end %>
