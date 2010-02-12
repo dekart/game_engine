@@ -71,8 +71,7 @@ class Item < ActiveRecord::Base
       :icon   => "40x40#",
       :small  => "72x72#",
       :medium => "120x120#",
-      :large  => "200x200#",
-      :belt   => "84x24#"
+      :large  => "200x200#"
     }
 
   has_effects
@@ -123,6 +122,7 @@ class Item < ActiveRecord::Base
     value = value.to_s.split(",") unless value.is_a?(Array)
 
     self[:placements] = value.any? ? value.join(",") : nil
+    self[:equippable] = self[:placements].present?
   end
 
   def placement_options_for_select

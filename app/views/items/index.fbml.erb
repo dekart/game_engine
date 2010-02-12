@@ -4,41 +4,37 @@
 
 <%= title(t(".title")) %>
 
-<div id="items">
-  <div class="buttons">
-    <%= link_to(button(:inventory), inventories_path, :class => "inventory button") %>
-  </div>
+<%= render "inventories/buttons", :current => :shop %>
 
-  <div id="item_groups" class="clearfix">
-    <% @item_groups.each do |group| %>
-      <% if group == @current_group %>
-        <b><%= group.name %></b>
-      <% else %>
-        <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
-      <% end %>
+<div id="item_groups" class="clearfix">
+  <% @item_groups.each do |group| %>
+    <% if group == @current_group %>
+      <b><%= group.name %></b>
+    <% else %>
+      <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
     <% end %>
-  </div>
-
-  <% if @special_items.any? %>
-    <%= render "specials", :items => @special_items %>
   <% end %>
-
-  <%= will_paginate @items %>
-
-  <table class="item_list" cellspacing="0" cellpadding="0">
-    <% @items.each do |item| %>
-      <%= render :partial => item %>
-    <% end %>
-  </table>
-
-  <% if @next_item %>
-    <div id="next_item">
-      <%= raw t(".next_item",
-            :level => content_tag(:span, @next_item.level, :class => :level),
-            :group => content_tag(:span, @next_item.item_group.name.mb_chars.downcase, :class => :weapon)
-          ) %>
-    </div>
-  <% end %>
-
-  <%= will_paginate @items %>
 </div>
+
+<% if @special_items.any? %>
+  <%= render "specials", :items => @special_items %>
+<% end %>
+
+<%= will_paginate @items %>
+
+<table class="item_list" cellspacing="0" cellpadding="0">
+  <% @items.each do |item| %>
+    <%= render :partial => item %>
+  <% end %>
+</table>
+
+<% if @next_item %>
+  <div id="next_item">
+    <%= raw t(".next_item",
+          :level => content_tag(:span, @next_item.level, :class => :level),
+          :group => content_tag(:span, @next_item.item_group.name.mb_chars.downcase, :class => :weapon)
+        ) %>
+  </div>
+<% end %>
+
+<%= will_paginate @items %>

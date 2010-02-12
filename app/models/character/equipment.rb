@@ -1,9 +1,19 @@
 class Character::Equipment
-  PLACEMENTS = [:left_hand, :right_hand, :head, :body, :additional]
+  MAIN_PLACEMENTS = [:left_hand, :right_hand, :head, :body, :legs]
+  PLACEMENTS = MAIN_PLACEMENTS + [:additional]
+
+  IMAGE_SIZES = {
+    :left_hand  => :medium,
+    :right_hand => :medium,
+    :head       => :small,
+    :body       => :medium,
+    :legs       => :medium,
+    :additional => :small
+  }
 
   class << self
     def placement_name(name)
-      I18n.t("characters.placements.#{name}")
+      I18n.t("inventories.placements.names.#{name}", :default => name.to_s.humanize)
     end
   end
 

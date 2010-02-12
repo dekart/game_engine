@@ -28,6 +28,7 @@ en:
         fights_lost: "Fights Lost"
         missions_succeeded: "Missions Succeded"
         missions_completed: "Missions Completed"
+        relations: "Alliance"
         relations_count: "Alliance Size"
         mercenaries: "Mercenaries"
         points: "Upgrade Points"
@@ -184,12 +185,6 @@ en:
         note: "Withdrawing money to cash is free."
         submit: "Withdraw"
   characters:
-    placements:
-      left_hand: "Left Hand"
-      right_hand: "Right Hand"
-      head: "Head"
-      body: "Body"
-      additional: "Bag"
     attributes:
       bonus: "+{{amount}} from Alliance"
     invitations:
@@ -312,6 +307,11 @@ en:
       invitee:
         level: "Fresh Meat"
   inventories:
+    buttons:
+      buttons:
+        inventory: "My Inventory"
+        equipment: "Equip Character"
+        shop: "Shop"
     create:
       buttons:
         publish: "Brag About It!"
@@ -327,9 +327,6 @@ en:
         title: "You received:"
     index:
       title: "Inventory"
-      buttons:
-        shop: "Go to Shop"
-        equipment: "Equip Character"
     list:
       owned: "Owned: {{amount}}"
       used: "In use: {{amount}}"
@@ -355,12 +352,26 @@ en:
       effects: "Effects:"
     equipment:
       title: "Your Equipment"
-    available_for_equipment:
-      header: "Unused Items"
-      amount: "Available for use: {{count}}"
-      assign_to: "Put to {{placement}}"
+    equippables:
+      header: "Available Items"
+      item_header: "{{name}} x {{amount}}"
+      equip_to: "Put to {{placement}}"
       buttons:
-        assign: "Assign"
+        equip: "Put"
+      empty_set: "No items available"
+    placements:
+      names:
+        left_hand: "Left Hand"
+        right_hand: "Right Hand"
+        head: "Head"
+        body: "Body"
+        legs: "Legs"
+        additional: "Bag"
+      remove: "Take Off"
+      additional:
+        free_slots:
+          one: "You have {{count_label}} additional slot left. Grow your {{relations}} to get more slots!"
+          other: "You have {{count_label}} additional slots left. Grow your {{relations}} to get more slots!"
   invitations:
     accept:
       message: "Invitation accepted! {{user}} became part of your alliance!"

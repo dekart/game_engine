@@ -4,18 +4,8 @@
 
 <%= title(t(".title")) %>
 
-<div id="inventory">
-  <div class="buttons">
-    <%= link_to(button(:shop), items_path, 
-          :class => "shop button"
-        ) %>
+<%= render "inventories/buttons", :current => :inventory %>
 
-    <%= link_to(button(:equipment), equipment_inventories_path,
-          :class => "equipment button"
-        ) %>
-  </div>
-  
-  <div id="inventory_list">
-    <%= render :partial => "list", :locals => {:inventories => @inventories} %>
-  </div>
+<div id="inventory_list">
+  <%= render :partial => "list", :locals => {:inventories => @inventories} %>
 </div>

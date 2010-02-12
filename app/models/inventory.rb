@@ -10,6 +10,9 @@ class Inventory < ActiveRecord::Base
     }
   }
   named_scope :equipped, :conditions => "equipped > 0"
+  named_scope :equippable,
+    :include => :item,
+    :conditions => "items.equippable = 1 AND (inventories.equipped < inventories.amount)"
 
   %w{
     item_group  name plural_name description image image? basic_price vip_price attack defence effects

@@ -1,12 +1,11 @@
 <%= title(t(".title")) %>
 
-<table>
-  <tr>
-    <td id="equipment_inventories">
-      <%= render "available_for_equipment" %>
-    </td>
-    <td id="equipment_placements">
-      <%= render "placements", :character => current_character %>
-    </td>
-  </tr>
-</table>
+<%= render "inventories/buttons", :current => :equipment %>
+
+<div id="equipment_inventories">
+  <%= render "equippables" %>
+</div>
+
+<div id="equipment_placements">
+  <%= render "placements", :character => current_character %>
+</div>

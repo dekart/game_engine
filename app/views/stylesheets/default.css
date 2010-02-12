@@ -168,9 +168,6 @@ form .error {color: red; padding: 3px 0px;}
   #next_mission_group .level {font-size: 14px; font-weight: bold;}
 
 /* Item list displayed at Shop page*/
-#items .buttons .inventory {width: 140px;}
-  #items .buttons .inventory span {background-image: url(asset:icons_inventory);}
-
 .item_list {width: 100%}
 .item_list td{padding: 10px 0; border-bottom: 1px solid #d0d0d0;}
   .item_list .picture {padding-right: 10px;}
@@ -207,8 +204,11 @@ form .error {color: red; padding: 3px 0px;}
   #next_item .level {font-size: 14px; font-weight: bold;}
 
 /* Inventory container */
-#inventory {width: 100%;}
-  #inventory .buttons .shop span {background-image: url(asset:icons_shop);}
+#inventory_buttons {margin-bottom: 15px;}
+  #inventory_buttons .button {float: left; width: auto; margin-right: 15px;}
+    #inventory_buttons .shop span {background-image: url(asset:icons_shop);}
+    #inventory_buttons .inventory span {background-image: url(asset:icons_inventory);}
+    #inventory_buttons .equipment span {background-image: url(asset:icons_profile);}
 
 /* Item list displayed at Inventory page*/
 #inventory_list {margin-top: 10px;}
@@ -267,7 +267,7 @@ form .error {color: red; padding: 3px 0px;}
   #invitation_list .controls .ignore span {background-image: url(asset:icons_delete)}
 
 /* Recruit to Alliance button at Alliance page */
-#alliance_buttons {height: 30px;}
+#alliance_buttons {margin-bottom: 15px;}
   #alliance_buttons .button {float: left; width: auto; margin-right: 15px;}
     #alliance_buttons .relations span {background-image: url(asset:icons_alliance);}
     #alliance_buttons .invite span {background-image: url(asset:icons_add);}
@@ -661,3 +661,35 @@ form .error {color: red; padding: 3px 0px;}
     #character_types .character_type:hover {border: 1px solid #3B5998;}
     #character_types .character_type .name {display: block; margin-bottom: 5px;}
   #character_types .selected {border: 2px solid #3B5998 !important; padding: 1px !important;}
+
+#placements {position: relative; background: url(asset:placements) top left no-repeat; padding-top: 490px; width: 100%;}
+  #placements .inventory {position: relative; background-color: white;}
+    #placements .inventory .remove {position:absolute; right: 0; display: block; width: 16px; height: 16px; background: url(asset:icons_delete) center no-repeat; }
+  #placements .placement {position: absolute;}
+    #placements .head {top: 3px; left: 155px;}
+      #placements .head .inventory {width: 72px; height: 72px;}
+    #placements .right_hand {top: 111px; left: 3px;}
+      #placements .right_hand .inventory{width: 120px; height: 120px;}
+    #placements .left_hand {top: 111px; left: 261px;}
+      #placements .left_hand .inventory {width: 120px; height: 120px;}
+    #placements .body {top: 81px; left: 132px;}
+      #placements .body .inventory{width: 120px; height: 120px;}
+    #placements .legs {top: 361px; left: 132px;}
+      #placements .legs .inventory{width: 120px; height: 120px;}
+    #placements .additional {position: relative;}
+      #placements .additional .inventory {width: 72px; height: 72px; margin: 0 10px 10px 0; float: left; border: 1px solid #BDC7D8;}
+      #placements .additional .note {clear: both;}
+        #placements .additional .note .value {font-weight: bold;}
+        #placements .additional .note .zero {color: red; font-size: 16px;}
+
+#inventory_for_equipment {padding-right: 10px; margin-right: 10px; border-right: 2px solid #BDC7D8;}
+  #inventory_for_equipment .inventory {padding: 10px 0; border-top: 1px solid #BDC7D8;}
+    #inventory_for_equipment .inventory .header {margin-bottom: 5px; white-space: nowrap;}
+      #inventory_for_equipment .inventory .header .name {font-weight: bold; font-size: 14px; white-space: normal;}
+    #inventory_for_equipment .inventory .image {margin-bottom: 5px;}
+    #inventory_for_equipment .inventory .controls select {float: left;}
+    #inventory_for_equipment .inventory .controls .button {margin-top: 0px; float: left; clear:none;}
+      #inventory_for_equipment .inventory .controls .button span {background-image: url(asset:icons_accept);}
+
+#equipment_inventories {width: 180px; float: left; }
+#equipment_placements {margin-left: 200px;}

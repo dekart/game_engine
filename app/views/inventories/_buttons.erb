@@ -1,0 +1,19 @@
+<div class="buttons clearfix" id="inventory_buttons">
+  <% unless current == :inventory %>
+    <%= link_to(button(:inventory), inventories_path,
+          :class => "inventory button"
+        ) %>
+  <% end %>
+
+  <% unless current == :equipment %>
+    <%= link_to(button(:equipment), equipment_inventories_path,
+          :class => "equipment button"
+        ) %>
+  <% end %>
+
+  <% unless current == :shop %>
+    <%= link_to(button(:shop), items_path,
+          :class => "shop button"
+        ) %>
+  <% end %>
+</div>

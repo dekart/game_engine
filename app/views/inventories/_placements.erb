@@ -1,19 +1,37 @@
 <div id="placements">
-  <% Character::Equipment::PLACEMENTS.each do |placement| %>
-    <% content_tag(:div, :class => placement) do %>
-      <h2><%= placement %></h2>
-      
-      <% character.equipment.inventories(placement).each_with_index do |inventory, index| %>
+  <% (Character::Equipment::MAIN_PLACEMENTS).each do |placement| %>
+    <% content_tag(:div, :class => "placement #{placement}") do %>
+      <% character.equipment.inventories(placement).each do |inventory| %>
         <% content_tag :div, :class => :inventory do %>
-          <%= link_to_remote("x",
+          <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
                 :url    => unequip_inventory_url(inventory, :placement => placement, :canvas => false),
                 :update => :result,
-                :html   => {:class => :remove}
+                :html   => {:class => :remove, :title => t(".remove")}
               ) if character == current_character %>
   
-          <%= item_image(inventory, :small) %>
+          <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement]) -%>
         <% end %>
       <% end %>
     <% end %>
   <% end %>
+
+  <div class="additional clearfix">
+    <h2><%= Character::Equipment.placement_name(:additional) %></h2>
+
+    <% character.equipment.inventories(:additional).each do |inventory| %>
+      <% content_tag :div, :class => :inventory do %>
+        <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
+              :url    => unequip_inventory_url(inventory, :placement => :additional, :canvas => false),
+              :update => :result,
+              :html   => {:class => :remove, :title => t(".remove")}
+            ) if character == current_character %>
+
+        <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional]) -%>
+      <% end %>
+    <% end %>
+
+    <div class="note">
+      <%= inventory_additonal_slots_note %>
+    </div>
+  </div>
 </div>
