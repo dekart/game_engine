@@ -98,7 +98,6 @@ class Character::Equipment
       else
         break
       end
-      puts "i"
     end
 
     Character.transaction do

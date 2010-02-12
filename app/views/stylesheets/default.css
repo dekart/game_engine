@@ -684,12 +684,11 @@ form .error {color: red; padding: 3px 0px;}
 
 #inventory_for_equipment {padding-right: 10px; margin-right: 10px; border-right: 2px solid #BDC7D8;}
   #inventory_for_equipment .inventory {padding: 10px 0; border-top: 1px solid #BDC7D8;}
-    #inventory_for_equipment .inventory .header {margin-bottom: 5px; white-space: nowrap;}
-      #inventory_for_equipment .inventory .header .name {font-weight: bold; font-size: 14px; white-space: normal;}
+    #inventory_for_equipment .inventory .header {margin-bottom: 5px;}
+      #inventory_for_equipment .inventory .header .name {font-weight: bold; font-size: 14px;}
     #inventory_for_equipment .inventory .image {margin-bottom: 5px;}
     #inventory_for_equipment .inventory .controls select {float: left;}
     #inventory_for_equipment .inventory .controls .button {margin-top: 0px; float: left; clear:none;}
       #inventory_for_equipment .inventory .controls .button span {background-image: url(asset:icons_accept);}
 
-#equipment_inventories {width: 180px; float: left; }
-#equipment_placements {margin-left: 200px;}
+#equipment_inventories {width: 200px;}

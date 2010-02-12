@@ -7,7 +7,7 @@
         <div class="header">
           <%= raw t(".item_header",
                 :name   => content_tag(:span, inventory.name, :class => :name),
-                :amount => content_tag(:span, inventory.amount_available_for_equipment, :class => :smount)
+                :amount => content_tag(:span, inventory.amount_available_for_equipment, :class => :amount)
               ) %>
         </div>
         <div class="image"><%= item_image(inventory, :small) %></div>

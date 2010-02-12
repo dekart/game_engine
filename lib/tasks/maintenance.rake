@@ -1,5 +1,14 @@
 namespace :app do
   namespace :maintenance do
+    desc "Auto-equip inventories"
+    task :auto_equip_inventories => :environment do
+      Inventory.all(:include => [{:character => :character_type}, :item], :order => "items.vip_price DESC, items.basic_price DESC").each_with_index do |inventory, index|
+        inventory.character.equipment.auto_equip!(inventory)
+
+        puts index
+      end
+    end
+
     desc "Set default states to objects"
     task :set_default_states => :environment do
       %w{bosses item_groups items mission_groups missions property_types}.each do |t|

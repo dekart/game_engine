@@ -2,10 +2,14 @@
 
 <%= render "inventories/buttons", :current => :equipment %>
 
-<div id="equipment_inventories">
-  <%= render "equippables" %>
-</div>
+<table>
+  <tr>
+    <td id="equipment_inventories">
+      <%= render "equippables" %>
+    </td>
 
-<div id="equipment_placements">
-  <%= render "placements", :character => current_character %>
-</div>
+    <td id="equipment_placements">
+      <%= render "placements", :character => current_character %>
+    </td>
+  </tr>
+</table>
