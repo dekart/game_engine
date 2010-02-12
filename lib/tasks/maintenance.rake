@@ -2,11 +2,17 @@ namespace :app do
   namespace :maintenance do
     desc "Auto-equip inventories"
     task :auto_equip_inventories => :environment do
-      Inventory.all(:include => [{:character => :character_type}, :item], :order => "items.vip_price DESC, items.basic_price DESC").each_with_index do |inventory, index|
+      count = Inventory.equippable.count
+
+      puts "Equipping #{count} inventories..."
+
+      Inventory.equippable.all(:include => [{:character => :character_type}, :item], :order => "items.vip_price DESC, items.basic_price DESC").each_with_index do |inventory, index|
         inventory.character.equipment.auto_equip!(inventory)
 
-        puts index
+        puts "Equipped #{index}/#{count} inventories..." if index % 10 == 0
       end
+
+      puts "Done!"
     end
 
     desc "Set default states to objects"
