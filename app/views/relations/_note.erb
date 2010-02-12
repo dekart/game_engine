@@ -1,0 +1,8 @@
+<div class="note">
+  <p><%= t(".text") %></p>
+  <p>
+    <%= raw t(".placements",
+          :amount => content_tag(:span, Configuration[:character_relations_per_equipment_slot], :class => :value)
+        ) %>
+  </p>
+</div>

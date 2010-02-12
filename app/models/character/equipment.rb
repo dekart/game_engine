@@ -42,7 +42,7 @@ class Character::Equipment
     return unless inventory.placements.include?(placement)
 
     if inventory.amount_available_for_equipment > 0
-      if placement_free_space(placement) > 0
+      if placement_free_slots(placement) > 0
         @character.placements[placement] ||= []
         @character.placements[placement] << inventory.id
 
@@ -93,7 +93,7 @@ class Character::Equipment
 
   def auto_equip!(inventory)
     inventory.amount_available_for_equipment.times do
-      if placement = (placements_with_free_space & inventory.placements).first
+      if placement = (placements_with_free_slots & inventory.placements).first
         equip(inventory, placement)
       else
         break
@@ -126,11 +126,17 @@ class Character::Equipment
     end
   end
 
-  def placements_with_free_space
-    PLACEMENTS.select{|placement| placement_free_space(placement) > 0 }
+  def free_slots
+    PLACEMENTS.inject(0) do |result, placement|
+      result + placement_free_slots(placement)
+    end
   end
 
-  def placement_free_space(placement)
+  def placements_with_free_slots
+    PLACEMENTS.select{|placement| placement_free_slots(placement) > 0 }
+  end
+
+  def placement_free_slots(placement)
     placement_capacity(placement) - placement_usage(placement)
   end
 

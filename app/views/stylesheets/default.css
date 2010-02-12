@@ -12,6 +12,7 @@ td {vertical-align: top;}
 
 .empty_set, .note {margin: 10px 0px; padding: 8px; border: 1px solid #D8DFEA;}
 .note {font-size: 14px;}
+  .note .value {font-weight: bold;}
 
 .nobutton .button {display: none !important;}
 .button {display:block; width: 130px;}
@@ -679,7 +680,6 @@ form .error {color: red; padding: 3px 0px;}
     #placements .additional {position: relative;}
       #placements .additional .inventory {width: 72px; height: 72px; margin: 0 10px 10px 0; float: left; border: 1px solid #BDC7D8;}
       #placements .additional .note {clear: both;}
-        #placements .additional .note .value {font-weight: bold;}
         #placements .additional .note .zero {color: red; font-size: 16px;}
 
 #inventory_for_equipment {padding-right: 10px; margin-right: 10px; border-right: 2px solid #BDC7D8;}

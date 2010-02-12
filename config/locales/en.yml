@@ -328,6 +328,11 @@ en:
         title: "You received:"
     index:
       title: "Inventory"
+      free_slots:
+        text:
+          one: "You have some unequipped inventory and {{count_label}} equipment slot available for use!"
+          other: "You have some unequipped inventory and {{count_label}} equipment slots available for use!"
+        link: "Equip your character &raquo;"
     list:
       owned: "Owned: {{amount}}"
       used: "In use: {{amount}}"
@@ -371,8 +376,9 @@ en:
       remove: "Take Off"
       additional:
         free_slots:
-          one: "You have {{count_label}} additional slot left. Grow your {{relations}} to get more slots!"
-          other: "You have {{count_label}} additional slots left. Grow your {{relations}} to get more slots!"
+          one: "You have {{count_label}} additional slot left."
+          other: "You have {{count_label}} additional slots left."
+        relations: "Grow your {{relations}} to get more slots. Every {{amount}} Alliance Members brings an extra slot!"
   invitations:
     accept:
       message: "Invitation accepted! {{user}} became part of your alliance!"
@@ -512,7 +518,6 @@ en:
   relations:
     index:
       title: "Your Alliance"
-      note: "Your alliance gives you additional attack and defence points. The more members in your alliance, the more chances you have in every battle."
       empty_set: "You don't have any members in your Alliance"
       members:
         title: "Alliance Members"
@@ -533,13 +538,15 @@ en:
         recruit: "Recruit to Alliance"
         gift: "Send Gifts to Alliance"
         hire: "Hire Mercenaries"
+    note:
+      text: "Recruit your friends to become stronger and fight better! The more friends who join your Alliance, the more chances you have to win battle."
+      placements: "Additionally, every {{amount}} Alliance Members brings an extra equipment slot!"
   users:
     edit:
       title: "Settings"
       submit: "Save"
     invite:
       title: "Recruit To Your Alliance"
-      note: "Your Alliance gives you additional attack and defence points. You can equip each of your friends with weapon and armor and fight together. The more friends who join your Alliance, the more chances you have to win battle. Recruit your friends to become stronger and fight better!"
       success_message: "You've successfully sent {{amount}} invitations to your friends!"
       invite:
         title: "Alliance"
@@ -715,7 +722,7 @@ en:
         text: "Every time you reach a new level or complete a mission you receive Upgrade Points. You can use these points to improve your attack and defence skills, health, or energy. Upgrade all these attributes to build a balanced character."
       step_5:
         title: "Step 5: Strengthen Your Alliance"
-        text: "The more people you have in your Alliance the more chances you have in every battle. You also can promote your friends to certain posisitons and get additional bonuses. Invite some of your friends to make your Alliance stronger!"
+        text: "The more people you have in your Alliance the more chances you have in every battle. You can promote your friends to certain posisitons and get additional bonuses. Invite some of your friends to make your Alliance stronger!"
   gifts:
     new:
       title: "Send Gifts to Your Alliance: Step 1"

@@ -14,15 +14,17 @@ module InventoriesHelper
   safe_helper :inventory_use_label
 
   def inventory_additonal_slots_note
-    free_slots = current_character.equipment.placement_free_space(:additional)
+    free_slots = current_character.equipment.placement_free_slots(:additional)
     
-    t("inventories.placements.additional.free_slots",
-      :count        => free_slots,
-      :count_label  => content_tag(:span, free_slots,
-        :class => "value #{"zero" if free_slots == 0}"
-      ),
-      :relations    => link_to(Character.human_attribute_name("relations"), relations_path)
-    )
+    yield(free_slots)
   end
   safe_helper :inventory_additonal_slots_note
+
+  def inventory_free_slots_note
+    free_slots = current_character.equipment.free_slots
+
+    if free_slots > 0 and current_character.inventories.equippable.size > 0
+      yield(free_slots)
+    end
+  end
 end

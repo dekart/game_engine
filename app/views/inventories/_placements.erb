@@ -30,8 +30,18 @@
       <% end %>
     <% end %>
 
-    <div class="note">
-      <%= inventory_additonal_slots_note %>
-    </div>
+    <% inventory_additonal_slots_note do |free_slots| %>
+      <div class="note">
+        <%= raw t(".additional.free_slots",
+              :count        => free_slots,
+              :count_label  => content_tag(:span, free_slots, :class => (free_slots == 0 ? "value zero" : "value"))
+            ) %>
+        
+        <%= raw t(".additional.relations",
+              :relations  => link_to(Character.human_attribute_name("relations"), relations_path),
+              :amount     => content_tag(:span, Configuration[:character_relations_per_equipment_slot], :class => :value)
+            ) %>
+      </div>
+    <% end %>
   </div>
 </div>
