@@ -20,7 +20,7 @@
         <td class="name"><%= link_to(type.name, edit_admin_character_type_path(type)) %></td>
         <td class="attributes">
           <table>
-            <% CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute| %>
+            <% (CharacterType::APPLICABLE_ATTRIBUTES + [:equipment_slots]).each do |attribute| %>
               <tr>
                 <td><%= CharacterType.human_attribute_name(attribute) %>:</td>
                 <td><%= type.send(attribute) %></td>

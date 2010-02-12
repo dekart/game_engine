@@ -15,3 +15,7 @@
     <%= form.text_field attribute, :size => 6, :autocomplete => :off %>
   <% end %>
 <% end %>
+
+<% form.field_set t(".other") do %>
+  <%= form.text_field :equipment_slots, :size => 6, :autocomplete => :off %>
+<% end %>

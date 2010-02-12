@@ -44,7 +44,9 @@
       :character_income_calculation_period,
       :character_weakness_minimum,
       :character_points_per_upgrade,
-      :character_vip_money_per_upgrade
+      :character_vip_money_per_upgrade,
+      :character_equipment_slots,
+      :character_relations_per_equipment_slot
     ].each do |field| %>
     <%= form.text_field field, :size => 5 %>
   <% end %>

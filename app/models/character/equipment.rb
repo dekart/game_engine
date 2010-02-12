@@ -136,7 +136,9 @@ class Character::Equipment
 
   def placement_capacity(placement)
     if placement == :additional
-      10 # calculate bag capacity here
+      result = @character.character_type.try(:equipment_slots) || Configuration[:character_equipment_slots]
+      result += @character.relations.effective_size / Configuration[:character_relations_per_equipment_slot]
+      result
     else
       1
     end

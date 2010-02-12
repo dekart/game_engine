@@ -44,6 +44,7 @@ en:
         energy_restore_bonus: "Decrease of energy restore period, %"
         stamina_restore_bonus: "Decrease of stamina restore period, %"
         income_period_bonus: "Decrease of income recalculation period, %"
+        equipment_slots: "Additional equipment slots"
     errors:
       models:
         character:
