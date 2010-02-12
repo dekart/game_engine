@@ -41,17 +41,50 @@ class Character::Equipment
 
     return unless inventory.placements.include?(placement)
 
-    if placement_free_space(placement) > 0 and inventory.amount_available_for_equipment > 0
-      inventory.increment(:equipped)
+    if inventory.amount_available_for_equipment > 0
+      if placement_free_space(placement) > 0
+        @character.placements[placement] ||= []
+        @character.placements[placement] << inventory.id
 
-      @character.placements[placement] ||= []
-      @character.placements[placement] << inventory.id
+        inventory.increment(:equipped)
+      elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be
+        previous = Inventory.find(@character.placements[placement].last)
+        
+        unequip(previous, placement)
+        equip(inventory, placement)
+
+        previous
+      else
+        #TODO Message that there is no place
+      end
+    else
+      #TODO Message that all items are equipped
+    end
+  end
+
+  def unequip(inventory, placement)
+    placement = placement.to_sym
+
+    if @character.placements[placement] and index = @character.placements[placement].index(inventory.id)
+      inventory.decrement(:equipped) unless inventory.frozen?
+
+      @character.placements[placement].delete_at(index)
     end
   end
 
   def equip!(inventory, placement)
     Character.transaction do
-      equip(inventory, placement)
+      previous = equip(inventory, placement)
+
+      previous.try(:save!)
+      inventory.save!
+      @character.save!
+    end
+  end
+
+  def unequip!(inventory, placement)
+    Character.transaction do
+      unequip(inventory, placement)
 
       inventory.save!
       @character.save!
@@ -69,25 +102,6 @@ class Character::Equipment
     end
 
     Character.transaction do
-      inventory.save!
-      @character.save!
-    end
-  end
-
-  def unequip(inventory, placement)
-    placement = placement.to_sym
-
-    if @character.placements[placement] and index = @character.placements[placement].index(inventory.id)
-      inventory.decrement(:equipped) unless inventory.frozen?
-
-      @character.placements[placement].delete_at(index)
-    end
-  end
-
-  def unequip!(inventory, placement)
-    Character.transaction do
-      unequip(inventory, placement)
-
       inventory.save!
       @character.save!
     end
