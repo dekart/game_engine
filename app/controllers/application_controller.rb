@@ -12,8 +12,32 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  before_filter :ensure_authenticated_to_facebook
   before_filter :check_character_existance
-  before_filter :ensure_application_is_installed_by_facebook_user
+
+      def top_redirect_to(*args)
+        if request_is_facebook_iframe?
+          @redirect_url = url_for(*args)
+          render :layout => false, :inline => <<-HTML
+            <html><head>
+              <script type="text/javascript">
+                window.top.location.href = <%= raw @redirect_url.to_json -%>;
+              </script>
+              <noscript>
+                <meta http-equiv="refresh" content="0;url=<%=h @redirect_url %>" />
+                <meta http-equiv="window-target" content="_top" />
+              </noscript>
+            </head></html>
+          HTML
+        else
+          redirect_to(*args)
+        end
+      end
+
+      def after_facebook_login_url
+        root_url(:canvas => true)
+      end
+
   
   layout :get_layout
 
@@ -25,18 +49,18 @@ class ApplicationController < ActionController::Base
 
   def landing_url
     if current_user.try(:should_visit_gift_page?)
-      new_gift_url(:canvas => true)
+      new_gift_path
     elsif current_user.try(:should_visit_invite_page?)
-      invite_users_url(:canvas => true)
+      invite_users_path
     else
-      root_url(:canvas => true)
+      root_path
     end
   end
 
   def check_character_existance
     set_facebook_session
 
-    redirect_to new_character_url unless current_character
+    redirect_to new_character_path unless current_character
   end
 
   def current_character(force_reload = false)
@@ -113,9 +137,16 @@ class ApplicationController < ActionController::Base
     redirect_to_landing_page
   end
 
+  def params_before_conversion
+    @raw_params ||= request.env['ORIGINAL_PARAMS']
+  end
+
   def default_url_options(options)
     returning result = {:canvas => true} do
-      result[:fb_page_id] = current_user.facebook_id if in_page? && options[:canvas] != false
+      params_before_conversion.each do |key, value|
+        result[key] = value if key.starts_with?("fb_sig")
+      end
+      #result[:fb_page_id] = current_user.facebook_id if in_page? && options[:canvas] != false
       
       result[:try_stylesheet] = params[:try_stylesheet] unless params[:try_stylesheet].blank?
     end

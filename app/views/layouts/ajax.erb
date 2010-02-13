@@ -1,6 +1,6 @@
 <%= yield %>
 
-<script>
+<script type="text/javascript">
   <%= yield :script %>
     
   Character.update(<%= raw current_character(true).to_json_for_overview %>);

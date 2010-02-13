@@ -1,19 +1,12 @@
-<fb:fbml>
-  <script>
-    root_url = '<%= root_url(:canvas => false) %>';
-  </script>
-
+<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div> 
+<script>
+  var facebook_api_key = '<%= Facebooker.facebooker_config["api_key"] %>';
+</script>
   <%= editable_stylesheet_link %>
 
-  <% if Rails.env.development? %>
-    <script>
-      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "facebooker.js")) %>
-
-      <%= raw File.read(File.join(RAILS_ROOT, "public", "javascripts", "application.js")) %>
-    </script>
-  <% else %>
-    <%= javascript_include_tag "facebooker", "application" %>
-  <% end %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
+  <%= raw fb_connect_javascript_tag %>
+  <%= javascript_include_tag "jrails", "application" %>
 
   <%= render :partial => "admin/layouts/main_menu" %>
 
@@ -44,4 +37,3 @@
   <script><%= yield :script %></script>
   
   <%= fb_google_analytics(Configuration[:app_google_analytics_id]) unless Configuration[:app_google_analytics_id].blank? %>
-</fb:fbml>

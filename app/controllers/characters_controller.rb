@@ -2,14 +2,14 @@ class CharactersController < ApplicationController
   skip_before_filter :check_character_existance,
     :only => [:new, :create, :load_vip_money]
   skip_before_filter :ensure_application_is_installed_by_facebook_user,
-    :only => [:new, :load_vip_money]
+    :only => [:load_vip_money]
   before_filter :set_facebook_session,
     :only => [:new]
   before_filter :fetch_character_types,
     :only => [:new, :create, :edit, :update]
 
   def index
-    if landing_url != root_url
+    if landing_url != root_path
       redirect_to landing_url
     else
       @latest_fights = Fight.with_participant(current_character).find(:all, 

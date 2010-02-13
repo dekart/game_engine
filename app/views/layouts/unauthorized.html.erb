@@ -1,0 +1,19 @@
+<fb:fbml>
+  <%= editable_stylesheet_link %>
+
+  <%= fb_connect_javascript_tag %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
+  <%= javascript_include_tag "application" %>
+
+  <div id="content">
+    <div id="header" class="clearfix">
+      <%= link_to("&nbsp;", root_path, :id => :logo) %>
+    </div>
+
+    <%= yield %>
+  </div>
+
+  <script><%= yield :script %></script>
+
+  <%= fb_google_analytics(Configuration[:app_google_analytics_id]) unless Configuration[:app_google_analytics_id].blank? %>
+</fb:fbml>
