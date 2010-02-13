@@ -36,7 +36,9 @@ class ApplicationController < ActionController::Base
   def check_character_existance
     set_facebook_session
 
-    redirect_to new_character_url unless current_character
+    unless current_character
+      redirect_to new_character_url(:reference => params[:reference] || params[:ref])
+    end
   end
 
   def current_character(force_reload = false)

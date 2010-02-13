@@ -1,6 +1,8 @@
 <%= title(t(".title", :app => t("app_name"))) %>
 
 <% form_for @character, :html => {:requirelogin => 1} do |form| %>
+  <%= hidden_field_tag :reference, params[:reference] %>
+
   <%= form.fields %>
 
   <%= form.submit %>
