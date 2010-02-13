@@ -1,113 +1,57 @@
-var root_url;
-
-extend_instance(Element, {
-  by_class: function(name){
-    var result = [];
-    var children = this.getChildNodes()
-
-    for(i=0; i < children.length; i++){
-      if(children[i].hasClassName(name)){
-        extend_instance(children[i], Element);
-        result.push(children[i])
-      }
-    }
-    return result;
+var CharacterForm = {
+  setup: function(){
+    $('#character_types .character_type').click(function(){
+      CharacterForm.set_character_type(this)
+    });
   },
-  by_tag: function(tag){
-    var result = [];
-    var children = this.getChildNodes();
-    for(i=0; i < children.length; i++){
-      if(children[i].getTagName() == tag){
-        extend_instance(children[i], Element);
-        result.push(children[i])
-      }
-    }
-    return result;
-  }
-})
 
-var Spinner = {
-  hide: function(){
-    $('spinner').hide();
-  },
-  show: function(){
-    $('spinner').show();
+  set_character_type: function(selector){
+    var $this = $(selector);
+
+    $this.addClass('selected').
+      siblings('.character_type').removeClass('selected');
+
+    $('#character_character_type_id').val(
+      $this.attr('value')
+    );
   }
 }
 
 var Character = {
-  onNewLevel: function(){},
-  onUpgradeComplete: function(){},
-
   update: function(a){
-    $("co_basic_money").setTextValue(a.character.formatted_basic_money);
-    $("co_vip_money").setTextValue(a.character.formatted_vip_money);
-    $("co_experience").setTextValue(a.character.experience + "/" + a.character.next_level_experience);
-    $("co_experience_percentage").setStyle({width: a.character.level_progress_percentage + "%"})
-    $("co_level").setTextValue(a.character.level);
-    $("co_health").setTextValue(a.character.hp + "/" + a.character.health);
-    $("co_energy").setTextValue(a.character.ep + "/" + a.character.energy);
-    $("co_stamina").setTextValue(a.character.sp + "/" + a.character.stamina);
+    $("#co_basic_money").text(a.character.formatted_basic_money);
+    $("#co_vip_money").text(a.character.formatted_vip_money);
+    $("#co_experience").text(a.character.experience + "/" + a.character.next_level_experience);
+    $("#co_experience_percentage").css({width: a.character.level_progress_percentage + "%"})
+    $("#co_level").text(a.character.level);
+    $("#co_health").text(a.character.hp + "/" + a.character.health);
+    $("#co_energy").text(a.character.ep + "/" + a.character.energy);
+    $("#co_stamina").text(a.character.sp + "/" + a.character.stamina);
 
     if(a.character.points > 0) {
-      $("co_point_link").show();
+      $("#co_point_link").show();
     } else {
-      $("co_point_link").hide();
+      $("#co_point_link").hide();
     }
+    
     if(a.character.property_income > 0){
-      Timer.start('co_basic_money_timer', a.character.time_to_basic_money_restore, this.updateFromRemote);
+      Timer.start('#co_basic_money_timer', a.character.time_to_basic_money_restore, this.updateFromRemote);
     }
-    Timer.start('co_health_timer', a.character.time_to_hp_restore, this.updateFromRemote);
-    Timer.start('co_energy_timer', a.character.time_to_ep_restore, this.updateFromRemote);
-    Timer.start('co_stamina_timer', a.character.time_to_sp_restore, this.updateFromRemote);
+    Timer.start('#co_health_timer', a.character.time_to_hp_restore, this.updateFromRemote);
+    Timer.start('#co_energy_timer', a.character.time_to_ep_restore, this.updateFromRemote);
+    Timer.start('#co_stamina_timer', a.character.time_to_sp_restore, this.updateFromRemote);
   },
-  updateFromRemote: function(){
-    new Ajax.Request(root_url + "character_status", {
-      "onSuccess": function(data){
-        Spinner.hide();
-        Character.update(data);
-      },
-      "scrollToTop": false
+
+  upgrade_from_remote: function(){
+    $.getJSON('/character_status', function(data){
+      Character.update(data)
     });
-  },
-  setCharacterType: function(id){
-    var previous_id = $('character_character_type_id').getValue()
-    var previous    = $('character_type_' + previous_id);
-    if(previous) previous.removeClassName('selected');
-
-    var previous_description = $('description_character_type_' + previous_id);
-    if(previous_description) previous_description.hide();
-
-    $('character_character_type_id').setValue(id);
-
-    $('character_type_' + id).addClassName('selected');
-
-    if($('description_character_type_' + id)){
-      $('description_character_type_' + id).show();
-    }
   }
-}
-
-var Mission = {
-  onComplete: function(){}
-}
-
-var Fight = {
-  hideVictim: function(id){
-    if($('character_' + id)){
-      $('character_' + id).hide();
-    }
-  },
-  hideCauseRespond: function(id){
-    if($('respond_fight_' + id)){
-      $('respond_fight_' + id).hide();
-    }
-  }
-}
+};
 
 var Timer = {
   timers: {},
-  
+
   format: function(value){
     var hours   = Math.floor(value / 3600);
     var minutes = Math.floor((value - hours * 3600) / 60);
@@ -128,25 +72,25 @@ var Timer = {
 
     return(result);
   },
-  
+
   update: function(id){
     var element = $(id);
 
     if(element == null){
       this.timers[id].running = false;
-      
+
       return
     }
 
     if(this.timers[id].value > 0){
-      element.setTextValue(Timer.format(this.timers[id].value));
+      element.text(Timer.format(this.timers[id].value));
 
       this.timers[id].value = this.timers[id].value - 1;
-      
+
       this.rerun(id);
     }else{
-      element.setTextValue('');
-      
+      element.text('');
+
       this.timers[id].running = false;
 
       if(this.timers[id].callback){
@@ -154,7 +98,7 @@ var Timer = {
       }
     }
   },
-  
+
   rerun: function(id){
     setTimeout(function() { Timer.update(id); }, 1000);
     this.timers[id].running = true;
@@ -176,29 +120,10 @@ var Timer = {
   }
 };
 
-var Inventory = {
-  onPurchase: function(){}
-}
-
-var HelpRequest = {
-  create: function(context_id, context_type){
-    new Ajax.Request(root_url + "help_requests", {
-      parameters: "context_id=" + context_id + "&context_type=" + context_type,
-      method: "POST",
-      "scrollToTop": false,
-      "showSpinner": false
-    });
-  }
-};
-
-var BossFight = {
-  hideReminder: function(id){
-    if($('boss_fight_block')){
-      $('boss_fight_block').removeChild($(id));
-
-      if($('boss_fight_block').by_class('boss_fight').length == 0){
-        $('boss_fight_block').hide();
-      }
-    }
-  }
-}
+$(function(){
+  FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'XFBML'], function() {
+    FB.init(facebook_api_key,'/xd_receiver.html', {});
+    
+    FB.CanvasClient.setCanvasHeight($('body').height() + 'px')
+  });
+})

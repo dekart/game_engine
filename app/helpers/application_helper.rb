@@ -101,4 +101,10 @@ module ApplicationHelper
     end
   end
   safe_helper :percentage_bar
+
+  def dom_ready(&block)
+    concat(
+      javascript_tag("$(function(){#{capture(&block)}});")
+    )
+  end
 end

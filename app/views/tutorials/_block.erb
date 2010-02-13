@@ -18,10 +18,10 @@
 
             <%= link_to(button(:continue), items_path, :class => "button continue") %>
 
-            <% content_for :script do %>
-              Mission.onComplete = function(){
+            <% dom_ready do %>
+              $(document).bind('mission.complete', function(){
                 <%= reload_tutorial %>
-              }
+              });
             <% end %>
           <% else %>
             <%= link_to(t(".step_1.title"), mission_groups_path) %> <%= completed_mark %>

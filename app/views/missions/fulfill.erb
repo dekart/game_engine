@@ -36,7 +36,7 @@
 </div>
 
 <% if @mission_groups %>
-  <% fb_js_string :mission_group_list do %>
+  <% mission_group_list = capture do %>
     <%= render("mission_groups/tabs",
           :groups   => @mission_groups,
           :current  => current_character.mission_groups.current
@@ -44,14 +44,12 @@
   <% end %>
 
   <% content_for :script do %>
-    if($('mission_group_list')){
-      $('mission_group_list').setInnerFBML(mission_group_list);
-    }
+    $('#mission_group_list').html('<%= escape_javascript(mission_group_list) %>');
   <% end %>
 <% end %>
 
 <%= character_level_up_block %>
 
 <% content_for :script do %>
-  $('result').show();
+  $('#result').show();
 <% end %>
