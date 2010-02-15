@@ -22,9 +22,9 @@ class Admin::ItemsController < Admin::BaseController
     @item = Item.new(params[:item])
 
     if @item.save
-      redirect_to admin_items_url(:canvas => true)
+      redirect_to admin_items_path
     else
-      redirect_to new_admin_item_url(:item => params[:item], :canvas => true)
+      render :action => :new
     end
   end
 
@@ -42,9 +42,9 @@ class Admin::ItemsController < Admin::BaseController
     @item = Item.find(params[:id])
 
     if @item.update_attributes(params[:item].reverse_merge(:effects => nil))
-      redirect_to admin_items_url(:canvas => true)
+      redirect_to admin_items_path
     else
-      redirect_to edit_admin_item_url(:item => params[:item], :canvas => true)
+      render :action => :edit
     end
   end
 

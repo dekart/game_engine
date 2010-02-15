@@ -1,12 +1,8 @@
-<div class="requirement" id="<%= requirement.object_id %>">
+<div class="requirement" id="requirement_<%= requirement.object_id %>">
   <div class="<%= requirement.name %> serializable_item">
     <%= hidden_field_tag("#{container}[requirements][requirement_#{requirement.object_id}][type]", requirement.name) %>
 
-    <%= link_to_function(
-          t(".remove"),
-          "$('requirement_list').removeChild($('requirement_#{requirement.id}'))",
-          :class => :remove
-        ) %>
+    <%= link_to_function(t(".remove"), "$('#requirement_#{requirement.id}').remove()", :class => :remove) %>
 
     <h4><%= t("requirements.#{requirement.name}.name") %></h4>
 

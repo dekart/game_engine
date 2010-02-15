@@ -30,11 +30,10 @@
 <%= form.check_box :usable %>
 <%= form.text_field :usage_limit, :size => 6, :autocomplete => :off %>
 
-<div class="serializable" id="effect_list">
-  <h2><%= Item.human_attribute_name("effects") %></h2>
 
-  <%= form.text_field :attack, :size => 6, :autocomplete => :off %>
-  <%= form.text_field :defence, :size => 6, :autocomplete => :off %>
+<h2><%= Item.human_attribute_name("effects") %></h2>
 
-  <%= render :partial => "admin/effects/collection", :locals => {:form => form} %>
-</div>
+<%= form.text_field :attack, :size => 6, :autocomplete => :off %>
+<%= form.text_field :defence, :size => 6, :autocomplete => :off %>
+
+<%= render :partial => "admin/effects/collection", :locals => {:form => form} %>

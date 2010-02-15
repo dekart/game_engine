@@ -14,9 +14,11 @@
 
         <p><%= raw t(".forward.text", :app => t("app_name")) %></p>
 
-        <%= fb_chat_invite(
-              t(".forward.invitation", :app => t("app_name"), :link => promotion_url(@promotion))
-            ) %>
+        <% fb_serverfbml do %>
+          <%= fb_chat_invite(
+                t(".forward.invitation", :app => t("app_name"), :link => promotion_url(@promotion))
+              ) %>
+        <% end %>
       </div>
     <% end %>
   </div>

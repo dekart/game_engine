@@ -1,4 +1,4 @@
-<% remote_form_for([:admin, @translation], :url => admin_translation_url(@translation, :canvas => false), :update => translation_id(@translation.key)) do |form| %>
+<% remote_form_for([:admin, @translation], :update => translation_id(@translation.key)) do |form| %>
   <%= form.text_field :value, :required => true %>
 
   <%= form.submit %>

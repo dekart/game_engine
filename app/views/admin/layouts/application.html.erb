@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+  <script>
+    var facebook_api_key = '<%= Facebooker.facebooker_config["api_key"] %>';
+  </script>
+  
+  <%= stylesheet_link_tag("admin") %>
+
+  <%= raw fb_connect_javascript_tag %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
+  <%= javascript_include_tag "jrails" %>
+</head>
+<body>
+  <%= render "admin/layouts/main_menu" %>
+      
+  <%= fb_success(flash[:success]) if flash[:success] %>
+  <%= fb_error(flash[:error]) if flash[:error] %>
+
+  <div id="result" style="display:none"></div>
+
+  <%= yield %>
+
+  <%= dom_ready %>
+</fb:fbml>

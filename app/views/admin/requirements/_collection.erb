@@ -1,0 +1,29 @@
+<div class="serializable">
+  <div id="requirement_list">
+    <% form.object.requirements.each do |requirement| %>
+      <%= content_tag(:div,
+            render(
+              :partial  => "admin/requirements/requirement",
+              :locals   => {
+                :requirement  => requirement,
+                :container    => form.object_name
+              }
+            ),
+            :class  => "requirement",
+            :id     => "requirement_#{requirement.object_id}"
+          ) %>
+    <% end %>
+  </div>
+
+  <div class="controls">
+    <b><%= t(".add_requirement") %></b>
+
+    <% Requirements::Base.types.each do |type| %>
+      <%= link_to_remote(t("requirements.#{type.requirement_name}.name"),
+            :url    => new_admin_requirement_path(:type => type.requirement_name, :container => form.object_name),
+            :method => :get,
+            :update => :result
+          ) %>
+    <% end %>
+  </div>
+</div>

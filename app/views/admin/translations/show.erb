@@ -1,9 +1,9 @@
 <%= link_to_remote(h(@translation.value),
-      :url    => edit_admin_translation_url(@translation, :canvas => false),
+      :url    => edit_admin_translation_path(@translation),
       :method => :get,
       :update => translation_id(@translation.key)
     ) %>
 
 <% dom_ready do %>
-  $('<%= translation_id(@translation.key) %>').getParentNode().addClassName('customized')
+  $('#<%= translation_id(@translation.key) %>').parent().addClass('customized');
 <% end %>

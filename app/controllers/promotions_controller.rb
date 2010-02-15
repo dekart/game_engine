@@ -4,7 +4,7 @@ class PromotionsController < ApplicationController
 
     @promotion = Promotion.find(id)
 
-    if @promotion.can_be_received?(current_character, secret)
+    if current_user.admin? or @promotion.can_be_received?(current_character, secret)
       @result = @promotion.promotion_receipts.create(:character => current_character)
     else
       if @promotion.expired?

@@ -17,9 +17,9 @@ class Admin::PropertyTypesController < Admin::BaseController
     @type = PropertyType.new(params[:property_type])
 
     if @type.save
-      redirect_to admin_property_types_url(:canvas => true)
+      redirect_to admin_property_types_path
     else
-      redirect_to new_admin_property_type_url(:property_type => params[:property_type], :canvas => true)
+      render :action => :new
     end
   end
 
@@ -37,9 +37,9 @@ class Admin::PropertyTypesController < Admin::BaseController
     @type = PropertyType.find(params[:id])
 
     if @type.update_attributes(params[:property_type])
-      redirect_to admin_property_types_url(:canvas => true)
+      redirect_to admin_property_types_path
     else
-      redirect_to edit_admin_property_type_url(:property_type => params[:property_type], :canvas => true)
+      render :action => :edit
     end
   end
 
@@ -48,7 +48,7 @@ class Admin::PropertyTypesController < Admin::BaseController
 
     @type.publish if @type.can_publish?
 
-    redirect_to admin_property_types_url
+    redirect_to admin_property_types_path
   end
 
   def hide
@@ -56,7 +56,7 @@ class Admin::PropertyTypesController < Admin::BaseController
 
     @type.hide if @type.can_hide?
 
-    redirect_to admin_property_types_url
+    redirect_to admin_property_types_path
   end
 
   def destroy
@@ -64,6 +64,6 @@ class Admin::PropertyTypesController < Admin::BaseController
 
     @type.mark_deleted if @type.can_mark_deleted?
 
-    redirect_to admin_property_types_url
+    redirect_to admin_property_types_path
   end
 end

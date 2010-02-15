@@ -4,10 +4,8 @@
 
 <%= form.file_field :image, :after_field => (image_tag(form.object.image.url) if form.object.image?) %>
 
-<div class="serializable" id="payout_list">
-  <h2><%= MissionGroup.human_attribute_name("payouts") %></h2>
+<h2><%= MissionGroup.human_attribute_name("payouts") %></h2>
 
-  <%= form.text_field :title %>
+<%= form.text_field :title %>
 
-  <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
-</div>
+<%= render "admin/payouts/collection", :form => form %>

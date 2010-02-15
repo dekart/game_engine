@@ -13,5 +13,5 @@
 <%= character_level_up_block %>
 
 <% dom_ready do %>
-  $('result').show();
+  $(document).trigger('result.received');
 <% end %>

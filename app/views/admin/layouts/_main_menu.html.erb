@@ -1,22 +1,27 @@
 <div id="admin_menu">
+  <%= link_to(t(".home"), root_path, :class => :app) %>
+
   <h2><%= t(".title") %></h2>
 
-  <%= link_to(t(".home"), root_path) %>
-
-  <%= link_to(t(".character_types"), admin_character_types_path) %>
-  <%= link_to(t(".item_groups"), admin_item_groups_path) %>
-  <%= link_to(t(".items"), admin_items_path) %>
-  <%= link_to(t(".mission_groups"), admin_mission_groups_path) %>
-  <%= link_to(t(".missions"), admin_missions_path) %>
-  <%= link_to(t(".bosses"), admin_bosses_path) %>
-  <%= link_to(t(".property_types"), admin_property_types_path) %>
-
-  <%= link_to(t(".statistics"), admin_statistics_path) %>
-  <%= link_to(t(".newsletter"), admin_newsletters_path) %>
-  <%= link_to(t(".promotions"), admin_promotions_path) %>
-  <%= link_to(t(".stylesheets"), admin_stylesheets_path) %>
-  <%= link_to(t(".tips"), admin_tips_path) %>
-  <%= link_to(t(".assets"), admin_assets_path) %>
-  <%= link_to(t(".translations"), admin_translations_path) %>
-  <%= link_to(t(".configurations"), edit_admin_configuration_path(Configuration.current)) %>
+  <%
+    [
+      [:character_types, admin_character_types_path],
+      [:item_groups,     admin_item_groups_path],
+      [:items,           admin_items_path],
+      [:mission_groups,  admin_mission_groups_path],
+      [:missions,        admin_missions_path],
+      [:bosses,          admin_bosses_path],
+      [:property_types,  admin_property_types_path],
+      [:statistics,      admin_statistics_path],
+      [:newsletter,      admin_newsletters_path],
+      [:promotions,      admin_promotions_path],
+      [:stylesheets,     admin_stylesheets_path],
+      [:tips,            admin_tips_path],
+      [:assets,          admin_assets_path],
+      [:translations,    admin_translations_path],
+      [:configurations,  edit_admin_configuration_path(Configuration.current)]
+    ].each do |title, link|
+  %>
+    <%= link_to(t(".#{title}"), link, :target => :admin) %>
+  <% end %>
 </div>

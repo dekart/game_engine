@@ -1,6 +1,6 @@
 <%= title(t(".title")) %>
 
-<% form_for [:admin, @group], :url => admin_mission_group_url(@group, :canvas => false), :html => {:multipart => true} do |form| %>
+<% form_for [:admin, @item], :html => {:multipart => true} do |form| %>
   <%= render :partial => "form_fields", :locals => {:form => form} %>
 
   <%= submit_tag t(".submit") %>
