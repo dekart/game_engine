@@ -33,7 +33,7 @@
               ) %>
         </div>
 
-        <% content_for :script do %>
+        <% dom_ready do %>
           Timer.start('boss_fight_time_left', <%= fight.time_left %>, function(){
             <%= remote_function(
                   :url    => boss_fight_url(fight, :canvas => false),

@@ -48,6 +48,6 @@ class Admin::AssetsController < Admin::BaseController
 
     @asset.destroy
 
-    redirect_to :action => :index
+    redirect_to admin_assets_path
   end
 end

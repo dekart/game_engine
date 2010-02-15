@@ -1,20 +1,16 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def hide_block_link(id)
-    content_tag(:form, hidden_field_tag(:block, id), :id => "#{id}_hide") +
-    link_to(t("blocks.hide"), hide_block_user_path(current_user),
-      :clickrewriteid   => id,
-      :clickrewriteurl  => hide_block_user_url(current_user, :canvas => false),
-      :clickrewriteform => "#{id}_hide",
-      :clicktohide      => id,
-
-      :class  => :hide
+    link_to_remote(t("blocks.hide"),
+      :url    => hide_block_user_path(current_user, :block => id),
+      :before => "$('##{id}').hide()",
+      :html   => {:class => :hide}
     )
   end
   safe_helper :hide_block_link
 
   def title(text)
-    fb_title(text) + content_tag(:h1, text, :class => :title)
+    content_tag(:h1, text, :class => :title)
   end
   safe_helper :title
 
@@ -23,7 +19,7 @@ module ApplicationHelper
   end
 
   def admin_only(&block)
-    if in_canvas? && current_user && current_user.admin?
+    if current_user && current_user.admin?
       concat(capture(&block))
     end
   end
@@ -103,8 +99,31 @@ module ApplicationHelper
   safe_helper :percentage_bar
 
   def dom_ready(&block)
-    concat(
-      javascript_tag("$(function(){#{capture(&block)}});")
-    )
+    @dom_ready ||= []
+    
+    if block_given?
+      @dom_ready << capture(&block)
+    else
+      javascript_tag("$(function(){ #{ @dom_ready.join("\n") } });")
+    end
+  end
+
+  def google_analytics
+    if Configuration[:app_google_analytics_id].present?
+      %{
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', '#{ Configuration[:app_google_analytics_id] }']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script');
+            ga.src = 'http://www.google-analytics.com/ga.js';
+            ga.setAttribute('async', 'true');
+            document.documentElement.firstChild.appendChild(ga);
+          })();
+        </script>
+      }.html_safe!
+    end
   end
 end

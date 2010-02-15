@@ -38,10 +38,10 @@
 
             <%= link_to(button(:continue), new_fight_path, :class => "button continue") %>
 
-            <% content_for :script do %>
-              Inventory.onPurchase = function(){
+            <% dom_ready do %>
+              $(document).bind('item.purchase', function(){
                 <%= reload_tutorial %>
-              }
+              });
             <% end %>
           <% else %>
             <%= link_to(t(".step_2.title"), items_path) %> <%= completed_mark %>
@@ -58,7 +58,7 @@
 
             <%= link_to(button(:continue), upgrade_character_path(:current), :class => "button continue") %>
 
-            <% content_for :script do %>
+            <% dom_ready do %>
               Character.onNewLevel = function(){
                 <%= reload_tutorial %>
               }
@@ -78,7 +78,7 @@
 
             <%= link_to(button(:continue), invite_users_path, :class => "button continue") %>
             
-            <% content_for :script do %>
+            <% dom_ready do %>
               Character.onUpgradeCompleteWithoutTutorial = Character.onUpgradeComplete;
 
               Character.onUpgradeComplete = function(){

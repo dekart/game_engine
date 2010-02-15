@@ -38,7 +38,7 @@
 </table>
 
 <% unless fight.cause %>
-  <% content_for :script do %>
-    Fight.hideVictim(<%= @victim.id %>);
+  <% dom_ready do %>
+    $('#<%= dom_id(@victim) %>').hide();
   <% end %>
 <% end %>

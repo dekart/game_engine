@@ -1,13 +1,5 @@
 <%= title(t(".title")) %>
 
-<% if @sent_invitations and @sent_invitations.any? %>
-  <% content_for :result do %>
-    <div id="invitation_result">
-      <p><%= t(".success_message", :amount => @sent_invitations.size) %></p>
-    </div>
-  <% end %>
-<% end %>
-
 <% content_for :invite_message do %>
   <%= raw t(".invite.message",
         :user     => fb_name(current_user, :linked => :false),
@@ -23,7 +15,7 @@
             :firstnameonly  => true
           )
         ),
-        character_url(current_character, :reference => :invite_form_profile)
+        character_url(current_character, :canvas => true, :reference => :invite_form_profile)
       ) %>
 
   <%= fb_custom_req_choice(
@@ -34,7 +26,7 @@
             :firstnameonly  => true
           )
         ),
-        invitation_url(current_character.invitation_key, :reference => :invite_form_accept)
+        invitation_url(current_character.invitation_key, :canvas => true, :reference => :invite_form_accept)
       ) %>
 <% end %>
 
@@ -42,26 +34,26 @@
 
 <%= render "relations/note" %>
 
+<div class="invitation_type">
+  <h2><%= t(".request.title") %></h2>
+
+  <p><%= t(".invite.note") %></p>
+
+  <% fb_serverfbml do %>
+    <% fb_request_form(t(".invite.title"), :invite_message, invite_users_url(:from_selector => true), :target => :_top) do %>
+      <%= fb_multi_friend_selector("choose friends",
+            :exclude_ids => (
+               current_user.invitations.facebook_ids +
+               current_character.friend_relations.facebook_ids
+            ).uniq.join(",")
+          ) %>
+    <% end %>
+  <% end %>
+</div>
+
 <table id="invitation_form" cellspacing="0" cellpadding="0">
   <tr>
     <td id="request_invitation">
-      <div class="invitation_type">
-        <h2><%= t(".request.title") %></h2>
-
-        <p><%= t(".invite.note") %></p>
-        
-        <% fb_request_form(t(".invite.title"), :invite_message, invite_users_path(:from_selector => true)) do %>
-          <%= fb_multi_friend_selector_condensed(
-                :exclude_ids => (
-                   current_user.invitations.facebook_ids +
-                   current_character.friend_relations.facebook_ids
-                ).uniq.join(",")
-              ) %>
-
-          <%= fb_request_form_submit %>
-        <% end %>
-      </div>
-
       <div class="invitation_type">
         <h2><%= t(".publish.title") %></h2>
 
@@ -91,12 +83,14 @@
         
         <p><%= t(".chat.note") %></p>
 
+        <% fb_serverfbml do %>
         <%= fb_chat_invite(
               t(".chat.invitation",
                 :app  => t("app_name"),
                 :link => invitation_url(current_character.invitation_key, :reference => :invite_chat)
               )
             ) %>
+        <% end %>
       </div>
     </td>
   </tr>

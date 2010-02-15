@@ -6,7 +6,7 @@ class PropertiesController < ApplicationController
     
     @property = current_character.properties.buy!(@property_type, @amount)
 
-    @properties = current_character.properties
+    @properties = current_character.properties(true)
     
     render :action => :create, :layout => "ajax"
   end

@@ -3,7 +3,7 @@
     <% content_tag_for(:tr, fight) do %>
       <td class="attacker"><%= character_picture_link(fight.attacker) %></td>
       <td class="description">
-        <div class="time"><%= fb_time(fight.created_at) %>:</div>
+        <div class="time"><%= l(fight.created_at, :format => :short) %>:</div>
         <div><%= fight_description(fight) %></div>
 
         <div class="controls">

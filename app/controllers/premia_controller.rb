@@ -31,6 +31,6 @@ class PremiaController < ApplicationController
       flash[:error] = t("premia.update.messages.failure")
     end
 
-    redirect_to :action => :show
+    redirect_to premium_path
   end
 end

@@ -5,14 +5,15 @@ class FightsController < ApplicationController
       :limit => Configuration[:fight_victim_show_limit]
     )
 
+    # FIXME Friend list should be gathered separately by AJAX request or background API request
     # Insert random non-registered friends
-    if current_character.allow_fight_with_invite? and facebook_params["friends"].any?
-      (@victims.size / 3 + 1).times do |i|
-        random_id = facebook_params["friends"][rand(facebook_params["friends"].size)]
-
-        @victims.insert(i * @victims.size / 3, random_id) unless User.find_by_facebook_id(random_id)
-      end
-    end
+#    if current_character.allow_fight_with_invite? and facebook_params["friends"].any?
+#      (@victims.size / 3 + 1).times do |i|
+#        random_id = facebook_params["friends"][rand(facebook_params["friends"].size)]
+#
+#        @victims.insert(i * @victims.size / 3, random_id) unless User.find_by_facebook_id(random_id)
+#      end
+#    end
   end
 
   def create

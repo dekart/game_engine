@@ -1,30 +1,4 @@
-var root_url;
 
-extend_instance(Element, {
-  by_class: function(name){
-    var result = [];
-    var children = this.getChildNodes()
-
-    for(i=0; i < children.length; i++){
-      if(children[i].hasClassName(name)){
-        extend_instance(children[i], Element);
-        result.push(children[i])
-      }
-    }
-    return result;
-  },
-  by_tag: function(tag){
-    var result = [];
-    var children = this.getChildNodes();
-    for(i=0; i < children.length; i++){
-      if(children[i].getTagName() == tag){
-        extend_instance(children[i], Element);
-        result.push(children[i])
-      }
-    }
-    return result;
-  }
-})
 
 var Spinner = {
   hide: function(){

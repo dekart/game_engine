@@ -675,7 +675,7 @@ module Facebooker
       # Meant to be used for a Facebook Connect site or an iframe application
       def fb_serverfbml(options={},&proc)
         inner = capture(&proc)
-        versioned_concat(content_tag("fb:serverfbml",inner,options), proc.binding)
+        versioned_concat(content_tag("fb:serverfbml", content_tag(:script, inner, :type => "text/fbml"),options), proc.binding)
       end
 
       def fb_container(options={},&proc)

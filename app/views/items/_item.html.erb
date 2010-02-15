@@ -19,7 +19,7 @@
             ) %>
       </div>
 
-      <% content_for :script do %> 
+      <% dom_ready do %>
         Timer.start('<%= dom_id(item, :timer) %>', <%= item.time_left %>)
       <% end %>
     <% end %>
@@ -43,7 +43,7 @@
       <%= link_to_remote(button(:buy),
             :url    => inventories_url(:item_id => item.id, :canvas => false),
             :update => :result,
-            :with   => "this.getParentNode().serialize()",
+            :with   => "$(this).parent('form').serialize()",
             :html   => {:class => "buy button"}
           ) %>
     <% end %>

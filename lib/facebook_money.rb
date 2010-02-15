@@ -31,14 +31,14 @@ module FacebookMoney
 
       def html_code(template, options = {})
         default_options = {
-          :src          => "http://www.superrewards-offers.com/super/offers?h=#{ FacebookMoney.config["key"] }",
+          :src          => "http://www.superrewards-offers.com/super/offers?h=#{ FacebookMoney.config["key"] }&uid=#{template.current_user.facebook_id}",
           :frameborder  => 0,
           :width        => 728,
           :height       => 2700,
           :scrolling    => :no
         }
 
-        template.content_tag("fb:iframe", "", default_options.merge(options))
+        template.content_tag("iframe", "", default_options.merge(options))
       end
 
       def success_code
@@ -75,7 +75,7 @@ module FacebookMoney
           :height       => 1750
         }
 
-        template.content_tag("fb:iframe", "", default_options.merge(options))
+        template.content_tag("iframe", "", default_options.merge(options))
       end
 
       def success_code
@@ -114,7 +114,7 @@ module FacebookMoney
           :height       => 1750
         }
 
-        template.content_tag("fb:iframe", "", default_options.merge(options))
+        template.content_tag("iframe", "", default_options.merge(options))
       end
 
       def success_code

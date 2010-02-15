@@ -25,7 +25,7 @@ class Admin::ItemGroupsController < Admin::BaseController
     @group = ItemGroup.find(params[:id])
 
     if @group.update_attributes(params[:item_group])
-      redirect_to :action => :index
+      redirect_to admin_item_groups_path
     else
       render :action => :edit
     end
@@ -65,6 +65,6 @@ class Admin::ItemGroupsController < Admin::BaseController
       @group.move_lower
     end
 
-    redirect_to :action => :index
+    redirect_to admin_item_groups_path
   end
 end

@@ -24,12 +24,9 @@
   <% end %>
 </div>
 
-<% fb_js_string :list do %>
-  <%= render :partial => "list", :locals => {:properties => @properties} %>
-<% end %>
-
-<% content_for :script do %>
-  $('property_list').setInnerFBML(list);
-  $('property_income_value').setTextValue('<%= number_to_currency(current_character.property_income) %>')
-  $('result').show();
+<% dom_ready do %>
+  $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
+  $('#property_income_value').text('<%= number_to_currency(current_character.property_income) %>');
+  
+  $(document).trigger('result.received');
 <% end %>

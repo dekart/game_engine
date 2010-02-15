@@ -4,6 +4,6 @@
       :update => translation_id(@translation.key)
     ) %>
 
-<% content_for :script do %>
+<% dom_ready do %>
   $('<%= translation_id(@translation.key) %>').getParentNode().addClassName('customized')
 <% end %>

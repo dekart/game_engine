@@ -43,7 +43,7 @@
                   <%= link_to_remote(button(:sell, :price => number_to_currency(inventory.sell_price)),
                         :url    => inventory_url(inventory.item, :canvas => false),
                         :method => :delete,
-                        :with   => "this.getParentNode().serialize()",
+                        :with   => "$(this).parent('form').serialize()",
                         :update => :result,
                         :html   => {:class => "sell button"}
                       ) %>

@@ -36,20 +36,20 @@
 </div>
 
 <% if @mission_groups %>
-  <% mission_group_list = capture do %>
-    <%= render("mission_groups/tabs",
-          :groups   => @mission_groups,
-          :current  => current_character.mission_groups.current
-        ) %>
-  <% end %>
-
-  <% content_for :script do %>
-    $('#mission_group_list').html('<%= escape_javascript(mission_group_list) %>');
+  <% dom_ready do %>
+    $('#mission_group_list').
+      html('<%=
+        escape_javascript(
+          render("mission_groups/tabs",
+            :groups   => @mission_groups,
+            :current  => current_character.mission_groups.current
+          )
+        ) %>');
   <% end %>
 <% end %>
 
 <%= character_level_up_block %>
 
-<% content_for :script do %>
-  $('#result').show();
+<% dom_ready do %>
+  $(document).trigger('result.received');
 <% end %>

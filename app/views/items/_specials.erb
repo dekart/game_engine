@@ -36,7 +36,7 @@
                 ) %>
           </div>
 
-          <% content_for :script do %>
+          <% dom_ready do %>
             Timer.start('<%= dom_id(item, :timer) %>', <%= item.time_left %>)
           <% end %>
         <% end %>

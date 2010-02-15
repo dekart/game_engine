@@ -47,7 +47,11 @@ class UsersController < ApplicationController
             @sent_invitations << invitation unless invitation.new_record?
           end
         end
+
+        flash[:success] = t("users.invite.success_message", :amount => @sent_invitations.size)
       end
+
+      redirect_to invite_users_url(:canvas => true)
     elsif params[:from_selector]
       redirect_to landing_url
     else

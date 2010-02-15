@@ -16,9 +16,9 @@
             <%= select_tag(:placement, options_for_select(inventory.placement_options_for_select)) %>
 
             <%= link_to_remote(button(:equip),
-                  :url    => equip_inventory_url(inventory, :canvas => false),
+                  :url    => equip_inventory_path(inventory),
                   :update => :result,
-                  :with   => "this.getParentNode().serialize()",
+                  :with   => "$(this).parent('form').serialize()",
                   :html   => {:class => "equip button"}
                 ) %>
           <% end %>
