@@ -1,0 +1,58 @@
+// Top header
+
+#header
+  border-bottom = !header_border
+
+
+
+// Logo image
+
+#logo
+  float: left
+  display: block
+  background:
+    color: transparent
+    repeat: no-repeat
+    image = !logo_image
+  width = !logo_width
+  height = !logo_height
+
+
+
+// Tip block in the header
+
+#tip
+  padding: 10px
+  text-align: center
+  border-top = !tip_border
+
+  .label
+    font-weight: bold
+    color = !label_color
+
+
+// AJAX spinner displayed when loading data from server
+
+#spinner
+  position: absolute
+  top: 240px
+  left: 300px
+  width: 150px
+  height: 50px
+  padding: 5px
+  z-index: 1000
+  background:
+    color = !body_bg_color
+  border = !main_border
+
+  img
+    float: left
+    margin-right: 10px
+    margin-left: -1px
+
+  #top_field
+    width: 1px
+    height: 1px
+    border: 0px
+    background-color: transparent
+    float: left

@@ -1,0 +1,125 @@
+#mission_group_list
+  border-top: 1px solid #d0d0d0
+  border-bottom: 1px solid #d0d0d0
+
+  table
+    width: 100%
+
+  .mission_group
+    text-align: center
+    padding: 5px
+
+  .current
+    font-weight: bold
+    background-color: #e8ebf3
+
+  .name
+    font-size: 14px
+
+  .level
+    padding-top: 3px
+
+
+#mission_list
+  th
+    padding: 10px 0px
+    border-bottom: 1px solid #d0d0d0
+
+  .mission_group
+    font-size: 16px
+    color: #3B5998
+    font-weight: bold
+
+  td
+    padding: 10px 0px
+    border-bottom: 1px solid #e7e7e7
+
+    &.image img
+      margin-right: 10px
+
+  .details
+    padding-right: 10px
+
+    .name
+      font-size: 14px
+      margin-bottom: 5px
+      font-weight: bold
+
+  .payout_preview, .requirements
+    padding-right: 10px
+
+  .progress
+    .progress_bar
+      width: 100px
+
+    .completed
+      height: 10px
+      background-image: url(asset:progress_completed)
+
+  .controls a span
+    background-image: url(asset:icons_missions)
+
+
+#locked_mission_group
+  margin-top: 30px
+
+  p
+    border: 1px solid #d0d0d0
+    padding: 10px
+
+  .level
+    font-size: 14px
+    font-weight: bold
+
+#mission_result
+  padding: 0px 30px
+  background: url(asset:icons_missions) 5px 0px no-repeat
+
+  .spent
+    b
+      width: 55px
+
+    .zero
+      .value
+        font-weight: bold
+        color: green
+        font-size: 14px
+
+      .relation
+        padding-left: 10px
+
+  .title
+    line-height: 22px
+    padding-left: 23px
+    background: url(asset:icons_level) center left no-repeat
+    font-size: 14px
+    margin-bottom: 15px
+
+  .fulfill_again
+    width: 120px
+
+    span
+      background-image: url(asset:icons_missions)
+
+  .request_help
+    width: 230px
+
+    span
+      background-image: url(asset:icons_alliance)
+
+  .progress
+    .progress_bar
+      width: 100px
+
+    .completed
+      height: 10px
+      background-image: url(asset:progress_completed)
+
+  .child_missions
+    margin: 15px 0
+
+    .child
+      line-height: 22px
+      padding-left: 23px
+      background: url(asset:icons_missions) center left no-repeat
+      margin-bottom: 15px

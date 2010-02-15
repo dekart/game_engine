@@ -23,7 +23,7 @@
     <% end %>
   </div>
 <% else %>
-  <div class="empty_set" id="next_mission_group">
+  <div class="empty_set" id="locked_mission_group">
     <%= raw t(".locked_group",
           :level => content_tag(:span, @mission_group.level, :class => :level)
         ) %>
