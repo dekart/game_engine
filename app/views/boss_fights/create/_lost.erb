@@ -41,5 +41,5 @@
 </table>
 
 <% dom_ready do %>
-  BossFight.hideReminder('<%= dom_id(fight) %>')
+  $(document).trigger('boss.lost', <%= fight.id %>)
 <% end %>

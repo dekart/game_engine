@@ -13,13 +13,13 @@
       <td class="key"><%= key.gsub(/\./, " ") %></td>
       <% content_tag(:td, :id => translation_id(key), :class => :value) do %>
         <%= link_to_remote(h(value),
-              :url    => customization ? edit_admin_translation_url(customization, :canvas => false) : new_admin_translation_url(:key => key, :canvas => false),
+              :url    => customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key),
               :method => :get,
               :update => translation_id(key)
             ) %>
       <% end %>
       <td class="controls">
-        <%= link_to(t(".controls.delete"), admin_translation_url(customization),
+        <%= link_to(t(".controls.delete"), admin_translation_path(customization),
               :method   => :delete,
               :confirm  => t(".controls.delete_confirm")
             ) if customization %>

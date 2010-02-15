@@ -9,49 +9,7 @@ var Spinner = {
   }
 }
 
-var Character = {
-  onNewLevel: function(){},
-  onUpgradeComplete: function(){},
 
-  setCharacterType: function(id){
-    var previous_id = $('character_character_type_id').getValue()
-    var previous    = $('character_type_' + previous_id);
-    if(previous) previous.removeClassName('selected');
-
-    var previous_description = $('description_character_type_' + previous_id);
-    if(previous_description) previous_description.hide();
-
-    $('character_character_type_id').setValue(id);
-
-    $('character_type_' + id).addClassName('selected');
-
-    if($('description_character_type_' + id)){
-      $('description_character_type_' + id).show();
-    }
-  }
-}
-
-var Mission = {
-  onComplete: function(){}
-}
-
-var Fight = {
-  hideVictim: function(id){
-    if($('character_' + id)){
-      $('character_' + id).hide();
-    }
-  },
-  hideCauseRespond: function(id){
-    if($('respond_fight_' + id)){
-      $('respond_fight_' + id).hide();
-    }
-  }
-}
-
-
-var Inventory = {
-  onPurchase: function(){}
-}
 
 var HelpRequest = {
   create: function(context_id, context_type){
@@ -63,15 +21,3 @@ var HelpRequest = {
     });
   }
 };
-
-var BossFight = {
-  hideReminder: function(id){
-    if($('boss_fight_block')){
-      $('boss_fight_block').removeChild($(id));
-
-      if($('boss_fight_block').by_class('boss_fight').length == 0){
-        $('boss_fight_block').hide();
-      }
-    }
-  }
-}

@@ -21,32 +21,32 @@ class Admin::TranslationsController < Admin::BaseController
 
     @current_value = translations_to_array(I18n.backend.send(:translations)[I18n.locale]).assoc(params[:key]).last
 
-    render :action => :new, :layout => false
+    render :action => :new, :layout => :ajax_layout
   end
 
   def create
     @translation = Translation.new(params[:translation])
 
     if @translation.save
-      render :action => :show, :layout => false
+      render :action => :show, :layout => :ajax_layout
     else
-      render :action => :new, :layout => false
+      render :action => :new, :layout => :ajax_layout
     end
   end
 
   def edit
     @translation = Translation.find(params[:id])
 
-    render :action => :edit, :layout => false
+    render :action => :edit, :layout => :ajax_layout
   end
 
   def update
     @translation = Translation.find(params[:id])
 
     if @translation.update_attributes(params[:translation])
-      render :action => :show, :layout => false
+      render :action => :show, :layout => :ajax_layout
     else
-      render :action => :edit, :layout => false
+      render :action => :edit, :layout => :ajax_layout
     end
   end
 

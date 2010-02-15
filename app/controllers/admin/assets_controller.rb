@@ -17,9 +17,9 @@ class Admin::AssetsController < Admin::BaseController
     @asset = Asset.new(params[:asset])
 
     if @asset.save
-      redirect_to admin_assets_url(:canvas => true)
+      redirect_to admin_assets_path
     else
-      redirect_to new_admin_asset_url(:asset => params[:asset], :canvas => true)
+      render :action => :new
     end
   end
 
@@ -37,9 +37,9 @@ class Admin::AssetsController < Admin::BaseController
     @asset = Asset.find(params[:id])
 
     if @asset.update_attributes(params[:asset])
-      redirect_to admin_assets_url(:canvas => true)
+      redirect_to admin_assets_path
     else
-      redirect_to edit_admin_asset_url(:asset => params[:asset], :canvas => true)
+      render :action => :edit
     end
   end
 

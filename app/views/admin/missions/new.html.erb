@@ -2,7 +2,7 @@
 
 <%= render :partial => "controls" %>
 
-<% form_for [:admin, @mission], :url => admin_missions_url(:canvas => false), :html => {:multipart => true} do |form| %>
+<% form_for [:admin, @mission], :html => {:multipart => true} do |form| %>
   <%= render :partial => "form_fields", :locals => {:form => form} %>
 
   <%= submit_tag t(".submit") %>

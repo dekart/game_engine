@@ -29,9 +29,9 @@ class Admin::MissionsController < Admin::BaseController
     @mission = Mission.new(params[:mission])
 
     if @mission.save
-      redirect_to admin_missions_url(:canvas => true)
+      redirect_to admin_missions_path
     else
-      redirect_to new_admin_mission_url(:mission => params[:mission], :canvas => true)
+      render :action => :new
     end
   end
 
@@ -49,9 +49,9 @@ class Admin::MissionsController < Admin::BaseController
     @mission = Mission.find(params[:id])
 
     if @mission.update_attributes(params[:mission].reverse_merge(:requirements => nil, :payouts => nil))
-      redirect_to admin_missions_url(:canvas => true)
+      redirect_to admin_missions_path
     else
-      redirect_to edit_admin_mission_url(:mission => params[:mission], :canvas => true)
+      render :action => :edit
     end
   end
 

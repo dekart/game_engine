@@ -120,8 +120,24 @@ var Timer = {
   }
 };
 
-var Fight = {
+var BossFight = {
+  onWin: function(event, fight_id){
+    BossFight.hide_reminder(fight_id);
+  },
   
+  onLose: function(event, fight_id){
+    BossFight.hide_reminder(fight_id);
+  },
+
+  onExpire: function(event, fight_id){
+    BossFight.hide_reminder(fight_id);
+  },
+
+  hide_reminder: function(fight_id){
+    $('#boss_fight_' + fight_id).hide();
+
+    $('#boss_fight_block:empty').hide();
+  }
 }
 
 FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){

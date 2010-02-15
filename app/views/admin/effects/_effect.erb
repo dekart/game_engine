@@ -1,12 +1,8 @@
-<div class="effect" id="<%= effect.object_id %>">
+<div class="effect" id="effect_<%= effect.object_id %>">
   <div class="<%= effect.name %> serializable_item">
     <%= hidden_field_tag("#{container}[effects][effect_#{effect.object_id}][type]", effect.name) %>
 
-    <%= link_to_function(
-          t(".remove"),
-          "$('effect_list').removeChild($('effect_#{effect.id}'))",
-          :class => :remove
-        ) %>
+    <%= link_to_function(t(".remove"), "$('#effect_#{effect.id}').remove()", :class => :remove) %>
 
     <%= render(
           :partial  => "admin/effects/form_fields/#{effect.name}",

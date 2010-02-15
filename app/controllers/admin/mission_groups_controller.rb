@@ -11,9 +11,9 @@ class Admin::MissionGroupsController < Admin::BaseController
     @group = MissionGroup.new(params[:mission_group])
 
     if @group.save
-      redirect_to admin_mission_groups_url(:canvas => true)
+      redirect_to admin_mission_groups_path
     else
-      new_admin_mission_group_url(:mission_group => params[:mission_group], :canvas => true)
+      render :action => :new
     end
   end
 
@@ -25,9 +25,9 @@ class Admin::MissionGroupsController < Admin::BaseController
     @group = MissionGroup.find(params[:id])
 
     if @group.update_attributes(params[:mission_group])
-      redirect_to admin_mission_groups_url(:canvas => true)
+      redirect_to admin_mission_groups_path
     else
-      edit_admin_mission_group_url(@group, :mission_group => params[:mission_group], :canvas => true)
+      render :action => :edit
     end
   end
 
@@ -36,7 +36,7 @@ class Admin::MissionGroupsController < Admin::BaseController
 
     @group.publish if @group.can_publish?
 
-    redirect_to admin_mission_groups_url
+    redirect_to admin_mission_groups_path
   end
 
   def hide
@@ -44,7 +44,7 @@ class Admin::MissionGroupsController < Admin::BaseController
 
     @group.hide if @group.can_hide?
 
-    redirect_to admin_mission_groups_url
+    redirect_to admin_mission_groups_path
   end
 
   def destroy
@@ -52,6 +52,6 @@ class Admin::MissionGroupsController < Admin::BaseController
 
     @group.mark_deleted if @group.can_mark_deleted?
 
-    redirect_to admin_mission_groups_url
+    redirect_to admin_mission_groups_path
   end
 end

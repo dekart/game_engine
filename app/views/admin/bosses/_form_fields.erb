@@ -14,18 +14,14 @@
 
 <%= form.check_box :repeatable %>
 
-<div class="serializable" id="requirement_list">
-  <h2><%= Boss.human_attribute_name("requirements") %></h2>
+<h2><%= Boss.human_attribute_name("requirements") %></h2>
 
-  <%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>
+<%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>
 
-  <%= render :partial => "admin/requirements/collection", :locals => {:form => form} %>
-</div>
+<%= render "admin/requirements/collection", :form => form %>
 
-<div class="serializable" id="payout_list">
-  <h2><%= Boss.human_attribute_name("payouts") %></h2>
+<h2><%= Boss.human_attribute_name("payouts") %></h2>
 
-  <%= form.text_field :experience, :required => true, :size => 6, :autocomplete => :off %>
+<%= form.text_field :experience, :required => true, :size => 6, :autocomplete => :off %>
 
-  <%= render :partial => "admin/payouts/collection", :locals => {:form => form} %>
-</div>
+<%= render "admin/payouts/collection", :form => form %>

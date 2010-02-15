@@ -1,17 +1,7 @@
-<% fb_js_string :payout_fields do %>
-  <%= render("admin/payouts/payout",
-        :payout     => @payout,
-        :container  => @container
-      ) %>
-<% end %>
-
 <% dom_ready do %>
-  var new_payout = document.createElement("div");
-
-  new_payout.
-    setId('payout_<%= @payout.object_id %>').
-    setClassName("payout").
-    setInnerFBML(payout_fields);
-
-  $('payout_list').appendChild(new_payout)
+  $('#payout_list').append('<%=
+    escape_javascript(
+      render("admin/payouts/payout", :payout => @payout, :container => @container)
+    )
+  %>');
 <% end %>

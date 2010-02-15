@@ -19,9 +19,9 @@ class Admin::BossesController < Admin::BaseController
     @boss = Boss.new(params[:boss])
 
     if @boss.save
-      redirect_to admin_bosses_url(:canvas => true)
+      redirect_to admin_bosses_path
     else
-      redirect_to new_admin_boss_url(:boss => params[:boss], :canvas => true)
+      render :action => :new
     end
   end
 
@@ -39,9 +39,9 @@ class Admin::BossesController < Admin::BaseController
     @boss = Boss.find(params[:id])
 
     if @boss.update_attributes(params[:boss].reverse_merge(:requirements => nil, :payouts => nil))
-      redirect_to admin_bosses_url(:canvas => true)
+      redirect_to admin_bosses_path
     else
-      redirect_to edit_admin_boss_url(:boss => params[:boss], :canvas => true)
+      render :action => :edit
     end
   end
 

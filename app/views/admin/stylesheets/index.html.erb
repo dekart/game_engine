@@ -43,7 +43,7 @@
 <% end %>
 
 <div class="controls">
-  <%= link_to(t(".controls.default"), source_stylesheet_url(:default, :format => :css, :canvas => false)) %>
+  <%= link_to(t(".controls.default"), source_stylesheet_path(:default, :format => :css)) %>
 </div>
 
 <% form_tag log_admin_stylesheet_path(:default) do %>
