@@ -35,7 +35,7 @@
         
           <%= link_to_remote(button(:buy),
                 :url    => properties_url(:property_type_id => type.id, :canvas => false),
-                :with   => "this.getParentNode().serialize()",
+                :with   => "$(this).parent('form').serialize()",
                 :update => :result,
                 :html   => {:class => "buy button"}
               ) %>
@@ -47,7 +47,7 @@
         
             <%= link_to_remote(button(:sell, :price => property.sell_price),
                   :url    => property_url(type, :canvas => false),
-                  :with   => "this.getParentNode().serialize()",
+                  :with   => "$(this).parent('form').serialize()",
                   :method => :delete,
                   :update => :result,
                   :html   => {:class => "sell button"}

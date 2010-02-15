@@ -14,7 +14,7 @@ development:
   secret_key: 9112b45e52241e49d58b2e0500a629ce
   adapter: "FacebookIframeAdapter"
   canvas_page_name: sword-dev
-  callback_url: http://itvektor.ru:3300
+  callback_url: http://fb.itvektor.ru
   pretty_errors: false
   set_asset_host_to_callback_url: true
   tunnel:

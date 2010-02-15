@@ -44,7 +44,7 @@
   <% end %>
 </fb:js-string>
 
-<% content_for :script do %>
+<% dom_ready do %>
   function setAssignmentRelation(id){
     if($('new_assignment').selectedRelation){
       $('new_assignment').selectedRelation.removeClassName('selected');

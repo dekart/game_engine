@@ -22,6 +22,6 @@
   </tr>
 </table>
 
-<% content_for :script do %>
+<% dom_ready do %>
   BossFight.hideReminder('<%= dom_id(fight) %>')
 <% end %>

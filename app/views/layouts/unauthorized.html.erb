@@ -1,10 +1,16 @@
-<fb:fbml>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+  <script>
+    var facebook_api_key = '<%= Facebooker.facebooker_config["api_key"] %>';
+  </script>
   <%= editable_stylesheet_link %>
 
-  <%= fb_connect_javascript_tag %>
+  <%= raw fb_connect_javascript_tag %>
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
-  <%= javascript_include_tag "application" %>
-
+  <%= javascript_include_tag "jrails", "application" %>
+</head>
+<body>
   <div id="content">
     <div id="header" class="clearfix">
       <%= link_to("&nbsp;", root_path, :id => :logo) %>
@@ -13,7 +19,10 @@
     <%= yield %>
   </div>
 
-  <script><%= yield :script %></script>
+  <!-- Smart resizing hack --><div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div><!-- /Smart resizing hack -->
 
-  <%= fb_google_analytics(Configuration[:app_google_analytics_id]) unless Configuration[:app_google_analytics_id].blank? %>
-</fb:fbml>
+  <%= dom_ready %>
+
+  <%= google_analytics %>
+</body>
+</html>

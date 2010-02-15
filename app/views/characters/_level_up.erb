@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<% content_for :script do %>
+<% dom_ready do %>
   Character.onNewLevel();
 
   <%= character_level_up_stream_dialog %>

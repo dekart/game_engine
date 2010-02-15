@@ -1,24 +1,22 @@
-<% admin_only do %>
-  <div id="admin_menu">
-    <h2><%= t(".title") %></h2>
+<div id="admin_menu">
+  <h2><%= t(".title") %></h2>
 
-    <%= link_to(t(".home"), root_path) %>
-    
-    <%= link_to(t(".character_types"), admin_character_types_path) %>
-    <%= link_to(t(".item_groups"), admin_item_groups_path) %>
-    <%= link_to(t(".items"), admin_items_path) %>
-    <%= link_to(t(".mission_groups"), admin_mission_groups_path) %>
-    <%= link_to(t(".missions"), admin_missions_path) %>
-    <%= link_to(t(".bosses"), admin_bosses_path) %>
-    <%= link_to(t(".property_types"), admin_property_types_path) %>
+  <%= link_to(t(".home"), root_path) %>
 
-    <%= link_to(t(".statistics"), admin_statistics_path) %>
-    <%= link_to(t(".newsletter"), admin_newsletters_path) %>
-    <%= link_to(t(".promotions"), admin_promotions_path) %>
-    <%= link_to(t(".stylesheets"), admin_stylesheets_path) %>
-    <%= link_to(t(".tips"), admin_tips_path) %>
-    <%= link_to(t(".assets"), admin_assets_path) %>
-    <%= link_to(t(".translations"), admin_translations_path) %>
-    <%= link_to(t(".configurations"), edit_admin_configuration_path(Configuration.current)) %>
-  </div>
-<% end %>
+  <%= link_to(t(".character_types"), admin_character_types_path) %>
+  <%= link_to(t(".item_groups"), admin_item_groups_path) %>
+  <%= link_to(t(".items"), admin_items_path) %>
+  <%= link_to(t(".mission_groups"), admin_mission_groups_path) %>
+  <%= link_to(t(".missions"), admin_missions_path) %>
+  <%= link_to(t(".bosses"), admin_bosses_path) %>
+  <%= link_to(t(".property_types"), admin_property_types_path) %>
+
+  <%= link_to(t(".statistics"), admin_statistics_path) %>
+  <%= link_to(t(".newsletter"), admin_newsletters_path) %>
+  <%= link_to(t(".promotions"), admin_promotions_path) %>
+  <%= link_to(t(".stylesheets"), admin_stylesheets_path) %>
+  <%= link_to(t(".tips"), admin_tips_path) %>
+  <%= link_to(t(".assets"), admin_assets_path) %>
+  <%= link_to(t(".translations"), admin_translations_path) %>
+  <%= link_to(t(".configurations"), edit_admin_configuration_path(Configuration.current)) %>
+</div>

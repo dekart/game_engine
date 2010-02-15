@@ -26,7 +26,7 @@
   <%= render :partial => "list", :locals => {:inventories => current_character.inventories} %>
 <% end %>
 
-<% content_for :script do %>
+<% dom_ready do %>
   $('result').show();
   $('inventory_list').setInnerFBML(list);
 <% end %>

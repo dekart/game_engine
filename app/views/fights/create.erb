@@ -14,10 +14,10 @@
 
 <%= character_level_up_block %>
 
-<% content_for :script do %>
+<% dom_ready do %>
   <% if @fight.cause %>
-    Fight.hideCauseRespond(<%= @fight.cause.id %>);
+    $('#<%= dom_id(@fight.cause, :respond) %>').hide();
   <% end %>
 
-  $('result').show();
+  $(document).trigger('result.received');
 <% end %>

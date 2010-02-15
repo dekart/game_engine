@@ -26,24 +26,18 @@
   </div>
 <% end %>
 
-<% content_for :script do %>
-  <%= mission_complete_stream_dialog(mission) %>
+<% dom_ready do %>
+  <%#= mission_complete_stream_dialog(mission) %>
 <% end %>
 
 <% if missions %>
-  <%= fb_js_string :mission_list, render(:partial => "list", :locals => {:missions => missions}) %>
-
-  <% content_for :script do %>
-    var list = $('mission_list');
-
-    if(list){
-      list.setInnerFBML(mission_list);
-    }
+  <% dom_ready do %>
+    $('#mission_list').html('<%= escape_javascript(render("list", :missions => missions)) %>');
   <% end %>
 <% end %>
 
 <% if result.rank.just_completed? %>
-  <% content_for :script do %>
-    Mission.onComplete();
+  <% dom_ready do %>
+    $(document).trigger('mission.complete');
   <% end %>
 <% end %>

@@ -28,9 +28,9 @@
       ) %>
 </div>
 
-<% content_for :script do %>
-  Character.onUpgradeComplete = function(){
-    $('upgrade_list').hide();
-    $('upgrade_finished').show();
-  }
+<% dom_ready do %>
+  $(document).bind('character.upgrade_complete', function(){
+    $('#upgrade_list').hide();
+    $('#upgrade_finished').show();
+  })
 <% end %>

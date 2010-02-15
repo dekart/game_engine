@@ -120,10 +120,24 @@ var Timer = {
   }
 };
 
+var Fight = {
+  
+}
+
+FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
+  FB.XdComm.Server.init("/xd_receiver.html");
+
+  FB.CanvasClient.startTimerToSizeToContent();
+});
+
 $(function(){
-  FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'XFBML'], function() {
-    FB.init(facebook_api_key,'/xd_receiver.html', {});
-    
-    FB.CanvasClient.setCanvasHeight($('body').height() + 'px')
-  });
+  FB.Facebook.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
+
+  $(document).bind('result.received', function(){
+    console.log($('#result').eq(0));
+
+    $('#result').show();
+
+    FB.XFBML.Host.parseDomTree();
+  })
 })

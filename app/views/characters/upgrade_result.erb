@@ -13,14 +13,14 @@
   <% end %>
 </div>
 
-<% content_for :script do %>
-  $('upgrade_<%= params[:attribute] %>').setTextValue('<%= current_character.attributes[params[:attribute]] %>');
+<% dom_ready do %>
+  $('#upgrade_<%= params[:attribute] %>').text('<%= current_character.attributes[params[:attribute]] %>');
 
   <% if current_character.points == 0 %>
-    Character.onUpgradeComplete();
+    $(document).trigger('character.upgrade_complete');
   <% else %>
-    $('upgrade_points').setTextValue('<%= current_character.points %>');
+    $('#upgrade_points').text('<%= current_character.points %>');
   <% end %>
 
-  $('result').show();
+  $(document).trigger('result.received')
 <% end %>

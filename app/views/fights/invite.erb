@@ -29,8 +29,8 @@
       </tr>
     </table>
 
-    <% content_for :script do %>
-      Fight.hideVictim('<%= @fight.victim %>');
+    <% dom_ready do %>
+      $('#<%= dom_id(@fight.victim) %>').hide();
     <% end %>
   <% elsif @fight.attacker.weak? %>
     <p><%= t("activerecord.errors.models.fight.attributes.character.too_weak") %></p>
@@ -41,6 +41,6 @@
 
 <%= character_level_up_block %>
 
-<% content_for :script do %>
+<% dom_ready do %>
   $('result').show();
 <% end %>

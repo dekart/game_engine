@@ -142,12 +142,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options(options)
-    returning result = {:canvas => true} do
-      params_before_conversion.each do |key, value|
-        result[key] = value if key.starts_with?("fb_sig")
-      end
-      #result[:fb_page_id] = current_user.facebook_id if in_page? && options[:canvas] != false
-      
+    returning result = {} do
       result[:try_stylesheet] = params[:try_stylesheet] unless params[:try_stylesheet].blank?
     end
   end

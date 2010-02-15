@@ -1,13 +1,4 @@
-<% fb_js_string :inventories do %>
-  <%= render "equippables" %>
-<% end %>
-
-<% fb_js_string :placements do %>
-  <%= render "placements", :character => current_character %>
-<% end %>
-
-
-<% content_for :script do %>
-  $('equipment_inventories').setInnerFBML(inventories);
-  $('equipment_placements').setInnerFBML(placements);
+<% dom_ready do %>
+  $('#equipment_inventories').html('<%= escape_javascript(render("equippables")) %>');
+  $('#equipment_placements').html('<%= escape_javascript(render("placements", :character => current_character)) %>');
 <% end %>

@@ -14,12 +14,6 @@
   <%= t(".message") %> <%= result.success_text %>
 </p>
 
-<%= fb_js_string :mission_progress, mission_progress(current_character, mission) %>
-
-<% content_for :script do %>
-  var progress = $('<%= dom_id(mission, :progress) %>');
-
-  if(progress){
-    progress.setInnerFBML(mission_progress);
-  }
+<% dom_ready do %>
+  $('#<%= dom_id(mission, :progress) %>').html('<%= raw escape_javascript(mission_progress(current_character, mission)) %>');
 <% end %>

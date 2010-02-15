@@ -2,7 +2,7 @@
   <%= render :partial => "admin/missions/requirements/#{@requirement.name}", :locals => {:requirement => @requirement} %>
 <% end %>
 
-<% content_for :script do %>
+<% dom_ready do %>
   var new_requirement = document.createElement("div");
 
   new_requirement.
