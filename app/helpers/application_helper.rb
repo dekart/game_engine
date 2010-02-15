@@ -87,12 +87,13 @@ module ApplicationHelper
     end
   end
 
-  def percentage_bar(percentage, label = nil)
+  def percentage_bar(percentage, options = {})
     returning result = "" do
-      result << content_tag(:div, label, :class => :text) if label
+      result << content_tag(:div, options.delete(:label), :class => :text) if options[:label]
+      
       result << content_tag(:div,
         content_tag(:div, "", :class => :percentage, :style => "width: %.4f%" % percentage),
-        :class => :progress_bar
+        {:class => :progress_bar}.merge(options)
       )
     end
   end

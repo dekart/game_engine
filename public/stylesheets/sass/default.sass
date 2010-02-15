@@ -1,0 +1,1466 @@
+@import assets
+@import default_skin
+
+@import globals
+@import forms
+@import common_elements
+@import flash_messages
+
+@import admin/menu
+
+@import header
+@import main_menu
+@import character_overview
+@import blocks
+@import result
+@import dashboard
+@import profile
+@import help_requests
+@import missions
+
+
+
+
+
+
+.item_list
+  width: 100%
+
+  td
+    padding: 10px 0
+    border-bottom: 1px solid #d0d0d0
+
+  .picture
+    padding-right: 10px
+
+  .info
+    padding-right: 10px
+
+    .name
+      font-size: 15px
+      margin-bottom: 5px
+      font-weight: bold
+
+    .sale_limit, .time_limit
+      color: red
+
+  .payout_preview
+    padding-right: 10px
+
+    .restore_health
+      background-image: url(asset:icons_health)
+
+    .restore_energy
+      background-image: url(asset:icons_energy)
+
+    .upgrade
+      background-image: url(asset:icons_level)
+
+  .requirements
+    padding-right: 10px
+
+  .spacer
+    border: 0
+
+  .controls
+    text-align: right
+    width: 130px
+
+    select
+      margin: 5px
+
+    a.buy span
+      background-image: url(asset:icons_basic_money)
+
+
+#special_items
+  border: 2px solid #EC7000
+  margin-bottom: 10px
+  padding: 10px
+
+  .items
+    width: 100%
+
+  .name
+    font-weight: bold
+    font-size: 14px
+    margin-bottom: 5px
+
+  .picture
+    float: left
+    margin-right: 10px
+
+  .requirements
+    margin-left: 80px
+
+    .requirement
+      clear: none
+
+  .payout_preview
+    margin-left: 80px
+
+    .payout
+      clear: none
+
+  .controls
+    float: left
+    clear: both
+
+    select
+      margin: 5px
+      float: left
+
+    .button
+      float: left
+      clear: none
+
+    .buy span
+      background-image: url(asset:icons_basic_money)
+
+  .sale_limit, .time_limit
+    color: red
+
+
+#next_item
+  margin-top: 30px
+  border: 1px solid #d0d0d0
+  padding: 10px
+  font-size: 14px
+
+  .level
+    font-size: 14px
+    font-weight: bold
+
+
+#inventory_buttons
+  margin-bottom: 15px
+
+  .button
+    float: left
+    width: auto
+    margin-right: 15px
+
+  .shop span
+    background-image: url(asset:icons_shop)
+
+  .inventory span
+    background-image: url(asset:icons_inventory)
+
+  .equipment span
+    background-image: url(asset:icons_profile)
+
+
+#inventory_list
+  margin-top: 10px
+
+  td
+    padding: 10px
+    border-bottom: 1px solid #d0d0d0
+
+  .info .name
+    font-size: 15px
+    margin-bottom: 5px
+    font-weight: bold
+
+  .payout_preview
+    padding-right: 10px
+
+    .restore_health
+      background-image: url(asset:icons_health)
+
+    .restore_energy
+      background-image: url(asset:icons_energy)
+
+    .upgrade
+      background-image: url(asset:icons_level)
+
+  .stats
+    width: 70px
+
+    div
+      margin-bottom: 5px
+
+  .spacer
+    border: 0
+
+  .controls
+    width: 90px
+    width: 200px
+    text-align: right
+
+    select
+      margin: 5px
+
+    .sell span
+      background-image: url(asset:icons_basic_money)
+
+    .use span
+      background-image: url(asset:icons_accept)
+
+
+#fight_attributes
+  margin: 10px 0
+  border-bottom: 1px solid #d0d0d0
+
+  table
+    width: 99%
+
+  th
+    font-size: 14px
+
+  .values div
+    display: inline
+    line-height: 22px
+    height: 22px
+    padding: 2px 5px 2px 21px
+    background-position: center left
+    background-repeat: no-repeat
+
+  .attack
+    background-image: url(asset:icons_attack)
+
+  .defence
+    background-image: url(asset:icons_defence)
+
+  .relations
+    background-image: url(asset:icons_alliance)
+
+
+#upgrade_list
+  td
+    padding: 5px
+    vertical-align: middle
+
+  .points td
+    border-bottom: 1px solid #d0d0d0
+
+  .name
+    font-weight: bold
+
+  .value
+    padding-left: 21px
+    background-position: center left
+    background-repeat: no-repeat
+
+
+#upgrade_attack
+  background: url(asset:icons_attack)
+
+
+#upgrade_defence
+  background: url(asset:icons_defence)
+
+
+#upgrade_health
+  background: url(asset:icons_health)
+
+
+#upgrade_energy
+  background: url(asset:icons_energy)
+
+
+#upgrade_stamina
+  background: url(asset:icons_stamina)
+
+
+#upgrade_list .controls a span
+  margin-top: 0
+  background-image: url(asset:icons_add)
+
+
+#victim_list
+  td
+    padding: 10px 0
+    border-bottom: 1px solid #d0d0d0
+    vertical-align: middle
+
+  .picture
+    padding-right: 10px
+
+  .name
+    width: 200px
+
+  .level
+    width: 80px
+
+  .relations .larger
+    color: red
+
+  .controls .button span
+    background-image: url(asset:icons_fights)
+
+  .invitee
+    color: green
+
+
+#invitation_list
+  width: 100%
+
+  td
+    padding: 5px
+    vertical-align: middle
+    border-bottom: 1px solid #d0d0d0
+
+  .picture
+    width: 55px
+
+  .level
+    width: 70px
+
+    .value
+      font-weight: bold
+
+  .controls
+    .accept span
+      background-image: url(asset:icons_accept)
+
+    .ignore span
+      background-image: url(asset:icons_delete)
+
+
+#alliance_buttons
+  margin-bottom: 15px
+
+  .button
+    float: left
+    width: auto
+    margin-right: 15px
+
+  .relations span
+    background-image: url(asset:icons_alliance)
+
+  .invite span
+    background-image: url(asset:icons_add)
+
+  .gifts span
+    background-image: url(asset:icons_gift)
+
+  .mercenaries span
+    background-image: url(asset:icons_add)
+
+
+#alliance_members
+  padding-right: 10px
+
+  td
+    padding: 5px
+    vertical-align: middle
+    border-bottom: 1px solid #d0d0d0
+
+  .picture
+    width: 55px
+
+  .level
+    width: 70px
+
+  .controls .delete span
+    background-image: url(asset:icons_delete)
+
+
+#rank_list .rank
+  padding: 3px 25px
+  background: url(asset:icons_level) 3px center no-repeat
+
+
+#tutorial
+  border: 2px solid #BDC7D8
+  padding: 10px
+
+  .step
+    margin-bottom: 5px
+
+  .current
+    font-size: 15px
+
+  .complete_mark
+    color: green
+    vertical-align: super
+    font-size: 10px
+    display: none
+
+  .button
+    text-align: center
+    width: 130px
+    margin: 10px
+    padding-left: 5px
+    display: none
+
+  .completed
+    .complete_mark
+      display: inline
+
+    .button
+      display: block
+
+
+
+
+
+
+#help_result
+  padding: 0px 30px
+  background: url(asset:icons_alliance) 5px 0px no-repeat
+
+
+#fight_result
+  padding: 0px 30px
+  background: url(asset:icons_fights) 5px 0px no-repeat
+
+  .lost b, .victim_lost b
+    width: 55px
+
+  .attack_again span
+    background-image: url(asset:icons_fights)
+
+  .request_help
+    width: 190px
+
+    span
+      background-image: url(asset:icons_alliance)
+
+  .details
+    border-top: 1px solid #e0e0e0
+    padding-top: 10px
+    width: 730px
+    height: 160px
+    margin: 0px auto
+
+    .attacker
+      width: 330px
+      text-align: right
+
+    .vs
+      width: 65px
+      text-align: center
+      font-weight: bold
+      font-size: 16px
+      line-height: 160px
+      vertical-align: middle
+
+    .victim
+      width: 330px
+
+    .character
+      height: auto
+      font-size: 14px
+
+      .name
+        font-weight: bold
+        margin-bottom: 5px
+
+      .level
+        margin-top: 5px
+
+    .attributes
+      height: 30px
+      clear: both
+
+      div
+        padding-left: 20px
+        line-height: 22px
+        background-position: center left
+        background-repeat: no-repeat
+
+    .best_items strong
+      display: block
+      margin-bottom: 5px
+      font-size: 14px
+
+    .attacker
+      .character .picture
+        float: right
+        margin-left: 10px
+
+      .attributes
+        margin-left: auto
+
+        div
+          float: right
+          margin-left: 10px
+
+        .attack
+          background-image: url(asset:icons_attack)
+
+        .relations
+          background-image: url(asset:icons_alliance)
+
+        .relations_attack
+          background-image: url(asset:icons_attack)
+
+      .best_items img
+        margin-left: 10px
+
+    .victim
+      .character .picture
+        float: left
+        margin-right: 10px
+
+      .attributes
+        div
+          float: left
+          margin-right: 10px
+
+        .defence
+          background-image: url(asset:icons_defence)
+
+        .relations
+          background-image: url(asset:icons_alliance)
+
+        .relations_defence
+          background-image: url(asset:icons_defence)
+
+      .best_items img
+        margin-right: 10px
+
+  .item_details
+    text-align: center
+    border-top: 1px solid #e0e0e0
+    padding-top: 10px
+
+    .items
+      text-align: left
+
+      strong
+        display: block
+        margin-bottom: 5px
+
+    .attacker
+      width: 330px
+
+    .victim
+      padding-left: 65px
+
+    .group
+      margin-bottom: 10px
+
+
+#shop_result
+  padding: 0px 30px
+  background: url(asset:icons_basic_money) 5px 0px no-repeat
+
+  .inventory
+    width: 150px
+
+    span
+      background-image: url(asset:icons_inventory)
+
+
+#inventory_result
+  padding: 0px 30px
+  background: url(asset:icons_basic_money) 5px 0px no-repeat
+
+
+#upgrade_result
+  padding: 0px 30px
+  background: url(asset:icons_add) 5px 0px no-repeat
+
+
+#character
+  .controls
+    clear: both
+
+    a
+      float: left
+
+    .attack span
+      background-image: url(asset:icons_fights)
+
+    .upgrade span
+      background-image: url(asset:icons_add)
+
+  .item_group .item
+    float: left
+    width: 85px
+    height: 135px
+    text-align: center
+    font-weight: bold
+
+  .properties .item
+    float: left
+    width: 130px
+    height: 170px
+    text-align: center
+    font-weight: bold
+
+  .wall
+    width: 315px
+    padding-left: 5px
+
+
+#rating_list .rating
+  margin-bottom: 30px
+
+  td
+    padding: 5px 10px
+    vertical-align: middle
+
+  th
+    padding: 5px 10px
+    vertical-align: middle
+    text-align: center
+    border-bottom: 1px solid #e0e0e0
+
+  .current
+    background-color: #FFFFD5
+
+    td
+      border-top: 1px solid #EC7000
+      border-bottom: 1px solid #EC7000
+
+    .position
+      border-left: 1px solid #EC7000
+      font-weight: bold
+      font-size: 16px
+      color: #3B5998
+
+    .last
+      border-right: 1px solid #EC7000
+
+  .position
+    font-size: 14px
+    font-weight: bold
+
+
+#rating_buttons
+  height: 60px
+
+  .button span
+    float: left
+    width: 130px
+    margin-right: 15px
+    background-image: url(asset:icons_rating)
+
+
+#bank
+  width: 100%
+
+
+#bank_balance
+  font-size: 14px
+  padding: 10px 0
+  font-weight: bold
+
+  .value
+    padding-left: 21px
+    background: url(asset:icons_basic_money) center left no-repeat
+    font-weight: normal
+
+
+#item_groups
+  border-bottom: 1px solid #D0D0D0
+  border-top: 1px solid #D0D0D0
+  margin: 10px 0 5px 0
+
+  b
+    font-size: 16px
+    padding: 0 10px
+    line-height: 30px
+    height: 28px
+    display: block
+    float: left
+
+  a
+    font-size: 14px
+    padding: 0 10px
+    line-height: 30px
+    height: 28px
+    font-weight: bold
+    border: 1px solid white
+    display: block
+    float: left
+
+    &:hover
+      border-left: 1px solid #D0D0D0
+      border-right: 1px solid #D0D0D0
+
+
+#property_list
+  td
+    padding: 10px 10px 10px 0
+    border-bottom: 1px solid #d0d0d0
+
+  .picture
+    width: 130px
+
+  .info .name
+    font-size: 15px
+    margin-bottom: 5px
+    font-weight: bold
+
+  .details
+    width: 100px
+
+    div
+      line-height: 22px
+      height: 22px
+
+    .basic_money
+      background: url(asset:icons_basic_money) center left no-repeat
+      padding-left: 21px
+
+  .requires
+    width: 100px
+
+    div
+      line-height: 22px
+      height: 22px
+      padding-left: 21px
+      background-position: center left
+      background-repeat: no-repeat
+
+    .basic_price
+      background-image: url(asset:icons_basic_money)
+
+    .vip_price
+      background-image: url(asset:icons_vip_money)
+
+  .income .basic_money
+    line-height: 22px
+    height: 22px
+    padding: 3px 0 3px 21px
+    background: url(asset:icons_basic_money) center left no-repeat
+
+  .controls
+    width: 200px
+
+    select
+      margin: 5px
+
+    a
+      width: auto
+
+    .buy span, .sell span
+      background-image: url(asset:icons_basic_money)
+
+
+#buy_properties span
+  width: 130px
+  background-image: url(asset:icons_properties)
+
+
+#property_type_list
+  width: 100%
+
+  td, th
+    padding: 10px 10px 10px 0
+    border-bottom: 1px solid #d0d0d0
+
+  .picture
+    width: 130px
+
+  .info .name
+    font-size: 15px
+    margin-bottom: 5px
+    font-weight: bold
+
+  .income
+    width: 100px
+
+    div
+      line-height: 22px
+      height: 22px
+      padding-left: 21px
+      background-position: center left
+      background-repeat: no-repeat
+
+    .basic_money
+      background-image: url(asset:icons_basic_money)
+
+  .controls
+    width: 110px
+
+
+#property_result
+  padding: 0px 30px
+  background: url(asset:icons_basic_money) 5px 0px no-repeat
+
+  .properties
+    background-image: url(asset:icons_properties)
+
+
+#property_income .value
+  line-height: 22px
+  height: 22px
+  padding: 5px 0 5px 21px
+  background: url(asset:icons_basic_money) center left no-repeat
+
+
+#current_vip_money
+  font-size: 14px
+  margin-bottom: 15px
+
+  .value
+    font-weight: bold
+    line-height: 22px
+    height: 22px
+    padding: 5px 0 5px 21px
+    background: url(asset:icons_vip_money) center left no-repeat
+
+
+#premia
+  margin-bottom: 15px
+
+  td
+    vertical-align: middle
+    border-bottom: 1px solid #d0d0d0
+
+  .name
+    width: 300px
+
+  .basic_money
+    line-height: 22px
+    height: 22px
+    padding: 5px 0 5px 21px
+    background: url(asset:icons_basic_money) center left no-repeat
+    font-weight: bold
+
+  .points
+    line-height: 22px
+    height: 22px
+    padding: 5px 0 5px 21px
+    background: url(asset:icons_level) center left no-repeat
+    font-weight: bold
+
+  .vip_money div
+    line-height: 22px
+    height: 22px
+    padding: 5px 15px 5px 21px
+    background: url(asset:icons_vip_money) center left no-repeat
+
+  .controls .button span
+    background-image: url(asset:icons_accept)
+    width: 70px
+
+
+#character_assignments
+  width: 250px
+  margin: 15px 0
+
+  b
+    font-size: 12px
+    display: block
+    margin-bottom: 10px
+
+  .context
+    padding-bottom: 5px
+    border-bottom: 1px solid #e0e0e0
+    margin-bottom: 10px
+
+  .effect
+    font-style: italic
+    font-size: 14px
+    margin-top: 5px
+
+  .description
+    font-style: italic
+
+  .controls
+    float: right
+    margin-top: -25px
+
+    .promote span
+      background-image: url(asset:icons_accept)
+
+    .demote span
+      background-image: url(asset:icons_delete)
+
+
+#new_assignment
+  table
+    width: 100%
+
+  .relations
+    margin-top: 10px
+    height: 200px
+    display: block
+    overflow: auto
+
+    td
+      vertical-align: middle
+      padding: 2px
+      border-bottom: 1px solid #e0e0e0
+
+    .picture
+      width: 60px
+
+    .relations .name
+      padding-right: 10px
+
+    .level
+      width: 60px
+
+      .value
+        font-weight: bold
+
+    .selected
+      background-color: #FFFFD5
+      font-weight: bold
+
+      td
+        border-top: 1px solid #EC7000
+        border-bottom: 1px solid #EC7000
+
+      .picture
+        border-left: 1px solid #EC7000
+
+      .effect
+        border-right: 1px solid #EC7000
+
+  .tab_titles
+    a
+      margin-right: 15px
+
+    .selected
+      font-weight: bold
+      font-size: 14px
+
+  .tabs .hidden
+    display: none
+
+
+#promotion_result
+  padding: 0px 30px
+  background: url(asset:icons_basic_money) 5px 0px no-repeat
+
+  .forward
+    margin-top: 25px
+
+
+#invitation_form
+  td
+    vertical-align: top
+
+  .invitation_type
+    padding-bottom: 10px
+    margin-bottom: 10px
+    border-bottom: 1px solid #e0e0e0
+
+  .invitation_text
+    margin: 15px
+    font-weight: bold
+    font-size: 15px
+    color: #3B5998
+
+  .button span
+    clear: right
+    background-image: url(asset:icons_publish)
+
+  #request_invitation
+    width: 315px
+    padding-right: 15px
+
+  #chat_invitation p
+    float: right
+    width: 200px
+
+
+#invitation
+  td
+    padding: 5px
+    vertical-align: middle
+    border-bottom: 1px solid #d0d0d0
+
+  .picture
+    width: 55px
+
+  .level
+    width: 70px
+
+    .value
+      font-weight: bold
+
+  .controls
+    .accept span
+      background-image: url(asset:icons_accept)
+
+    .ignore span
+      background-image: url(asset:icons_delete)
+
+
+#invitation_result
+  padding: 0px 30px
+  background: url(asset:icons_alliance) 5px 0px no-repeat
+
+
+#get_more_vip
+  margin-top: 30px
+
+
+#level_up
+  padding: 0px 30px
+  background: url(asset:icons_level) 5px 0px no-repeat
+
+  .upgrade span
+    background-image: url(asset:icons_add)
+
+
+#gift_result
+  padding: 0px 30px
+  background: url(asset:icons_inventory) 5px 0px no-repeat
+
+  .pending span
+    width: 140px
+    background-image: url(asset:icons_inventory)
+
+  .play_now span
+    width: 80px
+    background-image: url(asset:icons_home)
+
+  .details
+    td
+      padding: 0 15px
+      text-align: center
+
+    .item
+      font-weight: bold
+
+    .from
+      font-weight: bold
+      font-size: 16px
+      vertical-align: middle
+
+
+#gift_form
+  .buttons
+    float: right
+
+    .skip
+      width: 70px
+
+      span
+        background-image: url(asset:icons_home)
+
+  .item
+    padding: 5px
+    width: 120px
+    text-align: center
+    border: 1px solid #e0e0e0
+
+    .name
+      font-weight: bold
+
+    .effects
+      margin-top: 5px
+
+      div
+        display: inline
+        font-weight: bold
+        line-height: 26px
+        height: 26px
+        padding: 1px 0px 1px 21px
+        background-position: center left
+        background-repeat: no-repeat
+
+      .attack
+        background-image: url(asset:icons_attack)
+
+      .defence
+        background-image: url(asset:icons_defence)
+
+      .restore_health
+        background-image: url(asset:icons_health)
+
+      .restore_energy
+        background-image: url(asset:icons_energy)
+
+      .upgrade
+        background-image: url(asset:icons_level)
+
+  .items .item
+    margin: 0 10px 10px 0
+
+  .gift
+    margin-bottom: 15px
+
+    .item .name
+      margin-bottom: 10px
+
+  .friend_groups
+    font-size: 14px
+    font-weight: bold
+    line-height: 30px
+
+    a
+      padding: 5px
+      margin: 0 5px
+
+      &.current
+        border: 1px solid #D0D0D0
+        color: #333333
+
+
+.payout_preview
+  .payout
+    height: 25px
+    line-height: 25px
+    padding-left: 21px
+    background-position: left
+    background-repeat: no-repeat
+    clear: both
+    white-space: nowrap
+
+    .value
+      font-weight: bold
+      margin-right: 3px
+
+  .basic_money
+    background-image: url(asset:icons_basic_money)
+
+  .vip_money
+    background-image: url(asset:icons_vip_money)
+
+  .health
+    background-image: url(asset:icons_health)
+
+  .energy
+    background-image: url(asset:icons_energy)
+
+  .experience
+    background-image: url(asset:icons_experience)
+
+  .mercenaries
+    background-image: url(asset:icons_alliance)
+
+  .attack
+    background-image: url(asset:icons_attack)
+
+  .defence
+    background-image: url(asset:icons_defence)
+
+  .item, .property
+    line-height: 40px
+    height: 40px !important
+    padding-left: 0
+
+  .item .value, .property .value
+    display: block
+    float: left
+    margin-right: 5px
+
+  .item .label, .property .label
+    vertical-align: middle
+
+  .item .name, .property .name
+    font-weight: bold
+
+
+.requirements
+  .requirement
+    height: 25px
+    line-height: 25px
+    padding-left: 21px
+    background-position: left
+    background-repeat: no-repeat
+    clear: both
+    white-space: nowrap
+
+  .value
+    font-weight: bold
+
+  .basic_money
+    background-image: url(asset:icons_basic_money)
+
+  .vip_money
+    background-image: url(asset:icons_vip_money)
+
+  .energy
+    background-image: url(asset:icons_energy)
+
+  .health_point
+    background-image: url(asset:icons_health)
+
+  .attack
+    background-image: url(asset:icons_attack)
+
+  .defence
+    background-image: url(asset:icons_defence)
+
+  .alliance
+    background-image: url(asset:icons_alliance)
+
+  .item
+    line-height: 40px
+    height: 40px !important
+    padding-left: 0
+
+    .image
+      display: block
+      float: left
+      margin-right: 5px
+
+    .label
+      vertical-align: middle
+
+  .not_satisfied
+    color: #ff5353
+    font-weight: bold
+
+    img
+      border: 3px solid #ff5353
+
+
+#boss_list
+  .boss
+    margin-top: 15px
+    border: 2px solid #BDC7D8
+    padding: 10px
+    width: 100%
+
+    .image
+      width: 220px
+
+    .details
+      width: 100%
+
+  .buttons .attack span
+    background-image: url(asset:icons_fights)
+
+
+#boss_fight_block
+  padding: 10px
+  border: 2px solid #BDC7D8
+
+  .boss_fight
+    margin: 5px 0
+
+  .image
+    float: left
+    padding-right: 10px
+
+  .text
+    font-size: 14px
+
+    .name
+      font-weight: bold
+
+  .timer
+    margin-top: 10px
+    font-weight: bold
+
+    .value
+      font-weight: normal
+
+  .buttons
+    float: right
+    padding-left: 10px
+
+    .attack span
+      background-image: url(asset:icons_fights)
+
+
+#boss_fight_result
+  padding: 0px 30px
+  background: url(asset:icons_missions) 5px 0px no-repeat
+
+  .details
+    width: 100%
+
+    .character, .boss
+      width: 220px
+
+    .name
+      margin-bottom: 10px
+      font-size: 16px
+      font-weight: bold
+
+    .message
+      margin-top: 10px
+
+      span
+        font-weight: bold
+
+    .character .message .attacker, .boss .message .victim
+      color: green
+
+    .character .message .victim, .boss .message .attacker
+      color: red
+
+    .buttons
+      float: none
+
+      .button
+        margin-left: 0
+
+      .attack span
+        background-image: url(asset:icons_fights)
+
+      .publish span
+        background-image: url(asset:icons_publish)
+
+  .progress .progress_bar
+    width: 100px
+
+  .middle .result
+    font-size: 16px
+    margin-bottom: 15px
+
+    span
+      font-weight: bold
+
+  .timer
+    margin-top: 10px
+    font-weight: bold
+
+    .value
+      font-weight: normal
+
+  .lost .result, .expired .result
+    color: red
+
+  .won .result
+    color: green
+
+  .payouts
+    margin-top: 20px
+
+
+#new_character
+  .field
+    margin-bottom: 10px
+
+  .label
+    font-size: 16px
+
+  .note
+    font-size: 12px
+
+
+#character_types
+  margin-bottom: 10px
+
+  .character_type
+    display: block
+    width: 125px
+    text-align: center
+    text-decoration: none
+    float: left
+    margin: 10px 10px 0 0
+    font-weight: bold
+    padding: 2px
+    border: 1px solid #e0e0e0
+
+    &:hover
+      border: 1px solid #3B5998
+
+    .name
+      display: block
+      margin-bottom: 5px
+
+  .selected
+    border: 2px solid #3B5998 !important
+    padding: 1px !important
+
+
+#placements
+  position: relative
+  background: url(asset:placements) top left no-repeat
+  padding-top: 490px
+  width: 100%
+
+  .inventory
+    position: relative
+    background-color: white
+
+    .remove
+      position: absolute
+      right: 0
+      display: block
+      width: 16px
+      height: 16px
+      background: url(asset:icons_delete) center no-repeat
+
+  .placement
+    position: absolute
+
+  .head
+    top: 3px
+    left: 155px
+
+    .inventory
+      width: 72px
+      height: 72px
+
+  .right_hand
+    top: 111px
+    left: 3px
+
+    .inventory
+      width: 120px
+      height: 120px
+
+  .left_hand
+    top: 111px
+    left: 261px
+
+    .inventory
+      width: 120px
+      height: 120px
+
+  .body
+    top: 81px
+    left: 132px
+
+    .inventory
+      width: 120px
+      height: 120px
+
+  .legs
+    top: 361px
+    left: 132px
+
+    .inventory
+      width: 120px
+      height: 120px
+
+  .additional
+    position: relative
+
+    .inventory
+      width: 72px
+      height: 72px
+      margin: 0 10px 10px 0
+      float: left
+      border: 1px solid #BDC7D8
+
+    .note
+      clear: both
+
+      .zero
+        color: red
+        font-size: 16px
+
+
+#inventory_for_equipment
+  padding-right: 10px
+  margin-right: 10px
+  border-right: 2px solid #BDC7D8
+
+  .inventory
+    padding: 10px 0
+    border-top: 1px solid #BDC7D8
+
+    .header
+      margin-bottom: 5px
+
+      .name
+        font-weight: bold
+        font-size: 14px
+
+    .image
+      margin-bottom: 5px
+
+    .controls
+      select
+        float: left
+
+      .button
+        margin-top: 0px
+        float: left
+        clear: none
+
+        span
+          background-image: url(asset:icons_accept)
+
+
+#equipment_inventories
+  width: 200px

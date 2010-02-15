@@ -19,27 +19,27 @@ var CharacterForm = {
 
 var Character = {
   update: function(a){
-    $("#co_basic_money").text(a.character.formatted_basic_money);
-    $("#co_vip_money").text(a.character.formatted_vip_money);
-    $("#co_experience").text(a.character.experience + "/" + a.character.next_level_experience);
-    $("#co_experience_percentage").css({width: a.character.level_progress_percentage + "%"})
-    $("#co_level").text(a.character.level);
-    $("#co_health").text(a.character.hp + "/" + a.character.health);
-    $("#co_energy").text(a.character.ep + "/" + a.character.energy);
-    $("#co_stamina").text(a.character.sp + "/" + a.character.stamina);
+    $("#co .basic_money .value").text(a.character.formatted_basic_money);
+    $("#co .vip_money .value").text(a.character.formatted_vip_money);
+    $("#co .experience .value").text(a.character.experience + "/" + a.character.next_level_experience);
+    $("#co .experience .percentage").css({width: a.character.level_progress_percentage + "%"})
+    $("#co .level .value").text(a.character.level);
+    $("#co .health .value").text(a.character.hp + "/" + a.character.health);
+    $("#co .energy .value").text(a.character.ep + "/" + a.character.energy);
+    $("#co .stamina .value").text(a.character.sp + "/" + a.character.stamina);
 
     if(a.character.points > 0) {
-      $("#co_point_link").show();
+      $("#co .level .upgrade").show();
     } else {
-      $("#co_point_link").hide();
+      $("#co .level .upgrade").hide();
     }
     
     if(a.character.property_income > 0){
-      Timer.start('#co_basic_money_timer', a.character.time_to_basic_money_restore, this.updateFromRemote);
+      Timer.start('#co .basic_money .timer', a.character.time_to_basic_money_restore, this.updateFromRemote);
     }
-    Timer.start('#co_health_timer', a.character.time_to_hp_restore, this.updateFromRemote);
-    Timer.start('#co_energy_timer', a.character.time_to_ep_restore, this.updateFromRemote);
-    Timer.start('#co_stamina_timer', a.character.time_to_sp_restore, this.updateFromRemote);
+    Timer.start('#co .health .timer', a.character.time_to_hp_restore, this.updateFromRemote);
+    Timer.start('#co .energy .timer', a.character.time_to_ep_restore, this.updateFromRemote);
+    Timer.start('#co .stamina .timer', a.character.time_to_sp_restore, this.updateFromRemote);
   },
 
   upgrade_from_remote: function(){

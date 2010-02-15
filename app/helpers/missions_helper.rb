@@ -8,7 +8,7 @@ module MissionsHelper
     else
       percentage = (rank.win_count.to_f / rank.mission.win_amount * 100)
 
-      percentage_bar(percentage, "%d%" % percentage)
+      percentage_bar(percentage, :label => "%d%" % percentage)
     end
   end
   safe_helper :mission_progress
