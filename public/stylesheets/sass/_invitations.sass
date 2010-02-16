@@ -1,10 +1,13 @@
+#invitations
+  border = !invitations_border
+
 #invitation_list
   width: 100%
 
   td
     padding: 5px
     vertical-align: middle
-    border-bottom: 1px solid #d0d0d0
+    border-bottom = !invitations_invitation_border
 
   .picture
     width: 55px
@@ -12,21 +15,17 @@
   .level
     width: 70px
 
-    .value
-      font-weight: bold
-
   .controls
     .accept span
-      background-image: url(asset:icons_accept)
+      background-image = !invitations_invitation_accept_icon
 
     .ignore span
-      background-image: url(asset:icons_delete)
+      background-image = !invitations_invitation_decline_icon
 
 #invitation
   td
     padding: 5px
     vertical-align: middle
-    border-bottom: 1px solid #d0d0d0
 
   .picture
     width: 55px
@@ -34,17 +33,13 @@
   .level
     width: 70px
 
-    .value
-      font-weight: bold
-
   .controls
     .accept span
-      background-image: url(asset:icons_accept)
+      background-image = !invitation_accept_icon
 
     .ignore span
-      background-image: url(asset:icons_delete)
+      background-image = !invitation_decline_icon
 
 
 #invitation_result
-  padding: 0px 30px
-  background: url(asset:icons_alliance) 5px 0px no-repeat
+  background-image = !invitation_result_icon

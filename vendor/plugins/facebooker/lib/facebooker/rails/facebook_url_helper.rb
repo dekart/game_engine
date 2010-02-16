@@ -50,9 +50,7 @@ module ActionView
     module UrlHelper
       # Alters one and only one line of the Rails button_to.  See below.
       def button_to_with_facebooker(name, options={}, html_options = {})
-        if !respond_to?(:request_comes_from_facebook?) || !request_comes_from_facebook?
-           button_to_without_facebooker(name,options,html_options)
-        else
+        if use_fbjs_javascript_helpers?
           html_options = html_options.stringify_keys
           convert_boolean_attributes!(html_options, %w( disabled ))
 
@@ -80,6 +78,8 @@ module ActionView
 
           "<form method=\"#{form_method}\" action=\"#{escape_once url}\" class=\"button-to\"><div>" +
             method_tag + tag("input", html_options) + request_token_tag + "</div></form>"
+        else
+          button_to_without_facebooker(name,options,html_options)
         end
       end
 
@@ -90,9 +90,7 @@ module ActionView
 	# Altered to throw an error on :popup and sanitize the javascript
 	# for Facebook.
         def convert_options_to_javascript_with_facebooker!(html_options, url ='')
-          if !respond_to?(:request_comes_from_facebook?) || !request_comes_from_facebook?
-            convert_options_to_javascript_without_facebooker!(html_options,url)
-   	      else
+          if use_fbjs_javascript_helpers?
             confirm, popup = html_options.delete("confirm"), html_options.delete("popup")
 
             method, href = html_options.delete("method"), html_options['href']
@@ -107,7 +105,9 @@ module ActionView
               else
                 html_options["onclick"]
             end
- 	  end
+          else
+            convert_options_to_javascript_without_facebooker!(html_options,url)
+       	  end
         end
 
 	alias_method_chain :convert_options_to_javascript!, :facebooker
@@ -125,9 +125,7 @@ module ActionView
 	# link_to("Facebooker", "http://rubyforge.org/projects/facebooker", :confirm=>{:title=>"the page says:, :content=>"Go to Facebooker?"})
 	# link_to("Facebooker", "http://rubyforge.org/projects/facebooker", :confirm=>{:title=>"the page says:, :content=>"Go to Facebooker?", :color=>"pink"})
   def confirm_javascript_function_with_facebooker(confirm, fun = nil)
-    if !respond_to?(:request_comes_from_facebook?) || !request_comes_from_facebook?
-      confirm_javascript_function_without_facebooker(confirm)
-    else
+    if use_fbjs_javascript_helpers?
       if(confirm.is_a?(Hash))
         confirm_options = confirm.stringify_keys
 		    title = confirm_options.delete("title") || "Please Confirm"
@@ -140,6 +138,8 @@ module ActionView
 	    end
       "var dlg = new Dialog().showChoice('#{escape_javascript(title.to_s)}','#{escape_javascript(content.to_s)}','#{escape_javascript(button_confirm.to_s)}','#{escape_javascript(button_cancel.to_s)}').setStyle(#{style});"+
 	    "var a=this;dlg.onconfirm = function() { #{fun ? fun : 'document.setLocation(a.getHref());'} };"
+    else
+      confirm_javascript_function_without_facebooker(confirm)
 	  end
   end
 
@@ -157,9 +157,7 @@ module ActionView
 	# Dynamically creates a form for link_to with method.  Calls confirm_javascript_function if and 
 	# only if (confirm && method) for link_to
         def method_javascript_function_with_facebooker(method, url = '', href = nil, confirm = nil)
-          if !respond_to?(:request_comes_from_facebook?) || !request_comes_from_facebook?
-            method_javascript_function_without_facebooker(method,url,href)
- 	  else
+          if use_fbjs_javascript_helpers?
             action = (href && url.size > 0) ? "'#{url}'" : 'a.getHref()'
             submit_function =
               "var f = document.createElement('form'); f.setStyle('display','none'); " +
@@ -176,16 +174,22 @@ module ActionView
             end
             submit_function << "f.submit();"
 
-	    if(confirm)
-	      confirm_javascript_function(confirm, submit_function)
-  	    else
-	      "var a=this;" + submit_function
- 	    end
+            if(confirm)
+              confirm_javascript_function(confirm, submit_function)
+              else
+              "var a=this;" + submit_function
+            end
+          else
+            method_javascript_function_without_facebooker(method,url,href)
           end
-	end
+        end
 
 	alias_method_chain :method_javascript_function, :facebooker
 
+      def use_fbjs_javascript_helpers?
+        respond_to?(:request_comes_from_facebook?) && request_comes_from_facebook? &&
+        respond_to?(:request_is_facebook_iframe?) && !request_is_facebook_iframe?
+      end
     end
   end
 end

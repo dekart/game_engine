@@ -9,7 +9,7 @@ module Facebooker
         controller.extend(ClassMethods)
         controller.before_filter :set_facebook_request_format
         controller.helper_attr :facebook_session_parameters
-        controller.helper_method :request_comes_from_facebook?
+        controller.helper_method :request_comes_from_facebook?, :request_is_facebook_iframe?
       end
 
       def initialize *args
