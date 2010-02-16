@@ -37,11 +37,9 @@
 <div class="invitation_type">
   <h2><%= t(".request.title") %></h2>
 
-  <p><%= t(".invite.note") %></p>
-
   <% fb_serverfbml do %>
     <% fb_request_form(t(".invite.title"), :invite_message, invite_users_url(:from_selector => true), :target => :_top) do %>
-      <%= fb_multi_friend_selector("choose friends",
+      <%= fb_multi_friend_selector(t(".invite.note"),
             :exclude_ids => (
                current_user.invitations.facebook_ids +
                current_character.friend_relations.facebook_ids
@@ -73,7 +71,7 @@
         <p class="invitation_text">
           <%= raw t(".copy_paste.invitation",
                 :app  => t("app_name"),
-                :link => invitation_url(current_character.invitation_key, :reference => :invite_link)
+                :link => invitation_url(current_character.invitation_key, :reference => :invite_link, :canvas => true)
               ) %>
         </p>
       </div>

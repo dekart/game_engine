@@ -195,11 +195,6 @@ en:
   characters:
     attributes:
       bonus: "+{{amount}} from Equipment"
-    invitations:
-      title: "Alliance Invitations"
-      buttons:
-        accept: "Accept"
-        ignore: "Ignore"
     index:
       overview:
         title: "Profile Overview"
@@ -385,9 +380,14 @@ en:
         relations: "Grow your {{relations}} to get more slots. Every {{amount}} Alliance Members brings an extra slot!"
   invitations:
     accept:
-      message: "Invitation accepted! {{user}} became part of your alliance!"
+      message: "Invitation accepted! The player became part of your alliance!"
     ignore:
       message: "Invitation ignored"
+    block:
+      title: "Alliance Invitations"
+      buttons:
+        accept: "Accept"
+        ignore: "Ignore"
     show:
       title: "Alliance Invitation"
       note: "This user invites you to join their Alliance"

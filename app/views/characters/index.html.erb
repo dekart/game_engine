@@ -10,18 +10,11 @@
     </td>
 
     <td class="wall">
-      <%= render :partial => "layouts/next_steps" if current_user.show_next_steps? %>
+      <%= render("layouts/next_steps") if current_user.show_next_steps? %>
 
-      <% if @alliance_invitations.any? %>
-        <%= render(
-              :partial => "invitations",
-              :locals => {:invitations => @alliance_invitations}
-            ) %>
-      <% end %>
+      <%= render("invitations/block", :invitations => @alliance_invitations) if @alliance_invitations.any? %>
 
-      <% if @special_items.any? %>
-        <%= render "items/specials", :items => @special_items %>
-      <% end %>
+      <%= render("items/specials", :items => @special_items) if @special_items.any? %>
 
       <% if @latest_fights.any? %>
         <h3><%= t(".fights.title") %></h3>

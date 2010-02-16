@@ -957,6 +957,9 @@ form .error {
   #upgrade_result .value {
     font-weight: bold; }
 
+#invitations {
+  border: 2px solid #338833; }
+
 #invitation_list {
   width: 100%; }
   #invitation_list td {
@@ -967,31 +970,25 @@ form .error {
     width: 55px; }
   #invitation_list .level {
     width: 70px; }
-    #invitation_list .level .value {
-      font-weight: bold; }
   #invitation_list .controls .accept span {
-    background-image: url(asset:icons_accept); }
+    background-image: url(/system/assets/000/000/032/original/accept.gif); }
   #invitation_list .controls .ignore span {
-    background-image: url(asset:icons_delete); }
+    background-image: url(/system/assets/000/000/012/original/delete.gif); }
 
 #invitation td {
   padding: 5px;
-  vertical-align: middle;
-  border-bottom: 1px solid #d0d0d0; }
+  vertical-align: middle; }
 #invitation .picture {
   width: 55px; }
 #invitation .level {
   width: 70px; }
-  #invitation .level .value {
-    font-weight: bold; }
 #invitation .controls .accept span {
-  background-image: url(asset:icons_accept); }
+  background-image: url(/system/assets/000/000/032/original/accept.gif); }
 #invitation .controls .ignore span {
-  background-image: url(asset:icons_delete); }
+  background-image: url(/system/assets/000/000/012/original/delete.gif); }
 
 #invitation_result {
-  padding: 0px 30px;
-  background: url(asset:icons_alliance) 5px 0px no-repeat; }
+  background-image: url(/system/assets/000/000/014/original/alliance.gif); }
 
 #alliance_buttons {
   margin-bottom: 15px; }

@@ -6,7 +6,7 @@ class InvitationsController < ApplicationController
       send_notification(@invitation)
     end
 
-    render :action => :accept, :layout => false
+    render :text => t("invitations.accept.message"), :layout => false
   end
 
   def ignore
@@ -45,6 +45,8 @@ class InvitationsController < ApplicationController
 
       if invitation.accept!
         send_notification(invitation)
+
+        flash[:success] = t("invitations.accept.message")
       end
     end
 
