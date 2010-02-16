@@ -23,11 +23,11 @@
     <% end %>
   </div>
 
-  <table width="100%" cellspacing="0" cellpadding="0">
+  <table class="info" cellspacing="0" cellpadding="0">
     <tr>
       <td><%= render :partial => "characters/attributes", :locals => {:character => @character} %></td>
       <td><%= render :partial => "characters/statistics", :locals => {:character => @character} %></td>
-      <td id="rank_list">
+      <td class="rank_list">
         <% if @character.titles.any? %>
           <% @character.titles.each do |title| %>
             <%= content_tag(:div, title, :class => :rank) %>
@@ -39,70 +39,63 @@
     </tr>
   </table>
 
-  <table width="100%" cellspacing="0" cellpadding="0">
-    <tr>
-      <td>
-        <% ItemGroup.find_each do |group| %>
-          <div class="item_group">
-            <h2><%= group.name %></h2>
+  <% ItemGroup.find_each do |group| %>
+    <% collection(@character.inventories.by_item_group(group), :empty_set => false) do |items| %>
+      <div class="item_group">
+        <h2><%= group.name %></h2>
 
-            <% collection(@character.inventories.by_item_group(group),
-                :empty_set => t(".items.empty_set", :group => group.name.mb_chars.downcase)
-               ) do |items| %>
-              <div class="items clearfix">
-                <% items.each do |inventory| %>
-                  <div class="item">
-                    <%= item_image(inventory, :small) %>
+        <div class="items clearfix">
+          <% items.each do |inventory| %>
+            <div class="item">
+              <%= item_image(inventory, :small) %>
 
-                    <% if @character == current_character %>
-                      <div class="amount">
-                        <%= raw t(".items.amount",
-                              :name   => inventory.name,
-                              :amount => inventory.amount
-                            ) %>
-                      </div>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-
-        <div class="properties">
-          <h2><%= t(".properties.title") %></h2>
-
-          <% collection(@character.properties, :empty_set => t(".properties.empty_set")) do |properties| %>
-            <div class="items clearfix">
-              <% properties.each do |property| %>
-                <div class="item">
-                  <%= property_image(property, :small) %>
-
-                  <% if @character == current_character %>
-                    <div class="amount">
-                      <%= raw t(".properties.amount",
-                            :name   => property.name,
-                            :amount => property.amount
-                          ) %>
-                    </div>
-                  <% end %>
+              <% if @character == current_character %>
+                <div class="amount">
+                  <%= raw t(".items.amount",
+                        :name   => inventory.name,
+                        :amount => inventory.amount
+                      ) %>
                 </div>
               <% end %>
             </div>
           <% end %>
         </div>
-      </td>
-      <% if Configuration[:wall_enabled] %>
-      <td class="wall">
-        <h2>
-          <%= raw t(".wall.title",
-                :user => character_name(@character, :possessive => true, :capitalize => true)
-              ) %>
-        </h2>
-        
-        <%= character_wall(@character) %>
-      </td>
-      <% end %>
-    </tr>
-  </table>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% collection(@character.properties, :empty_set => false) do |properties| %>
+    <div class="properties">
+      <h2><%= t(".properties.title") %></h2>
+
+      <div class="items clearfix">
+        <% properties.each do |property| %>
+          <div class="item">
+            <%= property_image(property, :small) %>
+
+            <% if @character == current_character %>
+              <div class="amount">
+                <%= raw t(".properties.amount",
+                      :name   => property.name,
+                      :amount => property.amount
+                    ) %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if Configuration[:wall_enabled] %>
+    <div class="wall">
+      <h2>
+        <%= raw t(".wall.title",
+              :user => character_name(@character, :possessive => true, :capitalize => true)
+            ) %>
+      </h2>
+
+      <%= character_wall(@character) %>
+    </div>
+  <% end %>
 </div>

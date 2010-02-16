@@ -6,18 +6,18 @@
     <td class="value" id="upgrade_points"><%= current_character.points %></td>
   </tr>
   <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
-    <tr>
+    <% content_tag :tr, :class => attribute do %>
       <td class="name"><%= Character.human_attribute_name(attribute.to_s) %></td>
-      <td class="value" id="upgrade_<%= attribute %>"><%= current_character.send(attribute) %></td>
+      <td class="value"><%= current_character.send(attribute) %></td>
       <td class="controls">
         <%= link_to_remote(button(Configuration["character_#{attribute}_upgrade"], :disable_asset => true),
-              :url    => upgrade_character_url(current_character, :attribute => attribute, :canvas => false),
+              :url    => upgrade_character_path(current_character, :attribute => attribute),
               :update => :result,
-              :html   => {:class => :button}
+              :html   => {:class => "button upgrade"}
             ) %>
       </td>
       <td class="points"><%= t(".points", :count => Configuration["character_#{attribute}_upgrade_points"]) %></td>
-    </tr>
+    <% end %>
   <% end %>
 </table>
 

@@ -17,9 +17,14 @@ h1
   color = !label_color
   margin: 15px 0px
 
-h2, h3
+h2
   font-size: 16px
   color = !label_color
+  margin: 0 0 7px 0
+
+h3
+  font-size: 14px
+  color = !subheader_color
   margin: 0 0 7px 0
 
 td
@@ -27,3 +32,23 @@ td
 
 th
   text-align: left
+
+
+// Clearfix hack
+
+.clearfix
+  display: inline-block
+
+  &:after
+    content: "."
+    display: block
+    clear: both
+    visibility: hidden
+    line-height: 0
+    height: 0
+
+html[xmlns] .clearfix
+  display: block
+
+* html .clearfix
+  height: 1%

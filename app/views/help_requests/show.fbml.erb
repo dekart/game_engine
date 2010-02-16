@@ -2,7 +2,7 @@
   <% if @help_result %>
     <% if !@help_result.new_record? %>
       <% if @help_request.context.is_a?(Mission) %>
-        <div id="mission_result">
+        <% result_for :mission do %>
           <p class="success">
             <%= raw t(".success",
                   :user     => character_name_link(@help_request.character),
@@ -16,20 +16,20 @@
             <%= payout(:basic_money, number_to_currency(@help_result.money)) %>
             <%= payout(:experience, @help_result.experience) %>
           </div>
-        </div>
+        <% end %>
+
+        <%= character_level_up_block %>
       <% elsif @help_request.context.is_a?(Fight) %>
         <%= render :file => "fights/create" %>
       <% end %>
-
-      <%= character_level_up_block %>
     <% else %>
-      <div id="help_result">
+      <% result_for :help_request do %>
         <p class="fail"><%= @help_result.errors.full_messages.first %></p>
-      </div>
+      <% end %>
     <% end %>
   <% else %>
-    <div id="help_result">
+    <% result_for :help_request do %>
       <p class="fail"><%= t(".friends_only.message") %></p>
-    </div>
+    <% end %>
   <% end %>
 <% end %>

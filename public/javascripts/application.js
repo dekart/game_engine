@@ -147,7 +147,7 @@ FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 
 });
 
 $(function(){
-  FB.Facebook.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
+  FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
 
   $(document).bind('result.received', function(){
     console.log($('#result').eq(0));

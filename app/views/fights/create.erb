@@ -1,4 +1,4 @@
-<div id="fight_result">
+<% result_for :fight do %>
   <% if !@fight.new_record? %>
     <% if @fight.winner == current_character %>
       <%= render :partial => "fights/create/success", :locals => {:fight => @fight} %>
@@ -10,7 +10,7 @@
   <% else %>
     <p><%= @fight.errors.on(:character) %></p>
   <% end %>
-</div>
+<% end %>
 
 <%= character_level_up_block %>
 

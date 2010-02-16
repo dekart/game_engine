@@ -1,0 +1,70 @@
+#inventory_buttons
+  margin-bottom: 15px
+
+  .button
+    float: left
+    width: auto
+    margin-right: 15px
+
+  .shop span
+    background-image = !inventory_buttons_shop_icon
+
+  .inventory span
+    background-image = !inventory_buttons_inventory_icon
+
+  .equipment span
+    background-image = !inventory_buttons_equipment_icon
+
+#inventory_list
+  table
+    width: 100%
+
+  th
+    padding-top: 10px
+
+  td
+    padding: 10px
+    border-bottom = !inventory_item_border
+
+  .info
+    .name
+      font-size: 16px
+      font-weight: bold
+
+    .name, .description
+      margin-bottom: 5px
+
+  .payouts
+    padding-right: 10px
+
+  .stats
+    font-weight: bold
+
+    .owned, .used
+      margin-bottom: 5px
+
+    .value
+      font-weight: normal
+
+  .spacer
+    border: 0
+
+  .controls
+    width: 90px
+    width: 200px
+    text-align: right
+
+    select
+      margin: 5px
+
+    .sell span
+      background-image = !inventory_item_sell_icon
+
+    .use span
+      background-image = !inventory_item_use_icon
+
+#inventory_sell_result
+  background-image = !inventory_sell_result_icon
+
+#inventory_use_result
+  background-image = !inventory_use_result_icon

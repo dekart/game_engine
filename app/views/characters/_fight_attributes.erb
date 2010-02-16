@@ -1,32 +1,30 @@
-<div id="fight_attributes">
-  <table cellspacing="0" cellpadding="0">
-    <tr>
-      <th><%= t(".personal") %></th>
-      <th><%= t(".relations") %></th>
-      <th><%= t(".offence") %></th>
-      <th><%= t(".defence") %></th>
-    </tr>
-    <tr>
-      <td class="values">
-        <%= attack(current_character.attack) %>
-        <%= defence(current_character.defence) %>
-      </td>
-      <td class="values">
-        <div class="relations"><%= current_character.relations.effective_size %></div>
-        
-        <%= attack(current_character.inventory_attack_points) %>
-        <%= defence(current_character.inventory_defence_points) %>
-      </td>
-      <td class="inventories">
-        <% current_character.inventories.best_offence.each do |inventory| %>
-          <%= item_image(inventory, :icon) %>
-        <% end %>
-      </td>
-      <td class="inventories">
-        <% current_character.inventories.best_defence.each do |inventory| %>
-          <%= item_image(inventory, :icon) %>
-        <% end %>
-      </td>
-    </tr>
-  </table>
-</div>
+<table id="fight_attributes" cellspacing="0" cellpadding="0">
+  <tr>
+    <th><%= t(".personal") %></th>
+    <th><%= t(".relations") %></th>
+    <th><%= t(".offence") %></th>
+    <th><%= t(".defence") %></th>
+  </tr>
+  <tr>
+    <td class="values">
+      <%= attack(current_character.attack) %>
+      <%= defence(current_character.defence) %>
+    </td>
+    <td class="values">
+      <div class="relations"><%= current_character.relations.effective_size %></div>
+
+      <%= attack(current_character.inventory_attack_points) %>
+      <%= defence(current_character.inventory_defence_points) %>
+    </td>
+    <td class="inventories">
+      <% current_character.inventories.best_offence.each do |inventory| %>
+        <%= item_image(inventory, :icon) %>
+      <% end %>
+    </td>
+    <td class="inventories">
+      <% current_character.inventories.best_defence.each do |inventory| %>
+        <%= item_image(inventory, :icon) %>
+      <% end %>
+    </td>
+  </tr>
+</table>

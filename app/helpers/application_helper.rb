@@ -58,7 +58,7 @@ module ApplicationHelper
 
     if has_elements
       yield(items)
-    else
+    elsif options[:empty_set] != false
       concat(
         empty_set(options[:empty_set])
       )

@@ -1,4 +1,4 @@
-<div id="inventory_result">
+<% result_for :inventory_sell do %>
   <p>
     <%= raw t(".messages.success",
           :amount     => @amount,
@@ -11,7 +11,7 @@
   <div class="payouts">
     <%= payout(:basic_money, number_to_currency(@inventory.basic_money)) %>
   </div>
-</div>
+<% end %>
 
 <% dom_ready do %>
   $('#inventory_list').html('<%= escape_javascript(render("list", :inventories => current_character.inventories)) %>');
