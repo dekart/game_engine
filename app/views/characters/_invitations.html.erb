@@ -11,12 +11,12 @@
       </td>
       <% content_tag(:td, :id => dom_id(invitation, :controls), :class => :controls) do %>
         <%= link_to_remote(button(:accept),
-              :url    => accept_invitation_url(invitation, :canvas => false),
+              :url    => accept_invitation_path(invitation),
               :update => dom_id(invitation, :controls),
               :html   => {:class => "accept button"}
             ) %>
         <%= link_to_remote(button(:ignore),
-              :url    => ignore_invitation_url(invitation, :canvas => false),
+              :url    => ignore_invitation_path(invitation),
               :update => dom_id(invitation, :controls),
               :html   => {:class => "ignore button"}
             ) %>

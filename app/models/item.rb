@@ -14,7 +14,7 @@ class Item < ActiveRecord::Base
             items.available_till > ?
           ) AND (
             items.limit IS NULL OR
-            items.limit > owned
+            items.limit > items.owned
           )
         },
         Time.now

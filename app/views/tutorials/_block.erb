@@ -8,9 +8,9 @@
 
     <h2><%= t(".title") %></h2>
 
-    <ul>
+    <div class="steps">
       <% tutorial_step("mission_groups", "index") do |current, reload_tutorial| %>
-        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.missions_completed != 0 %>">
+        <div class="step clearfix <%= "current" if current %> <%= "completed" if current_character.missions_completed != 0 %>">
           <% if current %>
             <strong><%= t(".step_1.title") %> <%= completed_mark %></strong>
 
@@ -26,11 +26,11 @@
           <% else %>
             <%= link_to(t(".step_1.title"), mission_groups_path) %> <%= completed_mark %>
           <% end %>
-        </li>
+        </div>
       <% end %>
 
       <% tutorial_step("items", "index") do |current, reload_tutorial| %>
-        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.inventories.count != 0 %>">
+        <div class="step clearfix <%= "current" if current %> <%= "completed" if current_character.inventories.count != 0 %>">
           <% if current %>
             <strong><%= t(".step_2.title") %> <%= completed_mark %></strong>
 
@@ -46,11 +46,11 @@
           <% else %>
             <%= link_to(t(".step_2.title"), items_path) %> <%= completed_mark %>
           <% end %>
-        </li>
+        </div>
       <% end %>
 
       <% tutorial_step("fights", "new") do |current, reload_tutorial| %>
-        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.level != 1 %>">
+        <div class="step clearfix <%= "current" if current %> <%= "completed" if current_character.level != 1 %>">
           <% if current %>
             <strong><%= t(".step_3.title") %> <%= completed_mark %></strong>
 
@@ -66,11 +66,11 @@
           <% else %>
             <%= link_to(t(".step_3.title"), new_fight_path) %> <%= completed_mark %>
           <% end %>
-        </li>
+        </div>
       <% end %>
         
       <% tutorial_step("characters", "upgrade") do |current, reload_tutorial| %>
-        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_character.level != 1 && current_character.points == 0 %>">
+        <div class="step clearfix <%= "current" if current %> <%= "completed" if current_character.level != 1 && current_character.points == 0 %>">
           <% if current %>
             <strong><%= t(".step_4.title") %> <%= completed_mark %></strong>
 
@@ -90,11 +90,11 @@
           <% else %>
             <%= link_to(t(".step_4.title"), upgrade_character_path(:current)) %> <%= completed_mark %>
           <% end %>
-        </li>
+        </div>
       <% end %>
 
       <% tutorial_step("users", "invite") do |current, reload_tutorial| %>
-        <li class="step clearfix <%= "current" if current %> <%= "completed" if current_user.invitations.count != 0 %>">
+        <div class="step clearfix <%= "current" if current %> <%= "completed" if current_user.invitations.count != 0 %>">
           <% if current %>
             <strong><%= t(".step_5.title") %> <%= completed_mark %></strong>
 
@@ -102,8 +102,8 @@
           <% else %>
             <%= link_to(t(".step_5.title"), invite_users_path) %> <%= completed_mark %>
           <% end %>
-        </li>
+        </div>
       <% end %>
-    </ul>
+    </div>
   </div>
 </div>

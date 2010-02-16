@@ -1,8 +1,6 @@
-<div id="inventory_result">
+<% result_for :inventory_use do %>
   <p>
-    <%= raw t(".messages.success",
-          :item => @inventory.name
-        ) %>
+    <%= raw t(".messages.success", :item => @inventory.name) %>
   </p>
 
   <h3><%= t(".effects") %></h3>
@@ -15,18 +13,17 @@
 
   <% if @inventory.frozen? %>
     <p>
-      <%= raw t(".messages.item_gone",
-            :item => @inventory.name
-          ) %>
+      <%= raw t(".messages.item_gone", :item => @inventory.name) %>
     </p>
   <% end %>
-</div>
-
-<% fb_js_string :list do %>
-  <%= render :partial => "list", :locals => {:inventories => current_character.inventories} %>
 <% end %>
 
 <% dom_ready do %>
-  $('result').show();
-  $('inventory_list').setInnerFBML(list);
+  $('#inventory_list').html('<%=
+    escape_javascript(
+      render("list", :inventories => current_character.inventories)
+    )
+  %>');
+
+  $(document).trigger('result.received');
 <% end %>

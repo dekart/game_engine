@@ -1,9 +1,9 @@
-<div id="upgrade_result">
+<% result_for :upgrade do %>
   <% if @success %>
     <p>
       <%= raw t(".messages.success",
             :attribute  => Character.human_attribute_name(params[:attribute]),
-            :number     => content_tag(:b, current_character.attributes[params[:attribute]])
+            :number     => content_tag(:span, current_character.attributes[params[:attribute]], :class => :value)
           ) %>
     </p>
   <% else %>
@@ -11,10 +11,10 @@
       <%= t(".messages.not_enough_points", :attribute => Character.human_attribute_name(params[:attribute])) %>
     </p>
   <% end %>
-</div>
+<% end %>
 
 <% dom_ready do %>
-  $('#upgrade_<%= params[:attribute] %>').text('<%= current_character.attributes[params[:attribute]] %>');
+  $('#upgrade_list .<%= params[:attribute] %> .value').text('<%= current_character.attributes[params[:attribute]] %>');
 
   <% if current_character.points == 0 %>
     $(document).trigger('character.upgrade_complete');

@@ -22,7 +22,7 @@
 
 <%= will_paginate @items %>
 
-<table class="item_list" cellspacing="0" cellpadding="0">
+<table id="item_list" cellspacing="0" cellpadding="0">
   <% @items.each do |item| %>
     <%= render :partial => item %>
   <% end %>

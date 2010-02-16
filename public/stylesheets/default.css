@@ -14,9 +14,14 @@ h1 {
   color: #3b5998;
   margin: 15px 0px; }
 
-h2, h3 {
+h2 {
   font-size: 16px;
   color: #3b5998;
+  margin: 0 0 7px 0; }
+
+h3 {
+  font-size: 14px;
+  color: black;
   margin: 0 0 7px 0; }
 
 td {
@@ -24,6 +29,22 @@ td {
 
 th {
   text-align: left; }
+
+.clearfix {
+  display: inline-block; }
+  .clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0; }
+
+html[xmlns] .clearfix {
+  display: block; }
+
+* html .clearfix {
+  height: 1%; }
 
 form label {
   color: #3b5998; }
@@ -299,10 +320,32 @@ form .error {
     font-weight: bold;
     margin: 0; }
 
+#tutorial {
+  border: 2px solid #bdc7d8;
+  padding: 10px; }
+  #tutorial .step {
+    margin-bottom: 5px; }
+  #tutorial .current {
+    font-size: 15px; }
+  #tutorial .complete_mark {
+    color: #00d000;
+    vertical-align: super;
+    font-size: 10px;
+    display: none; }
+  #tutorial .continue {
+    margin: 10px;
+    display: none; }
+    #tutorial .continue span {
+      background-image: url(/system/assets/000/000/032/original/accept.gif); }
+  #tutorial .completed .complete_mark {
+    display: inline; }
+  #tutorial .completed .button {
+    display: block; }
+
 #result {
   font-size: 13px;
   margin: 10px 0;
-  padding: 10px 0 20px 0;
+  padding: 10px 0;
   border: 2px solid #3b5998; }
   #result .result_content {
     padding: 0px 30px;
@@ -406,11 +449,37 @@ form .error {
   .character_attributes .vip_money .value {
     background-image: url(/system/assets/000/000/017/original/vip_money.gif); }
 
-.character_statistics tr {
-  height: 25px;
-  line-height: 25px; }
-.character_statistics th {
-  padding-right: 15px; }
+#character .controls {
+  clear: both; }
+  #character .controls a {
+    float: left; }
+  #character .controls .attack span {
+    background-image: url(/system/assets/000/000/009/original/attack.gif); }
+  #character .controls .upgrade span {
+    background-image: url(/system/assets/000/000/025/original/add.gif); }
+#character .info {
+  width: 100%;
+  margin-bottom: 15px; }
+  #character .info .character_statistics tr {
+    height: 25px;
+    line-height: 25px; }
+  #character .info .character_statistics th {
+    padding-right: 15px; }
+  #character .info .rank_list .rank {
+    padding: 3px 25px;
+    background-image: url(/system/assets/000/000/034/original/level.gif);
+    background-position: 3px center;
+    background-repeat: no-repeat; }
+#character .item_group .item, #character .properties .item {
+  float: left;
+  text-align: center;
+  font-weight: bold; }
+#character .item_group .item {
+  width: 85px;
+  height: 135px; }
+#character .properties .item {
+  width: 130px;
+  height: 170px; }
 
 #latest_help_request {
   padding: 10px;
@@ -425,6 +494,9 @@ form .error {
     background-image: url(/system/assets/000/000/016/original/basic_money.gif);
     background-position: center left;
     background-repeat: no-repeat; }
+
+#help_request_result {
+  background-image: url(/system/assets/000/000/014/original/alliance.gif); }
 
 .payouts .payout {
   height: 25px;
@@ -458,6 +530,10 @@ form .error {
   background-image: url(/system/assets/000/000/034/original/level.gif); }
 .payouts .mercenaries {
   background-image: url(/system/assets/000/000/014/original/alliance.gif); }
+.payouts .attack {
+  background-image: url(/system/assets/000/000/009/original/attack.gif); }
+.payouts .defence {
+  background-image: url(/system/assets/000/000/028/original/defence.gif); }
 .payouts .item, .payouts .property, .payouts .random_item {
   height: 40px !important;
   padding-left: 0; }
@@ -598,62 +674,52 @@ form .error {
       background-repeat: no-repeat;
       margin-bottom: 15px; }
 
-.item_list {
+#item_list {
   width: 100%; }
-  .item_list td {
+  #item_list td {
     padding: 10px 0;
     border-bottom: 1px solid #d0d0d0; }
-  .item_list .picture {
+  #item_list .picture {
+    width: 80px; }
+  #item_list .info {
     padding-right: 10px; }
-  .item_list .info {
-    padding-right: 10px; }
-    .item_list .info .name {
-      font-size: 15px;
-      margin-bottom: 5px;
+    #item_list .info .name {
+      font-size: 16px;
       font-weight: bold; }
-    .item_list .info .sale_limit, .item_list .info .time_limit {
+    #item_list .info .name, #item_list .info .description {
+      margin-bottom: 10px; }
+    #item_list .info .limit {
       color: red; }
-  .item_list .payout_preview {
+  #item_list .info, #item_list .payouts, #item_list .requirements {
     padding-right: 10px; }
-    .item_list .payout_preview .restore_health {
-      background-image: url(asset:icons_health); }
-    .item_list .payout_preview .restore_energy {
-      background-image: url(asset:icons_energy); }
-    .item_list .payout_preview .upgrade {
-      background-image: url(asset:icons_level); }
-  .item_list .requirements {
-    padding-right: 10px; }
-  .item_list .spacer {
-    border: 0; }
-  .item_list .controls {
+  #item_list .controls {
     text-align: right;
     width: 130px; }
-    .item_list .controls select {
+    #item_list .controls select {
       margin: 5px; }
-    .item_list .controls a.buy span {
-      background-image: url(asset:icons_basic_money); }
+    #item_list .controls a.buy span {
+      background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
 
 #special_items {
-  border: 2px solid #EC7000;
+  border: 2px solid #ec7000;
   margin-bottom: 10px;
   padding: 10px; }
   #special_items .items {
     width: 100%; }
+  #special_items .item {
+    padding-right: 5px; }
   #special_items .name {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 5px; }
   #special_items .picture {
     float: left;
     margin-right: 10px; }
-  #special_items .requirements {
-    margin-left: 80px; }
-    #special_items .requirements .requirement {
-      clear: none; }
-  #special_items .payout_preview {
-    margin-left: 80px; }
-    #special_items .payout_preview .payout {
-      clear: none; }
+  #special_items .requirements, #special_items .payouts {
+    margin-left: 80px;
+    margin-bottom: 10px; }
+  #special_items .requirements .requirement, #special_items .payouts .payout {
+    clear: none; }
   #special_items .controls {
     float: left;
     clear: both; }
@@ -664,8 +730,8 @@ form .error {
       float: left;
       clear: none; }
     #special_items .controls .buy span {
-      background-image: url(asset:icons_basic_money); }
-  #special_items .sale_limit, #special_items .time_limit {
+      background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+  #special_items .limit {
     color: red; }
 
 #next_item {
@@ -677,6 +743,13 @@ form .error {
     font-size: 14px;
     font-weight: bold; }
 
+#shop_result {
+  background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+  #shop_result .inventory {
+    width: 150px; }
+    #shop_result .inventory span {
+      background-image: url(/system/assets/000/000/023/original/inventory.gif); }
+
 #inventory_buttons {
   margin-bottom: 15px; }
   #inventory_buttons .button {
@@ -684,53 +757,59 @@ form .error {
     width: auto;
     margin-right: 15px; }
   #inventory_buttons .shop span {
-    background-image: url(asset:icons_shop); }
+    background-image: url(/system/assets/000/000/011/original/shop.gif); }
   #inventory_buttons .inventory span {
-    background-image: url(asset:icons_inventory); }
+    background-image: url(/system/assets/000/000/023/original/inventory.gif); }
   #inventory_buttons .equipment span {
-    background-image: url(asset:icons_profile); }
+    background-image: url(/system/assets/000/000/033/original/profile.gif); }
 
-#inventory_list {
-  margin-top: 10px; }
-  #inventory_list td {
-    padding: 10px;
-    border-bottom: 1px solid #d0d0d0; }
-  #inventory_list .info .name {
-    font-size: 15px;
-    margin-bottom: 5px;
-    font-weight: bold; }
-  #inventory_list .payout_preview {
-    padding-right: 10px; }
-    #inventory_list .payout_preview .restore_health {
-      background-image: url(asset:icons_health); }
-    #inventory_list .payout_preview .restore_energy {
-      background-image: url(asset:icons_energy); }
-    #inventory_list .payout_preview .upgrade {
-      background-image: url(asset:icons_level); }
-  #inventory_list .stats {
-    width: 70px; }
-    #inventory_list .stats div {
-      margin-bottom: 5px; }
-  #inventory_list .spacer {
-    border: 0; }
-  #inventory_list .controls {
-    width: 90px;
-    width: 200px;
-    text-align: right; }
-    #inventory_list .controls select {
-      margin: 5px; }
-    #inventory_list .controls .sell span {
-      background-image: url(asset:icons_basic_money); }
-    #inventory_list .controls .use span {
-      background-image: url(asset:icons_accept); }
+#inventory_list table {
+  width: 100%; }
+#inventory_list th {
+  padding-top: 10px; }
+#inventory_list td {
+  padding: 10px;
+  border-bottom: 1px solid #d0d0d0; }
+#inventory_list .info .name {
+  font-size: 16px;
+  font-weight: bold; }
+#inventory_list .info .name, #inventory_list .info .description {
+  margin-bottom: 5px; }
+#inventory_list .payouts {
+  padding-right: 10px; }
+#inventory_list .stats {
+  font-weight: bold; }
+  #inventory_list .stats .owned, #inventory_list .stats .used {
+    margin-bottom: 5px; }
+  #inventory_list .stats .value {
+    font-weight: normal; }
+#inventory_list .spacer {
+  border: 0; }
+#inventory_list .controls {
+  width: 90px;
+  width: 200px;
+  text-align: right; }
+  #inventory_list .controls select {
+    margin: 5px; }
+  #inventory_list .controls .sell span {
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+  #inventory_list .controls .use span {
+    background-image: url(/system/assets/000/000/032/original/accept.gif); }
+
+#inventory_sell_result {
+  background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+
+#inventory_use_result {
+  background-image: url(/system/assets/000/000/032/original/accept.gif); }
 
 #fight_attributes {
   margin: 10px 0;
+  width: 100%;
   border-bottom: 1px solid #d0d0d0; }
-  #fight_attributes table {
-    width: 99%; }
   #fight_attributes th {
     font-size: 14px; }
+  #fight_attributes td {
+    padding: 5px 0; }
   #fight_attributes .values div {
     display: inline;
     line-height: 22px;
@@ -739,11 +818,114 @@ form .error {
     background-position: center left;
     background-repeat: no-repeat; }
   #fight_attributes .attack {
-    background-image: url(asset:icons_attack); }
+    background-image: url(/system/assets/000/000/009/original/attack.gif); }
   #fight_attributes .defence {
-    background-image: url(asset:icons_defence); }
+    background-image: url(/system/assets/000/000/028/original/defence.gif); }
   #fight_attributes .relations {
-    background-image: url(asset:icons_alliance); }
+    background-image: url(/system/assets/000/000/014/original/alliance.gif); }
+
+#victim_list td {
+  padding: 10px 0;
+  vertical-align: middle;
+  border-bottom: 1px solid #d0d0d0; }
+#victim_list .picture {
+  padding-right: 10px; }
+#victim_list .name {
+  width: 200px; }
+#victim_list .level {
+  width: 80px; }
+#victim_list .relations .larger {
+  color: red; }
+#victim_list .controls .attack span {
+  background-image: url(/system/assets/000/000/022/original/fights.gif); }
+#victim_list .invitee {
+  color: green; }
+
+#fight_result {
+  background-image: url(/system/assets/000/000/022/original/fights.gif); }
+  #fight_result .lost b, #fight_result .victim_lost b {
+    width: 55px; }
+  #fight_result .attack_again span {
+    background-image: url(/system/assets/000/000/022/original/fights.gif); }
+  #fight_result .request_help {
+    width: 190px; }
+    #fight_result .request_help span {
+      background-image: url(/system/assets/000/000/014/original/alliance.gif); }
+  #fight_result .details {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+    width: 100%;
+    margin: 0px auto; }
+    #fight_result .details .vs {
+      width: 65px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 160px;
+      vertical-align: middle; }
+    #fight_result .details .attacker, #fight_result .details .victim {
+      width: 280px; }
+      #fight_result .details .attacker .attributes .attack, #fight_result .details .victim .attributes .attack {
+        background-image: url(/system/assets/000/000/009/original/attack.gif); }
+      #fight_result .details .attacker .attributes .defence, #fight_result .details .victim .attributes .defence {
+        background-image: url(/system/assets/000/000/028/original/defence.gif); }
+      #fight_result .details .attacker .attributes .relations, #fight_result .details .victim .attributes .relations {
+        background-image: url(/system/assets/000/000/014/original/alliance.gif); }
+    #fight_result .details .attacker {
+      text-align: right; }
+      #fight_result .details .attacker .character .picture {
+        float: right;
+        margin-left: 10px; }
+      #fight_result .details .attacker .attributes div {
+        float: right;
+        margin-left: 10px; }
+      #fight_result .details .attacker .best_items img {
+        margin-left: 10px; }
+    #fight_result .details .victim .character .picture {
+      float: left;
+      margin-right: 10px; }
+    #fight_result .details .victim .attributes div {
+      float: left;
+      margin-right: 10px; }
+    #fight_result .details .victim .best_items img {
+      margin-right: 10px; }
+    #fight_result .details .character {
+      height: auto;
+      font-size: 14px; }
+      #fight_result .details .character .name {
+        font-weight: bold;
+        margin-bottom: 5px; }
+      #fight_result .details .character .level {
+        margin-top: 5px; }
+    #fight_result .details .attributes {
+      margin-top: 5px;
+      height: 30px; }
+      #fight_result .details .attributes div {
+        padding-left: 20px;
+        line-height: 22px;
+        background-position: center left;
+        background-repeat: no-repeat; }
+    #fight_result .details .best_items {
+      clear: both; }
+      #fight_result .details .best_items strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px; }
+  #fight_result .item_details {
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px; }
+    #fight_result .item_details .attacker {
+      width: 280px; }
+    #fight_result .item_details .items {
+      text-align: left; }
+      #fight_result .item_details .items strong {
+        display: block;
+        margin-bottom: 5px; }
+    #fight_result .item_details .victim {
+      padding-left: 85px; }
+    #fight_result .item_details .group {
+      margin-bottom: 10px; }
 
 #upgrade_list td {
   padding: 5px;
@@ -756,42 +938,24 @@ form .error {
   padding-left: 21px;
   background-position: center left;
   background-repeat: no-repeat; }
-
-#upgrade_attack {
-  background: url(asset:icons_attack); }
-
-#upgrade_defence {
-  background: url(asset:icons_defence); }
-
-#upgrade_health {
-  background: url(asset:icons_health); }
-
-#upgrade_energy {
-  background: url(asset:icons_energy); }
-
-#upgrade_stamina {
-  background: url(asset:icons_stamina); }
-
-#upgrade_list .controls a span {
+#upgrade_list .attack .value {
+  background-image: url(/system/assets/000/000/009/original/attack.gif); }
+#upgrade_list .defence .value {
+  background-image: url(/system/assets/000/000/028/original/defence.gif); }
+#upgrade_list .health .value {
+  background-image: url(/system/assets/000/000/013/original/health.gif); }
+#upgrade_list .energy .value {
+  background-image: url(/system/assets/000/000/020/original/energy.gif); }
+#upgrade_list .stamina .value {
+  background-image: url(/system/assets/000/000/024/original/stamina.gif); }
+#upgrade_list .controls .upgrade span {
   margin-top: 0;
-  background-image: url(asset:icons_add); }
+  background-image: url(/system/assets/000/000/025/original/add.gif); }
 
-#victim_list td {
-  padding: 10px 0;
-  border-bottom: 1px solid #d0d0d0;
-  vertical-align: middle; }
-#victim_list .picture {
-  padding-right: 10px; }
-#victim_list .name {
-  width: 200px; }
-#victim_list .level {
-  width: 80px; }
-#victim_list .relations .larger {
-  color: red; }
-#victim_list .controls .button span {
-  background-image: url(asset:icons_fights); }
-#victim_list .invitee {
-  color: green; }
+#upgrade_result {
+  background-image: url(/system/assets/000/000/025/original/add.gif); }
+  #upgrade_result .value {
+    font-weight: bold; }
 
 #invitation_list {
   width: 100%; }
@@ -809,6 +973,25 @@ form .error {
     background-image: url(asset:icons_accept); }
   #invitation_list .controls .ignore span {
     background-image: url(asset:icons_delete); }
+
+#invitation td {
+  padding: 5px;
+  vertical-align: middle;
+  border-bottom: 1px solid #d0d0d0; }
+#invitation .picture {
+  width: 55px; }
+#invitation .level {
+  width: 70px; }
+  #invitation .level .value {
+    font-weight: bold; }
+#invitation .controls .accept span {
+  background-image: url(asset:icons_accept); }
+#invitation .controls .ignore span {
+  background-image: url(asset:icons_delete); }
+
+#invitation_result {
+  padding: 0px 30px;
+  background: url(asset:icons_alliance) 5px 0px no-repeat; }
 
 #alliance_buttons {
   margin-bottom: 15px; }
@@ -837,172 +1020,6 @@ form .error {
     width: 70px; }
   #alliance_members .controls .delete span {
     background-image: url(asset:icons_delete); }
-
-#rank_list .rank {
-  padding: 3px 25px;
-  background: url(asset:icons_level) 3px center no-repeat; }
-
-#tutorial {
-  border: 2px solid #BDC7D8;
-  padding: 10px; }
-  #tutorial .step {
-    margin-bottom: 5px; }
-  #tutorial .current {
-    font-size: 15px; }
-  #tutorial .complete_mark {
-    color: green;
-    vertical-align: super;
-    font-size: 10px;
-    display: none; }
-  #tutorial .button {
-    text-align: center;
-    width: 130px;
-    margin: 10px;
-    padding-left: 5px;
-    display: none; }
-  #tutorial .completed .complete_mark {
-    display: inline; }
-  #tutorial .completed .button {
-    display: block; }
-
-#help_result {
-  padding: 0px 30px;
-  background: url(asset:icons_alliance) 5px 0px no-repeat; }
-
-#fight_result {
-  padding: 0px 30px;
-  background: url(asset:icons_fights) 5px 0px no-repeat; }
-  #fight_result .lost b, #fight_result .victim_lost b {
-    width: 55px; }
-  #fight_result .attack_again span {
-    background-image: url(asset:icons_fights); }
-  #fight_result .request_help {
-    width: 190px; }
-    #fight_result .request_help span {
-      background-image: url(asset:icons_alliance); }
-  #fight_result .details {
-    border-top: 1px solid #e0e0e0;
-    padding-top: 10px;
-    width: 730px;
-    height: 160px;
-    margin: 0px auto; }
-    #fight_result .details .attacker {
-      width: 330px;
-      text-align: right; }
-    #fight_result .details .vs {
-      width: 65px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 160px;
-      vertical-align: middle; }
-    #fight_result .details .victim {
-      width: 330px; }
-    #fight_result .details .character {
-      height: auto;
-      font-size: 14px; }
-      #fight_result .details .character .name {
-        font-weight: bold;
-        margin-bottom: 5px; }
-      #fight_result .details .character .level {
-        margin-top: 5px; }
-    #fight_result .details .attributes {
-      height: 30px;
-      clear: both; }
-      #fight_result .details .attributes div {
-        padding-left: 20px;
-        line-height: 22px;
-        background-position: center left;
-        background-repeat: no-repeat; }
-    #fight_result .details .best_items strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px; }
-    #fight_result .details .attacker .character .picture {
-      float: right;
-      margin-left: 10px; }
-    #fight_result .details .attacker .attributes {
-      margin-left: auto; }
-      #fight_result .details .attacker .attributes div {
-        float: right;
-        margin-left: 10px; }
-      #fight_result .details .attacker .attributes .attack {
-        background-image: url(asset:icons_attack); }
-      #fight_result .details .attacker .attributes .relations {
-        background-image: url(asset:icons_alliance); }
-      #fight_result .details .attacker .attributes .relations_attack {
-        background-image: url(asset:icons_attack); }
-    #fight_result .details .attacker .best_items img {
-      margin-left: 10px; }
-    #fight_result .details .victim .character .picture {
-      float: left;
-      margin-right: 10px; }
-    #fight_result .details .victim .attributes div {
-      float: left;
-      margin-right: 10px; }
-    #fight_result .details .victim .attributes .defence {
-      background-image: url(asset:icons_defence); }
-    #fight_result .details .victim .attributes .relations {
-      background-image: url(asset:icons_alliance); }
-    #fight_result .details .victim .attributes .relations_defence {
-      background-image: url(asset:icons_defence); }
-    #fight_result .details .victim .best_items img {
-      margin-right: 10px; }
-  #fight_result .item_details {
-    text-align: center;
-    border-top: 1px solid #e0e0e0;
-    padding-top: 10px; }
-    #fight_result .item_details .items {
-      text-align: left; }
-      #fight_result .item_details .items strong {
-        display: block;
-        margin-bottom: 5px; }
-    #fight_result .item_details .attacker {
-      width: 330px; }
-    #fight_result .item_details .victim {
-      padding-left: 65px; }
-    #fight_result .item_details .group {
-      margin-bottom: 10px; }
-
-#shop_result {
-  padding: 0px 30px;
-  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
-  #shop_result .inventory {
-    width: 150px; }
-    #shop_result .inventory span {
-      background-image: url(asset:icons_inventory); }
-
-#inventory_result {
-  padding: 0px 30px;
-  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
-
-#upgrade_result {
-  padding: 0px 30px;
-  background: url(asset:icons_add) 5px 0px no-repeat; }
-
-#character .controls {
-  clear: both; }
-  #character .controls a {
-    float: left; }
-  #character .controls .attack span {
-    background-image: url(asset:icons_fights); }
-  #character .controls .upgrade span {
-    background-image: url(asset:icons_add); }
-#character .item_group .item {
-  float: left;
-  width: 85px;
-  height: 135px;
-  text-align: center;
-  font-weight: bold; }
-#character .properties .item {
-  float: left;
-  width: 130px;
-  height: 170px;
-  text-align: center;
-  font-weight: bold; }
-#character .wall {
-  width: 315px;
-  padding-left: 5px; }
 
 #rating_list .rating {
   margin-bottom: 30px; }
@@ -1283,25 +1300,6 @@ form .error {
 #invitation_form #chat_invitation p {
   float: right;
   width: 200px; }
-
-#invitation td {
-  padding: 5px;
-  vertical-align: middle;
-  border-bottom: 1px solid #d0d0d0; }
-#invitation .picture {
-  width: 55px; }
-#invitation .level {
-  width: 70px; }
-  #invitation .level .value {
-    font-weight: bold; }
-#invitation .controls .accept span {
-  background-image: url(asset:icons_accept); }
-#invitation .controls .ignore span {
-  background-image: url(asset:icons_delete); }
-
-#invitation_result {
-  padding: 0px 30px;
-  background: url(asset:icons_alliance) 5px 0px no-repeat; }
 
 #get_more_vip {
   margin-top: 30px; }

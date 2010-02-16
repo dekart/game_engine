@@ -3,36 +3,25 @@
   <td class="info">
     <div class="name"><%= item.name %></div>
     <div class="description"><%= item.description %></div>
-    
-    <% if item.left %>
-      <div class="sale_limit">
-        <%= raw t(".sale_limit",
-              :amount => content_tag(:strong, item.left)
-            ) %>
-      </div>
-    <% end %>
 
-    <% if item.available_till %>
-      <div class="time_limit">
-        <%= raw t(".time_limit",
-              :amount => content_tag(:strong, "", :id => dom_id(item, :timer))
-            ) %>
-      </div>
-
-      <% dom_ready do %>
-        Timer.start('<%= dom_id(item, :timer) %>', <%= item.time_left %>)
-      <% end %>
+    <% if item.left or item.available_till %>
+      <%= render "items/limit", :item => item %>
     <% end %>
   </td>
   <td class="payouts">
+    <h3><%= Item.human_attribute_name("effects") %></h3>
+
     <%= payout(:attack, "+%d" % item.attack) if item.attack > 0 %>
     <%= payout(:defence, "+%d" % item.defence) if item.defence > 0 %>
-    
+
     <% item.effects.each do |effect| %>
       <%= payout(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
     <% end %>
   </td>
+
   <td class="requirements">
+    <h3><%= Item.human_attribute_name("price") %></h3>
+
     <%= attribute_requirement(:basic_money, number_to_currency(item.basic_price)) if item.basic_price > 0 %>
     <%= vip_money_requirement(item.vip_price) if item.vip_price > 0 %>
   </td>

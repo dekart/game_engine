@@ -49,6 +49,9 @@ en:
         progress: "Progress"
         requirements: "Requirements"
         payouts: "Payouts"
+      item:
+        price: "Price"
+        effects: "Effects"
     errors:
       models:
         character:
@@ -93,9 +96,9 @@ en:
               too_weak: "You are too weak to fight! Take a rest!"
   effects:
     restore_energy:
-      name: "Restore Energy"
+      name: "Energy Points"
     restore_health:
-      name: "Restore Health"
+      name: "Health Points"
     upgrade:
       name: "Upgrade Points"
   requirements:
@@ -211,11 +214,9 @@ en:
         empty_set: "{{user}} don't have any titles yet"
       items:
         amount: "{{name}} X&nbsp;{{amount}}"
-        empty_set: "No {{group}}"
       properties:
         title: "Properties"
         amount: "{{name}} X&nbsp;{{amount}}"
-        empty_set: "No properties"
       wall:
         title: "{{user}} Wall"
     upgrade:
@@ -283,7 +284,6 @@ en:
         victim_lost: "{{user_name}} lost:"
       details:
         vs: "VS."
-        defence_unknown: "???"
         best_offence: "Your Best Offence:"
         best_defence: "Their Best Defence:"
         show_items: "Show all items used"
@@ -404,8 +404,6 @@ en:
       buttons:
         inventory: "Go to Inventory"
     item:
-      sale_limit: "Only {{amount}} left!"
-      time_limit: "Time Left: {{amount}}"
       buttons:
         buy: "Buy"
     specials:
@@ -414,6 +412,9 @@ en:
       time_limit: "Time Left: {{amount}}"
       buttons:
         buy: "Buy"
+    limit:
+      amount_limit: "Only {{amount}} left!"
+      time_limit: "Time Left: {{amount}}"
   missions:
     fulfill:
       completed:
@@ -587,7 +588,6 @@ en:
       owned: "Owned: {{amount}}"
       buttons:
         buy: "Buy"
-        get_vip: "Earn Gems"
         sell: "Sell for {{price}}"
     destroy:
       messages:
@@ -653,7 +653,7 @@ en:
       already_used: "You already used this promotion link"
       expired: "This promotion link already expired"
   premia:
-    get_vip: "Earn Gems"
+    get_vip: "Earn"
     show:
       title: "Gem Market"
       current:

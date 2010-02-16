@@ -14,31 +14,69 @@
     background-repeat: no-repeat
 
   .attack .value
-    background-image = !character_attack_icon
+    background-image = !character_attributes_attack_icon
 
   .defence .value
-    background-image = !character_defence_icon
+    background-image = !character_attributes_defence_icon
 
   .health .value
-    background-image = !character_health_icon
+    background-image = !character_attributes_health_icon
 
   .energy .value
-    background-image = !character_energy_icon
+    background-image = !character_attributes_energy_icon
 
   .stamina .value
-    background-image = !character_stamina_icon
+    background-image = !character_attributes_stamina_icon
 
   .basic_money .value
-    background-image = !character_basic_money_icon
+    background-image = !character_attributes_basic_money_icon
 
   .vip_money .value
-    background-image = !character_vip_money_icon
+    background-image = !character_attributes_vip_money_icon
 
+#character
+  .controls
+    clear: both
 
-.character_statistics
-  tr
-    height: 25px
-    line-height: 25px
+    a
+      float: left
 
-  th
-    padding-right: 15px
+    .attack span
+      background-image = !character_buttons_attack_icon
+
+    .upgrade span
+      background-image = !character_buttons_upgrade_icon
+
+  .info
+    width: 100%
+    margin-bottom: 15px
+
+    .character_statistics
+      tr
+        height: 25px
+        line-height: 25px
+
+      th
+        padding-right: 15px
+
+    .rank_list
+      .rank
+        padding: 3px 25px
+        background:
+          image = !character_rank_icon
+          position: 3px center
+          repeat: no-repeat
+
+  .item_group, .properties
+    .item
+      float: left
+      text-align: center
+      font-weight: bold
+
+  .item_group .item
+    width: 85px
+    height: 135px
+
+  .properties .item
+    width: 130px
+    height: 170px
