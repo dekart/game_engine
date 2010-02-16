@@ -9,10 +9,10 @@
 
       <table class="details" cellspacing="0" cellpadding="0">
         <tr>
-          <td class="payout_preview">
+          <td class="payouts">
             <h4><%= t(".payout") %></h4>
 
-            <%= payout_preview(:experience, boss.experience) %>
+            <%= payout(:experience, boss.experience) %>
 
             <%= payout_list(boss.payouts, :add, :preview) %>
           </td>

@@ -24,12 +24,12 @@
       <% end %>
     <% end %>
   </td>
-  <td class="payout_preview">
-    <%= payout_preview(:attack, "+%d" % item.attack) if item.attack > 0 %>
-    <%= payout_preview(:defence, "+%d" % item.defence) if item.defence > 0 %>
+  <td class="payouts">
+    <%= payout(:attack, "+%d" % item.attack) if item.attack > 0 %>
+    <%= payout(:defence, "+%d" % item.defence) if item.defence > 0 %>
     
     <% item.effects.each do |effect| %>
-      <%= payout_preview(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
+      <%= payout(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
     <% end %>
   </td>
   <td class="requirements">

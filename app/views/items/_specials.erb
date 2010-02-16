@@ -7,12 +7,12 @@
       <td class="item">
         <div class="name"><%= item.name %></div>
         <div class="picture"><%= item_image(item, :small) %></div>
-        <div class="payout_preview">
-          <%= payout_preview(:attack, "+%d" % item.attack) if item.attack > 0 %>
-          <%= payout_preview(:defence, "+%d" % item.defence) if item.defence > 0 %>
+        <div class="payouts">
+          <%= payout(:attack, "+%d" % item.attack) if item.attack > 0 %>
+          <%= payout(:defence, "+%d" % item.defence) if item.defence > 0 %>
 
           <% item.effects.each do |effect| %>
-            <%= payout_preview(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
+            <%= payout(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
           <% end %>
         </div>
 

@@ -16,17 +16,6 @@ module PayoutsHelper
 
   def payout(type, value, options = {}, &block)
     result = content_tag(:div,
-      content_tag(:span, options.delete(:label) || Character.human_attribute_name(type.to_s), :class => :label) +
-      content_tag(:span, value, :class => :value) +
-      (block_given? ? capture(&block) : ""),
-      :class => "#{type} payout"
-    )
-
-    block_given? ? concat(result) : result
-  end
-
-  def payout_preview(type, value, options = {}, &block)
-    result = content_tag(:div,
       content_tag(:span, value, :class => :value) +
       (block_given? ? capture(&block) : "") +
       content_tag(:span, options.delete(:label) || Character.human_attribute_name(type.to_s), :class => :label),

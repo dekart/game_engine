@@ -4,6 +4,12 @@
   padding: 10px 0 20px 0
   border = !result_border
 
+  .result_content
+    padding: 0px 30px
+    background:
+      position: 5px 0px
+      repeat: no-repeat
+
   td
     padding-right: 15px
 
@@ -26,64 +32,6 @@
   .payouts
     width: 690px
 
-    .label
-      float: left
-      width: 100px
-      font-weight: bold
-      margin-right: 5px
-
-    .payout
-      line-height: 22px
-      min-height: 22px
-      height: 22px
-      clear: both
-      padding-bottom: 10px
-
-    .value
-      float: left
-      line-height: 22px
-      padding: 0 0 10px 21px
-      background-position: left 3px
-      background-repeat: no-repeat
-
-  .experience .value
-    background-image = !result_experience_icon
-
-  .basic_money .value
-    background-image = !result_basic_money_icon
-
-  .vip_money .value
-    background-image = !result_vip_money_icon
-
-  .health .value
-    background-image = !result_health_icon
-
-  .energy .value
-    background-image = !result_energy_icon
-
-  .stamina .value
-    background-image = !result_stamina_icon
-
-  .restore_health .value
-    background-image = !result_restore_health_icon
-
-  .restore_energy .value
-    background-image = !result_restore_energy_icon
-
-  .upgrade .value
-    background-image = !result_upgrade_icon
-
-  .payouts .item
-    height: 45px !important
-
-    .value
-      padding-left: 0px
-
-  .random_item .value
-    padding-left: 0px
-
-  .mercenaries .value
-    background-image = !result_mercenaries_icon
 
   .loot
     clear: both

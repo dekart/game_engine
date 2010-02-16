@@ -12,12 +12,12 @@
               <div class="name"><%= inventory.name %></div>
               <div class="description"><%= inventory.description %></div>
             </td>
-            <td class="payout_preview">
-              <%= payout_preview(:attack, "+%d" % inventory.attack) if inventory.attack > 0 %>
-              <%= payout_preview(:defence, "+%d" % inventory.defence) if inventory.defence > 0 %>
+            <td class="payouts">
+              <%= payout(:attack, "+%d" % inventory.attack) if inventory.attack > 0 %>
+              <%= payout(:defence, "+%d" % inventory.defence) if inventory.defence > 0 %>
 
               <% inventory.effects.each do |effect| %>
-                <%= payout_preview(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
+                <%= payout(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
               <% end %>
             </td>
             <td class="stats">
