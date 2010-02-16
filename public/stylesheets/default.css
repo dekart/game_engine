@@ -6,6 +6,8 @@ body {
 a {
   text-decoration: none;
   color: #3b5998; }
+  a img {
+    border: 0; }
 
 h1 {
   font-size: 18px;
@@ -98,27 +100,9 @@ form .error {
     font-size: 0px;
     background-color: #51a2e2;
     background-image: url(/system/assets/000/000/001/original/progress.gif); }
-
-#spinner {
-  position: absolute;
-  top: 240px;
-  left: 300px;
-  width: 150px;
-  height: 50px;
-  padding: 5px;
-  z-index: 1000;
-  background-color: white;
-  border: 1px solid #6d84b4; }
-  #spinner img {
-    float: left;
-    margin-right: 10px;
-    margin-left: -1px; }
-  #spinner #top_field {
-    width: 1px;
-    height: 1px;
-    border: 0px;
-    background-color: transparent;
-    float: left; }
+  .progress_bar .complete {
+    background-color: #3ddd3d;
+    background-image: url(/system/assets/000/000/002/original/progress_completed.gif); }
 
 #flash {
   height: 40px;
@@ -166,6 +150,27 @@ form .error {
   #tip .label {
     font-weight: bold;
     color: #3b5998; }
+
+#spinner {
+  position: absolute;
+  top: 240px;
+  left: 300px;
+  width: 150px;
+  height: 50px;
+  padding: 5px;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #6d84b4; }
+  #spinner img {
+    float: left;
+    margin-right: 10px;
+    margin-left: -1px; }
+  #spinner #top_field {
+    width: 1px;
+    height: 1px;
+    border: 0px;
+    background-color: transparent;
+    float: left; }
 
 #main_menu {
   float: right; }
@@ -229,7 +234,8 @@ form .error {
     #co .experience .value {
       background-image: url(/system/assets/000/000/031/original/experience.gif); }
     #co .experience .progress_bar {
-      margin-top: 5px; }
+      margin-top: 5px;
+      margin-right: 5px; }
       #co .experience .progress_bar .percentage {
         height: 4px; }
   #co .vip_money .value {
@@ -292,6 +298,47 @@ form .error {
   #bookmark p {
     font-weight: bold;
     margin: 0; }
+
+#result {
+  font-size: 13px;
+  margin: 10px 0;
+  padding: 10px 0 20px 0;
+  border: 2px solid #3b5998; }
+  #result .result_content {
+    padding: 0px 30px;
+    background-position: 5px 0px;
+    background-repeat: no-repeat; }
+  #result td {
+    padding-right: 15px; }
+  #result h2 {
+    margin-top: 10px; }
+  #result h3 {
+    font-size: 13px; }
+  #result p {
+    font-size: 13px;
+    margin-top: 0; }
+  #result .success {
+    color: green; }
+  #result .fail {
+    color: red; }
+  #result .payouts {
+    width: 690px; }
+  #result .loot {
+    clear: both; }
+  #result .buttons {
+    float: right; }
+  #result .button {
+    clear: right;
+    margin: 0 0 10px 10px; }
+  #result .publish span {
+    background-image: url(/system/assets/000/000/008/original/publish.gif); }
+  #result .requirements .health, #result .requirements .attack, #result .requirements .defence, #result .requirements .alliance, #result .requirements .health_point {
+    clear: both; }
+  #result .requirements .item {
+    float: left;
+    margin: 0 10px 2px 0; }
+    #result .requirements .item .amount {
+      text-align: center; }
 
 #dashboard {
   width: 100%; }
@@ -368,14 +415,104 @@ form .error {
 #latest_help_request {
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #e7e7e7;
-  font-size: 12px; }
+  font-size: 12px;
+  border: 1px solid #e7e7e7; }
   #latest_help_request .basic_money {
     line-height: 22px;
     height: 22px;
     padding: 5px 0 5px 21px;
-    background: url(asset:icons_basic_money) center left no-repeat;
-    font-weight: bold; }
+    font-weight: bold;
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif);
+    background-position: center left;
+    background-repeat: no-repeat; }
+
+.payouts .payout {
+  height: 25px;
+  line-height: 25px;
+  padding-left: 21px;
+  background-position: left;
+  background-repeat: no-repeat;
+  clear: both;
+  white-space: nowrap;
+  margin-bottom: 5px; }
+  .payouts .payout .value {
+    font-weight: bold;
+    margin-right: 3px; }
+.payouts .experience {
+  background-image: url(/system/assets/000/000/031/original/experience.gif); }
+.payouts .basic_money {
+  background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+.payouts .vip_money {
+  background-image: url(/system/assets/000/000/017/original/vip_money.gif); }
+.payouts .health {
+  background-image: url(/system/assets/000/000/013/original/health.gif); }
+.payouts .energy {
+  background-image: url(/system/assets/000/000/020/original/energy.gif); }
+.payouts .stamina {
+  background-image: url(/system/assets/000/000/024/original/stamina.gif); }
+.payouts .restore_health {
+  background-image: url(/system/assets/000/000/013/original/health.gif); }
+.payouts .restore_energy {
+  background-image: url(/system/assets/000/000/020/original/energy.gif); }
+.payouts .upgrade {
+  background-image: url(/system/assets/000/000/034/original/level.gif); }
+.payouts .mercenaries {
+  background-image: url(/system/assets/000/000/014/original/alliance.gif); }
+.payouts .item, .payouts .property, .payouts .random_item {
+  height: 40px !important;
+  padding-left: 0; }
+  .payouts .item .label, .payouts .property .label, .payouts .random_item .label {
+    line-height: 40px; }
+    .payouts .item .label .name, .payouts .property .label .name, .payouts .random_item .label .name {
+      font-weight: bold; }
+  .payouts .item .value, .payouts .property .value, .payouts .random_item .value {
+    display: block;
+    float: left;
+    margin-right: 5px;
+    line-height: 0; }
+
+.requirements .requirement {
+  height: 25px;
+  line-height: 25px;
+  padding-left: 21px;
+  background-position: left;
+  background-repeat: no-repeat;
+  clear: both;
+  white-space: nowrap;
+  margin-bottom: 5px; }
+.requirements .value {
+  font-weight: bold; }
+.requirements .basic_money {
+  background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+.requirements .vip_money {
+  background-image: url(/system/assets/000/000/017/original/vip_money.gif); }
+.requirements .health_point {
+  background-image: url(/system/assets/000/000/013/original/health.gif); }
+.requirements .energy {
+  background-image: url(/system/assets/000/000/020/original/energy.gif); }
+.requirements .stamina {
+  background-image: url(/system/assets/000/000/024/original/stamina.gif); }
+.requirements .alliance {
+  background-image: url(/system/assets/000/000/014/original/alliance.gif); }
+.requirements .attack {
+  background-image: url(/system/assets/000/000/009/original/attack.gif); }
+.requirements .defence {
+  background-image: url(/system/assets/000/000/028/original/defence.gif); }
+.requirements .item {
+  height: 40px !important;
+  padding-left: 0; }
+  .requirements .item .image {
+    display: block;
+    float: left;
+    margin-right: 5px;
+    line-height: 0; }
+  .requirements .item .label {
+    line-height: 40px; }
+.requirements .not_satisfied {
+  color: #ff5353;
+  font-weight: bold; }
+  .requirements .not_satisfied img {
+    border: 3px solid #ff5353; }
 
 #mission_group_list {
   border-top: 1px solid #d0d0d0;
@@ -389,46 +526,77 @@ form .error {
     font-weight: bold;
     background-color: #e8ebf3; }
   #mission_group_list .name {
-    font-size: 14px; }
+    font-size: 16px; }
   #mission_group_list .level {
     padding-top: 3px; }
 
-#mission_list th {
-  padding: 10px 0px;
-  border-bottom: 1px solid #d0d0d0; }
-#mission_list .mission_group {
-  font-size: 16px;
-  color: #3B5998;
-  font-weight: bold; }
+#locked_mission_group {
+  margin-top: 30px; }
+  #locked_mission_group .level {
+    font-size: 14px;
+    font-weight: bold; }
+
+#mission_list table {
+  width: 100%; }
 #mission_list td {
   padding: 10px 0px;
-  border-bottom: 1px solid #e7e7e7; }
-  #mission_list td.image img {
-    margin-right: 10px; }
-#mission_list .details {
-  padding-right: 10px; }
-  #mission_list .details .name {
-    font-size: 14px;
-    margin-bottom: 5px;
+  border-bottom: 1px solid #d0d0d0; }
+#mission_list .info {
+  padding-right: 15px;
+  width: 60%; }
+  #mission_list .info .name {
+    font-size: 16px;
     font-weight: bold; }
-#mission_list .payout_preview, #mission_list .requirements {
-  padding-right: 10px; }
+  #mission_list .info .image {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px; }
+#mission_list .payouts, #mission_list .requirements, #mission_list .description, #mission_list .name {
+  margin-bottom: 10px; }
+#mission_list .progress .text {
+  font-weight: bold; }
 #mission_list .progress .progress_bar {
-  width: 100px; }
-#mission_list .progress .completed {
-  height: 10px;
-  background-image: url(asset:progress_completed); }
+  width: 50%; }
 #mission_list .controls a span {
-  background-image: url(asset:icons_missions); }
+  background-image: url(/system/assets/000/000/021/original/missions.gif); }
 
-#next_mission_group {
-  margin-top: 30px; }
-  #next_mission_group p {
-    border: 1px solid #d0d0d0;
-    padding: 10px; }
-  #next_mission_group .level {
+#mission_result {
+  background-image: url(/system/assets/000/000/021/original/missions.gif); }
+  #mission_result .spent b {
+    width: 55px; }
+  #mission_result .spent .zero .value {
+    font-weight: bold;
+    color: green;
+    font-size: 14px; }
+  #mission_result .spent .zero .relation {
+    padding-left: 10px; }
+  #mission_result .title {
+    line-height: 22px;
+    padding-left: 23px;
+    background-image: url(/system/assets/000/000/034/original/level.gif);
+    background-position: center left;
+    background-repeat: no-repeat;
     font-size: 14px;
-    font-weight: bold; }
+    margin-bottom: 15px; }
+  #mission_result .fulfill_again {
+    width: 120px; }
+    #mission_result .fulfill_again span {
+      background-image: url(/system/assets/000/000/021/original/missions.gif); }
+  #mission_result .request_help {
+    width: 230px; }
+    #mission_result .request_help span {
+      background-image: url(/system/assets/000/000/014/original/alliance.gif); }
+  #mission_result .progress .progress_bar {
+    width: 150px; }
+  #mission_result .child_missions {
+    margin: 15px 0; }
+    #mission_result .child_missions .child {
+      line-height: 22px;
+      padding-left: 23px;
+      background-image: url(/system/assets/000/000/021/original/missions.gif);
+      background-position: center left;
+      background-repeat: no-repeat;
+      margin-bottom: 15px; }
 
 .item_list {
   width: 100%; }
@@ -696,124 +864,6 @@ form .error {
     display: inline; }
   #tutorial .completed .button {
     display: block; }
-
-#result {
-  font-size: 13px;
-  margin: 10px 0;
-  border: 2px solid #3B5998;
-  padding: 10px 0 20px 0; }
-  #result td {
-    padding-right: 15px; }
-  #result h2 {
-    margin-top: 10px; }
-  #result h3 {
-    font-size: 13px; }
-  #result p {
-    font-size: 13px;
-    margin-top: 0; }
-  #result .success {
-    color: green; }
-  #result .fail {
-    color: red; }
-  #result .payouts {
-    width: 690px; }
-    #result .payouts .label {
-      float: left;
-      width: 100px;
-      font-weight: bold;
-      margin-right: 5px; }
-    #result .payouts .payout {
-      line-height: 22px;
-      min-height: 22px;
-      height: 22px;
-      clear: both;
-      padding-bottom: 10px; }
-    #result .payouts .value {
-      float: left;
-      line-height: 22px;
-      padding: 0 0 10px 21px;
-      background-position: left 3px;
-      background-repeat: no-repeat; }
-  #result .experience .value {
-    background-image: url(asset:icons_experience); }
-  #result .basic_money .value {
-    background-image: url(asset:icons_basic_money); }
-  #result .energy .value {
-    background-image: url(asset:icons_energy); }
-  #result .stamina .value {
-    background-image: url(asset:icons_stamina); }
-  #result .health .value {
-    background-image: url(asset:icons_health); }
-  #result .vip_money .value {
-    background-image: url(asset:icons_vip_money); }
-  #result .restore_health .value {
-    background-image: url(asset:icons_health); }
-  #result .restore_energy .value {
-    background-image: url(asset:icons_energy); }
-  #result .upgrade .value {
-    background-image: url(asset:icons_level); }
-  #result .payouts .item {
-    height: 45px !important; }
-    #result .payouts .item .value {
-      padding-left: 0px; }
-  #result .random_item .value {
-    padding-left: 0px; }
-  #result .mercenaries .value {
-    background-image: url(asset:icons_alliance); }
-  #result .loot {
-    clear: both; }
-  #result .buttons {
-    float: right; }
-  #result .button {
-    clear: right;
-    margin: 0 0 10px 10px; }
-  #result .publish span {
-    background-image: url(asset:icons_publish); }
-  #result .requirements .health, #result .requirements .attack, #result .requirements .defence, #result .requirements .alliance, #result .requirements .health_point {
-    clear: both; }
-  #result .requirements .item {
-    float: left;
-    margin: 0 10px 2px 0; }
-    #result .requirements .item .amount {
-      text-align: center; }
-
-#mission_result {
-  padding: 0px 30px;
-  background: url(asset:icons_missions) 5px 0px no-repeat; }
-  #mission_result .spent b {
-    width: 55px; }
-  #mission_result .spent .zero .value {
-    font-weight: bold;
-    color: green;
-    font-size: 14px; }
-  #mission_result .spent .zero .relation {
-    padding-left: 10px; }
-  #mission_result .title {
-    line-height: 22px;
-    padding-left: 23px;
-    background: url(asset:icons_level) center left no-repeat;
-    font-size: 14px;
-    margin-bottom: 15px; }
-  #mission_result .fulfill_again {
-    width: 120px; }
-    #mission_result .fulfill_again span {
-      background-image: url(asset:icons_missions); }
-  #mission_result .request_help {
-    width: 230px; }
-    #mission_result .request_help span {
-      background-image: url(asset:icons_alliance); }
-  #mission_result .progress .progress_bar {
-    width: 100px; }
-  #mission_result .progress .completed {
-    height: 10px;
-    background-image: url(asset:progress_completed); }
-  #mission_result .child_missions {
-    margin: 15px 0; }
-    #mission_result .child_missions .child {
-      line-height: 22px;
-      padding-left: 23px;
-      background: url(asset:icons_missions) center left no-repeat;
-      margin-bottom: 15px; }
 
 #help_result {
   padding: 0px 30px;
@@ -1330,86 +1380,6 @@ form .error {
     #gift_form .friend_groups a.current {
       border: 1px solid #D0D0D0;
       color: #333333; }
-
-.payout_preview .payout {
-  height: 25px;
-  line-height: 25px;
-  padding-left: 21px;
-  background-position: left;
-  background-repeat: no-repeat;
-  clear: both;
-  white-space: nowrap; }
-  .payout_preview .payout .value {
-    font-weight: bold;
-    margin-right: 3px; }
-.payout_preview .basic_money {
-  background-image: url(asset:icons_basic_money); }
-.payout_preview .vip_money {
-  background-image: url(asset:icons_vip_money); }
-.payout_preview .health {
-  background-image: url(asset:icons_health); }
-.payout_preview .energy {
-  background-image: url(asset:icons_energy); }
-.payout_preview .experience {
-  background-image: url(asset:icons_experience); }
-.payout_preview .mercenaries {
-  background-image: url(asset:icons_alliance); }
-.payout_preview .attack {
-  background-image: url(asset:icons_attack); }
-.payout_preview .defence {
-  background-image: url(asset:icons_defence); }
-.payout_preview .item, .payout_preview .property {
-  line-height: 40px;
-  height: 40px !important;
-  padding-left: 0; }
-.payout_preview .item .value, .payout_preview .property .value {
-  display: block;
-  float: left;
-  margin-right: 5px; }
-.payout_preview .item .label, .payout_preview .property .label {
-  vertical-align: middle; }
-.payout_preview .item .name, .payout_preview .property .name {
-  font-weight: bold; }
-
-.requirements .requirement {
-  height: 25px;
-  line-height: 25px;
-  padding-left: 21px;
-  background-position: left;
-  background-repeat: no-repeat;
-  clear: both;
-  white-space: nowrap; }
-.requirements .value {
-  font-weight: bold; }
-.requirements .basic_money {
-  background-image: url(asset:icons_basic_money); }
-.requirements .vip_money {
-  background-image: url(asset:icons_vip_money); }
-.requirements .energy {
-  background-image: url(asset:icons_energy); }
-.requirements .health_point {
-  background-image: url(asset:icons_health); }
-.requirements .attack {
-  background-image: url(asset:icons_attack); }
-.requirements .defence {
-  background-image: url(asset:icons_defence); }
-.requirements .alliance {
-  background-image: url(asset:icons_alliance); }
-.requirements .item {
-  line-height: 40px;
-  height: 40px !important;
-  padding-left: 0; }
-  .requirements .item .image {
-    display: block;
-    float: left;
-    margin-right: 5px; }
-  .requirements .item .label {
-    vertical-align: middle; }
-.requirements .not_satisfied {
-  color: #ff5353;
-  font-weight: bold; }
-  .requirements .not_satisfied img {
-    border: 3px solid #ff5353; }
 
 #boss_list .boss {
   margin-top: 15px;

@@ -1,4 +1,4 @@
-<%= payout_preview(:property, property_image(payout.property_type, :icon),
+<%= payout(:property, property_image(payout.property_type, :icon),
       :label => t("payouts.property.label",
         :name   => content_tag(:span, payout.property_type.name, :class => :name),
         :amount => payout.amount

@@ -45,6 +45,10 @@ en:
         stamina_restore_bonus: "Decrease of stamina restore period, %"
         income_period_bonus: "Decrease of income recalculation period, %"
         equipment_slots: "Additional equipment slots"
+      mission:
+        progress: "Progress"
+        requirements: "Requirements"
+        payouts: "Payouts"
     errors:
       models:
         character:
@@ -448,15 +452,11 @@ en:
       requirements_not_satisfied:
         message: "Some mission requirements are not satisfied:"
     list:
-      payout: "Payout"
-      requires: "Requires"
-      progress: "Progress"
       empty_set: "You have no missions available at this time"
     mission:
-      buttons:
-        fulfill: "Fulfill"
-    helpers:
       completed: "Completed!"
+      buttons:
+        fulfill: "Fulfill"     
 
   bosses:
     boss:

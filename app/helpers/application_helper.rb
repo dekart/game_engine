@@ -92,7 +92,10 @@ module ApplicationHelper
       result << content_tag(:div, options.delete(:label), :class => :text) if options[:label]
       
       result << content_tag(:div,
-        content_tag(:div, "", :class => :percentage, :style => "width: %.4f%" % percentage),
+        content_tag(:div, "",
+          :class => "percentage #{ :complete if percentage >= 100 }",
+          :style => "width: %.4f%" % percentage
+        ),
         {:class => :progress_bar}.merge(options)
       )
     end
@@ -126,5 +129,11 @@ module ApplicationHelper
         </script>
       }.html_safe!
     end
+  end
+
+  def result_for(type, &block)
+    concat(
+      content_tag(:div, capture(&block), :id => "#{type}_result", :class => :result_content)
+    )
   end
 end

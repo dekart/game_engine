@@ -1,12 +1,5 @@
 <% collection(missions) do %>
   <table cellspacing="0" cellpadding="0">
-    <tr>
-      <th class="mission_group" colspan="2"><%= Mission.human_name %></th>
-      <th><%= t(".payout") %></th>
-      <th><%= t(".requires") %></th>
-      <th><%= t(".progress") %></th>
-      <th></th>
-    </tr>
     <% missions.each do |mission| %>
       <% if mission.visible_for?(current_character) %>
         <%= render(

@@ -3,12 +3,13 @@ module MissionsHelper
     rank = character.rank_for_mission(mission)
 
     if rank.completed?
-      content_tag(:div, t("missions.helpers.completed"), :class => :text) +
-      content_tag(:div, content_tag(:div, "", :class => "completed"), :class => :progress_bar)
+      percentage_bar(100, :label => t("missions.mission.completed"))
     else
       percentage = (rank.win_count.to_f / rank.mission.win_amount * 100)
 
-      percentage_bar(percentage, :label => "%d%" % percentage)
+      percentage_bar(percentage, 
+        :label => "%s: %d%" % [Mission.human_attribute_name("progress"), percentage]
+      )
     end
   end
   safe_helper :mission_progress
