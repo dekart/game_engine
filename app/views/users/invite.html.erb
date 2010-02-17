@@ -35,8 +35,6 @@
 <%= render "relations/note" %>
 
 <div class="invitation_type">
-  <h2><%= t(".request.title") %></h2>
-
   <% fb_serverfbml do %>
     <% fb_request_form(t(".invite.title"), :invite_message, invite_users_url(:from_selector => true), :target => :_top) do %>
       <%= fb_multi_friend_selector(t(".invite.note"),
@@ -51,18 +49,17 @@
 
 <table id="invitation_form" cellspacing="0" cellpadding="0">
   <tr>
-    <td id="request_invitation">
+    <td>
       <div class="invitation_type">
         <h2><%= t(".publish.title") %></h2>
 
         <p><%= t(".publish.note") %></p>
 
         <%= link_to_function(button(t(".publish.button")), invitation_stream_dialog,
-              :class => :button
+              :class => "button publish"
             ) %>
       </div>
-    </td>
-    <td id="manual_invitation">
+
       <div class="invitation_type">
         <h2><%= t(".copy_paste.title") %></h2>
 
@@ -75,8 +72,9 @@
               ) %>
         </p>
       </div>
-
-      <div class="invitation_type" id="chat_invitation">
+    </td>
+    <td id="chat_invitation">
+      <div class="invitation_type" >
         <h2><%= t(".chat.title") %></h2>
         
         <p><%= t(".chat.note") %></p>

@@ -153,7 +153,7 @@ form .error {
     margin-right: 10px; }
 
 #header {
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
 
 #logo {
   float: left;
@@ -167,7 +167,7 @@ form .error {
 #tip {
   padding: 10px;
   text-align: center;
-  border-top: 1px solid #d0d0d0; }
+  border-top: 1px solid #e0e0e0; }
   #tip .label {
     font-weight: bold;
     color: #3b5998; }
@@ -229,7 +229,7 @@ form .error {
 
 #co {
   clear: both;
-  border-top: 1px solid #d0d0d0;
+  border-top: 1px solid #e0e0e0;
   width: 100%; }
   #co td {
     line-height: 25px;
@@ -391,7 +391,7 @@ form .error {
 
 #fight_list td {
   padding: 10px 0;
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
 #fight_list .fight {
   clear: both;
   margin: 5px 0; }
@@ -591,8 +591,8 @@ form .error {
     border: 3px solid #ff5353; }
 
 #mission_group_list {
-  border-top: 1px solid #d0d0d0;
-  border-bottom: 1px solid #d0d0d0; }
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0; }
   #mission_group_list table {
     width: 100%; }
   #mission_group_list .mission_group {
@@ -616,7 +616,7 @@ form .error {
   width: 100%; }
 #mission_list td {
   padding: 10px 0px;
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
 #mission_list .info {
   padding-right: 15px;
   width: 60%; }
@@ -678,7 +678,7 @@ form .error {
   width: 100%; }
   #item_list td {
     padding: 10px 0;
-    border-bottom: 1px solid #d0d0d0; }
+    border-bottom: 1px solid #e0e0e0; }
   #item_list .picture {
     width: 80px; }
   #item_list .info {
@@ -769,7 +769,7 @@ form .error {
   padding-top: 10px; }
 #inventory_list td {
   padding: 10px;
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
 #inventory_list .info .name {
   font-size: 16px;
   font-weight: bold; }
@@ -805,7 +805,7 @@ form .error {
 #fight_attributes {
   margin: 10px 0;
   width: 100%;
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
   #fight_attributes th {
     font-size: 14px; }
   #fight_attributes td {
@@ -827,7 +827,7 @@ form .error {
 #victim_list td {
   padding: 10px 0;
   vertical-align: middle;
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
 #victim_list .picture {
   padding-right: 10px; }
 #victim_list .name {
@@ -931,7 +931,7 @@ form .error {
   padding: 5px;
   vertical-align: middle; }
 #upgrade_list .points td {
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
 #upgrade_list .name {
   font-weight: bold; }
 #upgrade_list .value {
@@ -965,7 +965,7 @@ form .error {
   #invitation_list td {
     padding: 5px;
     vertical-align: middle;
-    border-bottom: 1px solid #d0d0d0; }
+    border-bottom: 1px solid #e0e0e0; }
   #invitation_list .picture {
     width: 55px; }
   #invitation_list .level {
@@ -997,26 +997,109 @@ form .error {
     width: auto;
     margin-right: 15px; }
   #alliance_buttons .relations span {
-    background-image: url(asset:icons_alliance); }
+    background-image: url(/system/assets/000/000/014/original/alliance.gif); }
   #alliance_buttons .invite span {
-    background-image: url(asset:icons_add); }
+    background-image: url(/system/assets/000/000/025/original/add.gif); }
   #alliance_buttons .gifts span {
-    background-image: url(asset:icons_gift); }
+    background-image: url(/system/assets/000/000/030/original/gift.gif); }
   #alliance_buttons .mercenaries span {
-    background-image: url(asset:icons_add); }
+    background-image: url(/system/assets/000/000/025/original/add.gif); }
 
 #alliance_members {
   padding-right: 10px; }
   #alliance_members td {
     padding: 5px;
     vertical-align: middle;
-    border-bottom: 1px solid #d0d0d0; }
+    border-bottom: 1px solid #e0e0e0; }
   #alliance_members .picture {
     width: 55px; }
   #alliance_members .level {
     width: 70px; }
   #alliance_members .controls .delete span {
-    background-image: url(asset:icons_delete); }
+    background-image: url(/system/assets/000/000/012/original/delete.gif); }
+
+#assignments {
+  width: 250px;
+  margin: 15px 0; }
+  #assignments b {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 10px; }
+  #assignments .position {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0; }
+  #assignments .effect {
+    font-style: italic;
+    font-size: 14px;
+    margin-top: 5px; }
+  #assignments .description {
+    font-style: italic; }
+  #assignments .controls {
+    float: right;
+    margin-top: -25px; }
+    #assignments .controls .promote span {
+      background-image: url(/system/assets/000/000/032/original/accept.gif); }
+    #assignments .controls .demote span {
+      background-image: url(/system/assets/000/000/012/original/delete.gif); }
+
+#new_assignment table {
+  width: 100%; }
+#new_assignment .relations {
+  margin-top: 10px;
+  height: 200px;
+  display: block;
+  overflow: auto; }
+  #new_assignment .relations th {
+    padding: 5px; }
+  #new_assignment .relations td {
+    cursor: pointer;
+    vertical-align: middle;
+    padding: 5px;
+    border-bottom: 1px solid #e0e0e0; }
+  #new_assignment .relations .picture {
+    width: 60px; }
+  #new_assignment .relations .relations .name {
+    padding-right: 10px; }
+  #new_assignment .relations .selected {
+    background-color: #ffffd5;
+    font-weight: bold; }
+    #new_assignment .relations .selected td {
+      padding: 4px;
+      border-top: 1px solid #ec7000;
+      border-bottom: 1px solid #ec7000; }
+    #new_assignment .relations .selected .picture {
+      border-left: 1px solid #ec7000; }
+    #new_assignment .relations .selected .effect {
+      border-right: 1px solid #ec7000; }
+#new_assignment .tabs {
+  padding: 5px 0;
+  border-bottom: 1px solid #e0e0e0; }
+  #new_assignment .tabs a {
+    margin-right: 15px; }
+  #new_assignment .tabs .selected {
+    font-weight: bold;
+    font-size: 14px; }
+
+#invitation_form td {
+  vertical-align: top; }
+#invitation_form .invitation_type {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0; }
+#invitation_form .invitation_text {
+  margin: 15px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #3b5998; }
+#invitation_form .publish {
+  width: 150px;
+  margin: auto; }
+  #invitation_form .publish span {
+    clear: right;
+    background-image: url(/system/assets/000/000/008/original/publish.gif); }
+#invitation_form #chat_invitation {
+  padding-left: 10px; }
 
 #rating_list .rating {
   margin-bottom: 30px; }
@@ -1209,94 +1292,11 @@ form .error {
     background-image: url(asset:icons_accept);
     width: 70px; }
 
-#character_assignments {
-  width: 250px;
-  margin: 15px 0; }
-  #character_assignments b {
-    font-size: 12px;
-    display: block;
-    margin-bottom: 10px; }
-  #character_assignments .context {
-    padding-bottom: 5px;
-    border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 10px; }
-  #character_assignments .effect {
-    font-style: italic;
-    font-size: 14px;
-    margin-top: 5px; }
-  #character_assignments .description {
-    font-style: italic; }
-  #character_assignments .controls {
-    float: right;
-    margin-top: -25px; }
-    #character_assignments .controls .promote span {
-      background-image: url(asset:icons_accept); }
-    #character_assignments .controls .demote span {
-      background-image: url(asset:icons_delete); }
-
-#new_assignment table {
-  width: 100%; }
-#new_assignment .relations {
-  margin-top: 10px;
-  height: 200px;
-  display: block;
-  overflow: auto; }
-  #new_assignment .relations td {
-    vertical-align: middle;
-    padding: 2px;
-    border-bottom: 1px solid #e0e0e0; }
-  #new_assignment .relations .picture {
-    width: 60px; }
-  #new_assignment .relations .relations .name {
-    padding-right: 10px; }
-  #new_assignment .relations .level {
-    width: 60px; }
-    #new_assignment .relations .level .value {
-      font-weight: bold; }
-  #new_assignment .relations .selected {
-    background-color: #FFFFD5;
-    font-weight: bold; }
-    #new_assignment .relations .selected td {
-      border-top: 1px solid #EC7000;
-      border-bottom: 1px solid #EC7000; }
-    #new_assignment .relations .selected .picture {
-      border-left: 1px solid #EC7000; }
-    #new_assignment .relations .selected .effect {
-      border-right: 1px solid #EC7000; }
-#new_assignment .tab_titles a {
-  margin-right: 15px; }
-#new_assignment .tab_titles .selected {
-  font-weight: bold;
-  font-size: 14px; }
-#new_assignment .tabs .hidden {
-  display: none; }
-
 #promotion_result {
   padding: 0px 30px;
   background: url(asset:icons_basic_money) 5px 0px no-repeat; }
   #promotion_result .forward {
     margin-top: 25px; }
-
-#invitation_form td {
-  vertical-align: top; }
-#invitation_form .invitation_type {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #e0e0e0; }
-#invitation_form .invitation_text {
-  margin: 15px;
-  font-weight: bold;
-  font-size: 15px;
-  color: #3B5998; }
-#invitation_form .button span {
-  clear: right;
-  background-image: url(asset:icons_publish); }
-#invitation_form #request_invitation {
-  width: 315px;
-  padding-right: 15px; }
-#invitation_form #chat_invitation p {
-  float: right;
-  width: 200px; }
 
 #get_more_vip {
   margin-top: 30px; }
