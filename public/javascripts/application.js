@@ -140,6 +140,24 @@ var BossFight = {
   }
 }
 
+var AssignmentForm = {
+  setup: function(){
+    $('#new_assignment .tabs').tabs();
+
+    $('#new_assignment .relations .relation').click(AssignmentForm.select_relation)
+  },
+
+  select_relation: function(){
+    $('#new_assignment .relations .relation').removeClass('selected');
+
+    var $this = $(this);
+
+    $this.addClass('selected');
+
+    $('#assignment_relation_id').val($this.attr('value'));
+  }
+}
+
 FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
   FB.XdComm.Server.init("/xd_receiver.html");
 
@@ -150,10 +168,12 @@ $(function(){
   FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
 
   $(document).bind('result.received', function(){
-    console.log($('#result').eq(0));
+    $(document).trigger('remote_content.received');
 
     $('#result').show();
+  });
 
+  $(document).bind('remote_content.received', function(){
     FB.XFBML.Host.parseDomTree();
   })
 })

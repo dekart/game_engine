@@ -1,8 +1,8 @@
 <h2><%= t(".title") %></h2>
 
-<div id="character_assignments" cellspacing="0" cellpadding="0">
+<div id="assignments" cellspacing="0" cellpadding="0">
   <% Assignment::ROLES.each do |role| %>
-    <div class="context">
+    <div class="position">
       <b><%= t("assignments.roles.#{role}.title") %></b>
 
       <% if assignment = current_character.assignments.by_role(role) %>
@@ -17,11 +17,8 @@
         <%= render :partial => assignment %>
       <% else %>
         <div class="controls">
-          <%= link_to_remote(button(:promote),
-                :url    => new_character_assignment_url(current_character, :role => role, :canvas => false),
-                :method => :get,
-                :update => :result,
-                :html   => {:class => "promote button"}
+          <%= link_to_function(button(:promote), "$.facebox({ajax: '#{ escape_javascript(new_character_assignment_url(current_character, :role => role, :canvas => false))}'})",
+                :class => "promote button"
               ) %>
         </div>
       

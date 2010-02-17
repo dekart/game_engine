@@ -1,0 +1,149 @@
+#alliance_buttons
+  margin-bottom: 15px
+
+  .button
+    float: left
+    width: auto
+    margin-right: 15px
+
+  .relations span
+    background-image = !alliance_buttons_relations_icon
+
+  .invite span
+    background-image = !alliance_buttons_invite_icon
+
+  .gifts span
+    background-image = !alliance_buttons_gifts_icon
+
+  .mercenaries span
+    background-image = !alliance_buttons_mercenaries_icon
+
+
+#alliance_members
+  padding-right: 10px
+
+  td
+    padding: 5px
+    vertical-align: middle
+    border-bottom = !alliance_members_member_border
+
+  .picture
+    width: 55px
+
+  .level
+    width: 70px
+
+  .controls .delete span
+    background-image = !alliance_members_delete_icon
+
+#assignments
+  width: 250px
+  margin: 15px 0
+
+  b
+    font-size: 12px
+    display: block
+    margin-bottom: 10px
+
+  .position
+    padding-bottom: 5px
+    margin-bottom: 10px
+    border-bottom = !assignments_position_border
+
+  .effect
+    font-style: italic
+    font-size: 14px
+    margin-top: 5px
+
+  .description
+    font-style: italic
+
+  .controls
+    float: right
+    margin-top: -25px
+
+    .promote span
+      background-image = !assignments_promote_icon
+
+    .demote span
+      background-image = !assignments_demote_icon
+
+
+#new_assignment
+  table
+    width: 100%
+
+  .relations
+    margin-top: 10px
+    height: 200px
+    display: block
+    overflow: auto
+
+    th
+      padding: 5px
+
+    td
+      cursor: pointer
+      vertical-align: middle
+      padding: 5px
+      border-bottom = !new_assignment_relation_border
+
+    .picture
+      width: 60px
+
+    .relations .name
+      padding-right: 10px
+
+    .selected
+      background-color = !new_assignment_selected_bg_color
+      font-weight: bold
+
+      td
+        padding: 4px
+        border:
+          top = !new_assignment_selected_border
+          bottom = !new_assignment_selected_border
+
+      .picture
+        border-left = !new_assignment_selected_border
+
+      .effect
+        border-right = !new_assignment_selected_border
+
+  .tabs
+    padding: 5px 0
+    border-bottom = !new_assignment_tabs_border
+
+    a
+      margin-right: 15px
+
+    .selected
+      font-weight: bold
+      font-size: 14px
+
+
+#invitation_form
+  td
+    vertical-align: top
+
+  .invitation_type
+    padding-bottom: 10px
+    margin-bottom: 10px
+    border-bottom = !invitation_form_type_border
+
+  .invitation_text
+    margin: 15px
+    font-weight: bold
+    font-size: 16px
+    color = !invitation_form_text_color
+
+  .publish
+    width = !invitation_form_publish_width
+    margin: auto
+
+    span
+      clear: right
+      background-image = !invitation_form_publish_icon
+
+  #chat_invitation
+    padding-left: 10px

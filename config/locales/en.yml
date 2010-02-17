@@ -556,12 +556,10 @@ en:
         buttons:
           accept: "Join {{user}} Alliance"
           visit_profile: "View {{user}} Character"
-      request:
-        title: "Send Invites"
       publish:
         title: "Out Of Requests?"
         note: "You can invite your friends by publishing to your news feed - all your friends will see this message! Click the button below to post an invitation message to your Feed:"
-        button: "Invite from Feed"
+        button: "Publish Invitation"
       chat:
         title: "Invite by Chat"
         note: "You can invite your friends by sending them a chat message! Click on your friend names to send them your invitation link"
