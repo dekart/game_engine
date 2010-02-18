@@ -582,7 +582,7 @@ en:
         label: "Current Income:"
       note: "Properties bring you hourly income."
     list:
-      income: "{{amount}} per hour"
+      income_label: "per hour"
       owned: "Owned: {{amount}}"
       buttons:
         buy: "Buy"

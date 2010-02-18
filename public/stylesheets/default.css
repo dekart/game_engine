@@ -1169,88 +1169,38 @@ form .error {
     background-repeat: no-repeat;
     font-weight: normal; }
 
+#property_income {
+  margin-bottom: 10px; }
+  #property_income .value {
+    line-height: 22px;
+    height: 22px;
+    padding: 5px 0 5px 21px;
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif);
+    background-position: center left;
+    background-repeat: no-repeat; }
+
+#property_list table {
+  width: 100%; }
 #property_list td {
   padding: 10px 10px 10px 0;
-  border-bottom: 1px solid #d0d0d0; }
+  border-bottom: 1px solid #e0e0e0; }
 #property_list .picture {
   width: 130px; }
 #property_list .info .name {
   font-size: 15px;
   margin-bottom: 5px;
   font-weight: bold; }
-#property_list .details {
-  width: 100px; }
-  #property_list .details div {
-    line-height: 22px;
-    height: 22px; }
-  #property_list .details .basic_money {
-    background: url(asset:icons_basic_money) center left no-repeat;
-    padding-left: 21px; }
-#property_list .requires {
-  width: 100px; }
-  #property_list .requires div {
-    line-height: 22px;
-    height: 22px;
-    padding-left: 21px;
-    background-position: center left;
-    background-repeat: no-repeat; }
-  #property_list .requires .basic_price {
-    background-image: url(asset:icons_basic_money); }
-  #property_list .requires .vip_price {
-    background-image: url(asset:icons_vip_money); }
-#property_list .income .basic_money {
-  line-height: 22px;
-  height: 22px;
-  padding: 3px 0 3px 21px;
-  background: url(asset:icons_basic_money) center left no-repeat; }
 #property_list .controls {
-  width: 200px; }
+  text-align: right; }
   #property_list .controls select {
     margin: 5px; }
-  #property_list .controls a {
-    width: auto; }
-  #property_list .controls .buy span, #property_list .controls .sell span {
-    background-image: url(asset:icons_basic_money); }
-
-#buy_properties span {
-  width: 130px;
-  background-image: url(asset:icons_properties); }
-
-#property_type_list {
-  width: 100%; }
-  #property_type_list td, #property_type_list th {
-    padding: 10px 10px 10px 0;
-    border-bottom: 1px solid #d0d0d0; }
-  #property_type_list .picture {
-    width: 130px; }
-  #property_type_list .info .name {
-    font-size: 15px;
-    margin-bottom: 5px;
-    font-weight: bold; }
-  #property_type_list .income {
-    width: 100px; }
-    #property_type_list .income div {
-      line-height: 22px;
-      height: 22px;
-      padding-left: 21px;
-      background-position: center left;
-      background-repeat: no-repeat; }
-    #property_type_list .income .basic_money {
-      background-image: url(asset:icons_basic_money); }
-  #property_type_list .controls {
-    width: 110px; }
+  #property_list .controls .buy span {
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+  #property_list .controls .sell span {
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
 
 #property_result {
-  padding: 0px 30px;
-  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
-  #property_result .properties {
-    background-image: url(asset:icons_properties); }
-
-#property_income .value {
-  line-height: 22px;
-  height: 22px;
-  padding: 5px 0 5px 21px;
-  background: url(asset:icons_basic_money) center left no-repeat; }
+  background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
 
 #current_vip_money {
   font-size: 14px;

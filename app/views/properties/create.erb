@@ -1,4 +1,4 @@
-<div id="property_result">
+<% result_for :property do %>
   <% if @property.valid? %>
     <div class="buttons">
       <%= link_to_function(button(:publish), property_stream_dialog(@property),
@@ -22,7 +22,7 @@
   <% else %>
     <p><%= @property.errors.on(:character) %></p>
   <% end %>
-</div>
+<% end %>
 
 <% dom_ready do %>
   $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
