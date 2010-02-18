@@ -1,13 +1,13 @@
 <% if action_name == "global" %>
   <%= title(t(".title.global")) %>
 
-  <div class="buttons" id="rating_buttons">
+  <div class="buttons clearfix" id="rating_buttons">
     <%= link_to(button(:relations), rating_path, :class => :button) %>
   </div>
 <% else %>
   <%= title(t(".title.relations")) %>
 
-  <div class="buttons" id="rating_buttons">
+  <div class="buttons clearfix" id="rating_buttons">
     <%= link_to(button(:global), global_rating_path, :class => :button) %>
   </div>
 <% end %>
