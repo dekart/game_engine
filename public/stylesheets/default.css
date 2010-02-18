@@ -674,6 +674,26 @@ form .error {
       background-repeat: no-repeat;
       margin-bottom: 15px; }
 
+#item_groups {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 10px 0 15px 0; }
+  #item_groups a, #item_groups .current {
+    padding: 0 15px;
+    line-height: 30px;
+    height: 30px;
+    display: block;
+    float: left;
+    font-weight: bold;
+    border: 1px solid transparent; }
+  #item_groups .current {
+    font-size: 16px;
+    background-color: #e8ebf3; }
+  #item_groups a {
+    font-size: 14px; }
+    #item_groups a:hover {
+      background-color: #e8ebf3; }
+
 #item_list {
   width: 100%; }
   #item_list td {
@@ -1148,30 +1168,6 @@ form .error {
     background-position: center left;
     background-repeat: no-repeat;
     font-weight: normal; }
-
-#item_groups {
-  border-bottom: 1px solid #D0D0D0;
-  border-top: 1px solid #D0D0D0;
-  margin: 10px 0 5px 0; }
-  #item_groups b {
-    font-size: 16px;
-    padding: 0 10px;
-    line-height: 30px;
-    height: 28px;
-    display: block;
-    float: left; }
-  #item_groups a {
-    font-size: 14px;
-    padding: 0 10px;
-    line-height: 30px;
-    height: 28px;
-    font-weight: bold;
-    border: 1px solid white;
-    display: block;
-    float: left; }
-    #item_groups a:hover {
-      border-left: 1px solid #D0D0D0;
-      border-right: 1px solid #D0D0D0; }
 
 #property_list td {
   padding: 10px 10px 10px 0;
