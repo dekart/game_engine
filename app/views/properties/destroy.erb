@@ -1,4 +1,4 @@
-<div id="property_result">
+<% result_for :property do %>
   <% if @property %>
     <p>
       <%= raw t(".messages.success",
@@ -15,7 +15,7 @@
   <% else %>
     <%= t(".messages.property_not_found") %>
   <% end %>
-</div>
+<% end %>
 
 <% dom_ready do %>
   $('#property_list').html('<%= escape_javascript render("list", :properties => @properties) %>');

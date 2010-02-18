@@ -1,10 +1,4 @@
 <table cellspacing="0" cellpadding="0">
-  <tr>
-    <th></th>
-    <th></th>
-    <th><%= PropertyType.human_attribute_name("income") %></th>
-    <th><%= Property.human_attribute_name("price") %></th>
-  </tr>
   <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
     <% content_tag_for(:tr, type) do %>
       <td class="picture"><%= property_image(type, :small) %></td>
@@ -17,13 +11,15 @@
               ) %>
         </div>
       </td>
-      <td class="income">
-        <%= raw t(".income",
-              :amount => content_tag(:span, "+%s" % number_to_currency(type.income), :class => :basic_money)
-            ) %>
+      <td class="payouts">
+        <h3><%= PropertyType.human_attribute_name("income") %></h3>
+        
+        <%= payout(:basic_money, "+%s" % number_to_currency(type.income), :label => t(".income_label")) %>
       </td>
       <td class="requirements">
-        <%= attribute_requirement(:basic_money, 
+        <h3><%= PropertyType.human_attribute_name("price") %></h3>
+
+        <%= attribute_requirement(:basic_money,
               number_to_currency(property ? type.inflated_price(property.amount + 1) : type.basic_price)
             ) if type.basic_price > 0 %>
 
@@ -34,7 +30,7 @@
           <%= amount_select_tag %>
         
           <%= link_to_remote(button(:buy),
-                :url    => properties_url(:property_type_id => type.id, :canvas => false),
+                :url    => properties_path(:property_type_id => type.id),
                 :with   => "$(this).parent('form').serialize()",
                 :update => :result,
                 :html   => {:class => "buy button"}
@@ -46,7 +42,7 @@
             <%= amount_select_tag %>
         
             <%= link_to_remote(button(:sell, :price => property.sell_price),
-                  :url    => property_url(type, :canvas => false),
+                  :url    => property_path(type, :canvas => false),
                   :with   => "$(this).parent('form').serialize()",
                   :method => :delete,
                   :update => :result,
