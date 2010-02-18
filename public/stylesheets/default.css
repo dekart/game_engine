@@ -1144,7 +1144,9 @@ form .error {
   font-weight: bold; }
   #bank_balance .value {
     padding-left: 21px;
-    background: url(asset:icons_basic_money) center left no-repeat;
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif);
+    background-position: center left;
+    background-repeat: no-repeat;
     font-weight: normal; }
 
 #item_groups {
