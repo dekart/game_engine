@@ -9,7 +9,7 @@
 <div id="item_groups" class="clearfix">
   <% @item_groups.each do |group| %>
     <% if group == @current_group %>
-      <b><%= group.name %></b>
+      <span class="current"><%= group.name %></span>
     <% else %>
       <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
     <% end %>
