@@ -1210,44 +1210,40 @@ form .error {
     line-height: 22px;
     height: 22px;
     padding: 5px 0 5px 21px;
-    background: url(asset:icons_vip_money) center left no-repeat; }
+    background-image: url(/system/assets/000/000/017/original/vip_money.gif);
+    background-position: center left;
+    background-repeat: no-repeat; }
 
 #premia {
-  margin-bottom: 15px; }
+  margin-left: auto;
+  margin-bottom: 15px;
+  margin-right: auto; }
   #premia td {
     vertical-align: middle;
-    border-bottom: 1px solid #d0d0d0; }
+    border-bottom: 1px solid #e0e0e0; }
   #premia .name {
     width: 300px; }
+  #premia .basic_money, #premia .points {
+    line-height: 22px;
+    height: 22px;
+    padding: 5px 0 5px 21px;
+    font-weight: bold;
+    background-position: center left;
+    background-repeat: no-repeat; }
   #premia .basic_money {
-    line-height: 22px;
-    height: 22px;
-    padding: 5px 0 5px 21px;
-    background: url(asset:icons_basic_money) center left no-repeat;
-    font-weight: bold; }
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
   #premia .points {
-    line-height: 22px;
-    height: 22px;
-    padding: 5px 0 5px 21px;
-    background: url(asset:icons_level) center left no-repeat;
-    font-weight: bold; }
-  #premia .vip_money div {
-    line-height: 22px;
-    height: 22px;
-    padding: 5px 15px 5px 21px;
-    background: url(asset:icons_vip_money) center left no-repeat; }
-  #premia .controls .button span {
-    background-image: url(asset:icons_accept);
-    width: 70px; }
+    background-image: url(/system/assets/000/000/034/original/level.gif); }
+  #premia .controls .button {
+    width: 100px; }
+    #premia .controls .button span {
+      background-image: url(/system/assets/000/000/032/original/accept.gif); }
 
 #promotion_result {
   padding: 0px 30px;
   background: url(asset:icons_basic_money) 5px 0px no-repeat; }
   #promotion_result .forward {
     margin-top: 25px; }
-
-#get_more_vip {
-  margin-top: 30px; }
 
 #level_up {
   padding: 0px 30px;

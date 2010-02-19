@@ -17,8 +17,8 @@
             :amount => content_tag(:span, Configuration[:premium_points_amount], :class => :points)
           ) %>
     </td>
-    <td class="vip_money">
-      <div class="value"><%= number_to_currency(Configuration[:premium_points_price]) %></div>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Configuration[:premium_points_price]) %>
     </td>
     <td class="controls">
       <%= link_to(button(t(".buy_points.button")), premium_path(:type => :buy_points),
@@ -30,8 +30,8 @@
 
   <tr>
     <td class="name"><%= t(".hire_mercenary.text") %></td>
-    <td class="vip_money">
-      <div class="value"><%= number_to_currency(Configuration[:premium_mercenary_price]) %></div>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Configuration[:premium_mercenary_price]) %>
     </td>
     <td class="controls">
       <%= link_to(button(t(".hire_mercenary.button")), premium_path(:type => :hire_mercenary),
@@ -47,8 +47,8 @@
             :amount => content_tag(:span, number_to_currency(Configuration[:premium_money_amount]), :class => :basic_money)
           ) %>
     </td>
-    <td class="vip_money">
-      <div class="value"><%= number_to_currency(Configuration[:premium_money_price]) %></div>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Configuration[:premium_money_price]) %>
     </td>
     <td class="controls">
       <%= link_to(button(t(".exchange_money.button")), premium_path(:type => :exchange_money),
@@ -60,8 +60,8 @@
 
   <tr>
     <td class="name"><%= t(".refill_energy.text") %></td>
-    <td class="vip_money">
-      <div class="value"><%= number_to_currency(Configuration[:premium_energy_price]) %></div>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Configuration[:premium_energy_price]) %>
     </td>
     <td class="controls">
       <% if current_character.full_energy? %>
@@ -77,8 +77,8 @@
 
   <tr>
     <td class="name"><%= t(".refill_stamina.text") %></td>
-    <td class="vip_money">
-      <div class="value"><%= number_to_currency(Configuration[:premium_stamina_price]) %></div>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Configuration[:premium_stamina_price]) %>
     </td>
     <td class="controls">
       <% if current_character.full_stamina? %>
@@ -94,8 +94,8 @@
 
   <tr>
     <td class="name"><%= t(".refill_health.text") %></td>
-    <td class="vip_money">
-      <div class="value"><%= number_to_currency(Configuration[:premium_health_price]) %></div>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Configuration[:premium_health_price]) %>
     </td>
     <td class="controls">
       <% if current_character.full_health? %>
