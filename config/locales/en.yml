@@ -731,8 +731,8 @@ en:
     create:
       title: "Send Gifts to Your Alliance: Step 2"
       gift:
-        title: "You're sending:"
-        change: "&laquo; Change"
+        title: "You're sending ({{change}})"
+        change: "change"
       note: "Please choose friends whom you want to send this gift"
       groups:
         all: "All Friends"
@@ -743,11 +743,9 @@ en:
         message: "{{user}} has sent you a {{item}} in {{app}}! Click to accept gift."
         accept: "Accept {{item}}"
         note: "Send gifts to your Alliance"
-      buttons:
-        skip: "Skip"
     confirm:
       messages:
-        success: "Gifts has been sent to your alliance!"
+        success: "Gifts has been sent to your friends!"
         failure: "An error occured while sending gift. Please contact application developer."
     show:
       success: "You've just received the gift:"

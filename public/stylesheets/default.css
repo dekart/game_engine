@@ -1239,6 +1239,59 @@ form .error {
     #premia .controls .button span {
       background-image: url(/system/assets/000/000/032/original/accept.gif); }
 
+#gift_form .buttons {
+  float: right; }
+  #gift_form .buttons .skip {
+    width: 70px; }
+    #gift_form .buttons .skip span {
+      background-image: url(/system/assets/000/000/026/original/home.gif); }
+#gift_form .item {
+  padding: 5px;
+  text-align: center;
+  float: left;
+  margin: 0 10px 10px 0;
+  overflow: hidden;
+  width: 150px;
+  height: 170px;
+  border: 1px solid #e0e0e0; }
+  #gift_form .item .name {
+    font-weight: bold; }
+  #gift_form .item .payouts {
+    margin-top: 5px; }
+    #gift_form .item .payouts .payout {
+      display: inline; }
+#gift_form .gift {
+  margin-bottom: 15px; }
+#gift_form .friend_groups {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 30px; }
+  #gift_form .friend_groups a {
+    padding: 5px;
+    margin: 0 5px; }
+    #gift_form .friend_groups a.current {
+      border: 1px solid #d0d0d0;
+      color: #333333; }
+
+#gift_result {
+  background-image: url(/system/assets/000/000/030/original/gift.gif); }
+  #gift_result .pending {
+    width: 140px; }
+    #gift_result .pending span {
+      background-image: url(/system/assets/000/000/023/original/inventory.gif); }
+  #gift_result .play_now span {
+    width: 80px;
+    background-image: url(/system/assets/000/000/026/original/home.gif); }
+  #gift_result .details td {
+    padding: 0 15px;
+    text-align: center; }
+  #gift_result .details .item {
+    font-weight: bold; }
+  #gift_result .details .from {
+    font-weight: bold;
+    font-size: 16px;
+    vertical-align: middle; }
+
 #promotion_result {
   padding: 0px 30px;
   background: url(asset:icons_basic_money) 5px 0px no-repeat; }
@@ -1250,75 +1303,6 @@ form .error {
   background: url(asset:icons_level) 5px 0px no-repeat; }
   #level_up .upgrade span {
     background-image: url(asset:icons_add); }
-
-#gift_result {
-  padding: 0px 30px;
-  background: url(asset:icons_inventory) 5px 0px no-repeat; }
-  #gift_result .pending span {
-    width: 140px;
-    background-image: url(asset:icons_inventory); }
-  #gift_result .play_now span {
-    width: 80px;
-    background-image: url(asset:icons_home); }
-  #gift_result .details td {
-    padding: 0 15px;
-    text-align: center; }
-  #gift_result .details .item {
-    font-weight: bold; }
-  #gift_result .details .from {
-    font-weight: bold;
-    font-size: 16px;
-    vertical-align: middle; }
-
-#gift_form .buttons {
-  float: right; }
-  #gift_form .buttons .skip {
-    width: 70px; }
-    #gift_form .buttons .skip span {
-      background-image: url(asset:icons_home); }
-#gift_form .item {
-  padding: 5px;
-  width: 120px;
-  text-align: center;
-  border: 1px solid #e0e0e0; }
-  #gift_form .item .name {
-    font-weight: bold; }
-  #gift_form .item .effects {
-    margin-top: 5px; }
-    #gift_form .item .effects div {
-      display: inline;
-      font-weight: bold;
-      line-height: 26px;
-      height: 26px;
-      padding: 1px 0px 1px 21px;
-      background-position: center left;
-      background-repeat: no-repeat; }
-    #gift_form .item .effects .attack {
-      background-image: url(asset:icons_attack); }
-    #gift_form .item .effects .defence {
-      background-image: url(asset:icons_defence); }
-    #gift_form .item .effects .restore_health {
-      background-image: url(asset:icons_health); }
-    #gift_form .item .effects .restore_energy {
-      background-image: url(asset:icons_energy); }
-    #gift_form .item .effects .upgrade {
-      background-image: url(asset:icons_level); }
-#gift_form .items .item {
-  margin: 0 10px 10px 0; }
-#gift_form .gift {
-  margin-bottom: 15px; }
-  #gift_form .gift .item .name {
-    margin-bottom: 10px; }
-#gift_form .friend_groups {
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 30px; }
-  #gift_form .friend_groups a {
-    padding: 5px;
-    margin: 0 5px; }
-    #gift_form .friend_groups a.current {
-      border: 1px solid #D0D0D0;
-      color: #333333; }
 
 #boss_list .boss {
   margin-top: 15px;

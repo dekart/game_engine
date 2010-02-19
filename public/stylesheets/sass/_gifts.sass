@@ -1,0 +1,74 @@
+#gift_form
+  .buttons
+    float: right
+
+    .skip
+      width: 70px
+
+      span
+        background-image = !gifts_skip_icon
+
+  .item
+    padding: 5px
+    text-align: center
+    float: left
+    margin: 0 10px 10px 0
+    overflow: hidden
+    width = !gifts_item_width
+    height = !gifts_item_height
+    border = !gifts_item_border
+
+    .name
+      font-weight: bold
+
+    .payouts
+      margin-top: 5px
+
+      .payout
+        display: inline
+
+
+  .gift
+    margin-bottom: 15px
+
+  .friend_groups
+    font-size: 14px
+    font-weight: bold
+    line-height: 30px
+
+    a
+      padding: 5px
+      margin: 0 5px
+
+      &.current
+        border = !gifts_current_group_border
+        color = !gifts_current_group_color
+
+
+#gift_result
+  background-image = !gift_result_icon
+
+  .pending
+    width = !gift_result_pending_width
+
+    span
+      background-image = !gift_result_pending_icon
+
+  .play_now
+    width = !gift_result_play_now_width
+
+    span
+      background-image = !gift_result_play_now_icon
+
+  .details
+    td
+      padding: 0 15px
+      text-align: center
+
+    .item
+      font-weight: bold
+
+    .from
+      font-weight: bold
+      font-size: 16px
+      vertical-align: middle
