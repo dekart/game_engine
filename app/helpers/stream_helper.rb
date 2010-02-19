@@ -150,7 +150,7 @@ module StreamHelper
           :href => help_url
         }
       ],
-      :success => "HelpRequest.create(#{context.id}, '#{context_type}')"
+      :success => "$.post('#{ help_requests_path(:context_id => context.id, :context_type => context_type) }')"
     )
   end
 
