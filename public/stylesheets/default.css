@@ -486,14 +486,17 @@ form .error {
   margin-bottom: 15px;
   font-size: 12px;
   border: 1px solid #e7e7e7; }
-  #latest_help_request .basic_money {
+  #latest_help_request .basic_money, #latest_help_request .experience {
     line-height: 22px;
     height: 22px;
     padding: 5px 0 5px 21px;
     font-weight: bold;
-    background-image: url(/system/assets/000/000/016/original/basic_money.gif);
     background-position: center left;
     background-repeat: no-repeat; }
+  #latest_help_request .basic_money {
+    background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
+  #latest_help_request .experience {
+    background-image: url(/system/assets/000/000/031/original/experience.gif); }
 
 #help_request_result {
   background-image: url(/system/assets/000/000/014/original/alliance.gif); }
@@ -1276,12 +1279,13 @@ form .error {
 #gift_result {
   background-image: url(/system/assets/000/000/030/original/gift.gif); }
   #gift_result .pending {
-    width: 140px; }
+    width: 160px; }
     #gift_result .pending span {
       background-image: url(/system/assets/000/000/023/original/inventory.gif); }
-  #gift_result .play_now span {
-    width: 80px;
-    background-image: url(/system/assets/000/000/026/original/home.gif); }
+  #gift_result .play_now {
+    width: 95px; }
+    #gift_result .play_now span {
+      background-image: url(/system/assets/000/000/026/original/home.gif); }
   #gift_result .details td {
     padding: 0 15px;
     text-align: center; }
