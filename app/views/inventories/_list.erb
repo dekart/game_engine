@@ -29,13 +29,8 @@
             </td>
             <td class="payouts">
               <h3><%= Item.human_attribute_name("effects") %></h3>
-              
-              <%= payout(:attack, "+%d" % inventory.attack) if inventory.attack > 0 %>
-              <%= payout(:defence, "+%d" % inventory.defence) if inventory.defence > 0 %>
 
-              <% inventory.effects.each do |effect| %>
-                <%= payout(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
-              <% end %>
+              <%= render "items/effects", :item => inventory %>
             </td>
             <td class="controls">
               <% if inventory.can_be_sold? %>

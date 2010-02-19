@@ -1,0 +1,36 @@
+<%= title(t(".title")) %>
+
+<%= render "relations/buttons", :current => :gifts %>
+
+<div class="note"><%= t(".note") %></div>
+
+<div id="gift_form">
+  <% collection(@items) do %>
+    <div class="items clearfix">
+      <% @items.each do |item| %>
+        <% content_tag_for(:div, item) do %>
+
+          <%= link_to(item_image(item, :small), polymorphic_path(@gift, :item_id => item.id),
+                :method => @gift.new_record? ? :post : :put
+              ) %>
+
+          <div class="name">
+            <%= link_to(item.name, polymorphic_path(@gift, :item_id => item.id),
+                  :method => @gift.new_record? ? :post : :put
+                ) %>
+          </div>
+
+          <div class="payouts">
+            <%= render "items/effects", :item => item %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="buttons clearfix">
+    <%= link_to(button(:skip), @gift.new_record? ? root_path : confirm_gift_path(@gift),
+          :class => "skip button"
+        ) %>
+  </div>
+</div>

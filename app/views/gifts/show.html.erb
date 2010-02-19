@@ -1,5 +1,5 @@
 <% content_for :result do %>
-  <div id="gift_result">
+  <% result_for :gift do %>
     <div class="buttons">
       <%= link_to(button(:accept_pending), fb_app_requests_url, :class => "pending button") %>
       <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
@@ -21,5 +21,5 @@
         </td>
       </tr>
     </table>
-  </div>
+  <% end %>
 <% end %>
