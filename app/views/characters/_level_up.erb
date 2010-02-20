@@ -15,7 +15,7 @@
 </div>
 
 <% dom_ready do %>
-  Character.onNewLevel();
+  $(document).trigger('character.new_level');
 
   <%= character_level_up_stream_dialog %>
 <% end %>

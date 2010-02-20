@@ -59,9 +59,9 @@
             <%= link_to(button(:continue), upgrade_character_path(:current), :class => "button continue") %>
 
             <% dom_ready do %>
-              Character.onNewLevel = function(){
+              $(document).bind('character.new_level', function(){
                 <%= reload_tutorial %>
-              }
+              })
             <% end %>
           <% else %>
             <%= link_to(t(".step_3.title"), new_fight_path) %> <%= completed_mark %>
@@ -79,13 +79,9 @@
             <%= link_to(button(:continue), invite_users_path, :class => "button continue") %>
             
             <% dom_ready do %>
-              Character.onUpgradeCompleteWithoutTutorial = Character.onUpgradeComplete;
-
-              Character.onUpgradeComplete = function(){
+              $(document).bind('character.upgrade_complete', function(){
                 <%= reload_tutorial %>
-              
-                Character.onUpgradeCompleteWithoutTutorial();
-              }
+              })
             <% end %>
           <% else %>
             <%= link_to(t(".step_4.title"), upgrade_character_path(:current)) %> <%= completed_mark %>
