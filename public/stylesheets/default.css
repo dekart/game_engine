@@ -1496,8 +1496,7 @@ form.new_character .note, form.edit_character .note {
         background-image: url(/system/assets/000/000/032/original/accept.gif); }
 
 #promotion_result {
-  padding: 0px 30px;
-  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
+  background-image: url(/system/assets/000/000/016/original/basic_money.gif); }
   #promotion_result .forward {
     margin-top: 25px; }
 
