@@ -1,4 +1,4 @@
-<div id="level_up">
+<% result_for :level_up do %>
   <div class="buttons">
     <%= link_to(button(:upgrade), upgrade_character_url(current_character),
           :class => "upgrade button"
@@ -12,7 +12,7 @@
           :upgrade => link_to(t(".upgrade_link"), upgrade_character_url(current_character))
         ) %>
   </div>
-</div>
+<% end %>
 
 <% dom_ready do %>
   $(document).trigger('character.new_level');
