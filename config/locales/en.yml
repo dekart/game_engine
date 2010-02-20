@@ -419,7 +419,7 @@ en:
     fulfill:
       completed:
         title: "Congratulations!"
-        message: "You completed this mission and received new title:"
+        message: "You've completed this mission and received new title:"
         child_missions: "You also opened new missions:"
         buttons:
           publish: "Brag About It!"
@@ -504,7 +504,7 @@ en:
       locked_group: "Reach level {{level}} to open missions from this group"
     complete:
       title: "Mission Group Completed!"
-      message: "You completed all missions in this group!"
+      message: "You've completed all missions in this group!"
       title_received: "You received new title:"
       you_received: "You received:"
     tabs:

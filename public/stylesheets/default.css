@@ -1296,33 +1296,21 @@ form .error {
     font-size: 16px;
     vertical-align: middle; }
 
-#promotion_result {
-  padding: 0px 30px;
-  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
-  #promotion_result .forward {
-    margin-top: 25px; }
-
-#level_up {
-  padding: 0px 30px;
-  background: url(asset:icons_level) 5px 0px no-repeat; }
-  #level_up .upgrade span {
-    background-image: url(asset:icons_add); }
-
 #boss_list .boss {
   margin-top: 15px;
-  border: 2px solid #BDC7D8;
   padding: 10px;
-  width: 100%; }
+  width: 100%;
+  border: 2px solid #bdc7d8; }
   #boss_list .boss .image {
     width: 220px; }
   #boss_list .boss .details {
     width: 100%; }
 #boss_list .buttons .attack span {
-  background-image: url(asset:icons_fights); }
+  background-image: url(/system/assets/000/000/022/original/fights.gif); }
 
 #boss_fight_block {
   padding: 10px;
-  border: 2px solid #BDC7D8; }
+  border: 2px solid #bdc7d8; }
   #boss_fight_block .boss_fight {
     margin: 5px 0; }
   #boss_fight_block .image {
@@ -1341,11 +1329,10 @@ form .error {
     float: right;
     padding-left: 10px; }
     #boss_fight_block .buttons .attack span {
-      background-image: url(asset:icons_fights); }
+      background-image: url(/system/assets/000/000/022/original/fights.gif); }
 
 #boss_fight_result {
-  padding: 0px 30px;
-  background: url(asset:icons_missions) 5px 0px no-repeat; }
+  background-image: url(/system/assets/000/000/021/original/missions.gif); }
   #boss_fight_result .details {
     width: 100%; }
     #boss_fight_result .details .character, #boss_fight_result .details .boss {
@@ -1367,9 +1354,9 @@ form .error {
       #boss_fight_result .details .buttons .button {
         margin-left: 0; }
       #boss_fight_result .details .buttons .attack span {
-        background-image: url(asset:icons_fights); }
+        background-image: url(/system/assets/000/000/022/original/fights.gif); }
       #boss_fight_result .details .buttons .publish span {
-        background-image: url(asset:icons_publish); }
+        background-image: url(/system/assets/000/000/008/original/publish.gif); }
   #boss_fight_result .progress .progress_bar {
     width: 100px; }
   #boss_fight_result .middle .result {
@@ -1388,6 +1375,18 @@ form .error {
     color: green; }
   #boss_fight_result .payouts {
     margin-top: 20px; }
+
+#promotion_result {
+  padding: 0px 30px;
+  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
+  #promotion_result .forward {
+    margin-top: 25px; }
+
+#level_up {
+  padding: 0px 30px;
+  background: url(asset:icons_level) 5px 0px no-repeat; }
+  #level_up .upgrade span {
+    background-image: url(asset:icons_add); }
 
 #new_character .field {
   margin-bottom: 10px; }
