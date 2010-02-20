@@ -1,4 +1,4 @@
-<div id="fight_result">
+<% result_for :fight do %>
   <% if @fight.valid? %>
     <p class="success">
       <%= raw t(".message", 
@@ -37,10 +37,10 @@
   <% elsif not @fight.enough_stamina? %>
     <p><%= t("activerecord.errors.models.fight.attributes.character.not_enough_stamina") %></p>
   <% end %>
-</div>
+<% end %>
 
 <%= character_level_up_block %>
 
 <% dom_ready do %>
-  $('result').show();
+  $(document).trigger('result.received');
 <% end %>

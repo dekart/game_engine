@@ -1,5 +1,5 @@
 <% content_for :result do %>
-  <div id="promotion_result">
+  <% result_for :promotion do %>
     <p><%= @promotion.text %></p>
 
     <h3><%= t(".you_received") %></h3>
@@ -21,5 +21,5 @@
         <% end %>
       </div>
     <% end %>
-  </div>
+  <% end %>
 <% end %>
