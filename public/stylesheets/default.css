@@ -1376,6 +1376,37 @@ form .error {
   #boss_fight_result .payouts {
     margin-top: 20px; }
 
+form.new_character .field, form.edit_character .field {
+  margin-bottom: 10px; }
+form.new_character .label, form.edit_character .label {
+  font-size: 16px;
+  font-weight: bold; }
+form.new_character .note, form.edit_character .note {
+  font-size: 12px; }
+
+#character_types {
+  margin-bottom: 10px; }
+  #character_types .character_type {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    float: left;
+    margin: 10px 10px 0 0;
+    font-weight: bold;
+    padding: 2px;
+    cursor: pointer;
+    border: 1px solid #e0e0e0;
+    width: 125px; }
+    #character_types .character_type:hover {
+      border: 1px solid #3b5998; }
+    #character_types .character_type .name {
+      display: block;
+      margin-bottom: 5px; }
+  #character_types .selected {
+    padding: 1px !important;
+    border: 2px solid #3b5998 !important;
+    background-color: #e8ebf3; }
+
 #promotion_result {
   padding: 0px 30px;
   background: url(asset:icons_basic_money) 5px 0px no-repeat; }
@@ -1387,34 +1418,6 @@ form .error {
   background: url(asset:icons_level) 5px 0px no-repeat; }
   #level_up .upgrade span {
     background-image: url(asset:icons_add); }
-
-#new_character .field {
-  margin-bottom: 10px; }
-#new_character .label {
-  font-size: 16px; }
-#new_character .note {
-  font-size: 12px; }
-
-#character_types {
-  margin-bottom: 10px; }
-  #character_types .character_type {
-    display: block;
-    width: 125px;
-    text-align: center;
-    text-decoration: none;
-    float: left;
-    margin: 10px 10px 0 0;
-    font-weight: bold;
-    padding: 2px;
-    border: 1px solid #e0e0e0; }
-    #character_types .character_type:hover {
-      border: 1px solid #3B5998; }
-    #character_types .character_type .name {
-      display: block;
-      margin-bottom: 5px; }
-  #character_types .selected {
-    border: 2px solid #3B5998 !important;
-    padding: 1px !important; }
 
 #placements {
   position: relative;
