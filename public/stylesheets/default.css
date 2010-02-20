@@ -1407,33 +1407,24 @@ form.new_character .note, form.edit_character .note {
     border: 2px solid #3b5998 !important;
     background-color: #e8ebf3; }
 
-#promotion_result {
-  padding: 0px 30px;
-  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
-  #promotion_result .forward {
-    margin-top: 25px; }
-
-#level_up {
-  padding: 0px 30px;
-  background: url(asset:icons_level) 5px 0px no-repeat; }
-  #level_up .upgrade span {
-    background-image: url(asset:icons_add); }
-
 #placements {
   position: relative;
-  background: url(asset:placements) top left no-repeat;
+  background-image: url(/system/assets/000/000/038/original/placements.gif);
+  background-position: top left;
+  background-repeat: no-repeat;
   padding-top: 490px;
   width: 100%; }
   #placements .inventory {
-    position: relative;
-    background-color: white; }
+    position: relative; }
     #placements .inventory .remove {
       position: absolute;
       right: 0;
       display: block;
       width: 16px;
       height: 16px;
-      background: url(asset:icons_delete) center no-repeat; }
+      background-image: url(/system/assets/000/000/012/original/delete.gif);
+      background-position: center;
+      background-repeat: no-repeat; }
   #placements .placement {
     position: absolute; }
   #placements .head {
@@ -1469,39 +1460,49 @@ form.new_character .note, form.edit_character .note {
   #placements .additional {
     position: relative; }
     #placements .additional .inventory {
-      width: 72px;
-      height: 72px;
       margin: 0 10px 10px 0;
       float: left;
-      border: 1px solid #BDC7D8; }
+      width: 72px;
+      height: 72px;
+      border: 1px solid #bdc7d8; }
     #placements .additional .note {
       clear: both; }
       #placements .additional .note .zero {
-        color: red;
-        font-size: 16px; }
+        font-size: 16px;
+        color: red; }
 
-#inventory_for_equipment {
+#equippables {
   padding-right: 10px;
   margin-right: 10px;
-  border-right: 2px solid #BDC7D8; }
-  #inventory_for_equipment .inventory {
+  border-right: 2px solid #bdc7d8;
+  width: 210px; }
+  #equippables .inventory {
     padding: 10px 0;
-    border-top: 1px solid #BDC7D8; }
-    #inventory_for_equipment .inventory .header {
+    border-top: 1px solid #e0e0e0; }
+    #equippables .inventory .header {
       margin-bottom: 5px; }
-      #inventory_for_equipment .inventory .header .name {
+      #equippables .inventory .header .name {
         font-weight: bold;
         font-size: 14px; }
-    #inventory_for_equipment .inventory .image {
+    #equippables .inventory .image {
       margin-bottom: 5px; }
-    #inventory_for_equipment .inventory .controls select {
+    #equippables .inventory .controls select {
       float: left; }
-    #inventory_for_equipment .inventory .controls .button {
+    #equippables .inventory .controls .equip {
       margin-top: 0px;
       float: left;
       clear: none; }
-      #inventory_for_equipment .inventory .controls .button span {
-        background-image: url(asset:icons_accept); }
+      #equippables .inventory .controls .equip span {
+        background-image: url(/system/assets/000/000/032/original/accept.gif); }
 
-#equipment_inventories {
-  width: 200px; }
+#promotion_result {
+  padding: 0px 30px;
+  background: url(asset:icons_basic_money) 5px 0px no-repeat; }
+  #promotion_result .forward {
+    margin-top: 25px; }
+
+#level_up {
+  padding: 0px 30px;
+  background: url(asset:icons_level) 5px 0px no-repeat; }
+  #level_up .upgrade span {
+    background-image: url(asset:icons_add); }
