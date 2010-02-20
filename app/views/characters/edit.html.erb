@@ -5,3 +5,7 @@
 
   <%= form.submit %>
 <% end %>
+
+<% dom_ready do %>
+  CharacterForm.setup('form.edit_character');
+<% end %>
