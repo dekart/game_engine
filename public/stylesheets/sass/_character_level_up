@@ -1,0 +1,5 @@
+#level_up_result
+  background-image = !level_up_result_icon
+
+  .upgrade span
+    background-image = !level_up_upgrade_icon
