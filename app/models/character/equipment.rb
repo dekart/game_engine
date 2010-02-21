@@ -50,7 +50,7 @@ class Character::Equipment
       elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
         previous = Inventory.find(@character.placements[placement].last)
 
-        unless previous == inventory
+        unless previous == inventory # Do not re-equip the same inventory
           unequip(previous, placement)
           equip(inventory, placement)
 
