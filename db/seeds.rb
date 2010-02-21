@@ -29,6 +29,16 @@ knife = weapons.items.create!(
   :image        => File.open(Rails.root.join("db", "pictures", "knife.jpg"))
 )
 
+dagger = weapons.items.create!(
+  :name         => "Dagger",
+  :availability => "gift",
+  :level        => 1,
+  :basic_price  => 40,
+  :attack       => 1,
+  :can_be_sold  => false,
+  :image        => File.open(Rails.root.join("db", "pictures", "dagger.jpg"))
+)
+
 armors = ItemGroup.create!(:name => "Armors")
 
 shield = armors.items.create!(
@@ -60,6 +70,7 @@ upgrade = potions.items.create!(
   :vip_price    => 5,
   :usable       => true,
   :usage_limit  => 1,
+  :image        => File.open(Rails.root.join("db", "pictures", "potion_of_upgrade.jpg")),
   :effects      => Effects::Collection.new(
     Effects::Upgrade.new(5)
   )
