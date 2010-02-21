@@ -47,13 +47,15 @@ class Character::Equipment
         @character.placements[placement] << inventory.id
 
         inventory.increment(:equipped)
-      elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be
+      elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
         previous = Inventory.find(@character.placements[placement].last)
-        
-        unequip(previous, placement)
-        equip(inventory, placement)
 
-        previous
+        unless previous == inventory
+          unequip(previous, placement)
+          equip(inventory, placement)
+
+          previous
+        end
       else
         #TODO Message that there is no place
       end
