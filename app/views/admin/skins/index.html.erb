@@ -26,7 +26,7 @@
       <td class="updated_at"><%= l(skin.updated_at, :format => :short) %></td>
       <td class="controls">
         <%= link_to(t(".controls.edit"), edit_admin_skin_path(skin)) %>
-        <%= link_to(t(".controls.try"), root_url(:skin => skin, :canvas => true), :target => :_blank) %>
+        <%= link_to(t(".controls.try"), root_url(:try_skin => skin, :canvas => true), :target => :_blank) %>
         <%= link_to(t(".controls.activate"), activate_admin_skin_path(skin),
               :method   => :post,
               :confirm  => t(".controls.activate_confirm")
