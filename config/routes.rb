@@ -47,6 +47,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :promotions
     admin.resources :statistics, :only => :index
     admin.resources :stylesheets, :member => {:use => :post, :log => :post}
+    admin.resources :skins,
+      :member => {:activate => :post, :changelog => :post}
     admin.resources :tips
     admin.resources :translations
     admin.resources :configurations

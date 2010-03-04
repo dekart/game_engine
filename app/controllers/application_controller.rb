@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   
   layout :get_layout
 
-  helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context
+  helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context, :current_skin
 
   helper :all
 
@@ -145,7 +145,7 @@ class ApplicationController < ActionController::Base
 
   def default_url_options(options)
     returning result = {} do
-      result[:try_stylesheet] = params[:try_stylesheet] unless params[:try_stylesheet].blank?
+      result[:try_skin] = params[:try_skin] if params[:try_skin].present?
     end
   end
 
@@ -159,5 +159,9 @@ class ApplicationController < ActionController::Base
 
   def get_layout
     (current_character.nil? || current_character.new_record?) ? "unauthorized" : "application"
+  end
+
+  def current_skin
+    params[:try_skin] ? Skin.find_by_id(params[:try_skin]) : Skin.with_state(:active).first
   end
 end

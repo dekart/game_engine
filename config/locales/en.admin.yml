@@ -15,6 +15,7 @@ en:
         newsletter: "Newsletter"
         promotions: "Promotions"
         stylesheets: "Stylesheets"
+        skins: "Skins"
         tips: "Tips"
         translations: "Translations"
         configurations: "Configurations"
@@ -307,3 +308,29 @@ en:
         basic_attributes: "Basic Attributes"
         bonuses: "Bonuses"
         other: "Other Attributes"
+    skins:
+      index:
+        title: "Skins"
+        default_skin: "Default Skin"
+        controls:
+          new: "New Skin"
+          edit: "Edit"
+          activate: "Activate"
+          activate_confirm: "Please confirm you want to apply this skin to the game. If you just want to check how it will look - click 'Try' instead"
+          try: "Try"
+          delete: "Delete"
+          delete_confirm: "Are you sure you want to delete this skin? Game skin will return to default."
+      new:
+        title: "New Skin"
+        submit: "Create"
+      edit:
+        title: "Edit Skin"
+        submit: "Update"
+      show:
+        title: "Default Stylesheet"
+      changelog_form:
+        title: "View changes made since"
+        submit: "Show"
+      changelog:
+        title: "Default Skin Changelog"
+        no_changes: "No changes"
