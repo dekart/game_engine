@@ -3,6 +3,7 @@ source 'http://gemcutter.org'
 
 bundle_path "vendor/bundler_gems"
 
+gem "mysql",            "2.8.1"
 gem "system_timer",     "1.0"
 gem "memcache-client",  "1.7.6",  :require_as => "memcache"
 gem "will_paginate",    "2.3.11"
