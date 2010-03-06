@@ -28,20 +28,28 @@ class Skin < ActiveRecord::Base
   end
 
   protected
+
+  def sass_path
+    Rails.root.join("public", "stylesheets", "sass", "skins", "#{name.parameterize}.sass")
+  end
+
+  def css_path
+    Rails.root.join("public", "stylesheet", "skins", "#{name.parameterize}.css")
+  end
   
   def generate_sass
     default_skin = File.read(Rails.root.join("public", "stylesheets", "sass", "application.sass"))
 
     default_skin.gsub!(/^\/\/\s*<--\s*Skin.*$/i, content)
 
-    File.open(Rails.root.join("public", "stylesheets", "sass", "skins", "#{name.parameterize}.sass"), "w+") do |file|
+    FileUtils.mkdir_p(File.dirname(sass_path))
+
+    File.open(sass_path, "w+") do |file|
       file << default_skin
     end
   end
 
   def delete_compiled_stylesheet
-    stylesheet = Rails.root.join("public", "stylesheet", "skins", "#{name.parameterize}.css")
-
-    FileUtils.rm(stylesheet) if File.file?(stylesheet)
+    FileUtils.rm(css_path) if File.file?(css_path)
   end
 end
