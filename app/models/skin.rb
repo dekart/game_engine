@@ -19,7 +19,7 @@ class Skin < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  after_save :generate_sass, :delete_compiled_stylesheet
+  after_save :regenerate_stylesheet
 
   class << self
     def update_sass
@@ -29,14 +29,12 @@ class Skin < ActiveRecord::Base
 
   protected
 
-  def sass_path
-    Rails.root.join("public", "stylesheets", "sass", "skins", "#{name.parameterize}.sass")
+  def regenerate_stylesheet
+    generate_sass
+
+    Sass::Plugin.update_stylesheets
   end
 
-  def css_path
-    Rails.root.join("public", "stylesheet", "skins", "#{name.parameterize}.css")
-  end
-  
   def generate_sass
     default_skin = File.read(Rails.root.join("public", "stylesheets", "sass", "application.sass"))
 
@@ -49,7 +47,7 @@ class Skin < ActiveRecord::Base
     end
   end
 
-  def delete_compiled_stylesheet
-    FileUtils.rm(css_path) if File.file?(css_path)
+  def sass_path
+    Rails.root.join("public", "stylesheets", "sass", "skins", "#{name.parameterize}.sass")
   end
 end

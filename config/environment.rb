@@ -87,6 +87,9 @@ end
 
 require "facebook_money"
 require "i18n/backend/yaml_db"
-require "sass/plugin_extension"
 
 I18n.backend = I18n::Backend::YamlDb.new
+
+# Update sass templates for stylesheet generation
+Asset.update_sass
+Skin.update_sass
