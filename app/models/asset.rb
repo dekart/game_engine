@@ -14,14 +14,12 @@ class Asset < ActiveRecord::Base
         find_by_alias(value.to_s)
       end
     end
-  end
-  
-  protected
 
-  def update_stylesheet_template
-    File.open(Rails.root.join("public", "stylesheets", "sass", "_assets.sass"), "w+") do |file|
-      Asset.all.each do |asset|
-        file.puts "!asset_#{asset.alias} = url(\"#{asset.image.url}\")"
+    def update_sass
+      File.open(Rails.root.join("public", "stylesheets", "sass", "_assets.sass"), "w+") do |file|
+        Asset.all.each do |asset|
+          file.puts "!asset_#{asset.alias} = url(\"#{asset.image.url}\")"
+        end
       end
     end
   end

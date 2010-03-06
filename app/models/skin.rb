@@ -21,6 +21,12 @@ class Skin < ActiveRecord::Base
 
   after_save :generate_sass, :delete_compiled_stylesheet
 
+  class << self
+    def update_sass
+      with_state(:active).first.try(:generate_sass)
+    end
+  end
+
   protected
   
   def generate_sass
