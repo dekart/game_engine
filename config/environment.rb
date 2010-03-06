@@ -93,3 +93,5 @@ I18n.backend = I18n::Backend::YamlDb.new
 # Update sass templates for stylesheet generation
 Asset.update_sass
 Skin.update_sass
+
+Sass::Plugin.update_stylesheets

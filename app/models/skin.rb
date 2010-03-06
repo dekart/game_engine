@@ -23,19 +23,21 @@ class Skin < ActiveRecord::Base
 
   class << self
     def update_sass
-      with_state(:active).first.try(:generate_sass)
+      all.each do |skin|
+        skin.send(:update_sass)
+      end
     end
   end
 
   protected
 
   def regenerate_stylesheet
-    generate_sass
+    update_sass
 
     Sass::Plugin.update_stylesheets
   end
 
-  def generate_sass
+  def update_sass
     default_skin = File.read(Rails.root.join("public", "stylesheets", "sass", "application.sass"))
 
     default_skin.gsub!(/^\/\/\s*<--\s*Skin.*$/i, content)
