@@ -61,13 +61,14 @@ module Facebooker
       def top_redirect_to(*args)
         if request_is_facebook_iframe?
           @redirect_url = url_for(*args)
-          render :layout => false, :inline => <<-HTML
+
+          render :layout => false, :text => <<-HTML
             <html><head>
               <script type="text/javascript">  
-                window.top.location.href = <%= @redirect_url.to_json -%>;
+                window.top.location.href = #{@redirect_url.to_json};
               </script>
               <noscript>
-                <meta http-equiv="refresh" content="0;url=<%=h @redirect_url %>" />
+                <meta http-equiv="refresh" content="0;url=#{@redirect_url}" />
                 <meta http-equiv="window-target" content="_top" />
               </noscript>                
             </head></html>
@@ -188,8 +189,14 @@ module Facebooker
       
       def create_new_facebook_session_and_redirect!
         session[:facebook_session] = new_facebook_session
+
         next_url = after_facebook_login_url || default_after_facebook_login_url
-        top_redirect_to session[:facebook_session].login_url({:next => next_url, :canvas=>params[:fb_sig_in_canvas]}) unless @installation_required
+
+        top_redirect_to session[:facebook_session].login_url(
+          :next   => next_url,
+          :canvas => params[:fb_sig_in_canvas] || params[:fb_sig_in_iframe]
+        ) unless @installation_required
+        
         false
       end
       

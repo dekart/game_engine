@@ -11,34 +11,10 @@ class ApplicationController < ActionController::Base
       value.replace "[#{count} friends]"
     end
   end
-  
+
   before_filter :ensure_authenticated_to_facebook
   before_filter :check_character_existance
 
-      def top_redirect_to(*args)
-        if request_is_facebook_iframe?
-          @redirect_url = url_for(*args)
-          render :layout => false, :inline => <<-HTML
-            <html><head>
-              <script type="text/javascript">
-                window.top.location.href = <%= raw @redirect_url.to_json -%>;
-              </script>
-              <noscript>
-                <meta http-equiv="refresh" content="0;url=<%=h @redirect_url %>" />
-                <meta http-equiv="window-target" content="_top" />
-              </noscript>
-            </head></html>
-          HTML
-        else
-          redirect_to(*args)
-        end
-      end
-
-      def after_facebook_login_url
-        root_url(:canvas => true)
-      end
-
-  
   layout :get_layout
 
   helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context, :current_skin
@@ -70,7 +46,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_facebook_login_url
-    request.request_uri
+    params_hash = params.to_hash
+    params_hash.reject!{|key, value| key.starts_with?("fb_sig") or key.starts_with?("_fb_") }
+    params_hash[:canvas] = true
+
+    url_for(params_hash)
   end
 
   def current_user
