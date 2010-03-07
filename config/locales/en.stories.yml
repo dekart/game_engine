@@ -40,10 +40,3 @@ en:
     invitation:
       text: "{{user}} joined your Alliance!"
       link: "Manage Alliance"
-  notifications:
-    welcome:
-      text: "Welcome to {{app}}! Complete {{missions}}, {{fight}} with other players, and grow your {{alliance}} to become {{hero}}!"
-      missions: "missions"
-      fight: "fight"
-      alliance: "Alliance"
-      hero: "the Hero"

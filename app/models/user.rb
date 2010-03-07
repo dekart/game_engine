@@ -16,18 +16,8 @@ class User < ActiveRecord::Base
   
   attr_accessible :show_next_steps
 
-  after_create :setup_profile!, :update_profile!, :deliver_welcome_message!
-
   def show_tutorial?
     Configuration[:user_tutorial_enabled] && self[:show_tutorial]
-  end
-
-  def setup_profile!
-    Delayed::Job.enqueue Jobs::SetupProfile.new(self.id)
-  end
-
-  def update_profile!
-    Delayed::Job.enqueue Jobs::UpdateProfile.new(self.id)
   end
 
   def customized?
@@ -40,10 +30,6 @@ class User < ActiveRecord::Base
 
   def admin?
     Configuration[:user_admins].split(/\s*,\s*/).include?(self.facebook_id.to_s)
-  end
-
-  def deliver_welcome_message!
-    Delayed::Job.enqueue Jobs::WelcomeNotification.new(self.id)
   end
 
   def should_visit_invite_page?
