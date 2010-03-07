@@ -295,9 +295,6 @@ en:
     victim_list:
       buttons:
         attack: "Attack!"
-        attack_and_invite: "Attack & Invite!"
-      invitee:
-        level: "Fresh Meat"
   inventories:
     buttons:
       buttons:
