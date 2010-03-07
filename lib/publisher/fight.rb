@@ -7,23 +7,20 @@ module Publisher
     
     include FacebookHelper
 
-    def notification(user, fight)
-      send_as :notification
-      recipients fight.victim.user
-      from user
-      fbml I18n.t("notifications.fight.text",
-        :app  => link_to(I18n.t("app_name"), root_url),
-        :link => link_to(I18n.t('notifications.fight.link'), root_url)
-      )
-    end
-
-    def invitation(user, victim)
-      send_as :notification
-      recipients victim
-      from user
-      fbml I18n.t("notifications.fight_with_invite.text",
-        :app  => link_to(I18n.t("app_name"), root_url),
-        :link => link_to(I18n.t('notifications.fight_with_invite.link'), root_url)
+    def notification(fight)
+      Facebooker::Session.create.post("facebook.dashboard.addNews",
+        :uid => fight.victim.user.facebook_id,
+        :news => [
+          {
+            :message => I18n.t("news.fight.#{fight.attacker_won? ? :lost : :won}.text",
+              :user => "@:#{fight.attacker.user.facebook_id}"
+            ),
+            :action_link => {
+              :text => I18n.t("news.fight.#{fight.attacker_won? ? :lost : :won}.link"),
+              :href => root_url
+            }
+          }
+        ]
       )
     end
   end

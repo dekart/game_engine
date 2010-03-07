@@ -26,16 +26,18 @@ en:
     inventory:
       title: "{*actor*} just bought the {{item}} in {{app}}!"
 
+  news:
+    fight:
+      lost:
+        text: "You were attacked by {{user}} and LOST!"
+        link: "Fight back!"
+      won:
+        text: "You were attacked by {{user}} and WON!"
+        link: "Fight back!"
   notifications:
     assignment:
       text: "promoted you as {{pronoun}} {{title}} in {{app}}! {{link}}"
       link: "Promote {{user}} &raquo;"
-    fight:
-      text: "attacked you in {{app}}! You LOST the battle! {{link}}"
-      link: "Fight Back!"
-    fight_with_invite:
-      text: "attacked you in {{app}}! You LOST the battle! {{link}}"
-      link: "Fight Back!"
     invitation:
       text: "joined your Alliance in {{app}}! {{link}}"
       link: "Manage Alliance &raquo;"

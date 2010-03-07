@@ -14,7 +14,7 @@ class Fight < ActiveRecord::Base
   }
 
   before_create :calculate_fight
-  after_create  :save_payout
+  after_create  :save_payout, :update_victim_dashboard
 
   def attacker_won?
     self.winner == self.attacker
@@ -124,5 +124,9 @@ class Fight < ActiveRecord::Base
     end
 
     return [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
+  end
+
+  def update_victim_dashboard
+    Delayed::Job.enqueue Jobs::FightNotification.new(self.id)
   end
 end

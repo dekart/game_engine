@@ -97,24 +97,6 @@
   <% end %>
 <% end %>
 
-<% form.field_set t(".fight_with_invite") do %>
-  <%= form.check_box :fight_with_invite_allowed %>
-
-  <%
-    [
-      :fight_with_invite_stamina_required,
-      :fight_with_invite_max_level,
-      :fight_with_invite_experience,
-      :fight_with_invite_money_min,
-      :fight_with_invite_money_max,
-      :fight_with_invite_victim_damage_max,
-      :fight_with_invite_victim_damage_min,
-      :fight_with_invite_attacker_damage
-    ].each do |field| %>
-    <%= form.text_field field, :size => 5 %>
-  <% end %>
-<% end %>
-
 <% form.field_set t(".rating") do %>
   <%
     [

@@ -100,7 +100,6 @@ ActionController::Routing::Routes.draw do |map|
       :unequip  => :post
     }
   map.resources :fights,
-    :collection => {:invite => :post},
     :member     => {:respond => :post, :used_items => :post}
   map.resources :invitations, :member => {:accept => :any, :ignore => :any}
   map.resources :relations

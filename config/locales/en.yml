@@ -286,14 +286,6 @@ en:
       attacker: "Your items:"
       victim: "Their items:"
       item: "{{name}} x {{amount}}"
-    invite:
-      message: "You attacked {{user_name}} and WON the battle against {{pronoun}}!"
-      you_received:
-        title: "You received:"
-      you_lost:
-        title: "You lost:"
-      victim_lost:
-        title: "{{user_name}} lost:"
     new:
       title: "Fighting Arena"
       messages:
