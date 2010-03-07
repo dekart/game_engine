@@ -1,8 +1,9 @@
 class CharactersController < ApplicationController
   skip_before_filter :check_character_existance,
     :only => [:new, :create, :load_vip_money]
-  skip_before_filter :ensure_application_is_installed_by_facebook_user,
+  skip_before_filter :ensure_authenticated_to_facebook,
     :only => [:load_vip_money]
+  
   before_filter :set_facebook_session,
     :only => [:new]
   before_filter :fetch_character_types,
