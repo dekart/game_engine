@@ -3,7 +3,7 @@ module Delayed
     ROUNDS = 10
 
     def start
-      say "*** Starting limited job worker #{Delayed::Job.worker_name}"
+      say "*** Starting limited job worker #{Delayed::Job.worker_name} at #{Time.now}"
 
       trap('TERM') { say 'Exiting...'; $exit = true }
       trap('INT')  { say 'Exiting...'; $exit = true }
