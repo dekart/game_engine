@@ -7,13 +7,20 @@ module Publisher
 
     include FacebookHelper
 
-    def notification(user, invitation)
-      send_as :notification
-      recipients invitation.sender
-      from user
-      fbml I18n.t("notifications.invitation.text",
-        :app  => link_to(I18n.t("app_name"), root_url),
-        :link => link_to(I18n.t("notifications.invitation.link"), relations_url)
+    def notification(invitation)
+      Facebooker::Session.create.post("facebook.dashboard.addNews",
+        :uid => invitation.sender.facebook_id,
+        :news => [
+          {
+            :message => I18n.t("news.invitation.text",
+              :user => "@:#{invitation.receiver_id}"
+            ),
+            :action_link => {
+              :text => I18n.t("news.invitation.link"),
+              :href => relations_url
+            }
+          }
+        ]
       )
     end
   end

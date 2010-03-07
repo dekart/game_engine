@@ -37,10 +37,10 @@ en:
     assignment:
       text: "{{user}} promoted you as their {{position}}!"
       link: "Manage Alliance"
-  notifications:
     invitation:
-      text: "joined your Alliance in {{app}}! {{link}}"
-      link: "Manage Alliance &raquo;"
+      text: "{{user}} joined your Alliance!"
+      link: "Manage Alliance"
+  notifications:
     welcome:
       text: "Welcome to {{app}}! Complete {{missions}}, {{fight}} with other players, and grow your {{alliance}} to become {{hero}}!"
       missions: "missions"

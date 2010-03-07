@@ -2,9 +2,7 @@ class InvitationsController < ApplicationController
   def accept
     @invitation = Invitation.find(params[:id])
 
-    if @invitation.accept!
-      send_notification(@invitation)
-    end
+    @invitation.accept!
 
     render :text => t("invitations.accept.message"), :layout => false
   end
@@ -44,18 +42,10 @@ class InvitationsController < ApplicationController
       invitation = @character.user.invitations.find_or_create_by_receiver_id(current_user.facebook_id)
 
       if invitation.accept!
-        send_notification(invitation)
-
         flash[:success] = t("invitations.accept.message")
       end
     end
 
     redirect_to landing_url
-  end
-
-  protected
-
-  def send_notification(invitation)
-    Delayed::Job.enqueue Jobs::InvitationNotification.new(facebook_session, invitation.id)
   end
 end
