@@ -15,7 +15,6 @@
 
   $.extend($.dialog, {
     settings: {
-      opacity      : 0.6,
       overlay      : true,
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       dialogHtml  : '\
@@ -182,7 +181,7 @@
   }
 
   function skipOverlay() {
-    return $.dialog.settings.overlay == false || $.dialog.settings.opacity === null
+    return $.dialog.settings.overlay == false
   }
 
   function showOverlay() {
@@ -192,7 +191,6 @@
       $("body").append('<div id="dialog_overlay" class="dialog_hide"></div>')
 
     $('#dialog_overlay').hide().addClass("dialog_overlayBG")
-      .css('opacity', $.dialog.settings.opacity)
       .click(function() { $(document).trigger('close.dialog') })
       .fadeIn(200)
     return false
