@@ -82,6 +82,14 @@ Rails::Initializer.run do |config|
     )
 
     WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
+
+    # Update sass templates for stylesheet generation
+    if Asset.table_exists? and Skin.table_exists?
+      Asset.update_sass
+      Skin.update_sass
+
+      Sass::Plugin.update_stylesheets
+    end
   end
 end
 
@@ -89,9 +97,3 @@ require "facebook_money"
 require "i18n/backend/yaml_db"
 
 I18n.backend = I18n::Backend::YamlDb.new
-
-# Update sass templates for stylesheet generation
-Asset.update_sass
-Skin.update_sass
-
-Sass::Plugin.update_stylesheets
