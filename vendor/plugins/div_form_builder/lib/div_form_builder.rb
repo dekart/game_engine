@@ -51,8 +51,7 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
         (legend ? @template.content_tag(:legend, legend) : "") +
         @template.capture(&block),
         options
-      ),
-      block.binding
+      )
     )
   end
 
@@ -108,13 +107,7 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
       :id     => options[:id] || ("field_for_#{@object_name}_#{field_name}" unless field_name.blank?)
     )
     
-    if block_given?
-      @template.concat(code, block.binding)
-      
-      return nil
-    else
-      return code
-    end
+    block_given? ? @template.concat(code) : code
   end
 
   def error_message_on(method)
