@@ -8,9 +8,7 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = parents.last.assignments.build(params[:assignment])
 
-    if @assignment.save
-      Delayed::Job.enqueue Jobs::AssignmentNotification.new(facebook_session, @assignment.id)
-    end
+    @assignment.save
 
     redirect_to_context(@assignment)
   end

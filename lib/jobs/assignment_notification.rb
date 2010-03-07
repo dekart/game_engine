@@ -1,9 +1,9 @@
 module Jobs
-  class AssignmentNotification < Struct.new(:session, :assignment_id)
+  class AssignmentNotification < Struct.new(:assignment_id)
     def perform
-      if assignment = Assignment.find_by_id(assignment_id) and assignment.created_at > Time.now - 15.minutes
+      if assignment = Assignment.find_by_id(assignment_id) and assignment.created_at > 15.minutes.ago
         begin
-          Publisher::Assignment.deliver_notification(session.user, assignment)
+          Publisher::Assignment.create_notification(assignment)
         rescue Facebooker::Session::TooManyUserActionCalls
           logger.error "[Assignment Notification] User action call limit exceeded"
         rescue Curl::Err::GotNothingError

@@ -34,10 +34,10 @@ en:
       won:
         text: "You were attacked by {{user}} and WON!"
         link: "Fight back!"
-  notifications:
     assignment:
-      text: "promoted you as {{pronoun}} {{title}} in {{app}}! {{link}}"
-      link: "Promote {{user}} &raquo;"
+      text: "{{user}} promoted you as their {{position}}!"
+      link: "Manage Alliance"
+  notifications:
     invitation:
       text: "joined your Alliance in {{app}}! {{link}}"
       link: "Manage Alliance &raquo;"

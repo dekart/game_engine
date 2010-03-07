@@ -7,20 +7,21 @@ module Publisher
 
     include FacebookHelper
 
-    def notification(user, assignment)
-      send_as :notification
-      recipients assignment.relation.target_character.user
-      from user
-      fbml I18n.t("notifications.assignment.text",
-        :pronoun  => fb_pronoun(user, :possessive => true, :useyou => false),
-        :title    => content_tag(:b, I18n.t("assignments.roles.#{assignment.role}.title")),
-        :app      => link_to(I18n.t("app_name"), root_url),
-        :link     => link_to(
-          I18n.t("notifications.assignment.link",
-            :user => fb_name(user, :linked => false, :firstnameonly => true, :useyou => false)
-          ),
-          relations_url
-        )
+    def notification(assignment)
+      Facebooker::Session.create.post("facebook.dashboard.addNews",
+        :uid => assignment.relation.target_character.user.facebook_id,
+        :news => [
+          {
+            :message => I18n.t("news.assignment.text",
+              :user => "@:#{assignment.context.user.facebook_id}",
+              :position => I18n.t("assignments.roles.#{assignment.role}.title")
+            ),
+            :action_link => {
+              :text => I18n.t("news.assignment.link"),
+              :href => relations_url
+            }
+          }
+        ]
       )
     end
   end
