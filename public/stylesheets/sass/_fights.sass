@@ -44,9 +44,8 @@
   .relations .larger
     color = !fight_victim_larger_alliance_color
 
-  .controls 
-    .attack span
-      background-image = !fight_victim_attack_icon
+  .controls .attack
+    +button(!fight_victim_attack_icon)
 
 
 
@@ -56,14 +55,11 @@
   .lost b, .victim_lost b
     width: 55px
 
-  .attack_again span
-    background-image = !fight_result_attack_again_icon
-
   .request_help
-    width: 190px
+    +button(!fight_result_request_help_icon, 190px)
 
-    span
-      background-image = !fight_result_request_help_icon
+  .attack_again
+    +button(!fight_result_attack_again_icon)
 
   .details
     border-top = !fight_result_details_border

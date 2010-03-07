@@ -41,11 +41,11 @@
     a
       float: left
 
-    .attack span
-      background-image = !character_buttons_attack_icon
+    .attack
+      +button(!character_buttons_attack_icon)
 
-    .upgrade span
-      background-image = !character_buttons_upgrade_icon
+    .upgrade
+      +button(!character_buttons_upgrade_icon)
 
   .info
     width: 100%

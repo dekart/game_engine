@@ -3,10 +3,7 @@
     float: right
 
     .skip
-      width: 70px
-
-      span
-        background-image = !gifts_skip_icon
+      +button(!gifts_skip_icon, 70px)
 
   .item
     padding: 5px
@@ -49,16 +46,10 @@
   background-image = !gift_result_icon
 
   .pending
-    width = !gift_result_pending_width
-
-    span
-      background-image = !gift_result_pending_icon
+    +button(!gift_result_pending_icon, !gift_result_pending_width)
 
   .play_now
-    width = !gift_result_play_now_width
-
-    span
-      background-image = !gift_result_play_now_icon
+    +button(!gift_result_play_now_icon, !gift_result_play_now_width)
 
   .details
     td

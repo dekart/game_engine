@@ -56,8 +56,8 @@
     select
       margin: 5px
 
-    a.buy span
-      background-image = !shop_item_buy_icon
+    .buy
+      +button(!shop_item_buy_icon)
 
 
 #special_items
@@ -99,8 +99,8 @@
       float: left
       clear: none
 
-    .buy span
-      background-image = !shop_special_item_buy_icon
+    .buy
+      +button(!shop_special_item_buy_icon)
 
   .limit
     color = !shop_special_item_limit_color
@@ -120,7 +120,4 @@
   background-image = !shop_result_icon
 
   .inventory
-    width = !shop_result_inventory_width
-
-    span
-      background-image = !shop_result_inventory_icon
+    +button(!shop_result_inventory_icon, !shop_result_inventory_width)

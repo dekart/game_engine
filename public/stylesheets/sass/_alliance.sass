@@ -6,17 +6,17 @@
     width: auto
     margin-right: 15px
 
-  .relations span
-    background-image = !alliance_buttons_relations_icon
+  .relations
+    +button(!alliance_buttons_relations_icon)
 
-  .invite span
-    background-image = !alliance_buttons_invite_icon
+  .invite
+    +button(!alliance_buttons_invite_icon)
 
-  .gifts span
-    background-image = !alliance_buttons_gifts_icon
+  .gifts
+    +button(!alliance_buttons_gifts_icon)
 
-  .mercenaries span
-    background-image = !alliance_buttons_mercenaries_icon
+  .mercenaries
+    +button(!alliance_buttons_mercenaries_icon)
 
 
 #alliance_members
@@ -33,8 +33,8 @@
   .level
     width: 70px
 
-  .controls .delete span
-    background-image = !alliance_members_delete_icon
+  .controls .delete
+    +button(!alliance_members_delete_icon)
 
 #assignments
   width: 250px
@@ -62,11 +62,11 @@
     float: right
     margin-top: -25px
 
-    .promote span
-      background-image = !assignments_promote_icon
+    .promote
+      +button(!assignments_promote_icon)
 
-    .demote span
-      background-image = !assignments_demote_icon
+    .demote
+      +button(!assignments_demote_icon)
 
 
 #new_assignment
@@ -138,12 +138,8 @@
     color = !invitation_form_text_color
 
   .publish
-    width = !invitation_form_publish_width
+    +button(!invitation_form_publish_icon, !invitation_form_publish_width)
     margin: auto
-
-    span
-      clear: right
-      background-image = !invitation_form_publish_icon
 
   #chat_invitation
     padding-left: 10px

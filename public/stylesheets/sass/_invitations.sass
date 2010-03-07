@@ -16,11 +16,11 @@
     width: 70px
 
   .controls
-    .accept span
-      background-image = !invitations_invitation_accept_icon
+    .accept
+      +button(!invitations_invitation_accept_icon)
 
-    .ignore span
-      background-image = !invitations_invitation_decline_icon
+    .ignore
+      +button(!invitations_invitation_decline_icon)
 
 #invitation
   td
@@ -34,11 +34,11 @@
     width: 70px
 
   .controls
-    .accept span
-      background-image = !invitation_accept_icon
+    .accept
+      +button(!invitation_accept_icon)
 
-    .ignore span
-      background-image = !invitation_decline_icon
+    .ignore
+      +button(!invitation_decline_icon)
 
 
 #invitation_result

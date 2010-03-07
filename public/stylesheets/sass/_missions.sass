@@ -68,8 +68,8 @@
     .progress_bar
       width: 50%
 
-  .controls a span
-    background-image = !mission_fulfill_icon
+  .controls .fulfill
+    +button(!mission_fulfill_icon)
 
 
 
@@ -100,16 +100,10 @@
     margin-bottom: 15px
 
   .fulfill_again
-    width = !mission_result_fulfill_again_width
-
-    span
-      background-image = !mission_result_fulfill_again_icon
+    +button(!mission_result_fulfill_again_icon, !mission_result_fulfill_again_width)
 
   .request_help
-    width = !mission_result_request_help_width
-
-    span
-      background-image = !mission_result_request_help_icon
+    +button(!mission_result_request_help_icon, !mission_result_request_help_width)
 
   .progress
     .progress_bar

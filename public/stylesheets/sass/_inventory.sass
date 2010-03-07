@@ -6,14 +6,14 @@
     width: auto
     margin-right: 15px
 
-  .shop span
-    background-image = !inventory_buttons_shop_icon
+  .shop
+    +button(!inventory_buttons_shop_icon)
 
-  .inventory span
-    background-image = !inventory_buttons_inventory_icon
+  .inventory
+    +button(!inventory_buttons_inventory_icon)
 
-  .equipment span
-    background-image = !inventory_buttons_equipment_icon
+  .equipment
+    +button(!inventory_buttons_equipment_icon)
 
 #inventory_list
   table
@@ -57,11 +57,11 @@
     select
       margin: 5px
 
-    .sell span
-      background-image = !inventory_item_sell_icon
+    .sell
+      +button(!inventory_item_sell_icon)
 
-    .use span
-      background-image = !inventory_item_use_icon
+    .use
+      +button(!inventory_item_use_icon)
 
 #inventory_sell_result
   background-image = !inventory_sell_result_icon

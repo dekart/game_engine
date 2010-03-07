@@ -11,9 +11,8 @@
     .details
       width: 100%
 
-  .buttons
-    .attack span
-      background-image = !boss_list_attack_button
+  .buttons .attack
+    +button(!boss_list_attack_button)
 
 
 #boss_fight_block
@@ -44,8 +43,8 @@
     float: right
     padding-left: 10px
 
-    .attack span
-      background-image = !boss_fight_attack_icon
+    .attack
+      +button(!boss_fight_attack_icon)
 
 
 #boss_fight_result
@@ -80,11 +79,11 @@
       .button
         margin-left: 0
 
-      .attack span
-        background-image = !boss_fight_result_attack_icon
+      .attack
+        +button(!boss_fight_result_attack_icon)
 
-      .publish span
-        background-image = !boss_fight_result_publish_icon
+      .publish
+        +button(!boss_fight_result_publish_icon)
 
   .progress .progress_bar
     width: 100px

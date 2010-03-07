@@ -22,9 +22,19 @@
 !button_border = !main_border
 !button_bg_color = white
 !button_bg_color_hover = #F1F7FA
+!button_icons = true
+
+=button(!icon, !width = '')
+  @if !width != ''
+    width = !width
+
+  @if !button_icons == true
+    span
+      background-image = !icon
 
 
 // Spinner
+
 !spinner_top = 240px
 !spinner_left = 300px
 !spinner_width = 150px
@@ -153,6 +163,7 @@
 !dashboard_fight_basic_money_icon = !asset_icons_basic_money
 !dashboard_fight_health_icon = !asset_icons_health
 !dashboard_fight_experience_icon = !asset_icons_experience
+!dashboard_fight_respond_icon = !asset_icons_attack
 
 
 // Result block

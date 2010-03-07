@@ -1,11 +1,10 @@
 #rating_buttons
   margin-bottom: 15px
 
-  .button span
+  .button
+    +button(!rating_buttons_rating_icon, !rating_buttons_rating_width)
     float: left
     margin-right: 15px
-    width = !rating_buttons_rating_width
-    background-image = !rating_buttons_rating_icon
 
 
 #rating_list .rating
