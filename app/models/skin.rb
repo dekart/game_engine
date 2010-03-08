@@ -19,8 +19,6 @@ class Skin < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  after_save :regenerate_stylesheet
-
   class << self
     def update_sass
       all.each do |skin|
@@ -30,12 +28,6 @@ class Skin < ActiveRecord::Base
   end
 
   protected
-
-  def regenerate_stylesheet
-    update_sass
-
-    Sass::Plugin.update_stylesheets
-  end
 
   def update_sass
     default_skin = File.read(Rails.root.join("public", "stylesheets", "sass", "application.sass"))

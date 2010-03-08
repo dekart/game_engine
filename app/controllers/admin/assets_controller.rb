@@ -17,6 +17,8 @@ class Admin::AssetsController < Admin::BaseController
     @asset = Asset.new(params[:asset])
 
     if @asset.save
+      update_stylesheets
+
       redirect_to admin_assets_path
     else
       render :action => :new
@@ -37,6 +39,8 @@ class Admin::AssetsController < Admin::BaseController
     @asset = Asset.find(params[:id])
 
     if @asset.update_attributes(params[:asset])
+      update_stylesheets
+      
       redirect_to admin_assets_path
     else
       render :action => :edit
@@ -48,6 +52,16 @@ class Admin::AssetsController < Admin::BaseController
 
     @asset.destroy
 
+    update_stylesheets
+
     redirect_to admin_assets_path
+  end
+
+  protected
+
+  def update_stylesheets
+    Asset.update_sass
+
+    Sass::Plugin.update_stylesheets
   end
 end

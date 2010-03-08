@@ -5,9 +5,6 @@ class Asset < ActiveRecord::Base
   validates_uniqueness_of :alias
   validates_format_of :alias, :with => /^[a-z_0-9]+$/, :allow_blank => true
 
-  after_save :rebuild_stylesheet
-  after_destroy :rebuild_stylesheet
-
   class << self
     def [](value)
       logger.silence do
@@ -26,13 +23,5 @@ class Asset < ActiveRecord::Base
         end
       end
     end
-  end
-
-  protected
-
-  def rebuild_stylesheet
-    self.class.update_sass
-
-    Sass::Plugin.update_stylesheets
   end
 end

@@ -13,6 +13,8 @@ class Admin::SkinsController < Admin::BaseController
     @skin = Skin.new(params[:skin])
 
     if @skin.save
+      update_stylesheets
+
       redirect_to admin_skins_path
     else
       render :action => :new
@@ -27,6 +29,8 @@ class Admin::SkinsController < Admin::BaseController
     @skin = Skin.find(params[:id])
 
     if @skin.update_attributes(params[:skin])
+      update_stylesheets
+      
       redirect_to admin_skins_path
     else
       render :action => :edit
@@ -46,6 +50,8 @@ class Admin::SkinsController < Admin::BaseController
 
     @skin.destroy
 
+    update_stylesheets
+
     redirect_to admin_skins_path
   end
 
@@ -55,5 +61,13 @@ class Admin::SkinsController < Admin::BaseController
 
   def changelog
     @changelog = %x{git log -p --since=#{params[:log]["since(1i)"]}-#{params[:log]["since(2i)"]}-#{params[:log]["since(3i)"]} #{DEFAULT_SKIN_PATH}}
+  end
+
+  protected
+
+  def update_stylesheets
+    Skin.update_sass
+
+    Sass::Plugin.update_stylesheets
   end
 end
