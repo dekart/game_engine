@@ -46,14 +46,6 @@ class Configuration < ActiveRecord::Base
     :fight_max_loser_damage,
     :fight_max_winner_damage,
     :fight_latest_show_limit,
-    :fight_with_invite_stamina_required,
-    :fight_with_invite_max_level,
-    :fight_with_invite_experience,
-    :fight_with_invite_money_min,
-    :fight_with_invite_money_max,
-    :fight_with_invite_victim_damage_max,
-    :fight_with_invite_victim_damage_min,
-    :fight_with_invite_attacker_damage,
 
     :rating_show_limit,
 
