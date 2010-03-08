@@ -80,6 +80,10 @@ module Payouts
       @apply_on = Array(values).collect{|value| value.to_sym }
     end
 
+    def apply_on_label
+      apply_on.collect{|value| value.to_s.humanize }.join(", ")
+    end
+
     def action
       @action || :add
     end

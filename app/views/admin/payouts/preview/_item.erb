@@ -1,8 +1,8 @@
 <% content_tag :div, :class => payout.name do %>
-  <%= raw "%s (%s %s %d%%)" % [
+  <%= raw "%s: %s (%d%% %s)" % [
+        payout.apply_on_label,
         payout.item ? payout.item.name : content_tag(:span, t("payouts.item.missing"), :class => :missing),
-        payout.apply_on,
-        payout.action,
-        payout.chance
+        payout.chance,
+        payout.action
       ] %>
 <% end %>
