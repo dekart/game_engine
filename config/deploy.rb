@@ -109,6 +109,11 @@ namespace :deploy do
   task :setup_facebook_app, :roles => :app do
     run "cd #{current_path}; rake app:setup:facebook_app"
   end
+
+  desc "Setup application stylesheets"
+  task :setup_stylesheets, :roles => :app do
+    run "cd #{current_path}; rake app:setup:stylesheets"
+  end
 end
 
 ["deploy:dependencies:system_gems"].each do |t|
@@ -119,11 +124,11 @@ before "deploy:migrations", "deploy:db:backup"
 
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 
-["deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
+["deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
 
-["deploy:bootstrap", "deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:setup_facebook_app"].each do |t|
+["deploy:bootstrap", "deploy:setup_facebook_app", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
   after "deploy:cold", t
 end
