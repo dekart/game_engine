@@ -104,6 +104,11 @@ namespace :deploy do
       run "cd #{release_path}; gem bundle --only production"
     end
   end
+
+  desc "Setup Facebook application"
+  task :setup_facebook_app, :roles => :app do
+    run "cd #{current_path}; rake app:setup:facebook_app"
+  end
 end
 
 ["deploy:dependencies:system_gems"].each do |t|
@@ -119,6 +124,6 @@ after "deploy:update_code", "deploy:dependencies:bundled_gems"
   after "deploy:migrations", t
 end
 
-["deploy:bootstrap", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
+["deploy:bootstrap", "deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:setup_facebook_app"].each do |t|
   after "deploy:cold", t
 end
