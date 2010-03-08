@@ -47,11 +47,11 @@ module Payouts
     end
 
     def apply(character)
-      
+      raise "Not implemented"
     end
 
     def applicable?(trigger)
-      (self.apply_on == trigger) && (self.chance > rand(100))
+      apply_on.include?(trigger) && (chance > rand(100))
     end
 
     def errors
@@ -67,11 +67,17 @@ module Payouts
     end
 
     def apply_on
-      @apply_on || :complete
+      if @apply_on.is_a?(Array)
+        @apply_on
+      elsif !@apply_on.nil?
+        [@apply_on]
+      else
+        [:complete]
+      end
     end
 
-    def apply_on=(value)
-      @apply_on = value.to_sym
+    def apply_on=(values)
+      @apply_on = Array(values).collect{|value| value.to_sym }
     end
 
     def action

@@ -19,6 +19,10 @@ module HasPayouts
     self.payout_options = options
   end
 
+  def payout_events_for_select
+    payout_events.collect{|event| [event.to_s.humanize, event]}
+  end
+
   def preload_payouts
     Dir[File.join(RAILS_ROOT, "app", "models", "payouts", "*.rb")].each do |file|
       file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").classify.constantize

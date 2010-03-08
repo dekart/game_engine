@@ -53,6 +53,27 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
     field(field_name, code, options, &block)
   end
 
+  def check_box_list(field_name, choises, options = {}, &block)
+    code = ""
+
+    choises.each do |name, value|
+      code << div(
+        div(
+          @template.check_box_tag("#{@object_name}[#{field_name}][]", value, Array(object.send(field_name)).include?(value),
+            options.except(*CUSTOM_OPTIONS).merge(:id => "#{@object_name}_#{field_name}_#{value}")
+          ),
+          :class => :option_input
+        ) +
+        div(label(name, "#{field_name}_#{value}"), :class => :option_label),
+        :class => :option
+      )
+    end
+
+    options.reverse_merge!(:field_type => :check_box_list)
+
+    field(field_name, code, options, &block)
+  end
+
   def submit(*args)
     options = args.extract_options!
     text = args.any? ? args.first : @template.t(".submit", :default => @template.t("form_builder.submit"))
