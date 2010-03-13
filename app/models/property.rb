@@ -97,13 +97,17 @@ class Property < ActiveRecord::Base
 
   def total_sell_price
     if changes["amount"]
-      price = 0
-
-      changes["amount"].first.downto(changes["amount"].last + 1) do |amount|
-        price += property_type.inflated_price(amount)
-      end
+      amount_from = changes["amount"].first
+      amount_to   = changes["amount"].last
     else
-      price = property_type.basic_price
+      amount_from = amount
+      amount_to   = 0
+    end
+
+    price = 0
+
+    amount_from.downto(amount_to + 1) do |amount|
+      price += property_type.inflated_price(amount)
     end
 
     (price  * Configuration[:property_sell_price] * 0.01).ceil
