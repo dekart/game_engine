@@ -3,6 +3,10 @@ module FacebookHelper
     tag("fb:application-name", options)
   end
 
+  def fb_fan_box(options = {})
+    content_tag("fb:fan", "", {:profile_id => Facebooker.facebooker_config["app_id"]}.merge(options))
+  end
+
   def fb_header(text, options = {})
     content_tag("fb:header", text, options.reverse_merge(:icon => false))
   end
