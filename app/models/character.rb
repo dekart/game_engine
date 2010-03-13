@@ -5,8 +5,8 @@ class Character < ActiveRecord::Base
   
   LEVELS = [0]
 
-  2000.times do |i|
-    LEVELS[i + 1] = LEVELS[i].to_i + (i + 1) * 10
+  1000.times do |i|
+    LEVELS[i + 1] = ((LEVELS[i].to_i * 1.02 + (i + 1) * 10).round / 10.0).round * 10
   end
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
