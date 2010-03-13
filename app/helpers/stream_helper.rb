@@ -40,7 +40,8 @@ module StreamHelper
   def character_level_up_stream_dialog
     stream_dialog(
       :attachment => {
-        :caption => t("stories.level_up.title", :level => current_character.level, :app => t("app_name"))
+        :name => t("stories.level_up.title", :level => current_character.level, :app => t("app_name")),
+        :href => root_url(:canvas => true)
       }
     )
   end
@@ -48,14 +49,16 @@ module StreamHelper
   def fight_stream_dialog(fight)
     stream_dialog(
       :attachment => {
-        :caption => t("stories.fight.title", :level => fight.victim.level, :app => t("app_name"))
+        :name => t("stories.fight.title", :level => fight.victim.level, :app => t("app_name")),
+        :href => root_url(:canvas => true)
       }
     )
   end
 
   def inventory_stream_dialog(inventory)
     attachment = {
-      :caption => t("stories.inventory.title", :item => inventory.name, :app => t("app_name"))
+      :name => t("stories.inventory.title", :item => inventory.name, :app => t("app_name")),
+      :href => item_group_items_url(inventory.item_group, :canvas => true)
     }
 
     if inventory.image?
@@ -63,7 +66,7 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(inventory.image.url),
-          :href => item_group_items_url(inventory.item_group)
+          :href => item_group_items_url(inventory.item_group, :canvas => true)
         }
       ]
     end
@@ -74,16 +77,18 @@ module StreamHelper
   def invitation_stream_dialog
     stream_dialog(
       :attachment => {
-        :caption => t("stories.invitation.title", :app => t("app_name")),
-        :description => t("stories.invitation.description", :app => t("app_name")),
+        :name         => t("stories.invitation.title", :app => t("app_name")),
+        :href         => invitation_url(current_character.invitation_key, :reference => :invite_stream_name, :canvas => true),
+        :description  => t("stories.invitation.description", :app => t("app_name")),
+        
         :media => default_stream_media(
-          invitation_url(current_character.invitation_key, :reference => :invite_stream_image)
+          invitation_url(current_character.invitation_key, :reference => :invite_stream_image, :canvas => true)
         )
       },
       :action_links => [
         {
           :text => t("stories.invitation.action_link"),
-          :href => invitation_url(current_character.invitation_key, :reference => :invite_stream_link)
+          :href => invitation_url(current_character.invitation_key, :reference => :invite_stream_link, :canvas => true)
         }
       ]
     )
@@ -91,7 +96,8 @@ module StreamHelper
 
   def mission_complete_stream_dialog(mission)
     attachment = {
-      :caption => t("stories.mission.title", :mission => mission.name, :app => t("app_name"))
+      :name => t("stories.mission.title", :mission => mission.name, :app => t("app_name")),
+      :href => mission_group_url(mission.mission_group, :canvas => true)
     }
 
     if mission.image?
@@ -99,7 +105,7 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(mission.image.url),
-          :href => mission_group_url(mission.mission_group)
+          :href => mission_group_url(mission.mission_group, :canvas => true)
         }
       ]
     end
@@ -109,7 +115,8 @@ module StreamHelper
 
   def boss_defeated_stream_dialog(boss)
     attachment = {
-      :caption => t("stories.boss.title", :boss => boss.name, :app => t("app_name"))
+      :name => t("stories.boss.title", :boss => boss.name, :app => t("app_name")),
+      :href => mission_group_url(boss.mission_group, :canvas => true)
     }
 
     if boss.image?
@@ -117,7 +124,7 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(boss.image.url),
-          :href => mission_group_url(boss.mission_group)
+          :href => mission_group_url(boss.mission_group, :canvas => true)
         }
       ]
     end
@@ -133,11 +140,13 @@ module StreamHelper
     case context
     when Fight
       attachment = {
-        :caption => t("stories.help_request.fight.title", :level => context.victim.level, :app => t("app_name"))
+        :name => t("stories.help_request.fight.title", :level => context.victim.level, :app => t("app_name")),
+        :href => help_url
       }
     when Mission
       attachment = {
-        :caption      => t("stories.help_request.mission.title", :mission => context.name, :app => t("app_name")),
+        :name         => t("stories.help_request.mission.title", :mission => context.name, :app => t("app_name")),
+        :href         => help_url,
         :description  => t("stories.help_request.mission.description")
       }
     end
@@ -156,7 +165,8 @@ module StreamHelper
 
   def property_stream_dialog(property)
     attachment = {
-      :caption => t("stories.property.title", :property => property.name, :app => t("app_name"))
+      :name => t("stories.property.title", :property => property.name, :app => t("app_name")),
+      :href => properties_url(:canvas => true)
     }
 
     if property.image?
@@ -164,7 +174,7 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(property.image.url),
-          :href => properties_url
+          :href => properties_url(:canvas => true)
         }
       ]
     end

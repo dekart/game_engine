@@ -3,28 +3,28 @@ en:
     default:
       action_link: "Play {{app}} &raquo;"
     fight:
-      title: "{*actor*} WON fight against {{level}} level opponent in {{app}}!"
+      title: "I WON a fight against {{level}} level opponent in {{app}}!"
     help_request:
       fight:
-        title: "{*actor*} is offering a bounty for any friend who fights their {{level}} level enemy in {{app}}!"
+        title: "I'm offering a bounty for any friend who fights their {{level}} level enemy in {{app}}!"
       mission:
-        title: "{*actor*} requested help with the {{mission}} mission in {{app}}!"
+        title: "Please help me with the {{mission}} mission in {{app}}!"
         description: "Help your friend with this mission to get bonus gold and experience!"
-      action_link: "Help {*actor*}!"
+      action_link: "Help Them"
     level_up:
-      title: "{*actor*} just advanced to Level {{level}} in {{app}}!"
+      title: "I just advanced to Level {{level}} in {{app}}!"
     mission:
-      title: "{*actor*} completed \"{{mission}}\" mission in {{app}}!"
+      title: "I just completed the \"{{mission}}\" mission in {{app}}!"
     boss:
-      title: "{*actor*} defeated the {{boss}} in {{app}}!"
+      title: "I just defeated the {{boss}} in {{app}}!"
     property:
-      title: "{*actor*} bought {{property}} in {{app}}. Now {*actor*} earns more money!"
+      title: "I just bought {{property}} in {{app}}!"
     invitation:
-      title: "{*actor*} invites you to join their Alliance in {{app}}!"
+      title: "Please join my Alliance in {{app}}!"
       description: "{{app}} is a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of the fantasy world!"
-      action_link: "Join Alliance!"
+      action_link: "Join Alliance"
     inventory:
-      title: "{*actor*} just bought the {{item}} in {{app}}!"
+      title: "I just bought a \"{{item}}\" in {{app}}!"
 
   news:
     fight:
