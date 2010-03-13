@@ -1,5 +1,11 @@
 --- 
 dependencies: 
+  rails: 
+    group: 
+    - :default
+    version: ~> 2.3.5
+    require: []
+
   system_timer: 
     group: 
     - :default
@@ -47,12 +53,12 @@ dependencies:
     - :default
     version: = 1.2.0
 specs: 
+- activesupport: 
+    version: 2.3.5
 - json_pure: 
     version: 1.2.0
 - will_paginate: 
     version: 2.3.11
-- paperclip: 
-    version: 2.3.1.1
 - delayed_job: 
     version: 1.8.4
 - abstract: 
@@ -65,13 +71,29 @@ specs:
     version: 2.8.1
 - memcache-client: 
     version: 1.7.6
+- rack: 
+    version: 1.0.1
+- actionpack: 
+    version: 2.3.5
+- actionmailer: 
+    version: 2.3.5
 - taf2-curb: 
     version: 0.2.8.0
 - haml: 
     version: 2.2.20
+- rake: 
+    version: 0.8.7
+- activerecord: 
+    version: 2.3.5
+- paperclip: 
+    version: 2.3.1.1
 - system_timer: 
     version: "1.0"
-hash: ea54806aa79336495e75e7d4119360f07ad9ce07
+- activeresource: 
+    version: 2.3.5
+- rails: 
+    version: 2.3.5
+hash: a842502ec45d980dbef7457481881b8ad5a92f15
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
