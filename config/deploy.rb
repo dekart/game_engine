@@ -20,6 +20,7 @@ set :deploy_via, :remote_cache
 
 set :rails_env, "production"
 default_environment["RAILS_ENV"] = "production"
+default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
   desc "Restart service"
