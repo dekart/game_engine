@@ -1,0 +1,77 @@
+--- 
+dependencies: 
+  system_timer: 
+    group: 
+    - :default
+    version: = 1.0
+  haml: 
+    group: 
+    - :default
+    version: = 2.2.20
+  taf2-curb: 
+    group: 
+    - :default
+    version: = 0.2.8.0
+  memcache-client: 
+    group: 
+    - :default
+    version: = 1.7.6
+    require: 
+    - memcache
+  mysql: 
+    group: 
+    - :default
+    version: = 2.8.1
+  jrails: 
+    group: 
+    - :default
+    version: = 0.6.0
+  delayed_job: 
+    group: 
+    - :default
+    version: = 1.8.4
+  paperclip: 
+    group: 
+    - :default
+    version: = 2.3.1.1
+  will_paginate: 
+    group: 
+    - :default
+    version: = 2.3.11
+  erubis: 
+    group: 
+    - :default
+    version: = 2.6.5
+  json_pure: 
+    group: 
+    - :default
+    version: = 1.2.0
+specs: 
+- json_pure: 
+    version: 1.2.0
+- will_paginate: 
+    version: 2.3.11
+- paperclip: 
+    version: 2.3.1.1
+- delayed_job: 
+    version: 1.8.4
+- abstract: 
+    version: 1.0.0
+- erubis: 
+    version: 2.6.5
+- jrails: 
+    version: 0.6.0
+- mysql: 
+    version: 2.8.1
+- memcache-client: 
+    version: 1.7.6
+- taf2-curb: 
+    version: 0.2.8.0
+- haml: 
+    version: 2.2.20
+- system_timer: 
+    version: "1.0"
+hash: ea54806aa79336495e75e7d4119360f07ad9ce07
+sources: 
+- Rubygems: 
+    uri: http://gemcutter.org

@@ -94,7 +94,7 @@ namespace :deploy do
 
       put(config, ".gemrc")
 
-      run "gem install bundler -v=0.8.1"
+      run "gem install bundler -v=0.9.11 && gem cleanup bundler"
       run "gem install rails -v=2.3.5"
       run "gem install rack -v=1.0.1"
     end
