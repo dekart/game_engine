@@ -101,7 +101,7 @@ namespace :deploy do
 
     desc "Install required gems"
     task :bundled_gems, :roles => :app do
-      run "cd #{release_path}; gem bundle --only production"
+      run "cd #{release_path}; bundle install"
     end
   end
 
