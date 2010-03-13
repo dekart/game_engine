@@ -7,5 +7,10 @@
     <%= raw t(".text", :app => t("app_name"))  %>
   </p>
 
-  <%= fb_fan_box :stream => 0, :connections => 4, :width => 230, :logobar => 0 %>
+  <%= fb_fan_box(
+        :stream       => 0,
+        :connections  => 6,
+        :width        => 230,
+        :logobar      => 0
+      ) %>
 </div>
