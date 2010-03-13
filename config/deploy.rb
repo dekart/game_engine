@@ -84,9 +84,9 @@ namespace :deploy do
     task :system_gems, :roles => :app do
       config = YAML.dump(
         :verbose        => true,
-        "gem"           => "--no-ri --no-rdoc",
+        "gem"           => "--no-ri --no-rdoc --user-install",
         :bulk_threshold => 1000,
-        :sources        => %w{http://gemcutter.org http://gems.rubyforge.org http://gems.github.com},
+        :sources        => %w{http://gemcutter.org http://gems.github.com},
         :benchmark      => false,
         :backtrace      => false,
         :update_sources => true
