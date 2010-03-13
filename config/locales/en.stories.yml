@@ -6,7 +6,7 @@ en:
       title: "I WON a fight against {{level}} level opponent in {{app}}!"
     help_request:
       fight:
-        title: "I'm offering a bounty for any friend who fights their {{level}} level enemy in {{app}}!"
+        title: "I'm offering a bounty for any friend who fights my {{level}} level enemy in {{app}}!"
       mission:
         title: "Please help me with the {{mission}} mission in {{app}}!"
         description: "Help your friend with this mission to get bonus gold and experience!"
