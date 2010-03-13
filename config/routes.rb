@@ -46,7 +46,6 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :promotions
     admin.resources :statistics, :only => :index
-    admin.resources :stylesheets, :member => {:use => :post, :log => :post}
     admin.resources :skins,
       :member => {:activate => :post, :changelog => :post}
     admin.resources :tips
@@ -111,8 +110,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :premium
 
   map.resource :rating, :member => {:global => :any}
-
-  #map.resources :stylesheets, :only => :show, :member => {:source => :any}
 
   map.resources :help_requests, :only => [:show, :create]
 
