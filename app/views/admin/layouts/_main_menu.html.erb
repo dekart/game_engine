@@ -1,5 +1,5 @@
 <div id="admin_menu">
-  <%= link_to(t(".home"), root_path, :class => :app) %>
+  <%= link_to(t(".home"), root_url(:canvas => true), :class => :app) unless request_is_facebook_iframe? %>
 
   <h2><%= t(".title") %></h2>
 
@@ -19,7 +19,8 @@
       [:tips,            admin_tips_path],
       [:assets,          admin_assets_path],
       [:translations,    admin_translations_path],
-      [:configurations,  edit_admin_configuration_path(Configuration.current)]
+      [:configurations,  edit_admin_configuration_path(Configuration.current)],
+      [:help_pages,      admin_help_pages_path]
     ].each do |title, link|
   %>
     <%= link_to(t(".#{title}"), link, :target => :admin) %>

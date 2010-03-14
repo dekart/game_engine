@@ -19,6 +19,7 @@ en:
         translations: "Translations"
         configurations: "Configurations"
         assets: "Assets"
+        help_pages: "Help Pages"
       application:
         spinner:
           alt: "Please wait..."
@@ -310,3 +311,28 @@ en:
       changelog:
         title: "Default Skin Changelog"
         no_changes: "No changes"
+    help_pages:
+      index:
+        title: "Help Pages"
+        empty_set: "No pages"
+        controls:
+          new: "Add Page"
+          edit: "Edit"
+          preview: "Preview"
+          delete: "Delete"
+          delete_confirm: "Are you sure? This help page will become unavailable for users!"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this page visible to players?"
+          hide: "Hide"
+      new:
+        title: "New Help Page"
+        submit: "Create"
+      edit:
+        title: "Edit Help Page"
+        submit: "Update"
+      form_fields:
+        comments:
+          alias: "Only letters, numbers, dashes, and underscores are allowed"
+          content:
+            text: "You can use Textile markup. See {{reference}} to find more info."
+            reference: "Textile Reference"

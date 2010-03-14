@@ -3,6 +3,8 @@
 
 en:
   app_name: "Sword & Magic"
+  common:
+    empty_set: "Nothing here"
   number:
     currency:
       format:
@@ -52,6 +54,8 @@ en:
       item:
         price: "Price"
         effects: "Effects"
+      help_page:
+        alias: "Page URL"
     errors:
       models:
         character:

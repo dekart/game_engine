@@ -1,0 +1,265 @@
+!dialog_width = 500px
+!dialog_bg_color = white
+!dialog_close_icon = url(/images/icons/delete.gif)
+!dialog_close_width = 16px
+!dialog_close_height = 16px
+!dialog_overlay_opacity = 0.6
+
+@import admin/menu
+@import dialog
+
+html, body, table
+  font-family: "lucida grande",tahoma,verdana,arial,sans-serif
+
+h1.title
+  font-size: 18px
+  color: #3B5998
+  margin: 15px 0px
+
+
+h2, h3
+  font-size: 16px
+  color: #3B5998
+  margin-bottom: 7px
+
+
+td
+  vertical-align: middle
+  padding: 5px 3px
+  border-top: 1px solid #e0e0e0
+
+
+th
+  padding: 5px 3px
+  border-top: 1px solid #e0e0e0
+
+  &.subheader
+    background-color: #f1f7fa
+    color: #3B5998
+    border-top: 1px solid #8da7e0
+
+
+#spinner
+  position: absolute
+  top: 150px
+  left: 300px
+  width: 150px
+  height: 50px
+  border: 1px solid #6D84B4
+  padding: 5px
+  background-color: white
+  z-index: 1000
+
+  img
+    float: left
+    margin-right: 10px
+
+
+
+.empty_set
+  margin: 10px 0px
+  padding: 8px
+  border: 1px solid #D8DFEA
+
+
+.note
+  margin: 10px 0px
+  padding: 8px
+  border: 1px solid #D8DFEA
+  font-size: 14px
+
+
+.missing
+  color: red
+  font-style: italic
+
+
+.pagination
+  margin: 10px 0px
+  text-align: right
+
+  .disabled
+    display: none
+
+  a, span
+    border: 1px solid #3b5998
+    padding: 3px
+
+  a:hover
+    background-color: #d8dfea
+
+  .current
+    background-color: #d8dfea
+    font-weight: bold
+    color: #3b5998
+
+
+form
+  .required
+    color: red
+    padding-left: 5px
+
+  .field
+    margin-bottom: 10px
+
+    .input
+      margin-top: 3px
+
+    label
+      color: #3b5998
+
+    .comment
+      font-size: 12px
+      color: #444444
+
+  .fieldWithErrors
+    display: inline
+
+    select, input, textarea
+      border: 1px solid #ee5555
+
+  .error
+    color: red
+    padding: 3px 0px
+
+  fieldset
+    margin-bottom: 10px
+
+    legend
+      color: #3b5998
+      font-weight: bold
+      font-size: 14px
+
+  td
+    vertical-align: top
+
+  table
+    width: 100%
+
+  .label, .required
+    display: inline
+
+  .check_box_list
+    .option
+      clear: both
+
+    .option_input
+      float: left
+      margin-right: 5px
+
+
+.controls
+  padding: 5px
+
+  a
+    line-height: 25px
+    margin-bottom: 5px
+    padding: 3px
+    border: 1px solid #3B5998
+    white-space: nowrap
+
+
+.state
+  .hidden, .draft
+    color: red
+
+  .visible, .delivered
+    color: green
+
+  .delivering
+    color: blue
+
+  .paused
+    color: orange
+
+
+.serializable
+  margin: 20px 0
+
+  .controls
+    margin: 10px 0
+    padding: 0
+
+    a
+      margin: 5px 0px
+
+
+.serializable_item
+  margin: 5px 0px
+  padding: 5px
+  border: 1px solid #e0e0e0
+
+  h4
+    font-size: 15px
+    margin-bottom: 5px
+
+  .remove
+    float: right
+
+
+#mission_list, #item_list
+  width: 100%
+
+  .name
+    font-weight: bold
+
+
+#newsletter_list
+  width: 100%
+
+  .controls
+    width: 120px
+
+
+#promotion_list
+  .text
+    width: 250px
+
+  .valid
+    color: green
+
+  .invalid
+    color: red
+
+
+#stylesheet_list .current
+  background-color: #fff1c6
+
+
+#field_for_stylesheet_content textarea
+  width: 750px
+  height: 500px
+  font-family: monospace
+
+
+#skin_list .current
+  background-color: #fff1c6
+
+
+#field_for_skin_content textarea
+  width: 900px
+  height: 400px
+  font-family: monospace
+
+
+#translation_list
+  width: 100%
+
+  .splitter
+    border: 0
+
+  .key
+    width: 40%
+
+  .customized
+    .key, .value a
+      font-weight: bold
+
+
+#property_type_list .default
+  color: #c0c0c0
+  font-style: italic
+
+
+#field_for_boss_time_limit .after
+  margin: -20px 0 0 60px

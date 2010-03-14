@@ -12,4 +12,4 @@ bin/*
 public/stylesheets/sass/_assets.sass
 public/stylesheets/sass/skins/*
 public/stylesheets/skins/*
-public/stylesheets/application.css
+public/stylesheets/*.css

@@ -1,0 +1,12 @@
+<%= form.text_field :name, :required => true %>
+<%= form.text_field :alias, :required => true, :comment => t(".comments.alias") %>
+
+<%= form.text_area(:content,
+      :before_field => content_tag(:comment,
+        t(".comments.content.text",
+          :reference => link_to(t(".comments.content.reference"), "http://redcloth.org/textile", :target => :_blank)
+        ),
+        :class => :comment
+      ),
+      :cols => 80
+    ) %>

@@ -58,6 +58,12 @@ ActionController::Routing::Routes.draw do |map|
         :publish  => :put,
         :hide     => :put
       }
+
+    admin.resources :help_pages,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
   end
 
   map.root :controller => "characters", :action => "index"
@@ -115,6 +121,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :gifts,
     :member => {:confirm => :any}
+
+
+  map.resources :help_pages, :only => :show
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
