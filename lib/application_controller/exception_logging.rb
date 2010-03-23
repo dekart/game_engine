@@ -62,8 +62,6 @@ class ApplicationController
     end
 
     def log_browser_info
-      logger.fatal "Session: #{session.inspect}"
-      logger.fatal "Facebook Session: #{facebook_session.inspect}"
       logger.fatal "Requested URL: #{request.url}"
       logger.fatal "Referer: #{request.headers["Referer"]}" if request.headers["Referer"].present?
       logger.fatal "Request Origin: #{request_origin}"
