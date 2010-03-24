@@ -178,21 +178,20 @@ var Spinner = {
 }
 
 $(function(){
-  // Manually set canvas height to be sure that it will fit to content size
-  //try{
+  
   FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
     FB.XdComm.Server.init("/xd_receiver.html");
 
     FB.CanvasClient.set_timerInterval(1)
     FB.CanvasClient.startTimerToSizeToContent();
-    
+
+    // Manually set canvas height to be sure that it will fit to content size
     FB.CanvasClient.setCanvasHeight($('body').outerHeight());
 
     FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
 
     FB.XFBML.Host.parseDomTree();
   })
-  //}catch(e){}
 
   $(document).bind('result.received', function(){
     $(document).trigger('remote_content.received');
