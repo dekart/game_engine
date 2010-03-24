@@ -186,9 +186,11 @@ FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 
 
 $(function(){
   // Manually set canvas height to be sure that it will fit to content size
-  FB.CanvasClient.setCanvasHeight($('body').outerHeight());
+  try{
+    FB.CanvasClient.setCanvasHeight($('body').outerHeight());
 
-  FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
+    FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
+  }catch(e){}
 
   $(document).bind('result.received', function(){
     $(document).trigger('remote_content.received');
