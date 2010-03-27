@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  before_filter :set_p3p_header
   before_filter :ensure_authenticated_to_facebook
   before_filter :check_character_existance
 
@@ -22,6 +23,11 @@ class ApplicationController < ActionController::Base
   helper :all
 
   protected
+
+  # Send P3P privacy header to enable iframe cookies in IE
+  def set_p3p_header
+    headers["P3P"] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
+  end
 
   def landing_url
     if current_user.try(:should_visit_gift_page?)
