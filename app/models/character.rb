@@ -141,7 +141,17 @@ class Character < ActiveRecord::Base
     def find_by_invitation_key(key)
       id, secret = key.split("-")
 
-      if character = character.find_by_id(id) and secret == character.secret
+      if character = find_by_id(id) and secret == character.secret
+        character
+      else
+        nil
+      end
+    end
+
+    def find_by_key(key)
+      id, secret = key.split("-")
+
+      if character = find_by_id(id) and secret == character.secret(10)
         character
       else
         nil
@@ -379,12 +389,16 @@ class Character < ActiveRecord::Base
       self.level <= Configuration[:fight_with_invite_max_level]
   end
 
-  def secret
-    Digest::MD5.hexdigest("#{self.id}-#{self.created_at}")[0..5]
+  def secret(length = 5)
+    Digest::MD5.hexdigest("#{self.id}-#{self.created_at}")[0, length]
   end
 
   def invitation_key
-    "#{self.id}-#{self.secret}"
+    "#{id}-#{secret}"
+  end
+
+  def key
+    "#{id}-#{secret(10)}"
   end
 
   def charge(basic_amount, vip_amount)

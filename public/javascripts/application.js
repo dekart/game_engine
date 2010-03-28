@@ -43,7 +43,7 @@ var Character = {
   },
 
   update_from_remote: function(){
-    $.getJSON('/character_status', function(data){
+    $.getJSON('/character_status/' + character_key, function(data){
       Character.update(data)
     });
   }
