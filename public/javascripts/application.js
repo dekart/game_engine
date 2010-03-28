@@ -42,7 +42,7 @@ var Character = {
     Timer.start('#co .stamina .timer', a.character.time_to_sp_restore, this.update_from_remote);
   },
 
-  upgrade_from_remote: function(){
+  update_from_remote: function(){
     $.getJSON('/character_status', function(data){
       Character.update(data)
     });
