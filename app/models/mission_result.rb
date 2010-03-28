@@ -82,7 +82,7 @@ class MissionResult
   end
 
   def requirements_satisfied?
-    @mission.requirements.satisfies?(@character)
+    @requirements_satisfied ||= @mission.requirements.satisfies?(@character)
   end
 
   def received_something?

@@ -100,6 +100,10 @@ class BossFight < ActiveRecord::Base
     lost? || expired? || (@payouts && @payouts.by_action(:remove).any?)
   end
 
+  def requirements_satisfied?
+    @requirements_satisfied ||= boss.requirements.satisfies?(character)
+  end
+
   protected
 
   def validate_on_create
@@ -108,6 +112,8 @@ class BossFight < ActiveRecord::Base
     errors.add(:character, :not_enough_energy) if character.ep < ep_cost
 
     errors.add(:character, :too_weak) if character.weak?
+
+    errors.add(:character, :requirements_not_satisfied) unless requirements_satisfied?
   end
 
   def get_energy_from_character

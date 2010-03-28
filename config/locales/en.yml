@@ -463,6 +463,8 @@ en:
       buttons:
         attack: "Attack!"
     create:
+      requirements_not_satisfied:
+        message: "Some boss fight requirements are not satisfied:"
       progress:
         time_left: "Time Left: {{value}}"
         messages:
