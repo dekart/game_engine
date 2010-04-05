@@ -16,6 +16,9 @@ class Fight < ActiveRecord::Base
   before_create :calculate_fight
   after_create  :save_payout, :update_victim_dashboard
 
+  cattr_accessor :fighting_system
+  @@fighting_system = FightingSystem::PlayerVsPlayer::Proportion
+
   def attacker_won?
     self.winner == self.attacker
   end
@@ -63,20 +66,23 @@ class Fight < ActiveRecord::Base
   end
 
   def calculate_fight
-    attacker_won, self.victim_hp_loss, self.attacker_hp_loss = calculate_proportions(self.attacker, self.victim)
+    won, victim_damage, attacker_damage = self.class.fighting_system.calculate(attacker, victim)
 
-    self.winner = attacker_won ? self.attacker : self.victim
+    self.winner = won ? attacker : victim
 
-    self.experience = (rand(self.loser.level) * Configuration[:fight_experience] * 0.01).ceil
-    self.experience = 1 if self.experience == 0
+    self.victim_hp_loss = victim_damage
+    self.attacker_hp_loss = attacker_damage
 
-    if self.loser.basic_money == 0
+    self.experience = (rand(loser.level) * Configuration[:fight_experience] * 0.01).ceil
+    self.experience = 1 if experience == 0
+
+    if loser.basic_money == 0
       self.money = 0
     else
-      fignt_money_bonus = 0.01 * self.winner.assignments.effect_value(:fight_income)
+      fight_money_bonus = 0.01 * winner.assignments.effect_value(:fight_income)
 
       self.money = [
-        (rand(self.loser.basic_money) * (Configuration[:fight_money_loot] * 0.01 + fignt_money_bonus)).ceil,
+        (rand(loser.basic_money) * (Configuration[:fight_money_loot] * 0.01 + fight_money_bonus)).ceil,
         Configuration[:fight_max_money]
       ].min
     end
