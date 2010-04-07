@@ -40,10 +40,10 @@ module CharactersHelper
     )
 
     fb_comments(
-      dom_id(character, :wall),               # xid
-      true,                                   # canpost
-      false,                                  # candelete
-      Configuration[:wall_posts_show_limit],  # numposts
+      dom_id(character, :wall),           # xid
+      true,                               # canpost
+      false,                              # candelete
+      Setting.i(:wall_posts_show_limit),  # numposts
       options
     )
   end

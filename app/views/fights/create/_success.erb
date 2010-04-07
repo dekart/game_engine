@@ -26,7 +26,7 @@
     <td class="lost">
       <h3><%= t(".you_lost") %></h3>
 
-      <%= payout(:stamina, Configuration[:fight_stamina_required]) %>
+      <%= payout(:stamina, Setting.i(:fight_stamina_required)) %>
       <%= payout(:health, fight.attacker_hp_loss) %>
     </td>
     <td class="victim_lost">

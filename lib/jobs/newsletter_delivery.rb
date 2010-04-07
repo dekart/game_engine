@@ -6,7 +6,7 @@ module Jobs
       return unless newsletter = Newsletter.find_by_id(newsletter_id)
 
       users = User.after(newsletter.last_recipient).all(
-        :limit => Configuration[:newsletter_recipients_per_send]
+        :limit => Setting.i(:newsletter_recipients_per_send)
       )
       
       if users.any?
@@ -14,7 +14,7 @@ module Jobs
 
         newsletter.update_attribute(:last_recipient, users.last)
 
-        newsletter.schedule_delivery(Configuration[:newsletter_send_sleep].seconds.from_now)
+        newsletter.schedule_delivery(Setting.i(:newsletter_send_sleep).seconds.from_now)
       else
         newsletter.finish_delivery!
       end

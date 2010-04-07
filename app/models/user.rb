@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   attr_accessible :show_next_steps
 
   def show_tutorial?
-    Configuration[:user_tutorial_enabled] && self[:show_tutorial]
+    Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
   end
 
   def customized?
@@ -29,26 +29,26 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    Configuration[:user_admins].split(/\s*,\s*/).include?(self.facebook_id.to_s)
+    Setting.a(:user_admins).include?(facebook_id.to_s)
   end
 
   def should_visit_invite_page?
-    Configuration[:user_invite_page_redirect_enabled] and
-      self.created_at < Configuration[:user_invite_page_first_visit_delay].hours.ago and
-      (self.invite_page_visited_at.nil? or self.invite_page_visited_at < Configuration[:user_invite_page_recurrent_visit_delay].hours.ago)
+    Setting.b(:user_invite_page_redirect_enabled) and
+      created_at < Setting.i(:user_invite_page_first_visit_delay).hours.ago and
+      (invite_page_visited_at.nil? or invite_page_visited_at < Setting.i(:user_invite_page_recurrent_visit_delay).hours.ago)
   end
 
   def invite_page_visited!
-    self.update_attribute(:invite_page_visited_at, Time.now)
+    update_attribute(:invite_page_visited_at, Time.now)
   end
 
   def should_visit_gift_page?
-    Configuration[:gifting_enabled] and
-      self.created_at < Configuration[:gifting_page_first_visit_delay].hours.ago and
-      (self.gift_page_visited_at.nil? or self.gift_page_visited_at < Configuration[:gifting_page_recurrent_visit_delay].hours.ago)
+    Setting.b(:gifting_enabled) and
+      created_at < Setting.i(:gifting_page_first_visit_delay).hours.ago and
+      (gift_page_visited_at.nil? or gift_page_visited_at < Setting.i(:gifting_page_recurrent_visit_delay).hours.ago)
   end
 
   def gift_page_visited!
-    self.update_attribute(:gift_page_visited_at, Time.now)
+    update_attribute(:gift_page_visited_at, Time.now)
   end
 end

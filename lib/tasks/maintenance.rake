@@ -1,5 +1,20 @@
 namespace :app do
   namespace :maintenance do
+    desc "Migrate configuration values to settings"
+    task :move_configuration_to_settings => :environment do
+      puts "Moving configuration to settings"
+
+      if config = ActiveRecord::Base.connection.select_all("SELECT * FROM configurations").first
+        config.each do |key, value|
+          Setting[key] = value
+        end
+
+        puts "Done!"
+      else
+        puts "Configuration not found"
+      end
+    end
+
     desc "Auto-equip inventories"
     task :auto_equip_inventories => :environment do
       count = Inventory.equippable.count

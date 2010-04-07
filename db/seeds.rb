@@ -4,6 +4,8 @@ puts "Seeding configuration..."
 
 Configuration.create! if Configuration.count == 0
 
+require File.expand_path("../seeds/settings", __FILE__)
+
 puts "Seeding assets..."
 
 asset_folder = File.join(RAILS_ROOT, "public", "images")

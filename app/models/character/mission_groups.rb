@@ -11,8 +11,8 @@ class Character
 
     def current_page
       MissionGroup.with_state(:visible).paginate(
-        :page     => (MissionGroup.with_state(:visible).before(current).size.to_f / Configuration[:mission_group_show_limit]).floor + 1,
-        :per_page => Configuration[:mission_group_show_limit]
+        :page     => (MissionGroup.with_state(:visible).before(current).size.to_f / Setting.i(:mission_group_show_limit)).floor + 1,
+        :per_page => Setting.i(:mission_group_show_limit)
       )
     end
 

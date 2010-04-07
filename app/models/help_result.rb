@@ -25,8 +25,8 @@ class HelpResult < ActiveRecord::Base
   
   def calculate_payout
     if context.is_a?(Mission)
-      self.money      = (self.help_request.context.money * Configuration[:help_request_mission_money] * 0.01).ceil
-      self.experience = (self.help_request.context.experience * Configuration[:help_request_mission_experience] * 0.01).ceil
+      self.money      = Setting.p(:help_request_mission_money, help_request.context.money).ceil
+      self.experience = Setting.p(:help_request_mission_experience, help_request.context.experience).ceil
     elsif context.is_a?(Fight)
       @fight = Fight.create(
         :attacker => character,
@@ -34,8 +34,8 @@ class HelpResult < ActiveRecord::Base
         :cause    => help_request
       )
       
-      self.money      = @fight.attacker_won? ? (@fight.money * Configuration[:help_request_fight_money] * 0.01).ceil : 0
-      self.experience = @fight.attacker_won? ? (@fight.experience * Configuration[:help_request_fight_experience] * 0.01).ceil : 0
+      self.money      = @fight.attacker_won? ? Setting.p(:help_request_fight_money, @fight.money).ceil : 0
+      self.experience = @fight.attacker_won? ? Setting.p(:help_request_fight_experience, @fight.experience).ceil : 0
     end
   end
 

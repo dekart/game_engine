@@ -17,9 +17,9 @@ en:
         skins: "Skins"
         tips: "Tips"
         translations: "Translations"
-        configurations: "Configurations"
         assets: "Assets"
         help_pages: "Help Pages"
+        settings: "Settings"
       application:
         spinner:
           alt: "Please wait..."
@@ -227,26 +227,6 @@ en:
         submit: "Create"
       edit:
         submit: "Update"
-    configurations:
-      edit:
-        title: "Edit Configuration"
-        submit: "Update"
-      form_fields:
-        assignment: "Alliance Members & Assignments"
-        bank: "Bank Operations"
-        character: "Character"
-        premium: "Premium Services"
-        boss: "Boss Fighting"
-        fight: "Player-vs-Player Fights"
-        rating: "Rating"
-        help_request: "Help Requests"
-        inventory: "Inventory"
-        item: "Shop"
-        property: "Properties"
-        gifting: "Gifts"
-        user: "User Options"
-        newsletter: "Nesletter Delivery"
-        application: "Global Application Settings"
     assets:
       index:
         title: "Assets"
@@ -336,3 +316,18 @@ en:
           content:
             text: "You can use Textile markup. See {{reference}} to find more info."
             reference: "Textile Reference"
+    settings:
+      index:
+        title: "Settings"
+        empty_set: "No settings"
+        controls:
+          new: "Add Value"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Removing this setting may cause improper script behaviour! Are you sure you want to delete it?"
+      new:
+        title: "New Value"
+        submit: "Create"
+      edit:
+        title: "Edit Value"
+        submit: "Update"

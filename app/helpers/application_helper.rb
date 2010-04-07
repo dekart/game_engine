@@ -113,11 +113,11 @@ module ApplicationHelper
   end
 
   def google_analytics
-    if Configuration[:app_google_analytics_id].present?
+    if Setting.s(:app_google_analytics_id).present?
       %{
         <script type="text/javascript">
           var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', '#{ Configuration[:app_google_analytics_id] }']);
+          _gaq.push(['_setAccount', '#{ Setting.s(:app_google_analytics_id) }']);
           _gaq.push(['_trackPageview']);
 
           (function() {

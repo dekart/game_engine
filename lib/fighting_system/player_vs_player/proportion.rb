@@ -15,16 +15,20 @@ module FightingSystem
         if attacker_won
           victim_damage_reduce    = 0.01 * victim.assignments.effect_value(:fight_damage)
 
-          attack_damage   = rand(victim.health * 1000) * (1 - victim_damage_reduce) * Configuration[:fight_max_loser_damage] * 0.01
-          defence_damage  = rand(attack_damage * (attack > defence ? defence / attack : Configuration[:fight_max_winner_damage] * 0.01))
+          attack_damage   = rand(Setting.p(:fight_max_loser_damage, victim.health * 1000)) * (1 - victim_damage_reduce)
+          defence_damage  = rand(
+            attack > defence ? (attack_damage * defence / attack) : Setting.p(:fight_max_winner_damage, attack_damage)
+          )
         else
           attacker_damage_reduce  = 0.01 * attacker.assignments.effect_value(:fight_damage)
 
-          defence_damage  = rand(attacker.health * 1000) * Configuration[:fight_max_loser_damage] * 0.01 * (1 - attacker_damage_reduce)
-          attack_damage   = rand(defence_damage * (defence > attack ? attack / defence : Configuration[:fight_max_winner_damage] * 0.01))
+          defence_damage  = rand(Setting.p(:fight_max_loser_damage, attacker.health * 1000)) * (1 - attacker_damage_reduce)
+          attack_damage   = rand(
+            defence > attack ? (defence_damage * attack / defence) : Setting.p(:fight_max_winner_damage, defence_damage)
+          )
         end
 
-        return [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
+        [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
       end
     end
   end

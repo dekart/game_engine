@@ -8,11 +8,11 @@ class ItemsController < ApplicationController
 
     @items = item_scope.available_in(:shop).paginate(
       :page     => params[:page],
-      :per_page => Configuration[:item_show_basic]
+      :per_page => Setting.i(:item_show_basic)
     )
     
     @special_items = item_scope.available_in(:special).all(
-      :limit => Configuration[:item_show_special],
+      :limit => Setting.i(:item_show_special),
       :order => "level DESC"
     )
 

@@ -92,10 +92,10 @@ class Character < ActiveRecord::Base
           characters.id != :attacker_id
         },
         {
-          :low_level    => attacker.level - Configuration[:fight_victim_levels_lower],
-          :high_level   => attacker.level + Configuration[:fight_victim_levels_higher],
+          :low_level    => attacker.level - Setting.i(:fight_victim_levels_lower),
+          :high_level   => attacker.level + Setting.i(:fight_victim_levels_higher),
           :attacker_id  => attacker.id,
-          :time_limit   => Configuration[:fight_attack_repeat_delay].minutes.ago
+          :time_limit   => Setting.i(:fight_attack_repeat_delay).minutes.ago
         }
       ],
       :include  => :user
@@ -105,7 +105,7 @@ class Character < ActiveRecord::Base
   named_scope :rated_by, Proc.new{|unit|
     {
       :order => "characters.#{unit} DESC",
-      :limit => Configuration[:rating_show_limit]
+      :limit => Setting.i(:rating_show_limit)
     }
   }
 
@@ -117,18 +117,18 @@ class Character < ActiveRecord::Base
 
   restorable_attribute :hp,
     :limit          => :health,
-    :restore_period => Configuration[:character_health_restore_period].seconds,
+    :restore_period => Setting.i(:character_health_restore_period).seconds,
     :restore_bonus  => :health_restore_bonus
   restorable_attribute :ep, 
     :limit          => :energy,
-    :restore_period => Configuration[:character_energy_restore_period].seconds,
+    :restore_period => Setting.i(:character_energy_restore_period).seconds,
     :restore_bonus  => :energy_restore_bonus
   restorable_attribute :sp,
     :limit          => :stamina,
-    :restore_period => Configuration[:character_stamina_restore_period].seconds,
+    :restore_period => Setting.i(:character_stamina_restore_period).seconds,
     :restore_bonus  => :stamina_restore_bonus
   restorable_attribute :basic_money, 
-    :restore_period => Configuration[:character_income_calculation_period].minutes,
+    :restore_period => Setting.i(:character_income_calculation_period).minutes,
     :restore_rate   => :property_income,
     :restore_bonus  => :income_period_bonus
 
@@ -182,24 +182,24 @@ class Character < ActiveRecord::Base
   def upgrade_attribute!(name)
     name = name.to_sym
 
-    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && self.points >= Configuration["character_#{name}_upgrade_points"]
+    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && self.points >= Setting.i("character_#{name}_upgrade_points")
 
     ActiveRecord::Base.transaction do
       case name
       when :health
-        self.health += Configuration[:character_health_upgrade]
-        self.hp     += Configuration[:character_health_upgrade]
+        self.health += Setting.i(:character_health_upgrade)
+        self.hp     += Setting.i(:character_health_upgrade)
       when :energy
-        self.energy += Configuration[:character_energy_upgrade]
-        self.ep     += Configuration[:character_energy_upgrade]
+        self.energy += Setting.i(:character_energy_upgrade)
+        self.ep     += Setting.i(:character_energy_upgrade)
       when :stamina
-        self.stamina  += Configuration[:character_stamina_upgrade]
-        self.sp       += Configuration[:character_stamina_upgrade]
+        self.stamina  += Setting.i(:character_stamina_upgrade)
+        self.sp       += Setting.i(:character_stamina_upgrade)
       else
-        self.increment(name, Configuration["character_#{name}_upgrade"])
+        self.increment(name, Setting.i("character_#{name}_upgrade"))
       end
 
-      self.points -= Configuration["character_#{name}_upgrade_points"]
+      self.points -= Setting.i("character_#{name}_upgrade_points")
 
       self.save
     end
@@ -228,7 +228,7 @@ class Character < ActiveRecord::Base
   end
 
   def weakness_minimum
-    (self.health * Configuration[:character_weakness_minimum] * 0.01).ceil
+    Setting.p(:character_weakness_minimum, health)
   end
 
   def experience_to_next_level
@@ -303,11 +303,11 @@ class Character < ActiveRecord::Base
   end
 
   def exchange_money!
-    return if self.vip_money < Configuration[:premium_money_price]
+    return if self.vip_money < Setting.i(:premium_money_price)
 
     self.class.transaction do
-      self.vip_money    -= Configuration[:premium_money_price]
-      self.basic_money  += Configuration[:premium_money_amount]
+      self.vip_money    -= Setting.i(:premium_money_price)
+      self.basic_money  += Setting.i(:premium_money_amount)
 
       self.save
     end
@@ -318,11 +318,11 @@ class Character < ActiveRecord::Base
   end
 
   def refill_energy!(free = false)
-    return if full_energy? or (!free and vip_money < Configuration[:premium_energy_price])
+    return if full_energy? or (!free and vip_money < Setting.i(:premium_energy_price))
 
     self.class.transaction do
       self.ep = self.energy
-      self.vip_money -= Configuration[:premium_energy_price] unless free
+      self.vip_money -= Setting.i(:premium_energy_price) unless free
 
       self.save
     end
@@ -333,11 +333,11 @@ class Character < ActiveRecord::Base
   end
 
   def refill_health!(free = false)
-    return if full_health? or (!free and vip_money < Configuration[:premium_health_price])
+    return if full_health? or (!free and vip_money < Setting.i(:premium_health_price))
 
     self.class.transaction do
       self.hp = self.health
-      self.vip_money -= Configuration[:premium_health_price] unless free
+      self.vip_money -= Setting.i(:premium_health_price) unless free
 
       self.save
     end
@@ -348,32 +348,32 @@ class Character < ActiveRecord::Base
   end
 
   def refill_stamina!(free = false)
-    return if full_stamina? or (!free and vip_money < Configuration[:premium_stamina_price])
+    return if full_stamina? or (!free and vip_money < Setting.i(:premium_stamina_price))
 
     self.class.transaction do
       self.sp = self.health
-      self.vip_money -= Configuration[:premium_stamina_price] unless free
+      self.vip_money -= Setting.i(:premium_stamina_price) unless free
 
       self.save
     end
   end
 
   def buy_points!
-    return if self.vip_money < Configuration[:premium_points_price]
+    return if self.vip_money < Setting.i(:premium_points_price)
 
     self.class.transaction do
-      self.vip_money  -= Configuration[:premium_points_price]
-      self.points     += Configuration[:premium_points_amount]
+      self.vip_money  -= Setting.i(:premium_points_price)
+      self.points     += Setting.i(:premium_points_amount)
 
       self.save
     end
   end
 
   def hire_mercenary!
-    return if self.vip_money < Configuration[:premium_mercenary_price]
+    return if self.vip_money < Setting.i(:premium_mercenary_price)
 
     self.transaction do
-      self.vip_money -= Configuration[:premium_mercenary_price]
+      self.vip_money -= Setting.i(:premium_mercenary_price)
       
       mercenary_relations.create!
       save
@@ -385,8 +385,8 @@ class Character < ActiveRecord::Base
   end
 
   def allow_fight_with_invite?
-    Configuration[:fight_with_invite_allowed] and
-      self.level <= Configuration[:fight_with_invite_max_level]
+    Setting.b(:fight_with_invite_allowed) and
+      level <= Setting.i(:fight_with_invite_max_level)
   end
 
   def secret(length = 5)
@@ -440,8 +440,8 @@ class Character < ActiveRecord::Base
     if self.experience_to_next_level <= 0
       self.level      += 1
       
-      self.points     += Configuration[:character_points_per_upgrade]
-      self.vip_money  += Configuration[:character_vip_money_per_upgrade]
+      self.points     += Setting.i(:character_points_per_upgrade)
+      self.vip_money  += Setting.i(:character_vip_money_per_upgrade)
 
       self.ep     = self.energy
       self.hp     = self.health

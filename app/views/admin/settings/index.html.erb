@@ -1,0 +1,30 @@
+<%= title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_setting_path) %>
+</div>
+
+<% if @settings.any? %>
+  <table id="setting_list" cellspacing="0">
+    <tr>
+      <th><%= Tip.human_attribute_name("alias") %></th>
+      <th><%= Tip.human_attribute_name("value") %></th>
+      <th></th>
+    </tr>
+    <% @settings.each do |setting| %>
+      <tr>
+        <td><%= setting.alias %></td>
+        <td><%= setting.value %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_setting_path(setting)) %>
+          <%= link_to(t(".controls.delete"), admin_setting_path(setting),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="empty_set"><%= t(".empty_set") %></div>
+<% end %>

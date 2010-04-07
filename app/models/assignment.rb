@@ -14,28 +14,28 @@ class Assignment < ActiveRecord::Base
     def effect_value(context, character, role)
       case role.to_sym
       when :attack
-        (character.attack * Configuration[:assignment_attack_bonus] * 0.01).ceil
+        Setting.p(:assignment_attack_bonus, character.attack).ceil
       when :defence
-        (character.defence * Configuration[:assignment_defence_bonus] * 0.01).ceil
+        Setting.i(:assignment_defence_bonus, character.defence).ceil
       when :fight_damage
         log_percent(character.level,
-          Configuration[:assignment_fight_damage_multiplier],
-          Configuration[:assignment_fight_damage_divider]
+          Setting.i(:assignment_fight_damage_multiplier),
+          Setting.i(:assignment_fight_damage_divider)
         )
       when :fight_income
         log_percent(character.level,
-          Configuration[:assignment_fight_income_multiplier],
-          Configuration[:assignment_fight_income_divider]
+          Setting.i(:assignment_fight_income_multiplier),
+          Setting.i(:assignment_fight_income_divider)
         )
       when :mission_energy
         log_percent(character.level,
-          Configuration[:assignment_mission_energy_multiplier],
-          Configuration[:assignment_mission_energy_divider]
+          Setting.i(:assignment_mission_energy_multiplier),
+          Setting.i(:assignment_mission_energy_divider)
         )
       when :mission_income
         log_percent(character.level,
-          Configuration[:assignment_mission_income_multiplier],
-          Configuration[:assignment_mission_income_divider]
+          Setting.i(:assignment_mission_income_multiplier),
+          Setting.i(:assignment_mission_income_divider)
         )
       end
     end

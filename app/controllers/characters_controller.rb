@@ -14,7 +14,7 @@ class CharactersController < ApplicationController
       redirect_to landing_url
     else
       @latest_fights = Fight.with_participant(current_character).find(:all, 
-        :limit => Configuration[:fight_latest_show_limit]
+        :limit => Setting.i(:fight_latest_show_limit)
       )
 
       @alliance_invitations = Invitation.for_user(current_user).find(:all)
@@ -65,7 +65,7 @@ class CharactersController < ApplicationController
       redirect_to landing_url
     else
       @character = Character.new
-      @character.name ||= Configuration[:character_default_name]
+      @character.name ||= Setting.s(:character_default_name)
     end
   end
 

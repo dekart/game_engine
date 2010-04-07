@@ -11,10 +11,10 @@
           :minute_number  => (current_character.hp_restore_time(current_character.weakness_minimum) / 1.minute).ceil
         ) %>
   </p>
-<% elsif current_character.sp < Configuration[:fight_stamina_required] %>
+<% elsif current_character.sp < Setting.i(:fight_stamina_required) %>
   <p>
     <%= raw t(".messages.not_enough_stamina",
-          :minute_number => (current_character.sp_restore_time(Configuration[:fight_stamina_required]) / 1.minute).ceil
+          :minute_number => (current_character.sp_restore_time(Setting.i(:fight_stamina_required)) / 1.minute).ceil
         ) %>
   </p>
 <% else %>

@@ -14,7 +14,7 @@
 
         <%= f.text_field :amount, :value => current_character.basic_money, :label => t(".deposit.title") %>
 
-        <p><%= raw t(".deposit.note", :fee => Configuration[:bank_deposit_fee]) %></p>
+        <p><%= raw t(".deposit.note", :fee => Setting.i(:bank_deposit_fee)) %></p>
 
         <%= submit_tag(t(".deposit.submit")) %>
       <% end %>

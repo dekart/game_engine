@@ -87,7 +87,7 @@
     </div>
   <% end %>
 
-  <% if Configuration[:wall_enabled] %>
+  <% if Setting.b(:wall_enabled) %>
     <div class="wall">
       <h2>
         <%= raw t(".wall.title",

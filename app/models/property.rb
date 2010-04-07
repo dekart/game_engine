@@ -12,7 +12,7 @@ class Property < ActiveRecord::Base
   after_destroy :deposit_character
 
   def sell_price
-    (property_type.inflated_price(amount) * Configuration[:property_sell_price] * 0.01).ceil
+    Setting.p(:property_sell_price, property_type.inflated_price(amount)).ceil
   end
 
   def total_income
@@ -24,7 +24,7 @@ class Property < ActiveRecord::Base
   end
 
   def maximum_amount
-    self.property_type.purchase_limit || Configuration[:property_maximum_amount]
+    self.property_type.purchase_limit || Setting.i(:property_maximum_amount)
   end
 
   protected
@@ -110,6 +110,6 @@ class Property < ActiveRecord::Base
       price += property_type.inflated_price(amount)
     end
 
-    (price  * Configuration[:property_sell_price] * 0.01).ceil
+    Setting.p(:property_sell_price, price).ceil
   end
 end

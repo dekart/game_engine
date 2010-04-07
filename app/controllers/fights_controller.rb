@@ -2,7 +2,7 @@ class FightsController < ApplicationController
   def new
     @victims = Character.victims_for(current_character).find(:all,
       :order => "RAND()",
-      :limit => Configuration[:fight_victim_show_limit]
+      :limit => Setting.i(:fight_victim_show_limit)
     )
   end
 

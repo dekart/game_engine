@@ -33,7 +33,7 @@
           <% if type.purchase_limit %>
             <%= type.purchase_limit %>
           <% else %>
-            <span class="default"><%= Configuration[:property_maximum_amount] %></span>
+            <span class="default"><%= Setting.i(:property_maximum_amount) %></span>
           <% end %>
         </td>
         <td class="state"><%= admin_state(type) %></td>

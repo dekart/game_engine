@@ -5,7 +5,7 @@ class RelationsController < ApplicationController
     else
       @relations = current_character.relations.paginate(
         :page     => params[:page],
-        :per_page => Configuration[:relation_show_limit]
+        :per_page => Setting.i(:relation_show_limit)
       )
     end
   end

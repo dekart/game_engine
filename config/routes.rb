@@ -64,6 +64,8 @@ ActionController::Routing::Routes.draw do |map|
         :publish  => :put,
         :hide     => :put
       }
+
+    admin.resources :settings
   end
 
   map.root :controller => "characters", :action => "index"

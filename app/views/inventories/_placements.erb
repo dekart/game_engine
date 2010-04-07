@@ -39,7 +39,7 @@
         
         <%= raw t(".additional.relations",
               :relations  => link_to(Character.human_attribute_name("relations"), relations_path),
-              :amount     => content_tag(:span, Configuration[:character_relations_per_equipment_slot], :class => :value)
+              :amount     => content_tag(:span, Setting.i(:character_relations_per_equipment_slot), :class => :value)
             ) %>
       </div>
     <% end %>

@@ -132,11 +132,15 @@ class BossFight < ActiveRecord::Base
     attacker_won = (rand((attack + defence).to_i) >= defence)
 
     if attacker_won
-      attack_damage   = rand(boss.health * 1000) * Configuration[:boss_max_loser_damage] * 0.01
-      defence_damage  = rand(attack_damage * (attack > defence ? defence / attack : Configuration[:boss_max_winner_damage] * 0.01))
+      attack_damage   = Setting.p(:boss_max_loser_damage, rand(boss.health * 1000))
+      defence_damage  = rand(
+        attack > defence ? (attack_damage * defence / attack) : Setting.p(:boss_max_winner_damage, attack_damage)
+      )
     else
-      defence_damage  = rand(character.health * 1000) * Configuration[:boss_max_loser_damage] * 0.01
-      attack_damage   = rand(defence_damage * (defence > attack ? attack / defence : Configuration[:boss_max_winner_damage] * 0.01))
+      defence_damage  = rand(Setting.p(:boss_max_loser_damage, character.health * 1000))
+      attack_damage   = rand(
+        defence > attack ? (defence_damage * attack / defence) : Setting.p(:boss_max_winner_damage, defence_damage)
+      )
     end
 
     return [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
