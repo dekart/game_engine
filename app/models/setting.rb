@@ -36,7 +36,7 @@ class Setting < ActiveRecord::Base
 
       value = cache[key.to_sym].to_s.downcase
 
-      value == "true" || value == "yes" ? true : false
+      %w{true yes 1}.include?(value) ? true : false
     end
 
     # Returns value casted to string array (splits string value by comma)
