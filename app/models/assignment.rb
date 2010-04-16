@@ -16,7 +16,7 @@ class Assignment < ActiveRecord::Base
       when :attack
         Setting.p(:assignment_attack_bonus, character.attack).ceil
       when :defence
-        Setting.i(:assignment_defence_bonus, character.defence).ceil
+        Setting.p(:assignment_defence_bonus, character.defence).ceil
       when :fight_damage
         log_percent(character.level,
           Setting.i(:assignment_fight_damage_multiplier),
