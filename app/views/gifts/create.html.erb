@@ -27,7 +27,7 @@
     <% form_tag gift_url(@gift), :id => :group_switcher, :method => :put do %>
       <%= hidden_field_tag :group  %>
       <%= hidden_field_tag :friend_ids %>
-
+    
       <% %w{all players non_players}.each do |type| %>
         <%= link_to_function(t(".groups.#{type}", :app => t("app_name")), "$('#group').val('#{type}'); $('#group_switcher').submit()",
               :id     => "group_#{type}",
@@ -51,13 +51,14 @@
           ) %>
     <% end %>
 
-    <% fb_serverfbml(:style => "height: 700px;") do %>
+    <% fb_serverfbml do %>
       <% fb_request_form(t(".request.title"), :gift_message, confirm_gift_url(@gift)) do %>
-        <%= fb_multi_friend_selector_condensed(
-              :exclude_ids => @exclude_ids.join(",")
-            ) %>
-
-        <%= fb_request_form_submit %>
+        <div style="margin: auto; width: 470px">
+          <%= fb_multi_friend_selector(t(".request.note"),
+                :exclude_ids => @exclude_ids.join(","),
+                :cols => 3
+              ) %>
+        </div>
       <% end %>
     <% end %>
   </div>
