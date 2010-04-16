@@ -23,13 +23,17 @@
     </div>
   </div>
 
-  <div class="friend_groups">
-    <% %w{all players non_players}.each do |type| %>
-      <%= link_to(t(".groups.#{type}", :app => t("app_name")), gift_path(@gift, :group => type),
-            :method => :put,
-            :id     => "group_#{type}",
-            :class  => (:current if @group == type.to_sym)
-          ) %>
+  <div class="friend_groups" style="display:none;">
+    <% form_tag gift_url(@gift), :id => :group_switcher, :method => :put do %>
+      <%= hidden_field_tag :group  %>
+      <%= hidden_field_tag :friend_ids %>
+    
+      <% %w{all players non_players}.each do |type| %>
+        <%= link_to_function(t(".groups.#{type}", :app => t("app_name")), "$('#group').val('#{type}'); $('#group_switcher').submit()",
+              :id     => "group_#{type}",
+              :class  => "friend_group #{:current if @group == type.to_sym}"
+            ) %>
+      <% end %>
     <% end %>
   </div>
 
@@ -56,3 +60,14 @@
     <% end %>
   </div>
 </div>
+
+<% dom_ready do %>
+  $(document).bind('facebook.ready', function(){
+    FB.Facebook.apiClient.friends_get(null, function(result) {
+      if(result){
+        $('#friend_ids').val(result.join(','));
+        $('.friend_groups').show();
+      }
+    })
+  });
+<% end %>

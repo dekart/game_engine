@@ -32,12 +32,12 @@ class GiftsController < ApplicationController
     @group = params[:group] ? params[:group].to_sym : :all
     
     case @group
-    when :all
-      @exclude_ids = []
     when :players
-      @exclude_ids = facebook_params["friends"].collect{|id| id.to_i } - current_character.friend_relations.facebook_ids
+      @exclude_ids = params["friend_ids"].split(",").collect{|id| id.to_i } - current_character.friend_relations.facebook_ids
     when :non_players
       @exclude_ids = current_character.friend_relations.facebook_ids
+    else
+      @exclude_ids = []
     end
 
     render :action => :create

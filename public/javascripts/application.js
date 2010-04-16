@@ -178,7 +178,6 @@ var Spinner = {
 }
 
 $(function(){
-  
   FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
     FB.XdComm.Server.init("/xd_receiver.html");
 
@@ -191,7 +190,9 @@ $(function(){
     FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
 
     FB.XFBML.Host.parseDomTree();
-  })
+
+    $(document).trigger('facebook.ready');
+  });
 
   $(document).bind('result.received', function(){
     $(document).trigger('remote_content.received');
