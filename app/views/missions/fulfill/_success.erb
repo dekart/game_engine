@@ -1,6 +1,6 @@
 <div class="buttons">
   <%= link_to_remote(button(:continue),
-        :url => fulfill_mission_url(mission, :canvas => false),
+        :url    => fulfill_mission_path(mission),
         :update => :result,
         :html   => {:class => "fulfill_again button"}
       ) if current_character.can_fulfill?(mission) %>

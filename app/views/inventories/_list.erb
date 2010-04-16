@@ -38,7 +38,7 @@
                   <%= amount_select_tag %>
 
                   <%= link_to_remote(button(:sell, :price => number_to_currency(inventory.sell_price)),
-                        :url    => inventory_url(inventory.item, :canvas => false),
+                        :url    => inventory_path(inventory.item),
                         :method => :delete,
                         :with   => "$(this).parent('form').serialize()",
                         :update => :result,
@@ -48,7 +48,7 @@
               <% end %>
               
               <%= link_to_remote(button(inventory_use_label(inventory)),
-                    :url    => use_inventory_url(inventory, :canvas => false),
+                    :url    => use_inventory_path(inventory),
                     :update => :result,
                     :html   => {:class => "use button"}
                   ) if inventory.usable? %>

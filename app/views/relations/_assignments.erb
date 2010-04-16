@@ -17,7 +17,8 @@
         <%= render :partial => assignment %>
       <% else %>
         <div class="controls">
-          <%= link_to_function(button(:promote), "$.dialog({ajax: '#{ escape_javascript(new_character_assignment_url(current_character, :role => role, :canvas => false))}'})",
+          <%= link_to_function(button(:promote),
+                "$.dialog({ajax: '#{ escape_javascript(new_character_assignment_path(current_character, :role => role))}'})",
                 :class => "promote button"
               ) %>
         </div>

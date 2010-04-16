@@ -8,7 +8,7 @@
 
         <div class="controls">
           <%= link_to_remote(button(:respond),
-                :url    => respond_fight_url(fight, :canvas => false),
+                :url    => respond_fight_path(fight),
                 :update => :result,
                 :html   => {
                   :id     => dom_id(fight, :respond),

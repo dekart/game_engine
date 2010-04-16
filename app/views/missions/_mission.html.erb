@@ -9,7 +9,7 @@
     
     <div class="controls">
       <%= link_to_remote(button(:fulfill),
-            :url    => fulfill_mission_url(mission, :canvas => false),
+            :url    => fulfill_mission_path(mission),
             :update => :result,
             :html   => {:class => "fulfill button"}
           ) unless !mission.repeatable? && current_character.missions.completed?(mission) %>

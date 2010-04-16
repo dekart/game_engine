@@ -18,7 +18,7 @@
       </td>
       <td class="controls">
         <%= link_to_remote(button(:attack),
-              :url    => fights_url(:victim_id => victim.id, :canvas => false),
+              :url    => fights_path(:victim_id => victim.id),
               :update => :result,
               :html   => {:class => "button attack"}
             ) %>

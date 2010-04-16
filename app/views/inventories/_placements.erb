@@ -4,7 +4,7 @@
       <% character.equipment.inventories(placement).each do |inventory| %>
         <% content_tag :div, :class => :inventory do %>
           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
-                :url    => unequip_inventory_url(inventory, :placement => placement, :canvas => false),
+                :url    => unequip_inventory_path(inventory, :placement => placement),
                 :update => :result,
                 :html   => {:class => :remove, :title => t(".remove")}
               ) if character == current_character %>
@@ -21,7 +21,7 @@
     <% character.equipment.inventories(:additional).each do |inventory| %>
       <% content_tag :div, :class => :inventory do %>
         <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
-              :url    => unequip_inventory_url(inventory, :placement => :additional, :canvas => false),
+              :url    => unequip_inventory_path(inventory, :placement => :additional),
               :update => :result,
               :html   => {:class => :remove, :title => t(".remove")}
             ) if character == current_character %>

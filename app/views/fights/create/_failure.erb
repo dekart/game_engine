@@ -1,6 +1,6 @@
 <div class="buttons">
   <%= link_to_remote(button(:attack_again),
-        :url    => fight.cause ? respond_fight_url(fight.cause, :canvas => false) : fights_url(:victim_id => @victim, :canvas => false),
+        :url    => fight.cause ? respond_fight_path(fight.cause) : fights_path(:victim_id => @victim),
         :update => :result,
         :html   => {:class => "attack_again button"}
       ) if current_character.stamina > 0 %>

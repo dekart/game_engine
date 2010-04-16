@@ -18,13 +18,13 @@ module CharactersHelper
   def character_name_link(character_or_user, link_options = {}, name_options = {})
     character = character_for(character_or_user)
 
-    link_to(character_name(character, name_options), character_url(character, :canvas => true), link_options)
+    link_to(character_name(character, name_options), character_url(character), link_options)
   end
 
   def character_picture_link(character_or_user, link_options = {}, picture_options = {})
     character = character_for(character_or_user)
 
-    link_to(character_picture(character, picture_options), character_url(character, :canvas => true), link_options)
+    link_to(character_picture(character, picture_options), character_url(character), link_options)
   end
 
   def character_level_up_block
@@ -35,7 +35,7 @@ module CharactersHelper
     options = options.reverse_merge(
       :send_notification_uid  => character.user.facebook_id,
       :showform               => true,
-      :callbackurl            => wall_character_url(character, :canvas => false),
+      :callbackurl            => wall_character_url(character),
       :width                  => 700
     )
 

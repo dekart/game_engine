@@ -42,7 +42,7 @@
             <%= amount_select_tag %>
         
             <%= link_to_remote(button(:sell, :price => property.sell_price),
-                  :url    => property_path(type, :canvas => false),
+                  :url    => property_path(type),
                   :with   => "$(this).parent('form').serialize()",
                   :method => :delete,
                   :update => :result,

@@ -34,7 +34,7 @@
             <%= amount_select_tag %>
 
             <%= link_to_remote(button(:buy),
-                  :url    => inventories_url(:item_id => item.id, :canvas => false),
+                  :url    => inventories_path(:item_id => item.id),
                   :update => :result,
                   :with   => "$(this).parent('form').serialize()",
                   :html   => {:class => "buy button"}

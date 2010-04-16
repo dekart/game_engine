@@ -16,9 +16,9 @@
           ) if current_character.points > 0 %>
     <% else %>
       <%= link_to_remote(button(:attack),
-            :url => fights_url(:victim_id => @character, :canvas => false),
+            :url    => fights_path(:victim_id => @character),
             :update => :result,
-            :html => {:class => "attack button"}
+            :html   => {:class => "attack button"}
           ) if current_character.can_attack?(@character) %>
     <% end %>
   </div>
