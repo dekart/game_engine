@@ -5,7 +5,7 @@ namespace :app do
       puts "Moving configuration to settings"
 
       if config = ActiveRecord::Base.connection.select_all("SELECT * FROM configurations").first
-        config.except("id").each do |key, value|
+        config.except("id", "created_at", "updated_at").each do |key, value|
           Setting[key] = value
         end
 
