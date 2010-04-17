@@ -184,6 +184,9 @@ $(function(){
     FB.CanvasClient.set_timerInterval(1)
     FB.CanvasClient.startTimerToSizeToContent();
 
+    // This is beta feature, we should be sure that it won't break anything
+    try{ FB.CanvasClient.syncUrl(); } catch(e){}
+
     // Manually set canvas height to be sure that it will fit to content size
     FB.CanvasClient.setCanvasHeight($('body').outerHeight());
 
