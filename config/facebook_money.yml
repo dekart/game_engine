@@ -12,6 +12,10 @@ development:
 #  pid: 2579
 #  secret: thisisnotyourkey
 
+#  provider: offerpal
+#  application_id: 4d41d788fd8f3f7fb38935bb7db21d42
+#  secret: 1940032184011318
+
 production:
   provider: super_rewards
   key: ezimgo.263278932549
