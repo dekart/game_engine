@@ -36,7 +36,8 @@ module CharactersHelper
       :send_notification_uid  => character.user.facebook_id,
       :showform               => true,
       :callbackurl            => wall_character_url(character),
-      :width                  => 700
+      :width                  => 700,
+      :css                    => skin_path
     )
 
     fb_comments(

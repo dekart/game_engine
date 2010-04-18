@@ -136,4 +136,8 @@ module ApplicationHelper
       content_tag(:div, capture(&block), :id => "#{type}_result", :class => :result_content)
     )
   end
+
+  def skin_path
+    stylesheet_path(current_skin ? "skins/#{current_skin.name.parameterize}" : "application")
+  end
 end
