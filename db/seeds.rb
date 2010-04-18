@@ -1,7 +1,5 @@
 facebook_config = YAML.load_file(Rails.root.join("config", "facebooker.yml"))[Rails.env]
 
-puts "Seeding settings..."
-
 require File.expand_path("../seeds/settings", __FILE__)
 
 puts "Seeding assets..."

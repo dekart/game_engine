@@ -1,4 +1,4 @@
-puts "Seeding settings"
+puts "Seeding settings..."
 
 Setting[:assignment_attack_bonus] = 20
 Setting[:assignment_defence_bonus] = 20
