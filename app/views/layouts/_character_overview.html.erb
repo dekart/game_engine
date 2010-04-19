@@ -1,41 +1,41 @@
 <table id="co" cellspacing="0" cellpadding="0">
   <tr>
     <td class="basic_money">
-      <b><%= Character.human_attribute_name("basic_money") %></b>
-      <span class="timer"></span>
+      <div class="timer"></div>
+      <div class="label"><%= Character.human_attribute_name("basic_money") %></div>
       <div class="value"></div>
 
       <%= link_to(t(".bank"), new_bank_operation_path, :class => :bank) %>
     </td>
     <td class="vip_money">
-      <b><%= Character.human_attribute_name("vip_money") %></b>
+      <div class="label"><%= Character.human_attribute_name("vip_money") %></div>
       <div class="value"></div>
 
       <%= link_to(t(".premium"), premium_path, :class => :premium) %>
     </td>
     <td class="health">
-      <b><%= Character.human_attribute_name("health") %></b>
-      <span class="timer"></span>
+      <div class="timer"></div>
+      <div class="label"><%= Character.human_attribute_name("health") %></div>
       <div class="value"></div>
     </td>
     <td class="energy">
-      <b><%= Character.human_attribute_name("energy") %></b>
-      <span class="timer"></span>
+      <div class="timer"></div>
+      <div class="label"><%= Character.human_attribute_name("energy") %></div>
       <div class="value"></div>
     </td>
     <td class="stamina">
-      <b><%= Character.human_attribute_name("stamina") %></b>
-      <span class="timer"></span>
+      <div class="timer"></div>
+      <div class="label"><%= Character.human_attribute_name("stamina") %></div>
       <div class="value"></div>
     </td>
     <td class="experience">
-      <b><%= Character.human_attribute_name("experience") %></b>
+      <div class="label"><%= Character.human_attribute_name("experience") %></div>
       <div class="value"></div>
       
       <%= percentage_bar(0) %>
     </td>
     <td class="level">
-      <b><%= Character.human_attribute_name("level") %></b>
+      <div class="label"><%= Character.human_attribute_name("level") %></div>
       <div class="value"></div>
 
       <%= link_to(t(".upgrade"), upgrade_character_path(:current), :class => :upgrade, :style => "display:none;") %>
