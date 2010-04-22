@@ -73,6 +73,22 @@ namespace :deploy do
     put(config, "#{shared_path}/apache_vhost.conf")
   end
 
+  desc "Updates nginx virtual host config"
+  task :update_nginx_config do
+    facebook_config = YAML.load_file(File.join(File.dirname(__FILE__), "facebooker.yml"))
+
+    config = <<-CODE
+      server {
+        listen 80;
+        server_name #{URI.parse(facebook_config["production"]["callback_url"]).host};
+        root #{current_path}/public;
+        passenger_enabled on;
+      }
+    CODE
+
+    put(config, "#{shared_path}/nginx.conf")
+  end
+
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :app do
