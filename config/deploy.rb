@@ -65,7 +65,7 @@ namespace :deploy do
 
     config = <<-CODE
       <VirtualHost *>
-        ServerName #{URI.parse(facebook_config["production"]["callback_url"]).host}
+        ServerName #{URI.parse(facebook_config[rails_env]["callback_url"]).host}
         DocumentRoot #{current_path}/public
       </VirtualHost>
     CODE
@@ -80,7 +80,7 @@ namespace :deploy do
     config = <<-CODE
       server {
         listen 80;
-        server_name #{URI.parse(facebook_config["production"]["callback_url"]).host};
+        server_name #{URI.parse(facebook_config[rails_env]["callback_url"]).host};
         root #{current_path}/public;
         passenger_enabled on;
       }
@@ -92,7 +92,9 @@ namespace :deploy do
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :app do
-      run "cd #{current_path}; rake backup:db"
+      db_config = YAML.load_file(File.expand_path("../database.yml", __FILE__))[rails_env]
+
+      run "mysqldump -u #{ db_config["username"] } --password='#{ db_config["password"] }' #{db_config["database"]} > #{shared_path}/db_dump.#{Time.now.to_i}.sql"
     end
   end
 
