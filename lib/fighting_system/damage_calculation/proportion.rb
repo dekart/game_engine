@@ -1,39 +1,14 @@
 module FightingSystem
-  module PlayerVsPlayer
-    module LevelBased
-      LEVEL_DIFF = 3
-      CHANCE = 10 # %
-      
-      def self.calculate(attacker, victim)
-        if attacker.level - victim.level > LEVEL_DIFF
-          rand(1000) > CHANCE * 10
-        elsif victim.level - attacker.level > LEVEL_DIFF
-          rand(1000) < CHANCE * 10
-        else
-          attack_points   = attacker.attack_points
-          defence_points  = victim.defence_points
-
-          attack_bonus    = 1.0
-          defence_bonus   = 1.0
-
-          attack  = attack_points * attack_bonus * 50
-          defence = defence_points * defence_bonus * 50
-
-          (rand((attack + defence).to_i) >= defence)
-        end
-      end
-
-=begin
-      def self.calculate(attacker, victim)
+  module DamageCalculation
+    module Proportion
+      def self.calculate(attacker, victim, attacker_won)
         attack_points   = attacker.attack_points
         defence_points  = victim.defence_points
         attack_bonus    = 1.0
         defence_bonus   = 1.0
 
-        attack = attack_points * attack_bonus * 50
+        attack  = attack_points * attack_bonus * 50
         defence = defence_points * defence_bonus * 50
-
-        attacker_won = (rand((attack + defence).to_i) >= defence)
 
         if attacker_won
           victim_damage_reduce = 0.01 * victim.fight_damage_reduce
@@ -51,9 +26,8 @@ module FightingSystem
           )
         end
 
-        [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
+        [(attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
       end
-=end
     end
   end
 end

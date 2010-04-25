@@ -16,8 +16,9 @@ class Fight < ActiveRecord::Base
   before_create :calculate_fight
   after_create  :save_payout, :update_victim_dashboard
 
-  cattr_accessor :fighting_system
+  cattr_accessor :fighting_system, :damage_system
   @@fighting_system = FightingSystem::PlayerVsPlayer::Proportion
+  @@damage_system = FightingSystem::DamageCalculation::Proportion
 
   def attacker_won?
     self.winner == self.attacker
@@ -66,7 +67,9 @@ class Fight < ActiveRecord::Base
   end
 
   def calculate_fight
-    won, victim_damage, attacker_damage = self.class.fighting_system.calculate(attacker, victim)
+    won = self.class.fighting_system.calculate(attacker, victim)
+
+    victim_damage, attacker_damage = self.class.damage_system.calculate(attacker, victim, won)
 
     self.winner = won ? attacker : victim
 
