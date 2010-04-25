@@ -223,6 +223,10 @@ class Character < ActiveRecord::Base
     inventories.equipped.all.sum{|i| i.equipped * i.defence }
   end
 
+  def fight_damage_reduce
+    assignments.effect_value(:fight_damage)
+  end
+
   def weak?
     self.hp < self.weakness_minimum
   end
