@@ -185,3 +185,14 @@ recruit.missions.create!(
   :money_max      => 65,
   :title          => "Baron Assistant"
 )
+
+puts "Seeding boss..."
+
+adventurer.bosses.create!(
+  :name       => "Orc Leader",
+  :health     => 150,
+  :attack     => 15,
+  :defence    => 12,
+  :ep_cost    => 20,
+  :experience => 50
+)
