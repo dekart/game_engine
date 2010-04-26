@@ -7,7 +7,7 @@
         <div class="description"><%= type.description %></div>
         <div class="owned">
           <%= raw t(".owned",
-                :amount => content_tag(:span, property ? property.amount : 0, :class => :value)
+                :amount => content_tag(:span, property ? property.level : 0, :class => :value)
               ) %>
         </div>
       </td>
@@ -20,35 +20,26 @@
         <h3><%= PropertyType.human_attribute_name("price") %></h3>
 
         <%= attribute_requirement(:basic_money,
-              number_to_currency(property ? type.inflated_price(property.amount + 1) : type.basic_price)
+              number_to_currency(property ? type.inflated_price(property.level + 1) : type.basic_price)
             ) if type.basic_price > 0 %>
 
         <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
       </td>
       <td class="controls">
-        <% form_tag "", :class => :clearfix do %>
-          <%= amount_select_tag %>
-        
+        <% if property %>
+          <%= link_to_remote(button(:sell, :price => property.sell_price),
+                :url    => property_path(type),
+                :with   => "$(this).parent('form').serialize()",
+                :method => :delete,
+                :update => :result,
+                :html   => {:class => "sell button"}
+              ) %>
+        <% else %>
           <%= link_to_remote(button(:buy),
                 :url    => properties_path(:property_type_id => type.id),
-                :with   => "$(this).parent('form').serialize()",
                 :update => :result,
                 :html   => {:class => "buy button"}
               ) %>
-        <% end %>
-
-        <% if property %>
-          <% form_tag "", :class => :clearfix do %>
-            <%= amount_select_tag %>
-        
-            <%= link_to_remote(button(:sell, :price => property.sell_price),
-                  :url    => property_path(type),
-                  :with   => "$(this).parent('form').serialize()",
-                  :method => :delete,
-                  :update => :result,
-                  :html   => {:class => "sell button"}
-                ) %>
-          <% end %>
         <% end %>
       </td>
     <% end %>

@@ -37,7 +37,8 @@ en:
         rating: "Rating"
         name: "Character Name"
       property_type:
-        inflation: "Price increase per purchase"
+        upgrade_cost_increase: "Upgrade cost increase per level"
+        collect_period: "Income collection period, hours"
       user:
         show_next_steps: "Show 'Next Steps' block"
         show_fan_specials: "Show 'Fan Specials' block"

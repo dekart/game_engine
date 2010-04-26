@@ -111,7 +111,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :invitations, :member => {:accept => :any, :ignore => :any}
   map.resources :relations
   map.resources :bank_operations
-  map.resources :properties
+  map.resources :properties, :only => [:index, :create], :member => {:upgrade => :put}
 
   map.resources :promotions, :only => :show
 

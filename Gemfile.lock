@@ -10,6 +10,10 @@ dependencies:
     version: ~> 2.3.5
     require: []
 
+  ZenTest: 
+    group: 
+    - :test
+    version: ">= 0"
   mysql: 
     group: 
     - :default
@@ -36,6 +40,18 @@ dependencies:
     group: 
     - :default
     version: = 1.8.4
+  rspec: 
+    group: 
+    - :test
+    version: ">= 0"
+  rspec-rails: 
+    group: 
+    - :test
+    version: ">= 0"
+  factory_girl: 
+    group: 
+    - :test
+    version: ">= 0"
   erubis: 
     group: 
     - :default
@@ -59,20 +75,24 @@ dependencies:
     require: 
     - redcloth
 specs: 
-- RedCloth: 
-    version: 4.2.3
 - activesupport: 
     version: 2.3.5
+- RedCloth: 
+    version: 4.2.3
 - json_pure: 
     version: 1.2.0
 - will_paginate: 
     version: 2.3.11
-- delayed_job: 
-    version: 1.8.4
+- rspec: 
+    version: 1.3.0
+- rspec-rails: 
+    version: 1.3.2
 - abstract: 
     version: 1.0.0
 - erubis: 
     version: 2.6.5
+- delayed_job: 
+    version: 1.8.4
 - jrails: 
     version: 0.6.0
 - mysql: 
@@ -91,17 +111,21 @@ specs:
     version: 2.2.20
 - rake: 
     version: 0.8.7
-- system_timer: 
-    version: "1.0"
 - activerecord: 
     version: 2.3.5
 - paperclip: 
     version: 2.3.1.1
+- factory_girl: 
+    version: 1.2.4
+- system_timer: 
+    version: "1.0"
+- ZenTest: 
+    version: 4.3.1
 - activeresource: 
     version: 2.3.5
 - rails: 
     version: 2.3.5
-hash: cdee1c1743a32c438351b05b4aa9e436f57a0804
+hash: 5fb9e4288eba97bfec04395e60529fd9bf35adc4
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

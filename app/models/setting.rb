@@ -54,7 +54,15 @@ class Setting < ActiveRecord::Base
     end
 
     def []=(key, value)
-      create(:alias => key.to_s, :value => value)
+      if value
+        create(:alias => key.to_s, :value => value)
+      else
+        find_by_alias(key.to_s).try(:destroy)
+      end
+    end
+
+    def [](key)
+      find_by_alias(key.to_s).try(:value)
     end
   end
 end

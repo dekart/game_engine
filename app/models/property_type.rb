@@ -47,7 +47,7 @@ class PropertyType < ActiveRecord::Base
   end
 
   validates_presence_of :name, :availability, :basic_price, :income
-  validates_numericality_of :basic_price, :vip_price, :income, :purchase_limit, :allow_nil => true
+  validates_numericality_of :basic_price, :vip_price, :income, :upgrade_limit, :allow_nil => true
 
   def basic_price
     self[:basic_price].to_i
@@ -57,15 +57,15 @@ class PropertyType < ActiveRecord::Base
     self[:vip_price].to_i
   end
 
-  def inflated_price(amount)
-    inflation ? basic_price + inflation * (amount - 1) : basic_price
-  end
-
   def availability
     self[:availability].to_sym
   end
 
   def plural_name
     self[:plural_name].blank? ? self.name.pluralize : self[:plural_name]
+  end
+
+  def upgrade_price(level)
+    upgrade_cost_increase ? basic_price + upgrade_cost_increase * (level - 1) : basic_price
   end
 end
