@@ -20,13 +20,7 @@ class InvitationsController < ApplicationController
 
     @character = Character.find(@id)
 
-    if @secret != @character.secret
-      unless friend?(@character.user)
-        flash[:error] = t("invitations.show.messages.only_friends")
-
-        redirect_to landing_url
-      end
-    elsif @character == current_character
+    if @secret != @character.secret or @character == current_character
       redirect_to landing_url
     elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("invitations.show.messages.already_joined")
