@@ -393,7 +393,7 @@ class Character < ActiveRecord::Base
       level <= Setting.i(:fight_with_invite_max_level)
   end
 
-  def secret(length = 5)
+  def secret(length = 6)
     Digest::MD5.hexdigest("#{self.id}-#{self.created_at}")[0, length]
   end
 
