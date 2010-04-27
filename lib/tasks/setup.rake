@@ -21,5 +21,14 @@ namespace :app do
         :iframe_enable_util => 1
       )
     end
+
+    desc "Re-import development assets. All existing assets will be destroyed!"
+    task :reimport_assets => :environment do
+      Asset.destroy_all
+
+      require Rails.root.join("db", "seeds", "assets")
+
+      Rake::Task["app:setup:stylesheets"].execute
+    end
   end
 end
