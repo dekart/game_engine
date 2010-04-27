@@ -18,7 +18,7 @@ development:
   pretty_errors: false
   set_asset_host_to_callback_url: true
   tunnel:
-    public_host_username: dekart
+    public_host_username: fb
     public_host: itvektor.ru
     public_port: 3300
     local_port: 3300
