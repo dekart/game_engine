@@ -24,6 +24,8 @@ en:
         energy: "Energy"
         ep: "Energy Points"
         experience: "Experience"
+        stamina: "Stamina"
+        sp: "Stamina Points"
         basic_money: "Money"
         vip_money: "Gems"
         fights_won: "Fights Won"
