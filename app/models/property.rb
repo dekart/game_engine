@@ -30,6 +30,10 @@ class Property < ActiveRecord::Base
     collected_at < Time.now - collect_period.hours
   end
 
+  def time_to_next_collection
+    collectable? ? 0 : (collected_at + collect_period.hours).to_i - Time.now.to_i
+  end
+
   def buy!
     @validate_money = true
 

@@ -57,11 +57,12 @@ var Timer = {
     var minutes = Math.floor((value - hours * 3600) / 60);
     var seconds = value - hours * 3600 - minutes * 60;
 
-    var result;
-    if(hours > 0){
-      result = hours + ":" + minutes;
+    var result = hours > 0 ? hours + ":" : "";
+
+    if(minutes < 10){
+      result = result + "0" + minutes;
     }else{
-      result = minutes
+      result = result + minutes;
     }
 
     if(seconds < 10){
@@ -94,7 +95,7 @@ var Timer = {
       this.timers[id].running = false;
 
       if(this.timers[id].callback){
-        this.timers[id].callback();
+        this.timers[id].callback(element);
       }
     }
   },

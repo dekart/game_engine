@@ -580,6 +580,7 @@ en:
     list:
       income_label: "per hour"
       level: "Level: {{amount}}"
+      collect_in: "Collect in: {{value}}"
       buttons:
         buy: "Buy"
         upgrade: "Upgrade"

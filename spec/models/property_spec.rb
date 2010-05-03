@@ -41,7 +41,7 @@ describe Property do
     @property.upgrade_price.should == 123
   end
 
-  describe "when asking for maximum upgrade level" do
+  describe "when getting maximum upgrade level" do
     it "should return zero when no value specified in property type and settings" do
       Setting.should_receive(:i).and_return 0
 
@@ -87,6 +87,20 @@ describe Property do
           currency  => Character.human_attribute_name(currency)
         )
       )
+    end
+  end
+
+  describe "when getting time to next collection" do
+    it "should return time in seconds if property is not collectible yet" do
+      @property.collected_at = 50.minutes.ago
+
+      @property.time_to_next_collection.should == 10.minutes
+    end
+    
+    it "should return 0 if property is collectible" do
+      @property.collected_at = 61.minutes.ago
+      
+      @property.time_to_next_collection.should == 0
     end
   end
 

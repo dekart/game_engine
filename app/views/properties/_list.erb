@@ -10,6 +10,21 @@
                 :amount => content_tag(:span, property ? property.level : 0, :class => :value)
               ) %>
         </div>
+
+        <% if property %>
+          <div class="timer" style="<%= "display:none" if property.collectable? %>">
+            <%= raw t(".collect_in",
+                  :value => content_tag(:span, "", :id => dom_id(property, :timer), :class => :value)
+                ) %>
+          </div>
+
+          <% dom_ready do %>
+            Timer.start('#<%= dom_id(property, :timer) %>', <%= property.time_to_next_collection %>, function(element){
+              $(element).parent('.timer').hide();
+              $(element).parents('.property_type').find('.button.collect').show();
+            });
+          <% end %>
+        <% end %>
       </td>
       <td class="payouts">
         <h3><%= PropertyType.human_attribute_name("income") %></h3>
@@ -31,8 +46,11 @@
                 :url    => collect_money_property_path(property),
                 :method => :put,
                 :update => :result,
-                :html   => {:class => "upgrade button"}
-              ) if property.collectable? %>
+                :html   => {
+                  :class => "collect button",
+                  :style => ("display: none" unless property.collectable?)
+                }
+              ) %>
 
           <%= link_to_remote(button(:upgrade),
                 :url    => upgrade_property_path(property),
