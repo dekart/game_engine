@@ -34,9 +34,6 @@ var Character = {
       $("#co .level .upgrade").hide();
     }
     
-    if(a.character.property_income > 0){
-      Timer.start('#co .basic_money .timer', a.character.time_to_basic_money_restore, this.update_from_remote);
-    }
     Timer.start('#co .health .timer', a.character.time_to_hp_restore, this.update_from_remote);
     Timer.start('#co .energy .timer', a.character.time_to_ep_restore, this.update_from_remote);
     Timer.start('#co .stamina .timer', a.character.time_to_sp_restore, this.update_from_remote);

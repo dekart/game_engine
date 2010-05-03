@@ -15,6 +15,10 @@ class MakePropertiesUpgradeable < ActiveRecord::Migration
       t.integer :collect_period, :default => 1
     end
 
+    change_table :characters do |t|
+      t.remove :property_income
+    end
+
     Setting[:property_upgrade_limit] = Setting[:property_maximum_amount]
 
     Setting[:property_maximum_amount] = nil
@@ -36,6 +40,10 @@ class MakePropertiesUpgradeable < ActiveRecord::Migration
       t.rename :upgrade_cost_increase, :inflation
 
       t.remove :collect_period
+    end
+
+    change_table :characters do |t|
+      t.integer :property_income, :default => 0
     end
 
     Setting[:property_maximum_amount] = Setting[:property_upgrade_limit]

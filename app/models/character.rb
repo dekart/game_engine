@@ -127,10 +127,6 @@ class Character < ActiveRecord::Base
     :limit          => :stamina,
     :restore_period => Setting.i(:character_stamina_restore_period).seconds,
     :restore_bonus  => :stamina_restore_bonus
-  restorable_attribute :basic_money, 
-    :restore_period => Setting.i(:character_income_calculation_period).minutes,
-    :restore_rate   => :property_income,
-    :restore_bonus  => :income_period_bonus
 
   before_create :apply_character_type_defaults
   before_save   :update_level_and_points
@@ -259,7 +255,7 @@ class Character < ActiveRecord::Base
     to_json(
       :only     => [
         :basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp,
-        :stamina, :sp, :points, :property_income
+        :stamina, :sp, :points
       ],
       :methods  => [
         :formatted_basic_money,
@@ -292,18 +288,6 @@ class Character < ActiveRecord::Base
 
   def rank_for_mission(mission)
     self.ranks.find_or_initialize_by_mission_id(mission.id)
-  end
-
-  def recalculate_income
-    self.reload
-    
-    self.basic_money = self.basic_money
-
-    self.property_income = self.properties.inject(0) do |result, property|
-      result += property.total_income
-    end
-
-    self.save
   end
 
   def exchange_money!
