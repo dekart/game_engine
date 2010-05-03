@@ -16,28 +16,38 @@
     width: 100%
 
   td
-    padding: 10px 10px 10px 0
-    border-bottom = !property_list_item_border
+    width: 33%
+    padding: 10px
+    text-align: center
+    border = !property_list_item_border
 
   .picture
-    width: 130px
+    margin: 10px 0
 
-  .info .name
-    font-size: 15px
-    margin-bottom: 5px
+  .requirements, .payouts
+    text-align: left
+
+  .payout, .requirement
+    clear: left
+
+  .timer
     font-weight: bold
+    margin-bottom: 10px
+
+    .value
+      font-weight: normal
 
   .controls
-    text-align: right
-
-    select
-      margin: 5px
+    float: right
 
     .buy
-      +button(!property_list_buy_icon)
+      +button(!property_list_buy_icon, !property_list_button_width)
 
-    .sell
-      +button(!property_list_sell_icon)
+    .upgrade
+      +button(!property_list_upgrade_icon, !property_list_button_width)
+
+    .collect
+      +button(!property_list_collect_icon, !property_list_button_width)
 
 
 #property_result

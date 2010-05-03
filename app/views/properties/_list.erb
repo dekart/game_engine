@@ -1,14 +1,54 @@
-<table cellspacing="0" cellpadding="0">
-  <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
-    <% content_tag_for(:tr, type) do %>
-      <td class="picture"><%= property_image(type, :small) %></td>
-      <td class="info">
-        <div class="name"><%= type.name %></div>
+<table cellspacing="3" cellpadding="0">
+  <tr>
+    <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
+      <% content_tag_for(:td, type) do %>
+        <h2><%= property ? t(".name_with_level", :name => type.name, :level => property.level) : type.name %></h2>
+
+        <div class="picture"><%= property_image(type, :medium) %></div>
+
         <div class="description"><%= type.description %></div>
-        <div class="level">
-          <%= raw t(".level",
-                :amount => content_tag(:span, property ? property.level : 0, :class => :value)
-              ) %>
+
+        <div class="controls">
+          <% if property %>
+            <%= link_to_remote(button(:collect),
+                  :url    => collect_money_property_path(property),
+                  :method => :put,
+                  :update => :result,
+                  :html   => {
+                    :class => "collect button",
+                    :style => ("display: none" unless property.collectable?)
+                  }
+                ) %>
+
+            <%= link_to_remote(button(:upgrade),
+                  :url    => upgrade_property_path(property),
+                  :method => :put,
+                  :update => :result,
+                  :html   => {:class => "upgrade button"}
+                ) %>
+          <% else %>
+            <%= link_to_remote(button(:buy),
+                  :url    => properties_path(:property_type_id => type.id),
+                  :update => :result,
+                  :html   => {:class => "buy button"}
+                ) %>
+          <% end %>
+        </div>
+
+        <div class="payouts">
+          <h3><%= PropertyType.human_attribute_name("income") %></h3>
+
+          <%= payout(:basic_money, "+%s" % number_to_currency(property ? property.total_income : type.income)) %>
+        </div>
+
+        <div class="requirements">
+          <h3><%= PropertyType.human_attribute_name(property ? "upgrade_price" : "price") %></h3>
+
+          <%= attribute_requirement(:basic_money,
+                number_to_currency(property ? property.upgrade_price : type.basic_price)
+              ) if type.basic_price > 0 %>
+
+          <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
         </div>
 
         <% if property %>
@@ -19,53 +59,12 @@
           </div>
 
           <% dom_ready do %>
-            Timer.start('#<%= dom_id(property, :timer) %>', <%= property.time_to_next_collection %>, function(element){
-              $(element).parent('.timer').hide();
-              $(element).parents('.property_type').find('.button.collect').show();
-            });
+            Timer.start('#<%= dom_id(property, :timer) %>', <%= property.time_to_next_collection %>, PropertyList.enableCollection);
           <% end %>
         <% end %>
-      </td>
-      <td class="payouts">
-        <h3><%= PropertyType.human_attribute_name("income") %></h3>
+      <% end %>
         
-        <%= payout(:basic_money, "+%s" % number_to_currency(property ? property.total_income : type.income), :label => t(".income_label")) %>
-      </td>
-      <td class="requirements">
-        <h3><%= PropertyType.human_attribute_name("price") %></h3>
-
-        <%= attribute_requirement(:basic_money,
-              number_to_currency(property ? property.upgrade_price : type.basic_price)
-            ) if type.basic_price > 0 %>
-
-        <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
-      </td>
-      <td class="controls">
-        <% if property %>
-          <%= link_to_remote(button(:collect),
-                :url    => collect_money_property_path(property),
-                :method => :put,
-                :update => :result,
-                :html   => {
-                  :class => "collect button",
-                  :style => ("display: none" unless property.collectable?)
-                }
-              ) %>
-
-          <%= link_to_remote(button(:upgrade),
-                :url    => upgrade_property_path(property),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => "upgrade button"}
-              ) %>
-        <% else %>
-          <%= link_to_remote(button(:buy),
-                :url    => properties_path(:property_type_id => type.id),
-                :update => :result,
-                :html   => {:class => "buy button"}
-              ) %>
-        <% end %>
-      </td>
+      <%= raw cycle("", "</tr><tr>") %>
     <% end %>
-  <% end %>
+  </tr>
 </table>

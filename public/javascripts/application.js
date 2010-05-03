@@ -49,6 +49,13 @@ var Character = {
   }
 };
 
+var PropertyList = {
+  enableCollection: function(timer_element){
+    $(timer_element).parent('.timer').hide();
+    $(timer_element).parents('.property_type').find('.button.collect').show();
+  }
+}
+
 var Timer = {
   timers: {},
 

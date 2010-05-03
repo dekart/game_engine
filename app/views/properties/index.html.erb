@@ -2,14 +2,6 @@
 
 <div class="note"><%= t(".note") %></div>
 
-<div id="property_income">
-  <b><%= t(".income.label") %></b>
-  
-  <span class="value" id="property_income_value">
-    <%= number_to_currency(current_character.property_income) %>
-  </span>
-</div>
-
 <div id="property_list">
   <%= render "list", :properties => @properties %>
 </div>

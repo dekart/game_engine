@@ -574,12 +574,9 @@ en:
         title: "You spent:"
     index:
       title: "My Properties"
-      income:
-        label: "Income:"
-      note: "Properties bring you hourly income."
+      note: "Properties bring you income, it's a great way to make additional money. Some properties take less time to pay out than others, so check back as often as possible to collect the take and maximize your income."
     list:
-      income_label: "per hour"
-      level: "Level: {{amount}}"
+      name_with_level: "{{name}} (Level {{level}})"
       collect_in: "Collect in: {{value}}"
       buttons:
         buy: "Buy"
