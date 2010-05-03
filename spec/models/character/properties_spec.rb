@@ -5,6 +5,9 @@ describe Character do
     @property_type = Factory(:property_type)
     
     @character = Factory(:character)
+
+    @property1 = Factory(:property)
+    @property2 = Factory(:property)
   end
 
   describe "when giving a property" do
@@ -61,9 +64,6 @@ describe Character do
 
   describe "when collecting money from properties" do
     before :each do
-      @property1 = Factory(:property)
-      @property2 = Factory(:property)
-
       # Make property 2 collectable
       @property2.update_attribute(:collected_at, 61.minutes.ago)
 
@@ -85,6 +85,24 @@ describe Character do
       @property2.update_attribute(:collected_at, Time.now)
 
       @character.properties.collect_money!.should be_false
+    end
+  end
+
+  describe "when getting a list of collectable properties" do
+    before :each do
+      @character.properties = [@property1, @property2]
+    end
+
+    it "should return empty array if there is no collectable properties" do
+      @character.properties.collectable.size.should == 0
+    end
+
+    it "should return only collectable properties" do
+      # Make property 2 collectable
+      @property2.update_attribute(:collected_at, 61.minutes.ago)
+
+      @character.properties.collectable.size.should == 1
+      @character.properties.collectable.should include(@property2)
     end
   end
 end

@@ -27,5 +27,17 @@ class Character
 
       result > 0 ? result : false
     end
+
+    def collectable
+      unless @collectable
+        @collectable = []
+        
+        each do |property|
+          @collectable << property if property.collectable?
+        end
+      end
+
+      @collectable
+    end
   end
 end

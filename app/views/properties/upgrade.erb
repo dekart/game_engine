@@ -22,7 +22,6 @@
 
 <% dom_ready do %>
   $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
-  $('#property_income_value').text('<%= number_to_currency(current_character.property_income) %>');
 
   $(document).trigger('result.received');
 <% end %>

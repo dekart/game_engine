@@ -1,3 +1,16 @@
+<div id="property_collect_all" class="note clearfix" style="<%= "display:none" if properties.collectable.empty? %>">
+  <div class="controls">
+    <%= link_to_remote(button(:collect_all),
+          :url    => collect_money_properties_path,
+          :method => :put,
+          :update => :result,
+          :html   => {:class => "button collect_all"}
+        ) %>
+  </div>
+
+  <%= raw t(".collect_all", :amount => content_tag(:strong, properties.collectable.size, :class => :value)) %>
+</div>
+
 <table cellspacing="3" cellpadding="0">
   <tr>
     <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>

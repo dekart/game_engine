@@ -53,6 +53,11 @@ var PropertyList = {
   enableCollection: function(timer_element){
     $(timer_element).parent('.timer').hide();
     $(timer_element).parents('.property_type').find('.button.collect').show();
+
+    var collectables = $('#property_collect_all').find('.value');
+
+    collectables.text(parseInt(collectables.text()) + 1);
+    collectables.parent().show();
   }
 }
 
