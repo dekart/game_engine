@@ -5,6 +5,10 @@ describe PropertyType do
     @property_type = Factory(:property_type)
   end
 
+  it "should have 1 hour collection period by default" do
+    @property_type.collect_period.should == 1 # hour
+  end
+
   describe "when calculating upgrade price" do
     it "should return basic price plus cost increase for each additional level" do
       @property_type.upgrade_price(2).should == 1100 # 1000 + 100

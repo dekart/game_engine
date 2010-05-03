@@ -18,6 +18,8 @@ class MakePropertiesUpgradeable < ActiveRecord::Migration
     Setting[:property_upgrade_limit] = Setting[:property_maximum_amount]
 
     Setting[:property_maximum_amount] = nil
+
+    Property.update_all ["collected_at = ?", Time.now - 1.year]
   end
 
   def self.down

@@ -32,7 +32,10 @@ Factory.define :property_type do |t|
   t.upgrade_cost_increase 100
 
   t.income 10
-  t.collect_period 5
 
   t.state "visible"
+end
+
+Factory.define :property do |t|
+  t.association :property_type, :factory => :property_type
 end

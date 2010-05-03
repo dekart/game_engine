@@ -5,8 +5,8 @@
       <td class="info">
         <div class="name"><%= type.name %></div>
         <div class="description"><%= type.description %></div>
-        <div class="owned">
-          <%= raw t(".owned",
+        <div class="level">
+          <%= raw t(".level",
                 :amount => content_tag(:span, property ? property.level : 0, :class => :value)
               ) %>
         </div>
@@ -14,25 +14,31 @@
       <td class="payouts">
         <h3><%= PropertyType.human_attribute_name("income") %></h3>
         
-        <%= payout(:basic_money, "+%s" % number_to_currency(type.income), :label => t(".income_label")) %>
+        <%= payout(:basic_money, "+%s" % number_to_currency(property ? property.total_income : type.income), :label => t(".income_label")) %>
       </td>
       <td class="requirements">
         <h3><%= PropertyType.human_attribute_name("price") %></h3>
 
         <%= attribute_requirement(:basic_money,
-              number_to_currency(property ? type.inflated_price(property.level + 1) : type.basic_price)
+              number_to_currency(property ? property.upgrade_price : type.basic_price)
             ) if type.basic_price > 0 %>
 
         <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
       </td>
       <td class="controls">
         <% if property %>
-          <%= link_to_remote(button(:sell, :price => property.sell_price),
-                :url    => property_path(type),
-                :with   => "$(this).parent('form').serialize()",
-                :method => :delete,
+          <%= link_to_remote(button(:collect),
+                :url    => collect_money_property_path(property),
+                :method => :put,
                 :update => :result,
-                :html   => {:class => "sell button"}
+                :html   => {:class => "upgrade button"}
+              ) if property.collectable? %>
+
+          <%= link_to_remote(button(:upgrade),
+                :url    => upgrade_property_path(property),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => "upgrade button"}
               ) %>
         <% else %>
           <%= link_to_remote(button(:buy),

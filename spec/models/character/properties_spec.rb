@@ -58,5 +58,34 @@ describe Character do
       @character.properties.buy!(@property_type).should be_instance_of(Property)
     end
   end
+
+  describe "when collecting money from properties" do
+    before :each do
+      @property1 = Factory(:property)
+      @property2 = Factory(:property)
+
+      # Make property 2 collectable
+      @property2.update_attribute(:collected_at, 61.minutes.ago)
+
+      @character.properties = [@property1, @property2]
+    end
+
+    it "should collect money for each property" do
+      @property1.should_receive(:collect_money!).and_return(5)
+      @property2.should_receive(:collect_money!).and_return(10)
+
+      @character.properties.collect_money!
+    end
+
+    it "should return sum of all collected money" do
+      @character.properties.collect_money!.should == 10
+    end
+
+    it "should return false if collected nothing" do
+      @property2.update_attribute(:collected_at, Time.now)
+
+      @character.properties.collect_money!.should be_false
+    end
+  end
 end
 

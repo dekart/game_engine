@@ -24,7 +24,7 @@ en:
         energy: "Energy"
         ep: "Energy Points"
         experience: "Experience"
-        basic_money: "Money"
+        basic_money: "Gold"
         vip_money: "Gems"
         fights_won: "Fights Won"
         fights_lost: "Fights Lost"
@@ -85,8 +85,10 @@ en:
         property:
           attributes:
             character:
-              not_enough_basic_money: "You don't have enough gold to buy a {{name}}."
-              not_enough_vip_money: "You don't have enough Gems to buy a {{name}}."
+              not_enough_basic_money: "You don't have enough {{basic_money}} to buy a {{name}}."
+              not_enough_basic_money_for_upgrade: "You don't have enough {{basic_money}} to upgrade your {{name}}."
+              not_enough_vip_money: "You don't have enough {{vip_money}} to buy a {{name}}."
+              not_enough_vip_money_for_upgrade: "You don't have enough {{vip_money}} to upgrade your {{name}}."
               too_much_properties: "You cannot buy any more {{plural_name}} because you already have too many! Try to purchase other types of properties."
         help_result:
           too_late: "You're too late! Next time try to help your friends within 24 hours."
@@ -573,18 +575,25 @@ en:
     index:
       title: "My Properties"
       income:
-        label: "Current Income:"
+        label: "Income:"
       note: "Properties bring you hourly income."
     list:
       income_label: "per hour"
-      owned: "Owned: {{amount}}"
+      level: "Level: {{amount}}"
       buttons:
         buy: "Buy"
-        sell: "Sell for {{price}}"
-    destroy:
+        upgrade: "Upgrade"
+        collect: "Collect"
+    upgrade:
       messages:
-        success: "You've successfully sold {{amount}} of {{property_name}}!"
-        property_not_found: "This property is already sold"
+        success: "You successfully upgraded {{property_name}} to level {{level}}"
+      you_spent:
+        title: "You spent:"
+    collect_money:
+      messages:
+        success_single: "You successfully collected {{basic_money}} from your {{property_name}}"
+        success_collection: "You successfully collected {{basic_money}} from your properties"
+        failure: "You haven't collected anything"
       you_received:
         title: "You received:"
   assignments:
