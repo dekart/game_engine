@@ -1,5 +1,16 @@
 namespace :app do
   namespace :maintenance do
+    desc "Reprocess ass images"
+    task :reprocess_images => :environment do
+      [Boss, Mission, PropertyType, MissionGroup, CharacterType, Item].each do |klass|
+        puts "Reprocessing #{klass.to_s} images (#{klass.count})..."
+
+        klass.all.each do |instance|
+          instance.image.reprocess!
+        end
+      end
+    end
+
     desc "Migrate configuration values to settings"
     task :move_configuration_to_settings => :environment do
       puts "Moving configuration to settings"

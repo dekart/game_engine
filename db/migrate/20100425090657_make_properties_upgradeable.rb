@@ -24,6 +24,11 @@ class MakePropertiesUpgradeable < ActiveRecord::Migration
     Setting[:property_maximum_amount] = nil
 
     Property.update_all ["collected_at = ?", Time.now - 1.year]
+
+    puts
+    puts "Run 'rake app:maintenance:reprocess_images' to update images to the new size"
+    puts
+    puts
   end
 
   def self.down
