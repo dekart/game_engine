@@ -1,56 +1,83 @@
-<table cellspacing="0" cellpadding="0">
-  <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
-    <% content_tag_for(:tr, type) do %>
-      <td class="picture"><%= property_image(type, :small) %></td>
-      <td class="info">
-        <div class="name"><%= type.name %></div>
+<div id="property_collect_all" class="note clearfix" style="<%= "display:none" if properties.collectable.empty? %>">
+  <div class="controls">
+    <%= link_to_remote(button(:collect_all),
+          :url    => collect_money_properties_path,
+          :method => :put,
+          :update => :result,
+          :html   => {:class => "button collect_all"}
+        ) %>
+  </div>
+
+  <%= raw t(".collect_all", :amount => content_tag(:strong, properties.collectable.size, :class => :value)) %>
+</div>
+
+<table cellspacing="3" cellpadding="0">
+  <tr>
+    <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
+      <% content_tag_for(:td, type) do %>
+        <h2><%= property ? t(".name_with_level", :name => type.name, :level => property.level) : type.name %></h2>
+
+        <div class="picture"><%= property_image(type, :medium) %></div>
+
         <div class="description"><%= type.description %></div>
-        <div class="owned">
-          <%= raw t(".owned",
-                :amount => content_tag(:span, property ? property.amount : 0, :class => :value)
-              ) %>
-        </div>
-      </td>
-      <td class="payouts">
-        <h3><%= PropertyType.human_attribute_name("income") %></h3>
-        
-        <%= payout(:basic_money, "+%s" % number_to_currency(type.income), :label => t(".income_label")) %>
-      </td>
-      <td class="requirements">
-        <h3><%= PropertyType.human_attribute_name("price") %></h3>
 
-        <%= attribute_requirement(:basic_money,
-              number_to_currency(property ? type.inflated_price(property.amount + 1) : type.basic_price)
-            ) if type.basic_price > 0 %>
-
-        <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
-      </td>
-      <td class="controls">
-        <% form_tag "", :class => :clearfix do %>
-          <%= amount_select_tag %>
-        
-          <%= link_to_remote(button(:buy),
-                :url    => properties_path(:property_type_id => type.id),
-                :with   => "$(this).parent('form').serialize()",
-                :update => :result,
-                :html   => {:class => "buy button"}
-              ) %>
-        <% end %>
-
-        <% if property %>
-          <% form_tag "", :class => :clearfix do %>
-            <%= amount_select_tag %>
-        
-            <%= link_to_remote(button(:sell, :price => property.sell_price),
-                  :url    => property_path(type),
-                  :with   => "$(this).parent('form').serialize()",
-                  :method => :delete,
+        <div class="controls">
+          <% if property %>
+            <%= link_to_remote(button(:collect),
+                  :url    => collect_money_property_path(property),
+                  :method => :put,
                   :update => :result,
-                  :html   => {:class => "sell button"}
+                  :html   => {
+                    :class => "collect button",
+                    :style => ("display: none" unless property.collectable?)
+                  }
+                ) %>
+
+            <%= link_to_remote(button(:upgrade),
+                  :url    => upgrade_property_path(property),
+                  :method => :put,
+                  :update => :result,
+                  :html   => {:class => "upgrade button"}
+                ) %>
+          <% else %>
+            <%= link_to_remote(button(:buy),
+                  :url    => properties_path(:property_type_id => type.id),
+                  :update => :result,
+                  :html   => {:class => "buy button"}
                 ) %>
           <% end %>
+        </div>
+
+        <div class="payouts">
+          <h3><%= PropertyType.human_attribute_name("income") %></h3>
+
+          <%= payout(:basic_money, "+%s" % number_to_currency(property ? property.total_income : type.income)) %>
+        </div>
+
+        <div class="requirements">
+          <h3><%= PropertyType.human_attribute_name(property ? "upgrade_price" : "price") %></h3>
+
+          <%= attribute_requirement(:basic_money,
+                number_to_currency(property ? property.upgrade_price : type.basic_price)
+              ) if type.basic_price > 0 %>
+
+          <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
+        </div>
+
+        <% if property %>
+          <div class="timer" style="<%= "display:none" if property.collectable? %>">
+            <%= raw t(".collect_in",
+                  :value => content_tag(:span, "", :id => dom_id(property, :timer), :class => :value)
+                ) %>
+          </div>
+
+          <% dom_ready do %>
+            Timer.start('#<%= dom_id(property, :timer) %>', <%= property.time_to_next_collection %>, PropertyList.enableCollection);
+          <% end %>
         <% end %>
-      </td>
+      <% end %>
+        
+      <%= raw cycle("", "</tr><tr>") %>
     <% end %>
-  <% end %>
+  </tr>
 </table>

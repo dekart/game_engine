@@ -1,0 +1,30 @@
+<% result_for :property do %>
+  <% if @collected_money %>
+    <p>
+      <% if @property %>
+        <%= raw t(".messages.success_single",
+              :basic_money    => Character.human_attribute_name("basic_money"),
+              :property_name  => content_tag(:b, @property.name)
+            ) %>
+      <% else %>
+        <%= raw t(".messages.success_collection",
+              :basic_money => Character.human_attribute_name("basic_money")
+            ) %>
+      <% end %>
+    </p>
+
+    <h3><%= t(".you_received.title") %></h3>
+
+    <div class="payouts">
+      <%= payout(:basic_money, number_to_currency(@collected_money)) %>
+    </div>
+  <% else %>
+    <p><%= raw t(".messages.failure") %></p>
+  <% end %>
+<% end %>
+
+<% dom_ready do %>
+  $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
+
+  $(document).trigger('result.received');
+<% end %>

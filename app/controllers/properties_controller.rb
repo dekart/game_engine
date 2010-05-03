@@ -1,29 +1,40 @@
 class PropertiesController < ApplicationController
-  def create
-    @amount = params[:amount].to_i
-    
-    @property_type = PropertyType.available_in(:shop).available_for(current_character).find(params[:property_type_id])
-    
-    @property = current_character.properties.buy!(@property_type, @amount)
-
-    @properties = current_character.properties(true)
-    
-    render :action => :create, :layout => "ajax"
-  end
-
   def index
     @properties = current_character.properties
   end
 
-  def destroy
-    @amount = params[:amount].to_i
-    
-    @property_type = PropertyType.find(params[:id])
+  def create
+    @property_type = PropertyType.available_in(:shop, :special).available_for(current_character).
+      find(params[:property_type_id])
 
-    @property = current_character.properties.sell!(@property_type, @amount)
+    @property = current_character.properties.buy!(@property_type)
 
+    @properties = current_character.properties(true)
+
+    render :create, :layout => "ajax"
+  end
+
+  def upgrade
+    @property = current_character.properties.find(params[:id])
+
+    @property.upgrade!
+
+    @properties = current_character.properties(true)
+
+    render :upgrade, :layout => "ajax"
+  end
+
+  def collect_money
     @properties = current_character.properties
+    
+    if params[:id]
+      @property = current_character.properties.find(params[:id])
 
-    render :action => :destroy, :layout => "ajax"
+      @collected_money = @property.collect_money!
+    else
+      @collected_money = @properties.collect_money!
+    end
+
+    render :collect_money, :layout => "ajax"
   end
 end

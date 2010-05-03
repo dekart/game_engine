@@ -16,7 +16,7 @@
       <th><%= PropertyType.human_attribute_name("basic_price") %></th>
       <th><%= PropertyType.human_attribute_name("vip_price") %></th>
       <th><%= PropertyType.human_attribute_name("income") %></th>
-      <th><%= PropertyType.human_attribute_name("purchase_limit") %></th>
+      <th><%= PropertyType.human_attribute_name("upgrade_limit") %></th>
       <th><%= PropertyType.human_attribute_name("state") %></th>
       <th></th>
     </tr>
@@ -30,10 +30,10 @@
         <td class="vip_price"><%= number_to_currency(type.vip_price) %></td>
         <td class="income"><%= number_to_currency(type.income) %></td>
         <td class="limit">
-          <% if type.purchase_limit %>
-            <%= type.purchase_limit %>
+          <% if type.upgrade_limit %>
+            <%= type.upgrade_limit %>
           <% else %>
-            <span class="default"><%= Setting.i(:property_maximum_amount) %></span>
+            <span class="default"><%= Setting.i(:property_upgrade_limit) %></span>
           <% end %>
         </td>
         <td class="state"><%= admin_state(type) %></td>

@@ -34,9 +34,6 @@ var Character = {
       $("#co .level .upgrade").hide();
     }
     
-    if(a.character.property_income > 0){
-      Timer.start('#co .basic_money .timer', a.character.time_to_basic_money_restore, this.update_from_remote);
-    }
     Timer.start('#co .health .timer', a.character.time_to_hp_restore, this.update_from_remote);
     Timer.start('#co .energy .timer', a.character.time_to_ep_restore, this.update_from_remote);
     Timer.start('#co .stamina .timer', a.character.time_to_sp_restore, this.update_from_remote);
@@ -49,6 +46,18 @@ var Character = {
   }
 };
 
+var PropertyList = {
+  enableCollection: function(timer_element){
+    $(timer_element).parent('.timer').hide();
+    $(timer_element).parents('.property_type').find('.button.collect').show();
+
+    var collectables = $('#property_collect_all').find('.value');
+
+    collectables.text(parseInt(collectables.text()) + 1);
+    collectables.parent().show();
+  }
+}
+
 var Timer = {
   timers: {},
 
@@ -57,11 +66,12 @@ var Timer = {
     var minutes = Math.floor((value - hours * 3600) / 60);
     var seconds = value - hours * 3600 - minutes * 60;
 
-    var result;
-    if(hours > 0){
-      result = hours + ":" + minutes;
+    var result = hours > 0 ? hours + ":" : "";
+
+    if(minutes < 10){
+      result = result + "0" + minutes;
     }else{
-      result = minutes
+      result = result + minutes;
     }
 
     if(seconds < 10){
@@ -94,7 +104,7 @@ var Timer = {
       this.timers[id].running = false;
 
       if(this.timers[id].callback){
-        this.timers[id].callback();
+        this.timers[id].callback(element);
       }
     }
   },

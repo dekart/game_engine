@@ -12,7 +12,6 @@ development:
   app_id: 330750689413
   api_key: df3013384e37206cd411e220b78f6384
   secret_key: 9112b45e52241e49d58b2e0500a629ce
-  adapter: "FacebookIframeAdapter"
   canvas_page_name: sword-dev
   callback_url: http://fb.itvektor.ru
   pretty_errors: false
@@ -24,10 +23,12 @@ development:
     local_port: 3300
 
 test:
-  api_key: 
-  secret_key: 
-  canvas_page_name: 
-  callback_url:
+  app_id: 330750689413
+  api_key: df3013384e37206cd411e220b78f6384
+  secret_key: 9112b45e52241e49d58b2e0500a629ce
+  canvas_page_name: sword-dev
+  callback_url: http://fb.itvektor.ru
+  pretty_errors: false
   set_asset_host_to_callback_url: true
   tunnel:
     public_host_username: 

@@ -1,22 +1,18 @@
 <% result_for :property do %>
   <% if @property.errors.empty? %>
-    <div class="buttons">
-      <%= link_to_function(button(:publish), property_stream_dialog(@property),
-            :class => "publish button"
-          ) %>
-    </div>
-  
     <p>
       <%= raw t(".messages.success",
-            :amount         => @amount,
-            :property_name  => content_tag(:b, @property.name)
+            :property_name  => content_tag(:b, @property.name),
+            :level          => @property.level
           ) %>
     </p>
 
     <h3><%= t(".you_spent.title") %></h3>
 
     <div class="payouts">
-      <%= payout(:basic_money, number_to_currency(@property.basic_price)) if @property.basic_price > 0 %>
+      <%= payout(:basic_money, 
+            number_to_currency(@property.property_type.upgrade_price(@property.level - 1))
+          ) if @property.basic_price > 0 %>
       <%= payout(:vip_money, number_to_currency(@property.vip_price)) if @property.vip_price > 0 %>
     </div>
   <% else %>
@@ -26,6 +22,6 @@
 
 <% dom_ready do %>
   $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
-  
+
   $(document).trigger('result.received');
 <% end %>
