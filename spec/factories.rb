@@ -39,3 +39,19 @@ end
 Factory.define :property do |t|
   t.association :property_type, :factory => :property_type
 end
+
+Factory.define :stuff_invisibility do |t|
+  t.association :stuff, :factory => :item
+  t.association :character_type
+end
+
+Factory.define :item do |t|
+  t.name            'item'
+  t.availability    'shop'
+  t.level           1
+  t.association     :item_group
+end
+
+Factory.define :item_group do |t|
+  t.name            'first'
+end

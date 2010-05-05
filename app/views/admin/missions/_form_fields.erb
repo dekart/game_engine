@@ -15,6 +15,17 @@
 <%= form.text_field :success_chance, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.check_box :repeatable %>
 
+<% invisibility = capture do %>
+  <% CharacterType.all.each do |ct| %>
+    <div>
+      <%= hidden_field_tag "#{form.object_name}[itypes_ids][#{ct.id}]", 0 %>
+      <%= check_box_tag "#{form.object_name}[itypes_ids][#{ct.id}]", 1, form.object.itypes.include?(ct), :id => "invisibility_#{ct.id}" %>
+      <%= label_tag "invisibility_#{ct.id}", ct.name %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= form.field 'Hidden for', invisibility %>
 
 <h2><%= Mission.human_attribute_name("requirements") %></h2>
 

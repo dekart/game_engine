@@ -1,6 +1,8 @@
 class PropertyType < ActiveRecord::Base
   AVAILABILITIES = [:shop, :mission, :loot]
 
+  include HasInvisibility
+
   has_many :properties, :dependent => :destroy
 
   has_attached_file :image,
@@ -24,7 +26,10 @@ class PropertyType < ActiveRecord::Base
 
   named_scope :available_for, Proc.new {|character|
     {
-      :conditions => ["level <= ?", character.level],
+      :joins      => "LEFT JOIN stuff_invisibilities ON #{table_name}.id = stuff_invisibilities.stuff_id 
+        AND stuff_invisibilities.character_type_id = #{character.character_type.id}
+        AND stuff_invisibilities.stuff_type = \"#{class_name}\"", 
+      :conditions => ["level <= ? AND stuff_invisibilities.id IS NULL", character.level],
       :order      => :basic_price
     }
   }
