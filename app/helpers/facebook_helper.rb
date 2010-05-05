@@ -115,6 +115,10 @@ module FacebookHelper
     )
   end
 
+  def fb_bookmark_button(options = {})
+    content_tag("fb:bookmark", options)
+  end
+
   protected
 
   def fb_named_tag(tag, name, *args, &block)
