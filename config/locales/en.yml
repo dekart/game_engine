@@ -136,7 +136,6 @@ en:
     property:
       name: "Property"
       missing: "Missing property type!"
-      label: "{{name}} X {{amount}}"
     vip_money:
       name: "Gems"
     basic_money:
@@ -218,7 +217,7 @@ en:
         amount: "{{name}} X&nbsp;{{amount}}"
       properties:
         title: "Properties"
-        amount: "{{name}} X&nbsp;{{amount}}"
+        name: "{{name}} (Level {{level}})"
       wall:
         title: "{{user}} Wall"
     upgrade:

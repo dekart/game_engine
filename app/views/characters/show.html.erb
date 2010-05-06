@@ -73,14 +73,17 @@
           <div class="item">
             <%= property_image(property, :small) %>
 
-            <% if @character == current_character %>
-              <div class="amount">
-                <%= raw t(".properties.amount",
-                      :name   => property.name,
-                      :amount => property.amount
+            
+            <div class="name">
+              <% if @character == current_character %>
+                <%= raw t(".properties.name",
+                      :name  => property.name,
+                      :level => property.level
                     ) %>
-              </div>
-            <% end %>
+              <% else %>
+                <%= property.name %>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>
