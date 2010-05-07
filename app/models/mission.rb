@@ -71,11 +71,4 @@ class Mission < ActiveRecord::Base
   def loot_item_ids
     @loot_item_ids ||= self[:loot_item_ids].to_s.split(",").collect{|i| i.to_i }
   end
-
-  def itypes_ids=(values)
-    self.itypes = []
-    values.each do |ctype_id|
-      self.itypes << CharacterType.find(ctype_id)
-    end
-  end
 end
