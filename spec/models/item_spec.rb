@@ -16,7 +16,7 @@ describe Item do
   end
 
   it 'should not select items, marked as hidden' do
-    @item_2.itypes << @ctype 
+    @item_2.invisible_types << @ctype 
     Item.available_for(@character).all.should == [@item_1]
   end
 end
