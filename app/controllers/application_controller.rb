@@ -43,6 +43,8 @@ class ApplicationController < ActionController::Base
     set_facebook_session
 
     unless current_character
+      store_return_to
+
       redirect_to new_character_path(:reference => params[:reference] || params[:ref])
     end
   end
@@ -149,5 +151,21 @@ class ApplicationController < ActionController::Base
 
   def current_skin
     params[:try_skin] ? Skin.find_by_id(params[:try_skin]) : Skin.with_state(:active).first
+  end
+
+  def store_return_to(uri = nil)
+    session[:return_to] = uri
+    session[:return_to] ||= params[:return_to]
+    session[:return_to] ||= request.request_uri
+  end
+
+  def redirect_back(uri)
+    if session[:return_to].present?
+      uri = session[:return_to]
+
+      session[:return_to] = nil
+    end
+
+    redirect_to(uri.to_s)
   end
 end

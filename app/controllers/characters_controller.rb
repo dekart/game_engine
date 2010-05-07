@@ -78,7 +78,7 @@ class CharactersController < ApplicationController
       @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
       if @character.save
-        redirect_to landing_url
+        redirect_back landing_url
       else
         render :action => :new
       end
