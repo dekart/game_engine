@@ -108,6 +108,19 @@
       <% end %>
     </td>
   </tr>
+
+  <tr>
+    <td class="name"><%= t(".reset_attributes.text") %></td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, 10) %> 
+    </td>
+    <td class="controls">
+      <%= link_to(button(t(".reset_attributes.button")), premium_path(:type => :reset_attributes),
+            :method => :put,
+            :class => :button
+            ) %>
+    </td>
+  </tr>
 </table>
 
 <div id="get_more_vip">

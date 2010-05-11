@@ -8,6 +8,7 @@ test
 bin/*
 *~
 .bundle
+.*.sw?
 
 public/stylesheets/sass/_assets.sass
 public/stylesheets/sass/skins/*
