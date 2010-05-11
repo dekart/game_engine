@@ -694,6 +694,9 @@ en:
         text: "Refill your stamina"
         button: "Refill"
         full: "You have full stamina"
+      reset_attributes:
+        text: "Reset character attributes"
+        button: "Reset"
       buy_points:
         text: "Add {{amount}} upgrade points to your character"
         button: "Add Points"
@@ -709,6 +712,7 @@ en:
           refill_stamina: "Now you have maximum stamina!"
           buy_points: "Upgrade points have been added to your character!"
           hire_mercenary: "You successfully hired new mercenary!"
+          reset_attributes: "You successfully reseted all attributes!"
         failure: "You don't have enough Gems"
   help_requests:
     show:
