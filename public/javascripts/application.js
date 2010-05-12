@@ -218,4 +218,10 @@ $(function(){
   });
 
   Spinner.setup();
-})
+});
+
+function bookmark(){
+  Spinner.show();
+  FB.Connect.showBookmarkDialog();
+  Spinner.hide();
+}

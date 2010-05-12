@@ -7,5 +7,5 @@
     <%= raw t(".text", :app => t("app_name")) %>
   </p>
 
-  <%= fb_bookmark_button :type => "off-facebook" %>
+  <%= link_to_function(asset_image_tag(:bookmark), "bookmark()") %>
 </div>
