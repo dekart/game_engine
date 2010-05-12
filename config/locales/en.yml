@@ -768,6 +768,7 @@ en:
         title: "Gift"
         message: "{{user}} has sent you a {{item}} in {{app}}! Click to accept gift."
         accept: "Accept {{item}}"
+        accept_all: "Accept all items"
         note: "Send gifts to your Alliance"
     confirm:
       messages:

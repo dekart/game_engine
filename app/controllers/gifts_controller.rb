@@ -70,8 +70,16 @@ class GiftsController < ApplicationController
   end
 
   def show
-    if @gift = Gift.find_by_id(params[:id]) and @gift.can_receive?(current_character)
-      @gift_receipt = @gift.receipts.create(:character => current_character)
+    if params[:id] == 'all'
+      @gifts = Gift.for_character(current_character)
+      if @gifts.any?
+        @gifts.map {|gift| gift.receipts.create(:character => current_character) }
+      else
+        redirect_to landing_url
+      end
+    elsif gift = Gift.find_by_id(params[:id]) and gift.can_receive?(current_character)
+      gift_receipt = gift.receipts.create(:character => current_character)
+      @gifts = [ gift ]
     else
       redirect_to landing_url
     end
