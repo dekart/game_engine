@@ -7,19 +7,21 @@
     
     <p><%= t(".success") %></p>
 
-    <table class="details" cellspacing="0" cellpadding="0">
-      <tr>
-        <td class="item">
-          <%= item_image(@gift.item, :small) %>
+    <% @gifts.each do |gift| %>
+      <table class="details" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="item">
+            <%= item_image(gift.item, :small) %>
 
-          <div class="name"><%= @gift.item.name %></div>
-        </td>
-        <td class="from"><%= t(".from") %></td>
-        <td class="sender">
-          <%= character_picture_link(@gift.character, {}, {:size => :small}) %><br />
-          <%= character_name_link(@gift.character) %>
-        </td>
-      </tr>
-    </table>
+            <div class="name"><%= gift.item.name %></div>
+          </td>
+          <td class="from"><%= t(".from") %></td>
+          <td class="sender">
+            <%= character_picture_link(gift.character, {}, {:size => :small}) %><br />
+            <%= character_name_link(gift.character) %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
   <% end %>
 <% end %>
