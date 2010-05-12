@@ -202,8 +202,6 @@ $(function(){
 
     FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
 
-    FB.XFBML.Host.parseDomTree();
-
     $(document).trigger('facebook.ready');
   });
 
