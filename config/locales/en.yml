@@ -551,6 +551,8 @@ en:
         recruit: "Recruit to Alliance"
         gift: "Send Gifts to Alliance"
         hire: "Hire Mercenaries"
+        demote_all: "Demote all"
+        demote_all_confirm: "Do you really want to demote all alliance members?"
     note:
       text: "Recruit your friends to become stronger and fight better! The more friends who join your Alliance, the more chances you have to win battle."
       placements: "Additionally, every {{amount}} Alliance Members brings an extra equipment slot!"
