@@ -779,7 +779,7 @@ en:
       buttons:
         accept_pending: "Accept Other Gifts"
         play_now: "Play Now"
-        accept_other: "Accept All"
+        accept_all: "Accept All"
   ratings:
     show:
       title:
