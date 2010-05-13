@@ -64,7 +64,7 @@ namespace :deploy do
     facebook_config = YAML.load_file(File.join(File.dirname(__FILE__), "facebooker.yml"))
 
     config = <<-CODE
-      <VirtualHost *>
+      <VirtualHost *:80>
         ServerName #{URI.parse(facebook_config[rails_env]["callback_url"]).host}
         DocumentRoot #{current_path}/public
       </VirtualHost>
