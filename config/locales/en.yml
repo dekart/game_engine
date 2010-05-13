@@ -768,7 +768,6 @@ en:
         title: "Gift"
         message: "{{user}} has sent you a {{item}} in {{app}}! Click to accept gift."
         accept: "Accept {{item}}"
-        accept_all: "Accept all items"
         note: "Send gifts to your Alliance"
     confirm:
       messages:
@@ -780,6 +779,7 @@ en:
       buttons:
         accept_pending: "Accept Other Gifts"
         play_now: "Play Now"
+        accept_other: "Accept All"
   ratings:
     show:
       title:

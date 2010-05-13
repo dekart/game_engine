@@ -442,6 +442,27 @@ class Character < ActiveRecord::Base
     self[:placements] ||= {}
   end
 
+  def accept_gifts id
+    if id == 'all'
+      gift_receipts = GiftReceipt.unused.for_character self
+      gift_receipts.each(&:give_item_to_character!).map(&:gift).uniq
+    else
+      gift = Gift.find id
+      gift_receipt = gift.receipts.unused.for_character(self).first
+
+      if gift_receipt
+        gift_receipt.give_item_to_character!
+        [gift]
+      else
+        []
+      end
+    end
+  end
+
+  def has_unaccepted_gifts?
+    ! GiftReceipt.unused.for_character(self).count.zero?
+  end
+
   protected
 
   def update_level_and_points
