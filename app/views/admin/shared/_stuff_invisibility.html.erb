@@ -1,0 +1,12 @@
+<% invisibility = capture do %>
+  <% CharacterType.all.each do |ct| %>
+    <div>
+      <%= hidden_field_tag "#{form.object_name}[invisible_types_ids][#{ct.id}]", 0 %>
+      <%= check_box_tag "#{form.object_name}[invisible_types_ids][#{ct.id}]", 1, 
+        form.object.invisible_types.include?(ct), :id => "invisibility_#{ct.id}" %>
+      <%= label_tag "invisibility_#{ct.id}", ct.name %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= form.field 'Hidden for', invisibility %>

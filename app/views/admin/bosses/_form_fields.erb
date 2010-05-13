@@ -14,6 +14,8 @@
 
 <%= form.check_box :repeatable %>
 
+<%= render :partial => 'admin/shared/stuff_invisibility', :locals => {:form => form } %>
+
 <h2><%= Boss.human_attribute_name("requirements") %></h2>
 
 <%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>

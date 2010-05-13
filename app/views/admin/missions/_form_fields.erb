@@ -15,6 +15,7 @@
 <%= form.text_field :success_chance, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.check_box :repeatable %>
 
+<%= render :partial => 'admin/shared/stuff_invisibility', :locals => {:form => form } %>
 
 <h2><%= Mission.human_attribute_name("requirements") %></h2>
 

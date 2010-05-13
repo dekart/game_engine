@@ -1,12 +1,17 @@
 class Mission < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  include HasInvisibility
   
   has_many    :ranks, :dependent => :delete_all
   belongs_to  :mission_group
   belongs_to  :parent_mission, :class_name => "Mission"
   has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
   has_many    :help_requests, :as => :context, :dependent => :destroy
+
+  has_many    :stuff_invisibilities, :as => :stuff, :dependent => :destroy
+  has_many    :itypes, :source => :character_type, :through => :stuff_invisibilities
+
 
   state_machine :initial => :hidden do
     state :hidden

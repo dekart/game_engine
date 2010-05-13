@@ -14,3 +14,5 @@
 <%= form.text_field :collect_period, :size => 6, :required => true, :autocomplete => :off %>
 <%= form.text_field :upgrade_cost_increase, :size => 6, :autocomplete => :off %>
 <%= form.text_field :upgrade_limit, :size => 6, :autocomplete => :off %>
+
+<%= render :partial => 'admin/shared/stuff_invisibility', :locals => {:form => form } %>

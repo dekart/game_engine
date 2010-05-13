@@ -1,6 +1,7 @@
 class Boss < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  include HasInvisibility
 
   belongs_to  :mission_group
   has_many    :boss_fights,

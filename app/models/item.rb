@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   extend HasEffects
+  include HasInvisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
 
@@ -23,10 +24,14 @@ class Item < ActiveRecord::Base
   }
   named_scope :available_for, Proc.new {|character|
     {
-      :conditions => ["level <= ?", character.level],
+      :joins      => "LEFT JOIN stuff_invisibilities ON items.id = stuff_invisibilities.stuff_id 
+        AND stuff_invisibilities.character_type_id = #{character.character_type.id}
+        AND stuff_invisibilities.stuff_type = '#{class_name}'", 
+      :conditions => ["items.level <= ? AND stuff_invisibilities.id IS NULL", character.level],
       :order      => :basic_price
     }
   }
+
   named_scope :available_in, Proc.new{|*keys|
     valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys
 
