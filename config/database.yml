@@ -2,20 +2,20 @@
 #   gem install sqlite3-ruby (not necessary on OS X Leopard)
 development:
   adapter: mysql
-  database: fa_d
+  database: fb_app_development
   host: localhost
-  username: rails
-  password: rails
+  username: root
+  password: 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   adapter: mysql
-  database: fa_t
+  database: fb_app_test
   host: localhost
-  username: rails
-  password: rails
+  username: root
+  password:
 
 production:
   adapter: mysql
