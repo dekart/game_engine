@@ -29,4 +29,17 @@
       <% end %>
     </div>
   <% end %>
+  <% if current_character.assignments.any? %>
+    <div class='position'>
+      <b>&nbsp;</b>
+      <div class='controls'>
+        <%= link_to(button(:demote_all), assignment_path(:all),
+              :method => :delete,
+              :class => 'demote button', 
+              :confirm => t('.buttons.demote_all_confirm')
+            ) %>
+      </div>
+      <div class='clearfix'></div>
+    </div>
+  <% end %>
 </div>

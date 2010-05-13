@@ -20,12 +20,4 @@
           :class => "gifts button"
         ) %>
   <% end %>
-
-  <% if current_character.assignments.any? %>
-    <%= link_to(button(:demote_all), assignment_path(:all),
-          :method => :delete,
-          :class => 'demote button', 
-          :confirm => t('.buttons.demote_all_confirm')
-        ) %>
-  <% end %>
 </div>
