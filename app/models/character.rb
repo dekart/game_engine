@@ -369,10 +369,10 @@ class Character < ActiveRecord::Base
   end
 
   def reset_attributes!
-    return if self.vip_money < 10
+    return if self.vip_money < Setting.i(:premium_reset_attributes_price)
 
     self.transaction do
-      self.vip_money -= Setting.i(:premium_mercenary_price)
+      self.vip_money -= Setting.i(:premium_reset_attributes_price)
 
       free_points = 0
 
