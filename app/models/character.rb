@@ -453,11 +453,11 @@ class Character < ActiveRecord::Base
 
   def accept_gifts id
     if id == 'all'
-      gift_receipts = GiftReceipt.unused.for_character self
+      gift_receipts = GiftReceipt.unaccepted.for_character self
       gift_receipts.each(&:give_item_to_character!).map(&:gift).uniq
     else
       gift = Gift.find id
-      gift_receipt = gift.receipts.unused.for_character(self).first
+      gift_receipt = gift.receipts.unaccepted.for_character(self).first
 
       if gift_receipt
         gift_receipt.give_item_to_character!
@@ -469,7 +469,7 @@ class Character < ActiveRecord::Base
   end
 
   def has_unaccepted_gifts?
-    ! GiftReceipt.unused.for_character(self).count.zero?
+    ! GiftReceipt.unaccepted.for_character(self).count.zero?
   end
 
   protected
