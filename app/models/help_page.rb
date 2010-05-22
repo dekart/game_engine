@@ -40,8 +40,6 @@ class HelpPage < ActiveRecord::Base
   private
 
   def restart_server
-    Rails.logger.debug "Restarting server..."
-    
-    system("touch #{File.join(RAILS_ROOT, "tmp", "restart.txt")}")
+    Rails.restart!
   end
 end

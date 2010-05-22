@@ -87,5 +87,6 @@ end
 
 require "facebook_money"
 require "i18n/backend/yaml_db"
+require "rails_restart"
 
 I18n.backend = I18n::Backend::YamlDb.new

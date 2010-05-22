@@ -2,6 +2,9 @@ class Setting < ActiveRecord::Base
   validates_presence_of   :alias, :value
   validates_uniqueness_of :alias
 
+  after_save :restart_server
+  after_destroy :restart_server
+  
   cattr_accessor :cache
 
   class << self
@@ -64,5 +67,11 @@ class Setting < ActiveRecord::Base
     def [](key)
       find_by_alias(key.to_s).try(:value)
     end
+  end
+
+  protected
+
+  def restart_server
+    Rails.restart!
   end
 end

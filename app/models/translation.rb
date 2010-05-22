@@ -33,6 +33,6 @@ class Translation < ActiveRecord::Base
   private
 
   def restart_server
-    system("touch #{File.join(RAILS_ROOT, "tmp", "restart.txt")}")
+    Rails.restart!
   end
 end
