@@ -7,7 +7,7 @@ class Admin::MissionsController < Admin::BaseController
   end
 
   def balance
-    @missions = Mission.all(
+    @missions = Mission.without_state(:deleted).all(
       :include  => :mission_group,
       :order    => "mission_groups.level"
     )
