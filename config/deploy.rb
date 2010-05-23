@@ -133,6 +133,11 @@ namespace :deploy do
   task :setup_stylesheets, :roles => :app do
     run "cd #{current_path}; rake app:setup:stylesheets"
   end
+
+  desc "Setup application settings"
+  task :setup_settings, :roles => :app do
+    run "cd #{current_path}; rake app:setup:reimport_settings"
+  end
 end
 
 ["deploy:dependencies:system_gems"].each do |t|
@@ -143,7 +148,7 @@ before "deploy:migrations", "deploy:db:backup"
 
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 
-["deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
+["deploy:setup_settings", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
