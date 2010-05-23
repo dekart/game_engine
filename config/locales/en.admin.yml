@@ -320,6 +320,7 @@ en:
       index:
         title: "Settings"
         empty_set: "No settings"
+        empty_value: "(No value)"
         controls:
           new: "Add Value"
           edit: "Edit"

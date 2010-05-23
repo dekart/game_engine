@@ -30,5 +30,10 @@ namespace :app do
 
       Rake::Task["app:setup:stylesheets"].execute
     end
+
+    desc "Re-import settings"
+    task :reimport_settings => :environment do
+      require Rails.root.join("db", "seeds", "settings")
+    end
   end
 end

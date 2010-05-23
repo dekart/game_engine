@@ -14,7 +14,7 @@
     <% @settings.each do |setting| %>
       <tr>
         <td><%= setting.alias %></td>
-        <td><%= setting.value %></td>
+        <td><%= setting.value.present? ? setting.value : content_tag(:span, t(".empty_value"), :class => :empty) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_setting_path(setting)) %>
           <%= link_to(t(".controls.delete"), admin_setting_path(setting),
