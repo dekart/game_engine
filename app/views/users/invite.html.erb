@@ -36,9 +36,9 @@
 
 <div class="invitation_type">
   <% fb_serverfbml do %>
+    <%= stylesheet_link_tag(skin_path) %>
+  
     <div id="invitation_form_fbml">
-      <%= stylesheet_link_tag(skin_path) %>
-
       <% fb_request_form(t(".invite.title"), :invite_message, invite_users_url(:from_selector => true), :target => :_top) do %>
         <div class="selector">
           <%= fb_multi_friend_selector(t(".invite.note"),

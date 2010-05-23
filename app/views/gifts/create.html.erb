@@ -52,14 +52,18 @@
     <% end %>
 
     <% fb_serverfbml do %>
-      <% fb_request_form(t(".request.title"), :gift_message, confirm_gift_url(@gift)) do %>
-        <div style="margin: auto; width: 470px">
-          <%= fb_multi_friend_selector(t(".request.note"),
-                :exclude_ids => @exclude_ids.join(","),
-                :cols => 3
-              ) %>
-        </div>
-      <% end %>
+      <%= stylesheet_link_tag(skin_path) %>
+    
+      <div id="invitation_form_fbml">
+        <% fb_request_form(t(".request.title"), :gift_message, confirm_gift_url(@gift)) do %>
+          <div class="selector">
+            <%= fb_multi_friend_selector(t(".request.note"),
+                  :exclude_ids => @exclude_ids.join(","),
+                  :cols => 3,
+                  :rows => 3
+                ) %>
+          </div>
+        <% end %>
     <% end %>
   </div>
 </div>
