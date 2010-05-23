@@ -1,28 +1,46 @@
-<div id="admin_menu">
+<div id="admin_menu" class="clearfix">
   <%= link_to(t(".home"), root_url(:canvas => true), :class => :app) unless request_is_facebook_iframe? %>
 
   <h2><%= t(".title") %></h2>
 
-  <%
-    [
-      [:character_types, admin_character_types_path],
-      [:item_groups,     admin_item_groups_path],
-      [:items,           admin_items_path],
-      [:mission_groups,  admin_mission_groups_path],
-      [:missions,        admin_missions_path],
-      [:bosses,          admin_bosses_path],
-      [:property_types,  admin_property_types_path],
-      [:statistics,      admin_statistics_path],
-      [:newsletter,      admin_newsletters_path],
-      [:promotions,      admin_promotions_path],
-      [:skins,           admin_skins_path],
-      [:tips,            admin_tips_path],
-      [:assets,          admin_assets_path],
-      [:translations,    admin_translations_path],
-      [:settings,        admin_settings_path],
-      [:help_pages,      admin_help_pages_path]
-    ].each do |title, link|
-  %>
-    <%= link_to(t(".#{title}"), link, :target => :admin) %>
-  <% end %>
+  <table width="100%">
+    <tr>
+      <%
+        [
+          [
+            [:character_types, admin_character_types_path],
+            [:mission_groups,  admin_mission_groups_path],
+            [:missions,        admin_missions_path],
+            [:bosses,          admin_bosses_path],
+          ],
+          [
+            [:item_groups,     admin_item_groups_path],
+            [:items,           admin_items_path],
+            [:property_types,  admin_property_types_path],
+          ],
+          [
+            [:tips,            admin_tips_path],
+            [:help_pages,      admin_help_pages_path],
+            [:translations,    admin_translations_path],
+          ],
+          [
+            [:statistics,      admin_statistics_path],
+            [:newsletter,      admin_newsletters_path],
+            [:promotions,      admin_promotions_path],
+          ],
+          [
+            [:skins,           admin_skins_path],
+            [:assets,          admin_assets_path],
+            [:settings,        admin_settings_path],
+          ]
+        ].each do |group|
+      %>
+        <td>
+          <% group.each do |title, link| %>
+            <%= link_to(t(".#{title}"), link, :target => :admin, :class => :item) %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  </table>
 </div>
