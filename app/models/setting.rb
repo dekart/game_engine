@@ -1,5 +1,5 @@
 class Setting < ActiveRecord::Base
-  validates_presence_of   :alias, :value
+  validates_presence_of   :alias
   validates_uniqueness_of :alias
 
   after_save :restart_server
