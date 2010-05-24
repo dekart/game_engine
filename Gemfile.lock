@@ -7,7 +7,7 @@ dependencies:
   rails: 
     group: 
     - :default
-    version: ~> 2.3.5
+    version: = 2.3.5
     require: []
 
   ZenTest: 
@@ -125,7 +125,7 @@ specs:
     version: 0.2.8.0
 - will_paginate: 
     version: 2.3.11
-hash: 5fb9e4288eba97bfec04395e60529fd9bf35adc4
+hash: 398830f8e26ff0e261996242edf9d6144c5eab1a
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

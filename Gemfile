@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem "rails", "~> 2.3.5", :require => nil
+gem "rails", "2.3.5", :require => nil
 
 gem "mysql",            "2.8.1"
 gem "system_timer",     "1.0"
