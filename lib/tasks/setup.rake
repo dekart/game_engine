@@ -23,8 +23,12 @@ namespace :app do
     end
 
     desc "Re-import development assets. All existing assets will be destroyed!"
-    task :reimport_assets => :environment do
-      Asset.destroy_all
+    task :import_assets, :destroy_old, :needs => :environment do |task, options|
+      if options["destroy_old"] == "true"
+        puts "Destroying existing assets..."
+        
+        Asset.destroy_all
+      end
 
       require Rails.root.join("db", "seeds", "assets")
 
