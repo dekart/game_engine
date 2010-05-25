@@ -119,6 +119,12 @@ en:
     health_point:
       name: "Health Points"
       text: "{{amount}} Health Points"
+    energy_point:
+      name: "Energy Points"
+      text: "{{amount}} Energy Points"
+    stamina_point:
+      name: "Stamina Points"
+      text: "{{amount}} Stamina Points"
     attack:
       name: "Attack"
       text: "{{amount}} Attack Points"
@@ -147,6 +153,10 @@ en:
         allow_vip: "Allow items that cost gems"
     health_point:
       name: "Health Points"
+    energy_point:
+      name: "Energy Points"
+    stamina_point:
+      name: "Stamina Points"
     mercenary:
       name: "Mercenaries"
     experience:
