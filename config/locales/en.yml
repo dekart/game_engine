@@ -13,7 +13,7 @@ en:
   activerecord:
     models:
       mission: "Mission"
-      mission_group: "Mission Group"
+      missiousn_group: "Mission Group"
     attributes:
       character:
         level: "Level"
@@ -57,7 +57,7 @@ en:
       item:
         price: "Price"
         effects: "Effects"
-        use_label: "Custom label for 'Use' button"
+        use_button_label: "Custom label for 'Use' button"
       help_page:
         alias: "Page URL"
     errors:
