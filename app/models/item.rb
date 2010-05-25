@@ -1,5 +1,4 @@
 class Item < ActiveRecord::Base
-  extend HasEffects
   extend HasPayouts
   include HasInvisibility
 
@@ -80,7 +79,6 @@ class Item < ActiveRecord::Base
       :large  => "200x200#"
     }
 
-  has_effects
   has_payouts :use
 
   validates_presence_of :name, :item_group, :availability, :level
