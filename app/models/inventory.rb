@@ -16,7 +16,7 @@ class Inventory < ActiveRecord::Base
 
   %w{
     item_group  name plural_name description image image? basic_price vip_price attack defence
-    usable? usage_limit can_be_sold? placements placement_options_for_select payouts
+    usable? can_be_sold? placements placement_options_for_select payouts
   }.each do |attr|
     delegate attr, :to => :item
   end

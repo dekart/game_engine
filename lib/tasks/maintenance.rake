@@ -2,7 +2,20 @@ namespace :app do
   namespace :maintenance do
     desc "Migrate items to payout-based usage system"
     task :use_payouts_for_item_effects => :environment do
+      puts "Deleting legacy translations..."
+      
       Translation.delete_all "`key` LIKE 'inventories.use.button%'"
+
+      puts "Hiding currently usable items..."
+
+      Item.scoped(:conditions => {:usable => true}).each do |item|
+        item.update_attribute(:usable, false)
+        item.hide
+
+        item.inventories.update_all "amount = amount * #{item.usage_limit}"
+      end
+
+      puts "Done!"
     end
 
     desc "Reprocess ass images"
