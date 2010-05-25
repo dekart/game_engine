@@ -125,6 +125,9 @@ en:
     stamina_point:
       name: "Stamina Points"
       text: "{{amount}} Stamina Points"
+    upgrade_point:
+      name: "Upgrade Points"
+      text: "{{amount}} Upgrade Points"
     attack:
       name: "Attack"
       text: "{{amount}} Attack Points"
@@ -157,6 +160,8 @@ en:
       name: "Energy Points"
     stamina_point:
       name: "Stamina Points"
+    upgrade_point:
+      name: "Upgrade Points"
     mercenary:
       name: "Mercenaries"
     experience:
