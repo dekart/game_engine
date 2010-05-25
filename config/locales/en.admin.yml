@@ -48,6 +48,7 @@ en:
       index:
         title: "Items"
         empty_set: "No items"
+        not_usable: "Not usable"
         controls:
           new: "Add Item"
           edit: "Edit"

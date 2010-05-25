@@ -10,12 +10,7 @@
         <div class="payouts">
           <h3><%= Item.human_attribute_name("effects") %></h3>
           
-          <%= payout(:attack, "+%d" % item.attack) if item.attack > 0 %>
-          <%= payout(:defence, "+%d" % item.defence) if item.defence > 0 %>
-
-          <% item.effects.each do |effect| %>
-            <%= payout(effect.name, "+%d" % effect.value, :label => t("effects.#{effect.name}.name")) %>
-          <% end %>
+          <%= render "items/effects", :item => item %>
         </div>
 
         <div class="requirements">
