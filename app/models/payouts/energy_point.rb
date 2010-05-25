@@ -6,9 +6,9 @@ module Payouts
 
     def apply(character)
       if self.action == :remove
-        character.sp -= @value
+        character.ep -= @value
       else
-        character.sp += @value
+        character.ep += @value
       end
     end
   end
