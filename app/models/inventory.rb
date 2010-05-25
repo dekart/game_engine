@@ -15,8 +15,10 @@ class Inventory < ActiveRecord::Base
     :conditions => "items.equippable = 1 AND (inventories.equipped < inventories.amount)"
 
   %w{
-    item_group  name plural_name description image image? basic_price vip_price attack defence
-    usable? can_be_sold? placements placement_options_for_select payouts
+    item_group  name plural_name description image image?
+    basic_price vip_price attack defence
+    can_be_sold? placements placement_options_for_select
+    usable? payouts use_button_label use_message
   }.each do |attr|
     delegate attr, :to => :item
   end

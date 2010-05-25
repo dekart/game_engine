@@ -30,6 +30,8 @@
 <%= form.check_box :can_be_sold %>
 
 <%= form.check_box :usable %>
+<%= form.text_field :use_button_label %>
+<%= form.text_area :use_message, :rows => 2, :cols => 80 %>
 
 <h2><%= Item.human_attribute_name("effects") %></h2>
 
