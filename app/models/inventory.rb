@@ -16,7 +16,7 @@ class Inventory < ActiveRecord::Base
 
   %w{
     item_group  name plural_name description image image? basic_price vip_price attack defence effects
-    usable? usage_limit can_be_sold? placements placement_options_for_select
+    usable? usage_limit can_be_sold? placements placement_options_for_select payouts
   }.each do |attr|
     delegate attr, :to => :item
   end
@@ -32,26 +32,15 @@ class Inventory < ActiveRecord::Base
     Setting.p(:inventory_sell_price, item.basic_price).ceil
   end
 
-  def uses_left
-    self.usage_limit - self.usage_count
-  end
+  def use!
+    return false unless usable?
 
-  def use
-    return unless self.usable?
+    transaction do
+      result = payouts.apply(character, :use)
 
-    self.transaction do
-      self.effects.apply(self.character)
-      self.character.save!
+      character.inventories.take!(item)
 
-      self.usage_count += 1
-
-      if self.uses_left == 0
-        self.character.inventories.take!(self.item)
-        
-        self.usage_count = 0
-      end
-      
-      self.save!
+      result
     end
   end
 
