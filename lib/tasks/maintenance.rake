@@ -1,5 +1,10 @@
 namespace :app do
   namespace :maintenance do
+    desc "Migrate items to payout-based usage system"
+    task :use_payouts_for_item_effects => :environment do
+      Translation.delete_all "`key` LIKE 'inventories.use.button%'"
+    end
+
     desc "Reprocess ass images"
     task :reprocess_images => :environment do
       [Boss, Mission, PropertyType, MissionGroup, CharacterType, Item].each do |klass|

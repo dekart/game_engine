@@ -47,7 +47,7 @@
                 <% end %>
               <% end %>
               
-              <%= link_to_remote(button(inventory_use_label(inventory)),
+              <%= link_to_remote(button(:use),
                     :url    => use_inventory_path(inventory),
                     :update => :result,
                     :html   => {:class => "use button"}

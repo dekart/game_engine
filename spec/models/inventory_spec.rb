@@ -26,6 +26,12 @@ describe Inventory do
       @inventory.use!
     end
 
+    it "should save applied payouts to character" do
+      @inventory.character.should_receive(:save!).and_return(true)
+
+      @inventory.use!
+    end
+
     it "should take item from user's inventory" do
       lambda{
         @inventory.use!

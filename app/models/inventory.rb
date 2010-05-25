@@ -38,6 +38,8 @@ class Inventory < ActiveRecord::Base
     transaction do
       result = payouts.apply(character, :use)
 
+      character.save!
+      
       character.inventories.take!(item)
 
       result

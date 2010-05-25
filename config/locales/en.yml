@@ -338,18 +338,15 @@ en:
         to_belt: "To Belt"
         to_legs: "To Legs"
         sell: "Sell for {{price}}"
+        use: "Use"
       empty_set:
         text: "Your inventory is empty. You can buy new items in the {{shop}}"
         shop: "Shop"
     use:
-      button:
-        base: "Use {{limit}}"
-        unlimited: "(unlimited)"
-        limited: "({{left}}/{{limit}})"
+      you_received: "You received:"
+      you_spent: "You spent:"
       messages:
         success: "You've successfully used {{item}}!"
-        item_gone: "{{item}} ran out and now it's gone!"
-      effects: "Effects:"
     equipment:
       title: "Your Equipment"
     equippables:
