@@ -30,12 +30,14 @@
 <%= form.check_box :can_be_sold %>
 
 <%= form.check_box :usable %>
-<%= form.text_field :usage_limit, :size => 6, :autocomplete => :off %>
-
+<%= form.text_field :use_button_label %>
+<%= form.text_area :use_message, :rows => 2, :cols => 80 %>
 
 <h2><%= Item.human_attribute_name("effects") %></h2>
 
 <%= form.text_field :attack, :size => 6, :autocomplete => :off %>
 <%= form.text_field :defence, :size => 6, :autocomplete => :off %>
 
-<%= render :partial => "admin/effects/collection", :locals => {:form => form} %>
+<h2><%= Item.human_attribute_name("payouts") %></h2>
+
+<%= render "admin/payouts/collection", :form => form %>

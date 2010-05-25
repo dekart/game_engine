@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  extend HasEffects
+  extend HasPayouts
   include HasInvisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
@@ -79,11 +79,10 @@ class Item < ActiveRecord::Base
       :large  => "200x200#"
     }
 
-  has_effects
+  has_payouts :use
 
   validates_presence_of :name, :item_group, :availability, :level
-  validates_presence_of :usage_limit, :if => :usable?
-  validates_numericality_of :level, :basic_price, :vip_price, :usage_limit, :allow_blank => true
+  validates_numericality_of :level, :basic_price, :vip_price, :allow_blank => true
 
   class << self
     def to_grouped_dropdown
