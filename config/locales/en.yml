@@ -57,6 +57,7 @@ en:
       item:
         price: "Price"
         effects: "Effects"
+        use_label: "Custom label for 'Use' button"
       help_page:
         alias: "Page URL"
     errors:

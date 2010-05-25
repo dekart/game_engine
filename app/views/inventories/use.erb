@@ -1,6 +1,8 @@
 <% result_for :inventory_use do %>
   <p>
-    <%= raw t(".messages.success", :item => @inventory.name) %>
+    <%= raw(
+          @inventory.use_message.present? ? @inventory.use_message : t(".messages.success", :item => @inventory.name)
+        ) %>
   </p>
 
   <table class="payouts" cellspacing="0" cellpadding="0">

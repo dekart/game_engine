@@ -12,7 +12,7 @@ namespace :app do
         item.update_attribute(:usable, false)
         item.hide
 
-        item.inventories.update_all "amount = amount * #{item.usage_limit}"
+        item.inventories.update_all "amount = amount * #{item.usage_limit || 1}"
       end
 
       puts "Done!"
