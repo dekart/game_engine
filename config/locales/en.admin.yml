@@ -64,7 +64,7 @@ en:
         title: "Edit Item"
         submit: "Update"
       form_fields:
-        add_effect: "Add Effect:"
+        use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '{{default_value}}'"
       effect:
         remove: "Remove"
     mission_groups:

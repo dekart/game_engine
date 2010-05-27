@@ -33,6 +33,9 @@
 
 <%= form.check_box :allow_loot %>
 <%= form.text_field :loot_chance, :size => 6, :autocomplete => :off %>
-<%= form.grouped_select :loot_item_ids, Item.to_grouped_dropdown, {}, {:multiple => true} %>
+<%= form.grouped_select(:loot_item_ids, Item.to_grouped_dropdown,
+      {:comment => t("forms.select_multiple")},
+      {:multiple => true}
+    ) %>
 
 <%= render "admin/payouts/collection", :form => form %>

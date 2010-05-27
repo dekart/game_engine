@@ -10,6 +10,8 @@ en:
       format:
         unit: ""
         precision: 0
+  forms:
+    select_multiple: "Hold 'Ctrl' to select multiple items"
   activerecord:
     models:
       mission: "Mission"

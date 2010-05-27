@@ -1,7 +1,7 @@
 <table>
   <tr>
     <td>
-      <%= form.grouped_select :item_ids, Item.to_grouped_dropdown, {}, {:multiple => true} %>
+      <%= form.grouped_select :item_ids, Item.to_grouped_dropdown, {:comment => t("forms.select_multiple")}, {:multiple => true} %>
     </td>
     <td>OR</td>
     <td>
