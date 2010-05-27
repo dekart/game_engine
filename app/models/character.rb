@@ -368,6 +368,35 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def reset_attributes!
+    return if self.vip_money < Setting.i(:premium_reset_attributes_price)
+
+    self.transaction do
+      self.vip_money -= Setting.i(:premium_reset_attributes_price)
+
+      free_points = 0
+
+      UPGRADABLE_ATTRIBUTES.each do |attribute|
+        current_value = self[attribute]
+        new_value     = character_type[attribute]
+
+        free_points += (current_value - new_value) *
+          Setting.i("character_#{attribute}_upgrade_points") / 
+          Setting.i("character_#{attribute}_upgrade")
+
+        self[attribute] = new_value
+
+      end
+
+      self.points += free_points
+
+      self.hp = self.health if self.hp > self.health
+      self.ep = self.energy if self.ep > self.energy
+
+      self.save
+    end
+  end
+
   def owner
     self
   end
@@ -420,6 +449,27 @@ class Character < ActiveRecord::Base
 
   def placements
     self[:placements] ||= {}
+  end
+
+  def accept_gifts id
+    if id == 'all'
+      gift_receipts = GiftReceipt.unaccepted.for_character self
+      gift_receipts.each(&:give_item_to_character!).map(&:gift).uniq
+    else
+      gift = Gift.find id
+      gift_receipt = gift.receipts.unaccepted.for_character(self).first
+
+      if gift_receipt
+        gift_receipt.give_item_to_character!
+        [gift]
+      else
+        []
+      end
+    end
+  end
+
+  def has_unaccepted_gifts?
+    ! GiftReceipt.unaccepted.for_character(self).count.zero?
   end
 
   protected

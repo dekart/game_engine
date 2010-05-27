@@ -545,6 +545,8 @@ en:
         promote: "Promote"
         demote: "Demote"
         demote_confirm: "Do you really want to demote this alliance member?"
+        demote_all: "Demote all"
+        demote_all_confirm: "Do you really want to demote all alliance members?"
     buttons:
       buttons:
         relations: "My Alliance"
@@ -694,6 +696,9 @@ en:
         text: "Refill your stamina"
         button: "Refill"
         full: "You have full stamina"
+      reset_attributes:
+        text: "Reset character attributes"
+        button: "Reset"
       buy_points:
         text: "Add {{amount}} upgrade points to your character"
         button: "Add Points"
@@ -709,6 +714,7 @@ en:
           refill_stamina: "Now you have maximum stamina!"
           buy_points: "Upgrade points have been added to your character!"
           hire_mercenary: "You successfully hired new mercenary!"
+          reset_attributes: "You successfully reseted all attributes!"
         failure: "You don't have enough Gems"
   help_requests:
     show:
@@ -773,6 +779,7 @@ en:
       buttons:
         accept_pending: "Accept Other Gifts"
         play_now: "Play Now"
+        accept_all: "Accept All"
   ratings:
     show:
       title:

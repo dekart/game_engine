@@ -21,6 +21,8 @@ class PremiaController < ApplicationController
         current_character.refill_stamina!
       when :hire_mercenary
         current_character.hire_mercenary!
+      when :reset_attributes
+        current_character.reset_attributes!
       else
         false
       end

@@ -56,24 +56,28 @@ class GiftsController < ApplicationController
   def confirm
     @gift = Gift.find(params[:id])
 
-    if params[:ids]
-      if @gift.update_attributes(:recipients => params[:ids].join(","), :recipients_count => params[:ids].size)
+    begin
+      if params[:ids]
+
+        params[:ids].each do |facebook_id|
+          @gift.receipts.create! :facebook_id => facebook_id
+        end
+        
         flash[:success] = t("gifts.confirm.messages.success")
+
       else
-        flash[:error] = t("gifts.confirm.messages.failure")
+        @gift.destroy
       end
-    else
-      @gift.destroy
+
+    rescue ActiveRecord::RecordInvalid
+      flash[:error] = t("gifts.confirm.messages.failure")
     end
 
     redirect_to landing_url
   end
 
   def show
-    if @gift = Gift.find_by_id(params[:id]) and @gift.can_receive?(current_character)
-      @gift_receipt = @gift.receipts.create(:character => current_character)
-    else
-      redirect_to landing_url
-    end
+    @gifts = current_character.accept_gifts params[:id]
+    redirect_to landing_url if @gifts.empty?
   end
 end
