@@ -1,21 +1,26 @@
 <% result_for :inventory_use do %>
   <p>
-    <%= raw t(".messages.success", :item => @inventory.name) %>
+    <%= raw(
+          @inventory.use_message.present? ? @inventory.use_message : t(".messages.success", :item => @inventory.name)
+        ) %>
   </p>
 
-  <h3><%= t(".effects") %></h3>
+  <table class="payouts" cellspacing="0" cellpadding="0">
+    <tr>
+      <td class="received">
+        <h3><%= t(".you_received") %></h3>
 
-  <div class="payouts">
-    <% @inventory.effects.each do |effect| %>
-      <%= payout(effect.name, effect.value, :label => t("effects.#{effect.name}.name")) %>
-    <% end %>
-  </div>
+        <%= payout_list(@result, :add) %>
+      </td>
+      <td class="spent">
+        <h3><%= t(".you_spent") %></h3>
 
-  <% if @inventory.frozen? %>
-    <p>
-      <%= raw t(".messages.item_gone", :item => @inventory.name) %>
-    </p>
-  <% end %>
+        <%= payout_list(@result, :remove) %>
+
+        <%= payout(:item, item_image(@inventory, :icon), :label => @inventory.name) %>
+      </td>
+    </tr>
+  </table>
 <% end %>
 
 <% dom_ready do %>

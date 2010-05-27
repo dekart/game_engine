@@ -26,7 +26,7 @@ class InventoriesController < ApplicationController
   def use
     @inventory = current_character.inventories.find(params[:id])
 
-    @inventory.use
+    @result = @inventory.use!
 
     render :action => :use, :layout => "ajax"
   end

@@ -81,3 +81,5 @@ Setting[:character_energy_upgrade_points] = 1
 Setting[:character_default_name] = ""
 Setting[:character_equipment_slots] = 5
 Setting[:character_relations_per_equipment_slot] = 3
+Setting[:gifting_accept_all] = 0
+Setting[:premium_reset_attributes_price] = 10

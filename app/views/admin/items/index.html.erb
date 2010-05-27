@@ -34,8 +34,7 @@
         <td class="level"><%= item.level %></td>
         <td class="basic_price"><%= number_to_currency(item.basic_price) %></td>
         <td class="vip_price"><%= number_to_currency(item.vip_price) %></td>
-        <td class="usable"><%= item.usable %><%= ", #{item.usage_limit}" if item.usage_limit %></td>
-        <td class="effects">
+        <td class="attributes">
           <% if item.attack.to_i > 0 %>
             <div class="attack">
               <%= Item.human_attribute_name("attack") %>: <%= item.attack %>
@@ -47,9 +46,12 @@
               <%= Item.human_attribute_name("defence") %>: <%= item.defence %>
             </div>
           <% end %>
-
-          <% item.effects.each do |effect| %>
-            <%= render :partial => "admin/effects/preview/#{effect.name}", :locals => {:effect => effect} %>
+        </td>
+        <td class="payouts">
+          <% if item.usable %>
+            <%= admin_payouts_preview(item.payouts) %>
+          <% else %>
+            <%= t(".not_usable") %>
           <% end %>
         </td>
         <td class="owned"><%= item.owned %></td>

@@ -1,25 +1,33 @@
 <% content_for :result do %>
   <% result_for :gift do %>
     <div class="buttons">
-      <%= link_to(button(:accept_pending), fb_app_requests_url, :class => "pending button", :target => :_top) %>
+      <% if Setting.b(:gifting_accept_all) %> 
+        <% if current_character.has_unaccepted_gifts? %>
+          <%= link_to(button(:accept_all), gift_path(:all), :class => 'pending button') %>
+        <% end %>
+      <% else %>
+        <%= link_to(button(:accept_pending), fb_app_requests_url, :class => "pending button", :target => :_top) %>
+      <% end %>
       <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
     </div>
     
     <p><%= t(".success") %></p>
 
-    <table class="details" cellspacing="0" cellpadding="0">
-      <tr>
-        <td class="item">
-          <%= item_image(@gift.item, :small) %>
+    <% @gifts.each do |gift| %>
+      <table class="details" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="item">
+            <%= item_image(gift.item, :small) %>
 
-          <div class="name"><%= @gift.item.name %></div>
-        </td>
-        <td class="from"><%= t(".from") %></td>
-        <td class="sender">
-          <%= character_picture_link(@gift.character, {}, {:size => :small}) %><br />
-          <%= character_name_link(@gift.character) %>
-        </td>
-      </tr>
-    </table>
+            <div class="name"><%= gift.item.name %></div>
+          </td>
+          <td class="from"><%= t(".from") %></td>
+          <td class="sender">
+            <%= character_picture_link(gift.character, {}, {:size => :small}) %><br />
+            <%= character_name_link(gift.character) %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
   <% end %>
 <% end %>

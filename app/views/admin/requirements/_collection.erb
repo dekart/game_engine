@@ -18,7 +18,7 @@
   <div class="controls">
     <b><%= t(".add_requirement") %></b>
 
-    <% Requirements::Base.types.each do |type| %>
+    <% Requirements::Base.types.sort_by{|type| t("requirements.#{type.requirement_name}.name") }.each do |type| %>
       <%= link_to_remote(t("requirements.#{type.requirement_name}.name"),
             :url    => new_admin_requirement_path(:type => type.requirement_name, :container => form.object_name),
             :method => :get,

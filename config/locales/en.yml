@@ -10,10 +10,12 @@ en:
       format:
         unit: ""
         precision: 0
+  forms:
+    select_multiple: "Hold 'Ctrl' to select multiple items"
   activerecord:
     models:
       mission: "Mission"
-      mission_group: "Mission Group"
+      missiousn_group: "Mission Group"
     attributes:
       character:
         level: "Level"
@@ -57,6 +59,7 @@ en:
       item:
         price: "Price"
         effects: "Effects"
+        use_button_label: "Custom label for 'Use' button"
       help_page:
         alias: "Page URL"
     errors:
@@ -119,6 +122,15 @@ en:
     health_point:
       name: "Health Points"
       text: "{{amount}} Health Points"
+    energy_point:
+      name: "Energy Points"
+      text: "{{amount}} Energy Points"
+    stamina_point:
+      name: "Stamina Points"
+      text: "{{amount}} Stamina Points"
+    upgrade_point:
+      name: "Upgrade Points"
+      text: "{{amount}} Upgrade Points"
     attack:
       name: "Attack"
       text: "{{amount}} Attack Points"
@@ -147,6 +159,12 @@ en:
         allow_vip: "Allow items that cost gems"
     health_point:
       name: "Health Points"
+    energy_point:
+      name: "Energy Points"
+    stamina_point:
+      name: "Stamina Points"
+    upgrade_point:
+      name: "Upgrade Points"
     mercenary:
       name: "Mercenaries"
     experience:
@@ -338,18 +356,15 @@ en:
         to_belt: "To Belt"
         to_legs: "To Legs"
         sell: "Sell for {{price}}"
+        use: "Use"
       empty_set:
         text: "Your inventory is empty. You can buy new items in the {{shop}}"
         shop: "Shop"
     use:
-      button:
-        base: "Use {{limit}}"
-        unlimited: "(unlimited)"
-        limited: "({{left}}/{{limit}})"
+      you_received: "You received:"
+      you_spent: "You spent:"
       messages:
         success: "You've successfully used {{item}}!"
-        item_gone: "{{item}} ran out and now it's gone!"
-      effects: "Effects:"
     equipment:
       title: "Your Equipment"
     equippables:
@@ -530,6 +545,8 @@ en:
         promote: "Promote"
         demote: "Demote"
         demote_confirm: "Do you really want to demote this alliance member?"
+        demote_all: "Demote all"
+        demote_all_confirm: "Do you really want to demote all alliance members?"
     buttons:
       buttons:
         relations: "My Alliance"
@@ -679,6 +696,9 @@ en:
         text: "Refill your stamina"
         button: "Refill"
         full: "You have full stamina"
+      reset_attributes:
+        text: "Reset character attributes"
+        button: "Reset"
       buy_points:
         text: "Add {{amount}} upgrade points to your character"
         button: "Add Points"
@@ -694,6 +714,7 @@ en:
           refill_stamina: "Now you have maximum stamina!"
           buy_points: "Upgrade points have been added to your character!"
           hire_mercenary: "You successfully hired new mercenary!"
+          reset_attributes: "You successfully reseted all attributes!"
         failure: "You don't have enough Gems"
   help_requests:
     show:
@@ -758,6 +779,7 @@ en:
       buttons:
         accept_pending: "Accept Other Gifts"
         play_now: "Play Now"
+        accept_all: "Accept All"
   ratings:
     show:
       title:

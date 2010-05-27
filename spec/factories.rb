@@ -6,6 +6,13 @@ Factory.define :character_type do |t|
 
   t.basic_money 1100
   t.vip_money   1
+
+  t.attack      1
+  t.defence     1
+  
+  t.health      100
+  t.energy      10
+  t.stamina     10
 end
 
 Factory.define :character do |t|
@@ -46,10 +53,15 @@ Factory.define :stuff_invisibility do |t|
 end
 
 Factory.define :item do |t|
-  t.name            'item'
-  t.availability    'shop'
-  t.level           1
-  t.association     :item_group
+  t.name          'item'
+  t.availability  'shop'
+  t.level         1
+  t.association   :item_group
+
+  t.usable  true
+  t.payouts Payouts::Collection.new(
+    Payouts::BasicMoney.new(:value => 100, :apply_on => :use)
+  )
 end
 
 Factory.define :item_group do |t|

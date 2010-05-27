@@ -14,13 +14,18 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
-    @assignment = Assignment.find(params[:id])
+    if params[:id] == 'all'
+      current_character.assignments.clear
+      redirect_to relations_url
+    else
+      @assignment = Assignment.find(params[:id])
 
-    if @assignment.context.owner == current_character
-      @assignment.destroy
+      if @assignment.context.owner == current_character
+        @assignment.destroy
+      end
+
+      redirect_to_context(@assignment)
     end
-
-    redirect_to_context(@assignment)
   end
 
   protected

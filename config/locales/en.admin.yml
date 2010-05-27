@@ -48,6 +48,7 @@ en:
       index:
         title: "Items"
         empty_set: "No items"
+        not_usable: "Not usable"
         controls:
           new: "Add Item"
           edit: "Edit"
@@ -63,7 +64,7 @@ en:
         title: "Edit Item"
         submit: "Update"
       form_fields:
-        add_effect: "Add Effect:"
+        use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '{{default_value}}'"
       effect:
         remove: "Remove"
     mission_groups:
