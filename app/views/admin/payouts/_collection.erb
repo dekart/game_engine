@@ -10,9 +10,9 @@
   </div>
 
   <div class="controls">
-    <b><%= t(".add_payout") %></b>
+    <b><%= t(".add_payout") %></b><br>
 
-    <% Payouts::Base.types.each do |type| %>
+    <% Payouts::Base.types.sort_by{|type| t("payouts.#{type.payout_name}.name") }.each do |type| %>
       <%= link_to_remote(t("payouts.#{type.payout_name}.name"),
             :url    => new_admin_payout_path(:type => type.payout_name, :container => form.object_name),
             :method => :get,
