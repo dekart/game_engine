@@ -1,3 +1,13 @@
-<%= form.text_field :value, :size => 6, :autocomplete => :off %>
-<%= form.select :availability, Item::AVAILABILITIES, :include_blank => "-- Any --" %>
-<%= form.check_box :allow_vip %>
+<table>
+  <tr>
+    <td>
+      <%= form.grouped_select :item_ids, Item.to_grouped_dropdown, {}, {:multiple => true} %>
+    </td>
+    <td>OR</td>
+    <td>
+      <%= form.text_field :value, :size => 6, :autocomplete => :off %>
+      <%= form.select :availability, Item::AVAILABILITIES, :include_blank => "-- Any --" %>
+      <%= form.check_box :allow_vip %>
+    </td>
+  </tr>
+</table>
