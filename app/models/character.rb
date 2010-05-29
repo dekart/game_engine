@@ -264,8 +264,7 @@ class Character < ActiveRecord::Base
         :level_progress_percentage,
         :time_to_hp_restore,
         :time_to_ep_restore,
-        :time_to_sp_restore,
-        :time_to_basic_money_restore
+        :time_to_sp_restore
       ]
     )
   end
