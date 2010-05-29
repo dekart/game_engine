@@ -40,7 +40,11 @@ en:
         points: "Upgrade Points"
         rating: "Rating"
         name: "Character Name"
+        bank: "Bank"
       property_type:
+        income: "Income"
+        price: "Price"
+        upgrade_price: "Upgrade Price"
         upgrade_cost_increase: "Upgrade cost increase per level"
         collect_period: "Income collection period, hours"
       user:
