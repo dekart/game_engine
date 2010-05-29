@@ -43,7 +43,7 @@
       $('#dialog').css({
         top:	getPageScroll()[1] + (getPageHeight() / 10),
         left:	$(window).width() / 2 - 205 
-      }).show()
+      })//.show()
 
       $(document).bind('keydown.dialog', function(e) {
         if (e.keyCode == 27) $.dialog.close()
@@ -60,9 +60,10 @@
 
       if (options.klass) $('#dialog .content').addClass(options.klass);
       $('#dialog .content').append(data)
-      $('#dialog .loading').remove()
+      $('#dialog .loading').remove();
+      $('#dialog').show();
       $('#dialog .body').children().fadeIn('normal')
-      $('#dialog').css('left', $(window).width() / 2 - ($('#dialog .body').width() / 2))
+      $('#dialog').css('left', $(window).width() / 2 - ($('#dialog .body').width() / 2));
 
       $(document).trigger('reveal.dialog');
       if (options.reveal) options.reveal.call(this);
