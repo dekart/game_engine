@@ -9,6 +9,8 @@
     <%= render "fights/create/details", :fight => @fight %>
   <% elsif !@fight.enough_stamina? %>
     <%= render "requirements/not_satisfied/stamina", :required_value => Setting.i(:fight_stamina_required) %>
+  <% elsif current_character.weak? %>
+    <%= render "requirements/not_satisfied/health_point", :required_value => current_character.weakness_minimum %>
   <% else %>
     <p><%= @fight.errors.on(:character) %></p>
   <% end %>

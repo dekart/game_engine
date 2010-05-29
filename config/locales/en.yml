@@ -158,6 +158,12 @@ en:
         premium_page: "Gem Market"
         buttons:
           refill: "Refill Stamina"
+      health_point:
+        message: "You don't have enough health! Take a rest until your health will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."
+        get_more: "You can also visit {{premium_page}} to get a full health refill."
+        premium_page: "Gem Market"
+        buttons:
+          refill: "Refill Health"
 
 
   payouts:
