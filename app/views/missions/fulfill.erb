@@ -18,7 +18,7 @@
       <%= render "mission_groups/complete", :result => @result %>
     <% end %>
   <% elsif !@result.enough_energy? %>
-    <%= render "missions/fulfill/not_enough_energy", :mission => @mission, :result => @result %>
+    <%= render "requirements/not_satisfied/energy", :required_value => @mission.ep_cost %>
   <% elsif !@result.requirements_satisfied? %>
     <p><%= t(".requirements_not_satisfied.message") %></p>
 

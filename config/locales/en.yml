@@ -144,6 +144,16 @@ en:
     alliance:
       name: "Alliance"
       text: "{{amount}} Alliance Members"
+
+    not_satisfied:
+      energy:
+        message: "You don't have enough energy. Take a rest until your energy will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."
+        get_more: "You can also visit {{premium_page}} to get an energy refill."
+        premium_page: "Gem Market"
+        buttons:
+          refill: "Refill Energy"
+
+
   payouts:
     item:
       name: "Item"
@@ -463,13 +473,6 @@ en:
           zero_energy: "{{user}} helped to save energy!"
         progress:
           title: "Mission Progress"
-
-      not_enough_energy:
-        message: "You don't have enough energy. Take a rest until your energy will grow to {{ep_number}} points. You need to wait about {{minute_number}} minutes."
-        get_more: "You can also visit {{premium_page}} to get an energy refill."
-        premium_page: "Gem Market"
-        buttons:
-          refill: "Refill Energy"
           
       already_completed:
         message: "You already completed this mission"
