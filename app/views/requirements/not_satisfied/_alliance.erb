@@ -1,0 +1,8 @@
+<p>
+  <%= raw t(".message",
+        :required_value => content_tag(:strong, requirement.value),
+
+        :invite   => link_to(t(".invite"), invite_users_path),
+        :premium  => link_to(t(".premium"), premium_path)
+      ) %>
+</p>

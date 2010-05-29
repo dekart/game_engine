@@ -9,7 +9,7 @@
     <p><%= t(".requirements_not_satisfied.message") %></p>
 
     <div class="requirements clearfix">
-      <%= requirement_list(@fight.boss.requirements, :unsatisfied) %>
+      <%= unsatisfied_requirement_list(@fight.boss.requirements) %>
     </div>
   <% elsif !@fight.enough_energy? %>
     <%= render "requirements/not_satisfied/energy_point", :required_value => @fight.ep_cost %>

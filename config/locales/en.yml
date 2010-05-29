@@ -146,6 +146,10 @@ en:
       text: "{{amount}} Alliance Members"
 
     not_satisfied:
+      alliance:
+        message: "You don't have enought members in your alliance. You need at least {{required_value}} members. To get more members you can either {{invite}} or {{premium}}."
+        invite: "invite your friends"
+        premium: "hire mercenaries"
       energy_point:
         restorable:
           message: "You don't have enough energy! Take a rest until your energy will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."

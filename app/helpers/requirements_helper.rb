@@ -23,6 +23,20 @@ module RequirementsHelper
     block_given? ? concat(result) : result
   end
 
+  def unsatisfied_requirement_list(requirements)
+    returning result = "" do
+      requirements.each do |requirement|
+        next if requirement.satisfies?(current_character)
+
+        result << render("requirements/not_satisfied/#{requirement.name}",
+          :requirement  => requirement
+        )
+      end
+
+      result.html_safe!
+    end
+  end
+
   def attribute_requirement(attribute, value, satisfied = true)
     requirement(attribute,
       t("requirements.attribute.text",
