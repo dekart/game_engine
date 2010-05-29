@@ -26,10 +26,6 @@
   </div>
 <% end %>
 
-<% dom_ready do %>
-  <%#= mission_complete_stream_dialog(mission) %>
-<% end %>
-
 <% if missions %>
   <% dom_ready do %>
     $('#mission_list').html('<%= escape_javascript(render("list", :missions => missions)) %>');

@@ -251,7 +251,7 @@ class Character < ActiveRecord::Base
     number_to_currency(vip_money)
   end
 
-  def to_json_for_overview(options = {})
+  def to_json_for_overview
     to_json(
       :only     => [
         :basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp,
@@ -264,8 +264,7 @@ class Character < ActiveRecord::Base
         :level_progress_percentage,
         :time_to_hp_restore,
         :time_to_ep_restore,
-        :time_to_sp_restore,
-        :time_to_basic_money_restore
+        :time_to_sp_restore
       ]
     )
   end
@@ -483,6 +482,7 @@ class Character < ActiveRecord::Base
 
       self.ep     = self.energy
       self.hp     = self.health
+      self.sp     = self.stamina
 
       self.level_updated = true
     end

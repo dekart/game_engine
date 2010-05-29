@@ -43,7 +43,7 @@
       $('#dialog').css({
         top:	getPageScroll()[1] + (getPageHeight() / 10),
         left:	$(window).width() / 2 - 205 
-      }).show()
+      })//.show()
 
       $(document).bind('keydown.dialog', function(e) {
         if (e.keyCode == 27) $.dialog.close()
@@ -60,9 +60,10 @@
 
       if (options.klass) $('#dialog .content').addClass(options.klass);
       $('#dialog .content').append(data)
-      $('#dialog .loading').remove()
+      $('#dialog .loading').remove();
+      $('#dialog').show();
       $('#dialog .body').children().fadeIn('normal')
-      $('#dialog').css('left', $(window).width() / 2 - ($('#dialog .body').width() / 2))
+      $('#dialog').css('left', $(window).width() / 2 - ($('#dialog .body').width() / 2));
 
       $(document).trigger('reveal.dialog');
       if (options.reveal) options.reveal.call(this);
@@ -192,14 +193,14 @@
 
     $('#dialog_overlay').hide().addClass("dialog_overlayBG")
       .click(function() { $(document).trigger('close.dialog') })
-      .fadeIn(200)
+      .fadeTo(400, 0.5)
     return false
   }
 
   function hideOverlay() {
     if (skipOverlay()) return
 
-    $('#dialog_overlay').fadeOut(200, function(){
+    $('#dialog_overlay').fadeOut(400, function(){
       $("#dialog_overlay").removeClass("dialog_overlayBG")
       $("#dialog_overlay").addClass("dialog_hide")
       $("#dialog_overlay").remove()

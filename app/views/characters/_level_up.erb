@@ -1,21 +1,27 @@
 <% result_for :level_up do %>
-  <div class="buttons">
-    <%= link_to(button(:upgrade), upgrade_character_url(current_character),
-          :class => "upgrade button"
-        ) %>
-  </div>
-
   <h2><%= t(".title") %></h2>
 
   <div class="text">
-    <%=raw t(".text",
-          :upgrade => link_to(t(".upgrade_link"), upgrade_character_url(current_character))
+    <%= raw t(".text",
+          :point_amount => Setting.i(:character_points_per_upgrade),
+          :upgrade      => link_to(t(".upgrade_link"), upgrade_character_url(current_character))
+        ) %>
+  </div>
+
+  <div class="buttons">
+    <%= link_to_function(button(:continue),
+          character_level_up_stream_dialog + "$('#level_up_result .buttons .continue').hide(); $('#level_up_result .buttons .upgrade').show();",
+          :class => "continue button"
+        ) %>
+    <%= link_to(button(:upgrade), upgrade_character_url(current_character),
+          :class => "upgrade button",
+          :style => "display:none"
         ) %>
   </div>
 <% end %>
 
 <% dom_ready do %>
+  $.dialog({div: '#level_up_result'});
+  
   $(document).trigger('character.new_level');
-
-  <%= character_level_up_stream_dialog %>
 <% end %>

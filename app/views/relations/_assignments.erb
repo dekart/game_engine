@@ -18,7 +18,9 @@
       <% else %>
         <div class="controls">
           <%= link_to_function(button(:promote),
-                "$.dialog({ajax: '#{ escape_javascript(new_character_assignment_path(current_character, :role => role))}'})",
+                "$.dialog(%s);" % {
+                  :ajax => new_character_assignment_path(current_character, :role => role)
+                }.to_json,
                 :class => "promote button"
               ) %>
         </div>

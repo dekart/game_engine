@@ -42,7 +42,7 @@ module DesignHelper
     concat(
       content_tag(:div, capture(&block),
         :id     => "#{type}_result",
-        :class  => :result_content
+        :class  => "result_content clearfix"
       )
     )
   end

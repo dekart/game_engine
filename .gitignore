@@ -3,6 +3,7 @@ tmp/*
 db/*.sqlite3
 db/schema.rb
 public/system
+public/javascripts/all.js
 nbproject
 test
 bin/*

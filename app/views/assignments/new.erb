@@ -1,6 +1,6 @@
-<h2><%= t(".title") %></h2>
-
 <% form_for [@assignment.context, @assignment] do |f| %>
+  <h2><%= t(".title") %></h2>
+
   <%= f.hidden_field :role %>
   <%= f.hidden_field :relation_id %>
 
@@ -13,7 +13,7 @@
   </div>
 
   <% filters.each do |filter| %>
-    <div id="<%= filter %>">
+    <div id="<%= filter %>" class="list">
       <% if relations = current_character.friend_relations.send(filter) and relations.any? %>
         <table class="relations" cellspacing="0" cellpadding="0">
           <tr>

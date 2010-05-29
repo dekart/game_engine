@@ -28,7 +28,7 @@ module CharactersHelper
   end
 
   def character_level_up_block
-    render(:partial => "characters/level_up") if current_character.level_updated
+    render("characters/level_up") if current_character.level_updated
   end
 
   def character_wall(character, options = {})

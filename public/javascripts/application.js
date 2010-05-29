@@ -180,7 +180,6 @@ var Spinner = {
   },
   show: function(){
     $('#spinner').show();
-    $('#spinner_field').focus();
   },
   hide: function(){
     $('#spinner').hide()
@@ -209,11 +208,21 @@ $(function(){
     $(document).trigger('remote_content.received');
 
     $('#result').show();
+    
+    $.scrollTo('#result');
   });
 
   $(document).bind('remote_content.received', function(){
     FB.XFBML.Host.parseDomTree();
   });
+
+  $(document).bind('loading.dialog', function(){
+    $.scrollTo('#content');
+  });
+  
+  $(document).bind('afterReveal.dialog', function(){
+    $.scrollTo('#dialog .popup .body');
+  })
 
   Spinner.setup();
 });
