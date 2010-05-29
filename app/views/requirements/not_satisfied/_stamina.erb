@@ -7,7 +7,7 @@
 <p>
   <%= raw t(".message",
         :required_value => content_tag(:strong, required_value),
-        :restore_time   => content_tag(:strong, (current_character.ep_restore_time(required_value) / 1.minute).ceil)
+        :restore_time   => content_tag(:strong, (current_character.sp_restore_time(required_value) / 1.minute).ceil)
       ) %>
 </p>
 

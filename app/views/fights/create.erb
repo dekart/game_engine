@@ -1,12 +1,14 @@
 <% result_for :fight do %>
   <% if !@fight.new_record? %>
     <% if @fight.winner == current_character %>
-      <%= render :partial => "fights/create/success", :locals => {:fight => @fight} %>
+      <%= render "fights/create/success", :fight => @fight %>
     <% else %>
-      <%= render :partial => "fights/create/failure", :locals => {:fight => @fight} %>
+      <%= render "fights/create/failure", :fight => @fight %>
     <% end %>
 
-    <%= render :partial => "fights/create/details", :locals => {:fight => @fight} %>
+    <%= render "fights/create/details", :fight => @fight %>
+  <% elsif !@fight.enough_stamina? %>
+    <%= render "requirements/not_satisfied/stamina", :required_value => Setting.i(:fight_stamina_required) %>
   <% else %>
     <p><%= @fight.errors.on(:character) %></p>
   <% end %>

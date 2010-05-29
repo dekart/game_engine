@@ -148,10 +148,16 @@ en:
     not_satisfied:
       energy:
         message: "You don't have enough energy. Take a rest until your energy will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."
-        get_more: "You can also visit {{premium_page}} to get an energy refill."
+        get_more: "You can also visit {{premium_page}} to get a full energy refill."
         premium_page: "Gem Market"
         buttons:
           refill: "Refill Energy"
+      stamina:
+        message: "You don't have enough stamina. Take a rest until your stamina will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."
+        get_more: "You can also visit {{premium_page}} to get a full stamina refill."
+        premium_page: "Gem Market"
+        buttons:
+          refill: "Refill Stamina"
 
 
   payouts:
