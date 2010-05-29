@@ -482,6 +482,7 @@ class Character < ActiveRecord::Base
 
       self.ep     = self.energy
       self.hp     = self.health
+      self.sp     = self.stamina
 
       self.level_updated = true
     end
