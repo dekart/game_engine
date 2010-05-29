@@ -12,7 +12,7 @@
       <%= requirement_list(@fight.boss.requirements, :unsatisfied) %>
     </div>
   <% elsif !@fight.enough_energy? %>
-    <%= render "requirements/not_satisfied/energy", :required_value => @fight.ep_cost %>
+    <%= render "requirements/not_satisfied/energy_point", :required_value => @fight.ep_cost %>
   <% elsif current_character.weak? %>
     <%= render "requirements/not_satisfied/health_point", :required_value => current_character.weakness_minimum %>
   <% else %>
