@@ -6,7 +6,7 @@
     <td class="value" id="upgrade_points"><%= current_character.points %></td>
     <td class="" colspan="2">
       <%= raw t(".buy_more.text",
-            :premia => link_to(t(".buy_more.premia"), premium_path)
+            :premium_page => link_to(t(".buy_more.premium_page"), premium_path)
           ) %>
     </td>
   </tr>

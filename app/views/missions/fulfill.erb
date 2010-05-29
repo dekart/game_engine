@@ -18,12 +18,7 @@
       <%= render "mission_groups/complete", :result => @result %>
     <% end %>
   <% elsif !@result.enough_energy? %>
-    <p>
-      <%= raw t(".not_enough_energy.message",
-            :ep_number      => @mission.ep_cost,
-            :minute_number  => (current_character.ep_restore_time(@mission.ep_cost) / 1.minute).ceil
-          ) %>
-    </p>
+    <%= render "missions/fulfill/not_enough_energy", :mission => @mission, :result => @result %>
   <% elsif !@result.requirements_satisfied? %>
     <p><%= t(".requirements_not_satisfied.message") %></p>
 
