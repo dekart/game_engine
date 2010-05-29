@@ -251,7 +251,7 @@ class Character < ActiveRecord::Base
     number_to_currency(vip_money)
   end
 
-  def to_json_for_overview(options = {})
+  def to_json_for_overview
     to_json(
       :only     => [
         :basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp,
