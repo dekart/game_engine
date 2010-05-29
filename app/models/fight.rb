@@ -54,6 +54,14 @@ class Fight < ActiveRecord::Base
     attacker.sp >= Setting.i(:fight_stamina_required)
   end
 
+  def stamina_requirement
+    Requirements::StaminaPoint.new(:value => Setting.i(:fight_stamina_required))
+  end
+
+  def health_requirement
+    Requirements::HealthPoint.new(:value => attacker.weakness_minimum)
+  end
+
   protected
 
   def validate

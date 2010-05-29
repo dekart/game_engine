@@ -1,4 +1,4 @@
-<% if current_character.energy >= required_value %>
+<% if current_character.energy >= requirement.value %>
   <div class="buttons">
     <%= link_to(button(:refill), premium_path,
           :class => "premium button"
@@ -7,8 +7,8 @@
 
   <p>
     <%= raw t(".restorable.message",
-          :required_value => content_tag(:strong, required_value),
-          :restore_time   => content_tag(:strong, (current_character.ep_restore_time(required_value) / 1.minute).ceil)
+          :required_value => content_tag(:strong, requirement.value),
+          :restore_time   => content_tag(:strong, (current_character.ep_restore_time(requirement.value) / 1.minute).ceil)
         ) %>
   </p>
 

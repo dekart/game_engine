@@ -108,6 +108,14 @@ class BossFight < ActiveRecord::Base
     character.ep >= ep_cost
   end
 
+  def energy_requirement
+    Requirements::EnergyPoint.new(:value => ep_cost)
+  end
+
+  def health_requirement
+    Requirements::HealthPoint.new(:value => character.weakness_minimum)
+  end
+
   protected
 
   def validate_on_create
