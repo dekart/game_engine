@@ -193,14 +193,14 @@
 
     $('#dialog_overlay').hide().addClass("dialog_overlayBG")
       .click(function() { $(document).trigger('close.dialog') })
-      .fadeIn(200)
+      .fadeTo(400, 0.5)
     return false
   }
 
   function hideOverlay() {
     if (skipOverlay()) return
 
-    $('#dialog_overlay').fadeOut(200, function(){
+    $('#dialog_overlay').fadeOut(400, function(){
       $("#dialog_overlay").removeClass("dialog_overlayBG")
       $("#dialog_overlay").addClass("dialog_hide")
       $("#dialog_overlay").remove()
