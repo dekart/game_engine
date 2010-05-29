@@ -37,10 +37,9 @@ potions.items.create!(
   :level        => 2,
   :basic_price  => 100,
   :usable       => true,
-  :usage_limit  => 1,
   :image        => File.open(Rails.root.join("db", "pictures", "potion_of_healing.jpg")),
-  :effects      => Effects::Collection.new(
-    Effects::RestoreHealth.new(50)
+  :payouts      => Payouts::Collection.new(
+    Payouts::HealthPoint.new(:value => 50)
   )
 )
 
@@ -50,9 +49,8 @@ potions.items.create!(
   :basic_price  => 50,
   :vip_price    => 5,
   :usable       => true,
-  :usage_limit  => 1,
   :image        => File.open(Rails.root.join("db", "pictures", "potion_of_upgrade.jpg")),
-  :effects      => Effects::Collection.new(
-    Effects::Upgrade.new(5)
+  :payouts      => Payouts::Collection.new(
+    Payouts::UpgradePoint.new(:value => 5)
   )
 )
