@@ -3,7 +3,7 @@
         :url    => fulfill_mission_path(mission),
         :update => :result,
         :html   => {:class => "fulfill_again button"}
-      ) if current_character.can_fulfill?(mission) %>
+      ) %>
 
   <%= help_request_link(button(:request_help), mission,
         :class => "request_help button"

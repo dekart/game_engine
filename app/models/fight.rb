@@ -50,12 +50,22 @@ class Fight < ActiveRecord::Base
     attacker_won? and not responded?
   end
 
+  def enough_stamina?
+    attacker.sp >= Setting.i(:fight_stamina_required)
+  end
+
+  def stamina_requirement
+    Requirements::StaminaPoint.new(:value => Setting.i(:fight_stamina_required))
+  end
+
+  def health_requirement
+    Requirements::HealthPoint.new(:value => attacker.weakness_minimum)
+  end
+
   protected
 
   def validate
-    if self.attacker.sp < Setting.i(:fight_stamina_required)
-      self.errors.add(:character, :not_enough_stamina)
-    end
+    errors.add(:character, :not_enough_stamina) unless enough_stamina?
 
     if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or (!is_response? and Character.victims_for(self.attacker).find_by_id(self.victim.id).nil?) or (attacker == victim)
       self.errors.add(:character, :cannot_attack)

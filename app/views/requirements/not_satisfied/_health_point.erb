@@ -1,0 +1,32 @@
+<% if current_character.health >= requirement.value %>
+  <div class="buttons">
+    <%= link_to(button(:refill), premium_path,
+          :class => "premium button"
+        ) %>
+  </div>
+
+  <p>
+    <%= raw t(".restorable.message",
+          :required_value => content_tag(:strong, requirement.value),
+          :restore_time   => content_tag(:strong, (current_character.sp_restore_time(requirement.value) / 1.minute).ceil)
+        ) %>
+  </p>
+
+  <p>
+    <%= raw t("restorable.get_more",
+          :premium_page => link_to(t(".premium_page"), premium_path)
+        ) %>
+  </p>
+<% else %>
+  <div class="buttons">
+    <%= link_to(button(:get_points), premium_path,
+          :class => "premium button"
+        ) %>
+  </div>
+
+  <p>
+    <%= raw t(".low_base_level.message",
+          :premium_page => link_to(t(".premium_page"), premium_path)
+        ) %>
+  </p>
+<% end %>

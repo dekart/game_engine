@@ -228,7 +228,7 @@ class Character < ActiveRecord::Base
   end
 
   def weakness_minimum
-    Setting.p(:character_weakness_minimum, health)
+    Setting.p(:character_weakness_minimum, health).to_i
   end
 
   def experience_to_next_level

@@ -104,12 +104,24 @@ class BossFight < ActiveRecord::Base
     @requirements_satisfied ||= boss.requirements.satisfies?(character)
   end
 
+  def enough_energy?
+    character.ep >= ep_cost
+  end
+
+  def energy_requirement
+    Requirements::EnergyPoint.new(:value => ep_cost)
+  end
+
+  def health_requirement
+    Requirements::HealthPoint.new(:value => character.weakness_minimum)
+  end
+
   protected
 
   def validate_on_create
     errors.add(:character, :already_won) if !boss.repeatable && character.boss_fights.won?(boss)
     
-    errors.add(:character, :not_enough_energy) if character.ep < ep_cost
+    errors.add(:character, :not_enough_energy) if !enough_energy?
 
     errors.add(:character, :too_weak) if character.weak?
 

@@ -71,4 +71,8 @@ class Mission < ActiveRecord::Base
   def loot_item_ids
     @loot_item_ids ||= self[:loot_item_ids].to_s.split(",").collect{|i| i.to_i }
   end
+
+  def energy_requirement
+    Requirements::EnergyPoint.new(:value => ep_cost)
+  end
 end
