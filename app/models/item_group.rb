@@ -28,6 +28,6 @@ class ItemGroup < ActiveRecord::Base
   validates_uniqueness_of :name
 
   def self.to_dropdown(*args)
-    without_state(:deleted).all(:order => :level).to_dropdown(*args)
+    without_state(:deleted).all(:order => :position).to_dropdown(*args)
   end
 end
