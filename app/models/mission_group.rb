@@ -42,14 +42,16 @@ class MissionGroup < ActiveRecord::Base
     end
   end
 
-  acts_as_dropdown :text => "name_with_level", :order => "level"
-
   has_attached_file :image
 
   has_payouts :complete
 
   validates_presence_of :name, :level
   validates_numericality_of :level, :allow_nil => true
+
+  def self.to_dropdown(*args)
+    without_state(:deleted).all(:order => :level).to_dropdown(*(args.any? ? args : "name_with_level"))
+  end
 
   def previous_group
     self.class.with_state(:visible).before(self).first(:order => "mission_groups.level DESC")

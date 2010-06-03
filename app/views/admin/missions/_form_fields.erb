@@ -1,6 +1,6 @@
 <%= form.select :mission_group_id, MissionGroup.to_dropdown, :required => true %>
 
-<%= form.select :parent_mission_id, Mission.all.to_dropdown, :include_blank => true %>
+<%= form.grouped_select :parent_mission_id, Mission.to_grouped_dropdown, :include_blank => true %>
 
 <%= form.text_field :name, :required => true, :size => 50 %>
 <%= form.text_area :description, :cols => 80, :rows => 5 %>

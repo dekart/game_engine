@@ -55,6 +55,10 @@ class PropertyType < ActiveRecord::Base
   validates_presence_of :name, :availability, :basic_price, :income
   validates_numericality_of :basic_price, :vip_price, :income, :upgrade_limit, :allow_nil => true
 
+  def self.to_dropdown(*args)
+    without_state(:deleted).all(:order => :basic_price).to_dropdown(*args)
+  end
+
   def basic_price
     self[:basic_price].to_i
   end

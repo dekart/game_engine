@@ -46,8 +46,10 @@ class Mission < ActiveRecord::Base
 
   def self.to_grouped_dropdown
     returning result = {} do
-      MissionGroup.all(:order => :level).each do |group|
-        result[group.name] = group.missions.collect{|i| [i.name, i.id]}
+      MissionGroup.without_state(:deleted).all(:order => :level).each do |group|
+        result[group.name] = group.missions.without_state(:deleted).collect{|i| 
+          [i.name, i.id]
+        }
       end
     end
   end

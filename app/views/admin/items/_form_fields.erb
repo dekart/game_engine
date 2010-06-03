@@ -1,4 +1,4 @@
-<%= form.select :item_group_id, ItemGroup.without_state(:deleted).all.to_dropdown, :required => true %>
+<%= form.select :item_group_id, ItemGroup.to_dropdown, :required => true %>
 
 <%= form.text_field :name, :required => true, :size => 40 %>
 <%= form.text_field :plural_name, :size => 40 %>
