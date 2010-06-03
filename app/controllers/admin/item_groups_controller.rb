@@ -1,6 +1,6 @@
 class Admin::ItemGroupsController < Admin::BaseController
   def index
-    @groups = ItemGroup.all(:order => :position)
+    @groups = ItemGroup.without_state(:deleted).all(:order => :position)
   end
 
   def new
