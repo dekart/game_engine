@@ -5,7 +5,9 @@ ActionController::Routing::Routes.draw do |map|
         :move     => :put,
         :publish  => :put,
         :hide     => :put
-      }
+      } do |group|
+        group.resources :items, :only => :index
+      end
 
     admin.resources :items,
       :member => {

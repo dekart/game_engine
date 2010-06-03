@@ -47,6 +47,7 @@ en:
     items:
       index:
         title: "Items"
+        item_group_filter: "Filter By Group:"
         empty_set: "No items"
         not_usable: "Not usable"
         controls:
@@ -109,7 +110,7 @@ en:
         submit: "Update"
       balance:
         title: "Mission Balance"
-        character_type_filter: "Character Type"
+        character_type_filter: "Filter By Character Type:"
     bosses:
       index:
         title: "Bosses"
