@@ -15,11 +15,22 @@ module HasInvisibility
       has_many :stuff_invisibilities, :as => :stuff, :dependent => :destroy
       has_many :invisible_types, :source => :character_type, :through => :stuff_invisibilities
 
-      named_scope :available_for, Proc.new {|character|
+      named_scope :available_for, Proc.new {|character_or_type|
+        case character_or_type
+        when Character
+          type_id = character_or_type.character_type.id
+        when CharacterType
+          type_id = character_or_type.id
+        else
+          raise "Wrong availability filter type"
+        end
+
         {
-          :joins      => "LEFT JOIN stuff_invisibilities ON #{table_name}.id = stuff_invisibilities.stuff_id 
-            AND stuff_invisibilities.character_type_id = #{character.character_type.id}
-            AND stuff_invisibilities.stuff_type = \"#{class_name}\"", 
+          :joins      => %{
+            LEFT JOIN stuff_invisibilities ON #{table_name}.id = stuff_invisibilities.stuff_id
+            AND stuff_invisibilities.character_type_id = #{type_id}
+            AND stuff_invisibilities.stuff_type = "#{class_name}"
+          },
           :conditions => "stuff_invisibilities.id IS NULL"
         }
       }

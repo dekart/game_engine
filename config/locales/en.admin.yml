@@ -109,6 +109,7 @@ en:
         submit: "Update"
       balance:
         title: "Mission Balance"
+        character_type_filter: "Character Type"
     bosses:
       index:
         title: "Bosses"
