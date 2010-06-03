@@ -4,7 +4,7 @@ class Admin::ItemsController < Admin::BaseController
 
     @items = (@item_group ? @item_group.items : Item).without_state(:deleted).all(
       :include  => :item_group,
-      :order    => "item_groups.position, items.basic_price"
+      :order    => "item_groups.position, items.availability, items.level"
     ).paginate(:page => params[:page])
   end
 
