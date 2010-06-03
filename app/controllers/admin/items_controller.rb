@@ -1,6 +1,8 @@
 class Admin::ItemsController < Admin::BaseController
   def index
-    @items = Item.without_state(:deleted).all(
+    @item_group = ItemGroup.find_by_id(params[:item_group_id])
+
+    @items = (@item_group ? @item_group.items : Item).without_state(:deleted).all(
       :include  => :item_group,
       :order    => "item_groups.position, items.basic_price"
     ).paginate(:page => params[:page])

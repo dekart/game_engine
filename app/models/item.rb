@@ -87,8 +87,8 @@ class Item < ActiveRecord::Base
   class << self
     def to_grouped_dropdown
       returning result = {} do
-        ItemGroup.all(:order => :position).each do |group|
-          result[group.name] = group.items.collect{|i|
+        ItemGroup.without_state(:deleted).all(:order => :position).each do |group|
+          result[group.name] = group.items.without_state(:deleted).collect{|i|
             ["%s (%s)" % [i.name, i.availability], i.id]
           }
         end

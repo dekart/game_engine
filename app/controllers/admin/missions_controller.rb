@@ -7,7 +7,11 @@ class Admin::MissionsController < Admin::BaseController
   end
 
   def balance
-    @missions = Mission.without_state(:deleted).all(
+    @character_types = CharacterType.without_state(:deleted)
+
+    @character_type = @character_types.find_by_id(params[:character_type_id]) || @character_types.first
+
+    @missions = Mission.without_state(:deleted).available_for(@character_type).all(
       :include  => :mission_group,
       :order    => "mission_groups.level"
     )

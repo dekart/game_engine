@@ -2,6 +2,22 @@
 
 <%= render :partial => "controls" %>
 
+<div id="character_type_filter">
+  <h2><%= t(".character_type_filter") %></h2>
+
+  <ul>
+    <% @character_types.each do |type| %>
+      <li>
+        <% if type == @character_type %>
+          <strong><%= type.name %></strong>
+        <% else %>
+          <%= link_to(type.name, :character_type_id => type) %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
 <% if @missions.any? %>
   <table id="mission_list">
     <% total_experience = 0 %>

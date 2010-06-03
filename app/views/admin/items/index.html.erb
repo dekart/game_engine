@@ -4,6 +4,22 @@
   <%= link_to(t(".controls.new"), new_admin_item_path) %>
 </div>
 
+<div class="item_filter">
+  <h2><%= t(".item_group_filter") %></h2>
+
+  <ul>
+    <% ItemGroup.without_state(:deleted).each do |group| %>
+      <li>
+        <% if group == @item_group %>
+          <strong><%= group.name %></strong>
+        <% else %>
+          <%= link_to(group.name, admin_item_group_items_path(group)) %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
 <% if @items.any? %>
   <%= will_paginate @items %>
 
