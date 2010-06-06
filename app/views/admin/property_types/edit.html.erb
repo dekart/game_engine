@@ -1,4 +1,4 @@
-<%= title(t(".title")) %>
+<%= admin_title(t(".title", :name => @type.name)) %>
 
 <% form_for [:admin, @type], :html => {:multipart => true} do |form| %>
   <%= render :partial => "form_fields", :locals => {:form => form} %>

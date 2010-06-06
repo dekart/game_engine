@@ -10,6 +10,8 @@
   <%= raw fb_connect_javascript_tag %>
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
   <%= javascript_include_tag "jrails", "jquery/dialog" %>
+
+  <title><%= @admin_title %></title>
 </head>
 <body>
   <%= render "admin/layouts/main_menu" %>

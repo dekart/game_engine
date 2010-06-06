@@ -1,4 +1,4 @@
-<%= title(t(".title")) %>
+<%= admin_title(t(".title")) %>
 
 <% form_for [:admin, @group] do |form| %>
   <%= render :partial => "form_fields", :locals => {:form => form} %>

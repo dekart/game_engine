@@ -1,4 +1,4 @@
-<%= title(t(".title")) %>
+<%= admin_title(t(".title", :name => @skin.name)) %>
 
 <% form_for([:admin, @skin]) do |form| %>
   <%= form.fields %>
