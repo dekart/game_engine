@@ -2,12 +2,9 @@
   <div id="requirement_list">
     <% form.object.requirements.each do |requirement| %>
       <%= content_tag(:div,
-            render(
-              :partial  => "admin/requirements/requirement",
-              :locals   => {
-                :requirement  => requirement,
-                :container    => form.object_name
-              }
+            render("admin/requirements/requirement",
+              :requirement  => requirement,
+              :container    => form.object_name
             ),
             :class  => "requirement",
             :id     => "requirement_#{requirement.object_id}"

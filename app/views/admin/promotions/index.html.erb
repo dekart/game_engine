@@ -23,7 +23,7 @@
         <td class="text"><%= raw promotion.text %></td>
         <td class="promotions">
           <% promotion.payouts.each do |payout| %>
-            <%= render :partial => "admin/payouts/preview/#{payout.name}", :locals => {:payout => payout} %>
+            <%= render "admin/payouts/preview/#{payout.name}", :payout => payout %>
           <% end %>
         </td>
         <td class="receipts"><%= promotion.promotion_receipts.size %></td>

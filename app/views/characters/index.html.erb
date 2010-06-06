@@ -3,10 +3,10 @@
     <td class="profile">
       <h3><%= link_to(t(".overview.title"), character_path(current_character)) %></h3>
 
-      <%= render :partial => "characters/attributes", :locals => {:character => current_character} %>
+      <%= render "characters/attributes", :character => current_character %>
 
-      <%= render :partial => "layouts/fan_specials" if current_user.show_fan_specials? %>
-      <%= render :partial => "layouts/bookmark" if current_user.show_bookmark? %>
+      <%= render "layouts/fan_specials" if current_user.show_fan_specials? %>
+      <%= render "layouts/bookmark" if current_user.show_bookmark? %>
     </td>
 
     <td class="wall">

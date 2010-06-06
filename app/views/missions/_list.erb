@@ -2,10 +2,7 @@
   <table cellspacing="0" cellpadding="0">
     <% missions.each do |mission| %>
       <% if mission.visible_for?(current_character) %>
-        <%= render(
-              :partial  => "missions/mission",
-              :locals   => {:mission => mission}
-            ) %>
+        <%= render(mission) %>
       <% end %>
     <% end %>
   </table>

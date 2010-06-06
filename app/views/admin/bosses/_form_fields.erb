@@ -14,7 +14,7 @@
 
 <%= form.check_box :repeatable %>
 
-<%= render :partial => 'admin/shared/stuff_invisibility', :locals => {:form => form } %>
+<%= render 'admin/shared/stuff_invisibility', :form => form %>
 
 <h2><%= Boss.human_attribute_name("requirements") %></h2>
 

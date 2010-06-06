@@ -25,8 +25,8 @@
 
   <table class="info" cellspacing="0" cellpadding="0">
     <tr>
-      <td><%= render :partial => "characters/attributes", :locals => {:character => @character} %></td>
-      <td><%= render :partial => "characters/statistics", :locals => {:character => @character} %></td>
+      <td><%= render "characters/attributes", :character => @character %></td>
+      <td><%= render "characters/statistics", :character => @character %></td>
       <td class="rank_list">
         <% if @character.titles.any? %>
           <% @character.titles.each do |title| %>

@@ -1,5 +1,5 @@
 <div id="inventory_fight_attributes">
-  <%= render :partial => "characters/fight_attributes" %>
+  <%= render "characters/fight_attributes" %>
 </div>
 
 <%= title(t(".title")) %>
@@ -18,5 +18,5 @@
 <% end %>
 
 <div id="inventory_list">
-  <%= render :partial => "list", :locals => {:inventories => @inventories} %>
+  <%= render "list", :inventories => @inventories %>
 </div>

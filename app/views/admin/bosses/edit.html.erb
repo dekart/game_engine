@@ -1,7 +1,7 @@
 <%= admin_title(t(".title", :name => @boss.name)) %>
 
 <% form_for [:admin, @boss], :html => {:multipart => true} do |form| %>
-  <%= render :partial => "form_fields", :locals => {:form => form} %>
+  <%= form.fields %>
 
-  <%= submit_tag t(".submit") %>
+  <%= form.submit %>
 <% end %>
