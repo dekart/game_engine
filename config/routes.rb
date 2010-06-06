@@ -52,7 +52,6 @@ ActionController::Routing::Routes.draw do |map|
       :member => {:activate => :post, :changelog => :post}
     admin.resources :tips
     admin.resources :translations
-    admin.resources :configurations
     admin.resources :assets
 
     admin.resources :character_types,
