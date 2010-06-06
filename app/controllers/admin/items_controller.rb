@@ -43,7 +43,7 @@ class Admin::ItemsController < Admin::BaseController
   def update
     @item = Item.find(params[:id])
 
-    if @item.update_attributes(params[:item].reverse_merge(:payouts => nil))
+    if @item.update_attributes(params[:item].reverse_merge(:payouts => nil, :placements => nil))
       redirect_to admin_items_path
     else
       render :action => :edit
