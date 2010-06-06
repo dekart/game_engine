@@ -80,6 +80,8 @@ module ApplicationHelper
   end
 
   def skin_path
-    stylesheet_path(current_skin ? "skins/#{current_skin.name.parameterize}" : "application")
+    path = current_skin ? "skins/#{current_skin.name.parameterize}" : "application"
+
+    Facebooker.facebooker_config["callback_url"] + stylesheet_path(path)
   end
 end
