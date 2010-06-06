@@ -15,7 +15,7 @@ development:
   canvas_page_name: sword-dev
   callback_url: http://fb.itvektor.ru
   pretty_errors: false
-  set_asset_host_to_callback_url: true
+  set_asset_host_to_callback_url: false
   tunnel:
     public_host_username: fb
     public_host: itvektor.ru
@@ -29,7 +29,7 @@ test:
   canvas_page_name: sword-dev
   callback_url: http://fb.itvektor.ru
   pretty_errors: false
-  set_asset_host_to_callback_url: true
+  set_asset_host_to_callback_url: false
   tunnel:
     public_host_username: 
     public_host: 
