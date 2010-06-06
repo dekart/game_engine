@@ -3,12 +3,9 @@
 <%= latest_help_request_for(:mission) %>
 
 <div id="mission_group_list">
-  <%= render(
-        :partial  => "tabs",
-        :locals   => {
-          :groups   => current_character.mission_groups.current_page,
-          :current  => @mission_group
-        }
+  <%= render("tabs",
+        :groups   => current_character.mission_groups.current_page,
+        :current  => @mission_group
       ) %>
 </div>
 

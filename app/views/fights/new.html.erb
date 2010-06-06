@@ -1,4 +1,4 @@
-<%= render :partial => "characters/fight_attributes" %>
+<%= render "characters/fight_attributes" %>
 
 <%= title(t(".title")) %>
 
@@ -19,6 +19,6 @@
   </p>
 <% else %>
   <% collection(@victims) do %>
-    <%= render :partial => "victim_list", :locals => {:victims => @victims} %>
+    <%= render "victim_list", :victims => @victims %>
   <% end %>
 <% end %>

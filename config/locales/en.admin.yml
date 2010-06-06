@@ -42,7 +42,7 @@ en:
         title: "New Item Group"
         submit: "Create"
       edit:
-        title: "Edit Item Group"
+        title: "{{name}} - Edit Item Group"
         submit: "Update"
     items:
       index:
@@ -62,7 +62,7 @@ en:
         title: "New Item"
         submit: "Create"
       edit:
-        title: "Edit Item"
+        title: "{{name}} - Edit Item"
         submit: "Update"
       form_fields:
         use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '{{default_value}}'"
@@ -84,7 +84,7 @@ en:
         title: "New Mission Group"
         submit: "Create"
       edit:
-        title: "Edit Mission Group"
+        title: "{{name}} - Edit Mission Group"
         submit: "Update"
     missions:
       controls:
@@ -106,7 +106,7 @@ en:
         title: "New Mission"
         submit: "Create"
       edit:
-        title: "Edit Mission"
+        title: "{{name}} - Edit Mission"
         submit: "Update"
       balance:
         title: "Mission Balance"
@@ -127,7 +127,7 @@ en:
         title: "New Boss"
         submit: "Create"
       edit:
-        title: "Edit Boss"
+        title: "{{name}} - Edit Boss"
         submit: "Update"
       form_fields:
         minutes: "minutes"
@@ -217,7 +217,7 @@ en:
         title: "New Property Type"
         submit: "Create"
       edit:
-        title: "Edit Property Type"
+        title: "{{name}} - Edit Property Type"
         submit: "Update"
     translations:
       index:
@@ -244,7 +244,7 @@ en:
         title: "New Asset"
         submit: "Create"
       edit:
-        title: "Edit Asset"
+        title: "{{name}} - Edit Asset"
         submit: "Update"
     character_types:
       index:
@@ -262,7 +262,7 @@ en:
         title: "New Character Type"
         submit: "Create"
       edit:
-        title: "Edit Character Type"
+        title: "{{name}} - Edit Character Type"
         submit: "Update"
       form_fields:
         basic_attributes: "Basic Attributes"
@@ -284,7 +284,7 @@ en:
         title: "New Skin"
         submit: "Create"
       edit:
-        title: "Edit Skin"
+        title: "{{name}} - Edit Skin"
         submit: "Update"
       show:
         title: "Default Stylesheet"
@@ -311,7 +311,7 @@ en:
         title: "New Help Page"
         submit: "Create"
       edit:
-        title: "Edit Help Page"
+        title: "{{name}} - Edit Help Page"
         submit: "Update"
       form_fields:
         comments:
@@ -333,5 +333,5 @@ en:
         title: "New Value"
         submit: "Create"
       edit:
-        title: "Edit Value"
+        title: "{{name}} - Edit Value"
         submit: "Update"

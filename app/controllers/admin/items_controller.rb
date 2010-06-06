@@ -4,7 +4,7 @@ class Admin::ItemsController < Admin::BaseController
 
     @items = (@item_group ? @item_group.items : Item).without_state(:deleted).all(
       :include  => :item_group,
-      :order    => "item_groups.position, items.basic_price"
+      :order    => "item_groups.position, items.availability, items.level"
     ).paginate(:page => params[:page])
   end
 
@@ -43,7 +43,7 @@ class Admin::ItemsController < Admin::BaseController
   def update
     @item = Item.find(params[:id])
 
-    if @item.update_attributes(params[:item].reverse_merge(:payouts => nil))
+    if @item.update_attributes(params[:item].reverse_merge(:payouts => nil, :placements => nil))
       redirect_to admin_items_path
     else
       render :action => :edit

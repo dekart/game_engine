@@ -1,9 +1,9 @@
-<%= title(t(".title")) %>
+<%= admin_title(t(".title", :name => @mission.name)) %>
 
-<%= render :partial => "controls" %>
+<%= render "controls" %>
 
 <% form_for [:admin, @mission], :html => {:multipart => true} do |form| %>
-  <%= render :partial => "form_fields", :locals => {:form => form} %>
+  <%= form.fields %>
 
-  <%= submit_tag t(".submit") %>
+  <%= form.submit %>
 <% end %>
