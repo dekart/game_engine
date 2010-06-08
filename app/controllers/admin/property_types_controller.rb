@@ -1,6 +1,6 @@
 class Admin::PropertyTypesController < Admin::BaseController
   def index
-    @types = PropertyType.without_state(:deleted).paginate(:page => params[:page])
+    @types = PropertyType.without_state(:deleted).paginate(:order => :level, :page => params[:page])
   end
 
   def new
