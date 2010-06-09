@@ -36,8 +36,8 @@
           <th><%= Item.human_attribute_name("level") %></th>
           <th><%= Item.human_attribute_name("basic_price") %></th>
           <th><%= Item.human_attribute_name("vip_price") %></th>
-          <th><%= Item.human_attribute_name("usable") %></th>
-          <th><%= Item.human_attribute_name("effects") %></th>
+          <th><%= Item.human_attribute_name("attributes") %></th>
+          <th><%= Item.human_attribute_name("usage_effects") %></th>
           <th><%= Item.human_attribute_name("owned") %></th>
           <th><%= Item.human_attribute_name("state") %></th>
           <th></th>
@@ -51,13 +51,13 @@
         <td class="basic_price"><%= number_to_currency(item.basic_price) %></td>
         <td class="vip_price"><%= number_to_currency(item.vip_price) %></td>
         <td class="attributes">
-          <% if item.attack.to_i > 0 %>
+          <% if item.attack.to_i != 0 %>
             <div class="attack">
               <%= Item.human_attribute_name("attack") %>: <%= item.attack %>
             </div>
           <% end %>
 
-          <% if item.defence.to_i > 0 %>
+          <% if item.defence.to_i != 0 %>
             <div class="defence">
               <%= Item.human_attribute_name("defence") %>: <%= item.defence %>
             </div>
