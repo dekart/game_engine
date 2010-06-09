@@ -77,6 +77,7 @@ class Character < ActiveRecord::Base
     :extend     => Character::HelpRequests
 
   has_many :gifts
+  has_many :gift_receipts, :through => :gifts, :source => :receipts, :extend => Character::GiftReceipts
 
   has_many :boss_fights,
     :extend => Character::BossFights

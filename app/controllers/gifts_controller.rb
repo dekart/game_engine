@@ -40,6 +40,12 @@ class GiftsController < ApplicationController
       @exclude_ids = []
     end
 
+    if Setting.i(:gifting_repeat_send_delay) > 0
+      @exclude_ids += current_character.gift_receipts.recent_recipient_facebook_ids(
+        Setting.i(:gifting_repeat_send_delay)
+      )
+    end
+
     render :action => :create
   end
 
@@ -58,13 +64,9 @@ class GiftsController < ApplicationController
 
     begin
       if params[:ids]
+        @gift.receipts.sent_to!(params[:ids])
 
-        params[:ids].each do |facebook_id|
-          @gift.receipts.create! :facebook_id => facebook_id
-        end
-        
         flash[:success] = t("gifts.confirm.messages.success")
-
       else
         @gift.destroy
       end

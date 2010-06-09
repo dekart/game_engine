@@ -66,6 +66,7 @@ Setting[:gifting_enabled] = true
 Setting[:gifting_item_show_limit] = 10
 Setting[:gifting_page_first_visit_delay] = 1
 Setting[:gifting_page_recurrent_visit_delay] = 24
+Setting[:gifting_repeat_send_delay] = 24
 Setting[:wall_enabled] = true
 Setting[:wall_posts_show_limit] = 10
 Setting[:boss_max_loser_damage] = 10
