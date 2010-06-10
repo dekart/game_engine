@@ -66,6 +66,10 @@ en:
         use_button_label: "Custom label for 'Use' button"
       help_page:
         alias: "Page URL"
+      hit_listing:
+        victim: "Target"
+        client: "Paid By"
+        reward: "Bounty Amount"
     errors:
       models:
         character:
@@ -110,6 +114,10 @@ en:
               already_won: "You already defeated this boss!"
               not_enough_energy: "You don't have enough energy to fight. Take a rest!"
               too_weak: "You are too weak to fight! Take a rest!"
+        hit_listing:
+          attributes:
+            reward:
+              not_enough_basic_money: "You don't have enough {{basic_money}}"
   effects:
     restore_energy:
       name: "Energy Points"
@@ -281,6 +289,7 @@ en:
       buttons:
         upgrade: "Upgrade"
         attack: "Attack!"
+        hitlist: "Add to Hitlist"
       titles:
         empty_set: "{{user}} don't have any titles yet"
       items:
@@ -338,6 +347,10 @@ en:
       attack_lost: "You attacked {{victim}} and LOST the battle! You lost {{money}} and took {{attacker_damage}} points of damage. {{victim}} received {{victim_damage}} points of damage."
       defence_won: "You were attacked by {{attacker}} and WON the battle!  You received {{money}}, {{experience_points}} points of experience, and {{victim_damage}} points of damage. {{attacker}} was damaged for {{attacker_damage}} points"
       defence_lost: "You were attacked by {{attacker}} and LOST the battle! You lost {{money}} and took {{victim_damage}} points of damage. {{attacker}} received {{attacker_damage}} points of damage."
+    buttons:
+      buttons:
+        fight: "Fights"
+        hitlist: "Hitlist"
     latest:
       buttons:
         respond: "Fight Back!"
@@ -849,6 +862,14 @@ en:
       fights: "Most Wins"
       missions: "Most Missions"
       relations: "Strongest Alliance"
+  hit_listings:
+    index:
+      title: "Hitlist"
+      buttons:
+        attack: "Attack"
+    new:
+      title: "Add {{user}} to Hitlist"
+      note: "Note: A {{fee}}% security fee will be charged to safeguard your bounty."
 
 # Helpers
   blocks:

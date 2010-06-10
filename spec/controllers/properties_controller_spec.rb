@@ -41,6 +41,20 @@ describe PropertiesController do
       }
     end
   end
+
+  describe "when listing properties" do
+    before :each do
+      @character = mock_model(Character, :properties => [])
+
+      controller.stub!(:current_character).and_return(@character)
+    end
+
+    it "should succesfully render" do
+      facebook_get :index
+
+      response.should be_success
+    end
+  end
   
   describe "when purchasing a property" do
     before :each do
