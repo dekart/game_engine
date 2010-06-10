@@ -80,7 +80,7 @@ specs:
 - RedCloth: 
     version: 4.2.3
 - ZenTest: 
-    version: 4.3.1
+    version: 4.3.2
 - abstract: 
     version: 1.0.0
 - activesupport: 
