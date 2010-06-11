@@ -5,10 +5,9 @@ module Payouts
     def item
       return @item if @item
 
-
       source = ::Item
 
-      if item_ids.any?
+      if item_ids.is_a?(Array) && item_ids.any?
         @item = source.find(item_ids).rand
       else
         source = source.available_in(self.availability) if availability.present?
