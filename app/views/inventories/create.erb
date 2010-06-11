@@ -22,11 +22,11 @@
         <td class="spent">
           <h3><%= t(".you_spent.title") %></h3>
 
-          <% if @item.basic_price.to_i > 0 %>
+          <% if @item.basic_price > 0 %>
             <%= payout(:basic_money, number_to_currency(@inventory.basic_money)) %>
           <% end %>
 
-          <% if @item.vip_price.to_i > 0 %>
+          <% if @item.vip_price > 0 %>
             <%= payout(:vip_money, number_to_currency(@inventory.vip_money)) %>
           <% end %>
         </td>

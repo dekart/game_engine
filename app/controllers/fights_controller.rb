@@ -1,6 +1,6 @@
 class FightsController < ApplicationController
   def new
-    @victims = Character.victims_for(current_character).find(:all,
+    @victims = Character.victims_for(current_character).scoped(
       :order => "RAND()",
       :limit => Setting.i(:fight_victim_show_limit)
     )

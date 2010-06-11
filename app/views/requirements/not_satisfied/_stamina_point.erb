@@ -1,4 +1,4 @@
-<% if current_character.health >= required_value %>
+<% if current_character.stamina >= requirement.value %>
   <div class="buttons">
     <%= link_to(button(:refill), premium_path,
           :class => "premium button"
@@ -6,14 +6,14 @@
   </div>
 
   <p>
-    <%= raw t(".message",
-          :required_value => content_tag(:strong, required_value),
-          :restore_time   => content_tag(:strong, (current_character.sp_restore_time(required_value) / 1.minute).ceil)
+    <%= raw t(".restorable.message",
+          :required_value => content_tag(:strong, requirement.value),
+          :restore_time   => content_tag(:strong, (current_character.sp_restore_time(requirement.value) / 1.minute).ceil)
         ) %>
   </p>
 
   <p>
-    <%= raw t(".get_more",
+    <%= raw t(".restorable.get_more",
           :premium_page => link_to(t(".premium_page"), premium_path)
         ) %>
   </p>

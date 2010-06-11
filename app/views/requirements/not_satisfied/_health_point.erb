@@ -8,12 +8,12 @@
   <p>
     <%= raw t(".restorable.message",
           :required_value => content_tag(:strong, requirement.value),
-          :restore_time   => content_tag(:strong, (current_character.sp_restore_time(requirement.value) / 1.minute).ceil)
+          :restore_time   => content_tag(:strong, (current_character.hp_restore_time(requirement.value) / 1.minute).ceil)
         ) %>
   </p>
 
   <p>
-    <%= raw t("restorable.get_more",
+    <%= raw t(".restorable.get_more",
           :premium_page => link_to(t(".premium_page"), premium_path)
         ) %>
   </p>
