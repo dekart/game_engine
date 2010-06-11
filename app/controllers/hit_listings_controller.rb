@@ -1,9 +1,6 @@
 class HitListingsController < ApplicationController
   def index
-    @hit_listings = HitListing.incomplete.scoped(
-      :include  => [:victim, :client],
-      :limit    => Setting.i(:hit_list_display_limit)
-    )
+    fetch_incomplete_listings
   end
 
   def new
@@ -24,6 +21,8 @@ class HitListingsController < ApplicationController
     )
 
     if @hit_listing.save
+      fetch_incomplete_listings
+
       render :create
     else
       render :new
@@ -36,5 +35,14 @@ class HitListingsController < ApplicationController
     @fight = @hit_listing.execute!(current_character)
 
     render :action => :update, :layout => "ajax"
+  end
+
+  protected
+
+  def fetch_incomplete_listings
+    @hit_listings = HitListing.incomplete.scoped(
+      :include  => [:victim, :client],
+      :limit    => Setting.i(:hit_list_display_limit)
+    )
   end
 end

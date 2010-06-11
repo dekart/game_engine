@@ -54,7 +54,48 @@ describe HitListingsController do
     end
   end
 
-  describe "when hitlisting a character" do
+  shared_examples_for "fetching available listings" do
+    before :each do
+      @hit_listings = mock("listings")
+      @incomplete_listings = mock("incomplete", :scoped => @hit_listings)
+
+      HitListing.stub!(:incomplete).and_return(@incomplete_listings)
+    end
+
+    it "should fetch available listings" do
+      @incomplete_listings.should_receive(:scoped).
+        with(:limit => 20, :include => [:victim, :client]).
+        and_return(@hit_listings)
+
+      do_request
+    end
+
+    it "should pass available listings to the template" do
+      do_request
+
+      assigns[:hit_listings].should == @hit_listings
+    end
+  end
+
+  describe "when displaying hitlist" do
+    before :each do
+      controller.stub!(:current_character).and_return(mock_model(Character))
+    end
+
+    def do_request
+      facebook_get :index
+    end
+
+    it_should_behave_like "fetching available listings"
+
+    it "should render 'index'" do
+      do_request
+
+      response.should render_template(:index)
+    end
+  end
+
+  describe "when listing a character" do
     before :each do
       @hit_listing = mock_model(HitListing)
       @client_hit_listings = mock("hit_listings", :build => @hit_listing)
@@ -150,6 +191,8 @@ describe HitListingsController do
     end
 
     describe "if the listing was created successfully" do
+      it_should_behave_like "fetching available listings"
+
       it "should render 'create'" do
         do_request
 
@@ -216,41 +259,6 @@ describe HitListingsController do
 
       response.should render_template(:update)
       response.should use_layout(:ajax)
-    end
-  end
-
-  describe "when displaying hitlist" do
-    before :each do
-      controller.stub!(:current_character).and_return(mock_model(Character))
-
-      @hit_listings = mock("listings")
-      @incomplete_listings = mock("incomplete", :scoped => @hit_listings)
-
-      HitListing.stub!(:incomplete).and_return(@incomplete_listings)
-    end
-
-    def do_request
-      facebook_get :index
-    end
-
-    it "should fetch available listings" do
-      @incomplete_listings.should_receive(:scoped).
-        with(:limit => 20, :include => [:victim, :client]).
-        and_return(@hit_listings)
-
-      do_request
-    end
-
-    it "should pass available listings to the template" do
-      do_request
-
-      assigns[:hit_listings].should == @hit_listings
-    end
-
-    it "should render 'index'" do
-      do_request
-
-      response.should render_template(:index)
     end
   end
 end

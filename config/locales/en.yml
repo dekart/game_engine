@@ -869,7 +869,10 @@ en:
         attack: "Attack"
     new:
       title: "Add {{user}} to Hitlist"
+      submit: "Tell Your Alliance"
       note: "Note: A {{fee}}% security fee will be charged to safeguard your bounty."
+    create:
+      message: "You just set a {{reward}} bounty on {{victim}}"
     update:
       completed: "You've just took out {{victim}}! The reward is yours!"
       you_received: "You received:"

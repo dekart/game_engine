@@ -13,7 +13,7 @@
       <tr>
         <td class="victim"><%= character_name_link(listing.victim) %></td>
         <td class="client"><%= character_name_link(listing.client) %></td>
-        <td class="payouts"><%= payout(:basic_money, listing.reward) %></td>
+        <td class="payouts"><%= payout(:basic_money, number_to_currency(listing.reward)) %></td>
         <td class="controls">
           <%= link_to_remote(button(:attack),
                 :url    => hit_listing_path(listing),
