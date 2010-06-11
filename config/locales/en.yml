@@ -871,6 +871,8 @@ en:
       title: "Add {{user}} to Hitlist"
       note: "Note: A {{fee}}% security fee will be charged to safeguard your bounty."
     update:
+      completed: "You've just took out {{victim}}! The reward is yours!"
+      you_received: "You received:"
       already_completed: "Somebody already took out {{victim}} before you got the chance!"
 # Helpers
   blocks:

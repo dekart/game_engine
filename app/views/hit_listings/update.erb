@@ -7,6 +7,22 @@
       <% else %>
         <%= render "fights/create/failure", :fight => @fight %>
       <% end %>
+
+      <% if @hit_listing.completed? %>
+        <p class="success completed">
+          <%= raw t(".completed", :victim => character_name_link(@hit_listing.victim)) %>
+        </p>
+
+        <table class="payouts" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="received">
+              <h3><%= t(".you_received") %></h3>
+
+              <%= payout(:basic_money, number_to_currency(@hit_listing.reward)) %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
     <% elsif !@fight.enough_stamina? %>
       <%= render("requirements/not_satisfied/stamina_point",
             :requirement => @fight.stamina_requirement
@@ -18,7 +34,6 @@
     <% else %>
       <p><%= @fight.errors.on(:character) %></p>
     <% end %>
-      
   <% else %>
     <%= raw t(".already_completed", :victim => character_name_link(@hit_listing.victim)) %>
   <% end %>
