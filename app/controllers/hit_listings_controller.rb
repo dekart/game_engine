@@ -24,15 +24,17 @@ class HitListingsController < ApplicationController
     )
 
     if @hit_listing.save
-      render :action => :create
+      render :create
     else
-      render :action => :new
+      render :new
     end
   end
 
   def update
     @hit_listing = HitListing.find(params[:id])
 
-    @result = @hit_listing.execute!(current_character)
+    @fight = @hit_listing.execute!(current_character)
+
+    render :action => :update, :layout => "ajax"
   end
 end

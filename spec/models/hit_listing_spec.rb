@@ -115,9 +115,9 @@ describe HitListing do
       end
 
       it "should give a reward to attacker" do
-        @fight = mock_model(Fight, :winner_award => 0)
+        @fight = mock_model(Fight, :winner_award => 0, :save => true)
 
-        Fight.should_receive(:create).and_return(@fight)
+        Fight.should_receive(:new).and_return(@fight)
         
         lambda{
           @hit_listing.execute!(@attacker)
@@ -145,15 +145,19 @@ describe HitListing do
 
     describe "if fight wasn't saved for some reason" do
       before :each do
-        @fight = mock_model(Fight, :new_record? => true)
+        @fight = mock_model(Fight, :save => false)
 
-        Fight.stub!(:create).and_return(@fight)
+        Fight.stub!(:new).and_return(@fight)
       end
 
       it "shouldn't check victim health" do
         @victim.should_not_receive(:hp)
 
         @hit_listing.execute!(@attacker)
+      end
+
+      it "should return unsaved fight" do
+        @hit_listing.execute!(@attacker).should == @fight
       end
     end
 

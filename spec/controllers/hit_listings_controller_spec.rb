@@ -208,13 +208,14 @@ describe HitListingsController do
     it "should pass result to the template" do
       do_request
 
-      assigns[:result].should == @result
+      assigns[:fight].should == @result
     end
 
-    it "should render 'update'" do
+    it "should render AJAX response" do
       do_request
 
       response.should render_template(:update)
+      response.should use_layout(:ajax)
     end
   end
 
