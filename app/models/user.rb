@@ -1,11 +1,10 @@
 class User < ActiveRecord::Base
   has_one :character, :dependent => :destroy
 
-  has_many :invitations, :foreign_key => :sender_id, :dependent => :destroy do
-    def facebook_ids
-      self.find(:all, :select => "invitations.receiver_id").collect{|i| i[:receiver_id].to_i }
-    end
-  end
+  has_many :invitations, 
+    :foreign_key  => :sender_id,
+    :dependent    => :destroy,
+    :extend       => User::Invitations
 
   named_scope :after, Proc.new{|user|
     {

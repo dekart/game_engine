@@ -42,10 +42,7 @@
       <% fb_request_form(t(".invite.title"), :invite_message, invite_users_url(:from_selector => true), :target => :_top) do %>
         <div class="selector">
           <%= fb_multi_friend_selector(t(".invite.note"),
-                :exclude_ids => (
-                   current_user.invitations.facebook_ids +
-                   current_character.friend_relations.facebook_ids
-                ).uniq.join(","),
+                :exclude_ids => current_user.invitations.exclude_ids.join(","),
                 :cols => 3,
                 :rows => 3
               ) %>
