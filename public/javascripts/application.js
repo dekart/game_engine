@@ -229,9 +229,9 @@ $(function(){
 });
 
 function bookmark(){
-  Spinner.show();
   FB.Connect.showBookmarkDialog();
-  Spinner.hide();
+
+  $.scrollTo('body');
 }
 
 function show_result(){
