@@ -9,9 +9,10 @@ module RequirementsHelper
           :satisfied    => requirement.satisfies?(current_character)
         )
       end
+
+      result.html_safe!
     end
   end
-  safe_helper :requirement_list
 
   def requirement(*args, &block)
     type      = args.shift

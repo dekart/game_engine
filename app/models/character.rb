@@ -82,6 +82,8 @@ class Character < ActiveRecord::Base
   has_many :boss_fights,
     :extend => Character::BossFights
 
+  has_many :ordered_hit_listings, :foreign_key => :client_id, :class_name => "HitListing"
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [
@@ -422,7 +424,7 @@ class Character < ActiveRecord::Base
     self.basic_money  -= basic_amount if basic_amount > 0
     self.vip_money    -= vip_amount if vip_amount > 0
 
-    self.save
+    save
   end
 
   def titles
@@ -491,11 +493,11 @@ class Character < ActiveRecord::Base
 
   def apply_character_type_defaults
     CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute|
-      self.send("#{attribute}=", character_type.send(attribute))
+      send("#{attribute}=", character_type.send(attribute)) if send(attribute).nil?
     end
 
-    self.hp = self.health
-    self.ep = self.energy
-    self.sp = self.stamina
+    self.hp = health
+    self.ep = energy
+    self.sp = stamina
   end
 end

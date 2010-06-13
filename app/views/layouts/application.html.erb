@@ -31,7 +31,14 @@
 
     <%= render "layouts/spinner" %>
 
-    <%= content_tag(:div, yield(:result), :id => :result, :style => ("display:none" if @content_for_result.blank?)) %>
+    <%= content_tag(:div, yield(:result), :id => :result, :style => "display:none") %>
+    
+    <% if yield(:result).present? %>
+      <% dom_ready do %>
+        $(document).trigger('result.available');
+      <% end %>
+    <% end %>
+
 
     <% if (current_boss_fights = current_character.boss_fights.with_state(:progress)).any? %>
       <%= render "boss_fights/block", :fights => current_boss_fights %>
