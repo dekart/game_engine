@@ -84,3 +84,7 @@ Setting[:character_equipment_slots] = 5
 Setting[:character_relations_per_equipment_slot] = 3
 Setting[:gifting_accept_all] = 0
 Setting[:premium_reset_attributes_price] = 10
+
+Setting[:hit_list_minimum_reward] = 10_000
+Setting[:hit_list_reward_fee] = 20
+Setting[:hit_list_display_limit] = 20

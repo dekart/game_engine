@@ -13,6 +13,8 @@ Factory.define :character_type do |t|
   t.health      100
   t.energy      10
   t.stamina     10
+
+  t.points      0
 end
 
 Factory.define :character do |t|
@@ -66,4 +68,15 @@ end
 
 Factory.define :item_group do |t|
   t.name            'first'
+end
+
+Factory.define :hit_listing do |t|
+  t.client {|c| 
+    c.association :character, Factory.attributes_for(:character).merge(:basic_money => 10_000)
+  }
+  t.victim {|v|
+    v.association :character
+  }
+
+  t.reward 10_000
 end

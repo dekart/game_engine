@@ -10,9 +10,10 @@ module PayoutsHelper
           :payout => payout
         )
       end
+
+      result.html_safe!
     end
   end
-  safe_helper :payout_list
 
   def payout(type, value, options = {}, &block)
     result = content_tag(:div,

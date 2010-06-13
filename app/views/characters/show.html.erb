@@ -20,6 +20,10 @@
             :update => :result,
             :html   => {:class => "attack button"}
           ) if current_character.can_attack?(@character) %>
+
+      <%= link_to(button(:hitlist), new_character_hit_listing_path(@character),
+            :class => "hitlist button"
+          ) %>
     <% end %>
   </div>
 

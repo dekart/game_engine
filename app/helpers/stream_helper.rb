@@ -1,14 +1,15 @@
 module StreamHelper
   def stream_dialog(options = {})
-    "FB.Connect.streamPublish('', %s, %s, %s, %s, %s);" % [
+    result = "FB.Connect.streamPublish('', %s, %s, %s, %s, %s);" % [
       options[:attachment].reverse_merge(:media => default_stream_media).to_json,
       (options[:action_links] || default_stream_action_links).to_json,
       options[:target_id] || "null",
       options[:user_prompt] || "null",
       stream_callback_function(options)
     ]
+
+    result.html_safe!
   end
-  safe_helper :stream_dialog
 
   def link_to_stream_dialog(title, options = {})
     link_to_function(title, stream_dialog(options), options.delete(:html) || {})

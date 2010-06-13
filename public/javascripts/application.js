@@ -208,11 +208,10 @@ $(function(){
 
   $(document).bind('result.received', function(){
     $(document).trigger('remote_content.received');
-
-    $('#result').show();
-    
-    $.scrollTo('#result');
+    $(document).trigger('result.available')
   });
+
+  $(document).bind('result.available', show_result)
 
   $(document).bind('remote_content.received', function(){
     FB.XFBML.Host.parseDomTree();
@@ -233,4 +232,10 @@ function bookmark(){
   Spinner.show();
   FB.Connect.showBookmarkDialog();
   Spinner.hide();
+}
+
+function show_result(){
+  $('#result').show();
+
+  $.scrollTo('#result');
 }

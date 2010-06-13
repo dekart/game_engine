@@ -2,9 +2,8 @@ module InventoriesHelper
   def inventory_additonal_slots_note
     free_slots = current_character.equipment.placement_free_slots(:additional)
     
-    yield(free_slots)
+    yield(free_slots).html_safe!
   end
-  safe_helper :inventory_additonal_slots_note
 
   def inventory_free_slots_note
     free_slots = current_character.equipment.free_slots

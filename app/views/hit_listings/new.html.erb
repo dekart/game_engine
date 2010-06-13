@@ -1,0 +1,9 @@
+<%= title(t(".title", :user => character_name(@victim))) %>
+
+<% form_for [@victim, @hit_listing] do |form| %>
+  <%= form.text_field :reward %>
+
+  <%= form.submit %>
+<% end %>
+
+<div class="note"><%= t(".note", :fee => Setting.i(:hit_list_reward_fee)) %></div>

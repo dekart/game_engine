@@ -87,6 +87,7 @@ ActionController::Routing::Routes.draw do |map|
     :collection => {:load_vip_money => :any}
   ) do |character|
     character.resources :assignments, :shallow => true
+    character.resources :hit_listings, :only => [:new, :create]
   end
 
   map.resources :mission_groups, :only => [:index, :show]
@@ -132,6 +133,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :gifts,
     :member => {:confirm => :any}
 
+  map.resources :hit_listings, :only => [:index, :update]
 
   map.resources :help_pages, :only => :show
   
