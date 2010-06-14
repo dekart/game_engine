@@ -1,0 +1,20 @@
+en:
+  invitations:
+    accept:
+      message: "Invitation accepted! The player became part of your alliance!"
+    ignore:
+      message: "Invitation ignored"
+    block:
+      title: "Alliance Invitations"
+      buttons:
+        accept: "Accept"
+        ignore: "Ignore"
+    show:
+      title: "Alliance Invitation"
+      note: "This user invites you to join their Alliance"
+      buttons:
+        accept: "Accept"
+        ignore: "Ignore"
+      messages:
+        only_friends: "Only friends can join your Alliance"
+        already_joined: "This user is already in your Alliance"

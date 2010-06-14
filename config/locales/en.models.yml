@@ -1,5 +1,0 @@
-en:
-  activerecord:
-    attributes:
-      user:
-        show_next_steps: "Show 'Next Steps'"

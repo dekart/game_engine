@@ -1,0 +1,60 @@
+en:
+  mission_groups:
+    show:
+      title: "Missions"
+      locked_group: "Reach level {{level}} to open missions from this group"
+    complete:
+      title: "Mission Group Completed!"
+      message: "You've completed all missions in this group!"
+      title_received: "You received new title:"
+      you_received: "You received:"
+    tabs:
+      level: "(Levels {{level}}+)"
+      locked: "Locked"
+      previous:
+        name: "&laquo; Previous"
+        level: "(Below Level {{level}})"
+      next:
+        name: "Next &raquo;"
+        level: "(Levels {{level}}+)"
+  missions:
+    fulfill:
+      completed:
+        title: "Congratulations!"
+        message: "You've completed this mission and received new title:"
+        child_missions: "You also opened new missions:"
+        buttons:
+          publish: "Brag About It!"
+      success:
+        message: "Well done!"
+        buttons:
+          continue: "Fulfill Again!"
+          request_help: "Request Help & Earn Bonus"
+
+      failure:
+        message: "Ouch!"
+        buttons:
+          try_again: "Try Again!"
+          request_help: "Request Help & Earn Bonus"
+
+      payouts:
+        you_received:
+          title: "You received:"
+          loot_with_looter: "{{user}} gained the {{item}} for you!"
+          loot_without_looter: "You gained the {{item}}!"
+        you_spent:
+          title: "You spent:"
+          zero_energy: "{{user}} helped to save energy!"
+        progress:
+          title: "Mission Progress"
+
+      already_completed:
+        message: "You already completed this mission"
+      requirements_not_satisfied:
+        message: "Some mission requirements are not satisfied:"
+    list:
+      empty_set: "You have no missions available at this time"
+    mission:
+      completed: "Completed!"
+      buttons:
+        fulfill: "Fulfill"

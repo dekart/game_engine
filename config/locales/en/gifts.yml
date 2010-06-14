@@ -1,0 +1,34 @@
+en:
+  gifts:
+    new:
+      title: "Send Gifts to Your Alliance: Step 1"
+      note: "Please choose the item you want to send to your friends"
+      empty_set: "There are no gifts available at this time"
+      buttons:
+        skip: "Skip"
+    create:
+      title: "Send Gifts to Your Alliance: Step 2"
+      gift:
+        title: "You're sending ({{change}})"
+        change: "change"
+      note: "Please choose friends whom you want to send this gift"
+      groups:
+        all: "All Friends"
+        players: "{{app}} Friends"
+        non_players: "Facebook Friends"
+      request:
+        title: "Gift"
+        message: "{{user}} has sent you a {{item}} in {{app}}! Click to accept gift."
+        accept: "Accept {{item}}"
+        note: "Send gifts to your Alliance"
+    confirm:
+      messages:
+        success: "Gifts has been sent to your friends!"
+        failure: "An error occured while sending gift. Please contact application developer."
+    show:
+      success: "You've just received the gift:"
+      from: "From"
+      buttons:
+        accept_pending: "Accept Other Gifts"
+        play_now: "Play Now"
+        accept_all: "Accept All"

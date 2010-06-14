@@ -1,0 +1,66 @@
+en:
+  characters:
+    attributes:
+      bonus: "+{{amount}} from Equipment"
+    index:
+      overview:
+        title: "Profile Overview"
+      fights:
+        title: "Latest Fights"
+    show:
+      title: "{{user}} Profile"
+      buttons:
+        upgrade: "Upgrade"
+        attack: "Attack!"
+        hitlist: "Add to Hitlist"
+      titles:
+        empty_set: "{{user}} don't have any titles yet"
+      items:
+        amount: "{{name}} X&nbsp;{{amount}}"
+      properties:
+        title: "Properties"
+        name: "{{name}} (Level {{level}})"
+      wall:
+        title: "{{user}} Wall"
+    upgrade:
+      title: "Upgrade"
+      buy_more:
+        text: "Buy more points at the {{premium_page}}"
+        premium_page: "Gem Market"
+      finished:
+        note: "You spent all your upgrade points. Now you can {{profile}} or {{get_more}} to get more points"
+        profile: "go to profile"
+        get_more: "visit the Gem Market"
+      points:
+        one: "1 upgrade point"
+        other: "{{count}} upgrade points"
+    upgrade_result:
+      messages:
+        success: "You've successfully upgraded {{attribute}} to {{number}}"
+        not_enough_points: "You cannot upgrade {{attribute}} because you don't have enough points"
+    level_up:
+      title: "New Level!"
+      text: "You've gained enough experience to upgrade to the new level! You received {{point_amount}} upgrade points that you can spend to increase your attributes. Go to {{upgrade}} page and use your points as you wish. Additionally, your energy and health have been refilled."
+      upgrade_link: "upgrade"
+      buttons:
+        continue: "Continue"
+        upgrade: "Upgrade"
+    fight_attributes:
+      personal: "Your Skills"
+      relations: "Your Alliance"
+      offence: "Best Offence"
+      defence: "Best Defence"
+    new:
+      title: "Welcome to {{app}}!"
+      submit: "Start Playing!"
+      note: "After clicking '{{submit}}' you'll be asked to install {{application}}. Click 'Allow' in the appeared window to start playing."
+      already_registered:
+        text: "Already registered earlier? Simply {{skip_form}}"
+        skip_form: "skip this form &raquo;"
+    edit:
+      title: "Update Your Character"
+      submit: "Save"
+    form_fields:
+      labels:
+        character_type: "Choose Your Class:"
+        name: "Enter Your Nickname (optional):"

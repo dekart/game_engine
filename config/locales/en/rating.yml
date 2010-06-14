@@ -1,0 +1,16 @@
+en:
+  ratings:
+    show:
+      title:
+        global: "Hall of Fame: Global"
+        relations: "Hall of Fame: Alliance"
+
+      buttons:
+        relations: "Alliance Rating"
+        global: "Global Rating"
+
+      level: "Highest Level"
+      bank: "Wealthiest"
+      fights: "Most Wins"
+      missions: "Most Missions"
+      relations: "Strongest Alliance"
