@@ -38,6 +38,7 @@ Setting[:fight_money_loot] = 10
 Setting[:fight_max_loser_damage] = 50
 Setting[:fight_max_winner_damage] = 90
 Setting[:fight_latest_show_limit] = 10
+Setting[:fight_alliance_attack] = true
 Setting[:rating_show_limit] = 20
 Setting[:help_request_expire_period] = 24
 Setting[:help_request_display_period] = 24

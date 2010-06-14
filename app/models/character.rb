@@ -112,6 +112,12 @@ class Character < ActiveRecord::Base
     }
   }
 
+  named_scope :not_friends_with, Proc.new{|character|
+    ids = character.friend_relations.character_ids
+    
+    ids.any? ? {:conditions => ["characters.id NOT IN (?)", ids]} : {}
+  }
+
   serialize :placements
 
   attr_accessible :name

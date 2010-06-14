@@ -4,6 +4,8 @@ class FightsController < ApplicationController
       :order => "RAND()",
       :limit => Setting.i(:fight_victim_show_limit)
     )
+
+    @victims = @victims.not_friends_with(current_character) unless Setting.b(:fight_alliance_attack)
   end
 
   def create
