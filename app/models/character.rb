@@ -183,7 +183,7 @@ class Character < ActiveRecord::Base
 
     return false unless UPGRADABLE_ATTRIBUTES.include?(name) && points >= Setting.i("character_#{name}_upgrade_points")
 
-    ActiveRecord::Base.transaction do
+    transaction do
       case name
       when :health
         self.health += Setting.i(:character_health_upgrade)
@@ -202,8 +202,6 @@ class Character < ActiveRecord::Base
 
       save
     end
-
-    return true
   end
 
   def attack_points

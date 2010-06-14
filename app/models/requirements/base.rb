@@ -47,7 +47,7 @@ module Requirements
     end
 
     def satisfies?(character)
-      return true
+      true
     end
   end
 end

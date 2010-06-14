@@ -29,7 +29,7 @@ class Fight < ActiveRecord::Base
   end
 
   def loser
-    return nil if self.winner.nil?
+    return nil unless winner
 
     (self.winner == attacker) ? victim : attacker
   end

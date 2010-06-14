@@ -12,11 +12,7 @@ module ApplicationHelper
     if @group_headers[group_name] != text
       @group_headers[group_name] = text
 
-      if block_given?
-        yield(text)
-      else
-        return text
-      end
+      block_given? ? yield(text) : text
     end
   end
 

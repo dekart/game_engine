@@ -155,6 +155,6 @@ class BossFight < ActiveRecord::Base
       )
     end
 
-    return [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
+    [attacker_won, (attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
   end
 end
