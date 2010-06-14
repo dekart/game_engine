@@ -34,6 +34,8 @@ class HitListingsController < ApplicationController
 
     @fight = @hit_listing.execute!(current_character)
 
+    fetch_incomplete_listings if @hit_listing.completed?
+
     render :action => :update, :layout => "ajax"
   end
 

@@ -1,6 +1,5 @@
 <% result_for :hit_listing do %>
   <% if @fight %>
-
     <% if !@fight.new_record? %>
       <% unless @hit_listing.completed? %>
         <div class="buttons">
@@ -51,5 +50,9 @@
 <% end %>
 
 <% dom_ready do %>
+  <% if @hit_listing.completed? %>
+    $('#hitlist').html('<%= escape_javascript render("list", :hit_listings => @hit_listings) %>')
+  <% end %>
+
   $(document).trigger('result.received');
 <% end %>

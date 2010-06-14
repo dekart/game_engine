@@ -866,6 +866,7 @@ en:
   hit_listings:
     index:
       title: "Hitlist"
+    list:
       buttons:
         attack: "Attack"
     new:

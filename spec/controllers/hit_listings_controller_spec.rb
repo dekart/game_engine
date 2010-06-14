@@ -217,7 +217,7 @@ describe HitListingsController do
     before :each do
       @result = mock_model(Fight)
 
-      @hit_listing = mock_model(HitListing, :execute! => @result)
+      @hit_listing = mock_model(HitListing, :execute! => @result, :completed? => false)
 
       HitListing.stub!(:find).and_return(@hit_listing)
 
@@ -259,6 +259,14 @@ describe HitListingsController do
 
       response.should render_template(:update)
       response.should use_layout(:ajax)
+    end
+
+    describe "when listing is completed" do
+      before :each do
+        @hit_listing.stub!(:completed?).and_return(true)
+      end
+
+      it_should_behave_like "fetching available listings"
     end
   end
 end
