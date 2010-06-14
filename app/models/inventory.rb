@@ -81,7 +81,7 @@ class Inventory < ActiveRecord::Base
       if deposit_money
         self.basic_money = sell_price * difference
 
-        character.basic_money += self.basic_money
+        character.basic_money += basic_money
         character.save
       end
     end
@@ -91,7 +91,7 @@ class Inventory < ActiveRecord::Base
     if deposit_money
       self.basic_money = sell_price * amount
 
-      character.basic_money += self.basic_money
+      character.basic_money += basic_money
       character.save
     end
   end

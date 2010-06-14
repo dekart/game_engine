@@ -5,7 +5,7 @@ module Payouts
     end
 
     def apply(character)
-      if self.action == :remove
+      if action == :remove
         character.vip_money -= @value
       else
         character.vip_money += @value

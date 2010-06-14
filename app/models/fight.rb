@@ -21,17 +21,17 @@ class Fight < ActiveRecord::Base
   @@damage_system = FightingSystem::DamageCalculation::Proportion
 
   def attacker_won?
-    self.winner == self.attacker
+    self.winner == attacker
   end
 
   def victim_won?
-    self.winner == self.victim
+    self.winner == victim
   end
 
   def loser
     return nil if self.winner.nil?
 
-    return self.winner == self.attacker ? self.victim : self.attacker
+    (self.winner == attacker) ? victim : attacker
   end
 
   def is_response?
@@ -39,7 +39,7 @@ class Fight < ActiveRecord::Base
   end
 
   def response
-    self.class.first(:conditions => ["cause_id = ? AND cause_type = 'Fight'", self.id])
+    self.class.first(:conditions => ["cause_id = ? AND cause_type = 'Fight'", id])
   end
 
   def responded?
@@ -67,12 +67,12 @@ class Fight < ActiveRecord::Base
   def validate
     errors.add(:character, :not_enough_stamina) unless enough_stamina?
 
-    if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or (!is_response? and Character.victims_for(self.attacker).find_by_id(self.victim.id).nil?) or (attacker == victim)
-      self.errors.add(:character, :cannot_attack)
+    if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or (!is_response? and Character.victims_for(attacker).find_by_id(victim.id).nil?) or (attacker == victim)
+      errors.add(:character, :cannot_attack)
     end
 
-    if self.attacker.weak?
-      self.errors.add(:character, :too_weak)
+    if attacker.weak?
+      errors.add(:character, :too_weak)
     end
   end
 
@@ -102,24 +102,24 @@ class Fight < ActiveRecord::Base
   end
 
   def save_payout
-    self.winner.experience += self.experience
+    winner.experience += experience
 
-    self.winner.basic_money += self.money
-    self.loser.basic_money  -= self.money
+    winner.basic_money += money
+    loser.basic_money  -= money
 
-    self.attacker.sp  -= Setting.i(:fight_stamina_required)
+    attacker.sp  -= Setting.i(:fight_stamina_required)
 
-    self.attacker.hp  -= self.attacker_hp_loss
-    self.victim.hp    -= self.victim_hp_loss
+    attacker.hp  -= attacker_hp_loss
+    victim.hp    -= victim_hp_loss
 
-    self.winner.fights_won += 1
-    self.loser.fights_lost += 1
+    winner.fights_won += 1
+    loser.fights_lost += 1
 
-    self.attacker.save!
-    self.victim.save!
+    attacker.save!
+    victim.save!
   end
 
   def update_victim_dashboard
-    Delayed::Job.enqueue Jobs::FightNotification.new(self.id)
+    Delayed::Job.enqueue Jobs::FightNotification.new(id)
   end
 end

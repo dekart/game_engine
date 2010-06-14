@@ -12,10 +12,10 @@ class HelpResult < ActiveRecord::Base
   protected
 
   def validate_on_create
-    self.errors.add_to_base(:too_late) if self.help_request.expired?
+    errors.add_to_base(:too_late) if help_request.expired?
 
-    if self.help_request.help_results.find_by_character_id(self.character.id)
-      self.errors.add_to_base(:"already_helped_with_#{context.class.to_s.underscore}")
+    if help_request.help_results.find_by_character_id(character.id)
+      errors.add_to_base(:"already_helped_with_#{context.class.to_s.underscore}")
     end
 
     if context.is_a?(Fight) and context.victim == character
@@ -41,21 +41,21 @@ class HelpResult < ActiveRecord::Base
 
   def give_payout
     if context.is_a?(Mission)
-      self.character.basic_money  += self.money
-      self.character.experience   += self.experience
-      self.character.save
+      character.basic_money  += money
+      character.experience   += experience
+      character.save
     end
 
-    self.help_request.character.basic_money += self.money
-    self.help_request.character.experience  += self.experience
+    help_request.character.basic_money += money
+    help_request.character.experience  += experience
 
-    self.help_request.character.save if self.help_request.character.changed?
+    help_request.character.save if help_request.character.changed?
   end
 
   def increment_request_stats
-    self.help_request.increment(:money, self.money)
-    self.help_request.increment(:experience, self.experience)
+    help_request.increment(:money, money)
+    help_request.increment(:experience, experience)
     
-    self.help_request.save!
+    help_request.save!
   end
 end

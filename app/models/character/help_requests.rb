@@ -1,7 +1,7 @@
 class Character
   module HelpRequests
     def can_publish?(context)
-      latest_request = self.latest(
+      latest_request = latest(
         context.is_a?(String) ? context.classify.constantize : context.class
       )
 

@@ -5,7 +5,7 @@ module Payouts
     end
 
     def property_type
-      ::PropertyType.find_by_id(self.value)
+      ::PropertyType.find_by_id(value)
     end
 
     def apply(character)

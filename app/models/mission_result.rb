@@ -3,7 +3,7 @@ class MissionResult
     :payouts, :free_fulfillment, :mission_group, :group_rank, :group_payouts, :loot, :looter
 
   def self.create(*args)
-    result = self.new(*args)
+    result = new(*args)
 
     result.save! if result.mission.repeatable? or !result.rank.completed?
     
@@ -27,7 +27,7 @@ class MissionResult
           mission_money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)
 
           @money      = (@mission.money * (1 + mission_money_bonus)).ceil
-          @experience = self.mission.experience
+          @experience = mission.experience
           
           calculate_loot
 

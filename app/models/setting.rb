@@ -9,7 +9,10 @@ class Setting < ActiveRecord::Base
 
   class << self
     def cache_values!
-      self.cache || self.cache = all.inject({}){|result, s| result[s.alias.to_sym] = s.value; result }
+      cache || self.cache = all.inject({}){|result, s|
+        result[s.alias.to_sym] = s.value
+        result
+      }
     end
 
     # Returns value casted to integer

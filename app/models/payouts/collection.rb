@@ -10,7 +10,7 @@ module Payouts
 
     def apply(character, trigger)
       returning result = Payouts::Collection.new do
-        self.items.each do |payout|
+        items.each do |payout|
           if payout.applicable?(trigger)
             payout.apply(character)
 
@@ -21,7 +21,7 @@ module Payouts
     end
 
     def by_action(action)
-      self.items.select{|p| p.action == action }
+      items.select{|p| p.action == action }
     end
 
     def +(other)

@@ -5,23 +5,21 @@ class Translation < ActiveRecord::Base
   after_destroy :restart_server
   
   def self.to_hash
-    result = {}
-
-    self.all.each do |translation|
-      result.deep_merge!(translation.to_hash)
+    retuning result = {} do
+      all.each do |translation|
+        result.deep_merge!(translation.to_hash)
+      end
     end
-
-    result
   end
 
   def to_hash
     inject_key do |hash, key, last|
-      hash[key] = last ? self.value : {}
+      hash[key] = last ? value : {}
     end
   end
 
   def inject_key
-    key_parts = self.key.split(".")
+    key_parts = key.split(".")
 
     result = init = {}
     key_parts.each_with_index do |item, index|

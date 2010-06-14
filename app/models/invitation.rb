@@ -12,28 +12,28 @@ class Invitation < ActiveRecord::Base
   validates_uniqueness_of :receiver_id, :scope => :sender_id
 
   def receiver
-    User.find_by_facebook_id(self.receiver_id)
+    User.find_by_facebook_id(receiver_id)
   end
   
   def accept!
-    self.class.transaction do
+    transaction do
       FriendRelation.create(
-        :source_character => self.sender.character,
-        :target_character => self.receiver.character
+        :source_character => sender.character,
+        :target_character => receiver.character
       )
 
       FriendRelation.create(
-        :target_character => self.sender.character,
-        :source_character => self.receiver.character
+        :target_character => sender.character,
+        :source_character => receiver.character
       )
 
-      self.update_attribute(:accepted, true)
+      update_attribute(:accepted, true)
 
       Delayed::Job.enqueue Jobs::InvitationNotification.new(id)
     end
   end
 
   def ignore!
-    self.update_attribute(:accepted, :false)
+    update_attribute(:accepted, :false)
   end
 end

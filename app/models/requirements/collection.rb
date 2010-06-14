@@ -9,7 +9,7 @@ module Requirements
     end
 
     def satisfies?(character)
-      self.items.find{|r|
+      items.find{|r|
         not r.satisfies?(character)
       }.nil?
     end

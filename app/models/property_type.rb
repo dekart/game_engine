@@ -75,7 +75,7 @@ class PropertyType < ActiveRecord::Base
   end
 
   def plural_name
-    self[:plural_name].blank? ? self.name.pluralize : self[:plural_name]
+    self[:plural_name].blank? ? name.pluralize : self[:plural_name]
   end
 
   def upgrade_price(level)

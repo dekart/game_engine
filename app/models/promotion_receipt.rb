@@ -9,8 +9,8 @@ class PromotionReceipt < ActiveRecord::Base
   protected
 
   def assign_payouts
-    @payouts = self.promotion.payouts.apply(self.character, :success)
+    @payouts = promotion.payouts.apply(character, :success)
 
-    self.character.save!
+    character.save!
   end
 end

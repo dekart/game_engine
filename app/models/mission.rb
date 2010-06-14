@@ -55,15 +55,15 @@ class Mission < ActiveRecord::Base
   end
 
   def money
-    rand(self.money_max - self.money_min) + self.money_min
+    rand(money_max - money_min) + money_min
   end
 
   def visible_for?(character)
-    self.parent_mission.nil? or character.rank_for_mission(self.parent_mission).completed?
+    parent_mission.nil? or character.rank_for_mission(parent_mission).completed?
   end
 
   def loot_items
-    Item.find_all_by_id(self.loot_item_ids)
+    Item.find_all_by_id(loot_item_ids)
   end
 
   def loot_item_ids=(value)

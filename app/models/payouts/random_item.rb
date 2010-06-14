@@ -10,11 +10,11 @@ module Payouts
       if item_ids.is_a?(Array) && item_ids.any?
         @item = source.find(item_ids).rand
       else
-        source = source.available_in(self.availability) if availability.present?
+        source = source.available_in(availability) if availability.present?
         source = source.basic unless allow_vip
 
         @item = source.first(
-          :conditions => ["basic_price <= ?", self.value],
+          :conditions => ["basic_price <= ?", value],
           :order => "RAND()"
         )
       end

@@ -5,7 +5,7 @@ module Payouts
     end
 
     def apply(character)
-      if self.action == :remove
+      if action == :remove
         character.points -= @value
         character.points = 0 if character.points < 0
       else

@@ -16,7 +16,7 @@ module Requirements
       end
 
       def requirement_name
-        self.to_s.demodulize.underscore
+        to_s.demodulize.underscore
       end
 
       def by_name(name)
@@ -25,7 +25,7 @@ module Requirements
 
       def human_attribute_name(field)
         I18n.t(field,
-          :scope    => [:requirements, self.to_s.demodulize.underscore, :attributes],
+          :scope    => [:requirements, requirement_name, :attributes],
           :default  => I18n.t(field,
             :scope    => [:requirements, :base, :attributes],
             :default  => field.humanize

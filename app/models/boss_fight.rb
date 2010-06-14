@@ -37,18 +37,18 @@ class BossFight < ActiveRecord::Base
 
       @winner = attacker_won ? character : boss
 
-      self.character.hp -= @character_hp_loss
-      self.health       -= @boss_hp_loss
+      character.hp  -= @character_hp_loss
+      self.health   -= @boss_hp_loss
 
-      self.class.transaction do
+      transaction do
         if boss_lost?
-          self.character.experience += boss.experience
+          character.experience += boss.experience
 
           @payouts = boss.payouts.apply(character, 
             character.boss_fights.won?(boss) ? :repeat_victory : :victory
           )
           
-          self.win!
+          win!
 
           @group_rank, @group_payouts = character.mission_groups.check_completion!(boss.mission_group)
         elsif character_lost?
@@ -56,7 +56,7 @@ class BossFight < ActiveRecord::Base
             character.boss_fights.won?(boss) ? :repeat_defeat : :defeat
           )
 
-          self.lose!
+          lose!
         end
 
         save
@@ -66,7 +66,7 @@ class BossFight < ActiveRecord::Base
   end
 
   def perform_expire!
-    self.class.transaction do
+    transaction do
       @payouts = boss.payouts.apply(character, :failure)
 
       expire!
@@ -129,7 +129,7 @@ class BossFight < ActiveRecord::Base
   end
 
   def get_energy_from_character
-    self.character.ep -= self.ep_cost
+    character.ep -= ep_cost
   end
 
   def calculate_proportions

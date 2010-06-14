@@ -13,7 +13,7 @@ module Payouts
     end
 
     def item
-      ::Item.find_by_id(self.value)
+      ::Item.find_by_id(value)
     end
 
     def apply(character)

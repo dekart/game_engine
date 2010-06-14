@@ -49,13 +49,13 @@ class Assignment < ActiveRecord::Base
   end
   
   def effect_value
-    self.class.effect_value(self.context, self.relation.target_character, self.role)
+    self.class.effect_value(context, relation.target_character, role)
   end
 
   protected
 
   def destroy_current_assignments
-    self.class.find_all_by_relation_id(self.relation_id).each do |assignment|
+    self.class.find_all_by_relation_id(relation_id).each do |assignment|
       assignment.destroy
     end
 

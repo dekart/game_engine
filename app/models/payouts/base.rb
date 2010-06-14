@@ -18,7 +18,7 @@ module Payouts
       end
 
       def payout_name
-        self.to_s.demodulize.underscore
+        to_s.demodulize.underscore
       end
 
       def by_name(name)
@@ -27,7 +27,7 @@ module Payouts
 
       def human_attribute_name(field)
         I18n.t(field,
-          :scope    => [:payouts, self.to_s.demodulize.underscore, :attributes],
+          :scope    => [:payouts, payout_name, :attributes],
           :default  => I18n.t(field,
             :scope    => [:payouts, :base, :attributes],
             :default  => field.humanize
@@ -38,7 +38,7 @@ module Payouts
 
     def initialize(attributes = {})
       attributes.each_pair do |key, value|
-        self.send("#{key}=", value)
+        send("#{key}=", value)
       end
     end
 

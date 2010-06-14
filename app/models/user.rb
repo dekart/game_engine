@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def touch!
-    self.update_attribute(:updated_at, Time.now)
+    update_attribute(:updated_at, Time.now)
   end
 
   def admin?

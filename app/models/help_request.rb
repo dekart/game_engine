@@ -6,27 +6,27 @@ class HelpRequest < ActiveRecord::Base
   validates_presence_of :character, :context
 
   def self.latest(context_class)
-    self.first(
+    first(
       :conditions => [
         "context_type = ?", context_class.is_a?(Class) ? context_class.to_s : context_class.to_s.classify
       ],
-      :order      => "created_at DESC"
+      :order => "created_at DESC"
     )
   end
   
   def expired?
-    Time.now > self.expire_at
+    Time.now > expire_at
   end
 
   def expire_at
-    self.created_at + Setting.i(:help_request_expire_period).hours
+    created_at + Setting.i(:help_request_expire_period).hours
   end
 
   def stop_display_at
-    self.expire_at + Setting.i(:help_request_display_period).hours
+    expire_at + Setting.i(:help_request_display_period).hours
   end
 
   def should_be_displayed?
-    Time.now < self.stop_display_at && self.help_results.size > 0
+    Time.now < stop_display_at && help_results.size > 0
   end
 end

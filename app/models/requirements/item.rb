@@ -7,7 +7,7 @@ module Requirements
     end
 
     def item
-      ::Item.find_by_id(self.value)
+      ::Item.find_by_id(value)
     end
 
     def amount
@@ -15,7 +15,7 @@ module Requirements
     end
 
     def satisfies?(character)
-      inventory = character.inventories.detect{|i| i.item == self.item }
+      inventory = character.inventories.detect{|i| i.item == item }
 
       inventory && inventory.amount >= amount
     end

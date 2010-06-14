@@ -13,14 +13,14 @@ class Rank < ActiveRecord::Base
   delegate :title, :to => :mission
 
   def just_completed?
-    self.win_count == self.mission.win_amount
+    self.win_count == mission.win_amount
   end
   
   protected
 
   def check_progress
-    self.completed = (self.win_count >= self.mission.win_amount)
+    self.completed = (win_count >= mission.win_amount)
     
-    return true
+    true
   end
 end

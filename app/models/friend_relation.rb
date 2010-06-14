@@ -12,7 +12,7 @@ class FriendRelation < Relation
   validates_uniqueness_of :target_id, :scope => :source_id
 
   def self.destroy_between(c1, c2)
-    self.transaction do
+    transaction do
       Relation.find(:all,
         :conditions => [
           "(source_id = :c1 AND target_id = :c2) OR (source_id = :c2 AND target_id = :c1)",

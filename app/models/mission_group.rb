@@ -62,7 +62,7 @@ class MissionGroup < ActiveRecord::Base
   end
 
   def locked?(character)
-    character.level < self.level
+    character.level < level
   end
 
   def name_with_level

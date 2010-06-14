@@ -5,7 +5,9 @@ class Character
     end
 
     def effect_value(role)
-      (assignment = self.by_role(role)) ? assignment.effect_value : 0
+      assignment = by_role(role)
+
+      assignment ? assignment.effect_value : 0
     end
   end
 end

@@ -32,6 +32,6 @@ class Newsletter < ActiveRecord::Base
   validates_presence_of :text
 
   def schedule_delivery(time = nil)
-    self.delivery_job = Delayed::Job.enqueue(Jobs::NewsletterDelivery.new(self.id), 0, time || Time.now)
+    self.delivery_job = Delayed::Job.enqueue(Jobs::NewsletterDelivery.new(id), 0, time || Time.now)
   end
 end

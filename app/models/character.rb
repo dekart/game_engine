@@ -164,9 +164,7 @@ class Character < ActiveRecord::Base
     end
 
     def rating_position(character, field)
-      self.count(
-        :conditions => ["#{field} > ?", character.send(field)]
-      ) + 1
+      count(:conditions => ["#{field} > ?", character.send(field)]) + 1
     end
 
     def level_for_experience(value)
@@ -177,17 +175,13 @@ class Character < ActiveRecord::Base
   end
 
   def self_and_relations
-    Character.scoped(
-      :conditions => {
-        :id => [id] + self.friend_relations.character_ids
-      }
-    )
+    self.class.scoped(:conditions => {:id => [id] + friend_relations.character_ids})
   end
 
   def upgrade_attribute!(name)
     name = name.to_sym
 
-    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && self.points >= Setting.i("character_#{name}_upgrade_points")
+    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && points >= Setting.i("character_#{name}_upgrade_points")
 
     ActiveRecord::Base.transaction do
       case name
@@ -201,23 +195,23 @@ class Character < ActiveRecord::Base
         self.stamina  += Setting.i(:character_stamina_upgrade)
         self.sp       += Setting.i(:character_stamina_upgrade)
       else
-        self.increment(name, Setting.i("character_#{name}_upgrade"))
+        increment(name, Setting.i("character_#{name}_upgrade"))
       end
 
       self.points -= Setting.i("character_#{name}_upgrade_points")
 
-      self.save
+      save
     end
 
     return true
   end
 
   def attack_points
-    self.attack + self.inventory_attack_points + self.assignments.effect_value(:attack)
+    attack + inventory_attack_points + assignments.effect_value(:attack)
   end
 
   def defence_points
-    self.defence + self.inventory_defence_points + self.assignments.effect_value(:defence)
+    defence + inventory_defence_points + assignments.effect_value(:defence)
   end
 
   def inventory_attack_points
@@ -233,7 +227,7 @@ class Character < ActiveRecord::Base
   end
 
   def weak?
-    self.hp < self.weakness_minimum
+    hp < weakness_minimum
   end
 
   def weakness_minimum
@@ -241,15 +235,15 @@ class Character < ActiveRecord::Base
   end
 
   def experience_to_next_level
-    self.next_level_experience - self.experience
+    next_level_experience - experience
   end
 
   def next_level_experience
-    LEVELS[self.level]
+    LEVELS[level]
   end
 
   def level_progress_percentage
-    (100 - self.experience_to_next_level.to_f / (self.next_level_experience - LEVELS[self.level - 1]) * 100).round
+    (100 - experience_to_next_level.to_f / (next_level_experience - LEVELS[level - 1]) * 100).round
   end
 
   def formatted_basic_money
@@ -279,11 +273,11 @@ class Character < ActiveRecord::Base
   end
 
   def can_buy?(item)
-    self.basic_money >= item.basic_price.to_i and self.vip_money >= item.vip_price.to_i
+    basic_money >= item.basic_price.to_i and vip_money >= item.vip_price.to_i
   end
 
   def need_vip_money?(item)
-    item.vip_price.to_i > 0 && self.vip_money < item.vip_price
+    item.vip_price.to_i > 0 && vip_money < item.vip_price
   end
 
   def can_attack?(victim)
@@ -295,80 +289,81 @@ class Character < ActiveRecord::Base
   end
 
   def rank_for_mission(mission)
-    self.ranks.find_or_initialize_by_mission_id(mission.id)
+    ranks.find_or_initialize_by_mission_id(mission.id)
   end
 
   def exchange_money!
-    return if self.vip_money < Setting.i(:premium_money_price)
+    return if vip_money < Setting.i(:premium_money_price)
 
-    self.class.transaction do
+    transaction do
       self.vip_money    -= Setting.i(:premium_money_price)
       self.basic_money  += Setting.i(:premium_money_amount)
 
-      self.save
+      save
     end
   end
 
   def full_energy?
-    self.ep == self.energy
+    ep == energy
   end
 
   def refill_energy!(free = false)
     return if full_energy? or (!free and vip_money < Setting.i(:premium_energy_price))
 
-    self.class.transaction do
-      self.ep = self.energy
+    transaction do
+      self.ep = energy
+      
       self.vip_money -= Setting.i(:premium_energy_price) unless free
 
-      self.save
+      save
     end
   end
 
   def full_health?
-    self.hp == self.health
+    hp == health
   end
 
   def refill_health!(free = false)
     return if full_health? or (!free and vip_money < Setting.i(:premium_health_price))
 
-    self.class.transaction do
-      self.hp = self.health
+    transaction do
+      self.hp = health
       self.vip_money -= Setting.i(:premium_health_price) unless free
 
-      self.save
+      save
     end
   end
 
   def full_stamina?
-    self.sp == self.stamina
+    sp == stamina
   end
 
   def refill_stamina!(free = false)
     return if full_stamina? or (!free and vip_money < Setting.i(:premium_stamina_price))
 
-    self.class.transaction do
-      self.sp = self.health
+    transaction do
+      self.sp = health
       self.vip_money -= Setting.i(:premium_stamina_price) unless free
 
-      self.save
+      save
     end
   end
 
   def buy_points!
-    return if self.vip_money < Setting.i(:premium_points_price)
+    return if vip_money < Setting.i(:premium_points_price)
 
-    self.class.transaction do
+    transaction do
       self.vip_money  -= Setting.i(:premium_points_price)
       self.points     += Setting.i(:premium_points_amount)
 
-      self.save
+      save
     end
   end
 
   def hire_mercenary!
-    return if self.vip_money < Setting.i(:premium_mercenary_price)
+    return if vip_money < Setting.i(:premium_mercenary_price)
 
-    self.transaction do
+    transaction do
       self.vip_money -= Setting.i(:premium_mercenary_price)
       
       mercenary_relations.create!
@@ -377,9 +372,9 @@ class Character < ActiveRecord::Base
   end
 
   def reset_attributes!
-    return if self.vip_money < Setting.i(:premium_reset_attributes_price)
+    return if vip_money < Setting.i(:premium_reset_attributes_price)
 
-    self.transaction do
+    transaction do
       self.vip_money -= Setting.i(:premium_reset_attributes_price)
 
       free_points = 0
@@ -398,10 +393,10 @@ class Character < ActiveRecord::Base
 
       self.points += free_points
 
-      self.hp = self.health if self.hp > self.health
-      self.ep = self.energy if self.ep > self.energy
+      self.hp = health if hp > health
+      self.ep = energy if ep > energy
 
-      self.save
+      save
     end
   end
 
@@ -415,15 +410,15 @@ class Character < ActiveRecord::Base
   end
 
   def secret(length = 6)
-    Digest::MD5.hexdigest("#{self.id}-#{self.created_at}")[0, length]
+    Digest::MD5.hexdigest("%s-%s" % [id, created_at])[0, length]
   end
 
   def invitation_key
-    "#{id}-#{secret}"
+    "%s-%s" % [id, secret]
   end
 
   def key
-    "#{id}-#{secret(10)}"
+    "%s-%s" % [id, secret(10)]
   end
 
   def charge(basic_amount, vip_amount)
@@ -434,15 +429,15 @@ class Character < ActiveRecord::Base
   end
 
   def titles
-    (self.ranks.completed + self.mission_group_ranks.completed).collect do |rank|
+    (ranks.completed + mission_group_ranks.completed).collect do |rank|
       rank.title unless rank.title.blank?
     end.compact
   end
 
   def personalize_from(facebook_session)
-    profile_info = facebook_session.users([self.user.facebook_id], [:name]).first
+    profile_info = facebook_session.users([user.facebook_id], [:name]).first
 
-    self.name = profile_info.name if self.name.blank?
+    self.name = profile_info.name if name.blank?
   end
 
   CharacterType::BONUSES.each do |bonus|
@@ -459,9 +454,11 @@ class Character < ActiveRecord::Base
     self[:placements] ||= {}
   end
 
+  # TODO Refactor this
   def accept_gifts id
     if id == 'all'
-      gift_receipts = GiftReceipt.unaccepted.for_character self
+      gift_receipts = GiftReceipt.unaccepted.for_character(self)
+
       gift_receipts.each(&:give_item_to_character!).map(&:gift).uniq
     else
       gift = Gift.find id
@@ -483,15 +480,15 @@ class Character < ActiveRecord::Base
   protected
 
   def update_level_and_points
-    if self.experience_to_next_level <= 0
+    if experience_to_next_level <= 0
       self.level      += 1
       
       self.points     += Setting.i(:character_points_per_upgrade)
       self.vip_money  += Setting.i(:character_vip_money_per_upgrade)
 
-      self.ep     = self.energy
-      self.hp     = self.health
-      self.sp     = self.stamina
+      self.ep = energy
+      self.hp = health
+      self.sp = stamina
 
       self.level_updated = true
     end
