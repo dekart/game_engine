@@ -42,10 +42,10 @@ module RestorableAttribute
     end
 
     def value
-      calculated_value = self.stored_value + self.restore_rate * self.restores_since_last_update
+      calculated_value = stored_value + restore_rate * restores_since_last_update
 
-      if calculated_value > self.limit
-        return self.limit
+      if calculated_value > limit
+        return limit
       elsif calculated_value < 0
         return 0
       else
@@ -54,31 +54,31 @@ module RestorableAttribute
     end
 
     def restores_since_last_update
-      (Time.now - self.updated_at).to_i / self.restore_period
+      (Time.now - updated_at).to_i / restore_period
     end
 
     def value=(value)
       @container[@name] = value.to_i > 0 ? value : 0
 
       @container.send("#{@name}_updated_at=", 
-        Time.now - (self.time_to_restore > 0 ? self.restore_period - self.time_to_restore : 0)
+        Time.now - (time_to_restore > 0 ? restore_period - time_to_restore : 0)
       )
     end
 
     def restore_time(restore_to)
-      restore_to = self.limit if restore_to > self.limit
+      restore_to = limit if restore_to > self.limit
 
-      if self.value >= restore_to
+      if value >= restore_to
         return 0
       else
-        (self.updated_at + ((restore_to - self.stored_value).to_f / self.restore_rate).ceil * self.restore_period - Time.now).to_i
+        (updated_at + ((restore_to - stored_value).to_f / restore_rate).ceil * restore_period - Time.now).to_i
       end
     end
 
     def time_to_restore
-      return 0 if self.value == self.limit
+      return 0 if value == limit
       
-      self.restore_period - (Time.now - self.updated_at).to_i % self.restore_period.to_i
+      restore_period - (Time.now - updated_at).to_i % restore_period.to_i
     end
   end
 
