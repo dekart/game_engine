@@ -1,8 +1,30 @@
 <% result_for :fight do %>
   <% if !@fight.new_record? %>
     <% if @fight.winner == current_character %>
+      <div class="buttons">
+        <%= link_to_function(button(:publish), fight_stream_dialog(@fight),
+              :class => "publish button"
+            ) %>
+
+        <%= help_request_link(button(:request_help), @fight,
+              :class => "request_help button"
+            ) %>
+      </div>
+
       <%= render "fights/create/success", :fight => @fight %>
     <% else %>
+      <div class="buttons">
+        <%= link_to_remote(button(:attack_again),
+              :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @victim),
+              :update => :result,
+              :html   => {:class => "attack_again button"}
+            ) if current_character.stamina > 0 %>
+
+        <%= help_request_link(button(:request_help), @fight,
+              :class => "request_help button"
+            ) %>
+      </div>
+
       <%= render "fights/create/failure", :fight => @fight %>
     <% end %>
 

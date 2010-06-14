@@ -358,18 +358,16 @@ en:
       buttons:
         respond: "Fight Back!"
     create:
+      buttons:
+        publish: "Brag About It!"
+        request_help: "Ask Friends to Attack"
+        attack_again: "Attack Again!"
       success:
-        buttons:
-          publish: "Brag About It!"
-          request_help: "Ask Friends to Attack"
         message: "You attacked {{user_name}} and WON the battle against {{pronoun}}!"
         you_received: "You received:"
         you_lost: "You lost:"
         victim_lost: "{{user_name}} lost:"
       failure:
-        buttons:
-          attack_again: "Attack Again!"
-          request_help: "Ask Friends to Attack"
         message: "You attacked {{user_name}} and LOST the battle against {{pronoun}}!"
         you_lost: "You lost:"
         victim_lost: "{{user_name}} lost:"
@@ -877,6 +875,8 @@ en:
     create:
       message: "You just set a {{reward}} bounty on {{victim}}"
     update:
+      buttons:
+        attack_again: "Attack Again"
       completed: "You've just took out {{victim}}! The reward is yours!"
       you_received: "You received:"
       already_completed: "Somebody already took out {{victim}} before you got the chance!"

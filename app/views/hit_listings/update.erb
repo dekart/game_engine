@@ -2,6 +2,17 @@
   <% if @fight %>
 
     <% if !@fight.new_record? %>
+      <% unless @hit_listing.completed? %>
+        <div class="buttons">
+          <%= link_to_remote(button(:attack_again),
+                :url    => hit_listing_path(@hit_listing),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => "attack_again button"}
+              ) %>
+        </div>
+      <% end %>
+
       <% if @fight.winner == current_character %>
         <%= render "fights/create/success", :fight => @fight %>
       <% else %>

@@ -1,13 +1,3 @@
-<div class="buttons">
-  <%= link_to_function(button(:publish), fight_stream_dialog(fight),
-        :class => "publish button"
-      ) %>
-  
-  <%= help_request_link(button(:request_help), fight,
-        :class => "request_help button"
-      ) %>
-</div>
-
 <p class="success">
   <%= raw t(".message", 
         :pronoun    => fb_pronoun(fight.victim.user, :objective => true),
