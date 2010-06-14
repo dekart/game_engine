@@ -1,9 +1,12 @@
 class PropertyType < ActiveRecord::Base
-  AVAILABILITIES = [:shop, :mission, :loot]
-
+  extend HasPayouts
   include HasInvisibility
 
+  AVAILABILITIES = [:shop, :mission, :loot]
+
   has_many :properties, :dependent => :destroy
+
+  has_payouts :collect
 
   has_attached_file :image,
     :styles => {

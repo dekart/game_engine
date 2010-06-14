@@ -179,7 +179,7 @@ describe PropertiesController do
 
         facebook_put :collect_money, :id => 1
 
-        assigns[:collected_money].should == 123
+        assigns[:result].should == 123
       end
 
       it "should pass the property to the template" do
@@ -210,7 +210,7 @@ describe PropertiesController do
 
         facebook_put :collect_money
 
-        assigns[:collected_money].should == 456
+        assigns[:result].should == 456
       end
 
       it "should pass character properties to the template" do

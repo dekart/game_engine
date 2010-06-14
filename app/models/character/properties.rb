@@ -15,7 +15,7 @@ class Character
     end
 
     def collect_money!
-      result = 0
+      result = Payouts::Collection.new
       
       transaction do
         each do |property|
@@ -25,7 +25,7 @@ class Character
         end
       end
 
-      result > 0 ? result : false
+      result.any? ? result : false
     end
 
     def collectable

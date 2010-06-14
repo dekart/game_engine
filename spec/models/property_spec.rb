@@ -2,12 +2,10 @@ require File.expand_path("../../spec_helper", __FILE__)
 
 describe Property do
   before(:each) do
+    @character = Factory(:character)
     @property_type = Factory(:property_type)
 
     @property = Property.new(:property_type => @property_type)
-
-    @character = Factory(:character)
-
     @property.character = @character
   end
 
@@ -192,6 +190,10 @@ describe Property do
   describe "when collecting money from property" do
     before :each do
       @property.save!
+
+      @payout_result = Payouts::Collection.new
+      @payouts = mock("payouts", :apply => @payout_result)
+      @property.stub!(:payouts).and_return(@payouts)
     end
 
     describe "if property is not collectable" do
@@ -226,11 +228,21 @@ describe Property do
       it "should give collected money to character" do
         lambda{
           @property.collect_money!
-        }.should change(@property.character, :basic_money).from(1100).to(1110)
+        }.should change(@character, :basic_money).from(1100).to(1110)
       end
 
-      it "should return amount of collected money" do
-        @property.collect_money!.should == 10
+      it "should apply property payouts to character" do
+        @payouts.should_receive(:apply).with(@character, :collect).and_return(@payout_result)
+
+        @property.collect_money!
+      end
+
+      it "should return payout result together with collected money" do
+        result = @property.collect_money!
+
+        result.should == @payout_result
+        result.items.first.should be_kind_of(Payouts::BasicMoney)
+        result.items.first.value.should == 10
       end
     end
   end

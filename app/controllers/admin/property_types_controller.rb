@@ -36,7 +36,7 @@ class Admin::PropertyTypesController < Admin::BaseController
   def update
     @type = PropertyType.find(params[:id])
 
-    if @type.update_attributes(params[:property_type])
+    if @type.update_attributes(params[:property_type].reverse_merge(:payouts => nil))
       redirect_to admin_property_types_path
     else
       render :action => :edit

@@ -1,5 +1,5 @@
 <% result_for :property do %>
-  <% if @collected_money %>
+  <% if @result.any? %>
     <p>
       <% if @property %>
         <%= raw t(".messages.success_single",
@@ -16,7 +16,7 @@
     <h3><%= t(".you_received.title") %></h3>
 
     <div class="payouts">
-      <%= payout(:basic_money, number_to_currency(@collected_money)) %>
+      <%= payout_list(@result, :add) %>
     </div>
   <% else %>
     <p><%= raw t(".messages.failure") %></p>

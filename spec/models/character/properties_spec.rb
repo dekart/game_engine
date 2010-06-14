@@ -71,14 +71,14 @@ describe Character do
     end
 
     it "should collect money for each property" do
-      @property1.should_receive(:collect_money!).and_return(5)
-      @property2.should_receive(:collect_money!).and_return(10)
+      @property1.should_receive(:collect_money!).and_return(Payouts::Collection.new)
+      @property2.should_receive(:collect_money!).and_return(Payouts::Collection.new)
 
       @character.properties.collect_money!
     end
 
     it "should return sum of all collected money" do
-      @character.properties.collect_money!.should == 10
+      @character.properties.collect_money!.should be_kind_of(Payouts::Collection)
     end
 
     it "should return false if collected nothing" do

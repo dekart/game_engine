@@ -2,7 +2,8 @@ class Property < ActiveRecord::Base
   belongs_to :character
   belongs_to :property_type
 
-  delegate :name, :plural_name, :description, :image, :image?, :basic_price, :vip_price, :income, :collect_period, :to => :property_type
+  delegate :name, :plural_name, :description, :image, :image?, :basic_price, :vip_price, :income, :collect_period, :payouts,
+    :to => :property_type
 
   attr_accessor :charge_money
 
@@ -64,13 +65,16 @@ class Property < ActiveRecord::Base
 
   def collect_money!
     if collectable?
-      returning income = total_income do
-        transaction do
-          update_attribute(:collected_at, Time.now)
+      transaction do
+        update_attribute(:collected_at, Time.now)
 
-          character.basic_money += income
-          character.save
-        end
+        result = payouts.apply(character, :collect)
+        result << Payouts::BasicMoney.new(:value => total_income)
+
+        character.basic_money += total_income
+        character.save
+
+        result
       end
     else
       false

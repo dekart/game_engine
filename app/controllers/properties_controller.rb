@@ -30,9 +30,9 @@ class PropertiesController < ApplicationController
     if params[:id]
       @property = current_character.properties.find(params[:id])
 
-      @collected_money = @property.collect_money!
+      @result = @property.collect_money!
     else
-      @collected_money = @properties.collect_money!
+      @result = @properties.collect_money!
     end
 
     render :collect_money, :layout => "ajax"

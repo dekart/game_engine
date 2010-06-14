@@ -2,7 +2,7 @@ module Payouts
   class Collection
     attr_reader :items
 
-    delegate :each, :empty?, :any?, :size, :to => :items
+    delegate :<<, :each, :empty?, :any?, :size, :to => :items
 
     def initialize(*payouts)
       @items = payouts
@@ -22,6 +22,13 @@ module Payouts
 
     def by_action(action)
       self.items.select{|p| p.action == action }
+    end
+
+    def +(other)
+      returning result = Payouts::Collection.new do
+        result.items.push(*items)
+        result.items.push(*other.items)
+      end
     end
   end
 end
