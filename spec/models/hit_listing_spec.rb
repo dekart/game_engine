@@ -16,6 +16,26 @@ describe HitListing do
       @hit_listing = Factory.build(:hit_listing)
     end
     
+    describe "when valid" do
+      it "should be saved successfully" do
+        lambda{
+          @hit_listing.save!.should be_true
+        }.should change(HitListing, :count).from(0).to(1)
+      end
+
+      it "should charge client for reward amount" do
+        lambda{
+          @hit_listing.save!
+        }.should change(@hit_listing.client, :basic_money).from(10_000).to(0)
+      end
+
+      it "should get a defined fee from the reward" do
+        lambda{
+          @hit_listing.save!
+        }.should change(@hit_listing, :reward).from(10_000).to(8_000)
+      end
+    end
+
     it "should not be vaild without a client" do
       @hit_listing.client = nil
 
@@ -56,22 +76,20 @@ describe HitListing do
       @hit_listing.errors.on(:reward).should_not be_empty
     end
 
-    it "should be saved successfully when valid" do
-      lambda{
-        @hit_listing.save!.should be_true
-      }.should change(HitListing, :count).from(0).to(1)
+    it "should not be valid if victim is weak" do
+      @hit_listing.victim.stub!(:weak?).and_return(true)
+
+      @hit_listing.should_not be_valid
+
+      @hit_listing.errors.on(:victim).should_not be_empty
     end
 
-    it "should charge client for reward amount" do
-      lambda{
-        @hit_listing.save!
-      }.should change(@hit_listing.client, :basic_money).from(10_000).to(0)
-    end
+    it "should not be valid if victim is already listed" do
+      @other_listing = Factory(:hit_listing, :victim => @hit_listing.victim)
 
-    it "should get a defined fee from the reward" do
-      lambda{
-        @hit_listing.save!
-      }.should change(@hit_listing, :reward).from(10_000).to(8_000)
+      @hit_listing.should_not be_valid
+
+      @hit_listing.errors.on(:victim).should_not be_empty
     end
   end
 

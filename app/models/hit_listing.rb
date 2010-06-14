@@ -11,7 +11,7 @@ class HitListing < ActiveRecord::Base
     :allow_blank => true,
     :on => :create
 
-  validate_on_create :check_client_balance
+  validate_on_create :check_victim_weakness, :check_victim_already_listed, :check_client_balance
 
   before_create :charge_client, :take_fee_from_reward
 
@@ -34,6 +34,18 @@ class HitListing < ActiveRecord::Base
   end
 
   protected
+
+  def check_victim_weakness
+    if victim && victim.weak?
+      errors.add(:victim, :too_weak)
+    end
+  end
+
+  def check_victim_already_listed
+    if victim && self.class.incomplete.find_by_victim_id(victim.id)
+      errors.add(:victim, :already_listed)
+    end
+  end
 
   def check_client_balance
     if reward && client && client.basic_money < reward

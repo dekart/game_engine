@@ -1,6 +1,8 @@
-<%= title(t(".title", :user => character_name(@victim))) %>
+<%= title(t(".title")) %>
 
 <% form_for [@victim, @hit_listing] do |form| %>
+  <%= form.field :victim, character_name_link(@victim) %>
+
   <%= form.text_field :reward %>
 
   <%= form.submit %>
