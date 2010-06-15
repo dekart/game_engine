@@ -58,8 +58,12 @@ module ApplicationHelper
     end
   end
 
-  def dialog(&block)
+  def dialog(options = {}, &block)
     content = capture(&block)
+
+    if options.any?
+      content = content_tag(:div, content, options)
+    end
 
     dom_ready("$.dialog('#{escape_javascript(content)}')")
   end
