@@ -84,6 +84,9 @@ class Character < ActiveRecord::Base
 
   has_many :ordered_hit_listings, :foreign_key => :client_id, :class_name => "HitListing"
 
+  has_many :bank_deposits
+  has_many :bank_withdrawals, :class_name => "BankWithdraw"
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [

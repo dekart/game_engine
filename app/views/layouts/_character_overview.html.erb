@@ -4,7 +4,11 @@
       <div class="label"><%= Character.human_attribute_name("basic_money") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".bank"), new_bank_operation_path, :class => :bank) %>
+      <%= link_to_remote(t(".bank"),
+            :url    => new_bank_operation_path,
+            :update => :ajax,
+            :html   => {:class => :bank}
+          ) %>
     </td>
     <td class="vip_money">
       <div class="label"><%= Character.human_attribute_name("vip_money") %></div>

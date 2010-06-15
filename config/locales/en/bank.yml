@@ -3,11 +3,12 @@ en:
     new:
       title: Treasury
       current_balance: "Current Balance: {{amount}}"
-      deposit:
-        title: "Deposit"
-        note: "A {{fee}}% processing fee will be taken out of all incoming funds."
-        submit: "Deposit"
-      withdraw:
-        title: "Withdraw"
-        note: "Withdrawing money to cash is free."
-        submit: "Withdraw"
+      deposit: "Deposit"
+      withdraw: "Withdraw"
+      note: "A {{fee}}% processing fee will be taken out of all incoming funds. Withdrawing money to cash is free."
+    deposit:
+      message: "The deposit was processed successfully!"
+      balance: "New Balance: {{amount}}"
+    withdraw:
+      message: "The withdrawal was processed successfully!"
+      balance: "New Balance: {{amount}}"

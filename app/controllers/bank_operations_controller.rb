@@ -1,18 +1,33 @@
 class BankOperationsController < ApplicationController
   def new
-    @deposit = BankDeposit.new
-    @withdraw = BankWithdraw.new
+    @deposit = BankDeposit.new(:amount => current_character.basic_money)
+    
+    @withdrawal = BankWithdraw.new
 
-    render :action => :new
+    render :new, :layout => 'ajax'
   end
 
-  def create
-    @operation = (params[:type] == "deposit" ? BankDeposit : BankWithdraw).new(params[:bank_operation])
+  def deposit
+    @deposit = current_character.bank_deposits.build(params[:bank_operation])
 
-    @operation.character = current_character
+    if @deposit.save
+      current_character.reload
 
-    @operation.save
+      render :deposit, :layout => 'ajax'
+    else
+      render :new, :layout => 'ajax'
+    end
+  end
 
-    redirect_to new_bank_operation_path
+  def withdraw
+    @withdrawal = current_character.bank_withdrawals.build(params[:bank_operation])
+
+    if @withdrawal.save
+      current_character.reload
+      
+      render :withdraw, :layout => 'ajax'
+    else
+      render :new, :layout => 'ajax'
+    end
   end
 end

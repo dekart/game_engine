@@ -112,7 +112,12 @@ ActionController::Routing::Routes.draw do |map|
     :member     => {:respond => :post, :used_items => :post}
   map.resources :invitations, :member => {:accept => :any, :ignore => :any}
   map.resources :relations
-  map.resources :bank_operations
+  map.resources :bank_operations,
+    :only => :new,
+    :collection => {
+      :deposit  => :post,
+      :withdraw => :post
+    }
   map.resources :properties, :only => [:index, :create],
     :member => {
       :upgrade        => :put,
