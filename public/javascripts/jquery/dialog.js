@@ -113,7 +113,7 @@
     $.dialog.settings.imageTypesRegexp = new RegExp('\.(' + imageTypes + ')$', 'i')
 
     if (settings) $.extend($.dialog.settings, settings)
-    $('body').append($.dialog.settings.dialogHtml)
+    $('#content').append($.dialog.settings.dialogHtml)
 
     $('#dialog .close').click($.dialog.close)
   }
