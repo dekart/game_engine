@@ -7,8 +7,14 @@ var CharacterForm = {
     $('#new_character input[type=submit]').click(function(e){
       e.preventDefault();
 
+      Spinner.show();
+
       FB.Connect.requireSession(function(){
-        $('#new_character').submit()
+        Spinner.hide();
+
+        $('#new_character').submit();
+
+        Spinner.show(200);
       });
     });
 
@@ -16,9 +22,13 @@ var CharacterForm = {
       var link = e.target;
 
       e.preventDefault();
+
+      Spinner.show();
       
       FB.Connect.requireSession(function(){
         document.location = $(link).attr('href');
+
+        Spinner.show(200);
       });
     })
   },
@@ -201,15 +211,15 @@ var Spinner = {
       });
     $('body').mousemove(this.setPosition);
   },
-  show: function(){
-    $('#spinner').show();
-
+  show: function(speed){
     if(this.x > -1 && this.y > -1){
       $('#spinner').css({top: this.y - $('#spinner').height() - 50})
     }
+
+    $('#spinner').fadeIn(speed);
   },
-  hide: function(){
-    $('#spinner').hide()
+  hide: function(speed){
+    $('#spinner').fadeOut(speed)
   },
   setPosition: function(e){
     Spinner.x = e.pageX;
