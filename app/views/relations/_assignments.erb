@@ -17,11 +17,11 @@
         <%= render assignment %>
       <% else %>
         <div class="controls">
-          <%= link_to_function(button(:promote),
-                "$.dialog(%s);" % {
-                  :ajax => new_character_assignment_path(current_character, :role => role)
-                }.to_json,
-                :class => "promote button"
+          <%= link_to_remote(button(:promote),
+                :url    => new_character_assignment_path(current_character, :role => role),
+                :method => :get,
+                :update => :ajax,
+                :html   => {:class => "promote button"}
               ) %>
         </div>
       
