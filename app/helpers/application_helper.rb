@@ -46,14 +46,22 @@ module ApplicationHelper
     select_tag(:amount, options_for_select((1..10).to_a))
   end
 
-  def dom_ready(&block)
+  def dom_ready(content = nil, &block)
     @dom_ready ||= []
-    
-    if block_given?
+
+    if content
+      @dom_ready << content
+    elsif block_given?
       @dom_ready << capture(&block)
     else
       javascript_tag("$(function(){ #{ @dom_ready.join("\n") } });")
     end
+  end
+
+  def dialog(&block)
+    content = capture(&block)
+
+    dom_ready("$.dialog('#{escape_javascript(content)}')")
   end
 
   def google_analytics
