@@ -1,4 +1,4 @@
-<% result_for :level_up do %>
+<% dialog :id => :level_up_result do %>
   <h2><%= t(".title") %></h2>
 
   <div class="text">
@@ -21,7 +21,5 @@
 <% end %>
 
 <% dom_ready do %>
-  $.dialog({div: '#level_up_result'});
-  
   $(document).trigger('character.new_level');
 <% end %>
