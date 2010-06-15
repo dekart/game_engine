@@ -19,7 +19,7 @@
       <% end %>
 
       <% if @hit_listing.completed? %>
-        <p class="success completed">
+        <p class="completed">
           <%= raw t(".completed", :victim => character_name_link(@hit_listing.victim)) %>
         </p>
 
@@ -32,6 +32,8 @@
             </td>
           </tr>
         </table>
+      <% else %>
+        <p class="incomplete"><%= t(".incomplete") %></p>
       <% end %>
     <% elsif !@fight.enough_stamina? %>
       <%= render("requirements/not_satisfied/stamina_point",

@@ -14,6 +14,7 @@ en:
     update:
       buttons:
         attack_again: "Attack Again"
-      completed: "You've just took out {{victim}}! The reward is yours!"
       you_received: "You received:"
+      completed: "You've just took out {{victim}}! The reward is yours!"
+      incomplete: "The target is still alive. Keep attacking!"
       already_completed: "Somebody already took out {{victim}} before you got the chance!"
