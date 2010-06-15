@@ -24,7 +24,7 @@
           <div class="header"> \
             <a href="#" class="close"></a> \
           </div> \
-          <div class="content"> \
+          <div class="content clearfix"> \
           </div> \
         </div> \
       </div> \
