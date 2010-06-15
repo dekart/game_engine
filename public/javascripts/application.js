@@ -3,6 +3,34 @@ var CharacterForm = {
     $('#character_types .character_type').click(function(){
       CharacterForm.set_character_type(this)
     });
+
+    $('#new_character input[type=submit]').click(function(e){
+      e.preventDefault();
+
+      Spinner.show();
+
+      FB.Connect.requireSession(function(){
+        Spinner.hide();
+
+        $('#new_character').submit();
+
+        Spinner.show(200);
+      });
+    });
+
+    $('#new_character a.skip').click(function(e){
+      var link = e.target;
+
+      e.preventDefault();
+
+      Spinner.show();
+      
+      FB.Connect.requireSession(function(){
+        document.location = $(link).attr('href');
+
+        Spinner.show(200);
+      });
+    })
   },
 
   set_character_type: function(selector){
@@ -183,15 +211,15 @@ var Spinner = {
       });
     $('body').mousemove(this.setPosition);
   },
-  show: function(){
-    $('#spinner').show();
-
+  show: function(speed){
     if(this.x > -1 && this.y > -1){
       $('#spinner').css({top: this.y - $('#spinner').height() - 50})
     }
+
+    $('#spinner').fadeIn(speed);
   },
-  hide: function(){
-    $('#spinner').hide()
+  hide: function(speed){
+    $('#spinner').fadeOut(speed)
   },
   setPosition: function(e){
     Spinner.x = e.pageX;
