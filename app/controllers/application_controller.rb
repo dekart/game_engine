@@ -50,7 +50,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_character(force_reload = false)
-    current_user.character(force_reload) if current_user
+    if current_user.nil?
+      @current_character = nil
+    elsif force_reload || @current_character.nil?
+      @current_character = current_user.character(force_reload)
+    end
+
+    @current_character
   end
 
   def after_facebook_login_url
