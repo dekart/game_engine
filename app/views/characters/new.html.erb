@@ -17,7 +17,7 @@
 
     <p>
       <%= raw t(".already_registered.text",
-            :skip_form => link_to(t(".already_registered.skip_form"), root_url)
+            :skip_form => link_to(t(".already_registered.skip_form"), root_url, :class => :skip)
           ) %>
     </p>
   </div>

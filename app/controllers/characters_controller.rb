@@ -2,7 +2,7 @@ class CharactersController < ApplicationController
   skip_before_filter :check_character_existance,
     :only => [:new, :create, :load_vip_money]
   skip_before_filter :ensure_authenticated_to_facebook,
-    :only => [:load_vip_money]
+    :only => [:load_vip_money, :new]
   
   before_filter :set_facebook_session,
     :only => [:new]

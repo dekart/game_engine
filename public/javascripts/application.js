@@ -3,6 +3,24 @@ var CharacterForm = {
     $('#character_types .character_type').click(function(){
       CharacterForm.set_character_type(this)
     });
+
+    $('#new_character input[type=submit]').click(function(e){
+      e.preventDefault();
+
+      FB.Connect.requireSession(function(){
+        $('#new_character').submit()
+      });
+    });
+
+    $('#new_character a.skip').click(function(e){
+      var link = e.target;
+
+      e.preventDefault();
+      
+      FB.Connect.requireSession(function(){
+        document.location = $(link).attr('href');
+      });
+    })
   },
 
   set_character_type: function(selector){

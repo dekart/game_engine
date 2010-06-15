@@ -13,8 +13,8 @@ class ApplicationController < ActionController::Base
   end
 
   before_filter :set_p3p_header
-  before_filter :ensure_authenticated_to_facebook
   before_filter :check_character_existance
+  before_filter :ensure_authenticated_to_facebook
 
   layout :get_layout
 
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     unless current_character
       store_return_to
 
-      redirect_to new_character_path(:reference => params[:reference] || params[:ref])
+      redirect_to url_for(original_params.merge(:controller=> :characters, :action => :new))
     end
   end
 
@@ -133,8 +133,8 @@ class ApplicationController < ActionController::Base
     redirect_to_landing_page
   end
 
-  def params_before_conversion
-    @raw_params ||= request.env['ORIGINAL_PARAMS']
+  def original_params
+    request.env['ORIGINAL_PARAMS'] || params
   end
 
   def default_url_options(options)
