@@ -171,6 +171,8 @@ var AssignmentForm = {
 }
 
 var Spinner = {
+  x: -1,
+  y: -1,
   setup: function(){
     $('#spinner').
       ajaxStart(function(){
@@ -179,12 +181,21 @@ var Spinner = {
       ajaxStop(function(){
         Spinner.hide();
       });
+    $('body').mousemove(this.setPosition);
   },
   show: function(){
     $('#spinner').show();
+
+    if(this.x > -1 && this.y > -1){
+      $('#spinner').css({top: this.y - $('#spinner').height() - 50})
+    }
   },
   hide: function(){
     $('#spinner').hide()
+  },
+  setPosition: function(e){
+    Spinner.x = e.pageX;
+    Spinner.y = e.pageY;
   }
 }
 
