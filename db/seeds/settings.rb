@@ -89,3 +89,5 @@ Setting[:premium_reset_attributes_price] = 10
 Setting[:hit_list_minimum_reward] = 10_000
 Setting[:hit_list_reward_fee] = 20
 Setting[:hit_list_display_limit] = 20
+
+Setting[:landing_pages_visit_delay] = 24

@@ -56,6 +56,8 @@ Spec::Runner.configure do |config|
 
   config.before :all do
     require Rails.root.join("db", "seeds", "settings")
+
+    Setting.cache_values!(true)
   end
 end
 

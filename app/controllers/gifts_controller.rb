@@ -1,7 +1,8 @@
 class GiftsController < ApplicationController
-  def new
-    current_user.gift_page_visited!
+  landing_page :gifts, :only => :new
+  skip_landing_redirect :only => [:new, :show]
 
+  def new
     @gift ||= Gift.new
     
     @items = Item.with_state(:visible).available.available_in(:gift).available_for(current_character).all(
@@ -12,7 +13,7 @@ class GiftsController < ApplicationController
     if @items.any?
       render :action => :new
     else
-      redirect_to landing_url
+      redirect_to root_path
     end
   end
 
@@ -75,11 +76,12 @@ class GiftsController < ApplicationController
       flash[:error] = t("gifts.confirm.messages.failure")
     end
 
-    redirect_to landing_url
+    redirect_to root_path
   end
 
   def show
-    @gifts = current_character.accept_gifts params[:id]
-    redirect_to landing_url if @gifts.empty?
+    @gifts = current_character.accept_gifts(params[:id])
+    
+    redirect_to root_path if @gifts.empty?
   end
 end

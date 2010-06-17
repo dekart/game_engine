@@ -1,5 +1,9 @@
 require 'factory_girl'
 
+Factory.define :user do |t|
+  t.facebook_id 123456789
+end
+
 Factory.define :character_type do |t|
   t.name "Character Type"
   t.description "This is our test character type"

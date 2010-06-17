@@ -1,4 +1,6 @@
 class InvitationsController < ApplicationController
+  skip_landing_redirect :only => :show
+
   def accept
     @invitation = Invitation.find(params[:id])
 
@@ -21,11 +23,11 @@ class InvitationsController < ApplicationController
     @character = Character.find(@id)
 
     if @secret != @character.secret or @character == current_character
-      redirect_to landing_url
+      redirect_to root_path
     elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("invitations.show.messages.already_joined")
 
-      redirect_to landing_url
+      redirect_to root_path
     end
   end
 
@@ -40,6 +42,6 @@ class InvitationsController < ApplicationController
       end
     end
 
-    redirect_to landing_url
+    redirect_to root_path
   end
 end

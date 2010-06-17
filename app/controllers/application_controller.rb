@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   include ExceptionLogging if Rails.env.production?
+  include LandingPage
 
   filter_parameter_logging do |key, value|
     if key == "fb_sig_friends"
@@ -16,6 +17,8 @@ class ApplicationController < ActionController::Base
   before_filter :check_character_existance
   before_filter :ensure_authenticated_to_facebook
 
+  landing_redirect
+
   layout :get_layout
 
   helper_method :current_user, :current_character, :profile_user, :in_profile_tab?, :in_canvas?, :request_context, :current_skin
@@ -27,16 +30,6 @@ class ApplicationController < ActionController::Base
   # Send P3P privacy header to enable iframe cookies in IE
   def set_p3p_header
     headers["P3P"] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
-  end
-
-  def landing_url
-    if current_user.try(:should_visit_gift_page?)
-      new_gift_path
-    elsif current_user.try(:should_visit_invite_page?)
-      invite_users_path
-    else
-      root_path
-    end
   end
 
   def check_character_existance
@@ -117,20 +110,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def redirect_to_landing_page
-    if request.request_uri.starts_with?("//")
-      new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
-    else
-      new_url = landing_url
-    end
-
-    redirect_to new_url
-  end
-
   def log_exception_and_redirect(exception)
     log_error(exception)
 
-    redirect_to_landing_page
+    if request.request_uri.starts_with?("//")
+      new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
+    else
+      new_url = root_path
+    end
+
+    redirect_to new_url
   end
 
   def original_params
@@ -144,7 +133,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    redirect_to landing_url unless current_user.admin?
+    redirect_to root_path unless current_user.admin?
   end
 
   def friend?(user)

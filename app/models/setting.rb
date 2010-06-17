@@ -8,11 +8,15 @@ class Setting < ActiveRecord::Base
   cattr_accessor :cache
 
   class << self
-    def cache_values!
-      cache || self.cache = all.inject({}){|result, s|
-        result[s.alias.to_sym] = s.value
-        result
-      }
+    def cache_values!(force = false)
+      if cache.nil? || force
+        self.cache = all.inject({}){|result, s|
+          result[s.alias.to_sym] = s.value
+          result
+        }
+      end
+      
+      cache
     end
 
     # Returns value casted to integer

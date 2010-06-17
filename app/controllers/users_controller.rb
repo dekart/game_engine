@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  landing_page :invite, :only => :invite
+
   def hide_block
     @user = current_user
 
@@ -43,9 +45,7 @@ class UsersController < ApplicationController
 
       redirect_to invite_users_url(:canvas => true)
     elsif params[:from_selector]
-      redirect_to landing_url
-    else
-      current_user.invite_page_visited!
+      redirect_to root_path
     end
   end
 end

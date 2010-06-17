@@ -3,6 +3,8 @@ class CharactersController < ApplicationController
     :only => [:new, :create, :load_vip_money]
   skip_before_filter :ensure_authenticated_to_facebook,
     :only => [:load_vip_money, :new]
+
+  skip_landing_redirect :except => [:index, :upgrade]
   
   before_filter :set_facebook_session,
     :only => [:new]
@@ -10,20 +12,16 @@ class CharactersController < ApplicationController
     :only => [:new, :create, :edit, :update]
 
   def index
-    if landing_url != root_path
-      redirect_to landing_url
-    else
-      @latest_fights = Fight.with_participant(current_character).find(:all, 
-        :limit => Setting.i(:fight_latest_show_limit)
-      )
+    @latest_fights = Fight.with_participant(current_character).find(:all,
+      :limit => Setting.i(:fight_latest_show_limit)
+    )
 
-      @alliance_invitations = Invitation.for_user(current_user).find(:all)
+    @alliance_invitations = Invitation.for_user(current_user).find(:all)
 
-      @special_items = Item.with_state(:visible).available.available_in(:special).available_for(current_character).all(
-        :limit => 2,
-        :order => "RAND()"
-      )
-    end
+    @special_items = Item.with_state(:visible).available.available_in(:special).available_for(current_character).all(
+      :limit => 2,
+      :order => "RAND()"
+    )
   end
 
   def upgrade
@@ -62,7 +60,7 @@ class CharactersController < ApplicationController
 
   def new
     if current_character
-      redirect_to landing_url
+      redirect_to root_path
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
@@ -78,7 +76,7 @@ class CharactersController < ApplicationController
       @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
       if @character.save
-        redirect_back landing_url
+        redirect_back root_path
       else
         render :action => :new
       end
@@ -98,7 +96,7 @@ class CharactersController < ApplicationController
     @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
     if @character.save
-      redirect_to landing_url
+      redirect_to root_path
     else
       render :action => :edit
     end

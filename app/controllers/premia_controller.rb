@@ -1,4 +1,6 @@
 class PremiaController < ApplicationController
+  skip_landing_redirect
+
   def show
     @special_items = Item.with_state(:visible).available.available_in(:special).available_for(current_character).all(
       :limit => 3,
