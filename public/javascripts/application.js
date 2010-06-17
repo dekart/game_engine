@@ -1,10 +1,18 @@
 var CharacterForm = {
-  setup: function(){
-    $('#character_types .character_type').click(function(){
+  setup: function(selector){
+    var form = $(selector);
+
+    form.find('#character_types .character_type').click(function(){
       CharacterForm.set_character_type(this)
+    }).tooltip({
+      id: 'tooltip',
+      delay: 0,
+      bodyHandler: function(){
+        return $('#description_character_type_' + $(this).attr('value')).html();
+      }
     });
 
-    $('#new_character input[type=submit]').click(function(e){
+    form.find('input[type=submit]').click(function(e){
       e.preventDefault();
 
       Spinner.show();
@@ -18,7 +26,7 @@ var CharacterForm = {
       });
     });
 
-    $('#new_character a.skip').click(function(e){
+    form.find('#new_character a.skip').click(function(e){
       var link = e.target;
 
       e.preventDefault();
@@ -30,7 +38,7 @@ var CharacterForm = {
 
         Spinner.show(200);
       });
-    })
+    });
   },
 
   set_character_type: function(selector){

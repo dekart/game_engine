@@ -8,7 +8,7 @@
   <%= raw fb_connect_javascript_tag %>
   
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
-  <%= javascript_include_tag "jrails", "application" %>
+  <%= javascript_include_tag "jquery/tooltip", "jrails", "application" %>
 
   <%= stylesheet_link_tag(skin_path) %>
 </head>
@@ -21,6 +21,8 @@
     <%= render "layouts/spinner" %>
 
     <%= yield %>
+
+    <div id="tooltip"></div>
   </div>
 
   <!-- Smart resizing hack --><div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div><!-- /Smart resizing hack -->
