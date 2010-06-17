@@ -177,6 +177,14 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def basic_money=(value)
+    self[:basic_money] = [value.to_i, 0].max
+  end
+
+  def vip_money=(value)
+    self[:vip_money] = [value.to_i, 0].max
+  end
+
   def self_and_relations
     self.class.scoped(:conditions => {:id => [id] + friend_relations.character_ids})
   end
