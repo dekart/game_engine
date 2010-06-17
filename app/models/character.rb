@@ -282,7 +282,10 @@ class Character < ActiveRecord::Base
   end
 
   def can_attack?(victim)
-    not self.class.victims_for(self).find_by_id(victim.id).nil?
+    scope = self.class.victims_for(self)
+    scope = scope.not_friends_with(self) unless Setting.b(:fight_alliance_attack)
+
+    scope.find_by_id(victim.id).present?
   end
 
   def can_fulfill?(mission)
