@@ -7,6 +7,16 @@ class ApplicationController
       base.rescue_from ActionController::UnknownAction, :with => :rescue_unknown_action
     end
 
+    def redirect_to_fixed_or_root
+      if request.request_uri.starts_with?("//")
+        new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
+      else
+        new_url = root_path
+      end
+
+      redirect_to new_url
+    end
+
     def rescue_basic_exception(exception)
       fatal_log_processing_for_request_id
       fatal_log_processing_for_parameters
@@ -15,7 +25,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to_landing_page
+      redirect_to_fixed_or_root
     end
 
     def rescue_method_not_allowed(exception)
@@ -24,7 +34,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to_landing_page
+      redirect_to_fixed_or_root
     end
 
     def rescue_routing_error(exception)
@@ -32,7 +42,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to_landing_page
+      redirect_to_fixed_or_root
     end
 
     def rescue_unknown_action(exception)
@@ -43,7 +53,7 @@ class ApplicationController
       
       log_browser_info
 
-      redirect_to_landing_page
+      redirect_to_fixed_or_root
     end
 
     def fatal_log_processing_for_request_id

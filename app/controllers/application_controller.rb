@@ -110,18 +110,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def log_exception_and_redirect(exception)
-    log_error(exception)
-
-    if request.request_uri.starts_with?("//")
-      new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
-    else
-      new_url = root_path
-    end
-
-    redirect_to new_url
-  end
-
   def original_params
     request.env['ORIGINAL_PARAMS'] || params
   end
