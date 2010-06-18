@@ -38,7 +38,14 @@ class ApplicationController < ActionController::Base
     unless current_character
       store_return_to
 
-      redirect_to url_for(original_params.merge(:controller=> :characters, :action => :new))
+      url_params = original_params.to_hash.symbolize_keys
+      url_params.merge!(
+        :controller => "/characters",
+        :action     => :new,
+        :canvas     => !request_is_facebook_iframe?
+      )
+
+      redirect_to url_for(url_params)
     end
   end
 
