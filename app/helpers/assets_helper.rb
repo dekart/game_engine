@@ -6,7 +6,7 @@ module AssetsHelper
       url = "1px.gif"
     end
 
-    image_path(url)
+    Facebooker.facebooker_config["callback_url"] + image_path(url)
   end
 
   def asset_image_tag(asset_alias, options = {})
