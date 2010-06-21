@@ -78,7 +78,11 @@ Rails::Initializer.run do |config|
   config.after_initialize do
     Paperclip::Attachment.default_options.merge!(
       :url  => "/system/:class/:id_partition/:style/:basename.:extension",
-      :path => ":rails_root/public/system/:class/:id_partition/:style/:basename.:extension"
+      :path => ":rails_root/public/system/:class/:id_partition/:style/:basename.:extension",
+      
+      :convert_options => {
+        :all => "-quality #{Setting.i(:app_image_quality)}"
+      }
     )
 
     WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)

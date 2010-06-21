@@ -91,3 +91,5 @@ Setting[:hit_list_reward_fee] = 20
 Setting[:hit_list_display_limit] = 20
 
 Setting[:landing_pages_visit_delay] = 24
+
+Setting[:app_image_quality] = 100
