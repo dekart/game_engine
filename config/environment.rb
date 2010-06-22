@@ -80,9 +80,7 @@ Rails::Initializer.run do |config|
       :url  => "/system/:class/:id_partition/:style/:basename.:extension",
       :path => ":rails_root/public/system/:class/:id_partition/:style/:basename.:extension",
       
-      :convert_options => {
-        :all => "-quality #{Setting.i(:app_image_quality)}"
-      }
+      :convert_options => { :all => "-quality 100" }
     )
 
     WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
