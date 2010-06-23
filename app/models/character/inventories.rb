@@ -1,5 +1,11 @@
 class Character
   module Inventories
+    def effect(attribute)
+      equipped.all.sum do |i|
+        i.send(attribute) * i.equipped
+      end
+    end
+
     def give(item, amount = 1)
       if inventory = find_by_item_id(item.id)
         inventory.amount += amount

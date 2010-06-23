@@ -1,4 +1,4 @@
-<% if current_character.health >= requirement.value %>
+<% if current_character.health_points >= requirement.value %>
   <div class="buttons">
     <%= link_to(button(:refill), premium_path,
           :class => "premium button"

@@ -60,9 +60,9 @@ var Character = {
     $("#co .experience .value").text(a.character.experience + "/" + a.character.next_level_experience);
     $("#co .experience .percentage").css({width: a.character.level_progress_percentage + "%"})
     $("#co .level .value").text(a.character.level);
-    $("#co .health .value").text(a.character.hp + "/" + a.character.health);
-    $("#co .energy .value").text(a.character.ep + "/" + a.character.energy);
-    $("#co .stamina .value").text(a.character.sp + "/" + a.character.stamina);
+    $("#co .health .value").text(a.character.hp + "/" + a.character.health_points);
+    $("#co .energy .value").text(a.character.ep + "/" + a.character.energy_points);
+    $("#co .stamina .value").text(a.character.sp + "/" + a.character.stamina_points);
 
     if(a.character.points > 0) {
       $("#co .level .upgrade").show();
