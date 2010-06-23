@@ -10,6 +10,12 @@
               ) if character == current_character %>
   
           <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement]) -%>
+
+          <div class="payouts tooltip">
+            <h3><%= inventory.name %></h3>
+
+            <%= render "items/effects", :item => inventory %>
+          </div>
         <% end %>
       <% end %>
     <% end %>

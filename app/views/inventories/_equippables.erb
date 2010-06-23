@@ -23,6 +23,12 @@
                 ) %>
           <% end %>
         </div>
+
+        <div class="payouts tooltip">
+          <h3><%= inventory.name %></h3>
+          
+          <%= render "items/effects", :item => inventory %>
+        </div>
       <% end %>
     <% end %>
   <% end %>

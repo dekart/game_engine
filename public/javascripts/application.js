@@ -206,6 +206,18 @@ var AssignmentForm = {
   }
 }
 
+var Equipment = {
+  setup: function(){
+    $('#equippables .inventory, #placements .inventory').tooltip({
+      delay: 0,
+      track: true,
+      bodyHandler: function(){
+        return $(this).find('.tooltip').clone();
+      }
+    })
+  }
+}
+
 var Spinner = {
   x: -1,
   y: -1,
