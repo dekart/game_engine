@@ -1,4 +1,6 @@
 <% dom_ready do %>
   $('#equipment_inventories').html('<%= escape_javascript(render("equippables")) %>');
   $('#equipment_placements').html('<%= escape_javascript(render("placements", :character => current_character)) %>');
+
+  Equipment.setup();
 <% end %>
