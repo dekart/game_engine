@@ -7,7 +7,7 @@
         
         <span class="bonus">
           <%= raw t(".bonus",
-                :amount => content_tag(:span, character.inventory_attack_points)
+                :amount => content_tag(:span, character.inventories.effect(:attack))
               ) %>
         </span>
       </td>
@@ -19,7 +19,7 @@
         
         <span class="bonus">
           <%= raw t(".bonus",
-                :amount => content_tag(:span, character.inventory_defence_points)
+                :amount => content_tag(:span, character.inventories.effect(:defence))
               ) %>
         </span>
       </td>

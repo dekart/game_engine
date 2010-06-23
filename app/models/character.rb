@@ -216,11 +216,11 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    attack + inventory_attack_points + assignments.effect_value(:attack)
+    attack + inventories.effect(:attack) + assignments.effect_value(:attack)
   end
 
   def defence_points
-    defence + inventory_defence_points + assignments.effect_value(:defence)
+    defence + inventories.effect(:defence) + assignments.effect_value(:defence)
   end
 
   def health_points
@@ -233,14 +233,6 @@ class Character < ActiveRecord::Base
 
   def stamina_points
     stamina + inventories.effect(:energy)
-  end
-
-  def inventory_attack_points
-    inventories.equipped.all.sum{|i| i.equipped * i.attack }
-  end
-
-  def inventory_defence_points
-    inventories.equipped.all.sum{|i| i.equipped * i.defence }
   end
 
   def fight_damage_reduce

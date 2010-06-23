@@ -13,8 +13,8 @@
     <td class="values">
       <div class="relations"><%= current_character.relations.effective_size %></div>
 
-      <div class="attack"><%= current_character.inventory_attack_points %></div>
-      <div class="defence"><%= current_character.inventory_defence_points %></div>
+      <div class="attack"><%= current_character.inventories.effect(:attack) %></div>
+      <div class="defence"><%= current_character.inventories.effect(:defence) %></div>
     </td>
     <td class="inventories">
       <% current_character.inventories.best_offence.each do |inventory| %>
