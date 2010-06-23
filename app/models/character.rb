@@ -294,23 +294,11 @@ class Character < ActiveRecord::Base
     )
   end
 
-  def can_buy?(item)
-    basic_money >= item.basic_price.to_i and vip_money >= item.vip_price.to_i
-  end
-
-  def need_vip_money?(item)
-    item.vip_price.to_i > 0 && vip_money < item.vip_price
-  end
-
   def can_attack?(victim)
     scope = self.class.victims_for(self)
     scope = scope.not_friends_with(self) unless Setting.b(:fight_alliance_attack)
 
     scope.find_by_id(victim.id).present?
-  end
-
-  def can_fulfill?(mission)
-    MissionResult.new(self, mission).valid?
   end
 
   def rank_for_mission(mission)
@@ -423,10 +411,6 @@ class Character < ActiveRecord::Base
 
       save
     end
-  end
-
-  def owner
-    self
   end
 
   def allow_fight_with_invite?
