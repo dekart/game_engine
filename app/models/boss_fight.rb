@@ -89,7 +89,7 @@ class BossFight < ActiveRecord::Base
   end
 
   def health=(value)
-    self[:health] = (value >= 0 ? value : 0)
+    self[:health] = [value, 0].max
   end
 
   def received_something?
