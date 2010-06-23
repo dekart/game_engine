@@ -15,10 +15,6 @@ class Property < ActiveRecord::Base
     income * level
   end
 
-  def owner
-    character
-  end
-
   def maximum_level
     property_type.upgrade_limit || Setting.i(:property_upgrade_limit)
   end

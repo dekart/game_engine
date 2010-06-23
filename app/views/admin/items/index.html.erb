@@ -51,16 +51,12 @@
         <td class="basic_price"><%= number_to_currency(item.basic_price) %></td>
         <td class="vip_price"><%= number_to_currency(item.vip_price) %></td>
         <td class="attributes">
-          <% if item.attack != 0 %>
-            <div class="attack">
-              <%= Item.human_attribute_name("attack") %>: <%= item.attack %>
-            </div>
-          <% end %>
-
-          <% if item.defence != 0 %>
-            <div class="defence">
-              <%= Item.human_attribute_name("defence") %>: <%= item.defence %>
-            </div>
+          <% %w{attack defence health energy stamina}.each do |attribute| %>
+            <% if value = item.send(attribute) and value > 0 %>
+              <%= content_tag(:div, "%s: %d" % [Item.human_attribute_name(attribute), value], 
+                    :class => attribute
+                  ) %>
+            <% end %>
           <% end %>
         </td>
         <td class="payouts">

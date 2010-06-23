@@ -7,7 +7,7 @@
         
         <span class="bonus">
           <%= raw t(".bonus",
-                :amount => content_tag(:span, character.inventory_attack_points)
+                :amount => content_tag(:span, character.inventories.effect(:attack))
               ) %>
         </span>
       </td>
@@ -19,7 +19,7 @@
         
         <span class="bonus">
           <%= raw t(".bonus",
-                :amount => content_tag(:span, character.inventory_defence_points)
+                :amount => content_tag(:span, character.inventories.effect(:defence))
               ) %>
         </span>
       </td>
@@ -27,19 +27,19 @@
     <tr class="health">
       <th><%= Character.human_attribute_name("health") %></th>
       <td class="value">
-        <%= "%d/%d" % [character.hp, character.health] %>
+        <%= "%d/%d" % [character.hp, character.health_points] %>
       </td>
     </tr>
     <tr class="energy">
       <th><%= Character.human_attribute_name("energy") %></th>
       <td class="value">
-        <%= "%d/%d" % [character.ep, character.energy] %>
+        <%= "%d/%d" % [character.ep, character.energy_points] %>
       </td>
     </tr>
     <tr class="stamina">
       <th><%= Character.human_attribute_name("stamina") %></th>
       <td class="value">
-        <%= "%d/%d" % [character.sp, character.stamina] %>
+        <%= "%d/%d" % [character.sp, character.stamina_points] %>
       </td>
     </tr>
     <tr class="basic_money">

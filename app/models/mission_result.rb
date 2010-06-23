@@ -17,7 +17,7 @@ class MissionResult
   end
 
   def save!
-    if @character.can_fulfill?(@mission)
+    if valid?
       @success = (rand(100) <= @mission.success_chance)
 
       Rank.transaction do

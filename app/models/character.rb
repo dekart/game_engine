@@ -128,15 +128,15 @@ class Character < ActiveRecord::Base
   attr_accessor :level_updated
 
   restorable_attribute :hp,
-    :limit          => :health,
+    :limit          => :health_points,
     :restore_period => Setting.i(:character_health_restore_period).seconds,
     :restore_bonus  => :health_restore_bonus
   restorable_attribute :ep, 
-    :limit          => :energy,
+    :limit          => :energy_points,
     :restore_period => Setting.i(:character_energy_restore_period).seconds,
     :restore_bonus  => :energy_restore_bonus
   restorable_attribute :sp,
-    :limit          => :stamina,
+    :limit          => :stamina_points,
     :restore_period => Setting.i(:character_stamina_restore_period).seconds,
     :restore_bonus  => :stamina_restore_bonus
 
@@ -216,19 +216,23 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    attack + inventory_attack_points + assignments.effect_value(:attack)
+    attack + inventories.effect(:attack) + assignments.effect_value(:attack)
   end
 
   def defence_points
-    defence + inventory_defence_points + assignments.effect_value(:defence)
+    defence + inventories.effect(:defence) + assignments.effect_value(:defence)
   end
 
-  def inventory_attack_points
-    inventories.equipped.all.sum{|i| i.equipped * i.attack }
+  def health_points
+    health + inventories.effect(:health)
   end
 
-  def inventory_defence_points
-    inventories.equipped.all.sum{|i| i.equipped * i.defence }
+  def energy_points
+    energy + inventories.effect(:energy)
+  end
+
+  def stamina_points
+    stamina + inventories.effect(:energy)
   end
 
   def fight_damage_reduce
@@ -265,28 +269,29 @@ class Character < ActiveRecord::Base
 
   def to_json_for_overview
     to_json(
-      :only     => [
-        :basic_money, :vip_money, :experience, :level, :energy, :ep, :health, :hp,
-        :stamina, :sp, :points
+      :only => [
+        :basic_money,
+        :vip_money,
+        :experience, 
+        :level,
+        :points,
+        :hp, 
+        :ep,
+        :sp
       ],
-      :methods  => [
+      :methods => [
         :formatted_basic_money,
         :formatted_vip_money,
         :next_level_experience,
         :level_progress_percentage,
+        :health_points,
+        :energy_points,
+        :stamina_points,
         :time_to_hp_restore,
         :time_to_ep_restore,
-        :time_to_sp_restore
+        :time_to_sp_restore,
       ]
     )
-  end
-
-  def can_buy?(item)
-    basic_money >= item.basic_price.to_i and vip_money >= item.vip_price.to_i
-  end
-
-  def need_vip_money?(item)
-    item.vip_price.to_i > 0 && vip_money < item.vip_price
   end
 
   def can_attack?(victim)
@@ -294,10 +299,6 @@ class Character < ActiveRecord::Base
     scope = scope.not_friends_with(self) unless Setting.b(:fight_alliance_attack)
 
     scope.find_by_id(victim.id).present?
-  end
-
-  def can_fulfill?(mission)
-    MissionResult.new(self, mission).valid?
   end
 
   def rank_for_mission(mission)
@@ -316,14 +317,14 @@ class Character < ActiveRecord::Base
   end
 
   def full_energy?
-    ep == energy
+    ep == energy_points
   end
 
   def refill_energy!(free = false)
     return if full_energy? or (!free and vip_money < Setting.i(:premium_energy_price))
 
     transaction do
-      self.ep = energy
+      self.ep = energy_points
       
       self.vip_money -= Setting.i(:premium_energy_price) unless free
 
@@ -332,14 +333,14 @@ class Character < ActiveRecord::Base
   end
 
   def full_health?
-    hp == health
+    hp == health_points
   end
 
   def refill_health!(free = false)
     return if full_health? or (!free and vip_money < Setting.i(:premium_health_price))
 
     transaction do
-      self.hp = health
+      self.hp = health_points
       self.vip_money -= Setting.i(:premium_health_price) unless free
 
       save
@@ -347,14 +348,14 @@ class Character < ActiveRecord::Base
   end
 
   def full_stamina?
-    sp == stamina
+    sp == stamina_points
   end
 
   def refill_stamina!(free = false)
     return if full_stamina? or (!free and vip_money < Setting.i(:premium_stamina_price))
 
     transaction do
-      self.sp = health
+      self.sp = stamina_points
       self.vip_money -= Setting.i(:premium_stamina_price) unless free
 
       save
@@ -405,15 +406,11 @@ class Character < ActiveRecord::Base
 
       self.points += free_points
 
-      self.hp = health if hp > health
-      self.ep = energy if ep > energy
+      self.hp = health_points if hp > health_points
+      self.ep = energy_points if ep > energy_points
 
       save
     end
-  end
-
-  def owner
-    self
   end
 
   def allow_fight_with_invite?
@@ -498,9 +495,9 @@ class Character < ActiveRecord::Base
       self.points     += Setting.i(:character_points_per_upgrade)
       self.vip_money  += Setting.i(:character_vip_money_per_upgrade)
 
-      self.ep = energy
-      self.hp = health
-      self.sp = stamina
+      self.ep = energy_points
+      self.hp = health_points
+      self.sp = stamina_points
 
       self.level_updated = true
     end
@@ -511,8 +508,8 @@ class Character < ActiveRecord::Base
       send("#{attribute}=", character_type.send(attribute)) if send(attribute).nil?
     end
 
-    self.hp = health
-    self.ep = energy
-    self.sp = stamina
+    self.hp = health_points
+    self.ep = energy_points
+    self.sp = stamina_points
   end
 end

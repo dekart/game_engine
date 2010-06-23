@@ -20,7 +20,7 @@ class AssignmentsController < ApplicationController
     else
       @assignment = Assignment.find(params[:id])
 
-      if @assignment.context.owner == current_character
+      if @assignment.context == current_character or @assignment.context.character == current_character
         @assignment.destroy
       end
 

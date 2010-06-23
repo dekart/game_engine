@@ -96,7 +96,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  %w{attack defence basic_price vip_price}.each do |attribute|
+  %w{attack defence health energy stamina basic_price vip_price}.each do |attribute|
     define_method(attribute) do
       self[attribute].to_i
     end
