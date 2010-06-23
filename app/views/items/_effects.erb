@@ -1,4 +1,7 @@
-<%= payout(:attack, item.attack > 0 ? "+%d" % item.attack : item.attack) if item.attack != 0 %>
-<%= payout(:defence, item.defence > 0 ? "+%d" % item.defence : item.defence) if item.defence != 0 %>
+<% Item::EFFECTS.each do |effect| %>
+  <% if value = item.send(effect) and value != 0 %>
+    <%= payout(effect, value > 0 ? "+%d" % value : value) %>
+  <% end %>
+<% end %>
 
 <%= payout_list(item.payouts, :add, :preview) %>

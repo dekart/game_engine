@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   include HasInvisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
+  EFFECTS = [:attack, :defence, :health, :energy, :stamina]
 
   belongs_to  :item_group
   has_many    :inventories, :dependent => :destroy
@@ -96,7 +97,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  %w{attack defence health energy stamina basic_price vip_price}.each do |attribute|
+  (Item::EFFECTS + %w{basic_price vip_price}).each do |attribute|
     define_method(attribute) do
       self[attribute].to_i
     end

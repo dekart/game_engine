@@ -31,7 +31,7 @@
 
 <h2><%= Item.human_attribute_name("effects") %></h2>
 
-<% %w{attack defence health energy stamina}.each do |attribute| %>
+<% Item::EFFECTS.each do |attribute| %>
   <%= form.text_field(attribute, :size => 6, :autocomplete => :off) %>
 <% end %>
 
