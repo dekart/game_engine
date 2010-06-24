@@ -27,8 +27,8 @@ class ApplicationController
     protected
 
     def landing_url(last_landing)
-      case last_landing.to_sym
-      when :gifts
+      case last_landing.to_s
+      when "gifts"
         invite_users_path
       else
         new_gift_path
