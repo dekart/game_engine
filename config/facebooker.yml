@@ -15,7 +15,7 @@ development:
   canvas_page_name: hoodwars-dev
   callback_url: http://fb2.itvektor.ru
   pretty_errors: false
-  set_asset_host_to_callback_url: false
+  set_asset_host_to_callback_url: true
   tunnel:
     public_host_username: fb
     public_host: itvektor.ru
@@ -29,7 +29,7 @@ test:
   canvas_page_name: sword-dev
   callback_url: http://fb.itvektor.ru
   pretty_errors: false
-  set_asset_host_to_callback_url: false
+  set_asset_host_to_callback_url: true
   tunnel:
     public_host_username: 
     public_host: 
@@ -42,5 +42,5 @@ production:
   secret_key: 1a7e8b3eb1e5d3999d54d286b5d1c5e4
   canvas_page_name: sword-and-magic
   callback_url: http://sword.it-vektor.ru
-  set_asset_host_to_callback_url: false
+  set_asset_host_to_callback_url: true
   
