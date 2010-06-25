@@ -5,14 +5,6 @@ class ApplicationController < ActionController::Base
   include ExceptionLogging if Rails.env.production?
   include LandingPage
 
-  filter_parameter_logging do |key, value|
-    if key == "fb_sig_friends"
-      count = value.blank? ? 0 : value.count(",") + 1
-
-      value.replace "[#{count} friends]"
-    end
-  end
-
   before_filter :set_p3p_header
   before_filter :check_character_existance
   before_filter :ensure_authenticated_to_facebook
@@ -129,10 +121,6 @@ class ApplicationController < ActionController::Base
 
   def admin_required
     redirect_to root_path unless current_user.admin?
-  end
-
-  def friend?(user)
-    facebook_params["friends"].include?(user.facebook_id.to_s)
   end
 
   def get_layout
