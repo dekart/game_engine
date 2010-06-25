@@ -168,6 +168,7 @@ en:
     promotions:
       index:
         title: "Promotions"
+        note: "<b>Important:</b> promotion links work differently for admins and other players. For testing purposes admins can use links unlimited number of times and receive a bonus <b>each time</b>. Non-admins can use each link and receive a bonus <b>only once</b>."
         empty_set: "No promotions"
         link: "Link"
         controls:

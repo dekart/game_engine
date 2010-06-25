@@ -5,7 +5,7 @@
 </div>
 
 <% if @promotions.any? %>
-  <%= will_paginate @promotions %>
+  <div class="note"><%= raw t(".note") %></div>
 
   <table id="promotion_list" cellspacing="0">
     <tr>
