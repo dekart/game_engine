@@ -52,12 +52,6 @@ class CharactersController < ApplicationController
     end
   end
 
-  def wall
-    @character = Character.find(params[:id])
-    
-    render :action => :wall, :layout => false
-  end
-
   def new
     if current_character
       redirect_to root_path
