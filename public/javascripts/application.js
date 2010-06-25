@@ -212,7 +212,7 @@ var Equipment = {
       delay: 0,
       track: true,
       bodyHandler: function(){
-        return $(this).find('.tooltip').clone();
+        return $(this).find('.tooltip_content').clone();
       }
     })
   }

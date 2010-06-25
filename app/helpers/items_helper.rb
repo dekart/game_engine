@@ -6,4 +6,11 @@ module ItemsHelper
       item.name
     end
   end
+
+  def item_tooltip(item)
+    content_tag(:div,
+      content_tag(:h3, item.name) + render("items/effects", :item => item),
+      :class => "payouts tooltip_content"
+    )
+  end
 end
