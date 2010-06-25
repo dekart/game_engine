@@ -34,8 +34,7 @@ module CharactersHelper
   def character_wall(character, options = {})
     options = options.reverse_merge(
       :send_notification_uid  => character.user.facebook_id,
-      :showform               => true,
-      :callbackurl            => wall_character_url(character),
+      :url                    => character_url(character, :canvas => true, :reference => :comment),
       :width                  => 700,
       :css                    => skin_path
     )
