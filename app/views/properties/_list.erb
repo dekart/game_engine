@@ -38,7 +38,7 @@
                   :method => :put,
                   :update => :result,
                   :html   => {:class => "upgrade button"}
-                ) %>
+                ) if property.upgradeable? %>
           <% else %>
             <%= link_to_remote(button(:buy),
                   :url    => properties_path(:property_type_id => type.id),

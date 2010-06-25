@@ -73,6 +73,25 @@ describe Property do
     end
   end
 
+  describe "when asking if property is upgradeable" do
+    it "should return true if property level is lower than maximum  level" do
+      @property.should be_upgradeable
+    end
+
+    it "should return false if property level is equal to maximum level" do
+      @property_type.upgrade_limit = 1
+
+      @property.should_not be_upgradeable
+    end
+    
+    it "should return false if property level is higher than maximum level" do
+      @property_type.upgrade_limit = 1
+      @property.level = 5
+
+      @property.should_not be_upgradeable
+    end
+  end
+
   shared_examples_for "character validation" do
     def character_should_have_enough_money(currency, suffix = nil)
       @character.send("#{currency}=", 0)

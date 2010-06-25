@@ -7,13 +7,9 @@ class Property < ActiveRecord::Base
 
   attr_accessor :charge_money
 
-  validate :can_be_upgraded?, :enough_character_money?
+  validate :check_upgrade_possibility, :enough_character_money?
 
   after_create :assign_collected_at
-
-  def total_income
-    income * level
-  end
 
   def maximum_level
     property_type.upgrade_limit || Setting.i(:property_upgrade_limit)
@@ -23,8 +19,16 @@ class Property < ActiveRecord::Base
     property_type.upgrade_price(level)
   end
 
+  def upgradeable?
+    level < maximum_level
+  end
+
   def collectable?
     collected_at < Time.now - collect_period.hours
+  end
+
+  def total_income
+    income * level
   end
 
   def time_to_next_collection
@@ -79,8 +83,8 @@ class Property < ActiveRecord::Base
 
   protected
 
-  def can_be_upgraded?
-    if level > maximum_level
+  def check_upgrade_possibility
+    unless upgradeable?
       errors.add(:character, :too_much_properties, :plural_name => plural_name)
     end
   end
