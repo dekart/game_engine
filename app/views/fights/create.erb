@@ -38,7 +38,7 @@
           :requirement => @fight.health_requirement
         ) %>
   <% else %>
-    <p><%= @fight.errors.on(:character) %></p>
+    <p class="fail"><%= @fight.errors.on(:character) %></p>
   <% end %>
 <% end %>
 
