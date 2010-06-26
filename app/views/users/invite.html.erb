@@ -52,47 +52,25 @@
   <% end %>
 </div>
 
-<table id="invitation_form" cellspacing="0" cellpadding="0">
-  <tr>
-    <td>
-      <div class="invitation_type">
-        <h2><%= t(".publish.title") %></h2>
+<div class="invitation_type">
+  <h2><%= t(".publish.title") %></h2>
 
-        <p><%= t(".publish.note") %></p>
+  <p><%= t(".publish.note") %></p>
 
-        <%= link_to_function(button(t(".publish.button")), invitation_stream_dialog,
-              :class => "button publish"
-            ) %>
-      </div>
+  <%= link_to_function(button(t(".publish.button")), invitation_stream_dialog,
+        :class => "button publish"
+      ) %>
+</div>
 
-      <div class="invitation_type">
-        <h2><%= t(".copy_paste.title") %></h2>
+<div class="invitation_type">
+  <h2><%= t(".copy_paste.title") %></h2>
 
-        <p><%= t(".copy_paste.note") %></p>
+  <p><%= t(".copy_paste.note") %></p>
 
-        <p class="invitation_text">
-          <%= raw t(".copy_paste.invitation",
-                :app  => t("app_name"),
-                :link => invitation_url(current_character.invitation_key, :reference => :invite_link, :canvas => true)
-              ) %>
-        </p>
-      </div>
-    </td>
-    <td id="chat_invitation">
-      <div class="invitation_type" >
-        <h2><%= t(".chat.title") %></h2>
-        
-        <p><%= t(".chat.note") %></p>
-
-        <% fb_serverfbml do %>
-        <%= fb_chat_invite(
-              t(".chat.invitation",
-                :app  => t("app_name"),
-                :link => invitation_url(current_character.invitation_key, :reference => :invite_chat)
-              )
-            ) %>
-        <% end %>
-      </div>
-    </td>
-  </tr>
-</table>
+  <p class="invitation_text">
+    <%= raw t(".copy_paste.invitation",
+          :app  => t("app_name"),
+          :link => invitation_url(current_character.invitation_key, :reference => :invite_link, :canvas => true)
+        ) %>
+  </p>
+</div>
