@@ -1,12 +1,15 @@
-<%= title(
-      t(".title",
-        :user => character_name(@character, 
-          :possessive => true,
-          :capitalize => true,
-          :useyou     => true
+<% if @character == current_character %>
+  <%= title(t(".title_my")) %>
+<% else %>
+  <%= title(
+        t(".title",
+          :user => character_name(@character,
+            :possessive => true,
+            :capitalize => true
+          )
         )
-      )
-    ) %>
+      ) %>
+<% end %>
 
 <div id="character">
   <div class="controls">
