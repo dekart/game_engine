@@ -27,7 +27,7 @@
           <% end %>
         </td>
         <td class="receipts"><%= promotion.promotion_receipts.size %></td>
-        <td class="link"><%= link_to(t(".link"), promotion_url(promotion, :canvas => true)) %></td>
+        <td class="link"><%= link_to(t(".link"), promotion_url(promotion, :canvas => true), :target => :_blank) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_promotion_path(promotion)) %>
           <%= link_to(t(".controls.delete"), admin_promotion_path(promotion),
