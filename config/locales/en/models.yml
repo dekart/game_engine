@@ -95,6 +95,7 @@ en:
           already_helped_with_mission: "You already helped your friend with this mission."
           already_helped_with_fight: "You already helped your friend fight this enemy."
           cannot_attack_self: "Try to find another oppponent :) We're against suicide"
+          cannot_help_yourself: "You cannot help yourself!"
         boss_fight:
           attributes:
             character:

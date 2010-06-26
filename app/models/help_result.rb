@@ -12,7 +12,13 @@ class HelpResult < ActiveRecord::Base
   protected
 
   def validate_on_create
-    errors.add_to_base(:too_late) if help_request.expired?
+    if help_request.character == character
+      errors.add_to_base(:cannot_help_yourself)
+    end
+
+    if help_request.expired?
+      errors.add_to_base(:too_late)
+    end
 
     if help_request.help_results.find_by_character_id(character.id)
       errors.add_to_base(:"already_helped_with_#{context.class.to_s.underscore}")
