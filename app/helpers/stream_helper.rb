@@ -1,25 +1,37 @@
 module StreamHelper
   def stream_dialog(options = {})
+    attachment    = options[:attachment].reverse_merge(:media => default_stream_media)
+    action_links  = options[:action_links] || default_stream_action_links
+    target_id     = options[:target_id] || nil
+    prompt_text   = options[:user_prompt] || nil
+
     result = "FB.Connect.streamPublish('', %s, %s, %s, %s, %s);" % [
-      options[:attachment].reverse_merge(:media => default_stream_media).to_json,
-      (options[:action_links] || default_stream_action_links).to_json,
-      options[:target_id] || "null",
-      options[:user_prompt] || "null",
+      attachment.to_json,
+      action_links.to_json,
+      target_id.to_json,
+      prompt_text.to_json,
       stream_callback_function(options)
     ]
 
     result.html_safe!
   end
 
-  def link_to_stream_dialog(title, options = {})
-    link_to_function(title, stream_dialog(options), options.delete(:html) || {})
+  def stream_callback_function(options = {})
+    "function(post_id, exception, data){ if(post_id != 'null'){%s;}else{%s;} }" %[
+      options[:success],
+      options[:failure]
+    ]
+  end
+
+  def default_stream_url(reference = nil)
+    root_url(:canvas => true, :reference => reference)
   end
 
   def default_stream_action_links(url = nil)
     [
       {
         :text => t("stories.default.action_link", :app => t("app_name")),
-        :href => url || root_url(:canvas => true)
+        :href => url || default_stream_url(:default_stream_link)
       }
     ]
   end
@@ -29,15 +41,8 @@ module StreamHelper
       {
         :type => "image",
         :src  => asset_image_path("logo_stream"),
-        :href => url || root_url(:canvas => true)
+        :href => url || default_stream_url(:default_stream_image)
       }
-    ]
-  end
-
-  def stream_callback_function(options = {})
-    "function(post_id, exception, data){ if(post_id != 'null'){%s;}else{%s;} }" %[
-      options[:success],
-      options[:failure]
     ]
   end
 
@@ -48,7 +53,7 @@ module StreamHelper
           :level  => current_character.level,
           :app    => t("app_name")
         ),
-        :href => root_url(:canvas => true)
+        :href => default_stream_url(:level_up_stream_name)
       }
     )
   end
@@ -60,7 +65,7 @@ module StreamHelper
           :level  => fight.victim.level,
           :app    => t("app_name")
         ),
-        :href => root_url(:canvas => true)
+        :href => default_stream_url(:fight_stream_name)
       }
     )
   end
@@ -71,7 +76,10 @@ module StreamHelper
         :item => inventory.name,
         :app  => t("app_name")
       ),
-      :href => item_group_items_url(inventory.item_group, :canvas => true)
+      :href => item_group_items_url(inventory.item_group,
+        :reference  => :item_stream_name,
+        :canvas     => true
+      )
     }
 
     if inventory.image?
@@ -79,7 +87,10 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(inventory.image.url),
-          :href => item_group_items_url(inventory.item_group, :canvas => true)
+          :href => item_group_items_url(inventory.item_group,
+            :reference  => :item_stream_image,
+            :canvas     => true
+          )
         }
       ]
     end
@@ -122,7 +133,10 @@ module StreamHelper
         :mission  => mission.name,
         :app      => t("app_name")
       ),
-      :href => mission_group_url(mission.mission_group, :canvas => true)
+      :href => mission_group_url(mission.mission_group,
+        :reference  => :mission_stream_name,
+        :canvas     => true
+      )
     }
 
     if mission.image?
@@ -130,7 +144,10 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(mission.image.url),
-          :href => mission_group_url(mission.mission_group, :canvas => true)
+          :href => mission_group_url(mission.mission_group,
+            :reference  => :mission_stream_image,
+            :canvas     => true
+          )
         }
       ]
     end
@@ -144,7 +161,10 @@ module StreamHelper
         :boss => boss.name,
         :app  => t("app_name")
       ),
-      :href => mission_group_url(boss.mission_group, :canvas => true)
+      :href => mission_group_url(boss.mission_group,
+        :reference  => :boss_stream_name,
+        :canvas     => true
+      )
     }
 
     if boss.image?
@@ -152,7 +172,10 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(boss.image.url),
-          :href => mission_group_url(boss.mission_group, :canvas => true)
+          :href => mission_group_url(boss.mission_group,
+            :reference  => :boss_stream_image,
+            :canvas     => true
+          )
         }
       ]
     end
@@ -163,9 +186,10 @@ module StreamHelper
   def help_request_stream_dialog(context)
     context_type = context.class.to_s.underscore
 
-    help_url = help_request_url(current_character, 
-      :context  => context_type,
-      :canvas   => true
+    help_url = help_request_url(current_character,
+      :context    => context_type,
+      :reference  => :help_stream,
+      :canvas     => true
     )
 
     case context
@@ -209,7 +233,10 @@ module StreamHelper
         :property => property.name,
         :app      => t("app_name")
       ),
-      :href => properties_url(:canvas => true)
+      :href => properties_url(
+        :reference  => :property_stream_name,
+        :canvas     => true
+      )
     }
 
     if property.image?
@@ -217,7 +244,10 @@ module StreamHelper
         {
           :type => "image",
           :src  => image_path(property.image.url),
-          :href => properties_url(:canvas => true)
+          :href => properties_url(
+            :reference  => :property_stream_image,
+            :canvas     => true
+          )
         }
       ]
     end
@@ -228,7 +258,10 @@ module StreamHelper
   def promotion_stream_dialog(promotion)
     attachment = {
       :name => t("stories.promotion.title", :app => t("app_name")),
-      :href => promotion_url(promotion, :canvas => true),
+      :href => promotion_url(promotion,
+        :reference  => :promotion_stream_name,
+        :canvas     => true
+      ),
       
       :description => t("stories.promotion.description", 
         :expires_at => l(promotion.valid_till, :format => :short)
@@ -240,7 +273,10 @@ module StreamHelper
       :action_links => [
         {
           :text => t("stories.promotion.action_link"),
-          :href => promotion_url(promotion, :canvas => true)
+          :href => promotion_url(promotion,
+            :reference  => :promotion_stream_link,
+            :canvas     => true
+          )
         }
       ]
     )
