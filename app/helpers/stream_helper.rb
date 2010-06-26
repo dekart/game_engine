@@ -182,4 +182,24 @@ module StreamHelper
 
     stream_dialog(:attachment => attachment)
   end
+
+  def promotion_stream_dialog(promotion)
+    attachment = {
+      :name => t("stories.promotion.title", :app => t("app_name")),
+      :href => promotion_url(promotion, :canvas => true),
+      :description => t("stories.promotion.description", 
+        :expires_at => l(promotion.valid_till, :format => :short)
+      )
+    }
+
+    stream_dialog(
+      :attachment => attachment,
+      :action_links => [
+        {
+          :text => t("stories.promotion.action_link"),
+          :href => promotion_url(promotion, :canvas => true)
+        }
+      ]
+    )
+  end
 end

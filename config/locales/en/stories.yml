@@ -25,6 +25,10 @@ en:
       action_link: "Join Alliance"
     inventory:
       title: "I just bought a \"{{item}}\" in {{app}}!"
+    promotion:
+      title: "I got a secret bonus link for {{app}}!"
+      description: "Click the link to get the game bonus. Hurry up, this special link expires at {{expires_at}}!"
+      action_link: "Get Bonus"
 
   news:
     fight:

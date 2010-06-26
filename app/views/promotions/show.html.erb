@@ -14,11 +14,9 @@
 
         <p><%= raw t(".forward.text", :app => t("app_name")) %></p>
 
-        <% fb_serverfbml do %>
-          <%= fb_chat_invite(
-                t(".forward.invitation", :app => t("app_name"), :link => promotion_url(@promotion))
-              ) %>
-        <% end %>
+        <%= link_to_function(button(:publish), promotion_stream_dialog(@promotion),
+              :class => "publish button"
+            ) %>
       </div>
     <% end %>
   <% end %>
