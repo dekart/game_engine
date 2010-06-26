@@ -5,7 +5,7 @@ module StreamHelper
     target_id     = options[:target_id] || nil
     prompt_text   = options[:user_prompt] || nil
 
-    result = "FB.Connect.streamPublish('', %s, %s, %s, %s, %s);" % [
+    result = "$(document).trigger('facebook.stream_publish');FB.Connect.streamPublish('', %s, %s, %s, %s, %s);" % [
       attachment.to_json,
       action_links.to_json,
       target_id.to_json,

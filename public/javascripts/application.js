@@ -229,21 +229,39 @@ var Spinner = {
       ajaxStop(function(){
         Spinner.hide();
       });
-    $('body').mousemove(this.setPosition);
+    $('body').mousemove(this.alignToMouse);
   },
   show: function(speed){
-    if(this.x > -1 && this.y > -1){
-      $('#spinner').css({top: this.y - $('#spinner').height() - 50})
-    }
+    Spinner.moveToPosition();
 
     $('#spinner').fadeIn(speed);
   },
   hide: function(speed){
     $('#spinner').fadeOut(speed)
   },
-  setPosition: function(e){
-    Spinner.x = e.pageX;
-    Spinner.y = e.pageY;
+  blink: function(speed, delay){
+    Spinner.moveToPosition();
+
+    $('#spinner').fadeIn(speed).delay(delay).fadeOut(speed);
+  },
+  storePosition: function(x, y){
+    Spinner.x = x;
+    Spinner.y = y;
+  },
+  moveToPosition: function(){
+    if(this.x > -1 && this.y > -1){
+      $('#spinner').css({
+        top: this.y - $('#spinner').height() - 50
+      })
+    }
+  },
+  alignToMouse: function(e){
+    Spinner.storePosition(e.pageX, e.pageY)
+  },
+  alignTo: function(selector){
+    var position = $(selector).offset();
+
+    Spinner.storePosition(position.left, position.top);
   }
 }
 
@@ -282,6 +300,12 @@ $(function(){
   
   $(document).bind('afterReveal.dialog', function(){
     $.scrollTo('#dialog .popup .body');
+  });
+
+  $(document).bind('facebook.stream_publish', function(){
+    $.scrollTo('#content');
+    Spinner.alignTo('#content');
+    Spinner.blink();
   })
 
   Spinner.setup();
