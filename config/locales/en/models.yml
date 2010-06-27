@@ -57,6 +57,8 @@ en:
         victim: "Target"
         client: "Paid By"
         reward: "Bounty Amount"
+      boss:
+        health: "Health"
     errors:
       models:
         character:
