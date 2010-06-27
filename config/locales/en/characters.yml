@@ -15,7 +15,8 @@ en:
         attack: "Attack!"
         hitlist: "Add to Hitlist"
       titles:
-        empty_set: "{{user}} don't have any titles yet"
+        empty_set: "{{user}} doesn't have any titles yet"
+        empty_set_my: "You don't have any titles yet"
       items:
         amount: "{{name}} X&nbsp;{{amount}}"
       properties:

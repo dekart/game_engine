@@ -2,7 +2,7 @@
   <tr>
     <td class="attacker">
       <div class="character">
-        <%= character_name_link(fight.attacker, {:class => :name}, {:useyou => false}) %>
+        <%= character_name_link(fight.attacker, {:class => :name}) %>
         <%= character_picture_link(fight.attacker, {:class => :picture}) %>
 
         <div class="level">
@@ -29,7 +29,7 @@
     <td class="vs"><%= t(".vs") %></td>
     <td class="victim">
       <div class="character">
-        <%= character_name_link(fight.victim, {:class => :name}, {:useyou => false}) %>
+        <%= character_name_link(fight.victim, {:class => :name}) %>
         <%= character_picture_link(fight.victim, {:class => :picture}) %>
 
         <div class="level">

@@ -40,7 +40,16 @@
             <%= content_tag(:div, title, :class => :rank) %>
           <% end %>
         <% else %>
-          <%=raw t(".titles.empty_set", :user => character_name(@character, :firstnameonly => true, :capitalize => true, :useyou => true)) %>
+          <% if @character == current_character %>
+            <%= t(".titles.empty_set_my") %>
+          <% else %>
+            <%= raw t(".titles.empty_set",
+                  :user => character_name(@character,
+                    :firstnameonly  => true,
+                    :capitalize     => true
+                  )
+                ) %>
+          <% end %>
         <% end %>
       </td>
     </tr>
