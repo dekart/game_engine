@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  PERMISSIONS = %w{email}
+
   has_one :character, :dependent => :destroy
 
   has_many :invitations, 
@@ -54,5 +56,29 @@ class User < ActiveRecord::Base
 
   def admin?
     Setting.a(:user_admins).include?(facebook_id.to_s)
+  end
+
+  def clear_permissions!
+    PERMISSIONS.each do |permission|
+      self["permission_#{permission}"] = false
+    end
+  end
+
+  def add_permissions(values)
+    permissions = PERMISSIONS & values.to_s.split(",")
+
+    permissions.each do |value|
+      self["permission_#{value}"] = true
+    end
+  end
+
+  def update_permissions(values)
+    transaction do
+      clear_permissions!
+
+      add_permissions(values)
+
+      save!
+    end
   end
 end
