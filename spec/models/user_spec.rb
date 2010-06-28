@@ -69,7 +69,7 @@ describe User do
 
       it "should clear email permission" do
         lambda{
-          @user.clear_permissions!
+          @user.clear_permissions
         }.should change(@user, :permission_email).from(true).to(false)
       end
     end
@@ -104,19 +104,19 @@ describe User do
       end
 
       it "should clear all permissions when empty value is passed" do
-        @user.update_permissions(nil)
+        @user.update_permissions!(nil)
 
         @user.permission_email.should be_false
       end
 
       it "should add all passed permissions" do
-        @user.update_permissions("email")
+        @user.update_permissions!("email")
 
         @user.permission_email.should be_true
       end
 
       it "should save user" do
-        @user.update_permissions("email")
+        @user.update_permissions!("email")
 
         @user.should_not be_changed
       end

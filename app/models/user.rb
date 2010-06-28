@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
     Setting.a(:user_admins).include?(facebook_id.to_s)
   end
 
-  def clear_permissions!
+  def clear_permissions
     PERMISSIONS.each do |permission|
       self["permission_#{permission}"] = false
     end
@@ -72,13 +72,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def update_permissions(values)
-    transaction do
-      clear_permissions!
+  def update_permissions!(values)
+    clear_permissions
 
-      add_permissions(values)
+    add_permissions(values)
 
-      save!
-    end
+    save!
   end
 end
