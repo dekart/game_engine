@@ -58,13 +58,17 @@ describe User do
   end
 
   describe "permissions" do
+    before :each do
+      @user = Factory(:user)
+    end
+
     it "should include email permission" do
       User::PERMISSIONS.should include("email")
     end
 
     describe "when clearing" do
       before :each do
-        @user = Factory(:user, :permission_email => true)
+        @user.permission_email = true
       end
 
       it "should clear email permission" do
@@ -75,10 +79,6 @@ describe User do
     end
 
     describe "when adding new permissions" do
-      before :each do
-        @user = Factory(:user)
-      end
-
       it "should add email permissions" do
         lambda{
           @user.add_permissions("email")
@@ -99,10 +99,6 @@ describe User do
     end
 
     describe "when updating" do
-      before :each do
-        @user = Factory(:user)
-      end
-
       it "should clear all permissions when empty value is passed" do
         @user.update_permissions!(nil)
 
@@ -120,6 +116,43 @@ describe User do
 
         @user.should_not be_changed
       end
+    end
+
+    describe "when checking if should check permissions" do
+      it "should return false if delay is set to 0" do
+        Setting.should_receive(:i).with(:user_permission_request_delay).and_return(0)
+
+        @user.should_request_permissions?.should be_false
+      end
+
+      it "should return false if user were created less than 24 hours ago" do
+        @user.created_at = (24.hours - 1.second).ago
+
+        @user.should_request_permissions?.should be_false
+      end
+
+      describe "when user were created more than 24 hours ago" do
+        before :each do
+          @user.created_at = (24.hours + 1.second).ago
+        end
+
+        it "should return false if permissions were asked less than 24 hours ago" do
+          @user.permissions_requested_at = (24.hours - 1.second).ago
+
+          @user.should_request_permissions?.should be_false
+        end
+
+        it "should return true if permissions weren't asked at all" do
+          @user.should_request_permissions?.should be_true
+        end
+
+        it "should return true if permissions were asked more than 24 hours ago" do
+          @user.permissions_requested_at = (24.hours + 1.second).ago
+
+          @user.should_request_permissions?.should be_true
+        end
+      end
+
     end
   end
 end

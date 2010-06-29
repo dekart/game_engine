@@ -79,4 +79,16 @@ class User < ActiveRecord::Base
 
     save!
   end
+
+  def should_request_permissions?
+    if Setting.i(:user_permission_request_delay) == 0
+      false
+    elsif created_at > Setting.i(:user_permission_request_delay).hours.ago
+      false
+    elsif permissions_requested_at.nil? or permissions_requested_at < Setting.i(:user_permission_request_delay).hours.ago
+      true
+    else
+      false
+    end
+  end
 end
