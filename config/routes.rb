@@ -78,7 +78,8 @@ ActionController::Routing::Routes.draw do |map|
     :member => {
       :narrow_profile_box => :any,
       :wide_profile_box => :any,
-      :hide_block => :any
+      :hide_block => :any,
+      :add_permissions => :any
     }
   )
 

@@ -63,7 +63,19 @@ describe User do
     end
 
     it "should include email permission" do
-      User::PERMISSIONS.should include("email")
+      User::PERMISSIONS.should include(:email)
+    end
+
+    describe "when fetching permission list" do
+      it "should return empty array if no permissions are stored" do
+        @user.permissions.should == []
+      end
+
+      it "should return email if email is permitted" do
+        @user.permission_email = true
+
+        @user.permissions.should include(:email)
+      end
     end
 
     describe "when clearing" do

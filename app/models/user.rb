@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  PERMISSIONS = %w{email}
+  PERMISSIONS = [:email]
 
   has_one :character, :dependent => :destroy
 
@@ -58,6 +58,10 @@ class User < ActiveRecord::Base
     Setting.a(:user_admins).include?(facebook_id.to_s)
   end
 
+  def permissions
+    PERMISSIONS.select{|p| self["permission_#{p}"] }.collect(&:to_sym)
+  end
+
   def clear_permissions
     PERMISSIONS.each do |permission|
       self["permission_#{permission}"] = false
@@ -65,7 +69,7 @@ class User < ActiveRecord::Base
   end
 
   def add_permissions(values)
-    permissions = PERMISSIONS & values.to_s.split(",")
+    permissions = PERMISSIONS & values.to_s.split(",").collect(&:to_sym)
 
     permissions.each do |value|
       self["permission_#{value}"] = true
