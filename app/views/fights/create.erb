@@ -49,5 +49,7 @@
     $('#<%= dom_id(@fight.cause, :respond) %>').hide();
   <% end %>
 
-  $(document).trigger('result.received');
+  <% if request.xhr? %>
+    $(document).trigger('result.received');
+  <% end %>
 <% end %>
