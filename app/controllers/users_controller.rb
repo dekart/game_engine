@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     @user = current_user
 
     @user.add_permissions(params[:perms])
+    @user.permissions_requested_at = Time.now
     @user.save
 
     render :text => "OK"
