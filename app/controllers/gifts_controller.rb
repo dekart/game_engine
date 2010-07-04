@@ -43,7 +43,7 @@ class GiftsController < ApplicationController
 
     if Setting.i(:gifting_repeat_send_delay) > 0
       @exclude_ids += current_character.gift_receipts.recent_recipient_facebook_ids(
-        Setting.i(:gifting_repeat_send_delay)
+        Setting.i(:gifting_repeat_send_delay).hours.ago
       )
     end
 
