@@ -56,7 +56,7 @@ class Property < ActiveRecord::Base
       transaction do
         increment(:level)
 
-        save! && character.charge(property_type.upgrade_price(level - 1), vip_price)
+        save(false) && character.charge(property_type.upgrade_price(level - 1), vip_price)
       end
     else
       false

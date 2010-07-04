@@ -3,7 +3,7 @@ require File.expand_path("../../spec_helper", __FILE__)
 describe Property do
   before(:each) do
     @character = Factory(:character)
-    @property_type = Factory(:property_type)
+    @property_type = Factory(:property_type, :upgrade_limit => 2)
 
     @property = Property.new(:property_type => @property_type)
     @property.character = @character
@@ -40,6 +40,11 @@ describe Property do
   end
 
   describe "when getting maximum upgrade level" do
+    before :each do
+      @property_type = Factory(:property_type)
+      @property.property_type = @property_type
+    end
+
     it "should return zero when no value specified in property type and settings" do
       Setting.should_receive(:i).and_return 0
 

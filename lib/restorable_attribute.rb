@@ -44,7 +44,7 @@ module RestorableAttribute
     def value
       calculated_value = stored_value + restore_rate * restores_since_last_update
 
-      if calculated_value > limit
+      if calculated_value >= limit
         limit
       elsif calculated_value < 0
         0
@@ -66,17 +66,21 @@ module RestorableAttribute
     end
 
     def restore_time(restore_to)
-      restore_to = limit if restore_to > self.limit
+      restore_to = limit if restore_to > limit
 
       if value >= restore_to
         0
       else
-        (updated_at + ((restore_to - stored_value).to_f / restore_rate).ceil * restore_period - Time.now).to_i
+        time = (updated_at + ((restore_to - stored_value).to_f / restore_rate).ceil * restore_period - Time.now).to_i
+        time > 0 ? time : 0
       end
     end
 
     def time_to_restore
-      value == limit ? 0 : restore_period - (Time.now - updated_at).to_i % restore_period.to_i
+      return 0 if value == limit
+
+      time = restore_period - (Time.now - updated_at).to_i % restore_period.to_i
+      time > 0 ? time : 0
     end
   end
 

@@ -23,5 +23,9 @@ module Payouts
     def apply(character)
       character.inventories.give!(item) if item
     end
+
+    def item_ids
+      @item_ids.collect(&:to_i)
+    end
   end
 end

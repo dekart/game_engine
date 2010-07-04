@@ -232,7 +232,7 @@ class Character < ActiveRecord::Base
   end
 
   def stamina_points
-    stamina + inventories.effect(:energy)
+    stamina + inventories.effect(:stamina)
   end
 
   def fight_damage_reduce
