@@ -23,6 +23,9 @@ class HitListingsController < ApplicationController
     if @hit_listing.save
       fetch_incomplete_listings
 
+      # Reloading current character to show changed attributes
+      current_character(true)
+
       render :create
     else
       render :new
