@@ -15,7 +15,7 @@
     <% else %>
       <div class="buttons">
         <%= link_to_remote(button(:attack_again),
-              :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @victim),
+              :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
               :update => :result,
               :html   => {:class => "attack_again button"}
             ) %>
