@@ -29,6 +29,6 @@
 
 <% unless fight.cause %>
   <% dom_ready do %>
-    $('#<%= dom_id(@victim) %>').hide();
+    $('#<%= dom_id(@fight.victim) %>').hide();
   <% end %>
 <% end %>
