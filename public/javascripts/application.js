@@ -17,13 +17,15 @@ var CharacterForm = {
 
       Spinner.show();
 
-      FB.Connect.requireSession(function(){
+      var callback = function(){
         Spinner.hide();
 
         $('#new_character').submit();
 
         Spinner.show(200);
-      });
+      };
+
+      FB.Connect.requireSession(callback, callback, true);
     });
 
     form.find('#new_character a.skip').click(function(e){
@@ -32,12 +34,14 @@ var CharacterForm = {
       e.preventDefault();
 
       Spinner.show();
-      
-      FB.Connect.requireSession(function(){
+
+      var callback = function(){
         document.location = $(link).attr('href');
 
         Spinner.show(200);
-      });
+      }
+      
+      FB.Connect.requireSession(callback, callback, true);
     });
   },
 
