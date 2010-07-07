@@ -1,6 +1,7 @@
 <%= title(t(".title", :app => t("app_name"))) %>
 
 <% form_for @character do |form| %>
+  <%= hidden_field_tag :fb_sig_in_iframe, 1 %>
   <%= hidden_field_tag :reference, params[:reference] %>
 
   <%= form.fields %>
@@ -17,7 +18,7 @@
 
     <p>
       <%= raw t(".already_registered.text",
-            :skip_form => link_to(t(".already_registered.skip_form"), root_url, :class => :skip)
+            :skip_form => link_to(t(".already_registered.skip_form"), root_url(:fb_sig_in_iframe => 1), :class => :skip)
           ) %>
     </p>
   </div>
