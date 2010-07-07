@@ -10,6 +10,7 @@ module Payouts
       if item_ids.is_a?(Array) && item_ids.any?
         @item = source.find(item_ids).rand
       else
+        source = source.with_state(:visible)
         source = source.available_in(availability) if availability.present?
         source = source.basic unless allow_vip
 
