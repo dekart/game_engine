@@ -20,7 +20,7 @@ var CharacterForm = {
       var callback = function(){
         Spinner.hide();
 
-        $('#new_character').submit();
+        form.submit();
 
         Spinner.show(200);
       };
@@ -28,7 +28,7 @@ var CharacterForm = {
       FB.Connect.requireSession(callback, callback, true);
     });
 
-    form.find('#new_character a.skip').click(function(e){
+    form.find('a.skip').click(function(e){
       var link = e.target;
 
       e.preventDefault();
