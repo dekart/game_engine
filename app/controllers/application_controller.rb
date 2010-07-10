@@ -34,10 +34,10 @@ class ApplicationController < ActionController::Base
       url_params.merge!(
         :controller => "/characters",
         :action     => :new,
-        :canvas     => !request_is_facebook_iframe?
+        :canvas     => true
       )
 
-      redirect_to url_for(url_params)
+      top_redirect_to url_for(url_params)
     end
   end
 

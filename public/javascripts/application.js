@@ -17,27 +17,31 @@ var CharacterForm = {
 
       Spinner.show();
 
-      FB.Connect.requireSession(function(){
+      var callback = function(){
         Spinner.hide();
 
-        $('#new_character').submit();
+        form.submit();
 
         Spinner.show(200);
-      });
+      };
+
+      FB.Connect.requireSession(callback, callback, true);
     });
 
-    form.find('#new_character a.skip').click(function(e){
+    form.find('a.skip').click(function(e){
       var link = e.target;
 
       e.preventDefault();
 
       Spinner.show();
-      
-      FB.Connect.requireSession(function(){
+
+      var callback = function(){
         document.location = $(link).attr('href');
 
         Spinner.show(200);
-      });
+      }
+      
+      FB.Connect.requireSession(callback, callback, true);
     });
   },
 
