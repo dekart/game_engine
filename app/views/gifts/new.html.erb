@@ -4,7 +4,7 @@
 
 <div class="note"><%= t(".note") %></div>
 
-<div id="gift_form">
+<div id="gift_form" class="clearfix">
   <% collection(@items) do %>
     <div class="items clearfix">
       <% @items.each do |item| %>
@@ -28,7 +28,7 @@
     </div>
   <% end %>
 
-  <div class="buttons clearfix">
+  <div class="buttons">
     <%= link_to(button(:skip), @gift.new_record? ? root_path : confirm_gift_path(@gift),
           :class => "skip button"
         ) %>
