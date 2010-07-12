@@ -8,7 +8,7 @@ en:
   boss_fights:
     block:
       text: "You're currently fighting with {{boss}}."
-      time_left: "Time left: {{value}}"
+      time_left: "Time Left: {{value}}"
       buttons:
         attack: "Attack!"
     create:

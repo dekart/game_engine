@@ -26,7 +26,7 @@ module Payouts
     end
 
     def item_ids
-      @item_ids.collect(&:to_i)
+      Array.wrap(@item_ids).collect(&:to_i)
     end
   end
 end
