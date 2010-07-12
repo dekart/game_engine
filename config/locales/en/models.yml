@@ -3,6 +3,7 @@ en:
     models:
       mission: "Mission"
       missiousn_group: "Mission Group"
+      character: "Character"
     attributes:
       character:
         level: "Level"
