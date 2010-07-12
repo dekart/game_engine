@@ -1,5 +1,6 @@
 en:
   admin:
+    documentation: "Documentation"
     layouts:
       main_menu:
         title: "Admin Menu"
