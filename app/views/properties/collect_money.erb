@@ -1,5 +1,5 @@
 <% result_for :property do %>
-  <% if @result.any? %>
+  <% if @result %>
     <p>
       <% if @property %>
         <%= raw t(".messages.success_single",
