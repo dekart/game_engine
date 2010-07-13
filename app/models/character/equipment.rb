@@ -26,7 +26,7 @@ class Character::Equipment
     ids ||= []
     
     if ids.any?
-      inventories = Inventory.find(ids)
+      inventories = Inventory.find_all_by_id(ids)
 
       ids.collect do |id|
         inventories.detect{|inventory| inventory.id == id}
