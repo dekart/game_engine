@@ -56,6 +56,10 @@ class Inventory < ActiveRecord::Base
     amount - equipped
   end
 
+  def equippable?
+    item.equippable? and amount_available_for_equipment > 0
+  end
+  
   protected
 
   def enough_character_money?

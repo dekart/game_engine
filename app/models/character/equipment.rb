@@ -41,7 +41,7 @@ class Character::Equipment
 
     return unless inventory.placements.include?(placement)
 
-    if inventory.amount_available_for_equipment > 0
+    if inventory.equippable?
       if placement_free_slots(placement) > 0
         @character.placements[placement] ||= []
         @character.placements[placement] << inventory.id
@@ -93,24 +93,31 @@ class Character::Equipment
     end
   end
 
-  def auto_equip!(inventory)
-    inventory.amount_available_for_equipment.times do
+  def auto_equip(inventory, amount = nil)
+    amount ||= inventory.amount_available_for_equipment
+
+    amount.times do
       if placement = (placements_with_free_slots & inventory.placements).first
         equip(inventory, placement)
       else
         break
       end
     end
+  end
 
+  def auto_equip!(inventory, amount = nil)
     Character.transaction do
+      auto_equip(inventory, amount)
+
       inventory.save!
+      
       @character.save!
     end
   end
 
-  def auto_unequip!(inventory)
+  def auto_unequip(inventory)
     amount_to_unequip = inventory.destroyed? ? inventory.amount : (inventory.equipped - inventory.amount)
-    
+
     return if amount_to_unequip <= 0
 
     amount_to_unequip.times do
@@ -120,9 +127,51 @@ class Character::Equipment
         break
       end
     end
+  end
+
+  def auto_unequip!(inventory)
+    Character.transaction do
+      auto_unequip(inventory)
+
+      inventory.save! unless inventory.destroyed?
+      
+      @character.save!
+    end
+  end
+
+  def unequip_all!
+    Character.transaction do
+      @character.inventories.equipped.update_all(:equipped => 0)
+
+      @character.placements = {}
+      @character.save!
+    end
+  end
+
+  def equip_best!(force_unequip = false)
+    unequip_all! if force_unequip
+
+    equippables = @character.inventories.equippable.all
 
     Character.transaction do
-      inventory.save! unless inventory.destroyed?
+      while free_slots > 0
+        equipped = nil
+        
+        Item::EFFECTS.each do |effect|
+          candidates = equippables.select{|i| i.equippable? and i.send(effect) != 0}
+
+          if inventory = candidates.max_by(&effect) and auto_equip(inventory, 1)
+            equipped = inventory
+          end
+        end
+
+        break if equipped == nil
+      end
+
+      equippables.each do |inventory|
+        inventory.save! if inventory.changed?
+      end
+
       @character.save!
     end
   end
