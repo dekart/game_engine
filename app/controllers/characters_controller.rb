@@ -58,6 +58,7 @@ class CharactersController < ApplicationController
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
+      @character.character_type ||= @character_types.first
     end
   end
 
