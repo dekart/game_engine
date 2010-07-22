@@ -22,7 +22,7 @@ class Character
       if inventory.save
         Item.update_counters(item.id, :owned => amount)
         
-        proxy_owner.equipment.auto_equip!(inventory)
+        equip(inventory)
       end
 
       inventory
@@ -36,7 +36,7 @@ class Character
       if inventory.save
         Item.update_counters(item.id, :owned => amount)
 
-        proxy_owner.equipment.auto_equip!(inventory)
+        equip(inventory)
       end
 
       inventory
@@ -57,7 +57,7 @@ class Character
           Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
-        proxy_owner.equipment.auto_unequip!(inventory)
+        unequip(inventory)
 
         inventory
       else
@@ -78,7 +78,7 @@ class Character
           Item.update_counters(item.id, :owned => - inventory.amount)
         end
 
-        proxy_owner.equipment.auto_unequip!(inventory)
+        unequip(inventory)
 
         inventory
       else
@@ -109,6 +109,24 @@ class Character
         end
 
         result.compact!
+      end
+    end
+
+    protected
+
+    def equip(inventory)
+      if Setting.b(:character_auto_equipment)
+        proxy_owner.equipment.equip_best!(true)
+      else
+        proxy_owner.equipment.auto_equip!(inventory)
+      end
+    end
+
+    def unequip(inventory)
+      if Setting.b(:character_auto_equipment)
+        proxy_owner.equipment.equip_best!(true)
+      else
+        proxy_owner.equipment.auto_unequip!(inventory)
       end
     end
   end
