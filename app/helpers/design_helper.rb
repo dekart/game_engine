@@ -38,12 +38,12 @@ module DesignHelper
     end
   end
 
-  def result_for(type, &block)
-    concat(
-      content_tag(:div, capture(&block),
-        :id     => "#{type}_result",
-        :class  => "result_content clearfix"
-      )
+  def result_for(type, content = nil, &block)
+    result = content_tag(:div, block_given? ? capture(&block) : content,
+      :id     => "#{type}_result",
+      :class  => "result_content clearfix"
     )
+
+    block_given? ? concat(result) : result
   end
 end

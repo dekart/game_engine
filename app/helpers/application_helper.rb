@@ -92,4 +92,24 @@ module ApplicationHelper
 
     stylesheet_path(path)
   end
+
+  def flash_block(*args, &block)
+    display_keys = args.any? ? args : [:success, :error, :notice]
+
+    result = ""
+
+    display_keys.each do |key|
+      if flash[key].present?
+        result << (block_given? ? capture(key, flash[key], &block) : content_tag(:p, flash[key], :class => key))
+      end
+    end
+
+    if result.present?
+      result.html_safe!
+
+      content_for(:result, 
+        result_for(flash[:class] || :flash, result)
+      )
+    end
+  end
 end

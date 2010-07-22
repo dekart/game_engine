@@ -29,6 +29,8 @@ class PremiaController < ApplicationController
         false
       end
 
+    flash[:class] = :premia
+    
     if @result
       flash[:success] = t("premia.update.messages.success.#{params[:type]}")
     else
