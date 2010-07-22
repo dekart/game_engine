@@ -11,6 +11,14 @@ class Admin::GlobalTasksController < Admin::BaseController
     redirect_to admin_global_task_path
   end
 
+  def restart
+    Rails.restart!
+
+    flash[:success] = t("admin.global_tasks.restart.success")
+
+    redirect_to admin_global_task_path
+  end
+
   protected
 
   def delete_user_limit

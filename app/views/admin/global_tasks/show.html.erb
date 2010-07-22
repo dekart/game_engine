@@ -8,9 +8,22 @@
   <p><%= t(".delete_users.note", :limit => delete_user_limit) %></p>
 
   <p>
-    <%= link_to(t(".delete_users.delete"), delete_users_admin_global_task_path,
+    <%= link_to(t(".delete_users.perform"), delete_users_admin_global_task_path,
           :method   => :delete,
-          :confirm  => t(".delete_users.delete_confirm")
+          :confirm  => t(".delete_users.confirm")
+        ) %>
+  </p>
+</div>
+
+<div class="feature">
+  <h2><%= t(".restart.title") %></h2>
+
+  <p><%= t(".restart.note") %></p>
+
+  <p>
+    <%= link_to(t(".restart.perform"), restart_admin_global_task_path,
+          :method   => :post,
+          :confirm  => t(".restart.confirm")
         ) %>
   </p>
 </div>

@@ -349,7 +349,14 @@ en:
         delete_users:
           title: "Delete All Users"
           note: "This function allows you to delete all game users (including admins) and clear all their game data. Please use it only when testing your game before oficial launch. For security reasons this function stops working when your application gets more than {{limit}} users. WARNING: User data cannot be restored after deletion!"
-          delete: "Delete Users"
-          delete_confirm: "Are you sure you want to delete all users? This operation CANNOT BE UNDONE!"
+          perform: "Delete Users"
+          confirm: "Are you sure you want to delete all users? This operation CANNOT BE UNDONE!"
+        restart:
+          title: "Restart Application"
+          note: "This function allows you to restart your application. When restarting application will reload all code, templates, and settings. Please note that the application will be unavailable for all users while restarting. Restart process may take up to a minute or two."
+          perform: "Restart"
+          confirm: "Are you sure you want to restart the application?"
       delete_users:
         user_limit_reached: "This task cannot be performed because your application already reached {{limit}} user limit."
+      restart:
+        success: "The application was successfully restarted!"
