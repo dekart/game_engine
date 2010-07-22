@@ -1,13 +1,12 @@
 class CharactersController < ApplicationController
   skip_before_filter :check_character_existance,
-    :only => [:new, :create, :load_vip_money]
+    :only => [:new, :create, :index, :load_vip_money]
   skip_before_filter :ensure_authenticated_to_facebook,
     :only => [:load_vip_money, :new]
 
   skip_landing_redirect :except => [:index, :upgrade]
   
-  before_filter :set_facebook_session,
-    :only => [:new]
+  prepend_before_filter :check_character_existance_or_create, :only => :index
   before_filter :fetch_character_types,
     :only => [:new, :create, :edit, :update]
 
@@ -53,6 +52,8 @@ class CharactersController < ApplicationController
   end
 
   def new
+    set_facebook_session
+    
     if current_character
       redirect_to root_path
     else
@@ -63,6 +64,8 @@ class CharactersController < ApplicationController
   end
 
   def create
+    set_facebook_session
+    
     if current_character
       update
     else
@@ -101,5 +104,15 @@ class CharactersController < ApplicationController
 
   def fetch_character_types
     @character_types = CharacterType.with_state(:visible).all
+  end
+
+  def check_character_existance_or_create
+    if current_character
+      true
+    elsif params[:character]
+      create
+    else
+      check_character_existance
+    end
   end
 end
