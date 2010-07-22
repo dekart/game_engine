@@ -1,4 +1,6 @@
 class InventoriesController < ApplicationController
+  before_filter :check_auto_equipment, :only => [:equipment, :equip, :unequip]
+
   def create
     @amount = params[:amount].to_i
     
@@ -32,6 +34,7 @@ class InventoriesController < ApplicationController
   end
 
   def equipment
+    
   end
 
   def equip
@@ -48,5 +51,11 @@ class InventoriesController < ApplicationController
     current_character.equipment.unequip!(@inventory, params[:placement])
 
     render :action => "equip", :layout => "ajax"
+  end
+
+  protected
+
+  def check_auto_equipment
+    redirect_to inventories_path if Setting.b(:character_auto_equipment)
   end
 end

@@ -5,7 +5,7 @@
         ) %>
   <% end %>
 
-  <% unless current == :equipment %>
+  <% unless Setting.b(:character_auto_equipment) or current == :equipment %>
     <%= link_to(button(:equipment), equipment_inventories_path,
           :class => "equipment button"
         ) %>
