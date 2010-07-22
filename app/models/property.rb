@@ -7,7 +7,8 @@ class Property < ActiveRecord::Base
 
   attr_accessor :charge_money
 
-  validate :check_upgrade_possibility, :enough_character_money?
+  validate :enough_character_money?
+  validate_on_update :check_upgrade_possibility
 
   after_create :assign_collected_at
 

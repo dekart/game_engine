@@ -159,6 +159,12 @@ describe Property do
         @property.buy!
       }.should change(@character, :vip_money).from(1).to(0)
     end
+
+    it "should correctly buy a property if upgrade limit is set to 1" do
+      @property_type.upgrade_limit = 1
+
+      @property.buy!.should be_true
+    end
   end
 
   describe "when upgrading a property" do
