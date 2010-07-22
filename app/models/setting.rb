@@ -64,7 +64,7 @@ class Setting < ActiveRecord::Base
     end
 
     def []=(key, value)
-      if value
+      if !value.nil?
         create(:alias => key.to_s, :value => value)
       else
         find_by_alias(key.to_s).try(:destroy)
