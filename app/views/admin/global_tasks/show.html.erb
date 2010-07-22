@@ -1,0 +1,16 @@
+<%= admin_title(t(".title")) %>
+
+<div class="note"><%= t(".note") %></div>
+
+<div class="feature">
+  <h2><%= t(".delete_users.title") %></h2>
+
+  <p><%= t(".delete_users.note", :limit => delete_user_limit) %></p>
+
+  <p>
+    <%= link_to(t(".delete_users.delete"), delete_users_admin_global_task_path,
+          :method   => :delete,
+          :confirm  => t(".delete_users.delete_confirm")
+        ) %>
+  </p>
+</div>

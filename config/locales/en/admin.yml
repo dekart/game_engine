@@ -21,6 +21,7 @@ en:
         assets: "Assets"
         help_pages: "Help Pages"
         settings: "Settings"
+        global_tasks: "Global Tasks"
       application:
         spinner:
           alt: "Please wait..."
@@ -341,3 +342,14 @@ en:
       edit:
         title: "{{name}} - Edit Value"
         submit: "Update"
+    global_tasks:
+      show:
+        title: "Global Tasks"
+        note: "This page allows you to perform different application-wide tasks. Please be carefull with all the functions at this page - they can cause damage to your application if used without care."
+        delete_users:
+          title: "Delete All Users"
+          note: "This function allows you to delete all game users (including admins) and clear all their game data. Please use it only when testing your game before oficial launch. For security reasons this function stops working when your application gets more than {{limit}} users. WARNING: User data cannot be restored after deletion!"
+          delete: "Delete Users"
+          delete_confirm: "Are you sure you want to delete all users? This operation CANNOT BE UNDONE!"
+      delete_users:
+        user_limit_reached: "This task cannot be performed because your application already reached {{limit}} user limit."

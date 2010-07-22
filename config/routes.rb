@@ -67,6 +67,8 @@ ActionController::Routing::Routes.draw do |map|
       }
 
     admin.resources :settings
+
+    admin.resource :global_task, :member => {:delete_users => :delete}
   end
 
   map.root :controller => "characters", :action => "index"
