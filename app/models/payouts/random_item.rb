@@ -28,5 +28,9 @@ module Payouts
     def item_ids
       Array.wrap(@item_ids).collect(&:to_i)
     end
+
+    def allow_vip=(value)
+      @allow_vip = (value.to_i == 1)
+    end
   end
 end
