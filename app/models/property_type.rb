@@ -27,12 +27,9 @@ class PropertyType < ActiveRecord::Base
     end
   }
 
-  named_scope :available_for, Proc.new {|character|
+  named_scope :available_by_level, Proc.new {|character|
     {
-      :joins      => "LEFT JOIN stuff_invisibilities ON #{table_name}.id = stuff_invisibilities.stuff_id 
-        AND stuff_invisibilities.character_type_id = #{character.character_type.id}
-        AND stuff_invisibilities.stuff_type = \"#{class_name}\"", 
-      :conditions => ["level <= ? AND stuff_invisibilities.id IS NULL", character.level],
+      :conditions => ["level <= ?", character.level],
       :order      => :basic_price
     }
   }
@@ -58,8 +55,14 @@ class PropertyType < ActiveRecord::Base
   validates_presence_of :name, :availability, :basic_price, :income
   validates_numericality_of :basic_price, :vip_price, :income, :upgrade_limit, :allow_nil => true
 
-  def self.to_dropdown(*args)
-    without_state(:deleted).all(:order => :basic_price).to_dropdown(*args)
+  class << self
+    def to_dropdown(*args)
+      without_state(:deleted).all(:order => :basic_price).to_dropdown(*args)
+    end
+
+    def available_for(character)
+      visible_for(character).available_by_level(character)
+    end
   end
 
   def basic_price

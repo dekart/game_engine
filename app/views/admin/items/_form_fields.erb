@@ -17,7 +17,7 @@
 <% end %>
 <%= form.field :placements, placements %>
 
-<%= render 'admin/shared/stuff_invisibility', :form => form %>
+<%= form.fields 'admin/visibilities/form_fields' %>
 
 <%= form.select :availability, Item::AVAILABILITIES, :required => true %>
 <%= form.text_field :limit, :size => 6, :autocomplete => :off %>

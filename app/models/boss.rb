@@ -4,8 +4,7 @@ class Boss < ActiveRecord::Base
   include HasInvisibility
 
   belongs_to  :mission_group
-  has_many    :boss_fights,
-    :dependent => :delete_all
+  has_many    :boss_fights, :dependent => :delete_all
 
   state_machine :initial => :hidden do
     state :hidden

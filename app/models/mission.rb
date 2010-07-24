@@ -9,10 +9,6 @@ class Mission < ActiveRecord::Base
   has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
   has_many    :help_requests, :as => :context, :dependent => :destroy
 
-  has_many    :stuff_invisibilities, :as => :stuff, :dependent => :destroy
-  has_many    :itypes, :source => :character_type, :through => :stuff_invisibilities
-
-
   state_machine :initial => :hidden do
     state :hidden
     state :visible
@@ -53,7 +49,7 @@ class Mission < ActiveRecord::Base
       end
     end
   end
-
+  
   def money
     rand(money_max - money_min) + money_min
   end

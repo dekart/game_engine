@@ -15,7 +15,7 @@
 <%= form.text_field :upgrade_cost_increase, :size => 6, :autocomplete => :off %>
 <%= form.text_field :upgrade_limit, :size => 6, :autocomplete => :off %>
 
-<%= render 'admin/shared/stuff_invisibility', :form => form %>
+<%= form.fields 'admin/visibilities/form_fields' %>
 
 <h2><%= PropertyType.human_attribute_name("payouts") %></h2>
 

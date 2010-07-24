@@ -23,12 +23,10 @@ class Item < ActiveRecord::Base
       ]
     }
   }
-  named_scope :available_for, Proc.new {|character|
+
+  named_scope :available_by_level, Proc.new {|character|
     {
-      :joins      => "LEFT JOIN stuff_invisibilities ON items.id = stuff_invisibilities.stuff_id 
-        AND stuff_invisibilities.character_type_id = #{character.character_type.id}
-        AND stuff_invisibilities.stuff_type = '#{class_name}'", 
-      :conditions => ["items.level <= ? AND stuff_invisibilities.id IS NULL", character.level],
+      :conditions => ["items.level <= ?", character.level],
       :order      => :basic_price
     }
   }
@@ -94,6 +92,10 @@ class Item < ActiveRecord::Base
           }
         end
       end
+    end
+
+    def available_for(character)
+      visible_for(character).available_by_level(character)
     end
   end
 
