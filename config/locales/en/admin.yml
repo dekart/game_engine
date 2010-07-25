@@ -184,6 +184,10 @@ en:
       edit:
         title: "Edit Promotion"
         submit: "Update"
+    visibilities:
+      form_fields:
+        visible_for: "Visible For"
+        comment: "Don't check any flags if you want to make this visible for all character types"
     payouts:
       collection:
         add_payout: "Add Payout:"
