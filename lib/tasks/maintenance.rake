@@ -1,5 +1,23 @@
 namespace :app do
   namespace :maintenance do
+    desc "Invert visibility settings"
+    task :invert_visibility_settings => :environment do
+      Visibility.all(:select => "DISTINCT target_id, target_type").collect(&:target).each do |target|
+        puts target.class
+        puts target.id
+
+        Visibility.transaction do
+          types_to_add = (CharacterType.all - target.visibilities.character_types)
+
+          target.visibilities.delete_all
+
+          types_to_add.each do |type|
+            target.visibilities.create!(:character_type => type)
+          end
+        end
+      end
+    end
+
     desc "Migrate items to payout-based usage system"
     task :use_payouts_for_item_effects => :environment do
       puts "Deleting legacy translations..."
