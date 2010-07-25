@@ -2,9 +2,10 @@ namespace :app do
   namespace :maintenance do
     desc "Invert visibility settings"
     task :invert_visibility_settings => :environment do
+      puts "Inverting visibility settings..."
+
       Visibility.all(:select => "DISTINCT target_id, target_type").collect(&:target).each do |target|
-        puts target.class
-        puts target.id
+        puts "%s #%s" % [target.class, target.id]
 
         Visibility.transaction do
           types_to_add = (CharacterType.all - target.visibilities.character_types)
@@ -16,6 +17,8 @@ namespace :app do
           end
         end
       end
+      
+      puts "Done!"
     end
 
     desc "Migrate items to payout-based usage system"

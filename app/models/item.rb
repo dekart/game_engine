@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
   extend HasPayouts
-  include HasInvisibility
+  include HasVisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
   EFFECTS = [:attack, :defence, :health, :energy, :stamina]

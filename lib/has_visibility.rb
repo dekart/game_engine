@@ -1,4 +1,4 @@
-module HasInvisibility
+module HasVisibility
   def self.included(base)
     base.has_many :visibilities, :as => :target, :dependent => :destroy do
       def character_types

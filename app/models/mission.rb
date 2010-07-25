@@ -1,7 +1,7 @@
 class Mission < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
-  include HasInvisibility
+  include HasVisibility
   
   has_many    :ranks, :dependent => :delete_all
   belongs_to  :mission_group

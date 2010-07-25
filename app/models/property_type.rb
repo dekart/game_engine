@@ -1,6 +1,6 @@
 class PropertyType < ActiveRecord::Base
   extend HasPayouts
-  include HasInvisibility
+  include HasVisibility
 
   AVAILABILITIES = [:shop, :mission, :loot]
 
