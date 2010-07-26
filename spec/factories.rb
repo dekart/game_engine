@@ -53,8 +53,8 @@ Factory.define :property do |t|
   t.association :property_type, :factory => :property_type
 end
 
-Factory.define :stuff_invisibility do |t|
-  t.association :stuff, :factory => :item
+Factory.define :visibility do |t|
+  t.association :target, :factory => :item
   t.association :character_type
 end
 

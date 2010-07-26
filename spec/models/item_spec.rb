@@ -14,9 +14,4 @@ describe Item do
   it 'should select items, available for character for given level' do
     Item.available_for(@character).all.should == [@item_1, @item_2]
   end
-
-  it 'should not select items, marked as hidden' do
-    @item_2.invisible_types << @ctype 
-    Item.available_for(@character).all.should == [@item_1]
-  end
 end
