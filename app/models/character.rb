@@ -87,6 +87,9 @@ class Character < ActiveRecord::Base
   has_many :bank_deposits
   has_many :bank_withdrawals, :class_name => "BankWithdraw"
 
+  has_many :vip_money_deposits
+  has_many :vip_money_withdrawals
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [
