@@ -37,10 +37,7 @@ class CharactersController < ApplicationController
 
   def load_vip_money
     on_valid_facebook_money_request do
-      facebook_money_user.character.vip_money_deposits.create!(
-        :amount => facebook_money_amount,
-        :reference => FacebookMoney.config["provider"]
-      )
+      facebook_money_user.character.charge!(0, - facebook_money_amount, FacebookMoney.config["provider"])
     end
   end
 

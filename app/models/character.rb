@@ -412,7 +412,18 @@ class Character < ActiveRecord::Base
 
   def charge(basic_amount, vip_amount, reference = nil)
     self.basic_money  -= basic_amount if basic_amount != 0
-    self.vip_money    -= vip_amount if vip_amount != 0
+
+    if vip_amount > 0 # charging
+      vip_money_withdrawals.build(
+        :amount     => vip_amount,
+        :reference  => reference
+      )
+    elsif vip_amount < 0 # depositing
+      vip_money_deposits.build(
+        :amount     => - vip_amount,
+        :reference  => reference
+      )
+    end
   end
 
   def charge!(*args)
