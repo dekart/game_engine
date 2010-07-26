@@ -204,8 +204,18 @@ en:
       effect:
         remove: "Remove"
     statistics:
+      controls:
+        dashboard: "Dashboard"
+        users: "Users"
       index:
         title: "Statistics"
+        parameter: "Parameter"
+        value: "Value"
+        change: "Last 24 hours"
+        details: "Details &raquo;"
+        total_users: "Total Users"
+      user:
+        title: "Statistics: New Users"
         total_users: "Total Users"
         user_amount_change: "+{{amount}} in last 24 hours"
         latest_users: "Latest Users"
