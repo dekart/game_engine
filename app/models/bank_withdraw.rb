@@ -10,6 +10,6 @@ class BankWithdraw < BankOperation
   def move_money
     character.bank -= amount
 
-    character.charge!(- amount, 0)
+    character.charge!(- amount, 0, :bank_withdraw)
   end
 end

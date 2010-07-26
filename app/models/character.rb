@@ -311,7 +311,7 @@ class Character < ActiveRecord::Base
   def exchange_money!
     return if vip_money < Setting.i(:premium_money_price)
 
-    charge!(- Setting.i(:premium_money_amount), Setting.i(:premium_money_price))
+    charge!(- Setting.i(:premium_money_amount), Setting.i(:premium_money_price), :premium_money)
   end
 
   def full_energy?
@@ -323,7 +323,7 @@ class Character < ActiveRecord::Base
 
     self.ep = energy_points
 
-    free ? save : charge!(0, Setting.i(:premium_energy_price))
+    free ? save : charge!(0, Setting.i(:premium_energy_price), :premium_energy)
   end
 
   def full_health?
@@ -335,7 +335,7 @@ class Character < ActiveRecord::Base
 
     self.hp = health_points
 
-    free ? save : charge!(0, Setting.i(:premium_health_price))
+    free ? save : charge!(0, Setting.i(:premium_health_price), :premium_health)
   end
 
   def full_stamina?
@@ -347,7 +347,7 @@ class Character < ActiveRecord::Base
 
     self.sp = stamina_points
 
-    free ? save : charge!(0, Setting.i(:premium_stamina_price))
+    free ? save : charge!(0, Setting.i(:premium_stamina_price), :premium_stamina)
   end
 
   def buy_points!
@@ -355,7 +355,7 @@ class Character < ActiveRecord::Base
 
     self.points += Setting.i(:premium_points_amount)
 
-    charge!(0, Setting.i(:premium_points_price))
+    charge!(0, Setting.i(:premium_points_price), :premium_points)
   end
 
   def hire_mercenary!
@@ -364,7 +364,7 @@ class Character < ActiveRecord::Base
     transaction do
       mercenary_relations.create!
 
-      charge!(0, Setting.i(:premium_mercenary_price))
+      charge!(0, Setting.i(:premium_mercenary_price), :premium_mercenary)
     end
   end
 
@@ -390,7 +390,7 @@ class Character < ActiveRecord::Base
     self.hp = health_points if hp > health_points
     self.ep = energy_points if ep > energy_points
 
-    charge!(0, Setting.i(:premium_reset_attributes_price))
+    charge!(0, Setting.i(:premium_reset_attributes_price), :premium_reset_attributes)
   end
 
   def allow_fight_with_invite?
@@ -410,7 +410,7 @@ class Character < ActiveRecord::Base
     "%s-%s" % [id, secret(10)]
   end
 
-  def charge(basic_amount, vip_amount)
+  def charge(basic_amount, vip_amount, reference = nil)
     self.basic_money  -= basic_amount if basic_amount != 0
     self.vip_money    -= vip_amount if vip_amount != 0
   end
@@ -478,7 +478,7 @@ class Character < ActiveRecord::Base
       
       self.points     += Setting.i(:character_points_per_upgrade)
 
-      charge(0, - Setting.i(:character_vip_money_per_upgrade))
+      charge(0, - Setting.i(:character_vip_money_per_upgrade), :level_up)
 
       self.ep = energy_points
       self.hp = health_points

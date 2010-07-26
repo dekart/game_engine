@@ -49,12 +49,12 @@ class HelpResult < ActiveRecord::Base
     if context.is_a?(Mission)
       character.experience   += experience
 
-      character.charge!(- money, 0)
+      character.charge!(- money, 0, self)
     end
 
     help_request.character.experience  += experience
 
-    help_request.character.charge!(- money, 0)
+    help_request.character.charge!(- money, 0, help_request)
   end
 
   def increment_request_stats

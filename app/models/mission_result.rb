@@ -34,7 +34,7 @@ class MissionResult
 
           @character.experience += @experience
 
-          @character.charge(- @money, 0)
+          @character.charge(- @money, 0, @mission)
 
           @character.missions_succeeded += 1
 

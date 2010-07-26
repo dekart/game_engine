@@ -104,8 +104,8 @@ class Fight < ActiveRecord::Base
   def save_payout
     winner.experience += experience
 
-    winner.charge(- money, 0)
-    loser.charge(money, 0)
+    winner.charge(- money, 0, :fight_win)
+    loser.charge(money, 0, :fight_lose)
 
     attacker.sp  -= Setting.i(:fight_stamina_required)
 
