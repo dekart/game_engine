@@ -8,9 +8,8 @@ class BankWithdraw < BankOperation
   end
 
   def move_money
-    character.basic_money  += amount
-    character.bank         -= amount
+    character.bank -= amount
 
-    character.save
+    character.charge!(- amount, 0)
   end
 end

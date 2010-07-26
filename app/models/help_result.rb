@@ -47,15 +47,14 @@ class HelpResult < ActiveRecord::Base
 
   def give_payout
     if context.is_a?(Mission)
-      character.basic_money  += money
       character.experience   += experience
-      character.save
+
+      character.charge!(- money, 0)
     end
 
-    help_request.character.basic_money += money
     help_request.character.experience  += experience
 
-    help_request.character.save if help_request.character.changed?
+    help_request.character.charge!(- money, 0)
   end
 
   def increment_request_stats

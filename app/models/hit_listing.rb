@@ -24,9 +24,8 @@ class HitListing < ActiveRecord::Base
           self.executor   = attacker
           self.completed  = true
 
-          attacker.basic_money += reward
+          attacker.charge!(- reward, 0)
 
-          attacker.save!
           save!
         end
       end
@@ -54,7 +53,7 @@ class HitListing < ActiveRecord::Base
   end
 
   def charge_client
-    client.charge(reward, 0)
+    client.charge!(reward, 0)
   end
 
   def take_fee_from_reward

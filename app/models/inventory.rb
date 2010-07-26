@@ -83,24 +83,20 @@ class Inventory < ActiveRecord::Base
         self.basic_money = basic_price * difference.abs
         self.vip_money = vip_price * difference.abs
 
-        character.charge(basic_money, vip_money)
+        character.charge!(basic_money, vip_money)
       end
     else # Selling properties, should deposit
-      if deposit_money
-        self.basic_money = sell_price * difference
-
-        character.basic_money += basic_money
-        character.save
-      end
+      deposit_character(difference)
     end
   end
 
-  def deposit_character
+  def deposit_character(amount = nil)
+    amount ||= self.amount
+
     if deposit_money
       self.basic_money = sell_price * amount
 
-      character.basic_money += basic_money
-      character.save
+      character.charge(- basic_money, 0)
     end
   end
 end

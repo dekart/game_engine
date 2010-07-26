@@ -6,9 +6,9 @@ module Payouts
     
     def apply(character)
       if action == :remove
-        character.basic_money -= @value
+        character.charge(@value, 0)
       else
-        character.basic_money += @value
+        character.charge(- @value, 0)
       end
     end
   end
