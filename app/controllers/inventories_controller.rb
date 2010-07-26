@@ -38,17 +38,25 @@ class InventoriesController < ApplicationController
   end
 
   def equip
-    @inventory = current_character.inventories.find(params[:id])
+    if params[:id]
+      @inventory = current_character.inventories.find(params[:id])
 
-    current_character.equipment.equip!(@inventory, params[:placement])
+      current_character.equipment.equip!(@inventory, params[:placement])
+    else
+      current_character.equipment.equip_best!
+    end
 
     render :layout => "ajax"
   end
 
   def unequip
-    @inventory = current_character.inventories.find(params[:id])
+    if params[:id]
+      @inventory = current_character.inventories.find(params[:id])
 
-    current_character.equipment.unequip!(@inventory, params[:placement])
+      current_character.equipment.unequip!(@inventory, params[:placement])
+    else
+      current_character.equipment.unequip_all!
+    end
 
     render :action => "equip", :layout => "ajax"
   end

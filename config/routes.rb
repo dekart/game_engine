@@ -113,7 +113,11 @@ ActionController::Routing::Routes.draw do |map|
     group.resources :items
   end
   map.resources :inventories,
-    :collection => {:equipment => :any},
+    :collection => {
+      :equipment  => :any,
+      :unequip    => :post,
+      :equip      => :post
+    },
     :member     => {
       :use      => :any,
       :equip    => :post,

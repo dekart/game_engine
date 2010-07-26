@@ -112,3 +112,17 @@
         clear: none
 
         +button(!equippables_equip_icon)
+
+#equipment_buttons
+  margin-bottom: 15px
+
+  .button
+    float: left
+    width: auto
+    margin-right: 15px
+
+  .auto_equip
+    +button(!equipment_buttons_auto_equip_icon)
+
+  .unequip
+    +button(!equipment_buttons_unequip_icon)

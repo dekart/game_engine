@@ -47,6 +47,9 @@ en:
         success: "You've successfully used {{item}}!"
     equipment:
       title: "Your Equipment"
+      buttons:
+        auto_equip: "Auto-Equip"
+        unequip: "Unequip All"
     equippables:
       header: "Available Items"
       item_header: "{{name}} x {{amount}}"
