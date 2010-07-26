@@ -157,6 +157,8 @@ describe Property do
     it "should charge character for vip_money" do
       lambda{
         @property.buy!
+        
+        @character.reload
       }.should change(@character, :vip_money).from(1).to(0)
     end
 
@@ -213,6 +215,8 @@ describe Property do
     it "should charge character for vip_money" do
       lambda{
         @property.upgrade!
+
+        @character.reload
       }.should change(@character, :vip_money).from(1).to(0)
     end
   end
