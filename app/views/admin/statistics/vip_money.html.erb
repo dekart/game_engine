@@ -20,48 +20,56 @@
 
 <h2><%= t(".deposit_reference_types") %></h2>
 
-<table>
-  <% @statistics.deposit_reference_types.each do |reference, total, period| %>
-  <tr>
-    <td><%= reference %></td>
-    <td><%= total %></td>
-    <td><%= "+%d" % period if period > 0 %></td>
-  </tr>
-  <% end %>
-</table>
+<% collection(@statistics.deposit_reference_types) do |types| %>
+  <table>
+    <% types.each do |reference, total, period| %>
+    <tr>
+      <td><%= reference %></td>
+      <td><%= total %></td>
+      <td><%= "+%d" % period if period > 0 %></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <h2><%= t(".withdraw_reference_types") %></h2>
 
-<table>
-  <% @statistics.withdraw_reference_types.each do |reference, total, period| %>
-  <tr>
-    <td><%= reference %></td>
-    <td><%= total %></td>
-    <td><%= "+%d" % period if period > 0 %></td>
-  </tr>
-  <% end %>
-</table>
+<% collection(@statistics.withdraw_reference_types) do |types| %>
+  <table>
+    <% types.each do |reference, total, period| %>
+    <tr>
+      <td><%= reference %></td>
+      <td><%= total %></td>
+      <td><%= "+%d" % period if period > 0 %></td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <h2><%= t(".popular_deposit_references") %></h2>
 
-<table>
-  <% @statistics.popular_deposit_references.each do |reference, total, period| %>
-    <tr>
-      <td><%= admin_statistics_reference(reference) %></td>
-      <td><%= total %></td>
-      <td><%= "+%d" % period if period > 0 %></td>
-    </tr>
-  <% end %>
-</table>
+<% collection(@statistics.popular_deposit_references) do |references| %>
+  <table>
+    <% references.each do |reference, total, period| %>
+      <tr>
+        <td><%= admin_statistics_reference(reference) %></td>
+        <td><%= total %></td>
+        <td><%= "+%d" % period if period > 0 %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <h2><%= t(".popular_withdraw_references") %></h2>
 
-<table>
-  <% @statistics.popular_withdraw_references.each do |reference, total, period| %>
-    <tr>
-      <td><%= admin_statistics_reference(reference) %></td>
-      <td><%= total %></td>
-      <td><%= "+%d" % period if period > 0 %></td>
-    </tr>
-  <% end %>
-</table>
+<% collection(@statistics.popular_withdraw_references) do |references| %>
+  <table>
+    <% references.each do |reference, total, period| %>
+      <tr>
+        <td><%= admin_statistics_reference(reference) %></td>
+        <td><%= total %></td>
+        <td><%= "+%d" % period if period > 0 %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
