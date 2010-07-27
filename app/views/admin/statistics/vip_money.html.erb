@@ -1,0 +1,67 @@
+<%= admin_title(t(".title"))  %>
+
+<%= render "controls" %>
+
+<h2><%= t(".deposit") %></h2>
+
+<p>
+  <strong><%= @statistics.total_deposit %></strong>
+
+  <%= admin_statistics_amount_change(@statistics.deposit_by_period) %>
+</p>
+
+<h2><%= t(".withdraw") %></h2>
+
+<p>
+  <strong><%= @statistics.total_withdraw %></strong>
+
+  <%= admin_statistics_amount_change(@statistics.withdraw_by_period) %>
+</p>
+
+<h2><%= t(".deposit_reference_types") %></h2>
+
+<table>
+  <% @statistics.deposit_reference_types.each do |reference, total, period| %>
+  <tr>
+    <td><%= reference %></td>
+    <td><%= total %></td>
+    <td><%= "+%d" % period if period > 0 %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h2><%= t(".withdraw_reference_types") %></h2>
+
+<table>
+  <% @statistics.withdraw_reference_types.each do |reference, total, period| %>
+  <tr>
+    <td><%= reference %></td>
+    <td><%= total %></td>
+    <td><%= "+%d" % period if period > 0 %></td>
+  </tr>
+  <% end %>
+</table>
+
+<h2><%= t(".popular_deposit_references") %></h2>
+
+<table>
+  <% @statistics.popular_deposit_references.each do |reference, total, period| %>
+    <tr>
+      <td><%= admin_statistics_reference(reference) %></td>
+      <td><%= total %></td>
+      <td><%= "+%d" % period if period > 0 %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h2><%= t(".popular_withdraw_references") %></h2>
+
+<table>
+  <% @statistics.popular_withdraw_references.each do |reference, total, period| %>
+    <tr>
+      <td><%= admin_statistics_reference(reference) %></td>
+      <td><%= total %></td>
+      <td><%= "+%d" % period if period > 0 %></td>
+    </tr>
+  <% end %>
+</table>

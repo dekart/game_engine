@@ -87,6 +87,9 @@ class Character < ActiveRecord::Base
   has_many :bank_deposits
   has_many :bank_withdrawals, :class_name => "BankWithdraw"
 
+  has_many :vip_money_deposits
+  has_many :vip_money_withdrawals
+
   named_scope :victims_for, Proc.new{|attacker|
     {
       :conditions => [
@@ -308,12 +311,7 @@ class Character < ActiveRecord::Base
   def exchange_money!
     return if vip_money < Setting.i(:premium_money_price)
 
-    transaction do
-      self.vip_money    -= Setting.i(:premium_money_price)
-      self.basic_money  += Setting.i(:premium_money_amount)
-
-      save
-    end
+    charge!(- Setting.i(:premium_money_amount), Setting.i(:premium_money_price), :premium_money)
   end
 
   def full_energy?
@@ -323,13 +321,9 @@ class Character < ActiveRecord::Base
   def refill_energy!(free = false)
     return if full_energy? or (!free and vip_money < Setting.i(:premium_energy_price))
 
-    transaction do
-      self.ep = energy_points
-      
-      self.vip_money -= Setting.i(:premium_energy_price) unless free
+    self.ep = energy_points
 
-      save
-    end
+    free ? save : charge!(0, Setting.i(:premium_energy_price), :premium_energy)
   end
 
   def full_health?
@@ -339,12 +333,9 @@ class Character < ActiveRecord::Base
   def refill_health!(free = false)
     return if full_health? or (!free and vip_money < Setting.i(:premium_health_price))
 
-    transaction do
-      self.hp = health_points
-      self.vip_money -= Setting.i(:premium_health_price) unless free
+    self.hp = health_points
 
-      save
-    end
+    free ? save : charge!(0, Setting.i(:premium_health_price), :premium_health)
   end
 
   def full_stamina?
@@ -354,63 +345,52 @@ class Character < ActiveRecord::Base
   def refill_stamina!(free = false)
     return if full_stamina? or (!free and vip_money < Setting.i(:premium_stamina_price))
 
-    transaction do
-      self.sp = stamina_points
-      self.vip_money -= Setting.i(:premium_stamina_price) unless free
+    self.sp = stamina_points
 
-      save
-    end
+    free ? save : charge!(0, Setting.i(:premium_stamina_price), :premium_stamina)
   end
 
   def buy_points!
     return if vip_money < Setting.i(:premium_points_price)
 
-    transaction do
-      self.vip_money  -= Setting.i(:premium_points_price)
-      self.points     += Setting.i(:premium_points_amount)
+    self.points += Setting.i(:premium_points_amount)
 
-      save
-    end
+    charge!(0, Setting.i(:premium_points_price), :premium_points)
   end
 
   def hire_mercenary!
     return if vip_money < Setting.i(:premium_mercenary_price)
 
     transaction do
-      self.vip_money -= Setting.i(:premium_mercenary_price)
-      
       mercenary_relations.create!
-      save
+
+      charge!(0, Setting.i(:premium_mercenary_price), :premium_mercenary)
     end
   end
 
   def reset_attributes!
     return if vip_money < Setting.i(:premium_reset_attributes_price)
 
-    transaction do
-      self.vip_money -= Setting.i(:premium_reset_attributes_price)
+    free_points = 0
 
-      free_points = 0
+    UPGRADABLE_ATTRIBUTES.each do |attribute|
+      current_value = self[attribute]
+      new_value     = character_type[attribute]
 
-      UPGRADABLE_ATTRIBUTES.each do |attribute|
-        current_value = self[attribute]
-        new_value     = character_type[attribute]
+      free_points += (current_value - new_value) *
+        Setting.i("character_#{attribute}_upgrade_points") /
+        Setting.i("character_#{attribute}_upgrade")
 
-        free_points += (current_value - new_value) *
-          Setting.i("character_#{attribute}_upgrade_points") / 
-          Setting.i("character_#{attribute}_upgrade")
+      self[attribute] = new_value
 
-        self[attribute] = new_value
-
-      end
-
-      self.points += free_points
-
-      self.hp = health_points if hp > health_points
-      self.ep = energy_points if ep > energy_points
-
-      save
     end
+
+    self.points += free_points
+
+    self.hp = health_points if hp > health_points
+    self.ep = energy_points if ep > energy_points
+
+    charge!(0, Setting.i(:premium_reset_attributes_price), :premium_reset_attributes)
   end
 
   def allow_fight_with_invite?
@@ -430,11 +410,26 @@ class Character < ActiveRecord::Base
     "%s-%s" % [id, secret(10)]
   end
 
-  def charge(basic_amount, vip_amount)
-    self.basic_money  -= basic_amount if basic_amount > 0
-    self.vip_money    -= vip_amount if vip_amount > 0
+  def charge(basic_amount, vip_amount, reference = nil)
+    self.basic_money  -= basic_amount if basic_amount != 0
 
-    save
+    if vip_amount > 0 # charging
+      vip_money_withdrawals.build(
+        :amount     => vip_amount,
+        :reference  => reference
+      )
+    elsif vip_amount < 0 # depositing
+      vip_money_deposits.build(
+        :amount     => - vip_amount,
+        :reference  => reference
+      )
+    end
+  end
+
+  def charge!(*args)
+    charge(*args)
+    
+    save!
   end
 
   def titles
@@ -493,7 +488,8 @@ class Character < ActiveRecord::Base
       self.level      += 1
       
       self.points     += Setting.i(:character_points_per_upgrade)
-      self.vip_money  += Setting.i(:character_vip_money_per_upgrade)
+
+      charge(0, - Setting.i(:character_vip_money_per_upgrade), :level_up)
 
       self.ep = energy_points
       self.hp = health_points

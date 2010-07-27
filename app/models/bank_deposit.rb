@@ -8,9 +8,8 @@ class BankDeposit < BankOperation
   end
 
   def move_money
-    character.basic_money  -= amount
-    character.bank         += amount - Setting.p(:bank_deposit_fee, amount).ceil
-    
-    character.save
+    character.bank += amount - Setting.p(:bank_deposit_fee, amount).ceil
+
+    character.charge!(amount, 0, :bank_deposit)
   end
 end

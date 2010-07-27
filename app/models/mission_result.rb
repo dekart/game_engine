@@ -32,8 +32,9 @@ class MissionResult
           @rank.win_count += 1
           @rank.save!
 
-          @character.basic_money += @money
           @character.experience += @experience
+
+          @character.charge(- @money, 0, @mission)
 
           @character.missions_succeeded += 1
 

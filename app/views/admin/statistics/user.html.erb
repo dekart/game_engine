@@ -1,0 +1,42 @@
+<%= admin_title(t(".title")) %>
+
+<%= render "controls" %>
+
+<h2><%= t(".total_users") %></h2>
+
+<p id="total_users">
+  <strong><%= @statistics.total_users %></strong>
+  
+  <%= admin_statistics_amount_change(@statistics.users_by_period) %>
+</p>
+
+<h2><%= t(".references") %></h2>
+
+<table>
+<% @statistics.references.each do |reference, total, period| %>
+  <tr>
+    <td><%= reference || t(".no_reference") %></td>
+    <td><%= total %></td>
+    <td><%= "+%d" % period if period > 0 %></td>
+  </tr>
+<% end %>
+</table>
+
+<h2><%= t(".latest_users") %></h2>
+
+<table>
+  <tr>
+    <th><%= User.human_attribute_name("created_at") %></th>
+    <th><%= User.human_attribute_name("facebook_id") %></th>
+    <th><%= Character.human_name %></th>
+    <th><%= User.human_attribute_name("reference") %></th>
+  </tr>
+  <% @statistics.latest_users.each do |user| %>
+    <tr>
+      <td><%= l(user.created_at, :format => :short) %></td>
+      <td><%= link_to(user.facebook_id, fb_profile_url(user)) %></td>
+      <td><%= user.character ? link_to(user.character.character_type.name, character_url(user.character, :canvas => true)) : content_tag(:em, t(".no_character")) %></td>
+      <td><%= user.reference %></td>
+    </tr>
+  <% end %>
+</table>

@@ -37,9 +37,7 @@ class CharactersController < ApplicationController
 
   def load_vip_money
     on_valid_facebook_money_request do
-      @character = facebook_money_user.character
-      @character.vip_money += facebook_money_amount
-      @character.save
+      facebook_money_user.character.charge!(0, - facebook_money_amount, FacebookMoney.config["provider"])
     end
   end
 

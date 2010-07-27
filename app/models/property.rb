@@ -41,7 +41,7 @@ class Property < ActiveRecord::Base
 
     if valid?
       transaction do
-        save! && character.charge(basic_price, vip_price)
+        save! && character.charge!(basic_price, vip_price, property_type)
       end
     else
       false
@@ -57,7 +57,7 @@ class Property < ActiveRecord::Base
       transaction do
         increment(:level)
 
-        save(false) && character.charge(property_type.upgrade_price(level - 1), vip_price)
+        save(false) && character.charge!(property_type.upgrade_price(level - 1), vip_price, property_type)
       end
     else
       false
@@ -72,8 +72,7 @@ class Property < ActiveRecord::Base
         result = payouts.apply(character, :collect)
         result << Payouts::BasicMoney.new(:value => total_income)
 
-        character.basic_money += total_income
-        character.save
+        character.charge!(- total_income, 0, self)
 
         result
       end
