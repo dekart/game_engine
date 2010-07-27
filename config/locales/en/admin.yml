@@ -207,6 +207,7 @@ en:
       controls:
         dashboard: "Dashboard"
         users: "Users"
+        vip_money: "VIP Money"
       index:
         title: "Statistics"
         parameter: "Parameter"
@@ -222,6 +223,10 @@ en:
         references: "References"
         no_reference: "No reference"
         no_character: "(No character)"
+      vip_money:
+        title: "Statistics: VIP Money"
+        total_deposit: "Deposit"
+        total_withdraw: "Withdraw"
     property_types:
       index:
         title: "Property Types"

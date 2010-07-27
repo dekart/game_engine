@@ -17,4 +17,11 @@ class Admin::StatisticsController < Admin::BaseController
       [name, count, day_reference_stats.assoc(name).try(:last).to_i]
     end
   end
+
+  def vip_money
+    @total_deposit  = VipMoneyDeposit.sum(:amount)
+    @total_withdraw = VipMoneyWithdrawal.sum(:amount)
+
+    
+  end
 end
