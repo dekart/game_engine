@@ -204,6 +204,7 @@ en:
       effect:
         remove: "Remove"
     statistics:
+      amount_change: "(+{{amount}} in last 24 hours)"
       controls:
         dashboard: "Dashboard"
         users: "Users"
@@ -218,15 +219,18 @@ en:
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
-        user_amount_change: "+{{amount}} in last 24 hours"
         latest_users: "Latest Users"
         references: "References"
         no_reference: "No reference"
         no_character: "(No character)"
       vip_money:
         title: "Statistics: VIP Money"
-        total_deposit: "Deposit"
-        total_withdraw: "Withdraw"
+        deposit: "Deposit"
+        withdraw: "Withdraw"
+        deposit_reference_types: "Deposit Reference Types"
+        withdraw_reference_types: "Withdraw Reference Types"
+        popular_deposit_references: "Popular Deposit References"
+        popular_withdraw_references: "Popular Withdraw References"
     property_types:
       index:
         title: "Property Types"

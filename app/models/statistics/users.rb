@@ -33,9 +33,13 @@ class Statistics
 
       by_period.collect!{|c| [c.reference, c[:user_count].to_i] }
 
-      totals.collect do |name, count|
+      result = totals.collect do |name, count|
         [name, count, by_period.assoc(name).try(:last).to_i]
       end
+
+      result.sort!{|a, b| b.last <=> a.last }
+
+      result
     end
   end
 end

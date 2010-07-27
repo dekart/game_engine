@@ -6,17 +6,18 @@
 
 <p id="total_users">
   <strong><%= @statistics.total_users %></strong>
-  (<%= raw t(".user_amount_change", :amount => content_tag(:strong, @statistics.users_by_period)) %>)
+  
+  <%= admin_statistics_amount_change(@statistics.users_by_period) %>
 </p>
 
 <h2><%= t(".references") %></h2>
 
 <table>
-<% @statistics.references.each do |reference, total, day| %>
+<% @statistics.references.each do |reference, total, period| %>
   <tr>
     <td><%= reference || t(".no_reference") %></td>
     <td><%= total %></td>
-    <td><%= "+%d" % day if day > 0 %></td>
+    <td><%= "+%d" % period if period > 0 %></td>
   </tr>
 <% end %>
 </table>

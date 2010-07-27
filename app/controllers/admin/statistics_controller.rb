@@ -8,9 +8,6 @@ class Admin::StatisticsController < Admin::BaseController
   end
 
   def vip_money
-    @total_deposit  = VipMoneyDeposit.sum(:amount)
-    @total_withdraw = VipMoneyWithdrawal.sum(:amount)
-
-    
+    @statistics = Statistics::VipMoney.new(24.hours)
   end
 end
