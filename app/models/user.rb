@@ -17,20 +17,6 @@ class User < ActiveRecord::Base
   
   attr_accessible :show_next_steps
 
-  class << self
-    def reference_stats(time_limit = 0)
-      scope = self
-
-      if time_limit
-        scope = scope.scoped(:conditions => ["created_at > ?", time_limit])
-      end
-      
-      scope.all(:select => "reference, count(id) as user_count", :group => :reference, :order => :reference).collect{|c|
-        [c.reference, c[:user_count].to_i]
-      }
-    end
-  end
-
   def show_tutorial?
     Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
   end

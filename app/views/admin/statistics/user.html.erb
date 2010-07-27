@@ -5,14 +5,14 @@
 <h2><%= t(".total_users") %></h2>
 
 <p id="total_users">
-  <strong><%= @total_users %></strong>
-  (<%= raw t(".user_amount_change", :amount => content_tag(:strong, @last_day_users)) %>)
+  <strong><%= @statistics.total_users %></strong>
+  (<%= raw t(".user_amount_change", :amount => content_tag(:strong, @statistics.users_by_period)) %>)
 </p>
 
 <h2><%= t(".references") %></h2>
 
 <table>
-<% @total_reference_stats.each do |reference, total, day| %>
+<% @statistics.references.each do |reference, total, day| %>
   <tr>
     <td><%= reference || t(".no_reference") %></td>
     <td><%= total %></td>
@@ -30,7 +30,7 @@
     <th><%= Character.human_name %></th>
     <th><%= User.human_attribute_name("reference") %></th>
   </tr>
-  <% @latest_users.each do |user| %>
+  <% @statistics.latest_users.each do |user| %>
     <tr>
       <td><%= l(user.created_at, :format => :short) %></td>
       <td><%= link_to(user.facebook_id, fb_profile_url(user)) %></td>

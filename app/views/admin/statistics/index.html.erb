@@ -11,8 +11,8 @@
   </tr>
   <tr>
     <td><%= t(".total_users") %></td>
-    <td><%= @total_users %></td>
-    <td>+ <%= @last_day_users %></td>
+    <td><%= @statistics.total_users %></td>
+    <td>+ <%= @statistics.users_by_period %></td>
     <td><%= link_to(t(".details"), user_admin_statistics_path) %></td>
   </tr>
 </table>
