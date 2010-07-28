@@ -79,6 +79,9 @@ ActionController::Routing::Routes.draw do |map|
         :restart      => :post
       }
     admin.resources :characters, :only => [:index, :edit, :update]
+
+    # Add your custom admin routes below this mark
+    
   end
 
   map.root :controller => "characters", :action => "index"
@@ -162,6 +165,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :hit_listings, :only => [:index, :update]
 
   map.resources :help_pages, :only => :show
+
+  # Add your custom routes below this mark
   
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

@@ -23,6 +23,8 @@ en:
         help_pages: "Help Pages"
         settings: "Settings"
         global_tasks: "Global Tasks"
+        # Add your custom menu items below this mark
+        
       application:
         spinner:
           alt: "Please wait..."
@@ -393,3 +395,5 @@ en:
       edit:
         title: "Edit Character"
         submit: "Update"
+        
+     # Add your custom translation strings below this mark
