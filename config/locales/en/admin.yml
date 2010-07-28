@@ -13,6 +13,7 @@ en:
         bosses: "Bosses"
         property_types: "Property Types"
         statistics: "Statistics"
+        characters: "Characters"
         newsletter: "Newsletter"
         promotions: "Promotions"
         skins: "Skins"
@@ -383,3 +384,12 @@ en:
         user_limit_reached: "This task cannot be performed because your application already reached {{limit}} user limit."
       restart:
         success: "The application was successfully restarted!"
+    characters:
+      index:
+        title: "Characters"
+        profile: "FB Profile"
+        controls:
+          edit: "Edit"
+      edit:
+        title: "Edit Character"
+        submit: "Update"

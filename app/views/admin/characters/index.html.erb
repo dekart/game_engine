@@ -1,0 +1,29 @@
+<%= admin_title(t(".title")) %>
+
+<%= will_paginate @characters %>
+
+<table id="character_list">
+  <tr>
+    <th><%= Character.human_attribute_name("created_at") %></th>
+    <th><%= Character.human_attribute_name("name") %></th>
+    <th><%= Character.human_attribute_name("level") %></th>
+  </tr>
+  <% @characters.each do |character| %>
+    <tr>
+      <td><%= l(character.created_at, :format => :short) %></td>
+      <td>
+        <%= link_to(character_name(character), edit_admin_character_path(character, :page => params[:page])) %>
+        <%= link_to(t(".profile"), fb_profile_url(character.user),
+              :class  => :profile,
+              :target => :_blank
+            ) %>
+      </td>
+      <td><%= character.level %></td>
+      <td>
+        <%= link_to(t(".controls.edit"), edit_admin_character_path(character, :page => params[:page])) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @characters %>

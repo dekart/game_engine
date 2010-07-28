@@ -78,6 +78,7 @@ ActionController::Routing::Routes.draw do |map|
         :delete_users => :delete,
         :restart      => :post
       }
+    admin.resources :characters, :only => [:index, :edit, :update]
   end
 
   map.root :controller => "characters", :action => "index"
