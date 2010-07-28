@@ -21,10 +21,15 @@ en:
     fulfill:
       completed:
         title: "Congratulations!"
-        message: "You've completed this mission and received new title:"
+        message: "You've just completed this mission!"
+        new_title: "You've got the new title:"
         child_missions: "You also opened new missions:"
         buttons:
           publish: "Brag About It!"
+          continue: "Continue"
+        dialog:
+          title: "You've just completed this mission!"
+          message: "Let your friends know about your success:"
       success:
         message: "Well done!"
         buttons:

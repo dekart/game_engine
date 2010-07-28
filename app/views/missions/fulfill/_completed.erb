@@ -7,11 +7,11 @@
 <h2><%= t(".title") %></h2>
 
 <p>
-  <%= mission.complete_text %>
+  <%= t(".message") %> <%= mission.complete_text %>
 </p>
 
 <% unless mission.title.blank? %>
-  <p><%= t(".message") %></p>
+  <p><%= t(".new_title") %></p>
 
   <h3 class="title"><%= mission.title %></h3>
 <% end %>
@@ -23,6 +23,21 @@
     <% mission.child_missions.each do |child| %>
       <div class="child"><%= child.name %></div>
     <% end %>
+  </div>
+<% end %>
+
+<% dialog :id => :mission_completion do %>
+  <h2><%= t(".dialog.title") %></h2>
+
+  <p><%= mission.complete_text %></p>
+
+  <p><%= t(".dialog.message") %></p>
+
+  <div class="buttons">
+    <%= link_to_function(button(:continue),
+          mission_complete_stream_dialog(mission) + "$.dialog.close()",
+          :class => "continue button"
+        ) %>
   </div>
 <% end %>
 
