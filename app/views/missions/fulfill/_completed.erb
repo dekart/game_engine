@@ -26,10 +26,16 @@
   </div>
 <% end %>
 
-<% dialog :id => :mission_completion do %>
+<% dialog :id => :mission_dialog do %>
   <h2><%= t(".dialog.title") %></h2>
 
-  <p><%= mission.complete_text %></p>
+  <div class="clearfix">
+    <% if mission.image? %>
+      <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
+    <% end %>
+      
+    <p><%= mission.complete_text %></p>
+  </div>
 
   <p><%= t(".dialog.message") %></p>
 
