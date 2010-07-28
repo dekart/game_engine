@@ -26,25 +26,27 @@
   </div>
 <% end %>
 
-<% dialog :id => :mission_dialog do %>
-  <h2><%= t(".dialog.title") %></h2>
+<% if Setting.b(:mission_completion_dialog) %>
+  <% dialog :id => :mission_dialog do %>
+    <h2><%= t(".dialog.title") %></h2>
 
-  <div class="clearfix">
-    <% if mission.image? %>
-      <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
-    <% end %>
-      
-    <p><%= mission.complete_text %></p>
-  </div>
+    <div class="clearfix">
+      <% if mission.image? %>
+        <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
+      <% end %>
 
-  <p><%= t(".dialog.message") %></p>
+      <p><%= mission.complete_text %></p>
+    </div>
 
-  <div class="buttons">
-    <%= link_to_function(button(:continue),
-          mission_complete_stream_dialog(mission) + "$.dialog.close()",
-          :class => "continue button"
-        ) %>
-  </div>
+    <p><%= t(".dialog.message") %></p>
+
+    <div class="buttons">
+      <%= link_to_function(button(:continue),
+            mission_complete_stream_dialog(mission) + "$.dialog.close()",
+            :class => "continue button"
+          ) %>
+    </div>
+  <% end %>
 <% end %>
 
 <% if missions %>

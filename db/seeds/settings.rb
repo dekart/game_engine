@@ -63,6 +63,7 @@ Setting[:newsletter_send_sleep] = 60
 Setting[:relation_max_alliance_size] = 500
 Setting[:fight_max_money] = 10000
 Setting[:mission_group_show_limit] = 4
+Setting[:mission_completion_dialog] = true
 Setting[:app_google_analytics_id] = ""
 Setting[:gifting_enabled] = true
 Setting[:gifting_item_show_limit] = 10
