@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_p3p_header
   before_filter :check_character_existance
   before_filter :ensure_authenticated_to_facebook
+  before_filter :check_bookmark_reference
 
   landing_redirect
 
@@ -38,6 +39,12 @@ class ApplicationController < ActionController::Base
       )
 
       top_redirect_to url_for(url_params)
+    end
+  end
+
+  def check_bookmark_reference
+    if params[:ref] == "bookmarks" and !request_is_facebook_iframe?
+      redirect_to after_facebook_login_url
     end
   end
 
