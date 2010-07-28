@@ -67,6 +67,13 @@ namespace :deploy do
       <VirtualHost *:80>
         ServerName #{URI.parse(facebook_config[rails_env]["callback_url"]).host}
         DocumentRoot #{current_path}/public
+
+        <Directory #{current_path}/public>
+           AllowOverride all
+           Options FollowSymlinks -MultiViews
+           Order allow,deny
+           Allow from all
+        </Directory>
       </VirtualHost>
     CODE
 
