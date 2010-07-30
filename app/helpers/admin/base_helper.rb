@@ -3,18 +3,26 @@ module Admin::BaseHelper
     content_tag(:span, object.state.to_s.capitalize, :class => object.state)
   end
 
-  def admin_title(value, doc_url = nil)
+  def admin_title(value, doc_topic = nil)
     @admin_title = value
 
-    title = content_tag(:h1, value)
+    content_tag(:h1,
+      "%s %s" % [
+        value,
+        doc_topic.present? ? admin_documentation_link(doc_topic) : ""
+      ],
+      :class => :title
+    )
+  end
 
-    if doc_url.present?
-      title << link_to(t("admin.documentation"), "http://railorz.com/help/#{doc_url}",
-        :target => :_blank,
-        :class  => :documentation
-      )
-    end
+  def admin_documentation_link(topic)
+    link_to(t("admin.documentation"), admin_documentation_url(topic),
+      :target => :_blank,
+      :class  => :documentation
+    )
+  end
 
-    content_tag(:div, title, :class => :title)
+  def admin_documentation_url(topic)
+    "http://railorz.com/help/#{topic}"
   end
 end

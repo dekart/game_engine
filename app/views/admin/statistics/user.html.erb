@@ -10,7 +10,7 @@
   <%= admin_statistics_amount_change(@statistics.users_by_period) %>
 </p>
 
-<h2><%= t(".references") %></h2>
+<h2><%= t(".references") %> <%= admin_documentation_link(:references) %></h2>
 
 <table>
 <% @statistics.references.each do |reference, total, period| %>
