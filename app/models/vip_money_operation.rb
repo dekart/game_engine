@@ -1,6 +1,8 @@
 class VipMoneyOperation < ActiveRecord::Base
   belongs_to :character
 
+  named_scope :latest, :order => "id DESC"
+
   attr_accessible :amount, :reference
 
   validates_presence_of :amount

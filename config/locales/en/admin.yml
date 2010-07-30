@@ -228,12 +228,22 @@ en:
         no_character: "(No character)"
       vip_money:
         title: "Statistics: VIP Money"
-        deposit: "Deposit"
-        withdraw: "Withdraw"
-        deposit_reference_types: "Deposit Reference Types"
-        withdraw_reference_types: "Withdraw Reference Types"
-        popular_deposit_references: "Popular Deposit References"
-        popular_withdraw_references: "Popular Withdraw References"
+        reference_type: "Reference Type"
+        reference: "Reference"
+        amount:
+          total: "Total Amount"
+          by_period: "24 hours"
+        deposit:
+          overview: "Deposit"
+          operations: "See latest deposits"
+          reference_types: "Deposit Reference Types"
+          popular_references: "Popular Deposit References"
+        withdraw:
+          overview: "Withdraw"
+          operations: "See latest withdrawals"
+          reference_types: "Withdraw Reference Types"
+          popular_references: "Popular Withdraw References"
+        
     property_types:
       index:
         title: "Property Types"
@@ -398,5 +408,14 @@ en:
       edit:
         title: "Edit Character"
         submit: "Update"
+    vip_money_operations:
+      controls:
+        statistics: "Back to Statistics"
+        deposits: "Deposits"
+        withdrawals: "Withdrawals"
+      index:
+        title:
+          deposit: "Latest Deposits"
+          withdrawal: "Latest Withdrawals"
         
     # Add your custom translation strings below this mark

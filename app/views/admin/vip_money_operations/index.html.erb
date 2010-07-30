@@ -1,0 +1,27 @@
+<%= admin_title(t(".title.#{operation_type}")) %>
+
+<%= render "controls" %>
+
+<%= will_paginate(@operations) %>
+
+<% collection(@operations) do %>
+  <table>
+    <tr>
+      <th><%= VipMoneyOperation.human_attribute_name("created_at") %></th>
+      <th><%= Character.human_name %></th>
+      <th><%= VipMoneyOperation.human_attribute_name("reference") %></th>
+      <th><%= VipMoneyOperation.human_attribute_name("amount") %></th>
+    </tr>
+    <% @operations.each do |operation| %>
+      <tr>
+        <td><%= l(operation.created_at, :format => :short) %></td>
+        <td><%= link_to(character_name(operation.character), character_url(operation.character, :canvas => true)) %></td>
+        <td><%= admin_statistics_reference(operation.reference) %></td>
+        <td><%= operation.amount %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate(@operations) %>
+<% end %>
+
