@@ -314,7 +314,7 @@ $(function(){
 
   Spinner.setup();
 
-  $('a.help_page').live('click', function(e){
+  $('a.help').live('click', function(e){
     e.preventDefault();
     
     $.dialog({ajax: $(this).attr('href')});

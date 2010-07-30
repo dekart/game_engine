@@ -9,7 +9,7 @@ $(function(){
     $(document).trigger('facebook.ready');
   });
 
-  $('a.help_page').live('click', function(e){
+  $('a.help').live('click', function(e){
     e.preventDefault();
 
     $.dialog({ajax: $(this).attr('href')});

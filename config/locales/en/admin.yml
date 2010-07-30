@@ -351,10 +351,10 @@ en:
         submit: "Update"
       form_fields:
         comments:
-          alias: "Only letters, numbers, dashes, and underscores are allowed"
+          alias: "Only letters, numbers, dashes, and underscores are allowed."
           content:
-            text: "You can use Textile markup. See {{reference}} to find more info. HTML is available as well."
-            reference: "Textile Reference"
+            text: "Please read {{documentation}} to know more about formatting options."
+            documentation: "documentation"
     settings:
       index:
         title: "Settings"
