@@ -353,7 +353,7 @@ en:
         comments:
           alias: "Only letters, numbers, dashes, and underscores are allowed"
           content:
-            text: "You can use Textile markup. See {{reference}} to find more info."
+            text: "You can use Textile markup. See {{reference}} to find more info. HTML is available as well."
             reference: "Textile Reference"
     settings:
       index:
