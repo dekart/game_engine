@@ -218,7 +218,10 @@ en:
         value: "Value"
         change: "Last 24 hours"
         details: "Details &raquo;"
-        total_users: "Total Users"
+        values:
+          users: "Total Users"
+          deposit: "VIP Money Deposit"
+          withdraw: "VIP Money Withdraw"
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
