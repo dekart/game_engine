@@ -51,8 +51,10 @@ module ApplicationHelper
 
     if content
       @dom_ready << content
+      nil
     elsif block_given?
       @dom_ready << capture(&block)
+      nil
     else
       javascript_tag("$(function(){ #{ @dom_ready.join("\n") } });")
     end
