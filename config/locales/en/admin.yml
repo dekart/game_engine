@@ -331,10 +331,13 @@ en:
       index:
         title: "Help Pages"
         empty_set: "No pages"
+        page_preview: "Page Preview"
         controls:
           new: "Add Page"
           edit: "Edit"
-          preview: "Preview"
+          preview:
+            dialog: "Dialog"
+            page: "Page"
           delete: "Delete"
           delete_confirm: "Are you sure? This help page will become unavailable for users!"
           publish: "Publish"

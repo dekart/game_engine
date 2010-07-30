@@ -10,6 +10,7 @@
       <th><%= HelpPage.human_attribute_name("name") %></th>
       <th><%= HelpPage.human_attribute_name("alias") %></th>
       <th><%= HelpPage.human_attribute_name("state") %></th>
+      <th><%= t(".page_preview") %></th>
       <th></th>
     </tr>
     <% @pages.each do |page| %>
@@ -17,9 +18,12 @@
         <td class="name"><%= link_to(page.name, edit_admin_help_page_path(page)) %></td>
         <td class="alias"><%= page.alias %></td>
         <td class="state"><%= admin_state(page) %></td>
+        <td class="preview">
+          <%= link_to_function(t(".controls.preview.dialog"), "$.dialog({ajax: '#{help_page_path(page.alias)}'})") %>
+          <%= link_to(t(".controls.preview.page"), help_page_path(page.alias), :target => :_blank) %>
+        </td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_help_page_path(page)) %>
-          <%= link_to_function(t(".controls.preview"), "$.dialog({ajax: '#{help_page_path(page.alias)}'})") %>
           <%= link_to(t(".controls.publish"), publish_admin_help_page_path(page),
                 :method => :put,
                 :confirm => t(".controls.publish_confirm")

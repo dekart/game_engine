@@ -1,4 +1,6 @@
 $(function(){
+  $.dialog.settings.container = 'body';
+  
   FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
     FB.XdComm.Server.init("/xd_receiver.html");
 

@@ -15,6 +15,7 @@
 
   $.extend($.dialog, {
     settings: {
+      container    : '#content',
       overlay      : true,
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       dialogHtml  : '\
@@ -113,7 +114,7 @@
     $.dialog.settings.imageTypesRegexp = new RegExp('\.(' + imageTypes + ')$', 'i')
 
     if (settings) $.extend($.dialog.settings, settings)
-    $('#content').append($.dialog.settings.dialogHtml)
+    $($.dialog.settings.container).append($.dialog.settings.dialogHtml)
 
     $('#dialog .close').click($.dialog.close)
   }
