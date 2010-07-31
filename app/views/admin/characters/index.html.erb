@@ -36,7 +36,7 @@
               ) %>
         </td>
         <td><%= character.level %></td>
-        <td>
+        <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_character_path(character, :page => params[:page])) %>
           <%= link_to(t(".controls.payout"), payout_admin_character_path(character)) %>
         </td>
