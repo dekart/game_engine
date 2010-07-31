@@ -20,10 +20,10 @@
 
 <%= form.text_field :ep_cost, :required => true, :size => 6, :autocomplete => :off %>
 
-<%= render "admin/requirements/collection", :form => form %>
+<%= form.fields "admin/requirements/collection" %>
 
 <h2><%= Boss.human_attribute_name("payouts") %></h2>
 
 <%= form.text_field :experience, :required => true, :size => 6, :autocomplete => :off %>
 
-<%= render "admin/payouts/collection", :form => form %>
+<%= form.fields "admin/payouts/collection" %>
