@@ -1,10 +1,6 @@
 module HasPayouts
   def has_payouts(*args)
-    preload_payouts
-
-    serialize :payouts, Payouts::Collection
-
-    send(:include, InstanceMethods)
+    preload_payouts!
 
     options = args.extract_options!
 
@@ -17,33 +13,43 @@ module HasPayouts
 
     cattr_accessor :payout_options
     self.payout_options = options
+
+    if respond_to?(:serialize) and column_names.include?("payouts")
+      serialize :payouts, Payouts::Collection
+      
+      send(:include, ActiveRecordMethods)
+    else
+      send(:include, NonActiveRecordMethods)
+    end
   end
 
   def payout_events_for_select
     payout_events.collect{|event| [event.to_s.humanize, event]}
   end
 
-  def preload_payouts
+  def preload_payouts!
     Dir[File.join(RAILS_ROOT, "app", "models", "payouts", "*.rb")].each do |file|
       file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").classify.constantize
     end
   end
 
-  module InstanceMethods
+  module ActiveRecordMethods
     def payouts
       super || Payouts::Collection.new
     end
 
     def payouts=(collection)
-      if collection and !collection.is_a?(Payouts::Collection)
-        items = collection.values.collect do |payout|
-          Payouts::Base.by_name(payout[:type]).new(payout.except(:type))
-        end
+      super(Payouts::Collection.parse(collection))
+    end
+  end
 
-        collection = Payouts::Collection.new(*items)
-      end
+  module NonActiveRecordMethods
+    def payouts
+      @payouts || Payouts::Collection.new
+    end
 
-      super(collection)
+    def payouts=(collection)
+      @payouts = Payouts::Collection.parse(collection)
     end
   end
 end

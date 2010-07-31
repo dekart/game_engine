@@ -1,16 +1,28 @@
 <div class="payout" id="payout_<%= payout.object_id %>">
   <div class="<%= payout.name %> serializable_item">
-    <%= hidden_field_tag("#{container.to_s.underscore}[payouts][payout_#{payout.object_id}][type]", payout.name) %>
-
     <%= link_to_function(t(".remove"), "$('#payout_#{payout.id}').remove()", :class => :remove) %>
 
     <h4><%= t("payouts.#{payout.name}.name") %></h4>
 
     <% fields_for "#{container.to_s.underscore}[payouts][payout_#{payout.object_id}]", payout do |form| %>
+      <%= form.hidden_field :type, :value => payout.name %>
+    
       <table>
         <tr>
-          <td><%= render "admin/payouts/form_fields/#{payout.name}", :form => form, :container => container %></td>
-          <td width="50%"><%= render "admin/payouts/form_fields/common", :form => form, :container => container %></td>
+          <td>
+            <%= render("admin/payouts/form_fields/#{payout.name}",
+                  :form       => form,
+                  :container  => container
+                ) %>
+          </td>
+          <td width="30%">
+            <%= form.check_box_list :apply_on, container.payout_events_for_select %>
+          </td>
+          <td width="30%">
+            <%= form.select :action, Payouts::Base::ACTIONS %>
+            <%= form.text_field :chance, :size => 6, :autocomplete => :off %>
+            <%= form.check_box :visible %>
+          </td>
         </tr>
       </table>
     <% end %>

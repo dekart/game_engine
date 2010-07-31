@@ -405,12 +405,21 @@ en:
     characters:
       index:
         title: "Characters"
+        search:
+          title: "Search Characters"
+          facebook_ids: "Facebook IDs"
+          profile_ids: "Profile IDs"
+          submit: "Search"
         profile: "FB Profile"
         controls:
           edit: "Edit"
+          payout: "Apply Payout"
       edit:
         title: "Edit Character"
         submit: "Update"
+      payout:
+        title: "Apply Payouts To Character"
+        submit: "Apply"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"
