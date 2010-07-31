@@ -10,7 +10,14 @@
       <table>
         <tr>
           <td><%= render "admin/payouts/form_fields/#{payout.name}", :form => form, :container => container %></td>
-          <td width="50%"><%= render "admin/payouts/form_fields/common", :form => form, :container => container %></td>
+          <td width="30%">
+            <%= form.check_box_list :apply_on, container.payout_events_for_select %>
+          </td>
+          <td width="30%">
+            <%= form.select :action, Payouts::Base::ACTIONS %>
+            <%= form.text_field :chance, :size => 6, :autocomplete => :off %>
+            <%= form.check_box :visible %>
+          </td>
         </tr>
       </table>
     <% end %>
