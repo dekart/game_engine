@@ -3,6 +3,27 @@ class Admin::CharactersController < Admin::BaseController
     @characters = Character.paginate(:page => params[:page])
   end
 
+  def search
+    if params[:profile_ids].present?
+      ids = params[:profile_ids].split(/[^\d]+/)
+
+      @characters = Character.scoped(:conditions => {:id => ids})
+    elsif params[:facebook_ids].present?
+      ids = params[:facebook_ids].split(/[^\d]+/)
+
+      @characters = Character.scoped(
+        :include => :user,
+        :conditions => {:users => {:facebook_id => ids}}
+      )
+    else
+      @characters = Character
+    end
+
+    @characters = @characters.paginate(:page => params[:page])
+    
+    render :index
+  end
+
   def edit
     @character = Character.find(params[:id])
   end

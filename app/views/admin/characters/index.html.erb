@@ -1,29 +1,47 @@
 <%= admin_title(t(".title")) %>
 
-<%= will_paginate @characters %>
+<div id="character_search">
+  <h2><%= t(".search.title") %></h2>
 
-<table id="character_list">
-  <tr>
-    <th><%= Character.human_attribute_name("created_at") %></th>
-    <th><%= Character.human_attribute_name("name") %></th>
-    <th><%= Character.human_attribute_name("level") %></th>
-  </tr>
-  <% @characters.each do |character| %>
-    <tr>
-      <td><%= l(character.created_at, :format => :short) %></td>
-      <td>
-        <%= link_to(character_name(character), edit_admin_character_path(character, :page => params[:page])) %>
-        <%= link_to(t(".profile"), fb_profile_url(character.user),
-              :class  => :profile,
-              :target => :_blank
-            ) %>
-      </td>
-      <td><%= character.level %></td>
-      <td>
-        <%= link_to(t(".controls.edit"), edit_admin_character_path(character, :page => params[:page])) %>
-      </td>
-    </tr>
+  <% form_tag search_admin_characters_path do %>
+    <%= label_tag :profile_ids, t(".search.profile_ids") %>
+    <%= text_field_tag :profile_ids, params[:profile_ids] %>
+
+    <%= label_tag :facebook_ids, t(".search.facebook_ids") %>
+    <%= text_field_tag :facebook_ids, params[:facebook_ids] %>
+
+    <%= submit_tag t(".search.submit") %>
   <% end %>
-</table>
+</div>
 
 <%= will_paginate @characters %>
+
+<% collection(@characters) do %>
+  <table id="character_list">
+    <tr>
+      <th><%= Character.human_attribute_name("id") %></th>
+      <th><%= Character.human_attribute_name("created_at") %></th>
+      <th><%= Character.human_attribute_name("name") %></th>
+      <th><%= Character.human_attribute_name("level") %></th>
+    </tr>
+    <% @characters.each do |character| %>
+      <tr>
+        <td><%= character.id %></td>
+        <td><%= l(character.created_at, :format => :short) %></td>
+        <td>
+          <%= link_to(character_name(character), edit_admin_character_path(character, :page => params[:page])) %>
+          <%= link_to(t(".profile"), fb_profile_url(character.user),
+                :class  => :profile,
+                :target => :_blank
+              ) %>
+        </td>
+        <td><%= character.level %></td>
+        <td>
+          <%= link_to(t(".controls.edit"), edit_admin_character_path(character, :page => params[:page])) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @characters %>
+<% end %>

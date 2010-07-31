@@ -405,6 +405,11 @@ en:
     characters:
       index:
         title: "Characters"
+        search:
+          title: "Search Characters"
+          facebook_ids: "Facebook IDs"
+          profile_ids: "Profile IDs"
+          submit: "Search"
         profile: "FB Profile"
         controls:
           edit: "Edit"
