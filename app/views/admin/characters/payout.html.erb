@@ -1,0 +1,6 @@
+
+<% form_for @character, :url => payout_admin_character_path(@character) do |form| %>
+  <%= render "admin/payouts/collection", :form => form %>
+
+  <%= submit_tag %>
+<% end %>

@@ -413,6 +413,7 @@ en:
         profile: "FB Profile"
         controls:
           edit: "Edit"
+          payout: "Apply Payout"
       edit:
         title: "Edit Character"
         submit: "Update"

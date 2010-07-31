@@ -1,6 +1,7 @@
 class Character < ActiveRecord::Base
   extend SerializeWithPreload
   extend RestorableAttribute
+  extend HasPayouts
   include ActionView::Helpers::NumberHelper 
   
   LEVELS = [0]
@@ -130,6 +131,8 @@ class Character < ActiveRecord::Base
 
   attr_accessor :level_updated
 
+  has_payouts :save
+
   restorable_attribute :hp,
     :limit          => :health_points,
     :restore_period => Setting.i(:character_health_restore_period).seconds,
@@ -144,7 +147,7 @@ class Character < ActiveRecord::Base
     :restore_bonus  => :stamina_restore_bonus
 
   before_create :apply_character_type_defaults
-  before_save   :update_level_and_points
+  before_save   :update_level_and_points, :apply_payouts
 
   validates_presence_of :character_type, :on => :create
 
@@ -507,5 +510,9 @@ class Character < ActiveRecord::Base
     self.hp = health_points
     self.ep = energy_points
     self.sp = stamina_points
+  end
+
+  def apply_payouts
+    @payouts.apply(self, :save) if @payouts
   end
 end

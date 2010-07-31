@@ -37,4 +37,16 @@ class Admin::CharactersController < Admin::BaseController
       render :edit
     end
   end
+
+  def payout
+    @character = Character.find(params[:id])
+
+    if request.put? and params[:character]
+      @character.payouts = params[:character][:payouts]
+
+      @character.save!
+
+      redirect_to admin_characters_path
+    end
+  end
 end
