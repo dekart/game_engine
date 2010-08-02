@@ -147,7 +147,7 @@ class Character < ActiveRecord::Base
     :restore_bonus  => :stamina_restore_bonus
 
   before_create :apply_character_type_defaults
-  before_save   :update_level_and_points, :apply_payouts
+  before_save   :update_level_and_points, :apply_payouts, :update_total_money
 
   validates_presence_of :character_type, :on => :create
 
@@ -514,5 +514,9 @@ class Character < ActiveRecord::Base
 
   def apply_payouts
     @payouts.apply(self, :save) if @payouts
+  end
+
+  def update_total_money
+    self.total_money = basic_money + bank
   end
 end

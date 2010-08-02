@@ -45,26 +45,26 @@
 
     <td>
 
-      <h2><%= t(".bank") %></h2>
+      <h2><%= t(".total_money") %></h2>
 
       <table class="rating" cellspacing="0" cellpadding="0">
         <tr>
           <th>#</th>
           <th colspan="2"><%= Character.human_name %></th>
-          <th><%= Character.human_attribute_name("bank") %></th>
+          <th><%= Character.human_attribute_name("total_money") %></th>
         </tr>
-        <% @bank.each_with_index do |character, index| %>
+        <% @total_money.each_with_index do |character, index| %>
           <tr <% if character == current_character %>class="current"<% end %>>
             <td class="position"><%= index + 1 %></td>
             <td class="picture"><%= character_picture_link(character) %></td>
             <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
-            <td class="bank last"><%= number_to_currency(character.bank) %></td>
+            <td class="bank last"><%= number_to_currency(character.total_money) %></td>
           </tr>
         <% end %>
 
-        <% unless @bank.include?(current_character) %>
+        <% unless @total_money.include?(current_character) %>
           <tr class="current">
-            <td class="position"><%= @rating_scope.rating_position(current_character, :bank) %></td>
+            <td class="position"><%= @rating_scope.rating_position(current_character, :total_money) %></td>
             <td class="picture"><%= character_picture_link(current_character) %></td>
             <td class="name"><%= character_name_link(current_character, {}, {:capitalize => true}) %></td>
             <td class="bank last"><%= number_to_currency(current_character.bank) %></td>

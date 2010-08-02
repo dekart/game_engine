@@ -1,5 +1,10 @@
 namespace :app do
   namespace :maintenance do
+    desc "Update total money for characters"
+    task :update_total_money_for_characters => :environment do
+      Character.update_all "total_money = basic_money + bank"
+    end
+
     desc "Invert visibility settings"
     task :invert_visibility_settings => :environment do
       puts "Inverting visibility settings..."
