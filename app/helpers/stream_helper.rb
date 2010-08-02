@@ -210,6 +210,19 @@ module StreamHelper
         :href         => help_url,
         :description  => t("stories.help_request.mission.description")
       }
+
+      if context.image?
+        attachment[:media] = [
+          {
+            :type => "image",
+            :src  => image_path(context.image.url),
+            :href => mission_group_url(context.mission_group,
+              :reference  => :help_stream_image,
+              :canvas     => true
+            )
+          }
+        ]
+      end
     end
 
     stream_dialog(
