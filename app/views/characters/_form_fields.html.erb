@@ -34,4 +34,6 @@
   <% end %>
 <% end %>
 
-<%= form.text_field :name, :label => t(".labels.name") %>
+<% if form.object.new_record? or @allow_name %>
+  <%= form.text_field :name, :label => t(".labels.name") %>
+<% end %>

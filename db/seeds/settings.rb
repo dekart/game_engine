@@ -28,6 +28,7 @@ Setting[:premium_health_price] = 1
 Setting[:premium_points_price] = 5
 Setting[:premium_points_amount] = 5
 Setting[:premium_mercenary_price] = 10
+Setting[:premium_change_name_price] = 10
 Setting[:fight_victim_show_limit] = 10
 Setting[:fight_victim_levels_lower] = 0
 Setting[:fight_victim_levels_higher] = 5

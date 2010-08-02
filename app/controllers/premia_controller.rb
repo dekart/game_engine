@@ -25,6 +25,12 @@ class PremiaController < ApplicationController
         current_character.hire_mercenary!
       when :reset_attributes
         current_character.reset_attributes!
+      when :change_name
+        if current_character.change_name!
+          flash[:premium_change_name] = true
+
+          @redirect_to = edit_character_path(:current)
+        end
       else
         false
       end
@@ -37,6 +43,6 @@ class PremiaController < ApplicationController
       flash[:error] = t("premia.update.messages.failure")
     end
 
-    redirect_to premium_path
+    redirect_to(@redirect_to || premium_path)
   end
 end

@@ -124,6 +124,22 @@
       </td>
     </tr>
   <% end %>
+
+  <tr>
+    <td class="name">
+      <%= raw t(".change_name.text") %>
+    </td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_change_name_price)) %>
+    </td>
+    <td class="controls">
+      <%= link_to(button(t(".change_name.button")), premium_path(:type => :change_name),
+            :method => :put,
+            :confirm => t(".change_name.confirm"),
+            :class  => :button
+          ) %>
+    </td>
+  </tr>
 </table>
 
 <div id="get_more_vip">

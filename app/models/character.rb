@@ -396,6 +396,12 @@ class Character < ActiveRecord::Base
     charge!(0, Setting.i(:premium_reset_attributes_price), :premium_reset_attributes)
   end
 
+  def change_name!
+    return if vip_money < Setting.i(:premium_change_name_price)
+
+    charge!(0, Setting.i(:premium_change_name_price))
+  end
+
   def allow_fight_with_invite?
     Setting.b(:fight_with_invite_allowed) and
       level <= Setting.i(:fight_with_invite_max_level)

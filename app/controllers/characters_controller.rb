@@ -82,7 +82,11 @@ class CharactersController < ApplicationController
   def edit
     @character = current_character
 
-    @character.personalize_from(facebook_session)
+    if flash[:premium_change_name]
+      @allow_name = true
+    else
+      redirect_to root_path
+    end
   end
 
   def update

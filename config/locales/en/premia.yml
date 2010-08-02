@@ -27,6 +27,10 @@ en:
         text: "Reset character attributes"
         button: "Reset"
         confirm: "Are you sure you want to reset your character attributes? You'll need to re-assign all attributes when you'll get all your upgrade points back."
+      change_name:
+        text: "Change character name"
+        confirm: "Are you sure you want to change your name?"
+        button: "Change"
       buy_points:
         text: "Add {{amount}} upgrade points to your character"
         button: "Add Points"
@@ -43,4 +47,5 @@ en:
           buy_points: "Upgrade points have been added to your character!"
           hire_mercenary: "You successfully hired new mercenary!"
           reset_attributes: "You successfully reseted all attributes!"
+          change_name: "You were charged for changing the name! Please choose your new name."
         failure: "You don't have enough Gems"
