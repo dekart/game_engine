@@ -15,7 +15,10 @@
 
 <% dom_ready do %>
   $('#inventory_list').html('<%= escape_javascript(render("list", :inventories => current_character.inventories)) %>');
+
   $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
+
+  Character.initFightAttributes();
 
   $(document).trigger('result.received');
 <% end %>

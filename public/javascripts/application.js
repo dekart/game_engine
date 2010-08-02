@@ -85,6 +85,17 @@ var Character = {
     $.getJSON('/character_status/' + character_key + "?rand=" + Math.random(), function(data){
       Character.update(data)
     });
+  },
+
+  initFightAttributes: function(){
+    $('#fight_attributes .inventories .inventory').tooltip({
+      delay: 0,
+      track: true,
+      showURL: false,
+      bodyHandler: function(){
+        return $('#' + $(this).attr('tooltip')).clone();
+      }
+    })
   }
 };
 
