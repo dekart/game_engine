@@ -146,7 +146,7 @@ class Character < ActiveRecord::Base
     :restore_period => Setting.i(:character_stamina_restore_period).seconds,
     :restore_bonus  => :stamina_restore_bonus
 
-  before_create :apply_character_type_defaults
+  after_validation_on_create :apply_character_type_defaults
   before_save   :update_level_and_points, :apply_payouts, :update_total_money
 
   validates_presence_of :character_type, :on => :create
