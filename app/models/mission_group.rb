@@ -40,6 +40,10 @@ class MissionGroup < ActiveRecord::Base
     event :mark_deleted do
       transition(any - [:deleted] => :deleted)
     end
+
+    after_transition :to => :deleted do |group|
+      group.delete_children!
+    end
   end
 
   has_attached_file :image
@@ -67,5 +71,10 @@ class MissionGroup < ActiveRecord::Base
 
   def name_with_level
     "%s (%s %s)" % [name, Character.human_attribute_name("level"), level]
+  end
+
+  def delete_children!
+    missions.without_state(:deleted).all.map(&:mark_deleted)
+    bosses.without_state(:deleted).all.map(&:mark_deleted)
   end
 end
