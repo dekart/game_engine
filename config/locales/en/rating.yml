@@ -10,7 +10,7 @@ en:
         global: "Global Rating"
 
       level: "Highest Level"
-      bank: "Wealthiest"
+      total_money: "Wealthiest"
       fights: "Most Wins"
       missions: "Most Missions"
       relations: "Strongest Alliance"
