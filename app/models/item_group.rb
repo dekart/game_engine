@@ -23,11 +23,19 @@ class ItemGroup < ActiveRecord::Base
     event :mark_deleted do
       transition(any - [:deleted] => :deleted)
     end
+
+    after_transition :to => :deleted do |group|
+      group.delete_items!
+    end
   end
 
   validates_uniqueness_of :name
 
   def self.to_dropdown(*args)
     without_state(:deleted).all(:order => :position).to_dropdown(*args)
+  end
+
+  def delete_items!
+    items.without_state(:deleted).map(&:mark_deleted)
   end
 end
