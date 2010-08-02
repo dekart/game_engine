@@ -26,6 +26,7 @@ en:
       reset_attributes:
         text: "Reset character attributes"
         button: "Reset"
+        confirm: "Are you sure you want to reset your character attributes? You'll need to re-assign all attributes when you'll get all your upgrade points back."
       buy_points:
         text: "Add {{amount}} upgrade points to your character"
         button: "Add Points"

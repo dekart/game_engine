@@ -118,6 +118,7 @@
       <td class="controls">
         <%= link_to(button(t(".reset_attributes.button")), premium_path(:type => :reset_attributes),
               :method => :put,
+              :confirm => t(".reset_attributes.confirm"),
               :class => :button
               ) %>
       </td>
