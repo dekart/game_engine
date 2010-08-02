@@ -19,10 +19,6 @@ en:
       title: "I just defeated the {{boss}} in {{app}}!"
     property:
       title: "I just bought {{property}} in {{app}}!"
-    invitation:
-      title: "Please join my Alliance in {{app}}!"
-      description: "{{app}} is a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of the fantasy world!"
-      action_link: "Join Alliance"
     inventory:
       title: "I just bought a \"{{item}}\" in {{app}}!"
     promotion:

@@ -98,35 +98,6 @@ module StreamHelper
     stream_dialog(:attachment => attachment)
   end
 
-  def invitation_stream_dialog
-    stream_dialog(
-      :attachment => {
-        :name         => t("stories.invitation.title", :app => t("app_name")),
-        :href         => invitation_url(current_character.invitation_key, 
-          :reference    => :invite_stream_name,
-          :canvas       => true
-        ),
-        :description  => t("stories.invitation.description", :app => t("app_name")),
-        
-        :media => default_stream_media(
-          invitation_url(current_character.invitation_key, 
-            :reference  => :invite_stream_image,
-            :canvas     => true
-          )
-        )
-      },
-      :action_links => [
-        {
-          :text => t("stories.invitation.action_link"),
-          :href => invitation_url(current_character.invitation_key, 
-            :reference  => :invite_stream_link,
-            :canvas     => true
-          )
-        }
-      ]
-    )
-  end
-
   def mission_complete_stream_dialog(mission)
     attachment = {
       :name => t("stories.mission.title", 

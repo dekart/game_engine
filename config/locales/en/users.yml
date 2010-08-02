@@ -13,10 +13,6 @@ en:
         buttons:
           accept: "Join {{user}} Alliance"
           visit_profile: "View {{user}} Character"
-      publish:
-        title: "Out Of Requests?"
-        note: "You can invite your friends by publishing to your news feed - all your friends will see this message! Click the button below to post an invitation message to your Feed:"
-        button: "Publish Invitation"
       copy_paste:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. Or just send this message to your friends:"
