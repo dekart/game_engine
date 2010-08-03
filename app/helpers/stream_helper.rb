@@ -24,7 +24,7 @@ module StreamHelper
   end
 
   def default_stream_url(reference = nil)
-    root_url(:canvas => true, :reference => reference)
+    root_url(:canvas => true, :reference => reference, :referrer => current_user.id)
   end
 
   def default_stream_action_links(url = nil)
@@ -77,8 +77,9 @@ module StreamHelper
         :app  => t("app_name")
       ),
       :href => item_group_items_url(inventory.item_group,
+        :canvas     => true,
         :reference  => :item_stream_name,
-        :canvas     => true
+        :referrer   => current_user.id
       )
     }
 
@@ -88,8 +89,9 @@ module StreamHelper
           :type => "image",
           :src  => image_path(inventory.image.url),
           :href => item_group_items_url(inventory.item_group,
+            :canvas     => true,
             :reference  => :item_stream_image,
-            :canvas     => true
+            :referrer   => current_user.id
           )
         }
       ]
@@ -105,8 +107,9 @@ module StreamHelper
         :app      => t("app_name")
       ),
       :href => mission_group_url(mission.mission_group,
+        :canvas     => true,
         :reference  => :mission_stream_name,
-        :canvas     => true
+        :referrer   => current_user.id
       )
     }
 
@@ -116,8 +119,9 @@ module StreamHelper
           :type => "image",
           :src  => image_path(mission.image.url),
           :href => mission_group_url(mission.mission_group,
+            :canvas     => true,
             :reference  => :mission_stream_image,
-            :canvas     => true
+            :referrer   => current_user.id
           )
         }
       ]
@@ -133,8 +137,9 @@ module StreamHelper
         :app  => t("app_name")
       ),
       :href => mission_group_url(boss.mission_group,
+        :canvas     => true,
         :reference  => :boss_stream_name,
-        :canvas     => true
+        :referrer   => current_user.id
       )
     }
 
@@ -144,8 +149,9 @@ module StreamHelper
           :type => "image",
           :src  => image_path(boss.image.url),
           :href => mission_group_url(boss.mission_group,
+            :canvas     => true,
             :reference  => :boss_stream_image,
-            :canvas     => true
+            :referrer   => current_user.id
           )
         }
       ]
@@ -158,9 +164,10 @@ module StreamHelper
     context_type = context.class.to_s.underscore
 
     help_url = help_request_url(current_character,
+      :canvas     => true,
       :context    => context_type,
       :reference  => :help_stream,
-      :canvas     => true
+      :referrer   => current_user.id
     )
 
     case context
@@ -188,8 +195,9 @@ module StreamHelper
             :type => "image",
             :src  => image_path(context.image.url),
             :href => mission_group_url(context.mission_group,
+              :canvas     => true,
               :reference  => :help_stream_image,
-              :canvas     => true
+              :referrer   => current_user.id
             )
           }
         ]
@@ -218,8 +226,9 @@ module StreamHelper
         :app      => t("app_name")
       ),
       :href => properties_url(
+        :canvas     => true,
         :reference  => :property_stream_name,
-        :canvas     => true
+        :referrer   => current_user.id
       )
     }
 
@@ -229,8 +238,9 @@ module StreamHelper
           :type => "image",
           :src  => image_path(property.image.url),
           :href => properties_url(
+            :canvas     => true,
             :reference  => :property_stream_image,
-            :canvas     => true
+            :referrer   => current_user.id
           )
         }
       ]
@@ -243,8 +253,9 @@ module StreamHelper
     attachment = {
       :name => t("stories.promotion.title", :app => t("app_name")),
       :href => promotion_url(promotion,
+        :canvas     => true,
         :reference  => :promotion_stream_name,
-        :canvas     => true
+        :referrer   => current_user.id
       ),
       
       :description => t("stories.promotion.description", 
@@ -258,8 +269,9 @@ module StreamHelper
         {
           :text => t("stories.promotion.action_link"),
           :href => promotion_url(promotion,
+            :canvas     => true,
             :reference  => :promotion_stream_link,
-            :canvas     => true
+            :referrer   => current_user.id
           )
         }
       ]

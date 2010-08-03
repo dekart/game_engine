@@ -15,7 +15,11 @@
             :firstnameonly  => true
           )
         ),
-        character_url(current_character, :canvas => true, :reference => :invite_form_profile)
+        character_url(current_character, 
+          :canvas     => true,
+          :reference  => :invite_form_profile,
+          :referrer   => current_user.id
+        )
       ) %>
 
   <%= fb_custom_req_choice(
@@ -26,7 +30,11 @@
             :firstnameonly  => true
           )
         ),
-        invitation_url(current_character.invitation_key, :canvas => true, :reference => :invite_form_accept)
+        invitation_url(current_character.invitation_key, 
+          :canvas     => true,
+          :reference  => :invite_form_accept,
+          :referrer   => current_user.id
+        )
       ) %>
 <% end %>
 
@@ -60,7 +68,7 @@
   <p class="invitation_text">
     <%= raw t(".copy_paste.invitation",
           :app  => t("app_name"),
-          :link => invitation_url(current_character.invitation_key, :reference => :invite_link, :canvas => true)
+          :link => invitation_url(current_character.invitation_key, :canvas => true, :reference => :invite_link)
         ) %>
   </p>
 </div>

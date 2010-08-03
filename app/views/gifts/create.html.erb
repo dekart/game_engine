@@ -47,7 +47,11 @@
 
       <%= fb_req_choice(
             t(".request.accept", :item => @gift.item.name),
-            gift_url(@gift, :reference => :gift, :canvas => true)
+            gift_url(@gift, 
+              :canvas     => true,
+              :reference  => :gift,
+              :referrer   => current_user.id
+            )
           ) %>
     <% end %>
 

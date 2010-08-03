@@ -85,7 +85,9 @@ class ApplicationController < ActionController::Base
       user = User.new
 
       user.facebook_id  = facebook_id
+      
       user.reference    = params[:reference]
+      user.referrer_id  = params[:referrer]
       
       user.save!
     end

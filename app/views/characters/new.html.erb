@@ -3,6 +3,7 @@
 <% form_for @character do |form| %>
   <%= hidden_field_tag :fb_sig_in_iframe, 1 %>
   <%= hidden_field_tag :reference, params[:reference] %>
+  <%= hidden_field_tag :referrer, params[:referrer] %>
 
   <%= form.fields %>
 
