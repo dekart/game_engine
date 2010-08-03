@@ -1,5 +1,5 @@
 <% if @character == current_character %>
-  <%= title(t(".title_my")) %>
+  <%= title(t(".title_my", :user => character_name(@character))) %>
 <% else %>
   <%= title(
         t(".title",

@@ -9,7 +9,7 @@ en:
         title: "Latest Fights"
     show:
       title: "{{user}} Profile"
-      title_my: "My Profile"
+      title_my: "My Profile: {{user}}"
       buttons:
         upgrade: "Upgrade"
         attack: "Attack!"
