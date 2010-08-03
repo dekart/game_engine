@@ -399,7 +399,7 @@ class Character < ActiveRecord::Base
   def change_name!
     return if vip_money < Setting.i(:premium_change_name_price)
 
-    charge!(0, Setting.i(:premium_change_name_price))
+    charge!(0, Setting.i(:premium_change_name_price), :premium_change_name)
   end
 
   def allow_fight_with_invite?
