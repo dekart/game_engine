@@ -30,6 +30,7 @@
     <th><%= User.human_attribute_name("facebook_id") %></th>
     <th><%= Character.human_name %></th>
     <th><%= User.human_attribute_name("reference") %></th>
+    <th><%= User.human_attribute_name("referrer") %></th>
   </tr>
   <% @statistics.latest_users.each do |user| %>
     <tr>
@@ -37,6 +38,7 @@
       <td><%= link_to(user.facebook_id, fb_profile_url(user)) %></td>
       <td><%= user.character ? link_to(user.character.character_type.name, character_url(user.character, :canvas => true)) : content_tag(:em, t(".no_character")) %></td>
       <td><%= user.reference %></td>
+      <td><%= (user.referrer && user.referrer.character) ? link_to(character_name(user.referrer.character), character_url(user.referrer.character, :canvas => true)) : "" %></td>
     </tr>
   <% end %>
 </table>

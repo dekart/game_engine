@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   PERMISSIONS = [:email]
 
-  has_one :character, :dependent => :destroy
-
-  has_many :invitations, 
+  has_one     :character, :dependent => :destroy
+  belongs_to  :referrer, :class_name => "User"
+  has_many    :invitations,
     :foreign_key  => :sender_id,
     :dependent    => :destroy,
     :extend       => User::Invitations
