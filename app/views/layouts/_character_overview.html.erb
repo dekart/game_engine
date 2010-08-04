@@ -26,7 +26,7 @@
             :method => :get,
             :update => :ajax,
             :html   => {:class => :hospital}
-          ) %>
+          ) if Setting.b(:hospital_enabled) %>
     </td>
     <td class="energy">
       <div class="timer"></div>
