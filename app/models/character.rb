@@ -491,7 +491,16 @@ class Character < ActiveRecord::Base
   end
 
   def hospital_price
-    Setting.i(:hospital_price_per_point_per_level) * level * (health_points - hp)
+    Setting.i(:hospital_price) +
+      Setting.i(:hospital_price_per_point_per_level) * level * (health_points - hp)
+  end
+
+  def hospital_delay
+    value = 
+      Setting.i(:hospital_delay) +
+      Setting.i(:hospital_delay_per_level) * level
+
+    value.minutes
   end
 
   def hospital!
@@ -499,7 +508,7 @@ class Character < ActiveRecord::Base
       errors.add_to_base(:hospital_not_enough_money)
       
       return false
-    elsif hospital_used_at > Setting.i(:hospital_delay).minutes.ago
+    elsif hospital_used_at > hospital_delay.ago
       errors.add_to_base(:hospital_recently_used)
       
       return false
