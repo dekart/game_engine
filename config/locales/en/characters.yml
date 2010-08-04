@@ -68,7 +68,7 @@ en:
         name: "Enter Your Nickname (optional):"
     hospital:
       title: "Hospital"
-      note: "You can pay a healer to increase your health. Be careful, you can only do this every now and then!"
+      note: "You can ask a healer to increase your health. Be careful, you can only do this every now and then!"
       price: "Full Heal Price:"
       messages:
         full_health: "Your health is now full. Please visit Hospital when you'll need healing."
