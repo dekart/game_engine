@@ -2,7 +2,7 @@
   <h2><%= t(".title") %></h2>
 
   <% if @result.nil? %>
-    <p><%= t(".message") %></p>
+    <p><%= t(".note") %></p>
 
     <% if current_character.hospital_price > 0 %>
       <p>
@@ -12,15 +12,19 @@
       </p>
     <% end %>
 
-    <div class="buttons">
-      <%= link_to_remote(button(:heal),
-            :url    => hospital_character_path(:current),
-            :update => :ajax,
-            :html   => {:class => "button heal"}
-          ) %>
-    </div>
+    <% if current_character.full_health? %>
+      <p><%= t(".messages.full_health") %></p>
+    <% else %>
+      <div class="buttons">
+        <%= link_to_remote(button(:heal),
+              :url    => hospital_character_path(:current),
+              :update => :ajax,
+              :html   => {:class => "button heal"}
+            ) %>
+      </div>
+    <% end %>
   <% elsif @result %>
-    <p><%= t(".success") %></p>
+    <p><%= t(".messages.success") %></p>
   <% else %>
     <p><%= current_character.errors.on_base %></p>
     <p>

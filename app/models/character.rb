@@ -499,11 +499,17 @@ class Character < ActiveRecord::Base
       errors.add_to_base(:hospital_not_enough_money)
       
       return false
+    elsif hospital_used_at > Setting.i(:hospital_delay).minutes.ago
+      errors.add_to_base(:hospital_recently_used)
+      
+      return false
     end
 
     charge(hospital_price, 0)
 
     self.hp = health_points
+    
+    self.hospital_used_at = Time.now
 
     save
   end

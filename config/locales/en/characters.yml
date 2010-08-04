@@ -68,9 +68,11 @@ en:
         name: "Enter Your Nickname (optional):"
     hospital:
       title: "Hospital"
-      message: "You can pay a healer to increase your health. Be careful, you can only do this every now and then!"
+      note: "You can pay a healer to increase your health. Be careful, you can only do this every now and then!"
       price: "Full Heal Price:"
-      success: "Your health has been restored!"
+      messages:
+        full_health: "Your health is now full. Please visit Hospital when you'll need healing."
+        success: "Your health has been restored!"
       buttons:
         heal: "Heal"
       premium_refill:
