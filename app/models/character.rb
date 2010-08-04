@@ -490,6 +490,24 @@ class Character < ActiveRecord::Base
     ! GiftReceipt.unaccepted.for_character(self).count.zero?
   end
 
+  def hospital_price
+    Setting.i(:hospital_price_per_point_per_level) * level * (health_points - hp)
+  end
+
+  def hospital!
+    if basic_money < hospital_price
+      errors.add_to_base(:hospital_not_enough_money)
+      
+      return false
+    end
+
+    charge(hospital_price, 0)
+
+    self.hp = health_points
+
+    save
+  end
+
   protected
 
   def update_level_and_points

@@ -64,6 +64,7 @@ en:
     errors:
       models:
         character:
+          hospital_not_enough_money: "You don't have enough money to pay for healing."
           attributes:
             character_type:
               blank: "You must choose character type"

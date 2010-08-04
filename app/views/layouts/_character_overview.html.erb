@@ -20,6 +20,13 @@
       <div class="timer"></div>
       <div class="label"><%= Character.human_attribute_name("health") %></div>
       <div class="value"></div>
+
+      <%= link_to_remote(t(".hospital"),
+            :url    => hospital_character_path(:current),
+            :method => :get,
+            :update => :ajax,
+            :html   => {:class => :hospital}
+          ) %>
     </td>
     <td class="energy">
       <div class="timer"></div>

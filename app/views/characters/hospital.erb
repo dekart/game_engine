@@ -1,0 +1,32 @@
+<% dialog :id => :hospital do %>
+  <h2><%= t(".title") %></h2>
+
+  <% if @result.nil? %>
+    <p><%= t(".message") %></p>
+
+    <% if current_character.hospital_price > 0 %>
+      <p>
+        <strong><%= t(".price") %></strong>
+
+        <span class="basic_money"><%= number_to_currency(current_character.hospital_price) %></span>
+      </p>
+    <% end %>
+
+    <div class="buttons">
+      <%= link_to_remote(button(:heal),
+            :url    => hospital_character_path(:current),
+            :update => :ajax,
+            :html   => {:class => "button heal"}
+          ) %>
+    </div>
+  <% elsif @result %>
+    <p><%= t(".success") %></p>
+  <% else %>
+    <p><%= current_character.errors.on_base %></p>
+    <p>
+      <%= raw t(".premium_refill.text",
+            :premium => link_to(t(".premium_refill.link"), premium_path)
+          ) %>
+    </p>
+  <% end %>
+<% end %>

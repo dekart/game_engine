@@ -94,6 +94,14 @@ class CharactersController < ApplicationController
     end
   end
 
+  def hospital
+    if request.post?
+      @result = current_character.hospital!
+    end
+
+    render :layout => "ajax"
+  end
+
   protected
 
   def fetch_character_types
