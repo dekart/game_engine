@@ -66,3 +66,15 @@ en:
       labels:
         character_type: "Choose Your Class:"
         name: "Enter Your Nickname (optional):"
+    hospital:
+      title: "Hospital"
+      note: "You can ask a healer to increase your health. Be careful, you can only do this every now and then!"
+      price: "Full Heal Price:"
+      messages:
+        full_health: "Your health is now full. Please visit Hospital when you'll need healing."
+        success: "Your health has been restored!"
+      buttons:
+        heal: "Heal"
+      premium_refill:
+        text: "You can also visit {{premium}} to refill your health."
+        link: "Gem Market"

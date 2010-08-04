@@ -31,5 +31,6 @@ en:
       bank: "Treasury"
       premium: "Get More"
       upgrade: "Upgrade!"
+      hospital: "Hospital"
     tip:
       label: "Tip:"

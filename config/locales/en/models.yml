@@ -64,6 +64,8 @@ en:
     errors:
       models:
         character:
+          hospital_not_enough_money: "You don't have enough money to pay for healing."
+          hospital_recently_used: "You've already visited hospital recently. You cannot do this too often."
           attributes:
             character_type:
               blank: "You must choose character type"

@@ -104,7 +104,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources(:characters,
     :member => {
-      :upgrade => :any
+      :upgrade  => :any,
+      :hospital => :any
     },
     :collection => {
       :load_vip_money => :any

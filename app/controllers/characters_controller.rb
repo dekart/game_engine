@@ -41,14 +41,6 @@ class CharactersController < ApplicationController
     end
   end
 
-  def bank
-    if request.post?
-      if current_character.bank_operation(params[:operation])
-        flash[:success] = ""
-      end
-    end
-  end
-
   def new
     set_facebook_session
     
@@ -100,6 +92,14 @@ class CharactersController < ApplicationController
     else
       render :action => :edit
     end
+  end
+
+  def hospital
+    if request.post?
+      @result = current_character.hospital!
+    end
+
+    render :layout => "ajax"
   end
 
   protected
