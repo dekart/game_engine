@@ -4,15 +4,20 @@
 
     <table class="item">
       <tr>
-        <td class="picture"><%= item_image(@item, :small) %></td>
+        <td class="picture"><%= item_image(@item, :medium) %></td>
 
-        <td class="payouts">
-          <h3><%= Item.human_attribute_name("effects") %></h3>
+        
+        
+        
+        <% if @item.effects? %>
+          <td class="payouts">
+            <h3><%= Item.human_attribute_name("effects") %></h3>
 
-          <%= render "items/effects", :item => @item %>
-        </td>
+            <%= render "items/effects", :item => @item %>
+          </td>
+        <% end %>
 
-        <% if @item.has_price? %>
+        <% if @item.price? %>
           <td class="requirements">
             <h3><%= Item.human_attribute_name("price") %></h3>
 
@@ -22,15 +27,14 @@
         <% end %>
       </tr>
     </table>
+          <% if @item.description.present? %>
+            <div class="description"><%= @item.description %></div>
+          <% end %>
+
+          <% if @item.left or @item.available_till %>
+            <%= render "items/limit", :item => @item %>
+          <% end %>
       
-    <% if @item.description.present? %>
-      <div class="description"><%= @item.description %></div>
-    <% end %>
-
-    <% if @item.left or @item.available_till %>
-      <%= render "items/limit", :item => @item %>
-    <% end %>
-
     <div class="amount">
       <strong><%= t(".amount") %></strong> <%= @amount %>
     </div>

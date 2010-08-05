@@ -105,8 +105,26 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def has_price?
+  def price?
     basic_price > 0 or vip_price > 0
+  end
+
+  def effects?
+    effects.any?
+  end
+
+  def effects
+    unless @effects
+      @effects = ActiveSupport::OrderedHash.new
+
+      Item::EFFECTS.each do |effect|
+        value = send(effect)
+
+        @effects[effect] = value if value != 0
+      end
+    end
+
+    @effects
   end
 
   def availability
