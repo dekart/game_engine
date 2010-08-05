@@ -105,6 +105,10 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def has_price?
+    basic_price > 0 or vip_price > 0
+  end
+
   def availability
     self[:availability].to_sym
   end
