@@ -5,9 +5,6 @@
     <table class="item">
       <tr>
         <td class="picture"><%= item_image(@item, :medium) %></td>
-
-        
-        
         
         <% if @item.effects? %>
           <td class="payouts">
@@ -27,13 +24,14 @@
         <% end %>
       </tr>
     </table>
-          <% if @item.description.present? %>
-            <div class="description"><%= @item.description %></div>
-          <% end %>
 
-          <% if @item.left or @item.available_till %>
-            <%= render "items/limit", :item => @item %>
-          <% end %>
+    <% if @item.description.present? %>
+      <div class="description"><%= @item.description %></div>
+    <% end %>
+
+    <% if @item.left or @item.available_till %>
+      <%= render "items/limit", :item => @item %>
+    <% end %>
       
     <div class="amount">
       <strong><%= t(".amount") %></strong> <%= @amount %>
