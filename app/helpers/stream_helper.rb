@@ -17,9 +17,10 @@ module StreamHelper
   end
 
   def stream_callback_function(options = {})
-    "function(post_id, exception, data){ if(post_id != 'null'){%s;}else{%s;} }" %[
+    "function(post_id, exception, data){ if(post_id != 'null'){%s;}else{%s;}; %s }" %[
       options[:success],
-      options[:failure]
+      options[:failure],
+      options[:callback]
     ]
   end
 
@@ -46,16 +47,20 @@ module StreamHelper
     ]
   end
 
-  def character_level_up_stream_dialog
-    stream_dialog(
+  def character_level_up_stream_dialog(options = {})
+    dialog_options = {
       :attachment => {
-        :name => t("stories.level_up.title", 
+        :name => t("stories.level_up.title",
           :level  => current_character.level,
           :app    => t("app_name")
         ),
         :href => default_stream_url(:level_up_stream_name)
       }
-    )
+    }
+    
+    dialog_options.reverse_merge!(options)
+
+    stream_dialog(dialog_options)
   end
 
   def fight_stream_dialog(fight)
