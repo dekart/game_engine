@@ -14,8 +14,11 @@
 <div id="character">
   <div class="controls">
     <% if @character == current_character %>
-      <%= link_to(button(:upgrade), upgrade_character_path(@character),
-            :class => "upgrade button"
+      <%= link_to_remote(button(:upgrade),
+            :url    => upgrade_character_path(@character),
+            :method => :get,
+            :update => :ajax,
+            :html   => {:class => "upgrade button"}
           ) if current_character.points > 0 %>
     <% else %>
       <%= link_to_remote(button(:attack),
