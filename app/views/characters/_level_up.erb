@@ -13,9 +13,14 @@
           character_level_up_stream_dialog + "$('#level_up_result .buttons .continue').hide(); $('#level_up_result .buttons .upgrade').show();",
           :class => "continue button"
         ) %>
-    <%= link_to(button(:upgrade), upgrade_character_url(current_character),
-          :class => "upgrade button",
-          :style => "display:none"
+    <%= link_to(button(:upgrade), 
+          :url    => upgrade_character_url(current_character),
+          :method => :get,
+          :update => :ajax,
+          :html => {
+            :class => "upgrade button",
+            :style => "display:none"
+          }
         ) %>
   </div>
 <% end %>
