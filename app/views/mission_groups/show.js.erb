@@ -1,0 +1,2 @@
+$('#mission_list').html(<%= raw render("missions/list", :missions => @missions).to_json %>);
+$('#boss_list').html(<%= raw render("bosses/list", :bosses => @bosses).to_json %>)

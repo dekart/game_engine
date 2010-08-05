@@ -7,6 +7,8 @@ class Character
     end
 
     def give(item, amount = 1)
+      amount = amount.to_i
+
       if inventory = find_by_item_id(item.id)
         inventory.amount += amount
       else

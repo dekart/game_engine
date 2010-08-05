@@ -5,6 +5,11 @@ en:
         inventory: "My Inventory"
         equipment: "Equip Character"
         shop: "Shop"
+    new:
+      amount: "Amount To Purchase:"
+      cannot_purchase: "You cannot purchase this item right now."
+      buttons:
+        buy: "Buy"
     create:
       buttons:
         publish: "Brag About It!"
