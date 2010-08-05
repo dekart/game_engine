@@ -1,23 +1,37 @@
 <% requirement(requirement.name, satisfied) do %>
-  <span class="image">
-    <% if [:shop, :special].include?(requirement.item.availability) && !satisfied %>
-      <%= link_to_remote(item_image(requirement.item, :icon),
-            :url    => new_inventory_path(
-              :item_id  => requirement.item,
-              :amount   => requirement.missing_amount(current_character)
-            ),
-            :method => :get,
-            :update => :ajax
-          ) %>
-    <% else %>
-      <%= item_image(requirement.item, :icon) %>
-    <% end %>
-  </span>
+  <% if [:shop, :special].include?(requirement.item.availability) && !satisfied %>
+    <% link = capture do %>
+      <span class="image">
+        <%= item_image(requirement.item, :icon) %>
+      </span>
 
-  <span class="label">
-    <%= raw t(".text",
-          :name   => content_tag(:span, requirement.item.name, :class => :value),
-          :amount => requirement.amount
+      <span class="label">
+        <%= raw            t(".text",
+                :name   => content_tag(:span, requirement.item.name, :class => :value),
+                :amount => requirement.amount
+              )
+             %>
+      </span>
+    <% end %>
+
+    <%= link_to_remote(link,
+          :url    => new_inventory_path(
+            :item_id  => requirement.item,
+            :amount   => requirement.missing_amount(current_character)
+          ),
+          :method => :get,
+          :update => :ajax
         ) %>
-  </span>
+  <% else %>
+    <span class="image">
+      <%= item_image(requirement.item, :icon) %>
+    </span>
+
+    <span class="label">
+      <%= raw t(".text",
+            :name   => content_tag(:span, requirement.item.name, :class => :value),
+            :amount => requirement.amount
+          ) %>
+    </span>
+  <% end %>
 <% end %>
