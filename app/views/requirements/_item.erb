@@ -2,15 +2,17 @@
   <% if [:shop, :special].include?(requirement.item.availability) && !satisfied %>
     <% link = capture do %>
       <span class="image">
-        <%= item_image(requirement.item, :icon) %>
+        <%= item_image(requirement.item, :icon,
+              :alt    => t(".shop_link_title", :item => requirement.item.plural_name),
+              :title  => t(".shop_link_title", :item => requirement.item.plural_name)
+            ) %>
       </span>
 
       <span class="label">
-        <%= raw            t(".text",
-                :name   => content_tag(:span, requirement.item.name, :class => :value),
-                :amount => requirement.amount
-              )
-             %>
+        <%= raw t(".text",
+              :name   => content_tag(:span, requirement.item.name, :class => :value),
+              :amount => requirement.amount
+            ) %>
       </span>
     <% end %>
 
@@ -20,7 +22,10 @@
             :amount   => requirement.missing_amount(current_character)
           ),
           :method => :get,
-          :update => :ajax
+          :update => :ajax,
+          :html => {
+            :title => t(".shop_link_title", :item => requirement.item.plural_name)
+          }
         ) %>
   <% else %>
     <span class="image">
