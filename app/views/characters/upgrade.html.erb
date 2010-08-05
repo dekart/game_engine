@@ -3,7 +3,7 @@
 
   <div id="upgrade_result"></div>
 
-  <table id="upgrade_list" cellspacing="0" cellpadding="0">
+  <table id="upgrade_list" cellspacing="0" cellpadding="0" style="display:none">
     <tr class="points">
       <td class="name"><%= Character.human_attribute_name("points") %></td>
       <td class="value" id="upgrade_points"><%= current_character.points %></td>
@@ -41,5 +41,9 @@
   $(document).bind('character.upgrade_complete', function(){
     $('#upgrade_list').hide();
     $('#upgrade_finished').show();
-  })
+  });
+
+  $('#<%= current_character.points > 0 ? :upgrade_list : :upgrade_finished %>').show();
+  
+  $(document).trigger('character.upgrade_dialog');
 <% end %>
