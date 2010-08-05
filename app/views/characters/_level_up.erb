@@ -5,7 +5,7 @@
     <%= raw t(".text",
           :point_amount => Setting.i(:character_points_per_upgrade),
           :upgrade      => link_to_remote(t(".upgrade_link"),
-            :url => upgrade_character_url(current_character),
+            :url    => upgrade_character_url(current_character),
             :method => :get,
             :update => :ajax
           )
@@ -27,9 +27,9 @@
     unbind('character.level_up_publish').
     bind('character.level_up_publish', function(){
       <%= remote_function(
-        :url    => upgrade_character_url(current_character),
+            :url    => upgrade_character_url(current_character),
             :method => :get,
             :update => :ajax
-      ) %>
+          ) %>
     });
 <% end %>
