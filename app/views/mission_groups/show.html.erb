@@ -15,9 +15,7 @@
   </div>
 
   <div id="boss_list">
-    <% @bosses.each do |boss| %>
-      <%= render "bosses/boss", :boss => boss %>
-    <% end %>
+    <%= render "bosses/list", :bosses => @bosses %>
   </div>
 <% else %>
   <div class="empty_set" id="locked_mission_group">
@@ -25,4 +23,10 @@
           :level => content_tag(:span, @mission_group.level, :class => :level)
         ) %>
   </div>
+<% end %>
+
+<% dom_ready do %>
+  $(document).bind('item.purchase', function(){
+    <%= raw remote_function(:url => mission_group_path(@mission_group), :method => :get) %>
+  });
 <% end %>

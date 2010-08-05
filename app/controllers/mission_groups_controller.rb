@@ -1,8 +1,6 @@
 class MissionGroupsController < ApplicationController
   def index
     show
-
-    render :action => :show
   end
 
   def show
@@ -10,5 +8,10 @@ class MissionGroupsController < ApplicationController
     
     @missions = @mission_group.missions.with_state(:visible).visible_for(current_character)
     @bosses = @mission_group.bosses.with_state(:visible).visible_for(current_character)
+
+    respond_to do |format|
+      format.html {render :action => :show}
+      format.js { render :action => :show, :layout => false }
+    end
   end
 end

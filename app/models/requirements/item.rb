@@ -15,9 +15,17 @@ module Requirements
     end
 
     def satisfies?(character)
-      inventory = character.inventories.detect{|i| i.item == item }
+      missing_amount(character) == 0
+    end
 
-      inventory && inventory.amount >= amount
+    def missing_amount(character)
+      if inventory = character.inventories.find_by_item_id(item.id)
+        result = amount - inventory.amount
+
+        result > 0 ? result : 0
+      else
+        amount
+      end
     end
   end
 end

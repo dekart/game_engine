@@ -1,7 +1,14 @@
 <% requirement(requirement.name, satisfied) do %>
   <span class="image">
-    <% if requirement.item.availability == :shop %>
-      <%= link_to(item_image(requirement.item, :icon), item_group_items_path(requirement.item.item_group)) %>
+    <% if [:shop, :special].include?(requirement.item.availability) && !satisfied %>
+      <%= link_to_remote(item_image(requirement.item, :icon),
+            :url    => new_inventory_path(
+              :item_id  => requirement.item,
+              :amount   => requirement.missing_amount(current_character)
+            ),
+            :method => :get,
+            :update => :ajax
+          ) %>
     <% else %>
       <%= item_image(requirement.item, :icon) %>
     <% end %>
