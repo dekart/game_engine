@@ -28,6 +28,8 @@ class CharactersController < ApplicationController
       @success = current_character.upgrade_attribute!(params[:attribute])
 
       render :action => :upgrade_result, :layout => "ajax"
+    else
+      render :action => :upgrade, :layout => "ajax"
     end
   end
 

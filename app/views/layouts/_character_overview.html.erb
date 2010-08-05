@@ -48,7 +48,15 @@
       <div class="label"><%= Character.human_attribute_name("level") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".upgrade"), upgrade_character_path(:current), :class => :upgrade, :style => "display:none;") %>
+      <%= link_to_remote(t(".upgrade"),
+            :url    => upgrade_character_path(:current),
+            :method => :get,
+            :update => :ajax,
+            :html   => {
+              :class => :upgrade,
+              :style => "display:none;"
+            }
+          ) %>
     </td>
   </tr>
 </table>
