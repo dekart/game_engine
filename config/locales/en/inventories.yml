@@ -6,7 +6,6 @@ en:
         equipment: "Equip Character"
         shop: "Shop"
     new:
-      title: "Purchase Item"
       amount: "Amount To Purchase:"
       cannot_purchase: "You cannot purchase this item right now."
       buttons:

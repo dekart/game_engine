@@ -1,33 +1,34 @@
-<% dialog do %>
+<% dialog :id => :shop_dialog do %>
   <% if @item %>
-    <h2><%= t(".title") %></h2>
+    <h2><%= @item.name %></h2>
 
-    <div class="item clearfix">
-      <div class="picture"><%= item_image(@item, :small) %></td>
+    <table class="item">
+      <tr>
+        <td class="picture"><%= item_image(@item, :small) %></td>
 
-      <div class="info">
-        <div class="name"><%= @item.name %></div>
-        <div class="description"><%= @item.description %></div>
+        <td class="payouts">
+          <h3><%= Item.human_attribute_name("effects") %></h3>
 
-        <% if @item.left or @item.available_till %>
-          <%= render "items/limit", :item => @item %>
-        <% end %>
-      </div>
+          <%= render "items/effects", :item => @item %>
+        </td>
 
-      <div class="payouts">
-        <h3><%= Item.human_attribute_name("effects") %></h3>
+        <td class="requirements">
+          <h3><%= Item.human_attribute_name("price") %></h3>
 
-        <%= render "items/effects", :item => @item %>
-      </div>
-
-      <div class="requirements">
-        <h3><%= Item.human_attribute_name("price") %></h3>
-
-        <%= attribute_requirement(:basic_money, number_to_currency(@item.basic_price)) if @item.basic_price > 0 %>
-        <%= vip_money_requirement(@item.vip_price) if @item.vip_price > 0 %>
-      </div>
-    </div>
+          <%= attribute_requirement(:basic_money, number_to_currency(@item.basic_price)) if @item.basic_price > 0 %>
+          <%= vip_money_requirement(@item.vip_price) if @item.vip_price > 0 %>
+        </td>
+      </tr>
+    </table>
       
+    <% if @item.description.present? %>
+      <div class="description"><%= @item.description %></div>
+    <% end %>
+
+    <% if @item.left or @item.available_till %>
+      <%= render "items/limit", :item => @item %>
+    <% end %>
+
     <div class="amount">
       <strong><%= t(".amount") %></strong> <%= @amount %>
     </div>
