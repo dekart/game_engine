@@ -217,7 +217,7 @@
   $(document).bind('close.dialog', function() {
     $(document).unbind('keydown.dialog')
     $('#dialog').fadeOut(function() {
-      if ($('#dialog_moved').length == 0) $('#dialog .content').removeClass().addClass('content')
+      if ($('#dialog_moved').length == 0) $('#dialog .content').removeClass().addClass('content clearfix')
       else $('#dialog_moved').replaceWith($('#dialog .content').children().hide())
       hideOverlay()
       $('#dialog .loading').remove()
