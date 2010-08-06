@@ -20,7 +20,7 @@
         <td class="controls">
           <%= link_to_remote(button(Setting.i("character_#{attribute}_upgrade"), :disable_asset => true),
                 :url    => upgrade_character_path(current_character, :attribute => attribute),
-                :update => :result,
+                :update => :ajax,
                 :html   => {:class => "button upgrade"}
               ) %>
         </td>
