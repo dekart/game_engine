@@ -57,6 +57,7 @@ namespace :deploy do
       <VirtualHost *:80>
         ServerName #{URI.parse(facebook_config[rails_env]["callback_url"]).host}
         DocumentRoot #{current_path}/public
+        RailsEnv #{rails_env}
 
         <Directory #{current_path}/public>
            AllowOverride all
@@ -77,9 +78,13 @@ namespace :deploy do
     config = <<-CODE
       server {
         listen 80;
+
         server_name #{URI.parse(facebook_config[rails_env]["callback_url"]).host};
+
         root #{current_path}/public;
+
         passenger_enabled on;
+        rails_env #{rails_env};
       }
     CODE
 
