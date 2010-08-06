@@ -233,6 +233,19 @@ var Equipment = {
   }
 }
 
+var Mission = {
+  requirementCallback: function(){},
+  onRequirementSatisfy: function(){
+    $(document).unbind('requirement.satisfy', Mission.onRequirementSatisfy);
+
+    Mission.requirementCallback();
+  },
+  onItemPurchase: function(){
+    $(document).unbind('item.purchase', Mission.onItemPurchase);
+    $(document).trigger('requirement.satisfy');
+  }
+}
+
 var Spinner = {
   x: -1,
   y: -1,

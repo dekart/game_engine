@@ -27,6 +27,17 @@
     <div class="requirements clearfix">
       <%= unsatisfied_requirement_list(@mission.requirements) %>
     </div>
+
+    <% dom_ready do %>
+      Mission.requirementCallback = function(){
+        <%= remote_function(
+              :url    => fulfill_mission_path(@mission),
+              :update => :result
+            ) %>
+      };
+
+      $(document).bind('requirement.satisfy', Mission.onRequirementSatisfy);
+    <% end %>
   <% elsif @result.rank.completed? %>
     <p><%= t(".already_completed.message") %></p>
   <% end %>

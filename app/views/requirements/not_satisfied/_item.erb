@@ -7,6 +7,7 @@
               :amount   => requirement.missing_amount(current_character)
             ),
             :update => :result,
+            :before => "$(document).bind('item.purchase', Mission.onItemPurchase);",
             :html   => {:class => "buy button"}
           ) %>
     </div>
@@ -35,7 +36,8 @@
             ),
             :method => :get,
             :update => :ajax,
-            :html => {
+            :before => "$(document).bind('item.purchase', Mission.onItemPurchase);",
+            :html   => {
               :title => t(".shop_link_title", :item => requirement.item.plural_name)
             }
           ) %>
