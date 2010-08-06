@@ -1,25 +1,15 @@
 require "yaml"
 require "uri"
+require "capistrano/ext/multistage"
 
-set :application, "sword"
-set :repository,  "git@itvektor.ru:facebook/knights.git"
+set :stages, %w(staging production)
+set :default_stage, "production"
 
 set :use_sudo, false
 
-role :app, "173.45.238.123"
-role :web, "173.45.238.123"
-role :db,  "173.45.238.123", :primary => true
-
-set :deploy_to, "/home/#{application}"
-
-set :user, application
-
 set :scm, "git"
-set :branch, "master"
 set :deploy_via, :remote_cache
 
-set :rails_env, "production"
-default_environment["RAILS_ENV"] = "production"
 default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
