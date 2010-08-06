@@ -16,7 +16,7 @@
       </span>
     <% end %>
 
-    <%= link_to_remote(link,
+<p><%= link_to_remote(link,
           :url    => new_inventory_path(
             :item_id  => requirement.item,
             :amount   => requirement.missing_amount(current_character)
@@ -26,8 +26,9 @@
           :html => {
             :title => t(".shop_link_title", :item => requirement.item.plural_name)
           }
-        ) %>
+        ) %></p>
   <% else %>
+<p>
     <span class="image">
       <%= item_image(requirement.item, :icon) %>
     </span>
@@ -38,5 +39,6 @@
             :amount => requirement.amount
           ) %>
     </span>
+</p>
   <% end %>
 <% end %>

@@ -21,7 +21,7 @@
   .health_point
     background-image = !requirement_health_point_icon
 
-  .energy_point
+  .energy, .energy_point
     background-image = !requirement_energy_icon
 
   .stamina_point
@@ -37,13 +37,13 @@
     background-image = !requirement_defence_icon
 
   .item
-    // height: 40px !important
     padding-left: 0
 
     .image
       display: block
       float: left
       margin-right: 5px
+      margin-bottom: 10px
       line-height: 0
 
     .label
@@ -57,6 +57,8 @@
         background-repeat: no-repeat
         font-weight: bold
 
+    p
+      clear: left
 
   .not_satisfied
     color: #ff5353
@@ -77,3 +79,10 @@
     height: auto
     line-height: inherit
     background-position: top left
+    clear: both
+
+  .requirements
+    .item
+      float: left
+      width: 100%
+      margin: 0 10px 10px 0px

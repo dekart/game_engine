@@ -46,6 +46,7 @@
         ) %>
     </p>
   <% else %>
+    <p>
     <span class="image">
       <%= item_image(requirement.item, :icon) %>
     </span>
@@ -56,5 +57,6 @@
             :amount => requirement.amount
           ) %>
     </span>
+    </p>
   <% end %>
 <% end %>
