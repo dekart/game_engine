@@ -42,8 +42,14 @@ module ApplicationHelper
     content_tag(:div, label || t(".empty_set", :default => t("common.empty_set")), options.reverse_merge(:class => :empty_set))
   end
 
-  def amount_select_tag
-    select_tag(:amount, options_for_select((1..10).to_a))
+  def amount_select_tag(*args)
+    options = args.extract_options!
+
+    values = (1..10).to_a + args
+    values.uniq!
+    values.sort!
+
+    select_tag(:amount, options_for_select(values, options[:selected]), options.except(:selected))
   end
 
   def dom_ready(content = nil, &block)

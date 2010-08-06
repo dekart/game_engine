@@ -32,19 +32,22 @@
     <% if @item.left or @item.available_till %>
       <%= render "items/limit", :item => @item %>
     <% end %>
-      
-    <div class="amount">
-      <strong><%= t(".amount") %></strong> <%= @amount %>
-    </div>
 
-    <div class="buttons">
-      <%= link_to_remote(button(:buy),
-            :url    => inventories_path(:item_id => @item.id, :amount => @amount),
-            :update => :result,
-            :before => "$.dialog.close()",
-            :html   => {:class => "buy button"}
-          ) %>
-    </div>
+    <% form_tag "", :class => :clearfix do %>
+      <div class="amount">
+        <strong><%= t(".amount") %></strong> <%= amount_select_tag(@amount, :selected => @amount) %>
+      </div>
+
+      <div class="buttons">
+        <%= link_to_remote(button(:buy),
+              :url    => inventories_path(:item_id => @item.id, :amount => @amount),
+              :update => :result,
+              :with   => "$(this).parent('form').serialize()",
+              :before => "$.dialog.close()",
+              :html   => {:class => "buy button"}
+            ) %>
+      </div>
+    <% end %>
   <% else %>
     <p><%= t(".cannot_purchase") %></p>
   <% end %>
