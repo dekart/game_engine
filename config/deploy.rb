@@ -133,7 +133,7 @@ namespace :deploy do
 
   desc "Setup application stylesheets"
   task :setup_stylesheets, :roles => :app do
-    run "cd #{current_path}; rake app:setup:stylesheets"
+    run "cd #{current_path}; rake app:setup:import_assets app:setup:stylesheets"
   end
 
   desc "Setup application settings"
