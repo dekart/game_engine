@@ -40,10 +40,10 @@
 
       <div class="buttons">
         <%= link_to_remote(button(:buy),
-              :url    => inventories_path(:item_id => @item.id, :amount => @amount),
+              :url    => inventories_path(:item_id => @item.id),
               :update => :result,
-              :with   => "$(this).parent('form').serialize()",
-              :before => "$.dialog.close()",
+              :with   => "$(this).parents('form').serialize()",
+              :after  => "$.dialog.close()",
               :html   => {:class => "buy button"}
             ) %>
       </div>
