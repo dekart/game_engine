@@ -21,7 +21,7 @@ class Inventory < ActiveRecord::Base
         item_group  name plural_name description image image?
         basic_price vip_price can_be_sold?
         placements placement_options_for_select
-        usable? payouts use_button_label use_message effects
+        usable? payouts use_button_label use_message effects effects?
       } +
       [{:to => :item}]
     )
