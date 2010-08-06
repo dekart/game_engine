@@ -6,6 +6,7 @@ en:
       buttons:
         inventory: "Go to Inventory"
     item:
+      free: "FREE"
       buttons:
         buy: "Buy"
     specials:

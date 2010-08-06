@@ -28,9 +28,11 @@
               </div>
             </td>
             <td class="payouts">
-              <h3><%= Item.human_attribute_name("effects") %></h3>
+              <% if inventory.effects? %>
+                <h3><%= Item.human_attribute_name("effects") %></h3>
 
-              <%= render "items/effects", :item => inventory %>
+                <%= render "items/effects", :item => inventory %>
+              <% end %>
             </td>
             <td class="controls">
               <% if inventory.can_be_sold? %>

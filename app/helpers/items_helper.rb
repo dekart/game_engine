@@ -16,22 +16,26 @@ module ItemsHelper
   end
 
   def item_price_inline(item, amount = 1)
-    result = [].tap do |prices|
-      if item.basic_price > 0
-        prices << content_tag(:span,
-          attribute_requirement_text(:basic_money, number_to_currency(item.basic_price * amount)),
-          :class => :basic_money
-        )
+    if item.price?
+      result = [].tap do |prices|
+        if item.basic_price > 0
+          prices << content_tag(:span,
+            attribute_requirement_text(:basic_money, number_to_currency(item.basic_price * amount)),
+            :class => :basic_money
+          )
+        end
+
+        if item.vip_price > 0
+          prices << content_tag(:span,
+            attribute_requirement_text(:vip_money, item.vip_price * amount),
+            :class => :vip_money
+          )
+        end
       end
 
-      if item.vip_price > 0
-        prices << content_tag(:span, 
-          attribute_requirement_text(:vip_money, item.vip_price * amount),
-          :class => :vip_money
-        )
-      end
+      result.to_sentence.html_safe!
+    else
+      t("items.item.free")
     end
-
-    result.to_sentence.html_safe!
   end
 end
