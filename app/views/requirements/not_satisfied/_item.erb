@@ -1,5 +1,16 @@
 <% requirement(requirement.name, false) do %>
   <% if [:shop, :special].include?(requirement.item.availability) %>
+    <div class="buttons">
+      <%= link_to_remote(button(:buy),
+            :url => inventories_path(
+              :item_id  => requirement.item,
+              :amount   => requirement.missing_amount(current_character)
+            ),
+            :update => :result,
+            :html   => {:class => "buy button"}
+          ) %>
+    </div>
+
     <% link = capture do %>
       <span class="image">
         <%= item_image(requirement.item, :icon,
@@ -16,7 +27,7 @@
       </span>
     <% end %>
 
-    <%= link_to_remote(link,
+<p><%= link_to_remote(link,
           :url    => new_inventory_path(
             :item_id  => requirement.item,
             :amount   => requirement.missing_amount(current_character)
@@ -26,7 +37,14 @@
           :html => { 
             :title => t(".shop_link_title", :item => requirement.item.plural_name)
           }
+        ) %></p>
+
+    <p>
+      <%= raw t(".buy_missing",
+          :amount => requirement.missing_amount(current_character),
+          :price => content_tag(:span, item_price_inline(requirement.item, requirement.missing_amount(current_character)), :class => :price)
         ) %>
+    </p>
   <% else %>
     <span class="image">
       <%= item_image(requirement.item, :icon) %>

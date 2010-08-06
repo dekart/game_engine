@@ -75,3 +75,6 @@ en:
       item:
         message: "{{name}} X {{amount}}"
         shop_link_title: "Purchase {{item}} from Shop"
+        buy_missing: "You need {{amount}} more. You can buy them from Shop for {{price}}."
+        buttons:
+          buy: "Buy"

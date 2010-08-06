@@ -21,10 +21,10 @@
   .health_point
     background-image = !requirement_health_point_icon
 
-  .energy
+  .energy_point
     background-image = !requirement_energy_icon
 
-  .stamina
+  .stamina_point
     background-image = !requirement_stamina_icon
 
   .alliance
@@ -37,7 +37,7 @@
     background-image = !requirement_defence_icon
 
   .item
-    height: 40px !important
+    // height: 40px !important
     padding-left: 0
 
     .image
@@ -48,6 +48,15 @@
 
     .label
       line-height: 40px
+
+    .price
+      .basic_money, .vip_money
+        line-height: 20px
+        padding: 2px 0px 2px 21px
+        background-position: left center
+        background-repeat: no-repeat
+        font-weight: bold
+
 
   .not_satisfied
     color: #ff5353
@@ -61,3 +70,10 @@
 
       &:hover
         text-decoration: underline
+
+#result
+  .requirement
+    white-space: normal
+    height: auto
+    line-height: inherit
+    background-position: top left

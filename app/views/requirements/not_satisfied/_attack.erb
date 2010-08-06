@@ -1,5 +1,7 @@
-<p>
-  <%= raw t(".message",
-        :premium_page => link_to(t(".premium_page"), premium_path)
-      ) %>
-</p>
+<% requirement(requirement.name, false) do %>
+  <p>
+    <%= raw t(".message",
+          :premium_page => link_to(t(".premium_page"), premium_path)
+        ) %>
+  </p>
+<% end %>

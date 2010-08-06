@@ -38,23 +38,21 @@ module RequirementsHelper
     end
   end
 
-  def attribute_requirement(attribute, value, satisfied = true)
-    requirement(attribute,
-      t("requirements.attribute.text",
-        :amount => content_tag(:span, value, :class => :value),
-        :name   => Character.human_attribute_name(attribute.to_s)
-      ),
-      satisfied
+  def attribute_requirement_text(attribute, value)
+    t("requirements.attribute.text",
+      :amount => content_tag(:span, value, :class => :value),
+      :name   => Character.human_attribute_name(attribute.to_s)
     )
+  end
+
+  def attribute_requirement(attribute, value, satisfied = true)
+    requirement(attribute, attribute_requirement_text(attribute, value), satisfied)
   end
 
   def vip_money_requirement(value)
     requirement(:vip_money,
       "%s (%s)" %[
-        t("requirements.attribute.text",
-          :amount => content_tag(:span, number_to_currency(value), :class => :value),
-          :name   => Character.human_attribute_name("vip_money")
-        ),
+        attribute_requirement_text(:vip_money, number_to_currency(value)),
         link_to(t("premia.get_vip"), premium_path)
       ],
       current_character.vip_money >= value
