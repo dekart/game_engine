@@ -1,5 +1,5 @@
 class MercenaryRelation < Relation
-  before_create :assign_attributes
+  before_create :copy_owner_attributes
 
   def self.random_name
     @@names     ||= File.read(File.join(Rails.root, "db", "data", "names.txt")).split("\n")
@@ -13,7 +13,7 @@ class MercenaryRelation < Relation
 
   protected
 
-  def assign_attributes
+  def copy_owner_attributes
     self.name = self.class.random_name
 
     %w{level attack defence health energy stamina}.each do |attribute|
