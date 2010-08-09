@@ -40,9 +40,5 @@
 </div>
 
 <% dom_ready do %>
-  $(document).bind({
-    'boss.won': BossFight.onWin,
-    'boss.lost': BossFight.onLose,
-    'boss.expired': BossFight.onExpire
-  });
+  BossFight.initBlock();
 <% end %>

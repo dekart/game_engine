@@ -184,6 +184,13 @@ var Timer = {
 };
 
 var BossFight = {
+  initBlock: function(){
+    $(document).bind({
+      'boss.won': BossFight.onWin,
+      'boss.lost': BossFight.onLose,
+      'boss.expired': BossFight.onExpire
+    });
+  },
   onWin: function(event, fight_id){
     BossFight.hide_reminder(fight_id);
   },
@@ -199,7 +206,9 @@ var BossFight = {
   hide_reminder: function(fight_id){
     $('#boss_fight_' + fight_id).hide();
 
-    $('#boss_fight_block:empty').hide();
+    if($('#boss_fight_block .boss_fight:visible').length == 0){
+      $('#boss_fight_block').hide();
+    }
   }
 }
 
