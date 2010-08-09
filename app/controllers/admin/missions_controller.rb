@@ -11,7 +11,7 @@ class Admin::MissionsController < Admin::BaseController
 
     @character_type = @character_types.find_by_id(params[:character_type_id]) || @character_types.first
 
-    @missions = Mission.without_state(:deleted).available_for(@character_type).all(
+    @missions = Mission.without_state(:deleted).visible_for(@character_type).all(
       :include  => :mission_group,
       :order    => "mission_groups.level"
     )
