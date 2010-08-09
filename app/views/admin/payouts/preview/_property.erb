@@ -1,8 +1,8 @@
 <% content_tag :div, :class => payout.name do %>
-  <%= raw "%s: %s (%d%% %s)" % [
+  <%= ("%s: %s (%d%% %s)" % [
         payout.apply_on_label,
         payout.property_type ? payout.property_type.name : content_tag(:span, t("payouts.property.missing"), :class => :missing),
         payout.chance,
         payout.action
-      ] %>
+      ]).html_safe! %>
 <% end %>

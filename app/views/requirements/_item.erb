@@ -9,10 +9,10 @@
       </span>
 
       <span class="label">
-        <%= raw t(".text",
+        <%= t(".text",
               :name   => content_tag(:span, requirement.item.name, :class => :value),
               :amount => requirement.amount
-            ) %>
+            ).html_safe! %>
       </span>
     <% end %>
 
@@ -36,10 +36,10 @@
       </span>
 
       <span class="label">
-        <%= raw t(".text",
+        <%= t(".text",
               :name   => content_tag(:span, requirement.item.name, :class => :value),
               :amount => requirement.amount
-            ) %>
+            ).html_safe! %>
       </span>
     </p>
   <% end %>

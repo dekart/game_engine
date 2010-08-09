@@ -46,12 +46,12 @@
           <% if @character == current_character %>
             <%= t(".titles.empty_set_my") %>
           <% else %>
-            <%= raw t(".titles.empty_set",
+            <%= t(".titles.empty_set",
                   :user => character_name(@character,
                     :firstnameonly  => true,
                     :capitalize     => true
                   )
-                ) %>
+                ).html_safe! %>
           <% end %>
         <% end %>
       </td>
@@ -70,10 +70,10 @@
 
               <% if @character == current_character %>
                 <div class="amount">
-                  <%= raw t(".items.amount",
+                  <%= t(".items.amount",
                         :name   => inventory.name,
                         :amount => inventory.amount
-                      ) %>
+                      ).html_safe! %>
                 </div>
               <% end %>
             </div>
@@ -95,10 +95,10 @@
             
             <div class="name">
               <% if @character == current_character %>
-                <%= raw t(".properties.name",
+                <%= t(".properties.name",
                       :name  => property.name,
                       :level => property.level
-                    ) %>
+                    ).html_safe! %>
               <% else %>
                 <%= property.name %>
               <% end %>
@@ -112,9 +112,9 @@
   <% if Setting.b(:wall_enabled) %>
     <div class="wall">
       <h2>
-        <%= raw t(".wall.title",
+        <%= t(".wall.title",
               :user => character_name(@character, :possessive => true, :capitalize => true)
-            ) %>
+            ).html_safe! %>
       </h2>
 
       <%= character_wall(@character) %>

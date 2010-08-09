@@ -6,9 +6,9 @@
 
 <div id="gift_form" class="clearfix">
   <h3>
-    <%= raw t(".gift.title",
+    <%= t(".gift.title",
           :change => link_to(t(".gift.change"), edit_gift_path(@gift))
-        ) %>
+        ).html_safe! %>
   </h3>
 
   <div class="gift clearfix">
@@ -39,11 +39,11 @@
 
   <div class="invitation_form">
     <% content_for :gift_message do %>
-      <%= raw t(".request.message",
+      <%= t(".request.message",
             :user => fb_name(current_user, :linked => :false),
             :app  => t("app_name"),
             :item => @gift.item.name
-          ) %>
+          ).html_safe! %>
 
       <%= fb_req_choice(
             t(".request.accept", :item => @gift.item.name),

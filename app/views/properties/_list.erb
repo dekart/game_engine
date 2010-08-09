@@ -8,7 +8,9 @@
         ) %>
   </div>
 
-  <%= raw t(".collect_all", :amount => content_tag(:strong, properties.collectable.size, :class => :value)) %>
+  <%= t(".collect_all",
+        :amount => content_tag(:strong, properties.collectable.size, :class => :value)
+      ).html_safe! %>
 </div>
 
 <table cellspacing="3" cellpadding="0">
@@ -66,9 +68,9 @@
 
         <% if property %>
           <div class="timer" style="<%= "display:none" if property.collectable? %>">
-            <%= raw t(".collect_in",
+            <%= t(".collect_in",
                   :value => content_tag(:span, "", :id => dom_id(property, :timer), :class => :value)
-                ) %>
+                ).html_safe! %>
           </div>
 
           <% dom_ready do %>
@@ -77,7 +79,7 @@
         <% end %>
       <% end %>
         
-      <%= raw cycle("", "</tr><tr>") %>
+      <%= cycle("", "</tr><tr>").html_safe! %>
     <% end %>
   </tr>
 </table>

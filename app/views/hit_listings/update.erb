@@ -20,7 +20,7 @@
 
       <% if @hit_listing.completed? %>
         <p class="completed">
-          <%= raw t(".completed", :victim => character_name_link(@hit_listing.victim)) %>
+          <%= t(".completed", :victim => character_name_link(@hit_listing.victim)).html_safe! %>
         </p>
 
         <table class="payouts" cellspacing="0" cellpadding="0">
@@ -47,13 +47,13 @@
       <p><%= @fight.errors.on(:character) %></p>
     <% end %>
   <% else %>
-    <%= raw t(".already_completed", :victim => character_name_link(@hit_listing.victim)) %>
+    <%= t(".already_completed", :victim => character_name_link(@hit_listing.victim)).html_safe! %>
   <% end %>
 <% end %>
 
 <% dom_ready do %>
   <% if @hit_listing.completed? %>
-    $('#hitlist').html('<%= escape_javascript render("list", :hit_listings => @hit_listings) %>')
+    $('#hitlist').html(<%= render("list", :hit_listings => @hit_listings).to_json.html_safe! %>)
   <% end %>
 
   $(document).trigger('result.received');

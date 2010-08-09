@@ -14,16 +14,16 @@
           <div class="loot">
             <div class="relation">
               <% if result.looter %>
-                <%= raw t(".you_received.loot_with_looter",
+                <%= t(".you_received.loot_with_looter",
                       :user => (
                         result.looter.is_a?(FriendRelation) ? character_name_link(result.looter.character) : result.looter.name
                       ),
                       :item => content_tag(:strong, result.loot.name)
-                    ) %>
+                    ).html_safe! %>
               <% else %>
-                <%= raw t(".you_received.loot_without_looter",
+                <%= t(".you_received.loot_without_looter",
                       :item => content_tag(:strong, result.loot.name)
-                    ) %>
+                    ).html_safe! %>
               <% end %>
             </div>
 
@@ -39,9 +39,9 @@
       <% if result.free_fulfillment and relation = current_character.assignments.by_role(:mission_energy).relation %>
         <% payout("energy zero", 0, :label => Character.human_attribute_name("energy")) do %>
           <span class="relation">
-            <%= raw t(".you_spent.zero_energy",
+            <%= t(".you_spent.zero_energy",
                   :user => relation.is_a?(FriendRelation) ? character_name_link(relation.character) : relation.name
-                ) %>
+                ).html_safe! %>
           </span>
         <% end %>
       <% else %>

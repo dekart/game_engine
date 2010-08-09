@@ -8,9 +8,9 @@
     </td>
     <td class="middle">
       <div class="result">
-        <%= raw t(".messages.result",
+        <%= t(".messages.result",
               :boss => content_tag(:span, fight.boss.name, :class => :boss)
-            ) %>
+            ).html_safe! %>
       </div>
     </td>
     <td class="boss">

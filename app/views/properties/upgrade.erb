@@ -1,10 +1,10 @@
 <% result_for :property do %>
   <% if @property.errors.empty? %>
     <p>
-      <%= raw t(".messages.success",
+      <%= t(".messages.success",
             :property_name  => content_tag(:b, @property.name),
             :level          => @property.level
-          ) %>
+          ).html_safe! %>
     </p>
 
     <h3><%= t(".you_spent.title") %></h3>

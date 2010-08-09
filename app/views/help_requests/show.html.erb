@@ -4,10 +4,10 @@
       <% if @help_request.context.is_a?(Mission) %>
         <% result_for :mission do %>
           <p class="success">
-            <%= raw t(".success",
+            <%= t(".success",
                   :user     => character_name_link(@help_request.character),
                   :mission  => content_tag(:strong, @help_request.context.name)
-                ) %>
+                ).html_safe! %>
           </p>
 
           <div class="payouts">

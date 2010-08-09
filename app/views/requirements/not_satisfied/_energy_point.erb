@@ -7,16 +7,16 @@
     </div>
 
     <p>
-      <%= raw t(".restorable.message",
+      <%= t(".restorable.message",
             :required_value => content_tag(:strong, requirement.value),
             :restore_time   => content_tag(:strong, (current_character.ep_restore_time(requirement.value) / 1.minute).ceil)
-          ) %>
+          ).html_safe! %>
     </p>
 
     <p>
-      <%= raw t(".restorable.get_more",
+      <%= t(".restorable.get_more",
             :premium_page => link_to(t(".premium_page"), premium_path)
-          ) %>
+          ).html_safe! %>
     </p>
   <% else %>
     <div class="buttons">
@@ -26,9 +26,9 @@
     </div>
 
     <p>
-      <%= raw t(".low_base_level.message",
+      <%= t(".low_base_level.message",
             :premium_page => link_to(t(".premium_page"), premium_path)
-          ) %>
+          ).html_safe! %>
     </p>
   <% end %>
 <% end %>

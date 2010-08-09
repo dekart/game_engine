@@ -21,10 +21,10 @@
       </span>
 
       <span class="label">
-        <%= raw t(".message",
+        <%= t(".message",
               :name   => content_tag(:span, requirement.item.name, :class => :value),
               :amount => requirement.amount
-            ) %>
+            ).html_safe! %>
       </span>
     <% end %>
 
@@ -44,13 +44,13 @@
     </p>
 
     <p>
-      <%= raw t(".buy_missing",
-          :amount => requirement.missing_amount(current_character),
-          :price  => content_tag(:span,
-            item_price_inline(requirement.item, requirement.missing_amount(current_character)),
-            :class => :price
-          )
-        ) %>
+      <%= t(".buy_missing",
+            :amount => requirement.missing_amount(current_character),
+            :price  => content_tag(:span,
+              item_price_inline(requirement.item, requirement.missing_amount(current_character)),
+              :class => :price
+            )
+          ).html_safe! %>
     </p>
   <% else %>
     <p>
@@ -59,10 +59,10 @@
       </span>
 
       <span class="label">
-        <%= raw t(".message",
+        <%= t(".message",
               :name   => content_tag(:span, requirement.item.name, :class => :value),
               :amount => requirement.amount
-            ) %>
+            ).html_safe! %>
       </span>
     </p>
   <% end %>

@@ -94,7 +94,7 @@
         <% dom_ready do %>
           $(document).bind({
             'character.upgrade_dialog' : function(){
-              $('#upgrade_result').text(<%= raw t('.step_4.text').to_json %>);
+              $('#upgrade_result').text(<%= t('.step_4.text').to_json.html_safe! %>);
             },
             'character.upgrade_complete' : function(){
               <%= reload_tutorial %>

@@ -15,5 +15,5 @@
 </p>
 
 <% dom_ready do %>
-  $('#<%= dom_id(mission, :progress) %>').html('<%= raw escape_javascript(mission_progress(current_character, mission)) %>');
+  $('#<%= dom_id(mission, :progress) %>').html(<%= mission_progress(current_character, mission).to_json.html_safe! %>);
 <% end %>

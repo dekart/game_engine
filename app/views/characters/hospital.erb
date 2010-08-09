@@ -28,9 +28,9 @@
   <% else %>
     <p><%= current_character.errors.on_base %></p>
     <p>
-      <%= raw t(".premium_refill.text",
+      <%= t(".premium_refill.text",
             :premium => link_to(t(".premium_refill.link"), premium_path)
-          ) %>
+          ).html_safe! %>
     </p>
   <% end %>
 <% end %>

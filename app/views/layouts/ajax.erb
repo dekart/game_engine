@@ -3,5 +3,5 @@
 <%= dom_ready %>
 
 <script type="text/javascript">
-  Character.update(<%= raw current_character(true).to_json_for_overview %>);
+  Character.update(<%= current_character(true).to_json_for_overview.html_safe! %>);
 </script>

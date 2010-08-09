@@ -62,5 +62,5 @@
 </table>
 
 <% dom_ready do %>
-  Character.update(<%= raw current_character.to_json_for_overview %>);
+  Character.update(<%= current_character.to_json_for_overview.html_safe! %>);
 <% end %>

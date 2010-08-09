@@ -8,12 +8,12 @@
 
 <% inventory_free_slots_note do |free_slots| %>
   <div class="note">
-    <%= raw t(".free_slots.text",
+    <%= t(".free_slots.text",
           :count => free_slots,
           :count_label => content_tag(:span, free_slots, :class => :value)
-        ) %>
+        ).html_safe! %>
     
-    <%= raw link_to(t(".free_slots.link"), equipment_inventories_path) %>
+    <%= link_to(t(".free_slots.link"), equipment_inventories_path) %>
   </div>
 <% end %>
 

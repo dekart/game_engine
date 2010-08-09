@@ -6,9 +6,9 @@
         <%= character.attack %>
         
         <span class="bonus">
-          <%= raw t(".bonus",
+          <%= t(".bonus",
                 :amount => content_tag(:span, character.inventories.effect(:attack))
-              ) %>
+              ).html_safe! %>
         </span>
       </td>
     </tr>
@@ -18,9 +18,9 @@
         <%= character.defence %>
         
         <span class="bonus">
-          <%= raw t(".bonus",
+          <%= t(".bonus",
                 :amount => content_tag(:span, character.inventories.effect(:defence))
-              ) %>
+              ).html_safe! %>
         </span>
       </td>
     </tr>

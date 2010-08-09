@@ -13,16 +13,16 @@
               <div class="description"><%= inventory.description %></div>
               <div class="stats">
                 <div class="owned">
-                  <%= raw t(".owned",
+                  <%= t(".owned",
                         :amount => content_tag(:span, inventory.amount, :class => :value)
-                      ) %>
+                      ).html_safe! %>
                 </div>
 
                 <% if inventory.equipped > 0 %>
                   <div class="used">
-                    <%= raw t(".used",
+                    <%= t(".used",
                           :amount => content_tag(:span, inventory.equipped, :class => :value)
-                        ) %>
+                        ).html_safe! %>
                   </div>
                 <% end %>
               </div>
@@ -62,8 +62,8 @@
   </table>
 <% else %>
   <div class="empty_set">
-    <%= raw t(".empty_set.text",
+    <%= t(".empty_set.text",
           :shop => link_to(t(".empty_set.shop"), items_path)
-        ) %>
+        ).html_safe! %>
   </div>
 <% end %>

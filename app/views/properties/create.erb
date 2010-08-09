@@ -7,10 +7,10 @@
     </div>
   
     <p>
-      <%= raw t(".messages.success",
+      <%= t(".messages.success",
             :amount         => @amount,
             :property_name  => content_tag(:b, @property.name)
-          ) %>
+          ).html_safe! %>
     </p>
 
     <h3><%= t(".you_spent.title") %></h3>

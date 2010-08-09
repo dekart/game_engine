@@ -1,11 +1,11 @@
 <%= title(t(".title")) %>
 
 <% content_for :invite_message do %>
-  <%= raw t(".invite.message",
+  <%= t(".invite.message",
         :user     => fb_name(current_user, :linked => :false),
         :pronoun  => fb_pronoun(current_user, :possessive => true),
         :app_name => t("app_name")
-      ) %>
+      ).html_safe! %>
 
   <%= fb_custom_req_choice(
         t(".invite.buttons.visit_profile",
@@ -66,9 +66,9 @@
   <p><%= t(".copy_paste.note") %></p>
 
   <p class="invitation_text">
-    <%= raw t(".copy_paste.invitation",
+    <%= t(".copy_paste.invitation",
           :app  => t("app_name"),
           :link => invitation_url(current_character.invitation_key, :canvas => true, :reference => :invite_link)
-        ) %>
+        ).html_safe! %>
   </p>
 </div>

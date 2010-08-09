@@ -6,7 +6,7 @@
     var character_key = '<%= current_character.key %>';
   </script>
 
-  <%= raw fb_connect_javascript_tag %>
+  <%= fb_connect_javascript_tag.html_safe! %>
   
   <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", "jquery/tooltip", "application", :cache => "all" %>

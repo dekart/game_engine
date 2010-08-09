@@ -13,16 +13,16 @@
       <div class="image"><%= image_tag(fight.boss.image.url(:small)) if fight.boss.image? %></div>
 
       <div class="text">
-        <%= raw t(".text", 
+        <%= t(".text",
               :boss => content_tag(:span, fight.boss.name, :class => :name)
-            ) %>
+            ).html_safe! %>
       </div>
 
       <% if fight.time_limit? %>
         <div class="timer">
-          <%= raw t(".time_left", 
+          <%= t(".time_left",
                 :value => content_tag(:span, "", :id => dom_id(fight, :timer), :class => :value)
-              ) %>
+              ).html_safe! %>
         </div>
 
         <% dom_ready do %>
