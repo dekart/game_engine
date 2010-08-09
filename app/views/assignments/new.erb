@@ -24,8 +24,8 @@
             <% relations.each do |relation| %>
               <% content_tag_for :tr, relation.becomes(Relation), :value => relation.id do %>
                 <% if relation.is_a?(FriendRelation) %>
-                  <td class="picture"><%= character_picture(relation.target) %></td>
-                  <td class="name"><%= character_name(relation.target) %></td>
+                  <td class="picture"><%= character_picture(relation.character) %></td>
+                  <td class="name"><%= character_name(relation.character) %></td>
                 <% else %>
                   <td class="picture"><%= asset_image_tag(:mercenary) %></td>
                   <td class="name"><%= relation.name %></td>

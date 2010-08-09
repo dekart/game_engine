@@ -1,12 +1,12 @@
 <tr>
-  <td class="picture"><%= character_picture_link(relation.target) %></td>
-  <td class="name"><%= character_name_link(relation.target) %></td>
+  <td class="picture"><%= character_picture_link(relation.character) %></td>
+  <td class="name"><%= character_name_link(relation.character) %></td>
   <td class="level">
     <span class="label"><%= Character.human_attribute_name("level") %></span>
     <span class="value"><%= relation.level %></span>
   </td>
   <td class="controls">
-    <%= link_to(button(:break), relation_path(relation.target),
+    <%= link_to(button(:break), relation_path(relation.character),
           :method   => :delete,
           :confirm  => t(".break.confirmation"),
           :class    => "delete button"

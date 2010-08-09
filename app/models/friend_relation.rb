@@ -1,15 +1,15 @@
 class FriendRelation < Relation
   delegate(
-    *(ATTRIBUTES + [:to => :target])
+    *(ATTRIBUTES + [:to => :character])
   )
 
-  validates_uniqueness_of :target_id, :scope => :source_id
+  validates_uniqueness_of :character_id, :scope => :owner_id
 
   def self.destroy_between(c1, c2)
     transaction do
       Relation.find(:all,
         :conditions => [
-          "(source_id = :c1 AND target_id = :c2) OR (source_id = :c2 AND target_id = :c1)",
+          "(owner_id = :c1 AND character_id = :c2) OR (owner_id = :c2 AND character_id = :c1)",
           {
             :c1 => c1,
             :c2 => c2

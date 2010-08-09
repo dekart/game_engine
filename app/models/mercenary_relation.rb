@@ -17,7 +17,7 @@ class MercenaryRelation < Relation
     self.name = self.class.random_name
 
     %w{level attack defence health energy stamina}.each do |attribute|
-      self[attribute] = source_character.send(attribute)
+      self[attribute] = owner.send(attribute)
     end
   end
 end

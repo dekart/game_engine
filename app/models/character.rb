@@ -35,20 +35,20 @@ class Character < ActiveRecord::Base
   has_many :items, :through => :inventories
   
   has_many :relations, 
-    :foreign_key  => "source_id",
+    :foreign_key  => "owner_id",
     :order        => "type",
     :extend       => Character::Relations
   has_many :friend_relations, 
-    :foreign_key  => "source_id",
-    :include      => :target,
+    :foreign_key  => "owner_id",
+    :include      => :character,
     :dependent    => :destroy,
     :extend       => Character::FriendRelations
   has_many :reverse_friend_relations, 
-    :foreign_key  => "target_id",
+    :foreign_key  => "character_id",
     :class_name   => "FriendRelation",
     :dependent    => :destroy
   has_many :mercenary_relations, 
-    :foreign_key  => "source_id",
+    :foreign_key  => "owner_id",
     :dependent    => :delete_all,
     :extend       => Character::MercenaryRelations
 
