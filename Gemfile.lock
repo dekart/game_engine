@@ -59,7 +59,7 @@ dependencies:
   will_paginate: 
     group: 
     - :default
-    version: = 2.3.11
+    version: = 2.3.14
   paperclip: 
     group: 
     - :default
@@ -124,8 +124,8 @@ specs:
 - taf2-curb: 
     version: 0.2.8.0
 - will_paginate: 
-    version: 2.3.11
-hash: c52d7e18995139a7430ae5583465375641d2c1b1
+    version: 2.3.14
+hash: 2385547301d058f77881ec6077fa95f74080e137
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
