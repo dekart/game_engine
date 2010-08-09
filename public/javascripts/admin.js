@@ -14,4 +14,12 @@ $(function(){
 
     $.dialog({ajax: $(this).attr('href')});
   });
+
+  $('#character_list #all_ids').click(function(){
+    $('#character_list td :checkbox').attr({checked : $(this).attr('checked')});
+  });
+
+  $('#character_list :checkbox').click(function(){
+    $('#character_list :checked').length > 0 ? $('#character_batch').show() : $('#character_batch').hide();
+  })
 });

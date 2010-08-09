@@ -414,6 +414,10 @@ en:
         controls:
           edit: "Edit"
           payout: "Apply Payout"
+        batch:
+          title: "Batch Operations"
+          note: "These operations can be applied to all selected characters:"
+          payout: "Apply Payout"
       edit:
         title: "Edit Character"
         submit: "Update"

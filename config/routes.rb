@@ -79,8 +79,10 @@ ActionController::Routing::Routes.draw do |map|
         :restart      => :post
       }
     admin.resources :characters, :only => [:index, :edit, :update],
-      :collection => {:search => :any},
-      :member     => {:payout => :any}
+      :collection => {
+        :search => :any,
+        :payout => :any
+      }
 
     admin.resources :vip_money_operations, :only => :index
 

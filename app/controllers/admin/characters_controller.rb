@@ -5,25 +5,24 @@ class Admin::CharactersController < Admin::BaseController
 
   def search
     if params[:profile_ids].present?
-      ids = params[:profile_ids].split(/[^\d]+/)
-      per_page = ids.size
+      @ids = params[:profile_ids].split(/[^\d]+/)
 
-      @characters = Character.scoped(:conditions => {:id => ids})
+      @characters = Character.scoped(:conditions => {:id => @ids})
     elsif params[:facebook_ids].present?
-      ids = params[:facebook_ids].split(/[^\d]+/)
-      per_page = ids.size
+      @ids = params[:facebook_ids].split(/[^\d]+/)
 
       @characters = Character.scoped(
-        :include => :user,
-        :conditions => {:users => {:facebook_id => ids}}
+        :include    => :user,
+        :conditions => {:users => {:facebook_id => @ids}}
       )
     else
       @characters = Character
-
-      per_page = 100
     end
 
-    @characters = @characters.paginate(:page => params[:page], :per_page => per_page)
+    @characters = @characters.paginate(
+      :page     => params[:page],
+      :per_page => @ids.try(:size) || 100
+    )
     
     render :index
   end
@@ -43,12 +42,16 @@ class Admin::CharactersController < Admin::BaseController
   end
 
   def payout
-    @character = Character.find(params[:id])
+    @characters = Character.find(Array.wrap(params[:ids]))
 
     if request.put? and params[:character]
-      @character.payouts = params[:character][:payouts]
+      Character.transaction do
+        @characters.each do |character|
+          character.payouts = params[:character][:payouts]
 
-      @character.save!
+          character.save!
+        end
+      end
 
       redirect_to admin_characters_path
     end
