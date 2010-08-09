@@ -14,6 +14,8 @@ module DesignHelper
   def button(key, options = {})
     label = key.is_a?(Symbol) ? t(".buttons.#{key}", options) : key
 
+    label.html_safe! if label.respond_to?(:html_safe!)
+    
     content_tag(:span, label)
   end
 

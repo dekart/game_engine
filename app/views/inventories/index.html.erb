@@ -13,7 +13,7 @@
           :count_label => content_tag(:span, free_slots, :class => :value)
         ).html_safe! %>
     
-    <%= link_to(t(".free_slots.link"), equipment_inventories_path) %>
+    <%= link_to(t(".free_slots.link").html_safe!, equipment_inventories_path) %>
   </div>
 <% end %>
 

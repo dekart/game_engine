@@ -19,7 +19,7 @@ module RequirementsHelper
     value     = block_given? ? capture(&block) : args.shift
     satisfied = args.first
 
-    result = content_tag(:div, value, :class => "requirement #{type} #{"not_satisfied" unless satisfied}")
+    result = content_tag(:div, value.html_safe!, :class => "requirement #{type} #{"not_satisfied" unless satisfied}")
 
     block_given? ? concat(result) : result
   end
@@ -42,7 +42,7 @@ module RequirementsHelper
     t("requirements.attribute.text",
       :amount => content_tag(:span, value, :class => :value),
       :name   => Character.human_attribute_name(attribute.to_s)
-    )
+    ).html_safe!
   end
 
   def attribute_requirement(attribute, value, satisfied = true)
