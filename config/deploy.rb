@@ -150,7 +150,11 @@ before "deploy:migrations", "deploy:db:backup"
 
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 
-["deploy:setup_settings", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
+["deploy:setup_settings", "deploy:setup_stylesheets"].each do |t|
+  before "deploy:symlink"
+end
+
+["deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
