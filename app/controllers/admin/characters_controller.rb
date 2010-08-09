@@ -6,10 +6,12 @@ class Admin::CharactersController < Admin::BaseController
   def search
     if params[:profile_ids].present?
       ids = params[:profile_ids].split(/[^\d]+/)
+      per_page = ids.size
 
       @characters = Character.scoped(:conditions => {:id => ids})
     elsif params[:facebook_ids].present?
       ids = params[:facebook_ids].split(/[^\d]+/)
+      per_page = ids.size
 
       @characters = Character.scoped(
         :include => :user,
@@ -17,9 +19,11 @@ class Admin::CharactersController < Admin::BaseController
       )
     else
       @characters = Character
+
+      per_page = 100
     end
 
-    @characters = @characters.paginate(:page => params[:page])
+    @characters = @characters.paginate(:page => params[:page], :per_page => per_page)
     
     render :index
   end
