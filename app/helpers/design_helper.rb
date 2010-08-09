@@ -8,7 +8,7 @@ module DesignHelper
   end
 
   def title(text)
-    content_tag(:h1, text, :class => :title)
+    content_tag(:h1, text.html_safe!, :class => :title)
   end
 
   def button(key, options = {})
