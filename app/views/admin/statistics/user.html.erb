@@ -12,7 +12,7 @@
 
 <h2><%= t(".references") %> <%= admin_documentation_link(:references) %></h2>
 
-<table>
+<table class="data">
 <% @statistics.references.each do |reference, total, period| %>
   <tr>
     <td><%= reference || t(".no_reference") %></td>
@@ -24,7 +24,7 @@
 
 <h2><%= t(".latest_users") %></h2>
 
-<table>
+<table class="data">
   <tr>
     <th><%= User.human_attribute_name("created_at") %></th>
     <th><%= User.human_attribute_name("facebook_id") %></th>

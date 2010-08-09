@@ -7,7 +7,7 @@
 <% if @types.any? %>
   <%= will_paginate @types %>
 
-  <table id="property_type_list" cellspacing="0">
+  <table id="property_type_list" class="data">
     <tr>
       <th><%= PropertyType.human_attribute_name("image") %></th>
       <th><%= PropertyType.human_attribute_name("name") %></th>

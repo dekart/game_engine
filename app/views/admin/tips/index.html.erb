@@ -7,7 +7,7 @@
 <% if @tips.any? %>
   <%= will_paginate @tips %>
 
-  <table id="tip_list" cellspacing="0">
+  <table id="tip_list" class="data">
     <tr>
       <th><%= Tip.human_attribute_name("text") %></th>
       <th></th>

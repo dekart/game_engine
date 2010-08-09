@@ -19,7 +19,7 @@
 </div>
 
 <% if @missions.any? %>
-  <table id="mission_list">
+  <table id="mission_list" class="data">
     <% total_experience = 0 %>
     <tr>
       <th><%= Mission.human_attribute_name("name") %></th>

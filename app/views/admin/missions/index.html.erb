@@ -5,7 +5,7 @@
 <% if @missions.any? %>
   <%= will_paginate @missions %>
 
-  <table id="mission_list" cellspacing="0">
+  <table id="mission_list" class="data">
     <% @missions.each do |mission| %>
       <% group_header mission.mission_group do |group| %>
         <tr>

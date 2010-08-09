@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_skin_path) %>
 </div>
 
-<table id="skin_list" cellspacing="0">
+<table id="skin_list" class="data" cellspacing="0">
   <tr>
     <th><%= Skin.human_attribute_name("name") %></th>
     <th><%= Skin.human_attribute_name("created_at") %></th>

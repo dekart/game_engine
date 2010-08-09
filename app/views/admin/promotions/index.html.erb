@@ -7,7 +7,7 @@
 <% if @promotions.any? %>
   <div class="note"><%= raw t(".note") %></div>
 
-  <table id="promotion_list" cellspacing="0">
+  <table id="promotion_list" class="data">
     <tr>
       <th><%= Promotion.human_attribute_name("created_at") %></th>
       <th><%= Promotion.human_attribute_name("valid_till") %></th>

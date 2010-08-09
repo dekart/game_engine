@@ -22,7 +22,7 @@
       <h2><%= t(".deposit.reference_types") %></h2>
 
       <% collection(@statistics.deposit_reference_types) do |types| %>
-        <table>
+        <table class="data">
           <tr>
             <th><%= t(".reference_type") %></th>
             <th><%= t(".amount.total") %></th>
@@ -41,7 +41,7 @@
       <h2><%= t(".deposit.popular_references") %></h2>
 
       <% collection(@statistics.popular_deposit_references) do |references| %>
-        <table>
+        <table class="data">
           <tr>
             <th><%= t(".reference") %></th>
             <th><%= t(".amount.total") %></th>
@@ -75,7 +75,7 @@
       <h2><%= t(".withdraw.reference_types") %></h2>
 
       <% collection(@statistics.withdraw_reference_types) do |types| %>
-        <table>
+        <table class="data">
           <tr>
             <th><%= t(".reference_type") %></th>
             <th><%= t(".amount.total") %></th>
@@ -94,7 +94,7 @@
       <h2><%= t(".withdraw.popular_references") %></h2>
 
       <% collection(@statistics.popular_withdraw_references) do |references| %>
-        <table>
+        <table class="data">
           <tr>
             <th><%= t(".reference") %></th>
             <th><%= t(".amount.total") %></th>

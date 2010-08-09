@@ -21,7 +21,7 @@
 
       <% collection(@characters) do %>
         <% form_tag "", :id => :character_form do %>
-          <table id="character_list">
+          <table id="character_list" class="data">
             <tr>
               <th><%= check_box_tag("all_ids") %></th>
               <th><%= Character.human_attribute_name("id") %></th>

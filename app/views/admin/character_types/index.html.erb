@@ -5,7 +5,7 @@
 </div>
 
 <% if @character_types.any? %>
-  <table id="character_type_list" cellspacing="0">
+  <table id="character_type_list" class="data">
     <tr>
       <th><%= CharacterType.human_attribute_name("image") %></th>
       <th><%= CharacterType.human_attribute_name("name") %></th>

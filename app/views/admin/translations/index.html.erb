@@ -1,6 +1,6 @@
 <%= admin_title(t(".title")) %>
 
-<table id="translation_list" cellspacing="0">
+<table id="translation_list" class="data">
   <% @translations.each do |key, value, customization| %>
     <% group_header key.split(".").first do |group| %>
       <tr><td class="splitter">&nbsp;</td></tr>

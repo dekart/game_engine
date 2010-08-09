@@ -5,7 +5,7 @@
 <%= will_paginate(@operations) %>
 
 <% collection(@operations) do %>
-  <table>
+  <table class="data">
     <tr>
       <th><%= VipMoneyOperation.human_attribute_name("created_at") %></th>
       <th><%= Character.human_name %></th>

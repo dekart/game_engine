@@ -7,7 +7,7 @@
 <% if @assets.any? %>
   <%= will_paginate @assets %>
 
-  <table id="asset_list" cellspacing="0">
+  <table id="asset_list" class="data">
     <tr>
       <th><%= Asset.human_attribute_name("alias") %></th>
       <th><%= Asset.human_attribute_name("preview") %></th>
