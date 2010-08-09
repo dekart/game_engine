@@ -10,8 +10,10 @@ module Payouts
       if collection.is_a?(Payouts::Collection)
         collection
       else
-        items = collection.values.collect do |payout|
-          Payouts::Base.by_name(payout[:type]).new(payout.except(:type))
+        items = collection.values.sort_by{|v| v["position"].to_i }.collect do |payout|
+          payout.symbolize_keys!
+          
+          Payouts::Base.by_name(payout[:type]).new(payout.except(:type, :position))
         end
 
         new(*items)

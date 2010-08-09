@@ -1,11 +1,7 @@
 <div class="serializable payouts">
   <div id="payout_list">
     <% form.object.payouts.each do |payout| %>
-      <%= content_tag(:div,
-            render("admin/payouts/payout", :payout => payout, :container  => form.object.class),
-            :class  => "payout",
-            :id     => "payout_#{payout.object_id}"
-          ) %>
+      <%= render("admin/payouts/payout", :payout => payout, :container  => form.object.class) %>
     <% end %>
   </div>
 
@@ -21,3 +17,7 @@
     <% end %>
   </div>
 </div>
+
+<% dom_ready do %>
+  PayoutList.init('<%= form.object_name %>');
+<% end %>

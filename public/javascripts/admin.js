@@ -1,3 +1,18 @@
+var PayoutList = {
+  init: function(object_name){
+    $('#payout_list').parents('form').submit(function(){
+      $(this).find('.payout').each(function(index){
+        $('<input type="hidden" />').
+          attr({
+            name:   object_name + '[payouts][' + this.id + '][position]',
+            value:  index
+          }).
+          prependTo(this);
+      })
+    })
+  }
+}
+
 $(function(){
   $.dialog.settings.container = 'body';
   
