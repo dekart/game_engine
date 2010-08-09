@@ -12,14 +12,9 @@ module DesignHelper
   end
 
   def button(key, options = {})
-    asset_key = "buttons_#{scope_key_by_partial(".#{key}").gsub(/\./, "_")}"
     label = key.is_a?(Symbol) ? t(".buttons.#{key}", options) : key
 
-    if !options[:disable_asset] and asset = Asset[asset_key]
-      image_tag(asset.image.url, :alt => label)
-    else
-      content_tag(:span, label)
-    end
+    content_tag(:span, label)
   end
 
   def percentage_bar(percentage, options = {})
