@@ -49,6 +49,7 @@ en:
         upgrade: "Upgrade"
     fight_attributes:
       personal: "Your Skills"
+      inventory: "Your Inventory"
       relations: "Your Alliance"
       offence: "Best Offence"
       defence: "Best Defence"

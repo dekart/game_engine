@@ -2,6 +2,7 @@
   <tr>
     <th><%= t(".personal") %></th>
     <th><%= t(".relations") %></th>
+    <th><%= t(".inventory") %></th>
     <th><%= t(".offence") %></th>
     <th><%= t(".defence") %></th>
   </tr>
@@ -12,7 +13,8 @@
     </td>
     <td class="values">
       <div class="relations"><%= current_character.relations.effective_size %></div>
-
+    </td>
+    <td class="values">
       <div class="attack"><%= current_character.inventories.effect(:attack) %></div>
       <div class="defence"><%= current_character.inventories.effect(:defence) %></div>
     </td>
