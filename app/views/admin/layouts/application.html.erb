@@ -8,8 +8,8 @@
   <%= stylesheet_link_tag("admin") %>
 
   <%= fb_connect_javascript_tag.html_safe! %>
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
-  <%= javascript_include_tag "jrails", "jquery/dialog", "admin" %>
+  <%= include_jquery_from_google %>
+  <%= javascript_include_tag "jrails", "jquery/dialog", "jquery/dragsort", "admin" %>
 
   <title><%= @admin_title %></title>
 </head>

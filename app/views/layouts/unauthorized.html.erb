@@ -7,7 +7,7 @@
 
   <%= fb_connect_javascript_tag.html_safe! %>
   
-  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" %>
+  <%= include_jquery_from_google %>
   <%= javascript_include_tag "jquery/tooltip", "jrails", "application" %>
 
   <%= stylesheet_link_tag(skin_path) %>
