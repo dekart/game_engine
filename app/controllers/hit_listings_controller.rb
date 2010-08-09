@@ -1,4 +1,6 @@
 class HitListingsController < ApplicationController
+  before_filter :check_hitlist_enabled
+  
   def index
     fetch_incomplete_listings
   end
@@ -49,5 +51,9 @@ class HitListingsController < ApplicationController
       :include  => [:victim, :client],
       :limit    => Setting.i(:hit_list_display_limit)
     )
+  end
+
+  def check_hitlist_enabled
+    redirect_to root_path unless Setting.b(:hit_list_enabled)
   end
 end

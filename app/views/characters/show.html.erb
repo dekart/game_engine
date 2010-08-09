@@ -29,7 +29,7 @@
 
       <%= link_to(button(:hitlist), new_character_hit_listing_path(@character),
             :class => "hitlist button"
-          ) %>
+          ) if Setting.b(:hit_list_enabled) %>
     <% end %>
   </div>
 

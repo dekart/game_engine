@@ -90,6 +90,7 @@ Setting[:character_auto_equipment] = false
 Setting[:gifting_accept_all] = 0
 Setting[:premium_reset_attributes_price] = 10
 
+Setting[:hit_list_enabled] = true
 Setting[:hit_list_minimum_reward] = 10_000
 Setting[:hit_list_reward_fee] = 20
 Setting[:hit_list_display_limit] = 20
