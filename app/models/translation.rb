@@ -1,5 +1,5 @@
 class Translation < ActiveRecord::Base
-  validates_presence_of :key, :value
+  validates_presence_of :key
 
   after_save :restart_server
   after_destroy :restart_server

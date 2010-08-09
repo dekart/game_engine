@@ -268,9 +268,12 @@ en:
     translations:
       index:
         title: "Translations"
+        no_value: "(No value)"
         controls:
           delete: "Reset to Default"
           delete_confirm: "Are you sure?"
+      show:
+        no_value: "(No value)"
       new:
         current_value: "Current Value: "
         submit: "Create"

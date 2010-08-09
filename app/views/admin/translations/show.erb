@@ -1,4 +1,4 @@
-<%= link_to_remote(h(@translation.value),
+<%= link_to_remote(@translation.value.present? ? @translation.value : content_tag(:em, t(".no_value")),
       :url    => edit_admin_translation_path(@translation),
       :method => :get,
       :update => translation_id(@translation.key)
