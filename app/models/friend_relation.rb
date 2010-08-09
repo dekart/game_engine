@@ -1,13 +1,7 @@
 class FriendRelation < Relation
-  belongs_to  :target_character, :foreign_key => "target_id", :class_name => "Character"
-  has_one     :assignment, :dependent => :destroy, :foreign_key => "relation_id"
-
-  named_scope :not_assigned,
-    :include    => [:assignment, :target_character],
-    :conditions => "assignments.id IS NULL"
-  named_scope :assigned,
-    :include    => [:assignment, :target_character],
-    :conditions => "assignments.id IS NOT NULL"
+  delegate(
+    *(ATTRIBUTES + [:to => :target])
+  )
 
   validates_uniqueness_of :target_id, :scope => :source_id
 

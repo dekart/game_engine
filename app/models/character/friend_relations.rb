@@ -5,8 +5,8 @@ class Character
     end
 
     def facebook_ids
-      all(:include => {:target_character => :user}).collect{|r| 
-        r.target_character.user.facebook_id
+      all(:include => {:target => :user}).collect{|r| 
+        r.target.user.facebook_id
       }
     end
 

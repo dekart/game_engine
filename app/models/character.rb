@@ -36,10 +36,11 @@ class Character < ActiveRecord::Base
   
   has_many :relations, 
     :foreign_key  => "source_id",
+    :order        => "type",
     :extend       => Character::Relations
   has_many :friend_relations, 
     :foreign_key  => "source_id",
-    :include      => :target_character,
+    :include      => :target,
     :dependent    => :destroy,
     :extend       => Character::FriendRelations
   has_many :reverse_friend_relations, 

@@ -16,7 +16,7 @@
               <% if result.looter %>
                 <%= raw t(".you_received.loot_with_looter",
                       :user => (
-                        result.looter.is_a?(FriendRelation) ? character_name_link(result.looter.target_character) : result.looter.name
+                        result.looter.is_a?(FriendRelation) ? character_name_link(result.looter.target) : result.looter.name
                       ),
                       :item => content_tag(:strong, result.loot.name)
                     ) %>
@@ -41,7 +41,7 @@
           <span class="relation">
             <%= raw t(".you_spent.zero_energy",
                   :user => character_name_link(
-                    current_character.assignments.by_role(:mission_energy).relation.target_character
+                    current_character.assignments.by_role(:mission_energy).relation.target
                   )
                 ) %>
           </span>

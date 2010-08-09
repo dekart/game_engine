@@ -15,7 +15,7 @@
 
     <% filters.each do |filter| %>
       <div id="<%= filter %>" class="list">
-        <% if relations = current_character.friend_relations.send(filter) and relations.any? %>
+        <% if relations = current_character.relations.send(filter) and relations.any? %>
           <table class="relations" cellspacing="0" cellpadding="0">
             <tr>
               <th colspan="3"><%= t(".columns.user") %></th>
@@ -23,11 +23,17 @@
             </tr>
             <% relations.each do |relation| %>
               <% content_tag_for :tr, relation.becomes(Relation), :value => relation.id do %>
-                <td class="picture"><%= character_picture(relation.target_character) %></td>
-                <td class="name"><%= character_name(relation.target_character) %></td>
+                <% if relation.is_a?(FriendRelation) %>
+                  <td class="picture"><%= character_picture(relation.target) %></td>
+                  <td class="name"><%= character_name(relation.target) %></td>
+                <% else %>
+                  <td class="picture"><%= asset_image_tag(:mercenary) %></td>
+                  <td class="name"><%= relation.name %></td>
+                <% end %>
+
                 <td class="level">
                   <%= Character.human_attribute_name("level") %>
-                  <%= relation.target_character.level %>
+                  <%= relation.level %>
                 </td>
                 <td class="effect"><%= assignment_effect(@assignment, relation, :format => :short) %></td>
               <% end %>

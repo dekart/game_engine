@@ -13,7 +13,7 @@ module AssignmentsHelper
     else
       assignment, relation = *attr
       
-      value = Assignment.effect_value(assignment.context, relation.target_character, assignment.role)
+      value = Assignment.effect_value(assignment.context, relation, assignment.role)
     end
 
     t("assignments.roles.#{assignment.role}.effect.#{options[:format]}",

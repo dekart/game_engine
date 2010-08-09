@@ -19,11 +19,11 @@ class Invitation < ActiveRecord::Base
     transaction do
       FriendRelation.create(
         :source_character => sender.character,
-        :target_character => receiver.character
+        :target => receiver.character
       )
 
       FriendRelation.create(
-        :target_character => sender.character,
+        :target => sender.character,
         :source_character => receiver.character
       )
 

@@ -11,29 +11,29 @@ class Assignment < ActiveRecord::Base
   after_create :update_assignee_dashboard
 
   class << self
-    def effect_value(context, character, role)
+    def effect_value(context, relation, role)
       case role.to_sym
       when :attack
-        Setting.p(:assignment_attack_bonus, character.attack).ceil
+        Setting.p(:assignment_attack_bonus, relation.attack).ceil
       when :defence
-        Setting.p(:assignment_defence_bonus, character.defence).ceil
+        Setting.p(:assignment_defence_bonus, relation.defence).ceil
       when :fight_damage
-        log_percent(character.level,
+        log_percent(relation.level,
           Setting.i(:assignment_fight_damage_multiplier),
           Setting.i(:assignment_fight_damage_divider)
         )
       when :fight_income
-        log_percent(character.level,
+        log_percent(relation.level,
           Setting.i(:assignment_fight_income_multiplier),
           Setting.i(:assignment_fight_income_divider)
         )
       when :mission_energy
-        log_percent(character.level,
+        log_percent(relation.level,
           Setting.i(:assignment_mission_energy_multiplier),
           Setting.i(:assignment_mission_energy_divider)
         )
       when :mission_income
-        log_percent(character.level,
+        log_percent(relation.level,
           Setting.i(:assignment_mission_income_multiplier),
           Setting.i(:assignment_mission_income_divider)
         )
@@ -49,7 +49,7 @@ class Assignment < ActiveRecord::Base
   end
   
   def effect_value
-    self.class.effect_value(context, relation.target_character, role)
+    self.class.effect_value(context, relation, role)
   end
 
   protected

@@ -1,5 +1,11 @@
 <div class="assignment">
-  <div class="image"><%= character_picture_link(assignment.relation.target_character) %></div>
-  <div class="name"><%= character_name_link(assignment.relation.target_character) %></div>
+  <% if assignment.relation.is_a?(FriendRelation) %>
+    <div class="image"><%= character_picture_link(assignment.relation.target) %></div>
+    <div class="name"><%= character_name_link(assignment.relation.target) %></div>
+  <% else %>
+    <div class="image"><%= asset_image_tag(:mercenary) %></div>
+    <div class="name"><%= assignment.relation.name %></div>
+  <% end %>
+    
   <div class="effect"><%= assignment_effect(assignment) %></div>
 </div>
