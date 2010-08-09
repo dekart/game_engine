@@ -1,5 +1,16 @@
 namespace :app do
   namespace :maintenance do
+    desc "Assign attributes to mercenries"
+    task :assign_attributes_to_mercenaries => :environment do
+      MercenaryRelation.transaction do
+        MercenaryRelation.find_each do |relation|
+          relation.send(:assign_attributes)
+
+          relation.save!
+        end
+      end
+    end
+
     desc "Update total money for characters"
     task :update_total_money_for_characters => :environment do
       Character.update_all "total_money = basic_money + bank"

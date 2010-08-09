@@ -18,13 +18,13 @@ class Invitation < ActiveRecord::Base
   def accept!
     transaction do
       FriendRelation.create(
-        :source_character => sender.character,
-        :target_character => receiver.character
+        :owner      => sender.character,
+        :character  => receiver.character
       )
 
       FriendRelation.create(
-        :target_character => sender.character,
-        :source_character => receiver.character
+        :owner      => sender.character,
+        :character  => receiver.character
       )
 
       update_attribute(:accepted, true)

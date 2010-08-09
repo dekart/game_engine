@@ -1,17 +1,17 @@
 class Character
   module FriendRelations
     def character_ids
-      all(:select => "target_id").collect{|r| r[:target_id] }
+      all(:select => "character_id").collect{|r| r[:character_id] }
     end
 
     def facebook_ids
-      all(:include => {:target_character => :user}).collect{|r| 
-        r.target_character.user.facebook_id
+      all(:include => {:character => :user}).collect{|r|
+        r.character.user.facebook_id
       }
     end
 
     def with(character)
-      find(:first, :conditions => ['target_id = ?', character.id])
+      find(:first, :conditions => ['character_id = ?', character.id])
     end
 
     def established?(character)
