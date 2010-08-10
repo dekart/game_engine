@@ -1,0 +1,14 @@
+<% dialog do %>
+  <h2><%= t(".title") %></h2>
+
+  <p class="message">
+    <%= t(".message",
+          :reward => content_tag(:span, number_to_currency(@hit_listing.reward), :class => "attribute basic_money"),
+          :victim => character_name_link(@hit_listing.victim)
+        ).html_safe! %>
+  </p>
+<% end %>
+
+<% dom_ready do %>
+  $(document).trigger('result.received');
+<% end %>

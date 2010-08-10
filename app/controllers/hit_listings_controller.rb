@@ -12,6 +12,8 @@ class HitListingsController < ApplicationController
       :victim => @victim,
       :reward => Setting.i(:hit_list_minimum_reward)
     )
+
+    render :new, :layout => "ajax"
   end
 
   def create
@@ -28,9 +30,9 @@ class HitListingsController < ApplicationController
       # Reloading current character to show changed attributes
       current_character(true)
 
-      render :create
+      render :create, :layout => "ajax"
     else
-      render :new
+      render :new, :layout => "ajax"
     end
   end
 

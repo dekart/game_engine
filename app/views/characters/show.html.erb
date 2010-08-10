@@ -27,8 +27,11 @@
             :html   => {:class => "attack button"}
           ) if current_character.can_attack?(@character) %>
 
-      <%= link_to(button(:hitlist), new_character_hit_listing_path(@character),
-            :class => "hitlist button"
+      <%= link_to_remote(button(:hitlist),
+            :url    => new_character_hit_listing_path(@character),
+            :method => :get,
+            :update => :ajax,
+            :html   => {:class => "hitlist button"}
           ) if Setting.b(:hit_list_enabled) %>
     <% end %>
   </div>
