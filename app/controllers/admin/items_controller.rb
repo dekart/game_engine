@@ -12,6 +12,7 @@ class Admin::ItemsController < Admin::BaseController
     redirect_to new_admin_item_group_path if ItemGroup.count == 0
     
     @item = Item.new
+    @item.placements = Character::Equipment::DEFAULT_PLACEMENTS
 
     if params[:item]
       @item.attributes = params[:item]

@@ -2,6 +2,9 @@ class Character::Equipment
   MAIN_PLACEMENTS = [:left_hand, :right_hand, :head, :body, :legs]
   PLACEMENTS = MAIN_PLACEMENTS + [:additional]
 
+  # A set of placements to be enabled by default
+  DEFAULT_PLACEMENTS = []
+
   IMAGE_SIZES = {
     :left_hand  => :medium,
     :right_hand => :medium,
