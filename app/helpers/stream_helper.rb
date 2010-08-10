@@ -282,4 +282,35 @@ module StreamHelper
       ]
     )
   end
+
+  def new_hit_listing_stream_dialog(listing)
+    attachment = {
+      :name => t("stories.hitlist.new_listing.title"),
+      :href => hit_listings_url(
+        :canvas     => true,
+        :reference  => :hitlist_stream_name,
+        :referrer   => current_user.id
+      ),
+
+      :description => t("stories.hitlist.new_listing.description",
+        :amount => listing.reward,
+        :level  => listing.victim.level,
+        :app    => t("app_name")
+      )
+    }
+
+    stream_dialog(
+      :attachment => attachment,
+      :action_links => [
+        {
+          :text => t("stories.hitlist.new_listing.action_link"),
+          :href => hit_listings_url(
+            :canvas     => true,
+            :reference  => :hitlist_stream_link,
+            :referrer   => current_user.id
+          )
+        }
+      ]
+    )
+  end
 end

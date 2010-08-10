@@ -10,5 +10,7 @@
 <% end %>
 
 <% dom_ready do %>
-  $(document).trigger('result.received');
+  $(document).trigger('remote_content.received');
+
+  <%= new_hit_listing_stream_dialog(@hit_listing) %>
 <% end %>

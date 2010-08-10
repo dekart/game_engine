@@ -25,7 +25,11 @@ en:
       title: "I got a secret bonus link for {{app}}!"
       description: "Click the link to get the game bonus. Hurry up, this special link expires at {{expires_at}}!"
       action_link: "Get Bonus"
-
+    hitlist:
+      new_listing:
+        title: "Hitlist Offer"
+        description: "I'm offering a {{amount}} bounty for any friend who'll win my {{level}} level enemy in {{app}}!"
+        action_link: "Attack"
   news:
     fight:
       lost:
