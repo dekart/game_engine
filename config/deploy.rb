@@ -128,17 +128,17 @@ namespace :deploy do
 
   desc "Setup Facebook application"
   task :setup_facebook_app, :roles => :app do
-    run "cd #{current_path}; rake app:setup:facebook_app"
+    run "cd #{release_path}; rake app:setup:facebook_app"
   end
 
   desc "Setup application stylesheets"
   task :setup_stylesheets, :roles => :app do
-    run "cd #{current_path}; rake app:setup:import_assets app:setup:stylesheets"
+    run "cd #{release_path}; rake app:setup:import_assets app:setup:stylesheets"
   end
 
   desc "Setup application settings"
   task :setup_settings, :roles => :app do
-    run "cd #{current_path}; rake app:setup:reimport_settings"
+    run "cd #{release_path}; rake app:setup:reimport_settings"
   end
 end
 
