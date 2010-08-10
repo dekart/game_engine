@@ -2,6 +2,8 @@ namespace :app do
   namespace :maintenance do
     desc "Assign attributes to mercenries"
     task :assign_attributes_to_mercenaries => :environment do
+      puts "Assigning attributes to mercenaries..."
+
       MercenaryRelation.transaction do
         MercenaryRelation.find_each do |relation|
           relation.send(:copy_owner_attributes)
@@ -9,6 +11,8 @@ namespace :app do
           relation.save!
         end
       end
+
+      puts "Done!"
     end
 
     desc "Update total money for characters"
