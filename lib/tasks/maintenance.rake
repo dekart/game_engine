@@ -4,7 +4,7 @@ namespace :app do
     task :assign_attributes_to_mercenaries => :environment do
       MercenaryRelation.transaction do
         MercenaryRelation.find_each do |relation|
-          relation.send(:assign_attributes)
+          relation.send(:copy_owner_attributes)
 
           relation.save!
         end
