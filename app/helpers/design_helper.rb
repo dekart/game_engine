@@ -14,7 +14,7 @@ module DesignHelper
   def button(key, options = {})
     label = key.is_a?(Symbol) ? t(".buttons.#{key}", options) : key
 
-    content_tag(:span, label.try(:html_safe) || label)
+    content_tag(:span, label.respond_to?(:html_safe) ? label.html_safe : label)
   end
 
   def percentage_bar(percentage, options = {})
