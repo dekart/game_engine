@@ -4,7 +4,7 @@
       <%= t(".messages.success",
             :attribute  => Character.human_attribute_name(params[:attribute]),
             :number     => content_tag(:span, current_character.attributes[params[:attribute]], :class => :value)
-          ).html_safe! %>
+          ).html_safe %>
     </p>
   <% else %>
     <p>
@@ -14,7 +14,7 @@
 <% end %>
     
 <% dom_ready do %>
-  $('#upgrade_result').html(<%= result.to_json.html_safe! %>);
+  $('#upgrade_result').html(<%= result.to_json.html_safe %>);
   
   $('#upgrade_list .<%= params[:attribute] %> .value').text('<%= current_character.attributes[params[:attribute]] %>');
 

@@ -33,7 +33,7 @@ module ItemsHelper
         end
       end
 
-      result.to_sentence.html_safe!
+      result.to_sentence.html_safe
     else
       t("items.item.free")
     end

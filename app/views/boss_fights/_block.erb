@@ -15,14 +15,14 @@
       <div class="text">
         <%= t(".text",
               :boss => content_tag(:span, fight.boss.name, :class => :name)
-            ).html_safe! %>
+            ).html_safe %>
       </div>
 
       <% if fight.time_limit? %>
         <div class="timer">
           <%= t(".time_left",
                 :value => content_tag(:span, "", :id => dom_id(fight, :timer), :class => :value)
-              ).html_safe! %>
+              ).html_safe %>
         </div>
 
         <% dom_ready do %>

@@ -15,14 +15,14 @@
                 <div class="owned">
                   <%= t(".owned",
                         :amount => content_tag(:span, inventory.amount, :class => :value)
-                      ).html_safe! %>
+                      ).html_safe %>
                 </div>
 
                 <% if inventory.equipped > 0 %>
                   <div class="used">
                     <%= t(".used",
                           :amount => content_tag(:span, inventory.equipped, :class => :value)
-                        ).html_safe! %>
+                        ).html_safe %>
                   </div>
                 <% end %>
               </div>
@@ -64,6 +64,6 @@
   <div class="empty_set">
     <%= t(".empty_set.text",
           :shop => link_to(t(".empty_set.shop"), items_path)
-        ).html_safe! %>
+        ).html_safe %>
   </div>
 <% end %>

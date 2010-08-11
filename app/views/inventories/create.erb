@@ -14,7 +14,7 @@
       <%= t(".messages.success",
             :amount     => @amount,
             :item_name  => content_tag(:b, @amount > 1 ? @item.plural_name : @item.name)
-          ).html_safe! %>
+          ).html_safe %>
     </p>
 
     <% if @item.price? %>

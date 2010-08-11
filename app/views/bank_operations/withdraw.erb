@@ -4,6 +4,6 @@
   <div id="bank_balance">
     <%= t(".balance",
           :amount => content_tag(:span, number_to_currency(current_character.bank), :class => :value)
-        ).html_safe! %>
+        ).html_safe %>
   </div>
 <% end %>

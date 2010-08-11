@@ -19,11 +19,11 @@
                         result.looter.is_a?(FriendRelation) ? character_name_link(result.looter.character) : result.looter.name
                       ),
                       :item => content_tag(:strong, result.loot.name)
-                    ).html_safe! %>
+                    ).html_safe %>
               <% else %>
                 <%= t(".you_received.loot_without_looter",
                       :item => content_tag(:strong, result.loot.name)
-                    ).html_safe! %>
+                    ).html_safe %>
               <% end %>
             </div>
 
@@ -41,7 +41,7 @@
           <span class="relation">
             <%= t(".you_spent.zero_energy",
                   :user => relation.is_a?(FriendRelation) ? character_name_link(relation.character) : relation.name
-                ).html_safe! %>
+                ).html_safe %>
           </span>
         <% end %>
       <% else %>

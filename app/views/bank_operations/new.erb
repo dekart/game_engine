@@ -4,7 +4,7 @@
   <div id="bank_balance">
     <%= t(".current_balance",
           :amount => content_tag(:span, number_to_currency(current_character.bank), :class => :value)
-        ).html_safe! %>
+        ).html_safe %>
   </div>
 
   <table id="bank" cellspacing="0" cellpadding="0">
@@ -26,5 +26,5 @@
     </tr>
   </table>
 
-  <p><%= t(".note", :fee => Setting.i(:bank_deposit_fee)).html_safe! %></p>
+  <p><%= t(".note", :fee => Setting.i(:bank_deposit_fee)).html_safe %></p>
 <% end %>

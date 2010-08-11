@@ -14,13 +14,13 @@
       <%= t(".note",
             :submit => t(".submit"),
             :application => t("app_name")
-          ).html_safe! %>
+          ).html_safe %>
     </p>
 
     <p>
       <%= t(".already_registered.text",
             :skip_form => link_to(t(".already_registered.skip_form"), root_url(:fb_sig_in_iframe => 1), :class => :skip)
-          ).html_safe! %>
+          ).html_safe %>
     </p>
   </div>
 <% end %>

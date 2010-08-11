@@ -12,7 +12,7 @@ module MissionsHelper
       )
     end
 
-    result.html_safe!
+    result.html_safe
   end
 
   def mission_money(mission)

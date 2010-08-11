@@ -13,7 +13,7 @@ module StreamHelper
       stream_callback_function(options)
     ]
 
-    result.html_safe!
+    result.html_safe
   end
 
   def stream_callback_function(options = {})

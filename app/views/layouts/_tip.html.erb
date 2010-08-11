@@ -1,6 +1,6 @@
 <% if tip = Tip.random %>
   <div id="tip">
     <span class="label"><%= t(".label") %></span>
-    <span class="text"><%= tip.text.html_safe! %></span>
+    <span class="text"><%= tip.text.html_safe %></span>
   </div>
 <% end %>

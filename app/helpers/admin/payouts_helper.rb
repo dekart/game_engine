@@ -6,6 +6,6 @@ module Admin::PayoutsHelper
       result << render("admin/payouts/preview/#{payout.name}", :payout => payout)
     end
 
-    result.html_safe!
+    result.html_safe
   end
 end

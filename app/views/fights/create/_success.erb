@@ -2,7 +2,7 @@
   <%= t(".message", 
         :pronoun    => fb_pronoun(fight.victim.user, :objective => true),
         :user_name  => character_name_link(fight.victim)
-      ).html_safe! %>
+      ).html_safe %>
 </p>
 
 <table class="payouts" cellspacing="0" cellpadding="0">
@@ -20,7 +20,7 @@
       <%= payout(:health, fight.attacker_hp_loss) %>
     </td>
     <td class="victim_lost">
-      <h3><%= t('.victim_lost', :user_name => character_name_link(fight.victim)).html_safe! %></h3>
+      <h3><%= t('.victim_lost', :user_name => character_name_link(fight.victim)).html_safe %></h3>
 
       <%= payout(:health, fight.victim_hp_loss) %>
     </td>

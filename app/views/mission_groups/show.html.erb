@@ -21,12 +21,12 @@
   <div class="empty_set" id="locked_mission_group">
     <%= t(".locked_group",
           :level => content_tag(:span, @mission_group.level, :class => :level)
-        ).html_safe! %>
+        ).html_safe %>
   </div>
 <% end %>
 
 <% dom_ready do %>
   $(document).bind('item.purchase', function(){
-    <%= remote_function(:url => mission_group_path(@mission_group), :method => :get).html_safe! %>
+    <%= remote_function(:url => mission_group_path(@mission_group), :method => :get).html_safe %>
   });
 <% end %>

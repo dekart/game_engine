@@ -6,6 +6,6 @@ module Admin::RequirementsHelper
       result << render("admin/requirements/preview/#{requirement.name}", :requirement => requirement)
     end
 
-    result.html_safe!
+    result.html_safe
   end
 end

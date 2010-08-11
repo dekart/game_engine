@@ -9,7 +9,7 @@
 
           <%= @fight.attacker.inventories.by_item_group(group).equipped.collect{|i|
                 t(".item", :name => i.name, :amount => i.equipped)
-              }.join(", ").html_safe! %>
+              }.join(", ").html_safe %>
         </div>
       <% end %>
     </td>
@@ -22,7 +22,7 @@
 
           <%= @fight.victim.inventories.by_item_group(group).equipped.collect{|i|
                 t(".item", :name => i.name, :amount => i.equipped)
-              }.join(", ").html_safe! %>
+              }.join(", ").html_safe %>
         </div>
       <% end %>
     </td>

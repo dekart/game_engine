@@ -5,7 +5,7 @@
 </div>
 
 <% if @promotions.any? %>
-  <div class="note"><%= t(".note").html_safe! %></div>
+  <div class="note"><%= t(".note").html_safe %></div>
 
   <table id="promotion_list" class="data">
     <tr>
@@ -20,7 +20,7 @@
       <tr>
         <td class="created_at"><%= l(promotion.created_at, :format => :short) %></td>
         <td class="valid_till"><%= content_tag(:span, l(promotion.valid_till, :format => :short), :class => (Time.now < promotion.valid_till ? :valid : :invalid)) %></td>
-        <td class="text"><%= promotion.text.html_safe! %></td>
+        <td class="text"><%= promotion.text.html_safe %></td>
         <td class="promotions">
           <% promotion.payouts.each do |payout| %>
             <%= render "admin/payouts/preview/#{payout.name}", :payout => payout %>

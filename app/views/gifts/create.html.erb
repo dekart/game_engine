@@ -8,7 +8,7 @@
   <h3>
     <%= t(".gift.title",
           :change => link_to(t(".gift.change"), edit_gift_path(@gift))
-        ).html_safe! %>
+        ).html_safe %>
   </h3>
 
   <div class="gift clearfix">
@@ -43,7 +43,7 @@
             :user => fb_name(current_user, :linked => :false),
             :app  => t("app_name"),
             :item => @gift.item.name
-          ).html_safe! %>
+          ).html_safe %>
 
       <%= fb_req_choice(
             t(".request.accept", :item => @gift.item.name),

@@ -14,7 +14,7 @@
     </tr>
     <% @tips.each do |tip| %>
       <tr>
-        <td><%= tip.text.html_safe! %></td>
+        <td><%= tip.text.html_safe %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_tip_path(tip)) %>
           <%= link_to(t(".controls.delete"), admin_tip_path(tip),

@@ -54,7 +54,7 @@
                     :firstnameonly  => true,
                     :capitalize     => true
                   )
-                ).html_safe! %>
+                ).html_safe %>
           <% end %>
         <% end %>
       </td>
@@ -76,7 +76,7 @@
                   <%= t(".items.amount",
                         :name   => inventory.name,
                         :amount => inventory.amount
-                      ).html_safe! %>
+                      ).html_safe %>
                 </div>
               <% end %>
             </div>
@@ -101,7 +101,7 @@
                 <%= t(".properties.name",
                       :name  => property.name,
                       :level => property.level
-                    ).html_safe! %>
+                    ).html_safe %>
               <% else %>
                 <%= property.name %>
               <% end %>
@@ -117,7 +117,7 @@
       <h2>
         <%= t(".wall.title",
               :user => character_name(@character, :possessive => true, :capitalize => true)
-            ).html_safe! %>
+            ).html_safe %>
       </h2>
 
       <%= character_wall(@character) %>

@@ -39,12 +39,12 @@
         <%= t(".additional.free_slots",
               :count        => free_slots,
               :count_label  => content_tag(:span, free_slots, :class => (free_slots == 0 ? "value zero" : "value"))
-            ).html_safe! %>
+            ).html_safe %>
         
         <%= t(".additional.relations",
               :relations  => link_to(Character.human_attribute_name("relations"), relations_path),
               :amount     => content_tag(:span, Setting.i(:character_relations_per_equipment_slot), :class => :value)
-            ).html_safe! %>
+            ).html_safe %>
       </div>
     <% end %>
   </div>

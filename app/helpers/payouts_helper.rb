@@ -11,7 +11,7 @@ module PayoutsHelper
         )
       end
 
-      result.html_safe!
+      result.html_safe
     end
   end
 

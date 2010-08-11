@@ -15,5 +15,5 @@
 </p>
 
 <% dom_ready do %>
-  $('#<%= dom_id(mission, :progress) %>').html(<%= mission_progress(current_character, mission).to_json.html_safe! %>);
+  $('#<%= dom_id(mission, :progress) %>').html(<%= mission_progress(current_character, mission).to_json.html_safe %>);
 <% end %>

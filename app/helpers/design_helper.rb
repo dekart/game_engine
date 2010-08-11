@@ -8,13 +8,13 @@ module DesignHelper
   end
 
   def title(text)
-    content_tag(:h1, text.html_safe!, :class => :title)
+    content_tag(:h1, text.html_safe, :class => :title)
   end
 
   def button(key, options = {})
     label = key.is_a?(Symbol) ? t(".buttons.#{key}", options) : key
 
-    label.html_safe! if label.respond_to?(:html_safe!)
+    label.html_safe if label.respond_to?(:html_safe)
     
     content_tag(:span, label)
   end
@@ -31,7 +31,7 @@ module DesignHelper
         options.reverse_merge(:class => :progress_bar)
       )
 
-      result.html_safe!
+      result.html_safe
     end
   end
 

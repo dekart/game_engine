@@ -96,7 +96,7 @@ module ApplicationHelper
             document.documentElement.firstChild.appendChild(ga);
           })();
         </script>
-      }.html_safe!
+      }.html_safe
     end
   end
 
@@ -118,7 +118,7 @@ module ApplicationHelper
     end
 
     if result.present?
-      result.html_safe!
+      result.html_safe
 
       content_for(:result, 
         result_for(flash[:class] || :flash, result)

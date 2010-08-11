@@ -13,7 +13,7 @@
               ),
               :victim   => content_tag(:span, fight.boss.name, :class => :victim),
               :damage   => content_tag(:span, fight.boss_hp_loss, :class => :damage)
-            ).html_safe! %>
+            ).html_safe %>
       </div>
     </td>
     <td class="middle">
@@ -30,7 +30,7 @@
         <div class="timer">
           <%= t(".time_left", 
                 :value => content_tag(:span, "", :id => :boss_fight_time_left, :class => :value)
-              ).html_safe! %>
+              ).html_safe %>
         </div>
 
         <% dom_ready do %>
@@ -55,7 +55,7 @@
               :attacker => content_tag(:span, fight.boss.name, :class => :attacker),
               :victim   => content_tag(:span, character_name(fight.character), :class => :victim),
               :damage   => content_tag(:span, fight.character_hp_loss, :class => :damage)
-            ).html_safe! %>
+            ).html_safe %>
       </div>
     </td>
   </tr>

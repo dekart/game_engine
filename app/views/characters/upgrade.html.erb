@@ -10,7 +10,7 @@
       <td class="" colspan="2">
         <%= t(".buy_more.text",
               :premium_page => link_to(t(".buy_more.premium_page"), premium_path)
-            ).html_safe! %>
+            ).html_safe %>
       </td>
     </tr>
     <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
@@ -33,7 +33,7 @@
     <%= t(".finished.note",
           :profile  => link_to(t(".finished.profile"), character_path(current_character)),
           :get_more => link_to(t(".finished.get_more"), premium_path)
-        ).html_safe! %>
+        ).html_safe %>
   </div>
 <% end %>
 

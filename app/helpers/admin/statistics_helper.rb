@@ -2,7 +2,7 @@ module Admin::StatisticsHelper
   def admin_statistics_amount_change(value)
     t("admin.statistics.amount_change",
       :amount => content_tag(:strong, value)
-    ).html_safe!
+    ).html_safe
   end
 
   def admin_statistics_reference(reference)
@@ -15,6 +15,6 @@ module Admin::StatisticsHelper
       result = reference.to_s.humanize
     end
 
-    result.html_safe!
+    result.html_safe
   end
 end

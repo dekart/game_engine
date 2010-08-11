@@ -5,7 +5,7 @@
     var facebook_api_key = '<%= Facebooker.facebooker_config["api_key"] %>';
   </script>
 
-  <%= fb_connect_javascript_tag.html_safe! %>
+  <%= fb_connect_javascript_tag.html_safe %>
   
   <%= include_jquery_from_google %>
   <%= javascript_include_tag "jquery/tooltip", "jrails", "application" %>

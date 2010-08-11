@@ -24,7 +24,7 @@
         <%= t(".message",
               :name   => content_tag(:span, requirement.item.name, :class => :value),
               :amount => requirement.amount
-            ).html_safe! %>
+            ).html_safe %>
       </span>
     <% end %>
 
@@ -50,7 +50,7 @@
               item_price_inline(requirement.item, requirement.missing_amount(current_character)),
               :class => :price
             )
-          ).html_safe! %>
+          ).html_safe %>
     </p>
   <% else %>
     <p>
@@ -62,7 +62,7 @@
         <%= t(".message",
               :name   => content_tag(:span, requirement.item.name, :class => :value),
               :amount => requirement.amount
-            ).html_safe! %>
+            ).html_safe %>
       </span>
     </p>
   <% end %>

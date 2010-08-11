@@ -2,5 +2,5 @@
   <%= ("%s X %s" % [
         requirement.item ? requirement.item.name : content_tag(:span, t("payouts.item.missing"), :class => :missing),
         requirement.amount
-      ]).html_safe! %>
+      ]).html_safe %>
 <% end %>

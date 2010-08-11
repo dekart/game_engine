@@ -3,7 +3,7 @@
     <%= t(".messages.success",
           :amount     => @amount,
           :item_name  => content_tag(:b, @amount > 1 ? @inventory.plural_name : @inventory.name)
-        ).html_safe! %>
+        ).html_safe %>
   </p>
 
   <h3><%= t(".you_received.title") %></h3>
