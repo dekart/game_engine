@@ -39,7 +39,7 @@ class Admin::CharacterTypesController < Admin::BaseController
     if @character_type.update_attributes(params[:character_type])
       redirect_to admin_character_types_path
     else
-      render :action => edit
+      render :action => :edit
     end
   end
 
