@@ -10,6 +10,9 @@ set :use_sudo, false
 set :scm, "git"
 set :deploy_via, :remote_cache
 
+set :facebook_config, YAML.load_file(File.join(File.dirname(__FILE__), "facebooker.yml"))
+set :db_config, YAML.load_file(File.expand_path("../database.yml", __FILE__))
+
 default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
@@ -51,8 +54,6 @@ namespace :deploy do
 
   desc "Updates apache virtual host config"
   task :update_apache_config do
-    facebook_config = YAML.load_file(File.join(File.dirname(__FILE__), "facebooker.yml"))
-
     config = <<-CODE
       <VirtualHost *:80>
         ServerName #{URI.parse(facebook_config[rails_env]["callback_url"]).host}
@@ -68,13 +69,13 @@ namespace :deploy do
       </VirtualHost>
     CODE
 
+    puts config
+
     put(config, "#{shared_path}/apache_vhost.conf")
   end
 
   desc "Updates nginx virtual host config"
   task :update_nginx_config do
-    facebook_config = YAML.load_file(File.join(File.dirname(__FILE__), "facebooker.yml"))
-
     config = <<-CODE
       server {
         listen 80;
@@ -88,15 +89,21 @@ namespace :deploy do
       }
     CODE
 
+    puts config
+
     put(config, "#{shared_path}/nginx.conf")
   end
 
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :app do
-      db_config = YAML.load_file(File.expand_path("../database.yml", __FILE__))[rails_env]
-
-      run "mysqldump -u #{ db_config["username"] } --password='#{ db_config["password"] }' #{db_config["database"]} > #{shared_path}/db_dump.#{Time.now.to_i}.sql"
+      run "mysqldump -u %s --password='%s' %s > %s/db_dump.%d.sql" % [
+        db_config[rails_env]["username"],
+        db_config[rails_env]["password"],
+        db_config[rails_env]["database"],
+        shared_path,
+        Time.now.to_i
+      ]
     end
   end
 
