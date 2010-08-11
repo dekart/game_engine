@@ -2,17 +2,17 @@ module PayoutsHelper
   def payout_list(payouts, action, format = :result)
     return unless payouts
 
-    returning result = "" do
-      payouts.by_action(action).each do |payout|
-        next if (format == :preview) && !payout.visible
-        
-        result << render("payouts/#{format}/#{payout.class.to_s.underscore.split("/").last}",
-          :payout => payout
-        )
-      end
+    result = ""
 
-      result.html_safe
+    payouts.by_action(action).each do |payout|
+      next if (format == :preview) && !payout.visible
+
+      result << render("payouts/#{format}/#{payout.class.to_s.underscore.split("/").last}",
+        :payout => payout
+      )
     end
+
+    result.html_safe
   end
 
   def payout(type, value, options = {}, &block)

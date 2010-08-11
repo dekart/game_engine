@@ -1,17 +1,17 @@
 module RequirementsHelper
   def requirement_list(requirements, filter = nil)
-    returning result = "" do
-      requirements.each do |requirement|
-        next if filter == :unsatisfied and requirement.satisfies?(current_character)
+    result = ""
 
-        result << render("requirements/#{requirement.name}",
-          :requirement  => requirement,
-          :satisfied    => requirement.satisfies?(current_character)
-        )
-      end
+    requirements.each do |requirement|
+      next if filter == :unsatisfied and requirement.satisfies?(current_character)
 
-      result.html_safe
+      result << render("requirements/#{requirement.name}",
+        :requirement  => requirement,
+        :satisfied    => requirement.satisfies?(current_character)
+      )
     end
+
+    result.html_safe
   end
 
   def requirement(*args, &block)
@@ -25,17 +25,17 @@ module RequirementsHelper
   end
 
   def unsatisfied_requirement_list(requirements)
-    returning result = "" do
-      requirements.each do |requirement|
-        next if requirement.satisfies?(current_character)
+    result = ""
 
-        result << render("requirements/not_satisfied/#{requirement.name}",
-          :requirement  => requirement
-        )
-      end
+    requirements.each do |requirement|
+      next if requirement.satisfies?(current_character)
 
-      result.html_safe
+      result << render("requirements/not_satisfied/#{requirement.name}",
+        :requirement  => requirement
+      )
     end
+
+    result.html_safe
   end
 
   def attribute_requirement_text(attribute, value)

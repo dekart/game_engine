@@ -14,25 +14,23 @@ module DesignHelper
   def button(key, options = {})
     label = key.is_a?(Symbol) ? t(".buttons.#{key}", options) : key
 
-    label.html_safe if label.respond_to?(:html_safe)
-    
-    content_tag(:span, label)
+    content_tag(:span, label.try(:html_safe) || label)
   end
 
   def percentage_bar(percentage, options = {})
-    returning result = "" do
-      result << content_tag(:div, options.delete(:label), :class => :text) if options[:label]
+    result = ""
 
-      result << content_tag(:div,
-        content_tag(:div, "",
-          :class => "percentage #{ :complete if percentage >= 100 }",
-          :style => "width: %.4f%" % percentage
-        ),
-        options.reverse_merge(:class => :progress_bar)
-      )
+    result << content_tag(:div, options.delete(:label), :class => :text) if options[:label]
 
-      result.html_safe
-    end
+    result << content_tag(:div,
+      content_tag(:div, "",
+        :class => "percentage #{ :complete if percentage >= 100 }",
+        :style => "width: %.4f%" % percentage
+      ),
+      options.reverse_merge(:class => :progress_bar)
+    )
+
+    result.html_safe
   end
 
   def result_for(type, content = nil, &block)

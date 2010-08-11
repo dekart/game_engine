@@ -118,10 +118,8 @@ module ApplicationHelper
     end
 
     if result.present?
-      result.html_safe
-
       content_for(:result, 
-        result_for(flash[:class] || :flash, result)
+        result_for(flash[:class] || :flash, result.html_safe)
       )
     end
   end

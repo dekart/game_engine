@@ -10,9 +10,7 @@ module PropertiesHelper
       result << capture(type, property, &block)
     end
 
-    result.html_safe
-
-    concat(result)
+    concat(result.html_safe)
   end
 
   def property_image(property, format)
