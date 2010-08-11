@@ -1,7 +1,7 @@
 en:
   stories:
     default:
-      action_link: "Play {{app}} &raquo;"
+      action_link: "Play {{app}} »"
     fight:
       title: "I WON a fight against {{level}} level opponent in {{app}}!"
     help_request:

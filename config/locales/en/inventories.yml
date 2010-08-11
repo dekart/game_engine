@@ -29,7 +29,7 @@ en:
         text:
           one: "You have some unequipped inventory and {{count_label}} equipment slot available for use!"
           other: "You have some unequipped inventory and {{count_label}} equipment slots available for use!"
-        link: "Equip your character &raquo;"
+        link: "Equip your character »"
     list:
       owned: "Owned: {{amount}}"
       used: "In use: {{amount}}"

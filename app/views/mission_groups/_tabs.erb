@@ -1,7 +1,7 @@
 <% if groups.previous_page and previous_group = groups.first.previous_group %>
   <% content_for :previous_group do %>
     <% content_tag_for :td, previous_group, :class => "previous first" do %>
-      <%= link_to(t(".previous.name").html_safe, mission_group_path(previous_group),
+      <%= link_to(t(".previous.name"), mission_group_path(previous_group),
             :class => :name
           ) %>
 
@@ -15,7 +15,7 @@
 <% if groups.next_page and next_group = groups.last.next_group %>
   <% content_for :next_group do %>
     <% content_tag_for :td, next_group, :class => "next last" do %>
-      <%= link_to(t(".next.name").html_safe, mission_group_path(next_group),
+      <%= link_to(t(".next.name"), mission_group_path(next_group),
             :class => :name
           ) %>
 

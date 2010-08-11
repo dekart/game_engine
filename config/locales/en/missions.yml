@@ -12,10 +12,10 @@ en:
       level: "(Levels {{level}}+)"
       locked: "Locked"
       previous:
-        name: "&laquo; Previous"
+        name: "« Previous"
         level: "(Below Level {{level}})"
       next:
-        name: "Next &raquo;"
+        name: "Next »"
         level: "(Levels {{level}}+)"
   missions:
     fulfill:

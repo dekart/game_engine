@@ -217,7 +217,7 @@ en:
         parameter: "Parameter"
         value: "Value"
         change: "Last 24 hours"
-        details: "Details &raquo;"
+        details: "Details »"
         values:
           users: "Total Users"
           deposit: "VIP Money Deposit"
