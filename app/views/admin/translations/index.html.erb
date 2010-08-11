@@ -12,7 +12,7 @@
     <% content_tag :tr, :class => (:customized if customization) do %>
       <td class="key"><%= key.gsub(/\./, " ") %></td>
       <% content_tag(:td, :id => translation_id(key), :class => :value) do %>
-        <%= link_to_remote(value.present? ? value : content_tag(:em, t(".no_value")),
+        <%= link_to_remote(value.present? ? value : content_tag(:span, t(".no_value"), :class => :empty),
               :url    => customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key),
               :method => :get,
               :update => translation_id(key)

@@ -6,13 +6,12 @@ module Admin::BaseHelper
   def admin_title(value, doc_topic = nil)
     @admin_title = value
 
-    content_tag(:h1,
-      "%s %s" % [
-        value,
-        doc_topic.present? ? admin_documentation_link(doc_topic) : ""
-      ],
-      :class => :title
-    )
+    label = [
+      value,
+      doc_topic.present? ? admin_documentation_link(doc_topic) : nil
+    ].compact.join(" ").html_safe
+
+    content_tag(:h1, label, :class => :title)
   end
 
   def admin_documentation_link(topic)
