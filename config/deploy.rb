@@ -33,7 +33,7 @@ namespace :deploy do
 
   namespace :jobs do
     desc "Install cron jobs"
-    task :install_cron do
+    task :install_cron, :roles => :app do
       config = <<-CODE
         RAILS_ENV=#{rails_env}
         PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
