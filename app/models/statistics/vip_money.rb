@@ -4,7 +4,7 @@ class Statistics
       VipMoneyDeposit.sum(:amount)
     end
 
-    def total_withdraw
+    def total_withdrawal
       VipMoneyWithdrawal.sum(:amount)
     end
 
@@ -12,7 +12,7 @@ class Statistics
       VipMoneyDeposit.scoped(:conditions => ["created_at > ?", @period.ago]).sum(:amount)
     end
 
-    def withdraw_by_period
+    def withdrawal_by_period
       VipMoneyWithdrawal.scoped(:conditions => ["created_at > ?", @period.ago]).sum(:amount)
     end
 
@@ -20,7 +20,7 @@ class Statistics
       reference_types_by_class(VipMoneyDeposit)
     end
 
-    def withdraw_reference_types
+    def withdrawal_reference_types
       reference_types_by_class(VipMoneyWithdrawal)
     end
 
@@ -28,7 +28,7 @@ class Statistics
       popular_references_by_class(VipMoneyDeposit)
     end
 
-    def popular_withdraw_references
+    def popular_withdrawal_references
       popular_references_by_class(VipMoneyWithdrawal)
     end
 

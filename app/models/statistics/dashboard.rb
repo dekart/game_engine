@@ -3,7 +3,7 @@ class Statistics
     attr_reader :users, :vip_money
 
     delegate :total_users, :users_by_period, :to => :users
-    delegate :total_deposit, :total_withdraw, :deposit_by_period, :withdraw_by_period, :to => :vip_money
+    delegate :total_deposit, :total_withdrawal, :deposit_by_period, :withdrawal_by_period, :to => :vip_money
 
     def initialize(*args)
       super(*args)

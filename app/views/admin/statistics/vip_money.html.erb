@@ -64,17 +64,17 @@
         <strong><%= t(".amount.total") %>:</strong>
         
         <strong>
-          <%= link_to(@statistics.total_withdraw, admin_vip_money_operations_path(:type => :withdrawal),
+          <%= link_to(@statistics.total_withdrawal, admin_vip_money_operations_path(:type => :withdrawal),
                 :title => t(".withdraw.operations")
               )%>
         </strong>
 
-        <%= admin_statistics_amount_change(@statistics.withdraw_by_period) %>
+        <%= admin_statistics_amount_change(@statistics.withdrawal_by_period) %>
       </p>
 
       <h2><%= t(".withdraw.reference_types") %></h2>
 
-      <% collection(@statistics.withdraw_reference_types) do |types| %>
+      <% collection(@statistics.withdrawal_reference_types) do |types| %>
         <table class="data">
           <tr>
             <th><%= t(".reference_type") %></th>
@@ -93,7 +93,7 @@
 
       <h2><%= t(".withdraw.popular_references") %></h2>
 
-      <% collection(@statistics.popular_withdraw_references) do |references| %>
+      <% collection(@statistics.popular_withdrawal_references) do |references| %>
         <table class="data">
           <tr>
             <th><%= t(".reference") %></th>
