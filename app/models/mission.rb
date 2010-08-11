@@ -41,7 +41,7 @@ class Mission < ActiveRecord::Base
   validates_numericality_of :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max, :loot_chance, :allow_blank => true
 
   def self.to_grouped_dropdown
-    returning result = {} do
+    {}.tap do |result|
       MissionGroup.without_state(:deleted).all(:order => :level).each do |group|
         result[group.name] = group.missions.without_state(:deleted).collect{|i| 
           [i.name, i.id]

@@ -89,7 +89,7 @@ class Character
     end
 
     def best_offence
-      returning result = [] do
+      [].tap do |result|
         ItemGroup.all.each do |group|
           result << proxy_owner.inventories.by_item_group(group).equipped.first(
             :conditions => "attack > 0",
@@ -102,7 +102,7 @@ class Character
     end
 
     def best_defence
-      returning result = [] do
+      [].tap do |result|
         ItemGroup.all.each do |group|
           result << proxy_owner.inventories.by_item_group(group).equipped.first(
             :conditions => "defence > 0",

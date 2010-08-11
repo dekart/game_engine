@@ -13,7 +13,7 @@ class Character
     end
 
     def build_by_boss(boss)
-      returning fight = build(:boss => boss) do
+      build(:boss => boss).tap do |fight|
         fight.expire_at = Time.now + boss.time_limit.to_i.minutes if boss.time_limit?
         fight.health    = boss.health
       end

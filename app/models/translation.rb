@@ -5,7 +5,7 @@ class Translation < ActiveRecord::Base
   after_destroy :restart_server
   
   def self.to_hash
-    returning result = {} do
+    {}.tap do |result|
       all.each do |translation|
         result.deep_merge!(translation.to_hash)
       end

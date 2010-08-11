@@ -18,7 +18,7 @@ class HitListing < ActiveRecord::Base
   def execute!(attacker)
     return false if completed?
 
-    returning fight = Fight.new(:attacker => attacker, :victim => victim, :cause => self) do
+    Fight.new(:attacker => attacker, :victim => victim, :cause => self).tap do |fight|
       transaction do
         if fight.save && victim.hp == 0
           self.executor   = attacker

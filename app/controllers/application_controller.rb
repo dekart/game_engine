@@ -131,7 +131,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options(options)
-    returning result = {} do
+    {}.tap do |result|
       result[:try_skin] = params[:try_skin] if params[:try_skin].present?
     end
   end

@@ -25,7 +25,7 @@ module Payouts
     end
 
     def apply(character, trigger)
-      returning result = Payouts::Collection.new do
+      Payouts::Collection.new.tap do |result|
         items.each do |payout|
           if payout.applicable?(trigger)
             payout.apply(character)
@@ -41,7 +41,7 @@ module Payouts
     end
 
     def +(other)
-      returning result = Payouts::Collection.new do
+      Payouts::Collection.new.tap do |result|
         result.items.push(*items)
         result.items.push(*other.items)
       end

@@ -5,13 +5,15 @@ module FacebookPaginator
     end
 
     def params
-      return @params unless @params.nil?
-      
-      returning @params = HashWithIndifferentAccess.new do
+      unless @params
+        @params = HashWithIndifferentAccess.new
+
         @template.params.each_pair do |key, value|
           @params[key] = value unless key.to_s.starts_with?("fb_sig")
         end
       end
+
+      @params
     end
 
     def method_missing(*args)

@@ -5,7 +5,7 @@ class User
     end
 
     def exclude_ids
-      returning result = facebook_ids + proxy_owner.character.friend_relations.facebook_ids do
+      (facebook_ids + proxy_owner.character.friend_relations.facebook_ids).tap do |result|
         result.uniq!
       end
     end

@@ -3,7 +3,7 @@ class MissionResult
     :payouts, :free_fulfillment, :mission_group, :group_rank, :group_payouts, :loot, :looter
 
   def self.create(*args)
-    returning result = new(*args) do
+    new(*args).tap do |result|
       result.save! if result.mission.repeatable? or !result.rank.completed?
     end
   end
