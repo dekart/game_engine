@@ -11,7 +11,11 @@ class Admin::SettingsController < Admin::BaseController
     @setting = Setting.new(params[:setting])
 
     if @setting.save
-      redirect_to admin_settings_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_settings_path
+      end
     else
       render :action => :new
     end
@@ -25,7 +29,11 @@ class Admin::SettingsController < Admin::BaseController
     @setting = Setting.find(params[:id])
 
     if @setting.update_attributes(params[:setting])
-      redirect_to admin_settings_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_settings_path
+      end
     else
       render :action => :edit
     end

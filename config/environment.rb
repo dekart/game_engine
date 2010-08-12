@@ -74,5 +74,6 @@ end
 require "facebook_money"
 require "i18n/backend/yaml_db"
 require "rails_restart"
+require "div_form_builder/submit_and_continue"
 
 I18n.backend = I18n::Backend::YamlDb.new

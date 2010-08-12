@@ -149,7 +149,7 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
       :id     => options[:id] || ("field_for_#{@object_name}_#{field_name}" unless field_name.blank?)
     ) unless options[:wrapper] == false
 
-    code.html_safe!
+    code = code.html_safe
 
     block_given? ? @template.concat(code) : code
   end
@@ -168,11 +168,11 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
   protected
 
   def div(content, options = {})
-    @template.content_tag(:div, content.html_safe!, options)
+    @template.content_tag(:div, content.html_safe, options)
   end
 
   def label(text, field_name)
-    @template.content_tag(:label, text.html_safe!, :for => "#{@object_name}_#{field_name}")
+    @template.content_tag(:label, text.html_safe, :for => "#{@object_name}_#{field_name}")
   end
 
   def detect_field_order(value)

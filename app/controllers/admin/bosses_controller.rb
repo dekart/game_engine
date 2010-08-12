@@ -19,7 +19,11 @@ class Admin::BossesController < Admin::BaseController
     @boss = Boss.new(params[:boss])
 
     if @boss.save
-      redirect_to admin_bosses_path
+      flash[:success] = t(".success")
+
+      unless_continue_editing do
+        redirect_to admin_bosses_path
+      end
     else
       render :action => :new
     end
@@ -39,7 +43,11 @@ class Admin::BossesController < Admin::BaseController
     @boss = Boss.find(params[:id])
 
     if @boss.update_attributes(params[:boss].reverse_merge(:requirements => nil, :payouts => nil))
-      redirect_to admin_bosses_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_bosses_path
+      end
     else
       render :action => :edit
     end

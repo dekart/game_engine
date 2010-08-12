@@ -25,7 +25,11 @@ class Admin::ItemsController < Admin::BaseController
     @item = Item.new(params[:item])
 
     if @item.save
-      redirect_to admin_items_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_items_path
+      end
     else
       render :action => :new
     end
@@ -45,7 +49,11 @@ class Admin::ItemsController < Admin::BaseController
     @item = Item.find(params[:id])
 
     if @item.update_attributes(params[:item].reverse_merge(:payouts => nil, :placements => nil))
-      redirect_to admin_items_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_items_path
+      end
     else
       render :action => :edit
     end

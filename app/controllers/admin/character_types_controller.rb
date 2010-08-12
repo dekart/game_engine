@@ -17,7 +17,11 @@ class Admin::CharacterTypesController < Admin::BaseController
     @character_type = CharacterType.new(params[:character_type])
 
     if @character_type.save
-      redirect_to admin_character_types_path
+      flash[:success] = t(".success")
+      
+      unless_cotinue_editing do
+        redirect_to admin_character_types_path
+      end
     else
       render :action => :new
     end
@@ -37,7 +41,11 @@ class Admin::CharacterTypesController < Admin::BaseController
     @character_type = CharacterType.find(params[:id])
 
     if @character_type.update_attributes(params[:character_type])
-      redirect_to admin_character_types_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_character_types_path
+      end
     else
       render :action => :edit
     end

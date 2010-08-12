@@ -11,7 +11,11 @@ class Admin::HelpPagesController < Admin::BaseController
     @page = HelpPage.new(params[:help_page])
 
     if @page.save
-      redirect_to admin_help_pages_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_help_pages_path
+      end
     else
       render :action => :new
     end
@@ -25,7 +29,11 @@ class Admin::HelpPagesController < Admin::BaseController
     @page = HelpPage.find(params[:id])
 
     if @page.update_attributes(params[:help_page])
-      redirect_to admin_help_pages_path
+      flash[:success] = t(".success")
+      
+      unless_continue_editing do
+        redirect_to admin_help_pages_path
+      end
     else
       render :action => :edit
     end

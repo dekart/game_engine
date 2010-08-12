@@ -16,8 +16,7 @@
 <body>
   <%= render "admin/layouts/main_menu" %>
       
-  <%= fb_success(flash[:success]) if flash[:success] %>
-  <%= fb_error(flash[:error]) if flash[:error] %>
+  <%= admin_flash_block %>
 
   <div id="result" style="display:none"></div>
 
