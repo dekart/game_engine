@@ -11,6 +11,8 @@ class Admin::MissionGroupsController < Admin::BaseController
     @group = MissionGroup.new(params[:mission_group])
 
     if @group.save
+      flash[:success] = t(".success")
+
       unless_continue_editing do
         redirect_to admin_mission_groups_path
       end
@@ -27,6 +29,8 @@ class Admin::MissionGroupsController < Admin::BaseController
     @group = MissionGroup.find(params[:id])
 
     if @group.update_attributes(params[:mission_group])
+      flash[:success] = t(".success")
+      
       unless_continue_editing do
         redirect_to admin_mission_groups_path
       end

@@ -33,6 +33,8 @@ class Admin::MissionsController < Admin::BaseController
     @mission = Mission.new(params[:mission])
 
     if @mission.save
+      flash[:success] = t(".success")
+      
       unless_continue_editing do
         redirect_to admin_missions_path
       end
@@ -55,6 +57,8 @@ class Admin::MissionsController < Admin::BaseController
     @mission = Mission.find(params[:id])
 
     if @mission.update_attributes(params[:mission].reverse_merge(:requirements => nil, :payouts => nil))
+      flash[:success] = t(".success")
+      
       unless_continue_editing do
         redirect_to admin_missions_path
       end

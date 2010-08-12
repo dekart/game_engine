@@ -46,9 +46,13 @@ en:
       new:
         title: "New Item Group"
         submit: "Create"
+      create:
+        success: "Item group has been created successfully!"
       edit:
         title: "{{name}} - Edit Item Group"
         submit: "Update"
+      update:
+        success: "Item group has been updated successfully!"
     items:
       index:
         title: "Items"
@@ -66,9 +70,13 @@ en:
       new:
         title: "New Item"
         submit: "Create"
+      create:
+        success: "Item has been created successfully!"
       edit:
         title: "{{name}} - Edit Item"
         submit: "Update"
+      update:
+        success: "Item has been updated successfully!"
       form_fields:
         use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '{{default_value}}'"
       effect:
@@ -88,9 +96,13 @@ en:
       new:
         title: "New Mission Group"
         submit: "Create"
+      create:
+        success: "Mission group has been created successfully!"
       edit:
         title: "{{name}} - Edit Mission Group"
         submit: "Update"
+      update:
+        success: "Mission group has been updated successfully!"
     missions:
       controls:
         index: "List"
@@ -110,9 +122,13 @@ en:
       new:
         title: "New Mission"
         submit: "Create"
+      create:
+        success: "Mission has been created successfully!"
       edit:
         title: "{{name}} - Edit Mission"
         submit: "Update"
+      update:
+        success: "Mission has been updated successfully!"
       balance:
         title: "Mission Balance"
         character_type_filter: "Filter By Character Type:"
@@ -131,9 +147,13 @@ en:
       new:
         title: "New Boss"
         submit: "Create"
+      create:
+        success: "Boss has been created successfully!"
       edit:
         title: "{{name}} - Edit Boss"
         submit: "Update"
+      update:
+        success: "Boss has been updated successfully!"
       form_fields:
         minutes: "minutes"
     newsletters:
@@ -152,9 +172,13 @@ en:
       new:
         title: "New Newsletter"
         submit: "Create"
+      create:
+        success: "Newsletter has been created successfully!"
       edit:
         title: "Edit Newsletter"
         submit: "Update"
+      update:
+        success: "Newsletter has been updated successfully!"
     tips:
       index:
         title: "Tips"
@@ -167,9 +191,13 @@ en:
       new:
         title: "New Tip"
         submit: "Create"
+      create:
+        success: "Tip has been created successfully!"
       edit:
         title: "Edit Tip"
         submit: "Update"
+      update:
+        success: "Tip has been updated successfully!"
     promotions:
       index:
         title: "Promotions"
@@ -184,9 +212,13 @@ en:
       new:
         title: "New Promotion"
         submit: "Create"
+      create:
+        success: "Promotion has been created successfully!"
       edit:
         title: "Edit Promotion"
         submit: "Update"
+      update:
+        success: "Promotion has been updated successfully!"
     visibilities:
       form_fields:
         visible_for: "Visible For"
@@ -262,9 +294,13 @@ en:
       new:
         title: "New Property Type"
         submit: "Create"
+      create:
+        success: "Property type has been created successfully!"
       edit:
         title: "{{name}} - Edit Property Type"
         submit: "Update"
+      update:
+        success: "Property type has been updated successfully!"
     translations:
       index:
         title: "Translations"
@@ -292,9 +328,13 @@ en:
       new:
         title: "New Asset"
         submit: "Create"
+      create:
+        success: "Asset has been created successfully!"
       edit:
         title: "{{name}} - Edit Asset"
         submit: "Update"
+      update:
+        success: "Asset has been updated successfully!"
     character_types:
       index:
         title: "Character Types"
@@ -310,9 +350,13 @@ en:
       new:
         title: "New Character Type"
         submit: "Create"
+      create:
+        success: "Character type has been created successfully!"
       edit:
         title: "{{name}} - Edit Character Type"
         submit: "Update"
+      update:
+        success: "Character type has been updated successfully!"
       form_fields:
         basic_attributes: "Basic Attributes"
         bonuses: "Bonuses"
@@ -332,9 +376,13 @@ en:
       new:
         title: "New Skin"
         submit: "Create"
+      create:
+        success: "Skin has been created successfully!"
       edit:
         title: "{{name}} - Edit Skin"
         submit: "Update"
+      update:
+        success: "Skin has been updated successfully!"
       show:
         title: "Default Stylesheet"
       changelog_form:
@@ -362,9 +410,13 @@ en:
       new:
         title: "New Help Page"
         submit: "Create"
+      create:
+        success: "Help page has been created successfully!"
       edit:
         title: "{{name}} - Edit Help Page"
         submit: "Update"
+      update:
+        success: "Help page has been updated successfully!"
       form_fields:
         comments:
           alias: "Only letters, numbers, dashes, and underscores are allowed."
@@ -384,9 +436,13 @@ en:
       new:
         title: "New Value"
         submit: "Create"
+      create:
+        success: "Value has been created successfully!"
       edit:
         title: "{{name}} - Edit Value"
         submit: "Update"
+      update:
+        success: "Value has been updated successfully!"
     global_tasks:
       show:
         title: "Global Tasks"
@@ -424,10 +480,13 @@ en:
       edit:
         title: "Edit Character"
         submit: "Update"
+      update:
+        success: "Character has been updated successfully!"
       payout:
         title: "Apply Payouts To Character"
         submit: "Apply"
         submit_and_continue: "Apply & Continue editing"
+        success: "Payouts have been applied to the character!"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"

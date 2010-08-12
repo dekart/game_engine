@@ -15,6 +15,8 @@ class Admin::SkinsController < Admin::BaseController
     if @skin.save
       update_stylesheets
 
+      flash[:success] = t(".success")
+      
       unless_continue_editing do
         redirect_to admin_skins_path
       end
@@ -32,6 +34,8 @@ class Admin::SkinsController < Admin::BaseController
 
     if @skin.update_attributes(params[:skin])
       update_stylesheets
+
+      flash[:success] = t(".success")
 
       unless_continue_editing do
         redirect_to admin_skins_path

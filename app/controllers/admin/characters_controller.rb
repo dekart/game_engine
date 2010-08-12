@@ -35,6 +35,8 @@ class Admin::CharactersController < Admin::BaseController
     @character = Character.find(params[:id])
 
     if @character.update_attributes(params[:character])
+      flash[:success] = t(".success")
+      
       unless_continue_editing do
         redirect_to admin_characters_path(:page => params[:page])
       end
@@ -55,6 +57,8 @@ class Admin::CharactersController < Admin::BaseController
         end
       end
 
+      flash[:success] = t(".success")
+      
       unless_continue_editing :action => :payout do
         redirect_to admin_characters_path
       end

@@ -12,6 +12,8 @@ class Admin::PromotionsController < Admin::BaseController
     @promotion = Promotion.new(params[:promotion])
 
     if @promotion.save
+      flash[:success] = t(".success")
+      
       unless_continue_editing do
         redirect_to admin_promotions_path
       end
@@ -28,6 +30,8 @@ class Admin::PromotionsController < Admin::BaseController
     @promotion = Promotion.find(params[:id])
 
     if @promotion.update_attributes(params[:promotion].reverse_merge(:payouts => nil))
+      flash[:success] = t(".success")
+      
       unless_continue_editing do
         redirect_to admin_promotions_path
       end

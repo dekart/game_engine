@@ -19,6 +19,8 @@ class Admin::AssetsController < Admin::BaseController
     if @asset.save
       update_stylesheets
 
+      flash[:success] = t(".success")
+
       unless_continue_editing do
         redirect_to admin_assets_path
       end
@@ -42,6 +44,8 @@ class Admin::AssetsController < Admin::BaseController
 
     if @asset.update_attributes(params[:asset])
       update_stylesheets
+
+      flash[:success] = t(".success")
 
       unless_continue_editing do
         redirect_to admin_assets_path
