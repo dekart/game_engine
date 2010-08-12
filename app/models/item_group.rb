@@ -29,6 +29,7 @@ class ItemGroup < ActiveRecord::Base
     end
   end
 
+  validates_presence_of :name
   validates_uniqueness_of :name
 
   def self.to_dropdown(*args)
