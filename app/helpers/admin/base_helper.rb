@@ -1,4 +1,27 @@
 module Admin::BaseHelper
+  def admin_flash_block(*args, &block)
+    options = args.extract_options!
+    display_keys = args.any? ? args : [:success, :error, :notice]
+
+    result = ""
+
+    display_keys.each do |key|
+      unless flash[key].blank?
+        value = block_given? ? capture(flash[key], &block) : flash[key]
+
+        flash.discard(key)
+        
+        result << content_tag(:div, value,
+          options.reverse_merge(:id => :flash, :class => key)
+        )
+      end
+    end
+
+    result.html_safe!
+
+    block_given? ? concat(result) : result
+  end
+
   def admin_state(object)
     content_tag(:span, object.state.to_s.capitalize, :class => object.state)
   end
