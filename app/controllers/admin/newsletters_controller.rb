@@ -11,7 +11,9 @@ class Admin::NewslettersController < Admin::BaseController
     @newsletter = Newsletter.new(params[:newsletter])
 
     if @newsletter.save
-      redirect_to admin_newsletters_path
+      unless_continue_editing do
+        redirect_to admin_newsletters_path
+      end
     else
       render :action => :new
     end
@@ -25,7 +27,9 @@ class Admin::NewslettersController < Admin::BaseController
     @newsletter = Newsletter.find(params[:id])
 
     if @newsletter.update_attributes(params[:newsletter])
-      redirect_to admin_newsletters_path
+      unless_continue_editing do
+        redirect_to admin_newsletters_path
+      end
     else
       render :action => :edit
     end

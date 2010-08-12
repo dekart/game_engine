@@ -24,6 +24,10 @@ $(function(){
     $(document).trigger('facebook.ready');
   });
 
+  $('form input.submit_and_continue[type=submit]').click(function(){
+    $('<input type="hidden" name="continue" value="true">').appendTo($(this).parents('form'));
+  })
+
   $('a.help').live('click', function(e){
     e.preventDefault();
 

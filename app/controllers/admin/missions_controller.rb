@@ -33,7 +33,9 @@ class Admin::MissionsController < Admin::BaseController
     @mission = Mission.new(params[:mission])
 
     if @mission.save
-      redirect_to admin_missions_path
+      unless_continue_editing do
+        redirect_to admin_missions_path
+      end
     else
       render :action => :new
     end
@@ -53,7 +55,9 @@ class Admin::MissionsController < Admin::BaseController
     @mission = Mission.find(params[:id])
 
     if @mission.update_attributes(params[:mission].reverse_merge(:requirements => nil, :payouts => nil))
-      redirect_to admin_missions_path
+      unless_continue_editing do
+        redirect_to admin_missions_path
+      end
     else
       render :action => :edit
     end

@@ -10,4 +10,12 @@ class Admin::BaseController < ApplicationController
   def ajax_layout
     "admin/layouts/ajax"
   end
+
+  def unless_continue_editing(options = {}, &block)
+    if params[:continue]
+      render options.reverse_merge(:action => :edit)
+    else
+      yield
+    end
+  end
 end

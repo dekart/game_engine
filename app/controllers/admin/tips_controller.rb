@@ -11,7 +11,9 @@ class Admin::TipsController < Admin::BaseController
     @tip = Tip.new(params[:tip])
 
     if @tip.save
-      redirect_to admin_tips_path
+      unless_continue_editing do
+        redirect_to admin_tips_path
+      end
     else
       render :action => :new
     end
@@ -25,7 +27,9 @@ class Admin::TipsController < Admin::BaseController
     @tip = Tip.find(params[:id])
 
     if @tip.update_attributes(params[:tip])
-      redirect_to admin_tips_path
+      unless_continue_editing do
+        redirect_to admin_tips_path
+      end
     else
       render :action => :edit
     end

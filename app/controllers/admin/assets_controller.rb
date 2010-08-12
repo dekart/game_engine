@@ -19,7 +19,9 @@ class Admin::AssetsController < Admin::BaseController
     if @asset.save
       update_stylesheets
 
-      redirect_to admin_assets_path
+      unless_continue_editing do
+        redirect_to admin_assets_path
+      end
     else
       render :action => :new
     end
@@ -40,8 +42,10 @@ class Admin::AssetsController < Admin::BaseController
 
     if @asset.update_attributes(params[:asset])
       update_stylesheets
-      
-      redirect_to admin_assets_path
+
+      unless_continue_editing do
+        redirect_to admin_assets_path
+      end
     else
       render :action => :edit
     end

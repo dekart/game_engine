@@ -11,7 +11,9 @@ class Admin::ItemGroupsController < Admin::BaseController
     @group = ItemGroup.new(params[:item_group])
 
     if @group.save
-      redirect_to :action => :index
+      unless_continue_editing do
+        redirect_to admin_item_groups_path
+      end
     else
       render :action => :new
     end
@@ -25,7 +27,9 @@ class Admin::ItemGroupsController < Admin::BaseController
     @group = ItemGroup.find(params[:id])
 
     if @group.update_attributes(params[:item_group])
-      redirect_to admin_item_groups_path
+      unless_continue_editing do
+        redirect_to admin_item_groups_path
+      end
     else
       render :action => :edit
     end

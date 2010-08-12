@@ -12,5 +12,7 @@ en:
         precision: 0
   forms:
     select_multiple: "Hold 'Ctrl' to select multiple items"
+  form_builder:
+    submit_and_continue: "Save & Contunie Editing"
   blocks:
     hide: "Hide"

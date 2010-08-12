@@ -35,7 +35,9 @@ class Admin::CharactersController < Admin::BaseController
     @character = Character.find(params[:id])
 
     if @character.update_attributes(params[:character])
-      redirect_to admin_characters_path(:page => params[:page])
+      unless_continue_editing do
+        redirect_to admin_characters_path(:page => params[:page])
+      end
     else
       render :edit
     end
@@ -53,7 +55,9 @@ class Admin::CharactersController < Admin::BaseController
         end
       end
 
-      redirect_to admin_characters_path
+      unless_continue_editing :action => :payout do
+        redirect_to admin_characters_path
+      end
     end
   end
 end

@@ -12,7 +12,9 @@ class Admin::PromotionsController < Admin::BaseController
     @promotion = Promotion.new(params[:promotion])
 
     if @promotion.save
-      redirect_to admin_promotions_path
+      unless_continue_editing do
+        redirect_to admin_promotions_path
+      end
     else
       render :action => :new
     end
@@ -26,7 +28,9 @@ class Admin::PromotionsController < Admin::BaseController
     @promotion = Promotion.find(params[:id])
 
     if @promotion.update_attributes(params[:promotion].reverse_merge(:payouts => nil))
-      redirect_to admin_promotions_path
+      unless_continue_editing do
+        redirect_to admin_promotions_path
+      end
     else
       render :action => :edit
     end

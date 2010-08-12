@@ -427,6 +427,7 @@ en:
       payout:
         title: "Apply Payouts To Character"
         submit: "Apply"
+        submit_and_continue: "Apply & Continue editing"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"
