@@ -15,8 +15,8 @@
       <div class="relations"><%= current_character.relations.effective_size %></div>
     </td>
     <td class="values">
-      <div class="attack"><%= current_character.inventories.effect(:attack) %></div>
-      <div class="defence"><%= current_character.inventories.effect(:defence) %></div>
+      <div class="attack"><%= current_character.equipment.effect(:attack) %></div>
+      <div class="defence"><%= current_character.equipment.effect(:defence) %></div>
     </td>
     
     <% %w(best_offence best_defence).each do |group| %>

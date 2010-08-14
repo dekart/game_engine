@@ -24,18 +24,32 @@ class Character::Equipment
     @character = character
   end
 
+  def effect(name)
+    unless @effects
+      @effects = {}
+
+      all_inventories = inventories
+
+      Item::EFFECTS.each do |effect|
+        @effects[effect] = all_inventories.sum{|i| i.send(effect) }
+      end
+    end
+
+    @effects[name.to_sym]
+  end
+
   def inventories(placement = nil)
-    ids = placement ? @character.placements[placement.to_sym] : @character.placements.collect{|key, value| value}.flatten
-    ids ||= []
-    
+    ids = placement ? Array.wrap(@character.placements[placement.to_sym]) : @character.placements.values.flatten
+
     if ids.any?
       inventories = Inventory.find_all_by_id(ids)
 
+      # Sorting inventories by ID order
       ids.collect do |id|
         inventories.detect{|inventory| inventory.id == id}
       end
     else
-      ids
+      []
     end
   end
 

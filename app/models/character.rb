@@ -223,23 +223,23 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    attack + inventories.effect(:attack) + assignments.effect_value(:attack)
+    attack + equipment.effect(:attack) + assignments.effect_value(:attack)
   end
 
   def defence_points
-    defence + inventories.effect(:defence) + assignments.effect_value(:defence)
+    defence + equipment.effect(:defence) + assignments.effect_value(:defence)
   end
 
   def health_points
-    health + inventories.effect(:health)
+    health + equipment.effect(:health)
   end
 
   def energy_points
-    energy + inventories.effect(:energy)
+    energy + equipment.effect(:energy)
   end
 
   def stamina_points
-    stamina + inventories.effect(:stamina)
+    stamina + equipment.effect(:stamina)
   end
 
   def fight_damage_reduce

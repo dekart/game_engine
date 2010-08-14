@@ -1,11 +1,5 @@
 class Character
   module Inventories
-    def effect(attribute)
-      equipped.all.sum do |i|
-        i.send(attribute) * i.equipped
-      end
-    end
-
     def give(item, amount = 1)
       amount = amount.to_i
 
