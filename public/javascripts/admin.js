@@ -1,30 +1,40 @@
-var PayoutList = {
-  init: function(object_name){
-    $('#payout_list').parents('form').submit(function(){
-      $(this).find('.payout').each(function(index){
+var SerializableList = {
+  init: function(selector, object_name){
+    $(selector).parents('form').submit(function(){
+      $(selector).find('.serializable_item').each(function(index){
         $('<input type="hidden" />').
           attr({
-            name:   object_name + '[payouts][' + this.id + '][position]',
+            name:   object_name + '[' + this.id + '][position]',
             value:  index
           }).
           prependTo(this);
       })
-    })
-  }
-}
+    });
 
-var RequirementList = {
-  init: function(object_name){
-    $('#requirement_list').parents('form').submit(function(){
-      $(this).find('.requirement').each(function(index){
-        $('<input type="hidden" />').
-          attr({
-            name:   object_name + '[requirements][' + this.id + '][position]',
-            value:  index
-          }).
-          prependTo(this);
-      })
-    })
+    SerializableList.updateBorderClasses(selector);
+  },
+  moveUp: function(id){
+    var $element = $(id);
+    var $before = $element.prev('.serializable_item');
+
+    $element.hide().detach().insertBefore($before).fadeIn('slow');
+    
+    SerializableList.updateBorderClasses($element.parent());
+  },
+
+  moveDown: function(id){
+    var $element = $(id);
+    var $after = $element.next('.serializable_item');
+
+    $element.hide().detach().insertAfter($after).fadeIn('slow');
+    
+    SerializableList.updateBorderClasses($element.parent());
+  },
+
+  updateBorderClasses: function(selector){
+    $(selector).find('.serializable_item').removeClass('first last').
+      first().addClass('first').end().
+      last().addClass('last');
   }
 }
 

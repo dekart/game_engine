@@ -1,5 +1,5 @@
 <div class="serializable payouts">
-  <div id="payout_list">
+  <div id="payout_list" class="list">
     <% form.object.payouts.each do |payout| %>
       <%= render("admin/payouts/payout", :payout => payout, :container  => form.object.class) %>
     <% end %>
@@ -19,5 +19,5 @@
 </div>
 
 <% dom_ready do %>
-  PayoutList.init('<%= form.object_name %>');
+  SerializableList.init('#payout_list', '<%= form.object_name %>[payouts]');
 <% end %>

@@ -1,5 +1,5 @@
 <div class="serializable">
-  <div id="requirement_list">
+  <div id="requirement_list" class="list">
     <% form.object.requirements.each do |requirement| %>
       <%= render("admin/requirements/requirement",
             :requirement  => requirement,
@@ -22,5 +22,5 @@
 </div>
 
 <% dom_ready do %>
-  RequirementList.init('<%= form.object_name %>');
+  SerializableList.init('#requirement_list', '<%= form.object_name %>[requirements]');
 <% end %>
