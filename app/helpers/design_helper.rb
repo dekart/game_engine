@@ -1,6 +1,6 @@
 module DesignHelper
   def hide_block_link(id)
-    link_to_remote(t("blocks.hide"),
+    link_to_remote(t("blocks.hide").html_safe,
       :url    => hide_block_user_path(current_user, :block => id),
       :before => "$('##{id}').hide()",
       :html   => {:class => :hide}
