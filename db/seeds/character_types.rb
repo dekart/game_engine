@@ -6,6 +6,7 @@ CharacterType.create(
   :defence      => 1,
   :health       => 100,
   :energy       => 10,
+  :stamina      => 10,
   :basic_money  => 10,
   :vip_money    => 0
 )
@@ -16,6 +17,7 @@ CharacterType.create(
   :defence      => 1,
   :health       => 100,
   :energy       => 10,
+  :stamina      => 10,
   :basic_money  => 10,
   :vip_money    => 0
 )
@@ -26,6 +28,7 @@ CharacterType.create(
   :defence      => 1,
   :health       => 100,
   :energy       => 10,
+  :stamina      => 10,
   :basic_money  => 10,
   :vip_money    => 0
 )
