@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
   end
 
   def permissions
-    PERMISSIONS.select{|p| self["permission_#{p}"] }.collect(&:to_sym)
+    PERMISSIONS.select{|p| self["permission_#{p}"] }.collect{|p| p.to_sym }
   end
 
   def clear_permissions
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   end
 
   def add_permissions(values)
-    permissions = PERMISSIONS & values.to_s.split(",").collect(&:to_sym)
+    permissions = PERMISSIONS & values.to_s.split(",").collect{|p| p.to_sym }
 
     permissions.each do |value|
       self["permission_#{value}"] = true

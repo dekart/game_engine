@@ -74,7 +74,7 @@ class MissionGroup < ActiveRecord::Base
   end
 
   def delete_children!
-    missions.without_state(:deleted).all.map(&:mark_deleted)
-    bosses.without_state(:deleted).all.map(&:mark_deleted)
+    missions.without_state(:deleted).all.map{|m| m.mark_deleted }
+    bosses.without_state(:deleted).all.map{|b| b.mark_deleted }
   end
 end

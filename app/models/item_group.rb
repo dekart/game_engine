@@ -37,6 +37,6 @@ class ItemGroup < ActiveRecord::Base
   end
 
   def delete_items!
-    items.without_state(:deleted).map(&:mark_deleted)
+    items.without_state(:deleted).map{|i| i.mark_deleted }
   end
 end
