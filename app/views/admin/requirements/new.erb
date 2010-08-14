@@ -3,5 +3,7 @@
     escape_javascript(
       render("admin/requirements/requirement", :requirement => @requirement, :container => @container)
     )
-  %>')
+  %>');
+
+  SerializableList.updateBorderClasses('#requirement_list');
 <% end %>

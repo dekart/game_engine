@@ -2,7 +2,7 @@
   <div class="controls">
     <%= link_to_function(t(".move_up"), "SerializableList.moveUp('#payout_#{payout.id}')", :class => :move_up) %>
     <%= link_to_function(t(".move_down"), "SerializableList.moveDown('#payout_#{payout.id}')", :class => :move_down) %>
-    <%= link_to_function(t(".remove"), "$('#payout_#{payout.id}').remove()", :class => :remove) %>
+    <%= link_to_function(t(".remove"), "SerializableList.remove('#payout_#{payout.id}')", :class => :remove) %>
   </div>
 
   <h4><%= t("payouts.#{payout.name}.name") %></h4>

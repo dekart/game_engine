@@ -31,6 +31,14 @@ var SerializableList = {
     SerializableList.updateBorderClasses($element.parent());
   },
 
+  remove: function(id){
+    var $list = $(id).parent();
+
+    $(id).remove();
+
+    SerializableList.updateBorderClasses($list);
+  },
+
   updateBorderClasses: function(selector){
     $(selector).find('.serializable_item').removeClass('first last').
       first().addClass('first').end().
