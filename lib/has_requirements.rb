@@ -15,15 +15,7 @@ module HasRequirements
     end
 
     def requirements=(collection)
-      if collection and !collection.is_a?(Requirements::Collection)
-        items = collection.values.collect do |requirement|
-          Requirements::Base.by_name(requirement[:type]).new(requirement)
-        end
-
-        collection = Requirements::Collection.new(*items)
-      end
-
-      super(collection)
+      super(Requirements::Collection.parse(collection))
     end
   end
 end

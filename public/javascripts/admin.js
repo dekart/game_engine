@@ -13,6 +13,21 @@ var PayoutList = {
   }
 }
 
+var RequirementList = {
+  init: function(object_name){
+    $('#requirement_list').parents('form').submit(function(){
+      $(this).find('.requirement').each(function(index){
+        $('<input type="hidden" />').
+          attr({
+            name:   object_name + '[requirements][' + this.id + '][position]',
+            value:  index
+          }).
+          prependTo(this);
+      })
+    })
+  }
+}
+
 $(function(){
   $.dialog.settings.container = 'body';
   

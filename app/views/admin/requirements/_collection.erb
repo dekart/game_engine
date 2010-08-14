@@ -1,13 +1,9 @@
 <div class="serializable">
   <div id="requirement_list">
     <% form.object.requirements.each do |requirement| %>
-      <%= content_tag(:div,
-            render("admin/requirements/requirement",
-              :requirement  => requirement,
-              :container    => form.object_name
-            ),
-            :class  => "requirement",
-            :id     => "requirement_#{requirement.object_id}"
+      <%= render("admin/requirements/requirement",
+            :requirement  => requirement,
+            :container    => form.object_name
           ) %>
     <% end %>
   </div>
@@ -24,3 +20,7 @@
     <% end %>
   </div>
 </div>
+
+<% dom_ready do %>
+  RequirementList.init('<%= form.object_name %>');
+<% end %>
