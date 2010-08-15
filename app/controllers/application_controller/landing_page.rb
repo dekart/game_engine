@@ -29,15 +29,15 @@ class ApplicationController
     def landing_url(last_landing)
       case last_landing.to_s
       when "gifts"
-        invite_users_path
+        invite_users_url(:canvas => true)
       else
-        new_gift_path
+        new_gift_url(:canvas => true)
       end
     end
 
     def check_landing_url
       if request.get? && current_user && current_user.should_visit_landing_page?
-        redirect_to landing_url(current_user.last_landing)
+        top_redirect_to landing_url(current_user.last_landing)
       else
         true
       end
