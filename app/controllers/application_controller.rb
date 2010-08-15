@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   # Send P3P privacy header to enable iframe cookies in IE
   def set_p3p_header
-    headers["P3P"] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
+    headers["P3P"] = 'CP="CAO PSA OUR"'
   end
 
   def check_character_existance
