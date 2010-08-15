@@ -12,7 +12,6 @@ class Admin::BaseController < ApplicationController
   end
 
   def unless_continue_editing(options = {}, &block)
-    logger.debug action_name
     if params[:continue]
       render options.reverse_merge(:action => :edit)
     else
