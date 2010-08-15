@@ -303,6 +303,26 @@ var Spinner = {
 }
 
 $(function(){
+  if(document.cookie.indexOf(session_id) == -1){
+    $('a').live('click', function(){
+      var url = $(this).attr('href');
+
+      url = url + (url.indexOf('?') == -1 ? '?' : '&') + '_session_id=' + session_id;
+
+      $(this).attr('href', url);
+    });
+
+    $('form').live('submit', function(){
+      $(this).append('<input type="hidden" name="_session_id" value="' + session_id + '">');
+    });
+
+    $.ajaxSetup({
+      beforeSend : function(request){
+        request.setRequestHeader('session-id', session_id);
+      }
+    });
+  }
+
   FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
     FB.XdComm.Server.init("/xd_receiver.html");
 

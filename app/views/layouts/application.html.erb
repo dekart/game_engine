@@ -4,6 +4,7 @@
   <script type="text/javascript">
     var facebook_api_key = '<%= Facebooker.facebooker_config["api_key"] %>';
     var character_key = '<%= current_character.key %>';
+    var session_id = '<%= request.session_options[:id] %>';
   </script>
 
   <%= fb_connect_javascript_tag.html_safe %>
