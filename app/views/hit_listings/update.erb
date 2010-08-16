@@ -19,19 +19,29 @@
       <% end %>
 
       <% if @hit_listing.completed? %>
-        <p class="completed">
-          <%= t(".completed", :victim => character_name_link(@hit_listing.victim)).html_safe %>
-        </p>
+        <% dialog do %>
+          <p class="completed">
+            <%= t(".completed.message", :victim => character_name_link(@hit_listing.victim)).html_safe %>
+          </p>
 
-        <table class="payouts" cellspacing="0" cellpadding="0">
-          <tr>
-            <td class="received">
-              <h3><%= t(".you_received") %></h3>
+          <table class="payouts" cellspacing="0" cellpadding="0">
+            <tr>
+              <td class="received">
+                <h3><%= t(".you_received") %></h3>
 
-              <%= payout(:basic_money, number_to_currency(@hit_listing.reward)) %>
-            </td>
-          </tr>
-        </table>
+                <%= payout(:basic_money, number_to_currency(@hit_listing.reward)) %>
+              </td>
+            </tr>
+          </table>
+
+          <p><%= t(".completed.publish") %></p>
+
+          <div class="buttons">
+            <%= link_to_function(button(:publish), completed_hit_listing_stream_dialog(@hit_listing), 
+                  :class => "publish button"
+                ) %>
+          </div>
+        <% end %>
       <% else %>
         <p class="incomplete"><%= t(".incomplete") %></p>
       <% end %>
