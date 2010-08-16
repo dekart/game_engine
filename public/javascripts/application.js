@@ -59,26 +59,25 @@ var CharacterForm = {
 
 var Character = {
   update: function(a){
-    $("#co .basic_money .value").text(a.character.formatted_basic_money);
-    $("#co .vip_money .value").text(a.character.formatted_vip_money);
-    $("#co .experience .value").text(a.character.experience + "/" + a.character.next_level_experience);
-    $("#co .experience .percentage").css({width: a.character.level_progress_percentage + "%"})
-    $("#co .level .value").text(a.character.level);
-    $("#co .health .value").text(a.character.hp + "/" + a.character.health_points);
-    $("#co .energy .value").text(a.character.ep + "/" + a.character.energy_points);
-    $("#co .stamina .value").text(a.character.sp + "/" + a.character.stamina_points);
-
-    if(a.character.points > 0) {
-      $("#co .level .upgrade").show();
-    } else {
-      $("#co .level .upgrade").hide();
-    }
+    var c = a.character;
     
-    Timer.start('#co .health .timer', a.character.time_to_hp_restore, this.update_from_remote);
-    Timer.start('#co .energy .timer', a.character.time_to_ep_restore, this.update_from_remote);
-    Timer.start('#co .stamina .timer', a.character.time_to_sp_restore, this.update_from_remote);
+    $("#co .basic_money .value").text(c.formatted_basic_money);
+    $("#co .vip_money .value").text(c.formatted_vip_money);
+    $("#co .experience .value").text(c.experience + "/" + c.next_level_experience);
+    $("#co .experience .percentage").css({width: c.level_progress_percentage + "%"})
+    $("#co .level .value").text(c.level);
+    $("#co .health .value").text(c.hp + "/" + c.health_points);
+    $("#co .energy .value").text(c.ep + "/" + c.energy_points);
+    $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
+
+    Timer.start('#co .health .timer', c.time_to_hp_restore, this.update_from_remote);
+    Timer.start('#co .energy .timer', c.time_to_ep_restore, this.update_from_remote);
+    Timer.start('#co .stamina .timer', c.time_to_sp_restore, this.update_from_remote);
 
     $('#co .timer').click(this.update_from_remote)
+
+    c.points > 0 ? $("#co .level .upgrade").show() : $("#co .level .upgrade").hide();
+    c.hp == c.health_points ? $('#co .health .hospital').hide() : $('#co .health .hospital').show();
   },
 
   update_from_remote: function(){
