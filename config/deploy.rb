@@ -1,3 +1,4 @@
+require "active_support"
 require "yaml"
 require "uri"
 require "capistrano/ext/multistage"
@@ -146,6 +147,23 @@ namespace :deploy do
   desc "Setup application settings"
   task :setup_settings, :roles => :app do
     run "cd #{release_path}; rake app:setup:reimport_settings"
+  end
+
+  desc "Configure warning message about scheduled downtime"
+  task :schedule_maintenance, :roles => :app do
+    settings = {
+      :start  => eval(ENV['DOWNTIME_START']).from_now.utc,
+      :length => eval(ENV['DOWNTIME_LENGTH'])
+    }
+
+    config = YAML.dump(settings)
+
+    put(config, "#{current_path}/public/system/maintenance.yml")
+  end
+
+  desc "Remove maintenance warning"
+  task :finish_maintenance, :roles => :app do
+    run "rm #{current_path}/public/system/maintenance.yml"
   end
 end
 

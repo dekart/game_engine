@@ -19,6 +19,15 @@
     <%= render "admin/layouts/main_menu" %>
   <% end %>
 
+  <% maintenance_warning do |settings| %>
+    <div id="maintenance_warning">
+      <%= t(".maintenance_warning",
+            :start_time => distance_of_time_in_words_to_now(settings[:start]),
+            :length => distance_of_time_in_words(settings[:length])
+          ).html_safe %>
+    </div>
+  <% end %>
+
   <div id="content">
     <div id="header">
       <%= link_to("", root_path, :id => :logo) %>

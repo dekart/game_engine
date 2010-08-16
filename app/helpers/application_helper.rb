@@ -123,4 +123,14 @@ module ApplicationHelper
       )
     end
   end
+
+  def maintenance_warning
+    settings_path = Rails.root.join("public", "system", "maintenance.yml")
+
+    if File.file?(settings_path)
+      settings = YAML.load(File.read(settings_path))
+
+      yield(settings) if settings[:start] > Time.now
+    end
+  end
 end
