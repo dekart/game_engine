@@ -29,6 +29,9 @@ en:
         spinner:
           alt: "Please wait..."
           text: "Please wait for a few seconds..."
+        footer:
+          text: "This game is powered by {{engine}} version {{version}}"
+          engine: "Railorz RPG Engine"
     item_groups:
       index:
         title: "Item Groups"
