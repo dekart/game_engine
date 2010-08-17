@@ -504,5 +504,8 @@ en:
         title:
           deposit: "Latest Deposits"
           withdrawal: "Latest Withdrawals"
+        filter:
+          title: "Filter"
+          submit: "Apply Filter"
         
     # Add your custom translation strings below this mark
