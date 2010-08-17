@@ -1,10 +1,15 @@
 class ApplicationController
   module ExceptionLogging
     def self.included(base)
-      base.rescue_from Exception, :with => :rescue_basic_exception
-      base.rescue_from ActionController::MethodNotAllowed, :with => :rescue_method_not_allowed
-      base.rescue_from ActionController::RoutingError, :with => :rescue_routing_error
-      base.rescue_from ActionController::UnknownAction, :with => :rescue_unknown_action
+      {
+        Exception                             => :rescue_basic_exception,
+        ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
+        ActionController::RoutingError        => :rescue_routing_error,
+        ActionController::UnknownAction       => :rescue_unknown_action,
+        Facebooker::Session::SignatureTooOld  => :resque_signature_too_old
+      }.each do |exception, method|
+        base.rescue_from(exception, :with => method)
+      end
     end
 
     def redirect_to_fixed_or_root
@@ -56,6 +61,14 @@ class ApplicationController
       redirect_to_fixed_or_root
     end
 
+    def resque_signature_too_old(exception)
+      logger.fatal(exception)
+      
+      log_browser_info
+
+      redirect_from_iframe root_url(:canvas => true)
+    end
+    
     def fatal_log_processing_for_request_id
       request_id = "\n\nProcessing #{self.class.name}\##{action_name} "
       request_id << "to #{params[:format]} " if params[:format]

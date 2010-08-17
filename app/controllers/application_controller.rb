@@ -163,4 +163,24 @@ class ApplicationController < ActionController::Base
 
     redirect_to(uri.to_s)
   end
+
+  def redirect_from_iframe(*args)
+    @redirect_url = url_for(*args)
+
+    render :layout => false, :text => <<-HTML
+      <html><head>
+        <script type="text/javascript">
+          window.top.location.href = #{@redirect_url.to_json};
+        </script>
+        <noscript>
+          <meta http-equiv="refresh" content="0;url=#{@redirect_url}" />
+          <meta http-equiv="window-target" content="_top" />
+        </noscript>
+      </head></html>
+    HTML
+  end
+
+  def top_redirect_to(*args)
+    request_is_facebook_iframe? ? redirect_from_iframe(*args) : redirect_to(*args)
+  end
 end
