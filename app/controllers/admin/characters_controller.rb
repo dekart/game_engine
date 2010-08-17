@@ -50,8 +50,10 @@ class Admin::CharactersController < Admin::BaseController
 
     if request.put? and params[:character]
       Character.transaction do
+        payouts = Payouts::Collection.parse(params[:character][:payouts])
+
         @characters.each do |character|
-          character.payouts = params[:character][:payouts]
+          payouts.apply(character, :save, :admin_payout)
 
           character.save!
         end

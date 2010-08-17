@@ -146,7 +146,7 @@ class Character < ActiveRecord::Base
     :restore_bonus  => :stamina_restore_bonus
 
   after_validation_on_create :apply_character_type_defaults
-  before_save   :update_level_and_points, :apply_payouts, :update_total_money
+  before_save   :update_level_and_points, :update_total_money
 
   validates_presence_of :character_type, :on => :create
 
@@ -548,10 +548,6 @@ class Character < ActiveRecord::Base
     self.hp = health_points
     self.ep = energy_points
     self.sp = stamina_points
-  end
-
-  def apply_payouts
-    @payouts.apply(self, :save) if @payouts
   end
 
   def update_total_money
