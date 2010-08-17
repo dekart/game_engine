@@ -16,7 +16,7 @@
         </div>
       </div>
       
-      <% if offence = fight.attacker.inventories.best_offence and offence.any? %>
+      <% if offence = fight.attacker.equipment.best_offence and offence.any? %>
         <div class="best_items">
           <strong><%= t(".best_offence") %></strong>
 
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <% if defence = fight.victim.inventories.best_defence and defence.any? %>
+      <% if defence = fight.victim.equipment.best_defence and defence.any? %>
         <div class="best_items">
           <strong><%= t(".best_defence") %></strong>
 

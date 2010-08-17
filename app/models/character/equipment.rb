@@ -28,28 +28,36 @@ class Character::Equipment
     unless @effects
       @effects = {}
 
-      all_inventories = inventories
-
       Item::EFFECTS.each do |effect|
-        @effects[effect] = all_inventories.sum{|i| i.send(effect) }
+        @effects[effect] = inventories.sum{|i| i.send(effect) }
       end
     end
 
     @effects[name.to_sym]
   end
 
-  def inventories(placement = nil)
-    ids = placement ? Array.wrap(@character.placements[placement.to_sym]) : @character.placements.values.flatten
+  def inventories
+    unless @inventories
+      ids = @character.placements.values.flatten
 
-    if ids.any?
-      inventories = Inventory.find_all_by_id(ids)
+      if ids.any?
+        inventories = Inventory.find_all_by_id(ids, :include => :item)
 
-      # Sorting inventories by ID order
-      ids.collect do |id|
-        inventories.detect{|inventory| inventory.id == id}
+        # Sorting inventories by ID order
+        @inventories = ids.collect do |id|
+          inventories.detect{|inventory| inventory.id == id}
+        end
+      else
+        @inventories = []
       end
-    else
-      []
+    end
+
+    @inventories
+  end
+
+  def inventories_by_placement(placement)
+    Array.wrap(@character.placements[placement.to_sym]).collect do |id|
+      inventories.detect{|i| i.id == id}
     end
   end
 
@@ -223,5 +231,17 @@ class Character::Equipment
 
   def placement_usage(placement)
     @character.placements[placement].try(:size).to_i
+  end
+
+  def best_offence
+    inventories.group_by{|i| i.item.item_group_id }.values.collect do |group|
+      group.max_by{|i| i.attack }
+    end
+  end
+
+  def best_defence
+    inventories.group_by{|i| i.item.item_group_id }.values.collect do |group|
+      group.max_by{|i| i.defence }
+    end
   end
 end

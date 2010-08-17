@@ -1,7 +1,7 @@
 <div id="placements">
   <% (Character::Equipment::MAIN_PLACEMENTS).each do |placement| %>
     <% content_tag(:div, :class => "placement #{placement}") do %>
-      <% character.equipment.inventories(placement).each do |inventory| %>
+      <% character.equipment.inventories_by_placement(placement).each do |inventory| %>
         <% content_tag :div, :class => :inventory do %>
           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
                 :url    => unequip_inventory_path(inventory, :placement => placement),
@@ -20,7 +20,7 @@
   <div class="additional clearfix">
     <h2><%= Character::Equipment.placement_name(:additional) %></h2>
 
-    <% character.equipment.inventories(:additional).each do |inventory| %>
+    <% character.equipment.inventories_by_placement(:additional).each do |inventory| %>
       <% content_tag :div, :class => :inventory do %>
         <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
               :url    => unequip_inventory_path(inventory, :placement => :additional),

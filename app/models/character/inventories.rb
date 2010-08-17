@@ -82,32 +82,6 @@ class Character
       end
     end
 
-    def best_offence
-      [].tap do |result|
-        ItemGroup.all.each do |group|
-          result << proxy_owner.inventories.by_item_group(group).equipped.first(
-            :conditions => "attack > 0",
-            :order      => "attack DESC"
-          )
-        end
-
-        result.compact!
-      end
-    end
-
-    def best_defence
-      [].tap do |result|
-        ItemGroup.all.each do |group|
-          result << proxy_owner.inventories.by_item_group(group).equipped.first(
-            :conditions => "defence > 0",
-            :order      => "defence DESC"
-          )
-        end
-
-        result.compact!
-      end
-    end
-
     protected
 
     def equip(inventory)
