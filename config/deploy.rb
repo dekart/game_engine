@@ -85,8 +85,19 @@ namespace :deploy do
 
         root #{current_path}/public;
 
-        passenger_enabled on;
         rails_env #{rails_env};
+
+        location ~ null {
+          return 404;
+        }
+
+        location / {
+          try_files $uri @passenger;
+        }
+
+        location @passenger {
+          passenger_enabled on;
+        }
       }
     CODE
 
