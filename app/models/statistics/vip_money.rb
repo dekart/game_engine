@@ -52,7 +52,7 @@ class Statistics
       by_period.collect!{|d| [d[:reference_type], d[:total_amount].to_i] }
 
       result = totals.collect do |name, count|
-        [name.to_s.humanize, count, by_period.assoc(name).try(:last).to_i]
+        [name.to_s, count, by_period.assoc(name).try(:last).to_i]
       end
 
       result.sort!{|a, b| b.last <=> a.last }

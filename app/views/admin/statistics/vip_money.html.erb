@@ -30,7 +30,7 @@
           </tr>
           <% types.each do |reference, total, period| %>
             <tr>
-              <td><%= reference %></td>
+              <td><%= reference.humanize %></td>
               <td><%= total %></td>
               <td><%= "+%d" % period if period > 0 %></td>
             </tr>
@@ -83,7 +83,7 @@
           </tr>
           <% types.each do |reference, total, period| %>
             <tr>
-              <td><%= reference %></td>
+              <td><%= reference.humanize %></td>
               <td><%= total %></td>
               <td><%= "+%d" % period if period > 0 %></td>
             </tr>
