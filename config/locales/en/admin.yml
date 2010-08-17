@@ -265,6 +265,7 @@ en:
         title: "Statistics: New Users"
         total_users: "Total Users"
         latest_users: "Latest Users"
+        profile: "FB Profile"
         references: "References"
         no_reference: "No reference"
         no_character: "(No character)"
