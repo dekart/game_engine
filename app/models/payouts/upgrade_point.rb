@@ -4,7 +4,7 @@ module Payouts
       @value = value.to_i
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       if action == :remove
         character.points -= @value
         character.points = 0 if character.points < 0

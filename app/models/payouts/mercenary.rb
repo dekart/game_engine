@@ -6,7 +6,7 @@ module Payouts
       @value = value.to_i
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       @mercenaries = []
 
       @value.times do

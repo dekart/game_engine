@@ -42,18 +42,18 @@ class MissionResult
             @character.missions_completed += 1
             @character.points += 1
 
-            @payouts = @mission.payouts.apply(@character, :complete)
+            @payouts = @mission.payouts.apply(@character, :complete, @mission)
 
             @group_rank, @group_payouts = @character.mission_groups.check_completion!(@mission_group)
           else
-            @payouts = @mission.payouts.apply(@character,
-              @rank.completed? ? :repeat_success : :success
-            )
+            payout_trigger = @rank.completed? ? :repeat_success : :success
+
+            @payouts = @mission.payouts.apply(@character, payout_trigger, @mission)
           end
         else
-          @payouts = @mission.payouts.apply(@character,
-            @rank.completed? ? :repeat_failure : :failure
-          )
+          payout_trigger = @rank.completed? ? :repeat_failure : :failure
+
+          @payouts = @mission.payouts.apply(@character, payout_trigger, @mission)
         end
 
         # Checking if energy assignment encountered free fulfillment

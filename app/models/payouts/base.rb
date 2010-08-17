@@ -46,7 +46,7 @@ module Payouts
       self.class.payout_name
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       raise "Not implemented"
     end
 

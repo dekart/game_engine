@@ -44,17 +44,17 @@ class BossFight < ActiveRecord::Base
         if boss_lost?
           character.experience += boss.experience
 
-          @payouts = boss.payouts.apply(character, 
-            character.boss_fights.won?(boss) ? :repeat_victory : :victory
-          )
+          payout_trigger = character.boss_fights.won?(boss) ? :repeat_victory : :victory
+
+          @payouts = boss.payouts.apply(character, payout_trigger, boss)
           
           win!
 
           @group_rank, @group_payouts = character.mission_groups.check_completion!(boss.mission_group)
         elsif character_lost?
-          @payouts = boss.payouts.apply(character,
-            character.boss_fights.won?(boss) ? :repeat_defeat : :defeat
-          )
+          payout_trigger = character.boss_fights.won?(boss) ? :repeat_defeat : :defeat
+
+          @payouts = boss.payouts.apply(character, payout_trigger, boss)
 
           lose!
         end

@@ -7,6 +7,10 @@ class Promotion < ActiveRecord::Base
   
   validates_presence_of :text, :valid_till
 
+  def name
+    "%s #%d" % [self.class.human_name, id]
+  end
+
   def to_param
     "%s-%s" % [id, secret]
   end

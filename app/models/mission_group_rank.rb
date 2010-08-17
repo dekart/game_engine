@@ -38,7 +38,7 @@ class MissionGroupRank < ActiveRecord::Base
   end
 
   def apply_payouts
-    @payouts = mission_group.payouts.apply(character, :complete)
+    @payouts = mission_group.payouts.apply(character, :complete, mission_group)
   end
 
   def assign_just_created

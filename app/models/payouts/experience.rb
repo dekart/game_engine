@@ -4,7 +4,7 @@ module Payouts
       @value = value.to_i
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       character.experience += @value
     end
   end

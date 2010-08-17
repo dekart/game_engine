@@ -69,7 +69,8 @@ class Property < ActiveRecord::Base
       transaction do
         update_attribute(:collected_at, Time.now)
 
-        result = payouts.apply(character, :collect)
+        result = payouts.apply(character, :collect, property_type)
+        
         result << Payouts::BasicMoney.new(:value => total_income)
 
         character.charge!(- total_income, 0, self)

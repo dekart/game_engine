@@ -16,7 +16,7 @@ module Payouts
       ::Item.find_by_id(value)
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       if action == :remove
         character.inventories.take!(item, amount)
       else

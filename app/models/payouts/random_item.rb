@@ -21,7 +21,7 @@ module Payouts
       end
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       character.inventories.give!(item) if item
     end
 

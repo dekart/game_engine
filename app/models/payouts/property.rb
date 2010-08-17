@@ -8,7 +8,7 @@ module Payouts
       ::PropertyType.find_by_id(value)
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       if action != :remove
         character.properties.give!(property_type)
       end

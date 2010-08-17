@@ -24,11 +24,11 @@ module Payouts
       @items = payouts
     end
 
-    def apply(character, trigger)
+    def apply(character, trigger, reference = nil)
       Payouts::Collection.new.tap do |result|
         items.each do |payout|
           if payout.applicable?(trigger)
-            payout.apply(character)
+            payout.apply(character, reference)
 
             result.items << payout
           end

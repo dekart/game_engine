@@ -4,11 +4,11 @@ module Payouts
       @value = value.to_i
     end
 
-    def apply(character)
+    def apply(character, reference = nil)
       if action == :remove
-        character.charge(0, @value)
+        character.charge(0, @value, reference)
       else
-        character.charge(0, - @value)
+        character.charge(0, - @value, reference)
       end
     end
   end

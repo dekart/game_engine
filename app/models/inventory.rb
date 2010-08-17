@@ -42,7 +42,7 @@ class Inventory < ActiveRecord::Base
     return false unless usable?
 
     transaction do
-      result = payouts.apply(character, :use)
+      result = payouts.apply(character, :use, item)
 
       character.save!
       
