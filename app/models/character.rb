@@ -93,20 +93,18 @@ class Character < ActiveRecord::Base
   has_many :vip_money_withdrawals
 
   named_scope :victims_for, Proc.new{|attacker|
+    victim_ids = attacker.attacks.all(
+      :select     => "DISTINCT victim_id",
+      :conditions => ["winner_id = ? AND created_at > ?", attacker.id, Setting.i(:fight_attack_repeat_delay).minutes.ago]
+    ).collect{|a| a[:victim_id] }
+    
     {
       :conditions => [
-        %{
-          (level BETWEEN :low_level AND :high_level) AND
-          characters.id NOT IN (
-            SELECT fights.victim_id FROM fights WHERE attacker_id = :attacker_id AND winner_id = :attacker_id AND fights.created_at > :time_limit
-          ) AND
-          characters.id != :attacker_id
-        },
+        "(level BETWEEN :low_level AND :high_level) AND characters.id NOT IN (:exclude_ids)",
         {
           :low_level    => attacker.level - Setting.i(:fight_victim_levels_lower),
           :high_level   => attacker.level + Setting.i(:fight_victim_levels_higher),
-          :attacker_id  => attacker.id,
-          :time_limit   => Setting.i(:fight_attack_repeat_delay).minutes.ago
+          :exclude_ids  => victim_ids + [attacker.id]
         }
       ],
       :include  => :user
