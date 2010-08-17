@@ -9,7 +9,7 @@ module Publisher
 
     def notification(assignment)
       Facebooker::Session.create.post("facebook.dashboard.addNews",
-        :uid => assignment.relation.target_character.user.facebook_id,
+        :uid => assignment.relation.character.user.facebook_id,
         :news => [
           {
             :message => I18n.t("news.assignment.text",
