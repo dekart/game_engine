@@ -47,7 +47,7 @@ class CharactersController < ApplicationController
     set_facebook_session
     
     if current_character
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
