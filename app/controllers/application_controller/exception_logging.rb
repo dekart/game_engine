@@ -6,7 +6,8 @@ class ApplicationController
         ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
         ActionController::RoutingError        => :rescue_routing_error,
         ActionController::UnknownAction       => :rescue_unknown_action,
-        Facebooker::Session::SignatureTooOld  => :resque_signature_too_old
+        Facebooker::Session::SignatureTooOld  => :resque_signature_too_old,
+        Facebooker::Session::MissingOrInvalidParameter => :resque_missing_or_invalid_parameter
       }.each do |exception, method|
         base.rescue_from(exception, :with => method)
       end
@@ -69,6 +70,14 @@ class ApplicationController
       redirect_from_iframe root_url(:canvas => true)
     end
     
+    def resque_missing_or_invalid_parameter(exception)
+      logger.fatal(exception)
+
+      log_browser_info
+
+      redirect_from_iframe root_url(:canvas => true)
+    end
+
     def fatal_log_processing_for_request_id
       request_id = "\n\nProcessing #{self.class.name}\##{action_name} "
       request_id << "to #{params[:format]} " if params[:format]
