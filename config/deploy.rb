@@ -108,7 +108,7 @@ namespace :deploy do
 
   namespace :db do
     desc "Backup database"
-    task :backup, :roles => :app do
+    task :backup, :roles => :db do
       run "mysqldump -u %s --password='%s' %s > %s/db_dump.%d.sql" % [
         db_config[rails_env]["username"],
         db_config[rails_env]["password"],
