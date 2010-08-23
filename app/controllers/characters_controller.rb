@@ -90,7 +90,7 @@ class CharactersController < ApplicationController
     @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
     if @character.save
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     else
       render :action => :edit
     end
