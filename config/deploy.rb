@@ -176,6 +176,13 @@ namespace :deploy do
   task :finish_maintenance, :roles => :app do
     run "rm #{current_path}/public/system/maintenance.yml"
   end
+
+  desc "Generate Facebooker config file"
+  task :generate_facebooker_config do
+    config = YAML.dump(rails_env => facebooker.stringify_keys)
+
+    put(config, "#{release_path}/config/facebooker.yml")
+  end
 end
 
 ["deploy:dependencies:system_gems"].each do |t|
@@ -184,7 +191,9 @@ end
 
 before "deploy:migrations", "deploy:db:backup"
 
-after "deploy:update_code", "deploy:dependencies:bundled_gems"
+["deploy:dependencies:bundled_gems", "deploy:generate_facebooker_config"].each do |t|
+  after "deploy:update_code", t
+end
 
 ["deploy:setup_settings", "deploy:setup_stylesheets"].each do |t|
   before "deploy:symlink", t

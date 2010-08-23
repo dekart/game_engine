@@ -16,3 +16,5 @@ public/stylesheets/sass/skins/*
 public/stylesheets/skins/*
 public/stylesheets/*.css
 .*.sw?
+
+config/facebooker.yml
