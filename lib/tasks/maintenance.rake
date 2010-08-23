@@ -1,5 +1,25 @@
 namespace :app do
   namespace :maintenance do
+    desc "Make sure that friend relations are etsablished in both directions"
+    task :check_friend_relations => :environment do
+      puts "Checking friend relations (#{FriendRelation.count})..."
+
+      restored = 0
+
+      FriendRelation.find_each do |relation|
+        unless FriendRelation.first(:conditions => {:owner_id => relation.character_id, :character_id => relation.owner_id})
+          FriendRelation.create(
+            :owner      => relation.character,
+            :character  => relation.owner
+          )
+          
+          restored += 1
+        end
+      end
+
+      puts "Done! #{restored} relations restored"
+    end
+
     desc "Assign attributes to mercenries"
     task :assign_attributes_to_mercenaries => :environment do
       puts "Assigning attributes to mercenaries..."

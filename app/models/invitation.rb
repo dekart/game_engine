@@ -23,8 +23,8 @@ class Invitation < ActiveRecord::Base
       )
 
       FriendRelation.create(
-        :owner      => sender.character,
-        :character  => receiver.character
+        :owner      => receiver.character,
+        :character  => sender.character
       )
 
       update_attribute(:accepted, true)
