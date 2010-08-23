@@ -11,7 +11,6 @@ set :use_sudo, false
 set :scm, "git"
 set :deploy_via, :remote_cache
 
-set :facebook_config, YAML.load_file(File.join(File.dirname(__FILE__), "facebooker.yml"))
 set :db_config, YAML.load_file(File.expand_path("../database.yml", __FILE__))
 
 default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
@@ -57,7 +56,7 @@ namespace :deploy do
   task :update_apache_config do
     config = <<-CODE
       <VirtualHost *:80>
-        ServerName #{URI.parse(facebook_config[rails_env]["callback_url"]).host}
+        ServerName #{URI.parse(facebooker[:callback_url]).host}
         DocumentRoot #{current_path}/public
         RailsEnv #{rails_env}
 
@@ -81,7 +80,7 @@ namespace :deploy do
       server {
         listen 80;
 
-        server_name #{URI.parse(facebook_config[rails_env]["callback_url"]).host};
+        server_name #{URI.parse(facebooker[:callback_url]).host};
 
         root #{current_path}/public;
 
