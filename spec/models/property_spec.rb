@@ -266,7 +266,7 @@ describe Property do
       end
 
       it "should apply property payouts to character" do
-        @payouts.should_receive(:apply).with(@character, :collect).and_return(@payout_result)
+        @payouts.should_receive(:apply).with(@character, :collect, @property_type).and_return(@payout_result)
 
         @property.collect_money!
       end

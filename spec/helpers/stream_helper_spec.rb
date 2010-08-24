@@ -3,6 +3,7 @@ require "spec_helper"
 describe StreamHelper do
   before :each do
     helper.stub!(:asset_image_path).and_return("/path/to/image.jpg")
+    helper.stub!(:current_user).and_return(mock_model(Character))
   end
 
   describe "when generating stream dialog for level up" do
@@ -57,22 +58,6 @@ describe StreamHelper do
     end
   end
 
-  describe "when generating stream dialog for invitation" do
-    before :each do
-      @character = mock_model(Character,
-        :invitation_key => "the-key"
-      )
-
-      helper.stub!(:current_character).and_return(@character)
-    end
-
-    it "should not fail" do
-      lambda{
-        helper.invitation_stream_dialog
-      }.should_not raise_exception
-    end
-  end
-
   describe "when generating stream dialog for mission completion" do
     before :each do
       @mission_group = mock_model(MissionGroup)
@@ -113,8 +98,13 @@ describe StreamHelper do
 
   describe "when generating stream dialog for help request" do
     before :each do
+      @mission_group = mock_model(MissionGroup)
+
       @mission  = mock_model(Mission,
-        :name           => "Super Mission"
+        :name           => "Super Mission",
+        :mission_group  => @mission_group,
+        :image?         => true,
+        :image          => mock("image", :url => "/path/to/image.jpg")
       )
 
       @victim = mock_model(Character,

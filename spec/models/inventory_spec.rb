@@ -21,7 +21,7 @@ describe Inventory do
     end
 
     it "should apply usage payouts" do
-      @inventory.payouts.should_receive(:apply).with(@character, :use).and_return(Payouts::Collection.new)
+      @inventory.payouts.should_receive(:apply).with(@character, :use, @item).and_return(Payouts::Collection.new)
       
       @inventory.use!
     end
