@@ -18,13 +18,13 @@ module CharactersHelper
   def character_name_link(character_or_user, link_options = {}, name_options = {})
     character = character_for(character_or_user)
 
-    link_to(character_name(character, name_options), character_url(character), link_options)
+    link_to(character_name(character, name_options), character_url(character.key), link_options)
   end
 
   def character_picture_link(character_or_user, link_options = {}, picture_options = {})
     character = character_for(character_or_user)
 
-    link_to(character_picture(character, picture_options), character_url(character), link_options)
+    link_to(character_picture(character, picture_options), character_url(character.key), link_options)
   end
 
   def character_level_up_block

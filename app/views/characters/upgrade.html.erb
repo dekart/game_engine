@@ -31,7 +31,7 @@
 
   <div id="upgrade_finished" style="display:none;" class="note">
     <%= t(".finished.note",
-          :profile  => link_to(t(".finished.profile"), character_path(current_character)),
+          :profile  => link_to(t(".finished.profile"), character_path(current_character.key)),
           :get_more => link_to(t(".finished.get_more"), premium_path)
         ).html_safe %>
   </div>

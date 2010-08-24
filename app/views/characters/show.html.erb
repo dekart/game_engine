@@ -20,7 +20,7 @@
             :update => :ajax,
             :html   => {:class => "upgrade button"}
           ) if current_character.points > 0 %>
-    <% else %>
+    <% elsif @secured %>
       <%= link_to_remote(button(:attack),
             :url    => fights_path(:victim_id => @character),
             :update => :result,

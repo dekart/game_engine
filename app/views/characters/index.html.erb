@@ -1,7 +1,7 @@
 <table id="dashboard" cellspacing="0" cellpadding="0">
   <tr>
     <td class="profile">
-      <h3><%= link_to(t(".overview.title"), character_path(current_character)) %></h3>
+      <h3><%= link_to(t(".overview.title"), character_path(current_character.key)) %></h3>
 
       <%= render "characters/attributes", :character => current_character %>
 

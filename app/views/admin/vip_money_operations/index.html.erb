@@ -24,7 +24,7 @@
     <% @operations.each do |operation| %>
       <tr>
         <td><%= l(operation.created_at, :format => :short) %></td>
-        <td><%= link_to(character_name(operation.character), character_url(operation.character, :canvas => true)) %></td>
+        <td><%= link_to(character_name(operation.character), character_url(operation.character.key, :canvas => true)) %></td>
         <td><%= admin_statistics_reference(operation.reference) %></td>
         <td><%= operation.amount %></td>
       </tr>

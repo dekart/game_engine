@@ -35,6 +35,8 @@ class CharactersController < ApplicationController
 
   def show
     @character = Character.find(params[:id])
+
+    @secured = (@character.key == params[:id])
   end
 
   def load_vip_money

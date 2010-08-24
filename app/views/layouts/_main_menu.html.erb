@@ -2,7 +2,7 @@
   <tr>
     <td>
       <%= link_to(t(".home"), root_path, :class => :home) %>
-      <%= link_to(t(".character"), character_path(current_character), :class => :profile) %>
+      <%= link_to(t(".character"), character_path(current_character.key), :class => :profile) %>
     </td>
     <td>
       <%= link_to(t(".missions"), mission_groups_path, :class => :missions) %>

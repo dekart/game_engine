@@ -36,11 +36,11 @@
     <tr>
       <td><%= l(user.created_at, :format => :short) %></td>
       <td><%= link_to(user.facebook_id, fb_profile_url(user), :target => :_blank) %></td>
-      <td><%= user.character ? link_to(user.character.character_type.name, character_url(user.character, :canvas => true)) : content_tag(:span, t(".no_character"), :class => :empty) %></td>
+      <td><%= user.character ? link_to(user.character.character_type.name, character_url(user.character.key, :canvas => true)) : content_tag(:span, t(".no_character"), :class => :empty) %></td>
       <td><%= user.reference %></td>
       <td>
         <% if user.referrer.try(:character) %>
-          <%= link_to(character_name(user.referrer.character), character_url(user.referrer.character, :canvas => true)) %>
+          <%= link_to(character_name(user.referrer.character), character_url(user.referrer.character.key, :canvas => true)) %>
           <%= link_to(t(".profile"), fb_profile_url(user),
                 :class  => :profile,
                 :target => :_blank
