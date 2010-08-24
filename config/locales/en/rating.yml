@@ -9,8 +9,13 @@ en:
         relations: "Alliance Rating"
         global: "Global Rating"
 
-      level: "Highest Level"
-      total_money: "Wealthiest"
-      fights: "Most Wins"
-      missions: "Most Missions"
-      relations: "Strongest Alliance"
+    level: 
+      title: "Highest Level"
+    total_money:
+      title: "Wealthiest"
+    fights:
+      title: "Most Wins"
+    missions:
+      title: "Most Missions"
+    relations:
+      title: "Strongest Alliance"

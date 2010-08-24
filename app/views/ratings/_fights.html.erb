@@ -1,0 +1,18 @@
+<h2><%= t(".title") %></h2>
+
+<table class="rating" cellspacing="0" cellpadding="0">
+  <tr>
+    <th>#</th>
+    <th colspan="2"><%= Character.human_name %></th>
+    <th><%= Character.human_attribute_name("fights_won") %></th>
+  </tr>
+
+  <% characters.each_with_index do |character, index| %>
+    <% content_tag(:tr, :class => (:current if character == current_character)) do %>
+      <td class="position"><%= index + 1 %></td>
+      <td class="picture"><%= character_picture_link(character) %></td>
+      <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
+      <td class="fights_won last"><%= character.fights_won %></td>
+    <% end %>
+  <% end %>
+</table>
