@@ -1,11 +1,6 @@
 class FightsController < ApplicationController
   def new
-    @victims = Character.victims_for(current_character).scoped(
-      :order => "RAND()",
-      :limit => Setting.i(:fight_victim_show_limit)
-    )
-
-    @victims = @victims.not_friends_with(current_character) unless Setting.b(:fight_alliance_attack)
+    @victims = current_character.possible_victims
   end
 
   def create

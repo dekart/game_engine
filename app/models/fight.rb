@@ -67,7 +67,9 @@ class Fight < ActiveRecord::Base
   def validate
     errors.add(:character, :not_enough_stamina) unless enough_stamina?
 
-    if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or (!is_response? and Character.victims_for(attacker).find_by_id(victim.id).nil?) or (attacker == victim)
+    if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or 
+       (!is_response? and !attacker.can_attack?(victim.id)) or
+       (attacker == victim)
       errors.add(:character, :cannot_attack)
     end
 

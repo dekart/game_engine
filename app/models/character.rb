@@ -92,36 +92,11 @@ class Character < ActiveRecord::Base
   has_many :vip_money_deposits
   has_many :vip_money_withdrawals
 
-  named_scope :victims_for, Proc.new{|attacker|
-    victim_ids = attacker.attacks.all(
-      :select     => "DISTINCT victim_id",
-      :conditions => ["winner_id = ? AND created_at > ?", attacker.id, Setting.i(:fight_attack_repeat_delay).minutes.ago]
-    ).collect{|a| a[:victim_id] }
-    
-    {
-      :conditions => [
-        "(level BETWEEN :low_level AND :high_level) AND characters.id NOT IN (:exclude_ids)",
-        {
-          :low_level    => attacker.level - Setting.i(:fight_victim_levels_lower),
-          :high_level   => attacker.level + Setting.i(:fight_victim_levels_higher),
-          :exclude_ids  => victim_ids + [attacker.id]
-        }
-      ],
-      :include  => :user
-    }
-  }
-
   named_scope :rated_by, Proc.new{|unit|
     {
       :order => "characters.#{unit} DESC",
       :limit => Setting.i(:rating_show_limit)
     }
-  }
-
-  named_scope :not_friends_with, Proc.new{|character|
-    ids = character.friend_relations.character_ids
-    
-    ids.any? ? {:conditions => ["characters.id NOT IN (?)", ids]} : {}
   }
 
   serialize :placements
@@ -299,11 +274,52 @@ class Character < ActiveRecord::Base
     )
   end
 
-  def can_attack?(victim)
-    scope = self.class.victims_for(self)
-    scope = scope.not_friends_with(self) unless Setting.b(:fight_alliance_attack)
+  def possible_victims
+    exclude_ids = latest_opponent_ids + [id]
 
-    scope.find_by_id(victim.id).present?
+    exclude_ids.push(*friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
+
+    Character.all(
+      :conditions => [
+        "(level BETWEEN :low_level AND :high_level) AND characters.id NOT IN (:exclude_ids)",
+        {
+          :low_level    => lowest_opponent_level,
+          :high_level   => highest_opponent_level,
+          :exclude_ids  => exclude_ids
+        }
+      ],
+      :include  => :user,
+      :order => "ABS(level - #{level}), RAND()",
+      :limit => Setting.i(:fight_victim_show_limit)
+    ).tap do |result|
+      result.shuffle!
+    end
+  end
+
+  def latest_opponent_ids
+    attacks.all(
+      :select     => "DISTINCT victim_id",
+      :conditions => ["winner_id = ? AND created_at > ?",
+        self.id,
+        Setting.i(:fight_attack_repeat_delay).minutes.ago
+      ]
+    ).collect{|a| a.victim_id }
+  end
+
+  def lowest_opponent_level
+    level - Setting.i(:fight_victim_levels_lower)
+  end
+
+  def highest_opponent_level
+    level + Setting.i(:fight_victim_levels_higher)
+  end
+
+  def can_attack?(victim)
+    level_fits        = (lowest_opponent_level..highest_opponent_level).include?(victim.level)
+    attacked_recently = latest_opponent_ids.include?(victim.id)
+    friendly_attack   = Setting.b(:fight_alliance_attack) ? false : friend_relations.character_ids.include?(victim.id)
+
+    level_fits && !attacked_recently && !friendly_attack
   end
 
   def rank_for_mission(mission)
