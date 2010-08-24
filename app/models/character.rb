@@ -274,12 +274,12 @@ class Character < ActiveRecord::Base
     )
   end
 
-  def possible_victims
+  def possible_victims(scope_options = {})
     exclude_ids = latest_opponent_ids + [id]
 
     exclude_ids.push(*friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
 
-    Character.all(
+    Character.scoped(scope_options).all(
       :conditions => [
         "(level BETWEEN :low_level AND :high_level) AND characters.id NOT IN (:exclude_ids)",
         {
