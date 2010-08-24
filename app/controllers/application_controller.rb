@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
         :canvas     => true
       )
 
-      top_redirect_to url_for(url_params)
+      redirect_from_iframe url_for(url_params)
     end
   end
 

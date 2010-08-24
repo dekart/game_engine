@@ -37,7 +37,7 @@ class ApplicationController
 
     def check_landing_url
       if request.get? && current_user && current_user.should_visit_landing_page?
-        top_redirect_to landing_url(current_user.last_landing)
+        redirect_from_iframe landing_url(current_user.last_landing)
       else
         true
       end
