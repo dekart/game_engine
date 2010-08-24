@@ -279,7 +279,9 @@ class Character < ActiveRecord::Base
 
     exclude_ids.push(*friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
 
-    Character.scoped(scope_options).all(
+    scope = Character.scoped(scope_options)
+
+    scope.all(
       :conditions => [
         "(level BETWEEN :low_level AND :high_level) AND characters.id NOT IN (:exclude_ids)",
         {
