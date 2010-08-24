@@ -140,7 +140,7 @@ namespace :deploy do
 
     desc "Install required gems"
     task :bundled_gems, :roles => :app do
-      run "cd #{release_path}; bundle install"
+      run "cd #{release_path}; bundle install --without=test"
     end
   end
 
