@@ -63,6 +63,12 @@ class Setting < ActiveRecord::Base
       value_to_cast * cache[key.to_sym].to_i * 0.01
     end
 
+    def time(key)
+      cache_values!
+
+      Time.parse(cache[key.to_sym])
+    end
+
     def []=(key, value)
       if value.nil?
         find_by_alias(key.to_s).try(:destroy)
