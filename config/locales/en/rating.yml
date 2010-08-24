@@ -4,7 +4,8 @@ en:
       title:
         global: "Hall of Fame: Global"
         relations: "Hall of Fame: Alliance"
-
+        
+    buttons:
       buttons:
         relations: "Alliance Rating"
         global: "Global Rating"
