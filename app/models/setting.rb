@@ -64,10 +64,12 @@ class Setting < ActiveRecord::Base
     end
 
     def []=(key, value)
-      if !value.nil?
-        create(:alias => key.to_s, :value => value)
-      else
+      if value.nil?
         find_by_alias(key.to_s).try(:destroy)
+      elsif existing = find_by_alias(key.to_s)
+        existing.update_attributes(:value => value)
+      else
+        create(:alias => key.to_s, :value => value)
       end
     end
 

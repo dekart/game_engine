@@ -9,12 +9,12 @@ describe Setting do
         }.should change(Setting, :count).by(1)
       end
       
-      it "should not change existing value" do
+      it "should change existing value" do
         Setting[:some_value] = "asd"
 
         lambda{
           Setting[:some_value] = "sdf"
-        }.should_not change{ Setting[:some_value] }
+        }.should change{ Setting[:some_value] }.from("asd").to("sdf")
       end
     end
 
