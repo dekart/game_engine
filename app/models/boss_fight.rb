@@ -30,9 +30,11 @@ class BossFight < ActiveRecord::Base
   before_create :get_energy_from_character
   
   def perform!
+    return unless progress?
+
     if time_left <= 0
       perform_expire!
-    elsif progress? && valid?
+    elsif valid?
       attacker_won, @boss_hp_loss, @character_hp_loss = calculate_proportions
 
       @winner = attacker_won ? character : boss
