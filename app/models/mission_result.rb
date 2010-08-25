@@ -21,6 +21,11 @@ class MissionResult
       @success = (rand(100) <= @mission.success_chance)
 
       Rank.transaction do
+        # Checking if energy assignment encountered free fulfillment
+        @free_fulfillment = (@character.assignments.effect_value(:mission_energy) > rand(100))
+
+        @character.ep -= @mission.ep_cost unless @free_fulfillment
+
         if @success
           mission_money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)
 
@@ -56,11 +61,6 @@ class MissionResult
           @payouts = @mission.payouts.apply(@character, payout_trigger, @mission)
         end
 
-        # Checking if energy assignment encountered free fulfillment
-        @free_fulfillment = (@character.assignments.effect_value(:mission_energy) > rand(100))
-
-        @character.ep -= @mission.ep_cost unless @free_fulfillment
-        
         @character.save!
       end
 
