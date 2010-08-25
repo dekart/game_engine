@@ -77,6 +77,8 @@ class Setting < ActiveRecord::Base
       else
         create(:alias => key.to_s, :value => value)
       end
+
+      cache_values!(true)
     end
 
     def [](key)
