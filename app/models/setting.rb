@@ -66,10 +66,14 @@ class Setting < ActiveRecord::Base
     def time(key)
       cache_values!
 
-      Time.parse(cache[key.to_sym])
+      cache[key.to_sym] ? ActiveSupport::TimeZone["UTC"].parse(cache[key.to_sym]) : ActiveSupport::TimeZone["UTC"].at(0)
     end
 
     def []=(key, value)
+      if value.is_a?(Time)
+        value = value.utc
+      end
+
       if value.nil?
         find_by_alias(key.to_s).try(:destroy)
       elsif existing = find_by_alias(key.to_s)
