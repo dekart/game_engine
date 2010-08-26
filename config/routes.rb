@@ -173,6 +173,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :help_pages, :only => :show
 
+  map.resources :notifications, :only => [], :member => {:disable => :post}
+
   # Add your custom routes below this mark
   
   map.connect ':controller/:action/:id'

@@ -18,6 +18,8 @@
           :class => "continue button"
         ) %>
   </div>
+
+  <%= render("notifications/disable", :notification => notification) %>
 <% end %>
 
 <% dom_ready do %>
