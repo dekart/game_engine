@@ -1,7 +1,7 @@
 en:
   notifications:
     disable:
-      disable: "Disable {{type}} Notifications"
+      disable: "Don't show this message in the future"
       confirm: "Are you sure you want to disable all {{type}} notifications in the future?"
 
     level_up:
