@@ -27,14 +27,6 @@ module CharactersHelper
     link_to(character_picture(character, picture_options), character_url(character.key), link_options)
   end
 
-  def character_level_up_block
-    if notification = current_character.notifications.pending_by_type(:level_up).first
-      notification.display
-      
-      render("characters/level_up")
-    end
-  end
-
   def character_wall(character, options = {})
     options = options.reverse_merge(
       :url    => character_url(character, 

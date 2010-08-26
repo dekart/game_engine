@@ -44,5 +44,9 @@ module Notification
     def self.type_to_class(type)
       type_to_class_name(type).constantize
     end
+
+    def class_to_type
+      self.class.name.split("::").last.underscore.to_sym
+    end
   end
 end
