@@ -35,15 +35,15 @@
           :get_more => link_to(t(".finished.get_more"), premium_path)
         ).html_safe %>
   </div>
-<% end %>
 
-<% dom_ready do %>
-  $(document).bind('character.upgrade_complete', function(){
-    $('#upgrade_list').hide();
-    $('#upgrade_finished').show();
-  });
+  <script type="text/javascript">
+    $(document).bind('character.upgrade_complete', function(){
+      $('#upgrade_list').hide();
+      $('#upgrade_finished').show();
+    });
 
-  $('#<%= current_character.points > 0 ? :upgrade_list : :upgrade_finished %>').show();
-  
-  $(document).trigger('character.upgrade_dialog');
+    $('#<%= current_character.points > 0 ? :upgrade_list : :upgrade_finished %>').show();
+
+    $(document).trigger('character.upgrade_dialog');
+  </script>
 <% end %>
