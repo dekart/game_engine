@@ -17,8 +17,6 @@
             <%= payout(:experience, @help_result.experience) %>
           </div>
         <% end %>
-
-        <%= character_level_up_block %>
       <% elsif @help_request.context.is_a?(Fight) %>
         <%= render :file => "fights/create" %>
       <% end %>

@@ -67,6 +67,12 @@
   
   <%= user_permission_dialog(:email) %>
 
+  <%= display_notifications %>
+
+  <% dom_ready do %>
+    $(document).trigger('application.ready');
+  <% end %>
+    
   <%= dom_ready %>
 
   <%= google_analytics %>

@@ -42,8 +42,6 @@
   <% end %>
 <% end %>
 
-<%= character_level_up_block %>
-
 <% dom_ready do %>
   <% if @fight.cause %>
     $('#<%= dom_id(@fight.cause, :respond) %>').hide();

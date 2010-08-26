@@ -27,10 +27,6 @@ module CharactersHelper
     link_to(character_picture(character, picture_options), character_url(character.key), link_options)
   end
 
-  def character_level_up_block
-    render("characters/level_up") if current_character.level_updated
-  end
-
   def character_wall(character, options = {})
     options = options.reverse_merge(
       :url    => character_url(character, 

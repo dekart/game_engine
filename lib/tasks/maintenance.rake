@@ -1,5 +1,34 @@
 namespace :app do
   namespace :maintenance do
+    desc "Update translation keys"
+    task :update_translation_keys => :environment do
+      puts "Updating translation keys..."
+
+      {
+        "characters.level_up.title"             => "notifications.level_up.title",
+        "characters.level_up.text"              => "notifications.level_up.text",
+        "characters.level_up.upgrade_link"      => "notifications.level_up.upgrade_link",
+        "characters.level_up.buttons.continue"  => "notifications.level_up.buttons.continue",
+        "characters.level_up.buttons.upgrade"   => "notifications.level_up.buttons.upgrade"
+      }.each do |old_key, new_key|
+        if translation = Translation.find_by_key(old_key)
+          print "#{old_key} - "
+
+          if new_key.present?
+            translation.update_attribute(:key, new_key)
+            
+            puts "Updated"
+          else
+            translation.destroy
+
+            puts "Deleted"
+          end
+        end
+      end
+
+      puts "Done!"
+    end
+
     desc "Make sure that friend relations are etsablished in both directions"
     task :check_friend_relations => :environment do
       puts "Checking friend relations (#{FriendRelation.count})..."

@@ -78,7 +78,7 @@ module ApplicationHelper
       content = content_tag(:div, content, options)
     end
 
-    dom_ready("$.dialog('#{escape_javascript(content)}')")
+    dom_ready("$(document).queue('dialog', function(){ $.dialog('#{escape_javascript(content)}') });")
   end
 
   def google_analytics

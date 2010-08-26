@@ -2,7 +2,8 @@ class Character < ActiveRecord::Base
   extend SerializeWithPreload
   extend RestorableAttribute
   extend HasPayouts
-  include ActionView::Helpers::NumberHelper 
+  include ActionView::Helpers::NumberHelper
+  include Character::Notifications
   
   LEVELS = [0]
 
@@ -102,8 +103,6 @@ class Character < ActiveRecord::Base
   serialize :placements
 
   attr_accessible :name
-
-  attr_accessor :level_updated
 
   has_payouts :save
 
@@ -554,7 +553,7 @@ class Character < ActiveRecord::Base
       self.hp = health_points
       self.sp = stamina_points
 
-      self.level_updated = true
+      notifications.schedule(:level_up)
     end
   end
 
