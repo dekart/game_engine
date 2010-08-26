@@ -116,7 +116,7 @@
     if (settings) $.extend($.dialog.settings, settings)
     $($.dialog.settings.container).append($.dialog.settings.dialogHtml)
 
-    $('#dialog .close').click($.dialog.close)
+    $('#dialog .close').click($.dialog.close);
   }
   
   // getPageScroll() by quirksmode.com
@@ -198,16 +198,18 @@
     return false
   }
 
-  function hideOverlay() {
-    if (skipOverlay()) return
+  function hideOverlay(callback){
+    if (skipOverlay()) return false;
 
     $('#dialog_overlay').fadeOut(400, function(){
-      $("#dialog_overlay").removeClass("dialog_overlayBG")
-      $("#dialog_overlay").addClass("dialog_hide")
-      $("#dialog_overlay").remove()
-    })
+      $("#dialog_overlay").removeClass("dialog_overlayBG");
+      $("#dialog_overlay").addClass("dialog_hide");
+      $("#dialog_overlay").remove();
+
+      callback();
+    });
     
-    return false
+    return false;
   }
 
   /*
@@ -215,13 +217,17 @@
    */
 
   $(document).bind('close.dialog', function() {
-    $(document).unbind('keydown.dialog')
+    $(document).unbind('keydown.dialog');
+
     $('#dialog').fadeOut(function() {
       if ($('#dialog_moved').length == 0) $('#dialog .content').removeClass().addClass('content clearfix')
       else $('#dialog_moved').replaceWith($('#dialog .content').children().hide())
-      hideOverlay()
-      $('#dialog .loading').remove()
-    })
+      hideOverlay(function(){
+        $('#dialog .loading').remove();
+
+        $(document).trigger('dialog.close_complete');
+      })
+    });
   })
 
 })(jQuery);

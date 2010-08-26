@@ -371,6 +371,10 @@ $(function(){
     
     $.dialog({ajax: $(this).attr('href')});
   });
+
+  $(document).bind('dialog.close_complete application.ready', function(){
+    $(document).dequeue('dialog');
+  });
 });
 
 function bookmark(){
