@@ -28,7 +28,11 @@ module CharactersHelper
   end
 
   def character_level_up_block
-    render("characters/level_up") if current_character.level_updated
+    if notification = current_character.notifications.pending_by_type(:level_up).first
+      notification.display
+      
+      render("characters/level_up")
+    end
   end
 
   def character_wall(character, options = {})
