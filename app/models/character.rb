@@ -274,24 +274,26 @@ class Character < ActiveRecord::Base
   end
 
   def possible_victims(scope_options = {})
-    exclude_ids = latest_opponent_ids + [id]
-
-    exclude_ids.push(*friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
-
     scope = Character.scoped(scope_options)
 
+    # Exclude recent opponents, friends, and self
+    exclude_ids = latest_opponent_ids
+    exclude_ids.push(*friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
+    exclude_ids.push(id)
+
+    scope = scope.scoped(
+      :conditions => ["characters.id NOT IN (?)", exclude_ids]
+    )
+
+    # Scope by level
+    scope = scope.scoped(
+      :conditions => ["level BETWEEN ? AND ?", lowest_opponent_level, highest_opponent_level]
+    )
+
     scope.all(
-      :conditions => [
-        "(level BETWEEN :low_level AND :high_level) AND characters.id NOT IN (:exclude_ids)",
-        {
-          :low_level    => lowest_opponent_level,
-          :high_level   => highest_opponent_level,
-          :exclude_ids  => exclude_ids
-        }
-      ],
       :include  => :user,
-      :order => "ABS(level - #{level}), RAND()",
-      :limit => Setting.i(:fight_victim_show_limit)
+      :order    => "ABS(level - #{level}), RAND()",
+      :limit    => Setting.i(:fight_victim_show_limit)
     ).tap do |result|
       result.shuffle!
     end
