@@ -194,8 +194,14 @@ before "deploy:migrations", "deploy:db:backup"
   after "deploy:update_code", t
 end
 
-["deploy:setup_settings", "deploy:setup_stylesheets"].each do |t|
-  before "deploy:symlink", t
+on :before, :only => "deploy:cold" do
+  after "deploy:cold", "deploy:setup_stylesheets"
+end
+
+on :before, :only => ["deploy", "deploy:migrations"] do
+  ["deploy:setup_settings", "deploy:setup_stylesheets"].each do |t|
+    before "deploy:symlink", t
+  end
 end
 
 ["deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
