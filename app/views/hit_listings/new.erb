@@ -1,4 +1,4 @@
-<% dialog do %>
+<% dialog do |d| %>
   <h2><%= t(".title") %></h2>
 
   <% remote_form_for [@victim, @hit_listing], :update => :ajax do |form| %>
@@ -10,8 +10,8 @@
   <% end %>
 
   <div class="note"><%= t(".note", :fee => Setting.i(:hit_list_reward_fee)) %></div>
-<% end %>
 
-<% dom_ready do %>
-  $(document).trigger('remote_content.received');
+  <% d.on_ready do %>
+    $(document).trigger('remote_content.received');
+  <% end %>
 <% end %>

@@ -71,16 +71,6 @@ module ApplicationHelper
     end
   end
 
-  def dialog(options = {}, &block)
-    content = capture(&block)
-
-    if options.any?
-      content = content_tag(:div, content, options)
-    end
-
-    dom_ready("$(document).queue('dialog', function(){ $.dialog('#{escape_javascript(content)}') });")
-  end
-
   def google_analytics
     if Setting.s(:app_google_analytics_id).present?
       %{

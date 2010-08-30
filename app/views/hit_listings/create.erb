@@ -1,4 +1,4 @@
-<% dialog do %>
+<% dialog do |d| %>
   <h2><%= t(".title") %></h2>
 
   <p class="message">
@@ -7,10 +7,10 @@
           :victim => character_name_link(@hit_listing.victim)
         ).html_safe %>
   </p>
-<% end %>
 
-<% dom_ready do %>
-  $(document).trigger('remote_content.received');
+  <% d.on_ready do %>
+    $(document).trigger('remote_content.received');
 
-  <%= new_hit_listing_stream_dialog(@hit_listing) %>
+    <%= new_hit_listing_stream_dialog(@hit_listing) %>
+  <% end %>
 <% end %>

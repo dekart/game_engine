@@ -1,4 +1,4 @@
-<% dialog do %>
+<% dialog do |d| %>
   <% form_for [@assignment.context, @assignment] do |f| %>
     <h2><%= t(".title") %></h2>
 
@@ -47,10 +47,10 @@
 
     <%= submit_tag t(".submit") %>
   <% end %>
-<% end %>
 
-<% dom_ready do %>
-  AssignmentForm.setup();
+  <% d.on_ready do %>
+    AssignmentForm.setup();
 
-  $(document).trigger('remote_content.received');
+    $(document).trigger('remote_content.received');
+  <% end %>
 <% end %>

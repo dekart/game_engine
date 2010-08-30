@@ -1,4 +1,4 @@
-<% dialog :id => :upgrade_dialog do %>
+<% dialog :id => :upgrade_dialog do |d| %>
   <h2><%= t(".title") %></h2>
 
   <div id="upgrade_result"></div>
@@ -36,7 +36,7 @@
         ).html_safe %>
   </div>
 
-  <script type="text/javascript">
+  <% d.on_ready do %>
     $(document).bind('character.upgrade_complete', function(){
       $('#upgrade_list').hide();
       $('#upgrade_finished').show();
@@ -45,5 +45,5 @@
     $('#<%= current_character.points > 0 ? :upgrade_list : :upgrade_finished %>').show();
 
     $(document).trigger('character.upgrade_dialog');
-  </script>
+  <% end %>
 <% end %>
