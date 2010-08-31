@@ -8,8 +8,8 @@ class Statistics
     def initialize(*args)
       super(*args)
 
-      @users = Users.new(@period)
-      @vip_money = VipMoney.new(@period)
+      @users = Users.new(@time_range)
+      @vip_money = VipMoney.new(@time_range)
     end
   end
 end

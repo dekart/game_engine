@@ -9,11 +9,11 @@ class Statistics
     end
 
     def deposit_by_period
-      VipMoneyDeposit.scoped(:conditions => ["created_at > ?", @period.ago]).sum(:amount)
+      VipMoneyDeposit.scoped(:conditions => {:created_at => @time_range}).sum(:amount)
     end
 
     def withdrawal_by_period
-      VipMoneyWithdrawal.scoped(:conditions => ["created_at > ?", @period.ago]).sum(:amount)
+      VipMoneyWithdrawal.scoped(:conditions => {:created_at => @time_range}).sum(:amount)
     end
 
     def deposit_reference_types
@@ -43,7 +43,7 @@ class Statistics
 
       totals.collect!{|d| [d[:reference_type], d[:total_amount].to_i] }
 
-      by_period = klass.scoped(:conditions => ["created_at > ?", @period.ago]).all(
+      by_period = klass.scoped(:conditions => {:created_at => @time_range}).all(
         :select => "reference_type, sum(amount) as total_amount",
         :group  => :reference_type,
         :order  => :reference_type
@@ -68,7 +68,7 @@ class Statistics
 
       totals.collect!{|d| [d.reference, d[:total_amount].to_i]}
 
-      by_period = klass.scoped(:conditions => ["created_at > ?", @period.ago]).all(
+      by_period = klass.scoped(:conditions => {:created_at => @time_range}).all(
         :select => "reference_id, reference_type, sum(amount) as total_amount",
         :group  => "reference_id, reference_type"
       )

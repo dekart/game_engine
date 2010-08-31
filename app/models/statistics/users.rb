@@ -5,7 +5,7 @@ class Statistics
     end
 
     def users_by_period
-      User.count(:conditions => ["created_at >= ?", @period.ago])
+      User.count(:conditions => {:created_at => @time_range})
     end
 
     def latest_users(limit = 100)
@@ -25,7 +25,7 @@ class Statistics
 
       totals.collect!{|c| [c.reference, c[:user_count].to_i] }
 
-      by_period = User.scoped(:conditions => ["created_at >= ?", @period.ago]).all(
+      by_period = User.scoped(:conditions => {:created_at => @time_range}).all(
         :select => "reference, count(id) as user_count",
         :group  => :reference,
         :order  => :reference

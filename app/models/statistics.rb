@@ -1,5 +1,9 @@
 class Statistics
-  def initialize(period)
-    @period = period
+  def initialize(time_range)
+    if time_range.is_a?(Range)
+      @time_range = time_range
+    else
+      @tiem_range = (time_range .. Time.now)
+    end
   end
 end
