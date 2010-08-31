@@ -145,10 +145,6 @@ class Character < ActiveRecord::Base
       end
     end
 
-    def rating_position(character, field)
-      count(:conditions => ["#{field} > ?", character.send(field)]) + 1
-    end
-
     def level_for_experience(value)
       LEVELS.each_with_index do |experience, level|
         return level if experience >= value

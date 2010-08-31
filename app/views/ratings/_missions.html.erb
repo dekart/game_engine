@@ -7,9 +7,9 @@
     <th><%= Character.human_attribute_name("missions_succeeded") %></th>
   </tr>
 
-  <% characters.each_with_index do |character, index| %>
-    <% content_tag(:tr, :class => (:current if character == current_character)) do %>
-      <td class="position"><%= index + 1 %></td>
+  <% rating_table(characters, :missions_succeeded) do |character, position, current| %>
+    <% content_tag(:tr, :class => (:current if current)) do %>
+      <td class="position"><%= position %></td>
       <td class="picture"><%= character_picture_link(character) %></td>
       <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
       <td class="missions_succeeded last"><%= character.missions_succeeded %></td>
