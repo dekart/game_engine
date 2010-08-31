@@ -114,11 +114,20 @@ var Timer = {
   timers: {},
 
   format: function(value){
-    var hours   = Math.floor(value / 3600);
-    var minutes = Math.floor((value - hours * 3600) / 60);
-    var seconds = value - hours * 3600 - minutes * 60;
+    var days    = Math.floor(value / 86400);
+    var hours   = Math.floor((value - days * 86400) / 3600);
+    var minutes = Math.floor((value - days * 86400 - hours * 3600) / 60);
+    var seconds = value - days * 86400 - hours * 3600 - minutes * 60;
 
-    var result = hours > 0 ? hours + ":" : "";
+    var result = '';
+
+    if(days > 0){
+      result = result + days + ' days, ';
+    }
+
+    if(hours > 0){
+      result = result + hours + ":";
+    }
 
     if(minutes < 10){
       result = result + "0" + minutes;
