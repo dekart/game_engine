@@ -6,7 +6,7 @@ module RatingsHelper
       current = (character == current_character)
 
       if current and character == characters.last
-        position = characters.count(:conditions => ["#{field} > ?", character.send(field)]) + 1
+        position = characters.rating_position(character, field)
       else
         position = index + 1
       end

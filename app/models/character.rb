@@ -150,6 +150,10 @@ class Character < ActiveRecord::Base
         return level if experience >= value
       end
     end
+
+    def rating_position(character, field)
+      count(:conditions => ["#{field} > ?", character.send(field)]) + 1
+    end
   end
 
   def basic_money=(value)
