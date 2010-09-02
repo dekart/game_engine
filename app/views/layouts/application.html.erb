@@ -16,7 +16,9 @@
 </head>
 <body>
   <% admin_only do %>
-    <%= render "admin/layouts/main_menu" %>
+    <div id="admin_menu">
+      <%= link_to(t(".admin_interface"), admin_missions_path, :target => :admin)  %>
+    </div>
   <% end %>
 
   <% maintenance_warning do |settings| %>

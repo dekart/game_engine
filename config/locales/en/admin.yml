@@ -4,7 +4,6 @@ en:
     layouts:
       main_menu:
         title: "Admin Menu"
-        home: "Application Home"
         character_types: "Character Types"
         item_groups: "Item Groups"
         items: "Items"

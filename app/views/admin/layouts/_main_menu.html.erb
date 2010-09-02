@@ -1,48 +1,29 @@
-<div id="admin_menu" class="clearfix">
-  <%= link_to(t(".home"), root_url(:canvas => true), :class => :app) unless request_is_facebook_iframe? %>
-
+<div id="admin_menu">
   <h2><%= t(".title") %></h2>
 
-  <table width="100%">
-    <tr>
-      <%
-        [
-          [
-            [:character_types, admin_character_types_path],
-            [:mission_groups,  admin_mission_groups_path],
-            [:missions,        admin_missions_path],
-            [:bosses,          admin_bosses_path],
-          ],
-          [
-            [:item_groups,     admin_item_groups_path],
-            [:items,           admin_items_path],
-            [:property_types,  admin_property_types_path],
-          ],
-          [
-            [:tips,            admin_tips_path],
-            [:help_pages,      admin_help_pages_path],
-            [:translations,    admin_translations_path],
-          ],
-          [
-            [:newsletter,      admin_newsletters_path],
-            [:promotions,      admin_promotions_path],
-            [:statistics,      admin_statistics_path],
-            [:characters,      admin_characters_path],
-          ],
-          [
-            [:skins,           admin_skins_path],
-            [:assets,          admin_assets_path],
-            [:settings,        admin_settings_path],
-            [:global_tasks,    admin_global_task_path],
-          ]
-        ].each do |group|
-      %>
-        <td>
-          <% group.each do |title, link| %>
-            <%= link_to(t(".#{title}"), link, :target => :admin, :class => :item) %>
-          <% end %>
-        </td>
-      <% end %>
-    </tr>
-  </table>
+  <%
+    [
+      [:character_types, admin_character_types_path],
+      [:mission_groups,  admin_mission_groups_path],
+      [:missions,        admin_missions_path],
+      [:bosses,          admin_bosses_path],
+      [:item_groups,     admin_item_groups_path],
+      [:items,           admin_items_path],
+      [:property_types,  admin_property_types_path],
+      [:tips,            admin_tips_path],
+      [:help_pages,      admin_help_pages_path],
+      [:translations,    admin_translations_path],
+      [:newsletter,      admin_newsletters_path],
+      [:promotions,      admin_promotions_path],
+      [:statistics,      admin_statistics_path],
+      [:characters,      admin_characters_path],
+      [:skins,           admin_skins_path],
+      [:assets,          admin_assets_path],
+      [:settings,        admin_settings_path],
+      [:global_tasks,    admin_global_task_path],
+    ].each do |title, link| %>
+    <%= link_to(t(".#{title}"), link,
+          :class => "item %s" % (:current if controller_name == title.to_s)
+        ) %>
+  <% end %>
 </div>

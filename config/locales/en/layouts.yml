@@ -1,6 +1,7 @@
 en:
   layouts:
     application:
+      admin_interface: "Go to Admin Interface »"
       maintenance_warning: "The game will be down for a scheduled server maintenance in next {{start_time}}. Downtime shouldn't exceed {{length}}."
     next_steps:
       title: "Next Steps"

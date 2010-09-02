@@ -15,12 +15,14 @@
 </head>
 <body>
   <%= render "admin/layouts/main_menu" %>
-      
-  <%= admin_flash_block %>
 
-  <div id="result" style="display:none"></div>
+  <div id="content">
+    <%= admin_flash_block %>
 
-  <%= yield %>
+    <div id="result" style="display:none"></div>
+
+    <%= yield %>
+  </div>
 
   <div id="footer">
     <%= t(".footer.text",
