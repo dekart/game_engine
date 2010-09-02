@@ -22,14 +22,16 @@
     <div id="result" style="display:none"></div>
 
     <%= yield %>
+
+    <div id="footer">
+      <%= t(".footer.text",
+            :engine   => link_to(t(".footer.engine"), "http://railorz.com", :target => :_blank),
+            :version  => File.read(Rails.root.join("VERSION"))
+          ).html_safe %>
+    </div>
+
   </div>
 
-  <div id="footer">
-    <%= t(".footer.text",
-          :engine   => link_to(t(".footer.engine"), "http://railorz.com", :target => :_blank),
-          :version  => File.read(Rails.root.join("VERSION"))
-        ).html_safe %>
-  </div>
 
   <%= dom_ready %>
 </fb:fbml>
