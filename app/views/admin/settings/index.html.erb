@@ -12,6 +12,12 @@
       <th></th>
     </tr>
     <% @settings.each do |setting| %>
+      <% group_header setting.alias.split("_").first do |group| %>
+        <tr>
+          <th colspan="3" class="subheader"><a name="<%= group %>"></a><%= group %></th>
+        </tr>
+      <% end %>
+
       <tr>
         <td><%= setting.alias %></td>
         <td><%= setting.value.present? ? setting.value : content_tag(:span, t(".empty_value"), :class => :empty) %></td>
