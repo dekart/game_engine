@@ -14,10 +14,11 @@ gem "json_pure",        "1.4.6"
 gem "jrails",           "0.6.0"
 gem "haml",             "2.2.20"
 gem "RedCloth",         "4.2.3",  :require => "redcloth"
+gem "nokogiri",         "1.4.3.1"
 
 group :test do
-  gem "rspec"
-  gem "rspec-rails"
-  gem "ZenTest"
-  gem "factory_girl"
+  gem "rspec",        "1.3.0"
+  gem "rspec-rails",  "1.3.2"
+  gem "ZenTest",      "4.4.0"
+  gem "factory_girl", "1.3.2"
 end
