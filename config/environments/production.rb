@@ -27,3 +27,5 @@ config.log_level = :error
 
 CACHE_SERVER    = "localhost"
 SESSION_SERVER  = "localhost"
+
+config.cache_store = :mem_cache_store, CACHE_SERVER

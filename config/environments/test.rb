@@ -25,3 +25,5 @@ config.action_mailer.delivery_method = :test
 
 CACHE_SERVER    = "localhost"
 SESSION_SERVER  = "localhost"
+
+config.cache_store = :mem_cache_store, CACHE_SERVER
