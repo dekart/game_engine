@@ -44,7 +44,7 @@
         </tr>
       <% end %>
       <tr>
-        <td class="image"><%= item_image(item, :icon) %></td>
+        <td class="image"><%= item_image(item, :icon) if item.image? %></td>
         <td class="name"><%= link_to(item.name, edit_admin_item_path(item)) %></td>
         <td class="availability"><%= item.availability %></td>
         <td class="level"><%= item.level %></td>
