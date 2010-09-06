@@ -29,6 +29,57 @@ namespace :app do
       puts "Done!"
     end
 
+    # One-time tasks
+
+    desc "Move mission titles to a separate model"
+    task :move_mission_titles_to_model => :environment do
+      puts "Moving mission titles..."
+
+      i = 0
+
+      Mission.find_each do |mission|
+        next if mission.title.blank?
+
+        title = Title.find_or_create_by_name(mission.title)
+
+        mission.ranks.all(:conditions => {:completed => true}, :include => :character).each do |rank|
+          rank.character.titles << title
+        end
+
+        mission.title = nil
+        mission.payouts << Payouts::Title.new(:value => title)
+        mission.save!
+
+        i += 1
+      end
+
+      puts "Moved #{i} titles."
+
+      puts "Moving group titles..."
+
+      i = 0
+
+      MissionGroup.find_each do |group|
+        next if group.title.blank?
+
+        title = Title.find_or_create_by_name(group.title)
+
+        group.mission_group_ranks.all(:conditions => {:completed => true}, :include => :character).each do |rank|
+          rank.character.titles << title
+        end
+
+        group.title = nil
+        group.payouts << Payouts::Title.new(:value => title)
+        group.save!
+
+        i += 1
+      end
+
+      puts "Moved #{i} titles."
+      
+      puts "Done!"
+    end
+
     desc "Make sure that friend relations are etsablished in both directions"
     task :check_friend_relations => :environment do
       puts "Checking friend relations (#{FriendRelation.count})..."

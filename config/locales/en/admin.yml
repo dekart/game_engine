@@ -506,5 +506,24 @@ en:
         filter:
           title: "Filter"
           submit: "Apply Filter"
+    titles:
+      index:
+        title: "Titles"
+        empty_set: "No titles"
+        controls:
+          new: "Add Title"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+      new:
+        title: "New Title"
+        submit: "Create"
+      create:
+        success: "Title has been created successfully!"
+      edit:
+        title: "Edit Title"
+        submit: "Update"
+      update:
+        success: "Title has been updated successfully!"
         
     # Add your custom translation strings below this mark

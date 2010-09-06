@@ -29,8 +29,6 @@
 <%= form.text_field :money_min, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.text_field :money_max, :required => true, :size => 6, :autocomplete => :off %>
 
-<%= form.text_field :title %>
-
 <%= form.check_box :allow_loot %>
 <%= form.text_field :loot_chance, :size => 6, :autocomplete => :off %>
 <%= form.grouped_select(:loot_item_ids, Item.to_grouped_dropdown,

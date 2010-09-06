@@ -4,6 +4,7 @@ en:
       mission: "Mission"
       mission_group: "Mission Group"
       character: "Character"
+      title: "Title"
       notification/level_up: "Level Up"
     attributes:
       character:

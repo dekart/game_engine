@@ -1,0 +1,9 @@
+<% content_tag :div, :class => payout.name do %>
+  <%= ("%s: '%s' %s (%d%% %s)" % [
+        payout.apply_on_label,
+        payout.title.name,
+        Title.human_name,
+        payout.chance,
+        payout.action
+      ]).html_safe %>
+<% end %>

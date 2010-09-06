@@ -4,14 +4,6 @@
   <%= t(".message") %>
 </p>
 
-<% unless result.mission_group.title.blank? %>
-  <p>
-    <%= t(".title_received") %>
-  </p>
-  
-  <h3 class="title"><%= result.mission_group.title %></h3>
-<% end %>
-
 <% if result.group_payouts.try(:any?) %>
   <div class="payouts">
     <div class="received">
