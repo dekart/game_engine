@@ -28,3 +28,5 @@ en:
       name: "Mercenaries"
     experience:
       name: "Experience"
+    title:
+      name: "Title"

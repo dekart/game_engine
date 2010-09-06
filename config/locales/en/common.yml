@@ -13,6 +13,6 @@ en:
   forms:
     select_multiple: "Hold 'Ctrl' to select multiple items"
   form_builder:
-    submit_and_continue: "Save & Contunie Editing"
+    submit_and_continue: "Save & Continue Editing"
   blocks:
     hide: "Hide"

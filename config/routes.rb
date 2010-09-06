@@ -86,6 +86,8 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :vip_money_operations, :only => :index
 
+    admin.resources :titles
+
     # Add your custom admin routes below this mark
     
   end

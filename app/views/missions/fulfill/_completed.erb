@@ -10,12 +10,6 @@
   <%= t(".message") %> <%= mission.complete_text %>
 </p>
 
-<% unless mission.title.blank? %>
-  <p><%= t(".new_title") %></p>
-
-  <h3 class="title"><%= mission.title %></h3>
-<% end %>
-
 <% if mission.child_missions.any? %>
   <div class="child_missions">
     <p><%= t(".child_missions") %></p>

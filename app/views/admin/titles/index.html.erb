@@ -1,0 +1,27 @@
+<%= admin_title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_title_path) %>
+</div>
+
+<% collection @titles do %>
+  <table id="title_list" class="data">
+    <tr>
+      <th><%= Title.human_attribute_name("name") %></th>
+      <th></th>
+    </tr>
+    
+    <% @titles.each do |title| %>
+      <tr>
+        <td><%= title.name %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_title_path(title)) %>
+          <%= link_to(t(".controls.delete"), admin_title_path(title),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

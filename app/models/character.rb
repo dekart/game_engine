@@ -4,6 +4,7 @@ class Character < ActiveRecord::Base
   extend HasPayouts
   include ActionView::Helpers::NumberHelper
   include Character::Notifications
+  include Character::Titles
   
   LEVELS = [0]
 
@@ -458,12 +459,12 @@ class Character < ActiveRecord::Base
     
     save!
   end
-
-  def titles
-    (ranks.completed + mission_group_ranks.completed).collect do |rank|
-      rank.title unless rank.title.blank?
-    end.compact
-  end
+  
+#  def titles
+#    (ranks.completed + mission_group_ranks.completed).collect do |rank|
+#      rank.title unless rank.title.blank?
+#    end.compact
+#  end
 
   def personalize_from(facebook_session)
     profile_info = facebook_session.users([user.facebook_id], [:name]).first
