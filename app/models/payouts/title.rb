@@ -10,9 +10,9 @@ module Payouts
 
     def apply(character, reference = nil)
       if action == :remove
-        character.titles << title
-      else
         character.titles.delete(title)
+      else
+        character.titles << title
       end
     end
   end
