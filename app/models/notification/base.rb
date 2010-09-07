@@ -3,7 +3,8 @@ module Notification
     set_table_name :notifications
 
     belongs_to :character
-    belongs_to :reference, :polymorphic => true
+
+    serialize :data
 
     state_machine :initial => :pending do
       state :displayed
