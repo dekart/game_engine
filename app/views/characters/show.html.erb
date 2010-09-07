@@ -41,8 +41,8 @@
       <td><%= render "characters/attributes", :character => @character %></td>
       <td><%= render "characters/statistics", :character => @character %></td>
       <td class="rank_list">
-        <% if @character.titles.any? %>
-          <% @character.titles.each do |title| %>
+        <% if titles = @character.titles.with_state(:visible) and titles.any? %>
+          <% titles.each do |title| %>
             <%= content_tag(:div, title.name, :class => :rank) %>
           <% end %>
         <% else %>

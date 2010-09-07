@@ -86,7 +86,11 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :vip_money_operations, :only => :index
 
-    admin.resources :titles
+    admin.resources :titles,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
 
     # Add your custom admin routes below this mark
     

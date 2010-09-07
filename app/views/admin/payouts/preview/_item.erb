@@ -1,7 +1,7 @@
 <% content_tag :div, :class => payout.name do %>
   <%= ("%s: %s (%d%% %s)" % [
         payout.apply_on_label,
-        payout.item ? payout.item.name : content_tag(:span, t("payouts.item.missing"), :class => :missing),
+        payout.item && payout.item.visible? ? payout.item.name : content_tag(:span, t("payouts.item.missing"), :class => :missing),
         payout.chance,
         payout.action
       ]).html_safe %>

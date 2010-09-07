@@ -1,4 +1,4 @@
-<% content_tag :div, :class => payout.name do %>
+<% content_tag :div, :class => [payout.name, (:missing unless payout.title.visible?)].join(" ") do %>
   <%= ("%s: '%s' %s (%d%% %s)" % [
         payout.apply_on_label,
         payout.title.name,

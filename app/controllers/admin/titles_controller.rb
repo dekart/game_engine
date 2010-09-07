@@ -1,6 +1,6 @@
 class Admin::TitlesController < Admin::BaseController
   def index
-    @titles = Title.all
+    @titles = Title.without_state(:deleted).all(:order => "name ASC")
   end
 
   def new
@@ -37,10 +37,26 @@ class Admin::TitlesController < Admin::BaseController
     end
   end
 
+  def publish
+    @title = Title.find(params[:id])
+
+    @title.publish if @title.can_publish?
+
+    redirect_to admin_titles_path
+  end
+
+  def hide
+    @title = Title.find(params[:id])
+
+    @title.hide if @title.can_hide?
+
+    redirect_to admin_titles_path
+  end
+
   def destroy
     @title = Title.find(params[:id])
 
-    @title.destroy
+    @title.mark_deleted
 
     redirect_to admin_titles_path
   end
