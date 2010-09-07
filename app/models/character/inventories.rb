@@ -42,18 +42,24 @@ class Character
       if inventory = find_by_item_id(item.id)
         inventory.deposit_money = true
 
-        if inventory.amount > amount
-          inventory.amount -= amount
-          inventory.save
+        transaction do
+          if inventory.amount > amount
+            inventory.amount -= amount
+            inventory.save
 
-          Item.update_counters(item.id, :owned => - amount)
-        else
-          inventory.destroy
+            Item.update_counters(item.id, :owned => - amount)
 
-          Item.update_counters(item.id, :owned => - inventory.amount)
+            if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
+              inventory.market_item.destroy
+            end
+          else
+            inventory.destroy
+
+            Item.update_counters(item.id, :owned => - inventory.amount)
+          end
+
+          unequip(inventory)
         end
-
-        unequip(inventory)
 
         inventory
       else
@@ -68,6 +74,10 @@ class Character
           inventory.save
 
           Item.update_counters(item.id, :owned => - amount)
+
+          if inventory.market_items_count > 0 and inventory.market_item.amount > inventory_amount
+            inventory.market_item.destroy
+          end
         else
           inventory.destroy
 
