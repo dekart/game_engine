@@ -29,4 +29,12 @@ class MarketItemsController < ApplicationController
 
     render :buy, :layout => "ajax"
   end
+
+  def destroy
+    @item = current_character.market_items.find(params[:id])
+
+    @item.destroy
+
+    render :destroy, :layout => "ajax"
+  end
 end

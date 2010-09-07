@@ -94,6 +94,8 @@ class Character < ActiveRecord::Base
   has_many :vip_money_deposits
   has_many :vip_money_withdrawals
 
+  has_many :market_items
+
   named_scope :rated_by, Proc.new{|unit|
     {
       :order => "characters.#{unit} DESC",

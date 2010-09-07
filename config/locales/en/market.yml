@@ -5,9 +5,13 @@ en:
       free: "FREE"
       buttons:
         buy: "Buy"
+        delete: "Remove Listing"
+        delete_confirm: "Are you sure?"
+        
     new:
       title: "Sell on Market"
       maximum: "Maximum: {{amount}}"
+
     create:
       title: "Sell on Market"
       message:
@@ -22,3 +26,6 @@ en:
         success: "You successfully bought {{amount}} of {{item_name}}"
       you_spent:
         title: "You spent:"
+
+    destroy:
+      message: "Your listing has been removed successfully!"

@@ -35,11 +35,21 @@
           <%= character_name_link(item.character) %>
         </td>
         <td class="controls">
-          <%= link_to_remote(button(:buy),
-                :url    => buy_market_item_path(item),
-                :update => :result,
-                :html   => {:class => "buy button"}
-              ) %>
+          <% if item.character == current_character %>
+            <%= link_to_remote(button(:delete),
+                  :url    => market_item_path(item),
+                  :method => :delete,
+                  :update => :result,
+                  :html   => {:class => "delete button"},
+                  :confirm => t(".buttons.delete_confirm")
+                ) %>
+          <% else %>
+            <%= link_to_remote(button(:buy),
+                  :url    => buy_market_item_path(item),
+                  :update => :result,
+                  :html   => {:class => "buy button"}
+                ) %>
+          <% end %>
         </td>
       <% end %>
     <% end %>
