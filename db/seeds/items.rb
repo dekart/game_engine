@@ -7,6 +7,7 @@ weapons.items.create!(
   :level        => 1,
   :basic_price  => 40,
   :attack       => 1,
+  :can_be_sold_on_market => true,
   :image        => File.open(Rails.root.join("db", "pictures", "knife.jpg"))
 )
 
