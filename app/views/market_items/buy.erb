@@ -1,5 +1,5 @@
 <% result_for :shop do %>
-  <% if @item.valid? %>
+  <% if @item.frozen? %>
     <div class="buttons">
       <%= link_to_function(button(:publish), inventory_stream_dialog(@item.inventory),
             :class => "publish button"
@@ -40,7 +40,7 @@
 <% end %>
     
 <% dom_ready do %>
-  <% if @item.valid? %>
+  <% if @item.frozen? %>
     $('#<%= dom_id(@item) %>').remove();
   <% end %>
 

@@ -121,3 +121,6 @@ en:
             victim:
               too_weak: "The target is too weak, you cannot add them to the hitlist"
               already_listed: "This target is already in the hit list"
+        market_item:
+          not_enough_basic_money: "You don't have enough gold to buy {{name}}."
+          not_enough_vip_money: "You don't have enough Gems to buy {{name}}."

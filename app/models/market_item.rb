@@ -27,9 +27,9 @@ class MarketItem < ActiveRecord::Base
 
   def buy!(target_character)
     if target_character.basic_money < basic_price
-      errors.add_to_base(:not_enough_basic_money)
+      errors.add(:base, :not_enough_basic_money, :name => plural_name)
     elsif target_character.vip_money < vip_price
-      errors.add_to_base(:not_enough_vip_money)
+      errors.add(:base, :not_enough_vip_money, :name => plural_name)
     else
       transaction do
         target_character.charge!(basic_price, vip_price)
