@@ -1,6 +1,7 @@
 class Inventory < ActiveRecord::Base
-  belongs_to :character
-  belongs_to :item
+  belongs_to  :character
+  belongs_to  :item
+  has_one     :market_item, :dependent => :destroy
 
   named_scope :by_item_group, Proc.new{|group|
     {
@@ -19,7 +20,7 @@ class Inventory < ActiveRecord::Base
       Item::EFFECTS +
       %w{
         item_group  name plural_name description image image?
-        basic_price vip_price can_be_sold?
+        basic_price vip_price can_be_sold? can_be_sold_on_market?
         placements placement_options_for_select
         usable? payouts use_button_label use_message effects effects?
       } +

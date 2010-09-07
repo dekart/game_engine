@@ -16,4 +16,10 @@
           :class => "shop button"
         ) %>
   <% end %>
+
+  <% if current != :market and Setting.b(:market_enabled) %>
+    <%= link_to(button(:market), market_items_path,
+          :class => "market button"
+        ) %>
+  <% end %>
 </div>

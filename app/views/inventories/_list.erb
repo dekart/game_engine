@@ -43,10 +43,19 @@
                         :url    => inventory_path(inventory.item),
                         :method => :delete,
                         :with   => "$(this).parent('form').serialize()",
-                        :update => :result,
+                        :update => :ajax,
                         :html   => {:class => "sell button"}
                       ) %>
                 <% end %>
+              <% end %>
+
+              <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) %>
+                <%= link_to_remote(button(:sell_on_market),
+                          :url    => new_market_item_path(:inventory_id => inventory),
+                          :method => :get,
+                          :update => :result,
+                          :html   => {:class => "market button"}
+                        ) %>
               <% end %>
               
               <%= link_to_remote(button(inventory.use_button_label.present? ? inventory.use_button_label : :use),

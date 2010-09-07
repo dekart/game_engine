@@ -103,4 +103,8 @@ Setting[:hospital_price_per_point_per_level] ||= 5
 Setting[:hospital_delay] ||= 5
 Setting[:hospital_delay_per_level] ||= 1
 
+Setting[:market_enabled]          ||= true
+Setting[:market_basic_price_fee]  ||= 10
+Setting[:market_vip_price_fee]    ||= 10
+
 # Put your custom settings below this line

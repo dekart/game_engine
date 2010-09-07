@@ -1,0 +1,48 @@
+<% result_for :shop do %>
+  <% if @item.valid? %>
+    <div class="buttons">
+      <%= link_to_function(button(:publish), inventory_stream_dialog(@item.inventory),
+            :class => "publish button"
+          ) %>
+      
+      <%= link_to(button(:inventory), inventories_url, 
+            :class => "inventory button"
+          ) %>
+    </div>
+
+    <p>
+      <%= t(".messages.success",
+            :amount     => @item.amount,
+            :item_name  => content_tag(:b, @item.amount > 1 ? @item.plural_name : @item.name)
+          ).html_safe %>
+    </p>
+
+    <% if @item.price? %>
+      <table class="payouts">
+        <tr>
+          <td class="spent">
+            <h3><%= t(".you_spent.title") %></h3>
+
+            <% if @item.basic_price > 0 %>
+              <%= payout(:basic_money, number_to_currency(@item.basic_price)) %>
+            <% end %>
+
+            <% if @item.vip_price > 0 %>
+              <%= payout(:vip_money, number_to_currency(@item.vip_price)) %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  <% else %>
+    <p><%= @item.errors.on_base %></p>
+  <% end %>
+<% end %>
+    
+<% dom_ready do %>
+  <% if @item.valid? %>
+    $('#<%= dom_id(@item) %>').remove();
+  <% end %>
+
+  $(document).trigger('result.received');
+<% end %>

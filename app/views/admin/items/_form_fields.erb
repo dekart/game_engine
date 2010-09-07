@@ -28,6 +28,7 @@
 <%= form.text_field :basic_price, :size => 6, :autocomplete => :off %>
 <%= form.text_field :vip_price, :size => 6, :autocomplete => :off %>
 <%= form.check_box :can_be_sold %>
+<%= form.check_box :can_be_sold_on_market %>
 
 <h2><%= Item.human_attribute_name("effects") %></h2>
 

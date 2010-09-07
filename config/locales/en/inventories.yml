@@ -5,6 +5,7 @@ en:
         inventory: "My Inventory"
         equipment: "Equip Character"
         shop: "Shop"
+        market: "Market"
     new:
       amount: "Amount To Purchase:"
       cannot_purchase: "You cannot purchase this item right now."
@@ -41,6 +42,7 @@ en:
         to_belt: "To Belt"
         to_legs: "To Legs"
         sell: "Sell for {{price}}"
+        sell_on_market: "Sell on Market"
         use: "Use"
       empty_set:
         text: "Your inventory is empty. You can buy new items in the {{shop}}"

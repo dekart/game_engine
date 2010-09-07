@@ -5,6 +5,7 @@ en:
       mission_group: "Mission Group"
       character: "Character"
       title: "Title"
+      item: "Item"
       notification/level_up: "Level Up"
     attributes:
       character:
@@ -63,6 +64,9 @@ en:
         reward: "Bounty Amount"
       boss:
         health: "Health"
+      market_item:
+        character: "Seller"
+        price: "Price"
     errors:
       models:
         character:

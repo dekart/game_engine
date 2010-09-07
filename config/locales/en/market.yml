@@ -1,0 +1,24 @@
+en:
+  market_items:
+    index:
+      title: "Market"
+      free: "FREE"
+      buttons:
+        buy: "Buy"
+    new:
+      title: "Sell on Market"
+      maximum: "Maximum: {{amount}}"
+    create:
+      title: "Sell on Market"
+      message:
+        text: "Your ad was successfully published on the {{market}}! You'll be notified if someone will decide to purchase from you."
+        market: "Market page"
+
+    buy:
+      buttons:
+        publish: "Brag About It!"
+        inventory: "Go To Inventory"
+      messages:
+        success: "You successfully bought {{amount}} of {{item_name}}"
+      you_spent:
+        title: "You spent:"

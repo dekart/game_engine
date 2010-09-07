@@ -1,0 +1,5 @@
+<% dialog :id => :market_item do %>
+  <h2><%= t(".title") %></h2>
+
+  <p><%= t(".message.text", :market => link_to(t(".message.market"), market_items_path)).html_safe %></p>
+<% end %>
