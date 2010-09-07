@@ -121,8 +121,10 @@ var Timer = {
 
     var result = '';
 
-    if(days > 0){
+    if(days > 1){
       result = result + days + ' days, ';
+    } else if(days > 0) {
+      result = result + days + ' day, ';
     }
 
     if(hours > 0){
