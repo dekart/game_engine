@@ -11,3 +11,8 @@ en:
       buttons:
         continue: "Continue"
         upgrade: "Upgrade"
+
+    market_item_sold:
+      title: "Sold on Market!"
+      text: "You've successfully sold {{item}} on the Market!"
+      you_received: "You received:"

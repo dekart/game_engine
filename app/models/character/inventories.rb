@@ -80,7 +80,7 @@ class Character
 
             Item.update_counters(item.id, :owned => - amount)
 
-            if inventory.market_items_count > 0 and inventory.market_item.amount > inventory_amount
+            if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
               inventory.market_item.destroy
             end
           else
