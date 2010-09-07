@@ -1,4 +1,4 @@
-<% result_for :shop do %>
+<% result_for :market do %>
   <% if @item.frozen? %>
     <div class="buttons">
       <%= link_to_function(button(:publish), inventory_stream_dialog(@item.inventory),

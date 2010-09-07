@@ -10,7 +10,10 @@ en:
         
     new:
       title: "Sell on Market"
-      maximum: "Maximum: {{amount}}"
+      labels:
+        amount: "Amount to Sell (Max: {{maximum}})"
+      and: "AND"
+      note: "Leave fields blank if you don't want to charge either Gold or Gems for this item. A small processing fee will be taken for all sales made at market ({{basic_price_fee}}% for Gold, {{vip_price_fee}}% for Gems)."
 
     create:
       title: "Sell on Market"

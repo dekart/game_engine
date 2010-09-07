@@ -43,7 +43,7 @@
                         :url    => inventory_path(inventory.item),
                         :method => :delete,
                         :with   => "$(this).parent('form').serialize()",
-                        :update => :ajax,
+                        :update => :result,
                         :html   => {:class => "sell button"}
                       ) %>
                 <% end %>

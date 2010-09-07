@@ -8,20 +8,20 @@
       <% content_tag_for(:tr, item) do %>
         <td class="picture"><%= item_image(item, :small) %></td>
         <td class="info">
-          <div class="name"><%= item.name %></div>
+          <div class="name"><%= item.name %> X <%= item.amount %></div>
           <div class="description"><%= item.description %></div>
         </td>
         <td class="payouts">
           <% if item.effects? %>
-            <h3><%= Item.human_attribute_name("effects") %></h3>
+            <h3><%= MarketItem.human_attribute_name("effects") %></h3>
 
             <%= render "items/effects", :item => item %>
           <% end %>
         </td>
         <td class="requirements">
-          <% if item.price? %>
-            <h3><%= Item.human_attribute_name("price") %></h3>
+          <h3><%= MarketItem.human_attribute_name("price") %></h3>
 
+          <% if item.price? %>
             <%= attribute_requirement(:basic_money, number_to_currency(item.basic_price)) if item.basic_price > 0 %>
             <%= vip_money_requirement(item.vip_price) if item.vip_price > 0 %>
           <% else %>
