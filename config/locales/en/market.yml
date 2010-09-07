@@ -18,7 +18,7 @@ en:
     create:
       title: "Sell on Market"
       message:
-        text: "Your ad was successfully published on the {{market}}! You'll be notified if someone will decide to purchase from you."
+        text: "Your listing was successfully published on the {{market}}! You'll be notified if someone will decide to purchase from you."
         market: "Market page"
 
     buy:
