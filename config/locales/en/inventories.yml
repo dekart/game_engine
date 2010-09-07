@@ -34,6 +34,7 @@ en:
     list:
       owned: "Owned: {{amount}}"
       used: "In use: {{amount}}"
+      listed_on_market: "Listed on Market"
       buttons:
         to_left_hand: "To Left Hand"
         to_right_hand: "To Right Hand"

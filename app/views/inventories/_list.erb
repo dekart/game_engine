@@ -50,12 +50,16 @@
               <% end %>
 
               <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) %>
-                <%= link_to_remote(button(:sell_on_market),
-                          :url    => new_market_item_path(:inventory_id => inventory),
-                          :method => :get,
-                          :update => :result,
-                          :html   => {:class => "market button"}
-                        ) %>
+                <% if inventory.market_items_count == 0 %>
+                  <%= link_to_remote(button(:sell_on_market),
+                            :url    => new_market_item_path(:inventory_id => inventory),
+                            :method => :get,
+                            :update => :result,
+                            :html   => {:class => "market button"}
+                          ) %>
+                <% else %>
+                  <div class="market_listing"><%= t(".listed_on_market") %></div>
+                <% end %>
               <% end %>
               
               <%= link_to_remote(button(inventory.use_button_label.present? ? inventory.use_button_label : :use),
