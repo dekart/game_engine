@@ -1,4 +1,4 @@
-puts "Seeding character types"
+puts "Seeding character types..."
 
 CharacterType.create(
   :name         => "Warrior",
