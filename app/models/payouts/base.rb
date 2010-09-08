@@ -93,7 +93,11 @@ module Payouts
     end
 
     def visible=(value)
-      @visible = (value.to_i == 1)
+      if value == true || value == false
+        @visible = value
+      else
+        @visible = (value.to_i != 0)
+      end
     end
   end
 end
