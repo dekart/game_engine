@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
   landing_page :invite, :only => :invite
 
-  def hide_block
+  def toggle_block
     @user = current_user
 
-    if current_user.respond_to?("show_#{ params[:block] }")
-      current_user.update_attribute("show_#{ params[:block] }", false)
+    attribute = "show_#{ params[:block] }"
+
+    if current_user.respond_to?(attribute)
+      current_user.update_attribute(attribute, !current_user.send(attribute))
     end
 
     render :text => "<!-- no data -->"

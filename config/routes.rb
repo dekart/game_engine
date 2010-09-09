@@ -103,9 +103,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources(:users,
     :collection => { :invite => :any },
     :member => {
-      :narrow_profile_box => :any,
-      :wide_profile_box => :any,
-      :hide_block => :any,
+      :toggle_block => :any,
       :add_permissions => :any
     }
   )
