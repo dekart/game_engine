@@ -11,7 +11,7 @@ module Payouts
         @item = source.find(item_ids).rand
       else
         source = source.with_state(:visible)
-        source = source.available_in(availability) if availability.present?
+        source = source.available_in(availability) unless availability.blank?
         source = source.basic unless allow_vip
 
         @item = source.first(

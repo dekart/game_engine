@@ -72,7 +72,7 @@ module ApplicationHelper
   end
 
   def google_analytics
-    if Setting.s(:app_google_analytics_id).present?
+    unless Setting.s(:app_google_analytics_id).blank?
       %{
         <script type="text/javascript">
           var _gaq = _gaq || [];
@@ -102,12 +102,12 @@ module ApplicationHelper
     result = ""
 
     display_keys.each do |key|
-      if flash[key].present?
+      unless flash[key].blank?
         result << (block_given? ? capture(key, flash[key], &block) : content_tag(:p, flash[key], :class => key))
       end
     end
 
-    if result.present?
+    unless result.blank?
       content_for(:result, 
         result_for(flash[:class] || :flash, result.html_safe)
       )

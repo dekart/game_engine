@@ -95,7 +95,7 @@ class ApplicationController
 
     def log_browser_info
       logger.fatal "Requested URL: #{request.url}"
-      logger.fatal "Referer: #{request.headers["Referer"]}" if request.headers["Referer"].present?
+      logger.fatal "Referer: #{request.headers["Referer"]}" unless request.headers["Referer"].blank?
       logger.fatal "Request Origin: #{request_origin}"
       logger.fatal "User Agent: #{request.headers["User-Agent"]}\n\n"
     end

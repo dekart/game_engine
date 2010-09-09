@@ -43,7 +43,7 @@
 
     <%= render "layouts/spinner" %>
 
-    <% if result = yield(:result) and result.present? %>
+    <% if result = yield(:result) and !result.blank? %>
       <%= content_tag(:div, result, :id => :result) %>
     
       <% dom_ready do %>

@@ -31,7 +31,7 @@ module Admin::BaseHelper
 
     label = [
       value,
-      doc_topic.present? ? admin_documentation_link(doc_topic) : nil
+      (admin_documentation_link(doc_topic) unless doc_topic.blank?)
     ].compact.join(" ").html_safe
 
     content_tag(:h1, label, :class => :title)

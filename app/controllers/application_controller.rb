@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
       unless @current_user
         @current_user = find_or_create_current_user
 
-        @current_user.update_permissions!(facebook_params["ext_perms"]) if facebook_params["ext_perms"].present?
+        @current_user.update_permissions!(facebook_params["ext_perms"]) unless facebook_params["ext_perms"].blank?
       end
 
       @current_user
@@ -132,7 +132,7 @@ class ApplicationController < ActionController::Base
 
   def default_url_options(options)
     {}.tap do |result|
-      result[:try_skin] = params[:try_skin] if params[:try_skin].present?
+      result[:try_skin] = params[:try_skin] unless params[:try_skin].blank?
     end
   end
 
@@ -155,7 +155,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_back(uri)
-    if session[:return_to].present?
+    unless session[:return_to].blank?
       uri = session[:return_to]
 
       session[:return_to] = nil
