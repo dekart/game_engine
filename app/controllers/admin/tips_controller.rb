@@ -11,6 +11,8 @@ class Admin::TipsController < Admin::BaseController
     @tip = Tip.new(params[:tip])
 
     if @tip.save
+      flash[:success] = t(".success")
+
       unless_continue_editing do
         redirect_to admin_tips_path
       end

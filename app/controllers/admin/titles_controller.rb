@@ -11,6 +11,8 @@ class Admin::TitlesController < Admin::BaseController
     @title = Title.new(params[:title])
 
     if @title.save
+      flash[:success] = t(".success")
+
       unless_continue_editing do
         redirect_to admin_titles_path
       end
