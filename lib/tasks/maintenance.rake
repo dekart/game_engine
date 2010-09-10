@@ -47,7 +47,7 @@ namespace :app do
         end
 
         mission.title = nil
-        mission.payouts << Payouts::Title.new(:value => title)
+        mission.payouts = mission.payouts + Payouts::Collection.new(Payouts::Title.new(:value => title))
         mission.save!
 
         i += 1
