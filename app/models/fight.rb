@@ -1,6 +1,6 @@
 class Fight < ActiveRecord::Base
-  belongs_to :attacker, :class_name => "Character"
-  belongs_to :victim, :class_name => "Character"
+  belongs_to :attacker, :class_name => "Character", :extend => Fight::UsedItems
+  belongs_to :victim, :class_name => "Character", :extend => Fight::UsedItems
   belongs_to :winner, :class_name => "Character"
 
   belongs_to  :cause, :polymorphic => true

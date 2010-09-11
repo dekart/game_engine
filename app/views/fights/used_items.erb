@@ -3,11 +3,11 @@
     <td class="attacker">
       <h3><%= t(".attacker") %></h3>
 
-      <% ItemGroup.all.each do |group| %>
+      <% @attacker_items.each do |group, items| %>
         <div class="group">
           <strong><%= group.name %></strong>
 
-          <%= @fight.attacker.inventories.by_item_group(group).equipped.collect{|i|
+          <%= items.collect{|i|
                 t(".item", :name => i.name, :amount => i.equipped)
               }.join(", ").html_safe %>
         </div>
@@ -16,11 +16,11 @@
     <td class="victim">
       <h3><%= t(".victim") %></h3>
 
-      <% ItemGroup.all.each do |group| %>
+      <% @victim_items.each do |group, items| %>
         <div class="group">
           <strong><%= group.name %></strong>
 
-          <%= @fight.victim.inventories.by_item_group(group).equipped.collect{|i|
+          <%= items.collect{|i|
                 t(".item", :name => i.name, :amount => i.equipped)
               }.join(", ").html_safe %>
         </div>
