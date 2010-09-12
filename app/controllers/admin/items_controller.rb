@@ -1,8 +1,12 @@
 class Admin::ItemsController < Admin::BaseController
   def index
+    @availability = params[:availability].try(:to_sym)
     @item_group = ItemGroup.find_by_id(params[:item_group_id])
 
-    @items = (@item_group ? @item_group.items : Item).without_state(:deleted).all(
+    @scope = @item_group ? @item_group.items : Item
+    @scope = @scope.available_in(@availability)
+
+    @items = @scope.without_state(:deleted).scoped(
       :include  => :item_group,
       :order    => "item_groups.position, items.availability, items.level"
     ).paginate(:page => params[:page])

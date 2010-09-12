@@ -2,16 +2,44 @@
 
 <%= render "controls" %>
 
-<div class="item_filter">
-  <h2><%= t(".item_group_filter") %></h2>
+<div class="data_filter clearfix">
+  <h2><%= t(".filter.title") %></h2>
 
   <ul>
+    <li>
+      <% if @item_group.nil? %>
+        <strong><%= t(".filter.all_groups") %></strong>
+      <% else %>
+        <%= link_to(t(".filter.all_groups"), admin_items_path) %>
+      <% end %>
+    </li>
+
     <% ItemGroup.without_state(:deleted).each do |group| %>
       <li>
         <% if group == @item_group %>
           <strong><%= group.name %></strong>
         <% else %>
           <%= link_to(group.name, admin_item_group_items_path(group)) %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <ul>
+    <li>
+      <% if @availability.nil? %>
+        <strong><%= t(".filter.all_availabilities") %></strong>
+      <% else %>
+        <%= link_to(t(".filter.all_availabilities"), :availability => nil) %>
+      <% end %>
+    </li>
+
+    <% Item::AVAILABILITIES.each do |availability| %>
+      <li>
+        <% if availability == @availability %>
+          <strong><%= availability.to_s.humanize %></strong>
+        <% else %>
+          <%= link_to(availability.to_s.humanize, :availability => availability) %>
         <% end %>
       </li>
     <% end %>

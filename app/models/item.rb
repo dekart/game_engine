@@ -32,7 +32,7 @@ class Item < ActiveRecord::Base
   }
 
   named_scope :available_in, Proc.new{|*keys|
-    valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys
+    valid_keys = keys.collect{|k| k.try(:to_sym) } & AVAILABILITIES # Find intersections between passed key list and available keys
 
     if valid_keys.any?
       valid_keys.collect!{|k| k.to_s }
