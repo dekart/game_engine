@@ -6,10 +6,14 @@ ActionController::Routing::Routes.draw do |map|
         :publish  => :put,
         :hide     => :put
       } do |group|
-        group.resources :items, :only => :index
+        group.resources :items, :only => :index,
+          :collection => { :balance => :any }
       end
 
     admin.resources :items,
+      :collection => {
+        :balance => :any
+      },
       :member => {
         :publish  => :put,
         :hide     => :put

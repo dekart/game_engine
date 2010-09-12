@@ -82,4 +82,18 @@ class Admin::ItemsController < Admin::BaseController
 
     redirect_to admin_items_path
   end
+
+  def balance
+    @items = ActiveSupport::OrderedHash.new
+
+    @item_group = ItemGroup.find_by_id(params[:item_group_id])
+
+    items = (@item_group ? @item_group.items : Item).with_state(:visible).all(:order => "level, availability, item_group_id")
+    items.each do |item|
+      @items[item.level] ||= ActiveSupport::OrderedHash.new
+      @items[item.level][item.availability] ||= []
+
+      @items[item.level][item.availability] << item
+    end
+  end
 end

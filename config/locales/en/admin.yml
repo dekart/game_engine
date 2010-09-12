@@ -56,14 +56,17 @@ en:
         submit: "Update"
       update:
         success: "Item group has been updated successfully!"
+        
     items:
+      controls:
+        new: "Add Item"
+        balance: "Balance Items"
       index:
         title: "Items"
         item_group_filter: "Filter By Group:"
         empty_set: "No items"
         not_usable: "Not usable"
         controls:
-          new: "Add Item"
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? This item will be also removed from all users!"
@@ -84,6 +87,12 @@ en:
         use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '{{default_value}}'"
       effect:
         remove: "Remove"
+      balance:
+        title: "Balance Items"
+        filter:
+          title: "Filter Items"
+          all_groups: "All Groups"
+
     mission_groups:
       index:
         title: "Mission Groups"
