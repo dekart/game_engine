@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_boss_path) %>
 </div>
 
-<% if @bosses.any? %>
+<% collection @bosses do %>
   <table id="boss_list" class="data">
     <tr>
       <th><%= Boss.human_attribute_name("image") %></th>
@@ -46,6 +46,4 @@
       </tr>
     <% end %>
   </table>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

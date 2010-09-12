@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_promotion_path) %>
 </div>
 
-<% if @promotions.any? %>
+<% collection @promotions do %>
   <div class="note"><%= t(".note").html_safe %></div>
 
   <table id="promotion_list" class="data">
@@ -40,6 +40,4 @@
   </table>
 
   <%= will_paginate @promotions %>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

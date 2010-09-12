@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_asset_path) %>
 </div>
 
-<% if @assets.any? %>
+<% collection @assets do %>
   <%= will_paginate @assets %>
 
   <table id="asset_list" class="data">
@@ -34,6 +34,4 @@
   </table>
 
   <%= will_paginate @assets %>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

@@ -18,7 +18,7 @@
   </ul>
 </div>
 
-<% if @missions.any? %>
+<% collection @missions do %>
   <table id="mission_list" class="data">
     <% total_experience = 0 %>
     <tr>
@@ -53,6 +53,4 @@
       </tr>
     <% end %>
   </table>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

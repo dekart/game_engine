@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_mission_group_path) %>
 </div>
 
-<% if @groups.any? %>
+<% collection @groups do %>
   <table id="mission_group_list" class="data">
     <tr>
       <th><%= MissionGroup.human_attribute_name("name") %></th>
@@ -36,6 +36,4 @@
       </tr>
     <% end %>
   </table>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

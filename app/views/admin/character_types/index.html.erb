@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_character_type_path) %>
 </div>
 
-<% if @character_types.any? %>
+<% collection @character_types do %>
   <table id="character_type_list" class="data">
     <tr>
       <th><%= CharacterType.human_attribute_name("image") %></th>
@@ -56,6 +56,4 @@
       </tr>
     <% end %>
   </table>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

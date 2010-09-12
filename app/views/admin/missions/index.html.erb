@@ -2,7 +2,7 @@
 
 <%= render "controls" %>
 
-<% if @missions.any? %>
+<% collection @missions do %>
   <%= will_paginate @missions %>
 
   <table id="mission_list" class="data">
@@ -70,6 +70,4 @@
   </table>
 
   <%= will_paginate @missions %>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

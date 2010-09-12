@@ -20,7 +20,7 @@
   </ul>
 </div>
 
-<% if @items.any? %>
+<% collection @items do %>
   <%= will_paginate @items %>
 
   <table id="item_list" class="data">
@@ -85,6 +85,4 @@
   </table>
 
   <%= will_paginate @items %>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

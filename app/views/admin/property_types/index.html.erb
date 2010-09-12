@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_property_type_path) %>
 </div>
 
-<% if @types.any? %>
+<% collection @types do %>
   <%= will_paginate @types %>
 
   <table id="property_type_list" class="data">
@@ -56,6 +56,4 @@
   </table>
 
   <%= will_paginate @types %>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_setting_path) %>
 </div>
 
-<% if @settings.any? %>
+<% collection @settings do %>
   <table id="setting_list" class="data">
     <tr>
       <th><%= Tip.human_attribute_name("alias") %></th>
@@ -31,6 +31,4 @@
       </tr>
     <% end %>
   </table>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>

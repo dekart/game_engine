@@ -4,7 +4,7 @@
   <%= link_to(t(".controls.new"), new_admin_newsletter_path) %>
 </div>
 
-<% if @newsletters.any? %>
+<% collection @newsletters do %>
   <%= will_paginate @newsletters %>
 
   <table id="newsletter_list" class="data">
@@ -54,6 +54,4 @@
   </table>
 
   <%= will_paginate @newsletters %>
-<% else %>
-  <div class="empty_set"><%= t(".empty_set") %></div>
 <% end %>
