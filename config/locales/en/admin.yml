@@ -63,7 +63,10 @@ en:
         balance: "Balance Items"
       index:
         title: "Items"
-        item_group_filter: "Filter By Group:"
+        filter:
+          title: "Filter Items"
+          all_groups: "All Groups"
+          all_availabilities: "All Availabilities"
         empty_set: "No items"
         not_usable: "Not usable"
         controls:
