@@ -106,5 +106,6 @@ Setting[:hospital_delay_per_level] ||= 1
 Setting[:market_enabled]          ||= true
 Setting[:market_basic_price_fee]  ||= 10
 Setting[:market_vip_price_fee]    ||= 10
+Setting[:market_expire_period]    ||= 24
 
 # Put your custom settings below this line

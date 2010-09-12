@@ -2,6 +2,12 @@ class MarketItem < ActiveRecord::Base
   belongs_to :character
   belongs_to :inventory, :counter_cache => true
 
+  named_scope :expired, Proc.new{
+    {
+      :conditions => ["created_at < ?", Setting.i(:market_expire_period).hours.ago]
+    }
+  }
+
   delegate(*(%w{name plural_name description image image? effects effects? payouts} + [{:to => :inventory}]))
 
   attr_accessible :amount, :basic_price, :vip_price
