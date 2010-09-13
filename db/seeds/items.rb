@@ -7,6 +7,7 @@ weapons.items.create!(
   :level        => 1,
   :basic_price  => 40,
   :attack       => 1,
+  :placements   => [:left_hand, :right_hand, :additional],
   :can_be_sold_on_market => true,
   :image        => File.open(Rails.root.join("db", "pictures", "knife.jpg"))
 )
@@ -17,6 +18,7 @@ weapons.items.create!(
   :level        => 1,
   :basic_price  => 40,
   :attack       => 1,
+  :placements   => [:left_hand, :right_hand, :additional],
   :can_be_sold  => false,
   :image        => File.open(Rails.root.join("db", "pictures", "dagger.jpg"))
 )
@@ -28,6 +30,7 @@ armors.items.create!(
   :level        => 1,
   :basic_price  => 70,
   :defence      => 1,
+  :placements   => [:left_hand, :right_hand, :additional],
   :image        => File.open(Rails.root.join("db", "pictures", "shield.jpg"))
 )
 
