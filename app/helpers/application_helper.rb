@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def include_jquery_from_google
-    javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js") +
+  def include_jquery_from_google(version = "1.4.2")
+    javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/#{version}/jquery.min.js") +
     javascript_tag("if(typeof jQuery == 'undefined'){document.write(unescape(\"%3Cscript src='#{javascript_path("jquery")}' type='text/javascript'%3E%3C/script%3E\"))}")
   end
 
