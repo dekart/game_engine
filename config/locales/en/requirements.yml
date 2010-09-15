@@ -6,6 +6,7 @@ en:
       name: "Item"
       text: "{{name}} X {{amount}}"
       shop_link_title: "Purchase {{item}} from Shop"
+      missing: "Missing Item!"
     health_point:
       name: "Health Points"
       text: "{{amount}} Health Points"
