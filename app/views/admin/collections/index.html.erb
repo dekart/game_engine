@@ -1,0 +1,50 @@
+<%= admin_title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_collection_path) %>
+</div>
+
+<% collection @collections do %>
+  <table id="collection_list" class="data">
+    <tr>
+      <th><%= Collection.human_attribute_name("name") %></th>
+      <th><%= Collection.human_attribute_name("items") %></th>
+      <th><%= Collection.human_attribute_name("payouts") %></th>
+      <th><%= Collection.human_attribute_name("state") %></th>
+      <th></th>
+    </tr>
+    
+    <% @collections.each do |collection| %>
+      <tr>
+        <td class="name"><%= link_to(collection.name, edit_admin_collection_path(collection)) %></td>
+        <td class="items">
+          <% collection.items.each do |item| %>
+            <div class="item">
+              <% unless item.visible? %>
+                <span class="state"><%= admin_state(item) %></span>
+              <% end %>
+                
+              <%= item.name %>
+            </div>
+          <% end %>
+        </td>
+        <td class="payouts"><%= admin_payouts_preview(collection.payouts) %></td>
+        <td class="state"><%= admin_state(collection) %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_collection_path(collection)) %>
+          <%= link_to(t(".controls.publish"), publish_admin_collection_path(collection),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              ) if collection.can_publish? %>
+          <%= link_to(t(".controls.hide"), hide_admin_collection_path(collection),
+                :method => :put
+              ) if collection.can_hide? %>
+          <%= link_to(t(".controls.delete"), admin_collection_path(collection),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
