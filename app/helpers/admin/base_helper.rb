@@ -17,9 +17,7 @@ module Admin::BaseHelper
       end
     end
 
-    result.html_safe!
-
-    block_given? ? concat(result) : result
+    block_given? ? concat(result.html_safe) : result.html_safe
   end
 
   def admin_state(object)
