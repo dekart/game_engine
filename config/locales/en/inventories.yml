@@ -4,6 +4,7 @@ en:
       buttons:
         inventory: "My Inventory"
         equipment: "Equip Character"
+        collections: "Collections"
         shop: "Shop"
         market: "Market"
     new:

@@ -70,6 +70,8 @@ en:
       market_item:
         character: "Seller"
         price: "Price"
+      collection:
+        payouts: "Payouts"
     errors:
       models:
         character:

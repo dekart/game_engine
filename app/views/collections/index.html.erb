@@ -1,0 +1,25 @@
+<%= title(t(".title")) %>
+
+<%= render "inventories/buttons", :current => :collections %>
+
+<% @collections.each do |collection| %>
+  <% div_for collection do %>
+    <h2><%= collection.name %></h2>
+
+    <div class="items">
+      <% collection.items.each do |item| %>
+        <div class="item <%= 'present' if current_character.items.include?(item) %>">
+          <div class="name"><%= item.name %></div>
+          
+          <div class="image"><%= item_image(item, :small) %></div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="payouts">
+      <h3><%= Collection.human_attribute_name("payouts") %></h3>
+
+      <%= payout_list(collection.payouts, :add, :preview) %>
+    </div>
+  <% end %>
+<% end %>

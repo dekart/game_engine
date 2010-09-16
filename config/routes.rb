@@ -205,6 +205,7 @@ ActionController::Routing::Routes.draw do |map|
     :member => {
       :buy => :post
     }
+  map.resources :collections, :only => :index
 
   # Add your custom routes below this mark
   
