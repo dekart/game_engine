@@ -4,6 +4,8 @@ class Collection < ActiveRecord::Base
   has_payouts :collected
   
   validates_presence_of :name
+  
+  validate_on_create :check_item_list
 
   state_machine :initial => :hidden do
     state :hidden
@@ -33,5 +35,11 @@ class Collection < ActiveRecord::Base
 
   def items
     Item.find_all_by_id(item_ids)
+  end
+
+  protected
+
+  def check_item_list
+    errors.add(:items, :not_enough_items) unless items.any?
   end
 end
