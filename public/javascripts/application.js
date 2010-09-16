@@ -1,3 +1,8 @@
+var CollectionList = {
+  setup: function(){
+    $('#collection_list').find('.item:not(.present) .image').css({opacity: 0.4});
+  }
+};
 var CharacterForm = {
   setup: function(selector){
     var form = $(selector);

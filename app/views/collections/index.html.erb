@@ -2,33 +2,43 @@
 
 <%= render "inventories/buttons", :current => :collections %>
 
-<% @collections.each do |collection| %>
-  <% div_for collection do %>
-    <h2><%= collection.name %></h2>
+<% collection @collections do %>
+  <table id="collection_list">
+    <% @collections.each do |collection| %>
+      <% content_tag_for :tr, collection do %>
+        <td class="info">
+          <h2><%= collection.name %></h2>
 
-    <div class="items">
-      <% collection.items.each do |item| %>
-        <div class="item <%= 'present' if current_character.items.include?(item) %>">
-          <div class="name"><%= item.name %></div>
-          
-          <div class="image"><%= item_image(item, :small) %></div>
-        </div>
+          <div class="items clearfix">
+            <% collection.items.each do |item| %>
+              <div class="item <%= 'present' if current_character.items.include?(item) %>">
+                <div class="name"><%= item.name %></div>
+
+                <div class="image"><%= item_image(item, :small) %></div>
+              </div>
+            <% end %>
+          </div>
+        </td>
+
+        <td class="payouts">
+          <h3><%= Collection.human_attribute_name("payouts") %></h3>
+
+          <%= payout_list(collection.payouts, :add, :preview) %>
+        </td>
+
+        <td class="controls">
+          <%= link_to_remote(button(:collect),
+                :url    => collection_path(collection),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => "collect button"}
+              ) %>
+        </td>
       <% end %>
-    </div>
+    <% end %>
+  </table>
+<% end %>
 
-    <div class="payouts">
-      <h3><%= Collection.human_attribute_name("payouts") %></h3>
-
-      <%= payout_list(collection.payouts, :add, :preview) %>
-    </div>
-
-    <div class="controls">
-      <%= link_to_remote(button(:collect),
-            :url    => collection_path(collection),
-            :method => :put,
-            :update => :result,
-            :html   => {:class => "collect button"}
-          ) %>
-    </div>
-  <% end %>
+<% dom_ready do %>
+  CollectionList.setup();
 <% end %>
