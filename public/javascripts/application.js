@@ -1,6 +1,10 @@
 var CollectionList = {
   setup: function(){
-    $('#collection_list').find('.item:not(.present) .image').css({opacity: 0.4});
+    CollectionList.blurItems($('#collection_list').find('.item:not(.present)'));
+  },
+
+  blurItems: function(collection){
+    collection.removeClass('present').find('.image').css({opacity: 0.4})
   }
 };
 var CharacterForm = {

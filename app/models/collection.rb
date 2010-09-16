@@ -45,6 +45,10 @@ class Collection < ActiveRecord::Base
     )
   end
 
+  def missing_items(character)
+    items - character.items
+  end
+
   protected
 
   def check_item_list
