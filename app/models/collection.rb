@@ -37,6 +37,14 @@ class Collection < ActiveRecord::Base
     Item.find_all_by_id(item_ids)
   end
 
+  def spendings
+    Payouts::Collection.new(
+      *items.collect{|item|
+        Payouts::Item.new(:value => item, :apply_on => :collected, :action => :remove, :visible => true)
+      }
+    )
+  end
+
   protected
 
   def check_item_list

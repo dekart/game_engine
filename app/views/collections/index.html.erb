@@ -21,5 +21,14 @@
 
       <%= payout_list(collection.payouts, :add, :preview) %>
     </div>
+
+    <div class="controls">
+      <%= link_to_remote(button(:collect),
+            :url    => collection_path(collection),
+            :method => :put,
+            :update => :result,
+            :html   => {:class => "collect button"}
+          ) %>
+    </div>
   <% end %>
 <% end %>

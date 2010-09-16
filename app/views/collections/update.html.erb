@@ -1,0 +1,26 @@
+<% result_for :collection do %>
+  <% if @result.applied %>
+    <p class="success"><%= t(".messages.success") %></p>
+
+    <table class="payouts">
+      <tr>
+        <td class="received">
+          <h3><%= t(".you_received") %></h3>
+
+          <%= payout_list(@result.payouts, :add) %>
+        </td>
+        <td class="spent">
+          <h3><%= t(".you_spent") %></h3>
+
+          <%= payout_list(@result.payouts, :remove) %>
+        </td>
+      </tr>
+    </table>
+  <% else %>
+    <p class="fail"><%= @result.errors.on(:character) %></p>
+  <% end %>
+<% end %>
+
+<% dom_ready do %>
+  $(document).trigger('result.received');
+<% end %>

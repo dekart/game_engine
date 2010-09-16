@@ -2,3 +2,10 @@ en:
   collections:
     index:
       title: "Collections"
+      buttons:
+        collect: "Collect"
+    update:
+      messages:
+        success: "You've successfully collected all required items!"
+      you_received: "You received:"
+      you_spent: "You spent:"
