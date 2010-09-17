@@ -1,55 +1,39 @@
-<% if groups.previous_page and previous_group = groups.first.previous_group %>
-  <% content_for :previous_group do %>
-    <% content_tag_for :td, previous_group, :class => "previous first" do %>
-      <%= link_to(t(".previous.name"), mission_group_path(previous_group),
-            :class => :name
-          ) %>
-
-      <div class="level">
-        <%= t(".previous.level", :level => groups.first.level) %>
-      </div>
-    <% end %>
-  <% end %>
-<% end %>
-
-<% if groups.next_page and next_group = groups.last.next_group %>
-  <% content_for :next_group do %>
-    <% content_tag_for :td, next_group, :class => "next last" do %>
-      <%= link_to(t(".next.name"), mission_group_path(next_group),
-            :class => :name
-          ) %>
-
-      <div class="level">
-        <%= t(".next.level", :level => next_group.level) %>
-      </div>
-    <% end %>
-  <% end %>
-<% end %>
-
 <table cellspacing="0" cellpadding="0">
   <tr>
-    <%= yield(:previous_group) %>
+    <% mission_group_tabs(groups, current) do |tabs| %>
+      <% tabs.previous_tab do |group, level| %>
+        <% content_tag_for :td, group, :class => "previous first" do %>
+          <%= link_to(t(".previous.name"), mission_group_path(group),
+                :class => :name
+              ) %>
 
-    <% groups.each do |group| %>
-      <% locked = group.locked?(current_character) %>
+          <div class="level">
+            <%= t(".previous.level", :level => level) %>
+          </div>
+        <% end %>
+      <% end %>
 
-      <% 
-        content_tag_for(:td, group,
-          :class => [
-            (:locked if locked),
-            (:current if group == current),
-            (:first if group == groups.first && yield(:previous_group).blank?),
-            (:last if group == groups.last && yield(:next_group).blank?)
-          ].compact.join(" ")
-        ) do %>
-        <%= link_to(locked ? t(".locked") : group.name, mission_group_path(group),
-              :class => :name
-            ) %>
+      <% tabs.group_tab do |group, locked, current, position| %>
+        <% content_tag_for(:td, group, :class => [(:locked if locked), (:current if current), position].compact.join(" ")) do %>
+          <%= link_to(locked ? t(".locked") : group.name, mission_group_path(group),
+                :class => :name
+              ) %>
 
-        <div class="level"><%= t(".level", :level => group.level) %></div>
+          <div class="level"><%= t(".level", :level => group.level) %></div>
+        <% end %>
+      <% end %>
+
+      <% tabs.next_tab do |group, level| %>
+        <% content_tag_for :td, group, :class => "next last" do %>
+          <%= link_to(t(".next.name"), mission_group_path(group),
+                :class => :name
+              ) %>
+
+          <div class="level">
+            <%= t(".next.level", :level => level) %>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
-
-    <%= yield(:next_group) %>
   </tr>
 </table>
