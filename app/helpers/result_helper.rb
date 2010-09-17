@@ -17,9 +17,10 @@ module ResultHelper
     end
 
     def message(type = nil, content = nil, &block)
-      result = content_tag(:p, content ? content.html_safe : capture(&block), :class => type)
-
-      block_given? ? concat(result) : result
+      @message = {
+        :content  => content || capture(&block),
+        :type     => type
+      }
     end
 
     def notice(content = nil, &block)
@@ -55,7 +56,7 @@ module ResultHelper
       dom_ready(@on_ready)
       dom_ready("$(document).trigger('result.#{options[:inline] ? :available : :received}');")
 
-      content_tag(:div, "#{buttons_html} #{content}".html_safe,
+      content_tag(:div, "#{buttons_html} #{message_html} #{content}".html_safe,
         :id     => "#{type}_result",
         :class  => "result_content clearfix"
       )
@@ -65,6 +66,10 @@ module ResultHelper
 
     def buttons_html
       content_tag(:div, @buttons.html_safe, :class => :buttons) unless @buttons.blank?
+    end
+
+    def message_html
+      content_tag(:p, @message[:content], :class => @message[:type]) if @message
     end
   end
 

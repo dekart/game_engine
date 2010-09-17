@@ -22,7 +22,9 @@
           :requirement => @mission.energy_requirement
         ) %>
   <% elsif !@result.requirements_satisfied? %>
-    <p><%= t(".requirements_not_satisfied.message") %></p>
+    <% builder.fail do %>
+      <%= t(".requirements_not_satisfied.message") %>
+    <% end %>
 
     <div class="requirements clearfix">
       <%= unsatisfied_requirement_list(@mission.requirements) %>
@@ -39,7 +41,9 @@
       $(document).bind('requirement.satisfy', Mission.onRequirementSatisfy);
     <% end %>
   <% elsif @result.rank.completed? %>
-    <p><%= t(".already_completed.message") %></p>
+    <% builder.fail do %>
+      <%= t(".already_completed.message") %>
+    <% end %>
   <% end %>
 
   <% if @mission_groups %>

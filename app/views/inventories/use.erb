@@ -1,7 +1,11 @@
 <% result_for :inventory_use do |builder| %>
-  <%= builder.success(
-        @inventory.use_message.present? ? @inventory.use_message : t(".messages.success", :item => @inventory.name)
-      ) %>
+  <% builder.success do %>
+    <% if @inventory.use_message.present? %>
+      <%= @inventory.use_message.html_safe %>
+    <% else %>
+      <%= t(".messages.success", :item => @inventory.name).html_safe %>
+    <% end %>
+  <% end %>
 
   <table class="payouts" cellspacing="0" cellpadding="0">
     <tr>

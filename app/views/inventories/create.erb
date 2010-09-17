@@ -10,10 +10,12 @@
           ) %>
     <% end %>
 
-    <%= builder.success t(".messages.success",
-          :amount     => @amount,
-          :item_name  => content_tag(:b, @amount > 1 ? @item.plural_name : @item.name)
-        ) %>
+    <% builder.success do %>
+      <%=  t(".messages.success",
+            :amount     => @amount,
+            :item_name  => content_tag(:b, @amount > 1 ? @item.plural_name : @item.name)
+          ).html_safe %>
+    <% end %>
 
     <% if @item.price? %>
       <table class="payouts">
@@ -41,6 +43,8 @@
       $(document).trigger('item.purchase');
     <% end %>
   <% else %>
-    <%= builder.fail @inventory.errors.on(:character) %>
+    <% builder.fail do %>
+      <%= @inventory.errors.on(:character) %>
+    <% end %>
   <% end %>
 <% end %>

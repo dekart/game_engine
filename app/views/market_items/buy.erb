@@ -10,10 +10,12 @@
           ) %>
     <% end %>
 
-    <%= builder.success t(".messages.success",
-          :amount     => @item.amount,
-          :item_name  => content_tag(:b, @item.amount > 1 ? @item.plural_name : @item.name)
-        ) %>
+    <% builder.success do %>
+      <%= t(".messages.success",
+            :amount     => @item.amount,
+            :item_name  => content_tag(:b, @item.amount > 1 ? @item.plural_name : @item.name)
+          ).html_safe %>
+    <% end %>
 
     <% if @item.price? %>
       <table class="payouts">
@@ -37,6 +39,8 @@
       $('#<%= dom_id(@item) %>').remove();
     <% end %>
   <% else %>
-    <%= builder.fail @item.errors.on_base %>
+    <% builder.fail do %>
+      <%= @item.errors.on_base %>
+    <% end %>
   <% end %>
 <% end %>

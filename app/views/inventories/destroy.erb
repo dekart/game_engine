@@ -1,8 +1,10 @@
 <% result_for :inventory_sell do |builder| %>
-  <%= builder.success t(".messages.success",
-        :amount     => @amount,
-        :item_name  => content_tag(:b, @amount > 1 ? @inventory.plural_name : @inventory.name)
-      ) %>
+  <% builder.success do %>
+    <%= t(".messages.success",
+          :amount     => @amount,
+          :item_name  => content_tag(:b, @amount > 1 ? @inventory.plural_name : @inventory.name)
+        ).html_safe %>
+  <% end %>
 
   <h3><%= t(".you_received.title") %></h3>
 

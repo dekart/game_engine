@@ -1,6 +1,6 @@
 <%= builder.title t(".title") %>
 
-<%= builder.notice t(".message") %>
+<p><%= t(".message") %></p>
 
 <% if result.group_payouts.try(:any?) %>
   <div class="payouts">

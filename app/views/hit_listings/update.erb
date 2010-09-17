@@ -41,7 +41,7 @@
           </div>
         <% end %>
       <% else %>
-        <%= builder.message :incomplete, t(".incomplete") %>
+        <p class="incomplete"><%= t(".incomplete") %></p>
       <% end %>
     <% elsif !@fight.enough_stamina? %>
       <%= builder.render("requirements/not_satisfied/stamina_point",
@@ -52,10 +52,16 @@
             :requirement => @fight.health_requirement
           ) %>
     <% else %>
-      <%= builder.fail @fight.errors.on(:character) %>
+      <% builder.fail do %>
+        <%= @fight.errors.on(:character) %>
+      <% end %>
     <% end %>
   <% else %>
-    <%= builder.notice t(".already_completed", :victim => character_name_link(@hit_listing.victim)) %>
+    <% builder.notice do %>
+      <%= t(".already_completed", 
+            :victim => character_name_link(@hit_listing.victim)
+          ).html_safe %>
+    <% end %>
   <% end %>
 
   <% if @hit_listing.completed? %>

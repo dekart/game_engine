@@ -3,10 +3,12 @@
     <% if !@help_result.new_record? %>
       <% if @help_request.context.is_a?(Mission) %>
         <% result_for :mission, :inline => true do |builder| %>
-          <%= builder.success t(".success",
-                :user     => character_name_link(@help_request.character),
-                :mission  => content_tag(:strong, @help_request.context.name)
-              ) %>
+          <% builder.success do %>
+            <%= t(".success",
+                  :user     => character_name_link(@help_request.character),
+                  :mission  => content_tag(:strong, @help_request.context.name)
+                ).html_safe %>
+          <% end %>
 
           <div class="payouts">
             <h3><%= t(".you_received") %></h3>
@@ -20,12 +22,16 @@
       <% end %>
     <% else %>
       <% result_for :help_request, :inline => true do |builder| %>
-        <%= builder.fail @help_result.errors.full_messages.first %>
+        <% builder.fail do %>
+          <%= @help_result.errors.full_messages.first %>
+        <% end %>
       <% end %>
     <% end %>
   <% else %>
     <% result_for :help_request, :inline => true do |builder| %>
-      <%= builder.fail t(".friends_only.message") %>
+      <% builder.fail do %>
+        <%= t(".friends_only.message") %>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>

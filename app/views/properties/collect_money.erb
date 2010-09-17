@@ -23,6 +23,8 @@
       $('#property_list').html(<%= render("list", :properties => @properties).to_json.html_safe %>);
     <% end %>
   <% else %>
-    <%= builder.fail t(".messages.failure") %>
+    <% builder.fail do %>
+      <%= t(".messages.failure") %>
+    <% end %>
   <% end %>
 <% end %>

@@ -12,7 +12,9 @@
       <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
     <% end %>
     
-    <%= builder.success t(".success") %>
+    <% builder.success do %>
+      <%= t(".success") %>
+    <% end %>
 
     <% @gifts.each do |gift| %>
       <table class="details" cellspacing="0" cellpadding="0">
