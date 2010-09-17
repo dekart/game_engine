@@ -17,6 +17,10 @@
     <% if @result.group_rank.try(:just_created?) %>
       <%= builder.render "mission_groups/complete", :result => @result %>
     <% end %>
+
+    <% builder.on_ready do %>
+      $('#mission_group_list').html('<%= escape_javascript(render("mission_groups/tabs")) %>');
+    <% end %>
   <% elsif !@result.enough_energy? %>
     <%= builder.render("requirements/not_satisfied/energy_point",
           :requirement => @mission.energy_requirement
@@ -43,18 +47,6 @@
   <% elsif @result.rank.completed? %>
     <% builder.fail do %>
       <%= t(".already_completed.message") %>
-    <% end %>
-  <% end %>
-
-  <% if @mission_groups %>
-    <% builder.on_ready do %>
-      $('#mission_group_list').html('<%=
-        escape_javascript(
-          render("mission_groups/tabs",
-            :groups   => @mission_groups,
-            :current  => current_character.mission_groups.current
-          )
-        ) %>');
     <% end %>
   <% end %>
 <% end %>

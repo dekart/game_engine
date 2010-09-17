@@ -8,8 +8,6 @@ class MissionsController < ApplicationController
       @missions = current_character.mission_groups.current.missions.with_state(:visible).visible_for(current_character)
     end
 
-    @mission_groups = current_character.mission_groups.current_page
-
     render :action => :fulfill, :layout => "ajax"
   end
 end

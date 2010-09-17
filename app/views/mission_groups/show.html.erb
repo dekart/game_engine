@@ -3,10 +3,7 @@
 <%= latest_help_request_for(:mission) %>
 
 <div id="mission_group_list">
-  <%= render("tabs",
-        :groups   => current_character.mission_groups.current_page,
-        :current  => @mission_group
-      ) %>
+  <%= render("tabs") %>
 </div>
 
 <% unless @mission_group.locked?(current_character) %>

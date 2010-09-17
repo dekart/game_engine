@@ -20,16 +20,34 @@ module MissionGroupsHelper
       @group = block
     end
 
-    def html(groups, current_group = nil)
+    def html
       yield(self)
 
-      if @previous_group and groups.previous_page and group = groups.first.previous_group
+      groups        = MissionGroup.with_state(:visible).all(:order => :level)
+      current_group = current_character.mission_groups.current
+      limit         = Setting.i(:mission_group_show_limit)
+
+      position = groups.index(current_group)
+
+      if position < limit - 1
+        page = :first
+        
+        visible_groups = groups[0, limit - 1]
+      elsif position > groups.size - limit
+        page = :last
+
+        visible_groups = groups[- (limit - 1), limit - 1]
+      else
+        visible_groups = groups[((position - 1) / (limit - 2)) * (limit - 2) + 1, limit - 2]
+      end
+
+      if @previous_group and page != :first and group = groups[groups.index(visible_groups.first) - 1]
         previous_group = capture(group, groups.first.level, &@previous_group)
       else
         previous_group = ""
       end
 
-      if @next_group and groups.next_page and group = groups.last.next_group
+      if @next_group and page != :last and group = groups[groups.index(visible_groups.last) + 1]
         next_group = capture(group, group.level, &@next_group)
       else
         next_group = ""
@@ -37,13 +55,13 @@ module MissionGroupsHelper
 
       result = ""
 
-      groups.each do |group|
+      visible_groups.each do |group|
         locked = group.locked?(current_character)
         current = (group == current_group)
 
-        if group == groups.first && previous_group.blank?
+        if group == visible_groups.first && previous_group.blank?
           position = :first
-        elsif group == groups.last && next_group.blank?
+        elsif group == visible_groups.last && next_group.blank?
           position = :last
         else
           position = nil
@@ -58,7 +76,7 @@ module MissionGroupsHelper
     end
   end
 
-  def mission_group_tabs(groups, current_group, &block)
-    GroupTabBuilder.new(self).html(groups, current_group, &block)
+  def mission_group_tabs(&block)
+    GroupTabBuilder.new(self).html(&block)
   end
 end

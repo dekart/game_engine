@@ -1,6 +1,6 @@
 <table cellspacing="0" cellpadding="0">
   <tr>
-    <% mission_group_tabs(groups, current) do |tabs| %>
+    <% mission_group_tabs do |tabs| %>
       <% tabs.previous_tab do |group, level| %>
         <% content_tag_for :td, group, :class => "previous first" do %>
           <%= link_to(t(".previous.name"), mission_group_path(group),

@@ -9,13 +9,6 @@ class Character
       group ||= MissionGroup.with_state(:visible).first
     end
 
-    def current_page
-      MissionGroup.with_state(:visible).paginate(
-        :page     => (MissionGroup.with_state(:visible).before(current).size.to_f / Setting.i(:mission_group_show_limit)).floor + 1,
-        :per_page => Setting.i(:mission_group_show_limit)
-      )
-    end
-
     def check_completion!(group)
       rank = rank_for(group)
 
