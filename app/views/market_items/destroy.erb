@@ -1,13 +1,9 @@
-<% result_for :market do %>
-  <p>
+<% result_for :market do |builder| %>
+  <% builder.success do %>
     <%= t(".message").html_safe %>
-  </p>
-<% end %>
-
-<% dom_ready do %>
-  <% if @item.valid? %>
-    $('#<%= dom_id(@item) %>').remove();
   <% end %>
 
-  $(document).trigger('result.received');
+  <% builder.on_ready do %>
+    $('#<%= dom_id(@item) %>').remove();
+  <% end %>
 <% end %>

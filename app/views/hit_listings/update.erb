@@ -1,22 +1,20 @@
-<% result_for :hit_listing do %>
+<% result_for :hit_listing do |builder| %>
   <% if @fight %>
     <% if !@fight.new_record? %>
       <% unless @hit_listing.completed? %>
-        <div class="buttons">
+        <% builder.buttons do %>
           <%= link_to_remote(button(:attack_again),
                 :url    => hit_listing_path(@hit_listing),
                 :method => :put,
                 :update => :result,
                 :html   => {:class => "attack_again button"}
               ) %>
-        </div>
+        <% end %>
       <% end %>
 
-      <% if @fight.winner == current_character %>
-        <%= render "fights/create/success", :fight => @fight %>
-      <% else %>
-        <%= render "fights/create/failure", :fight => @fight %>
-      <% end %>
+      <%= builder.render("fights/create/#{@fight.winner == current_character ? :success : :failure}",
+            :fight => @fight
+          ) %>
 
       <% if @hit_listing.completed? %>
         <% dialog do %>
@@ -46,25 +44,29 @@
         <p class="incomplete"><%= t(".incomplete") %></p>
       <% end %>
     <% elsif !@fight.enough_stamina? %>
-      <%= render("requirements/not_satisfied/stamina_point",
+      <%= builder.render("requirements/not_satisfied/stamina_point",
             :requirement => @fight.stamina_requirement
           ) %>
     <% elsif current_character.weak? %>
-      <%= render("requirements/not_satisfied/health_point",
+      <%= builder.render("requirements/not_satisfied/health_point",
             :requirement => @fight.health_requirement
           ) %>
     <% else %>
-      <p><%= @fight.errors.on(:character) %></p>
+      <% builder.fail do %>
+        <%= @fight.errors.on(:character) %>
+      <% end %>
     <% end %>
   <% else %>
-    <%= t(".already_completed", :victim => character_name_link(@hit_listing.victim)).html_safe %>
+    <% builder.notice do %>
+      <%= t(".already_completed", 
+            :victim => character_name_link(@hit_listing.victim)
+          ).html_safe %>
+    <% end %>
   <% end %>
-<% end %>
 
-<% dom_ready do %>
   <% if @hit_listing.completed? %>
-    $('#hitlist').html(<%= render("list", :hit_listings => @hit_listings).to_json.html_safe %>)
+    <% builder.on_ready do %>
+      $('#hitlist').html(<%= render("list", :hit_listings => @hit_listings).to_json.html_safe %>)
+    <% end %>
   <% end %>
-
-  $(document).trigger('result.received');
 <% end %>

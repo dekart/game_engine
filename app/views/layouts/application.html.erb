@@ -45,12 +45,8 @@
 
     <% if result = yield(:result) and !result.blank? %>
       <%= content_tag(:div, result, :id => :result) %>
-    
-      <% dom_ready do %>
-        $(document).trigger('result.available');
-      <% end %>
     <% else %>
-      <%= content_tag(:div, result, :id => :result, :style => "display:none;") %>
+      <%= content_tag(:div, "", :id => :result, :style => "display:none;") %>
     <% end %>
 
 

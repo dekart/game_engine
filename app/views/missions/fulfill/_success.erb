@@ -1,4 +1,4 @@
-<div class="buttons">
+<% builder.buttons do %>
   <%= link_to_remote(button(:continue),
         :url    => fulfill_mission_path(mission),
         :update => :result,
@@ -8,12 +8,12 @@
   <%= help_request_link(button(:request_help), mission,
         :class => "request_help button"
       ) %>
-</div>
+<% end %>
 
-<p>
+<% builder.success do %>
   <%= t(".message") %> <%= result.success_text %>
-</p>
+<% end %>
 
-<% dom_ready do %>
+<% builder.on_ready do %>
   $('#<%= dom_id(mission, :progress) %>').html(<%= mission_progress(current_character, mission).to_json.html_safe %>);
 <% end %>

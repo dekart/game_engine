@@ -1,4 +1,4 @@
-<div class="buttons">
+<% builder.buttons do %>
   <%= help_request_link(button(:request_help), mission,
         :class => "request_help button"
       ) %>
@@ -8,8 +8,8 @@
         :update => :result,
         :html   => {:class => "fulfill_again button"}
       ) %>
-</div>
+<% end %>
 
-<p>
+<% builder.fail do %>
   <%= t(".message") %> <%= mission.failure_text %>
-</p>
+<% end %>

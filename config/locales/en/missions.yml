@@ -20,7 +20,6 @@ en:
   missions:
     fulfill:
       completed:
-        title: "Congratulations!"
         message: "You've just completed this mission!"
         new_title: "You've got the new title:"
         child_missions: "You also opened new missions:"
