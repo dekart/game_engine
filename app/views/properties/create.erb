@@ -1,17 +1,15 @@
-<% result_for :property do %>
+<% result_for :property do |builder| %>
   <% if @property.errors.empty? %>
-    <div class="buttons">
+    <% builder.buttons do %>
       <%= link_to_function(button(:publish), property_stream_dialog(@property),
             :class => "publish button"
           ) %>
-    </div>
+    <% end %>
   
-    <p>
-      <%= t(".messages.success",
-            :amount         => @amount,
-            :property_name  => content_tag(:b, @property.name)
-          ).html_safe %>
-    </p>
+    <%= builder.success t(".messages.success",
+          :amount         => @amount,
+          :property_name  => content_tag(:b, @property.name)
+        ) %>
 
     <h3><%= t(".you_spent.title") %></h3>
 
@@ -19,13 +17,11 @@
       <%= payout(:basic_money, number_to_currency(@property.basic_price)) if @property.basic_price > 0 %>
       <%= payout(:vip_money, number_to_currency(@property.vip_price)) if @property.vip_price > 0 %>
     </div>
-  <% else %>
-    <p><%= @property.errors.on(:character) %></p>
-  <% end %>
-<% end %>
 
-<% dom_ready do %>
-  $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
-  
-  $(document).trigger('result.received');
+    <% builder.on_ready do %>
+      $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
+    <% end %>
+  <% else %>
+    <%= builder.fail @property.errors.on(:character) %>
+  <% end %>
 <% end %>

@@ -2,13 +2,11 @@
   <% if @help_result %>
     <% if !@help_result.new_record? %>
       <% if @help_request.context.is_a?(Mission) %>
-        <% result_for :mission do %>
-          <p class="success">
-            <%= t(".success",
-                  :user     => character_name_link(@help_request.character),
-                  :mission  => content_tag(:strong, @help_request.context.name)
-                ).html_safe %>
-          </p>
+        <% result_for :mission, :inline => true do |builder| %>
+          <%= builder.success t(".success",
+                :user     => character_name_link(@help_request.character),
+                :mission  => content_tag(:strong, @help_request.context.name)
+              ) %>
 
           <div class="payouts">
             <h3><%= t(".you_received") %></h3>
@@ -21,13 +19,13 @@
         <%= render :file => "fights/create" %>
       <% end %>
     <% else %>
-      <% result_for :help_request do %>
-        <p class="fail"><%= @help_result.errors.full_messages.first %></p>
+      <% result_for :help_request, :inline => true do |builder| %>
+        <%= builder.fail @help_result.errors.full_messages.first %>
       <% end %>
     <% end %>
   <% else %>
-    <% result_for :help_request do %>
-      <p class="fail"><%= t(".friends_only.message") %></p>
+    <% result_for :help_request, :inline => true do |builder| %>
+      <%= builder.fail t(".friends_only.message") %>
     <% end %>
   <% end %>
 <% end %>

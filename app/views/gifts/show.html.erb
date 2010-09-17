@@ -1,6 +1,6 @@
 <% content_for :result do %>
-  <% result_for :gift do %>
-    <div class="buttons">
+  <% result_for :gift, :inline => true do |builder| %>
+    <% builder.buttons do %>
       <% if Setting.b(:gifting_accept_all) %> 
         <% if current_character.has_unaccepted_gifts? %>
           <%= link_to(button(:accept_all), gift_path(:all), :class => 'pending button') %>
@@ -8,10 +8,11 @@
       <% else %>
         <%= link_to(button(:accept_pending), fb_app_requests_url, :class => "pending button", :target => :_top) %>
       <% end %>
+
       <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
-    </div>
+    <% end %>
     
-    <p><%= t(".success") %></p>
+    <%= builder.success t(".success") %>
 
     <% @gifts.each do |gift| %>
       <table class="details" cellspacing="0" cellpadding="0">

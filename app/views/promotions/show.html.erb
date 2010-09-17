@@ -1,6 +1,6 @@
 <% content_for :result do %>
-  <% result_for :promotion do %>
-    <p><%= @promotion.text %></p>
+  <% result_for :promotion, :inline => true do |builder| %>
+    <%= builder.notice @promotion.text %>
 
     <h3><%= t(".you_received") %></h3>
 

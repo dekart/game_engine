@@ -1,7 +1,7 @@
-<% result_for :fight do %>
+<% result_for :fight do |builder| %>
   <% if !@fight.new_record? %>
     <% if @fight.winner == current_character %>
-      <div class="buttons">
+      <% builder.buttons do %>
         <%= link_to_function(button(:publish), fight_stream_dialog(@fight),
               :class => "publish button"
             ) %>
@@ -9,11 +9,11 @@
         <%= help_request_link(button(:request_help), @fight,
               :class => "request_help button"
             ) %>
-      </div>
+      <% end %>
 
-      <%= render "fights/create/success", :fight => @fight %>
+      <%= builder.render "fights/create/success", :fight => @fight %>
     <% else %>
-      <div class="buttons">
+      <% builder.buttons do %>
         <%= link_to_remote(button(:attack_again),
               :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
               :update => :result,
@@ -23,31 +23,27 @@
         <%= help_request_link(button(:request_help), @fight,
               :class => "request_help button"
             ) %>
-      </div>
+      <% end %>
 
-      <%= render "fights/create/failure", :fight => @fight %>
+      <%= builder.render "fights/create/failure", :fight => @fight %>
     <% end %>
 
-    <%= render "fights/create/details", :fight => @fight %>
+    <%= builder.render "fights/create/details", :fight => @fight %>
+
+    <% if @fight.cause %>
+      <% builder.on_ready do %>
+        $('#<%= dom_id(@fight.cause, :respond) %>').hide();
+      <% end %>
+    <% end %>
   <% elsif !@fight.enough_stamina? %>
-    <%= render("requirements/not_satisfied/stamina_point",
+    <%= builder.render("requirements/not_satisfied/stamina_point",
           :requirement => @fight.stamina_requirement
         ) %>
   <% elsif current_character.weak? %>
-    <%= render("requirements/not_satisfied/health_point",
+    <%= builder.render("requirements/not_satisfied/health_point",
           :requirement => @fight.health_requirement
         ) %>
   <% else %>
-    <p class="fail"><%= @fight.errors.on(:character) %></p>
-  <% end %>
-<% end %>
-
-<% dom_ready do %>
-  <% if @fight.cause %>
-    $('#<%= dom_id(@fight.cause, :respond) %>').hide();
-  <% end %>
-
-  <% if request.xhr? %>
-    $(document).trigger('result.received');
+    <%= builder.fail @fight.errors.on(:character) %>
   <% end %>
 <% end %>

@@ -1,11 +1,9 @@
-<% result_for :property do %>
+<% result_for :property do |builder| %>
   <% if @property.errors.empty? %>
-    <p>
-      <%= t(".messages.success",
-            :property_name  => content_tag(:b, @property.name),
-            :level          => @property.level
-          ).html_safe %>
-    </p>
+    <%= builder.success t(".messages.success",
+          :property_name  => content_tag(:b, @property.name),
+          :level          => @property.level
+        ) %>
 
     <h3><%= t(".you_spent.title") %></h3>
 
@@ -16,12 +14,10 @@
       <%= payout(:vip_money, number_to_currency(@property.vip_price)) if @property.vip_price > 0 %>
     </div>
   <% else %>
-    <p><%= @property.errors.on(:character) %></p>
+    <%= builder.fail @property.errors.on(:character) %>
   <% end %>
-<% end %>
 
-<% dom_ready do %>
-  $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
-
-  $(document).trigger('result.received');
+  <% builder.on_ready do %>
+    $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
+  <% end %>
 <% end %>

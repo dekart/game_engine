@@ -1,24 +1,24 @@
-<% result_for(:mission) do %>
+<% result_for(:mission) do |builder| %>
   <% if @result.saved %>
     <% if @result.rank.just_completed? %>
-      <%= render("missions/fulfill/completed",
+      <%= builder.render("missions/fulfill/completed",
             :mission  => @mission,
             :result   => @result,
             :missions => @missions
           ) %>
     <% elsif @result.success %>
-      <%= render "missions/fulfill/success", :mission => @mission, :result => @result %>
+      <%= builder.render "missions/fulfill/success", :mission => @mission, :result => @result %>
     <% else %>
-      <%= render "missions/fulfill/failure", :mission => @mission, :result => @result %>
+      <%= builder.render "missions/fulfill/failure", :mission => @mission, :result => @result %>
     <% end %>
 
-    <%= render "missions/fulfill/payouts", :mission => @mission, :result => @result %>
+    <%= builder.render "missions/fulfill/payouts", :mission => @mission, :result => @result %>
 
     <% if @result.group_rank.try(:just_created?) %>
-      <%= render "mission_groups/complete", :result => @result %>
+      <%= builder.render "mission_groups/complete", :result => @result %>
     <% end %>
   <% elsif !@result.enough_energy? %>
-    <%= render("requirements/not_satisfied/energy_point",
+    <%= builder.render("requirements/not_satisfied/energy_point",
           :requirement => @mission.energy_requirement
         ) %>
   <% elsif !@result.requirements_satisfied? %>
@@ -28,7 +28,7 @@
       <%= unsatisfied_requirement_list(@mission.requirements) %>
     </div>
 
-    <% dom_ready do %>
+    <% builder.on_ready do %>
       Mission.requirementCallback = function(){
         <%= remote_function(
               :url    => fulfill_mission_path(@mission),
@@ -41,18 +41,16 @@
   <% elsif @result.rank.completed? %>
     <p><%= t(".already_completed.message") %></p>
   <% end %>
-<% end %>
 
-<% dom_ready do %>
   <% if @mission_groups %>
-    $('#mission_group_list').html('<%=
-      escape_javascript(
-        render("mission_groups/tabs",
-          :groups   => @mission_groups,
-          :current  => current_character.mission_groups.current
-        )
-      ) %>');
+    <% builder.on_ready do %>
+      $('#mission_group_list').html('<%=
+        escape_javascript(
+          render("mission_groups/tabs",
+            :groups   => @mission_groups,
+            :current  => current_character.mission_groups.current
+          )
+        ) %>');
+    <% end %>
   <% end %>
-
-  $(document).trigger('result.received');
 <% end %>

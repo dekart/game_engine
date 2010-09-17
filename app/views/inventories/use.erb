@@ -1,9 +1,7 @@
-<% result_for :inventory_use do %>
-  <p>
-    <%= (
-          @inventory.use_message.present? ? @inventory.use_message : t(".messages.success", :item => @inventory.name)
-        ).html_safe %>
-  </p>
+<% result_for :inventory_use do |builder| %>
+  <%= builder.success(
+        @inventory.use_message.present? ? @inventory.use_message : t(".messages.success", :item => @inventory.name)
+      ) %>
 
   <table class="payouts" cellspacing="0" cellpadding="0">
     <tr>
@@ -21,14 +19,12 @@
       </td>
     </tr>
   </table>
-<% end %>
 
-<% dom_ready do %>
-  $('#inventory_list').html('<%=
-    escape_javascript(
-      render("list", :inventories => current_character.inventories)
-    )
-  %>');
-
-  $(document).trigger('result.received');
+  <% builder.on_ready do %>
+    $('#inventory_list').html('<%=
+      escape_javascript(
+        render("list", :inventories => current_character.inventories)
+      )
+    %>');
+  <% end %>
 <% end %>

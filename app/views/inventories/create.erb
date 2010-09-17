@@ -1,6 +1,6 @@
-<% result_for :shop do %>
+<% result_for :shop do |builder| %>
   <% if @inventory.valid? %>
-    <div class="buttons">
+    <% builder.buttons do %>
       <%= link_to_function(button(:publish), inventory_stream_dialog(@inventory),
             :class => "publish button"
           ) %>
@@ -8,14 +8,12 @@
       <%= link_to(button(:inventory), inventories_url, 
             :class => "inventory button"
           ) %>
-    </div>
+    <% end %>
 
-    <p>
-      <%= t(".messages.success",
-            :amount     => @amount,
-            :item_name  => content_tag(:b, @amount > 1 ? @item.plural_name : @item.name)
-          ).html_safe %>
-    </p>
+    <%= builder.success t(".messages.success",
+          :amount     => @amount,
+          :item_name  => content_tag(:b, @amount > 1 ? @item.plural_name : @item.name)
+        ) %>
 
     <% if @item.price? %>
       <table class="payouts">
@@ -34,16 +32,15 @@
         </tr>
       </table>
     <% end %>
-  <% else %>
-    <p><%= @inventory.errors.on(:character) %></p>
-  <% end %>
-<% end %>
-    
-<% dom_ready do %>
-  $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
-  Character.initFightAttributes();
-  
-  $(document).trigger('item.purchase');
-  $(document).trigger('result.received');
+    <% builder.on_ready do %>
+      $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
+
+      Character.initFightAttributes();
+
+      $(document).trigger('item.purchase');
+    <% end %>
+  <% else %>
+    <%= builder.fail @inventory.errors.on(:character) %>
+  <% end %>
 <% end %>

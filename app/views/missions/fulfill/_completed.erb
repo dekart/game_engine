@@ -1,14 +1,14 @@
-<div class="buttons">
+<% builder.buttons do %>
   <%= link_to_function(button(:publish), mission_complete_stream_dialog(mission),
         :class => "publish button"
       ) %>
-</div>
+<% end %>
 
-<h2><%= t(".title") %></h2>
+<%= builder.title t(".title") %>
 
-<p>
+<% builder.message :complete do %>
   <%= t(".message") %> <%= mission.complete_text %>
-</p>
+<% end %>
 
 <% if mission.child_missions.any? %>
   <div class="child_missions">
@@ -44,13 +44,13 @@
 <% end %>
 
 <% if missions %>
-  <% dom_ready do %>
+  <% builder.on_ready do %>
     $('#mission_list').html('<%= escape_javascript(render("list", :missions => missions)) %>');
   <% end %>
 <% end %>
 
 <% if result.rank.just_completed? %>
-  <% dom_ready do %>
+  <% builder.on_ready do %>
     $(document).trigger('mission.complete');
   <% end %>
 <% end %>

@@ -1,9 +1,7 @@
-<p class="fail">
-  <%= t(".message",
-        :pronoun    => fb_pronoun(fight.victim.user, :objective => true),
-        :user_name  => character_name_link(fight.victim)
-      ).html_safe %>
-</p>
+<%= builder.fail t(".message",
+      :pronoun    => fb_pronoun(fight.victim.user, :objective => true),
+      :user_name  => character_name_link(fight.victim)
+    ) %>
 
 <table class="payouts" cellspacing="0" cellpadding="0">
   <tr>

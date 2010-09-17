@@ -1,6 +1,6 @@
-<% result_for :property do %>
+<% result_for :property do |builder| %>
   <% if @result %>
-    <p>
+    <% builder.success do %>
       <% if @property %>
         <%= t(".messages.success_single",
               :basic_money    => Character.human_attribute_name("basic_money"),
@@ -11,20 +11,18 @@
               :basic_money => Character.human_attribute_name("basic_money")
             ).html_safe %>
       <% end %>
-    </p>
+    <% end %>
 
     <h3><%= t(".you_received.title") %></h3>
 
     <div class="payouts">
       <%= payout_list(@result, :add) %>
     </div>
+
+    <% builder.on_ready do %>
+      $('#property_list').html(<%= render("list", :properties => @properties).to_json.html_safe %>);
+    <% end %>
   <% else %>
-    <p><%= t(".messages.failure").html_safe %></p>
+    <%= builder.fail t(".messages.failure") %>
   <% end %>
-<% end %>
-
-<% dom_ready do %>
-  $('#property_list').html(<%= render("list", :properties => @properties).to_json.html_safe %>);
-
-  $(document).trigger('result.received');
 <% end %>

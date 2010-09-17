@@ -32,13 +32,4 @@ module DesignHelper
 
     result.html_safe
   end
-
-  def result_for(type, content = nil, &block)
-    result = content_tag(:div, block_given? ? capture(&block) : content,
-      :id     => "#{type}_result",
-      :class  => "result_content clearfix"
-    )
-
-    block_given? ? concat(result) : result
-  end
 end
