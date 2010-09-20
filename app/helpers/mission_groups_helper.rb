@@ -42,7 +42,7 @@ module MissionGroupsHelper
       end
 
       if @previous_group and page != :first and group = groups[groups.index(visible_groups.first) - 1]
-        previous_group = capture(group, groups.first.level, &@previous_group)
+        previous_group = capture(group, visible_groups.first.level, &@previous_group)
       else
         previous_group = ""
       end
