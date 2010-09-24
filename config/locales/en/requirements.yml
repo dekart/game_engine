@@ -7,6 +7,9 @@ en:
       text: "{{name}} X {{amount}}"
       shop_link_title: "Purchase {{item}} from Shop"
       missing: "Missing Item!"
+    title:
+      name: "Title"
+      text: "'{{name}}' Title"
     health_point:
       name: "Health Points"
       text: "{{amount}} Health Points"
@@ -30,6 +33,8 @@ en:
       text: "{{amount}} Alliance Members"
 
     not_satisfied:
+      title:
+        message: "You don't have the '{{name}}' title!"
       alliance:
         message: "You don't have enought members in your alliance. You need at least {{required_value}} members. To get more members you can either {{invite}} or {{premium}}."
         invite: "invite your friends"
