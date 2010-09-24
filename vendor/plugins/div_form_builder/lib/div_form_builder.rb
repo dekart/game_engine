@@ -90,7 +90,7 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
   def field_set(legend = nil, options = {}, &block)
     @template.concat(
       @template.content_tag(:fieldset,
-        (legend ? @template.content_tag(:legend, legend) : "") +
+        (legend ? @template.content_tag(:legend, legend) : "").html_safe +
         @template.capture(&block),
         options
       )
