@@ -4,10 +4,11 @@
 
 <%= form.file_field :image, :after_field => (image_tag(form.object.image.url) if form.object.image?) %>
 
-<h2><%= MissionGroup.human_attribute_name("requirements") %></h2>
+<% form.field_set MissionGroup.human_attribute_name("requirements") do %>
+  <%= form.fields "admin/requirements/collection" %>
+  <%= form.check_box :hide_unsatisfied %>
+<% end %>
 
-<%= form.fields "admin/requirements/collection" %>
-
-<h2><%= MissionGroup.human_attribute_name("payouts") %></h2>
-
-<%= form.fields "admin/payouts/collection" %>
+<% form.field_set MissionGroup.human_attribute_name("payouts") do %>
+  <%= form.fields "admin/payouts/collection" %>
+<% end %>
