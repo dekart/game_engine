@@ -7,7 +7,7 @@ en:
       title: "Title"
       item: "Item"
       notification/level_up: "Level Up"
-    attributes:
+    attributes:     
       character:
         level: "Level"
         attack: "Attack"
@@ -48,6 +48,8 @@ en:
         stamina_restore_bonus: "Decrease of stamina restore period, %"
         income_period_bonus: "Decrease of income recalculation period, %"
         equipment_slots: "Additional equipment slots"
+      mission_group:
+        hide_unsatisfied: "Hide if requirements are not satisfied"
       mission:
         progress: "Progress"
         requirements: "Requirements"

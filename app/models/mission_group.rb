@@ -1,5 +1,6 @@
 class MissionGroup < ActiveRecord::Base
   extend HasPayouts
+  extend HasRequirements
 
   has_many :missions, :dependent => :destroy
   has_many :bosses, :dependent => :destroy
@@ -48,6 +49,7 @@ class MissionGroup < ActiveRecord::Base
 
   has_attached_file :image
 
+  has_requirements
   has_payouts :complete
 
   validates_presence_of :name, :level
@@ -65,8 +67,12 @@ class MissionGroup < ActiveRecord::Base
     self.class.with_state(:visible).after(self).first(:order => "mission_groups.level")
   end
 
-  def locked?(character)
-    character.level < level
+  def available_for(character)
+    enough_level?(character) && requirements.satisfies?(character)
+  end
+
+  def enough_level?(character)
+    character.level >= level
   end
 
   def name_with_level

@@ -3,6 +3,7 @@ en:
     show:
       title: "Missions"
       locked_group: "Reach level {{level}} to open missions from this group"
+      requirements_not_satisfied: "Some of the mission group requirements are not satisfied:"
     complete:
       title: "Mission Group Completed!"
       message: "You've completed all missions in this group!"

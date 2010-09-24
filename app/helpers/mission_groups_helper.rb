@@ -20,14 +20,19 @@ module MissionGroupsHelper
       @group = block
     end
 
+    def groups
+      @groups ||= MissionGroup.with_state(:visible).all(:order => :level).select do |group|
+        !group.hide_unsatisfied? || group.requirements.satisfies?(current_character)
+      end
+    end
+
     def html
       yield(self)
 
-      groups        = MissionGroup.with_state(:visible).all(:order => :level)
       current_group = current_character.mission_groups.current
       limit         = Setting.i(:mission_group_show_limit)
 
-      position = groups.index(current_group)
+      position = groups.index(current_group) || -1
 
       if position < limit - 1
         page = :first
@@ -56,7 +61,7 @@ module MissionGroupsHelper
       result = ""
 
       visible_groups.each do |group|
-        locked = group.locked?(current_character)
+        locked  = !group.available_for(current_character)
         current = (group == current_group)
 
         if group == visible_groups.first && previous_group.blank?

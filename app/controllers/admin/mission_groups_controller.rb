@@ -28,7 +28,7 @@ class Admin::MissionGroupsController < Admin::BaseController
   def update
     @group = MissionGroup.find(params[:id])
 
-    if @group.update_attributes(params[:mission_group])
+    if @group.update_attributes(params[:mission_group].reverse_merge(:requirements => nil, :payouts => nil))
       flash[:success] = t(".success")
       
       unless_continue_editing do
