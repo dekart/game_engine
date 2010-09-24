@@ -56,7 +56,7 @@ module MissionGroupsHelper
       result = ""
 
       visible_groups.each do |group|
-        locked = group.locked?(current_character)
+        locked  = !group.available_for(current_character)
         current = (group == current_group)
 
         if group == visible_groups.first && previous_group.blank?

@@ -27,7 +27,7 @@
         ) %>
   <% elsif !@result.requirements_satisfied? %>
     <% builder.fail do %>
-      <%= t(".requirements_not_satisfied.message") %>
+      <%= t(".requirements_not_satisfied") %>
     <% end %>
 
     <div class="requirements clearfix">

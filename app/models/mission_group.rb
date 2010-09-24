@@ -67,8 +67,12 @@ class MissionGroup < ActiveRecord::Base
     self.class.with_state(:visible).after(self).first(:order => "mission_groups.level")
   end
 
-  def locked?(character)
-    character.level < level
+  def available_for(character)
+    enough_level?(character) && requirements.satisfies?(character)
+  end
+
+  def enough_level?(character)
+    character.level >= level
   end
 
   def name_with_level

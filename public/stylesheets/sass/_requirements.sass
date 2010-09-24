@@ -1,13 +1,16 @@
 .requirements
   .requirement
-    height: 25px
-    line-height: 25px
     padding-left: 21px
-    background-position: left
+    background-position: left top
     background-repeat: no-repeat
     clear: both
-    white-space: nowrap
     margin-bottom: 5px
+
+  .buttons
+    float: right
+
+    .premium
+      +button(!requirement_premium_icon)
 
   .value
     font-weight: bold
@@ -37,8 +40,6 @@
     background-image = !requirement_defence_icon
 
   .item
-    padding-left: 0
-
     .image
       display: block
       float: left
