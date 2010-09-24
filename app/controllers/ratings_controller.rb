@@ -8,10 +8,6 @@ class RatingsController < ApplicationController
     @missions    = @rating_scope.rated_by(:missions_succeeded)
     @relations   = @rating_scope.rated_by(:relations_count)
 
-    [@level, @total_money, @fights, @missions, @relations].each do |rating|
-      rating.push(current_character) unless rating.include?(current_character)
-    end
-
     render :action => :show
   end
 
