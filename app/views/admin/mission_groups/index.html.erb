@@ -10,6 +10,8 @@
       <th><%= MissionGroup.human_attribute_name("name") %></th>
       <th><%= MissionGroup.human_attribute_name("level") %></th>
       <th><%= MissionGroup.human_attribute_name("missions") %></th>
+      <th><%= MissionGroup.human_attribute_name("requirements") %></th>
+      <th><%= MissionGroup.human_attribute_name("payouts") %></th>
       <th><%= MissionGroup.human_attribute_name("state") %></th>
       <th></th>
     </tr>
@@ -18,6 +20,8 @@
         <td class="name"><%= link_to(group.name, edit_admin_mission_group_path(group)) %></td>
         <td class="level"><%= group.level %></td>
         <td class="missions"><%= group.missions.size %></td>
+        <td class="requirements"><%= admin_requirements_preview(group.requirements) %></td>
+        <td class="payouts"><%= admin_payouts_preview(group.payouts) %></td>
         <td class="state"><%= admin_state(group) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_mission_group_path(group)) %>

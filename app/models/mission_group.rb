@@ -1,5 +1,6 @@
 class MissionGroup < ActiveRecord::Base
   extend HasPayouts
+  extend HasRequirements
 
   has_many :missions, :dependent => :destroy
   has_many :bosses, :dependent => :destroy
@@ -48,6 +49,7 @@ class MissionGroup < ActiveRecord::Base
 
   has_attached_file :image
 
+  has_requirements
   has_payouts :complete
 
   validates_presence_of :name, :level
