@@ -32,7 +32,7 @@ module MissionGroupsHelper
       current_group = current_character.mission_groups.current
       limit         = Setting.i(:mission_group_show_limit)
 
-      position = groups.index(current_group)
+      position = groups.index(current_group) || -1
 
       if position < limit - 1
         page = :first
