@@ -20,10 +20,15 @@ module MissionGroupsHelper
       @group = block
     end
 
+    def groups
+      @groups ||= MissionGroup.with_state(:visible).all(:order => :level).select do |group|
+        !group.hide_unsatisfied? || group.requirements.satisfies?(current_character)
+      end
+    end
+
     def html
       yield(self)
 
-      groups        = MissionGroup.with_state(:visible).all(:order => :level)
       current_group = current_character.mission_groups.current
       limit         = Setting.i(:mission_group_show_limit)
 
