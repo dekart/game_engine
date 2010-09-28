@@ -16,9 +16,6 @@
         <tr>
           <th><%= Mission.human_attribute_name("image") %></th>
           <th><%= Mission.human_attribute_name("name") %></th>
-          <th><%= Mission.human_attribute_name("ep_cost") %></th>
-          <th><%= Mission.human_attribute_name("experience") %></th>
-          <th><%= Mission.human_attribute_name("basic_money") %></th>
           <th><%= Mission.human_attribute_name("requirements") %></th>
           <th><%= Mission.human_attribute_name("payouts") %></th>
           <th><%= Mission.human_attribute_name("state") %></th>
@@ -28,11 +25,6 @@
       <tr>
         <td class="image"><%= image_tag(mission.image.url(:icon)) if mission.image? %></td>
         <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
-        <td class="ep_cost"><%= mission.ep_cost %></td>
-        <td class="experience"><%= mission.experience %></td>
-        <td class="basic_money">
-          <%= number_to_currency(mission.money_min) %> - <%= number_to_currency(mission.money_max) %>
-        </td>
         <td class="requirements">
           <%= admin_requirements_preview(mission.requirements) %>
         </td>
@@ -47,23 +39,32 @@
               <%=  %>
             </div>
           <% end %>
-
-          <%= admin_payouts_preview(mission.payouts) %>
         </td>
         <td class="state"><%= admin_state(mission) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_mission_path(mission)) %>
-          <%= link_to(t(".controls.publish"), publish_admin_mission_path(mission),
-                :method => :put,
-                :confirm => t(".controls.publish_confirm")
-              ) if mission.can_publish? %>
+
+          <% if mission.levels.any? && mission.can_publish? %>
+            <%= link_to(t(".controls.publish"), publish_admin_mission_path(mission),
+                  :method => :put,
+                  :confirm => t(".controls.publish_confirm")
+                ) %>
+          <% end %>
+          
           <%= link_to(t(".controls.hide"), hide_admin_mission_path(mission),
                 :method => :put
               ) if mission.can_hide? %>
+          
           <%= link_to(t(".controls.delete"), admin_mission_path(mission),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")
               ) if mission.can_mark_deleted? %>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="6">
+          <%= render "levels", :mission => mission %>
         </td>
       </tr>
     <% end %>

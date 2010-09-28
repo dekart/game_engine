@@ -23,12 +23,20 @@ ActionController::Routing::Routes.draw do |map|
         :publish  => :put,
         :hide     => :put
       }
-    admin.resources :missions, 
+      
+    admin.resources(:missions,
       :collection => {:balance => :any},
       :member => {
         :publish  => :put,
         :hide     => :put
       }
+    ) do |mission|
+      mission.resources :mission_levels,
+        :member => {
+          :move => :put
+        }
+    end
+
     admin.resources :bosses,
       :member => {
         :publish  => :put,

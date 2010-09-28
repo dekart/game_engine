@@ -2,7 +2,8 @@ class Mission < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
   include HasVisibility
-  
+
+  has_many    :levels, :class_name => "MissionLevel"
   has_many    :ranks, :dependent => :delete_all
   belongs_to  :mission_group
   belongs_to  :parent_mission, :class_name => "Mission"
@@ -37,8 +38,8 @@ class Mission < ActiveRecord::Base
   has_payouts :success, :failure, :complete, :repeat_success, :repeat_failure,
     :default_event => :complete
 
-  validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text, :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max
-  validates_numericality_of :win_amount, :success_chance, :ep_cost, :experience, :money_min, :money_max, :loot_chance, :allow_blank => true
+  validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text
+  validates_numericality_of :loot_chance, :allow_blank => true
 
   def self.to_grouped_dropdown
     {}.tap do |result|
