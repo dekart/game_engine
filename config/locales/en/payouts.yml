@@ -30,6 +30,8 @@ en:
       name: "Experience"
     attack_points_total:
       name: "Attack points"
+    defence_points_total:
+      name: "Defence points"
     title:
       name: "Title"
       missing: "Deleted or hidden"
