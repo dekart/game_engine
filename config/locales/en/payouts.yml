@@ -34,6 +34,8 @@ en:
       name: "Defence points"
     energy_points_total:
       name: "Total energy points"
+    health_points_total:
+      name: "Total health points"
     title:
       name: "Title"
       missing: "Deleted or hidden"
