@@ -36,6 +36,8 @@ en:
       name: "Total energy points"
     health_points_total:
       name: "Total health points"
+    stamina_points_total:
+      name: "Total stamina points"
     title:
       name: "Title"
       missing: "Deleted or hidden"
