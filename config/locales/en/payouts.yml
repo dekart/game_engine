@@ -28,6 +28,8 @@ en:
       name: "Mercenaries"
     experience:
       name: "Experience"
+    attack_points_total:
+      name: "Attack points"
     title:
       name: "Title"
       missing: "Deleted or hidden"
