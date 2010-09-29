@@ -11,7 +11,7 @@ module RatingsHelper
     if include_self && !characters.include?(current_character)
       position = characters.rating_position(current_character, field)
 
-      result << capture(current_character, position, current, &block)
+      result << capture(current_character, position, true, &block)
     end
 
     block_given? ? concat(result.html_safe) : result.html_safe
