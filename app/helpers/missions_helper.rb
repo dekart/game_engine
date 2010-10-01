@@ -1,21 +1,32 @@
 module MissionsHelper
-  def mission_progress(character, mission)
-    rank = character.rank_for_mission(mission)
+  def mission_list(missions)
+    missions.each do |mission|
+      if mission.visible_for?(current_character)
+        rank = current_character.mission_levels.rank_for(mission)
+        level = rank ? rank.level : mission.levels.first
 
-    if rank.completed?
-      result = percentage_bar(100, :label => t("missions.mission.completed"))
+        yield(mission, level, rank)
+      end
+    end
+  end
+
+  def mission_progress(rank)
+    if rank.nil?
+      percentage_bar(0,
+        :label => "%s: %d%" % [Mission.human_attribute_name("progress"), 0]
+      )
+    elsif rank.completed?
+      percentage_bar(100, :label => t("missions.mission.completed"))
     else
-      percentage = (rank.win_count.to_f / rank.mission.win_amount * 100)
+      percentage = rank.progress_percentage
 
-      result = percentage_bar(percentage,
+      percentage_bar(percentage,
         :label => "%s: %d%" % [Mission.human_attribute_name("progress"), percentage]
       )
     end
-
-    result.html_safe
   end
 
-  def mission_money(mission)
-    "%s - %s" % [number_to_currency(mission.money_min), number_to_currency(mission.money_max)]
+  def mission_money(level)
+    "%s - %s" % [number_to_currency(level.money_min), number_to_currency(level.money_max)]
   end
 end

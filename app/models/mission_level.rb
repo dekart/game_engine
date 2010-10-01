@@ -12,4 +12,21 @@ class MissionLevel < ActiveRecord::Base
 
   validates_presence_of :win_amount, :chance, :energy, :experience, :money_min, :money_max
   validates_numericality_of :win_amount, :chance, :energy, :experience, :money_min, :money_max, :allow_blank => true
+
+  after_create :update_completion_status
+
+  def money
+    rand(money_max - money_min) + money_min
+  end
+
+  def energy_requirement
+    Requirements::EnergyPoint.new(:value => energy)
+  end
+
+  protected
+
+  def update_completion_status
+    mission.ranks.delete_all
+    mission.mission_group.ranks.delete_all
+  end
 end

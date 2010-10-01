@@ -1,9 +1,11 @@
 <% collection(missions) do %>
   <table cellspacing="0" cellpadding="0">
-    <% missions.each do |mission| %>
-      <% if mission.visible_for?(current_character) %>
-        <%= render(mission) %>
-      <% end %>
+    <% mission_list(missions) do |mission, level, rank| %>
+      <%= render('missions/mission',
+            :mission  => mission,
+            :level    => level,
+            :rank     => rank
+          ) %>
     <% end %>
   </table>
 <% end %>

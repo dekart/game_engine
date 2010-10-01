@@ -4,7 +4,7 @@ class Mission < ActiveRecord::Base
   include HasVisibility
 
   has_many    :levels, :class_name => "MissionLevel"
-  has_many    :ranks, :dependent => :delete_all
+  has_many    :ranks, :class_name => "MissionRank", :dependent => :delete_all
   belongs_to  :mission_group
   belongs_to  :parent_mission, :class_name => "Mission"
   has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
@@ -51,12 +51,8 @@ class Mission < ActiveRecord::Base
     end
   end
   
-  def money
-    rand(money_max - money_min) + money_min
-  end
-
   def visible_for?(character)
-    parent_mission.nil? or character.rank_for_mission(parent_mission).completed?
+    parent_mission.nil? or character.missions.rank_for(parent_mission).completed?
   end
 
   def loot_items
@@ -69,9 +65,5 @@ class Mission < ActiveRecord::Base
 
   def loot_item_ids
     @loot_item_ids ||= self[:loot_item_ids].to_s.split(",").collect{|i| i.to_i }
-  end
-
-  def energy_requirement
-    Requirements::EnergyPoint.new(:value => ep_cost)
   end
 end

@@ -4,7 +4,7 @@ class MissionGroup < ActiveRecord::Base
 
   has_many :missions, :dependent => :destroy
   has_many :bosses, :dependent => :destroy
-  has_many :mission_group_ranks, :dependent => :delete_all
+  has_many :ranks, :class_name => "MissionGroupRank", :dependent => :delete_all
 
   default_scope :order => "mission_groups.level"
   

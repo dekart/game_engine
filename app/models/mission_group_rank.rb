@@ -2,16 +2,8 @@ class MissionGroupRank < ActiveRecord::Base
   belongs_to :character
   belongs_to :mission_group
 
-  named_scope :completed, {
-    :conditions => {:completed => true},
-    :include    => :mission_group,
-    :order      => "mission_groups.level"
-   }
-
   before_create :set_completed
   after_create  :apply_payouts, :assign_just_created
-
-  delegate :title, :to => :mission_group
 
   attr_reader :payouts
 

@@ -1,6 +1,6 @@
 <% result_for(:mission) do |builder| %>
   <% if @result.saved %>
-    <% if @result.rank.just_completed? %>
+    <% if @result.level_rank.just_completed? %>
       <%= builder.render("missions/fulfill/completed",
             :mission  => @mission,
             :result   => @result,
@@ -23,7 +23,7 @@
     <% end %>
   <% elsif !@result.enough_energy? %>
     <%= builder.render("requirements/not_satisfied/energy_point",
-          :requirement => @mission.energy_requirement
+          :requirement => @result.level.energy_requirement
         ) %>
   <% elsif !@result.requirements_satisfied? %>
     <% builder.fail do %>
@@ -44,7 +44,7 @@
 
       $(document).bind('requirement.satisfy', Mission.onRequirementSatisfy);
     <% end %>
-  <% elsif @result.rank.completed? %>
+  <% elsif @result.mission_rank.completed? %>
     <% builder.fail do %>
       <%= t(".already_completed.message") %>
     <% end %>
