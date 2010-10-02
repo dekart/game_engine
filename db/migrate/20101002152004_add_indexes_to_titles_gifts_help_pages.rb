@@ -2,6 +2,8 @@ class AddIndexesToTitlesGiftsHelpPages < ActiveRecord::Migration
   def self.up
     add_index :character_titles, [:character_id, :title_id]
     
+    add_index :collection_ranks, [:character_id, :collection_id]
+
     add_index :gifts, :character_id
 
     add_index :help_pages, 'alias'
@@ -22,6 +24,8 @@ class AddIndexesToTitlesGiftsHelpPages < ActiveRecord::Migration
 
   def self.down
     remove_index :character_titles, :column => [:character_id, :title_id]
+
+    remove_index :collection_ranks, :column => [:character_id, :collection_id]
 
     remove_index :gifts, :column => :character_id
 
