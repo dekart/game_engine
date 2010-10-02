@@ -8,21 +8,23 @@
 
         <%= help_request_link(button(:request_help), @fight,
               :class => "request_help button"
-            ) %>
+            ) unless @fight.cause.is_a?(HelpRequest) %>
       <% end %>
 
       <%= builder.render "fights/create/success", :fight => @fight %>
     <% else %>
-      <% builder.buttons do %>
-        <%= link_to_remote(button(:attack_again),
-              :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
-              :update => :result,
-              :html   => {:class => "attack_again button"}
-            ) %>
+      <% unless @fight.cause.is_a?(HelpRequest) %>
+        <% builder.buttons do %>
+          <%= link_to_remote(button(:attack_again),
+                :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
+                :update => :result,
+                :html   => {:class => "attack_again button"}
+              ) %>
 
-        <%= help_request_link(button(:request_help), @fight,
-              :class => "request_help button"
-            ) %>
+          <%= help_request_link(button(:request_help), @fight,
+                :class => "request_help button"
+              ) %>
+        <% end %>
       <% end %>
 
       <%= builder.render "fights/create/failure", :fight => @fight %>
