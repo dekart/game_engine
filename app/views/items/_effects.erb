@@ -1,5 +1,3 @@
 <% item.effects.each do |effect, value| %>
   <%= payout(effect, value > 0 ? "+%d" % value : value) %>
 <% end %>
-
-<%= payout_list(item.payouts, :add, :preview) %>

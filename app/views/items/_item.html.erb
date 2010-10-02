@@ -14,6 +14,12 @@
 
       <%= render "items/effects", :item => item %>
     <% end %>
+
+    <% if item.payouts.visible? %>
+      <h3><%= Item.human_attribute_name("payouts") %></h3>
+
+      <%= payout_list(item.payouts, :add, :preview) %>
+    <% end %>
   </td>
 
   <td class="requirements">

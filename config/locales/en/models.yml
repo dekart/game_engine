@@ -55,6 +55,7 @@ en:
       item:
         price: "Price"
         effects: "Effects"
+        payouts: "On Use"
         use_button_label: "Custom label for 'Use' button"
       help_page:
         alias: "Page URL"
