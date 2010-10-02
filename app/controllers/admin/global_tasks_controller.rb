@@ -5,7 +5,7 @@ class Admin::GlobalTasksController < Admin::BaseController
     if User.count < delete_user_limit
       User.destroy_all
     else
-      flash[:error] = t("admin.global_tasks.delete_users.user_limit_reached", :limit => delete_user_limit)
+      flash[:error] = t(".user_limit_reached", :limit => delete_user_limit)
     end
 
     redirect_to admin_global_task_path
@@ -14,7 +14,7 @@ class Admin::GlobalTasksController < Admin::BaseController
   def restart
     Rails.restart!
 
-    flash[:success] = t("admin.global_tasks.restart.success")
+    flash[:success] = t(".success")
 
     redirect_to admin_global_task_path
   end

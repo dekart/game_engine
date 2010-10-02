@@ -25,7 +25,7 @@ class Admin::BaseController < ApplicationController
 
     super(
       *(
-        (key.starts_with?(".") ? ["admin.#{controller_name}.#{action_name}#{key}"] : key) + args
+        [key.starts_with?(".") ? "admin.#{controller_name}.#{action_name}#{key}" : key] + args
       )
     )
   end
