@@ -51,5 +51,9 @@ module HasPayouts
     def payouts=(collection)
       @payouts = Payouts::Collection.parse(collection)
     end
+    
+    def payouts?
+      payouts.any?
+    end
   end
 end

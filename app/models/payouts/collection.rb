@@ -40,6 +40,10 @@ module Payouts
       items.select{|p| p.action == action }
     end
 
+    def visible?
+      !items.detect{|i| i.visible }.nil?
+    end
+
     def +(other)
       Payouts::Collection.new.tap do |result|
         result.items.push(*items)
