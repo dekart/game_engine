@@ -26,7 +26,7 @@ class MissionLevel < ActiveRecord::Base
   protected
 
   def update_completion_status
-    mission.ranks.delete_all
-    mission.mission_group.ranks.delete_all
+    mission.ranks.update_all({:completed => false}, {:completed => true})
+    mission.mission_group.ranks.update_all({:completed => false}, {:completed => true})
   end
 end

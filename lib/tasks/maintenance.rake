@@ -49,6 +49,18 @@ namespace :app do
         )
       end
 
+      puts "Upgrading mission ranks to mission level ranks..."
+
+      MissionRank.find_each(:include => :mission) do |rank|
+        MissionLevelRank.create!(
+          :level      => rank.mission.levels.first,
+          :character  => rank.character,
+          :progress   => rank.win_count
+        )
+
+        rank.save!
+      end
+
       puts "Done!"
     end
 
