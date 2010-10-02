@@ -28,6 +28,16 @@ en:
       name: "Mercenaries"
     experience:
       name: "Experience"
+    attack_points_total:
+      name: "Attack points"
+    defence_points_total:
+      name: "Defence points"
+    energy_points_total:
+      name: "Total energy points"
+    health_points_total:
+      name: "Total health points"
+    stamina_points_total:
+      name: "Total stamina points"
     title:
       name: "Title"
       missing: "Deleted or hidden"
