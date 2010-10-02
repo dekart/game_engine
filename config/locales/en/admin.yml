@@ -5,7 +5,6 @@ en:
       main_menu:
         title: "Admin Menu"
         character_types: "Character Types"
-        item_groups: "Item Groups"
         items: "Items"
         missions: "Missions"
         bosses: "Bosses"
@@ -60,6 +59,7 @@ en:
       controls:
         new: "Add Item"
         balance: "Balance Items"
+        groups: "Manage Groups"
       index:
         title: "Items"
         filter:
