@@ -7,7 +7,7 @@
     <div class="name"><%= mission.name %></div>
     <div class="description"><%= mission.description %></div>
 
-    <% if mission.levels.count > 1 %>
+    <% if mission.levels.size > 1 %>
       <div class="level"><%= t(".level", :level => level.position) %></div>
     <% end %>
 

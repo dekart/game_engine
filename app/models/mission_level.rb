@@ -3,7 +3,7 @@ class MissionLevel < ActiveRecord::Base
 
   default_scope :order => "mission_levels.position"
 
-  belongs_to :mission
+  belongs_to :mission, :counter_cache => :levels_count
 
   acts_as_list :scope => :mission_id
 

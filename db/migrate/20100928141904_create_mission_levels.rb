@@ -15,6 +15,10 @@ class CreateMissionLevels < ActiveRecord::Migration
       t.timestamps
     end
 
+    change_table :missions do |t|
+      t.integer :levels_count, :default => 0
+    end
+
     create_table :mission_level_ranks do |t|
       t.integer :character_id
       t.integer :mission_id
@@ -43,6 +47,10 @@ class CreateMissionLevels < ActiveRecord::Migration
     end
 
     drop_table :mission_level_ranks
+
+    change_table :missions do |t|
+      t.remove :levels_count
+    end
 
     drop_table :mission_levels
   end
