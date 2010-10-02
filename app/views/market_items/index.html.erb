@@ -13,9 +13,15 @@
         </td>
         <td class="payouts">
           <% if item.effects? %>
-            <h3><%= MarketItem.human_attribute_name("effects") %></h3>
+            <h3><%= Item.human_attribute_name("effects") %></h3>
 
             <%= render "items/effects", :item => item %>
+          <% end %>
+
+          <% if item.payouts.visible? %>
+            <h3><%= Item.human_attribute_name("payouts") %></h3>
+
+            <%= payout_list(item.payouts, :add, :preview) %>
           <% end %>
         </td>
         <td class="requirements">
