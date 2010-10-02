@@ -3,7 +3,7 @@ class Admin::MissionsController < Admin::BaseController
     @missions = Mission.without_state(:deleted).all(
       :include  => :mission_group,
       :order    => "mission_groups.level, mission_groups.id"
-    ).paginate(:page => params[:page])
+    )
   end
 
   def balance

@@ -3,8 +3,6 @@
 <%= render "controls" %>
 
 <% collection @missions do %>
-  <%= will_paginate @missions %>
-
   <table id="mission_list" class="data">
     <% @missions.each do |mission| %>
       <% group_header mission.mission_group do |group| %>
@@ -69,6 +67,4 @@
       </tr>
     <% end %>
   </table>
-
-  <%= will_paginate @missions %>
 <% end %>
