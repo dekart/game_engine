@@ -30,10 +30,11 @@ class HelpResult < ActiveRecord::Base
   end
   
   def calculate_payout
-    # FIXME: Fix help requests to use mission levels instead of mission itself
     if context.is_a?(Mission)
-      self.money      = Setting.p(:help_request_mission_money, help_request.context.money).ceil
-      self.experience = Setting.p(:help_request_mission_experience, help_request.context.experience).ceil
+      level = help_request.character.mission_levels.rank_for(context).level
+
+      self.money      = Setting.p(:help_request_mission_money, level.money).ceil
+      self.experience = Setting.p(:help_request_mission_experience, level.experience).ceil
     elsif context.is_a?(Fight)
       @fight = Fight.create(
         :attacker => character,
