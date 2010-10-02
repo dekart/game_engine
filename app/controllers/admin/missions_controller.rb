@@ -2,7 +2,7 @@ class Admin::MissionsController < Admin::BaseController
   def index
     @missions = Mission.without_state(:deleted).all(
       :include  => :mission_group,
-      :order    => "mission_groups.level"
+      :order    => "mission_groups.level, mission_groups.id"
     ).paginate(:page => params[:page])
   end
 
@@ -36,7 +36,7 @@ class Admin::MissionsController < Admin::BaseController
       flash[:success] = t(".success")
       
       unless_continue_editing do
-        redirect_to admin_missions_path
+        redirect_to new_polymorphic_path([:admin, @mission, MissionLevel])
       end
     else
       render :action => :new

@@ -31,6 +31,39 @@ namespace :app do
 
     # One-time tasks
 
+    desc "Move mission attributes to mission levels"
+    task :move_mission_attributes_to_levels => :environment do
+      puts "Moving mission attributes to mastery levels..."
+
+      Mission.find_each do |mission|
+        next if mission.levels.any?
+        
+        mission.levels.create!(
+          :win_amount => mission.win_amount,
+          :chance     => mission.success_chance,
+          :energy     => mission.ep_cost,
+          :experience => mission.experience,
+          :money_min  => mission.money_min,
+          :money_max  => mission.money_max,
+          :payouts    => mission.payouts
+        )
+      end
+
+      puts "Upgrading mission ranks to mission level ranks..."
+
+      MissionRank.find_each(:include => :mission) do |rank|
+        MissionLevelRank.create!(
+          :level      => rank.mission.levels.first,
+          :character  => rank.character,
+          :progress   => rank.win_count
+        )
+
+        rank.save!
+      end
+
+      puts "Done!"
+    end
+
     desc "Move mission titles to a separate model"
     task :move_mission_titles_to_model => :environment do
       puts "Moving mission titles..."

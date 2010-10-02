@@ -6,32 +6,38 @@
       
     <div class="name"><%= mission.name %></div>
     <div class="description"><%= mission.description %></div>
-    
-    <div class="controls">
-      <%= link_to_remote(button(:fulfill),
-            :url    => fulfill_mission_path(mission),
-            :update => :result,
-            :html   => {:class => "fulfill button"}
-          ) unless !mission.repeatable? && current_character.missions.completed?(mission) %>
-    </div>
+
+    <% if mission.levels.size > 1 %>
+      <div class="level"><%= t(".level", :level => level.position) %></div>
+    <% end %>
+
+    <% if mission.repeatable? || rank.nil? || !rank.completed? %>
+      <div class="controls">
+        <%= link_to_remote(button(:fulfill),
+              :url    => fulfill_mission_path(mission),
+              :update => :result,
+              :html   => {:class => "fulfill button"}
+            ) %>
+      </div>
+    <% end %>
 
     <div class="progress" id="<%= dom_id(mission, :progress) %>">
-      <%= mission_progress(current_character, mission) %>
+      <%= mission_progress(rank) %>
     </div>
   </td>
   <td class="details">
     <div class="payouts">
       <h3><%= Mission.human_attribute_name("payouts") %></h3>
       
-      <%= payout(:experience, mission.experience) %>
-      <%= payout(:basic_money, mission_money(mission)) %>
-      <%= payout_list(mission.payouts, :add, :preview) %>
+      <%= payout(:experience, level.experience) %>
+      <%= payout(:basic_money, mission_money(level)) %>
+      <%= payout_list(level.payouts, :add, :preview) %>
     </div>
 
     <div class="requirements">
       <h3><%= Mission.human_attribute_name("requirements") %></h3>
       
-      <%= attribute_requirement(:energy, mission.ep_cost, current_character.ep >= mission.ep_cost) %>
+      <%= attribute_requirement(:energy, level.energy, current_character.ep >= level.energy) %>
 
       <%= requirement_list(mission.requirements) %>
     </div>

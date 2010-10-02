@@ -61,5 +61,6 @@ en:
       empty_set: "You have no missions available at this time"
     mission:
       completed: "Completed!"
+      level: "Level {{level}}"
       buttons:
         fulfill: "Fulfill"

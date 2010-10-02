@@ -45,7 +45,7 @@
           </span>
         <% end %>
       <% else %>
-        <%= payout(:energy, mission.ep_cost) %>
+        <%= payout(:energy, result.level.energy) %>
       <% end %>
 
       <%= payout_list(result.payouts, :remove) %>
@@ -53,7 +53,7 @@
     <td class="progress">
       <h3><%= t(".progress.title") %></h3>
 
-      <%= mission_progress(current_character, mission) %>
+      <%= mission_progress(result.level_rank) %>
     </td>
   </tr>
 </table>

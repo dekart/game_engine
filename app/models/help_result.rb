@@ -31,8 +31,10 @@ class HelpResult < ActiveRecord::Base
   
   def calculate_payout
     if context.is_a?(Mission)
-      self.money      = Setting.p(:help_request_mission_money, help_request.context.money).ceil
-      self.experience = Setting.p(:help_request_mission_experience, help_request.context.experience).ceil
+      level = help_request.character.mission_levels.rank_for(context).level
+
+      self.money      = Setting.p(:help_request_mission_money, level.money).ceil
+      self.experience = Setting.p(:help_request_mission_experience, level.experience).ceil
     elsif context.is_a?(Fight)
       @fight = Fight.create(
         :attacker => character,

@@ -47,7 +47,7 @@
   <% end %>
 <% end %>
 
-<% if result.rank.just_completed? %>
+<% if result.level_rank.just_completed? %>
   <% builder.on_ready do %>
     $(document).trigger('mission.complete');
   <% end %>

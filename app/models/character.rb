@@ -5,6 +5,7 @@ class Character < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include Character::Notifications
   include Character::Titles
+  include Character::Missions
   
   LEVELS = [0]
 
@@ -18,16 +19,6 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
   
-  has_many :ranks,
-    :dependent => :delete_all
-  has_many :missions, 
-    :through  => :ranks,
-    :extend   => Character::Missions
-
-  has_many :mission_group_ranks, :dependent => :delete_all
-  has_many :mission_groups, 
-    :through  => :mission_group_ranks,
-    :extend   => Character::MissionGroups
   
   has_many :inventories,
     :include    => :item,
@@ -328,10 +319,6 @@ class Character < ActiveRecord::Base
     level_fits && !attacked_recently && !friendly_attack
   end
 
-  def rank_for_mission(mission)
-    ranks.find_or_initialize_by_mission_id(mission.id)
-  end
-
   def exchange_money!
     return if vip_money < Setting.i(:premium_money_price)
 
@@ -462,12 +449,6 @@ class Character < ActiveRecord::Base
     save!
   end
   
-#  def titles
-#    (ranks.completed + mission_group_ranks.completed).collect do |rank|
-#      rank.title unless rank.title.blank?
-#    end.compact
-#  end
-
   def personalize_from(facebook_session)
     profile_info = facebook_session.users([user.facebook_id], [:name]).first
 

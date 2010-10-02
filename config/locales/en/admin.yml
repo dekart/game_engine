@@ -134,6 +134,13 @@ en:
           publish_confirm: "Are you sure you want to make this mission visible to players?"
           hide: "Hide"
         random_loot: "Random Item"
+      levels:
+        controls:
+          new: "Add Mastery Level"
+          edit: "Edit"
+          move_up: "Move Up"
+          move_down: "Move Down"
+        empty_set: "No mastery levels for this mission. You should add at least 1 level before publishing this mission."
       new:
         title: "New Mission"
         submit: "Create"
@@ -147,6 +154,18 @@ en:
       balance:
         title: "Mission Balance"
         character_type_filter: "Filter By Character Type:"
+
+    mission_levels:
+      new:
+        title: "New Mission Level"
+        submit: "Create"
+      create:
+        success: "Mission level has been created successfully!"
+      edit:
+        title: "Edit Mission Level"
+        submit: "Update"
+      update:
+        success: "Mission level has been updated successfully!"
     bosses:
       index:
         title: "Bosses"

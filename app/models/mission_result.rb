@@ -1,41 +1,45 @@
 class MissionResult
-  attr_reader :character, :mission, :rank, :success, :money, :experience, :saved, 
-    :payouts, :free_fulfillment, :mission_group, :group_rank, :group_payouts, :loot, :looter
+  attr_reader :character, :mission, :level, :mission_group, 
+    :money, :experience, :loot, :looter,
+    :success, :free_fulfillment, :saved,
+    :level_rank, :mission_rank, :group_rank,
+    :payouts, :group_payouts
 
   def self.create(*args)
     new(*args).tap do |result|
-      result.save! if result.mission.repeatable? or !result.rank.completed?
+      result.save! if result.mission.repeatable? or !result.level_rank.completed?
     end
   end
 
   def initialize(character, mission)
-    @character  = character
-    @mission    = mission
-    @mission_group      = mission.mission_group
+    @character      = character
+    @mission        = mission
+    @mission_group  = mission.mission_group
 
-    @rank = @character.rank_for_mission(@mission)
+    @level_rank   = character.mission_levels.rank_for(@mission)
+    @level        = @level_rank.level
   end
 
   def save!
     if valid?
       @success = (rand(100) <= @mission.success_chance)
 
-      Rank.transaction do
+      MissionLevelRank.transaction do
         # Checking if energy assignment encountered free fulfillment
         @free_fulfillment = (@character.assignments.effect_value(:mission_energy) > rand(100))
 
-        @character.ep -= @mission.ep_cost unless @free_fulfillment
+        @character.ep -= @level.energy unless @free_fulfillment
 
         if @success
-          mission_money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)
+          money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)
 
-          @money      = (@mission.money * (1 + mission_money_bonus)).ceil
-          @experience = mission.experience
+          @money      = (@level.money * (1 + money_bonus)).ceil
+          @experience = @level.experience
           
           calculate_loot
 
-          @rank.win_count += 1
-          @rank.save!
+          @level_rank.progress += 1
+          @level_rank.save!
 
           @character.experience += @experience
 
@@ -43,22 +47,24 @@ class MissionResult
 
           @character.missions_succeeded += 1
 
-          if @rank.just_completed?
+          if @level_rank.just_completed?
             @character.missions_completed += 1
             @character.points += 1
 
-            @payouts = @mission.payouts.apply(@character, :complete, @mission)
+            @payouts = @level.payouts.apply(@character, :complete, @mission)
 
+            @mission_rank = @character.missions.check_completion!(@mission)
+            
             @group_rank, @group_payouts = @character.mission_groups.check_completion!(@mission_group)
           else
-            payout_trigger = @rank.completed? ? :repeat_success : :success
+            payout_trigger = @level_rank.completed? ? :repeat_success : :success
 
-            @payouts = @mission.payouts.apply(@character, payout_trigger, @mission)
+            @payouts = @level.payouts.apply(@character, payout_trigger, @mission)
           end
         else
-          payout_trigger = @rank.completed? ? :repeat_failure : :failure
+          payout_trigger = @level_rank.completed? ? :repeat_failure : :failure
 
-          @payouts = @mission.payouts.apply(@character, payout_trigger, @mission)
+          @payouts = @level.payouts.apply(@character, payout_trigger, @mission)
         end
 
         @character.save!
@@ -69,7 +75,9 @@ class MissionResult
   end
 
   def valid?
-    enough_energy? and (mission.repeatable? or !rank.completed?) and requirements_satisfied?
+    enough_energy? &&
+    (mission.repeatable? || !@level_rank.completed?) &&
+    requirements_satisfied?
   end
 
   def new_record?
@@ -77,7 +85,7 @@ class MissionResult
   end
 
   def enough_energy?
-    @character.ep >= @mission.ep_cost
+    @character.ep >= @level.energy
   end
 
   def requirements_satisfied?
@@ -92,7 +100,7 @@ class MissionResult
     texts = @mission.success_text.split(/\n+/)
     texts.reject!{|t| t.blank? }
 
-    texts[(@rank.win_count % texts.size) - 1]
+    texts[(@level_rank.progress % texts.size) - 1]
   end
 
   def calculate_loot
