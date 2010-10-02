@@ -60,7 +60,9 @@ class Admin::MissionsController < Admin::BaseController
       flash[:success] = t(".success")
       
       unless_continue_editing do
-        redirect_to admin_missions_path
+        redirect_to(
+          @mission.levels.size > 0 ? admin_missions_path : new_polymorphic_path([:admin, @mission, MissionLevel])
+        )
       end
     else
       render :action => :edit
