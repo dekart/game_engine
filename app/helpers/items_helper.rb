@@ -9,7 +9,7 @@ module ItemsHelper
 
   def item_tooltip(item)
     content_tag(:div,
-      content_tag(:h3, item.name) + render("items/effects", :item => item),
+      content_tag(:h2, item.name) + render("items/effects", :item => item),
       :class  => "payouts tooltip_content",
       :id     => dom_id(item, :tooltip)
     )

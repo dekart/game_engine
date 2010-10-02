@@ -1,3 +1,13 @@
-<% item.effects.each do |effect, value| %>
-  <%= payout(effect, value > 0 ? "+%d" % value : value) %>
+<% if item.effects? %>
+  <h3><%= Item.human_attribute_name("effects") %></h3>
+
+  <% item.effects.each do |effect, value| %>
+    <%= payout(effect, value > 0 ? "+%d" % value : value) %>
+  <% end %>
+<% end %>
+
+<% if item.payouts.visible? %>
+  <h3><%= Item.human_attribute_name("payouts") %></h3>
+
+  <%= payout_list(item.payouts, :add, :preview) %>
 <% end %>
