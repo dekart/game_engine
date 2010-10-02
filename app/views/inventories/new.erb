@@ -6,13 +6,9 @@
       <tr>
         <td class="picture"><%= item_image(@item, :medium) %></td>
         
-        <% if @item.effects? %>
-          <td class="payouts">
-            <h3><%= Item.human_attribute_name("effects") %></h3>
-
-            <%= render "items/effects", :item => @item %>
-          </td>
-        <% end %>
+        <td class="payouts">
+          <%= render "items/effects", :item => @item %>
+        </td>
 
         <% if @item.price? %>
           <td class="requirements">
