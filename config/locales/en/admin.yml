@@ -7,7 +7,6 @@ en:
         character_types: "Character Types"
         item_groups: "Item Groups"
         items: "Items"
-        mission_groups: "Mission Groups"
         missions: "Missions"
         bosses: "Bosses"
         property_types: "Property Types"
@@ -120,9 +119,9 @@ en:
         success: "Mission group has been updated successfully!"
     missions:
       controls:
-        index: "List"
         balance: "Balance"
         new: "Add Mission"
+        groups: "Manage Groups"
       index:
         title: "Missions"
         empty_set: "No missions"

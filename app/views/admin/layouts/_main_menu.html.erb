@@ -4,8 +4,7 @@
   <%
     [
       [:character_types, admin_character_types_path],
-      [:mission_groups,  admin_mission_groups_path],
-      [:missions,        admin_missions_path],
+      [:missions,        admin_missions_path, %w{missions mission_groups}],
       [:bosses,          admin_bosses_path],
       [:item_groups,     admin_item_groups_path],
       [:items,           admin_items_path],
@@ -22,9 +21,9 @@
       [:assets,          admin_assets_path],
       [:settings,        admin_settings_path],
       [:global_tasks,    admin_global_task_path],
-    ].each do |title, link| %>
+    ].each do |title, link, controllers| %>
     <%= link_to(t(".#{title}"), link,
-          :class => "item %s" % (:current if controller_name == title.to_s)
+          :class => "item %s" % (:current if controller_name == title.to_s || (Array.wrap(controllers).include?(controller_name)))
         ) %>
   <% end %>
 </div>
