@@ -3,7 +3,9 @@ class HitListing < ActiveRecord::Base
   belongs_to :victim,   :class_name => "Character"
   belongs_to :executor, :class_name => "Character"
 
-  named_scope :incomplete, :conditions => {:completed => false}
+  named_scope :incomplete,
+    :conditions => {:completed => false},
+    :include    => [:victim, :client]
 
   validates_presence_of :client, :victim, :reward
   validates_numericality_of :reward,

@@ -49,9 +49,9 @@ class HitListingsController < ApplicationController
   protected
 
   def fetch_incomplete_listings
-    @hit_listings = HitListing.incomplete.scoped(
-      :include  => [:victim, :client],
-      :limit    => Setting.i(:hit_list_display_limit)
+    @hit_listings = HitListing.incomplete.paginate(
+      :page     => params[:page],
+      :per_page => Setting.i(:hit_list_display_limit)
     )
   end
 
