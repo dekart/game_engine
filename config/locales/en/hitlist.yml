@@ -5,6 +5,7 @@ en:
     list:
       buttons:
         attack: "Attack"
+      empty_set: "Right now there are not listings. Please try again later."
     new:
       title: "Add to Hitlist"
       submit: "Tell Your Alliance"
