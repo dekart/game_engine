@@ -15,6 +15,7 @@ en:
         promotions: "Promotions"
         skins: "Skins"
         titles: "Titles"
+        collections: "Collections"
         tips: "Tips"
         translations: "Translations"
         assets: "Assets"
@@ -559,5 +560,33 @@ en:
         submit: "Update"
       update:
         success: "Title has been updated successfully!"
-        
+
+    collections:
+      index:
+        title: "Collections"
+        empty_set: "No collections"
+        controls:
+          new: "Add Collection"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this collection visible to players?"
+          hide: "Hide"
+      new:
+        title: "New Collection"
+        submit: "Create"
+      create:
+        success: "Collection has been created successfully!"
+      edit:
+        title: "Edit Collection"
+        submit: "Update"
+      update:
+        success: "Collection has been updated successfully!"
+      form_fields:
+        items: "Items"
+        add_item: "Add Item..."
+      item_fields:
+        remove: "Remove"
+
     # Add your custom translation strings below this mark

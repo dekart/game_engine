@@ -1,0 +1,34 @@
+#collection_list
+  width: 100%
+
+  .collection
+    margin-bottom: 20px
+
+    td
+      padding-bottom: 20px
+
+    .items
+      .item
+        float: left
+        width: 100px
+        height: 110px
+        border = !thin_border
+        margin: 0 3px 0 0
+        padding: 5px
+        text-align: center
+
+        .name
+          height: 30px
+          font-weight: bold
+
+      .present
+        border = !main_border
+
+    .controls
+      width: 100px
+
+      .collect
+        +button(!collection_collect_icon)
+
+#collection_result
+  background-image = !collection_result_icon

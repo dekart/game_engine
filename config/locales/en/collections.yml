@@ -1,0 +1,13 @@
+en:
+  collections:
+    index:
+      title: "Collections"
+      buttons:
+        collect: "Collect"
+    update:
+      buttons:
+        publish: "Brag About It!"
+      messages:
+        success: "You've successfully collected all the required items!"
+      you_received: "You received:"
+      you_spent: "You spent:"

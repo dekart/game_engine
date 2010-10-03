@@ -11,6 +11,12 @@
         ) %>
   <% end %>
 
+  <% if current != :collections and Setting.b(:collections_enabled) %>
+    <%= link_to(button(:collections), collections_path,
+          :class => "collections button"
+        ) %>
+  <% end %>
+
   <% unless current == :shop %>
     <%= link_to(button(:shop), items_path,
           :class => "shop button"

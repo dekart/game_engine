@@ -1,0 +1,40 @@
+<% result_for :collection do |builder| %>
+  <% if @result.applied %>
+    <% builder.buttons do %>
+      <%= link_to_function(button(:publish), collection_stream_dialog(@collection),
+            :class => "publish button"
+          ) %>
+    <% end %>
+
+    <% builder.success do %>
+      <%= t(".messages.success") %>
+    <% end %>
+
+    <table class="payouts">
+      <tr>
+        <td class="received">
+          <h3><%= t(".you_received") %></h3>
+
+          <%= payout_list(@result.payouts, :add) %>
+        </td>
+        <td class="spent">
+          <h3><%= t(".you_spent") %></h3>
+
+          <%= payout_list(@result.payouts, :remove) %>
+        </td>
+      </tr>
+    </table>
+  <% else %>
+    <p class="fail"><%= @result.errors.on(:character) %></p>
+  <% end %>
+<% end %>
+
+<% dom_ready do %>
+  <% if @result.applied %>
+    CollectionList.blurItems(
+      $('<%= @collection.missing_items(current_character).collect{|i| ".#{dom_id(i)}" }.join(",") %>')
+    );
+  <% end %>
+
+  $(document).trigger('result.received');
+<% end %>
