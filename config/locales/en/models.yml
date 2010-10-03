@@ -136,4 +136,4 @@ en:
         collection_rank:
           attributes:
             character:
-              not_enough_items: "You haven't collected all required items"
+              not_enough_items: "You haven't collected all the required items"
