@@ -469,16 +469,23 @@ en:
         empty_value: "(No value)"
         controls:
           new: "Add Value"
+          new_payout: "Add Payout"
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Removing this setting may cause improper script behaviour! Are you sure you want to delete it?"
       new:
         title: "New Value"
         submit: "Create"
+      new_payout:
+        title: "New Payout Value"
+        submit: "Create"
       create:
         success: "Value has been created successfully!"
       edit:
         title: "{{name}} - Edit Value"
+        submit: "Update"
+      edit_payout:
+        title: "{{name}} - Edit Payout Value"
         submit: "Update"
       update:
         success: "Value has been updated successfully!"

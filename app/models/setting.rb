@@ -1,6 +1,11 @@
 class Setting < ActiveRecord::Base
+  extend HasPayouts
+  has_payouts
+
   validates_presence_of   :alias
   validates_uniqueness_of :alias
+
+  before_save :serialize_payouts
 
   after_save :restart_server
   after_destroy :restart_server
@@ -90,7 +95,29 @@ class Setting < ActiveRecord::Base
     end
   end
 
+  def payout?
+    self.alias.match(/_payout$/) ? true : false
+  end
+
+  def payouts
+    @payouts ||= deserialize_payouts
+  end
+
   protected
+
+  def serialize_payouts
+    if payout?
+      self.value = YAML.dump(payouts)
+    end
+  end
+
+  def deserialize_payouts
+    if self.value
+      YAML.load(value)
+    else
+      Payouts::Collection.new
+    end
+  end
 
   def restart_server
     Rails.restart!
