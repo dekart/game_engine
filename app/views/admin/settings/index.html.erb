@@ -2,6 +2,7 @@
 
 <div class="controls">
   <%= link_to(t(".controls.new"), new_admin_setting_path) %>
+  <%= link_to(t(".controls.new_payout"), new_admin_setting_path(:type => :payout)) %>
 </div>
 
 <% collection @settings do %>
@@ -20,7 +21,13 @@
 
       <tr>
         <td><%= setting.alias %></td>
-        <td><%= setting.value.present? ? setting.value : content_tag(:span, t(".empty_value"), :class => :empty) %></td>
+        <td>
+          <% if setting.value.present? %>
+            <%= setting.payout? ? admin_payouts_preview(setting.payouts) : setting.value %>
+          <% else %>
+            <%= content_tag(:span, t(".empty_value"), :class => :empty) %>
+          <% end %>
+        </td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_setting_path(setting)) %>
           <%= link_to(t(".controls.delete"), admin_setting_path(setting),
