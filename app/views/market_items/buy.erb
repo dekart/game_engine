@@ -1,5 +1,5 @@
 <% result_for :market do |builder| %>
-  <% if @item.frozen? %>
+  <% if @item.errors.empty? %>
     <% builder.buttons do %>
       <%= link_to_function(button(:publish), inventory_stream_dialog(@item.inventory),
             :class => "publish button"

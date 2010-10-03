@@ -45,9 +45,9 @@ class MarketItem < ActiveRecord::Base
         vip_money   = vip_price - Setting.p(:market_vip_price_fee, vip_price).floor
 
         character.charge!(- basic_money, - vip_money)
-        character.inventories.take!(inventory.item, amount)
+        character.inventories.take!(inventory, amount)
 
-        destroy
+        destroy unless inventory.market_item.destroyed?
 
         character.notifications.schedule(:market_item_sold,
           :item_id      => inventory.item_id,

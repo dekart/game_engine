@@ -3,7 +3,7 @@ class Character
     def give(item, amount = 1)
       amount = amount.to_i
 
-      if inventory = find_by_item_id(item.id)
+      if inventory = find_by_item(item)
         inventory.amount += amount
       else
         inventory = build(:item => item, :amount => amount)
@@ -17,7 +17,7 @@ class Character
 
       transaction do
         if inventory.save
-          Item.update_counters(item.id, :owned => amount)
+          Item.update_counters(inventory.item_id, :owned => amount)
 
           equip(inventory)
         end
@@ -33,7 +33,7 @@ class Character
 
       transaction do
         if inventory.save
-          Item.update_counters(item.id, :owned => amount)
+          Item.update_counters(inventory.item_id, :owned => amount)
 
           equip(inventory)
         end
@@ -43,7 +43,7 @@ class Character
     end
 
     def sell!(item, amount = 1)
-      if inventory = find_by_item_id(item.id)
+      if inventory = find_by_item(item)
         inventory.deposit_money = true
 
         transaction do
@@ -51,15 +51,16 @@ class Character
             inventory.amount -= amount
             inventory.save
 
-            Item.update_counters(item.id, :owned => - amount)
+            Item.update_counters(inventory.item_id, :owned => - amount)
 
             if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
+              logger.debug inventory.market_item.object_id
               inventory.market_item.destroy
             end
           else
             inventory.destroy
 
-            Item.update_counters(item.id, :owned => - inventory.amount)
+            Item.update_counters(inventory.item_id, :owned => - inventory.amount)
           end
 
           unequip(inventory)
@@ -72,21 +73,22 @@ class Character
     end
 
     def take!(item, amount = 1)
-      if inventory = find_by_item_id(item.id)
+      if inventory = find_by_item(item)
         transaction do
           if inventory.amount > amount
             inventory.amount -= amount
             inventory.save
 
-            Item.update_counters(item.id, :owned => - amount)
+            Item.update_counters(inventory.item_id, :owned => - amount)
 
             if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
+              logger.debug inventory.market_item.object_id
               inventory.market_item.destroy
             end
           else
             inventory.destroy
 
-            Item.update_counters(item.id, :owned => - inventory.amount)
+            Item.update_counters(inventory.item_id, :owned => - inventory.amount)
           end
 
           unequip(inventory)
@@ -99,6 +101,11 @@ class Character
     end
 
     protected
+
+    def find_by_item(item)
+      logger.debug item.inspect
+      item.is_a?(Inventory) ? item : find_by_item_id(item.id, :include => :item)
+    end
 
     def equip(inventory)
       if Setting.b(:character_auto_equipment)
