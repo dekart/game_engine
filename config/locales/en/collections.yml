@@ -5,6 +5,8 @@ en:
       buttons:
         collect: "Collect"
     update:
+      buttons:
+        publish: "Brag About It!"
       messages:
         success: "You've successfully collected all required items!"
       you_received: "You received:"

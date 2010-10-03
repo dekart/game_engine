@@ -344,4 +344,20 @@ module StreamHelper
       ]
     )
   end
+
+  def collection_stream_dialog(collection)
+    attachment = {
+      :name => t("stories.collection.title",
+        :collection => collection.name,
+        :app        => t("app_name")
+      ),
+      :href => collections_url(
+        :canvas     => true,
+        :reference  => :collection_stream_name,
+        :referrer   => current_user.id
+      )
+    }
+
+    stream_dialog(:attachment => attachment)
+  end
 end

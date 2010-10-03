@@ -1,6 +1,14 @@
-<% result_for :collection do %>
+<% result_for :collection do |builder| %>
   <% if @result.applied %>
-    <p class="success"><%= t(".messages.success") %></p>
+    <% builder.buttons do %>
+      <%= link_to_function(button(:publish), collection_stream_dialog(@collection),
+            :class => "publish button"
+          ) %>
+    <% end %>
+
+    <% builder.success do %>
+      <%= t(".messages.success") %>
+    <% end %>
 
     <table class="payouts">
       <tr>

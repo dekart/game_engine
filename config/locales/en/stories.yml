@@ -21,6 +21,8 @@ en:
       title: "I just bought {{property}} in {{app}}!"
     inventory:
       title: "I just bought a \"{{item}}\" in {{app}}!"
+    collection:
+      title: "I just finished the '{{collection}}' Collection in {{app}}!"
     promotion:
       title: "I got a secret bonus link for {{app}}!"
       description: "Click the link to get the game bonus. Hurry up, this special link expires at {{expires_at}}!"
