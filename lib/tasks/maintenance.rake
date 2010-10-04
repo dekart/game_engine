@@ -33,7 +33,7 @@ namespace :app do
 
     desc "Move mission attributes to mission levels"
     task :move_mission_attributes_to_levels => :environment do
-      puts "Moving mission attributes to mastery levels..."
+      puts "Moving mission attributes to mastery levels (#{Mission.count} missions)..."
 
       Mission.find_each do |mission|
         next if mission.levels.any?
@@ -49,9 +49,11 @@ namespace :app do
         )
       end
 
-      puts "Upgrading mission ranks to mission level ranks..."
+      puts "Upgrading mission ranks to mission level ranks (#{MissionRank.count} records)..."
 
-      MissionRank.find_each(:include => :mission) do |rank|
+      i = 0
+
+      MissionRank.find_each(:include => :mission, :batch_size => 100) do |rank|
         MissionLevelRank.create!(
           :level      => rank.mission.levels.first,
           :character  => rank.character,
@@ -59,6 +61,10 @@ namespace :app do
         )
 
         rank.save!
+
+        i += 1
+
+        puts "Processed #{i} of #{MissionRank.count}..." if i % 10 == 0
       end
 
       puts "Done!"
