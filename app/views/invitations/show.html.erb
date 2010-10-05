@@ -11,12 +11,12 @@
       <%= @character.level %>
     </td>
     <td class="controls">
+      <%= link_to(button(:ignore), root_path,
+            :class => "ignore button"
+          ) %>
       <%= link_to(button(:accept), invitation_path(@character.id),
             :method => :put,
             :class  => "accept button"
-          ) %>
-      <%= link_to(button(:ignore), root_path,
-            :class => "ignore button"
           ) %>
     </td>
   </tr>
