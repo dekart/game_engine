@@ -6,19 +6,13 @@
   <%= render("tabs") %>
 </div>
 
-<% if @mission_group.available_for(current_character) %>
+<% if @mission_group.requirements.satisfies?(current_character) %>
   <div id="mission_list">
     <%= render "missions/list", :missions => @missions %>
   </div>
 
   <div id="boss_list">
     <%= render "bosses/list", :bosses => @bosses %>
-  </div>
-<% elsif !@mission_group.enough_level?(current_character) %>
-  <div class="empty_set" id="locked_mission_group">
-    <%= t(".locked_group",
-          :level => content_tag(:span, @mission_group.level, :class => :level)
-        ).html_safe %>
   </div>
 <% else %>
   <div class="empty_set">

@@ -10,23 +10,6 @@ class MissionGroup < ActiveRecord::Base
 
   default_scope :order => "mission_groups.position"
   
-  named_scope :next_for, Proc.new{|character|
-    {
-      :conditions => ["mission_groups.level > ?", character.level],
-      :order      => "mission_groups.level"
-    }
-  }
-  named_scope :before, Proc.new{|group|
-    {
-      :conditions => ["mission_groups.level < ?", group.level]
-    }
-  }
-  named_scope :after, Proc.new{|group|
-    {
-      :conditions => ["mission_groups.level > ?", group.level]
-    }
-  }
-
   state_machine :initial => :hidden do
     state :hidden
     state :visible
@@ -54,31 +37,10 @@ class MissionGroup < ActiveRecord::Base
   has_requirements
   has_payouts :complete
 
-  validates_presence_of :name, :level
-  validates_numericality_of :level, :allow_nil => true
+  validates_presence_of :name
 
   def self.to_dropdown(*args)
-    without_state(:deleted).all(:order => :level).to_dropdown(*(args.any? ? args : "name_with_level"))
-  end
-
-  def previous_group
-    self.class.with_state(:visible).before(self).first(:order => "mission_groups.level DESC")
-  end
-
-  def next_group
-    self.class.with_state(:visible).after(self).first(:order => "mission_groups.level")
-  end
-
-  def available_for(character)
-    enough_level?(character) && requirements.satisfies?(character)
-  end
-
-  def enough_level?(character)
-    character.level >= level
-  end
-
-  def name_with_level
-    "%s (%s %s)" % [name, Character.human_attribute_name("level"), level]
+    without_state(:deleted).to_dropdown(*(args.any? ? args : :name))
   end
 
   def delete_children!

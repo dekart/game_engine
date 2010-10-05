@@ -1,15 +1,11 @@
 <table cellspacing="0" cellpadding="0">
   <tr>
     <% mission_group_tabs do |tabs| %>
-      <% tabs.previous_tab do |group, level| %>
+      <% tabs.previous_tab do |group| %>
         <% content_tag_for :td, group, :class => "previous first" do %>
           <%= link_to(t(".previous.name"), mission_group_path(group),
                 :class => :name
               ) %>
-
-          <div class="level">
-            <%= t(".previous.level", :level => level) %>
-          </div>
         <% end %>
       <% end %>
 
@@ -19,19 +15,15 @@
                 :class => :name
               ) %>
 
-          <div class="level"><%= t(".level", :level => group.level) %></div>
+          <%= requirement_list(group.requirements[0, 1]) %>
         <% end %>
       <% end %>
 
-      <% tabs.next_tab do |group, level| %>
+      <% tabs.next_tab do |group| %>
         <% content_tag_for :td, group, :class => "next last" do %>
           <%= link_to(t(".next.name"), mission_group_path(group),
                 :class => :name
               ) %>
-
-          <div class="level">
-            <%= t(".next.level", :level => level) %>
-          </div>
         <% end %>
       <% end %>
     <% end %>

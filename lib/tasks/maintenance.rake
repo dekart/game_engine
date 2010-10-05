@@ -9,7 +9,14 @@ namespace :app do
         "characters.level_up.text"              => "notifications.level_up.text",
         "characters.level_up.upgrade_link"      => "notifications.level_up.upgrade_link",
         "characters.level_up.buttons.continue"  => "notifications.level_up.buttons.continue",
-        "characters.level_up.buttons.upgrade"   => "notifications.level_up.buttons.upgrade"
+        "characters.level_up.buttons.upgrade"   => "notifications.level_up.buttons.upgrade",
+        
+        "mission_groups.tabs.level"             => nil,
+        "mission_groups.tabs.previous.name"     => "mission_groups.tabs.previous",
+        "mission_groups.tabs.previous.level"    => nil,
+        "mission_groups.tabs.next.name"         => "mission_groups.tabs.next",
+        "mission_groups.tabs.next.level"        => nil,
+        "mission_groups.show.locked_group"      => nil
       }.each do |old_key, new_key|
         if translation = Translation.find_by_key(old_key)
           print "#{old_key} - "
@@ -30,6 +37,27 @@ namespace :app do
     end
 
     # One-time tasks
+
+    desc "Convert mission group levels to requirements"
+    task :convert_mission_group_levels_to_requirements => :environment do
+      puts "Converting mission group levels to requirements (#{MissionGroup.count} groups)..."
+
+      MissionGroup.find_each do |group|
+        requirement = Requirements::Level.new(:value => group.level)
+
+        if group.requirements.any?
+          group.requirements.unshift(requirement)
+        else
+          group.requirements = Requirements::Collection.new(
+            requirement
+          )
+        end
+
+        group.save!
+      end
+      
+      puts "Done!"
+    end
 
     desc "Add positions to mission groups"
     task :add_positions_to_mission_groups => :environment do
