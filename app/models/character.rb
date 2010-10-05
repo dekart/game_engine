@@ -129,9 +129,7 @@ class Character < ActiveRecord::Base
 
   class << self
     def find_by_invitation_key(key)
-      id, secret = key.split("-")
-
-      if character = find_by_id(id) and secret == character.secret
+      if character = find_by_id(key.split("-").first) and key == character.invitation_key
         character
       else
         nil
@@ -139,9 +137,7 @@ class Character < ActiveRecord::Base
     end
 
     def find_by_key(key)
-      id, secret = key.split("-")
-
-      if character = find_by_id(id) and secret == character.secret(10)
+      if character = find_by_id(key.split("-").first) and key == character.key
         character
       else
         nil
@@ -429,15 +425,19 @@ class Character < ActiveRecord::Base
   end
 
   def secret(length = 6)
-    Digest::MD5.hexdigest("%s-%s" % [id, created_at])[0, length]
+    [0, length]
   end
 
   def invitation_key
-    "%s-%s" % [id, secret]
+    digest = Digest::MD5.hexdigest("%s-%s" % [created_at, id])
+
+    "%s-%s" % [id, digest[0, 10]]
   end
 
   def key
-    "%s-%s" % [id, secret(10)]
+    digest = Digest::MD5.hexdigest("%s-%s" % [id, created_at])
+
+    "%s-%s" % [id, digest[0, 10]]
   end
 
   def charge(basic_amount, vip_amount, reference = nil)

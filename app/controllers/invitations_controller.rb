@@ -18,11 +18,9 @@ class InvitationsController < ApplicationController
   end
 
   def show
-    @id, @secret = params[:id].split("-")
+    @character = Character.find_by_invitation_key(params[:id])
 
-    @character = Character.find(@id)
-
-    if @secret != @character.secret or @character == current_character
+    if @character.nil? or @character == current_character
       redirect_to root_path
     elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("invitations.show.messages.already_joined")
