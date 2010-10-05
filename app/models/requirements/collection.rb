@@ -2,7 +2,7 @@ module Requirements
   class Collection
     attr_reader :items
 
-    delegate :each, :empty?, :size, :to => :items
+    delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :to => :items
 
     def self.parse(collection)
       return if collection.nil?

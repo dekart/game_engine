@@ -21,7 +21,7 @@ module MissionGroupsHelper
     end
 
     def groups
-      @groups ||= MissionGroup.with_state(:visible).all(:order => :level).select do |group|
+      @groups ||= MissionGroup.with_state(:visible).select do |group|
         !group.hide_unsatisfied? || group.requirements.satisfies?(current_character)
       end
     end
@@ -47,13 +47,13 @@ module MissionGroupsHelper
       end
 
       if @previous_group and page != :first and group = groups[groups.index(visible_groups.first) - 1]
-        previous_group = capture(group, visible_groups.first.level, &@previous_group)
+        previous_group = capture(group, &@previous_group)
       else
         previous_group = ""
       end
 
       if @next_group and page != :last and group = groups[groups.index(visible_groups.last) + 1]
-        next_group = capture(group, group.level, &@next_group)
+        next_group = capture(group, &@next_group)
       else
         next_group = ""
       end
@@ -61,7 +61,7 @@ module MissionGroupsHelper
       result = ""
 
       visible_groups.each do |group|
-        locked  = !group.available_for(current_character)
+        locked  = !group.requirements.satisfies?(current_character)
         current = (group == current_group)
 
         if group == visible_groups.first && previous_group.blank?

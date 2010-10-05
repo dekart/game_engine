@@ -102,6 +102,8 @@ en:
         empty_set: "No mission groups"
         controls:
           new: "Add Group"
+          move_up: "Move Up"
+          move_down: "Move Down"
           edit: "Edit"
           delete: "Delete"
           delete_confirm: "Are you sure? All missions linked to this group will be unlinked and hidden from a list of available missions!"
