@@ -24,6 +24,12 @@
         <td class="payouts"><%= admin_payouts_preview(group.payouts) %></td>
         <td class="state"><%= admin_state(group) %></td>
         <td class="controls">
+          <%= link_to(t(".controls.move_up"), move_admin_mission_group_path(group, :direction => :up),
+                :method => :put
+              ) unless group.first? %>
+          <%= link_to(t(".controls.move_down"), move_admin_mission_group_path(group, :direction => :down),
+                :method => :put
+              ) unless group.last? %>
           <%= link_to(t(".controls.edit"), edit_admin_mission_group_path(group)) %>
           <%= link_to(t(".controls.publish"), publish_admin_mission_group_path(group),
                 :method => :put,

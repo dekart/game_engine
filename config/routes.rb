@@ -20,6 +20,7 @@ ActionController::Routing::Routes.draw do |map|
       }
     admin.resources :mission_groups,
       :member => {
+        :move     => :put,
         :publish  => :put,
         :hide     => :put
       }

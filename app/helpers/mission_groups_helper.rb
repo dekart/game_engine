@@ -21,7 +21,7 @@ module MissionGroupsHelper
     end
 
     def groups
-      @groups ||= MissionGroup.with_state(:visible).all(:order => :level).select do |group|
+      @groups ||= MissionGroup.with_state(:visible).select do |group|
         !group.hide_unsatisfied? || group.requirements.satisfies?(current_character)
       end
     end

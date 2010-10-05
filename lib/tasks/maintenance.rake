@@ -31,6 +31,21 @@ namespace :app do
 
     # One-time tasks
 
+    desc "Add positions to mission groups"
+    task :add_positions_to_mission_groups => :environment do
+      puts "Adding positions to mission groups (#{MissionGroup.without_state(:deleted).count} groups)..."
+
+      position = 1
+
+      MissionGroup.without_state(:deleted).all(:order => "level").each do |group|
+        group.update_attribute(:position, position)
+
+        position += 1
+      end
+
+      puts "Done!"
+    end
+
     desc "Move mission attributes to mission levels"
     task :move_mission_attributes_to_levels => :environment do
       puts "Moving mission attributes to mastery levels (#{Mission.count} missions)..."

@@ -6,7 +6,9 @@ class MissionGroup < ActiveRecord::Base
   has_many :bosses, :dependent => :destroy
   has_many :ranks, :class_name => "MissionGroupRank", :dependent => :delete_all
 
-  default_scope :order => "mission_groups.level"
+  acts_as_list
+
+  default_scope :order => "mission_groups.position"
   
   named_scope :next_for, Proc.new{|character|
     {

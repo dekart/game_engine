@@ -1,6 +1,6 @@
 class Admin::MissionGroupsController < Admin::BaseController
   def index
-    @groups = MissionGroup.without_state(:deleted).all(:order => :level)
+    @groups = MissionGroup.without_state(:deleted)
   end
 
   def new
@@ -59,6 +59,19 @@ class Admin::MissionGroupsController < Admin::BaseController
     @group = MissionGroup.find(params[:id])
 
     @group.mark_deleted if @group.can_mark_deleted?
+
+    redirect_to admin_mission_groups_path
+  end
+
+  def move
+    @group = MissionGroup.find(params[:id])
+
+    case params[:direction]
+    when "up"
+      @group.move_higher
+    when "down"
+      @group.move_lower
+    end
 
     redirect_to admin_mission_groups_path
   end
