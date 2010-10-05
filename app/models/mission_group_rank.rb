@@ -2,13 +2,13 @@ class MissionGroupRank < ActiveRecord::Base
   belongs_to :character
   belongs_to :mission_group
 
-  before_create :set_completed
+  before_save :cache_completion
   after_create  :apply_payouts, :assign_just_created
 
   attr_reader :payouts
 
   def completed?
-    new_record? ? (missions_completed? && bosses_completed?) : self[:completed]
+    self[:completed] || (missions_completed? && bosses_completed?)
   end
 
   def just_created?
@@ -25,8 +25,10 @@ class MissionGroupRank < ActiveRecord::Base
     (mission_group.boss_ids - character.boss_fights.won_boss_ids).empty?
   end
 
-  def set_completed
-    self.completed = true
+  def cache_completion
+    self.completed = missions_completed? && bosses_completed?
+
+    true
   end
 
   def apply_payouts

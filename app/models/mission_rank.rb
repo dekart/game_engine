@@ -2,10 +2,10 @@ class MissionRank < ActiveRecord::Base
   belongs_to :character
   belongs_to :mission
 
-  before_save :check_completion
+  before_save :cache_completion
 
   def completed?
-    new_record? ? levels_completed? : self[:completed]
+    self[:completed] || levels_completed?
   end
   
   protected
@@ -14,7 +14,7 @@ class MissionRank < ActiveRecord::Base
     (mission.level_ids - character.mission_levels.completed_ids(mission)).empty?
   end
 
-  def check_completion
+  def cache_completion
     self.completed = levels_completed?
     
     true
