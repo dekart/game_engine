@@ -15,7 +15,7 @@ en:
         promotions: "Promotions"
         skins: "Skins"
         titles: "Titles"
-        collections: "Collections"
+        item_collections: "Collections"
         tips: "Tips"
         translations: "Translations"
         assets: "Assets"
@@ -570,7 +570,7 @@ en:
       update:
         success: "Title has been updated successfully!"
 
-    collections:
+    item_collections:
       index:
         title: "Collections"
         empty_set: "No collections"

@@ -351,7 +351,7 @@ module StreamHelper
         :collection => collection.name,
         :app        => t("app_name")
       ),
-      :href => collections_url(
+      :href => item_collections_url(
         :canvas     => true,
         :reference  => :collection_stream_name,
         :referrer   => current_user.id

@@ -12,7 +12,7 @@
   <% end %>
 
   <% if current != :collections and Setting.b(:collections_enabled) %>
-    <%= link_to(button(:collections), collections_path,
+    <%= link_to(button(:collections), item_collections_path,
           :class => "collections button"
         ) %>
   <% end %>

@@ -105,7 +105,7 @@ ActionController::Routing::Routes.draw do |map|
         :hide     => :put
       }
 
-    admin.resources :collections,
+    admin.resources :item_collections,
       :new => {
         :add_item => :any
       },
@@ -206,7 +206,7 @@ ActionController::Routing::Routes.draw do |map|
     :member => {
       :buy => :post
     }
-  map.resources :collections, :only => [:index, :update]
+  map.resources :item_collections, :only => [:index, :update]
 
   # Add your custom routes below this mark
   

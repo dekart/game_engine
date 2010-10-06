@@ -21,14 +21,14 @@
         </td>
 
         <td class="payouts">
-          <h3><%= Collection.human_attribute_name("payouts") %></h3>
+          <h3><%= ItemCollection.human_attribute_name("payouts") %></h3>
 
           <%= payout_list(collection.payouts, :add, :preview) %>
         </td>
 
         <td class="controls">
           <%= link_to_remote(button(:collect),
-                :url    => collection_path(collection),
+                :url    => item_collection_path(collection),
                 :method => :put,
                 :update => :result,
                 :html   => {:class => "collect button"}

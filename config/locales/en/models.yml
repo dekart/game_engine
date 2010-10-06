@@ -70,7 +70,7 @@ en:
       market_item:
         character: "Seller"
         price: "Price"
-      collection:
+      item_collection:
         payouts: "Payouts"
     errors:
       models:
@@ -129,11 +129,11 @@ en:
         market_item:
           not_enough_basic_money: "You don't have enough gold to buy {{name}}."
           not_enough_vip_money: "You don't have enough Gems to buy {{name}}."
-        collection:
+        item_collection:
           attributes:
             items:
               not_enough_items: "Collection should contain at least 1 item"
-        collection_rank:
+        item_collection_rank:
           attributes:
             character:
               not_enough_items: "You haven't collected all the required items"

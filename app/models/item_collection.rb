@@ -1,4 +1,4 @@
-class Collection < ActiveRecord::Base
+class ItemCollection < ActiveRecord::Base
   extend HasPayouts
 
   has_payouts :collected

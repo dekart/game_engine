@@ -1,6 +1,6 @@
-class CollectionRank < ActiveRecord::Base
+class ItemCollectionRank < ActiveRecord::Base
   belongs_to :character
-  belongs_to :collection
+  belongs_to :collection, :class_name => "ItemCollection"
 
   attr_reader :payouts, :applied
 
@@ -24,6 +24,8 @@ class CollectionRank < ActiveRecord::Base
   protected
 
   def check_items
-    errors.add(:character, :not_enough_items) unless character.items.count(:conditions => {:id => collection.item_ids}) == collection.item_ids.size
+    unless character.items.count(:conditions => {:id => collection.item_ids}) == collection.item_ids.size
+      errors.add(:character, :not_enough_items)
+    end
   end
 end
