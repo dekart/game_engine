@@ -26,6 +26,10 @@ class InvitationsController < ApplicationController
       flash[:notice] = t("invitations.show.messages.already_joined")
 
       redirect_to root_path
+    elsif Setting.b(:relation_friends_only) && !facebook_session.user.friend_ids.include?(@character.user.facebook_id.to_s)
+      flash[:notice] = t("invitations.show.messages.only_friends")
+
+      redirect_to root_path
     end
   end
 
