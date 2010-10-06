@@ -6,9 +6,9 @@ class Character
           :class_name => "ItemCollectionRank"
 
         has_many :collections,
-          :class    => "ItemCollection",
-          :through  => :collection_ranks,
-          :extend   => AssociationExtension
+          :class_name => "ItemCollection",
+          :through    => :collection_ranks,
+          :extend     => AssociationExtension
       end
     end
 
