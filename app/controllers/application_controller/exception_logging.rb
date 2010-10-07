@@ -6,6 +6,7 @@ class ApplicationController
         ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
         ActionController::RoutingError        => :rescue_routing_error,
         ActionController::UnknownAction       => :rescue_unknown_action,
+        ActiveRecord::StaleObjectError        => :resque_locking_error,
         Facebooker::Session::SignatureTooOld  => :resque_signature_too_old,
         Facebooker::Session::MissingOrInvalidParameter => :resque_missing_or_invalid_parameter
       }.each do |exception, method|
@@ -60,6 +61,11 @@ class ApplicationController
       log_browser_info
 
       redirect_to_fixed_or_root
+    end
+
+    # TODO: Catch locking error in models that may cause them instead of controller
+    def resque_locking_error(exception)
+      render :text => ""
     end
 
     def resque_signature_too_old(exception)
