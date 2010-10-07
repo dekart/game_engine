@@ -1,6 +1,6 @@
 puts "Seeding missions..."
 
-tutorial = MissionGroup.create!(:name => "Tutorial", :level => 1)
+tutorial = MissionGroup.create!(:name => "Tutorial")
 
 tutorial.missions.create!(
   :name           => "Thieves",
@@ -24,7 +24,11 @@ tutorial.missions.create!(
   )
 end
 
-adventurer = MissionGroup.create!(:name => "Adventurer", :level => 2)
+adventurer = MissionGroup.create!(:name => "Adventurer", 
+  :requirements => Requirements::Collection.new(
+    Requirements::Level.new(:value => 2)
+  )
+)
 
 adventurer.missions.create!(
   :name           => "Deratization",
@@ -134,7 +138,11 @@ adventurer.missions.create!(
   )
 end
 
-recruit = MissionGroup.create!(:name => "Recruit", :level => 5)
+recruit = MissionGroup.create!(:name => "Recruit",
+  :requirements => Requirements::Collection.new(
+    Requirements::Level.new(:value => 5)
+  )
+)
 
 recruit.missions.create!(
   :name           => "Martial Tulnees",
