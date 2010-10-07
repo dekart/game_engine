@@ -54,7 +54,6 @@ class Character
             Item.update_counters(inventory.item_id, :owned => - amount)
 
             if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
-              logger.debug inventory.market_item.object_id
               inventory.market_item.destroy
             end
           else
@@ -82,7 +81,6 @@ class Character
             Item.update_counters(inventory.item_id, :owned => - amount)
 
             if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
-              logger.debug inventory.market_item.object_id
               inventory.market_item.destroy
             end
           else
@@ -103,7 +101,6 @@ class Character
     protected
 
     def find_by_item(item)
-      logger.debug item.inspect
       item.is_a?(Inventory) ? item : find_by_item_id(item.id, :include => :item)
     end
 
