@@ -69,6 +69,8 @@ var CharacterForm = {
 var Character = {
   update: function(a){
     var c = a.character;
+
+    if(c == undefined) return;
     
     $("#co .basic_money .value").text(c.formatted_basic_money);
     $("#co .vip_money .value").text(c.formatted_vip_money);
