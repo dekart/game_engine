@@ -23,6 +23,12 @@
       <%= character.missions_completed %>
     </td>
   </tr>
+  <tr class="missions_mastered">
+    <th><%= Character.human_attribute_name("missions_mastered") %></th>
+    <td class="value">
+      <%= character.missions_mastered %>
+    </td>
+  </tr>
   <tr class="alliance_size">
     <th><%= Character.human_attribute_name("relations_count") %></th>
     <td class="value">

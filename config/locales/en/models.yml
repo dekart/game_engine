@@ -25,6 +25,7 @@ en:
         fights_lost: "Fights Lost"
         missions_succeeded: "Missions Succeded"
         missions_completed: "Missions Completed"
+        missions_mastered: "Missions Mastered"
         relations: "Alliance"
         relations_count: "Alliance Size"
         mercenaries: "Mercenaries"

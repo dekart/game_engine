@@ -38,6 +38,31 @@ namespace :app do
 
     # One-time tasks
 
+    desc "Update missions mastered count for characters"
+    task :update_missions_mastered_count => :environment do
+      puts "Updating mastered missions counter..."
+
+      last_level_ids = Mission.all(:include => :levels).collect{|m| m.levels.last.id }
+
+      Character.update_all(
+        [
+          %{
+            missions_mastered = (
+              SELECT count(*)
+              FROM mission_level_ranks
+              WHERE
+                character_id = characters.id AND
+                level_id IN (?) AND
+                completed = 1
+            )
+          },
+          last_level_ids
+        ]
+      )
+
+      puts "Done!"
+    end
+
     desc "Convert mission group levels to requirements"
     task :convert_mission_group_levels_to_requirements => :environment do
       puts "Converting mission group levels to requirements (#{MissionGroup.count} groups)..."

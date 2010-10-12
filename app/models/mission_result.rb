@@ -49,6 +49,8 @@ class MissionResult
 
           if @level_rank.just_completed?
             @character.missions_completed += 1
+            @character.missions_mastered  += 1 if @level.last?
+            
             @character.points += 1
 
             @payouts = @level.payouts.apply(@character, :complete, @mission)
