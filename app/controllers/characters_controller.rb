@@ -1,8 +1,8 @@
 class CharactersController < ApplicationController
   skip_before_filter :check_character_existance,
-    :only => [:new, :create, :index, :load_vip_money]
+    :only => [:new, :create, :index]
   skip_before_filter :ensure_authenticated_to_facebook,
-    :only => [:load_vip_money, :new]
+    :only => [:new]
 
   skip_landing_redirect :except => [:index, :upgrade]
   
@@ -37,12 +37,6 @@ class CharactersController < ApplicationController
     @character = Character.find(params[:id])
 
     @secured = (@character.key == params[:id])
-  end
-
-  def load_vip_money
-    on_valid_facebook_money_request do
-      facebook_money_user.character.charge!(0, - facebook_money_amount, FacebookMoney.config["provider"])
-    end
   end
 
   def new
