@@ -1,15 +1,16 @@
 puts "Seeding settings..."
 
-Setting[:assignment_attack_bonus] ||= 20
-Setting[:assignment_defence_bonus] ||= 20
-Setting[:assignment_fight_damage_multiplier] ||= 3.5
-Setting[:assignment_fight_damage_divider] ||= 2.0
-Setting[:assignment_fight_income_multiplier] ||= 2.0
-Setting[:assignment_fight_income_divider] ||= 1.0
-Setting[:assignment_mission_energy_multiplier] ||= 1.0
-Setting[:assignment_mission_energy_divider] ||= 4.0
-Setting[:assignment_mission_income_multiplier] ||= 4.0
-Setting[:assignment_mission_income_divider] ||= 2.0
+Setting[:assignment_mercenaries]                ||= true
+Setting[:assignment_attack_bonus]               ||= 20
+Setting[:assignment_defence_bonus]              ||= 20
+Setting[:assignment_fight_damage_multiplier]    ||= 3.5
+Setting[:assignment_fight_damage_divider]       ||= 2.0
+Setting[:assignment_fight_income_multiplier]    ||= 2.0
+Setting[:assignment_fight_income_divider]       ||= 1.0
+Setting[:assignment_mission_energy_multiplier]  ||= 1.0
+Setting[:assignment_mission_energy_divider]     ||= 4.0
+Setting[:assignment_mission_income_multiplier]  ||= 4.0
+Setting[:assignment_mission_income_divider]     ||= 2.0
 
 Setting[:bank_deposit_fee] ||= 10
 

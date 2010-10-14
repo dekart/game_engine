@@ -1,6 +1,7 @@
 class AssignmentsController < ApplicationController
   def new
     @assignment = parents.last.assignments.build(:role => params[:role])
+    @relations = Setting.b(:assignment_mercenaries) ? current_character.relations : current_character.friend_relations
     
     render :new, :layout => "ajax"
   end
