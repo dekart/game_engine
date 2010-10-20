@@ -80,33 +80,6 @@ module FacebookHelper
     end
   end
 
-  def confirm_javascript_function(confirm, fun = nil)
-    if !respond_to?(:request_comes_from_facebook?) || !request_comes_from_facebook?
-      confirm_javascript_function_without_facebooker(confirm)
-    else
-      if(confirm.is_a?(Hash))
-        confirm_options = confirm.stringify_keys
-		    title = confirm_options.delete("title") || "Please Confirm"
-		    content = confirm_options.delete("content") || "Are you sure?"
-		    button_confirm = confirm_options.delete("button_confirm") || "Okay"
-		    button_cancel = confirm_options.delete("button_cancel") || "Cancel"
-		    style = confirm_options.empty? ? "" : convert_options_to_css(confirm_options)
-	    else
-	      title,content,style,button_confirm,button_cancel = 'Please Confirm', confirm, "", "Okay", "Cancel"
-	    end
-
-      js_key = "confirm_#{confirm.object_id}"
-
-      output_buffer << fb_js_string(js_key + "content", content)
-      output_buffer << fb_js_string(js_key + "title", title)
-      output_buffer << fb_js_string(js_key + "button_confirm", button_confirm)
-      output_buffer << fb_js_string(js_key + "button_cancel", button_cancel)
-
-      "var dlg = new Dialog().showChoice(#{js_key + "title"},#{js_key + "content"},#{js_key + "button_confirm"},#{js_key + "button_cancel"}).setStyle(#{style});"+
-	    "var a=this;dlg.onconfirm = function() { #{fun ? fun : 'document.setLocation(a.getHref());'} };"
-	  end
-  end
-
   def fb_chat_invite(message, condensed = false, *exclude_ids)
     content_tag("fb:chat-invite", "",
       :msg          => message,
