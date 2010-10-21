@@ -1,0 +1,5 @@
+en:
+  newsfeeds:
+    show:
+      title_my: "News feed"
+      title: "{{user}} news feed"

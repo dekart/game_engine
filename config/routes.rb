@@ -210,6 +210,8 @@ ActionController::Routing::Routes.draw do |map|
     }
   map.resources :item_collections, :only => [:index, :update]
 
+  map.resources :newsfeeds, :only => [:show]
+
   # Add your custom routes below this mark
   
   map.connect ':controller/:action/:id'

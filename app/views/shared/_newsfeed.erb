@@ -1,0 +1,10 @@
+<div class="newsfeed" id="newsfeed_<%= character.key %>"></div>
+
+<% dom_ready do %>
+  // TODO: remove ajax calls cache disabling before release
+  $.ajaxSetup({
+    cache: false
+  });
+
+  $("#newsfeed_<%= character.key %>").load("/newsfeeds/<%= character.key %>");
+<% end %>

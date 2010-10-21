@@ -1,0 +1,3 @@
+en:
+  news:
+    item_purchase: "has bought %{amount} %{item}"

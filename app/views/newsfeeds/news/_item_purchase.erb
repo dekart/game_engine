@@ -1,0 +1,3 @@
+<span class="character"><%= link_to news.character.name, character_path(news.character.key) %></span>
+<% item = Item.find_by_id(news.data[:item_id]) %>
+<%= t("news.item_purchase", :amount => news.data[:amount], :item => item.name) %>
