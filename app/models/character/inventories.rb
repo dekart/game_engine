@@ -36,6 +36,8 @@ class Character
           Item.update_counters(inventory.item_id, :owned => amount)
 
           equip(inventory)
+
+          proxy_owner.news.add(:item_purchase, :item_id => item.id, :amount => amount)
         end
       end
 
