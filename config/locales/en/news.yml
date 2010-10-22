@@ -9,3 +9,6 @@ en:
       completed: "completed \"%{mission}\" mission"
       successfull: "successfully fulfilled \"%{mission}\" mission"
       failed: "failed to fulfill \"%{mission}\" mission"
+    property:
+      collect: "collected %{result} from %{property}"
+      upgrade: "upgraded %{property}"

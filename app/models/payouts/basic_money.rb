@@ -11,5 +11,9 @@ module Payouts
         character.charge(- @value, 0, reference)
       end
     end
+
+    def to_s
+      I18n.t("payouts.basic_money.value", :value => @value)
+    end
   end
 end
