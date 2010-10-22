@@ -1,0 +1,7 @@
+<% if news.successfull? %>
+  <%= news.completed? ?
+      t("news.mission.completed", :mission => news.mission.name) :
+      t("news.mission.successfull", :mission => news.mission.name) %>
+<% else %>
+  <%= t("news.mission.failed", :mission => news.mission.name) %>      
+<% end %>

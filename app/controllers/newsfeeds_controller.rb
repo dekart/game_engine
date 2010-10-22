@@ -6,7 +6,7 @@ class NewsfeedsController < ApplicationController
       current_character
     end
 
-    @newsfeed = @character.news.last(10)
+    @newsfeed = @character.news.last(5).reverse
 
     render :layout => false
   end
