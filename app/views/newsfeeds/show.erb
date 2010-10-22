@@ -7,7 +7,11 @@
 
   <% @newsfeed.each do |news| %>
     <div class="news">
-      <%= render :partial => "newsfeeds/#{news.class.to_s.underscore}", :locals => {:news => news} %>
+      <span class="character"><%= link_to news.character.name, character_path(news.character.key) %></span>
+      <span class="content">
+        <%= render :partial => "newsfeeds/#{news.class.to_s.underscore}", :locals => {:news => news} %>
+      </span>
+      <div class="time"><%= time_ago_in_words(news.created_at) %></div>
     </div>
   <% end %>
 <% end %>
