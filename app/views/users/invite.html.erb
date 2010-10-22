@@ -68,7 +68,7 @@
   <p class="invitation_text">
     <%= t(".copy_paste.invitation",
           :app  => t("app_name"),
-          :link => invitation_url(current_character.invitation_key, :canvas => true, :reference => :invite_link)
+          :link => invitation_short_url(current_character)
         ).html_safe %>
   </p>
 </div>

@@ -81,6 +81,8 @@ Setting[:user_invite_page_recurrent_visit_delay] ||= 48
 Setting[:user_permission_request_delay] ||= 24
 Setting[:user_admins] ||= "682180971"
 
+Setting[:invitation_direct_link] ||= false
+
 Setting[:relation_show_limit]         ||= 10
 Setting[:relation_max_alliance_size]  ||= 500
 Setting[:relation_friends_only]       ||= false
