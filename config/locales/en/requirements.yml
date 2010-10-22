@@ -45,17 +45,17 @@ en:
         invite: "invite your friends"
         premium: "hire mercenaries"
       attack:
-        message: "Your attack level is lower than required. You need to get addition upgrade points to improve your attack to the required level. You can visit {{premium_page}} to get additional upgrade points."
+        message: "Your attack level is lower than required. You need to get addition upgrade points to improve your attack to the required level. You can visit the {{premium_page}} to get additional upgrade points."
         premium_page: "Gem Market"
       defence:
-        message: "Your defence level is lower than required. You need to get addition upgrade points to improve your defence to the required level. You can visit {{premium_page}} to get additional upgrade points."
+        message: "Your defence level is lower than required. You need to get addition upgrade points to improve your defence to the required level. You can visit the {{premium_page}} to get additional upgrade points."
         premium_page: "Gem Market"
       energy_point:
         restorable:
           message: "You don't have enough energy! Take a rest until your energy will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."
           get_more: "You can also visit {{premium_page}} to get a full energy refill."
         low_base_level:
-          message: "Your energy level is lower than required. You need to get addition upgrade points to improve your energy to the required level. You can visit {{premium_page}} to get additional upgrade points."
+          message: "Your energy level is lower than required. You need to get addition upgrade points to improve your energy to the required level. You can visit the {{premium_page}} to get additional upgrade points."
         premium_page: "Gem Market"
         buttons:
           refill: "Refill Energy"
@@ -66,7 +66,7 @@ en:
           message: "You don't have enough stamina! Take a rest until your stamina will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."
           get_more: "You can also visit {{premium_page}} to get a full stamina refill."
         low_base_level:
-          message: "Your stamina level is lower than required. You need to get addition upgrade points to improve your stamina to the required level. You can visit {{premium_page}} to get additional upgrade points."
+          message: "Your stamina level is lower than required. You need to get addition upgrade points to improve your stamina to the required level. You can visit the {{premium_page}} to get additional upgrade points."
         premium_page: "Gem Market"
         buttons:
           refill: "Refill Stamina"
@@ -77,7 +77,7 @@ en:
           message: "You don't have enough health! Take a rest until your health will grow to {{required_value}} points. You need to wait about {{restore_time}} minutes."
           get_more: "You can also visit {{premium_page}} to get a full health refill."
         low_base_level:
-          message: "Your health level is lower than required. You need to get addition upgrade points to improve your health to the required level. You can visit {{premium_page}} to get additional upgrade points."
+          message: "Your health level is lower than required. You need to get addition upgrade points to improve your health to the required level. You can visit the {{premium_page}} to get additional upgrade points."
         premium_page: "Gem Market"
         buttons:
           refill: "Refill Health"
