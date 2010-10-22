@@ -16,12 +16,6 @@ module PayoutsHelper
   end
 
   def payout(type, value, options = {}, &block)
-    if value.is_a?(Numeric)
-      value = value >= 0 ? "+#{value}" : value
-    elsif numeric_value = options.delete(:numeric_value)
-      value = "#{numeric_value >= 0 ? '+' : '-'}#{ value }"
-    end
-
     result = content_tag(:div,
       content_tag(:span, value, :class => :value) +
       (block_given? ? capture(&block) : "") +
