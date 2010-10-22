@@ -34,8 +34,10 @@ module Requirements
       end
     end
 
-    def initialize(options = {})
-      @value = options[:value].to_i
+    def initialize(attributes = {})
+      attributes.each_pair do |key, value|
+        send("#{key}=", value)
+      end
     end
 
     def name

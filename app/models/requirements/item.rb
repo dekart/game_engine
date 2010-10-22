@@ -1,17 +1,19 @@
 module Requirements
   class Item < Base
-    def initialize(options = {})
-      super(options)
+    def value=(value)
+      @value = value.is_a?(::Item) ? value.id : value.to_i
+    end
 
-      @amount = options[:amount].to_i
+    def amount
+      @amount || 1
+    end
+
+    def amount=(value)
+      @amount = value.to_i
     end
 
     def item
       ::Item.find_by_id(value)
-    end
-
-    def amount
-      @amount && @amount.to_i > 0 ? @amount : 1
     end
 
     def satisfies?(character)
