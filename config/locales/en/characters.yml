@@ -70,5 +70,5 @@ en:
       buttons:
         heal: "Heal"
       premium_refill:
-        text: "You can also visit {{premium}} to refill your health."
+        text: "You can also visit the {{premium}} to refill your health."
         link: "Gem Market"
