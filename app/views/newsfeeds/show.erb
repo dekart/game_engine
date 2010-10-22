@@ -11,7 +11,7 @@
       <span class="content">
         <%= render :partial => "newsfeeds/#{news.class.to_s.underscore}", :locals => {:news => news} %>
       </span>
-      <div class="time"><%= time_ago_in_words(news.created_at) %></div>
+      <div class="time"><%= time_ago_in_words(news.created_at) %>&nbsp;<%= t("news.ago") %></div>
     </div>
   <% end %>
 <% end %>
