@@ -22,7 +22,7 @@ class MissionResult
 
   def save!
     if valid?
-      @success = (rand(100) <= @mission.success_chance)
+      @success = (rand(100) <= @level.chance)
 
       MissionLevelRank.transaction do
         # Checking if energy assignment encountered free fulfillment
