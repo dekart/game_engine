@@ -8,17 +8,7 @@
         <div class="name"><%= item.name %></div>
         <div class="picture"><%= item_image(item, :small) %></div>
         <div class="payouts">
-          <% if item.effects? %>
-            <h3><%= Item.human_attribute_name("effects") %></h3>
-
-            <%= render "items/effects", :item => item %>
-          <% end %>
-
-          <% if item.payouts.visible? %>
-            <h3><%= Item.human_attribute_name("payouts") %></h3>
-
-            <%= payout_list(item.payouts, :add, :preview) %>
-          <% end %>
+          <%= render "items/effects", :item => item %>
         </div>
 
         <div class="requirements">
