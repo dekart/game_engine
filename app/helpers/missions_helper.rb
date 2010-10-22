@@ -27,6 +27,6 @@ module MissionsHelper
   end
 
   def mission_money(level)
-    "%s - %s" % [number_to_currency(level.money_min), number_to_currency(level.money_max)]
+    "+ %s - %s" % [number_to_currency(level.money_min), number_to_currency(level.money_max)]
   end
 end
