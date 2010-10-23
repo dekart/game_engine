@@ -39,7 +39,7 @@ namespace :deploy do
         PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
         * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_job' | wc -l` -le 3 && #{current_path}/script/delayed_job >> #{shared_path}/log/delayed_job.log 2>&1
-        */30 * * * * cd #{current_path} && rake app:market:remove_expired_listings -- trace >> #{shared_path}/log/market.log 2>&1
+        */30 * * * * cd #{current_path} && rake app:market:remove_expired_listings --trace >> #{shared_path}/log/market.log 2>&1
       CODE
 
       put(config, "#{shared_path}/crontab.conf")
