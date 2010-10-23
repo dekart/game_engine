@@ -1,0 +1,14 @@
+en:
+  news:
+    # base strings
+    ago: "ago"
+    base: "did something"
+    # news strings
+    item_purchase: "has bought %{amount} %{item}"
+    mission:
+      completed: "completed \"%{mission}\" mission"
+      successfull: "successfully fulfilled \"%{mission}\" mission"
+      failed: "failed to fulfill \"%{mission}\" mission"
+    property:
+      collect: "collected %{result} from %{property}"
+      upgrade: "upgraded %{property}"

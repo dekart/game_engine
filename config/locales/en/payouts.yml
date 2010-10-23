@@ -11,6 +11,7 @@ en:
       name: "Gems"
     basic_money:
       name: "Money"
+      value: "%{value} money"
     random_item:
       name: "Random Item"
       attributes:

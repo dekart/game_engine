@@ -7,6 +7,7 @@ class Character < ActiveRecord::Base
   include Character::Titles
   include Character::Missions
   include Character::Collections
+  include Character::Newsfeed
   
   LEVELS = [0]
 
