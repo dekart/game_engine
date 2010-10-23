@@ -8,6 +8,21 @@
       ).html_safe %>
 
   <%= fb_custom_req_choice(
+        t(".invite.buttons.accept",
+          :user => fb_name(current_user,
+            :linked         => false,
+            :possessive     => true,
+            :firstnameonly  => true
+          )
+        ),
+        invitation_url(current_character.invitation_key,
+          :canvas     => true,
+          :reference  => :invite_form_accept,
+          :referrer   => current_user.id
+        )
+      ) %>
+
+  <%= fb_custom_req_choice(
         t(".invite.buttons.visit_profile",
           :user => fb_name(current_user,
             :linked         => false,
@@ -18,21 +33,6 @@
         character_url(current_character.key,
           :canvas     => true,
           :reference  => :invite_form_profile,
-          :referrer   => current_user.id
-        )
-      ) %>
-
-  <%= fb_custom_req_choice(
-        t(".invite.buttons.accept",
-          :user => fb_name(current_user,
-            :linked         => false,
-            :possessive     => true,
-            :firstnameonly  => true
-          )
-        ),
-        invitation_url(current_character.invitation_key, 
-          :canvas     => true,
-          :reference  => :invite_form_accept,
           :referrer   => current_user.id
         )
       ) %>
