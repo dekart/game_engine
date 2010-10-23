@@ -44,7 +44,7 @@
 
       $(document).bind('requirement.satisfy', Mission.onRequirementSatisfy);
     <% end %>
-  <% elsif @result.mission_rank.completed? %>
+  <% elsif @result.level_rank.completed? %>
     <% builder.fail do %>
       <%= t(".already_completed.message") %>
     <% end %>
