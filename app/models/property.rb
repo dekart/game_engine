@@ -58,6 +58,8 @@ class Property < ActiveRecord::Base
         increment(:level)
 
         save(false) && character.charge!(property_type.upgrade_price(level - 1), vip_price, property_type)
+
+        character.news.add(:property_action, :action => :upgrade, :property_id => self.id)
       end
     else
       false
@@ -74,6 +76,8 @@ class Property < ActiveRecord::Base
         result << Payouts::BasicMoney.new(:value => total_income)
 
         character.charge!(- total_income, 0, self)
+
+        character.news.add(:property_action, :action => :collect, :result => result.to_s, :property_id => self.id)
 
         result
       end

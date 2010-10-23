@@ -50,5 +50,9 @@ module Payouts
         result.items.push(*other.items)
       end
     end
+
+    def to_s
+      items.collect{|i| i.to_s}.join(", ")
+    end
   end
 end
