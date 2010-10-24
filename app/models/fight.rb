@@ -62,6 +62,22 @@ class Fight < ActiveRecord::Base
     Requirements::HealthPoint.new(:value => attacker.weakness_minimum)
   end
 
+  def attacker_boost
+    if defined?(@attacker_boost)
+      @attacker_boost
+    else
+      @attacker_boost = @attacker_boost_id ? Boost.find(@attacker_boost_id) : nil
+    end
+  end
+
+  def victim_boost
+    if defined?(@victim_boost)
+      @victim_boost
+    else
+      @victim_boost = @victim_boost_id ? Boost.find(@victim_boost_id) : nil
+    end
+  end
+
   protected
 
   def validate
@@ -92,6 +108,9 @@ class Fight < ActiveRecord::Base
     self.experience = 1 if experience == 0
 
     self.money = (loser.basic_money == 0 ? 0 : winner_reward)
+
+    @attacker_boost_id = attacker.best_boost(:attack).boost.id
+    @victim_boost_id = victim.best_boost(:defence).boost.id
   end
 
   def winner_reward
@@ -113,6 +132,9 @@ class Fight < ActiveRecord::Base
 
     attacker.hp  -= attacker_hp_loss
     victim.hp    -= victim_hp_loss
+
+    attacker.delete_best_boost(:attack)
+    victim.delete_best_boost(:defence)
 
     winner.fights_won += 1
     loser.fights_lost += 1
