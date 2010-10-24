@@ -114,6 +114,12 @@ ActionController::Routing::Routes.draw do |map|
         :hide     => :put
       }
 
+    admin.resources :boosts,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+
     # Add your custom admin routes below this mark
     
   end

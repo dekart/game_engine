@@ -1,0 +1,2 @@
+module Admin::BoostsHelper
+end
