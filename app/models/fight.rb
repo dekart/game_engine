@@ -109,8 +109,8 @@ class Fight < ActiveRecord::Base
 
     self.money = (loser.basic_money == 0 ? 0 : winner_reward)
 
-    @attacker_boost_id = attacker.best_boost(:attack).boost.id
-    @victim_boost_id = victim.best_boost(:defence).boost.id
+    @attacker_boost_id = attacker.best_boost(:attack) ? attacker.best_boost(:attack).boost.id : nil
+    @victim_boost_id = victim.best_boost(:defence) ? victim.best_boost(:defence).boost.id : nil
   end
 
   def winner_reward
