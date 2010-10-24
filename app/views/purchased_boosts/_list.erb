@@ -28,4 +28,8 @@
       </tr>
     <% end %>
   </table>
+<% else %>
+  <div class="empty_set">
+    <%= t(".empty_set.text", :purchase => link_to(t(".empty_set.purchase"), boosts_path)).html_safe %>
+  </div>
 <% end %>

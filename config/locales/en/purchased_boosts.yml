@@ -11,3 +11,6 @@ en:
     list:
       title: "Boosts"
       owned: "Owned: %{amount}"
+      empty_set:
+        text: "You have no boost in your inventory. You can %{purchase}"
+        purchase: "purchase them"
