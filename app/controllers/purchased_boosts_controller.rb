@@ -1,0 +1,2 @@
+class PurchasedBoostsController < ApplicationController
+end

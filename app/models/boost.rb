@@ -27,4 +27,9 @@ class Boost < ActiveRecord::Base
   }
 
   validates_presence_of :name, :level
+  validates_numericality_of :level, :basic_price, :vip_price, :allow_blank => true
+
+  def price?
+    basic_price > 0 or vip_price > 0
+  end
 end

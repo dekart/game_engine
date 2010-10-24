@@ -218,6 +218,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :newsfeeds, :only => [:show]
 
+  map.resources :boosts
+
+  map.resources :purchased_boosts
+
   # Add your custom routes below this mark
   
   map.connect ':controller/:action/:id'
