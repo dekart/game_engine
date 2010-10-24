@@ -21,6 +21,8 @@ class Character
         end
 
         proxy_owner.charge!(boost.basic_price * amount, boost.vip_price * amount)
+
+        proxy_owner.news.add(:boost_purchase, :amount => amount, :boost_id => boost.id)
       end
     end
 

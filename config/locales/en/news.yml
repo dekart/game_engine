@@ -5,6 +5,7 @@ en:
     base: "did something"
     # news strings
     item_purchase: "has bought %{amount} %{item}"
+    boost_purchase: "has bought %{amount} items of %{boost_name}"
     mission:
       completed: "completed \"%{mission}\" mission"
       successfull: "successfully fulfilled \"%{mission}\" mission"
