@@ -28,4 +28,8 @@
           :class => "market button"
         ) %>
   <% end %>
+
+  <% unless current == :boosts %>
+    <%= link_to(button(:boosts), boosts_path, :class => "boosts button") %>
+  <% end %>
 </div>

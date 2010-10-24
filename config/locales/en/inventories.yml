@@ -7,6 +7,7 @@ en:
         collections: "Collections"
         shop: "Shop"
         market: "Market"
+        boosts: "Purchase boosts"
     new:
       amount: "Amount To Purchase:"
       cannot_purchase: "You cannot purchase this item right now."

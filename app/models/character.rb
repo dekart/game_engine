@@ -28,6 +28,13 @@ class Character < ActiveRecord::Base
     :extend     => Character::Inventories
   
   has_many :items, :through => :inventories
+
+  has_many :purchased_boosts,
+    :include   => :boost,
+    :dependent => :delete_all,
+    :extend   => Character::Boosts
+
+  has_many :boosts, :through => :purchased_boosts
   
   has_many :relations, 
     :foreign_key  => "owner_id",
@@ -187,11 +194,13 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    attack + equipment.effect(:attack) + assignments.effect_value(:attack)
+    boost_attack = best_boost(:attack) ? best_boost(:attack).attack : 0
+    attack + equipment.effect(:attack) + assignments.effect_value(:attack) + boost_attack
   end
 
   def defence_points
-    defence + equipment.effect(:defence) + assignments.effect_value(:defence)
+    boost_defence = best_boost(:defence) ? best_boost(:defence).defence : 0
+    defence + equipment.effect(:defence) + assignments.effect_value(:defence) + boost_defence
   end
 
   def health_points
@@ -525,6 +534,34 @@ class Character < ActiveRecord::Base
     self.hospital_used_at = Time.now
 
     save
+  end
+
+  def best_boost(type)
+    case type
+    when :attack
+      @best_attacking_boost || @best_attacking_boost = self.purchased_boosts.best_attacking
+    when :defence
+      @best_defending_boost || @best_defending_boost = self.purchased_boosts.best_defending
+    else
+      raise ArgumentError
+    end
+  end
+
+  def delete_best_boost(type)
+    case type
+    when :attack
+      if @best_attacking_boost
+        @best_attacking_boost.delete
+        @best_attacking_boost = nil
+      end
+    when :defence
+      if @best_defending_boost
+        @best_defending_boost.delete
+        @best_defending_boost = nil
+      end
+    else
+      raise ArgumentError
+    end
   end
 
   protected

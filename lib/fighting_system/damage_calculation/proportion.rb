@@ -26,7 +26,8 @@ module FightingSystem
           )
         end
 
-        [(attack_damage / 1000).ceil, (defence_damage / 1000).ceil]
+        [(attack_damage / 1000).ceil + attacker.best_boost(:attack).damage,
+         (defence_damage / 1000).ceil + victim.best_boost(:defence).damage]
       end
     end
   end

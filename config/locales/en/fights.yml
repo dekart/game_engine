@@ -31,6 +31,8 @@ en:
         best_offence: "Your Best Offence:"
         best_defence: "Their Best Defence:"
         show_items: "Show all items used"
+        best_attacking_boost: "You have used attacking boost"
+        best_defending_boost: "They have used defending boost"
     used_items:
       attacker: "Your items:"
       victim: "Their items:"
