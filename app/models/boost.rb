@@ -1,5 +1,7 @@
 class Boost < ActiveRecord::Base
 
+  has_many :purchased_boosts, :dependent => :destroy
+
   state_machine :initial => :hidden do
     state :hidden
     state :visible

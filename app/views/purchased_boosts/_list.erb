@@ -1,0 +1,31 @@
+<% if boosts.any? %>
+  <table>
+    <tr>
+      <th colspan="3"><h2><%= t(".title") %></h2></th>
+    </tr>
+
+    <% boosts.each do |b| %>
+      <% boost = b[:boost] %>
+      <tr>
+        <td class="picture"><%= boost_image(boost, :small) %></td>
+        <td class="info">
+          <div class="name"><%= boost.name %></div>
+          <div class="description"><%= boost.description %></div>
+          <div class="stats">
+            <div class="owned">
+              <%= t(".owned", :amount => content_tag(:span, b[:amount], :class => :value)).html_safe %>
+            </div>
+          </div>
+        </td>
+        <td class="payouts">
+          <h3><%= Boost.human_attribute_name("effects") %></h3>
+          <%= payout(:attack, "+%d" % boost.attack.to_s) if boost.attack > 0 %>
+          <%= payout(:defence, "+%d" % boost.defence.to_s) if boost.defence > 0 %>
+          <%= payout(:damage, "+%d" % boost.damage.to_s) if boost.damage > 0 %>
+        </td>
+        <td class="controls">
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

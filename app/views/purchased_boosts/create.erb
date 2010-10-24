@@ -1,0 +1,35 @@
+<% result_for :shop do |builder| %>
+  <% if @enough_money %>
+    <% builder.buttons do %>    
+      <%= link_to(button(:inventory), inventories_url, :class => "inventory button") %>
+    <% end %>
+  
+    <% builder.success do %>
+      <%= t(".messages.success",
+            :amount => @amount,
+            :boost_name => content_tag(:b, @boost.name)).html_safe %>
+    <% end %>
+  
+    <% if @boost.price? %>
+      <table class="payouts">
+        <tr>
+          <td class="spent">
+            <h3><%= t(".you_spent.title") %></h3>
+            
+            <% if @boost.basic_price > 0 %>
+              <%= payout(:basic_money, number_to_currency(@amount * @boost.basic_price)) %>
+            <% end %>
+  
+            <% if @boost.vip_price > 0 %>
+              <%= payout(:vip_money, number_to_currency(@amount * @boost.vip_price)) %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    <% end %>
+  <% else %>
+    <% builder.fail do %>
+      <%= t(".not_enough_money", :amount => @amount, :boost_name => content_tag(:b, @boost.name)).html_safe %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -28,6 +28,13 @@ class Character < ActiveRecord::Base
     :extend     => Character::Inventories
   
   has_many :items, :through => :inventories
+
+  has_many :purchased_boosts,
+    :include   => :boost,
+    :dependent => :delete_all,
+    :extend   => Character::Boosts
+
+  has_many :boosts, :through => :purchased_boosts
   
   has_many :relations, 
     :foreign_key  => "owner_id",

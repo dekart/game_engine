@@ -1,0 +1,13 @@
+en:
+  purchased_boosts:
+    create:
+      buttons:
+        inventory: "Go to Inventory"
+      messages:
+        success: "You successfully bought %{amount} of %{boost_name}"
+      you_spent:
+        title: "You spent"
+      not_enough_money: "You have not enough money or gems to purchase %{amount} items of %{boost_name}"
+    list:
+      title: "Boosts"
+      owned: "Owned: %{amount}"
