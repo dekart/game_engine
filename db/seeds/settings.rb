@@ -20,6 +20,7 @@ Setting[:character_health_upgrade] ||= 5
 Setting[:character_energy_upgrade] ||= 1
 Setting[:character_points_per_upgrade] ||= 5
 Setting[:character_vip_money_per_upgrade] ||= 0
+Setting[:character_vip_money_per_upgrade_per_level] ||= 0
 Setting[:character_stamina_upgrade] ||= 1
 Setting[:character_stamina_upgrade_points] ||= 2
 Setting[:character_attack_upgrade_points] ||= 1

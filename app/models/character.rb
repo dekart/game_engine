@@ -572,7 +572,7 @@ class Character < ActiveRecord::Base
       
       self.points     += Setting.i(:character_points_per_upgrade)
 
-      charge(0, - Setting.i(:character_vip_money_per_upgrade), :level_up)
+      charge(0, - vip_money_per_upgrade, :level_up)
 
       self.ep = energy_points
       self.hp = health_points
@@ -580,6 +580,10 @@ class Character < ActiveRecord::Base
 
       notifications.schedule(:level_up)
     end
+  end
+
+  def vip_money_per_upgrade
+    (Setting.i(:character_vip_money_per_upgrade) + level * Setting.f(:character_vip_money_per_upgrade_per_level)).round
   end
 
   def apply_character_type_defaults
