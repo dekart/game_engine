@@ -46,13 +46,13 @@ module MissionGroupsHelper
         visible_groups = groups[((position - 1) / (limit - 2)) * (limit - 2) + 1, limit - 2]
       end
 
-      if @previous_group and page != :first and group = groups[groups.index(visible_groups.first) - 1]
+      if @previous_group and page != :first and groups.any? and group = groups[groups.index(visible_groups.first) - 1]
         previous_group = capture(group, &@previous_group)
       else
         previous_group = ""
       end
 
-      if @next_group and page != :last and group = groups[groups.index(visible_groups.last) + 1]
+      if @next_group and page != :last and groups.any? and group = groups[groups.index(visible_groups.last) + 1]
         next_group = capture(group, &@next_group)
       else
         next_group = ""
