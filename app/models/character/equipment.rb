@@ -185,7 +185,7 @@ class Character::Equipment
         Item::EFFECTS.each do |effect|
           candidates = equippables.select{|i| i.equippable? and i.send(effect) != 0}
 
-          if inventory = candidates.max_by(&effect) and auto_equip(inventory, 1)
+          if inventory = candidates.max_by{|i| [i.send(effect), i.effects.values.sum]} and auto_equip(inventory, 1)
             equipped = inventory
           end
         end
