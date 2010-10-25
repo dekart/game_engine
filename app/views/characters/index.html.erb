@@ -10,7 +10,8 @@
     </td>
 
     <td class="wall">
-      <%= render("layouts/next_steps") if current_user.show_next_steps? %>
+      <%!#= render("layouts/next_steps") if current_user.show_next_steps? %>
+      <div class="block"></div><!-- Removing next steps block breaks layout, this empty block repairs it -->
 
       <%= render("invitations/block", :invitations => @alliance_invitations) if @alliance_invitations.any? %>
 
