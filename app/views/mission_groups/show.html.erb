@@ -6,26 +6,30 @@
   <%= render("tabs") %>
 </div>
 
-<% if @mission_group.requirements.satisfies?(current_character) %>
-  <div id="mission_list">
-    <%= render "missions/list", :missions => @missions %>
-  </div>
-
-  <div id="boss_list">
-    <%= render "bosses/list", :bosses => @bosses %>
-  </div>
-<% else %>
-  <div class="empty_set">
-    <p><%= t(".requirements_not_satisfied") %></p>
-
-    <div class="requirements clearfix">
-      <%= unsatisfied_requirement_list(@mission_group.requirements) %>
+<% if @mission_group %>
+  <% if @mission_group.requirements.satisfies?(current_character) %>
+    <div id="mission_list">
+      <%= render "missions/list", :missions => @missions %>
     </div>
-  </div>
-<% end %>
 
-<% dom_ready do %>
-  $(document).bind('item.purchase', function(){
-    <%= remote_function(:url => mission_group_path(@mission_group), :method => :get).html_safe %>
-  });
+    <div id="boss_list">
+      <%= render "bosses/list", :bosses => @bosses %>
+    </div>
+  <% else %>
+    <div class="empty_set">
+      <p><%= t(".requirements_not_satisfied") %></p>
+
+      <div class="requirements clearfix">
+        <%= unsatisfied_requirement_list(@mission_group.requirements) %>
+      </div>
+    </div>
+  <% end %>
+
+  <% dom_ready do %>
+    $(document).bind('item.purchase', function(){
+      <%= remote_function(:url => mission_group_path(@mission_group), :method => :get).html_safe %>
+    });
+  <% end %>
+<% else %>
+  <%= empty_set %>
 <% end %>
