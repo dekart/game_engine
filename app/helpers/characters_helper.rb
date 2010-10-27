@@ -38,13 +38,7 @@ module CharactersHelper
       :css    => skin_path
     )
 
-    fb_comments(
-      dom_id(character, :wall),           # xid
-      true,                               # canpost
-      false,                              # candelete
-      Setting.i(:wall_posts_show_limit),  # numposts
-      options
-    )
+    fb_comments(dom_id(character, :wall), options.merge(:numposts => Setting.i(:wall_posts_show_limit)))
   end
 
   def character_health_bar(character)

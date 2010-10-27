@@ -38,7 +38,7 @@
   </div>
 
   <div class="invitation_form">
-    <% content_for :gift_message do %>
+    <% gift_message = capture do %>
       <%= t(".request.message",
             :user => fb_name(current_user, :linked => :false),
             :app  => t("app_name"),
@@ -55,11 +55,11 @@
           ) %>
     <% end %>
 
-    <% fb_serverfbml do %>
+    <% fb_server_fbml do %>
       <%= stylesheet_link_tag(skin_path) %>
     
       <div id="invitation_form_fbml">
-        <% fb_request_form(t(".request.title"), :gift_message, confirm_gift_url(@gift)) do %>
+        <% fb_request_form(t(".request.title"), confirm_gift_url(@gift), gift_message) do %>
           <div class="selector">
             <%= fb_multi_friend_selector(t(".request.note"),
                   :exclude_ids => @exclude_ids.join(","),

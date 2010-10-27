@@ -1,6 +1,6 @@
 <%= title(t(".title")) %>
 
-<% content_for :invite_message do %>
+<% invite_message = capture do %>
   <%= t(".invite.message",
         :user     => fb_name(current_user, :linked => :false),
         :pronoun  => fb_pronoun(current_user, :possessive => true),
@@ -43,11 +43,11 @@
 <%= render "relations/note" %>
 
 <div class="invitation_type">
-  <% fb_serverfbml do %>
+  <% fb_server_fbml do %>
     <%= stylesheet_link_tag(skin_path) %>
   
     <div id="invitation_form_fbml">
-      <% fb_request_form(t(".invite.title"), :invite_message, invite_users_url(:from_selector => true), :target => :_top) do %>
+      <% fb_request_form(t(".invite.title"), invite_users_url(:from_selector => true), invite_message, :target => :_top) do %>
         <div class="selector">
           <%= fb_multi_friend_selector(t(".invite.note"),
                 :exclude_ids => current_user.invitations.exclude_ids.join(","),

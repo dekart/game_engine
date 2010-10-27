@@ -2,14 +2,13 @@ module StreamHelper
   def stream_dialog(options = {})
     attachment    = options[:attachment].reverse_merge(:media => default_stream_media)
     action_links  = options[:action_links] || default_stream_action_links
-    target_id     = options[:target_id] || nil
-    prompt_text   = options[:user_prompt] || nil
 
-    result = "$(document).trigger('facebook.stream_publish');FB.Connect.streamPublish('', %s, %s, %s, %s, %s);" % [
-      attachment.to_json,
-      action_links.to_json,
-      target_id.to_json,
-      prompt_text.to_json,
+    result = "$(document).trigger('facebook.stream_publish');FB.ui(%s, %s);" % [
+      {
+        :method       => 'stream.publish',
+        :attachment   => attachment,
+        :action_links => action_links
+      }.to_json,
       stream_callback_function(options)
     ]
 

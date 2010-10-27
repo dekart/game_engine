@@ -65,7 +65,9 @@
   <%= display_notifications %>
 
   <% fb_connect_async_js do %>
-    $(document).trigger('facebook.ready');
+    $(function(){
+      $(document).trigger('facebook.ready');
+    });
   <% end %>
 
   <% dom_ready do %>

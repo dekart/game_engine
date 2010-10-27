@@ -22,14 +22,12 @@ module FacebookHelper
     )
   end
 
-  def fb_wallpost_action(text, link)
-    content_tag("fb:wallpost-action", text, :href => link)
+  def fb_comments(xid, options = {})
+    content_tag('fb:comments', '', options.merge(:xid => xid))
   end
 
-  def fb_if_section_not_added(section, &block)
-    concat(
-      content_tag("fb:if-section-not-added", capture(&block), :section => section)
-    )
+  def fb_pronoun(user, options = {})
+    content_tag('fb:pronoun', '', options.merge(:uid => user.facebook_id))
   end
 
   def fb_custom_req_choice(label, url)

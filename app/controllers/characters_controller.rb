@@ -1,6 +1,6 @@
 class CharactersController < ApplicationController
   skip_before_filter :check_character_existance,
-    :only => [:new, :create, :index]
+    :only => [:new, :create]
 
   skip_landing_redirect :except => [:index, :upgrade]
   
@@ -55,7 +55,7 @@ class CharactersController < ApplicationController
       @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
       if @character.save
-        redirect_from_iframe root_url(:canvas => true)
+        redirect_back root_url(:canvas => true)
       else
         render :action => :new
       end
