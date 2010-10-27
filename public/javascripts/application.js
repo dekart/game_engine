@@ -344,22 +344,26 @@ $(function(){
     });
   }
 
-  FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
-    FB.XdComm.Server.init("/xd_receiver.html");
+//  FB_RequireFeatures(['Base', 'Api', 'Common', 'XdComm', 'CanvasUtil', 'Connect', 'XFBML'], function(){
+//    FB.XdComm.Server.init("/xd_receiver.html");
+//
+//    FB.CanvasClient.set_timerInterval(1)
+//    FB.CanvasClient.startTimerToSizeToContent();
+//
+//    // This is beta feature, we should be sure that it won't break anything
+//    try{ FB.CanvasClient.syncUrl(); } catch(e){}
+//
+//    // Manually set canvas height to be sure that it will fit to content size
+//    FB.CanvasClient.setCanvasHeight($('body').outerHeight());
+//
+//    FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
+//
+//    $(document).trigger('facebook.ready');
+//  });
 
-    FB.CanvasClient.set_timerInterval(1)
-    FB.CanvasClient.startTimerToSizeToContent();
-
-    // This is beta feature, we should be sure that it won't break anything
-    try{ FB.CanvasClient.syncUrl(); } catch(e){}
-
-    // Manually set canvas height to be sure that it will fit to content size
-    FB.CanvasClient.setCanvasHeight($('body').outerHeight());
-
-    FB.init(facebook_api_key, "/xd_receiver.html", {debugLogLevel: 2});
-
-    $(document).trigger('facebook.ready');
-  });
+  $(document).bind('facebook.ready', function(){
+    FB.Canvas.setAutoResize();
+  })
 
   $(document).bind('result.received', function(){
     $(document).trigger('remote_content.received');

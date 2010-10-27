@@ -16,6 +16,13 @@ gem "haml",             "2.2.20"
 gem "RedCloth",         "4.2.3",  :require => "redcloth"
 gem "nokogiri",         "1.4.3.1"
 
+# facebooker2 dependencies
+gem "crack",      "0.1.8"
+gem "hashie",      "0.4.0"
+gem "httparty",      "0.6.1"
+gem "mogli",      "0.0.15"
+gem "ruby-hmac",      "0.4.0"
+
 group :test do
   gem "rspec",        "1.3.0"
   gem "rspec-rails",  "1.3.2"

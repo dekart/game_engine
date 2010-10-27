@@ -2,12 +2,21 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+  include Facebooker2::Rails::Controller
+  include Facebooker2::Rails::Controller::CanvasOAuth
+  include Facebooker2::Rails::Controller::UrlRewriting
+  
   include ExceptionLogging if Rails.env.production?
   include LandingPage
 
+  ensure_canvas_connected_to_facebook 'publish_stream'
+
+  rescue_from Facebooker2::OAuthException do |exception|
+    redirect_to 'http://www.facebook.com/'
+  end
+
   before_filter :set_p3p_header
   before_filter :check_character_existance
-  before_filter :ensure_authenticated_to_facebook
   before_filter :check_bookmark_reference
 
   landing_redirect
@@ -19,15 +28,13 @@ class ApplicationController < ActionController::Base
   helper :all
 
   protected
-
+  
   # Send P3P privacy header to enable iframe cookies in IE
   def set_p3p_header
     headers["P3P"] = 'CP="CAO PSA OUR"'
   end
 
   def check_character_existance
-    set_facebook_session
-
     unless current_character
       store_return_to
 
@@ -67,7 +74,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if facebook_session
+    if current_facebook_user
+      logger.debug current_facebook_user.inspect
+
       unless @current_user
         @current_user = find_or_create_current_user
 
@@ -79,7 +88,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_or_create_current_user
-    facebook_id = in_page? ? facebook_params["page_id"] : facebook_session.user.id
+    facebook_id = current_facebook_user.id
 
     unless user = User.find_by_facebook_id(facebook_id)
       user = User.new
@@ -130,10 +139,21 @@ class ApplicationController < ActionController::Base
     request.env['ORIGINAL_PARAMS'] || params
   end
 
-  def default_url_options(options)
+  def default_url_options(options = {})
     {}.tap do |result|
       result[:try_skin] = params[:try_skin] unless params[:try_skin].blank?
     end
+  end
+
+
+  def with_canvas_relative_root
+    @relative_root = Facebooker2.canvas_page_name
+    yield
+    @relative_root = nil
+  end
+
+  def relative_url_root
+    Facebooker2.canvas_page_name#@relative_root
   end
 
   def admin_required
@@ -162,25 +182,5 @@ class ApplicationController < ActionController::Base
     end
 
     redirect_to(uri.to_s)
-  end
-
-  def redirect_from_iframe(*args)
-    @redirect_url = url_for(*args)
-
-    render :layout => false, :text => <<-HTML
-      <html><head>
-        <script type="text/javascript">
-          window.top.location.href = #{@redirect_url.to_json};
-        </script>
-        <noscript>
-          <meta http-equiv="refresh" content="0;url=#{@redirect_url}" />
-          <meta http-equiv="window-target" content="_top" />
-        </noscript>
-      </head></html>
-    HTML
-  end
-
-  def top_redirect_to(*args)
-    request_is_facebook_iframe? ? redirect_from_iframe(*args) : redirect_to(*args)
   end
 end

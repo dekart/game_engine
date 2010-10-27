@@ -2,12 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
   <script>
-    var facebook_api_key = '<%= Facebooker.facebooker_config["api_key"] %>';
+    var facebook_api_key = '<%= #Facebooker.api_key %>';
   </script>
   
   <%= stylesheet_link_tag("admin") %>
 
-  <%= fb_connect_javascript_tag.html_safe %>
   <%= include_jquery_from_google %>
   <%= javascript_include_tag "jrails", "jquery/dialog", "admin" %>
 
@@ -32,6 +31,9 @@
 
   </div>
 
+  <% fb_connect_async_js do %>
+    $(document).trigger('facebook.ready');
+  <% end %>
 
   <%= dom_ready %>
 </body>
