@@ -1,10 +1,19 @@
-<div class="newsfeed" id="newsfeed_<%= character.key %>"></div>
+<div class="newsfeed" id="newsfeed">
+<% if character.newsfeed.any? %>
+  <h2 class="title">
+    <%= character == current_character ?
+            t("news.title_my") :
+            t("news.title", :user => character_name(character, :possessive => true)) %>
+  </h2>
 
-<% dom_ready do %>
-  // TODO: remove ajax calls cache disabling before release
-  $.ajaxSetup({
-    cache: false
-  });
-
-  $("#newsfeed_<%= character.key %>").load("/newsfeeds/<%= character.key %>");
+  <% character.newsfeed.each do |news| %>
+    <div class="news">
+      <span class="character"><%= link_to news.character.name, character_path(news.character.key) %></span>
+      <span class="content">
+        <%= render :partial => "shared/#{news.class.to_s.underscore}", :locals => {:news => news} %>
+      </span>
+      <div class="time"><%= time_ago_in_words(news.created_at) %>&nbsp;<%= t("news.ago") %></div>
+    </div>
+  <% end %>
 <% end %>
+</div>

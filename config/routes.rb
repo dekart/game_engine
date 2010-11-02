@@ -220,8 +220,6 @@ ActionController::Routing::Routes.draw do |map|
     }
   map.resources :item_collections, :only => [:index, :update]
 
-  map.resources :newsfeeds, :only => [:show]
-
   map.resources :boosts
 
   map.resources :purchased_boosts

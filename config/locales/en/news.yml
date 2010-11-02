@@ -1,6 +1,8 @@
 en:
   news:
     # base strings
+    title_my: "News feed"
+    title: "{{user}} news feed"
     ago: "ago"
     base: "did something"
     # news strings

@@ -564,6 +564,10 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def newsfeed
+    self.news.last(5).reverse
+  end
+
   protected
 
   def update_level_and_points
