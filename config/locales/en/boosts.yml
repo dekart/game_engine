@@ -1,7 +1,8 @@
 en:
   boosts:
     index:
-      title: "Purchase boosts"
+      title: "Shop"
+      boosts: "Boosts"
     boost:
       buttons:
         buy: "Purchase"
