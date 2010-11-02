@@ -15,3 +15,10 @@ en:
     property:
       collect: "collected %{result} from %{property}"
       upgrade: "upgraded %{property}"
+    fight:
+      attack:
+        won: "attacked %{victim} and won the battle!"
+        lost: "attacked %{victim} and lost the battle"
+      defend:
+        won: "was attacked by %{attacker} and won the battle!"
+        lost: "was attacked by %{attacker} and lost the battle"
