@@ -10,18 +10,11 @@
     </td>
 
     <td class="wall">
-      <%!#= render("layouts/next_steps") if current_user.show_next_steps? %>
-      <%= render :partial => "shared/newsfeed", :locals => {:character => current_character} %>
+      <%= render "news/feed", :character => current_character %>
 
       <%= render("invitations/block", :invitations => @alliance_invitations) if @alliance_invitations.any? %>
 
       <%= render("items/specials", :items => @special_items) if @special_items.any? %>
-
-      <% if @latest_fights.any? %>
-        <h3><%= t(".fights.title") %></h3>
-
-        <%= render "fights/latest", :fights => @latest_fights %>
-      <% end %>
     </td>
   </tr>
 </table>

@@ -1,0 +1,33 @@
+<div class="actor attacker">
+  <%= character_picture_link(news.fight.attacker) %>
+</div>
+
+<div class="subject victim">
+  <%= character_picture_link(news.fight.victim) %>
+</div>
+
+<div class="description">
+  <%= fight_description(news.fight) %>
+</div>
+
+<div class="controls">
+  <%= link_to_remote(button(:respond),
+        :url    => respond_fight_path(news.fight),
+        :update => :result,
+        :html   => {
+          :id     => dom_id(news.fight, :respond),
+          :class  => "respond button"
+        }
+      ) if news.fight.victim == current_character and news.fight.respondable? %>
+</div>
+
+
+<% if false %>
+<% if current_character == news.attacker %>
+  <%= news.won? ? t("news.fight.attack.won",  :victim => link_to(character_name(news.victim), character_path(news.victim))).html_safe :
+                  t("news.fight.attack.lost", :victim => link_to(character_name(news.victim), character_path(news.victim))).html_safe %>
+<% else %>
+  <%= news.won? ? t("news.fight.defend.lost",  :attacker => link_to(character_name(news.attacker), character_path(news.attacker))).html_safe :
+                  t("news.fight.defend.won", :attacker => link_to(character_name(news.attacker), character_path(news.attacker))).html_safe %>
+<% end %>
+<% end %>

@@ -1,7 +1,0 @@
-<% if current_character == news.attacker %>
-  <%= news.won? ? t("news.fight.attack.won",  :victim => link_to(character_name(news.victim), character_path(news.victim))).html_safe :
-                  t("news.fight.attack.lost", :victim => link_to(character_name(news.victim), character_path(news.victim))).html_safe %>
-<% else %>
-  <%= news.won? ? t("news.fight.defend.lost",  :attacker => link_to(character_name(news.attacker), character_path(news.attacker))).html_safe :
-                  t("news.fight.defend.won", :attacker => link_to(character_name(news.attacker), character_path(news.attacker))).html_safe %>
-<% end %>

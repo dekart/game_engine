@@ -148,7 +148,7 @@ class Fight < ActiveRecord::Base
   end
 
   def post_to_newsfeed
-    attacker.news.add(:fight_result, :attacker_id => attacker.id, :victim_id => victim.id, :winner_id => winner.id, :fight_id => self.id)
-    victim.news.add(:fight_result, :attacker_id => attacker.id, :victim_id => victim.id, :winner_id => winner.id, :fight_id => self.id)
+    attacker.news.add(:fight_result, :fight_id => id)
+    victim.news.add(:fight_result, :fight_id => id)
   end
 end

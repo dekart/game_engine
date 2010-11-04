@@ -59,20 +59,19 @@ class MissionResult
             
             @group_rank, @group_payouts = @character.mission_groups.check_completion!(@mission_group)
 
-            @character.news.add(:mission_fulfill_result, :completed => true, :mission_id => @mission.id, :success => true)
+            @character.news.add(:mission_complete,
+              :mission_id     => @mission.id,
+              :level_rank_id  => @level_rank.id
+            )
           else
             payout_trigger = @level_rank.completed? ? :repeat_success : :success
 
             @payouts = @level.payouts.apply(@character, payout_trigger, @mission)
-
-            @character.news.add(:mission_fulfill_result, :completed => false, :mission_id => @mission.id, :success => true)
           end
         else
           payout_trigger = @level_rank.completed? ? :repeat_failure : :failure
 
           @payouts = @level.payouts.apply(@character, payout_trigger, @mission)
-
-          @character.news.add(:mission_fulfill_result, :completed => false, :mission_id => @mission.id, :success => false)
         end
 
         @character.save!

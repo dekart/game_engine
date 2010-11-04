@@ -10,7 +10,7 @@ class PropertyType < ActiveRecord::Base
 
   has_attached_file :image,
     :styles => {
-      :icon   => "40x40#",
+      :icon   => "50x50>",
       :small  => "120x120>",
       :medium => "180x180>"
     }

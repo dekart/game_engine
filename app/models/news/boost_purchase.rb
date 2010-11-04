@@ -5,7 +5,7 @@ module News
     end
 
     def boost
-      @boost || @boost = Boost.find(data[:boost_id])
+      @boost ||= Boost.find(data[:boost_id])
     end
   end
 end

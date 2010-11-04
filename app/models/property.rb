@@ -41,7 +41,13 @@ class Property < ActiveRecord::Base
 
     if valid?
       transaction do
-        save! && character.charge!(basic_price, vip_price, property_type)
+        if save! && character.charge!(basic_price, vip_price, property_type)
+          character.news.add(:property_purchase, :property_id => id)
+
+          true
+        else
+          false
+        end
       end
     else
       false
@@ -59,7 +65,7 @@ class Property < ActiveRecord::Base
 
         save(false) && character.charge!(property_type.upgrade_price(level - 1), vip_price, property_type)
 
-        character.news.add(:property_action, :action => :upgrade, :property_id => self.id)
+        character.news.add(:property_upgrade, :property_id => id)
       end
     else
       false
@@ -77,7 +83,7 @@ class Property < ActiveRecord::Base
 
         character.charge!(- total_income, 0, self)
 
-        character.news.add(:property_action, :action => :collect, :result => result.to_s, :property_id => self.id)
+        character.news.add(:property_collect, :property_id => id)
 
         result
       end

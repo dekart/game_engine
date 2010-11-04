@@ -72,7 +72,7 @@ class Item < ActiveRecord::Base
 
   has_attached_file :image,
     :styles => {
-      :icon   => "40x40#",
+      :icon   => "50x50>",
       :small  => "72x72#",
       :medium => "120x120#",
       :large  => "200x200#"

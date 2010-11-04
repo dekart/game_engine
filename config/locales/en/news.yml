@@ -1,24 +1,23 @@
 en:
   news:
-    # base strings
-    title_my: "News feed"
-    title: "{{user}} news feed"
-    ago: "ago"
-    base: "did something"
-    # news strings
-    item_purchase: "has bought %{amount} %{item}"
-    boost_purchase: "has bought %{amount} items of %{boost_name}"
-    mission:
-      completed: "completed \"%{mission}\" mission"
-      successfull: "successfully fulfilled \"%{mission}\" mission"
-      failed: "failed to fulfill \"%{mission}\" mission"
-    property:
-      collect: "collected %{result} from %{property}"
-      upgrade: "upgraded %{property}"
-    fight:
-      attack:
-        won: "attacked %{victim} and won the battle!"
-        lost: "attacked %{victim} and lost the battle"
-      defend:
-        won: "was attacked by %{attacker} and won the battle!"
-        lost: "was attacked by %{attacker} and lost the battle"
+    feed:
+      title_my: "News Feed"
+      title: "{{user}} News Feed"
+
+    mission_complete:
+      text:
+        single_level: "{{actor}} completed the {{mission}} mission"
+        multi_level: "{{actor}} completed level {{level}} of the {{mission}} mission"
+    fight_result:
+      buttons:
+        respond: "Fight Back!"
+    item_purchase:
+      text: "{{actor}} purchased {{amount}} {{item}}"
+    property_purchase:
+      text: "{{actor}} purchased the {{property}}"
+    property_upgrade:
+      text: "{{actor}} upgraded the {{property}} to level {{level}}"
+    property_collect:
+      text: "{{actor}} collected income from the {{property}}"
+    boost_purchase:
+      text: "{{actor}} purchased %{amount} %{boost}"

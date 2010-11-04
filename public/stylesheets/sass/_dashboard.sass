@@ -5,28 +5,10 @@
     width: 250px
     padding-right: 10px
 
-#fight_list
-  td
+#newsfeed
+  .news
     padding: 10px 0
-    border-bottom = !dashboard_fight_border
-
-  .fight
-    clear: both
-    margin: 5px 0
-
-  .attacker
-    width: 60px
-    text-align: left
-
-    img
-      border: 1px solid #d0d0d0
-
-  .victim
-    width: 60px
-    text-align: right
-
-    img
-      border: 1px solid #d0d0d0
+    border-bottom = !dashboard_newsfeed_border
 
   .time
     font-weight: bold
@@ -40,13 +22,33 @@
     font-weight: bold
 
   .basic_money
-    background-image = !dashboard_fight_basic_money_icon
+    background-image = !dashboard_newsfeed_basic_money_icon
 
   .health
-    background-image = !dashboard_fight_health_icon
+    background-image = !dashboard_newsfeed_health_icon
 
   .experience
-    background-image = !dashboard_fight_experience_icon
+    background-image = !dashboard_newsfeed_experience_icon
 
-  .respond
-    +button(!dashboard_fight_respond_icon)
+  .actor
+    width: 60px
+    text-align: left
+    float: left
+
+    img
+      border: 1px solid #d0d0d0
+
+  .subject
+    width: 60px
+    float: right
+    text-align: right
+
+    img
+      border: 1px solid #d0d0d0
+
+  .description
+    margin: 0 60px
+
+  .fight_result
+    .respond
+      +button(!dashboard_newsfeed_fight_respond_icon)
