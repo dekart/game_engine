@@ -3,8 +3,8 @@ en:
     descriptions:
       attack_won: "{{attacker}} attacked {{victim}} and WON the battle! You received {{money}}, {{experience_points}} points of experience, and {{attacker_damage}} points of damage. {{victim}} was damaged for {{victim_damage}} points"
       attack_lost: "{{attacker}} attacked {{victim}} and LOST the battle! You lost {{money}} and took {{attacker_damage}} points of damage. {{victim}} received {{victim_damage}} points of damage."
-      defence_won: "{{victim}} were attacked by {{attacker}} and WON the battle!  You received {{money}}, {{experience_points}} points of experience, and {{victim_damage}} points of damage. {{attacker}} was damaged for {{attacker_damage}} points"
-      defence_lost: "{{victim}} were attacked by {{attacker}} and LOST the battle! You lost {{money}} and took {{victim_damage}} points of damage. {{attacker}} received {{attacker_damage}} points of damage."
+      defence_won: "{{attacker}} attacked {{victim}} and you WON the battle!  You received {{money}}, {{experience_points}} points of experience, and {{victim_damage}} points of damage. {{attacker}} was damaged for {{attacker_damage}} points"
+      defence_lost: "{{attacker}} attacked {{victim}} and you LOST the battle! You lost {{money}} and took {{victim_damage}} points of damage. {{attacker}} received {{attacker_damage}} points of damage."
     buttons:
       buttons:
         fight: "Fights"
