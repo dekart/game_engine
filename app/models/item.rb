@@ -44,7 +44,7 @@ class Item < ActiveRecord::Base
   }
   named_scope :next_for, Proc.new{|character|
     {
-      :conditions => ["items.level > ?", character.level],
+      :conditions => ["items.level > ? AND items.availability = 'shop' AND items.state = 'visible'", character.level],
       :order      => "items.level"
     }
   }
