@@ -1,12 +1,12 @@
 <div class="newsfeed" id="newsfeed">
-  <% collection character.newsfeed do %>
+  <% collection character.news.latest(10) do |newsfeed| %>
     <h3>
       <%= character == current_character ?
               t(".title_my") :
               t(".title", :user => character_name(character, :possessive => true)) %>
     </h3>
 
-    <% character.newsfeed.each do |news| %>
+    <% newsfeed.each do |news| %>
       <% content_tag(:div, :class => [news.type_name, :news, :clearfix].join(' ')) do %>
         <div class="time"><%= l(news.created_at, :format => :short) %>:</div>
 

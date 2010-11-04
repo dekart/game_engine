@@ -3,6 +3,14 @@ module News
     set_table_name :news
 
     belongs_to :character
+
+    named_scope :latest, Proc.new{|limit|
+      {
+        :order => "id DESC",
+        :limit => limit
+      }
+    }
+
     serialize :data
 
     def type_name
