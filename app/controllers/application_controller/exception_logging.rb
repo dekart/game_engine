@@ -6,22 +6,10 @@ class ApplicationController
         ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
         ActionController::RoutingError        => :rescue_routing_error,
         ActionController::UnknownAction       => :rescue_unknown_action,
-        ActiveRecord::StaleObjectError        => :resque_locking_error,
-        Facebooker::Session::SignatureTooOld  => :resque_signature_too_old,
-        Facebooker::Session::MissingOrInvalidParameter => :resque_missing_or_invalid_parameter
+        ActiveRecord::StaleObjectError        => :resque_locking_error
       }.each do |exception, method|
         base.rescue_from(exception, :with => method)
       end
-    end
-
-    def redirect_to_fixed_or_root
-      if request.request_uri.starts_with?("//")
-        new_url = request.request_uri.gsub(/^\/+/, "/#{Facebooker.facebooker_config["canvas_page_name"]}/")
-      else
-        new_url = root_path
-      end
-
-      redirect_to new_url
     end
 
     def rescue_basic_exception(exception)
@@ -32,7 +20,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to_fixed_or_root
+      redirect_to root_url
     end
 
     def rescue_method_not_allowed(exception)
@@ -41,7 +29,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to_fixed_or_root
+      redirect_to root_url
     end
 
     def rescue_routing_error(exception)
@@ -49,7 +37,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to_fixed_or_root
+      redirect_to root_url
     end
 
     def rescue_unknown_action(exception)
@@ -60,28 +48,12 @@ class ApplicationController
       
       log_browser_info
 
-      redirect_to_fixed_or_root
+      redirect_to root_url
     end
 
     # TODO: Catch locking error in models that may cause them instead of controller
     def resque_locking_error(exception)
       render :text => ""
-    end
-
-    def resque_signature_too_old(exception)
-      logger.fatal(exception)
-      
-      log_browser_info
-
-      redirect_from_iframe root_url(:canvas => true)
-    end
-    
-    def resque_missing_or_invalid_parameter(exception)
-      logger.fatal(exception)
-
-      log_browser_info
-
-      redirect_from_iframe root_url(:canvas => true)
     end
 
     def fatal_log_processing_for_request_id

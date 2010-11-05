@@ -1,9 +1,8 @@
 class ShortLink
   def self.call(env)
     if env["PATH_INFO"] =~ /^\/cil\/(.+)/
-      target_url = "http://%s%s/invitations/%s?reference=invite_link" % [
-        Facebooker.canvas_server_base,
-        Facebooker.facebook_path_prefix,
+      target_url = "http://apps.facebook.com/%s/invitations/%s?reference=invite_link" % [
+        Facebooker2.canvas_page_name,
         $1
       ]
 

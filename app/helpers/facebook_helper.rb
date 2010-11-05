@@ -39,11 +39,11 @@ module FacebookHelper
   end
 
   def fb_app_page_url
-    "http://www.facebook.com/apps/application.php?api_key=#{Facebooker.facebooker_config["api_key"]}"
+    "http://www.facebook.com/apps/application.php?id=#{Facebooker2.app_id}"
   end
 
   def fb_app_requests_url
-    "http://www.facebook.com/reqs.php#confirm_#{Facebooker.facebooker_config["app_id"]}_0"
+    "http://www.facebook.com/reqs.php#confirm_#{Facebooker2.app_id}_0"
   end
 
   def fb_i(*args, &block)
