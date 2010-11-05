@@ -1,31 +1,17 @@
-<table cellspacing="0" cellpadding="0">
-  <tr>
-    <% mission_group_tabs do |tabs| %>
-      <% tabs.previous_tab do |group| %>
-        <% content_tag_for :td, group, :class => "previous first" do %>
-          <%= link_to(t(".previous.name"), mission_group_path(group),
-                :class => :name
-              ) %>
-        <% end %>
-      <% end %>
+<% mission_group_tabs do |tabs| %>
+  <% tabs.previous_tab do %>
+    <%= asset_image_tag(:icons_previous, :alt => t(".previous.name")) %>
+  <% end %>
 
-      <% tabs.group_tab do |group, locked, current, position| %>
-        <% content_tag_for(:td, group, :class => [(:locked if locked), (:current if current), position].compact.join(" ")) do %>
-          <%= link_to(locked ? t(".locked") : group.name, mission_group_path(group),
-                :class => :name
-              ) %>
+  <% tabs.group_tab do |group, locked| %>
+    <%= link_to(locked ? t(".locked") : group.name, mission_group_path(group),
+          :class => :name
+        ) %>
 
-          <%= requirement_list(group.requirements[0, 1]) %>
-        <% end %>
-      <% end %>
+    <%= requirement_list(group.requirements[0, 1]) %>
+  <% end %>
 
-      <% tabs.next_tab do |group| %>
-        <% content_tag_for :td, group, :class => "next last" do %>
-          <%= link_to(t(".next.name"), mission_group_path(group),
-                :class => :name
-              ) %>
-        <% end %>
-      <% end %>
-    <% end %>
-  </tr>
-</table>
+  <% tabs.next_tab do %>
+    <%= asset_image_tag(:icons_next, :alt => t(".next.name")) %>
+  <% end %>
+<% end %>
