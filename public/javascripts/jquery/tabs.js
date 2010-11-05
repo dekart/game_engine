@@ -1,4 +1,4 @@
-(function($){
+;(function($){
 
   $.fn.tabs = function(){
     //Loop Arguments matching options

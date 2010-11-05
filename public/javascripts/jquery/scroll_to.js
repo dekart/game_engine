@@ -1,4 +1,4 @@
-(function($){
+;(function($){
   $.scrollTo = function(target){
     var $target = $(target).eq(0);
     
