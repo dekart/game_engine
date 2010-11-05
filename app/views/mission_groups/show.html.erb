@@ -2,9 +2,7 @@
 
 <%= latest_help_request_for(:mission) %>
 
-<div id="mission_group_list">
-  <%= render("tabs") %>
-</div>
+<%= render("tabs") %>
 
 <% if @mission_group %>
   <% if @mission_group.requirements.satisfies?(current_character) %>

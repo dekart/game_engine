@@ -2,7 +2,7 @@ module MissionGroupsHelper
   class GroupTabBuilder
     attr_reader :template
 
-    delegate :capture, :concat, :current_character, :to => :template
+    delegate :dom_id, :dom_class, :content_tag, :capture, :concat, :javascript_tag, :current_character, :to => :template
 
     def initialize(template)
       @template = template
@@ -29,53 +29,31 @@ module MissionGroupsHelper
     def html
       yield(self)
 
-      current_group = current_character.mission_groups.current
-      limit         = Setting.i(:mission_group_show_limit)
-
-      position = groups.index(current_group) || -1
-
-      if position < limit - 1
-        page = :first
-        
-        visible_groups = groups[0, limit - 1]
-      elsif position > groups.size - limit
-        page = :last
-
-        visible_groups = groups[- (limit - 1), limit - 1]
-      else
-        visible_groups = groups[((position - 1) / (limit - 2)) * (limit - 2) + 1, limit - 2]
-      end
-
-      if @previous_group and page != :first and groups.any? and group = groups[groups.index(visible_groups.first) - 1]
-        previous_group = capture(group, &@previous_group)
-      else
-        previous_group = ""
-      end
-
-      if @next_group and page != :last and groups.any? and group = groups[groups.index(visible_groups.last) + 1]
-        next_group = capture(group, &@next_group)
-      else
-        next_group = ""
-      end
+      current_group   = current_character.mission_groups.current
+      
+      previous_group  = capture(&@previous_group)
+      next_group      = capture(&@next_group)
 
       result = ""
 
-      visible_groups.each do |group|
+      groups.each do |group|
         locked  = !group.requirements.satisfies?(current_character)
-        current = (group == current_group)
 
-        if group == visible_groups.first && previous_group.blank?
-          position = :first
-        elsif group == visible_groups.last && next_group.blank?
-          position = :last
-        else
-          position = nil
-        end
-
-        result << capture(group, locked, current, position, &@group)
+        result << content_tag(:li, capture(group, locked, &@group),
+          :id     => dom_id(group),
+          :class  => [dom_class(group), (:locked if locked)].compact.join(" ")
+        )
       end
 
-      result = [previous_group, result, next_group].join(" ").html_safe
+      result = content_tag(:div,
+        [
+          content_tag(:div, previous_group, :class => :previous),
+          content_tag(:div, next_group, :class => :next),
+          content_tag(:div, content_tag(:ul, result.html_safe, :class => :clearfix), :class => :container)
+        ].join(" ").html_safe,
+        :id     => :mission_group_list,
+        :class  => :clearfix
+      ) + javascript_tag("$('#mission_group_list').missionGroups('##{dom_id(current_group)}', #{Setting.i(:mission_group_show_limit)})")
 
       block_given? ? concat(result) : result
     end

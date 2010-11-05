@@ -1,3 +1,21 @@
+(function($){
+  $.fn.missionGroups = function(current_group, show_limit){
+    var $container = $(this)
+    var $items = $container.find('li');
+    var $current = $(current_group);
+
+    $container.find('.container').jCarouselLite({
+      btnNext:  $container.find('.next'),
+      btnPrev:  $container.find('.previous'),
+      visible:  show_limit,
+      start:    Math.floor($items.index($current) / show_limit) * show_limit,
+      circular: false
+    });
+
+    $current.addClass('current');
+  }
+})(jQuery);
+
 var CollectionList = {
   setup: function(){
     CollectionList.blurItems($('#collection_list').find('.item:not(.present)'));

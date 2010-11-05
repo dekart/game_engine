@@ -5,22 +5,42 @@
     top = !mission_group_border_top
     bottom = !mission_group_border_bottom
 
-  table
-    width: 100%
+  .container
+    margin-left: 20px
 
   .mission_group
     text-align: center
     padding: 5px
+    width: 170px
+    height: 40px
+    white-space: nowrap
 
-  .current
-    font-weight: bold
-    background-color = !mission_group_current_bg_color
+    .name
+      font-size: 16px
 
-  .name
-    font-size: 16px
+    .level
+      padding-top: 3px
 
-  .level
-    padding-top: 3px
+    &.current
+      font-weight: bold
+      background-color = !mission_group_current_bg_color
+
+  .previous, .next
+    width: 20px
+    height: 40px
+    cursor: pointer
+    display: block
+    line-height: 40px
+
+    img
+      vertical-align: middle
+
+  .previous
+    float: left
+
+  .next
+    float: right
+
 
 
 
