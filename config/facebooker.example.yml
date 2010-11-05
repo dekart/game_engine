@@ -11,7 +11,7 @@
 development:
   app_id: 123861447629643
   api_key: eb10c2f51295fd4060c8355b1bd0e041
-  secret_key: e60fff396d3307bdf9a48e91eebbb131
+  secret: e60fff396d3307bdf9a48e91eebbb131
   canvas_page_name: hoodwars-dev
   callback_url: http://fb2.itvektor.ru
   pretty_errors: false
