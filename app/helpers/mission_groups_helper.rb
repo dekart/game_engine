@@ -53,7 +53,7 @@ module MissionGroupsHelper
         ].join(" ").html_safe,
         :id     => :mission_group_list,
         :class  => :clearfix
-      ) + javascript_tag("$('#mission_group_list').missionGroups('##{dom_id(current_group)}', #{Setting.i(:mission_group_show_limit)})")
+      ) + javascript_tag("$(function(){ $('#mission_group_list').missionGroups('##{dom_id(current_group)}', #{Setting.i(:mission_group_show_limit)}) });")
 
       block_given? ? concat(result) : result
     end
