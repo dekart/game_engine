@@ -61,8 +61,6 @@
     </tr>
   </table>
 
-  <%= render :partial => "shared/newsfeed", :locals => {:character => @character} %>
-
   <% ItemGroup.find_each do |group| %>
     <% collection(@character.inventories.by_item_group(group), :empty_set => false) do |items| %>
       <div class="item_group">
