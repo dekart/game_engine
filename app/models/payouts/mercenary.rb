@@ -2,10 +2,6 @@ module Payouts
   class Mercenary < Base
     attr_reader :mercenaries
 
-    def value=(value)
-      @value = value.to_i
-    end
-
     def apply(character, reference = nil)
       @mercenaries = []
 

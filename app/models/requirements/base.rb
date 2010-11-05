@@ -48,6 +48,10 @@ module Requirements
       Errors.new
     end
 
+    def value=(value)
+      @value = value.to_i
+    end
+
     def satisfies?(character)
       true
     end

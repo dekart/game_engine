@@ -99,5 +99,9 @@ module Payouts
         @visible = (value.to_i != 0)
       end
     end
+
+    def value=(value)
+      @value = value.to_i
+    end
   end
 end

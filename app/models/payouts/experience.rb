@@ -1,9 +1,5 @@
 module Payouts
   class Experience < Base
-    def value=(value)
-      @value = value.to_i
-    end
-
     def apply(character, reference = nil)
       character.experience += @value
     end
