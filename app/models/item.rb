@@ -100,9 +100,11 @@ class Item < ActiveRecord::Base
   end
 
   (Item::EFFECTS + %w{basic_price vip_price}).each do |attribute|
-    define_method(attribute) do
-      self[attribute].to_i
-    end
+    class_eval %{
+      def #{attribute}
+        self[:#{attribute}] || 0
+      end
+    }
   end
 
   def price?

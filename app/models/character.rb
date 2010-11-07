@@ -467,9 +467,11 @@ class Character < ActiveRecord::Base
   end
 
   CharacterType::BONUSES.each do |bonus|
-    define_method(bonus) do
-      character_type.try(bonus)
-    end
+    class_eval %{
+      def #{bonus}
+        character_type ? character_type.#{bonus} : nil
+      end
+    }
   end
 
   def equipment

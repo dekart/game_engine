@@ -21,10 +21,12 @@ class MarketItem < ActiveRecord::Base
 
   before_create :destroy_previous_items, :assign_character
 
-  %w{basic_price vip_price}.each do |attr|
-    define_method(attr) do
-      self[attr].to_i
-    end
+  %w{basic_price vip_price}.each do |attribute|
+    class_eval %{
+      def #{attribute}
+        self[:#{attribute}] || 0
+      end
+    }
   end
 
   def price?
