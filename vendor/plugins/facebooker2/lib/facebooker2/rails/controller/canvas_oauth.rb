@@ -25,7 +25,7 @@ module Facebooker2
         end
 
         protected
-        
+
           def ensure_canvas_connected(*scope)
             if current_facebook_user == nil && !params[:code] && !params[:error]
               url = 'https://graph.facebook.com/oauth/authorize?client_id=%s&redirect_uri=%s&scope=%s' % [
