@@ -1,5 +1,5 @@
-<div class="newsfeed" id="newsfeed">
-  <% collection character.news.latest(10) do |newsfeed| %>
+<% if newsfeed = character.news.latest(10) and newsfeed.any? %>
+  <div class="newsfeed" id="newsfeed">
     <h3>
       <%= character == current_character ?
               t(".title_my") :
@@ -13,5 +13,5 @@
         <%= render "news/#{news.type_name}", :news => news %>
       <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>
