@@ -6,7 +6,8 @@ class ApplicationController
         ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
         ActionController::RoutingError        => :rescue_routing_error,
         ActionController::UnknownAction       => :rescue_unknown_action,
-        ActiveRecord::StaleObjectError        => :resque_locking_error
+        ActiveRecord::StaleObjectError        => :rescue_locking_error,
+        Facebooker2::OAuthException           => :rescue_facebooker_oauth_exception
       }.each do |exception, method|
         base.rescue_from(exception, :with => method)
       end
@@ -52,8 +53,16 @@ class ApplicationController
     end
 
     # TODO: Catch locking error in models that may cause them instead of controller
-    def resque_locking_error(exception)
+    def rescue_locking_error(exception)
       render :text => ""
+    end
+
+    def rescue_facebooker_oauth_exception
+      logger.fatal(exception)
+
+      log_browser_info
+
+      redirect_to root_url
     end
 
     def fatal_log_processing_for_request_id

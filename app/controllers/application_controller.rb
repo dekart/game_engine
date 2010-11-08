@@ -7,10 +7,6 @@ class ApplicationController < ActionController::Base
   include ExceptionLogging if Rails.env.production?
   include LandingPage
 
-  rescue_from Facebooker2::OAuthException do |exception|
-    redirect_to 'http://www.facebook.com/'
-  end
-
   before_filter :ensure_canvas_connected_to_facebook
   before_filter :set_p3p_header
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
