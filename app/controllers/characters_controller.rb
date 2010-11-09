@@ -1,5 +1,5 @@
 class CharactersController < ApplicationController
-  skip_before_filter :ensure_canvas_connected_to_facebook, :only => :new
+  skip_before_filter :ensure_canvas_connected_to_facebook, :only => [:new, :index]
   skip_before_filter :check_character_existance,
     :only => [:new, :create]
 
@@ -103,6 +103,8 @@ class CharactersController < ApplicationController
   end
 
   def check_character_existance_or_create
+    ensure_canvas_connected_to_facebook
+
     if current_character
       true
     elsif params[:character]
