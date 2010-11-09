@@ -12,7 +12,7 @@
 
       <%= payout(:stamina, Setting.i(:fight_stamina_required)) %>
       <%= payout(:health, fight.attacker_hp_loss) %>
-      <%= payout(:basic_money, number_to_currency(fight.money)) %>
+      <%= payout(:basic_money, number_to_currency(fight.loser_money)) %>
     </td>
     <td class="victim_lost">
       <h3><%= t(".victim_lost", :user_name => character_name_link(fight.victim)).html_safe %></h3>

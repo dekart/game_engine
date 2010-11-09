@@ -107,26 +107,31 @@ class Fight < ActiveRecord::Base
     self.experience = Setting.p(:fight_experience, rand(loser.level)).ceil
     self.experience = 1 if experience == 0
 
-    self.money = (loser.basic_money == 0 ? 0 : winner_reward)
+    self.winner_money = winner_reward
+    self.loser_money  = (loser.basic_money >= winner_money ? winner_money : loser.basic_money)
 
     @attacker_boost_id = attacker.best_boost(:attack) ? attacker.best_boost(:attack).boost.id : nil
     @victim_boost_id = victim.best_boost(:defence) ? victim.best_boost(:defence).boost.id : nil
   end
 
   def winner_reward
-    fight_money_bonus = 0.01 * winner.assignments.effect_value(:fight_income)
+    if loser.basic_money > 0
+      fight_money_bonus = 0.01 * winner.assignments.effect_value(:fight_income)
 
-    [
-      (rand(loser.basic_money) * (Setting.i(:fight_money_loot) * 0.01 + fight_money_bonus)).ceil,
-      Setting.i(:fight_max_money)
-    ].min
+      [
+        (rand(loser.basic_money) * (Setting.i(:fight_money_loot) * 0.01 + fight_money_bonus)).ceil,
+        Setting.i(:fight_max_money)
+      ].min
+    else
+      (Setting.i(:fight_min_money) + Setting.f(:fight_min_money_per_level) * loser.level).round
+    end
   end
 
   def save_payout
     winner.experience += experience
 
-    winner.charge(- money, 0, :fight_win)
-    loser.charge(money, 0, :fight_lose)
+    winner.charge(- winner_money, 0, :fight_win)
+    loser.charge(loser_money, 0, :fight_lose)
 
     attacker.sp  -= Setting.i(:fight_stamina_required)
 

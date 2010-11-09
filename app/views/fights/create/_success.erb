@@ -11,7 +11,7 @@
       <h3><%= t(".you_received") %></h3>
 
       <%= payout(:experience, fight.experience) %>
-      <%= payout(:basic_money, number_to_currency(fight.money)) %>
+      <%= payout(:basic_money, number_to_currency(fight.winner_money)) %>
     </td>
     <td class="lost">
       <h3><%= t(".you_lost") %></h3>

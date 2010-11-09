@@ -42,7 +42,7 @@ class HelpResult < ActiveRecord::Base
         :cause    => help_request
       )
 
-      self.money      = @fight.attacker_won? ? Setting.p(:help_request_fight_money, @fight.money).ceil : 0
+      self.money      = @fight.attacker_won? ? Setting.p(:help_request_fight_money, @fight.winner_money).ceil : 0
       self.experience = @fight.attacker_won? ? Setting.p(:help_request_fight_experience, @fight.experience).ceil : 0
     end
   end

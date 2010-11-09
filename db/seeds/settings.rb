@@ -57,6 +57,8 @@ Setting[:fight_max_winner_damage] ||= 90
 Setting[:fight_latest_show_limit] ||= 10
 Setting[:fight_alliance_attack] ||= true
 Setting[:fight_max_money] ||= 10000
+Setting[:fight_min_money] ||= 10
+Setting[:fight_min_money_per_level] ||= 1.5
 
 Setting[:rating_show_limit] ||= 20
 
