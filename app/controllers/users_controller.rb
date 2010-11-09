@@ -13,16 +13,6 @@ class UsersController < ApplicationController
     render :text => "<!-- no data -->"
   end
 
-  def add_permissions
-    @user = current_user
-
-    @user.add_permissions(params[:perms])
-    @user.permissions_requested_at = Time.now
-    @user.save
-
-    render :text => "OK"
-  end
-
   def edit
     @user = current_user
   end

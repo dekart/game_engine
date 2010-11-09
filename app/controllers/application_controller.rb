@@ -57,13 +57,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if current_facebook_user
-      unless @current_user
-        @current_user = find_or_create_current_user
-
-        @current_user.update_permissions!(facebook_params["ext_perms"]) unless facebook_params["ext_perms"].blank?
-      end
-
-      @current_user
+      @current_user ||= find_or_create_current_user
     end
   end
 

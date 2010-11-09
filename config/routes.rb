@@ -135,8 +135,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources(:users,
     :collection => { :invite => :any },
     :member => {
-      :toggle_block => :any,
-      :add_permissions => :any
+      :toggle_block => :any
     }
   )
 
