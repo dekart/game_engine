@@ -62,7 +62,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to 'http://facebook.com'
+      redirect_to root_url
     end
 
     def fatal_log_processing_for_request_id
