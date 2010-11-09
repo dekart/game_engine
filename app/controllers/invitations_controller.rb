@@ -18,6 +18,8 @@ class InvitationsController < ApplicationController
   end
 
   def show
+    logger.debug current_facebook_user.friends.inspect
+    
     @character = Character.find_by_invitation_key(params[:id])
 
     if @character.nil? or @character == current_character
@@ -26,7 +28,7 @@ class InvitationsController < ApplicationController
       flash[:notice] = t("invitations.show.messages.already_joined")
 
       redirect_to root_path
-    elsif Setting.b(:relation_friends_only) && !facebook_session.user.friend_ids.include?(@character.user.facebook_id.to_s)
+    elsif Setting.b(:relation_friends_only) && !current_facebook_user.friends.detect{|f| f.id.to_i == @character.user.facebook_id }
       flash[:notice] = t("invitations.show.messages.only_friends")
 
       redirect_to root_path
