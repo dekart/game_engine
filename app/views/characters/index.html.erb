@@ -10,11 +10,11 @@
     </td>
 
     <td class="wall">
-      <%= render "news/feed", :character => current_character %>
-
       <%= render("invitations/block", :invitations => @alliance_invitations) if @alliance_invitations.any? %>
 
       <%= render("items/specials", :items => @special_items) if @special_items.any? %>
+
+      <%= render "news/feed", :character => current_character %>
     </td>
   </tr>
 </table>

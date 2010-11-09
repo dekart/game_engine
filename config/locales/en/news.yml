@@ -3,6 +3,7 @@ en:
     feed:
       title_my: "News Feed"
       title: "{{user}} News Feed"
+      empty_set: "No news at the moment"
 
     mission_complete:
       text:
