@@ -37,7 +37,7 @@
     <% end %>
   </div>
 
-  <div class="invitation_form">
+  <div id="invitation_form">
     <% gift_message = capture do %>
       <%= t(".request.message",
             :user => fb_name(current_user, :linked => :false),
