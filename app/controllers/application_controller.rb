@@ -71,9 +71,12 @@ class ApplicationController < ActionController::Base
 
       user.reference    = params[:reference]
       user.referrer_id  = params[:referrer]
-
-      user.save!
     end
+
+    # Updating access token
+    user.access_token = current_facebook_user.client.access_token
+    
+    user.save!
 
     user
   end
