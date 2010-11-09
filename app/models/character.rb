@@ -460,12 +460,6 @@ class Character < ActiveRecord::Base
     save!
   end
 
-  def personalize_from(facebook_session)
-    profile_info = facebook_session.users([user.facebook_id], [:name]).first
-
-    self.name = profile_info.name if name.blank?
-  end
-
   CharacterType::BONUSES.each do |bonus|
     class_eval %{
       def #{bonus}
