@@ -57,12 +57,12 @@ class ApplicationController
       render :text => ""
     end
 
-    def rescue_facebooker_oauth_exception
+    def rescue_facebooker_oauth_exception(exception)
       logger.fatal(exception)
 
       log_browser_info
 
-      redirect_to root_url
+      redirect_to 'http://facebook.com'
     end
 
     def fatal_log_processing_for_request_id
