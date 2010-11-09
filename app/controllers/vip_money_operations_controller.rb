@@ -1,5 +1,5 @@
 class VipMoneyOperationsController < ApplicationController
-  skip_before_filter :check_character_existance, :ensure_authenticated_to_facebook
+  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook
 
   def load_money
     on_valid_facebook_money_request do
