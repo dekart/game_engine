@@ -3,7 +3,7 @@
 
 class ApplicationController < ActionController::Base
   include Facebooker2::Rails::Controller
-  
+
   include ExceptionLogging if Rails.env.production?
   include LandingPage
 
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   def ensure_canvas_connected_to_facebook
     ensure_canvas_connected(:publish_stream, :email)
   end
-  
+
   # Send P3P privacy header to enable iframe cookies in IE
   def set_p3p_header
     headers["P3P"] = 'CP="CAO PSA OUR"'
@@ -74,10 +74,10 @@ class ApplicationController < ActionController::Base
       user = User.new
 
       user.facebook_id  = facebook_id
-      
+
       user.reference    = params[:reference]
       user.referrer_id  = params[:referrer]
-      
+
       user.save!
     end
 

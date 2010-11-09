@@ -4,7 +4,7 @@ module Publisher
       include ::ApplicationHelper
       include ::FacebookHelper
     end
-    
+
     include FacebookHelper
 
     def notification(fight)

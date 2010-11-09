@@ -13,7 +13,7 @@ class HelpRequest < ActiveRecord::Base
       :order => "created_at DESC"
     )
   end
-  
+
   def expired?
     Time.now > expire_at
   end

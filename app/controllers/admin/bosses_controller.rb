@@ -5,7 +5,7 @@ class Admin::BossesController < Admin::BaseController
 
   def new
     redirect_to new_admin_boss_group_path if MissionGroup.count == 0
-    
+
     @boss = Boss.new
 
     if params[:boss]
@@ -44,7 +44,7 @@ class Admin::BossesController < Admin::BaseController
 
     if @boss.update_attributes(params[:boss].reverse_merge(:requirements => nil, :payouts => nil))
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_bosses_path
       end

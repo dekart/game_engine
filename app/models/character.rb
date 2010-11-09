@@ -8,7 +8,7 @@ class Character < ActiveRecord::Base
   include Character::Missions
   include Character::Collections
   include Character::Newsfeed
-  
+
   LEVELS = [0]
 
   1000.times do |i|
@@ -20,13 +20,13 @@ class Character < ActiveRecord::Base
   belongs_to :user
   belongs_to :character_type,
     :counter_cache => true
-  
-  
+
+
   has_many :inventories,
     :include    => :item,
     :dependent  => :delete_all,
     :extend     => Character::Inventories
-  
+
   has_many :items, :through => :inventories
 
   has_many :purchased_boosts,
@@ -35,21 +35,21 @@ class Character < ActiveRecord::Base
     :extend   => Character::Boosts
 
   has_many :boosts, :through => :purchased_boosts
-  
-  has_many :relations, 
+
+  has_many :relations,
     :foreign_key  => "owner_id",
     :order        => "type",
     :extend       => Character::Relations
-  has_many :friend_relations, 
+  has_many :friend_relations,
     :foreign_key  => "owner_id",
     :include      => :character,
     :dependent    => :destroy,
     :extend       => Character::FriendRelations
-  has_many :reverse_friend_relations, 
+  has_many :reverse_friend_relations,
     :foreign_key  => "character_id",
     :class_name   => "FriendRelation",
     :dependent    => :destroy
-  has_many :mercenary_relations, 
+  has_many :mercenary_relations,
     :foreign_key  => "owner_id",
     :dependent    => :delete_all,
     :extend       => Character::MercenaryRelations
@@ -58,16 +58,16 @@ class Character < ActiveRecord::Base
     :order      => "property_type_id",
     :dependent  => :delete_all,
     :extend     => Character::Properties
-  
-  has_many :attacks, 
+
+  has_many :attacks,
     :class_name   => "Fight",
     :foreign_key  => :attacker_id,
     :dependent    => :delete_all
-  has_many :defences, 
+  has_many :defences,
     :class_name   => "Fight",
     :foreign_key  => :victim_id,
     :dependent    => :delete_all
-  has_many :won_fights, 
+  has_many :won_fights,
     :class_name   => "Fight",
     :foreign_key  => :winner_id
 
@@ -76,7 +76,7 @@ class Character < ActiveRecord::Base
     :dependent  => :delete_all,
     :extend     => Character::Assignments
 
-  has_many :help_requests, 
+  has_many :help_requests,
     :dependent  => :destroy,
     :extend     => Character::HelpRequests
 
@@ -113,7 +113,7 @@ class Character < ActiveRecord::Base
     :limit          => :health_points,
     :restore_period => Setting.i(:character_health_restore_period).seconds,
     :restore_bonus  => :health_restore_bonus
-  restorable_attribute :ep, 
+  restorable_attribute :ep,
     :limit          => :energy_points,
     :restore_period => Setting.i(:character_energy_restore_period).seconds,
     :restore_bonus  => :energy_restore_bonus
@@ -252,10 +252,10 @@ class Character < ActiveRecord::Base
       :only => [
         :basic_money,
         :vip_money,
-        :experience, 
+        :experience,
         :level,
         :points,
-        :hp, 
+        :hp,
         :ep,
         :sp
       ],
@@ -456,10 +456,10 @@ class Character < ActiveRecord::Base
 
   def charge!(*args)
     charge(*args)
-    
+
     save!
   end
-  
+
   def personalize_from(facebook_session)
     profile_info = facebook_session.users([user.facebook_id], [:name]).first
 
@@ -511,7 +511,7 @@ class Character < ActiveRecord::Base
   end
 
   def hospital_delay
-    value = 
+    value =
       Setting.i(:hospital_delay) +
       Setting.i(:hospital_delay_per_level) * level
 
@@ -521,18 +521,18 @@ class Character < ActiveRecord::Base
   def hospital!
     if basic_money < hospital_price
       errors.add_to_base(:hospital_not_enough_money)
-      
+
       return false
     elsif hospital_used_at > hospital_delay.ago
       errors.add_to_base(:hospital_recently_used)
-      
+
       return false
     end
 
     charge(hospital_price, 0)
 
     self.hp = health_points
-    
+
     self.hospital_used_at = Time.now
 
     save
@@ -571,7 +571,7 @@ class Character < ActiveRecord::Base
   def update_level_and_points
     if experience_to_next_level <= 0
       self.level      += 1
-      
+
       self.points     += Setting.i(:character_points_per_upgrade)
 
       charge(0, - vip_money_per_upgrade, :level_up)

@@ -57,7 +57,7 @@
                   <div class="market_listing"><%= t(".listed_on_market") %></div>
                 <% end %>
               <% end %>
-              
+
               <%= link_to_remote(button(inventory.use_button_label.blank? ? :use : inventory.use_button_label),
                     :url    => use_inventory_path(inventory),
                     :update => :result,

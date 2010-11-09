@@ -17,7 +17,7 @@ namespace :app do
         :canvas_name  => Facebooker.facebooker_config["canvas_page_name"],
         :callback_url => Facebooker.facebooker_config["callback_url"] + "/",
         :connect_url  => Facebooker.facebooker_config["callback_url"] + "/",
-        
+
         :iframe_enable_util => 1
       )
     end
@@ -26,7 +26,7 @@ namespace :app do
     task :import_assets, :destroy_old, :needs => :environment do |task, options|
       if options["destroy_old"] == "true"
         puts "Destroying existing assets..."
-        
+
         Asset.destroy_all
       end
 

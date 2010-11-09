@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
       :order      => "id ASC"
     }
   }
-  
+
   attr_accessible :show_next_steps
 
   def show_tutorial?

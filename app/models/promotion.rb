@@ -4,7 +4,7 @@ class Promotion < ActiveRecord::Base
   has_many :promotion_receipts, :dependent => :delete_all
 
   has_payouts :success
-  
+
   validates_presence_of :text, :valid_till
 
   def name

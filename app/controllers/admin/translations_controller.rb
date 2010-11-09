@@ -1,15 +1,15 @@
 class Admin::TranslationsController < Admin::BaseController
   def index
     I18n.backend.send(:init_translations)
-    
+
     @translations = translations_to_array(I18n.backend.send(:translations)[I18n.locale])
     @translations.sort!
 
     @customizations = Translation.all(:order => "translations.key")
 
     @translations.reject!{|key, value| key.starts_with?("admin") }
-    
-    @translations.collect!{|key, value| 
+
+    @translations.collect!{|key, value|
       [key, value, @customizations.find{|c| c.key == key }]
     }
   end
@@ -69,7 +69,7 @@ class Admin::TranslationsController < Admin::BaseController
       else
         items = []
       end
-      
+
       items.each do |k, v|
         result << [[prefix, k].compact.join("."), v]
       end

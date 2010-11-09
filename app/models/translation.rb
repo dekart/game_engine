@@ -3,7 +3,7 @@ class Translation < ActiveRecord::Base
 
   after_save :restart_server
   after_destroy :restart_server
-  
+
   def self.to_hash
     {}.tap do |result|
       all.each do |translation|

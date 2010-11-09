@@ -11,7 +11,7 @@ module DialogHelper
 
     def html(&block)
       content = @template.capture(self, &block)
-      
+
       content << @template.content_tag(:script, @on_ready, :type => "text/javascript") if @on_ready
 
       if @options.any?

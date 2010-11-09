@@ -11,7 +11,7 @@
       <th><%= Title.human_attribute_name("state") %></th>
       <th></th>
     </tr>
-    
+
     <% @titles.each do |title| %>
       <tr>
         <td class="name"><%= link_to(title.name, edit_admin_title_path(title)) %></td>

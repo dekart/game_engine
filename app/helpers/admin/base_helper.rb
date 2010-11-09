@@ -10,7 +10,7 @@ module Admin::BaseHelper
         value = block_given? ? capture(flash[key], &block) : flash[key]
 
         flash.discard(key)
-        
+
         result << content_tag(:div, value,
           options.reverse_merge(:id => :flash, :class => key)
         )

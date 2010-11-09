@@ -28,7 +28,7 @@ class Newsletter < ActiveRecord::Base
       newsletter.delivery_job.try(:destroy)
     end
   end
-  
+
   validates_presence_of :text
 
   def schedule_delivery(time = nil)

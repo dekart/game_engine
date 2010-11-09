@@ -7,7 +7,7 @@ class Admin::BaseController < ApplicationController
   layout "admin/layouts/application"
 
   protected
-  
+
   def ajax_layout
     "admin/layouts/ajax"
   end

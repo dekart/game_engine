@@ -17,7 +17,7 @@ class BossFight < ActiveRecord::Base
     event :lose do
       transition :progress => :lost
     end
-    
+
     event :expire do
       transition :progress => :expired
     end
@@ -28,7 +28,7 @@ class BossFight < ActiveRecord::Base
   delegate :experience, :ep_cost, :mission_group, :time_limit?, :to => :boss
 
   before_create :get_energy_from_character
-  
+
   def perform!
     return unless progress?
 
@@ -49,7 +49,7 @@ class BossFight < ActiveRecord::Base
           payout_trigger = character.boss_fights.won?(boss) ? :repeat_victory : :victory
 
           @payouts = boss.payouts.apply(character, payout_trigger, boss)
-          
+
           win!
 
           @group_rank, @group_payouts = character.mission_groups.check_completion!(boss.mission_group)
@@ -122,7 +122,7 @@ class BossFight < ActiveRecord::Base
 
   def validate_on_create
     errors.add(:character, :already_won) if !boss.repeatable && character.boss_fights.won?(boss)
-    
+
     errors.add(:character, :not_enough_energy) if !enough_energy?
 
     errors.add(:character, :too_weak) if character.weak?

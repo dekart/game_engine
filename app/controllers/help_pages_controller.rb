@@ -1,6 +1,6 @@
 class HelpPagesController < ApplicationController
   skip_before_filter :check_character_existance, :ensure_authenticated_to_facebook
-  
+
   def show
     @page = HelpPage.find_by_alias(params[:id]) or raise ActiveRecord::RecordNotFound
 

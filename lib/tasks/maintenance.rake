@@ -10,7 +10,7 @@ namespace :app do
         "characters.level_up.upgrade_link"      => "notifications.level_up.upgrade_link",
         "characters.level_up.buttons.continue"  => "notifications.level_up.buttons.continue",
         "characters.level_up.buttons.upgrade"   => "notifications.level_up.buttons.upgrade",
-        
+
         "mission_groups.tabs.level"             => nil,
         "mission_groups.tabs.previous.name"     => "mission_groups.tabs.previous",
         "mission_groups.tabs.previous.level"    => nil,
@@ -23,7 +23,7 @@ namespace :app do
 
           if new_key.present?
             translation.update_attribute(:key, new_key)
-            
+
             puts "Updated"
           else
             translation.destroy
@@ -80,7 +80,7 @@ namespace :app do
 
         group.save!
       end
-      
+
       puts "Done!"
     end
 
@@ -105,7 +105,7 @@ namespace :app do
 
       Mission.find_each do |mission|
         next if mission.levels.any?
-        
+
         mission.levels.create!(
           :win_amount => mission.win_amount,
           :chance     => mission.success_chance,
@@ -183,7 +183,7 @@ namespace :app do
       end
 
       puts "Moved #{i} titles."
-      
+
       puts "Done!"
     end
 
@@ -199,7 +199,7 @@ namespace :app do
             :owner      => relation.character,
             :character  => relation.owner
           )
-          
+
           restored += 1
         end
       end
@@ -244,14 +244,14 @@ namespace :app do
           end
         end
       end
-      
+
       puts "Done!"
     end
 
     desc "Migrate items to payout-based usage system"
     task :use_payouts_for_item_effects => :environment do
       puts "Deleting legacy translations..."
-      
+
       Translation.delete_all "`key` LIKE 'inventories.use.button%'"
 
       puts "Hiding currently usable items..."
@@ -416,10 +416,10 @@ namespace :app do
 
       Character.find_each(:batch_size => 100) do |character|
         puts "Processing character #{i}/#{total}"
-        
+
         properties = property_types.inject({}) do |result, type|
           count = character.properties.count(:conditions => ["property_type_id = ?", type.id])
-          
+
           result[type] = count if count > 0
           result
         end
@@ -432,7 +432,7 @@ namespace :app do
           end
 
           character.save
-          
+
           character.recalculate_income
         end
 
@@ -443,7 +443,7 @@ namespace :app do
     desc "Group inventories"
     task :group_inventories => :environment do
       puts "Processing item effects"
-      
+
       Item.find_each do |item|
         collection = Effects::Collection.new
 
@@ -468,10 +468,10 @@ namespace :app do
       total = Character.count
 
       i = 1
-      
+
       Character.find_each do |character|
         puts "Processing character #{i}/#{total}"
-        
+
         items = character.inventories.inject({}) do |result, inventory|
           result[inventory.item] ||= 0
           result[inventory.item] += 1
@@ -486,7 +486,7 @@ namespace :app do
           end
 
           character.save
-          
+
           character.inventories.calculate_used_in_fight!
         end
 

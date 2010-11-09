@@ -18,7 +18,7 @@ class Admin::CharacterTypesController < Admin::BaseController
 
     if @character_type.save
       flash[:success] = t(".success")
-      
+
       unless_cotinue_editing do
         redirect_to admin_character_types_path
       end
@@ -42,7 +42,7 @@ class Admin::CharacterTypesController < Admin::BaseController
 
     if @character_type.update_attributes(params[:character_type])
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_character_types_path
       end

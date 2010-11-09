@@ -4,7 +4,7 @@ class GiftsController < ApplicationController
 
   def new
     @gift ||= Gift.new
-    
+
     @items = Item.with_state(:visible).available.available_in(:gift).available_for(current_character).all(
       :order => "items.level DESC",
       :limit => Setting.i(:gifting_item_show_limit)
@@ -31,7 +31,7 @@ class GiftsController < ApplicationController
     end
 
     @group = params[:group] ? params[:group].to_sym : :all
-    
+
     case @group
     when :players
       @exclude_ids = params["friend_ids"].split(",").collect{|id| id.to_i } - current_character.friend_relations.facebook_ids
@@ -81,7 +81,7 @@ class GiftsController < ApplicationController
 
   def show
     @gifts = current_character.accept_gifts(params[:id])
-    
+
     redirect_to root_path if @gifts.empty?
   end
 end

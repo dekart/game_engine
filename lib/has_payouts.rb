@@ -16,7 +16,7 @@ module HasPayouts
 
     if respond_to?(:serialize) and column_names.include?("payouts")
       serialize :payouts, Payouts::Collection
-      
+
       send(:include, ActiveRecordMethods)
     else
       send(:include, NonActiveRecordMethods)
@@ -51,7 +51,7 @@ module HasPayouts
     def payouts=(collection)
       @payouts = Payouts::Collection.parse(collection)
     end
-    
+
     def payouts?
       payouts.any?
     end

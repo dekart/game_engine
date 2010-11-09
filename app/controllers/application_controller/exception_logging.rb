@@ -44,9 +44,9 @@ class ApplicationController
     def rescue_unknown_action(exception)
       logger.fatal("Unknown action for #{request.request_uri} [#{request.method.to_s.upcase}]")
       fatal_log_processing_for_parameters
-      
+
       log_error(exception)
-      
+
       log_browser_info
 
       redirect_to root_url

@@ -35,7 +35,7 @@ class InvitationsController < ApplicationController
 
   def update
     @character = Character.find(params[:id])
-    
+
     Invitation.transaction do
       invitation = @character.user.invitations.find_or_create_by_receiver_id(current_user.facebook_id)
 

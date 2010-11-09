@@ -48,11 +48,11 @@
                   :confirm => t(".controls.publish_confirm")
                 ) %>
           <% end %>
-          
+
           <%= link_to(t(".controls.hide"), hide_admin_mission_path(mission),
                 :method => :put
               ) if mission.can_hide? %>
-          
+
           <%= link_to(t(".controls.delete"), admin_mission_path(mission),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")

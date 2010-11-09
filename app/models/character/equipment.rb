@@ -135,7 +135,7 @@ class Character::Equipment
       auto_equip(inventory, amount)
 
       inventory.save!
-      
+
       @character.save!
     end
   end
@@ -159,7 +159,7 @@ class Character::Equipment
       auto_unequip(inventory)
 
       inventory.save! unless inventory.destroyed?
-      
+
       @character.save!
     end
   end
@@ -181,7 +181,7 @@ class Character::Equipment
     Character.transaction do
       while free_slots > 0
         equipped = nil
-        
+
         Item::EFFECTS.each do |effect|
           candidates = equippables.select{|i| i.equippable? and i.send(effect) != 0}
 

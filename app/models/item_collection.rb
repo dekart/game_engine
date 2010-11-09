@@ -2,9 +2,9 @@ class ItemCollection < ActiveRecord::Base
   extend HasPayouts
 
   has_payouts :collected
-  
+
   validates_presence_of :name
-  
+
   validate_on_create :check_item_list
 
   state_machine :initial => :hidden do

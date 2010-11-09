@@ -8,14 +8,14 @@
 
   <% remote_form_for(@item, :update => :ajax) do |form| %>
     <%= form.hidden_field :inventory_id %>
-  
+
     <%= form.text_field(:amount,
           :size   => 3,
           :label  => t(".labels.amount", :maximum => @item.inventory.amount)
         ) %>
 
     <h3><%= MarketItem.human_attribute_name("price") %></h3>
-    
+
     <table>
       <tr>
         <td><%= form.text_field(:basic_price, :size => 5, :label => Character.human_attribute_name("basic_money")) %></td>
@@ -30,7 +30,7 @@
             :vip_price_fee => Setting.i(:market_vip_price_fee)
           ) %>
     </p>
-    
+
     <%= form.submit %>
   <% end %>
 <% end %>

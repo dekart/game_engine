@@ -36,7 +36,7 @@ class PremiaController < ApplicationController
       end
 
     flash[:class] = :premia
-    
+
     if @result
       flash[:success] = t("premia.update.messages.success.#{params[:type]}")
     else

@@ -8,7 +8,7 @@ module Jobs
       users = User.after(newsletter.last_recipient).all(
         :limit => Setting.i(:newsletter_recipients_per_send)
       )
-      
+
       if users.any?
         facebook_session.send_notification(users, newsletter.text)
 

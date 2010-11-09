@@ -14,7 +14,7 @@ class PropertyType < ActiveRecord::Base
       :small  => "120x120>",
       :medium => "180x180>"
     }
-    
+
   named_scope :available_in, Proc.new{|*keys|
     valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys
 

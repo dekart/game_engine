@@ -29,7 +29,7 @@ module CharactersHelper
 
   def character_wall(character, options = {})
     options = options.reverse_merge(
-      :url    => character_url(character, 
+      :url    => character_url(character,
         :canvas     => true,
         :reference  => :comment,
         :referrer   => current_user.id

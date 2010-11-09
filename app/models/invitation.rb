@@ -8,13 +8,13 @@ class Invitation < ActiveRecord::Base
       :order      => "created_at DESC"
     }
   }
-  
+
   validates_uniqueness_of :receiver_id, :scope => :sender_id
 
   def receiver
     User.find_by_facebook_id(receiver_id)
   end
-  
+
   def accept!
     transaction do
       FriendRelation.create(

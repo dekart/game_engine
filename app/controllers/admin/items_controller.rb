@@ -14,13 +14,13 @@ class Admin::ItemsController < Admin::BaseController
 
   def new
     redirect_to new_admin_item_group_path if ItemGroup.count == 0
-    
+
     @item = Item.new
     @item.placements = Character::Equipment::DEFAULT_PLACEMENTS
 
     if params[:item]
       @item.attributes = params[:item]
-      
+
       @item.valid?
     end
   end
@@ -30,7 +30,7 @@ class Admin::ItemsController < Admin::BaseController
 
     if @item.save
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_items_path
       end
@@ -54,7 +54,7 @@ class Admin::ItemsController < Admin::BaseController
 
     if @item.update_attributes(params[:item].reverse_merge(:payouts => nil, :placements => nil))
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_items_path
       end

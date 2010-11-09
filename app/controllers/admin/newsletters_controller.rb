@@ -12,7 +12,7 @@ class Admin::NewslettersController < Admin::BaseController
 
     if @newsletter.save
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_newsletters_path
       end
@@ -30,7 +30,7 @@ class Admin::NewslettersController < Admin::BaseController
 
     if @newsletter.update_attributes(params[:newsletter])
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_newsletters_path
       end

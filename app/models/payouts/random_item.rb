@@ -1,7 +1,7 @@
 module Payouts
   class RandomItem < Base
     attr_accessor :availability, :allow_vip, :item_ids
-    
+
     def item
       return @item if @item
 

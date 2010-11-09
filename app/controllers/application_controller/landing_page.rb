@@ -23,7 +23,7 @@ class ApplicationController
     end
 
     # Instance Methods
-    
+
     protected
 
     def landing_url(last_landing)

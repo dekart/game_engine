@@ -27,7 +27,7 @@
     <% form_tag gift_url(@gift), :id => :group_switcher, :method => :put do %>
       <%= hidden_field_tag :group  %>
       <%= hidden_field_tag :friend_ids %>
-    
+
       <% %w{all players non_players}.each do |type| %>
         <%= link_to_function(t(".groups.#{type}", :app => t("app_name")), "$('#group').val('#{type}'); $('#group_switcher').submit()",
               :id     => "group_#{type}",
@@ -47,7 +47,7 @@
 
       <%= fb_req_choice(
             t(".request.accept", :item => @gift.item.name),
-            gift_url(@gift, 
+            gift_url(@gift,
               :canvas     => true,
               :reference  => :gift,
               :referrer   => current_user.id
@@ -57,7 +57,7 @@
 
     <% fb_server_fbml do %>
       <%= stylesheet_link_tag(skin_path) %>
-    
+
       <div id="invitation_form_fbml">
         <% fb_request_form(t(".request.title"), confirm_gift_url(@gift), gift_message) do %>
           <div class="selector">

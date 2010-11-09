@@ -47,7 +47,7 @@ class Assignment < ActiveRecord::Base
     end
 
   end
-  
+
   def effect_value
     self.class.effect_value(context, relation, role)
   end

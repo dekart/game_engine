@@ -13,7 +13,7 @@
       <th><%= ItemCollection.human_attribute_name("state") %></th>
       <th></th>
     </tr>
-    
+
     <% @item_collections.each do |item_collection| %>
       <tr>
         <td class="name"><%= link_to(item_collection.name, edit_admin_item_collection_path(item_collection)) %></td>
@@ -23,7 +23,7 @@
               <% unless item.visible? %>
                 <span class="state"><%= admin_state(item) %></span>
               <% end %>
-                
+
               <%= item.name %>
             </div>
           <% end %>

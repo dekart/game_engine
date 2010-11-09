@@ -60,7 +60,7 @@ module RestorableAttribute
     def value=(value)
       @container[@name] = value.to_i > 0 ? value : 0
 
-      @container.send("#{@name}_updated_at=", 
+      @container.send("#{@name}_updated_at=",
         Time.now - (time_to_restore > 0 ? restore_period - time_to_restore : 0)
       )
     end

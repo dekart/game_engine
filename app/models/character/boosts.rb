@@ -11,7 +11,7 @@ class Character
 
     def enough_money_for(boost, amount)
       return (boost.basic_price * amount <= proxy_owner.basic_money) &&
-             (boost.vip_price * amount <= proxy_owner.vip_money) 
+             (boost.vip_price * amount <= proxy_owner.vip_money)
     end
 
     def buy!(boost, amount)

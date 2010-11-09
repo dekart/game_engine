@@ -23,7 +23,7 @@ class Admin::CharactersController < Admin::BaseController
       :page     => params[:page],
       :per_page => @ids.try(:size) || 100
     )
-    
+
     render :index
   end
 
@@ -36,7 +36,7 @@ class Admin::CharactersController < Admin::BaseController
 
     if @character.update_attributes(params[:character])
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_characters_path(:page => params[:page])
       end
@@ -60,7 +60,7 @@ class Admin::CharactersController < Admin::BaseController
       end
 
       flash[:success] = t(".success")
-      
+
       unless_continue_editing :action => :payout do
         redirect_to admin_characters_path
       end

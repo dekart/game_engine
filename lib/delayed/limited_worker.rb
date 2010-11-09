@@ -15,11 +15,11 @@ module Delayed
 
         realtime = Benchmark.realtime do
           say "Round #{round}..."
-          
+
           result = Delayed::Job.work_off
 
           round += 1
-          
+
           $exit = true if round >= ROUNDS
         end
 

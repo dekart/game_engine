@@ -5,7 +5,7 @@
             :fight    => fight,
             :picture  => :small
           ) %>
-      
+
       <div class="message">
         <%= t(".messages.character",
               :attacker => content_tag(:span, character_name(fight.character, :capitalize => true),
@@ -28,7 +28,7 @@
 
       <% if fight.time_limit? %>
         <div class="timer">
-          <%= t(".time_left", 
+          <%= t(".time_left",
                 :value => content_tag(:span, "", :id => :boss_fight_time_left, :class => :value)
               ).html_safe %>
         </div>

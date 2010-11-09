@@ -1,6 +1,6 @@
 class HitListingsController < ApplicationController
   before_filter :check_hitlist_enabled
-  
+
   def index
     fetch_incomplete_listings
   end

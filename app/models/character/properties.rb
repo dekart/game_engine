@@ -16,7 +16,7 @@ class Character
 
     def collect_money!
       result = Payouts::Collection.new
-      
+
       transaction do
         each do |property|
           if collected = property.collect_money!
@@ -31,7 +31,7 @@ class Character
     def collectable
       unless @collectable
         @collectable = []
-        
+
         each do |property|
           @collectable << property if property.collectable?
         end

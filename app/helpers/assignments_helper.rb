@@ -8,11 +8,11 @@ module AssignmentsHelper
 
     if attr.size == 1
       assignment = attr.first
-      
+
       value = assignment.effect_value
     else
       assignment, relation = *attr
-      
+
       value = Assignment.effect_value(assignment.context, relation, assignment.role)
     end
 

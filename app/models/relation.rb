@@ -11,6 +11,6 @@ class Relation < ActiveRecord::Base
   named_scope :assigned,
     :include    => [:assignment, :character],
     :conditions => "assignments.id IS NOT NULL"
-  
+
   #TODO Check size of the 'bag' placement when relation is getting removed
 end

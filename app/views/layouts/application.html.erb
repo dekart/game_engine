@@ -6,11 +6,11 @@
   </script>
 
   <%= stylesheet_link_tag(skin_path) %>
-  
+
   <%= include_jquery_from_google %>
   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", "jquery/tooltip", "jquery/carousel", "application", :cache => "all" %>
 </head>
-<body>  
+<body>
   <% admin_only do %>
     <div id="admin_menu">
       <%= link_to(t(".admin_interface"), admin_missions_path, :target => :admin)  %>
@@ -56,7 +56,7 @@
   </div>
 
   <div id="ajax" style="display:none;"></div>
-  
+
   <%= user_permission_dialog(:email) %>
 
   <%= display_notifications %>
@@ -70,7 +70,7 @@
   <% dom_ready do %>
     $(document).trigger('application.ready');
   <% end %>
-    
+
   <%= dom_ready %>
 
   <%= google_analytics %>

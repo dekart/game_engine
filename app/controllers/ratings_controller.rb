@@ -1,7 +1,7 @@
 class RatingsController < ApplicationController
   def show
     @rating_scope ||= current_character.self_and_relations
-    
+
     @level       = @rating_scope.rated_by(:level)
     @total_money = @rating_scope.rated_by(:total_money)
     @fights      = @rating_scope.rated_by(:fights_won)

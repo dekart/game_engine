@@ -24,7 +24,7 @@
                 :html   => {:class => "promote button"}
               ) %>
         </div>
-      
+
         <div class="description">
           <%= t("assignments.roles.#{role}.description") %>
         </div>
@@ -37,7 +37,7 @@
       <div class='controls'>
         <%= link_to(button(:demote_all), assignment_path(:all),
               :method => :delete,
-              :class => 'demote button', 
+              :class => 'demote button',
               :confirm => t('.buttons.demote_all_confirm')
             ) %>
       </div>

@@ -5,7 +5,7 @@ class ItemCollectionsController < ApplicationController
 
   def update
     @collection = ItemCollection.find(params[:id])
-    
+
     @result = current_character.collections.apply!(@collection)
 
     render :layout => "ajax"

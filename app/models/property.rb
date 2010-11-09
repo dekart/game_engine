@@ -58,7 +58,7 @@ class Property < ActiveRecord::Base
     return false if new_record?
 
     @validate_money = true
-    
+
     if valid?
       transaction do
         increment(:level)
@@ -78,7 +78,7 @@ class Property < ActiveRecord::Base
         update_attribute(:collected_at, Time.now)
 
         result = payouts.apply(character, :collect, property_type)
-        
+
         result << Payouts::BasicMoney.new(:value => total_income)
 
         character.charge!(- total_income, 0, self)
@@ -110,7 +110,7 @@ class Property < ActiveRecord::Base
       end
 
       if character.vip_money < vip_price
-        errors.add(:character, new_record? ? :not_enough_vip_money : :not_enough_vip_money_for_upgrade, 
+        errors.add(:character, new_record? ? :not_enough_vip_money : :not_enough_vip_money_for_upgrade,
           :name       => name,
           :vip_money  => Character.human_attribute_name("vip_money")
         )

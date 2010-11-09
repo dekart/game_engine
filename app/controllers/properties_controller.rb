@@ -26,7 +26,7 @@ class PropertiesController < ApplicationController
 
   def collect_money
     @properties = current_character.properties
-    
+
     if params[:id]
       @property = current_character.properties.find(params[:id])
 

@@ -19,7 +19,7 @@ module Requirements
         new(*items)
       end
     end
-    
+
     def initialize(*requirements)
       @items = requirements
     end

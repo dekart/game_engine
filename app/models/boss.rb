@@ -23,7 +23,7 @@ class Boss < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
-  
+
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",
@@ -32,7 +32,7 @@ class Boss < ActiveRecord::Base
     }
 
   has_requirements
-  
+
   has_payouts :victory, :defeat, :repeat_victory, :repeat_defeat,
     :default_event => :victory
 

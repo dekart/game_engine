@@ -36,7 +36,7 @@ class Item < ActiveRecord::Base
 
     if valid_keys.any?
       valid_keys.collect!{|k| k.to_s }
-      
+
       {:conditions => ["items.availability IN (?)", valid_keys]}
     else
       {}

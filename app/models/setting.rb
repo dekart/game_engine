@@ -9,7 +9,7 @@ class Setting < ActiveRecord::Base
 
   after_save :restart_server
   after_destroy :restart_server
-  
+
   cattr_accessor :cache
 
   class << self
@@ -20,7 +20,7 @@ class Setting < ActiveRecord::Base
           result
         }
       end
-      
+
       cache
     end
 

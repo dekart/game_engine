@@ -9,13 +9,13 @@
           <span class="label"><%= Character.human_attribute_name("level") %></span>
           <span class="value"><%= fight.attacker.level %></span>
         </div>
-        
+
         <div class="attributes">
           <div class="attack"><%= fight.attacker.attack_points %></div>
           <div class="relations"><%= fight.attacker.relations.effective_size %></div>
         </div>
       </div>
-      
+
       <% if offence = fight.attacker.equipment.best_offence and offence.any? %>
         <div class="best_items">
           <strong><%= t(".best_offence") %></strong>
@@ -43,7 +43,7 @@
           <span class="label"><%= Character.human_attribute_name("level") %></span>
           <span class="value"><%= fight.victim.level %></span>
         </div>
-        
+
         <div class="attributes">
           <div class="defence"><%= fight.victim.defence_points %></div>
           <div class="relations"><%= fight.victim.relations.effective_size %></div>

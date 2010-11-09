@@ -107,7 +107,7 @@ module ApplicationHelper
     end
 
     unless result.blank?
-      content_for(:result, 
+      content_for(:result,
         result_for(flash[:class] || :flash, result.html_safe)
       )
     end

@@ -1,5 +1,5 @@
 class MissionResult
-  attr_reader :character, :mission, :level, :mission_group, 
+  attr_reader :character, :mission, :level, :mission_group,
     :money, :experience, :loot, :looter,
     :success, :free_fulfillment, :saved,
     :level_rank, :mission_rank, :group_rank,
@@ -35,7 +35,7 @@ class MissionResult
 
           @money      = (@level.money * (1 + money_bonus)).ceil
           @experience = @level.experience
-          
+
           calculate_loot
 
           @level_rank.progress += 1
@@ -50,13 +50,13 @@ class MissionResult
           if @level_rank.just_completed?
             @character.missions_completed += 1
             @character.missions_mastered  += 1 if @level.last?
-            
+
             @character.points += 1
 
             @payouts = @level.payouts.apply(@character, :complete, @mission)
 
             @mission_rank = @character.missions.check_completion!(@mission)
-            
+
             @group_rank, @group_payouts = @character.mission_groups.check_completion!(@mission_group)
 
             @character.news.add(:mission_complete,

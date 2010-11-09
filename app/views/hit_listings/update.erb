@@ -35,7 +35,7 @@
           <p><%= t(".completed.publish") %></p>
 
           <div class="buttons">
-            <%= link_to_function(button(:publish), completed_hit_listing_stream_dialog(@hit_listing), 
+            <%= link_to_function(button(:publish), completed_hit_listing_stream_dialog(@hit_listing),
                   :class => "publish button"
                 ) %>
           </div>
@@ -58,7 +58,7 @@
     <% end %>
   <% else %>
     <% builder.notice do %>
-      <%= t(".already_completed", 
+      <%= t(".already_completed",
             :victim => character_name_link(@hit_listing.victim)
           ).html_safe %>
     <% end %>

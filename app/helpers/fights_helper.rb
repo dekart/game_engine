@@ -1,7 +1,7 @@
 module FightsHelper
   def fight_description(fight)
     t("fights.descriptions.#{ fight.attacker == current_character ? "attack" : "defence" }_#{ fight.winner == current_character ? "won" : "lost" }",
-      
+
       :attacker           => character_name_link(fight.attacker, {}, {:useyou => true, :capitalize => fight.attacker == current_character}),
       :victim             => character_name_link(fight.victim, {}, {:useyou => true, :capitalize => fight.victim == current_character}),
 

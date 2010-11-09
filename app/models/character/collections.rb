@@ -14,11 +14,11 @@ class Character
 
     module AssociationExtension
       def apply!(collection)
-        rank = proxy_owner.collection_ranks.find_by_collection_id(collection.id) 
+        rank = proxy_owner.collection_ranks.find_by_collection_id(collection.id)
         rank ||= proxy_owner.collection_ranks.build(:collection => collection)
 
         rank.apply!
-        
+
         rank
       end
     end

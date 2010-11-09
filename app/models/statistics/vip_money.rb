@@ -56,7 +56,7 @@ class Statistics
       end
 
       result.sort!{|a, b| b.last <=> a.last }
-      
+
       result
     end
 
@@ -80,7 +80,7 @@ class Statistics
       end
 
       result.sort!{|a, b| b.last <=> a.last }
-      
+
       result
     end
   end

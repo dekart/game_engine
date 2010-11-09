@@ -1,6 +1,6 @@
 class Admin::VipMoneyOperationsController < Admin::BaseController
   helper_method :operation_type, :operation_class
-  
+
   def index
     scope = operation_class
 

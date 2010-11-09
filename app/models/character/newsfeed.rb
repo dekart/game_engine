@@ -16,5 +16,5 @@ class Character
         end
       end
     end
-  end  
+  end
 end

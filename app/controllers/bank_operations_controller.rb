@@ -1,7 +1,7 @@
 class BankOperationsController < ApplicationController
   def new
     @deposit = BankDeposit.new(:amount => current_character.basic_money)
-    
+
     @withdrawal = BankWithdraw.new
 
     render :new, :layout => 'ajax'
@@ -24,7 +24,7 @@ class BankOperationsController < ApplicationController
 
     if @withdrawal.save
       current_character.reload
-      
+
       render :withdraw, :layout => 'ajax'
     else
       render :new, :layout => 'ajax'

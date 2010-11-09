@@ -27,7 +27,7 @@ class Inventory < ActiveRecord::Base
       [{:to => :item}]
     )
   )
-  
+
   attr_accessor :charge_money, :deposit_money, :basic_money, :vip_money
 
   validate :enough_character_money?
@@ -46,7 +46,7 @@ class Inventory < ActiveRecord::Base
       result = payouts.apply(character, :use, item)
 
       character.save!
-      
+
       character.inventories.take!(item)
 
       result
@@ -60,12 +60,12 @@ class Inventory < ActiveRecord::Base
   def equippable?
     item.equippable? and amount_available_for_equipment > 0
   end
-  
+
   protected
 
   def enough_character_money?
     return unless charge_money and changes["amount"]
-    
+
     difference = changes["amount"].last - changes["amount"].first
 
     if difference > 0

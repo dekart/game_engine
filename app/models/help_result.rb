@@ -28,7 +28,7 @@ class HelpResult < ActiveRecord::Base
       errors.add_to_base(:cannot_attack_self)
     end
   end
-  
+
   def calculate_payout
     if context.is_a?(Mission)
       level = help_request.character.mission_levels.rank_for(context).level
@@ -41,7 +41,7 @@ class HelpResult < ActiveRecord::Base
         :victim   => context.victim,
         :cause    => help_request
       )
-      
+
       self.money      = @fight.attacker_won? ? Setting.p(:help_request_fight_money, @fight.money).ceil : 0
       self.experience = @fight.attacker_won? ? Setting.p(:help_request_fight_experience, @fight.experience).ceil : 0
     end
@@ -62,7 +62,7 @@ class HelpResult < ActiveRecord::Base
   def increment_request_stats
     help_request.increment(:money, money)
     help_request.increment(:experience, experience)
-    
+
     help_request.save!
   end
 end

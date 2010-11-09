@@ -1,10 +1,10 @@
 class HelpRequestsController < ApplicationController
   skip_landing_redirect
-  
+
   def create
     if current_character.help_requests.can_publish?(params[:context_type])
       @context = params[:context_type].classify.constantize.find(params[:context_id])
-      
+
       @help_request = current_character.help_requests.create!(:context => @context)
     end
 

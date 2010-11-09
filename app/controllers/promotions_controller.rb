@@ -1,6 +1,6 @@
 class PromotionsController < ApplicationController
   skip_landing_redirect
-  
+
   def show
     id, secret = params[:id].split("-")
 
@@ -14,7 +14,7 @@ class PromotionsController < ApplicationController
       else
         flash[:notice] = t("promotions.show.already_used")
       end
-      
+
       redirect_to root_path
     end
   end

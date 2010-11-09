@@ -1,7 +1,7 @@
 <% content_for :result do %>
   <% result_for :gift, :inline => true do |builder| %>
     <% builder.buttons do %>
-      <% if Setting.b(:gifting_accept_all) %> 
+      <% if Setting.b(:gifting_accept_all) %>
         <% if current_character.has_unaccepted_gifts? %>
           <%= link_to(button(:accept_all), gift_path(:all), :class => 'pending button') %>
         <% end %>
@@ -11,7 +11,7 @@
 
       <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
     <% end %>
-    
+
     <% builder.success do %>
       <%= t(".success") %>
     <% end %>

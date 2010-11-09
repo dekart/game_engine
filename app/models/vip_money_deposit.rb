@@ -5,7 +5,7 @@ class VipMoneyDeposit < VipMoneyOperation
 
   def deposit_money
     character.vip_money += amount
-    
+
     character.save
   end
 end

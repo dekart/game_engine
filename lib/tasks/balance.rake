@@ -20,7 +20,7 @@ namespace :app do
       ].collect{|level, attack_points, defence_points, fight_damage_reduce, health|
         OpenStruct.new(
           :title                => [level, attack_points, defence_points, fight_damage_reduce, health].join("_"),
-          
+
           :level                => level,
           :attack_points        => attack_points,
           :defence_points       => defence_points,
@@ -88,7 +88,7 @@ namespace :app do
 
         puts
       end
-      
+
       puts
       puts "Done!"
     end

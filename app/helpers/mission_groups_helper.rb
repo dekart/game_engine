@@ -30,7 +30,7 @@ module MissionGroupsHelper
       yield(self)
 
       current_group   = current_character.mission_groups.current
-      
+
       previous_group  = capture(&@previous_group)
       next_group      = capture(&@next_group)
 

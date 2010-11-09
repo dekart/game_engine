@@ -3,7 +3,7 @@
     <% if mission.image? %>
       <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
     <% end %>
-      
+
     <div class="name"><%= mission.name %></div>
     <div class="description"><%= mission.description %></div>
 
@@ -28,7 +28,7 @@
   <td class="details">
     <div class="payouts">
       <h3><%= Mission.human_attribute_name("payouts") %></h3>
-      
+
       <%= payout(:experience, level.experience) %>
       <%= payout(:basic_money, mission_money(level)) %>
       <%= payout_list(level.payouts, :add, :preview) %>
@@ -36,7 +36,7 @@
 
     <div class="requirements">
       <h3><%= Mission.human_attribute_name("requirements") %></h3>
-      
+
       <%= attribute_requirement(:energy, level.energy, current_character.ep >= level.energy) %>
 
       <%= requirement_list(mission.requirements) %>

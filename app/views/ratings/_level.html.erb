@@ -6,7 +6,7 @@
     <th colspan="2"><%= Character.human_name %></th>
     <th><%= Character.human_attribute_name("level") %></th>
   </tr>
-  
+
   <% rating_table(characters, :level) do |character, position, current| %>
     <% content_tag(:tr, :class => (:current if current)) do %>
       <td class="position"><%= position %></td>

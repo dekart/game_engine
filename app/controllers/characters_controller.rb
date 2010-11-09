@@ -3,7 +3,7 @@ class CharactersController < ApplicationController
     :only => [:new, :create]
 
   skip_landing_redirect :except => [:index, :upgrade]
-  
+
   before_filter :fetch_character_types,
     :only => [:new, :create, :edit, :update]
 

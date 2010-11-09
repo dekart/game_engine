@@ -8,7 +8,7 @@
                 :update => :result,
                 :html   => {:class => :remove, :title => t(".remove")}
               ) if character == current_character %>
-  
+
           <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement]) -%>
 
           <%= item_tooltip(inventory) %>
@@ -40,7 +40,7 @@
               :count        => free_slots,
               :count_label  => content_tag(:span, free_slots, :class => (free_slots == 0 ? "value zero" : "value"))
             ).html_safe %>
-        
+
         <%= t(".additional.relations",
               :relations  => link_to(Character.human_attribute_name("relations"), relations_path),
               :amount     => content_tag(:span, Setting.i(:character_relations_per_equipment_slot), :class => :value)

@@ -7,10 +7,10 @@ class InventoriesController < ApplicationController
 
     render :action => :new, :layout => "ajax"
   end
-  
+
   def create
     @amount = params[:amount].to_i
-    
+
     @item = Item.available.available_in(:shop, :special).available_for(current_character).find(params[:item_id])
 
     @inventory = current_character.inventories.buy!(@item, @amount)
@@ -20,7 +20,7 @@ class InventoriesController < ApplicationController
 
   def destroy
     @amount = params[:amount].to_i
-    
+
     @item = Item.find(params[:id])
 
     @inventory = current_character.inventories.sell!(@item, @amount)
@@ -42,7 +42,7 @@ class InventoriesController < ApplicationController
   end
 
   def equipment
-    
+
   end
 
   def equip

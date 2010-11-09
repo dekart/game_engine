@@ -18,7 +18,7 @@ class Character
           end
         else
           klass = Notification::Base.type_to_class(type)
-          
+
           self << klass.new(:data => data)
         end
       end

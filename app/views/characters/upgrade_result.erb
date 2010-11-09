@@ -12,10 +12,10 @@
     </p>
   <% end %>
 <% end %>
-    
+
 <% dom_ready do %>
   $('#upgrade_result').html(<%= result.to_json.html_safe %>);
-  
+
   $('#upgrade_list .<%= params[:attribute] %> .value').text('<%= current_character.attributes[params[:attribute]] %>');
 
   <% if current_character.points == 0 %>

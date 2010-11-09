@@ -3,7 +3,7 @@ module Notification
     def item
       @item ||= ::Item.find_by_id(data[:item_id])
     end
-    
+
     def basic_money
       data[:basic_money].to_i
     end

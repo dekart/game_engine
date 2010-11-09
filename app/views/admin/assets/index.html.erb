@@ -20,10 +20,10 @@
         <td class="preview"><%= image_tag(asset.image.url(:small)) %></td>
         <td class="controls">
           <%= link_to(t(".controls.view"), image_path(asset.image.url), :target => :_blank) %>
-          <%= link_to(t(".controls.edit"), edit_admin_asset_path(asset), 
+          <%= link_to(t(".controls.edit"), edit_admin_asset_path(asset),
                 :class => :edit
               ) %>
-          <%= link_to(t(".controls.delete"), admin_asset_path(asset), 
+          <%= link_to(t(".controls.delete"), admin_asset_path(asset),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm"),
                 :class    => :edit

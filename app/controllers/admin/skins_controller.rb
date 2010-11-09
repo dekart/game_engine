@@ -16,7 +16,7 @@ class Admin::SkinsController < Admin::BaseController
       update_stylesheets
 
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_skins_path
       end

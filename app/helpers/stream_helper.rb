@@ -56,7 +56,7 @@ module StreamHelper
         :href => default_stream_url(:level_up_stream_name)
       }
     }
-    
+
     dialog_options.reverse_merge!(options)
 
     stream_dialog(dialog_options)
@@ -65,7 +65,7 @@ module StreamHelper
   def fight_stream_dialog(fight)
     stream_dialog(
       :attachment => {
-        :name => t("stories.fight.title", 
+        :name => t("stories.fight.title",
           :level  => fight.victim.level,
           :app    => t("app_name")
         ),
@@ -106,7 +106,7 @@ module StreamHelper
 
   def mission_complete_stream_dialog(mission)
     attachment = {
-      :name => t("stories.mission.title", 
+      :name => t("stories.mission.title",
         :mission  => mission.name,
         :app      => t("app_name")
       ),
@@ -177,7 +177,7 @@ module StreamHelper
     case context
     when Fight
       attachment = {
-        :name => t("stories.help_request.fight.title", 
+        :name => t("stories.help_request.fight.title",
           :level  => context.victim.level,
           :app    => t("app_name")
         ),
@@ -185,7 +185,7 @@ module StreamHelper
       }
     when Mission
       attachment = {
-        :name         => t("stories.help_request.mission.title", 
+        :name         => t("stories.help_request.mission.title",
           :mission  => context.name,
           :app      => t("app_name")
         ),
@@ -261,8 +261,8 @@ module StreamHelper
         :reference  => :promotion_stream_name,
         :referrer   => current_user.id
       ),
-      
-      :description => t("stories.promotion.description", 
+
+      :description => t("stories.promotion.description",
         :expires_at => l(promotion.valid_till, :format => :short)
       )
     }

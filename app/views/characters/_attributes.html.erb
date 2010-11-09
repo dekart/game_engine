@@ -4,7 +4,7 @@
       <th><%= Character.human_attribute_name("attack") %></th>
       <td class="value">
         <%= character.attack %>
-        
+
         <span class="bonus">
           <%= t(".bonus",
                 :amount => content_tag(:span, character.equipment.effect(:attack))
@@ -16,7 +16,7 @@
       <th><%= Character.human_attribute_name("defence") %></th>
       <td class="value">
         <%= character.defence %>
-        
+
         <span class="bonus">
           <%= t(".bonus",
                 :amount => content_tag(:span, character.equipment.effect(:defence))

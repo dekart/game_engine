@@ -12,7 +12,7 @@ class Admin::ItemGroupsController < Admin::BaseController
 
     if @group.save
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_item_groups_path
       end
@@ -30,7 +30,7 @@ class Admin::ItemGroupsController < Admin::BaseController
 
     if @group.update_attributes(params[:item_group])
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_item_groups_path
       end

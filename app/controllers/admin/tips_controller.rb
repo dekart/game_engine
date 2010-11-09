@@ -30,7 +30,7 @@ class Admin::TipsController < Admin::BaseController
 
     if @tip.update_attributes(params[:tip])
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_tips_path
       end

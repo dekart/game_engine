@@ -45,7 +45,7 @@
 <div class="invitation_type">
   <% fb_server_fbml do %>
     <%= stylesheet_link_tag(skin_path) %>
-  
+
     <div id="invitation_form_fbml">
       <% fb_request_form(t(".invite.title"), invite_users_url(:from_selector => true), invite_message, :target => :_top) do %>
         <div class="selector">

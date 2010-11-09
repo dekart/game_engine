@@ -44,13 +44,13 @@ class Mission < ActiveRecord::Base
   def self.to_grouped_dropdown
     {}.tap do |result|
       MissionGroup.without_state(:deleted).each do |group|
-        result[group.name] = group.missions.without_state(:deleted).collect{|i| 
+        result[group.name] = group.missions.without_state(:deleted).collect{|i|
           [i.name, i.id]
         }
       end
     end
   end
-  
+
   def visible_for?(character)
     parent_mission.nil? or character.missions.rank_for(parent_mission).completed?
   end

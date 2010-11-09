@@ -9,7 +9,7 @@ class MissionGroup < ActiveRecord::Base
   acts_as_list
 
   default_scope :order => "mission_groups.position"
-  
+
   state_machine :initial => :hidden do
     state :hidden
     state :visible

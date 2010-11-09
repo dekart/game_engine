@@ -18,7 +18,7 @@
 
         <%= admin_statistics_amount_change(@statistics.deposit_by_period) %>
       </p>
-      
+
       <h2><%= t(".deposit.reference_types") %></h2>
 
       <% collection(@statistics.deposit_reference_types) do |types| %>
@@ -62,7 +62,7 @@
 
       <p>
         <strong><%= t(".amount.total") %>:</strong>
-        
+
         <strong>
           <%= link_to(@statistics.total_withdrawal, admin_vip_money_operations_path(:type => :withdrawal),
                 :title => t(".withdraw.operations")

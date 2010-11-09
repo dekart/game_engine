@@ -34,7 +34,7 @@ class Admin::MissionsController < Admin::BaseController
 
     if @mission.save
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to new_polymorphic_path([:admin, @mission, MissionLevel])
       end
@@ -58,7 +58,7 @@ class Admin::MissionsController < Admin::BaseController
 
     if @mission.update_attributes(params[:mission].reverse_merge(:requirements => nil, :payouts => nil))
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to(
           @mission.levels.size > 0 ? admin_missions_path : new_polymorphic_path([:admin, @mission, MissionLevel])

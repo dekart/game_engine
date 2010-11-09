@@ -8,7 +8,7 @@ class Admin::PropertyTypesController < Admin::BaseController
 
     if params[:property_type]
       @type.attributes = params[:property_type]
-      
+
       @type.valid?
     end
   end
@@ -18,7 +18,7 @@ class Admin::PropertyTypesController < Admin::BaseController
 
     if @type.save
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_property_types_path
       end
@@ -42,7 +42,7 @@ class Admin::PropertyTypesController < Admin::BaseController
 
     if @type.update_attributes(params[:property_type].reverse_merge(:payouts => nil))
       flash[:success] = t(".success")
-      
+
       unless_continue_editing do
         redirect_to admin_property_types_path
       end
