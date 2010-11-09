@@ -18,8 +18,6 @@ class InvitationsController < ApplicationController
   end
 
   def show
-    logger.debug current_facebook_user.friends.inspect
-    
     @character = Character.find_by_invitation_key(params[:id])
 
     if @character.nil? or @character == current_character
