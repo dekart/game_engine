@@ -74,11 +74,13 @@
 
 <% dom_ready do %>
   $(document).bind('facebook.ready', function(){
-    FB.Facebook.apiClient.friends_get(null, function(result) {
-      if(result){
-        $('#friend_ids').val(result.join(','));
-        $('.friend_groups').show();
-      }
-    })
+    FB.api('/me/friends', function(response) {
+      var ids = $.map(response.data, function(user){
+        return user.id
+      });
+
+      $('#friend_ids').val(ids.join(','));
+      $('.friend_groups').show();
+    });
   });
 <% end %>
