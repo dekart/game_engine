@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
   include ExceptionLogging if Rails.env.production?
   include LandingPage
 
-  before_filter :ensure_canvas_connected_to_facebook
   before_filter :set_p3p_header
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
+  before_filter :ensure_canvas_connected_to_facebook
 
   landing_redirect
 
@@ -79,9 +79,8 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options(options = {})
-    {}.tap do |result|
-      result[:try_skin] = params[:try_skin] unless params[:try_skin].blank?
-    end
+    options[:try_skin] = params[:try_skin] unless params[:try_skin].blank?
+    options
   end
 
   def admin_required
@@ -99,7 +98,7 @@ class ApplicationController < ActionController::Base
   def store_return_to(uri = nil)
     session[:return_to] = uri
     session[:return_to] ||= params[:return_to]
-    session[:return_to] ||= request.request_uri
+    session[:return_to] ||= url_for(params.except(:signed_request).merge(:canvas => false, :only_path => true))
   end
 
   def redirect_back(uri)

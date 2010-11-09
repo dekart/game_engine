@@ -12,6 +12,8 @@ module Facebooker2
               options[:only_path] = true
 
               canvas = true
+            else
+              canvas = false
             end
 
             url = url_for_without_facebooker(options)

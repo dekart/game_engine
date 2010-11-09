@@ -1,8 +1,11 @@
 class CharactersController < ApplicationController
+  skip_before_filter :ensure_canvas_connected_to_facebook, :only => :new
   skip_before_filter :check_character_existance,
     :only => [:new, :create]
 
   skip_landing_redirect :except => [:index, :upgrade]
+
+  prepend_before_filter :check_character_existance_or_create, :only => :index
 
   before_filter :fetch_character_types,
     :only => [:new, :create, :edit, :update]

@@ -14,7 +14,7 @@ module Facebooker2
             if params[:code]
               redirect_to 'http://apps.facebook.com/%s%s' % [
                 Facebooker2.canvas_page_name,
-                params[:return_to]
+                facebook_url_encryptor.decrypt(params[:fb_return_to])
               ]
 
               false
@@ -28,9 +28,13 @@ module Facebooker2
 
           def ensure_canvas_connected(*scope)
             if current_facebook_user == nil && !params[:code] && !params[:error]
+              return_code = facebook_url_encryptor.encrypt(
+                url_for(params.except(:signed_request).merge(:canvas => false, :only_path => true))
+              )
+
               url = 'https://graph.facebook.com/oauth/authorize?client_id=%s&redirect_uri=%s&scope=%s' % [
                 Facebooker2.app_id,
-                facebook_oauth_connect_url(:return_to => request.request_uri),
+                facebook_oauth_connect_url(:fb_return_to => CGI.escape(return_code)),
                 scope.join(',')
               ]
 
@@ -38,6 +42,10 @@ module Facebooker2
 
               false
             end
+          end
+
+          def facebook_url_encryptor
+            @facebook_url_encryptor ||= ActiveSupport::MessageEncryptor.new(Facebooker2.secret)
           end
       end
     end
