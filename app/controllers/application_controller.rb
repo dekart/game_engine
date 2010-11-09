@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def ensure_canvas_connected_to_facebook
-    ensure_canvas_connected(:publish_stream, :email)
+    ensure_canvas_connected(:email)
   end
 
   # Send P3P privacy header to enable iframe cookies in IE
