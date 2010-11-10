@@ -19,6 +19,10 @@ module Facebooker2
     @app_id || raise_unconfigured_exception
   end
 
+  def self.canvas_page_url
+    "http://apps.facebook.com/#{canvas_page_name}"
+  end
+
 
   def self.raise_unconfigured_exception
     raise NotConfigured.new("No configuration provided for Facebooker2. Either set the app_id and secret or call Facebooker2.load_facebooker_yaml in an initializer")

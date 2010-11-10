@@ -12,10 +12,7 @@ module Facebooker2
             # outside of using the FB JavaScript library (see Authenticating Users in a Web Application
             # under the Authentication docs at http://developers.facebook.com/docs/authentication/)
             if params[:code]
-              redirect_to 'http://apps.facebook.com/%s%s' % [
-                Facebooker2.canvas_page_name,
-                facebook_url_encryptor.decrypt(params[:fb_return_to])
-              ]
+              redirect_to Facebooker2.canvas_page_url + facebook_url_encryptor.decrypt(params[:fb_return_to])
 
               false
             else

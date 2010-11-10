@@ -18,7 +18,7 @@ module Facebooker2
 
             url = url_for_without_facebooker(options)
 
-            canvas ? "http://apps.facebook.com/#{Facebooker2.canvas_page_name}#{url}" : url
+            canvas ? Facebooker2.canvas_page_name + url : url
           else
             url_for_without_facebooker(options)
           end

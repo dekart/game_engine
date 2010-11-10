@@ -116,9 +116,11 @@ module Facebooker2
 
 
       def fb_load_facebook_params
-        return {} if params[:signed_request].blank?
+        signed_request = params[:signed_request] || request.env['HTTP_SIGNED_REQUEST']
 
-        sig, encoded_json = params[:signed_request].split(".")
+        return {} if signed_request.blank?
+
+        sig, encoded_json = signed_request.split(".")
 
         return {} unless fb_signed_request_sig_valid?(sig, encoded_json)
 
