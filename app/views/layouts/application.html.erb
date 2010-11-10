@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
   <script type="text/javascript">
-    var session_id = '<%= request.session_options[:id] %>';
+    var signed_request = '<%= params[:signed_request] %>';
   </script>
 
   <%= stylesheet_link_tag(skin_path) %>

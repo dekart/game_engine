@@ -338,22 +338,23 @@ var Spinner = {
 }
 
 $(function(){
-  if(document.cookie.indexOf(session_id) == -1){
+  if(document.cookie.indexOf('access_token') == -1){
     $('a').live('click', function(){
       var url = $(this).attr('href');
 
-      url = url + (url.indexOf('?') == -1 ? '?' : '&') + '_session_id=' + session_id;
+      url = url + (url.indexOf('?') == -1 ? '?' : '&') +
+        'signed_request=' + signed_request;
 
       $(this).attr('href', url);
     });
 
     $('form').live('submit', function(){
-      $(this).append('<input type="hidden" name="_session_id" value="' + session_id + '">');
+      $(this).append('<input type="hidden" name="signed_request" value="' + signed_request + '">');
     });
 
     $.ajaxSetup({
       beforeSend : function(request){
-        request.setRequestHeader('session-id', session_id);
+        request.setRequestHeader('signed-request', signed_request);
       }
     });
   }
