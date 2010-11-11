@@ -17,7 +17,7 @@
   <tr>
     <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
       <% content_tag_for(:td, type) do %>
-        <h2><%= property ? t(".name_with_level", :name => type.name, :level => property.level) : type.name %></h2>
+        <h2><%= property && type.upgrade_limit > 1 ? t(".name_with_level", :name => type.name, :level => property.level) : type.name %></h2>
 
         <div class="picture"><%= property_image(type, :medium) %></div>
 
