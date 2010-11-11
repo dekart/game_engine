@@ -17,7 +17,7 @@
   <tr>
     <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
       <% content_tag_for(:td, type) do %>
-        <h2><%= property && type.upgrade_limit > 1 ? t(".name_with_level", :name => type.name, :level => property.level) : type.name %></h2>
+        <h2><%= property && type.upgradeable? ? t(".name_with_level", :name => type.name, :level => property.level) : type.name %></h2>
 
         <div class="picture"><%= property_image(type, :medium) %></div>
 
@@ -56,15 +56,17 @@
           <%= payout(:basic_money, "+%s" % number_to_currency(property ? property.total_income : type.income)) %>
         </div>
 
-        <div class="requirements">
-          <h3><%= PropertyType.human_attribute_name(property ? "upgrade_price" : "price") %></h3>
+        <% if property.nil? or type.upgradeable? %>
+          <div class="requirements">
+            <h3><%= PropertyType.human_attribute_name(property ? "upgrade_price" : "price") %></h3>
 
-          <%= attribute_requirement(:basic_money,
-                number_to_currency(property ? property.upgrade_price : type.basic_price)
-              ) if type.basic_price > 0 %>
+            <%= attribute_requirement(:basic_money,
+                  number_to_currency(property ? property.upgrade_price : type.basic_price)
+                ) if type.basic_price > 0 %>
 
-          <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
-        </div>
+            <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
+          </div>
+        <% end %>
 
         <% if property %>
           <div class="timer" style="<%= "display:none" if property.collectable? %>">

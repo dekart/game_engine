@@ -65,6 +65,10 @@ class PropertyType < ActiveRecord::Base
     end
   end
 
+  def upgradeable?
+    upgrade_limit > 1
+  end
+
   def basic_price
     self[:basic_price].to_i
   end
