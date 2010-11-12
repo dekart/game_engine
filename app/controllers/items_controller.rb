@@ -12,8 +12,7 @@ class ItemsController < ApplicationController
     )
 
     @special_items = item_scope.available_in(:special).all(
-      :limit => Setting.i(:item_show_special),
-      :order => "level DESC"
+      :limit => Setting.i(:item_show_special)
     )
 
     @next_item = @current_group.items.next_for(current_character).first

@@ -27,7 +27,7 @@ class Item < ActiveRecord::Base
   named_scope :available_by_level, Proc.new {|character|
     {
       :conditions => ["items.level <= ?", character.level],
-      :order      => :basic_price
+      :order      => "items.level DESC"
     }
   }
 
