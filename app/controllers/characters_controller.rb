@@ -103,14 +103,12 @@ class CharactersController < ApplicationController
   end
 
   def check_character_existance_or_create
-    if ensure_canvas_connected_to_facebook
-      if current_character
-        true
-      elsif params[:character]
-        create
-      else
-        check_character_existance
-      end
+    if current_character
+      true
+    elsif params[:character]
+      create
+    else
+      check_character_existance
     end
   end
 end
