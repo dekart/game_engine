@@ -2,4 +2,12 @@
   <h1><%= @page.name %></h1>
 
   <div class="content"><%= @page.content_processed.html_safe %></div>
+
+  <div class="return">
+    <% if request.xhr? %>
+      <%= link_to_function(t(".close"), '$.dialog.close()') %>
+    <% else %>
+      <%= link_to(t(".return").html_safe, root_path) %>
+    <% end %>
+  </div>
 </div>
