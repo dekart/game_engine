@@ -170,7 +170,7 @@ on :before, :only => ["deploy", "deploy:migrations"] do
   end
 end
 
-["deploy:update_apache_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
+["deploy:update_nginx_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
   after "deploy", t
   after "deploy:migrations", t
 end
