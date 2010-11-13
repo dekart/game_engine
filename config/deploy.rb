@@ -40,6 +40,8 @@ namespace :deploy do
 
       config = template.result(binding)
 
+      put(config, "#{shared_path}/crontab.conf")
+
       run "crontab #{shared_path}/crontab.conf"
     end
   end
