@@ -1,7 +1,5 @@
 RAILS_ENV=<%= rails_env %>
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-CURRENT_PATH=<%= current_path %>
-SHARED_PATH=<%= current_path %>
 
-* * * * * cd $CURRENT_PATH && test `ps ax | grep -E 'delayed_job' | wc -l` -le 3 && $CURRENT_PATH/script/delayed_job >> $SHARED_PATH/log/delayed_job.log 2>&1
-*/30 * * * * cd $CURRENT_PATH && rake app:market:remove_expired_listings --trace >> $SHARED_PATH/log/market.log 2>&1
+* * * * * cd <%= current_path %> && test `ps ax | grep -E 'delayed_job' | wc -l` -le 3 && <%= current_path %>/script/delayed_job >> <%= shared_path %>/log/delayed_job.log 2>&1
+*/30 * * * * cd <%= current_path %> && rake app:market:remove_expired_listings --trace >> <%= shared_path %>/log/market.log 2>&1
