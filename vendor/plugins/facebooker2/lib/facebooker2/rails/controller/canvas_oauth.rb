@@ -38,6 +38,8 @@ module Facebooker2
               redirect_from_iframe(url)
 
               false
+            else
+              true
             end
           end
 

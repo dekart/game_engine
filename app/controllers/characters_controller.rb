@@ -106,7 +106,7 @@ class CharactersController < ApplicationController
     if current_character
       true
     elsif params[:character]
-      create
+      ensure_canvas_connected_to_facebook and create
     else
       check_character_existance
     end
