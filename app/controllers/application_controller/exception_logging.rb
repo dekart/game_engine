@@ -1,15 +1,17 @@
 class ApplicationController
   module ExceptionLogging
     def self.included(base)
-      {
-        Exception                             => :rescue_basic_exception,
-        ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
-        ActionController::RoutingError        => :rescue_routing_error,
-        ActionController::UnknownAction       => :rescue_unknown_action,
-        ActiveRecord::StaleObjectError        => :rescue_locking_error,
-        Facebooker2::OAuthException           => :rescue_facebooker_oauth_exception
-      }.each do |exception, method|
-        base.rescue_from(exception, :with => method)
+      if Rails.env.production?
+        {
+          Exception                             => :rescue_basic_exception,
+          ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
+          ActionController::RoutingError        => :rescue_routing_error,
+          ActionController::UnknownAction       => :rescue_unknown_action,
+          ActiveRecord::StaleObjectError        => :rescue_locking_error,
+          Facebooker2::OAuthException           => :rescue_facebooker_oauth_exception
+        }.each do |exception, method|
+          base.rescue_from(exception, :with => method)
+        end
       end
     end
 
@@ -55,14 +57,6 @@ class ApplicationController
     # TODO: Catch locking error in models that may cause them instead of controller
     def rescue_locking_error(exception)
       render :text => ""
-    end
-
-    def rescue_facebooker_oauth_exception(exception)
-      logger.fatal(exception)
-
-      log_browser_info
-
-      redirect_to root_url
     end
 
     def fatal_log_processing_for_request_id

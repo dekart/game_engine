@@ -2,15 +2,13 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  include Facebooker2::Rails::Controller
-
-  include ExceptionLogging if Rails.env.production?
+  include ExceptionLogging
+  include FacebookIntegration
   include LandingPage
 
-  before_filter :set_p3p_header
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
-  before_filter :ensure_canvas_connected_to_facebook
-
+  facebook_integration_filters
+  
   landing_redirect
 
   layout :get_layout
@@ -20,15 +18,6 @@ class ApplicationController < ActionController::Base
   helper :all
 
   protected
-
-  def ensure_canvas_connected_to_facebook
-    ensure_canvas_connected(:email)
-  end
-
-  # Send P3P privacy header to enable iframe cookies in IE
-  def set_p3p_header
-    headers["P3P"] = 'CP="CAO PSA OUR"'
-  end
 
   def check_character_existance
     unless current_character
