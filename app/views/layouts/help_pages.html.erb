@@ -5,10 +5,12 @@
     var signed_request = '<%= params[:signed_request] %>';
   </script>
 
+  <%= stylesheet_link_tag(skin_path) %>
+
   <%= include_jquery_from_google %>
   <%= javascript_include_tag "jquery/tooltip", "jquery/scroll_to", "jquery/dialog", "jrails", "application", :cache => "help_pages" %>
 
-  <%= stylesheet_link_tag(skin_path) %>
+  <%= google_analytics %>
 </head>
 <body>
   <div id="content">
