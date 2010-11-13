@@ -6,7 +6,7 @@
   </script>
 
   <%= include_jquery_from_google %>
-  <%= javascript_include_tag "jquery/tooltip", "jrails", "application" %>
+  <%= javascript_include_tag "jquery/tooltip", "jrails", "application", :cache => "unauthorized" %>
 
   <%= stylesheet_link_tag(skin_path) %>
 </head>
