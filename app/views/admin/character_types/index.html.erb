@@ -11,6 +11,7 @@
       <th><%= CharacterType.human_attribute_name("name") %></th>
       <th><%= CharacterType.human_attribute_name("attributes") %></th>
       <th><%= CharacterType.human_attribute_name("bonuses") %></th>
+      <th><%= CharacterType.human_attribute_name("characters") %></th>
       <th><%= CharacterType.human_attribute_name("state") %></th>
       <th></th>
     </tr>
@@ -38,6 +39,7 @@
             <% end %>
           </table>
         </td>
+        <td class="state"><%= type.characters.count %></td>
         <td class="state"><%= admin_state(type) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_character_type_path(type)) %>
