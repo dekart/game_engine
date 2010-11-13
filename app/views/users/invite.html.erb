@@ -16,9 +16,8 @@
           )
         ),
         invitation_url(current_character.invitation_key,
-          :canvas     => true,
-          :reference  => :invite_form_accept,
-          :referrer   => current_user.id
+          :canvas => true,
+          :reference_code => reference_code(:invite_form_accept)
         )
       ) %>
 
@@ -31,9 +30,8 @@
           )
         ),
         character_url(current_character.key,
-          :canvas     => true,
-          :reference  => :invite_form_profile,
-          :referrer   => current_user.id
+          :canvas => true,
+          :reference_code => reference_code(:invite_form_profile)
         )
       ) %>
 <% end %>

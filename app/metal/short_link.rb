@@ -1,9 +1,14 @@
 class ShortLink
+  extend ApplicationController::ReferenceCode
+  
   def self.call(env)
     if env["PATH_INFO"] =~ /^\/cil\/(.+)/
-      target_url = "http://apps.facebook.com/%s/invitations/%s?reference=invite_link" % [
+      target_url = "http://apps.facebook.com/%s/invitations/%s?reference_code=%s" % [
         Facebooker2.canvas_page_name,
-        $1
+        $1,
+        CGI.escape(
+          reference_code(:invite_link, user_id($1))
+        )
       ]
 
       [
@@ -23,5 +28,9 @@ class ShortLink
     else
       [404, {"Content-Type" => "text/html"}, "Not Found"]
     end
+  end
+
+  def self.user_id(key)
+    Character.find_by_invitation_key(key).try(:user_id)
   end
 end

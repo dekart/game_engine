@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   include ExceptionLogging
   include FacebookIntegration
   include LandingPage
+  include ReferenceCode
 
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
   facebook_integration_filters
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   layout :get_layout
 
-  helper_method :current_user, :current_character, :current_skin
+  helper_method :current_user, :current_character, :current_skin, :reference_code
 
   helper :all
 
@@ -58,8 +59,15 @@ class ApplicationController < ActionController::Base
 
       user.facebook_id  = facebook_id
 
-      user.reference    = params[:reference]
-      user.referrer_id  = params[:referrer]
+      if params[:reference_code] and reference = decrypt_reference_code(params[:reference_code])
+        user.reference    = reference[0]
+        user.referrer_id  = reference[1]
+      elsif params[:reference]
+        user.reference    = params[:reference]
+        
+        #FIXME Stop parsing referrer passed in unencrypted params
+        user.referrer_id  = params[:referrer]
+      end
     end
 
     # Updating access token

@@ -24,7 +24,10 @@ module StreamHelper
   end
 
   def default_stream_url(reference = nil)
-    root_url(:canvas => true, :reference => reference, :referrer => current_user.id)
+    root_url(
+      :canvas => true,
+      :reference_code => reference_code(reference)
+    )
   end
 
   def default_stream_action_links(url = nil)
@@ -41,7 +44,7 @@ module StreamHelper
       {
         :type => "image",
         :src  => asset_image_path("logo_stream"),
-        :href => url || default_stream_url(:default_stream_image)
+        :href => url.is_a?(String) ? url : default_stream_url(url || :default_stream_image)
       }
     ]
   end
@@ -53,7 +56,8 @@ module StreamHelper
           :level  => current_character.level,
           :app    => t("app_name")
         ),
-        :href => default_stream_url(:level_up_stream_name)
+        :href => default_stream_url(:level_up_stream_name),
+        :media => default_stream_media(:level_up_stream_image)
       }
     }
 
@@ -69,7 +73,8 @@ module StreamHelper
           :level  => fight.victim.level,
           :app    => t("app_name")
         ),
-        :href => default_stream_url(:fight_stream_name)
+        :href => default_stream_url(:fight_stream_name),
+        :media => default_stream_media(:fight_stream_image)
       }
     )
   end
@@ -81,24 +86,26 @@ module StreamHelper
         :app  => t("app_name")
       ),
       :href => item_group_items_url(inventory.item_group,
-        :canvas     => true,
-        :reference  => :item_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:item_stream_name)
       )
     }
+
+    image_url = item_group_items_url(inventory.item_group,
+      :canvas => true,
+      :reference_code => reference_code(:item_stream_image)
+    )
 
     if inventory.image?
       attachment[:media] = [
         {
           :type => "image",
           :src  => image_path(inventory.image.url),
-          :href => item_group_items_url(inventory.item_group,
-            :canvas     => true,
-            :reference  => :item_stream_image,
-            :referrer   => current_user.id
-          )
+          :href => image_url
         }
       ]
+    else
+      attachment[:media] = default_stream_media(image_url)
     end
 
     stream_dialog(:attachment => attachment)
@@ -111,24 +118,26 @@ module StreamHelper
         :app      => t("app_name")
       ),
       :href => mission_group_url(mission.mission_group,
-        :canvas     => true,
-        :reference  => :mission_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:mission_stream_name)
       )
     }
+
+    image_url = mission_group_url(mission.mission_group,
+      :canvas => true,
+      :reference_code => reference_code(:mission_stream_image)
+    )
 
     if mission.image?
       attachment[:media] = [
         {
           :type => "image",
           :src  => image_path(mission.image.url),
-          :href => mission_group_url(mission.mission_group,
-            :canvas     => true,
-            :reference  => :mission_stream_image,
-            :referrer   => current_user.id
-          )
+          :href => image_url
         }
       ]
+    else
+      attachment[:media] = default_stream_media(image_url)
     end
 
     stream_dialog(:attachment => attachment)
@@ -141,24 +150,26 @@ module StreamHelper
         :app  => t("app_name")
       ),
       :href => mission_group_url(boss.mission_group,
-        :canvas     => true,
-        :reference  => :boss_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:boss_stream_name)
       )
     }
+
+    image_url = mission_group_url(boss.mission_group,
+      :canvas => true,
+      :reference_code => reference_code(:boss_stream_image)
+    )
 
     if boss.image?
       attachment[:media] = [
         {
           :type => "image",
           :src  => image_path(boss.image.url),
-          :href => mission_group_url(boss.mission_group,
-            :canvas     => true,
-            :reference  => :boss_stream_image,
-            :referrer   => current_user.id
-          )
+          :href => image_url
         }
       ]
+    else
+      attachment[:media] = default_stream_media(image_url)
     end
 
     stream_dialog(:attachment => attachment)
@@ -168,10 +179,15 @@ module StreamHelper
     context_type = context.class.to_s.underscore
 
     help_url = help_request_url(current_character,
-      :canvas     => true,
-      :context    => context_type,
-      :reference  => :help_stream,
-      :referrer   => current_user.id
+      :canvas => true,
+      :context => context_type,
+      :reference_code => reference_code(:help_stream)
+    )
+
+    image_url = help_request_url(current_character,
+      :canvas => true,
+      :context => context_type,
+      :reference_code => reference_code(:help_stream_image)
     )
 
     case context
@@ -181,7 +197,8 @@ module StreamHelper
           :level  => context.victim.level,
           :app    => t("app_name")
         ),
-        :href => help_url
+        :href => help_url,
+        :media => default_stream_media(image_url)
       }
     when Mission
       attachment = {
@@ -198,13 +215,11 @@ module StreamHelper
           {
             :type => "image",
             :src  => image_path(context.image.url),
-            :href => mission_group_url(context.mission_group,
-              :canvas     => true,
-              :reference  => :help_stream_image,
-              :referrer   => current_user.id
-            )
+            :href => image_url
           }
         ]
+      else
+        attachment[:media] = default_stream_media(image_url)
       end
     end
 
@@ -230,24 +245,26 @@ module StreamHelper
         :app      => t("app_name")
       ),
       :href => properties_url(
-        :canvas     => true,
-        :reference  => :property_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:property_stream_name)
       )
     }
+
+    image_url = properties_url(
+      :canvas => true,
+      :reference_code => reference_code(:property_stream_image)
+    )
 
     if property.image?
       attachment[:media] = [
         {
           :type => "image",
           :src  => image_path(property.image.url),
-          :href => properties_url(
-            :canvas     => true,
-            :reference  => :property_stream_image,
-            :referrer   => current_user.id
-          )
+          :href => image_url
         }
       ]
+    else
+      attachment[:media] = default_stream_media(image_url)
     end
 
     stream_dialog(:attachment => attachment)
@@ -257,9 +274,8 @@ module StreamHelper
     attachment = {
       :name => t("stories.promotion.title", :app => t("app_name")),
       :href => promotion_url(promotion,
-        :canvas     => true,
-        :reference  => :promotion_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:promotion_stream_name)
       ),
 
       :description => t("stories.promotion.description",
@@ -267,15 +283,21 @@ module StreamHelper
       )
     }
 
+    image_url = promotion_url(promotion,
+      :canvas => true,
+      :reference_code => reference_code(:promotion_stream_image)
+    )
+
+    attachment[:media] = default_stream_media(image_url)
+
     stream_dialog(
       :attachment => attachment,
       :action_links => [
         {
           :text => t("stories.promotion.action_link"),
           :href => promotion_url(promotion,
-            :canvas     => true,
-            :reference  => :promotion_stream_link,
-            :referrer   => current_user.id
+            :canvas => true,
+            :reference_code => reference_code(:promotion_stream_link)
           )
         }
       ]
@@ -286,9 +308,8 @@ module StreamHelper
     attachment = {
       :name => t("stories.hitlist.new_listing.title"),
       :href => hit_listings_url(
-        :canvas     => true,
-        :reference  => :new_hitlist_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:new_hitlist_stream_name)
       ),
 
       :description => t("stories.hitlist.new_listing.description",
@@ -298,15 +319,21 @@ module StreamHelper
       )
     }
 
+    image_url = hit_listings_url(
+      :canvas => true,
+      :reference_code => reference_code(:new_hitlist_stream_image)
+    )
+
+    attachment[:media] = default_stream_media(image_url)
+
     stream_dialog(
       :attachment => attachment,
       :action_links => [
         {
           :text => t("stories.hitlist.new_listing.action_link"),
           :href => hit_listings_url(
-            :canvas     => true,
-            :reference  => :new_hitlist_stream_link,
-            :referrer   => current_user.id
+            :canvas => true,
+            :reference_code => reference_code(:new_hitlist_stream_link)
           )
         }
       ]
@@ -317,9 +344,8 @@ module StreamHelper
     attachment = {
       :name => t("stories.hitlist.completed_listing.title"),
       :href => hit_listings_url(
-        :canvas     => true,
-        :reference  => :completed_hitlist_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:completed_hitlist_stream_name)
       ),
 
       :description => t("stories.hitlist.completed_listing.description",
@@ -329,15 +355,21 @@ module StreamHelper
       )
     }
 
+    image_url = hit_listings_url(
+      :canvas => true,
+      :reference_code => reference_code(:completed_hitlist_stream_image)
+    )
+
+    attachment[:media] = default_stream_media(image_url)
+
     stream_dialog(
       :attachment => attachment,
       :action_links => [
         {
           :text => t("stories.hitlist.completed_listing.action_link"),
           :href => hit_listings_url(
-            :canvas     => true,
-            :reference  => :completed_hitlist_stream_link,
-            :referrer   => current_user.id
+            :canvas => true,
+            :reference_code => reference_code(:completed_hitlist_stream_link)
           )
         }
       ]
@@ -351,11 +383,17 @@ module StreamHelper
         :app        => t("app_name")
       ),
       :href => item_collections_url(
-        :canvas     => true,
-        :reference  => :collection_stream_name,
-        :referrer   => current_user.id
+        :canvas => true,
+        :reference_code => reference_code(:collection_stream_name)
       )
     }
+
+    image_url = item_collections_url(
+      :canvas => true,
+      :reference_code => reference_code(:collection_stream_image)
+    )
+
+    attachment[:media] = default_stream_media(image_url)
 
     stream_dialog(:attachment => attachment)
   end

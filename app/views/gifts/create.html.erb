@@ -48,9 +48,8 @@
       <%= fb_req_choice(
             t(".request.accept", :item => @gift.item.name),
             gift_url(@gift,
-              :canvas     => true,
-              :reference  => :gift,
-              :referrer   => current_user.id
+              :canvas => true,
+              :reference_code => reference_code(:gift)
             )
           ) %>
     <% end %>
