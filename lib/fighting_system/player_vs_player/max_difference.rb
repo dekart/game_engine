@@ -11,7 +11,7 @@ module FightingSystem
         attack  = attack_points * attack_bonus * 50
         defence = defence_points * defence_bonus * 50
 
-        if Setting.p(:fight_max_difference, attack) > defence
+        if attack - defence > Setting.p(:fight_max_difference, attack)
           true
         else
           (rand((attack + defence).to_i) >= defence)
