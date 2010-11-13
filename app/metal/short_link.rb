@@ -16,7 +16,7 @@ class ShortLink
       [404, {"Content-Type" => "text/html"}, "Not Found"]
     end
   rescue
-    Rails.logger.error "Failed to parse short link: #{env["PATH_INFO"]}"
+    Rails.logger.error "Failed to parse short link: '#{env["PATH_INFO"]}'"
 
     [200, {"Content-Type" => "text/html"}, iframe_redirect_code(Facebooker2.canvas_page_url)]
   end
