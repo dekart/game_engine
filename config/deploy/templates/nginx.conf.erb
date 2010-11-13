@@ -1,0 +1,33 @@
+server {
+  listen 80;
+
+  server_name <%= URI.parse(facebooker[:callback_url]).host %>;
+
+  root <%= current_path %>/public;
+
+  rails_env <%= rails_env %>;
+
+  location ~ null {
+    return 404;
+  }
+
+  location / {
+    try_files $uri @passenger;
+  }
+
+  location @passenger {
+    passenger_enabled on;
+  }
+
+  location /system {
+    expires 1y;
+
+    try_files $uri =404;
+  }
+
+  location ~* ^.+\.(jpg|jpeg|gif|png|css|bmp|ico)$ {
+    expires 1y;
+
+    try_files $uri =404;
+  }
+}

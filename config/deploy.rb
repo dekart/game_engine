@@ -34,15 +34,11 @@ namespace :deploy do
   namespace :jobs do
     desc "Install cron jobs"
     task :install_cron, :roles => :app do
-      config = <<-CODE
-        RAILS_ENV=#{rails_env}
-        PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      template = ERB.new(
+        File.read(File.expand_path("../deploy/templates/crontab.erb", __FILE__))
+      )
 
-        * * * * * cd #{current_path} && test `ps ax | grep -E 'delayed_job' | wc -l` -le 3 && #{current_path}/script/delayed_job >> #{shared_path}/log/delayed_job.log 2>&1
-        */30 * * * * cd #{current_path} && rake app:market:remove_expired_listings --trace >> #{shared_path}/log/market.log 2>&1
-      CODE
-
-      put(config, "#{shared_path}/crontab.conf")
+      config = template.result(binding)
 
       run "crontab #{shared_path}/crontab.conf"
     end
@@ -55,53 +51,22 @@ namespace :deploy do
 
   desc "Updates apache virtual host config"
   task :update_apache_config do
-    config = <<-CODE
-      <VirtualHost *:80>
-        ServerName #{URI.parse(facebooker[:callback_url]).host}
-        DocumentRoot #{current_path}/public
-        RailsEnv #{rails_env}
+    template = ERB.new(
+      File.read(File.expand_path("../deploy/templates/apache.conf.erb", __FILE__))
+    )
 
-        <Directory #{current_path}/public>
-           AllowOverride all
-           Options FollowSymlinks -MultiViews
-           Order allow,deny
-           Allow from all
-        </Directory>
-      </VirtualHost>
-    CODE
-
-    puts config
+    config = template.result(binding)
 
     put(config, "#{shared_path}/apache_vhost.conf")
   end
 
   desc "Updates nginx virtual host config"
   task :update_nginx_config do
-    config = <<-CODE
-      server {
-        listen 80;
+    template = ERB.new(
+      File.read(File.expand_path("../deploy/templates/nginx.conf.erb", __FILE__))
+    )
 
-        server_name #{URI.parse(facebooker[:callback_url]).host};
-
-        root #{current_path}/public;
-
-        rails_env #{rails_env};
-
-        location ~ null {
-          return 404;
-        }
-
-        location / {
-          try_files $uri @passenger;
-        }
-
-        location @passenger {
-          passenger_enabled on;
-        }
-      }
-    CODE
-
-    puts config
+    config = template.result(binding)
 
     put(config, "#{shared_path}/nginx.conf")
   end
