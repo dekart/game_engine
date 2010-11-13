@@ -20,7 +20,7 @@
         <td class="state"><%= admin_state(page) %></td>
         <td class="preview">
           <%= link_to(t(".controls.preview.dialog"), help_page_path(page.alias), :class => :help) %>
-          <%= link_to(t(".controls.preview.page"), help_page_path(page.alias), :target => :_blank) %>
+          <%= link_to(t(".controls.preview.page"), help_page_url(page.alias, :canvas => true), :target => :_blank) %>
         </td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_help_page_path(page)) %>
