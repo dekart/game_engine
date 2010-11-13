@@ -1,5 +1,6 @@
 en:
   help_pages:
     show:
-      close: "Close dialog"
-      return: "&laquo; Return to the game"
+      buttons:
+        close: "Close"
+        return: "Return to the game"

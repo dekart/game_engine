@@ -1,9 +1,12 @@
 .help_page_content
-  .return
+  .controls
     margin-top: 20px
-    font-weight: bold
 
-#dialog .help_page_content
-  .return
-    font-weight: normal
-    font-size: 10px
+    .button
+      float: none
+
+    .return
+      +button(!asset_icons_home, 170px)
+
+    .close
+      +button(!asset_icons_delete, 70px)
