@@ -2,7 +2,7 @@ class ShortLink
   extend ApplicationController::ReferenceCode
   
   def self.call(env)
-    if match_data = env["PATH_INFO"].match(/^\/cil\/(.+)/) and key = match_data[1]
+    if match_data = env["PATH_INFO"].match(/^\/cil\/(\d+-[a-z0-9]{10})/) and key = match_data[1]
       target_url = "%s/invitations/%s?reference_code=%s" % [
         Facebooker2.canvas_page_url,
         key,
