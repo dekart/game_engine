@@ -99,7 +99,7 @@ var Character = {
     Timer.start('#co .energy .timer', c.time_to_ep_restore, this.update_from_remote);
     Timer.start('#co .stamina .timer', c.time_to_sp_restore, this.update_from_remote);
 
-    $('#co .timer').click(this.update_from_remote)
+    $('#co .timer').unbind('click').click(Character.update_from_remote);
 
     c.points > 0 ? $("#co .level .upgrade").show() : $("#co .level .upgrade").hide();
     c.hp == c.health_points ? $('#co .health .hospital').hide() : $('#co .health .hospital').show();
