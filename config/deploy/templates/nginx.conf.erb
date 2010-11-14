@@ -7,9 +7,9 @@ server {
 
   rails_env <%= rails_env %>;
 
-  location ~ null {
-    return 404;
-  }
+  # Ignored URLs
+  location ~ null { return 404; }
+  location ~ google-analytics\.com/ga\.js { return 404; }
 
   location / {
     try_files $uri @passenger;
