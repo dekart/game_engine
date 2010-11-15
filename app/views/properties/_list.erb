@@ -56,7 +56,7 @@
           <%= payout(:basic_money, "+%s" % number_to_currency(property ? property.total_income : type.income)) %>
         </div>
 
-        <% if property.nil? or type.upgradeable? %>
+        <% if property.nil? or property.upgradeable? %>
           <div class="requirements">
             <h3><%= PropertyType.human_attribute_name(property ? "upgrade_price" : "price") %></h3>
 
