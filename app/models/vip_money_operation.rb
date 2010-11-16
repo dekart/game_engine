@@ -23,7 +23,7 @@ class VipMoneyOperation < ActiveRecord::Base
       self.reference_id   = value.id
       self.reference_type = value.class.sti_name
     when Array
-      self.reference_type = value.first
+      self.reference_type = value.first.to_s
       self.reference_id   = value.last
     else
       self.reference_type = value.to_s
