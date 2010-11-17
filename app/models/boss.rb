@@ -29,7 +29,8 @@ class Boss < ActiveRecord::Base
       :icon   => "40x40#",
       :small  => "100x100>",
       :normal => "200x200>"
-    }
+    },
+    :removable => true
 
   has_requirements
 

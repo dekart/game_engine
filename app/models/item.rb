@@ -76,7 +76,8 @@ class Item < ActiveRecord::Base
       :small  => "72x72#",
       :medium => "120x120#",
       :large  => "200x200#"
-    }
+    },
+    :removable => true
 
   has_payouts :use
 

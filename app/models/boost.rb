@@ -26,7 +26,8 @@ class Boost < ActiveRecord::Base
       :small  => "72x72#",
       :medium => "120x120#",
       :large  => "200x200#"
-    }
+    },
+    :removable => true
 
   validates_presence_of :name, :level
   validates_numericality_of :level, :basic_price, :vip_price, :allow_blank => true
