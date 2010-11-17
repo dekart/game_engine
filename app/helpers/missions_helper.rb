@@ -17,7 +17,7 @@ module MissionsHelper
 
     result = ""
 
-    if options[:level] and rank.mission.levels.size > 0
+    if options[:level] and rank.mission.levels.size > 1
       result << content_tag(:div, t("missions.mission.level", :level => rank.level.position), :class => :level)
     end
 
