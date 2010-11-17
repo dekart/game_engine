@@ -12,4 +12,19 @@ class DivFormBuilder
       options.merge(:label => false)
     )
   end
+
+  def attachment_preview(name, style)
+    if object.send("#{name}?")
+      result = @template.image_tag(object.send(name).url(style))
+      
+      if object.respond_to?("remove_#{name}")
+        result << @template.link_to(@template.t(".remove_attachment", :default => @template.t('form_builder.remove_attachment')), '#',
+          :class => :remove_attachment,
+          :"data-field" => "#{object_name}[remove_#{name}]"
+        )
+      end
+
+      result
+    end
+  end
 end

@@ -26,7 +26,8 @@ class CharacterType < ActiveRecord::Base
     :styles => {
       :icon   => "40x40#",
       :small  => "120x120>"
-    }
+    },
+    :removable => true
 
   validates_presence_of [:name] + APPLICABLE_ATTRIBUTES + BONUSES
   validates_numericality_of APPLICABLE_ATTRIBUTES + BONUSES,

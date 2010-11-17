@@ -32,7 +32,8 @@ class Mission < ActiveRecord::Base
     :styles => {
       :icon       => "50x50>",
       :small      => "120x120>"
-    }
+    },
+    :removable => true
 
   has_requirements
   has_payouts :success, :failure, :complete, :repeat_success, :repeat_failure,

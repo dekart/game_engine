@@ -14,5 +14,6 @@ en:
     select_multiple: "Hold 'Ctrl' to select multiple items"
   form_builder:
     submit_and_continue: "Save & Continue Editing"
+    remove_attachment: "Remove Image"
   blocks:
     hide: "Hide"

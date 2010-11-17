@@ -32,7 +32,7 @@ class MissionGroup < ActiveRecord::Base
     end
   end
 
-  has_attached_file :image
+  has_attached_file :image, :removable => true
 
   has_requirements
   has_payouts :complete

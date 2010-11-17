@@ -3,7 +3,7 @@
 
 <%= form.text_area :description, :cols => 80, :rows => 5 %>
 
-<%= form.file_field :image, :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
+<%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
 
 <%= form.select :availability, PropertyType::AVAILABILITIES, :required => true %>
 

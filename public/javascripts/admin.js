@@ -53,6 +53,16 @@ $(function(){
     $('<input type="hidden" name="continue" value="true">').appendTo($(this).parents('form'));
   });
 
+  $('form a.remove_attachment').click(function(e){
+    e.preventDefault();
+    
+    var $this = $(this);
+
+    $('<input type="hidden" name="' + $this.attr('data-field') + '" value="1" />').insertBefore($this);
+
+    $(this).hide().parent().css({opacity: 0.4});
+  })
+
   $('#flash').click(function(){$(this).remove()}).delay(3000).fadeOut(3000);
 
   $('a.help').live('click', function(e){

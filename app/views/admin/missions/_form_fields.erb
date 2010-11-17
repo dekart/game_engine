@@ -9,7 +9,7 @@
 <%= form.text_area :failure_text, :required => true, :cols => 80, :rows => 3 %>
 <%= form.text_area :complete_text, :required => true, :cols => 80, :rows => 3 %>
 
-<%= form.file_field :image, :after_field => (image_tag(form.object.image(:small)) if form.object.image?) %>
+<%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
 
 <%= form.check_box :repeatable %>
 

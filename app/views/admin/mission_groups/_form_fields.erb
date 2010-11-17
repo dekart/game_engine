@@ -1,6 +1,6 @@
 <%= form.text_field :name, :required => true %>
 
-<%= form.file_field :image, :after_field => (image_tag(form.object.image.url) if form.object.image?) %>
+<%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>
 
 <% form.field_set MissionGroup.human_attribute_name("requirements") do %>
   <%= form.fields "admin/requirements/collection" %>
