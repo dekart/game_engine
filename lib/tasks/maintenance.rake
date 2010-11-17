@@ -38,6 +38,81 @@ namespace :app do
 
     # One-time tasks
 
+    desc "Remove duplicate mission and mission level ranks"
+    task :remove_duplicate_ranks => :environment do
+      puts "Removing duplicate level ranks..."
+
+      i = 0
+      
+      MissionLevelRank.all(
+        :select => "character_id, level_id, COUNT(level_id) as level_count",
+        :group => "character_id, level_id HAVING level_count > 1"
+      ).each do |rank|
+        level_ranks = MissionLevelRank.all(:conditions => {:character_id => rank.character_id, :level_id => rank.level_id})
+
+        rank_to_keep = level_ranks.max_by(&:progress)
+        
+        level_ranks.delete(rank_to_keep)
+
+        MissionLevelRank.transaction do
+          level_ranks.each do |duplicate|
+            rank_to_keep.progress += duplicate.progress
+
+            duplicate.destroy
+
+            i += 1
+          end
+
+          rank_to_keep.save
+        end
+      end
+
+      puts "Done! #{i} duplicates removed"
+
+      puts "Removing duplicate mission ranks..."
+
+      i = 0
+      
+      MissionRank.all(
+        :select => "character_id, mission_id, COUNT(mission_id) as mission_count",
+        :group => "character_id, mission_id HAVING mission_count > 1"
+      ).each do |rank|
+        mission_ranks = MissionRank.all(:conditions => {:character_id => rank.character_id, :mission_id => rank.mission_id})
+        mission_ranks.delete(mission_ranks.detect{|r| r.completed } || mission_ranks.first)
+
+        mission_ranks.each do |duplicate|
+          duplicate.destroy
+
+          i += 1
+        end
+      end
+
+      puts "Done! #{i} duplicates removed"
+    end
+
+    desc "Recalculate mission stats for characters"
+    task :recalculate_mission_stats => :environment do
+      total = Character.count
+
+      puts "Recalculating mission stats for #{total} characters..."
+
+      i = 0
+
+      Character.find_each(:batch_size => 1) do |character|
+        character.missions_succeeded = character.mission_level_ranks.sum(:progress)
+        character.missions_completed = character.mission_level_ranks.scoped(:conditions => {:completed => true}).count
+        character.missions_mastered = character.mission_ranks.scoped(:conditions => {:completed => true}).count
+
+        character.save
+
+        i += 1
+
+        puts "Processed #{i} of #{total}..." if i % 100 == 0
+      end
+
+      puts "Done!"
+    end
+
     desc "Update missions mastered count for characters"
     task :update_missions_mastered_count => :environment do
       puts "Updating mastered missions counter..."
