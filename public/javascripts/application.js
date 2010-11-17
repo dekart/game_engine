@@ -13,6 +13,13 @@
     });
 
     $current.addClass('current');
+
+    $items.click(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+      document.location = $(this).find('a').attr('href');
+    })
   }
 })(jQuery);
 
