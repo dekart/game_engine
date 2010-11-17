@@ -382,7 +382,7 @@ $(function(){
   });
 
   $(document).bind('loading.dialog', function(){
-    $.scrollTo('#content');
+    $.scrollTo('#dialog .popup');
   });
   
   $(document).bind('afterReveal.dialog', function(){
@@ -390,8 +390,8 @@ $(function(){
   });
 
   $(document).bind('facebook.stream_publish', function(){
-    $.scrollTo('#content');
-    Spinner.alignTo('#content');
+    $.scrollTo('.fb_dialog.fb_dialog_advanced');
+    Spinner.alignTo('.fb_dialog.fb_dialog_advanced');
     Spinner.blink();
   })
 

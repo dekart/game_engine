@@ -8,9 +8,11 @@
       border: "0px",
       backgroundColor: "transparent",
       "float": "left",
-      marginTop: "-50px"
+      position: 'absolute',
+      top: $target.offset().top,
+      left: $target.offset().left
     });
 
-    $focus_field.insertBefore($target).focus().remove();
+    $focus_field.insertBefore('body').focus().remove();
   }
 })(jQuery);
