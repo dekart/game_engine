@@ -7,10 +7,6 @@
     <div class="name"><%= mission.name %></div>
     <div class="description"><%= mission.description %></div>
 
-    <% if mission.levels.size > 1 %>
-      <div class="level"><%= t(".level", :level => level.position) %></div>
-    <% end %>
-
     <% if mission.repeatable? || rank.nil? || !rank.completed? %>
       <div class="controls">
         <%= link_to_remote(button(:fulfill),

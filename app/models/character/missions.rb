@@ -47,7 +47,7 @@ class Character
             level = mission.levels.first
           end
 
-          proxy_owner.mission_level_ranks.build(:level => level)
+          proxy_owner.mission_level_ranks.build(:level => level, :mission => mission)
         end
       end
 

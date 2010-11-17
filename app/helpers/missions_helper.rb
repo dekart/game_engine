@@ -10,20 +10,32 @@ module MissionsHelper
     end
   end
 
-  def mission_progress(rank)
+  def mission_progress(rank, options = {})
+    options = options.reverse_merge(
+      :level => true
+    )
+
+    result = ""
+
+    if options[:level] and rank.mission.levels.size > 0
+      result << content_tag(:div, t("missions.mission.level", :level => rank.level.position))
+    end
+
     if rank.nil?
-      percentage_bar(0,
+      result << percentage_bar(0,
         :label => "%s: %d%" % [Mission.human_attribute_name("progress"), 0]
       )
     elsif rank.completed?
-      percentage_bar(100, :label => t("missions.mission.completed"))
+      result << percentage_bar(100, :label => t("missions.mission.completed"))
     else
       percentage = rank.progress_percentage
 
-      percentage_bar(percentage,
+      result << percentage_bar(percentage,
         :label => "%s: %d%" % [Mission.human_attribute_name("progress"), percentage]
       )
     end
+
+    result.html_safe
   end
 
   def mission_money(level)
