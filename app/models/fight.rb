@@ -83,6 +83,10 @@ class Fight < ActiveRecord::Base
   def validate
     errors.add(:character, :not_enough_stamina) unless enough_stamina?
 
+    if attacker.friend_relations.established?(victim) and !Setting.b(:fight_alliance_attack)
+      errors.add(:character, :cannot_attack_friends)
+    end
+
     if (is_response? and cause.is_a?(Fight) and !cause.respondable?) or
        (!is_response? and !attacker.can_attack?(victim)) or
        (attacker == victim)
