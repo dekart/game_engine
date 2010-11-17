@@ -94,7 +94,7 @@ en:
             character:
               not_enough_stamina: "You don't have enough stamina to fight. Take a rest!"
               cannot_attack: "You cannot attack this player!"
-              cannot_attack: "You cannot attack your allies!"
+              cannot_attack_friends: "You cannot attack your allies!"
               too_weak: "You are too weak to fight! Take a rest!"
         inventory:
           attributes:
