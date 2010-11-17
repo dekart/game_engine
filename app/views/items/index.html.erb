@@ -14,7 +14,7 @@
       <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
     <% end %>
   <% end %>
-  <%= link_to t(".boosts"), boosts_path %>
+  <%= link_to t(".boosts"), boosts_path if Setting.b(:boosts_enabled) %>
 </div>
 
 <% if @special_items.any? %>

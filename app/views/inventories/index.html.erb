@@ -20,6 +20,9 @@
 <div id="inventory_list" class="inventory_list">
   <%= render "list", :inventories => @inventories %>
 </div>
-<div id="boost_list" class="inventory_list">
-  <%= render "purchased_boosts/list", :boosts => @boosts %>
-</div>
+
+<% if Setting.b(:boosts_enabled) %>
+  <div id="boost_list" class="inventory_list">
+    <%= render "purchased_boosts/list", :boosts => @boosts %>
+  </div>
+<% end %>

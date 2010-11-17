@@ -136,4 +136,6 @@ Setting[:market_expire_period]    ||= 24
 
 Setting[:collections_enabled] ||= true
 
+Setting[:boosts_enabled] ||= false
+
 # Put your custom settings below this line
