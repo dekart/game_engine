@@ -32,7 +32,7 @@
             :method => :get,
             :update => :ajax,
             :html   => {:class => "hitlist button"}
-          ) if Setting.b(:hit_list_enabled) %>
+          ) if current_character.can_hitlist?(@character) %>
     <% end %>
   </div>
 

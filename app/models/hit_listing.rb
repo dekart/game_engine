@@ -6,6 +6,15 @@ class HitListing < ActiveRecord::Base
   named_scope :incomplete,
     :conditions => {:completed => false},
     :include    => [:victim, :client]
+  named_scope :available_for, Proc.new{|character|
+    exclude_ids = [character.id]
+    exclude_ids.push(*character.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
+
+    {
+      :conditions => ["victim_id NOT IN (?)", exclude_ids]
+    }
+  }
+
 
   validates_presence_of :client, :victim, :reward
   validates_numericality_of :reward,

@@ -326,6 +326,12 @@ class Character < ActiveRecord::Base
     level_fits && !attacked_recently && !friendly_attack
   end
 
+  def can_hitlist?(victim)
+    friendly_attack = Setting.b(:fight_alliance_attack) ? false : friend_relations.established?(victim)
+
+    Setting.b(:hit_list_enabled) && !friendly_attack
+  end
+
   def exchange_money!
     return if vip_money < Setting.i(:premium_money_price)
 

@@ -49,7 +49,7 @@ class HitListingsController < ApplicationController
   protected
 
   def fetch_incomplete_listings
-    @hit_listings = HitListing.incomplete.paginate(
+    @hit_listings = HitListing.incomplete.available_for(current_character).paginate(
       :page     => params[:page],
       :per_page => Setting.i(:hit_list_display_limit)
     )
