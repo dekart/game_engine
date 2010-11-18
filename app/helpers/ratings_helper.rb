@@ -5,7 +5,9 @@ module RatingsHelper
     characters.each_with_index do |character, index|
       current = (character == current_character)
 
-      result << capture(character, index + 1, current, &block)
+      position = field ? characters.index{|c| c.send(field) == character.send(field) } : index
+
+      result << capture(character, position + 1, current, &block)
     end
 
     if include_self && !characters.include?(current_character)
