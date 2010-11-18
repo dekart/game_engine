@@ -13,6 +13,6 @@
       left: $target.offset().left
     });
 
-    $focus_field.insertBefore('body').focus().remove();
+    $focus_field.appendTo('body').focus().delay(100).remove();
   }
 })(jQuery);
