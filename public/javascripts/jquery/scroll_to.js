@@ -9,7 +9,7 @@
       backgroundColor: "transparent",
       "float": "left",
       position: 'absolute',
-      top: $target.offset().top,
+      top: $target.offset().top + 100,
       left: $target.offset().left
     });
 
