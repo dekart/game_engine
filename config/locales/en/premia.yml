@@ -8,6 +8,7 @@ en:
       hire_mercenary:
         text: "Hire a mercenary to your Alliance"
         button: "Hire"
+        maximum: "You have maximum Alliance"
       exchange_money:
         text: "Add {{amount}} gold to your character"
         button: "Add Gold"

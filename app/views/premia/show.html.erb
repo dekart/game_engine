@@ -28,16 +28,21 @@
     </td>
   </tr>
 
+
   <tr>
     <td class="name"><%= t(".hire_mercenary.text") %></td>
     <td class="requirements">
       <%= attribute_requirement(:vip_money, Setting.i(:premium_mercenary_price)) %>
     </td>
     <td class="controls">
-      <%= link_to(button(t(".hire_mercenary.button")), premium_path(:type => :hire_mercenary),
-            :method => :put,
-            :class  => :button
-          ) %>
+      <% if !current_character.relations.maximum_size? %>
+        <%= link_to(button(t(".hire_mercenary.button")), premium_path(:type => :hire_mercenary),
+              :method => :put,
+              :class  => :button
+            ) %>
+      <% else %>
+        <%= t('.hire_mercenary.maximum') %>
+      <% end %>
     </td>
   </tr>
 

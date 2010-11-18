@@ -23,6 +23,7 @@
   td
     vertical-align: middle
     border-bottom = !premium_service_border
+    padding: 5px 10px
 
   .name
     width: 300px
@@ -42,8 +43,14 @@
   .points
     background-image = !premium_points_icon
 
-  .controls .button
-    +button(!premium_accept_icon, !premium_accept_width)
+  .controls
+    text-align: center
+
+    .button
+      text-align: left
+      float: none
+      margin: auto
+      +button(!premium_accept_icon, !premium_accept_width)
 
 #premia_result
   background-image = !premium_result_icon
