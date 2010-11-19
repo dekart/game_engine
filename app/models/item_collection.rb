@@ -1,7 +1,7 @@
 class ItemCollection < ActiveRecord::Base
   extend HasPayouts
 
-  has_payouts :collected
+  has_payouts :collected, :repeat_collected
 
   validates_presence_of :name
 
