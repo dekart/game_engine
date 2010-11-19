@@ -84,7 +84,7 @@ namespace :deploy do
 
       html = template.result(binding)
 
-      put(config, "#{shared_path}/system/maintenance.html")
+      put(html, "#{shared_path}/system/maintenance.html")
     end
   end
 
