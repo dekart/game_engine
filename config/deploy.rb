@@ -73,6 +73,21 @@ namespace :deploy do
     put(config, "#{shared_path}/nginx.conf")
   end
 
+  namespace :web do
+    desc "Disable application"
+    task :disable, :roles => :web do
+      template = ERB.new(
+        File.read(File.expand_path("../deploy/templates/maintenance.html.erb", __FILE__))
+      )
+
+      downtime_length = ENV['DOWNTIME_LENGTH'] ? eval(ENV['DOWNTIME_LENGTH']) : 10.minutes
+
+      html = template.result(binding)
+
+      put(config, "#{shared_path}/system/maintenance.html")
+    end
+  end
+
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :db do
