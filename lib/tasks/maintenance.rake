@@ -38,6 +38,33 @@ namespace :app do
 
     # One-time tasks
 
+    desc "Remove duplicate character titles"
+    task :remove_duplicate_character_titles => :environment do
+      puts "Removing duplicate level ranks..."
+
+      i = 0
+
+      CharacterTitle.all(
+        :select => "character_id, title_id, COUNT(title_id) as title_count",
+        :group => "character_id, title_id HAVING title_count > 1"
+      ).each do |title|
+        character_titles = CharacterTitle.all(:conditions => {:character_id => title.character_id, :title_id => title.title_id})
+
+        # Removing first from the list
+        character_titles.shift
+
+        CharacterTitle.transaction do
+          character_titles.each do |duplicate|
+            duplicate.destroy
+
+            i += 1
+          end
+        end
+      end
+
+      puts "Done! #{i} duplicates removed"
+    end
+
     desc "Remove duplicate mission and mission level ranks"
     task :remove_duplicate_ranks => :environment do
       puts "Removing duplicate level ranks..."
