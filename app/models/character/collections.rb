@@ -3,23 +3,35 @@ class Character
     def self.included(base)
       base.class_eval do
         has_many :collection_ranks,
-          :class_name => "ItemCollectionRank"
+          :class_name => "ItemCollectionRank",
+          :extend     => CollectionRankAssociationExtension
 
         has_many :collections,
           :class_name => "ItemCollection",
           :through    => :collection_ranks,
-          :extend     => AssociationExtension
+          :extend     => CollectionAssociationExtension
       end
     end
 
-    module AssociationExtension
+    module CollectionRankAssociationExtension
+      def rank_for(collection)
+        proxy_owner.collection_ranks.find_by_collection_id(collection.id) || proxy_owner.collection_ranks.build(:collection => collection)
+      end
+    end
+
+    module CollectionAssociationExtension
       def apply!(collection)
-        rank = proxy_owner.collection_ranks.find_by_collection_id(collection.id)
-        rank ||= proxy_owner.collection_ranks.build(:collection => collection)
+        proxy_owner.collection_ranks.rank_for(collection).tap do |rank|
+          rank.apply!
+        end
+      end
 
-        rank.apply!
-
-        rank
+      def next_payout_triggers(collection)
+        if proxy_owner.collection_ranks.rank_for(collection).collected?
+          [:repeat_collected]
+        else
+          [:collected]
+        end
       end
     end
   end

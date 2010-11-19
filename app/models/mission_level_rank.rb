@@ -14,6 +14,20 @@ class MissionLevelRank < ActiveRecord::Base
     (progress.to_f / level.win_amount * 100)
   end
 
+  def next_payout_triggers
+    if completed?
+      mission.repeatable? ? [:repeat_success, :repeat_failure] : [:complete]
+    elsif almost_completed?
+      [:success, :failure, :complete]
+    elsif
+      [:success, :failure]
+    end
+  end
+
+  def almost_completed?
+    level.win_amount - progress == 1
+  end
+
   protected
 
   def assign_mission

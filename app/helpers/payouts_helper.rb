@@ -1,13 +1,17 @@
 module PayoutsHelper
-  def payout_list(payouts, action, format = :result)
+  def payout_list(payouts, action, options = {})
     return unless payouts
 
+    options = options.reverse_merge(
+      :format => :result
+    )
+    
     result = ""
 
     payouts.by_action(action).each do |payout|
-      next if (format == :preview) && !payout.visible
+      next if options[:format] == :preview && !payout.visible || options[:triggers] && (options[:triggers] & payout.apply_on).empty?
 
-      result << render("payouts/#{format}/#{payout.class.to_s.underscore.split("/").last}",
+      result << render("payouts/#{options[:format]}/#{payout.class.payout_name}",
         :payout => payout
       )
     end

@@ -18,5 +18,13 @@ class Character
         fight.health    = boss.health
       end
     end
+
+    def next_payout_triggers(boss)
+      if won?(boss)
+        [:repeat_victory, :repeat_defeat]
+      else
+        [:victory, :defeat]
+      end
+    end
   end
 end

@@ -10,7 +10,7 @@ class ItemCollectionRank < ActiveRecord::Base
     return unless valid?
 
     transaction do
-      @payouts = collection.payouts.apply(character, collection_count > 0 ? :repeat_collected : :collected)
+      @payouts = collection.payouts.apply(character, collected? ? :repeat_collected : :collected)
       @payouts += collection.spendings.apply(character, :collected)
 
       increment(:collection_count)
@@ -20,6 +20,10 @@ class ItemCollectionRank < ActiveRecord::Base
 
       @applied = true
     end
+  end
+
+  def collected?
+    collection_count > 0
   end
 
   protected
