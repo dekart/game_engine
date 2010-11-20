@@ -46,7 +46,7 @@ class MarketItem < ActiveRecord::Base
         basic_money = basic_price - Setting.p(:market_basic_price_fee, basic_price).floor
         vip_money   = vip_price - Setting.p(:market_vip_price_fee, vip_price).floor
 
-        character.charge!(- basic_money, - vip_money)
+        character.charge!(- basic_money, - vip_money, :market)
         character.inventories.take!(inventory, amount)
 
         destroy unless inventory.market_item.destroyed?
