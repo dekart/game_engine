@@ -17,6 +17,7 @@
       <th><%= PropertyType.human_attribute_name("vip_price") %></th>
       <th><%= PropertyType.human_attribute_name("income") %></th>
       <th><%= PropertyType.human_attribute_name("upgrade_limit") %></th>
+      <th><%= PropertyType.human_attribute_name("owned") %></th>
       <th><%= PropertyType.human_attribute_name("state") %></th>
       <th></th>
     </tr>
@@ -36,6 +37,7 @@
             <span class="default"><%= Setting.i(:property_upgrade_limit) %></span>
           <% end %>
         </td>
+        <td><%= type.properties.size %></td>
         <td class="state"><%= admin_state(type) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_property_type_path(type)) %>
