@@ -33,6 +33,26 @@ class MarketItem < ActiveRecord::Base
     basic_price > 0 or vip_price > 0
   end
 
+  def basic_fee
+    if basic_price > 0
+      result = Setting.p(:market_basic_price_fee, basic_price).floor
+      result = 1 if result == 0
+      result
+    else
+      0
+    end
+  end
+
+  def vip_fee
+    if vip_price > 0
+      result = Setting.p(:market_vip_price_fee, vip_price).floor
+      result = 1 if result == 0
+      result
+    else
+      0
+    end
+  end
+
   def buy!(target_character)
     if target_character.basic_money < basic_price
       errors.add(:base, :not_enough_basic_money, :name => plural_name)
@@ -43,8 +63,8 @@ class MarketItem < ActiveRecord::Base
         target_character.charge!(basic_price, vip_price)
         target_character.inventories.give!(inventory.item, amount)
 
-        basic_money = basic_price - Setting.p(:market_basic_price_fee, basic_price).floor
-        vip_money   = vip_price - Setting.p(:market_vip_price_fee, vip_price).floor
+        basic_money = basic_price - basic_fee
+        vip_money   = vip_price - vip_fee
 
         character.charge!(- basic_money, - vip_money, :market)
         character.inventories.take!(inventory, amount)
