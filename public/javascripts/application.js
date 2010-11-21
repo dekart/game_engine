@@ -49,15 +49,9 @@ var CharacterForm = {
     form.find('input[type=submit]').click(function(e){
       e.preventDefault();
 
-      Spinner.show();
+      form.submit();
 
-      //var callback = function(){
-        Spinner.hide();
-
-        form.submit();
-
-        Spinner.show(200);
-      //};
+      Spinner.show(200);
     });
 
     form.find('a.skip').click(function(e){
@@ -65,13 +59,9 @@ var CharacterForm = {
 
       e.preventDefault();
 
-      Spinner.show();
+      document.location = signed_url($(link).attr('href'));
 
-      //var callback = function(){
-        document.location = signed_url($(link).attr('href'));
-
-        Spinner.show(200);
-      //}
+      Spinner.show(200);
     });
   },
 
