@@ -18,7 +18,7 @@
       e.preventDefault();
       e.stopPropagation();
 
-      document.location = signed_url($(this).find('a').attr('href'));
+      redirectTo($(this).find('a').attr('href'));
     })
   }
 })(jQuery);
@@ -59,7 +59,7 @@ var CharacterForm = {
 
       e.preventDefault();
 
-      document.location = signed_url($(link).attr('href'));
+      redirectTo($(link).attr('href'));
 
       Spinner.show(200);
     });
@@ -337,7 +337,7 @@ var Spinner = {
 $(function(){
   if(document.cookie.indexOf('access_token') == -1){
     $('a').live('click', function(){
-      $(this).attr('href', signed_url($(this).attr('href')));
+      $(this).attr('href', signedUrl($(this).attr('href')));
     });
 
     $('form').live('submit', function(){
@@ -405,12 +405,12 @@ function show_result(){
   $.scrollTo('#result');
 }
 
-function signed_url(url){
+function signedUrl(url){
   var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'signed_request=' + signed_request;
 
   return new_url
 }
 
-function redirect_to(url){
-  
+function redirectTo(url){
+  document.location = signedUrl(url)
 }
