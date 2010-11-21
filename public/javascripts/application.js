@@ -18,7 +18,7 @@
       e.preventDefault();
       e.stopPropagation();
 
-      document.location = $(this).find('a').attr('href');
+      document.location = signed_url($(this).find('a').attr('href'));
     })
   }
 })(jQuery);
@@ -68,7 +68,7 @@ var CharacterForm = {
       Spinner.show();
 
       //var callback = function(){
-        document.location = $(link).attr('href');
+        document.location = signed_url($(link).attr('href'));
 
         Spinner.show(200);
       //}
@@ -347,12 +347,7 @@ var Spinner = {
 $(function(){
   if(document.cookie.indexOf('access_token') == -1){
     $('a').live('click', function(){
-      var url = $(this).attr('href');
-
-      url = url + (url.indexOf('?') == -1 ? '?' : '&') +
-        'signed_request=' + signed_request;
-
-      $(this).attr('href', url);
+      $(this).attr('href', signed_url($(this).attr('href')));
     });
 
     $('form').live('submit', function(){
@@ -418,4 +413,14 @@ function show_result(){
   $('#result').show();
 
   $.scrollTo('#result');
+}
+
+function signed_url(url){
+  var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'signed_request=' + signed_request;
+
+  return new_url
+}
+
+function redirect_to(url){
+  
 }
