@@ -41,7 +41,8 @@ module Facebooker2
                 appId  : '#{app_id}',
                 status : #{options[:status]}, // check login status
                 cookie : #{options[:cookie]}, // enable cookies to allow the server to access the session
-                xfbml  : #{options[:xfbml]}  // parse XFBML
+                xfbml  : #{options[:xfbml]},  // parse XFBML
+                channelUrl : '#{ options[:channel_url] || 'null' }'
               });
               #{extra_js}
             };

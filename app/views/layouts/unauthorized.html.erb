@@ -24,7 +24,7 @@
   </div>
 
   <% dom_ready do %>
-    <% fb_connect_async_js(:wrap_tag => false) do %>
+    <% fb_connect_async_js(:wrap_tag => false, :channel_url => Facebooker2.callback_url + '/channel.html') do %>
         $(document).trigger('facebook.ready');
     <% end %>
   <% end %>
