@@ -61,13 +61,11 @@
 
   <%= display_notifications %>
 
-  <% fb_connect_async_js do %>
-    $(function(){
-      $(document).trigger('facebook.ready');
-    });
-  <% end %>
-
   <% dom_ready do %>
+    <% fb_connect_async_js(:wrap_tag => false) do %>
+      $(document).trigger('facebook.ready');
+    <% end %>
+
     $(document).trigger('application.ready');
   <% end %>
 

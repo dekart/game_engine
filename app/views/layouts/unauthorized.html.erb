@@ -23,10 +23,10 @@
     <%= yield %>
   </div>
 
-  <% fb_connect_async_js do %>
-    $(function(){
-      $(document).trigger('facebook.ready');
-    });
+  <% dom_ready do %>
+    <% fb_connect_async_js(:wrap_tag => false) do %>
+        $(document).trigger('facebook.ready');
+    <% end %>
   <% end %>
 
   <%= dom_ready %>

@@ -20,23 +20,28 @@ module Facebooker2
         end
 
 
-        def fb_connect_async_js(app_id = Facebooker2.app_id, options = {}, &proc)
-          opts    = Hash.new(true).merge!(options)
-          cookie  = opts[:cookie]
-          status  = opts[:status]
-          xfbml   = opts[:xfbml]
-          locale  = options[:locale] || "en_US"
+        def fb_connect_async_js(*args, &proc)
+          options = args.extract_options!
+          
+          app_id  = args.shift || Facebooker2.app_id
+
+          options.reverse_merge!(
+            :wrap_tag => true,
+            :cookie   => true,
+            :status   => true,
+            :xfbml    => true,
+            :locale   => "en_US"
+          )
 
           extra_js = capture(&proc) if block_given?
 
           js = <<-JAVASCRIPT
-          <script>
             window.fbAsyncInit = function() {
               FB.init({
                 appId  : '#{app_id}',
-                status : #{status}, // check login status
-                cookie : #{cookie}, // enable cookies to allow the server to access the session
-                xfbml  : #{xfbml}  // parse XFBML
+                status : #{options[:status]}, // check login status
+                cookie : #{options[:cookie]}, // enable cookies to allow the server to access the session
+                xfbml  : #{options[:xfbml]}  // parse XFBML
               });
               #{extra_js}
             };
@@ -46,13 +51,13 @@ module Facebooker2
               s.setAttribute('id','fb-root');
               document.documentElement.getElementsByTagName("body")[0].appendChild(s);
               var e = document.createElement('script');
-              e.src = document.location.protocol + '//connect.facebook.net/#{locale}/all.js';
+              e.src = document.location.protocol + '//connect.facebook.net/#{options[:locale]}/all.js';
               e.async = true;
               s.appendChild(e);
             }());
-          </script>
           JAVASCRIPT
 
+          js = javascript_tag(js) if options[:wrap_tag]
           js = fb_html_safe(js)
 
           block_given? ? fb_concat(js) : js
