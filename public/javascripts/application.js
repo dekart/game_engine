@@ -375,8 +375,12 @@ $(function(){
   });
 
   $(document).bind('facebook.stream_publish', function(){
-    $.scrollTo('.fb_dialog.fb_dialog_advanced');
-    Spinner.alignTo('.fb_dialog.fb_dialog_advanced');
+    var dialog = $('.fb_dialog').filter(function(){ 
+      return $(this).offset().top > 0;
+    }).first();
+
+    $.scrollTo(dialog);
+    Spinner.alignTo(dialog);
     Spinner.blink();
   })
 
