@@ -3,7 +3,7 @@ module StreamHelper
     attachment    = options[:attachment].reverse_merge(:media => default_stream_media)
     action_links  = options[:action_links] || default_stream_action_links
 
-    result = "FB.ui(%s, %s);$(document).delay(500).trigger('facebook.stream_publish');" % [
+    result = "FB.ui(%s, %s);$(document).delay(100).queue(function(){ $(document).trigger('facebook.stream_publish') });" % [
       {
         :method       => 'stream.publish',
         :attachment   => attachment,
