@@ -27,6 +27,8 @@ module MissionGroupsHelper
     end
 
     def html
+      return if groups.empty?
+
       yield(self)
 
       current_group   = current_character.mission_groups.current
