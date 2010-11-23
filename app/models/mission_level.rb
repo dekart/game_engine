@@ -4,6 +4,11 @@ class MissionLevel < ActiveRecord::Base
   default_scope :order => "mission_levels.position"
 
   belongs_to :mission, :counter_cache => :levels_count
+  has_many   :ranks,
+    :class_name   => "MissionLevelRank",
+    :foreign_key  => :level_id,
+    :dependent    => :delete_all
+
 
   acts_as_list :scope => :mission_id
 
