@@ -68,8 +68,6 @@ class GiftsController < ApplicationController
         @gift.receipts.sent_to!(params[:ids])
 
         flash[:success] = t("gifts.confirm.messages.success")
-      else
-        @gift.destroy
       end
 
     rescue ActiveRecord::RecordInvalid
