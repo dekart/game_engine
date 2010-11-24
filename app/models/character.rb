@@ -129,7 +129,7 @@ class Character < ActiveRecord::Base
 
   class << self
     def find_by_invitation_key(key)
-      if character = find_by_id(key.split("-").first) and key == character.invitation_key
+      if character = find_by_id(key.split("-").first) and key.downcase == character.invitation_key
         character
       else
         nil
@@ -137,7 +137,7 @@ class Character < ActiveRecord::Base
     end
 
     def find_by_key(key)
-      if character = find_by_id(key.split("-").first) and key == character.key
+      if character = find_by_id(key.split("-").first) and key.downcase == character.key
         character
       else
         nil
