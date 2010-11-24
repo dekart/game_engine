@@ -353,7 +353,7 @@ $(function(){
 
   $(document).bind('facebook.ready', function(){
     FB.Canvas.setAutoResize();
-    FB.Canvas.setSize({height: $(document.body).height()})
+    FB.Canvas.setSize({height: $(document.body).height()});
   })
 
   $(document).bind('result.received', function(){
