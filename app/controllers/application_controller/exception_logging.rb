@@ -82,6 +82,8 @@ class ApplicationController
     end
 
     def redirect_from_exception
+      logger.fatal "Redirecting to root..."
+      
       redirect_from_iframe root_url(:canvas => true)
     end
   end
