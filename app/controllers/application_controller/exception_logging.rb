@@ -23,7 +23,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to root_url
+      redirect_from_exception
     end
 
     def rescue_method_not_allowed(exception)
@@ -32,7 +32,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to root_url
+      redirect_from_exception
     end
 
     def rescue_routing_error(exception)
@@ -40,7 +40,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to root_url
+      redirect_from_exception
     end
 
     def rescue_unknown_action(exception)
@@ -51,7 +51,7 @@ class ApplicationController
 
       log_browser_info
 
-      redirect_to root_url
+      redirect_from_exception
     end
 
     # TODO: Catch locking error in models that may cause them instead of controller
@@ -79,6 +79,10 @@ class ApplicationController
       logger.fatal "Referer: #{request.headers["Referer"]}" unless request.headers["Referer"].blank?
       logger.fatal "Request Origin: #{request_origin}"
       logger.fatal "User Agent: #{request.headers["User-Agent"]}\n\n"
+    end
+
+    def redirect_from_exception
+      redirect_from_iframe root_url(:canvas => true)
     end
   end
 end
