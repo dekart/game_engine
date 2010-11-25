@@ -134,12 +134,12 @@ namespace :deploy do
 
   desc "Setup application stylesheets"
   task :setup_stylesheets, :roles => :app do
-    run "cd #{release_path}; rake app:setup:import_assets app:setup:stylesheets"
+    run "cd #{release_path}; rake app:setup:import_assets app:setup:stylesheets --trace"
   end
 
   desc "Setup application settings"
   task :setup_settings, :roles => :app do
-    run "cd #{release_path}; rake app:setup:reimport_settings"
+    run "cd #{release_path}; rake app:setup:reimport_settings --trace"
   end
 
   desc "Configure warning message about scheduled downtime"
