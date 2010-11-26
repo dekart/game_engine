@@ -1,18 +1,30 @@
 ;(function($){
   $.scrollTo = function(target){
     var $target = $(target).eq(0);
-    
-    var $focus_field = $('<input type="text" />').css({
+    var $offset = $target.offset();
+
+    var styles = {
       width: "1px",
       height: "1px",
       border: "0px",
       backgroundColor: "transparent",
       "float": "left",
       position: 'absolute',
-      top: $target.offset().top + 100,
-      left: $target.offset().left
-    });
+      left: $offset.left
+    };
 
-    $focus_field.appendTo('body').focus().delay(100).remove();
+    $('<input type="text" />').css(styles).
+      css({ top: $offset.top + $target.outerHeight() }).
+      appendTo('body').
+      focus().
+      delay(100).
+      remove();
+
+    $('<input type="text" />').css(styles).
+      css({ top: $offset.top }).
+      appendTo('body').
+      focus().
+      delay(100).
+      remove();
   }
 })(jQuery);
