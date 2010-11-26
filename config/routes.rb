@@ -33,7 +33,8 @@ ActionController::Routing::Routes.draw do |map|
       :collection => {:balance => :any},
       :member => {
         :publish  => :put,
-        :hide     => :put
+        :hide     => :put,
+        :move     => :put
       }
     ) do |mission|
       mission.resources :mission_levels,

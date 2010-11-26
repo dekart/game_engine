@@ -38,6 +38,25 @@ namespace :app do
 
     # One-time tasks
 
+    desc "Set default positions to missions within mission groups"
+    task :enumerate_missions => :environment do
+      total = Mission.without_state(:deleted).count
+      
+      puts "Enumerating #{total} missions..."
+
+      MissionGroup.without_state(:deleted).find_each do |group|
+        position = 1
+
+        group.missions.without_state(:deleted).each do |mission|
+          mission.update_attribute(:position, position)
+
+          position += 1
+        end
+      end
+
+      puts "Done!"
+    end
+
     desc "Remove duplicate character titles"
     task :remove_duplicate_character_titles => :environment do
       puts "Removing duplicate level ranks..."

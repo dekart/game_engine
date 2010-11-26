@@ -2,7 +2,9 @@ class MissionGroup < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
 
-  has_many :missions, :dependent => :destroy
+  has_many :missions,
+    :order      => "missions.position",
+    :dependent  => :destroy
   has_many :bosses, :dependent => :destroy
   has_many :ranks, :class_name => "MissionGroupRank", :dependent => :delete_all
 

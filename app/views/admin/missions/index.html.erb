@@ -53,6 +53,13 @@
                 :method => :put
               ) if mission.can_hide? %>
 
+          <%= link_to(t(".controls.move_up"), move_admin_mission_path(mission, :direction => :up),
+                :method => :put
+              ) unless mission.first? %>
+          <%= link_to(t(".controls.move_down"), move_admin_mission_path(mission, :direction => :down),
+                :method => :put
+              ) unless mission.last? %>
+
           <%= link_to(t(".controls.delete"), admin_mission_path(mission),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")

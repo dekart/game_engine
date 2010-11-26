@@ -153,6 +153,8 @@ en:
         empty_set: "No missions"
         controls:
           edit: "Edit"
+          move_up: "Move Up"
+          move_down: "Move Down"
           delete: "Delete"
           delete_confirm: "Are you sure? Mission results will be also removed from all users!"
           publish: "Publish"
