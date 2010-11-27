@@ -9,6 +9,8 @@ class Character
         inventory = build(:item => item, :amount => amount)
       end
 
+      Rails.logger.debug inventory.character.object_id
+
       inventory
     end
 
@@ -27,6 +29,7 @@ class Character
     end
 
     def buy!(item, amount = 1)
+        Rails.logger.debug 'here1'
       inventory = give(item, amount)
 
       inventory.charge_money = true
@@ -107,6 +110,8 @@ class Character
     end
 
     def equip(inventory)
+      proxy_owner.reload
+
       if Setting.b(:character_auto_equipment)
         proxy_owner.equipment.equip_best!(true)
       else
@@ -115,6 +120,8 @@ class Character
     end
 
     def unequip(inventory)
+      proxy_owner.reload
+      
       if Setting.b(:character_auto_equipment)
         proxy_owner.equipment.equip_best!(true)
       else

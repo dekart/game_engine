@@ -56,7 +56,7 @@ class ApplicationController
 
     # TODO: Catch locking error in models that may cause them instead of controller
     def rescue_locking_error(exception)
-      render :text => ""
+      render :text => "You're clicking too fast. Please calm down :)"
     end
 
     def fatal_log_processing_for_request_id
