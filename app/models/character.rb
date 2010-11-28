@@ -386,9 +386,9 @@ class Character < ActiveRecord::Base
     return if vip_money < Setting.i(:premium_mercenary_price)
 
     transaction do
-      mercenary_relations.create!
-
       charge!(0, Setting.i(:premium_mercenary_price), :premium_mercenary)
+
+      mercenary_relations.create!
     end
   end
 
@@ -447,16 +447,13 @@ class Character < ActiveRecord::Base
   def charge(basic_amount, vip_amount, reference = nil)
     self.basic_money  -= basic_amount if basic_amount != 0
 
-    if vip_amount > 0 # charging
-      vip_money_withdrawals.build(
-        :amount     => vip_amount,
+    if vip_amount.to_i != 0
+      deposit = (vip_amount > 0 ? vip_money_withdrawals : vip_money_deposits).build(
+        :amount     => vip_amount.abs,
         :reference  => reference
       )
-    elsif vip_amount < 0 # depositing
-      vip_money_deposits.build(
-        :amount     => - vip_amount,
-        :reference  => reference
-      )
+      deposit.character = self
+      deposit
     end
   end
 

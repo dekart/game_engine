@@ -1,5 +1,5 @@
 class VipMoneyWithdrawal < VipMoneyOperation
-  before_create :withdraw_money
+  after_create :withdraw_money
 
   protected
 
@@ -10,6 +10,6 @@ class VipMoneyWithdrawal < VipMoneyOperation
   def withdraw_money
     character.vip_money -= amount
 
-    character.save
+    character.save!
   end
 end
