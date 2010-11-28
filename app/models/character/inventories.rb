@@ -104,7 +104,9 @@ class Character
 
     def find_by_item(item)
       inventory = item.is_a?(Inventory) ? item : find_by_item_id(item.id, :include => :item)
-      inventory.character = proxy_owner
+
+      inventory.try(:character=, proxy_owner)
+      
       inventory
     end
 
