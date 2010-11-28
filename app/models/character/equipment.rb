@@ -73,7 +73,7 @@ class Character::Equipment
 
         inventory.increment(:equipped)
       elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
-        previous = Inventory.find(@character.placements[placement].last)
+        previous = @character.inventories.find(@character.placements[placement].last)
 
         unless previous == inventory # Do not re-equip the same inventory
           unequip(previous, placement)
