@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe BankOperationsController do
-  include Facebooker::Rails::TestHelpers
+  include FacebookSpecHelper
+  
+  before do
+    controller.stub!(:current_facebook_user).and_return(fake_fb_user)
+  end
 
   describe "when routing" do
     it "should map GET /bank_operations/new to a deposit/withdraw form" do
@@ -54,7 +58,7 @@ describe BankOperationsController do
     end
 
     def do_request
-      facebook_get :new
+      get :new
     end
 
     it "should instantiate new deposit with current character money" do
@@ -97,7 +101,7 @@ describe BankOperationsController do
     end
 
     def do_request
-      facebook_post :deposit, :bank_operation => {:amount => 1000}
+      post :deposit, :bank_operation => {:amount => 1000}
     end
 
     it "should build new deposit for character" do
@@ -161,7 +165,7 @@ describe BankOperationsController do
     end
 
     def do_request
-      facebook_post :withdraw, :bank_operation => {:amount => 1000}
+      post :withdraw, :bank_operation => {:amount => 1000}
     end
 
     it "should build new withdrawal for character" do

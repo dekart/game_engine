@@ -5,7 +5,6 @@ require File.expand_path(File.join(File.dirname(__FILE__),'..','config','preinit
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
 require 'spec/autorun'
 require 'spec/rails'
-require 'facebooker/rails/test_helpers'
 
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'

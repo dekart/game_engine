@@ -4,6 +4,7 @@ describe StreamHelper do
   before :each do
     helper.stub!(:asset_image_path).and_return("/path/to/image.jpg")
     helper.stub!(:current_user).and_return(mock_model(Character))
+    helper.stub!(:reference_code).and_return("The code")
   end
 
   describe "when generating stream dialog for level up" do

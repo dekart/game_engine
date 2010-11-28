@@ -1,8 +1,12 @@
 require File.expand_path("../../spec_helper", __FILE__)
 
 describe InventoriesController do
-  include Facebooker::Rails::TestHelpers
-
+  include FacebookSpecHelper
+  
+  before do
+    controller.stub!(:current_facebook_user).and_return(fake_fb_user)
+  end
+  
   describe "when routing" do
     it "should correctly map to inventory usage for a single inventory" do
       params_from(:post, "/inventories/123/use").should == {
@@ -27,23 +31,23 @@ describe InventoriesController do
     it "should fetch inventory from current character by ID" do
       @character_inventories.should_receive(:find).with("123").and_return(@inventory)
 
-      facebook_post :use, :id => 123
+      post :use, :id => 123
     end
 
     it "should use the inventory" do
       @inventory.should_receive(:use!).and_return(@usage_result)
 
-      facebook_post :use, :id => 123
+      post :use, :id => 123
     end
 
     it "should pass usage result to the template" do
-      facebook_post :use, :id => 123
+      post :use, :id => 123
       
       assigns[:result].should == @usage_result
     end
 
     it "should render AJAX response" do
-      facebook_post :use, :id => 123
+      post :use, :id => 123
 
       response.should render_template("use")
       response.should use_layout("ajax")

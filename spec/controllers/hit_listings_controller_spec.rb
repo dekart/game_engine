@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe HitListingsController do
-  include Facebooker::Rails::TestHelpers
-
+  include FacebookSpecHelper
+  
+  before do
+    controller.stub!(:current_facebook_user).and_return(fake_fb_user)
+  end
+  
   describe "when routing" do
     it "should map GET /hit_listings to a hitlist page" do
       params_from(:get, "/hit_listings").should == {
@@ -57,15 +61,20 @@ describe HitListingsController do
   shared_examples_for "fetching available listings" do
     before :each do
       @hit_listings = mock("listings")
-      @incomplete_listings = mock("incomplete", :scoped => @hit_listings)
+      @character_listings = mock("available for character", :paginate => @hit_listings)
+      @incomplete_listings = mock("incomplete", :available_for => @character_listings)
 
       HitListing.stub!(:incomplete).and_return(@incomplete_listings)
     end
 
     it "should fetch available listings" do
-      @incomplete_listings.should_receive(:scoped).
-        with(:limit => 20, :include => [:victim, :client]).
-        and_return(@hit_listings)
+      @incomplete_listings.should_receive(:available_for).and_return(@character_listings)
+
+      do_request
+    end
+
+    it "should paginate listings" do
+      @character_listings.should_receive(:paginate)
 
       do_request
     end
@@ -83,7 +92,7 @@ describe HitListingsController do
     end
 
     def do_request
-      facebook_get :index
+      get :index
     end
 
     it_should_behave_like "fetching available listings"
@@ -109,7 +118,7 @@ describe HitListingsController do
     end
     
     def do_request
-      facebook_get :new, :character_id => 123
+      get :new, :character_id => 123
     end
 
     it "should fetch victim from the database" do
@@ -157,7 +166,7 @@ describe HitListingsController do
     end
 
     def do_request
-      facebook_post :create, :character_id => 123, :hit_listing => {:reward => 10_000}
+      post :create, :character_id => 123, :hit_listing => {:reward => 10_000}
     end
 
     it "should fetch victim from the database" do
@@ -227,7 +236,7 @@ describe HitListingsController do
     end
 
     def do_request
-      facebook_put :update, :id => 123
+      put :update, :id => 123
     end
 
     it "should fetch listing from the database" do
