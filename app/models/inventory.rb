@@ -32,7 +32,7 @@ class Inventory < ActiveRecord::Base
 
   validate :enough_character_money?
 
-  after_save :charge_or_deposit_character
+  before_save :charge_or_deposit_character
   after_destroy :deposit_character
 
   def sell_price
@@ -84,7 +84,7 @@ class Inventory < ActiveRecord::Base
         self.basic_money = basic_price * difference.abs
         self.vip_money = vip_price * difference.abs
 
-        character.charge!(basic_money, vip_money, item)
+        character.charge(basic_money, vip_money, item)
       end
     else # Selling properties, should deposit
       deposit_character(difference)
@@ -97,7 +97,7 @@ class Inventory < ActiveRecord::Base
     if deposit_money
       self.basic_money = sell_price * amount
 
-      character.charge!(- basic_money, 0, self)
+      character.charge(- basic_money, 0, self)
     end
   end
 end

@@ -7,6 +7,7 @@ class Character
         inventory.amount += amount
       else
         inventory = build(:item => item, :amount => amount)
+        inventory.character = proxy_owner
       end
 
       inventory
