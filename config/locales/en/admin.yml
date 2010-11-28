@@ -8,6 +8,7 @@ en:
         items: "Items"
         boosts: "Boosts"
         missions: "Missions"
+        monster_types: "Monsters"
         bosses: "Bosses"
         property_types: "Property Types"
         statistics: "Statistics"
