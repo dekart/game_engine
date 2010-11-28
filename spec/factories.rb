@@ -85,6 +85,20 @@ Factory.define :hit_listing do |t|
   t.reward 10_000
 end
 
+Factory.define :monster_type do |t|
+  t.name 'The Monster'
+  t.description 'The fake monster'
+  t.level 1
+
+  t.health 1000
+
+  t.cooling_time 24
+end
+
+Factory.define :monster do |t|
+  t.association :monster_type
+  t.association :character
+end
 Factory.define :mission_group do |t|
   t.name "Some Group"
 end
