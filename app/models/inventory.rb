@@ -32,7 +32,7 @@ class Inventory < ActiveRecord::Base
 
   validate :enough_character_money?
 
-  before_save :charge_or_deposit_character
+  after_save :charge_or_deposit_character
   after_destroy :deposit_character
 
   def sell_price
