@@ -9,8 +9,6 @@ class Character
         inventory = build(:item => item, :amount => amount)
       end
 
-      inventory.character = proxy_owner
-
       inventory
     end
 
@@ -105,7 +103,9 @@ class Character
     protected
 
     def find_by_item(item)
-      item.is_a?(Inventory) ? item : find_by_item_id(item.id, :include => :item)
+      inventory = item.is_a?(Inventory) ? item : find_by_item_id(item.id, :include => :item)
+      inventory.character = proxy_owner
+      inventory
     end
 
     def equip(inventory)
