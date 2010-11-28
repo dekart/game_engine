@@ -1,0 +1,11 @@
+<%= title(t(".title")) %>
+
+<%= render "missions/buttons", :current => :monsters %>
+
+<% @monster_types.each do |type| %>
+  <% content_tag_for :div, type do %>
+    <%= type.name %>
+
+    <%= link_to("Attack", monsters_path(:monster_type_id => type), :method => :post) %>
+  <% end %>
+<% end %>

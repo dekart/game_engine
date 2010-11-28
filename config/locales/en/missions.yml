@@ -15,6 +15,10 @@ en:
       next:
         name: "Next »"
   missions:
+    buttons:
+      buttons:
+        missions: "Missions"
+        monsters: "Monsters"
     fulfill:
       completed:
         message: "You've just completed this mission!"

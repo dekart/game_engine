@@ -8,6 +8,7 @@ class Character < ActiveRecord::Base
   include Character::Missions
   include Character::Collections
   include Character::Newsfeed
+  include Character::Monsters
 
   LEVELS = [0]
 
