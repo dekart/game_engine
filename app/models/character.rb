@@ -194,12 +194,14 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    boost_attack = best_boost(:attack) ? best_boost(:attack).attack : 0
+    boost_attack = purchased_boosts.best_attacking.try(:attack) || 0
+    
     attack + equipment.effect(:attack) + assignments.effect_value(:attack) + boost_attack
   end
 
   def defence_points
-    boost_defence = best_boost(:defence) ? best_boost(:defence).defence : 0
+    boost_defence = purchased_boosts.best_defending.try(:defence) || 0
+    
     defence + equipment.effect(:defence) + assignments.effect_value(:defence) + boost_defence
   end
 
@@ -541,23 +543,6 @@ class Character < ActiveRecord::Base
       @best_attacking_boost || @best_attacking_boost = self.purchased_boosts.best_attacking
     when :defence
       @best_defending_boost || @best_defending_boost = self.purchased_boosts.best_defending
-    else
-      raise ArgumentError
-    end
-  end
-
-  def delete_best_boost(type)
-    case type
-    when :attack
-      if @best_attacking_boost
-        @best_attacking_boost.delete
-        @best_attacking_boost = nil
-      end
-    when :defence
-      if @best_defending_boost
-        @best_defending_boost.delete
-        @best_defending_boost = nil
-      end
     else
       raise ArgumentError
     end

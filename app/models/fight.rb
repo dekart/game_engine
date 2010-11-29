@@ -142,8 +142,8 @@ class Fight < ActiveRecord::Base
     attacker.hp  -= attacker_hp_loss
     victim.hp    -= victim_hp_loss
 
-    attacker.delete_best_boost(:attack)
-    victim.delete_best_boost(:defence)
+    attacker.purchased_boosts.best_attacking.try(:delete)
+    victim.purchased_boosts.best_defending.try(:delete)
 
     winner.fights_won += 1
     loser.fights_lost += 1

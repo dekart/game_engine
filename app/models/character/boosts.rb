@@ -2,6 +2,7 @@ class Character
   module Boosts
     def amounts_by_type
       amounts = []
+      
       proxy_owner.purchased_boosts.count(:group => "boost_id").each do |boost_id, count|
         amounts << {:boost => Boost.find(boost_id), :amount => count}
       end
@@ -14,11 +15,17 @@ class Character
              (boost.vip_price * amount <= proxy_owner.vip_money)
     end
 
-    def buy!(boost, amount)
+    def give!(boost, amount = 1)
       transaction do
         amount.times.each do
           proxy_owner.purchased_boosts.create(:boost => boost)
         end
+      end
+    end
+
+    def buy!(boost, amount = 1)
+      transaction do
+        give!(boost, amount)
 
         proxy_owner.charge!(boost.basic_price * amount, boost.vip_price * amount)
 
