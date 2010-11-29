@@ -10,11 +10,12 @@
           <h2><%= collection.name %></h2>
 
           <div class="items clearfix">
-            <% collection.items.each do |item| %>
-              <% content_tag :div, :class => [:item, dom_id(item), ('present' if current_character.items.include?(item))].join(" ") do %>
+            <% collection_items(collection) do |item, inventory| %>
+              <% content_tag :div, :class => [:item, dom_id(item), ('present' if inventory)].join(" ") do %>
                 <div class="name"><%= item.name %></div>
 
                 <div class="image"><%= item_image(item, :small) %></div>
+                <div class="amount"><%= inventory.try(:amount).to_i %></div>
               <% end %>
             <% end %>
           </div>
