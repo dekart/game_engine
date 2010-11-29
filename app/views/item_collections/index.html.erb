@@ -28,15 +28,15 @@
                 :format   => :preview,
                 :triggers => current_character.collections.next_payout_triggers(collection)
               ) %>
-        </td>
 
-        <td class="controls">
-          <%= link_to_remote(button(:collect),
-                :url    => item_collection_path(collection),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => "collect button"}
-              ) %>
+          <div class="controls">
+            <%= link_to_remote(button(:collect),
+                  :url    => item_collection_path(collection),
+                  :method => :put,
+                  :update => :result,
+                  :html   => {:class => "collect button"}
+                ) %>
+          </div>
         </td>
       <% end %>
     <% end %>
