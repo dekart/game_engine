@@ -32,6 +32,12 @@ class Boost < ActiveRecord::Base
   validates_presence_of :name, :level
   validates_numericality_of :level, :basic_price, :vip_price, :allow_blank => true
 
+  class << self
+    def to_dropdown(*args)
+      without_state(:deleted).all(:order => :name).to_dropdown(*(args.any? ? args : :name))
+    end
+  end
+
   def price?
     basic_price > 0 or vip_price > 0
   end

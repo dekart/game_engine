@@ -33,6 +33,16 @@ class Character
       end
     end
 
+    def take!(boost, amount = 1)
+      transaction do
+        boosts = all(:conditions => {:boost_id => boost.id}, :limit => amount)
+
+        boosts.each do |boost|
+          boost.delete
+        end
+      end
+    end
+
     def best_attacking
       best_boost_type = nil
       best_attack = 0
