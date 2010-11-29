@@ -5,7 +5,7 @@ module HasPayouts
     options = args.extract_options!
 
     options.reverse_merge!(
-      :default_event => args.first
+      :apply_on => args.first
     )
 
     cattr_accessor :payout_events

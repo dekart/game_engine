@@ -34,8 +34,7 @@ class Boss < ActiveRecord::Base
 
   has_requirements
 
-  has_payouts :victory, :defeat, :repeat_victory, :repeat_defeat,
-    :default_event => :victory
+  has_payouts :victory, :defeat, :repeat_victory, :repeat_defeat
 
   validates_presence_of     :mission_group, :name, :health, :attack, :defence, :ep_cost, :experience
   validates_numericality_of :health, :attack, :defence, :ep_cost, :time_limit, :experience, :allow_blank => true

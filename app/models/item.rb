@@ -79,7 +79,8 @@ class Item < ActiveRecord::Base
     },
     :removable => true
 
-  has_payouts :use
+  has_payouts :use,
+    :visible => true
 
   validates_presence_of :name, :item_group, :availability, :level
   validates_numericality_of :level, :basic_price, :vip_price, :allow_blank => true
