@@ -6,10 +6,9 @@
 
 <div id="gift_form" class="clearfix">
   <% collection(@items) do %>
-    <div class="items clearfix">
+    <div class="gifts clearfix">
       <% @items.each do |item| %>
-        <% content_tag_for(:div, item) do %>
-
+        <div class="gift">
           <%= link_to(item_image(item, :small), polymorphic_path(@gift, :item_id => item.id),
                 :method => @gift.new_record? ? :post : :put
               ) %>
@@ -23,7 +22,7 @@
           <div class="payouts">
             <%= render "items/effects", :item => item %>
           </div>
-        <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>

@@ -11,15 +11,13 @@
         ).html_safe %>
   </h3>
 
-  <div class="gift clearfix">
-    <div class="item">
-      <%= item_image(@gift.item, :small) %>
+  <div class="gift selected">
+    <%= item_image(@gift.item, :small) %>
 
-      <div class="name"><%= @gift.item.name %></div>
+    <div class="name"><%= @gift.item.name %></div>
 
-      <div class="payouts">
-        <%= render "items/effects", :item => @gift.item %>
-      </div>
+    <div class="payouts">
+      <%= render "items/effects", :item => @gift.item %>
     </div>
   </div>
 
