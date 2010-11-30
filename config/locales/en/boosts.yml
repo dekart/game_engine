@@ -4,5 +4,6 @@ en:
       title: "Shop"
       boosts: "Boosts"
     boost:
+      free: "FREE"
       buttons:
         buy: "Purchase"
