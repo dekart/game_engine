@@ -30,7 +30,6 @@ class ItemGroup < ActiveRecord::Base
   end
 
   validates_presence_of :name
-  validates_uniqueness_of :name
 
   def self.to_dropdown(*args)
     without_state(:deleted).all(:order => :position).to_dropdown(*args)

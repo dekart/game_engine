@@ -1,6 +1,4 @@
 class Title < ActiveRecord::Base
-  validates_uniqueness_of :name
-
   state_machine :initial => :visible do
     state :hidden
     state :visible
