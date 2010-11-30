@@ -83,7 +83,7 @@ dependencies:
   paperclip: 
     group: 
     - :default
-    version: = 2.3.3
+    version: = 2.3.6
   json_pure: 
     group: 
     - :default
@@ -146,7 +146,7 @@ specs:
 - nokogiri: 
     version: 1.4.3.1
 - paperclip: 
-    version: 2.3.3
+    version: 2.3.6
 - rails: 
     version: 2.3.8
 - rspec: 
@@ -161,7 +161,7 @@ specs:
     version: 0.2.8.0
 - will_paginate: 
     version: 2.3.14
-hash: 1cf5541cf96f1bca83793c2f52e6f03e4745c589
+hash: d23cca4cd4c184bfbf2fa971f95b3990def7deba
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
