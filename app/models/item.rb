@@ -154,7 +154,7 @@ class Item < ActiveRecord::Base
   def placements=(value)
     value = value.to_s.split(",") unless value.is_a?(Array)
 
-    self[:placements] = value.any? ? value.join(",") : nil
+    self[:placements] = value.join(",")
     self[:equippable] = self[:placements].present?
   end
 
