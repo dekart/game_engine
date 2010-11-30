@@ -9,7 +9,7 @@
 <% if item.payouts.visible? %>
   <h3><%= Item.human_attribute_name("payouts") %></h3>
 
-  <%= payout_list(item.payouts, :add, 
+  <%= payout_list(item, item.payouts, :add,
         :format => :preview
       ) %>
 <% end %>

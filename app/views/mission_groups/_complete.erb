@@ -7,7 +7,7 @@
     <div class="received">
       <h3><%= t(".you_received") %></h3>
 
-      <%= payout_list(result.group_payouts, :add) %>
+      <%= payout_list(result, result.group_payouts, :add) %>
     </td>
   </div>
 <% end %>

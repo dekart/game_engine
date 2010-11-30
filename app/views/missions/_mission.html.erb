@@ -27,7 +27,7 @@
 
       <%= payout(:experience, level.experience) %>
       <%= payout(:basic_money, mission_money(level)) %>
-      <%= payout_list(level.payouts, :add, 
+      <%= payout_list(level, level.payouts, :add,
             :format   => :preview,
             :triggers => rank.next_payout_triggers
           ) %>

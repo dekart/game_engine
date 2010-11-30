@@ -15,12 +15,12 @@
         <td class="received">
           <h3><%= t(".you_received") %></h3>
 
-          <%= payout_list(@result.payouts, :add) %>
+          <%= payout_list(@collection, @result.payouts, :add) %>
         </td>
         <td class="spent">
           <h3><%= t(".you_spent") %></h3>
 
-          <%= payout_list(@result.payouts, :remove) %>
+          <%= payout_list(@collection, @result.payouts, :remove) %>
         </td>
       </tr>
     </table>

@@ -12,12 +12,12 @@
       <td class="received">
         <h3><%= t(".you_received") %></h3>
 
-        <%= payout_list(@result, :add) %>
+        <%= payout_list(@inventory, @result, :add) %>
       </td>
       <td class="spent">
         <h3><%= t(".you_spent") %></h3>
 
-        <%= payout_list(@result, :remove) %>
+        <%= payout_list(@inventory, @result, :remove) %>
 
         <%= payout(:item, item_image(@inventory, :icon), :label => @inventory.name) %>
       </td>

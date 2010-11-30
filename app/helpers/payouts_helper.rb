@@ -1,5 +1,5 @@
 module PayoutsHelper
-  def payout_list(payouts, action, options = {})
+  def payout_list(container, payouts, action, options = {})
     return unless payouts
 
     options = options.reverse_merge(
@@ -12,7 +12,9 @@ module PayoutsHelper
       next if options[:format] == :preview && !payout.visible || options[:triggers] && (options[:triggers] & payout.apply_on).empty?
 
       result << render("payouts/#{options[:format]}/#{payout.class.payout_name}",
-        :payout => payout
+        :container  => container,
+        :payout     => payout,
+        :options    => options
       )
     end
 

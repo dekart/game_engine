@@ -14,7 +14,7 @@
 
             <%= payout(:experience, boss.experience) %>
 
-            <%= payout_list(boss.payouts, :add, 
+            <%= payout_list(boss, boss.payouts, :add,
                   :format   => :preview,
                   :triggers => current_character.boss_fights.next_payout_triggers(boss)
                 ) %>

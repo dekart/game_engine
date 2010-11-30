@@ -6,7 +6,7 @@
 
         <%= payout(:experience, fight.experience) if fight.won? %>
 
-        <%= payout_list(fight.payouts, :add) %>
+        <%= payout_list(fight, fight.payouts, :add) %>
       </td>
     <% end %>
 
@@ -16,7 +16,7 @@
 
         <%= payout(:energy, fight.ep_cost) if fight.lost? || fight.expired? %>
 
-        <%= payout_list(fight.payouts, :remove) %>
+        <%= payout_list(fight, fight.payouts, :remove) %>
       </td>
     <% end %>
   </tr>

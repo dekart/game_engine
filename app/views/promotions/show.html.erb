@@ -7,7 +7,7 @@
     <h3><%= t(".you_received") %></h3>
 
     <div class="payouts">
-      <%= payout_list(@result.payouts, :add) %>
+      <%= payout_list(@promotion, @result.payouts, :add) %>
     </div>
 
     <% if @promotion.forwardable? %>
