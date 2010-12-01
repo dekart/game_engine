@@ -7,6 +7,8 @@ server {
 
   rails_env <%= rails_env %>;
 
+  access_log off;
+
   # Ignored URLs
   location ~ null { return 404; }
   location ~ google-analytics\.com/ga\.js { return 404; }
