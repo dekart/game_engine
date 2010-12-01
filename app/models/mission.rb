@@ -42,7 +42,7 @@ class Mission < ActiveRecord::Base
   has_payouts :success, :failure, :complete, :repeat_success, :repeat_failure,
     :apply_on => :complete
 
-  validates_presence_of :mission_group, :name, :success_text, :failure_text, :complete_text
+  validates_presence_of :mission_group, :name, :success_text, :complete_text
   validates_numericality_of :loot_chance, :allow_blank => true
 
   def self.to_grouped_dropdown

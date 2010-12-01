@@ -6,7 +6,7 @@
 <%= form.text_area :description, :cols => 80, :rows => 5 %>
 
 <%= form.text_area :success_text, :required => true, :cols => 80, :rows => 3 %>
-<%= form.text_area :failure_text, :required => true, :cols => 80, :rows => 3 %>
+<%= form.text_area :failure_text, :cols => 80, :rows => 3 %>
 <%= form.text_area :complete_text, :required => true, :cols => 80, :rows => 3 %>
 
 <%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
