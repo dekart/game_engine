@@ -36,6 +36,27 @@ namespace :app do
       puts "Done!"
     end
 
+    desc "Update image thumbnails"
+    task :update_thumbnails => :environment do
+      [Boost, Boss, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
+        scope = klass.without_state(:deleted)
+
+        puts "Updating thumbails for #{scope.count} of #{klass}..."
+
+        i = 0
+
+        scope.all.each do |object|
+          object.image.reprocess! if object.image?
+
+          i += 1
+
+          puts "Processed #{i} of #{scope.count}..." if i % 10 == 0
+        end
+      end
+      
+      puts "Updating"
+    end
+
     # One-time tasks
 
     desc "Set default positions to missions within mission groups"
