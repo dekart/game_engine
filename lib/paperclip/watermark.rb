@@ -14,7 +14,7 @@ module Paperclip
     def make
       dst = Tempfile.new([@basename, @format].compact.join("."))
 
-      command = "-gravity South -dissolve 75 \\( %s -extract %dx%d+%d+%d \\) %s %s" % [
+      command = "-gravity South -dissolve 100 \\( %s -extract %dx%d+%d+%d \\) %s %s" % [
         @watermark,
         @current_geometry.width.to_i,
         @current_geometry.height.to_i,
