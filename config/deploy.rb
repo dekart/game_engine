@@ -132,9 +132,14 @@ namespace :deploy do
     run "cd #{release_path}; rake app:setup:facebook_app"
   end
 
+  desc "Import assets"
+  task :import_assets, :roles => :app do
+    run "cd #{release_path}; rake app:setup:import_assets --trace"
+  end
+
   desc "Setup application stylesheets"
   task :setup_stylesheets, :roles => :app do
-    run "cd #{release_path}; rake app:setup:import_assets app:setup:stylesheets --trace"
+    run "cd #{release_path}; rake app:setup:stylesheets --trace"
   end
 
   desc "Setup application settings"
@@ -182,7 +187,7 @@ on :before, :only => "deploy:cold" do
 end
 
 on :before, :only => ["deploy", "deploy:migrations"] do
-  ["deploy:setup_settings", "deploy:setup_stylesheets"].each do |t|
+  ["deploy:setup_settings", "deploy:import_assets", "deploy:setup_stylesheets"].each do |t|
     before "deploy:symlink", t
   end
 end
@@ -192,6 +197,6 @@ end
   after "deploy:migrations", t
 end
 
-["deploy:bootstrap", "deploy:setup_facebook_app", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
+["deploy:bootstrap", "deploy:setup_facebook_app", "deploy:import_assets", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
   after "deploy:cold", t
 end
