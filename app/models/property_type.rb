@@ -12,7 +12,8 @@ class PropertyType < ActiveRecord::Base
     :styles => {
       :icon   => "50x50>",
       :small  => "120x120>",
-      :medium => "180x180>"
+      :medium => "180x180>",
+      :stream => "90x90#"
     },
     :removable => true
 

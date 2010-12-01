@@ -28,7 +28,8 @@ class Boss < ActiveRecord::Base
     :styles => {
       :icon   => "40x40#",
       :small  => "100x100>",
-      :normal => "200x200>"
+      :normal => "200x200>",
+      :stream => "90x90#"
     },
     :removable => true
 

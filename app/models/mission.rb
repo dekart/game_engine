@@ -32,8 +32,9 @@ class Mission < ActiveRecord::Base
 
   has_attached_file :image,
     :styles => {
-      :icon       => "50x50>",
-      :small      => "120x120>"
+      :icon   => "50x50>",
+      :small  => "120x120>",
+      :stream => "90x90#"
     },
     :removable => true
 

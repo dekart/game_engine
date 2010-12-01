@@ -75,7 +75,8 @@ class Item < ActiveRecord::Base
       :icon   => "50x50>",
       :small  => "72x72#",
       :medium => "120x120#",
-      :large  => "200x200#"
+      :large  => "200x200#",
+      :stream => "90x90#"
     },
     :removable => true
 

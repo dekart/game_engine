@@ -25,7 +25,8 @@ class CharacterType < ActiveRecord::Base
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",
-      :small  => "120x120>"
+      :small  => "120x120>",
+      :stream => "90x90#"
     },
     :removable => true
 

@@ -22,10 +22,11 @@ class Boost < ActiveRecord::Base
 
   has_attached_file :image,
     :styles => {
-      :icon => "40x40#",
+      :icon   => "40x40#",
       :small  => "72x72#",
       :medium => "120x120#",
-      :large  => "200x200#"
+      :large  => "200x200#",
+      :stream => "90x90#"
     },
     :removable => true
 

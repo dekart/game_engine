@@ -100,7 +100,7 @@ module StreamHelper
       attachment[:media] = [
         {
           :type => "image",
-          :src  => image_path(inventory.image.url),
+          :src  => image_path(inventory.image.url(:stream)),
           :href => image_url
         }
       ]
@@ -132,7 +132,7 @@ module StreamHelper
       attachment[:media] = [
         {
           :type => "image",
-          :src  => image_path(mission.image.url),
+          :src  => image_path(mission.image.url(:stream)),
           :href => image_url
         }
       ]
@@ -164,7 +164,7 @@ module StreamHelper
       attachment[:media] = [
         {
           :type => "image",
-          :src  => image_path(boss.image.url),
+          :src  => image_path(boss.image.url(:stream)),
           :href => image_url
         }
       ]
@@ -214,7 +214,7 @@ module StreamHelper
         attachment[:media] = [
           {
             :type => "image",
-            :src  => image_path(context.image.url),
+            :src  => image_path(context.image.url(:stream)),
             :href => image_url
           }
         ]
@@ -259,7 +259,7 @@ module StreamHelper
       attachment[:media] = [
         {
           :type => "image",
-          :src  => image_path(property.image.url),
+          :src  => image_path(property.image.url(:stream)),
           :href => image_url
         }
       ]
