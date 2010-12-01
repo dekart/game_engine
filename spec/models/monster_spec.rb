@@ -1,6 +1,41 @@
 require 'spec_helper'
 
 describe Monster do
+  describe 'associations' do
+    it 'should belong to character' do
+      should belong_to :character
+    end
+
+    it 'should belong to monster type' do
+      should belong_to :monster_type
+    end
+
+    it 'should have many monster fights' do
+      should have_many :monster_fights
+    end
+  end
+
+  describe "delegations" do
+    before do
+      @monster_type = Factory(:monster_type)
+      @monster = @monster_type.monsters.create(:character => Factory(:character))
+    end
+
+    %w{name health level cooling_time}.each do |attribute|
+      it "should delegate #{attribute.humanize} to monster type" do
+        @monster.send(attribute).should == @monster_type.send(attribute)
+      end
+    end
+
+    it "should delegate image to monster type" do
+      @monster.image.instance.should == @monster_type
+    end
+
+    it "should delegate requirements to monster type" do
+      @monster.requirements.size.should == @monster_type.requirements.size
+    end
+  end
+
   describe 'when creating' do
     before do
       @character = Factory.create(:character)
@@ -70,6 +105,17 @@ describe Monster do
         @monster.payouts.should be_kind_of(Payouts::Collection)
         @monster.payouts.first.should be_kind_of(Payouts::UpgradePoint)
       end
+
+      it "should assign expiration time" do
+        @monster.save
+        (@monster.expire_at.to_i - 12.hours.from_now.to_i).should == 0
+      end
+
+      it "should create monster fight record for character" do
+        lambda { @monster.save }.should change(@character.monster_fights, :count).from(0).to(1)
+
+        @character.monster_fights.first.monster.should == @monster
+      end
     end
   end
 
@@ -88,6 +134,28 @@ describe Monster do
       @monster.reload
       
       @monster.cooling_time_passed?.should be_true
+    end
+  end
+
+  describe "scopes" do
+    describe "when fetching visible monsters" do
+      it "should fetch monsters who expired less than 5 days ago" do
+        @monster1 = Factory.create(:monster)
+        @monster2 = Factory.create(:monster)
+
+        Monster.update_all({:expire_at => (Setting.i(:monster_display_time).days + 1.minute).ago}, {:id => @monster2.id})
+
+        Monster.visible.should include(@monster1)
+        Monster.visible.should_not include(@monster2)
+      end
+
+      it "should fetch monsters defeated less than 5 days ago" do
+        @monster1 = Factory.create(:monster)
+        @monster2 = Factory.create(:monster, :defeated_at => (Setting.i(:monster_display_time).days + 1.minute).ago)
+
+        Monster.visible.should include(@monster1)
+        Monster.visible.should_not include(@monster2)
+      end
     end
   end
 end

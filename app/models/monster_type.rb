@@ -3,6 +3,8 @@ class MonsterType < ActiveRecord::Base
   extend HasRequirements
   include HasVisibility
 
+  has_many :monsters
+
   state_machine :initial => :hidden do
     state :hidden
     state :visible

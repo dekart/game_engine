@@ -2,3 +2,6 @@ en:
   monsters:
     index:
       title: "Monsters"
+    show:
+      buttons:
+        attack: "Attack"

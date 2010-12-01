@@ -90,6 +90,10 @@ Factory.define :monster_type do |t|
   t.description 'The fake monster'
   t.level 1
 
+  t.requirements Requirements::Collection.new(
+    Requirements::Level.new(:value => 1)
+  )
+
   t.health 1000
 
   t.cooling_time 24

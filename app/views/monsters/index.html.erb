@@ -2,6 +2,14 @@
 
 <%= render "missions/buttons", :current => :monsters %>
 
+<% @monsters.each do |monster| %>
+  <% content_tag_for :div, monster do %>
+    <%= monster.name %>
+
+    <%= link_to("Engage", monster_path(monster)) %>
+  <% end %>
+<% end %>
+
 <% @monster_types.each do |type| %>
   <% content_tag_for :div, type do %>
     <%= type.name %>

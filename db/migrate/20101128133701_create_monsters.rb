@@ -35,6 +35,8 @@ class CreateMonsters < ActiveRecord::Migration
       t.string    :state, :limit => 50, :default => '', :null => false
 
       t.datetime  :expire_at
+      t.datetime  :defeated_at
+
       t.integer   :lock_version, :default => 0
       t.timestamps
     end

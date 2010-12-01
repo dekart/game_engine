@@ -1,6 +1,15 @@
 class Monster < ActiveRecord::Base
-  belongs_to :monster_type
-  belongs_to :character
+  belongs_to  :monster_type
+  belongs_to  :character
+  has_many    :monster_fights
+
+  named_scope :visible, Proc.new{
+    {
+      :conditions => ["(defeated_at IS NULL AND expire_at >= :time) OR (defeated_at >= :time)",
+        {:time => Setting.i(:monster_display_time).days.ago}
+      ]
+    }
+  }
 
   state_machine :initial => :progress do
     state :progress
@@ -16,13 +25,14 @@ class Monster < ActiveRecord::Base
     end
   end
 
-  delegate :name, :health, :level, :requirements, :cooling_time, :to => :monster_type
+  delegate :name, :image, :health, :level, :requirements, :cooling_time, :to => :monster_type
 
   attr_reader :payouts
 
   validates_presence_of :character, :monster_type
 
-  before_create :assign_health_points, :apply_fight_start_payouts
+  before_create :assign_initial_attributes, :apply_fight_start_payouts
+  after_create  :create_fight
 
   def cooling_time_passed?
     created_at <= cooling_time.hours.ago
@@ -30,8 +40,10 @@ class Monster < ActiveRecord::Base
 
   protected
 
-  def assign_health_points
+  def assign_initial_attributes
     self.hp = health
+
+    self.expire_at = monster_type.fight_time.hours.from_now
   end
 
   def apply_fight_start_payouts
@@ -48,5 +60,9 @@ class Monster < ActiveRecord::Base
     errors.add(:character, :low_level) if character.level < level
 
     errors.add(:character, :requirements_not_satisfied) unless requirements.satisfies?(character)
+  end
+
+  def create_fight
+    monster_fights.create!(:character => character)
   end
 end

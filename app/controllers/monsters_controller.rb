@@ -1,6 +1,7 @@
 class MonstersController < ApplicationController
   def index
-    @monster_types = current_character.monster_types.available
+    @monsters       = current_character.monsters.with_state(:progress)
+    @monster_types  = current_character.monster_types.available
   end
 
   def show
@@ -10,8 +11,18 @@ class MonstersController < ApplicationController
   def create
     @monster_type = MonsterType.find(params[:monster_type_id])
 
-    @monster = current_character.monsters.create(:monster_type => @monster_type)
+    @monster = @monster_type.monsters.create(:character => current_character)
 
     redirect_to @monster
+  end
+
+  def update
+    @monster = Monster.find(params[:id])
+
+    @fight = @monster.monster_fights.find_or_create_by_character_id(current_character.id)
+
+    @fight.attack!
+
+    render :layout => 'ajax'
   end
 end

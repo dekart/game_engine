@@ -2,7 +2,10 @@ class Character
   module Monsters
     def self.included(base)
       base.class_eval do
-        has_many :monsters
+        has_many :monster_fights
+
+        has_many :monsters,
+          :through  => :monster_fights
 
         has_many :monster_types,
           :through  => :monsters,
