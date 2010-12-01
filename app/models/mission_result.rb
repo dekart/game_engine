@@ -103,13 +103,6 @@ class MissionResult
     !(@money.nil? && @experience.nil? && @payouts.by_action(:add).empty?)
   end
 
-  def success_text
-    texts = @mission.success_text.split(/\n+/)
-    texts.reject!{|t| t.blank? }
-
-    texts[(@level_rank.progress % texts.size) - 1]
-  end
-
   def calculate_loot
     if @mission.allow_loot? and (rand(100) < @mission.loot_chance)
       if @mission.loot_item_ids.any?
