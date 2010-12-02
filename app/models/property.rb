@@ -102,7 +102,7 @@ class Property < ActiveRecord::Base
 
   def enough_character_money?
     if @validate_money
-      if character.basic_money < basic_price
+      if character.basic_money < (new_record? ? basic_price : upgrade_price)
         errors.add(:character, new_record? ? :not_enough_basic_money : :not_enough_basic_money_for_upgrade,
           :name         => name,
           :basic_money  => Character.human_attribute_name("basic_money")
