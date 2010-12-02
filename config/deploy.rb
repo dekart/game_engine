@@ -91,13 +91,16 @@ namespace :deploy do
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :db do
-      run "mysqldump -u %s --password='%s' %s > %s/db_dump.%d.sql" % [
+      dump_path = '%s/dump.%s.%d.sql' % [shared_path, db_config[rails_env]["database"], Time.now.to_i]
+
+      run "mysqldump -u %s --password='%s' %s > %s" % [
         db_config[rails_env]["username"],
         db_config[rails_env]["password"],
         db_config[rails_env]["database"],
-        shared_path,
-        Time.now.to_i
+        dump_path
       ]
+      
+      run "gzip #{dump_path}"
     end
   end
 
