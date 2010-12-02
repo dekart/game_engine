@@ -16,12 +16,16 @@ class ApplicationController
     end
 
     def rescue_basic_exception(exception)
-      fatal_log_processing_for_request_id
-      fatal_log_processing_for_parameters
+      if exception.message.include?('Error validating access token')
+        logger.fatal(exception.to_s)
+      else
+        fatal_log_processing_for_request_id
+        fatal_log_processing_for_parameters
 
-      log_error(exception)
+        log_error(exception)
 
-      log_browser_info
+        log_browser_info
+      end
 
       redirect_from_exception
     end
@@ -62,6 +66,8 @@ class ApplicationController
 
       render :text => "You're clicking too fast. Please calm down :)"
     end
+
+    protected
 
     def fatal_log_processing_for_request_id
       request_id = "\n\nProcessing #{self.class.name}\##{action_name} "
