@@ -88,6 +88,6 @@ class PropertyType < ActiveRecord::Base
   end
 
   def upgrade_price(level)
-    upgrade_cost_increase ? basic_price + upgrade_cost_increase * (level - 1) : basic_price
+    upgrade_cost_increase ? basic_price + upgrade_cost_increase * level : basic_price
   end
 end
