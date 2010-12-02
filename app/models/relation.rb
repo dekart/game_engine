@@ -1,7 +1,7 @@
 class Relation < ActiveRecord::Base
   ATTRIBUTES = %w{level attack defence health energy stamina}
 
-  belongs_to  :owner, :class_name => "Character", :counter_cache => true
+  belongs_to  :owner, :class_name => "Character"
   belongs_to  :character
   has_one     :assignment, :dependent => :destroy, :foreign_key => "relation_id"
 
@@ -13,4 +13,17 @@ class Relation < ActiveRecord::Base
     :conditions => "assignments.id IS NOT NULL"
 
   #TODO Check size of the 'bag' placement when relation is getting removed
+
+  after_create  :increment_character_relations_counter
+  after_destroy :decrement_character_relations_counter
+
+  protected
+
+  def increment_character_relations_counter
+    Character.update_counters(character_id, :relations_count => 1)
+  end
+
+  def decrement_character_relations_counter
+    Character.update_counters(character_id, :relations_count => -1)
+  end
 end
