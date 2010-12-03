@@ -14,16 +14,16 @@ class Relation < ActiveRecord::Base
 
   #TODO Check size of the 'bag' placement when relation is getting removed
 
-  after_create  :increment_character_relations_counter
-  after_destroy :decrement_character_relations_counter
+  after_create  :increment_owner_relations_counter
+  after_destroy :decrement_owner_relations_counter
 
   protected
 
-  def increment_character_relations_counter
-    Character.update_counters(character_id, :relations_count => 1)
+  def increment_owner_relations_counter
+    Character.update_counters_without_lock(owner_id, :relations_count => 1)
   end
 
-  def decrement_character_relations_counter
-    Character.update_counters(character_id, :relations_count => -1)
+  def decrement_owner_relations_counter
+    Character.update_counters_without_lock(owner_id, :relations_count => -1)
   end
 end
