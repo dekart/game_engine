@@ -60,6 +60,7 @@ class ApplicationController
 
     # TODO: Catch locking error in models that may cause them instead of controller
     def rescue_locking_error(exception)
+      fatal_log_processing_for_request_id
       fatal_log_processing_for_parameters
       
       Rails.logger.fatal "Stale object update error"
