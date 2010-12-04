@@ -13,8 +13,7 @@ describe MonsterFight do
 
   describe 'when attacking monster' do
     before do
-      @monster_type = Factory(:monster_type)
-      @monster = Factory(:monster, :monster_type => @monster_type)
+      @monster = Factory(:monster)
 
       @character = Factory(:character)
 

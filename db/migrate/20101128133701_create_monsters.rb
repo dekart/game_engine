@@ -5,9 +5,12 @@ class CreateMonsters < ActiveRecord::Migration
       
       t.string  :name,              :limit => 100, :default => '', :null => false
       t.text    :description
+
       t.integer :health
       t.integer :attack
       t.integer :defence
+      t.integer :minimum_damage, :maximum_damage
+      t.integer :minimum_response, :maximum_response
 
       t.integer :experience
       t.integer :money

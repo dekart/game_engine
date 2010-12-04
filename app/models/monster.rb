@@ -25,7 +25,8 @@ class Monster < ActiveRecord::Base
     end
   end
 
-  delegate :name, :image, :health, :level, :experience, :money, :requirements, :cooling_time, :to => :monster_type
+  delegate :name, :image, :health, :level, :experience, :money, :requirements,
+    :minimum_damage, :maximum_damage, :minimum_response, :maximum_response, :cooling_time, :to => :monster_type
 
   attr_reader :payouts
 
@@ -33,6 +34,9 @@ class Monster < ActiveRecord::Base
 
   before_create :assign_initial_attributes, :apply_fight_start_payouts
   after_create  :create_fight
+
+  before_update :check_negative_health_points
+  after_update  :check_winning_status
 
   def cooling_time_passed?
     created_at <= cooling_time.hours.ago
@@ -64,5 +68,13 @@ class Monster < ActiveRecord::Base
 
   def create_fight
     monster_fights.create!(:character => character)
+  end
+
+  def check_negative_health_points
+    self.hp = 0 if hp < 0
+  end
+
+  def check_winning_status
+    win! if progress? and hp == 0
   end
 end

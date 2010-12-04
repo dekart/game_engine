@@ -21,7 +21,7 @@ describe Monster do
       @monster = @monster_type.monsters.create(:character => Factory(:character))
     end
 
-    %w{name health level cooling_time experience money}.each do |attribute|
+    %w{name health level cooling_time experience money minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
       it "should delegate #{attribute.humanize} to monster type" do
         @monster.send(attribute).should == @monster_type.send(attribute)
       end
@@ -116,6 +116,36 @@ describe Monster do
 
         @character.monster_fights.first.monster.should == @monster
       end
+    end
+  end
+
+  describe 'when updating' do
+    before do
+      @monster = Factory(:monster)
+    end
+
+    it 'should set health to 0 if it went below zero' do
+      @monster.hp = -10
+
+      lambda{
+        @monster.save
+      }.should change(@monster, :hp).to(0)
+    end
+
+    it 'should become won if in progress and health dropped to zero' do
+      @monster.hp = 0
+
+      lambda {
+        @monster.save
+      }.should change(@monster, :state).from('progress').to('won')
+    end
+
+    it 'should stay in progress if health is greater than 0' do
+      @monster.hp = 1
+      
+      lambda {
+        @monster.save
+      }.should_not change(@monster, :state)
     end
   end
 

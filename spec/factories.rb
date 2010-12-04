@@ -96,6 +96,11 @@ Factory.define :monster_type do |t|
   t.attack 10
   t.defence 10
 
+  t.minimum_damage 3
+  t.maximum_damage 10
+  t.minimum_response 1
+  t.maximum_response 5
+
   t.experience 5
   t.money 5
 
