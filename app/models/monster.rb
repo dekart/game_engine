@@ -25,7 +25,7 @@ class Monster < ActiveRecord::Base
     end
   end
 
-  delegate :name, :image, :health, :level, :requirements, :cooling_time, :to => :monster_type
+  delegate :name, :image, :health, :level, :experience, :money, :requirements, :cooling_time, :to => :monster_type
 
   attr_reader :payouts
 

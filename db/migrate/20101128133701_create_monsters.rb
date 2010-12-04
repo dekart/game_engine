@@ -10,6 +10,7 @@ class CreateMonsters < ActiveRecord::Migration
       t.integer :defence
 
       t.integer :experience
+      t.integer :money
 
       t.text    :requirements
       t.text    :payouts

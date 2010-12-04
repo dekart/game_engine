@@ -4,7 +4,7 @@ describe Character do
   before :each do
     @property_type = Factory(:property_type)
     
-    @character = Factory(:character)
+    @character = Factory(:character, :basic_money => 1100)
 
     @property1 = Factory(:property)
     @property2 = Factory(:property)

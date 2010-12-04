@@ -8,7 +8,7 @@ Factory.define :character_type do |t|
   t.name "Character Type"
   t.description "This is our test character type"
 
-  t.basic_money 1100
+  t.basic_money 0
   t.vip_money   1
 
   t.attack      1
@@ -88,15 +88,18 @@ end
 Factory.define :monster_type do |t|
   t.name 'The Monster'
   t.description 'The fake monster'
-  t.level 1
 
   t.requirements Requirements::Collection.new(
     Requirements::Level.new(:value => 1)
   )
 
-  t.health 1000
+  t.attack 10
+  t.defence 10
 
-  t.cooling_time 24
+  t.experience 5
+  t.money 5
+
+  t.health 1000
 end
 
 Factory.define :monster do |t|

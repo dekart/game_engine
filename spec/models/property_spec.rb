@@ -2,7 +2,8 @@ require File.expand_path("../../spec_helper", __FILE__)
 
 describe Property do
   before(:each) do
-    @character = Factory(:character)
+    @character = Factory(:character, :basic_money => 1100)
+    
     @property_type = Factory(:property_type, :upgrade_limit => 2)
 
     @property = Property.new(:property_type => @property_type)
@@ -133,7 +134,6 @@ describe Property do
       lambda{
         @property.buy!.should be_true
       }.should change(@character.properties, :count).from(0).to(1)
-      
     end
 
     it "should verify that character has enough basic money" do

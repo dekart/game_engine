@@ -21,7 +21,7 @@ describe Monster do
       @monster = @monster_type.monsters.create(:character => Factory(:character))
     end
 
-    %w{name health level cooling_time}.each do |attribute|
+    %w{name health level cooling_time experience money}.each do |attribute|
       it "should delegate #{attribute.humanize} to monster type" do
         @monster.send(attribute).should == @monster_type.send(attribute)
       end

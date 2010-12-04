@@ -19,7 +19,7 @@ class MonstersController < ApplicationController
   def update
     @monster = Monster.find(params[:id])
 
-    @fight = @monster.monster_fights.find_or_create_by_character_id(current_character.id)
+    @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
     @fight.attack!
 
