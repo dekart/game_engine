@@ -12,7 +12,7 @@ describe PropertyType do
   describe "when calculating upgrade price" do
     it "should return basic price plus cost increase for each additional level" do
       @property_type.upgrade_price(1).should == 1100 # 1000 + 100
-      @property_type.upgrade_price(19).should == 2900 # 1000 + 100 * 19
+      @property_type.upgrade_price(20).should == 3000 # 1000 + 100 * 20
     end
 
     it "should return basic price if cost increase is not defined" do
