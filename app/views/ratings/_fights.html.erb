@@ -7,7 +7,7 @@
     <th><%= Character.human_attribute_name("fights_won") %></th>
   </tr>
 
-  <% rating_table(characters, :fights_won) do |character, position, current| %>
+  <% rating_table(collection, :fights_won, current) do |character, position, current| %>
     <% content_tag(:tr, :class => (:current if current)) do %>
       <td class="position"><%= position %></td>
       <td class="picture"><%= character_picture_link(character) %></td>

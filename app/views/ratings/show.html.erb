@@ -10,14 +10,14 @@
 
 <table id="rating_list" cellspacing="0" cellpadding="0">
   <tr>
-    <td><%= render("level", :characters => @level) %></td>
-    <td><%= render("total_money", :characters => @total_money) %></td>
+    <td><%= render("level", :collection => @level, :current => current_character) %></td>
+    <td><%= render("total_money", :collection => @total_money, :current => current_character) %></td>
   </tr>
   <tr>
-    <td><%= render("fights", :characters => @fights) %></td>
-    <td><%= render("missions", :characters => @missions) %></td>
+    <td><%= render("fights", :collection => @fights, :current => current_character) %></td>
+    <td><%= render("missions", :collection => @missions, :current => current_character) %></td>
   </tr>
   <tr>
-    <td><%= render("relations", :characters => @relations) %></td>
+    <td><%= render("relations", :collection => @relations, :current => current_character) %></td>
   </tr>
 </table>
