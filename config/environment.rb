@@ -39,6 +39,13 @@ Rails::Initializer.run do |config|
   # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
+  begin
+    require 'hodel_3000_compliant_logger'
+    config.logger = Hodel3000CompliantLogger.new(config.log_path)
+  rescue LoadError => e
+    $stderr.puts "Hodel3000CompliantLogger unavailable, oink will be disabled"
+  end
+
 
   # Make Time.zone default to the specified zone, and make Active Record store time values
   # in the database in UTC, and return them converted to the specified local zone.
