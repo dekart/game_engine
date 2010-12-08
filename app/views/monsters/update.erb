@@ -1,3 +1,44 @@
-<% result_for(:monster) do %>
-<%= debug @fight %>
+<% result_for(:monster) do |builder| %>
+  <% builder.buttons do %>
+    <%= link_to_remote(button(:attack),
+          :url    => monster_path(@fight.monster),
+          :method => :put,
+          :update => :result,
+          :html   => {:class => "attack button"}
+        ) if @fight.monster.progress? %>
+  <% end %>
+
+  <% builder.success do %>
+    <%= t(".message", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
+  <% end %>
+
+  <table class="payouts">
+    <tr>
+      <td class="received">
+        <h3><%= t(".you_received") %></h3>
+
+        <%= payout(:experience, @fight.experience) %>
+
+        <%= payout(:basic_money, number_to_currency(@fight.money)) %>
+      </td>
+
+      <td class="spent">
+        <h3><%= t(".you_spent") %></h3>
+
+        <%= payout(:hp, @fight.character_damage) %>
+
+        <%= payout(:sp, @fight.stamina) %>
+      </td>
+
+      <td class="monster_spent">
+        <h3><%= t(".monster_spent") %></h3>
+
+        <%= payout(:hp, @fight.monster_damage) %>
+      </td>
+    </tr>
+  </table>
+
+  <% builder.on_ready do %>
+    $('#monster').html(<%= render(@fight.monster.state, :monster => @fight.monster, :fight => @fight).to_json.html_safe %>);
+  <% end %>
 <% end %>

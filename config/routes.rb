@@ -230,7 +230,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :purchased_boosts
 
-  map.resources :monsters
+  map.resources :monsters, :member => {:reward => :post}
 
   # Add your custom routes below this mark
   

@@ -11,6 +11,10 @@ describe MonsterFight do
     end
   end
 
+  it 'should use simple damage calculation system' do
+    MonsterFight.damage_system.should == FightingSystem::PlayerVsMonster::Simple
+  end
+
   describe 'when attacking monster' do
     before do
       @monster = Factory(:monster)
@@ -53,10 +57,22 @@ describe MonsterFight do
         }.should change(@monster, :hp).from(1000).to(980)
       end
 
+      it 'should store damage dealt to monster to a variable' do
+        lambda {
+          @monster_fight.attack!
+        }.should change(@monster_fight, :monster_damage).from(nil).to(20)
+      end
+
       it 'should apply damage to character' do
         lambda {
           @monster_fight.attack!
         }.should change(@character, :hp).from(100).to(90)
+      end
+
+      it 'should store damage dealt to character to a variable' do
+        lambda {
+          @monster_fight.attack!
+        }.should change(@monster_fight, :character_damage).from(nil).to(10)
       end
 
       it 'should apply experience reward to character' do
@@ -65,16 +81,34 @@ describe MonsterFight do
         }.should change(@character, :experience).from(0).to(5)
       end
 
+      it 'should store experience reward to a variable' do
+        lambda {
+          @monster_fight.attack!
+        }.should change(@monster_fight, :experience).from(nil).to(5)
+      end
+
       it 'should apply money reward to character' do
         lambda {
           @monster_fight.attack!
         }.should change(@character, :basic_money).from(0).to(5)
       end
 
+      it 'should store money reward to a variable' do
+        lambda {
+          @monster_fight.attack!
+        }.should change(@monster_fight, :money).from(nil).to(5)
+      end
+
       it 'should take stamina from character' do
         lambda {
           @monster_fight.attack!
         }.should change(@character, :sp).from(10).to(9)
+      end
+
+      it 'should store stamina spending to a variable' do
+        lambda {
+          @monster_fight.attack!
+        }.should change(@monster_fight, :stamina).from(nil).to(1)
       end
 
       it 'should append damage dealt to monster' do
@@ -100,6 +134,31 @@ describe MonsterFight do
 
         @monster_fight.should_not be_changed
       end
+    end
+  end
+
+  describe 'when checking if reward is collectable' do
+    before do
+      @monster_fight = Factory(:monster_fight)
+    end
+
+    it 'should return true if monster is won and reward is not collected' do
+      @monster_fight.monster.win
+
+      @monster_fight.reward_collectable?.should be_true
+    end
+
+    it 'should return false if monster is not won' do
+      @monster_fight.monster.expire
+
+      @monster_fight.reward_collectable?.should_not be_true
+    end
+
+    it 'should return false if reward is already collected' do
+      @monster_fight.monster.win
+      @monster_fight.reward_collected = true
+
+      @monster_fight.reward_collectable?.should_not be_true
     end
   end
 end

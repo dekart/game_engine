@@ -111,7 +111,13 @@ Factory.define :monster do |t|
   t.association :monster_type
   t.association :character
 end
-Factory.define :mission_group do |t|
+
+Factory.define :monster_fight do |t|
+  t.association :monster
+  t.association :character
+
+  t.damage 1
+endFactory.define :mission_group do |t|
   t.name "Some Group"
 end
 

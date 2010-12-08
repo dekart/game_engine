@@ -51,6 +51,8 @@ class CreateMonsters < ActiveRecord::Migration
       
       t.integer :damage, :default => 0
 
+      t.boolean :reward_collected
+
       t.timestamps
     end
   end

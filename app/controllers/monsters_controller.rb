@@ -6,6 +6,8 @@ class MonstersController < ApplicationController
 
   def show
     @monster = current_character.monsters.find(params[:id])
+    
+    @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
   end
 
   def create
@@ -17,9 +19,7 @@ class MonstersController < ApplicationController
   end
 
   def update
-    @monster = Monster.find(params[:id])
-
-    @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
+    @fight = Monster.find(params[:id]).monster_fights.find_or_initialize_by_character_id(current_character.id)
 
     @fight.attack!
 

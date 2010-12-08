@@ -2,6 +2,16 @@ en:
   monsters:
     index:
       title: "Monsters"
-    show:
+    progress:
       buttons:
         attack: "Attack"
+    won:
+      buttons:
+        reward: "Get Reward"
+    update:
+      message: "You've successfully attacked %{monster}!"
+      you_received: "You received:"
+      you_spent: "You spent:"
+      monster_spent: "Monster spent:"
+      buttons:
+        attack: "Attack Again"
