@@ -13,7 +13,7 @@ module Requirements
     end
 
     def item
-      ::Item.find_by_id(value)
+      @item ||= ::Item.find_by_id(value)
     end
 
     def satisfies?(character)

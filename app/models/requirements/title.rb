@@ -5,7 +5,7 @@ module Requirements
     end
 
     def title
-      ::Title.find_by_id(value)
+      @title ||= ::Title.find_by_id(value)
     end
 
     def satisfies?(character)
