@@ -23,9 +23,6 @@ gem "httparty",      "0.6.1"
 gem "mogli",      "0.0.15"
 gem "ruby-hmac",      "0.4.0"
 
-# Performance optimization tools
-gem "oink"
-
 group :test do
   gem "rspec",        "1.3.0"
   gem "rspec-rails",  "1.3.2"
