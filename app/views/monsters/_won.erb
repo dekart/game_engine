@@ -1,0 +1,15 @@
+<div class="health">
+  <%= monster_health_bar(monster) %>
+</div>
+
+<div class="image">
+  <%= image_tag(monster.image.url(:normal)) %>
+</div>
+
+<div class="controls">
+  <%= link_to_remote(button(:reward),
+        :url    => reward_monster_path(monster),
+        :update => :result,
+        :html   => {:class => "reward button"}
+      ) if fight.reward_collectable? %>
+</div>
