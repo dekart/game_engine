@@ -3,24 +3,19 @@ class GiftsController < ApplicationController
   skip_landing_redirect :only => [:new, :show]
 
   def new
-    @gift ||= Gift.new
+    @gift = Gift.new
+    
+    @items = fetch_items
 
-    @items = Item.with_state(:visible).available.available_in(:gift).available_for(current_character).all(
-      :order => "items.level DESC",
-      :limit => Setting.i(:gifting_item_show_limit)
-    )
-
-    if @items.any?
-      render :action => :new
-    else
-      redirect_to root_path
-    end
+    redirect_to root_path if @items.empty?
   end
 
   def edit
     @gift = Gift.find(params[:id])
 
-    new
+    @items = fetch_items
+
+    render :layout => 'ajax'
   end
 
   def create
@@ -47,7 +42,7 @@ class GiftsController < ApplicationController
       )
     end
 
-    render :action => :create
+    render :action => :create, :layout => 'ajax'
   end
 
   def update
@@ -81,5 +76,14 @@ class GiftsController < ApplicationController
     @gifts = current_character.accept_gifts(params[:id])
 
     redirect_to root_path if @gifts.empty?
+  end
+
+  protected
+
+  def fetch_items
+    Item.with_state(:visible).available.available_in(:gift).available_for(current_character).all(
+      :order => "items.level DESC",
+      :limit => Setting.i(:gifting_item_show_limit)
+    )
   end
 end

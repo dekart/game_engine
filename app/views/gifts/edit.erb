@@ -1,0 +1,3 @@
+<% dom_ready do %>
+  $('#gift_form').html('<%= escape_javascript render('item_selector', :gift => @gift, :items => @items) %>');
+<% end %>

@@ -1,10 +1,4 @@
 #gift_form
-  .buttons
-    float: right
-
-    .skip
-      +button(!gifts_skip_icon, 70px)
-
   .gift
     padding: 5px
     text-align: center
@@ -28,6 +22,10 @@
       margin: 0 auto 15px
       float: none
 
+  .gifts
+    .gift
+      cursor: pointer
+
   h3
     text-align: center
 
@@ -45,6 +43,11 @@
         border = !gifts_current_group_border
         color = !gifts_current_group_color
 
+#gift_buttons
+  float: right
+
+  .skip
+    +button(!gifts_skip_icon, 70px)
 
 #gift_result
   background-image = !gift_result_icon

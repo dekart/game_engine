@@ -6,7 +6,7 @@ en:
       empty_set: "There are no gifts available at this time"
       buttons:
         skip: "Skip"
-    create:
+    friend_selector:
       title: "Send Gifts to Your Alliance: Step 2"
       gift:
         title: "You're sending ({{change}})"

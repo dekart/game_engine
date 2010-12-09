@@ -1,0 +1,11 @@
+<% dom_ready do %>
+  $('#gift_form').html('<%= escape_javascript render('friend_selector', :gift => @gift, :group => @group) %>');
+
+  FB.api('/me/friends', function(response) {
+    var ids = $.map(response.data, function(user){ return user.id });
+
+    $('#gift_form').data('friend_ids', ids.join(','));
+    
+    $('.friend_groups').show();
+  });
+<% end %>

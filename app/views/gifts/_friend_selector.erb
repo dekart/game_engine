@@ -1,0 +1,76 @@
+<h3>
+  <%= t(".gift.title",
+        :change => link_to_remote(t(".gift.change"),
+          :url      => edit_gift_path(gift),
+          :method  => :get,
+          :update   => :ajax
+        )
+      ).html_safe %>
+</h3>
+
+<div class="gift selected">
+  <div class="image"><%= item_image(gift.item, :small) %></div>
+
+  <div class="name"><%= gift.item.name %></div>
+
+  <div class="payouts">
+    <%= render "items/effects", :item => gift.item %>
+  </div>
+</div>
+
+<div class="friend_groups" style="display:none;">
+  <% %w{all players non_players}.each do |type| %>
+    <%= link_to_remote(t(".groups.#{type}", :app => t("app_name")),
+          :url    => gift_path(gift, :group => type),
+          :with   => "'friend_ids=' + $('#gift_form').data('friend_ids')",
+          :method => :put,
+          :update => :ajax,
+          :html   => {:class  => "friend_group #{:current if group == type.to_sym}"}
+        ) %>
+  <% end %>
+</div>
+
+<div id="invitation_form">
+</div>
+
+<% gift_message = capture do %>
+  <%= t(".request.message",
+        :user => fb_name(current_user, :linked => :false),
+        :app  => t("app_name"),
+        :item => gift.item.name
+      ).html_safe %>
+
+  <%= fb_req_choice(
+        t(".request.accept", :item => gift.item.name),
+        gift_url(gift,
+          :canvas => true,
+          :reference_code => reference_code(:gift)
+        )
+      ) %>
+<% end %>
+
+<% friend_selector = capture do %>
+  <% fb_server_fbml do %>
+    <%= stylesheet_link_tag(skin_path) %>
+
+    <div id="invitation_form_fbml">
+      <% fb_request_form(t(".request.title"), confirm_gift_url(gift), gift_message) do %>
+        <div class="selector">
+          <%= fb_multi_friend_selector(t(".request.note"),
+                :exclude_ids => @exclude_ids.join(","),
+                :cols => 3,
+                :rows => 3
+              ) %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<script>
+  var form = $('#invitation_form').get(0);
+  
+  form.innerHTML = '<%= escape_javascript(friend_selector) %>';
+
+  FB.XFBML.parse(form);
+</script>
