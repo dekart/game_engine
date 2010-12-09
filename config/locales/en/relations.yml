@@ -3,8 +3,8 @@ en:
     index:
       title: "Your Alliance"
       empty_set: "You don't have any members in your Alliance"
-      members:
-        title: "Alliance Members"
+    members:
+      title: "Alliance Members"
     friend_relation:
       buttons:
         break: "Break Alliance"

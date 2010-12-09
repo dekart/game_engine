@@ -6,10 +6,14 @@
     <span class="value"><%= relation.level %></span>
   </td>
   <td class="controls">
-    <%= link_to(button(:break), relation_path(relation.character),
+    <%= link_to_remote(button(:break),
+          :url      => relation_path(relation.character),
           :method   => :delete,
+          :update   => :ajax,
           :confirm  => t(".break.confirmation"),
-          :class    => "delete button"
+          :html     => {
+            :class    => "delete button"
+          }
         ) %>
   </td>
 </tr>

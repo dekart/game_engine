@@ -16,7 +16,8 @@ namespace :app do
         "mission_groups.tabs.previous.level"    => nil,
         "mission_groups.tabs.next.name"         => "mission_groups.tabs.next",
         "mission_groups.tabs.next.level"        => nil,
-        "mission_groups.show.locked_group"      => nil
+        "mission_groups.show.locked_group"      => nil,
+        "relations.index.members.title"         => "relations.members.title"
       }.each do |old_key, new_key|
         if translation = Translation.find_by_key(old_key)
           print "#{old_key} - "

@@ -3,10 +3,7 @@ class RelationsController < ApplicationController
     if current_character.relations.size == 0 and params[:noredirect].nil?
       redirect_to invite_users_path
     else
-      @relations = current_character.relations.paginate(
-        :page     => params[:page],
-        :per_page => Setting.i(:relation_show_limit)
-      )
+      @relations = fetch_relations
     end
   end
 
@@ -15,6 +12,17 @@ class RelationsController < ApplicationController
 
     FriendRelation.destroy_between(current_character, @target)
 
-    redirect_to relations_path
+    @relations = fetch_relations
+
+    render :layout => 'ajax'
+  end
+
+  protected
+
+  def fetch_relations
+    current_character.relations.paginate(
+      :page     => params[:page],
+      :per_page => Setting.i(:relation_show_limit)
+    )
   end
 end
