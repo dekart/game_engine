@@ -17,16 +17,15 @@ class AssignmentsController < ApplicationController
   def destroy
     if params[:id] == 'all'
       current_character.assignments.clear
-      redirect_to relations_url
     else
       @assignment = Assignment.find(params[:id])
 
       if @assignment.context == current_character or @assignment.context.character == current_character
         @assignment.destroy
       end
-
-      redirect_to_context(@assignment)
     end
+
+    render :layout => 'ajax'
   end
 
   protected
