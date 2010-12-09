@@ -93,13 +93,16 @@ class Character
     end
 
     module MissionGroupAssociationExtension
-      def current(new_group_id = nil)
-        if new_group_id and new_group_id.to_i != proxy_owner.current_mission_group_id
-          proxy_owner.update_attribute(:current_mission_group_id, new_group_id)
-        end
+      def current(group_id = nil)
+        groups = MissionGroup.with_state(:visible)
 
-        group = MissionGroup.find_by_id(proxy_owner.current_mission_group_id) if proxy_owner.current_mission_group_id
-        group ||= MissionGroup.with_state(:visible).first
+        group = groups.find_by_id(group_id) if group_id
+        group ||= groups.find_by_id(proxy_owner.current_mission_group_id) if proxy_owner.current_mission_group_id
+        group ||= groups.first
+
+        proxy_owner.update_attribute(:current_mission_group_id, group.id) if group.id != proxy_owner.current_mission_group_id
+
+        group
       end
 
       def check_completion!(group)
