@@ -39,11 +39,9 @@ class InvitationsController < ApplicationController
     Invitation.transaction do
       invitation = @character.user.invitations.find_or_create_by_receiver_id(current_user.facebook_id)
 
-      if invitation.accept!
-        flash[:success] = t("invitations.accept.message")
-      end
+      invitation.accept!
     end
 
-    redirect_to root_path
+    render :layout => 'ajax'
   end
 end

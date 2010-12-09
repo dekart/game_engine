@@ -14,9 +14,13 @@
       <%= link_to(button(:ignore), root_path,
             :class => "ignore button"
           ) %>
-      <%= link_to(button(:accept), invitation_path(@character.id),
+      <%= link_to_remote(button(:accept),
+            :url    => invitation_path(@character.id),
             :method => :put,
-            :class  => "accept button"
+            :update => :result,
+            :html => {
+              :class  => "accept button"
+            }
           ) %>
     </td>
   </tr>
