@@ -130,11 +130,6 @@ namespace :deploy do
     end
   end
 
-  desc "Setup Facebook application"
-  task :setup_facebook_app, :roles => :app do
-    run "cd #{release_path}; rake app:setup:facebook_app"
-  end
-
   desc "Import assets"
   task :import_assets, :roles => :app do
     run "cd #{release_path}; rake app:setup:import_assets --trace"
@@ -200,6 +195,6 @@ end
   after "deploy:migrations", t
 end
 
-["deploy:bootstrap", "deploy:setup_facebook_app", "deploy:import_assets", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
+["deploy:bootstrap", "deploy:import_assets", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
   after "deploy:cold", t
 end
