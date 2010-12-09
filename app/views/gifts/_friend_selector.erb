@@ -54,7 +54,7 @@
     <%= stylesheet_link_tag(skin_path) %>
 
     <div id="invitation_form_fbml">
-      <% fb_request_form(t(".request.title"), confirm_gift_url(gift), gift_message) do %>
+      <% fb_request_form(t(".request.title"), confirm_gift_url(gift, :signed_request => facebook_signed_request), gift_message) do %>
         <div class="selector">
           <%= fb_multi_friend_selector(t(".request.note"),
                 :exclude_ids => @exclude_ids.join(","),

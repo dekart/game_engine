@@ -2,8 +2,6 @@ class GiftsController < ApplicationController
   landing_page :gifts, :only => :new
   skip_landing_redirect :only => [:new, :show]
   
-  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook, :only => :confirm
-
   def new
     @gift = Gift.new
     

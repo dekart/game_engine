@@ -13,6 +13,7 @@ module Facebooker2
         controller.helper_method :current_facebook_user
         controller.helper_method :current_facebook_client
         controller.helper_method :facebook_params
+        controller.helper_method :facebook_signed_request
       end
 
 
@@ -119,8 +120,13 @@ module Facebooker2
       end
 
 
+      def facebook_signed_request
+        params[:signed_request] || request.env['HTTP_SIGNED_REQUEST']
+      end
+
+
       def fb_load_facebook_params
-        signed_request = params[:signed_request] || request.env['HTTP_SIGNED_REQUEST']
+        signed_request = facebook_signed_request
 
         return {} if signed_request.blank?
 
