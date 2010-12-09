@@ -35,14 +35,12 @@ class PremiaController < ApplicationController
         false
       end
 
-    flash[:class] = :premia
-
     if @result
-      flash[:success] = t("premia.update.messages.success.#{params[:type]}")
+      flash.now[:success] = t("premia.update.messages.success.#{params[:type]}")
     else
-      flash[:error] = t("premia.update.messages.failure")
+      flash.now[:error] = t("premia.update.messages.failure")
     end
 
-    redirect_to(@redirect_to || premium_path)
+    render :layout => 'ajax'
   end
 end
