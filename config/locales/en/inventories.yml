@@ -16,6 +16,7 @@ en:
     create:
       buttons:
         publish: "Brag About It!"
+        use: "Use"
         inventory: "Go To Inventory"
       messages:
         success: "You successfully bought {{amount}} of {{item_name}}"

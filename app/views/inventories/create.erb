@@ -8,6 +8,12 @@
       <%= link_to(button(:inventory), inventories_url,
             :class => "inventory button"
           ) %>
+
+      <%= link_to_remote(button(@inventory.use_button_label.blank? ? :use : @inventory.use_button_label),
+            :url    => use_inventory_path(@inventory),
+            :update => :result,
+            :html   => {:class => "use button"}
+          ) if @inventory.usable? %>
     <% end %>
 
     <% builder.success do %>
