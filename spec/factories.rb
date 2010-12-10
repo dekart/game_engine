@@ -84,3 +84,23 @@ Factory.define :hit_listing do |t|
 
   t.reward 10_000
 end
+
+Factory.define :mission_group do |t|
+  t.name "Some Group"
+end
+
+Factory.define :mission do |t|
+  t.association :mission_group
+
+  t.name "Some Mission"
+  t.success_text "Success!"
+  t.complete_text "Complete!"
+end
+
+Factory.define :mission_level do |t|
+  t.win_amount 5
+  t.energy 1
+  t.experience 2
+  t.money_min 10
+  t.money_max 20
+end
