@@ -30,5 +30,4 @@ en:
       from: "From"
       buttons:
         accept_pending: "Accept Other Gifts"
-        play_now: "Play Now"
         accept_all: "Accept All"

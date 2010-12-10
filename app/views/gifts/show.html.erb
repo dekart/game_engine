@@ -8,8 +8,6 @@
       <% else %>
         <%= link_to(button(:accept_pending), fb_app_requests_url, :class => "pending button", :target => :_top) %>
       <% end %>
-
-      <%= link_to(button(:play_now), root_path, :class => "play_now button") %>
     <% end %>
 
     <% builder.success do %>
