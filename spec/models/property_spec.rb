@@ -209,7 +209,7 @@ describe Property do
     it "should charge character for basic_money" do
       lambda{
         @property.upgrade!
-      }.should change(@character, :basic_money).from(1100).to(100)
+      }.should change(@character, :basic_money).from(1100).to(0)
     end
 
     it "should charge character for vip_money" do
