@@ -18,11 +18,11 @@ class MissionGroupRank < ActiveRecord::Base
   protected
 
   def missions_completed?
-    mission_group.missions.with_state(:visible).size <= character.missions.completed_ids.size # Less or equal because mission can be hidden after completion
+    (mission_group.mission_ids - character.missions.completed_ids).empty?
   end
 
   def bosses_completed?
-    mission_group.bosses.with_state(:visible).size <= character.boss_fights.won_boss_ids.size # Less or equal because boss can be hidden after completion
+    (mission_group.boss_ids - character.boss_fights.won_boss_ids).empty?
   end
 
   def cache_completion
