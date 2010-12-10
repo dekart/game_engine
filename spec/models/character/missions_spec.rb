@@ -30,7 +30,7 @@ describe Character do
         :progress => 5
       )
 
-      @mission_rank = @character.mission_ranks.create!(:mission => @mission)
+      @character.missions.check_completion!(@mission)
 
       @character.mission_levels.rank_for(@mission).should == @rank2
     end
