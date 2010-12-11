@@ -16,7 +16,7 @@
     <h3><%= t(".you_received.title") %></h3>
 
     <div class="payouts">
-      <%= payout_list(@property, @result, :add) %>
+      <%= payout_list(@property, @result) %>
     </div>
 
     <% builder.on_ready do %>

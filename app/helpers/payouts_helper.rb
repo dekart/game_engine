@@ -1,24 +1,53 @@
 module PayoutsHelper
-  def payout_list(container, payouts, action, options = {})
-    return unless payouts
+  class ListBuilder
+    attr_reader :template, :container, :payouts, :options
 
-    options = options.reverse_merge(
-      :format => :result
-    )
-    
-    result = ""
+    delegate :capture, :render, :to => :template
 
-    payouts.by_action(action).each do |payout|
-      next if options[:format] == :preview && !payout.visible || options[:triggers] && (options[:triggers] & payout.apply_on).empty?
-
-      result << render("payouts/#{options[:format]}/#{payout.class.payout_name}",
-        :container  => container,
-        :payout     => payout,
-        :options    => options
+    def initialize(template, container, payouts, options = {})
+      @template = template
+      @container = container
+      @payouts = payouts
+      @options = options.reverse_merge(
+        :action => :add,
+        :format => :result
       )
     end
 
-    result.html_safe
+    def applicable_payouts
+      @applicable_payouts ||= payouts.by_action(options[:action]).reject{|payout|
+        options[:format] == :preview && !payout.visible ||
+        options[:triggers] && (options[:triggers] & payout.apply_on).empty?
+      }
+    end
+
+    def payout_list
+      result = ""
+
+      applicable_payouts.each do |payout|
+        result << render("payouts/#{options[:format]}/#{payout.class.payout_name}",
+            :container  => container,
+            :payout     => payout,
+            :options    => options
+          )
+      end
+
+      result.html_safe
+    end
+
+    def html(&block)
+      if applicable_payouts.any?
+        block_given? ? capture(self, &block) : payout_list
+      end
+    end
+  end
+
+  def payout_list(container, payouts, options = {}, &block)
+    return unless payouts
+
+    content = ListBuilder.new(self, container, payouts, options).html(&block)
+
+    block_given? ? concat(content) : content
   end
 
   def payout(type, value, options = {}, &block)

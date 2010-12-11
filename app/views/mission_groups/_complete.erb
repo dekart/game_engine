@@ -2,12 +2,12 @@
 
 <p><%= t(".message") %></p>
 
-<% if result.group_payouts.try(:any?) %>
+<% payout_list(result, result.group_payouts) do |p| %>
   <div class="payouts">
     <div class="received">
       <h3><%= t(".you_received") %></h3>
 
-      <%= payout_list(result, result.group_payouts, :add) %>
+      <%= p.payout_list %>
     </td>
   </div>
 <% end %>

@@ -6,10 +6,8 @@
   <% end %>
 <% end %>
 
-<% if item.payouts.visible? %>
+<% payout_list(item, item.payouts, :format => :preview) do |p| %>
   <h3><%= Item.human_attribute_name("payouts") %></h3>
 
-  <%= payout_list(item, item.payouts, :add,
-        :format => :preview
-      ) %>
+  <%= p.payout_list %>
 <% end %>

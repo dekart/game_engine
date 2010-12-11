@@ -14,9 +14,10 @@
       ) if fight.reward_collectable? %>
 </div>
 
-<div class="payouts">
-  <%= payout_list(monster, monster.monster_type.payouts, :add,
-        :format   => :preview,
-        :triggers => fight.payout_triggers
-      ) %>
-</div>
+<% payout_list(monster, monster.monster_type.payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
+  <div class="payouts">
+    <h3><%= MonsterType.human_attribute_name('payouts') %></h3>
+
+    <%= p.payout_list %>
+  </div>
+<% end %>
