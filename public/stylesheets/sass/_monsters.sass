@@ -1,0 +1,39 @@
+.monster_list
+  .monster
+    float: left
+    margin: 0 15px 15px 0
+    border = !main_border
+    text-align: center
+    padding: 15px
+
+    .name
+      font-size: 16px
+      font-weight: bold
+      margin-bottom: 10px
+
+    .image
+      margin-bottom: 10px
+
+    .status
+      margin-bottom: 10px
+      font-weight: bold
+
+      .timer
+        font-weight: normal
+
+    .button
+      text-align: left
+      float: none
+      margin: 0 auto
+
+      &.attack
+        +button(!monster_list_attack_icon, !monster_list_attack_width)
+
+      &.engage
+        +button(!monster_list_engage_icon, !monster_list_engage_width)
+
+      &.reward
+        +button(!monster_list_reward_icon, !monster_list_reward_width)
+
+      &.view
+        +button(!monster_list_view_icon, !monster_list_view_width)

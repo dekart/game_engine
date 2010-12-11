@@ -26,8 +26,8 @@ class MonsterType < ActiveRecord::Base
   has_attached_file :image,
     :styles => {
       :icon   => "40x40#",
-      :small  => "100x100>",
-      :normal => "200x200>",
+      :small  => "200x200>",
+      :normal => "350x350>",
       :stream => "90x90#"
     },
     :removable => true

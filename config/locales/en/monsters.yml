@@ -2,8 +2,13 @@ en:
   monsters:
     index:
       title: "Monsters"
-      current_fights: "Current Fights"
-      available_monsters: "Available Monsters"
+      current:
+        title: "Current Monster Fights"
+        time_remaining: "Time remaining:"
+        won: "Victory!"
+        expired: "You lost"
+      available:
+        title: "Available Monsters"
       buttons:
         attack: "Attack"
         engage: "Engage"
