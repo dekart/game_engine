@@ -33,8 +33,8 @@ class MonsterType < ActiveRecord::Base
 
   has_requirements
 
-  has_payouts :victory, :defeat, :repeat_victory, :repeat_defeat,
-    :default_event => :victory
+  has_payouts :victory, :repeat_victory, :fight_start,
+    :apply_on => [:victory, :repeat_victory]
 
   validates_presence_of :name, :level, :health, :attack, :defence, :experience, :money, :fight_time, :cooling_time,
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response

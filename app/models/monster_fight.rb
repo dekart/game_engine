@@ -5,7 +5,7 @@ class MonsterFight < ActiveRecord::Base
   cattr_reader :damage_system
   @@damage_system = FightingSystem::PlayerVsMonster::Simple
 
-  attr_reader :experience, :money, :character_damage, :monster_damage, :stamina
+  attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
 
   def attack!
     if valid?
@@ -35,13 +35,33 @@ class MonsterFight < ActiveRecord::Base
     end
   end
 
+  def collect_reward!
+    return false unless reward_collectable?
+
+    transaction do
+      @payouts = monster.monster_type.payouts.apply(character, repeat_fight? ? :repeat_victory : :victory, monster.monster_type)
+
+      character.save!
+
+      self.reward_collected = true
+
+      save!
+    end
+  end
+
   def reward_collectable?
     monster.won? && !reward_collected?
   end
 
   protected
 
-  def validate
+  def repeat_fight?
+    character.monster_fights(
+      :joins => :monster, :conditions => {:monster_type_id => monster.monster_type_id, :state => 'won'}
+    ).count > 1
+  end
+
+  def validate_on_create
     errors.add(:character, :not_enough_stamina) if character.sp < 1
     errors.add(:monster, :already_done) unless monster.progress?
   end

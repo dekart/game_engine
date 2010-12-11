@@ -22,3 +22,8 @@ en:
       monster_spent: "Monster spent:"
       buttons:
         attack: "Attack Again"
+    reward:
+      messages:
+        success: "Well done! You defeated %{monster} and that's your reward!"
+        already_collected: "You've already collected reward for this fight."
+      you_received: "You received:"

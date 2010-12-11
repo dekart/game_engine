@@ -13,7 +13,7 @@ class MonstersController < ApplicationController
   def new
     @monster_type = MonsterType.find(params[:monster_type_id])
 
-    @monster = current_character.monsters.visible.by_type(@monster_type).first
+    @monster = current_character.monsters.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create(:character => current_character)
 
     redirect_to @monster
@@ -23,6 +23,14 @@ class MonstersController < ApplicationController
     @fight = Monster.find(params[:id]).monster_fights.find_or_initialize_by_character_id(current_character.id)
 
     @fight.attack!
+
+    render :layout => 'ajax'
+  end
+
+  def reward
+    @fight = current_character.monster_fights.find_by_monster_id(params[:id])
+
+    @reward_collected = @fight.collect_reward!
 
     render :layout => 'ajax'
   end

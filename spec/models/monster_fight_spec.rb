@@ -161,4 +161,55 @@ describe MonsterFight do
       @monster_fight.reward_collectable?.should_not be_true
     end
   end
+
+  describe 'when applying reward' do
+    before do
+      @character = Factory(:character)
+      
+      @monster_fight = Factory(:monster_fight, :character => @character)
+      @monster_fight.monster.win
+    end
+
+    it 'should return false if reward is not collectable' do
+      @monster_fight.should_receive(:reward_collectable?).and_return(false)
+
+      @monster_fight.collect_reward!.should be_false
+    end
+
+    it 'should apply victory payout when character won this monster type for the first time' do
+      lambda {
+        @monster_fight.collect_reward!
+      }.should change(@character, :basic_money).to(123)
+    end
+
+    it 'should apply repeat victory payout when character won this monster type again' do
+      @second_monster = Factory(:monster, :monster_type => @monster_fight.monster.monster_type)
+      @second_monster_fight = Factory(:monster_fight, :character => @character, :monster => @second_monster)
+      @second_monster.win
+
+      lambda{
+        @second_monster_fight.collect_reward!
+      }.should change(@character, :basic_money).to(456)
+    end
+
+    it 'should store applied payouts to a variable' do
+      @monster_fight.collect_reward!
+
+      @monster_fight.payouts.should be_kind_of(Payouts::Collection)
+      
+      @monster_fight.payouts.first.should be_kind_of(Payouts::BasicMoney)
+      @monster_fight.payouts.first.value.should == 123
+    end
+
+    it 'should become collected' do
+      @monster_fight.collect_reward!
+
+      @monster_fight.reward_collected?.should be_true
+      @monster_fight.reload.reward_collected?.should be_true
+    end
+
+    it 'should return true on successfull collection' do
+      @monster_fight.collect_reward!.should be_true
+    end
+  end
 end

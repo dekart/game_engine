@@ -93,6 +93,11 @@ Factory.define :monster_type do |t|
     Requirements::Level.new(:value => 1)
   )
 
+  t.payouts Payouts::Collection.new(
+    Payouts::BasicMoney.new(:value => 123, :apply_on => :victory),
+    Payouts::BasicMoney.new(:value => 456, :apply_on => :repeat_victory)
+  )
+
   t.attack 10
   t.defence 10
 
