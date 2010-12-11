@@ -117,7 +117,9 @@ Factory.define :monster_fight do |t|
   t.association :character
 
   t.damage 1
-endFactory.define :mission_group do |t|
+end
+
+Factory.define :mission_group do |t|
   t.name "Some Group"
 end
 
