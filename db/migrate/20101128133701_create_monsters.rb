@@ -23,7 +23,6 @@ class CreateMonsters < ActiveRecord::Migration
       t.integer :image_file_size
 
       t.integer :fight_time,    :default => 12
-      t.integer :cooling_time,  :default => 24
 
       t.string  :state, :limit => 50, :default => '', :null => false
 

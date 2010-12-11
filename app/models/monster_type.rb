@@ -36,9 +36,9 @@ class MonsterType < ActiveRecord::Base
   has_payouts :victory, :repeat_victory, :fight_start,
     :apply_on => [:victory, :repeat_victory]
 
-  validates_presence_of :name, :level, :health, :attack, :defence, :experience, :money, :fight_time, :cooling_time,
+  validates_presence_of :name, :level, :health, :attack, :defence, :experience, :money, :fight_time,
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response
-  validates_numericality_of :level, :attack, :defence, :experience, :money, :fight_time, :cooling_time,
+  validates_numericality_of :level, :attack, :defence, :experience, :money, :fight_time,
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response,
     :allow_nil    => true,
     :greater_than => 0

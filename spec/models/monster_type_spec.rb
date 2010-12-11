@@ -19,10 +19,6 @@ describe MonsterType do
     it 'should have 12 hours for fight' do
       @monster_type.fight_time.should == 12
     end
-
-    it 'should have 24 hours for cooling' do
-      @monster_type.cooling_time.should == 24
-    end
   end
 
   describe 'when creating' do
@@ -30,13 +26,13 @@ describe MonsterType do
       @monster_type = Factory.build(:monster_type)
     end
 
-    %w{name level health attack defence experience money fight_time cooling_time minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
+    %w{name level health attack defence experience money fight_time minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
       it "should validate presence of #{attribute}" do
         @monster_type.should validate_presence_of(attribute)
       end
     end
 
-    %w{level attack defence experience money fight_time cooling_time minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
+    %w{level attack defence experience money fight_time minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
       it "should validate numericality of #{attribute}" do
         @monster_type.should validate_numericality_of(attribute)
       end

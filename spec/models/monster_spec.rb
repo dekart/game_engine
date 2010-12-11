@@ -21,7 +21,7 @@ describe Monster do
       @monster = @monster_type.monsters.create(:character => Factory(:character))
     end
 
-    %w{name health level cooling_time experience money attack defence minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
+    %w{name health level experience money attack defence minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
       it "should delegate #{attribute.humanize} to monster type" do
         @monster.send(attribute).should == @monster_type.send(attribute)
       end
@@ -61,7 +61,7 @@ describe Monster do
       @monster.errors.on(:monster_type).should_not be_empty
     end
 
-    it "should be invalid if cooling time haven't passed" do
+    it "should be invalid if there are current monsters of the same type" do
       @other_monster = Monster.create!(:character => @character, :monster_type => @monster_type)
       
       Monster.update_all({:created_at => (24.hours - 1.minute).ago}, {:id => @other_monster.id})
@@ -149,39 +149,21 @@ describe Monster do
     end
   end
 
-  describe "when checking cooling time passed" do
-    before do
-      @monster = Factory(:monster)
-    end
-
-    it "should return false if monster was created less than 24 hours ago" do
-      @monster.cooling_time_passed?.should be_false
-    end
-
-    it "should return true if monster was created more than 24 hours ago" do
-      Monster.update_all({:created_at => (24.hours + 1.minute).ago}, {:id => @monster.id})
-
-      @monster.reload
-      
-      @monster.cooling_time_passed?.should be_true
-    end
-  end
-
   describe "scopes" do
     describe "when fetching current monsters" do
-      it "should fetch monsters who expired less than 5 days ago" do
+      it "should fetch monsters who expired less than 24 hours ago" do
         @monster1 = Factory.create(:monster)
         @monster2 = Factory.create(:monster)
 
-        Monster.update_all({:expire_at => (Setting.i(:monster_display_time).days + 1.minute).ago}, {:id => @monster2.id})
+        Monster.update_all({:expire_at => (24.hours + 1.minute).ago}, {:id => @monster2.id})
 
         Monster.current.should include(@monster1)
         Monster.current.should_not include(@monster2)
       end
 
-      it "should fetch monsters defeated less than 5 days ago" do
+      it "should fetch monsters defeated less than 24 hours ago" do
         @monster1 = Factory.create(:monster)
-        @monster2 = Factory.create(:monster, :defeated_at => (Setting.i(:monster_display_time).days + 1.minute).ago)
+        @monster2 = Factory.create(:monster, :defeated_at => (24.hours.days + 1.minute).ago)
 
         Monster.current.should include(@monster1)
         Monster.current.should_not include(@monster2)

@@ -6,7 +6,7 @@ class Monster < ActiveRecord::Base
   named_scope :current, Proc.new{
     {
       :conditions => ["(defeated_at IS NULL AND expire_at >= :time) OR (defeated_at >= :time)",
-        {:time => Setting.i(:monster_display_time).hours.ago}
+        {:time => Setting.i(:monster_reward_time).hours.ago}
       ]
     }
   }
@@ -31,7 +31,7 @@ class Monster < ActiveRecord::Base
   end
 
   delegate :name, :image, :health, :level, :experience, :money, :requirements, :attack, :defence,
-    :minimum_damage, :maximum_damage, :minimum_response, :maximum_response, :cooling_time, :to => :monster_type
+    :minimum_damage, :maximum_damage, :minimum_response, :maximum_response, :to => :monster_type
 
   attr_reader :payouts
 
@@ -42,10 +42,6 @@ class Monster < ActiveRecord::Base
 
   before_update :check_negative_health_points
   after_update  :check_winning_status
-
-  def cooling_time_passed?
-    created_at <= cooling_time.hours.ago
-  end
 
   protected
 
@@ -62,9 +58,7 @@ class Monster < ActiveRecord::Base
   def validate_on_create
     return unless character && monster_type
 
-    if recent_monster = character.monsters.find_by_monster_type_id(monster_type.id) and !recent_monster.cooling_time_passed?
-      errors.add(:base, :recently_attacked)
-    end
+    errors.add(:base, :recently_attacked) if character.monsters.current.by_type(monster_type).count > 0
 
     errors.add(:character, :low_level) if character.level < level
 
