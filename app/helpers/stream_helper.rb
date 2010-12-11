@@ -169,6 +169,35 @@ module StreamHelper
     stream_dialog(:attachment => attachment)
   end
 
+  def monster_invite_stream_dialog(monster)
+    attachment = {
+      :name => t("stories.monster_invite.title",
+        :monster  => monster.name,
+        :app      => t("app_name")
+      ),
+      :description => t("stories.monster_invite.description",
+        :monster  => monster.name,
+        :app      => t("app_name")
+      ),
+      :href => monster_url(monster,
+        :canvas => true,
+        :reference_code => reference_code(:stream_monster_invite_name)
+      )
+    }
+
+    image_url = monster_url(monster,
+      :canvas => true,
+      :reference_code => reference_code(:stream_monster_invite_image)
+    )
+
+    attachment[:media] = stream_image(
+      :image  => monster.image? ? monster.image.url(:stream) : :stream_monster_invite,
+      :url    => image_url
+    )
+
+    stream_dialog(:attachment => attachment)
+  end
+
   def monster_defeated_stream_dialog(monster)
     attachment = {
       :name => t("stories.monster_defeated.title",

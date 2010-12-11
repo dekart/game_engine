@@ -13,4 +13,8 @@
         :update => :result,
         :html   => {:class => "attack button"}
       ) %>
+
+  <%= link_to_function(button(:invite), monster_invite_stream_dialog(monster),
+        :class => "invite button"
+      ) %>
 </div>

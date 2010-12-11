@@ -12,6 +12,7 @@ en:
     progress:
       buttons:
         attack: "Attack"
+        invite: "Call to Arms"
     won:
       buttons:
         reward: "Get Reward"
