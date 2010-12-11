@@ -8,7 +8,7 @@ class MonsterFight < ActiveRecord::Base
   attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
 
   def attack!
-    if valid?
+    if monster.progress? && character.sp > 0
       @character_damage, @monster_damage = self.class.damage_system.calculate_damage(character, monster)
 
       @experience = monster.experience
@@ -32,6 +32,8 @@ class MonsterFight < ActiveRecord::Base
         monster.save!
         character.save!
       end
+    else
+      false
     end
   end
 
@@ -53,16 +55,15 @@ class MonsterFight < ActiveRecord::Base
     monster.won? && !reward_collected?
   end
 
+  def stamina_requirement
+    Requirements::StaminaPoint.new(:value => 1)
+  end
+
   protected
 
   def repeat_fight?
     character.monster_fights(
       :joins => :monster, :conditions => {:monster_type_id => monster.monster_type_id, :state => 'won'}
     ).count > 1
-  end
-
-  def validate_on_create
-    errors.add(:character, :not_enough_stamina) if character.sp < 1
-    errors.add(:monster, :already_done) unless monster.progress?
   end
 end

@@ -17,6 +17,8 @@ en:
       title: "I just completed the \"{{mission}}\" mission in {{app}}!"
     boss:
       title: "I just defeated the {{boss}} in {{app}}!"
+    monster_defeated:
+      title: "I just defeated %{monster} in {{app}}!"
     property:
       title: "I just bought {{property}} in {{app}}!"
     inventory:

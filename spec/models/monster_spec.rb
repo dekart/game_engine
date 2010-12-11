@@ -29,6 +29,7 @@ describe Monster do
 
     it "should delegate image to monster type" do
       @monster.image.instance.should == @monster_type
+      @monster.image?.should == @monster_type.image?
     end
 
     it "should delegate requirements to monster type" do

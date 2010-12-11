@@ -1,50 +1,76 @@
 <% result_for(:monster) do |builder| %>
-  <% builder.buttons do %>
-    <%= link_to_remote(button(:attack),
-          :url    => monster_path(@fight.monster),
-          :method => :put,
-          :update => :result,
-          :html   => {:class => "attack button"}
-        ) if @fight.monster.progress? %>
-  <% end %>
+  <% if @attack_result %>
+    <% if @fight.monster.progress? %>
+      <% builder.buttons do %>
+        <%= link_to_remote(button(:attack),
+              :url    => monster_path(@fight.monster),
+              :method => :put,
+              :update => :result,
+              :html   => {:class => "attack button"}
+            ) %>
+      <% end %>
 
-  <% builder.success do %>
-    <%= t(".message", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
-  <% end %>
+      <% builder.success do %>
+        <%= t(".message.progress", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
+      <% end %>
+    <% elsif @fight.monster.won? %>
+      <% dialog :id => :monster_defeated do %>
+        <h2><%= t('.dialog.title', :monster => @fight.monster.name) %></h2>
 
-  <table class="payouts">
-    <tr>
-      <td class="received">
-        <h3><%= t(".you_received") %></h3>
+        <p><%= t('.dialog.message', :monster => content_tag(:strong, @fight.monster.name)).html_safe %></p>
 
-        <%= payout(:experience, @fight.experience) %>
+        <div class="buttons">
+          <%= link_to_function(button(:continue),
+                monster_defeated_stream_dialog(@fight.monster) + "$.dialog.close()",
+                :class => "continue button"
+              ) %>
+        </div>
+      <% end %>
 
-        <%= payout(:basic_money, number_to_currency(@fight.money)) %>
-      </td>
+      <% builder.buttons do %>
+        <%= link_to_function(button(:publish),
+              monster_defeated_stream_dialog(@fight.monster) + "$.dialog.close()",
+              :class => "publish button"
+            ) %>
+      <% end %>
 
-      <td class="spent">
-        <h3><%= t(".you_spent") %></h3>
-
-        <%= payout(:hp, @fight.character_damage) %>
-
-        <%= payout(:sp, @fight.stamina) %>
-      </td>
-
-      <td class="monster_spent">
-        <h3><%= t(".monster_spent") %></h3>
-
-        <%= payout(:hp, @fight.monster_damage) %>
-      </td>
-    </tr>
-  </table>
-
-  <% if @monster.won? %>
-    <% dialog :monster_victory do %>
-      Hey! I won!
+      <% builder.success do %>
+        <%= t(".message.won", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <% builder.on_ready do %>
-    $('#monster').html(<%= render(@fight.monster.state, :monster => @fight.monster, :fight => @fight).to_json.html_safe %>);
+    <table class="payouts">
+      <tr>
+        <td class="received">
+          <h3><%= t(".you_received") %></h3>
+
+          <%= payout(:experience, @fight.experience) %>
+
+          <%= payout(:basic_money, number_to_currency(@fight.money)) %>
+        </td>
+
+        <td class="spent">
+          <h3><%= t(".you_spent") %></h3>
+
+          <%= payout(:hp, @fight.character_damage) %>
+
+          <%= payout(:sp, @fight.stamina) %>
+        </td>
+
+        <td class="monster_spent">
+          <h3><%= t(".monster_spent") %></h3>
+
+          <%= payout(:hp, @fight.monster_damage) %>
+        </td>
+      </tr>
+    </table>
+
+    <% builder.on_ready do %>
+      $('#monster').html(<%= render(@fight.monster.state, :monster => @fight.monster, :fight => @fight).to_json.html_safe %>);
+    <% end %>
+  <% elsif @fight.character.sp == 0 %>
+    <%= builder.render("requirements/not_satisfied/stamina_point",
+          :requirement => @fight.stamina_requirement
+        ) %>
   <% end %>
 <% end %>

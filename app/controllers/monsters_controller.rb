@@ -22,7 +22,7 @@ class MonstersController < ApplicationController
   def update
     @fight = Monster.find(params[:id]).monster_fights.find_or_initialize_by_character_id(current_character.id)
 
-    @fight.attack!
+    @attack_result = @fight.attack!
 
     render :layout => 'ajax'
   end

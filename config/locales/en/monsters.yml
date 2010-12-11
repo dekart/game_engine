@@ -16,12 +16,19 @@ en:
       buttons:
         reward: "Get Reward"
     update:
-      message: "You've successfully attacked %{monster}!"
+      message:
+        progress: "You've successfully attacked %{monster}!"
+        won: "You've defeated %{monster}!"
       you_received: "You received:"
       you_spent: "You spent:"
       monster_spent: "Monster spent:"
       buttons:
         attack: "Attack Again"
+        publish: "Brag About It"
+        continue: "Continue"
+      dialog:
+        title: "You defeated %{monster}!"
+        message: "You did it! %{monster} is defeated and you're the winner! Let your friends know about your success!"
     reward:
       messages:
         success: "Well done! You defeated %{monster} and that's your reward!"

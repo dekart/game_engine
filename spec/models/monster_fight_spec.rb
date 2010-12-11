@@ -21,119 +21,117 @@ describe MonsterFight do
 
       @character = Factory(:character)
 
-      @monster_fight = MonsterFight.new(:character => @character, :monster => @monster)
+      @monster_fight = MonsterFight.create(:character => @character, :monster => @monster)
+
+      @damage_system = mock('damage system', :calculate_damage => [10, 20])
+
+      MonsterFight.stub!(:damage_system).and_return(@damage_system)
     end
 
-    it 'should not be valid if character does not have enough stamina' do
+    it 'should return false if character does not have enough stamina' do
       @character.sp = 0
 
-      @monster_fight.should_not be_valid
-      @monster_fight.errors.on(:character).should_not be_empty
+      @monster_fight.attack!.should be_false
     end
 
-    it 'should not be valid if monster is not in the progress' do
+    it 'should return false if monster is not in the progress' do
       @monster.win
 
-      @monster_fight.should_not be_valid
-      @monster_fight.errors.on(:monster).should_not be_empty
+      @monster_fight.attack!.should be_false
     end
 
-    describe 'when valid' do
-      before do
-        @damage_system = mock('damage system', :calculate_damage => [10, 20])
+    it 'should calculate damage dealt to monster and character' do
+      @damage_system.should_receive(:calculate_damage).with(@character, @monster).and_return([10, 20])
 
-        MonsterFight.stub!(:damage_system).and_return(@damage_system)
-      end
+      @monster_fight.attack!
+    end
 
-      it 'should calculate damage dealt to monster and character' do
-        @damage_system.should_receive(:calculate_damage).with(@character, @monster).and_return([10, 20])
-
+    it 'should apply damage to monster' do
+      lambda {
         @monster_fight.attack!
-      end
+      }.should change(@monster, :hp).from(1000).to(980)
+    end
 
-      it 'should apply damage to monster' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@monster, :hp).from(1000).to(980)
-      end
-
-      it 'should store damage dealt to monster to a variable' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@monster_fight, :monster_damage).from(nil).to(20)
-      end
-
-      it 'should apply damage to character' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@character, :hp).from(100).to(90)
-      end
-
-      it 'should store damage dealt to character to a variable' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@monster_fight, :character_damage).from(nil).to(10)
-      end
-
-      it 'should apply experience reward to character' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@character, :experience).from(0).to(5)
-      end
-
-      it 'should store experience reward to a variable' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@monster_fight, :experience).from(nil).to(5)
-      end
-
-      it 'should apply money reward to character' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@character, :basic_money).from(0).to(5)
-      end
-
-      it 'should store money reward to a variable' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@monster_fight, :money).from(nil).to(5)
-      end
-
-      it 'should take stamina from character' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@character, :sp).from(10).to(9)
-      end
-
-      it 'should store stamina spending to a variable' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@monster_fight, :stamina).from(nil).to(1)
-      end
-
-      it 'should append damage dealt to monster' do
-        lambda {
-          @monster_fight.attack!
-        }.should change(@monster_fight, :damage).from(0).to(20)
-      end
-
-      it 'should save monster' do
+    it 'should store damage dealt to monster to a variable' do
+      lambda {
         @monster_fight.attack!
+      }.should change(@monster_fight, :monster_damage).from(nil).to(20)
+    end
 
-        @monster.should_not be_changed
-      end
-
-      it 'should save character' do
+    it 'should apply damage to character' do
+      lambda {
         @monster_fight.attack!
+      }.should change(@character, :hp).from(100).to(90)
+    end
 
-        @character.should_not be_changed
-      end
-
-      it 'should be saved' do
+    it 'should store damage dealt to character to a variable' do
+      lambda {
         @monster_fight.attack!
+      }.should change(@monster_fight, :character_damage).from(nil).to(10)
+    end
 
-        @monster_fight.should_not be_changed
-      end
+    it 'should apply experience reward to character' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@character, :experience).from(0).to(5)
+    end
+
+    it 'should store experience reward to a variable' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@monster_fight, :experience).from(nil).to(5)
+    end
+
+    it 'should apply money reward to character' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@character, :basic_money).from(0).to(5)
+    end
+
+    it 'should store money reward to a variable' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@monster_fight, :money).from(nil).to(5)
+    end
+
+    it 'should take stamina from character' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@character, :sp).from(10).to(9)
+    end
+
+    it 'should store stamina spending to a variable' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@monster_fight, :stamina).from(nil).to(1)
+    end
+
+    it 'should append damage dealt to monster' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@monster_fight, :damage).from(0).to(20)
+    end
+
+    it 'should save monster' do
+      @monster_fight.attack!
+
+      @monster.should_not be_changed
+    end
+
+    it 'should save character' do
+      @monster_fight.attack!
+
+      @character.should_not be_changed
+    end
+
+    it 'should be saved' do
+      @monster_fight.attack!
+
+      @monster_fight.should_not be_changed
+    end
+
+    it 'should return true' do
+      @monster_fight.attack!.should be_true
     end
   end
 
@@ -210,6 +208,17 @@ describe MonsterFight do
 
     it 'should return true on successfull collection' do
       @monster_fight.collect_reward!.should be_true
+    end
+  end
+
+  describe 'when getting stamina requirement' do
+    before do
+      @monster_fight = Factory(:monster_fight)
+    end
+
+    it 'should return requirement for 1 stamina point' do
+      @monster_fight.stamina_requirement.should be_kind_of(Requirements::StaminaPoint)
+      @monster_fight.stamina_requirement.value.should == 1
     end
   end
 end

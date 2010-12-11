@@ -169,6 +169,31 @@ module StreamHelper
     stream_dialog(:attachment => attachment)
   end
 
+  def monster_defeated_stream_dialog(monster)
+    attachment = {
+      :name => t("stories.monster_defeated.title",
+        :monster  => monster.name,
+        :app      => t("app_name")
+      ),
+      :href => monster_url(monster,
+        :canvas => true,
+        :reference_code => reference_code(:stream_monster_defeated_name)
+      )
+    }
+
+    image_url = monster_url(monster,
+      :canvas => true,
+      :reference_code => reference_code(:stream_monster_defeated_image)
+    )
+
+    attachment[:media] = stream_image(
+      :image  => monster.image? ? monster.image.url(:stream) : :stream_monster_defeated,
+      :url    => image_url
+    )
+
+    stream_dialog(:attachment => attachment)
+  end
+
   def help_request_stream_dialog(context)
     context_type = context.class.to_s.underscore
 
