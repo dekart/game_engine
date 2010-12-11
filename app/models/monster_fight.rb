@@ -59,11 +59,23 @@ class MonsterFight < ActiveRecord::Base
     Requirements::StaminaPoint.new(:value => 1)
   end
 
-  protected
-
   def repeat_fight?
-    character.monster_fights(
-      :joins => :monster, :conditions => {:monster_type_id => monster.monster_type_id, :state => 'won'}
-    ).count > 1
+    fights_won = character.monsters.count(:conditions => {:monster_type_id => monster.monster_type_id, :state => 'won'})
+
+    if monster.won?
+      fights_won > 1
+    else
+      fights_won > 0
+    end
+  end
+
+  def payout_triggers
+    if reward_collected?
+      []
+    elsif repeat_fight?
+      [:repeat_victory]
+    else
+      [:victory]
+    end
   end
 end

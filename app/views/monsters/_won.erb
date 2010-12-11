@@ -13,3 +13,10 @@
         :html   => {:class => "reward button"}
       ) if fight.reward_collectable? %>
 </div>
+
+<div class="payouts">
+  <%= payout_list(monster, monster.monster_type.payouts, :add,
+        :format   => :preview,
+        :triggers => fight.payout_triggers
+      ) %>
+</div>

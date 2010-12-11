@@ -174,19 +174,19 @@ describe MonsterFight do
       @monster_fight.collect_reward!.should be_false
     end
 
-    it 'should apply victory payout when character won this monster type for the first time' do
+    it 'should apply victory payout when this fight is not repeat fight' do
+      @monster_fight.should_receive(:repeat_fight?).and_return(false)
+
       lambda {
         @monster_fight.collect_reward!
       }.should change(@character, :basic_money).to(123)
     end
 
-    it 'should apply repeat victory payout when character won this monster type again' do
-      @second_monster = Factory(:monster, :monster_type => @monster_fight.monster.monster_type)
-      @second_monster_fight = Factory(:monster_fight, :character => @character, :monster => @second_monster)
-      @second_monster.win
+    it 'should apply repeat victory payout when this fight is repeat fight' do
+      @monster_fight.should_receive(:repeat_fight?).and_return(true)
 
       lambda{
-        @second_monster_fight.collect_reward!
+        @monster_fight.collect_reward!
       }.should change(@character, :basic_money).to(456)
     end
 
@@ -208,6 +208,52 @@ describe MonsterFight do
 
     it 'should return true on successfull collection' do
       @monster_fight.collect_reward!.should be_true
+    end
+  end
+
+  describe 'when checking if fight is repeat fight' do
+    before do
+      @monster_fight = Factory(:monster_fight)
+    end
+
+    it 'should return false if there is no won fights with this monster type' do
+      @monster_fight.repeat_fight?.should be_false
+    end
+
+    it 'should return false if there is no won fight with this monster type and the fight is won' do
+      @monster_fight.monster.win
+
+      @monster_fight.repeat_fight?.should be_false
+    end
+    
+    it 'should return true if there is a won fight with this monster type' do
+      @second_monster = Factory(:monster, :monster_type => @monster_fight.monster.monster_type)
+      @second_monster_fight = Factory(:monster_fight, :character => @monster_fight.character, :monster => @second_monster)
+      @second_monster.win
+
+      @monster_fight.repeat_fight?.should be_true
+    end
+  end
+
+  describe 'when getting payout triggers' do
+    before do
+      @monster_fight = Factory(:monster_fight)
+    end
+
+    it 'should return :victory if it\'s not a repeat fight' do
+      @monster_fight.payout_triggers.should == [:victory]
+    end
+
+    it 'should return :repeat_victory if it\'s a repeat fight' do
+      @monster_fight.should_receive(:repeat_fight?).and_return true
+
+      @monster_fight.payout_triggers.should == [:repeat_victory]
+    end
+
+    it 'should return empty array if reward is already collected' do
+      @monster_fight.reward_collected = true
+
+      @monster_fight.payout_triggers.should == []
     end
   end
 

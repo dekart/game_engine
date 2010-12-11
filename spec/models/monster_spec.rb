@@ -150,6 +150,22 @@ describe Monster do
     end
   end
 
+  describe 'when fetching time remaining for fight' do
+    before do
+      @monster = Factory(:monster)
+    end
+
+    it 'should return integer value' do
+      @monster.time_remaining.should be_kind_of(Integer)
+    end
+
+    it 'should return amount of seconds remaining to fight expiration' do
+      @monster.expire_at = 10.minutes.from_now
+
+      @monster.time_remaining.should == 599
+    end
+  end
+
   describe "scopes" do
     describe "when fetching current monsters" do
       it "should fetch monsters who expired less than 24 hours ago" do

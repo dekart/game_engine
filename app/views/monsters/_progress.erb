@@ -1,9 +1,15 @@
-<div class="health">
-  <%= monster_health_bar(monster) %>
-</div>
-
 <div class="image">
   <%= image_tag(monster.image.url(:normal)) %>
+</div>
+
+<div class="timer">
+  <%= t(".timer") %>
+
+  <span class="value"></span>
+</div>
+
+<div class="health">
+  <%= monster_health_bar(monster) %>
 </div>
 
 <div class="controls">
@@ -18,3 +24,16 @@
         :class => "invite button"
       ) %>
 </div>
+
+<div class="payouts">
+  <h3><%= MonsterType.human_attribute_name('payouts') %></h3>
+  
+  <%= payout_list(monster, monster.monster_type.payouts, :add,
+        :format   => :preview,
+        :triggers => fight.payout_triggers
+      ) %>
+</div>
+
+<% dom_ready do %>
+  Timer.start('#monster .timer .value', <%= monster.time_remaining %>)
+<% end %>

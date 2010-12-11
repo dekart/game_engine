@@ -43,6 +43,10 @@ class Monster < ActiveRecord::Base
   before_update :check_negative_health_points
   after_update  :check_winning_status
 
+  def time_remaining
+    (expire_at - Time.now).to_i
+  end
+
   protected
 
   def assign_initial_attributes
