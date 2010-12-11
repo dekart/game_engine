@@ -2,18 +2,28 @@
 
 <%= render "missions/buttons", :current => :monsters %>
 
-<% @monsters.each do |monster| %>
+<h2><%= t(".current_fights") %></h2>
+
+<% monster_list(@monsters) do |monster, fight| %>
   <% content_tag_for :div, monster do %>
     <%= monster.name %>
 
-    <%= link_to("Engage", monster_path(monster)) %>
+    <% if monster.progress? %>
+      <%= link_to(button(:engage), monster_path(monster), :class => "engage button") %>
+    <% elsif monster.expired? || fight.reward_collected? %>
+      <%= link_to(button(:view), monster_path(monster), :class => "view button") %>
+    <% else %>
+      <%= link_to(button(:reward), monster_path(monster), :class => "reward button") %>
+    <% end %>
   <% end %>
 <% end %>
+
+<h2><%= t(".available_monsters") %></h2>
 
 <% @monster_types.each do |type| %>
   <% content_tag_for :div, type do %>
     <%= type.name %>
 
-    <%= link_to("Attack", monsters_path(:monster_type_id => type), :method => :post) %>
+    <%= link_to(button(:attack), new_monster_path(:monster_type_id => type), :class => "attack button") %>
   <% end %>
 <% end %>

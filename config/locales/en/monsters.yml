@@ -2,6 +2,13 @@ en:
   monsters:
     index:
       title: "Monsters"
+      current_fights: "Current Fights"
+      available_monsters: "Available Monsters"
+      buttons:
+        attack: "Attack"
+        engage: "Engage"
+        view: "View"
+        reward: "Get Reward"
     progress:
       buttons:
         attack: "Attack"

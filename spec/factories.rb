@@ -105,6 +105,8 @@ Factory.define :monster_type do |t|
   t.money 5
 
   t.health 1000
+
+  t.state 'visible'
 end
 
 Factory.define :monster do |t|

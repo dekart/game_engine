@@ -3,11 +3,16 @@ class Monster < ActiveRecord::Base
   belongs_to  :character
   has_many    :monster_fights
 
-  named_scope :visible, Proc.new{
+  named_scope :current, Proc.new{
     {
       :conditions => ["(defeated_at IS NULL AND expire_at >= :time) OR (defeated_at >= :time)",
-        {:time => Setting.i(:monster_display_time).days.ago}
+        {:time => Setting.i(:monster_display_time).hours.ago}
       ]
+    }
+  }
+  named_scope :by_type, Proc.new{|type|
+    {
+      :conditions => {:monster_type_id => type.id}
     }
   }
 

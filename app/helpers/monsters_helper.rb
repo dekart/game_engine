@@ -10,4 +10,16 @@ module MonstersHelper
       ]
     )
   end
+
+  def monster_list(monsters)
+    monster_ids = monsters.collect{|m| m.id }
+
+    fights = current_character.monster_fights.all(:conditions => {:monster_id => monster_ids})
+
+    monsters.each do |monster|
+      fight = fights.detect{|f| f.monster_id == monster.id }
+
+      yield(monster, fight)
+    end
+  end
 end

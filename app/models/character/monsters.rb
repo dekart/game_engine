@@ -14,8 +14,14 @@ class Character
     end
 
     module MonsterTypeAssociationExtension
-      def available
-        MonsterType.with_state(:visible).scoped(:conditions => ["level <= ?", proxy_owner.level])
+      def available_for_fight
+        scope = MonsterType.with_state(:visible).scoped(:conditions => ["level <= ?", proxy_owner.level])
+
+        if exclude_ids = proxy_owner.monsters.current.collect{|m| m.monster_type_id } and exclude_ids.any?
+          scope = scope.scoped(:conditions => ["id NOT IN (?)", exclude_ids])
+        end
+
+        scope
       end
     end
   end

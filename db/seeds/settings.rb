@@ -138,6 +138,6 @@ Setting[:collections_enabled] ||= true
 
 Setting[:boosts_enabled] ||= false
 
-Setting[:monster_display_time] ||= 5
+Setting[:monster_display_time] ||= 24
 
 # Put your custom settings below this line
