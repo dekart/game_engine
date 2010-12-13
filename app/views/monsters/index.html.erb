@@ -10,7 +10,7 @@
       <% content_tag_for :div, monster do %>
         <div class="name"><%= monster.name %></div>
 
-        <div class="image"><%= monster_image(monster, :small) %></div>
+        <div class="image"><%= link_to(monster_image(monster, :small), monster) %></div>
 
         <div class="status">
           <% if monster.progress? %>
@@ -30,11 +30,11 @@
 
         <div class="controls">
           <% if monster.progress? %>
-            <%= link_to(button(:engage), monster_path(monster), :class => "engage button") %>
+            <%= link_to(button(:engage), monster, :class => "engage button") %>
           <% elsif monster.expired? || fight.reward_collected? %>
-            <%= link_to(button(:view), monster_path(monster), :class => "view button") %>
+            <%= link_to(button(:view), monster, :class => "view button") %>
           <% else %>
-            <%= link_to(button(:reward), monster_path(monster), :class => "reward button") %>
+            <%= link_to(button(:reward), monster, :class => "reward button") %>
           <% end %>
         </div>
       <% end %>

@@ -14,8 +14,10 @@
         <%= t(".message.progress", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
       <% end %>
     <% elsif @fight.monster.won? %>
-      <% dialog :id => :monster_defeated do %>
+      <% dialog :id => :monster_dialog do %>
         <h2><%= t('.dialog.title', :monster => @fight.monster.name) %></h2>
+
+        <div class="image"><%= monster_image(@fight.monster, :small) %></div>
 
         <p><%= t('.dialog.message', :monster => content_tag(:strong, @fight.monster.name)).html_safe %></p>
 
