@@ -11,7 +11,7 @@ module MonstersHelper
     percentage = monster.hp.to_f / monster.health * 100
 
     percentage_bar(percentage,
-      :label => "%s: %d/%d" % [
+      :label => '%s: <span class="value">%d/%d</span>' % [
         MonsterType.human_attribute_name("health"),
         monster.hp,
         monster.health

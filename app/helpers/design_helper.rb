@@ -20,7 +20,7 @@ module DesignHelper
   def percentage_bar(percentage, options = {})
     result = ""
 
-    result << content_tag(:div, options.delete(:label), :class => :text) if options[:label]
+    result << content_tag(:div, options.delete(:label).html_safe, :class => :text) if options[:label]
 
     result << content_tag(:div,
       content_tag(:div, "",

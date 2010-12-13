@@ -37,3 +37,40 @@
 
       &.view
         +button(!monster_list_view_icon, !monster_list_view_width)
+
+#monster
+  table
+    width: 100%
+
+  .image
+    padding-right: 15px
+    width: 1px
+
+  .health, .timer
+    font-weight: bold
+
+    .value
+      font-weight: normal
+
+  .timer
+    float: right
+
+  .health
+    .progress_bar
+      margin-top: 5px
+
+  .controls
+    margin: 15px auto
+    width: 210px
+
+    .button
+      float: left
+
+    .attack
+      +button(!monster_attack_icon)
+
+    .invite
+      +button(!monster_invite_icon)
+
+  .payouts
+    clear: both
