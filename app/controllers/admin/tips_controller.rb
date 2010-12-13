@@ -1,6 +1,6 @@
 class Admin::TipsController < Admin::BaseController
   def index
-    @tips = Tip.paginate(:page => params[:page])
+    @tips = Tip.without_state(:deleted).paginate(:page => params[:page])
   end
 
   def new
@@ -39,10 +39,26 @@ class Admin::TipsController < Admin::BaseController
     end
   end
 
+  def publish
+    @tip = Tip.find(params[:id])
+
+    @tip.publish if @tip.can_publish?
+
+    redirect_to admin_tips_path
+  end
+
+  def hide
+    @tip = Tip.find(params[:id])
+
+    @tip.hide if @tip.can_hide?
+
+    redirect_to admin_tips_path
+  end
+
   def destroy
     @tip = Tip.find(params[:id])
 
-    @tip.destroy
+    @tip.mark_deleted
 
     redirect_to admin_tips_path
   end

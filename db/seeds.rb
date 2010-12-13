@@ -4,7 +4,7 @@ end
 
 puts "Publishing seeded data..."
 
-[MissionGroup, Mission, ItemGroup, Item, Boss, PropertyType, CharacterType].each do |model|
+[MissionGroup, Mission, ItemGroup, Item, Boss, PropertyType, CharacterType, Tip].each do |model|
   model.all.each do |record|
     record.publish
   end
