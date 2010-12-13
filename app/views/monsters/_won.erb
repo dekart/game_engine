@@ -1,23 +1,29 @@
-<div class="health">
-  <%= monster_health_bar(monster) %>
-</div>
+<table cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="image">
+      <%= image_tag(monster.image.url(:normal)) %>
+    </td>
 
-<div class="image">
-  <%= image_tag(monster.image.url(:normal)) %>
-</div>
+    <td class="info">
+      <div class="health">
+        <%= monster_health_bar(monster) %>
+      </div>
 
-<div class="controls">
-  <%= link_to_remote(button(:reward),
-        :url    => reward_monster_path(monster),
-        :update => :result,
-        :html   => {:class => "reward button"}
-      ) if fight.reward_collectable? %>
-</div>
+      <div class="controls">
+        <%= link_to_remote(button(:reward),
+              :url    => reward_monster_path(monster),
+              :update => :result,
+              :html   => {:class => "reward button"}
+            ) if fight.reward_collectable? %>
+      </div>
 
-<% payout_list(monster, monster.monster_type.payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
-  <div class="payouts">
-    <h3><%= MonsterType.human_attribute_name('payouts') %></h3>
+      <% payout_list(monster, monster.monster_type.payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
+        <div class="payouts">
+          <h3><%= MonsterType.human_attribute_name('payouts') %></h3>
 
-    <%= p.payout_list %>
-  </div>
-<% end %>
+          <%= p.payout_list %>
+        </div>
+      <% end %>
+    </td>
+  </tr>
+</table>

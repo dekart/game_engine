@@ -38,6 +38,6 @@ en:
         message: "You did it! %{monster} is defeated and you're the winner! Let your friends know about your success!"
     reward:
       messages:
-        success: "Well done! You defeated %{monster} and that's your reward!"
+        success: "Well done! You defeated %{monster} and the reward is yours!"
         already_collected: "You've already collected reward for this fight."
       you_received: "You received:"
