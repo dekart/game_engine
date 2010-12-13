@@ -28,6 +28,7 @@
               <th><%= Character.human_attribute_name("name") %></th>
               <th><%= Character.human_attribute_name("level") %></th>
               <th><%= Character.human_attribute_name("created_at") %></th>
+              <th><%= User.human_attribute_name("reference") %></th>
             </tr>
             <% @characters.each do |character| %>
               <tr>
@@ -42,6 +43,7 @@
                 </td>
                 <td><%= character.level %></td>
                 <td><%= l(character.created_at, :format => :short) %></td>
+                <td><%= character.user.reference %></td>
                 <td class="controls">
                   <%= link_to(t(".controls.edit"), edit_admin_character_path(character, :page => params[:page])) %>
                   <%= link_to(t(".controls.payout"), payout_admin_characters_path(:ids => character)) %>
