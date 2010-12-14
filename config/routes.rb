@@ -73,7 +73,11 @@ ActionController::Routing::Routes.draw do |map|
       }
     admin.resources :skins,
       :member => {:activate => :post, :changelog => :post}
-    admin.resources :tips
+    admin.resources :tips,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
     admin.resources :translations
     admin.resources :assets
 

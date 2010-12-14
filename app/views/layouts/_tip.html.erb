@@ -1,4 +1,4 @@
-<% if tip = Tip.random %>
+<% if tip = Tip.with_state(:visible).random %>
   <div id="tip" class="block">
     <%= hide_block_link(:tip) %>
     
