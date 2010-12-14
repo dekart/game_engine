@@ -7,18 +7,20 @@ class Setting < ActiveRecord::Base
 
   before_save :serialize_payouts
 
-  after_save :restart_server
-  after_destroy :restart_server
+  after_save :update_cache!
 
   cattr_accessor :cache
 
   class << self
-    def cache_values!(force = false)
-      if cache.nil? || force
-        self.cache = all.inject({}){|result, s|
-          result[s.alias.to_sym] = s.value
-          result
+    def update_cache!(force = false)
+      if force || cache.nil? || (cache[:updated_at] < 5.seconds.ago && cache[:key] < Setting.maximum(:updated_at))
+        self.cache = {
+          :key => Setting.maximum(:updated_at),
+          :values => Hash[all.map{|s| [s.alias.to_sym, s.value]}],
+          :updated_at => Time.now
         }
+      else
+        cache[:updated_at] = Time.now if cache[:updated_at] < 5.seconds.ago
       end
 
       cache
@@ -26,52 +28,52 @@ class Setting < ActiveRecord::Base
 
     # Returns value casted to integer
     def i(key)
-      cache_values!
+      update_cache!
 
-      cache[key.to_sym].to_i
+      cache[:values][key.to_sym].to_i
     end
 
     # Returns value casted to string
     def s(key)
-      cache_values!
+      update_cache!
 
-      cache[key.to_sym].to_s
+      cache[:values][key.to_sym].to_s
     end
 
     # Returns value casted to float
     def f(key)
-      cache_values!
+      update_cache!
 
-      cache[key.to_sym].to_f
+      cache[:values][key.to_sym].to_f
     end
 
     # Returns value casted to boolean
     def b(key)
-      cache_values!
+      update_cache!
 
-      value = cache[key.to_sym].to_s.downcase
+      value = cache[:values][key.to_sym].to_s.downcase
 
       %w{true yes 1}.include?(value) ? true : false
     end
 
     # Returns value casted to string array (splits string value by comma)
     def a(key)
-      cache_values!
+      update_cache!
 
-      cache[key.to_sym].to_s.split(/\s*,\s*/)
+      cache[:values][key.to_sym].to_s.split(/\s*,\s*/)
     end
 
     # Returns percentage value casted to float
     def p(key, value_to_cast)
-      cache_values!
+      update_cache!
 
       value_to_cast * cache[key.to_sym].to_i * 0.01
     end
 
     def time(key)
-      cache_values!
+      update_cache!
 
-      cache[key.to_sym] ? ActiveSupport::TimeZone["UTC"].parse(cache[key.to_sym]) : ActiveSupport::TimeZone["UTC"].at(0)
+      cache[:values][key.to_sym] ? ActiveSupport::TimeZone["UTC"].parse(cache[key.to_sym]) : ActiveSupport::TimeZone["UTC"].at(0)
     end
 
     def []=(key, value)
@@ -87,7 +89,7 @@ class Setting < ActiveRecord::Base
         create(:alias => key.to_s, :value => value)
       end
 
-      cache_values!(true)
+      update_cache!(true)
     end
 
     def [](key)
@@ -119,7 +121,7 @@ class Setting < ActiveRecord::Base
     end
   end
 
-  def restart_server
-    Rails.restart!
+  def update_cache!
+    self.class.update_cache!(true)
   end
 end
