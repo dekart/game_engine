@@ -100,6 +100,10 @@ class Item < ActiveRecord::Base
     def available_for(character)
       visible_for(character).available_by_level(character)
     end
+
+    def special_for(character)
+      with_state(:visible).available.available_in(:special).available_for(character).scoped(:order => "RAND()")
+    end
   end
 
   (Item::EFFECTS + %w{basic_price vip_price}).each do |attribute|
