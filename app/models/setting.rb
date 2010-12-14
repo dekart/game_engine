@@ -67,13 +67,17 @@ class Setting < ActiveRecord::Base
     def p(key, value_to_cast)
       update_cache!
 
-      value_to_cast * cache[key.to_sym].to_i * 0.01
+      value_to_cast * cache[:values][key.to_sym].to_i * 0.01
     end
 
     def time(key)
       update_cache!
 
-      cache[:values][key.to_sym] ? ActiveSupport::TimeZone["UTC"].parse(cache[key.to_sym]) : ActiveSupport::TimeZone["UTC"].at(0)
+      if value = cache[:values][key.to_sym]
+        ActiveSupport::TimeZone["UTC"].parse(value)
+      else
+        ActiveSupport::TimeZone["UTC"].at(0)
+      end
     end
 
     def []=(key, value)
