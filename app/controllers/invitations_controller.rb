@@ -21,15 +21,15 @@ class InvitationsController < ApplicationController
     @character = Character.find_by_invitation_key(params[:id])
 
     if @character.nil? or @character == current_character
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("invitations.show.messages.already_joined")
 
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     elsif Setting.b(:relation_friends_only) && !current_facebook_user.friends.detect{|f| f.id.to_i == @character.user.facebook_id }
       flash[:notice] = t("invitations.show.messages.only_friends")
 
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     end
   end
 

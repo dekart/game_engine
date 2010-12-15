@@ -56,6 +56,6 @@ class HitListingsController < ApplicationController
   end
 
   def check_hitlist_enabled
-    redirect_to root_path unless Setting.b(:hit_list_enabled)
+    redirect_from_iframe root_url(:canvas => true) unless Setting.b(:hit_list_enabled)
   end
 end

@@ -32,9 +32,9 @@ class AssignmentsController < ApplicationController
 
   def redirect_to_context(assignment)
     if assignment.context.is_a?(Character)
-      redirect_to relations_url
+      redirect_from_iframe relations_url(:canvas => true)
     elsif assignment.context.is_a?(Property)
-      redirect_to properties_url
+      redirect_from_iframe properties_url(:canvas => true)
     end
   end
 end

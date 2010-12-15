@@ -23,7 +23,7 @@ class HelpRequestsController < ApplicationController
         @fight = @help_result.fight
       end
     else
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     end
   end
 end

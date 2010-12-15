@@ -70,7 +70,7 @@ class CharactersController < ApplicationController
     if flash[:premium_change_name]
       @allow_name = true
     else
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     end
   end
 

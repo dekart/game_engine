@@ -7,7 +7,7 @@ class GiftsController < ApplicationController
     
     @items = fetch_items
 
-    redirect_to root_path if @items.empty?
+    redirect_from_iframe root_url(:canvas => true) if @items.empty?
   end
 
   def edit
@@ -69,13 +69,13 @@ class GiftsController < ApplicationController
       flash[:error] = t("gifts.confirm.messages.failure")
     end
 
-    redirect_to root_path
+    redirect_from_iframe root_url(:canvas => true)
   end
 
   def show
     @gifts = current_character.accept_gifts(params[:id])
 
-    redirect_to root_path if @gifts.empty?
+    redirect_from_iframe root_url(:canvas => true) if @gifts.empty?
   end
 
   protected

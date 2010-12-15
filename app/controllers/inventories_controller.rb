@@ -72,6 +72,6 @@ class InventoriesController < ApplicationController
   protected
 
   def check_auto_equipment
-    redirect_to inventories_path if Setting.b(:character_auto_equipment)
+    redirect_from_iframe inventories_url(:canvas => true) if Setting.b(:character_auto_equipment)
   end
 end
