@@ -9,7 +9,7 @@
             :class => "inventory button"
           ) %>
 
-      <%= link_to_remote(button(@inventory.use_button_label.blank? ? :use : @inventory.use_button_label),
+      <%= link_to_remote(inventory_use_button(@inventory),
             :url    => use_inventory_path(@inventory),
             :update => :result,
             :html   => {:class => "use button"}
