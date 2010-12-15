@@ -13,4 +13,6 @@ class Gift < ActiveRecord::Base
       end
     end
   end
+
+  attr_accessor :inventory
 end

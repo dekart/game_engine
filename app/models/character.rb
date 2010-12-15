@@ -3,6 +3,7 @@ class Character < ActiveRecord::Base
   extend RestorableAttribute
   extend HasPayouts
   include ActionView::Helpers::NumberHelper
+  include Character::Gifts
   include Character::Notifications
   include Character::Titles
   include Character::Missions
@@ -79,9 +80,6 @@ class Character < ActiveRecord::Base
   has_many :help_requests,
     :dependent  => :destroy,
     :extend     => Character::HelpRequests
-
-  has_many :gifts
-  has_many :gift_receipts, :through => :gifts, :source => :receipts, :extend => Character::GiftReceipts
 
   has_many :boss_fights,
     :extend => Character::BossFights
@@ -479,29 +477,6 @@ class Character < ActiveRecord::Base
 
   def placements
     self[:placements] ||= {}
-  end
-
-  # TODO Refactor this
-  def accept_gifts id
-    if id == 'all'
-      gift_receipts = GiftReceipt.unaccepted.for_character(self)
-
-      gift_receipts.each(&:give_item_to_character!).map(&:gift).uniq
-    else
-      gift = Gift.find id
-      gift_receipt = gift.receipts.unaccepted.for_character(self).first
-
-      if gift_receipt
-        gift_receipt.give_item_to_character!
-        [gift]
-      else
-        []
-      end
-    end
-  end
-
-  def has_unaccepted_gifts?
-    ! GiftReceipt.unaccepted.for_character(self).count.zero?
   end
 
   def hospital_price

@@ -14,4 +14,10 @@ module InventoriesHelper
       yield(free_slots)
     end
   end
+
+  def inventory_use_button(inventory)
+    button(
+      inventory.use_button_label.blank? ? t('inventories.list.buttons.use') : inventory.use_button_label
+    )
+  end
 end

@@ -36,11 +36,7 @@ class GiftsController < ApplicationController
       @exclude_ids = []
     end
 
-    if Setting.i(:gifting_repeat_send_delay) > 0
-      @exclude_ids += current_character.gift_receipts.recent_recipient_facebook_ids(
-        Setting.i(:gifting_repeat_send_delay).hours.ago
-      )
-    end
+    @exclude_ids += current_character.gift_receipts.recent_facebook_ids
 
     render :action => :create, :layout => 'ajax'
   end
@@ -73,7 +69,7 @@ class GiftsController < ApplicationController
   end
 
   def show
-    @gifts = current_character.accept_gifts(params[:id])
+    @gifts = current_character.gifts.accept!(params[:id])
 
     redirect_from_iframe root_url(:canvas => true) if @gifts.empty?
   end

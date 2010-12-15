@@ -2,7 +2,7 @@
   <% result_for :gift, :inline => true do |builder| %>
     <% builder.buttons do %>
       <% if Setting.b(:gifting_accept_all) %>
-        <% if current_character.has_unaccepted_gifts? %>
+        <% if current_character.gifts.has_unaccepted? %>
           <%= link_to(button(:accept_all), gift_path(:all), :class => 'pending button') %>
         <% end %>
       <% else %>
@@ -17,15 +17,22 @@
     <% @gifts.each do |gift| %>
       <table class="details" cellspacing="0" cellpadding="0">
         <tr>
+          <td class="sender">
+            <%= character_picture_link(gift.character, {}, {:size => :small}) %><br />
+            <%= character_name_link(gift.character) %>
+          </td>
+          <td class="sends"><%= t(".sends") %></td>
           <td class="item">
             <%= item_image(gift.item, :small) %>
 
             <div class="name"><%= gift.item.name %></div>
           </td>
-          <td class="from"><%= t(".from") %></td>
-          <td class="sender">
-            <%= character_picture_link(gift.character, {}, {:size => :small}) %><br />
-            <%= character_name_link(gift.character) %>
+          <td class="controls">
+            <%= link_to_remote(inventory_use_button(gift.inventory),
+                  :url    => use_inventory_path(gift.inventory),
+                  :update => :result,
+                  :html   => {:class => "use button"}
+                ) if gift.inventory.usable? %>
           </td>
         </tr>
       </table>
