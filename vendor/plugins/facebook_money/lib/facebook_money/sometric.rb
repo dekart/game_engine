@@ -3,22 +3,24 @@ module FacebookMoney
     extend self
     
     def valid_request?(params)
-      digest = Digest::MD5.hexdigest("#{params[:uid]}#{params[:txn_value]}#{FacebookMoney.config["secret"]}#{params[:txn_date]}")
-
-      digest == params[:txn_sig] && !user(params).nil?
+      params[:txn_sig] == Digest::MD5.hexdigest("#{params[:uid]}#{params[:txn_value]}#{FacebookMoney.config["secret"]}#{params[:txn_date]}")
     end
 
-    def user(params)
-      User.find_by_facebook_id(params[:uid])
+    def user_id(params)
+      params[:uid]
     end
 
     def amount(params)
       params[:txn_value].to_i
     end
 
-    def html_code(template, options = {})
+    def html_code(template, recipient_id, options = {})
       default_options = {
-        :src => "http://v.sometrics.com/vc_delivery.html?zid=#{FacebookMoney.config["zid"]}&uid=#{template.current_user.facebook_id}&pid=#{FacebookMoney.config["pid"]}",
+        :src => "http://v.sometrics.com/vc_delivery.html?zid=%s&uid=%s&pid=%s" % [
+          FacebookMoney.config["zid"],
+          recipient_id,
+          FacebookMoney.config["pid"]
+        ],
         :frameborder  => 0,
         :width        => 600,
         :height       => 2400

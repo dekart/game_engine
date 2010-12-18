@@ -16,26 +16,20 @@ module FacebookMoney
   module ControllerMethods
     def on_valid_facebook_money_request
       if FacebookMoney.provider.valid_request?(params)
-        yield
+        yield(FacebookMoney.provider.user_id(params), FacebookMoney.provider.amount(params))
         
         render FacebookMoney.provider.success_response
       else
         render FacebookMoney.provider.failure_response
       end
     end
-
-    def facebook_money_user
-      FacebookMoney.provider.user(params)
-    end
-
-    def facebook_money_amount
-      FacebookMoney.provider.amount(params)
-    end
   end
 
   module HelperMethods
-    def facebook_money(options = {})
-      FacebookMoney.provider.html_code(self, options)
+    def facebook_money(recipient, options = {})
+      recipient_id = recipient.is_a?(Numeric) ? recipient : recipient.id
+
+      FacebookMoney.provider.html_code(self, recipient_id, options)
     end
   end
 end
