@@ -6,7 +6,7 @@ class Monster < ActiveRecord::Base
   named_scope :current, Proc.new{
     {
       :conditions => ["(defeated_at IS NULL AND expire_at >= :time) OR (defeated_at >= :time)",
-        {:time => Setting.i(:monster_reward_time).hours.ago}
+        {:time => Setting.i(:monsters_reward_time).hours.ago}
       ]
     }
   }
