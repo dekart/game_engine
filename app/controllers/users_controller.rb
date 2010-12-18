@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Your settings have been updated!"
 
-      redirect_to root_url
+      redirect_from_iframe root_url(:canvas => true)
     else
       render :action => :edit
     end
@@ -45,9 +45,9 @@ class UsersController < ApplicationController
         flash[:success] = t("users.invite.success_message", :amount => @sent_invitations.size)
       end
 
-      redirect_to invite_users_url(:canvas => true)
+      redirect_from_iframe invite_users_url(:canvas => true)
     elsif params[:from_selector]
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     end
   end
 end

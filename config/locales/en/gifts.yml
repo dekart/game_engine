@@ -27,7 +27,7 @@ en:
         failure: "An error occured while sending gift. Please contact application developer."
     show:
       success: "You've just received the gift:"
-      from: "From"
+      sends: "sends you"
       buttons:
         accept_pending: "Accept Other Gifts"
         accept_all: "Accept All"

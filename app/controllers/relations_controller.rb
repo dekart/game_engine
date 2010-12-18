@@ -1,7 +1,7 @@
 class RelationsController < ApplicationController
   def index
     if current_character.relations.size == 0 and params[:noredirect].nil?
-      redirect_to invite_users_path
+      redirect_from_iframe invite_users_url(:canvas => true)
     else
       @relations = fetch_relations
     end

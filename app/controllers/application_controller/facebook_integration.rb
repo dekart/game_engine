@@ -23,13 +23,13 @@ class ApplicationController
 
     def rescue_facebooker_oauth_exception(exception)
       if params[:error_reason] == 'user_denied' and HelpPage.visible?(:permissions)
-        redirect_to help_page_url(:permissions, :canvas => true)
+        redirect_from_iframe help_page_url(:permissions, :canvas => true)
       else
         logger.fatal(exception)
 
         log_browser_info
 
-        redirect_to root_url(:canvas => true)
+        redirect_from_iframe root_url(:canvas => true)
       end
     end
 

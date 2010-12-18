@@ -23,6 +23,8 @@ end
 
 Factory.define :character do |t|
   t.name "Character"
+  
+  t.association :user
   t.association :character_type, :factory => :character_type
 end
 
@@ -144,4 +146,15 @@ Factory.define :mission_level do |t|
   t.experience 2
   t.money_min 10
   t.money_max 20
+end
+
+Factory.define :gift do |t|
+  t.association :character
+  t.association :item
+end
+
+Factory.define :gift_receipt do |t|
+  t.association :gift
+
+  t.facebook_id 987654321
 end

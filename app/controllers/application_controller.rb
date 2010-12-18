@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required
-    redirect_to root_path unless current_user.admin?
+    redirect_from_iframe root_url(:canvas => true) unless current_user.admin?
   end
 
   def get_layout

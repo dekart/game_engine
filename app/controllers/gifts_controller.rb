@@ -7,7 +7,7 @@ class GiftsController < ApplicationController
     
     @items = fetch_items
 
-    redirect_to root_path if @items.empty?
+    redirect_from_iframe root_url(:canvas => true) if @items.empty?
   end
 
   def edit
@@ -36,11 +36,7 @@ class GiftsController < ApplicationController
       @exclude_ids = []
     end
 
-    if Setting.i(:gifting_repeat_send_delay) > 0
-      @exclude_ids += current_character.gift_receipts.recent_recipient_facebook_ids(
-        Setting.i(:gifting_repeat_send_delay).hours.ago
-      )
-    end
+    @exclude_ids += current_character.gift_receipts.recent_facebook_ids
 
     render :action => :create, :layout => 'ajax'
   end
@@ -69,13 +65,13 @@ class GiftsController < ApplicationController
       flash[:error] = t("gifts.confirm.messages.failure")
     end
 
-    redirect_to root_path
+    redirect_from_iframe root_url(:canvas => true)
   end
 
   def show
-    @gifts = current_character.accept_gifts(params[:id])
+    @gifts = current_character.gifts.accept!(params[:id])
 
-    redirect_to root_path if @gifts.empty?
+    redirect_from_iframe root_url(:canvas => true) if @gifts.empty?
   end
 
   protected

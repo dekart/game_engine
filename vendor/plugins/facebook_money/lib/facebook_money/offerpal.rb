@@ -3,22 +3,23 @@ module FacebookMoney
     extend self
     
     def valid_request?(params)
-      digest = Digest::MD5.hexdigest([params[:id], params[:snuid], params[:currency], FacebookMoney.config["secret"]].join(":"))
-
-      digest == params[:verifier] && !user(params).nil?
+      params[:verifier] == Digest::MD5.hexdigest([params[:id], params[:snuid], params[:currency], FacebookMoney.config["secret"]].join(":"))
     end
 
-    def user(params)
-      User.find_by_facebook_id(params[:snuid])
+    def user_id(params)
+      params[:snuid]
     end
 
     def amount(params)
       params[:currency].to_i
     end
 
-    def html_code(template, options = {})
+    def html_code(template, recipient_id, options = {})
       default_options = {
-        :src          => "http://pub.myofferpal.com/#{FacebookMoney.config["application_id"]}/showoffers.action?snuid=#{template.current_user.facebook_id}",
+        :src          => "http://pub.myofferpal.com/%s/showoffers.action?snuid=%s" % [
+          FacebookMoney.config["application_id"],
+          recipient_id
+        ],
         :frameborder  => 0,
         :width        => 728,
         :height       => 2700,

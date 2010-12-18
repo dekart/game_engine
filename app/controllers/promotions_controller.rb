@@ -15,7 +15,7 @@ class PromotionsController < ApplicationController
         flash[:notice] = t("promotions.show.already_used")
       end
 
-      redirect_to root_path
+      redirect_from_iframe root_url(:canvas => true)
     end
   end
 end
