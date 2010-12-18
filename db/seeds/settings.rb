@@ -138,6 +138,7 @@ Setting[:collections_enabled] ||= true
 
 Setting[:boosts_enabled] ||= false
 
-Setting[:monster_reward_time] ||= 24
+Setting[:monsters_enabled] ||= true
+Setting[:monsters_reward_time] ||= 24
 
 # Put your custom settings below this line
