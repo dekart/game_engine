@@ -29,17 +29,17 @@
       </div>
 
       <% payout_list(monster, monster.monster_type.payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
-        <div class="payouts">
+        <div class="payouts clearfix">
           <h3><%= MonsterType.human_attribute_name('payouts') %></h3>
 
           <%= p.payout_list %>
         </div>
       <% end %>
+
+      <%= render('fighters', :monster => monster) %>
     </td>
   </tr>
 </table>
-
-<%= render('fighters', :monster => monster) %>
 
 <% dom_ready do %>
   Timer.start('#monster .timer .value', <%= monster.time_remaining %>)
