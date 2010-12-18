@@ -11,6 +11,20 @@ describe MonsterFight do
     end
   end
 
+  describe 'scopes' do
+    describe 'top damage scope' do
+      before do
+        @monster = Factory(:monster)
+        @fight1 = @monster.monster_fights.first
+        @fight2 = Factory(:monster_fight, :monster => @monster, :damage => 100)
+      end
+      
+      it 'should order fights by most damage dealt' do
+        MonsterFight.top_damage.should == [@fight2, @fight1]
+      end
+    end
+  end
+
   it 'should use simple damage calculation system' do
     MonsterFight.damage_system.should == FightingSystem::PlayerVsMonster::Simple
   end

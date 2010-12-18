@@ -1,6 +1,8 @@
 class MonsterFight < ActiveRecord::Base
   belongs_to :character
   belongs_to :monster
+
+  named_scope :top_damage, :order => "damage DESC", :include => :character
   
   cattr_reader :damage_system
   @@damage_system = FightingSystem::PlayerVsMonster::Simple

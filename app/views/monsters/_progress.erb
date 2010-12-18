@@ -39,6 +39,8 @@
   </tr>
 </table>
 
+<%= render('fighters', :monster => monster) %>
+
 <% dom_ready do %>
   Timer.start('#monster .timer .value', <%= monster.time_remaining %>)
 <% end %>

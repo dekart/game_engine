@@ -41,3 +41,5 @@ en:
         success: "Well done! You defeated %{monster} and the reward is yours!"
         already_collected: "You've already collected reward for this fight."
       you_received: "You received:"
+    fighters:
+      title: "Damage Leaders"
