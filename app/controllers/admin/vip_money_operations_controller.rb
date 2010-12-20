@@ -3,10 +3,8 @@ class Admin::VipMoneyOperationsController < Admin::BaseController
 
   def index
     scope = operation_class
-
-    if params[:reference_type]
-      scope = scope.by_reference_type(params[:reference_type])
-    end
+    scope = scope.by_reference_type(params[:reference_type]) unless params[:reference_type].blank?
+    scope = scope.by_profile_ids(params[:profile_ids].split(/[^\d]+/)) unless params[:profile_ids].blank?
 
     @operations = scope.latest.paginate(:page => params[:page], :per_page => 100)
   end

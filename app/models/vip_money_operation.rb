@@ -5,6 +5,12 @@ class VipMoneyOperation < ActiveRecord::Base
   named_scope :by_reference_type, Proc.new{|type|
     {:conditions => ["reference_type = ?", type]}
   }
+  named_scope :by_profile_ids, Proc.new{|ids|
+    {
+      :joins => {:character => :user},
+      :conditions => ["characters.id IN (:ids) OR users.facebook_id IN (:ids)", {:ids => ids}]
+    }
+  }
 
   attr_accessible :amount, :reference
 

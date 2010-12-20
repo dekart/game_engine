@@ -574,6 +574,8 @@ en:
           withdrawal: "Latest Withdrawals"
         filter:
           title: "Filter"
+          reference_type: "Reference:"
+          profile_ids: "Facebook / Profile IDs:"
           submit: "Apply Filter"
     titles:
       index:
