@@ -30,7 +30,6 @@ class InventoriesController < ApplicationController
 
   def index
     @inventories = current_character.inventories
-    @boosts = current_character.purchased_boosts.amounts_by_type
   end
 
   def use

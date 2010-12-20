@@ -20,6 +20,8 @@ class Fight < ActiveRecord::Base
   @@fighting_system = FightingSystem::PlayerVsPlayer::Proportion
   @@damage_system = FightingSystem::DamageCalculation::Proportion
 
+  attr_reader :attacker_boost, :victim_boost
+
   def attacker_won?
     self.winner == attacker
   end
@@ -62,22 +64,6 @@ class Fight < ActiveRecord::Base
     Requirements::HealthPoint.new(:value => attacker.weakness_minimum)
   end
 
-  def attacker_boost
-    if defined?(@attacker_boost)
-      @attacker_boost
-    else
-      @attacker_boost = @attacker_boost_id ? Boost.find(@attacker_boost_id) : nil
-    end
-  end
-
-  def victim_boost
-    if defined?(@victim_boost)
-      @victim_boost
-    else
-      @victim_boost = @victim_boost_id ? Boost.find(@victim_boost_id) : nil
-    end
-  end
-
   protected
 
   def validate
@@ -114,8 +100,8 @@ class Fight < ActiveRecord::Base
     self.winner_money = winner_reward
     self.loser_money  = (loser.basic_money >= winner_money ? winner_money : loser.basic_money)
 
-    @attacker_boost_id = attacker.best_boost(:attack) ? attacker.best_boost(:attack).boost.id : nil
-    @victim_boost_id = victim.best_boost(:defence) ? victim.best_boost(:defence).boost.id : nil
+    @attacker_boost = attacker.boosts.best_attacking
+    @victim_boost = victim.boosts.best_defending
   end
 
   def winner_reward
@@ -142,8 +128,8 @@ class Fight < ActiveRecord::Base
     attacker.hp  -= attacker_hp_loss
     victim.hp    -= victim_hp_loss
 
-    attacker.purchased_boosts.best_attacking.try(:delete)
-    victim.purchased_boosts.best_defending.try(:delete)
+    attacker.inventories.take!(@attacker_boost.item) if @attacker_boost
+    victim.inventories.take!(@victim_boost.item) if @victim_boost
 
     winner.fights_won += 1
     loser.fights_lost += 1

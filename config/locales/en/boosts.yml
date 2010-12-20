@@ -1,9 +1,0 @@
-en:
-  boosts:
-    index:
-      title: "Shop"
-      boosts: "Boosts"
-    boost:
-      free: "FREE"
-      buttons:
-        buy: "Purchase"

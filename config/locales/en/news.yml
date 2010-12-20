@@ -20,5 +20,3 @@ en:
       text: "{{actor}} upgraded the {{property}} to level {{level}}"
     property_collect:
       text: "{{actor}} collected income from the {{property}}"
-    boost_purchase:
-      text: "{{actor}} purchased %{amount} %{boost}"

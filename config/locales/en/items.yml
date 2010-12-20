@@ -5,7 +5,6 @@ en:
       next_item: "Reach level {{level}} to unlock new items"
       buttons:
         inventory: "Go to Inventory"
-      boosts: "Boosts"
     item:
       free: "FREE"
       buttons:

@@ -39,7 +39,7 @@ namespace :app do
 
     desc "Update image thumbnails"
     task :update_thumbnails => :environment do
-      [Boost, Boss, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
+      [Boss, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
         scope = klass.without_state(:deleted)
 
         puts "Updating thumbails for #{scope.count} of #{klass}..."
