@@ -26,11 +26,13 @@ module FightingSystem
           )
         end
 
-        attacker_boost_damage = attacker.best_boost(:attack) ? attacker.best_boost(:attack).damage : 0
-        victim_boost_damage = victim.best_boost(:defence) ? victim.best_boost(:defence).damage : 0
+        attacker_boost_damage = attacker.boosts.best_attacking.try(:health) || 0
+        victim_boost_damage = attacker.boosts.best_defending.try(:health) || 0
 
-        [(attack_damage / 1000).ceil + attacker_boost_damage,
-         (defence_damage / 1000).ceil + victim_boost_damage]
+        [
+          (attack_damage / 1000).ceil + attacker_boost_damage,
+          (defence_damage / 1000).ceil + victim_boost_damage
+        ]
       end
     end
   end

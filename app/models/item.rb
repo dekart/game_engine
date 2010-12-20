@@ -153,7 +153,7 @@ class Item < ActiveRecord::Base
   end
 
   def placements
-    self[:placements].to_s.split(",").collect{|p| p.to_sym }
+    boost? ? [] : self[:placements].to_s.split(",").collect{|p| p.to_sym }
   end
 
   def placements=(value)

@@ -29,7 +29,8 @@
       <% if fight.attacker_boost %>
         <div class="best_items">
           <strong><%= t(".best_attacking_boost") %></strong>
-          <%= boost_image(fight.attacker_boost, :icon) %>
+          
+          <%= item_image(fight.attacker_boost, :icon) %>
         </div>
       <% end %>
     </td>
@@ -63,7 +64,8 @@
       <% if fight.victim_boost %>
         <div class="best_items">
           <strong><%= t(".best_defending_boost") %></strong>
-          <%= boost_image(fight.victim_boost, :icon) %>
+
+          <%= item_image(fight.victim_boost, :icon) %>
         </div>
       <% end %>
     </td>
