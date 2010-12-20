@@ -6,6 +6,8 @@
   <h2><%= t(".filter.title") %></h2>
 
   <% form_tag admin_vip_money_operations_path(:type => operation_type), :method => :get do %>
+    <%= hidden_field_tag :type, operation_type %>
+  
     <%= label_tag :reference_type, t(".filter.reference_type") %>
     <%= select_tag(:reference_type, options_for_select([''] + operation_class.reference_type_options_for_select, params[:reference_type])) %>
 
