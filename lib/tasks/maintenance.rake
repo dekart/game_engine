@@ -76,6 +76,8 @@ namespace :app do
       
       ActiveRecord::Base.transaction do
         ActiveRecord::Base.connection.execute('SELECT * FROM boosts').each do |boost|
+          image_path = Rails.root.join('public', 'system', 'boosts', ("%09d" % boost[0].to_i).scan(/\d{3}/).join("/"), 'original', boost[9])
+
           item = group.items.create!(
             :name         => boost[1],
             :description  => boost[2],
@@ -85,9 +87,7 @@ namespace :app do
             :health       => boost[6],
             :basic_price  => boost[7],
             :vip_price    => boost[8],
-            :image        => (
-              boost[9].present? ? File.open(Rails.root.join('public', 'system', 'boosts', ("%09d" % boost[0].to_i).scan(/\d{3}/).join("/"), 'original', boost[9])) : ''
-            ),
+            :image        => (boost[9].present? && File.file?(image_path) ? File.open(image_path) : ''),
             :boost => true
           )
 
