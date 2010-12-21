@@ -9,11 +9,15 @@ class Character
     end
 
     def best_attacking
-      inventories.max_by{|i| [i.attack, i.health] }
+      inventories.select{|i| i.attack > 0 || i.health > 0 }.max_by{|i| [i.attack, i.health] }
     end
 
     def best_defending
-      inventories.max_by{|i| [i.defence, i.health] }
+      inventories.select{|i| i.defence > 0 || i.health > 0 }.max_by{|i| [i.defence, i.health] }
+    end
+
+    def best_energy
+      inventories.select{|i| i.energy > 0 }.max_by{|i| i.energy }
     end
   end
 end
