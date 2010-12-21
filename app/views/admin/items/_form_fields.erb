@@ -25,6 +25,7 @@
 <% form.field_set form.object.class.human_attribute_name('sales') do %>
   <%= form.text_field :basic_price, :size => 6, :autocomplete => :off %>
   <%= form.text_field :vip_price, :size => 6, :autocomplete => :off %>
+  <%= form.text_field :package_size, :size => 6, :autocomplete => :off %>
   <%= form.check_box :can_be_sold %>
   <%= form.check_box :can_be_sold_on_market %>
   <%= form.text_field :limit, :size => 6, :autocomplete => :off %>

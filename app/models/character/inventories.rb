@@ -28,17 +28,19 @@ class Character
     end
 
     def buy!(item, amount = 1)
-      inventory = give(item, amount)
+      effective_amount = amount * item.package_size
+
+      inventory = give(item, effective_amount)
 
       inventory.charge_money = true
 
       transaction do
         if inventory.save
-          Item.update_counters(inventory.item_id, :owned => amount)
+          Item.update_counters(inventory.item_id, :owned => effective_amount)
 
           equip(inventory)
 
-          proxy_owner.news.add(:item_purchase, :item_id => item.id, :amount => amount)
+          proxy_owner.news.add(:item_purchase, :item_id => item.id, :amount => effective_amount)
         end
       end
 

@@ -27,5 +27,6 @@ group :test do
   gem "rspec",        "1.3.0"
   gem "rspec-rails",  "1.3.2"
   gem "ZenTest",      "4.4.0"
+  gem "shoulda",      "2.11.3"
   gem "factory_girl", "1.3.2"
 end

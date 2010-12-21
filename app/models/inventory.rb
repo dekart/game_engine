@@ -61,12 +61,16 @@ class Inventory < ActiveRecord::Base
     item.equippable? and amount_available_for_equipment > 0
   end
 
+  def equipped?
+    equipped > 0
+  end
+
   protected
 
   def enough_character_money?
     return unless charge_money and changes["amount"]
 
-    difference = changes["amount"].last - changes["amount"].first
+    difference = (changes["amount"].last - changes["amount"].first) / item.package_size
 
     if difference > 0
       errors.add(:character, :not_enough_basic_money, :name => name) if character.basic_money < basic_price * difference
@@ -77,7 +81,7 @@ class Inventory < ActiveRecord::Base
   def charge_or_deposit_character
     return unless changes["amount"]
 
-    difference = changes["amount"].first - changes["amount"].last
+    difference = (changes["amount"].first - changes["amount"].last) / item.package_size
 
     if difference < 0 # Buying properties, should charge
       if charge_money

@@ -85,6 +85,9 @@ class Item < ActiveRecord::Base
 
   validates_presence_of :name, :item_group, :availability, :level
   validates_numericality_of :level, :basic_price, :vip_price, :allow_blank => true
+  validates_numericality_of :package_size, 
+    :greater_than => 0,
+    :allow_blank  => true
 
   class << self
     def to_grouped_dropdown
@@ -167,5 +170,13 @@ class Item < ActiveRecord::Base
     placements.collect{|p|
       [Character::Equipment.placement_name(p), p]
     }
+  end
+
+  def package_size
+    self[:package_size] || 1
+  end
+
+  def can_be_sold?
+    self[:can_be_sold] && package_size == 1
   end
 end
