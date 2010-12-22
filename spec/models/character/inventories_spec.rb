@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Character do
   describe 'when purchasing item' do
     before do
-      @character = Factory(:character)
+      @character = Factory(:character, :basic_money => 100)
       @item = Factory(:item)
     end
     
@@ -19,7 +19,7 @@ describe Character do
     it 'should charge money from character' do
       lambda{
         @character.inventories.buy!(@item)
-      }.should change(@character, :basic_money).from(1100).to(1090)
+      }.should change(@character, :basic_money).from(100).to(90)
     end
 
     it 'should increment item usage counter' do
@@ -65,7 +65,7 @@ describe Character do
       it 'should charge money for 3 items' do
         lambda{
           @character.inventories.buy!(@item, 3)
-        }.should change(@character, :basic_money).from(1100).to(1070)
+        }.should change(@character, :basic_money).from(100).to(70)
       end
 
       it 'should increment item usage counter by 3' do
@@ -91,7 +91,7 @@ describe Character do
       it 'should charge money for 1 item' do
         lambda{
           @character.inventories.buy!(@item)
-        }.should change(@character, :basic_money).from(1100).to(1090)
+        }.should change(@character, :basic_money).from(100).to(90)
       end
 
       it 'should increment item usage counter by 5' do
@@ -106,7 +106,7 @@ describe Character do
         }.should change(@character.inventories, :count).from(0).to(1)
 
         @character.inventories.first.amount.should == 15
-        @character.basic_money.should == 1070
+        @character.basic_money.should == 70
         @item.reload.owned.should == 15
       end
     end
