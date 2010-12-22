@@ -62,6 +62,7 @@ en:
         new: "Add Item"
         balance: "Balance Items"
         groups: "Manage Groups"
+        sets: "Item Sets"
       index:
         title: "Items"
         filter:

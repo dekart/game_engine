@@ -139,3 +139,7 @@ en:
           attributes:
             character:
               not_enough_items: "You haven't collected all the required items"
+        item_set:
+          attributes:
+            items:
+              not_enough_items: "Item set should contain at least 1 item"

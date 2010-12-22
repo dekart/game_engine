@@ -129,6 +129,9 @@ ActionController::Routing::Routes.draw do |map|
         :hide     => :put
       }
 
+    admin.resources :item_sets,
+      :new => { :add_item => :any }
+
     # Add your custom admin routes below this mark
     
   end

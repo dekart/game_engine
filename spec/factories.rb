@@ -170,3 +170,13 @@ Factory.define :gift_receipt do |t|
 
   t.facebook_id 987654321
 end
+
+Factory.define :item_set do |t|
+  t.name 'Fake Item Set'
+  t.item_ids do
+    item1 = Factory(:item)
+    item2 = Factory(:item)
+
+    "[[#{item1.id}, 70], [#{item2.id}, 30]]"
+  end
+end
