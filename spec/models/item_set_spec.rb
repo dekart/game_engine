@@ -129,4 +129,44 @@ describe ItemSet do
       end
     end
   end
+
+  describe 'when fetching random item' do
+    before do
+      @item1 = Factory(:item)
+      @item2 = Factory(:item)
+
+      @item_set = Factory(:item_set)
+      @item_set.items = [[@item1, 70], [@item2, 30]]
+    end
+
+    it 'should return an item' do
+      @item_set.random_item.should be_kind_of(Item)
+    end
+
+    it 'should always return first item if there is only one item' do
+      only_item = Factory(:item)
+
+      @item_set.items = [[only_item, 0]]
+
+      @item_set.random_item.should == only_item
+    end
+
+    it 'should choose first item basing on its frequency' do
+      @item_set.stub!(:rand).and_return(6999)
+      @item_set.random_item.should == @item1
+    end
+
+    it 'should choose second item basing on its frequency' do
+      @item_set.stub!(:rand).and_return(7000)
+      @item_set.random_item.should == @item2
+    end
+
+    it 'should raise exception when item list is empty' do
+      @item_set = ItemSet.new
+
+      lambda{
+        @item_set.random_item
+      }.should raise_exception
+    end
+  end
 end

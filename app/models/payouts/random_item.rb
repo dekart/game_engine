@@ -1,24 +1,32 @@
 module Payouts
   class RandomItem < Base
-    attr_accessor :availability, :allow_vip, :item_ids
+    attr_accessor :availability, :allow_vip, :item_set_id
+
+    def item_set
+      @item_set ||= (@item_set_id ? ItemSet.find_by_id(@item_set_id) : nil)
+    end
+
+    def item_set_id=(value)
+      @item_set_id = value.to_i
+    end
 
     def item
-      return @item if @item
+      unless @item
+        if item_set
+          @item = item_set.random_item
+        else
+          scope = ::Item.with_state(:visible)
+          scope = scope.available_in(availability) unless availability.blank?
+          scope = scope.basic unless allow_vip
 
-      source = ::Item
-
-      if item_ids.is_a?(Array) && item_ids.any?
-        @item = source.find(item_ids).rand
-      else
-        source = source.with_state(:visible)
-        source = source.available_in(availability) unless availability.blank?
-        source = source.basic unless allow_vip
-
-        @item = source.first(
-          :conditions => ["basic_price <= ?", value],
-          :order => "RAND()"
-        )
+          @item = scope.first(
+            :conditions => ["basic_price <= ?", value],
+            :order => "RAND()"
+          )
+        end
       end
+
+      @item
     end
 
     def apply(character, reference = nil)

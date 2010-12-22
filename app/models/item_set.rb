@@ -51,6 +51,21 @@ class ItemSet < ActiveRecord::Base
     value
   end
 
+  def random_item
+    if items.empty?
+      raise Exception.new('Item list is empty')
+    else
+      frequencies = items.collect{|i| i.last }
+      
+      frequencies = frequencies.inject([]){|r, f| r.push((r.last || 0) + f * 100); r }
+      max = frequencies.max
+      chance = rand(max)
+      result = frequencies.index{|f| chance < f } || 0
+
+      items[result][0]
+    end
+  end
+
   protected
 
   def check_item_presence
