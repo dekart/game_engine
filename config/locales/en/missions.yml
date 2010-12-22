@@ -50,6 +50,7 @@ en:
         you_spent:
           title: "You spent:"
           zero_energy: "{{user}} helped to save energy!"
+          boost: "You've used a boost:"
         progress:
           title: "Mission Progress"
 

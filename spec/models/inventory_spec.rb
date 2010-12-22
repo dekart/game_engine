@@ -47,4 +47,20 @@ describe Inventory do
       result.items.first.value.should == 100
     end
   end
+
+  describe 'when checking if inventory is equipped' do
+    before do
+      @inventory = Factory(:inventory)
+    end
+
+    it 'should return false if no items of current type are equipped' do
+      @inventory.equipped?.should be_false
+    end
+
+    it 'should return true if at least one item is equipped' do
+      @inventory.equipped = 1
+
+      @inventory.equipped?.should be_true
+    end
+  end
 end

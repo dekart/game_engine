@@ -1,6 +1,6 @@
 class MissionResult
   attr_reader :character, :mission, :level, :mission_group,
-    :money, :experience, :loot, :looter,
+    :energy, :money, :experience, :loot, :looter, :boost,
     :success, :free_fulfillment, :saved,
     :level_rank, :mission_rank, :group_rank,
     :payouts, :group_payouts
@@ -28,7 +28,21 @@ class MissionResult
         # Checking if energy assignment encountered free fulfillment
         @free_fulfillment = (@character.assignments.effect_value(:mission_energy) > rand(100))
 
-        @character.ep -= @level.energy unless @free_fulfillment
+        if @free_fulfillment
+          @energy = 0
+        else
+          if boost = @character.boosts.best_energy and boost.energy <= @level.energy
+            @boost = boost
+            
+            @energy = (@level.energy - @boost.energy)
+
+            @character.inventories.take!(@boost.item)
+          else
+            @energy = @level.energy
+          end
+        end
+
+        @character.ep -= @energy
 
         if @success
           money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)

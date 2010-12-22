@@ -4,10 +4,6 @@ en:
       name: "Item"
       missing: "Missing item!"
       label: "{{name}} X {{amount}}"
-    boost:
-      name: "Boost"
-      missing: "Missing boost!"
-      label: "{{name}} X {{amount}}"
     property:
       name: "Property"
       missing: "Missing property type!"

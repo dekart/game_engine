@@ -39,7 +39,7 @@ namespace :app do
 
     desc "Update image thumbnails"
     task :update_thumbnails => :environment do
-      [Boost, Boss, MonsterType, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
+      [Boss, MonsterType, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
         scope = klass.without_state(:deleted)
 
         puts "Updating thumbails for #{scope.count} of #{klass}..."
@@ -59,6 +59,69 @@ namespace :app do
     end
 
     # One-time tasks
+
+    desc 'Convert boosts to items'
+    task :convert_boosts_to_items => :environment do
+      puts 'Converting boosts to items...'
+
+      puts 'Removing news related to boosts...'
+
+      News::Base.delete_all "type = 'News::BoostPurchase'"
+
+      puts 'Converting boosts...'
+
+      group = ItemGroup.find_or_create_by_name('Boosts')
+
+      ids = {}
+      
+      ActiveRecord::Base.transaction do
+        ActiveRecord::Base.connection.execute('SELECT * FROM boosts').each do |boost|
+          image_path = Rails.root.join('public', 'system', 'boosts', ("%09d" % boost[0].to_i).scan(/\d{3}/).join("/"), 'original', boost[9])
+
+          item = group.items.create!(
+            :name         => boost[1],
+            :description  => boost[2],
+            :level        => boost[3],
+            :attack       => boost[4],
+            :defence      => boost[5],
+            :health       => boost[6],
+            :basic_price  => boost[7],
+            :vip_price    => boost[8],
+            :image        => (boost[9].present? && File.file?(image_path) ? File.open(image_path) : ''),
+            :boost => true
+          )
+
+          ids[boost[0].to_i] = item.id
+
+          ActiveRecord::Base.connection.execute("SELECT * FROM purchased_boosts WHERE boost_id = #{boost[0]}").each do |purchased|
+            Character.find(purchased[1]).inventories.give!(item)
+          end
+        end
+      end
+
+      puts 'Converting payouts...'
+
+      [Boss, Item, ItemCollection, Mission, MissionGroup, MissionLevel, Promotion, PropertyType].each do |klass|
+        klass.find_each do |record|
+          if record.payouts.any? and record.payouts.detect{|p| p.class == 'Payouts::Boost'}
+            new_collection = Payouts::Collection.new
+
+            record.payouts.each do |payout|
+              if payout.class == 'Payouts::Boost'
+                new_collection << Payouts::Item.new(payout.ivars.symbolize_keys.merge(:value => ids[payout.ivars['value']]))
+              else
+                new_collection << payout
+              end
+            end
+
+            record.payouts = new_collection
+            record.save!
+          end
+        end
+      end
+
+      puts 'Done!'
+    end
 
     desc "Set default positions to missions within mission groups"
     task :enumerate_missions => :environment do

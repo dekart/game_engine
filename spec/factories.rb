@@ -60,20 +60,32 @@ Factory.define :visibility do |t|
   t.association :character_type
 end
 
+Factory.define :item_group do |t|
+  t.name            'first'
+end
+
 Factory.define :item do |t|
-  t.name          'item'
+  t.association   :item_group
+
+  t.name          'Fake Item'
   t.availability  'shop'
   t.level         1
-  t.association   :item_group
+
+  t.basic_price   10
 
   t.usable  true
   t.payouts Payouts::Collection.new(
     Payouts::BasicMoney.new(:value => 100, :apply_on => :use)
   )
+
+  t.placements [:additional]
 end
 
-Factory.define :item_group do |t|
-  t.name            'first'
+Factory.define :inventory do |t|
+  t.association :character
+  t.association :item
+  
+  t.amount 1
 end
 
 Factory.define :hit_listing do |t|

@@ -31,13 +31,6 @@ class Character < ActiveRecord::Base
 
   has_many :items, :through => :inventories
 
-  has_many :purchased_boosts,
-    :include   => :boost,
-    :dependent => :delete_all,
-    :extend   => Character::Boosts
-
-  has_many :boosts, :through => :purchased_boosts
-
   has_many :relations,
     :foreign_key  => "owner_id",
     :order        => "type",
@@ -193,15 +186,11 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    boost_attack = purchased_boosts.best_attacking.try(:attack) || 0
-    
-    attack + equipment.effect(:attack) + assignments.effect_value(:attack) + boost_attack
+    attack + equipment.effect(:attack) + assignments.effect_value(:attack) + (boosts.best_attacking.try(:attack) || 0)
   end
 
   def defence_points
-    boost_defence = purchased_boosts.best_defending.try(:defence) || 0
-    
-    defence + equipment.effect(:defence) + assignments.effect_value(:defence) + boost_defence
+    defence + equipment.effect(:defence) + assignments.effect_value(:defence) + (boosts.best_defending.try(:defence) || 0)
   end
 
   def health_points
@@ -476,6 +465,10 @@ class Character < ActiveRecord::Base
     @equipment ||= Character::Equipment.new(self)
   end
 
+  def boosts
+    @boosts ||= Character::Boosts.new(self)
+  end
+
   def placements
     self[:placements] ||= {}
   end
@@ -511,17 +504,6 @@ class Character < ActiveRecord::Base
     self.hospital_used_at = Time.now
 
     save
-  end
-
-  def best_boost(type)
-    case type
-    when :attack
-      @best_attacking_boost || @best_attacking_boost = self.purchased_boosts.best_attacking
-    when :defence
-      @best_defending_boost || @best_defending_boost = self.purchased_boosts.best_defending
-    else
-      raise ArgumentError
-    end
   end
 
   protected

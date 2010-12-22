@@ -9,11 +9,11 @@ class InventoriesController < ApplicationController
   end
 
   def create
-    @amount = params[:amount].to_i
-
     @item = Item.available.available_in(:shop, :special).available_for(current_character).find(params[:item_id])
 
-    @inventory = current_character.inventories.buy!(@item, @amount)
+    @inventory = current_character.inventories.buy!(@item, params[:amount].to_i)
+
+    @amount = params[:amount].to_i * @item.package_size
 
     render :action => :create, :layout => "ajax"
   end
@@ -30,7 +30,6 @@ class InventoriesController < ApplicationController
 
   def index
     @inventories = current_character.inventories
-    @boosts = current_character.purchased_boosts.amounts_by_type
   end
 
   def use

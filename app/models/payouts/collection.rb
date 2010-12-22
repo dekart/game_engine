@@ -2,7 +2,7 @@ module Payouts
   class Collection
     attr_reader :items
 
-    delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :to => :items
+    delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :detect, :to => :items
 
     def self.parse(collection)
       return if collection.nil?

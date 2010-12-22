@@ -6,7 +6,6 @@ en:
         title: "Admin Menu"
         character_types: "Character Types"
         items: "Items"
-        boosts: "Boosts"
         missions: "Missions"
         monster_types: "Monsters"
         bosses: "Bosses (Legacy)"
@@ -97,28 +96,6 @@ en:
         filter:
           title: "Filter Items"
           all_groups: "All Groups"
-
-    boosts:
-      index:
-        title: "Boosts"
-        controls:
-          new: "Add Boost"
-          edit: "Edit"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this boost visible to players?"
-          hide: "Hide"
-          delete: "Delete"
-          delete_confirm: "Are you sure? This boost will be also be removed from all users!"
-      new:
-        title: "New Boost"
-        submit: "Create"
-      create:
-        success: "Boost has been created successfully!"
-      edit:
-        title: "%{name} - edit boost"
-        submit: "Update"
-      update:
-        success: "Boost has been updated successfully!"
 
     mission_groups:
       index:
@@ -575,6 +552,8 @@ en:
           withdrawal: "Latest Withdrawals"
         filter:
           title: "Filter"
+          reference_type: "Reference:"
+          profile_ids: "Facebook / Profile IDs:"
           submit: "Apply Filter"
     titles:
       index:

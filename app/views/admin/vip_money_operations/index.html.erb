@@ -6,8 +6,13 @@
   <h2><%= t(".filter.title") %></h2>
 
   <% form_tag admin_vip_money_operations_path(:type => operation_type), :method => :get do %>
-    <%= label_tag :reference_type %>
-    <%= select_tag(:reference_type, options_for_select(operation_class.reference_type_options_for_select, params[:reference_type])) %>
+    <%= hidden_field_tag :type, operation_type %>
+  
+    <%= label_tag :reference_type, t(".filter.reference_type") %>
+    <%= select_tag(:reference_type, options_for_select([''] + operation_class.reference_type_options_for_select, params[:reference_type])) %>
+
+    <%= label_tag :profile_ids, t(".filter.profile_ids") %>
+    <%= text_field_tag :profile_ids, params[:profile_ids], :size => 30 %>
 
     <%= submit_tag t(".filter.submit") %>
   <% end %>

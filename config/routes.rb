@@ -123,12 +123,6 @@ ActionController::Routing::Routes.draw do |map|
         :hide     => :put
       }
 
-    admin.resources :boosts,
-      :member => {
-        :publish  => :put,
-        :hide     => :put
-      }
-
     admin.resources :monster_types,
       :member => {
         :publish  => :put,
@@ -229,10 +223,6 @@ ActionController::Routing::Routes.draw do |map|
       :buy => :post
     }
   map.resources :item_collections, :only => [:index, :update]
-
-  map.resources :boosts
-
-  map.resources :purchased_boosts
 
   map.resources :monsters, :member => {:reward => :post}
 

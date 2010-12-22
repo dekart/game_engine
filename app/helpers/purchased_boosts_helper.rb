@@ -1,2 +1,0 @@
-module PurchasedBoostsHelper
-end
