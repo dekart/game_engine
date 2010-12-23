@@ -60,7 +60,7 @@ class MarketItem < ActiveRecord::Base
       errors.add(:base, :not_enough_vip_money, :name => plural_name)
     else
       transaction do
-        target_character.charge!(basic_price, vip_price)
+        target_character.charge!(basic_price, vip_price, :market)
         target_character.inventories.give!(inventory.item, amount)
 
         basic_money = basic_price - basic_fee
