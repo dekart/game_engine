@@ -42,7 +42,12 @@ class ItemCollection < ActiveRecord::Base
   def spendings
     Payouts::Collection.new(
       *items.collect{|item|
-        Payouts::Item.new(:value => item, :apply_on => :collected, :action => :remove, :visible => true)
+        Payouts::Item.new(
+          :value    => item,
+          :apply_on => :collected,
+          :action   => :remove,
+          :visible  => true
+        )
       }
     )
   end

@@ -1,4 +1,4 @@
-class AddPackagesToitems < ActiveRecord::Migration
+class AddPackagesToItems < ActiveRecord::Migration
   def self.up
     change_table :items do |t|
       t.integer :package_size
