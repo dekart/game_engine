@@ -2,6 +2,7 @@ en:
   item_collections:
     index:
       title: "Collections"
+    item_collection:
       buttons:
         collect: "Collect"
     update:

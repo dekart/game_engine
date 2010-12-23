@@ -3,44 +3,11 @@
 <%= render "inventories/buttons", :current => :collections %>
 
 <% collection @collections do %>
-  <table id="collection_list">
+  <div id="item_collection_list">
     <% @collections.each do |collection| %>
-      <% content_tag_for :tr, collection do %>
-        <td class="info">
-          <h2><%= collection.name %></h2>
-
-          <div class="items clearfix">
-            <% collection_items(collection) do |item, inventory| %>
-              <% content_tag :div, :class => [:item, dom_id(item), ('present' if inventory)].join(" ") do %>
-                <div class="name"><%= item.name %></div>
-
-                <div class="image"><%= item_image(item, :small) %></div>
-                <div class="amount"><%= inventory.try(:amount).to_i %></div>
-              <% end %>
-            <% end %>
-          </div>
-        </td>
-
-        <td class="payouts">
-          <h3><%= ItemCollection.human_attribute_name("payouts") %></h3>
-
-          <%= payout_list(collection, collection.payouts, :add,
-                :format   => :preview,
-                :triggers => current_character.collections.next_payout_triggers(collection)
-              ) %>
-
-          <div class="controls">
-            <%= link_to_remote(button(:collect),
-                  :url    => item_collection_path(collection),
-                  :method => :put,
-                  :update => :result,
-                  :html   => {:class => "collect button"}
-                ) %>
-          </div>
-        </td>
-      <% end %>
+      <%= render('item_collection', :collection => collection) %>
     <% end %>
-  </table>
+  </div>
 <% end %>
 
 <% dom_ready do %>
