@@ -20,6 +20,7 @@ en:
     monster_invite:
       title: "I need your assistance to defeat %{monster} in {{app}}!"
       description: "Join our fight against %{monster} in {{app}}! Together we can slay this monster and get reward!"
+      action_link: "Engage! »"
     monster_defeated:
       title: "I just defeated %{monster} in {{app}}!"
     property:

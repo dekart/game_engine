@@ -195,7 +195,18 @@ module StreamHelper
       :url    => image_url
     )
 
-    stream_dialog(:attachment => attachment)
+    stream_dialog(
+      :attachment => attachment,
+      :action_links => [
+        {
+          :text => t("stories.monster_invite.action_link"),
+          :href => monster_url(monster,
+            :canvas => true,
+            :reference_code => reference_code(:stream_monster_invite_link)
+          )
+        }
+      ]
+    )
   end
 
   def monster_defeated_stream_dialog(monster)
