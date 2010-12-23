@@ -35,7 +35,7 @@ class MarketItem < ActiveRecord::Base
 
   def basic_fee
     if basic_price > 0
-      result = Setting.p(:market_basic_price_fee, basic_price).floor
+      result = Setting.p(:market_basic_price_fee, basic_price).round
       result = 1 if result == 0
       result
     else
@@ -45,7 +45,7 @@ class MarketItem < ActiveRecord::Base
 
   def vip_fee
     if vip_price > 0
-      result = Setting.p(:market_vip_price_fee, vip_price).floor
+      result = Setting.p(:market_vip_price_fee, vip_price).round
       result = 1 if result == 0
       result
     else
