@@ -29,11 +29,11 @@ module StreamHelper
     root_url(:reference_code => reference_code(reference), :canvas => true)
   end
 
-  def default_stream_action_links(url = nil)
+  def default_stream_action_links(url_or_reference = nil)
     [
       {
         :text => t("stories.default.action_link", :app => t("app_name")),
-        :href => url || default_stream_url(:stream_default_link)
+        :href => url_or_reference.is_a?(String) ? url_or_reference : default_stream_url(url_or_reference || :stream_default_link)
       }
     ]
   end
@@ -70,7 +70,8 @@ module StreamHelper
           :image  => :stream_level_up,
           :url    => :stream_level_up_image
         )
-      }
+      },
+      :action_links => default_stream_action_links(:stream_level_up_link)
     }
 
     dialog_options.reverse_merge!(options)
@@ -90,7 +91,8 @@ module StreamHelper
           :image  => :stream_fight,
           :url    => :stream_fight_image
         )
-      }
+      },
+      :action_links => default_stream_action_links(:stream_fight_link)
     )
   end
 
@@ -116,7 +118,10 @@ module StreamHelper
       :url    => image_url
     )
 
-    stream_dialog(:attachment => attachment)
+    stream_dialog(
+      :attachment   => attachment,
+      :action_links => default_stream_action_links(:stream_item_link)
+    )
   end
 
   def mission_complete_stream_dialog(mission)
@@ -141,7 +146,10 @@ module StreamHelper
       :url    => image_url
     )
 
-    stream_dialog(:attachment => attachment)
+    stream_dialog(
+      :attachment   => attachment,
+      :action_links => default_stream_action_links(:stream_mission_link)
+    )
   end
 
   def boss_defeated_stream_dialog(boss)
@@ -166,7 +174,10 @@ module StreamHelper
       :url    => image_url
     )
 
-    stream_dialog(:attachment => attachment)
+    stream_dialog(
+      :attachment   => attachment,
+      :action_links => default_stream_action_links(:stream_boss_link)
+    )
   end
 
   def monster_invite_stream_dialog(monster)
@@ -231,7 +242,10 @@ module StreamHelper
       :url    => image_url
     )
 
-    stream_dialog(:attachment => attachment)
+    stream_dialog(
+      :attachment   => attachment,
+      :action_links => default_stream_action_links(:stream_monster_defeated_link)
+    )
   end
 
   def help_request_stream_dialog(context)
@@ -315,7 +329,10 @@ module StreamHelper
       :url    => image_url
     )
 
-    stream_dialog(:attachment => attachment)
+    stream_dialog(
+      :attachment   => attachment,
+      :action_links => default_stream_action_links(:stream_property_link)
+    )
   end
 
   def promotion_stream_dialog(promotion)
@@ -455,6 +472,9 @@ module StreamHelper
       :url    => image_url
     )
 
-    stream_dialog(:attachment => attachment)
+    stream_dialog(
+      :attachment => attachment,
+      :action_links => default_stream_action_links(:stream_collection_link)
+    )
   end
 end
