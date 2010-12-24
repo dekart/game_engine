@@ -497,7 +497,7 @@ class Character < ActiveRecord::Base
       return false
     end
 
-    charge(hospital_price, 0)
+    charge(hospital_price, 0, :hospital)
 
     self.hp = health_points
 

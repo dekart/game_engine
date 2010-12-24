@@ -101,7 +101,7 @@ class Inventory < ActiveRecord::Base
     if deposit_money
       self.basic_money = sell_price * amount
 
-      character.charge(- basic_money, 0, self)
+      character.charge(- basic_money, 0, item)
     end
   end
 end

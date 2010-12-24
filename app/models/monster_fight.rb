@@ -27,7 +27,7 @@ class MonsterFight < ActiveRecord::Base
 
       character.experience += @experience
 
-      character.charge(- @money, 0)
+      character.charge(- @money, 0, :monster_attack)
 
       transaction do
         save!
