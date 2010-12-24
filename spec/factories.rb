@@ -25,7 +25,7 @@ Factory.define :character do |t|
   t.name "Character"
   
   t.association :user
-  t.association :character_type, :factory => :character_type
+  t.association :character_type
 end
 
 Factory.define :property_type do |t|

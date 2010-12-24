@@ -103,21 +103,23 @@ class Character < ActiveRecord::Base
 
   restorable_attribute :hp,
     :limit          => :health_points,
-    :restore_period => Setting.i(:character_health_restore_period).seconds,
+    :restore_period => :health_restore_period,
     :restore_bonus  => :health_restore_bonus
   restorable_attribute :ep,
     :limit          => :energy_points,
-    :restore_period => Setting.i(:character_energy_restore_period).seconds,
+    :restore_period => :energy_restore_period,
     :restore_bonus  => :energy_restore_bonus
   restorable_attribute :sp,
     :limit          => :stamina_points,
-    :restore_period => Setting.i(:character_stamina_restore_period).seconds,
+    :restore_period => :stamina_restore_period,
     :restore_bonus  => :stamina_restore_bonus
 
   after_validation_on_create :apply_character_type_defaults
   before_save   :update_level_and_points, :update_total_money
 
   validates_presence_of :character_type, :on => :create
+
+  delegate(*(CharacterType::BONUSES + [:to => :character_type]))
 
   class << self
     def find_by_invitation_key(key)
@@ -453,14 +455,6 @@ class Character < ActiveRecord::Base
     save!
   end
 
-  CharacterType::BONUSES.each do |bonus|
-    class_eval %{
-      def #{bonus}
-        character_type ? character_type.#{bonus} : nil
-      end
-    }
-  end
-
   def equipment
     @equipment ||= Character::Equipment.new(self)
   end
@@ -504,6 +498,18 @@ class Character < ActiveRecord::Base
     self.hospital_used_at = Time.now
 
     save
+  end
+
+  def health_restore_period
+    Setting.i(:character_health_restore_period).seconds
+  end
+
+  def energy_restore_period
+    Setting.i(:character_energy_restore_period).seconds
+  end
+
+  def stamina_restore_period
+    Setting.i(:character_stamina_restore_period).seconds
   end
 
   protected
