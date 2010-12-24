@@ -123,6 +123,15 @@ ActionController::Routing::Routes.draw do |map|
         :hide     => :put
       }
 
+    admin.resources :monster_types,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+
+    admin.resources :item_sets,
+      :new => { :add_item => :any }
+
     # Add your custom admin routes below this mark
     
   end
@@ -217,6 +226,8 @@ ActionController::Routing::Routes.draw do |map|
       :buy => :post
     }
   map.resources :item_collections, :only => [:index, :update]
+
+  map.resources :monsters, :member => {:reward => :post}
 
   # Add your custom routes below this mark
   

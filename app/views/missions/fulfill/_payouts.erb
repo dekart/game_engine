@@ -8,7 +8,7 @@
 
         <%= payout(:basic_money, number_to_currency(result.money)) if result.money %>
 
-        <%= payout_list(result, result.payouts, :add) %>
+        <%= payout_list(result, result.payouts) %>
 
         <% if result.loot %>
           <div class="loot">
@@ -58,7 +58,7 @@
         </div>
       <% end %>
 
-      <%= payout_list(result, result.payouts, :remove) %>
+      <%= payout_list(result, result.payouts, :action => :remove) %>
     </td>
     <td class="progress">
       <h3><%= t(".progress.title") %></h3>

@@ -43,7 +43,7 @@ potions.items.create!(
   :usable       => true,
   :image        => File.open(Rails.root.join("db", "pictures", "potion_of_healing.jpg")),
   :payouts      => Payouts::Collection.new(
-    Payouts::HealthPoint.new(:value => 50)
+    Payouts::HealthPoint.new(:value => 50, :apply_on => :use, :visible => true)
   )
 )
 
@@ -55,6 +55,6 @@ potions.items.create!(
   :usable       => true,
   :image        => File.open(Rails.root.join("db", "pictures", "potion_of_upgrade.jpg")),
   :payouts      => Payouts::Collection.new(
-    Payouts::UpgradePoint.new(:value => 5)
+    Payouts::UpgradePoint.new(:value => 5, :apply_on => :use, :visible => true)
   )
 )

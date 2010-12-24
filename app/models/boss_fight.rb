@@ -69,7 +69,7 @@ class BossFight < ActiveRecord::Base
 
   def perform_expire!
     transaction do
-      @payouts = boss.payouts.apply(character, :failure)
+      @payouts = boss.payouts.apply(character, :failure, boss)
 
       expire!
 

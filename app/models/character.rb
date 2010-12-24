@@ -9,6 +9,7 @@ class Character < ActiveRecord::Base
   include Character::Missions
   include Character::Collections
   include Character::Newsfeed
+  include Character::Monsters
 
   LEVELS = [0]
 
@@ -496,7 +497,7 @@ class Character < ActiveRecord::Base
       return false
     end
 
-    charge(hospital_price, 0)
+    charge(hospital_price, 0, :hospital)
 
     self.hp = health_points
 

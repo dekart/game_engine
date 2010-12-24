@@ -17,7 +17,7 @@
   <div class="payouts">
     <h3><%= ItemCollection.human_attribute_name("payouts") %></h3>
 
-    <%= payout_list(collection, collection.payouts, :add,
+    <%= payout_list(collection, collection.payouts,
           :format   => :preview,
           :triggers => current_character.collections.next_payout_triggers(collection)
         ) %>

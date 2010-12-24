@@ -1,0 +1,25 @@
+<% result_for(:monster) do |builder| %>
+  <% if @reward_collected %>
+    <% builder.success do %>
+      <%= t(".messages.success", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
+    <% end %>
+
+    <table class="payouts">
+      <tr>
+        <td class="received">
+          <h3><%= t(".you_received") %></h3>
+
+          <%= payout_list(@fight, @fight.payouts) %>
+        </td>
+      </tr>
+    </table>
+  <% elsif @fight.reward_collected? %>
+    <% builder.fail do %>
+      <%= t(".messages.already_collected").html_safe %>
+    <% end %>
+  <% end %>
+
+  <% builder.on_ready do %>
+    $('#monster').html(<%= render(@fight.monster.state, :monster => @fight.monster, :fight => @fight).to_json.html_safe %>);
+  <% end %>
+<% end %>

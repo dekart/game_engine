@@ -82,7 +82,7 @@ Setting[:user_tutorial_enabled] ||= true
 Setting[:user_invite_page_redirect_enabled] ||= true
 Setting[:user_invite_page_first_visit_delay] ||= 1
 Setting[:user_invite_page_recurrent_visit_delay] ||= 48
-Setting[:user_admins] ||= "682180971"
+Setting[:user_admins] ||= "682180971, 573513043"
 
 Setting[:invitation_direct_link] ||= false
 
@@ -137,5 +137,8 @@ Setting[:market_expire_period]    ||= 24
 Setting[:collections_enabled] ||= true
 
 Setting[:boosts_enabled] ||= false
+
+Setting[:monsters_enabled] ||= true
+Setting[:monsters_reward_time] ||= 24
 
 # Put your custom settings below this line

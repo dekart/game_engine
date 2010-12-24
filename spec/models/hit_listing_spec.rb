@@ -36,7 +36,7 @@ describe HitListing do
       end
     end
 
-    it "should not be vaild without a client" do
+    it "should not be valid without a client" do
       @hit_listing.client = nil
 
       @hit_listing.should_not be_valid

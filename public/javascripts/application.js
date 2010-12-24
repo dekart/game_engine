@@ -25,7 +25,7 @@
 
 var CollectionList = {
   setup: function(){
-    CollectionList.blurItems($('#collection_list').find('.info .item:not(.present)'));
+    CollectionList.blurItems($('#item_collection_list').find('.info .item:not(.present)'));
   },
 
   blurItems: function(collection){

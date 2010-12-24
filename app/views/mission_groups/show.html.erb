@@ -1,5 +1,7 @@
 <%= title(t(".title")) %>
 
+<%= render("missions/buttons", :current => :missions) if Setting.b(:monsters_enabled) %>
+
 <%= latest_help_request_for(:mission) %>
 
 <%= render("tabs") %>

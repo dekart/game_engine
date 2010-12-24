@@ -7,7 +7,8 @@ en:
         character_types: "Character Types"
         items: "Items"
         missions: "Missions"
-        bosses: "Bosses"
+        monster_types: "Monsters"
+        bosses: "Bosses (Legacy)"
         property_types: "Property Types"
         statistics: "Statistics"
         characters: "Characters"
@@ -61,6 +62,7 @@ en:
         new: "Add Item"
         balance: "Balance Items"
         groups: "Manage Groups"
+        sets: "Item Sets"
       index:
         title: "Items"
         filter:

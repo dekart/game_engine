@@ -39,7 +39,7 @@ namespace :app do
 
     desc "Update image thumbnails"
     task :update_thumbnails => :environment do
-      [Boss, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
+      [Boss, MonsterType, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
         scope = klass.without_state(:deleted)
 
         puts "Updating thumbails for #{scope.count} of #{klass}..."
@@ -59,6 +59,38 @@ namespace :app do
     end
 
     # One-time tasks
+
+    desc 'Convert random item payouts to item sets'
+    task :convert_random_item_payouts_to_sets => :environment do
+      puts 'Converting random item payouts to item sets...'
+
+      i = 0
+
+      ActiveRecord::Base.transaction do
+        [Boss, Item, ItemCollection, Mission, MissionGroup, MissionLevel, Promotion, PropertyType, MonsterType].each do |klass|
+          klass.find_each do |record|
+            record.payouts.each do |payout|
+              if payout.is_a?(Payouts::RandomItem) and item_ids = payout.instance_variable_get(:@item_ids) and !item_ids.empty?
+                payout.send(:remove_instance_variable, :@item_ids)
+                
+                item_set = ItemSet.create!(
+                  :name   => "Item Set #{i}",
+                  :items  => Item.find_all_by_id(item_ids).collect{|item| [item, 10] }
+                )
+
+                payout.item_set_id = item_set.id
+
+                i += 1
+              end
+            end
+
+            record.save
+          end
+        end
+      end
+
+      puts "Done! #{i} payouts converted"
+    end
 
     desc 'Convert boosts to items'
     task :convert_boosts_to_items => :environment do

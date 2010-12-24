@@ -1,0 +1,45 @@
+en:
+  monsters:
+    index:
+      title: "Monsters"
+      current:
+        title: "Current Monster Fights"
+        time_remaining: "Time remaining:"
+        won: "Victory!"
+        expired: "You lost"
+      available:
+        title: "Available Monsters"
+      buttons:
+        attack: "Attack"
+        engage: "Engage"
+        view: "View"
+        reward: "Get Reward"
+    progress:
+      timer: "Time Remaining:"
+      buttons:
+        attack: "Attack"
+        invite: "Call to Arms"
+    won:
+      buttons:
+        reward: "Get Reward"
+    update:
+      message:
+        progress: "You've successfully attacked %{monster}!"
+        won: "You've defeated %{monster}!"
+      you_received: "You received:"
+      you_spent: "You spent:"
+      monster_spent: "Monster spent:"
+      buttons:
+        attack: "Attack Again"
+        publish: "Brag About It"
+        continue: "Continue"
+      dialog:
+        title: "You defeated %{monster}!"
+        message: "You did it! %{monster} is defeated and you're the winner! Let your friends know about your success!"
+    reward:
+      messages:
+        success: "Well done! You defeated %{monster} and the reward is yours!"
+        already_collected: "You've already collected reward for this fight."
+      you_received: "You received:"
+    fighters:
+      title: "Damage Leaders"

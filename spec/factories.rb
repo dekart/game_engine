@@ -8,7 +8,7 @@ Factory.define :character_type do |t|
   t.name "Character Type"
   t.description "This is our test character type"
 
-  t.basic_money 1100
+  t.basic_money 0
   t.vip_money   1
 
   t.attack      1
@@ -99,6 +99,47 @@ Factory.define :hit_listing do |t|
   t.reward 10_000
 end
 
+Factory.define :monster_type do |t|
+  t.name 'The Monster'
+  t.description 'The fake monster'
+
+  t.requirements Requirements::Collection.new(
+    Requirements::Level.new(:value => 1)
+  )
+
+  t.payouts Payouts::Collection.new(
+    Payouts::BasicMoney.new(:value => 123, :apply_on => :victory),
+    Payouts::BasicMoney.new(:value => 456, :apply_on => :repeat_victory)
+  )
+
+  t.attack 10
+  t.defence 10
+
+  t.minimum_damage 3
+  t.maximum_damage 10
+  t.minimum_response 1
+  t.maximum_response 5
+
+  t.experience 5
+  t.money 5
+
+  t.health 1000
+
+  t.state 'visible'
+end
+
+Factory.define :monster do |t|
+  t.association :monster_type
+  t.association :character
+end
+
+Factory.define :monster_fight do |t|
+  t.association :monster
+  t.association :character
+
+  t.damage 1
+end
+
 Factory.define :mission_group do |t|
   t.name "Some Group"
 end
@@ -128,4 +169,14 @@ Factory.define :gift_receipt do |t|
   t.association :gift
 
   t.facebook_id 987654321
+end
+
+Factory.define :item_set do |t|
+  t.name 'Fake Item Set'
+  t.item_ids do
+    item1 = Factory(:item)
+    item2 = Factory(:item)
+
+    "[[#{item1.id}, 70], [#{item2.id}, 30]]"
+  end
 end

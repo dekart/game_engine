@@ -17,6 +17,12 @@ en:
       title: "I just completed the \"{{mission}}\" mission in {{app}}!"
     boss:
       title: "I just defeated the {{boss}} in {{app}}!"
+    monster_invite:
+      title: "I need your assistance to defeat %{monster} in {{app}}!"
+      description: "Join our fight against %{monster} in {{app}}! Together we can slay this monster and get reward!"
+      action_link: "Engage! »"
+    monster_defeated:
+      title: "I just defeated %{monster} in {{app}}!"
     property:
       title: "I just bought {{property}} in {{app}}!"
     inventory:
