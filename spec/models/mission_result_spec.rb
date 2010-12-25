@@ -1,37 +1,128 @@
 require 'spec_helper'
 
 describe MissionResult do
-  describe 'when performing mission' do
+  before do
+    @character = Factory(:character)
+
+    @mission = Factory(:mission)
+    @mission_level = Factory(:mission_level, :mission => @mission)
+
+    @payout_success = DummyPayout.new(:apply_on => :success)
+    @payout_failure = DummyPayout.new(:apply_on => :failure)
+    @payout_repeat_success = DummyPayout.new(:apply_on => :repeat_success)
+    @payout_repeat_failure = DummyPayout.new(:apply_on => :repeat_failure)
+    @payout_complete = DummyPayout.new(:apply_on => :complete)
+
+    @payouts = Payouts::Collection.new(
+      @payout_success, @payout_repeat_success, @payout_complete, @payout_failure, @payout_repeat_failure
+    )
+  end
+
+  def mission_result
+    @mission_result ||= MissionResult.new(@character, @mission)
+  end
+
+  def progress_level!(level, progress)
+    MissionLevelRank.create(
+      :level      => level,
+      :character  => @character,
+      :progress   => progress
+    )
+    @character.missions.check_completion!(@mission)
+  end
+
+  describe 'when checking if enough energy for mission' do
+    it 'should return true when character has enough energy' do
+      mission_result.enough_energy?.should be_true
+    end
+
+    it 'should return false when character\'s energy is lower than required' do
+      @character.ep = 4
+
+      mission_result.enough_energy?.should_not be_true
+    end
+  end
+
+  describe 'when checking if mission performace succeed' do
+    it 'should roll dice with level chance and return its result' do
+      Dice.should_receive(:chance).with(50, 100).and_return(true)
+
+      mission_result.success?.should be_true
+    end
+
+    it 'should roll dice only once' do
+      Dice.should_receive(:chance).once.and_return(false)
+
+      mission_result.success?.should be_false
+      mission_result.success?.should be_false
+    end
+  end
+
+  describe 'when checking if mission result is a new record' do
+    it 'should return true if result wasn\'t saved' do
+      mission_result.new_record?
+    end
+
+    it 'should return false when result saved' do
+      mission_result.save!
+      mission_result.new_record?.should be_false
+    end
+  end
+
+  describe 'when checking if mission was fulfilled for free' do
     before do
-      @character = Factory(:character)
+      @character.assignments.stub!(:mission_energy_effect => 42)
+    end
 
-      @mission = Factory(:mission)
-      @mission_level = Factory(:mission_level, :mission => @mission)
+    it 'should roll dice with assignment effect for mission energy and return its result' do
+      Dice.should_receive(:chance).with(42, 100).and_return(true)
 
-      @payout_success = Payouts::DummyPayout.new(:apply_on => :success)
-      @payout_failure = Payouts::DummyPayout.new(:apply_on => :failure)
-      @payout_repeat_success = Payouts::DummyPayout.new(:apply_on => :repeat_success)
-      @payout_repeat_failure = Payouts::DummyPayout.new(:apply_on => :repeat_failure)
-      @payout_complete = Payouts::DummyPayout.new(:apply_on => :complete)
+      mission_result.free_fulfillment?.should be_true
+    end
 
-      @payouts = Payouts::Collection.new(
-        @payout_success, @payout_repeat_success, @payout_complete, @payout_failure, @payout_repeat_failure
+    it 'should roll dice only once' do
+      Dice.should_receive(:chance).once.and_return(false)
+
+      mission_result.free_fulfillment?.should be_false
+      mission_result.free_fulfillment?.should be_false
+    end
+  end
+
+  describe 'when checking if requirements are satisfied' do
+    it 'should return true if there are no requirements' do
+      @mission.requirements = nil
+
+      mission_result.requirements_satisfied?.should be_true
+    end
+
+    it 'should return true when requirements are satisfied' do
+      @mission.requirements = Requirements::Collection.new(
+        DummyRequirement.new(:should_satisfy => true)
       )
-    end
 
-    def mission_result
-      @mission_result ||= MissionResult.new(@character, @mission)
+      mission_result.requirements_satisfied?.should be_true
     end
-
-    def progress_level!(level, progress)
-      MissionLevelRank.create(
-        :level      => level,
-        :character  => @character,
-        :progress   => progress
+    
+    it 'should return false when requirements are not satisfied' do
+      @mission.requirements = Requirements::Collection.new(
+        DummyRequirement.new(:should_satisfy => false)
       )
-      @character.missions.check_completion!(@mission)
+
+      mission_result.requirements_satisfied?.should be_false
     end
 
+    it 'should check requirements only once' do
+      @requirement = DummyRequirement.new(:should_satisfy => false)
+      @mission.requirements = Requirements::Collection.new(@requirement)
+
+      @requirement.should_receive(:satisfies?).once.and_return(false)
+
+      mission_result.requirements_satisfied?.should be_false
+      mission_result.requirements_satisfied?.should be_false
+    end
+  end
+
+  describe 'when performing mission' do
     it 'should not be saved if character doesn\'t have enough energy' do
       @character.ep = 0
 
@@ -53,7 +144,7 @@ describe MissionResult do
 
     it 'should not be saved if mission requirements are not satisfied' do
       @mission.requirements = Requirements::Collection.new(
-        Requirements::Level.new(:value => 100)
+        DummyRequirement.new(:should_satisfy => false)
       )
 
       mission_result.save!

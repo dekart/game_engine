@@ -93,7 +93,11 @@ class MissionResult
   end
 
   def success?
-    @success ||= Dice.chance(@level.chance, 100)
+    if @success.nil?
+      @success = Dice.chance(@level.chance, 100)
+    end
+
+    @success
   end
 
   def new_record?
@@ -105,13 +109,19 @@ class MissionResult
   end
 
   def free_fulfillment?
-    @free_fulfillment ||= Dice.chance(
-      @character.assignments.mission_energy_effect, 100
-    )
+    if @free_fulfillment.nil?
+      @free_fulfillment = Dice.chance(@character.assignments.mission_energy_effect, 100)
+    end
+
+    @free_fulfillment
   end
 
   def requirements_satisfied?
-    @requirements_satisfied ||= @mission.requirements.satisfies?(@character)
+    if @requirements_satisfied.nil?
+      @requirements_satisfied = @mission.requirements.satisfies?(@character)
+    end
+
+    @requirements_satisfied
   end
 
   def received_something?

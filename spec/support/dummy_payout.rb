@@ -1,4 +1,4 @@
-class Payouts::DummyPayout < Payouts::Base
+class DummyPayout < Payouts::Base
   attr_reader :applied, :character, :reference
   
   def apply(character, reference = nil)
