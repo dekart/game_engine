@@ -1,12 +1,12 @@
 <% result_for(:mission) do |builder| %>
-  <% if @result.saved %>
+  <% if @result.saved? %>
     <% if @result.level_rank.just_completed? %>
       <%= builder.render("missions/fulfill/completed",
             :mission  => @mission,
             :result   => @result,
             :missions => @missions
           ) %>
-    <% elsif @result.success %>
+    <% elsif @result.success? %>
       <%= builder.render "missions/fulfill/success", :mission => @mission, :result => @result %>
     <% else %>
       <%= builder.render "missions/fulfill/failure", :mission => @mission, :result => @result %>

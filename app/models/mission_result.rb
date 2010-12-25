@@ -1,13 +1,12 @@
 class MissionResult
   attr_reader :character, :mission, :level, :mission_group,
     :energy, :money, :experience, :loot, :looter, :boost,
-    :success, :free_fulfillment, :saved,
     :level_rank, :mission_rank, :group_rank,
     :payouts, :group_payouts
 
   def self.create(*args)
-    new(*args).tap do |result|
-      result.save! if result.mission.repeatable? or !result.level_rank.completed?
+    new(*args).tap do |r|
+      r.save!
     end
   end
 
@@ -22,13 +21,9 @@ class MissionResult
 
   def save!
     if valid?
-      @success = (rand(100) <= @level.chance)
-
       MissionLevelRank.transaction do
         # Checking if energy assignment encountered free fulfillment
-        @free_fulfillment = (@character.assignments.effect_value(:mission_energy) > rand(100))
-
-        if @free_fulfillment
+        if free_fulfillment?
           @energy = 0
         else
           if boost = @character.boosts.best_energy and boost.energy <= @level.energy
@@ -44,11 +39,9 @@ class MissionResult
 
         @character.ep -= @energy
 
-        if @success
-          money_bonus = 0.01 * @character.assignments.effect_value(:mission_income)
-
-          @money      = (@level.money * (1 + money_bonus)).ceil
+        if success?
           @experience = @level.experience
+          @money      = (@level.money * (1 + @character.assignments.mission_income_effect * 0.01)).ceil
 
           calculate_loot
 
@@ -95,18 +88,26 @@ class MissionResult
     end
   end
 
-  def valid?
-    enough_energy? &&
-    (mission.repeatable? || !@level_rank.completed?) &&
-    requirements_satisfied?
+  def saved?
+    @saved
+  end
+
+  def success?
+    @success ||= Dice.chance(@level.chance, 100)
   end
 
   def new_record?
-    !saved
+    !saved?
   end
 
   def enough_energy?
     @character.ep >= @level.energy
+  end
+
+  def free_fulfillment?
+    @free_fulfillment ||= Dice.chance(
+      @character.assignments.mission_energy_effect, 100
+    )
   end
 
   def requirements_satisfied?
@@ -116,6 +117,15 @@ class MissionResult
   def received_something?
     !(@money.nil? && @experience.nil? && @payouts.by_action(:add).empty?)
   end
+
+  protected
+
+  def valid?
+    (mission.repeatable? || !@level_rank.completed?) and
+    enough_energy? and
+    requirements_satisfied?
+  end
+
 
   def calculate_loot
     if @mission.allow_loot? and (rand(100) < @mission.loot_chance)

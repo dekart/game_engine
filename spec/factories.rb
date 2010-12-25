@@ -153,11 +153,14 @@ Factory.define :mission do |t|
 end
 
 Factory.define :mission_level do |t|
+  t.association :mission
+  
   t.win_amount 5
-  t.energy 1
-  t.experience 2
+  t.energy 5
+  t.experience 5
   t.money_min 10
   t.money_max 20
+  t.chance 50
 end
 
 Factory.define :gift do |t|

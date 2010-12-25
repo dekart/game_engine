@@ -68,8 +68,7 @@ class Character < ActiveRecord::Base
 
   has_many :assignments,
     :as         => :context,
-    :dependent  => :delete_all,
-    :extend     => Character::Assignments
+    :dependent  => :delete_all
 
   has_many :help_requests,
     :dependent  => :destroy,
@@ -188,11 +187,17 @@ class Character < ActiveRecord::Base
   end
 
   def attack_points
-    attack + equipment.effect(:attack) + assignments.effect_value(:attack) + (boosts.best_attacking.try(:attack) || 0)
+    attack + 
+      equipment.effect(:attack) +
+      assignments.attack_effect +
+      boosts.best_attacking.try(:attack).to_i
   end
 
   def defence_points
-    defence + equipment.effect(:defence) + assignments.effect_value(:defence) + (boosts.best_defending.try(:defence) || 0)
+    defence +
+      equipment.effect(:defence) +
+      assignments.defence_effect +
+      boosts.best_defending.try(:defence).to_i
   end
 
   def health_points
@@ -208,7 +213,7 @@ class Character < ActiveRecord::Base
   end
 
   def fight_damage_reduce
-    assignments.effect_value(:fight_damage)
+    assignments.fight_damage_effect
   end
 
   def weak?

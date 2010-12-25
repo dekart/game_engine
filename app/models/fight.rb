@@ -106,7 +106,7 @@ class Fight < ActiveRecord::Base
 
   def winner_reward
     if loser.basic_money > 0
-      fight_money_bonus = 0.01 * winner.assignments.effect_value(:fight_income)
+      fight_money_bonus = 0.01 * winner.assignments.fight_income_effect
 
       [
         (rand(loser.basic_money) * (Setting.i(:fight_money_loot) * 0.01 + fight_money_bonus)).ceil,

@@ -36,7 +36,7 @@
     <td class="spent">
       <h3><%= t(".you_spent.title") %></h3>
 
-      <% if result.free_fulfillment and relation = current_character.assignments.by_role(:mission_energy).relation %>
+      <% if result.free_fulfillment? and relation = current_character.assignments.by_role(:mission_energy).relation %>
         <% payout("energy zero", 0, :label => Character.human_attribute_name("energy")) do %>
           <span class="relation">
             <%= t(".you_spent.zero_energy",

@@ -11,6 +11,18 @@ class Assignment < ActiveRecord::Base
   after_create :update_assignee_dashboard
 
   class << self
+    ROLES.each do |role|
+      class_eval %[
+        def #{role}_effect
+          by_role('#{role}').try(:effect_value) || 0
+        end
+      ]
+    end
+    
+    def by_role(role)
+      all.detect{|a| a.role == role.to_s }
+    end
+
     def effect_value(context, relation, role)
       case role.to_sym
       when :attack
