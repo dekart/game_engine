@@ -43,7 +43,6 @@ class Mission < ActiveRecord::Base
     :apply_on => :mission_complete
 
   validates_presence_of :mission_group, :name, :success_text, :complete_text
-  validates_numericality_of :loot_chance, :allow_blank => true
 
   def self.to_grouped_dropdown
     {}.tap do |result|
@@ -57,17 +56,5 @@ class Mission < ActiveRecord::Base
 
   def visible_for?(character)
     parent_mission.nil? or character.missions.rank_for(parent_mission).completed?
-  end
-
-  def loot_items
-    Item.find_all_by_id(loot_item_ids)
-  end
-
-  def loot_item_ids=(value)
-    self[:loot_item_ids] = value.is_a?(Array) ? value.join(",") : value
-  end
-
-  def loot_item_ids
-    @loot_item_ids ||= self[:loot_item_ids].to_s.split(",").collect{|i| i.to_i }
   end
 end

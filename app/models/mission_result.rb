@@ -1,6 +1,6 @@
 class MissionResult
   attr_reader :character, :mission, :level, :mission_group,
-    :energy, :money, :experience, :loot, :looter, :boost,
+    :energy, :money, :experience, :boost,
     :level_rank, :mission_rank, :group_rank,
     :payouts
 
@@ -44,8 +44,6 @@ class MissionResult
         if success?
           @experience = @level.experience
           @money      = (@level.money * (1 + @character.assignments.mission_income_effect * 0.01)).ceil
-
-          calculate_loot
 
           @level_rank.progress += 1
           @level_rank.save!
@@ -137,22 +135,5 @@ class MissionResult
     (mission.repeatable? || !@level_rank.completed?) and
     enough_energy? and
     requirements_satisfied?
-  end
-
-
-  def calculate_loot
-    if @mission.allow_loot? and (rand(100) < @mission.loot_chance)
-      if @mission.loot_item_ids.any?
-        loot_items = Item.find(@mission.loot_item_ids)
-      else
-        loot_items = Item.available_for(@character).available_in(:loot).all
-      end
-
-      if @loot = loot_items[rand(loot_items.size)]
-        @looter = @character.friend_relations.random || @character.mercenary_relations.random
-
-        @character.inventories.give!(@loot)
-      end
-    end
   end
 end

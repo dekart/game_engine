@@ -60,6 +60,50 @@ namespace :app do
 
     # One-time tasks
 
+    desc 'Convert payout triggers'
+    task :convert_loot_to_random_payout => :environment do
+      puts 'Converting mission loot to payouts...'
+
+      Mission.without_state(:deleted).all.each do |mission|
+        if mission.loot_item_ids.present?
+          set = ItemSet.create!(
+            :name => "Item Set for Mission '#{mission.name}'",
+            :items => Item.find_all_by_id(mission.loot_item_ids.split(',')).collect{|i| [i, 10] }
+          )
+
+          mission.payouts = Payouts::Collection.new(
+            Payouts::RandomItem.new(:item_set_id => set.id, :chance => mission.loot_chance)
+          )
+        else
+          mission.payouts = nil
+        end
+
+        mission.save!
+      end
+
+      puts 'Converting mission level payout triggers...'
+
+      MissionLevel.all.each do |level|
+        level.payouts.each do |payout|
+          payout.apply_on.collect!{|a| a == :complete ? :level_complete : a }
+        end
+
+        level.save!
+      end
+
+      puts 'Converting mission group payout trigers...'
+
+      MissionGroup.all.each do |group|
+        group.payouts.each do |payout|
+          payout.apply_on.collect!{|a| a == :complete ? :mission_group_complete : a }
+        end
+
+        group.save!
+      end
+
+      puts 'Done!'
+    end
+
     desc 'Convert random item payouts to item sets'
     task :convert_random_item_payouts_to_sets => :environment do
       puts 'Converting random item payouts to item sets...'

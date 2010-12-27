@@ -9,27 +9,6 @@
         <%= payout(:basic_money, number_to_currency(result.money)) if result.money %>
 
         <%= payout_list(result, result.payouts) %>
-
-        <% if result.loot %>
-          <div class="loot">
-            <div class="relation">
-              <% if result.looter %>
-                <%= t(".you_received.loot_with_looter",
-                      :user => (
-                        result.looter.is_a?(FriendRelation) ? character_name_link(result.looter.character) : result.looter.name
-                      ),
-                      :item => content_tag(:strong, result.loot.name)
-                    ).html_safe %>
-              <% else %>
-                <%= t(".you_received.loot_without_looter",
-                      :item => content_tag(:strong, result.loot.name)
-                    ).html_safe %>
-              <% end %>
-            </div>
-
-            <%= item_image(result.loot, :icon) %>
-          </div>
-        <% end %>
       </td>
     <% end %>
 

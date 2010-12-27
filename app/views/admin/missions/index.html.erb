@@ -15,7 +15,7 @@
           <th><%= Mission.human_attribute_name("image") %></th>
           <th><%= Mission.human_attribute_name("name") %></th>
           <th><%= Mission.human_attribute_name("requirements") %></th>
-          <th><%= Mission.human_attribute_name("loot") %></th>
+          <th><%= Mission.human_attribute_name("payouts") %></th>
           <th><%= Mission.human_attribute_name("state") %></th>
           <th></th>
         </tr>
@@ -27,16 +27,7 @@
           <%= admin_requirements_preview(mission.requirements) %>
         </td>
         <td class="payouts">
-          <% if mission.allow_loot? %>
-            <div class="item">
-              <%= "%s (%d%%) : %s" % [
-                    Mission.human_attribute_name("loot"),
-                    mission.loot_chance,
-                    mission.loot_items.any? ? mission.loot_items.collect{|i| i.name}.join(", ") : t(".random_loot")
-                  ] %>
-              <%=  %>
-            </div>
-          <% end %>
+          <%= admin_payouts_preview(level.payouts) %>
         </td>
         <td class="state"><%= admin_state(mission) %></td>
         <td class="controls">
