@@ -139,7 +139,6 @@ en:
           publish: "Publish"
           publish_confirm: "Are you sure you want to make this mission visible to players?"
           hide: "Hide"
-        random_loot: "Random Item"
       levels:
         controls:
           new: "Add Mastery Level"
