@@ -50,8 +50,8 @@ module Payouts
       raise "Not implemented"
     end
 
-    def applicable?(trigger)
-      apply_on.include?(trigger) && (chance > rand(100))
+    def applicable?(*triggers)
+      (apply_on & triggers).present? && Dice.chance(chance, 100)
     end
 
     def errors

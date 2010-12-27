@@ -2,7 +2,7 @@ module Payouts
   class Collection
     attr_reader :items
 
-    delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :detect, :to => :items
+    delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :detect, :include?, :to => :items
 
     def self.parse(collection)
       return if collection.nil?
@@ -27,7 +27,7 @@ module Payouts
     def apply(character, trigger, reference = nil)
       Payouts::Collection.new.tap do |result|
         items.each do |payout|
-          if payout.applicable?(trigger)
+          if payout.applicable?(*trigger)
             payout.apply(character, reference)
 
             result.items << payout

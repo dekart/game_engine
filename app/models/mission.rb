@@ -39,8 +39,8 @@ class Mission < ActiveRecord::Base
     :removable => true
 
   has_requirements
-  has_payouts :success, :failure, :complete, :repeat_success, :repeat_failure,
-    :apply_on => :complete
+  has_payouts :success, :failure, :repeat_success, :repeat_failure, :level_complete, :mission_complete,
+    :apply_on => :mission_complete
 
   validates_presence_of :mission_group, :name, :success_text, :complete_text
   validates_numericality_of :loot_chance, :allow_blank => true

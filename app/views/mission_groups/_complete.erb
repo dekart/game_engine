@@ -1,13 +1,3 @@
 <%= builder.title t(".title") %>
 
 <p><%= t(".message") %></p>
-
-<% payout_list(result, result.group_payouts) do |p| %>
-  <div class="payouts">
-    <div class="received">
-      <h3><%= t(".you_received") %></h3>
-
-      <%= p.payout_list %>
-    </td>
-  </div>
-<% end %>

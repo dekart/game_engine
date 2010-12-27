@@ -15,9 +15,13 @@
 
 <%= form.fields 'admin/visibilities/form_fields' %>
 
-<h2><%= Mission.human_attribute_name("requirements") %></h2>
+<% form.field_set Mission.human_attribute_name("requirements") do %>
+  <%= form.fields "admin/requirements/collection" %>
+<% end %>
 
-<%= form.fields "admin/requirements/collection" %>
+<% form.field_set Mission.human_attribute_name("payouts") do %>
+  <%= form.fields "admin/payouts/collection" %>
+<% end %>
 
 <%= form.check_box :allow_loot %>
 <%= form.text_field :loot_chance, :size => 6, :autocomplete => :off %>

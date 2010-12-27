@@ -2,7 +2,7 @@ class MissionResult
   attr_reader :character, :mission, :level, :mission_group,
     :energy, :money, :experience, :loot, :looter, :boost,
     :level_rank, :mission_rank, :group_rank,
-    :payouts, :group_payouts
+    :payouts
 
   def self.create(*args)
     new(*args).tap do |r|
@@ -39,6 +39,8 @@ class MissionResult
 
         @character.ep -= @energy
 
+        payout_triggers = []
+
         if success?
           @experience = @level.experience
           @money      = (@level.money * (1 + @character.assignments.mission_income_effect * 0.01)).ceil
@@ -60,30 +62,27 @@ class MissionResult
 
             @character.points += 1
 
-            @payouts = @level.payouts.apply(@character, :complete, @mission)
-
             @mission_rank = @character.missions.check_completion!(@mission)
-
             @group_rank = @character.mission_groups.check_completion!(@mission_group)
-
-            if @group_rank.completed?
-              @group_payouts = @mission_group.payouts.apply(@character, :complete, @mission_group)
-            end
 
             @character.news.add(:mission_complete,
               :mission_id     => @mission.id,
               :level_rank_id  => @level_rank.id
             )
-          else
-            payout_trigger = @level_rank.completed? ? :repeat_success : :success
 
-            @payouts = @level.payouts.apply(@character, payout_trigger, @mission)
+            payout_triggers << :level_complete
+            payout_triggers << :mission_complete if @mission_rank.completed?
+            payout_triggers << :mission_group_complete if @group_rank.completed?
+          else
+            payout_triggers << (@level_rank.completed? ? :repeat_success : :success)
           end
         else
-          payout_trigger = @level_rank.completed? ? :repeat_failure : :failure
-
-          @payouts = @level.payouts.apply(@character, payout_trigger, @mission)
+          payout_triggers << (@level_rank.completed? ? :repeat_failure : :failure)
         end
+
+        @payouts = (
+          @level.payouts + @mission.payouts + @mission_group.payouts
+        ).apply(@character, payout_triggers, @mission)
 
         @character.save!
       end

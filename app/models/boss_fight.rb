@@ -23,7 +23,7 @@ class BossFight < ActiveRecord::Base
     end
   end
 
-  attr_reader :winner, :boss_hp_loss, :character_hp_loss, :payouts, :group_rank, :group_payouts
+  attr_reader :winner, :boss_hp_loss, :character_hp_loss, :payouts, :group_rank
 
   delegate :experience, :ep_cost, :mission_group, :time_limit?, :to => :boss
 
@@ -52,7 +52,7 @@ class BossFight < ActiveRecord::Base
 
           win!
 
-          @group_rank, @group_payouts = character.mission_groups.check_completion!(boss.mission_group)
+          @group_rank = character.mission_groups.check_completion!(boss.mission_group)
         elsif character_lost?
           payout_trigger = character.boss_fights.won?(boss) ? :repeat_defeat : :defeat
 

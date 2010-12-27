@@ -38,7 +38,8 @@ class MissionGroup < ActiveRecord::Base
     :removable => true
 
   has_requirements
-  has_payouts :complete
+  has_payouts :success, :failure, :repeat_success, :repeat_failure, :level_complete, :mission_complete, :group_complete,
+    :apply_on => :group_complete
 
   validates_presence_of :name
 

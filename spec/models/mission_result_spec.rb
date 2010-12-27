@@ -12,15 +12,22 @@ describe MissionResult do
     @payout_failure = DummyPayout.new(:apply_on => :failure)
     @payout_repeat_success = DummyPayout.new(:apply_on => :repeat_success)
     @payout_repeat_failure = DummyPayout.new(:apply_on => :repeat_failure)
-    @payout_complete = DummyPayout.new(:apply_on => :complete)
+    @payout_level_complete = DummyPayout.new(:apply_on => :level_complete)
+    @payout_mission_complete = DummyPayout.new(:apply_on => :mission_complete)
+    @payout_group_complete = DummyPayout.new(:apply_on => :mission_group_complete)
 
     @payouts = Payouts::Collection.new(
-      @payout_success, @payout_repeat_success, @payout_complete, @payout_failure, @payout_repeat_failure
+      @payout_success, 
+      @payout_failure,
+      @payout_repeat_success,
+      @payout_repeat_failure,
+      
+      @payout_level_complete,
+      @payout_mission_complete,
+      @payout_group_complete
     )
-  end
-
-  def mission_result
-    @mission_result ||= MissionResult.new(@character, @mission)
+    
+    @result = MissionResult.new(@character, @mission)
   end
 
   def progress_level!(level, progress)
@@ -34,13 +41,13 @@ describe MissionResult do
 
   describe 'when checking if enough energy for mission' do
     it 'should return true when character has enough energy' do
-      mission_result.enough_energy?.should be_true
+      @result.enough_energy?.should be_true
     end
 
     it 'should return false when character\'s energy is lower than required' do
       @character.ep = 4
 
-      mission_result.enough_energy?.should_not be_true
+      @result.enough_energy?.should_not be_true
     end
   end
 
@@ -48,25 +55,26 @@ describe MissionResult do
     it 'should roll dice with level chance and return its result' do
       Dice.should_receive(:chance).with(50, 100).and_return(true)
 
-      mission_result.success?.should be_true
+      @result.success?.should be_true
     end
 
     it 'should roll dice only once' do
       Dice.should_receive(:chance).once.and_return(false)
 
-      mission_result.success?.should be_false
-      mission_result.success?.should be_false
+      result = @result
+      result.success?.should be_false
+      result.success?.should be_false
     end
   end
 
   describe 'when checking if mission result is a new record' do
     it 'should return true if result wasn\'t saved' do
-      mission_result.new_record?
+      @result.new_record?
     end
 
     it 'should return false when result saved' do
-      mission_result.save!
-      mission_result.new_record?.should be_false
+      @result.save!
+      @result.new_record?.should be_false
     end
   end
 
@@ -78,14 +86,16 @@ describe MissionResult do
     it 'should roll dice with assignment effect for mission energy and return its result' do
       Dice.should_receive(:chance).with(42, 100).and_return(true)
 
-      mission_result.free_fulfillment?.should be_true
+      @result.free_fulfillment?.should be_true
     end
 
     it 'should roll dice only once' do
       Dice.should_receive(:chance).once.and_return(false)
 
-      mission_result.free_fulfillment?.should be_false
-      mission_result.free_fulfillment?.should be_false
+      result = @result
+
+      result.free_fulfillment?.should be_false
+      result.free_fulfillment?.should be_false
     end
   end
 
@@ -93,7 +103,7 @@ describe MissionResult do
     it 'should return true if there are no requirements' do
       @mission.requirements = nil
 
-      mission_result.requirements_satisfied?.should be_true
+      @result.requirements_satisfied?.should be_true
     end
 
     it 'should return true when requirements are satisfied' do
@@ -101,7 +111,7 @@ describe MissionResult do
         DummyRequirement.new(:should_satisfy => true)
       )
 
-      mission_result.requirements_satisfied?.should be_true
+      @result.requirements_satisfied?.should be_true
     end
     
     it 'should return false when requirements are not satisfied' do
@@ -109,7 +119,7 @@ describe MissionResult do
         DummyRequirement.new(:should_satisfy => false)
       )
 
-      mission_result.requirements_satisfied?.should be_false
+      @result.requirements_satisfied?.should be_false
     end
 
     it 'should check requirements only once' do
@@ -118,8 +128,10 @@ describe MissionResult do
 
       @requirement.should_receive(:satisfies?).once.and_return(false)
 
-      mission_result.requirements_satisfied?.should be_false
-      mission_result.requirements_satisfied?.should be_false
+      result = @result
+
+      result.requirements_satisfied?.should be_false
+      result.requirements_satisfied?.should be_false
     end
   end
 
@@ -127,20 +139,18 @@ describe MissionResult do
     it 'should not be saved if character doesn\'t have enough energy' do
       @character.ep = 0
 
-      mission_result.save!
-
-      mission_result.should_not be_saved
+      @result.save!
+      @result.should_not be_saved
     end
 
     it 'should not be saved if mission is not repeatable and current level is already completed' do
-      mission_result.level_rank.update_attributes(
+      @result.level_rank.update_attributes(
         :progress => @mission_level.win_amount
       )
       @character.missions.check_completion!(@mission)
 
-      mission_result.save!
-
-      mission_result.should_not be_saved
+      @result.save!
+      @result.should_not be_saved
     end
 
     it 'should not be saved if mission requirements are not satisfied' do
@@ -148,26 +158,23 @@ describe MissionResult do
         DummyRequirement.new(:should_satisfy => false)
       )
 
-      mission_result.save!
-
-      mission_result.should_not be_saved
+      @result.save!
+      @result.should_not be_saved
     end
 
     describe 'when mission is valid' do
       it 'should succeed if we hit success chance' do
         Dice.should_receive(:chance).at_least(1).and_return(true)
 
-        mission_result.save!
-
-        mission_result.should be_success
+        @result.save!
+        @result.should be_success
       end
 
       it 'should not succeed if we don\'t hit success chance' do
         Dice.should_receive(:chance).at_least(1).and_return(false)
 
-        mission_result.save!
-
-        mission_result.should_not be_success
+        @result.save!
+        @result.should_not be_success
       end
 
       it 'should be done for free if we hit character\'s mission energy assignment chance' do
@@ -175,17 +182,19 @@ describe MissionResult do
 
         Dice.should_receive(:chance).at_least(1).and_return(true)
 
+        result = @result
+
         lambda{
-          mission_result.save!
+          result.save!
         }.should_not change(@character, :ep)
 
-        mission_result.should be_free_fulfillment
+        result.should be_free_fulfillment
       end
 
       describe 'when not done for free' do
         it 'should charge energy' do
           lambda{
-            mission_result.save!
+            @result.save!
           }.should change(@character, :ep).from(10).to(5)
         end
 
@@ -202,18 +211,18 @@ describe MissionResult do
             end
 
             it 'should use energy boost' do
-              mission_result.save!
-              mission_result.boost.item.should == @energy_boost
+              @result.save!
+              @result.boost.item.should == @energy_boost
             end
             
             it 'should reduce energy cost by boost bonus' do
               lambda{
-                mission_result.save!
+                @result.save!
               }.should change(@character, :ep).from(10).to(9)
             end
 
             it 'should take boost from character' do
-              mission_result.save!
+              @result.save!
 
               @character.inventories.should be_empty
             end
@@ -221,19 +230,18 @@ describe MissionResult do
 
           shared_examples_for 'boost that don\'t fit' do
             it 'should not use boost' do
-              mission_result.save!
-
-              mission_result.boost.should be_nil
+              @result.save!
+              @result.boost.should be_nil
             end
 
             it 'should charge energy in full' do
               lambda{
-                mission_result.save!
+                @result.save!
               }.should change(@character, :ep).from(10).to(5)
             end
 
             it 'should not take boost from character' do
-              mission_result.save!
+              @result.save!
 
               @character.inventories.should_not be_empty
             end
@@ -264,42 +272,44 @@ describe MissionResult do
         
         it 'should give experience to user' do
           lambda{
-            mission_result.save!
+            @result.save!
           }.should change(@character, :experience).from(0).to(5)
 
-          mission_result.experience.should == 5
+          @result.experience.should == 5
         end
 
         it 'should give money to user' do
-          mission_result.level.should_receive(:money).and_return(100)
+          @result.level.should_receive(:money).and_return(100)
 
           lambda{
-            mission_result.save!
+            @result.save!
           }.should change(@character, :basic_money).from(0).to(100)
 
-          mission_result.money.should == 100
+          @result.money.should == 100
         end
 
         it 'should increase level progress' do
-          mission_result.save!
+          @result.save!
 
           @character.mission_levels.rank_for(@mission).progress.should == 1
         end
 
         it 'should increase succeeded mission counter' do
           lambda{
-            mission_result.save!
+            @result.save!
           }.should change(@character, :missions_succeeded).from(0).to(1)
         end
 
         describe 'if level is just completed' do
           before do
             progress_level!(@mission_level, 4)
+
+            @result = MissionResult.new(@character.reload, @mission.reload)
           end
 
           it 'should increase completed mission counter' do
             lambda{
-              mission_result.save!
+              @result.save!
             }.should change(@character, :missions_completed).from(0).to(1)
           end
 
@@ -312,8 +322,10 @@ describe MissionResult do
             
             @character.missions.check_completion!(@mission)
 
+            @result = MissionResult.new(@character.reload, @mission.reload)
+
             lambda{
-              mission_result.save!
+              @result.save!
             }.should change(@character, :missions_mastered).from(0).to(1)
           end
 
@@ -321,72 +333,90 @@ describe MissionResult do
             @second_level = Factory(:mission_level, :mission => @mission)
 
             lambda{
-              mission_result.save!
+              @result.save!
             }.should_not change(@character, :missions_mastered)
           end
 
           it 'should give upgrade point to character' do
             lambda{
-              mission_result.save!
+              @result.save!
             }.should change(@character, :points).from(0).to(1)
           end
 
           it 'should apply :complete payouts of level' do
-            mission_result.level.payouts = @payouts
+            result = @result
 
-            lambda{
-              mission_result.save!
-            }.should change(@payout_complete, :applied).from(nil).to(true)
+            result.level.payouts = @payouts
 
-            mission_result.payouts.size.should == 1
-            mission_result.payouts.first.should == @payout_complete
+            result.save!
+
+            result.payouts.should include(@payout_level_complete)
+            result.payouts.each do |p|
+              p.should be_applied
+            end
           end
 
-          it 'should check completion of mission' do
-            @mission_rank = mock('Mission Rank')
+          it 'should check completion of mission and create mission rank record' do
+            @result.save!
 
-            @character.missions.should_receive(:check_completion!).and_return(@mission_rank)
+            @result.mission_rank.should == MissionRank.first
 
-            mission_result.save!
+            MissionRank.first.should be_completed
+          end
 
-            mission_result.mission_rank.should == @mission_rank
+          it 'should apply mission payouts' do
+            result = @result
+
+            result.mission.payouts = @payouts
+
+            result.save!
+
+            result.payouts.should include(@payout_mission_complete)
+            result.payouts.each do |p|
+              p.should be_applied
+            end
           end
           
-          it 'should check completion of mission group' do
-            mission_result.save!
+          it 'should check completion of mission group and create mission group rank record' do
+            @result.save!
 
-            mission_result.group_rank.should == MissionGroupRank.first
-            mission_result.group_rank.should be_completed
+            @result.group_rank.should == MissionGroupRank.first
+            
+            MissionGroupRank.first.should be_completed
           end
 
           it 'should apply group payouts if mission group completed' do
-            mission_result.mission.mission_group.payouts = Payouts::Collection.new(@payout_complete)
+            result = @result
 
-            mission_result.save!
-            mission_result.group_payouts.first.should == @payout_complete
-            mission_result.group_payouts.first.should be_applied
+            result.mission.mission_group.payouts = @payouts
+
+            result.save!
+
+            result.payouts.should include(@payout_group_complete)
+            result.payouts.each do |p|
+              p.should be_applied
+            end
           end
           
           it 'should add news about completed mission to character' do
             lambda{
-              mission_result.save!
+              @result.save!
             }.should change(@character.news, :count).from(0).to(1)
 
             @character.news.first.should be_kind_of(News::MissionComplete)
             @character.news.first.mission.should == @mission
-            @character.news.first.level_rank.should == mission_result.level_rank
+            @character.news.first.level_rank.should == MissionLevelRank.first
           end
         end
 
         it 'should apply :success if mission is not completed yet' do
-          mission_result.level.payouts = @payouts
+          result = @result
 
-          lambda{
-            mission_result.save!
-          }.should change(@payout_success, :applied).from(nil).to(true)
+          result.level.payouts = @payouts
 
-          mission_result.payouts.size.should == 1
-          mission_result.payouts.first.should == @payout_success
+          result.save!
+
+          result.payouts.should include(@payout_success)
         end
 
         it 'should apply :repeat_success if mission is already completed in past' do
@@ -394,31 +424,26 @@ describe MissionResult do
 
           progress_level!(@mission_level, 5)
 
-          mission_result.level.payouts = @payouts
+          @result = MissionResult.new(@character.reload, @mission.reload)
 
-          lambda{
-            mission_result.save!
-          }.should change(@payout_repeat_success, :applied).from(nil).to(true)
+          @result.level.payouts = @payouts
 
-          mission_result.payouts.size.should == 1
-          mission_result.payouts.first.should == @payout_repeat_success
+          @result.save!
+
+          @result.payouts.size.should == 1
+          @result.payouts.first.should == @payout_repeat_success
+          @result.payouts.first.should be_applied
         end
       end
 
       describe 'when failed' do
-        before do
-          Dice.stub!(:chance => false)
-        end
-
         it 'should apply :failure payouts if level is not completed yet' do
-          mission_result.level.payouts = @payouts
+          @result.stub!(:success? => false)
+          @result.level.payouts = @payouts
 
-          lambda{
-            mission_result.save!
-          }.should change(@payout_failure, :applied).from(nil).to(true)
+          @result.save!
 
-          mission_result.payouts.size.should == 1
-          mission_result.payouts.first.should == @payout_failure
+          @result.payouts.should include(@payout_failure)
         end
 
         it 'should apply :repeat_failure payouts if level is already completed' do
@@ -426,14 +451,13 @@ describe MissionResult do
 
           progress_level!(@mission_level, 5)
 
-          mission_result.level.payouts = @payouts
+          @result = MissionResult.new(@character.reload, @mission.reload)
+          @result.stub!(:success? => false)
+          @result.level.payouts = @payouts
 
-          lambda{
-            mission_result.save!
-          }.should change(@payout_repeat_failure, :applied).from(nil).to(true)
+          @result.save!
 
-          mission_result.payouts.size.should == 1
-          mission_result.payouts.first.should == @payout_repeat_failure
+          @result.payouts.should include(@payout_repeat_failure)
         end
       end
     end
@@ -444,9 +468,9 @@ describe MissionResult do
       end
 
       it 'should be saved if level is already completed' do
-        mission_result.save!
+        @result.save!
 
-        mission_result.should be_saved
+        @result.should be_saved
       end
     end
   end

@@ -12,8 +12,8 @@ class MissionLevel < ActiveRecord::Base
 
   acts_as_list :scope => :mission_id
 
-  has_payouts :success, :failure, :complete, :repeat_success, :repeat_failure,
-    :apply_on => :complete
+  has_payouts :success, :failure, :repeat_success, :repeat_failure, :level_complete,
+    :apply_on => :level_complete
 
   validates_presence_of :win_amount, :chance, :energy, :experience, :money_min, :money_max
   validates_numericality_of :win_amount, :chance, :energy, :experience, :money_min, :money_max, :allow_blank => true
