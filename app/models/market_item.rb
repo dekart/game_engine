@@ -14,7 +14,7 @@ class MarketItem < ActiveRecord::Base
 
   validates_presence_of :inventory_id
   validates_presence_of :amount
-  validates_numericality_of :amount, :allow_nil => true, :greater_than => -1
+  validates_numericality_of :amount, :allow_nil => true, :greater_than => 0
   validates_numericality_of :basic_price, :vip_price, :allow_nil => true, :greater_than => -1
 
   validate_on_create :check_amount
