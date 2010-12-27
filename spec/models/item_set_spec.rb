@@ -168,5 +168,31 @@ describe ItemSet do
         @item_set.random_item
       }.should raise_exception
     end
+
+    describe 'when shift value is passed' do
+      it 'should shift result' do
+        @item_set.stub!(:rand).and_return(6999)
+        @item_set.random_item(1).should == @item2
+      end
+
+      it 'should correctly return to beginning if shifted outside of the list' do
+        @item_set.stub!(:rand).and_return(6999)
+        @item_set.random_item(6).should == @item1
+      end
+    end
+  end
+
+  describe 'when receiving item set size' do
+    before do
+      @item1 = Factory(:item)
+      @item2 = Factory(:item)
+
+      @item_set = Factory(:item_set)
+      @item_set.items = [[@item1, 70], [@item2, 30]]
+    end
+
+    it 'should return number of items in set' do
+      @item_set.size.should == 2
+    end
   end
 end

@@ -51,7 +51,9 @@ class ItemSet < ActiveRecord::Base
     value
   end
 
-  def random_item
+  def random_item(shift = 0)
+    logger.debug shift
+
     if items.empty?
       raise Exception.new('Item list is empty')
     else
@@ -62,8 +64,15 @@ class ItemSet < ActiveRecord::Base
       chance = rand(max)
       result = frequencies.index{|f| chance < f } || 0
 
+      # Shifting result position
+      result = (result + shift) % frequencies.size
+
       items[result][0]
     end
+  end
+
+  def size
+    items.size
   end
 
   protected

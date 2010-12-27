@@ -2,6 +2,7 @@
   <tr>
     <td>
       <%= form.select :item_set_id, ItemSet.all.to_dropdown, :include_blank => true %>
+      <%= form.check_box :shift_item_set %>
     </td>
     <td>OR</td>
     <td>

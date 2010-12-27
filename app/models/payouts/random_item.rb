@@ -1,6 +1,6 @@
 module Payouts
   class RandomItem < Base
-    attr_accessor :availability, :allow_vip, :item_set_id
+    attr_accessor :item, :availability, :allow_vip, :item_set_id, :shift_item_set
 
     def item_set
       @item_set ||= (@item_set_id ? ItemSet.find_by_id(@item_set_id) : nil)
@@ -10,27 +10,10 @@ module Payouts
       @item_set_id = value.to_i
     end
 
-    def item
-      unless @item
-        if item_set
-          @item = item_set.random_item
-        else
-          scope = ::Item.with_state(:visible)
-          scope = scope.available_in(availability) unless availability.blank?
-          scope = scope.basic unless allow_vip
-
-          @item = scope.first(
-            :conditions => ["basic_price <= ?", value],
-            :order => "RAND()"
-          )
-        end
-      end
-
-      @item
-    end
-
     def apply(character, reference = nil)
-      character.inventories.give!(item) if item
+      if @item = choose_item(character)
+        character.inventories.give!(@item)
+      end
     end
 
     def item_ids
@@ -39,6 +22,27 @@ module Payouts
 
     def allow_vip=(value)
       @allow_vip = (value.to_i == 1)
+    end
+
+    def shift_item_set=(value)
+      @shift_item_set = (value.to_i == 1)
+    end
+
+    protected
+
+    def choose_item(character)
+      if item_set
+        item_set.random_item(shift_item_set ? character.id % item_set.size : 0)
+      else
+        scope = ::Item.with_state(:visible)
+        scope = scope.available_in(availability) unless availability.blank?
+        scope = scope.basic unless allow_vip
+
+        scope.first(
+          :conditions => ["basic_price <= ?", value],
+          :order => "RAND()"
+        )
+      end
     end
   end
 end
