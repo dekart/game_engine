@@ -142,6 +142,8 @@ end
 
 Factory.define :mission_group do |t|
   t.name "Some Group"
+
+  t.state 'visible'
 end
 
 Factory.define :mission do |t|
@@ -150,6 +152,8 @@ Factory.define :mission do |t|
   t.name "Some Mission"
   t.success_text "Success!"
   t.complete_text "Complete!"
+
+  t.state 'visible'
 end
 
 Factory.define :mission_level do |t|
@@ -188,4 +192,17 @@ Factory.define :item_set do |t|
 
     "[[#{item1.id}, 70], [#{item2.id}, 30]]"
   end
+end
+
+Factory.define :boss do |t|
+  t.association :mission_group
+
+  t.name 'Fake Boss'
+  t.health 100
+  t.attack 1
+  t.defence 1
+  t.ep_cost 5
+  t.experience 10
+  
+  t.state 'visible'
 end

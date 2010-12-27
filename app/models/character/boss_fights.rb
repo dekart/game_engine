@@ -1,11 +1,15 @@
 class Character
   module BossFights
     def won?(boss)
-      won_boss_ids.include?(boss.id)
+      won_boss_ids(boss.mission_group).include?(boss.id)
     end
 
-    def won_boss_ids
-      with_state(:won).all(:select => "DISTINCT boss_id").collect{|f| f.boss_id }
+    def won_boss_ids(group)
+      with_state(:won).all(
+        :select     => "DISTINCT boss_id",
+        :joins      => :boss,
+        :conditions => ["mission_group_id = ?", group.id]
+      ).collect{|f| f.boss_id }
     end
 
     def find_by_boss(boss)
