@@ -12,12 +12,6 @@
       <%= builder.render "missions/fulfill/failure", :mission => @mission, :result => @result %>
     <% end %>
 
-    <%= builder.render "missions/fulfill/payouts", :mission => @mission, :result => @result %>
-
-    <% if @result.group_rank.try(:just_created?) %>
-      <%= builder.render "mission_groups/complete", :result => @result %>
-    <% end %>
-
     <% builder.on_ready do %>
       $('#mission_group_list').replaceWith('<%= escape_javascript(render("mission_groups/tabs")) %>');
     <% end %>

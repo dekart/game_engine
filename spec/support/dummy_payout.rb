@@ -6,4 +6,8 @@ class DummyPayout < Payouts::Base
     @character = character
     @reference = reference
   end
+
+  def applied?
+    @applied
+  end
 end

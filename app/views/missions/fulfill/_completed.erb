@@ -18,6 +18,12 @@
   </div>
 <% end %>
 
+<%= builder.render "missions/fulfill/payouts", :mission => mission, :result => result %>
+
+<% if result.group_rank.try(:just_created?) %>
+  <%= builder.render "mission_groups/complete", :result => @result %>
+<% end %>
+
 <% if Setting.b(:mission_completion_dialog) %>
   <% dialog :id => :mission_dialog do %>
     <h2><%= t(".dialog.title") %></h2>

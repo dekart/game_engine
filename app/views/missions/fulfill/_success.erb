@@ -14,6 +14,8 @@
   <%= t(".message") %> <%= mission.success_text %>
 <% end %>
 
+<%= builder.render "missions/fulfill/payouts", :mission => mission, :result => result %>
+
 <% builder.on_ready do %>
   $('#<%= dom_id(mission, :progress) %>').html(<%= mission_progress(result.level_rank).to_json.html_safe %>);
 <% end %>

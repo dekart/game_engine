@@ -64,7 +64,11 @@ class MissionResult
 
             @mission_rank = @character.missions.check_completion!(@mission)
 
-            @group_rank, @group_payouts = @character.mission_groups.check_completion!(@mission_group)
+            @group_rank = @character.mission_groups.check_completion!(@mission_group)
+
+            if @group_rank.completed?
+              @group_payouts = @mission_group.payouts.apply(@character, :complete, @mission_group)
+            end
 
             @character.news.add(:mission_complete,
               :mission_id     => @mission.id,

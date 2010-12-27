@@ -70,9 +70,7 @@ class Character
       def check_completion!(mission)
         rank = rank_for(mission)
 
-        if rank.completed?
-          rank.save!
-        end
+        rank.save! if rank.completed?
 
         rank
       end
@@ -112,13 +110,9 @@ class Character
       def check_completion!(group)
         rank = rank_for(group)
 
-        if rank.completed?
-          rank.save!
+        rank.save! if rank.completed?
 
-          [rank, rank.payouts]
-        else
-          rank
-        end
+        rank
       end
 
       def rank_for(group)

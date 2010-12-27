@@ -4,7 +4,8 @@ describe MissionResult do
   before do
     @character = Factory(:character)
 
-    @mission = Factory(:mission)
+    @group = Factory(:mission_group)
+    @mission = Factory(:mission, :mission_group => @group)
     @mission_level = Factory(:mission_level, :mission => @mission)
 
     @payout_success = DummyPayout.new(:apply_on => :success)
@@ -352,17 +353,18 @@ describe MissionResult do
           end
           
           it 'should check completion of mission group' do
-            @group_rank = mock('Group Rank')
-            @group_payouts = mock('Group Payouts')
-
-            @character.mission_groups.
-              should_receive(:check_completion!).
-              and_return([@group_rank, @group_payouts])
-
             mission_result.save!
 
-            mission_result.group_rank.should == @group_rank
-            mission_result.group_payouts.should == @group_payouts
+            mission_result.group_rank.should == MissionGroupRank.first
+            mission_result.group_rank.should be_completed
+          end
+
+          it 'should apply group payouts if mission group completed' do
+            mission_result.mission.mission_group.payouts = Payouts::Collection.new(@payout_complete)
+
+            mission_result.save!
+            mission_result.group_payouts.first.should == @payout_complete
+            mission_result.group_payouts.first.should be_applied
           end
           
           it 'should add news about completed mission to character' do

@@ -13,3 +13,5 @@
 <% builder.fail do %>
   <%= t(".message") %> <%= mission.failure_text %>
 <% end %>
+
+<%= builder.render "missions/fulfill/payouts", :mission => mission, :result => result %>
