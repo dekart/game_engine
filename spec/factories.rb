@@ -163,6 +163,12 @@ Factory.define :mission_level do |t|
   t.chance 50
 end
 
+Factory.define :mission_with_level, :parent => :mission do |t|
+  t.after_create do |m|
+    m.levels << Factory(:mission_level, :mission => m)
+  end
+end
+
 Factory.define :gift do |t|
   t.association :character
   t.association :item

@@ -52,11 +52,12 @@ class Character
       end
 
       def completed_ids(mission)
-        proxy_owner.mission_level_ranks.scoped(
-          :conditions => {:mission_id => mission.id}
-        ).all(
+        proxy_owner.mission_level_ranks.all(
           :select     => "level_id",
-          :conditions => {:completed => true}
+          :conditions => {
+            :completed  => true,
+            :mission_id => mission.id
+          }
         ).collect{|m| m.level_id }
       end
     end
@@ -77,13 +78,16 @@ class Character
       end
 
       def completed?(mission)
-        completed_ids.include?(mission.id)
+        completed_ids(mission.mission_group).include?(mission.id)
       end
 
-      def completed_ids
+      def completed_ids(group)
         proxy_owner.mission_ranks.all(
           :select     => "mission_id",
-          :conditions => {:completed => true}
+          :conditions => {
+            :completed        => true,
+            :mission_group_id => group.id
+          }
         ).collect{|m| m.mission_id }
       end
 

@@ -28,5 +28,11 @@ describe MissionRank do
       @mission_rank.save
       @mission_rank.reload.completed?.should be_true
     end
+
+    it 'should store mission group' do
+      @mission_rank.save
+
+      @mission_rank.reload.mission_group.should == @mission.mission_group
+    end
   end
 end

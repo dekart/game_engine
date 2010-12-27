@@ -48,4 +48,48 @@ describe Character do
       @new_rank.character.should == @character
     end
   end
+
+  describe 'when fetching a list of completed missions in a group' do
+    before do
+      @group = Factory(:mission_group)
+
+      @mission1 = Factory(:mission_with_level, :mission_group => @group)
+      @mission2 = Factory(:mission_with_level, :mission_group => @group)
+
+      @other_group = Factory(:mission_group)
+
+      @mission3 = Factory(:mission_with_level, :mission_group => @other_group)
+
+      @character = Factory(:character)
+    end
+
+    it 'should return empty array when there is no completed missions' do
+      @character.missions.completed_ids(@group).should == []
+    end
+
+    describe 'when there are completed missions' do
+      def complete_mission!(mission)
+        MissionLevelRank.create(
+          :level      => mission.levels.first,
+          :character  => @character,
+          :progress   => mission.levels.first.win_amount
+        )
+        @character.missions.check_completion!(mission)
+      end
+
+      it 'should return ID of only completed missions' do
+        complete_mission!(@mission1)
+
+        @character.missions.completed_ids(@group).should == [@mission1.id]
+      end
+
+      it 'should not return IDs of completed missions from other groups' do
+        complete_mission!(@mission1)
+        complete_mission!(@mission3)
+
+        @character.missions.completed_ids(@group).should == [@mission1.id]
+        @character.missions.completed_ids(@other_group).should == [@mission3.id]
+      end
+    end
+  end
 end
