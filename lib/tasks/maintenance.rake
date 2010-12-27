@@ -72,7 +72,12 @@ namespace :app do
           )
 
           mission.payouts = Payouts::Collection.new(
-            Payouts::RandomItem.new(:item_set_id => set.id, :chance => mission.loot_chance)
+            Payouts::RandomItem.new(
+              :apply_on     => [:success, :repeat_success, :level_complete],
+              :action       => :add,
+              :item_set_id  => set.id,
+              :chance       => mission.loot_chance
+            )
           )
         else
           mission.payouts = nil
