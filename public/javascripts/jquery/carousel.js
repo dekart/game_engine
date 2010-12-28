@@ -1,16 +1,22 @@
-/**
- * jCarouselLite - jQuery plugin to navigate images/any content in a carousel style widget.
- * @requires jQuery v1.2 or above
+/*!
+ * jQuery jCarousellite Plugin v1.3.1
  *
- * http://gmarwaha.com/jquery/jcarousellite/
+ * Date: Mon Dec 6 19:36:31 2010 -0500
+ * Requires: jQuery v1.4+
  *
- * Copyright (c) 2007 Ganeshji Marwaha (gmarwaha.com)
- * Dual licensed under the MIT and GPL licenses:
+ * Copyright 2007 Ganeshji Marwaha (gmarwaha.com)
+ * Modifications/enhancements by Karl Swedberg
+ * Dual licensed under the MIT and GPL licenses (just like jQuery):
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  *
- * Version: 1.0.1
- * Note: Requires jquery 1.2 or above from version 1.0.1
- */
-
-;eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('(6($){$.1g.1w=6(o){o=$.1f({r:n,x:n,N:n,17:q,J:n,L:1a,16:n,y:q,u:12,H:3,B:0,k:1,K:n,I:n},o||{});8 G.R(6(){p b=q,A=o.y?"15":"w",P=o.y?"t":"s";p c=$(G),9=$("9",c),E=$("10",9),W=E.Y(),v=o.H;7(o.u){9.1h(E.D(W-v-1+1).V()).1d(E.D(0,v).V());o.B+=v}p f=$("10",9),l=f.Y(),4=o.B;c.5("1c","H");f.5({U:"T",1b:o.y?"S":"w"});9.5({19:"0",18:"0",Q:"13","1v-1s-1r":"S","z-14":"1"});c.5({U:"T",Q:"13","z-14":"2",w:"1q"});p g=o.y?t(f):s(f);p h=g*l;p j=g*v;f.5({s:f.s(),t:f.t()});9.5(P,h+"C").5(A,-(4*g));c.5(P,j+"C");7(o.r)$(o.r).O(6(){8 m(4-o.k)});7(o.x)$(o.x).O(6(){8 m(4+o.k)});7(o.N)$.R(o.N,6(i,a){$(a).O(6(){8 m(o.u?o.H+i:i)})});7(o.17&&c.11)c.11(6(e,d){8 d>0?m(4-o.k):m(4+o.k)});7(o.J)1p(6(){m(4+o.k)},o.J+o.L);6 M(){8 f.D(4).D(0,v)};6 m(a){7(!b){7(o.K)o.K.Z(G,M());7(o.u){7(a<=o.B-v-1){9.5(A,-((l-(v*2))*g)+"C");4=a==o.B-v-1?l-(v*2)-1:l-(v*2)-o.k}F 7(a>=l-v+1){9.5(A,-((v)*g)+"C");4=a==l-v+1?v+1:v+o.k}F 4=a}F{7(a<0||a>l-v)8;F 4=a}b=12;9.1o(A=="w"?{w:-(4*g)}:{15:-(4*g)},o.L,o.16,6(){7(o.I)o.I.Z(G,M());b=q});7(!o.u){$(o.r+","+o.x).1n("X");$((4-o.k<0&&o.r)||(4+o.k>l-v&&o.x)||[]).1m("X")}}8 q}})};6 5(a,b){8 1l($.5(a[0],b))||0};6 s(a){8 a[0].1k+5(a,\'1j\')+5(a,\'1i\')};6 t(a){8 a[0].1t+5(a,\'1u\')+5(a,\'1e\')}})(1x);',62,96,'||||curr|css|function|if|return|ul|||||||||||scroll|itemLength|go|null||var|false|btnPrev|width|height|circular||left|btnNext|vertical||animCss|start|px|slice|tLi|else|this|visible|afterEnd|auto|beforeStart|speed|vis|btnGo|click|sizeCss|position|each|none|hidden|overflow|clone|tl|disabled|size|call|li|mousewheel|true|relative|index|top|easing|mouseWheel|padding|margin|200|float|visibility|append|marginBottom|extend|fn|prepend|marginRight|marginLeft|offsetWidth|parseInt|addClass|removeClass|animate|setInterval|0px|type|style|offsetHeight|marginTop|list|jCarouselLite|jQuery'.split('|'),0,{}));
+ * jQuery plugin to navigate images/any content in a carousel style widget.
+ *
+*/
+(function(e){function p(r,a){return parseInt(e.css(r[0],a),10)||0}e.jCarouselLite={version:"1.3.1"};e.fn.jCarouselLite=function(r){var a=e.extend({},e.fn.jCarouselLite.defaults,r);return this.each(function(){function n(c){if(!s){a.beforeStart&&a.beforeStart.call(this,f.slice(g).slice(0,b));if(a.circular)if(c<=k-b-1){j.css(q,-((i-b*2)*l)+"px");g=c==k-b-1?i-b*2-1:i-b*2-a.scroll}else if(c>=i-b+1){j.css(q,-(b*l)+"px");g=c==i-b+1?b+1:b+a.scroll}else g=c;else{a.$btnPrev.toggleClass(a.btnDisabledClass,a.btnPrev&&
+c<=0);a.$btnNext.toggleClass(a.btnDisabledClass,a.btnNext&&c>i-b);g=c<0?0:c>i-b?i-b:c}s=true;v[q]=-(g*l);j.animate(v,a.speed,a.easing,function(){a.afterEnd&&a.afterEnd.call(this,f.slice(g).slice(0,b));s=false})}return false}var s=false,q=a.vertical?"top":"left",v={},w=a.vertical?"height":"width",m=this,d=e(this),j=d.find("ul").eq(0),o=j.children("li"),t=o.length,b=a.visible,k=Math.min(a.start,t-1);if(a.circular){j.prepend(o.slice(t-b-1+1).clone(true)).append(o.slice(0,b).clone(true));k+=b}var f=j.children("li"),
+i=f.length,g=k;d.css("visibility","visible");f.css({overflow:a.vertical?"hidden":"visible","float":a.vertical?"none":"left"});j.css({margin:"0",padding:"0",position:"relative",listStyleType:"none",zIndex:1});d.css({overflow:"hidden",position:"relative",zIndex:2,left:"0px"});var l=a.vertical?f[0].offsetHeight+p(f,"marginTop")+p(f,"marginBottom"):f[0].offsetWidth+p(f,"marginLeft")+p(f,"marginRight");o=l*i;var z=l*b;f.css({width:f.width(),height:f.height()});j.css(w,o+"px").css(q,-(g*l));d.css(w,z+"px");
+e.each(["btnPrev","btnNext"],function(c,h){if(a[h]){a["$"+h]=e.isFunction(a[h])?a[h].call(d[0]):e(a[h]);a["$"+h].bind("click.jc",function(){return n(c==0?g-a.scroll:g+a.scroll)})}});if(!a.circular){a.btnPrev&&k==0&&a.$btnPrev.addClass(a.btnDisabledClass);a.btnNext&&k+a.visible>=i&&a.$btnNext.addClass(a.btnDisabledClass)}a.btnGo&&e.each(a.btnGo,function(c,h){e(h).bind("click.jc",function(){return n(a.circular?a.visible+c:c)})});a.mouseWheel&&d.mousewheel&&d.bind("mousewheel.jc",function(c,h){return h>
+0?n(g-a.scroll):n(g+a.scroll)});if(a.auto){var x=0,y=a.autoStop&&(a.circular?a.autoStop:Math.min(t,a.autoStop)),u=function(){m.setAutoAdvance=setTimeout(function(){if(!y||y>x){n(g+a.scroll);x++;u()}},a.timeout+a.speed)};u();d.bind("pauseCarousel.jc",function(){clearTimeout(m.setAutoAdvance);d.data("pausedjc",true)}).bind("resumeCarousel.jc",function(){u();d.removeData("pausedjc")});a.pause&&d.bind("mouseenter.jc",function(){d.trigger("pauseCarousel")}).bind("mouseleave.jc",function(){d.trigger("resumeCarousel")})}d.bind("endCarousel.jc",
+function(){m.setAutoAdvance&&clearTimeout(m.setAutoAdvance);a.btnPrev&&a[$btnPrev].addClass(a.btnDisabledClass).unbind(".jc");a.btnNext&&a[$btnNext].addClass(a.btnDisabledClass).unbind(".jc");a.btnGo&&e.each(a.btnGo,function(c,h){e(h).unbind(".jc")});if(m.setAutoAdvance)m.setAutoAdvance=null;d.removeData("pausejc");d.unbind(".jc")})})};e.fn.jCarouselLite.defaults={btnPrev:null,btnNext:null,btnDisabledClass:"disabled",btnGo:null,mouseWheel:false,speed:200,easing:null,auto:false,autoStop:false,timeout:4E3,
+pause:true,vertical:false,circular:true,visible:3,start:0,scroll:1,beforeStart:null,afterEnd:null}})(jQuery);
