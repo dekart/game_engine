@@ -1,5 +1,5 @@
 class AddTimestampsToAttachedImages < ActiveRecord::Migration
-  CLASSES = [Asset, Boost, Boss, CharacterType, Item, Mission, MissionGroup, PropertyType]
+  CLASSES = [Asset, Boss, CharacterType, Item, Mission, MissionGroup, PropertyType]
 
   def self.up
     CLASSES.each do |klass|
