@@ -12,7 +12,7 @@ module Payouts
       if action == :remove
         character.titles.delete(title)
       else
-        character.titles << title
+        character.titles << title unless character.titles.include?(title)
       end
     end
   end
