@@ -80,3 +80,13 @@ en:
           one: "You have {{count_label}} additional slot left."
           other: "You have {{count_label}} additional slots left."
         relations: "Grow your {{relations}} to get more slots. Every {{amount}} Alliance Members bring an extra slot!"
+    give:
+      title: "Give Items to %{character}"
+      you_have: "You have:"
+      give: "Give:"
+      buttons:
+        give: "Give Items"
+      messages:
+        success: "You've successfully gave items to your friend!"
+        expired: "Sorry but this item request already expired."
+        no_items: "You don't have any of the requested items."

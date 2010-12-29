@@ -77,3 +77,33 @@
 
 #inventory_use_result
   background-image = !inventory_use_result_icon
+
+#give_inventory
+  table
+    float: left
+    margin-right: 20px
+
+  td
+    vertical-align: middle
+    padding: 5px 10px
+
+    &.name
+      font-size: 16px
+      font-weight: bold
+
+    &.amount
+      .value
+        font-weight: bold
+
+    &.give
+      font-weight: bold
+
+  .character
+    text-align: center
+
+    .name
+      margin-bottom: 5px
+      font-weight: bold
+
+  .give.button
+    +button(!inventory_give_button_icon)

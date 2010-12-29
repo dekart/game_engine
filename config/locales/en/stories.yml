@@ -28,7 +28,12 @@ en:
     inventory:
       title: "I just bought a \"{{item}}\" in {{app}}!"
     collection:
-      title: "I just finished the '{{collection}}' Collection in {{app}}!"
+      completed:
+        title: "I just finished the '{{collection}}' Collection in {{app}}!"
+      missing_items:
+        title: "Please help me to finish my collection in %{app}!"
+        description: "I need these items to finish the '%{collection}' collection: %{items}."
+        action_link: "Give Items »"
     promotion:
       title: "I got a secret bonus link for {{app}}!"
       description: "Click the link to get the game bonus. Hurry up, this special link expires at {{expires_at}}!"

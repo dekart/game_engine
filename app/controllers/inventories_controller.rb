@@ -68,6 +68,47 @@ class InventoriesController < ApplicationController
     render :action => "equip", :layout => "ajax"
   end
 
+  def give
+    data = encryptor.decrypt(params[:request_data])
+
+    if Time.now < data[:valid_till]
+      @character = Character.find(data[:requester_id])
+      
+      if request.get?
+        @inventories = current_character.inventories.find_all_by_item_id(data[:items])
+
+        if @inventories.empty?
+          flash[:error] = t('inventories.give.messages.no_items')
+
+          redirect_from_iframe root_url(:canvas => true)
+        end
+      else
+        @inventories = current_character.inventories.all(
+          :conditions => {
+            :item_id => data[:items],
+            :id => params[:inventory].keys
+          }
+        )
+
+        @inventories.each do |inventory|
+          current_character.inventories.transfer!(@character, inventory, params[:inventory][inventory.id.to_s].to_i)
+        end
+
+        flash[:success] = t('inventories.give.messages.success')
+
+        redirect_from_iframe root_url(:canvas => true)
+      end
+    else
+      flash[:error] = t('inventories.give.messages.expired')
+
+      redirect_from_iframe root_url(:canvas => true)
+    end
+  rescue ActiveSupport::MessageEncryptor::InvalidMessage
+    Rails.logger.error "Failed to decrypt collection request data: #{params[:request_data]}"
+    
+    redirect_from_exception
+  end
+
   protected
 
   def check_auto_equipment

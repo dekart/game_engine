@@ -450,31 +450,79 @@ module StreamHelper
     )
   end
 
-  def collection_stream_dialog(collection)
+  def collection_completed_stream_dialog(collection)
     attachment = {
-      :name => t("stories.collection.title",
+      :name => t("stories.collection.completed.title",
         :collection => collection.name,
         :app        => t("app_name")
       ),
       :href => item_collections_url(
         :canvas => true,
-        :reference_code => reference_code(:stream_collection_name)
+        :reference_code => reference_code(:stream_collection_completed_name)
       )
     }
 
     image_url = item_collections_url(
       :canvas => true,
-      :reference_code => reference_code(:stream_collection_image)
+      :reference_code => reference_code(:stream_collection_completed_image)
     )
 
     attachment[:media] = stream_image(
-      :image  => :stream_collection,
+      :image  => :stream_collection_completed,
       :url    => image_url
     )
 
     stream_dialog(
       :attachment => attachment,
-      :action_links => default_stream_action_links(:stream_collection_link)
+      :action_links => default_stream_action_links(:stream_collection_completed_link)
+    )
+  end
+
+  def collection_missing_items_stream_dialog(collection)
+    missing_items = collection.missing_items(current_character)
+
+    request_data = encryptor.encrypt(
+      :items        => missing_items.collect{|i| i.id },
+      :requester_id => current_character.id,
+      :valid_till   => Setting.i(:collections_request_time).hours.from_now
+    )
+
+    attachment = {
+      :name => t("stories.collection.missing_items.title", :app => t("app_name")),
+      :description => t('stories.collection.missing_items.description',
+        :collection => collection.name,
+        :items      => missing_items.collect{|i| i.name }.join(', ')
+      ),
+      :href => give_inventories_url(
+        :request_data   => request_data,
+        :canvas         => true,
+        :reference_code => reference_code(:stream_collection_missing_items_name)
+      )
+    }
+
+    image_url = give_inventories_url(
+      :request_data   => request_data,
+      :canvas         => true,
+      :reference_code => reference_code(:stream_collection_missing_items_image)
+    )
+
+    attachment[:media] = stream_image(
+      :image  => :stream_collection_missing_items,
+      :url    => image_url
+    )
+
+    stream_dialog(
+      :attachment => attachment,
+      :action_links => [
+        {
+          :text => t("stories.collection.missing_items.action_link"),
+          :href => give_inventories_url(
+            :request_data   => request_data,
+            :canvas         => true,
+            :reference_code => reference_code(:stream_collection_missing_items_link)
+          )
+        }
+      ]
     )
   end
 end

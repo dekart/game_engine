@@ -103,6 +103,13 @@ class Character
       end
     end
 
+    def transfer!(character, item, amount = 1)
+      transaction do
+        take!(item, amount)
+        character.inventories.give!(item.is_a?(Inventory) ? item.item : item, amount)
+      end
+    end
+
     protected
 
     def find_by_item(item)

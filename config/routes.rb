@@ -170,6 +170,7 @@ ActionController::Routing::Routes.draw do |map|
     :only => [:create, :update]
   
   map.resources :items
+
   map.resources :item_groups do |group|
     group.resources :items
   end
@@ -177,7 +178,8 @@ ActionController::Routing::Routes.draw do |map|
     :collection => {
       :equipment  => :any,
       :unequip    => :post,
-      :equip      => :post
+      :equip      => :post,
+      :give       => :any
     },
     :member     => {
       :use      => :any,

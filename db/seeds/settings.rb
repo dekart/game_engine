@@ -135,6 +135,7 @@ Setting[:market_vip_price_fee]    ||= 10
 Setting[:market_expire_period]    ||= 24
 
 Setting[:collections_enabled] ||= true
+Setting[:collections_request_time] ||= 48
 
 Setting[:boosts_enabled] ||= false
 
