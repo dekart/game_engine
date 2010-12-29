@@ -181,7 +181,12 @@ module StreamHelper
   end
 
   def monster_invite_stream_dialog(monster)
-    monster_id = encryptor.encrypt(monster.id)
+    url_options = {
+      :controller => 'monsters',
+      :action     => 'show',
+      :id         => encryptor.encrypt(monster.id),
+      :canvas     => true
+    }
 
     attachment = {
       :name => t("stories.monster_invite.title",
@@ -192,20 +197,16 @@ module StreamHelper
         :monster  => monster.name,
         :app      => t("app_name")
       ),
-      :href => monster_url(monster_id,
-        :canvas => true,
-        :reference_code => reference_code(:stream_monster_invite_name)
+      :href => url_for(
+        url_options.merge(:reference_code => reference_code(:stream_monster_invite_name))
       )
     }
 
-    image_url = monster_url(monster_id,
-      :canvas => true,
-      :reference_code => reference_code(:stream_monster_invite_image)
-    )
-
     attachment[:media] = stream_image(
       :image  => monster.image? ? monster.image.url(:stream) : :stream_monster_invite,
-      :url    => image_url
+      :url    => url_for(
+        url_options.merge(:reference_code => reference_code(:stream_monster_invite_image))
+      )
     )
 
     stream_dialog(
@@ -213,9 +214,8 @@ module StreamHelper
       :action_links => [
         {
           :text => t("stories.monster_invite.action_link"),
-          :href => monster_url(monster_id,
-            :canvas => true,
-            :reference_code => reference_code(:stream_monster_invite_link)
+          :href => url_for(
+            url_options.merge(:reference_code => reference_code(:stream_monster_invite_link))
           )
         }
       ]
@@ -223,25 +223,28 @@ module StreamHelper
   end
 
   def monster_defeated_stream_dialog(monster)
+    url_options = {
+      :controller => 'monsters',
+      :action     => 'show',
+      :id         => encryptor.encrypt(monster.id),
+      :canvas     => true
+    }
+    
     attachment = {
       :name => t("stories.monster_defeated.title",
         :monster  => monster.name,
         :app      => t("app_name")
       ),
-      :href => monster_url(monster,
-        :canvas => true,
-        :reference_code => reference_code(:stream_monster_defeated_name)
+      :href => url_for(
+        url_options.merge(:reference_code => reference_code(:stream_monster_defeated_name))
       )
     }
 
-    image_url = monster_url(monster,
-      :canvas => true,
-      :reference_code => reference_code(:stream_monster_defeated_image)
-    )
-
     attachment[:media] = stream_image(
       :image  => monster.image? ? monster.image.url(:stream) : :stream_monster_defeated,
-      :url    => image_url
+      :url    => url_for(
+        url_options.merge(:reference_code => reference_code(:stream_monster_defeated_image))
+      )
     )
 
     stream_dialog(
