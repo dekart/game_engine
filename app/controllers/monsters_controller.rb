@@ -5,9 +5,17 @@ class MonstersController < ApplicationController
   end
 
   def show
-    @monster = Monster.find(params[:id])
+    if params[:id] =~ /^[0-9]+$/
+      @monster = current_character.monsters.find(params[:id])
+    else
+      @monster = Monster.find(encryptor.decrypt(params[:id]))
+    end
     
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
+  rescue ActiveSupport::MessageEncryptor::InvalidMessage
+    Rails.logger.error "Failed to decrypt monster ID: #{ params[:id] }"
+
+    redirect_from_exception
   end
 
   def new

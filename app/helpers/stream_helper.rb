@@ -181,6 +181,8 @@ module StreamHelper
   end
 
   def monster_invite_stream_dialog(monster)
+    monster_id = encryptor.encrypt(monster.id)
+
     attachment = {
       :name => t("stories.monster_invite.title",
         :monster  => monster.name,
@@ -190,13 +192,13 @@ module StreamHelper
         :monster  => monster.name,
         :app      => t("app_name")
       ),
-      :href => monster_url(monster,
+      :href => monster_url(monster_id,
         :canvas => true,
         :reference_code => reference_code(:stream_monster_invite_name)
       )
     }
 
-    image_url = monster_url(monster,
+    image_url = monster_url(monster_id,
       :canvas => true,
       :reference_code => reference_code(:stream_monster_invite_image)
     )
@@ -211,7 +213,7 @@ module StreamHelper
       :action_links => [
         {
           :text => t("stories.monster_invite.action_link"),
-          :href => monster_url(monster,
+          :href => monster_url(monster_id,
             :canvas => true,
             :reference_code => reference_code(:stream_monster_invite_link)
           )
