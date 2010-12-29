@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101227100036) do
+ActiveRecord::Schema.define(:version => 20101227134540) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -365,7 +365,6 @@ ActiveRecord::Schema.define(:version => 20101227100036) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.boolean  "boost"
-    t.boolean  "can_be_requested"
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
@@ -468,9 +467,6 @@ ActiveRecord::Schema.define(:version => 20101227100036) do
     t.integer  "image_file_size"
     t.integer  "parent_mission_id"
     t.boolean  "repeatable"
-    t.boolean  "allow_loot"
-    t.integer  "loot_chance",                       :default => 10
-    t.string   "loot_item_ids",                     :default => "",  :null => false
     t.string   "state",              :limit => 50,  :default => "",  :null => false
     t.integer  "levels_count",                      :default => 0
     t.integer  "position"
