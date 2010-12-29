@@ -111,4 +111,52 @@ describe Character do
       end
     end
   end
+
+  describe 'when transferring items from one character to another' do
+    before do
+      @character1 = Factory(:character)
+      @character2 = Factory(:character)
+
+      @item = Factory(:item)
+
+      @character1.inventories.give!(@item, 5)
+    end
+
+    it 'should raise exception if passed amount is less than 1' do
+      lambda{
+        @character1.inventories.transfer!(@character2, @item, 0)
+      }.should raise_exception(ArgumentError)
+
+      lambda{
+        @character1.inventories.transfer!(@character2, @item, -1)
+      }.should raise_exception(ArgumentError)
+    end
+
+    it 'should raise exception if source character doesn\'t have enough items' do
+      lambda{
+        @character1.inventories.transfer!(@character2, @item, 10)
+      }.should raise_exception(ArgumentError)
+    end
+    
+    it 'should take items from source character' do
+      @character1.inventories.transfer!(@character2, @item, 2)
+      
+      @character1.inventories.first.amount.should == 3
+    end
+
+    it 'should give items to destination character' do
+      @character1.inventories.transfer!(@character2, @item, 2)
+
+      @character2.inventories.first.amount.should == 2
+    end
+
+    it 'should correctly work when passing inventory' do
+      lambda{
+        @character1.inventories.transfer!(@character2, @character1.inventories.first, 2)
+      }.should_not raise_exception
+
+      @character1.inventories.first.amount.should == 3
+      @character2.inventories.first.amount.should == 2
+    end
+  end
 end

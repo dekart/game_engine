@@ -104,7 +104,9 @@ class Character
     end
 
     def transfer!(character, item, amount = 1)
-      raise ArgumentError if amount < 1
+      raise ArgumentError.new('Cannot transfer negative amount of items') if amount < 1
+      raise ArgumentError.new('Source character doesn\'t have enough items') if find_by_item(item).amount < amount
+
       transaction do
         take!(item, amount)
         character.inventories.give!(item.is_a?(Inventory) ? item.item : item, amount)
