@@ -1,6 +1,12 @@
 class ApplicationController
   module ReferenceCode
-    def reference_encoder
+    def self.included(base)
+      base.helper_method(:encryptor, :reference_code)
+    end
+
+    protected
+
+    def encryptor
       @reference_encoder ||= ActiveSupport::MessageEncryptor.new(Facebooker2.secret)
     end
 
@@ -9,13 +15,11 @@ class ApplicationController
       reference = args.shift
       user_id   = args.shift || current_user.try(:id)
       
-      reference_encoder.encrypt([reference, user_id, options].to_json)
+      encryptor.encrypt([reference, user_id, options].to_json)
     end
 
     def decrypt_reference_code(code)
-      JSON.parse(
-        reference_encoder.decrypt(code)
-      )
+      JSON.parse(encryptor.decrypt(code))
     rescue ActiveSupport::MessageEncryptor::InvalidMessage
       Rails.logger.error "Failed to decrypt reference code: #{code}"
 

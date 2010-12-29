@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   layout :get_layout
 
-  helper_method :current_user, :current_character, :current_skin, :reference_code
+  helper_method :current_user, :current_character, :current_skin
 
   helper :all
 
