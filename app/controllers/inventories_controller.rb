@@ -93,7 +93,9 @@ class InventoriesController < ApplicationController
         )
 
         @inventories.each do |inventory|
-          current_character.inventories.transfer!(@character, inventory, params[:inventory][inventory.id.to_s].to_i)
+          if amount = params[:inventory][inventory.id.to_s].to_i and amount > 0
+            current_character.inventories.transfer!(@character, inventory, amount)
+          end
         end
 
         flash[:success] = t('inventories.give.messages.success')

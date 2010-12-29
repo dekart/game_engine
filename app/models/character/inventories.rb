@@ -104,6 +104,7 @@ class Character
     end
 
     def transfer!(character, item, amount = 1)
+      raise ArgumentError if amount < 1
       transaction do
         take!(item, amount)
         character.inventories.give!(item.is_a?(Inventory) ? item.item : item, amount)
