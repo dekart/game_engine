@@ -73,6 +73,8 @@ class InventoriesController < ApplicationController
 
     if Time.now < data[:valid_till]
       @character = Character.find(data[:requester_id])
+
+      redirect_from_iframe root_url(:canvas => true) if @character == current_character
       
       if request.get?
         @inventories = current_character.inventories.find_all_by_item_id(data[:items])
