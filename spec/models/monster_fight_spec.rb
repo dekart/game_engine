@@ -172,6 +172,14 @@ describe MonsterFight do
 
       @monster_fight.reward_collectable?.should_not be_true
     end
+
+    it 'should return false if monster is won and fight is not saved yet' do
+      Monster.first.win
+
+      @monster_fight = Factory.build(:monster_fight, :monster => Monster.first)
+
+      @monster_fight.reward_collectable?.should_not be_true
+    end
   end
 
   describe 'when applying reward' do

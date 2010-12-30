@@ -9,13 +9,19 @@
         <%= monster_health_bar(monster) %>
       </div>
 
-      <div class="controls">
-        <%= link_to_remote(button(:reward),
-              :url    => reward_monster_path(monster),
-              :update => :result,
-              :html   => {:class => "reward button"}
-            ) if fight.reward_collectable? %>
-      </div>
+      <% if fight.reward_collectable? %>
+        <div class="controls">
+          <%= link_to_remote(button(:reward),
+                :url    => reward_monster_path(monster),
+                :update => :result,
+                :html   => {:class => "reward button"}
+              ) %>
+        </div>
+      <% elsif fight.new_record? %>
+        <p><%= t('.too_late') %></p>
+      <% else %>
+        <p><%= t('.reward_collected') %></p>
+      <% end %>
 
       <% payout_list(monster, monster.monster_type.payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
         <div class="payouts clearfix">

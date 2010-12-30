@@ -54,7 +54,7 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def reward_collectable?
-    monster.won? && !reward_collected?
+    !new_record? && monster.won? && !reward_collected?
   end
 
   def stamina_requirement
