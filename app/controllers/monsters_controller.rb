@@ -5,10 +5,10 @@ class MonstersController < ApplicationController
   end
 
   def show
-    if params[:id] =~ /^[0-9]+$/
-      @monster = current_character.monsters.find(params[:id])
+    if params[:key].present?
+      @monster = Monster.find(encryptor.decrypt(params[:key]))
     else
-      @monster = Monster.find(encryptor.decrypt(params[:id]))
+      @monster = current_character.monsters.find(params[:id])
     end
 
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)

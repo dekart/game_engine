@@ -229,7 +229,8 @@ ActionController::Routing::Routes.draw do |map|
     }
   map.resources :item_collections, :only => [:index, :update]
 
-  map.resources :monsters, :member => {:reward => :post}
+  map.resources :monsters, 
+    :member => {:reward => :post}
 
   # Add your custom routes below this mark
   

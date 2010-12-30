@@ -182,9 +182,7 @@ module StreamHelper
 
   def monster_invite_stream_dialog(monster)
     url_options = {
-      :controller => 'monsters',
-      :action     => 'show',
-      :id         => encryptor.encrypt(monster.id),
+      :key        => encryptor.encrypt(monster.id),
       :canvas     => true
     }
 
@@ -197,14 +195,14 @@ module StreamHelper
         :monster  => monster.name,
         :app      => t("app_name")
       ),
-      :href => url_for(
+      :href => monster_url(monster,
         url_options.merge(:reference_code => reference_code(:stream_monster_invite_name))
       )
     }
 
     attachment[:media] = stream_image(
       :image  => monster.image? ? monster.image.url(:stream) : :stream_monster_invite,
-      :url    => url_for(
+      :url    => monster_url(monster,
         url_options.merge(:reference_code => reference_code(:stream_monster_invite_image))
       )
     )
@@ -214,7 +212,7 @@ module StreamHelper
       :action_links => [
         {
           :text => t("stories.monster_invite.action_link"),
-          :href => url_for(
+          :href => monster_url(monster,
             url_options.merge(:reference_code => reference_code(:stream_monster_invite_link))
           )
         }
