@@ -15,6 +15,10 @@ describe WallPost do
     end
   end
 
+  it 'should paginate by 10' do
+    WallPost.per_page.should == 10
+  end
+
   describe 'when creating' do
     before do
       @wall_post = Factory.build(:wall_post)
