@@ -1,3 +1,5 @@
+require 'will_paginate'
+
 module WallPostsHelper
   class PaginationRenderer < WillPaginate::LinkRenderer
     def page_link(page, text, attributes = {})
