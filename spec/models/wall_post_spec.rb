@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe WallPost do
+  it 'should paginate by 10' do
+    WallPost.per_page.should == 10
+  end
+
   describe 'associations' do
     before do
       @wall_post = WallPost.new
@@ -15,8 +19,20 @@ describe WallPost do
     end
   end
 
-  it 'should paginate by 10' do
-    WallPost.per_page.should == 10
+  describe 'attribute protection' do
+    before do
+      @wall_post = Factory(:wall_post)
+    end
+
+    it 'should allow to change text with mass assignment' do
+      @wall_post.should allow_mass_assignment_of(:text)
+    end
+
+    %w{id character author created_at updated_at}.each do |attribute|
+      it "should not allow to change #{attribute} with mass assignment" do
+        @wall_post.should_not allow_mass_assignment_of(attribute)
+      end
+    end
   end
 
   describe 'when creating' do

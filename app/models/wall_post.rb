@@ -16,6 +16,8 @@ class WallPost < ActiveRecord::Base
   validates_presence_of :character, :author, :text
   validates_length_of :text, :maximum => 4.kilobytes
 
+  attr_accessible :text
+
   def author_post?
     character == author
   end
