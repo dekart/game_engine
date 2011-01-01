@@ -87,6 +87,8 @@ class Character < ActiveRecord::Base
 
   has_many :market_items
 
+  has_many :wall_posts
+
   named_scope :rated_by, Proc.new{|unit|
     {
       :order => "characters.#{unit} DESC",

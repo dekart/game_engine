@@ -206,3 +206,10 @@ Factory.define :boss do |t|
   
   t.state 'visible'
 end
+
+Factory.define :wall_post do |t|
+  t.association :character
+  t.association :author, :factory => :character
+
+  t.text "This is a Fake Text"
+end

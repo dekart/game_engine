@@ -36,6 +36,12 @@ class CharactersController < ApplicationController
     @character = Character.find(params[:id])
 
     @secured = (@character.key == params[:id])
+
+    @wall_enabled = Setting.b(:wall_enabled)
+
+    if @wall_enabled
+      @wall_posts = @character.wall_posts.paginate(:page => params[:page])
+    end
   end
 
   def new

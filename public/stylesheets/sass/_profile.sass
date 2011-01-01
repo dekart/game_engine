@@ -83,3 +83,43 @@
   .properties .item
     width: 130px
     height: 170px
+
+#new_wall_post
+  margin-bottom: 15px
+
+  textarea
+    width: 740px
+    height: 80px
+
+  .publish.button
+    +button(!wall_publish_icon)
+
+#wall_post_list
+  .wall_post
+    padding: 10px 5px
+    border-bottom = !splitter_border
+
+  .author_post
+    background-color = !wall_author_post_bg_color
+    border: 0
+
+  .author
+    float: left
+    width: 120px
+    text-align: center
+
+    .name
+      font-weight: bold
+      margin-bottom: 5px
+
+    .image
+      margin-bottom: 5px
+
+  .created_at
+    margin-left: 130px
+    font-weight: bold
+    margin-bottom: 5px
+    font-size: 10px
+
+  .text
+    margin-left: 130px

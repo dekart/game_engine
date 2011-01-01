@@ -112,15 +112,16 @@
     </div>
   <% end %>
 
-  <% if Setting.b(:wall_enabled) %>
-    <div class="wall">
+  <% if @wall_enabled %>
+    <div id="wall">
       <h2>
         <%= t(".wall.title",
               :user => character_name(@character, :possessive => true, :capitalize => true)
             ).html_safe %>
       </h2>
 
-      <%= character_wall(@character) %>
+      <%= render('wall_posts/form', :character => @character, :wall_post => WallPost.new) %>
+      <%= render('wall_posts/list', :wall_posts => @wall_posts) %>
     </div>
   <% end %>
 </div>

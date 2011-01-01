@@ -1,0 +1,6 @@
+en:
+  wall_posts:
+    form:
+      title: "Add your comment:"
+      buttons:
+        submit: "Publish"

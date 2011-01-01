@@ -160,6 +160,8 @@ ActionController::Routing::Routes.draw do |map|
   ) do |character|
     character.resources :assignments, :shallow => true
     character.resources :hit_listings, :only => [:new, :create]
+
+    character.resources :wall_posts, :shallow => true, :only => [:index, :create, :destroy]
   end
 
   map.resources :mission_groups, :only => [:index, :show]

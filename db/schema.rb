@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101227134540) do
+ActiveRecord::Schema.define(:version => 20110101112646) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -119,41 +119,41 @@ ActiveRecord::Schema.define(:version => 20101227134540) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                     :limit => 100,      :default => "",                    :null => false
+    t.string   "name",                     :limit => 100,        :default => "",                    :null => false
     t.integer  "basic_money"
     t.integer  "vip_money"
-    t.integer  "level",                                        :default => 1
-    t.integer  "experience",                                   :default => 0
+    t.integer  "level",                                          :default => 1
+    t.integer  "experience",                                     :default => 0
     t.integer  "points"
     t.integer  "attack"
     t.integer  "defence"
-    t.integer  "hp",                                           :default => 100
+    t.integer  "hp",                                             :default => 100
     t.integer  "health"
-    t.integer  "ep",                                           :default => 10
+    t.integer  "ep",                                             :default => 10
     t.integer  "energy"
     t.text     "inventory_effects"
     t.datetime "hp_updated_at"
     t.datetime "ep_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "fights_won",                                   :default => 0
-    t.integer  "fights_lost",                                  :default => 0
-    t.integer  "missions_succeeded",                           :default => 0
-    t.integer  "missions_completed",                           :default => 0
-    t.integer  "relations_count",                              :default => 0
-    t.integer  "bank",                     :limit => 8,        :default => 0
+    t.integer  "fights_won",                                     :default => 0
+    t.integer  "fights_lost",                                    :default => 0
+    t.integer  "missions_succeeded",                             :default => 0
+    t.integer  "missions_completed",                             :default => 0
+    t.integer  "relations_count",                                :default => 0
+    t.integer  "bank",                     :limit => 8,          :default => 0
     t.datetime "basic_money_updated_at"
     t.text     "relation_effects"
     t.integer  "current_mission_group_id"
     t.integer  "character_type_id"
     t.integer  "stamina"
-    t.integer  "sp",                                           :default => 10
+    t.integer  "sp",                                             :default => 10
     t.datetime "sp_updated_at"
-    t.text     "placements",               :limit => 16777215
-    t.integer  "total_money",                                  :default => 0
-    t.datetime "hospital_used_at",                             :default => '1970-01-01 05:00:00'
-    t.integer  "missions_mastered",                            :default => 0
-    t.integer  "lock_version",                                 :default => 0
+    t.text     "placements",               :limit => 2147483647
+    t.integer  "total_money",                                    :default => 0
+    t.datetime "hospital_used_at",                               :default => '1970-01-01 05:00:00'
+    t.integer  "missions_mastered",                              :default => 0
+    t.integer  "lock_version",                                   :default => 0
   end
 
   add_index "characters", ["level"], :name => "index_characters_on_level"
@@ -671,6 +671,7 @@ ActiveRecord::Schema.define(:version => 20101227134540) do
     t.string   "last_landing",       :limit => 100, :default => "",   :null => false
     t.integer  "referrer_id"
     t.string   "access_token",                      :default => "",   :null => false
+    t.integer  "wall_privacy_level",                :default => 2
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"
@@ -695,5 +696,13 @@ ActiveRecord::Schema.define(:version => 20101227134540) do
   end
 
   add_index "visibilities", ["target_id", "target_type"], :name => "index_visibilities_on_target_id_and_target_type"
+
+  create_table "wall_posts", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "author_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
