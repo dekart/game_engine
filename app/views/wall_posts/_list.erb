@@ -14,8 +14,19 @@
 
       <div class="created_at"><%= l(post.created_at, :format => :short) %>:</div>
       <div class="text"><%= simple_format(post.text) %></div>
+
+      <% if post.character == current_character %>
+        <div class="controls">
+          <%= link_to_remote(t('.controls.remove'),
+                :url      => wall_post_path(post, :page => wall_posts.current_page),
+                :update   => :ajax,
+                :method   => :delete,
+                :confirm  => t('.controls.remove_confirm')
+              ) %>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
 
-  <%= will_paginate(wall_posts) %>
+  <%= will_paginate(wall_posts, :renderer => 'WallPostsHelper::PaginationRenderer') %>
 </div>

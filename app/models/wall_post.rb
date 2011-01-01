@@ -6,7 +6,9 @@ class WallPost < ActiveRecord::Base
   }
 
   cattr_reader :per_page
-  @@per_page = 10
+  @@per_page = 2
+
+  default_scope :order => "wall_posts.created_at DESC"
 
   belongs_to :character
   belongs_to :author, :class_name => "Character"

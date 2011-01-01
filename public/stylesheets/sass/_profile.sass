@@ -98,6 +98,16 @@
   .wall_post
     padding: 10px 5px
     border-bottom = !splitter_border
+    position: relative
+
+    .controls
+      position: absolute
+      top: 5px
+      right: 5px
+      visibility: hidden
+
+    &:hover .controls
+      visibility: visible
 
   .author_post
     background-color = !wall_author_post_bg_color
