@@ -27,7 +27,10 @@ class HitListing < ActiveRecord::Base
   before_create :charge_client, :take_fee_from_reward
 
   def execute!(attacker)
-    return false if completed?
+    errors.add(:base, :already_completed) if completed?
+    errors.add(:base, :client_attack) if attacker == client
+    
+    return false if errors.any?
 
     Fight.new(:attacker => attacker, :victim => victim, :cause => self).tap do |fight|
       transaction do

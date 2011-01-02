@@ -193,6 +193,35 @@ describe HitListing do
 
         @hit_listing.execute!(@attacker)
       end
+      
+      it 'should add completed listing error' do
+        @hit_listing.execute!(@attacker)
+        
+        @hit_listing.errors.should_not be_empty
+        @hit_listing.errors.on(:base).should =~ /Somebody already took out this target before you got the chance/
+      end
+    end
+    
+    describe 'if client tries to complete his own listing' do
+      before do
+        @hit_listing.client = @attacker
+      end
+      
+      it 'should return false' do
+        @hit_listing.execute!(@attacker).should be_false
+      end
+      
+      it 'shouldn\'t try to save fight' do
+        Fight.should_not_receive(:create)
+        
+        @hit_listing.execute!(@attacker)
+      end
+      
+      it 'should add client attack error' do
+        @hit_listing.execute!(@attacker)
+        
+        @hit_listing.errors.should_not be_empty
+      end
     end
   end
 end

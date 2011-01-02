@@ -16,7 +16,7 @@
             :fight => @fight
           ) %>
 
-      <% if @hit_listing.completed? %>
+     <% if @hit_listing.completed? %>
         <% dialog do %>
           <p class="completed">
             <%= t(".completed.message", :victim => character_name_link(@hit_listing.victim)).html_safe %>
@@ -58,9 +58,7 @@
     <% end %>
   <% else %>
     <% builder.notice do %>
-      <%= t(".already_completed",
-            :victim => character_name_link(@hit_listing.victim)
-          ).html_safe %>
+      <%= @hit_listing.errors.on(:base) %>
     <% end %>
   <% end %>
 
