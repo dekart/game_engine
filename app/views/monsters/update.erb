@@ -66,13 +66,13 @@
         </td>
       </tr>
     </table>
-
-    <% builder.on_ready do %>
-      $('#monster').html(<%= render(@fight.monster.state, :monster => @fight.monster, :fight => @fight).to_json.html_safe %>);
-    <% end %>
   <% elsif @fight.character.sp == 0 %>
     <%= builder.render("requirements/not_satisfied/stamina_point",
           :requirement => @fight.stamina_requirement
         ) %>
+  <% end %>
+
+  <% builder.on_ready do %>
+    $('#monster').html(<%= render(@fight.monster.state, :monster => @fight.monster, :fight => @fight).to_json.html_safe %>);
   <% end %>
 <% end %>

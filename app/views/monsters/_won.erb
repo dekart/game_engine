@@ -19,6 +19,8 @@
         </div>
       <% elsif fight.new_record? %>
         <p><%= t('.too_late') %></p>
+      <% elsif !fight.significant_damage? %>
+        <p><%= t('.insignificant_damage') %></p>
       <% else %>
         <p><%= t('.reward_collected') %></p>
       <% end %>

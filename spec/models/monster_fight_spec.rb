@@ -148,6 +148,25 @@ describe MonsterFight do
       @monster_fight.attack!.should be_true
     end
   end
+  
+  describe "when checking if player dealt significant damage to monster" do
+    before do
+      @monster = Factory(:monster)
+      @monster_fight = Factory(:monster_fight, :monster => @monster)
+      
+      Factory(:monster_fight, :monster => @monster, :damage => 900)
+    end
+    
+    it 'should return true if user damaged monster for at least 10% of highest damage' do
+      @monster_fight.damage = 91
+      @monster_fight.significant_damage?.should be_true
+    end
+    
+    it 'should return false if user damaged monster for less than 10% of highest damage' do
+      @monster_fight.damage = 89
+      @monster_fight.significant_damage?.should be_false
+    end
+  end
 
   describe 'when checking if reward is collectable' do
     before do
@@ -170,6 +189,14 @@ describe MonsterFight do
       @monster_fight.monster.win
       @monster_fight.reward_collected = true
 
+      @monster_fight.reward_collectable?.should_not be_true
+    end
+    
+    it "should return false if player didn't done significant damage to monster" do
+      @monster_fight.monster.win
+      
+      @monster_fight.should_receive(:significant_damage?).and_return(false)
+      
       @monster_fight.reward_collectable?.should_not be_true
     end
 

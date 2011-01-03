@@ -31,7 +31,7 @@
         <div class="controls">
           <% if monster.progress? %>
             <%= link_to(button(:engage), monster, :class => "engage button") %>
-          <% elsif monster.expired? || fight.reward_collected? %>
+          <% elsif monster.expired? || !fight.reward_collectable? %>
             <%= link_to(button(:view), monster, :class => "view button") %>
           <% else %>
             <%= link_to(button(:reward), monster, :class => "reward button") %>

@@ -142,5 +142,6 @@ Setting[:boosts_enabled] ||= false
 
 Setting[:monsters_enabled] ||= true
 Setting[:monsters_reward_time] ||= 24
+Setting[:monster_minimum_damage] ||= 10
 
 # Put your custom settings below this line

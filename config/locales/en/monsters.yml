@@ -22,6 +22,7 @@ en:
     won:
       too_late: "It's too late to join the battle! The monster is already defeated."
       reward_collected: "The monster is defeated and the reward is collected."
+      insignificant_damage: "The monster is defeated and you didn't done any significant damage to it"
       buttons:
         reward: "Get Reward"
     update:
@@ -42,6 +43,7 @@ en:
       messages:
         success: "Well done! You defeated %{monster} and the reward is yours!"
         already_collected: "You've already collected reward for this fight."
+        insignificant_damage: "You didn't done any significant damage to this monster"
       you_received: "You received:"
     fighters:
       title: "Damage Leaders"

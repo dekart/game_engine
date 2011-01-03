@@ -54,7 +54,7 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def reward_collectable?
-    !new_record? && monster.won? && !reward_collected?
+    !new_record? && monster.won? && !reward_collected? && significant_damage?
   end
 
   def stamina_requirement
@@ -79,5 +79,9 @@ class MonsterFight < ActiveRecord::Base
     else
       [:victory]
     end
+  end
+  
+  def significant_damage?
+    damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.maximum(:damage))
   end
 end

@@ -17,6 +17,10 @@
     <% builder.fail do %>
       <%= t(".messages.already_collected").html_safe %>
     <% end %>
+  <% elsif !@fight.significant_damage? %>
+    <% builder.fail do %>
+      <%= t(".messages.insignificant_damage").html_safe %>
+    <% end %>
   <% end %>
 
   <% builder.on_ready do %>
