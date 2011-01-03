@@ -47,6 +47,12 @@ describe MonsterFight do
 
       @monster_fight.attack!.should be_false
     end
+    
+    it 'should return false if character is weak' do
+      @character.should_receive(:weak?).and_return(true)
+      
+      @monster_fight.attack!.should be_false
+    end
 
     it 'should return false if monster is not in the progress' do
       @monster.win

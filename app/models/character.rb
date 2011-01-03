@@ -221,6 +221,10 @@ class Character < ActiveRecord::Base
   def weak?
     hp < weakness_minimum
   end
+  
+  def weakness_requirement
+    Requirements::HealthPoint.new(:value => weakness_minimum)
+  end
 
   def weakness_minimum
     Setting.p(:character_weakness_minimum, health).to_i

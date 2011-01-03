@@ -10,7 +10,7 @@ class MonsterFight < ActiveRecord::Base
   attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
 
   def attack!
-    if monster.progress? && character.sp > 0
+    if monster.progress? && character.sp > 0 && !character.weak?
       @character_damage, @monster_damage = self.class.damage_system.calculate_damage(character, monster)
 
       @experience = monster.experience
