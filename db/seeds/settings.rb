@@ -32,7 +32,7 @@ Setting[:character_health_restore_period] ||= 60
 Setting[:character_energy_restore_period] ||= 120
 Setting[:character_stamina_restore_period] ||= 180
 Setting[:character_income_calculation_period] ||= 60
-Setting[:character_weakness_minimum] ||= 20
+Setting[:character_weakness_minimum] ||= 5
 
 Setting[:premium_money_price] ||= 5
 Setting[:premium_money_amount] ||= 1000
