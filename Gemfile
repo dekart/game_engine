@@ -29,4 +29,5 @@ group :test do
   gem "ZenTest",      "4.4.0"
   gem "shoulda",      "2.11.3"
   gem "factory_girl", "1.3.2"
+  gem "autotest-growl", "0.2.9"
 end
