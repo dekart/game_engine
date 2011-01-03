@@ -128,6 +128,7 @@ en:
             victim:
               too_weak: "The target is too weak, you cannot add them to the hitlist"
               already_listed: "This target is already in the hit list"
+              recently_listed: "This target was destroyed recently"
           already_completed: "Somebody already took out this target before you got the chance!"
           client_attack: "You cannot claim a bounty from your own listing!"
         market_item:

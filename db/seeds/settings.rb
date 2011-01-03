@@ -120,6 +120,7 @@ Setting[:hit_list_enabled] ||= true
 Setting[:hit_list_minimum_reward] ||= 10_000
 Setting[:hit_list_reward_fee] ||= 20
 Setting[:hit_list_display_limit] ||= 20
+Setting[:hit_list_repeat_listing_delay] ||= 12
 
 Setting[:landing_pages_visit_delay] ||= 24
 

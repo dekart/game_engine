@@ -91,6 +91,14 @@ describe HitListing do
 
       @hit_listing.errors.on(:victim).should_not be_empty
     end
+    
+    it 'should not be valid is victim was listed less than 12 hours ago' do
+      @other_listing = Factory(:hit_listing, :victim => @hit_listing.victim, :completed => true, :executor => Factory(:character))
+      HitListing.update_all({:updated_at => (12.hours - 1.minute).ago}, {:id => @other_listing.id})
+      
+      @hit_listing.should_not be_valid
+      @hit_listing.errors.on(:victim).should_not be_empty
+    end
   end
 
   describe "when executing a listing" do

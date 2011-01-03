@@ -6,6 +6,11 @@ class HitListing < ActiveRecord::Base
   named_scope :incomplete,
     :conditions => {:completed => false},
     :include    => [:victim, :client]
+  named_scope :completed_recently, Proc.new {
+    {
+      :conditions => ["completed = 1 AND updated_at > ?", Setting.i(:hit_listing_repeat_listing_delay).hours]
+    }
+  }
   named_scope :available_for, Proc.new{|character|
     exclude_ids = [character.id]
     exclude_ids.push(*character.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
@@ -22,7 +27,7 @@ class HitListing < ActiveRecord::Base
     :allow_blank => true,
     :on => :create
 
-  validate_on_create :check_victim_weakness, :check_victim_already_listed, :check_client_balance
+  validate_on_create :check_victim_weakness, :check_victim_listed, :check_client_balance
 
   before_create :charge_client, :take_fee_from_reward
 
@@ -54,10 +59,11 @@ class HitListing < ActiveRecord::Base
     end
   end
 
-  def check_victim_already_listed
-    if victim && self.class.incomplete.find_by_victim_id(victim.id)
-      errors.add(:victim, :already_listed)
-    end
+  def check_victim_listed
+    return unless victim
+    
+    errors.add(:victim, :already_listed) if self.class.incomplete.find_by_victim_id(victim.id)
+    errors.add(:victim, :recently_listed) if self.class.completed_recently.find_by_victim_id(victim.id)
   end
 
   def check_client_balance
