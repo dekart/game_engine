@@ -68,7 +68,7 @@
     </table>
   <% elsif @fight.character.weak? %>
     <%= builder.render("requirements/not_satisfied/health_point",
-          :requirement => @fight.character.weakness_requirement
+          :requirement => current_character.weakness_requirement
         ) %>
   <% elsif @fight.character.sp == 0 %>
     <%= builder.render("requirements/not_satisfied/stamina_point",

@@ -114,10 +114,6 @@ class BossFight < ActiveRecord::Base
     Requirements::EnergyPoint.new(:value => ep_cost)
   end
 
-  def health_requirement
-    Requirements::HealthPoint.new(:value => character.weakness_minimum)
-  end
-
   protected
 
   def validate_on_create

@@ -43,7 +43,7 @@
         ) %>
   <% elsif current_character.weak? %>
     <%= builder.render("requirements/not_satisfied/health_point",
-          :requirement => @fight.health_requirement
+          :requirement => current_character.weakness_requirement
         ) %>
   <% else %>
     <% builder.fail do %>
