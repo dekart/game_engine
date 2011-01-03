@@ -56,4 +56,76 @@ describe User do
       @user.should_not be_changed
     end
   end
+
+  describe "when assigning signup IP" do
+    before do
+      @user = User.new
+    end
+    
+    it 'should covert string value to integer' do
+      lambda{
+        @user.signup_ip = '127.0.0.1'
+      }.should change(@user, :signup_ip).from(nil).to(2130706433)
+    end
+    
+    it 'should store integer value as is' do
+      lambda{
+        @user.signup_ip = 64000
+      }.should change(@user, :signup_ip).from(nil).to(64000)
+    end
+  end
+  
+  describe "when retrieving signup IP" do
+    before do
+      @user = User.new
+      @user.signup_ip = '127.0.0.1'
+    end
+    
+    it 'should return parsed IP value as IPAddr object' do
+      @user.signup_ip.should be_kind_of(IPAddr)
+      @user.signup_ip.should == IPAddr.new('127.0.0.1')
+    end
+    
+    it 'should return nil if IP is not set' do
+      @user.signup_ip = nil
+      
+      @user.signup_ip.should be_nil
+    end
+  end
+  
+  describe "when assigning last visit IP" do
+    before do
+      @user = User.new
+    end
+    
+    it 'should covert string value to integer' do
+      lambda{
+        @user.last_visit_ip = '127.0.0.1'
+      }.should change(@user, :last_visit_ip).from(nil).to(2130706433)
+    end
+    
+    it 'should store integer value as is' do
+      lambda{
+        @user.last_visit_ip = 64000
+      }.should change(@user, :last_visit_ip).from(nil).to(64000)
+    end
+  end
+
+  describe "when retrieving last visit IP" do
+    before do
+      @user = User.new
+      @user.last_visit_ip = '127.0.0.1'
+    end
+    
+    it 'should return parsed IP value as IPAddr object' do
+      @user.last_visit_ip.should be_kind_of(IPAddr)
+      @user.last_visit_ip.should == IPAddr.new('127.0.0.1')
+    end
+    
+    it 'should return nil if IP is not set' do
+      @user.last_visit_ip = nil
+      
+      @user.last_visit_ip.should be_nil
+    end
+  end
 end

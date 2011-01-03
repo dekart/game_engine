@@ -71,6 +71,7 @@ Rails::Initializer.run do |config|
   end
 end
 
+require 'ipaddr'
 require "facebook_money"
 require "i18n/backend/yaml_db"
 require "rails_restart"

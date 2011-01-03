@@ -41,4 +41,20 @@ class User < ActiveRecord::Base
   def admin?
     Setting.a(:user_admins).include?(facebook_id.to_s)
   end
+  
+  def last_visit_ip=(value)
+    self[:last_visit_ip] = value.is_a?(String) ? IPAddr.new(value).to_i : value
+  end
+  
+  def last_visit_ip
+    IPAddr.new(self[:last_visit_ip], Socket::AF_INET) if self[:last_visit_ip]
+  end
+  
+  def signup_ip=(value)
+    self[:signup_ip] = value.is_a?(String) ? IPAddr.new(value).to_i : value
+  end
+  
+  def signup_ip
+    IPAddr.new(self[:signup_ip], Socket::AF_INET) if self[:signup_ip]
+  end
 end

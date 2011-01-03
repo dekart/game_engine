@@ -68,10 +68,14 @@ class ApplicationController < ActionController::Base
         #FIXME Stop parsing referrer passed in unencrypted params
         user.referrer_id  = params[:referrer]
       end
+      
+      user.signup_ip = request.remote_ip
     end
 
-    # Updating access token
+    # Updating user access information
     user.access_token = current_facebook_user.client.access_token
+    user.last_visit_at = Time.now if user.last_visit_at.nil? || user.last_visit_at < 30.minutes.ago
+    user.last_visit_ip = request.remote_ip
     
     user.save!
 
