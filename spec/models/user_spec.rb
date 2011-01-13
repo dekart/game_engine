@@ -91,6 +91,13 @@ describe User do
       
       @user.signup_ip.should be_nil
     end
+    
+    it 'should correctly store values after 127.*' do
+      @user.signup_ip = '250.250.250.250'
+      @user.save!
+      
+      @user.reload.signup_ip.should == IPAddr.new('250.250.250.250')
+    end
   end
   
   describe "when assigning last visit IP" do
@@ -126,6 +133,13 @@ describe User do
       @user.last_visit_ip = nil
       
       @user.last_visit_ip.should be_nil
+    end
+    
+    it 'should correctly store values after 127.*' do
+      @user.last_visit_ip = '250.250.250.250'
+      @user.save!
+      
+      @user.reload.last_visit_ip.should == IPAddr.new('250.250.250.250')
     end
   end
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110103142111) do
+ActiveRecord::Schema.define(:version => 20110113100030) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -672,8 +672,8 @@ ActiveRecord::Schema.define(:version => 20110103142111) do
     t.integer  "referrer_id"
     t.string   "access_token",                      :default => "",   :null => false
     t.integer  "wall_privacy_level",                :default => 2
-    t.integer  "signup_ip"
-    t.integer  "last_visit_ip"
+    t.integer  "signup_ip",          :limit => 8
+    t.integer  "last_visit_ip",      :limit => 8
     t.datetime "last_visit_at"
   end
 
