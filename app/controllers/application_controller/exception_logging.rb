@@ -2,14 +2,14 @@ class ApplicationController
   module ExceptionLogging
     def self.included(base)
       if Rails.env.production?
-        {
-          Exception                             => :rescue_basic_exception,
-          ActionController::MethodNotAllowed    => :rescue_method_not_allowed,
-          ActionController::RoutingError        => :rescue_routing_error,
-          ActionController::UnknownAction       => :rescue_unknown_action,
-          ActiveRecord::StaleObjectError        => :rescue_locking_error,
-          Facebooker2::OAuthException           => :rescue_facebooker_oauth_exception
-        }.each do |exception, method|
+        [
+          [ActionController::MethodNotAllowed,  :rescue_method_not_allowed],
+          [ActionController::RoutingError,      :rescue_routing_error],
+          [ActionController::UnknownAction,     :rescue_unknown_action],
+          [ActiveRecord::StaleObjectError,      :rescue_locking_error],
+          [Facebooker2::OAuthException,         :rescue_facebooker_oauth_exception],
+          [Exception,                           :rescue_basic_exception]
+        ].each do |exception, method|
           base.rescue_from(exception, :with => method)
         end
       end
