@@ -61,6 +61,7 @@
               <%= link_to_remote(inventory_use_button(inventory),
                     :url    => use_inventory_path(inventory),
                     :update => :result,
+                    :before => "$(this).css('visibility', 'hidden')",
                     :html   => {:class => "use button"}
                   ) if inventory.usable? %>
             </td>
