@@ -5,6 +5,7 @@ class Character < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   
   include Character::Relations
+  include Character::Properties
   include Character::Gifts
   include Character::Notifications
   include Character::Titles
@@ -32,11 +33,6 @@ class Character < ActiveRecord::Base
     :extend     => Character::Inventories
 
   has_many :items, :through => :inventories
-
-  has_many :properties,
-    :order      => "property_type_id",
-    :dependent  => :delete_all,
-    :extend     => Character::Properties
 
   has_many :attacks,
     :class_name   => "Fight",
