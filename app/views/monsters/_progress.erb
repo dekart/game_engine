@@ -20,6 +20,7 @@
               :url    => monster_path(monster),
               :method => :put,
               :update => :result,
+              :before => "$(this).css('visibility', 'hidden')",
               :html   => {:class => "attack button"}
             ) %>
 
