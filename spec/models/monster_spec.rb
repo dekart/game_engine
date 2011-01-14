@@ -63,9 +63,9 @@ describe Monster do
     end
 
     it "should be invalid if there are current monsters of the same type" do
-      @other_monster = Monster.create!(:character => @character, :monster_type => @monster_type)
-      
-      Monster.update_all({:created_at => (24.hours - 1.minute).ago}, {:id => @other_monster.id})
+      time_travel_to((24.hours - 1.minute).ago) do
+        @other_monster = Monster.create!(:character => @character, :monster_type => @monster_type)
+      end
 
       @monster.should_not be_valid
       @monster.errors.on(:base).should_not be_empty

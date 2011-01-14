@@ -13,9 +13,9 @@ describe GiftReceipt do
     end
 
     it 'should return facebook ids for gifts in time limit' do
-      @gift_receipt2 = Factory(:gift_receipt, :facebook_id => 111222333)
-
-      GiftReceipt.update_all({:created_at => (24.hours + 1.minute).ago}, {:id => @gift_receipt2.id})
+      time_travel_to((24.hours + 1.minute).ago) do
+        @gift_receipt2 = Factory(:gift_receipt, :facebook_id => 111222333)
+      end
 
       GiftReceipt.recent_facebook_ids.should == [987654321]
     end

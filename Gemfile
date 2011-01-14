@@ -18,16 +18,18 @@ gem "nokogiri",         "1.4.3.1"
 
 # facebooker2 dependencies
 gem "crack",      "0.1.8"
-gem "hashie",      "0.4.0"
-gem "httparty",      "0.6.1"
+gem "hashie",     "0.4.0"
+gem "httparty",   "0.6.1"
 gem "mogli",      "0.0.15"
-gem "ruby-hmac",      "0.4.0"
+gem "ruby-hmac",  "0.4.0"
 
 group :test do
-  gem "rspec",        "1.3.0"
-  gem "rspec-rails",  "1.3.2"
-  gem "ZenTest",      "4.4.0"
-  gem "shoulda",      "2.11.3"
-  gem "factory_girl", "1.3.2"
+  gem "rspec",          "1.3.0"
+  gem "rspec-rails",    "1.3.2"
+  gem "ZenTest",        "4.4.0"
+  gem "shoulda",        "2.11.3"
+  gem "factory_girl",   "1.3.2"
   gem "autotest-growl", "0.2.9"
+  gem "delorean",       "0.2.1"
+  gem "chronic",        "0.3.0"
 end
