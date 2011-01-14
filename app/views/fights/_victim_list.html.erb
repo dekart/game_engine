@@ -20,6 +20,7 @@
         <%= link_to_remote(button(:attack),
               :url    => fights_path(:victim_id => victim.id),
               :update => :result,
+              :before => "$(this).css('visibility', 'hidden')",
               :html   => {:class => "button attack"}
             ) %>
       </td>

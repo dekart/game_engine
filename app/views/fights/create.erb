@@ -18,6 +18,7 @@
           <%= link_to_remote(button(:attack_again),
                 :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
                 :update => :result,
+                :before => "$(this).css('visibility', 'hidden')",
                 :html   => {:class => "attack_again button"}
               ) %>
 
