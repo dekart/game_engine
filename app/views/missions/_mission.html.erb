@@ -12,14 +12,13 @@
         <%= link_to_remote(button(:fulfill),
               :url    => fulfill_mission_path(mission),
               :update => :result,
+              :before => "$(this).css('visibility', 'hidden')",
               :html   => {:class => "fulfill button"}
             ) %>
       </div>
     <% end %>
 
-    <div class="progress" id="<%= dom_id(mission, :progress) %>">
-      <%= mission_progress(rank) %>
-    </div>
+    <div class="progress"><%= mission_progress(rank) %></div>
   </td>
   <td class="details">
     <div class="payouts">

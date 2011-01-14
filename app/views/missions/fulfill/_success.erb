@@ -2,6 +2,7 @@
   <%= link_to_remote(button(:continue),
         :url    => fulfill_mission_path(mission),
         :update => :result,
+        :before => "$(this).css('visibility', 'hidden')",
         :html   => {:class => "fulfill_again button"}
       ) %>
 
@@ -17,5 +18,8 @@
 <%= builder.render "missions/fulfill/payouts", :mission => mission, :result => result %>
 
 <% builder.on_ready do %>
-  $('#<%= dom_id(mission, :progress) %>').html(<%= mission_progress(result.level_rank).to_json.html_safe %>);
+  var mission = $('#<%= dom_id(mission) %>');
+  
+  mission.find('.progress').html(<%= mission_progress(result.level_rank).to_json.html_safe %>);
+  mission.find('a.fulfill.button').css('visibility', 'visible');
 <% end %>
