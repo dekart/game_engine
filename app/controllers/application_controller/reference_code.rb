@@ -19,7 +19,7 @@ class ApplicationController
     end
 
     def decrypt_reference_code(code)
-      JSON.parse(encryptor.decrypt(code))
+      JSON.parse(encryptor.decrypt(code.to_s))
     rescue ActiveSupport::MessageEncryptor::InvalidMessage
       Rails.logger.error "Failed to decrypt reference code: #{code}"
 

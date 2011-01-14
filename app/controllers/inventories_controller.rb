@@ -69,7 +69,7 @@ class InventoriesController < ApplicationController
   end
 
   def give
-    data = encryptor.decrypt(params[:request_data])
+    data = encryptor.decrypt(params[:request_data].to_s)
 
     if Time.now < data[:valid_till]
       @character = Character.find(data[:requester_id])

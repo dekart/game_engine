@@ -6,7 +6,7 @@ class MonstersController < ApplicationController
 
   def show
     if params[:key].present?
-      @monster = Monster.find(encryptor.decrypt(params[:key]))
+      @monster = Monster.find(encryptor.decrypt(params[:key].to_s))
     else
       @monster = current_character.monsters.find(params[:id])
     end
