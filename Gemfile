@@ -32,4 +32,5 @@ group :test do
   gem "autotest-growl", "0.2.9"
   gem "delorean",       "0.2.1"
   gem "chronic",        "0.3.0"
+  gem "spork"
 end

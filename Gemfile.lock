@@ -1,50 +1,74 @@
 --- 
 dependencies: 
-  httparty: 
+  spork: 
     group: 
-    - :default
-    version: = 0.6.1
-  system_timer: 
+    - :test
+    version: ">= 0"
+  ZenTest: 
     group: 
-    - :default
-    version: = 1.0
+    - :test
+    version: = 4.4.0
   rails: 
     group: 
     - :default
     version: = 2.3.8
     require: []
 
-  ZenTest: 
-    group: 
-    - :test
-    version: = 4.4.0
-  mysql: 
+  system_timer: 
     group: 
     - :default
-    version: = 2.8.1
+    version: = 1.0
+  httparty: 
+    group: 
+    - :default
+    version: = 0.6.1
+  haml: 
+    group: 
+    - :default
+    version: = 2.2.20
+  taf2-curb: 
+    group: 
+    - :default
+    version: = 0.2.8.0
   memcache-client: 
     group: 
     - :default
     version: = 1.7.6
     require: 
     - memcache
-  taf2-curb: 
+  mysql: 
     group: 
     - :default
-    version: = 0.2.8.0
-  haml: 
+    version: = 2.8.1
+  hashie: 
     group: 
     - :default
-    version: = 2.2.20
-  shoulda: 
-    group: 
-    - :test
-    version: = 2.11.3
+    version: = 0.4.0
   jrails: 
     group: 
     - :default
     version: = 0.6.0
-  hashie: 
+  shoulda: 
+    group: 
+    - :test
+    version: = 2.11.3
+  rspec: 
+    group: 
+    - :test
+    version: = 1.3.0
+  mogli: 
+    group: 
+    - :default
+    version: = 0.0.15
+  delayed_job: 
+    group: 
+    - :default
+    version: = 1.8.4
+  crack: 
+    group: 
+    - :default
+    version: = 0.1.8
+  ruby-hmac: 
     group: 
     - :default
     version: = 0.4.0
@@ -52,58 +76,38 @@ dependencies:
     group: 
     - :test
     version: = 0.2.9
-  ruby-hmac: 
-    group: 
-    - :default
-    version: = 0.4.0
-  crack: 
-    group: 
-    - :default
-    version: = 0.1.8
-  delayed_job: 
-    group: 
-    - :default
-    version: = 1.8.4
-  mogli: 
-    group: 
-    - :default
-    version: = 0.0.15
-  rspec: 
-    group: 
-    - :test
-    version: = 1.3.0
   rspec-rails: 
     group: 
     - :test
     version: = 1.3.2
-  erubis: 
-    group: 
-    - :default
-    version: = 2.6.6
-  will_paginate: 
-    group: 
-    - :default
-    version: = 2.3.14
-  paperclip: 
-    group: 
-    - :default
-    version: = 2.3.6
   factory_girl: 
     group: 
     - :test
     version: = 1.3.2
-  chronic: 
-    group: 
-    - :test
-    version: = 0.3.0
-  json_pure: 
+  paperclip: 
     group: 
     - :default
-    version: = 1.4.6
+    version: = 2.3.6
+  will_paginate: 
+    group: 
+    - :default
+    version: = 2.3.14
+  erubis: 
+    group: 
+    - :default
+    version: = 2.6.6
   delorean: 
     group: 
     - :test
     version: = 0.2.1
+  json_pure: 
+    group: 
+    - :default
+    version: = 1.4.6
+  chronic: 
+    group: 
+    - :test
+    version: = 0.3.0
   RedCloth: 
     group: 
     - :default
@@ -179,13 +183,15 @@ specs:
     version: 0.4.0
 - shoulda: 
     version: 2.11.3
+- spork: 
+    version: 0.8.4
 - system_timer: 
     version: "1.0"
 - taf2-curb: 
     version: 0.2.8.0
 - will_paginate: 
     version: 2.3.14
-hash: 25cf04be89a1498736cb483890fafb8046472d2e
+hash: 6c7c14945eba48ba953831bb2c039adfff641c39
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org

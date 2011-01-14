@@ -2,16 +2,22 @@
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','preinitializer'))
-require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
-require 'spec/autorun'
-require 'spec/rails'
+require 'spork'
 
+Spork.prefork do
+  require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
+  require 'spec/autorun'
+  require 'spec/rails'
+end
+
+Spork.each_run do
+  Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
+end
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
-Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
 
 Spec::Runner.configure do |config|
   config.include Delorean
