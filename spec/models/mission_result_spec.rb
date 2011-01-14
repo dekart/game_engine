@@ -51,7 +51,7 @@ describe MissionResult do
     end
   end
 
-  describe 'when checking if mission performace succeed' do
+  describe 'when checking if mission performance succeed' do
     it 'should roll dice with level chance and return its result' do
       Dice.should_receive(:chance).with(50, 100).and_return(true)
 
