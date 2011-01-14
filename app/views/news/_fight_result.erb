@@ -14,6 +14,7 @@
   <%= link_to_remote(button(:respond),
         :url    => respond_fight_path(news.fight),
         :update => :result,
+        :before => "$(this).css('visibility', 'hidden')",
         :html   => {
           :id     => dom_id(news.fight, :respond),
           :class  => "respond button"
