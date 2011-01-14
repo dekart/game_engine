@@ -14,6 +14,7 @@
           <%= link_to_remote(button(:reward),
                 :url    => reward_monster_path(monster),
                 :update => :result,
+                :before => "$(this).css('visibility', 'hidden')",
                 :html   => {:class => "reward button"}
               ) %>
         </div>
