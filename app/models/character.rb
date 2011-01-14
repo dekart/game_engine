@@ -3,6 +3,8 @@ class Character < ActiveRecord::Base
   extend RestorableAttribute
   extend HasPayouts
   include ActionView::Helpers::NumberHelper
+  
+  include Character::Relations
   include Character::Gifts
   include Character::Notifications
   include Character::Titles
@@ -30,24 +32,6 @@ class Character < ActiveRecord::Base
     :extend     => Character::Inventories
 
   has_many :items, :through => :inventories
-
-  has_many :relations,
-    :foreign_key  => "owner_id",
-    :order        => "type",
-    :extend       => Character::Relations
-  has_many :friend_relations,
-    :foreign_key  => "owner_id",
-    :include      => :character,
-    :dependent    => :destroy,
-    :extend       => Character::FriendRelations
-  has_many :reverse_friend_relations,
-    :foreign_key  => "character_id",
-    :class_name   => "FriendRelation",
-    :dependent    => :destroy
-  has_many :mercenary_relations,
-    :foreign_key  => "owner_id",
-    :dependent    => :delete_all,
-    :extend       => Character::MercenaryRelations
 
   has_many :properties,
     :order      => "property_type_id",
