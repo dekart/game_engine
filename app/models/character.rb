@@ -4,6 +4,7 @@ class Character < ActiveRecord::Base
   extend HasPayouts
   include ActionView::Helpers::NumberHelper
   
+  include Character::Levels
   include Character::Relations
   include Character::Inventories
   include Character::Properties
@@ -15,11 +16,6 @@ class Character < ActiveRecord::Base
   include Character::Newsfeed
   include Character::Monsters
 
-  LEVELS = [0]
-
-  1000.times do |i|
-    LEVELS[i + 1] = ((LEVELS[i].to_i * 1.02 + (i + 1) * 10).round / 10.0).round * 10
-  end
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
@@ -112,12 +108,6 @@ class Character < ActiveRecord::Base
       end
     end
 
-    def level_for_experience(value)
-      LEVELS.each_with_index do |experience, level|
-        return level if experience >= value
-      end
-    end
-
     def rating_position(character, field)
       count(:conditions => ["#{field} > ?", character.send(field)]) + 1
     end
@@ -201,18 +191,6 @@ class Character < ActiveRecord::Base
 
   def weakness_minimum
     Setting.p(:character_weakness_minimum, health).to_i
-  end
-
-  def experience_to_next_level
-    next_level_experience - experience
-  end
-
-  def next_level_experience
-    LEVELS[level]
-  end
-
-  def level_progress_percentage
-    (100 - experience_to_next_level.to_f / (next_level_experience - LEVELS[level - 1]) * 100).round
   end
 
   def formatted_basic_money
