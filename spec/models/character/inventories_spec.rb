@@ -147,6 +147,7 @@ describe Character do
     it 'should give items to destination character' do
       @character1.inventories.transfer!(@character2, @item, 2)
 
+      @character2.inventories.first.item.should == @item
       @character2.inventories.first.amount.should == 2
     end
 
