@@ -77,10 +77,14 @@ module RestorableAttribute
     end
 
     def time_to_restore
-      return 0 if value == limit
+      return 0 if full?
 
       time = restore_period - (Time.now - updated_at).to_i % restore_period.to_i
       time > 0 ? time : 0
+    end
+    
+    def full?
+      value == limit
     end
   end
 
@@ -108,6 +112,10 @@ module RestorableAttribute
 
     define_method("time_to_#{name}_restore") do
       send("#{name}_restorable").time_to_restore
+    end
+    
+    define_method("full_#{name}?") do
+      send("#{name}_restorable").full?
     end
   end
 end

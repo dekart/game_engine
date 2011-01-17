@@ -288,19 +288,6 @@ class Character < ActiveRecord::Base
     Setting.b(:hit_list_enabled) && !friendly_attack
   end
 
-  def full_energy?
-    ep == energy_points
-  end
-
-  def full_health?
-    hp == health_points
-  end
-
-  def full_stamina?
-    sp == stamina_points
-  end
-
-
   def allow_fight_with_invite?
     Setting.b(:fight_with_invite_allowed) and
       level <= Setting.i(:fight_with_invite_max_level)

@@ -7,7 +7,7 @@ class Character
     end
     
     def refill_energy!(free = false)
-      return if full_energy? or (!free and vip_money < Setting.i(:premium_energy_price))
+      return if full_ep? or (!free and vip_money < Setting.i(:premium_energy_price))
 
       self.ep = energy_points
 
@@ -15,7 +15,7 @@ class Character
     end
 
     def refill_health!(free = false)
-      return if full_health? or (!free and vip_money < Setting.i(:premium_health_price))
+      return if full_hp? or (!free and vip_money < Setting.i(:premium_health_price))
 
       self.hp = health_points
 
@@ -23,7 +23,7 @@ class Character
     end
 
     def refill_stamina!(free = false)
-      return if full_stamina? or (!free and vip_money < Setting.i(:premium_stamina_price))
+      return if full_sp? or (!free and vip_money < Setting.i(:premium_stamina_price))
 
       self.sp = stamina_points
 

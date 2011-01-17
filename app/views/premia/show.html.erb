@@ -75,7 +75,7 @@
       <%= attribute_requirement(:vip_money, Setting.i(:premium_energy_price)) %>
     </td>
     <td class="controls">
-      <% if current_character.full_energy? %>
+      <% if current_character.full_ep? %>
         <%= t(".refill_energy.full") %>
       <% else %>
         <%= link_to_remote(button(t(".refill_energy.button")),
@@ -94,7 +94,7 @@
       <%= attribute_requirement(:vip_money, Setting.i(:premium_stamina_price)) %>
     </td>
     <td class="controls">
-      <% if current_character.full_stamina? %>
+      <% if current_character.full_sp? %>
         <%= t(".refill_stamina.full") %>
       <% else %>
         <%= link_to_remote(button(t(".refill_stamina.button")),
@@ -113,7 +113,7 @@
       <%= attribute_requirement(:vip_money, Setting.i(:premium_health_price)) %>
     </td>
     <td class="controls">
-      <% if current_character.full_health? %>
+      <% if current_character.full_hp? %>
         <%= t(".refill_health.full") %>
       <% else %>
         <%= link_to_remote(button(t(".refill_health.button")),
