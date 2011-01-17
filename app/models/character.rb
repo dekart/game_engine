@@ -17,6 +17,7 @@ class Character < ActiveRecord::Base
   include Character::Hospital
   include Character::Monsters
   include Character::Premium
+  include Character::SecretKeys
 
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
@@ -94,22 +95,6 @@ class Character < ActiveRecord::Base
   delegate(*(CharacterType::BONUSES + [:to => :character_type]))
 
   class << self
-    def find_by_invitation_key(key)
-      if character = find_by_id(key.split("-").first) and key.downcase == character.invitation_key
-        character
-      else
-        nil
-      end
-    end
-
-    def find_by_key(key)
-      if character = find_by_id(key.split("-").first) and key.downcase == character.key
-        character
-      else
-        nil
-      end
-    end
-
     def rating_position(character, field)
       count(:conditions => ["#{field} > ?", character.send(field)]) + 1
     end
@@ -291,22 +276,6 @@ class Character < ActiveRecord::Base
   def allow_fight_with_invite?
     Setting.b(:fight_with_invite_allowed) and
       level <= Setting.i(:fight_with_invite_max_level)
-  end
-
-  def secret(length = 6)
-    [0, length]
-  end
-
-  def invitation_key
-    digest = Digest::MD5.hexdigest("%s-%s" % [created_at, id])
-
-    "%s-%s" % [id, digest[0, 10]]
-  end
-
-  def key
-    digest = Digest::MD5.hexdigest("%s-%s" % [id, created_at])
-
-    "%s-%s" % [id, digest[0, 10]]
   end
 
   def charge(basic_amount, vip_amount, reference = nil)
