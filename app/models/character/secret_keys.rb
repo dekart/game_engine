@@ -22,10 +22,6 @@ class Character
       end
     end
     
-    def secret(length = 6)
-      [0, length]
-    end
-
     def invitation_key
       digest = Digest::MD5.hexdigest("%s-%s" % [created_at, id])
 
