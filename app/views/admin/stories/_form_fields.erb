@@ -1,0 +1,13 @@
+<%= form.text_field :alias, :required => true %>
+
+<% form.field_set t('.story') do %>
+  <%= form.text_field :title, :required => true, :size => 80 %>
+  <%= form.text_area :description, :cols => 80, :rows => 5 %>
+  <%= form.text_field :action_link %>
+<% end %>
+
+<%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>
+
+<% form.field_set Story.human_attribute_name('payouts') do %>
+  <%= form.fields "admin/payouts/collection" %>
+<% end %>

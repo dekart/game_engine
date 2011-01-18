@@ -637,16 +637,16 @@ ActiveRecord::Schema.define(:version => 20110122091203) do
   end
 
   create_table "stories", :force => true do |t|
-    t.string   "alias",              :limit => 70,  :default => "", :null => false
-    t.string   "title",              :limit => 200, :default => "", :null => false
-    t.string   "description",        :limit => 200, :default => "", :null => false
-    t.string   "action_link",        :limit => 50,  :default => "", :null => false
+    t.string   "alias",              :limit => 70,                  :null => false
+    t.string   "title",              :limit => 200,                 :null => false
+    t.string   "description",        :limit => 200,                 :null => false
+    t.string   "action_link",        :limit => 50,                  :null => false
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.text     "payouts"
-    t.string   "state",              :limit => 50,  :default => "", :null => false
+    t.string   "state",              :limit => 50,                  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

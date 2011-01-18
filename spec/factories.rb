@@ -216,3 +216,9 @@ Factory.define :wall_post do |t|
 
   t.text "This is a Fake Text"
 end
+
+Factory.define :story do |t|
+  t.alias 'fake_story'
+  
+  t.title 'This is the fake story'
+end
