@@ -1,6 +1,22 @@
 require "spec_helper"
 
 describe User do
+  describe 'when creating' do
+    before do
+      @user = Factory.build(:user)
+    end
+    
+    it 'should schedule user data update' do
+      lambda{
+        @user.save!
+      }.should change(Delayed::Job, :count).from(0).to(1)
+      
+      Delayed::Job.first.payload_object.should be_kind_of(Jobs::UserDataUpdate)
+      Delayed::Job.first.payload_object.user_ids.should == [@user.id]
+    end
+  end
+  
+  
   describe "when checking if user should visit landing page" do
     before :each do
       @user = Factory(:user)
@@ -140,6 +156,73 @@ describe User do
       @user.save!
       
       @user.reload.last_visit_ip.should == IPAddr.new('250.250.250.250')
+    end
+  end
+  
+  describe 'when updating social data' do
+    before do
+      @user = Factory(:user, :access_token => 'abc123')
+      
+      @mogli_user = mock('Mogli::User',
+        :client= => true,
+        :fetch => true,
+        
+        :first_name => 'Fake Name',
+        :last_name => 'Fake Surname',
+        :timezone => 5,
+        :locale => 'ab_CD',
+        :gender => 'male'
+      )
+      
+      Mogli::User.stub!(:new).and_return(@mogli_user)
+    end
+    
+    it 'should return false if user doesn\'t have access token' do
+      @user.access_token = ''
+      
+      @user.update_social_data!.should be_false
+    end
+    
+    it 'should fetch user data using Facebook API' do
+      @mogli_user.should_receive(:fetch).and_return(true)
+      
+      @user.update_social_data!
+    end
+    
+    it "should update first name to received value" do
+      lambda{
+        @user.update_social_data!
+      }.should change(@user, :first_name).from('').to('Fake Name')
+    end
+
+    it "should update last name to received value" do
+      lambda{
+        @user.update_social_data!
+      }.should change(@user, :last_name).from('').to('Fake Surname')
+    end
+    
+    it "should update time zone to received value" do
+      lambda{
+        @user.update_social_data!
+      }.should change(@user, :timezone).from(nil).to(5)
+    end
+
+    it "should update locale to received value" do
+      lambda{
+        @user.update_social_data!
+      }.should change(@user, :locale).from('en_US').to('ab_CD')
+    end
+
+    it 'should update gender to received value' do
+      lambda{
+        @user.update_social_data!
+      }.should change(@user, :gender).from(nil).to(1)
+    end
+    
+    it 'should save user' do
+      @user.update_social_data!
+      
+      @user.should_not be_changed
     end
   end
 end

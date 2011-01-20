@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook, :only => :subscribe
+  
   landing_page :invite, :only => :invite
 
   def toggle_block
@@ -48,6 +50,18 @@ class UsersController < ApplicationController
       redirect_from_iframe invite_users_url(:canvas => true)
     elsif params[:from_selector]
       redirect_from_iframe root_url(:canvas => true)
+    end
+  end
+  
+  def subscribe
+    if request.get?
+      if params['hub.verify_token'] == Digest::MD5.hexdigest(Facebooker2.secret)
+        render :text => params['hub.challenge']
+      else
+        render :nothing
+      end
+    else
+
     end
   end
 end

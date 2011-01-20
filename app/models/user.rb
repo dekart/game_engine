@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  GENDERS = {:male => 1, :female => 2}
+  
   has_one     :character, :dependent => :destroy
   belongs_to  :referrer, :class_name => "User"
   has_many    :invitations,
@@ -14,6 +16,8 @@ class User < ActiveRecord::Base
   }
 
   attr_accessible :show_next_steps
+  
+  after_create :schedule_social_data_update
 
   def show_tutorial?
     Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
@@ -56,5 +60,28 @@ class User < ActiveRecord::Base
   
   def signup_ip
     IPAddr.new(self[:signup_ip], Socket::AF_INET) if self[:signup_ip]
+  end
+  
+  def update_social_data!
+    return false if access_token.blank?
+    
+    client = Mogli::Client.new(access_token)
+    user = Mogli::User.new(:id => facebook_id)
+    user.client = client
+    user.fetch
+    
+    %w{first_name last_name timezone locale}.each do |attribute|
+      self.send("#{attribute}=", user.send(attribute))
+    end
+    
+    self.gender = GENDERS[user.gender.to_sym]
+    
+    save!
+  end
+  
+  protected
+  
+  def schedule_social_data_update
+    Delayed::Job.enqueue Jobs::UserDataUpdate.new([id])
   end
 end

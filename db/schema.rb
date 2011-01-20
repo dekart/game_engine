@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110113100030) do
+ActiveRecord::Schema.define(:version => 20110120114918) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -636,6 +636,21 @@ ActiveRecord::Schema.define(:version => 20110113100030) do
     t.datetime "updated_at"
   end
 
+  create_table "stories", :force => true do |t|
+    t.string   "alias",              :limit => 70,  :default => "", :null => false
+    t.string   "title",              :limit => 200, :default => "", :null => false
+    t.string   "description",        :limit => 200, :default => "", :null => false
+    t.string   "action_link",        :limit => 50,  :default => "", :null => false
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_content_type", :limit => 100, :default => "", :null => false
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.text     "payouts"
+    t.string   "state",              :limit => 50,  :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tips", :force => true do |t|
     t.text     "text"
     t.datetime "created_at"
@@ -665,16 +680,21 @@ ActiveRecord::Schema.define(:version => 20110113100030) do
     t.boolean  "show_fan_specials",                 :default => true
     t.boolean  "show_bookmark",                     :default => true
     t.boolean  "show_tips",                         :default => true
-    t.string   "reference",          :limit => 100, :default => "",   :null => false
+    t.string   "reference",          :limit => 100, :default => "",      :null => false
     t.boolean  "show_tutorial",                     :default => true
     t.datetime "landing_visited_at"
-    t.string   "last_landing",       :limit => 100, :default => "",   :null => false
+    t.string   "last_landing",       :limit => 100, :default => "",      :null => false
     t.integer  "referrer_id"
-    t.string   "access_token",                      :default => "",   :null => false
+    t.string   "access_token",                      :default => "",      :null => false
     t.integer  "wall_privacy_level",                :default => 2
     t.integer  "signup_ip",          :limit => 8
     t.integer  "last_visit_ip",      :limit => 8
     t.datetime "last_visit_at"
+    t.string   "first_name",         :limit => 50,  :default => "",      :null => false
+    t.string   "last_name",          :limit => 50,  :default => "",      :null => false
+    t.integer  "gender"
+    t.integer  "timezone"
+    t.string   "locale",             :limit => 5,   :default => "en_US", :null => false
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

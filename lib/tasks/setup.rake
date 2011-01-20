@@ -25,5 +25,23 @@ namespace :app do
     task :reimport_settings => :environment do
       require Rails.root.join("db", "seeds", "settings")
     end
+    
+    desc "Subscribe to real-time updates"
+    task :subscriptions => :environment do
+      puts 'Setting up real-time update subscriptions...'
+      
+      authenticator = Mogli::Authenticator.new(Facebooker2.app_id, Facebooker2.secret, nil)
+
+      client = Mogli::AppClient.new(authenticator.get_access_token_for_application)
+      client.application_id = Facebooker2.app_id
+      
+      client.subscribe_to_model(Mogli::User, 
+        :fields => [:first_name, :last_name, :email, :gender, :timezone, :third_party_id, :locale],
+        :callback_url => Facebooker2.callback_url + '/users/subscribe',
+        :verify_token => Digest::MD5.hexdigest(Facebooker2.secret)
+      )
+      
+      puts 'Done!'
+    end
   end
 end
