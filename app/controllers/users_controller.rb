@@ -60,8 +60,14 @@ class UsersController < ApplicationController
       else
         render :nothing
       end
-    else
-
+    elsif request.post?
+      facebook_ids = params[:entry].collect{|e| e['id'] }
+      
+      ids = User.all(:select => 'id', :conditions => {:facebook_id => facebook_ids}).collect{|u| u.id }
+      
+      Delayed::Job.enqueue Jobs::UserDataUpdate.new(ids)
+      
+      render :text => 'OK'
     end
   end
 end
