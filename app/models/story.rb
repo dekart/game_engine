@@ -1,6 +1,13 @@
 class Story < ActiveRecord::Base
   extend HasPayouts
   
+  named_scope :by_alias, Proc.new{|value|
+    {
+      :conditions => {:state => 'visible', :alias => value.to_s},
+      :order => "RAND()"
+    }
+  }
+  
   state_machine :initial => :hidden do
     state :hidden
     state :visible
@@ -25,5 +32,19 @@ class Story < ActiveRecord::Base
     
   has_payouts :visit
 
-  validates_presence_of :alias, :title
+  validates_presence_of :alias, :title, :description, :action_link
+  
+  def interpolate(attribute, options = {})
+    raise ArgumentError.new("#{attribute} is not available for interpolation") unless [:title, :description, :action_link].include?(attribute.to_sym)
+    
+    if attribute_value = send(attribute) and !attribute_value.blank?
+      options.each do |key, value|
+        attribute_value.gsub!(/%\{#{key}\}/, value.to_s)
+      end
+      
+      attribute_value
+    else
+      nil
+    end
+  end
 end

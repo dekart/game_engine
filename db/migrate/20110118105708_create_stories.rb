@@ -1,11 +1,11 @@
 class CreateStories < ActiveRecord::Migration
   def self.up
     create_table :stories do |t|
-      t.string    :alias, :limit => 70, :null => false
+      t.string    :alias, :limit => 70, :null => false, :default => ''
       
-      t.string    :title,       :limit => 200,  :null => false
-      t.string    :description, :limit => 200,  :null => false
-      t.string    :action_link, :limit => 50,   :null => false
+      t.string    :title,       :limit => 200,  :null => false, :default => ''
+      t.string    :description, :limit => 200,  :null => false, :default => ''
+      t.string    :action_link, :limit => 50,   :null => false, :default => ''
       
       t.string    :image_file_name,                   :default => "", :null => false
       t.string    :image_content_type, :limit => 100, :default => "", :null => false
@@ -14,7 +14,7 @@ class CreateStories < ActiveRecord::Migration
 
       t.text :payouts
       
-      t.string :state, :limit => 50, :null => false
+      t.string :state, :limit => 50, :null => false, :default => ''
       
       t.timestamps
     end

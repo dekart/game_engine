@@ -16,7 +16,21 @@ describe StreamHelper do
       helper.stub!(:current_character).and_return(@character)
     end
 
-    it "should not fail" do
+    it "should not fail with default story" do
+      lambda{
+        helper.character_level_up_stream_dialog
+      }.should_not raise_exception
+    end
+    
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:level_up).and_return([@story])
+
       lambda{
         helper.character_level_up_stream_dialog
       }.should_not raise_exception
@@ -157,6 +171,111 @@ describe StreamHelper do
     it "should not fail" do
       lambda{
         helper.promotion_stream_dialog(@promotion)
+      }.should_not raise_exception
+    end
+  end
+  
+  describe 'when generating stream dialog for monster fight invitation' do
+    before do
+      @monster = mock_model(Monster,
+        :name => 'Fake Monster',
+        :image? => true,
+        :image  => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      helper.stub!(:encryptor).and_return(
+        mock('encryptor', :encrypt => 'asd123')
+      )
+    end
+    
+    it 'should not fail' do
+      lambda{
+        helper.monster_invite_stream_dialog(@monster)
+      }.should_not raise_exception
+    end
+  end
+  
+  describe 'when generating stream dialog for monster defeat' do
+    before do
+      @monster = mock_model(Monster,
+        :name => 'Fake Monster',
+        :image? => true,
+        :image  => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      helper.stub!(:encryptor).and_return(
+        mock('encryptor', :encrypt => 'asd123')
+      )
+    end
+    
+    it 'should not fail' do
+      lambda{
+        helper.monster_defeated_stream_dialog(@monster)
+      }.should_not raise_exception
+    end
+  end
+
+  describe 'when generating stream dialog for new hit listing' do
+    before do
+      @listing = mock_model(HitListing,
+        :reward => 1000,
+        :victim => mock_model(Character, :level => 123)
+      )
+    end
+    
+    it 'should not fail' do
+      lambda{
+        helper.new_hit_listing_stream_dialog(@listing)
+      }.should_not raise_exception
+    end
+  end
+  
+  describe 'when generating stream dialog for completed hit listing' do
+    before do
+      @listing = mock_model(HitListing,
+        :reward => 1000,
+        :victim => mock_model(Character, :level => 123)
+      )
+    end
+    
+    it 'should not fail' do
+      lambda{
+        helper.completed_hit_listing_stream_dialog(@listing)
+      }.should_not raise_exception
+    end
+  end
+
+  describe 'when generating stream dialog for completed collection' do
+    before do
+      @collection = mock_model(ItemCollection,
+        :name => 'Fake Collection'
+      )
+    end
+    
+    it 'should not fail' do
+      lambda{
+        helper.collection_completed_stream_dialog(@collection)
+      }.should_not raise_exception
+    end
+  end
+
+  describe 'when generating stream dialog for missing collection items' do
+    before do
+      @collection = mock_model(ItemCollection,
+        :name => 'Fake Collection',
+        :missing_items => [mock_model(Item, :name => 'Fake Item')]
+      )
+      
+      helper.stub!(:current_character).and_return(mock_model(Character))
+
+      helper.stub!(:encryptor).and_return(
+        mock('encryptor', :encrypt => 'asd123')
+      )
+    end
+    
+    it 'should not fail' do
+      lambda{
+        helper.collection_missing_items_stream_dialog(@collection)
       }.should_not raise_exception
     end
   end

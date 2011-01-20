@@ -2,8 +2,8 @@
 
 <% form.field_set t('.story') do %>
   <%= form.text_field :title, :required => true, :size => 80 %>
-  <%= form.text_area :description, :cols => 80, :rows => 5 %>
-  <%= form.text_field :action_link %>
+  <%= form.text_area :description, :required => true, :cols => 80, :rows => 5 %>
+  <%= form.text_field :action_link, :required => true %>
 <% end %>
 
 <%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>

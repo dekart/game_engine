@@ -221,4 +221,6 @@ Factory.define :story do |t|
   t.alias 'fake_story'
   
   t.title 'This is the fake story'
+  t.description 'This is description'
+  t.action_link 'Play our app!'
 end
