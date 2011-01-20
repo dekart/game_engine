@@ -1,5 +1,5 @@
 class BankWithdraw < BankOperation
-  before_save :move_money
+  before_create :move_money
 
   protected
 
