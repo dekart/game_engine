@@ -20,7 +20,6 @@ gem "nokogiri",         "1.4.3.1"
 gem "crack",      "0.1.8"
 gem "hashie",     "0.4.0"
 gem "httparty",   "0.6.1"
-gem "mogli",      "0.0.15"
 gem "ruby-hmac",  "0.4.0"
 
 group :test do
