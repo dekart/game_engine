@@ -82,7 +82,21 @@ describe StreamHelper do
       )
     end
 
-    it "should not fail" do
+    it "should not fail with default options" do
+      lambda{
+        helper.mission_complete_stream_dialog(@mission)
+      }.should_not raise_exception
+    end
+    
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:mission_complete).and_return([@story])
+
       lambda{
         helper.mission_complete_stream_dialog(@mission)
       }.should_not raise_exception
@@ -101,9 +115,91 @@ describe StreamHelper do
       )
     end
 
-    it "should not fail" do
+    it "should not fail with default story" do
       lambda{
         helper.boss_defeated_stream_dialog(@boss)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:boss_defeated).and_return([@story])
+
+      lambda{
+        helper.boss_defeated_stream_dialog(@boss)
+      }.should_not raise_exception
+    end
+  end
+
+  describe 'when generating stream dialog for monster fight invitation' do
+    before do
+      @monster = mock_model(Monster,
+        :name => 'Fake Monster',
+        :image? => true,
+        :image  => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      helper.stub!(:encryptor).and_return(
+        mock('encryptor', :encrypt => 'asd123')
+      )
+    end
+    
+    it 'should not fail with default story' do
+      lambda{
+        helper.monster_invite_stream_dialog(@monster)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:monster_invite).and_return([@story])
+
+      lambda{
+        helper.monster_invite_stream_dialog(@monster)
+      }.should_not raise_exception
+    end
+  end
+  
+  describe 'when generating stream dialog for monster defeat' do
+    before do
+      @monster = mock_model(Monster,
+        :name => 'Fake Monster',
+        :image? => true,
+        :image  => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      helper.stub!(:encryptor).and_return(
+        mock('encryptor', :encrypt => 'asd123')
+      )
+    end
+    
+    it 'should not fail with default story' do
+      lambda{
+        helper.monster_defeated_stream_dialog(@monster)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:monster_defeated).and_return([@story])
+
+      lambda{
+        helper.monster_defeated_stream_dialog(@monster)
       }.should_not raise_exception
     end
   end
@@ -151,7 +247,21 @@ describe StreamHelper do
       )
     end
 
-    it "should not fail" do
+    it "should not fail with default story" do
+      lambda{
+        helper.property_stream_dialog(@property)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:property).and_return([@story])
+
       lambda{
         helper.property_stream_dialog(@property)
       }.should_not raise_exception
@@ -165,53 +275,27 @@ describe StreamHelper do
       )
     end
 
-    it "should not fail" do
+    it "should not fail with default story" do
+      lambda{
+        helper.promotion_stream_dialog(@promotion)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:promotion).and_return([@story])
+
       lambda{
         helper.promotion_stream_dialog(@promotion)
       }.should_not raise_exception
     end
   end
   
-  describe 'when generating stream dialog for monster fight invitation' do
-    before do
-      @monster = mock_model(Monster,
-        :name => 'Fake Monster',
-        :image? => true,
-        :image  => mock("image", :url => "/path/to/image.jpg")
-      )
-      
-      helper.stub!(:encryptor).and_return(
-        mock('encryptor', :encrypt => 'asd123')
-      )
-    end
-    
-    it 'should not fail' do
-      lambda{
-        helper.monster_invite_stream_dialog(@monster)
-      }.should_not raise_exception
-    end
-  end
-  
-  describe 'when generating stream dialog for monster defeat' do
-    before do
-      @monster = mock_model(Monster,
-        :name => 'Fake Monster',
-        :image? => true,
-        :image  => mock("image", :url => "/path/to/image.jpg")
-      )
-      
-      helper.stub!(:encryptor).and_return(
-        mock('encryptor', :encrypt => 'asd123')
-      )
-    end
-    
-    it 'should not fail' do
-      lambda{
-        helper.monster_defeated_stream_dialog(@monster)
-      }.should_not raise_exception
-    end
-  end
-
   describe 'when generating stream dialog for new hit listing' do
     before do
       @listing = mock_model(HitListing,

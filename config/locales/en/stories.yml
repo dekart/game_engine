@@ -12,21 +12,31 @@ en:
     level_up:
       title: "I just advanced to Level {{level}} in {{app}}!"
       description: ""
+      action_link: ""
     mission:
       title: "I just completed the \"{{mission}}\" mission in {{app}}!"
+      description: ""
+      action_link: ""
     boss:
       title: "I just defeated the {{boss}} in {{app}}!"
+      description: ""
+      action_link: ""
     monster_invite:
       title: "I need your assistance to defeat %{monster} in {{app}}!"
       description: "Join our fight against %{monster} in {{app}}! Together we can slay this monster and get reward!"
       action_link: "Engage! »"
     monster_defeated:
       title: "I just defeated %{monster} in {{app}}!"
+      description: ""
+      action_link: ""
     property:
       title: "I just bought {{property}} in {{app}}!"
+      description: ""
+      action_link: ""
     inventory:
       title: "I just bought a \"{{item}}\" in {{app}}!"
       description: ""
+      action_link: ""
     collection:
       completed:
         title: "I just finished the '{{collection}}' Collection in {{app}}!"
@@ -37,7 +47,7 @@ en:
     promotion:
       title: "I got a secret bonus link for {{app}}!"
       description: "Click the link to get the game bonus. Hurry up, this special link expires at {{expires_at}}!"
-      action_link: "Get Bonus"
+      action_link: "Get Bonus »"
     hitlist:
       new_listing:
         title: "Hitlist Offer"
