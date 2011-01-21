@@ -19,17 +19,17 @@ module StreamHelper
 
 
   def character_level_up_stream_dialog(options = {})
+    interpolation_options = {
+      :level  => current_character.level, 
+      :app    => t('app_name')
+    }
+    
     if story = Story.by_alias(:level_up).first
-      interpolation_options = {
-        :level  => current_character.level, 
-        :app    => t('app_name')
-      }
-      
       dialog_options = {
         :attachment => {
-          :name => story.interpolate(:title, interpolation_options),
-          :description => story.interpolate(:description, interpolation_options),
-          :href => default_stream_url(:stream_level_up_name),
+          :name         => story.interpolate(:title, interpolation_options),
+          :description  => story.interpolate(:description, interpolation_options),
+          
           :media => stream_image(
             :image  => story.image? ? story.image.url : :stream_level_up,
             :url    => :stream_level_up_image
@@ -43,11 +43,9 @@ module StreamHelper
     else
       dialog_options = {
         :attachment => {
-          :name => t("stories.level_up.title",
-            :level  => current_character.level,
-            :app    => t("app_name")
-          ),
-          :href => default_stream_url(:stream_level_up_name),
+          :name         => t("stories.level_up.title", interpolation_options),
+          :description  => t("stories.level_up.description", interpolation_options),
+          
           :media => stream_image(
             :image  => :stream_level_up,
             :url    => :stream_level_up_image
@@ -56,38 +54,72 @@ module StreamHelper
         :action_links => stream_action_link(:reference => :stream_level_up_link)
       }
     end
-
-    dialog_options.reverse_merge!(options)
+    
+    dialog_options.deep_merge!(
+      :attachment => {
+        :href => default_stream_url(:stream_level_up_name)
+      }
+    )
+    dialog_options.deep_merge!(options)
 
     stream_dialog(dialog_options)
   end
 
   def inventory_stream_dialog(inventory)
-    attachment = {
-      :name => t("stories.inventory.title",
-        :item => inventory.name,
-        :app  => t("app_name")
-      ),
-      :href => item_group_items_url(inventory.item_group,
-        :canvas => true,
-        :reference_code => reference_code(:stream_item_name)
-      )
-    }
-
     image_url = item_group_items_url(inventory.item_group,
       :canvas => true,
       :reference_code => reference_code(:stream_item_image)
     )
+    
+    interpolation_options = {
+      :item => inventory.name, 
+      :app  => t('app_name')
+    }
 
-    attachment[:media] = stream_image(
-      :image  => inventory.image? ? inventory.image.url(:stream) : :stream_item,
-      :url    => image_url
+    if story = Story.by_alias(:inventory).first      
+      image = inventory.image.url(:stream) if inventory.image?
+      image ||= story.image.url if story.image?
+      
+      dialog_options = {
+        :attachment => {
+          :name         => story.interpolate(:title, interpolation_options),
+          :description  => story.interpolate(:description, interpolation_options),
+          
+          :media => stream_image(
+            :image  => image || :stream_item,
+            :url    => image_url
+          )
+        },
+        :action_links => stream_action_link(
+          :text => story.interpolate(:action_link, interpolation_options),
+          :reference => :stream_level_up_link
+        )
+      }
+    else
+      dialog_options = {
+        :attachment => {
+          :name         => t("stories.inventory.title", interpolation_options),
+          :description  => t("stories.inventory.description", interpolation_options),
+          
+          :media => stream_image(
+            :image  => inventory.image? ? inventory.image.url(:stream) : :stream_item,
+            :url    => image_url
+          )
+        },
+        :action_links => stream_action_link(:reference => :stream_item_link)
+      }
+    end
+    
+    dialog_options.deep_merge!(
+      :attachment => {
+        :href => item_group_items_url(inventory.item_group,
+          :reference_code => reference_code(:stream_item_name),
+          :canvas => true
+        )
+      }
     )
-
-    stream_dialog(
-      :attachment   => attachment,
-      :action_links => stream_action_link(:reference => :stream_item_link)
-    )
+    
+    stream_dialog(dialog_options)
   end
 
   def mission_complete_stream_dialog(mission)

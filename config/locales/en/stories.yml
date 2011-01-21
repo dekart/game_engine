@@ -11,6 +11,7 @@ en:
       action_link: "Help Them"
     level_up:
       title: "I just advanced to Level {{level}} in {{app}}!"
+      description: ""
     mission:
       title: "I just completed the \"{{mission}}\" mission in {{app}}!"
     boss:
@@ -25,6 +26,7 @@ en:
       title: "I just bought {{property}} in {{app}}!"
     inventory:
       title: "I just bought a \"{{item}}\" in {{app}}!"
+      description: ""
     collection:
       completed:
         title: "I just finished the '{{collection}}' Collection in {{app}}!"

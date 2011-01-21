@@ -49,7 +49,21 @@ describe StreamHelper do
       )
     end
 
-    it "should not fail" do
+    it "should not fail with default story" do
+      lambda{
+        helper.inventory_stream_dialog(@inventory)
+      }.should_not raise_exception
+    end
+    
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:inventory).and_return([@story])
+
       lambda{
         helper.inventory_stream_dialog(@inventory)
       }.should_not raise_exception
