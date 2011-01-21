@@ -2,7 +2,7 @@ class Character
   module Hospital
     def hospital_price
       Setting.i(:hospital_price) +
-        Setting.i(:hospital_price_per_point_per_level) * level * (health_points - hp)
+        (Setting.f(:hospital_price_per_point_per_level) * level * (health_points - hp)).round
     end
 
     def hospital_delay
