@@ -37,23 +37,6 @@ describe StreamHelper do
     end
   end
 
-  describe "when generating stream dialog for fight" do
-    before :each do
-      @victim = mock_model(Character,
-        :level => 5
-      )
-      @fight  = mock_model(Fight, 
-        :victim => @victim
-      )
-    end
-
-    it "should not fail" do
-      lambda{
-        helper.fight_stream_dialog(@fight)
-      }.should_not raise_exception
-    end
-  end
-
   describe "when generating stream dialog for inventory item" do
     before :each do
       @item_group = mock_model(ItemGroup)

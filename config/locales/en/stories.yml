@@ -2,8 +2,6 @@ en:
   stories:
     default:
       action_link: "Play {{app}} »"
-    fight:
-      title: "I WON a fight against {{level}} level opponent in {{app}}!"
     help_request:
       fight:
         title: "I'm offering a bounty for any friend who fights my {{level}} level enemy in {{app}}!"

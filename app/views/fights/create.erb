@@ -2,10 +2,6 @@
   <% if !@fight.new_record? %>
     <% if @fight.winner == current_character %>
       <% builder.buttons do %>
-        <%= link_to_function(button(:publish), fight_stream_dialog(@fight),
-              :class => "publish button"
-            ) %>
-
         <%= help_request_link(button(:request_help), @fight,
               :class => "request_help button"
             ) unless @fight.cause.is_a?(HelpRequest) %>
