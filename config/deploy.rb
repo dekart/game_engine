@@ -56,7 +56,7 @@ namespace :deploy do
 
     desc "Generate Facebooker config file"
     task :facebooker do
-      config = YAML.dump(rails_env => facebooker.stringify_keys)
+      config = YAML.dump(rails_env => facebooker_config.stringify_keys)
 
       put(config, "#{release_path}/config/facebooker.yml")
     end
