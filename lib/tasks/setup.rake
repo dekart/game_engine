@@ -1,6 +1,6 @@
 namespace :app do
   desc 'Setup application'
-  task :setup => [:environment, 'setup:assets', 'app:setup:stylesheets', 'app:setup:settings', 'app:setup:subscriptions']
+  task :setup => [:environment, 'setup:assets', 'setup:stylesheets', 'setup:settings', 'setup:subscriptions']
   
   namespace :setup do
     desc "Setup application stylesheets"
