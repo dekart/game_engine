@@ -140,7 +140,7 @@ namespace :deploy do
 
     desc "Setup application"
     task :setup, :roles => :app do
-      run "cd #{release_path}; rake app:setup:import_assets --trace"
+      run "cd #{release_path}; rake app:setup --trace"
     end
   end
   
