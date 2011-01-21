@@ -62,23 +62,6 @@ module StreamHelper
     stream_dialog(dialog_options)
   end
 
-  def fight_stream_dialog(fight)
-    stream_dialog(
-      :attachment => {
-        :name => t("stories.fight.title",
-          :level  => fight.victim.level,
-          :app    => t("app_name")
-        ),
-        :href => default_stream_url(:stream_fight_name),
-        :media => stream_image(
-          :image  => :stream_fight,
-          :url    => :stream_fight_image
-        )
-      },
-      :action_links => stream_action_link(:reference => :stream_fight_link)
-    )
-  end
-
   def inventory_stream_dialog(inventory)
     attachment = {
       :name => t("stories.inventory.title",
