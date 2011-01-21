@@ -31,9 +31,38 @@ namespace :deploy do
     puts "Stop task not implemented"
   end
 
-  namespace :jobs do
+  namespace :configure do
+    desc "Updates apache virtual host config"
+    task :apache do
+      template = ERB.new(
+        File.read(File.expand_path("../deploy/templates/apache.conf.erb", __FILE__))
+      )
+
+      config = template.result(binding)
+
+      put(config, "#{shared_path}/apache_vhost.conf")
+    end
+
+    desc "Updates nginx virtual host config"
+    task :nginx do
+      template = ERB.new(
+        File.read(File.expand_path("../deploy/templates/nginx.conf.erb", __FILE__))
+      )
+
+      config = template.result(binding)
+
+      put(config, "#{shared_path}/nginx.conf")
+    end
+
+    desc "Generate Facebooker config file"
+    task :facebooker do
+      config = YAML.dump(rails_env => facebooker.stringify_keys)
+
+      put(config, "#{release_path}/config/facebooker.yml")
+    end
+
     desc "Install cron jobs"
-    task :install_cron, :roles => :app do
+    task :cron, :roles => :app do
       template = ERB.new(
         File.read(File.expand_path("../deploy/templates/crontab.erb", __FILE__))
       )
@@ -44,33 +73,6 @@ namespace :deploy do
 
       run "crontab #{shared_path}/crontab.conf"
     end
-  end
-
-  desc "Bootstrap application data"
-  task :bootstrap, :roles => :app do
-    run "cd #{current_path}; rake db:seed --trace"
-  end
-
-  desc "Updates apache virtual host config"
-  task :update_apache_config do
-    template = ERB.new(
-      File.read(File.expand_path("../deploy/templates/apache.conf.erb", __FILE__))
-    )
-
-    config = template.result(binding)
-
-    put(config, "#{shared_path}/apache_vhost.conf")
-  end
-
-  desc "Updates nginx virtual host config"
-  task :update_nginx_config do
-    template = ERB.new(
-      File.read(File.expand_path("../deploy/templates/nginx.conf.erb", __FILE__))
-    )
-
-    config = template.result(binding)
-
-    put(config, "#{shared_path}/nginx.conf")
   end
 
   namespace :web do
@@ -129,72 +131,59 @@ namespace :deploy do
       run "cd #{release_path}; bundle install --without=test"
     end
   end
+  
+  namespace :app do
+    desc "Bootstrap application data"
+    task :bootstrap, :roles => :app do
+      run "cd #{current_path}; rake db:seed --trace"
+    end
 
-  desc "Import assets"
-  task :import_assets, :roles => :app do
-    run "cd #{release_path}; rake app:setup:import_assets --trace"
+    desc "Setup application"
+    task :setup, :roles => :app do
+      run "cd #{release_path}; rake app:setup:import_assets --trace"
+    end
   end
+  
+  namespace :maintenance do
+    desc "Configure warning message about scheduled downtime"
+    task :schedule, :roles => :app do
+      settings = {
+        :start  => eval(ENV['DOWNTIME_START']).from_now.utc,
+        :length => eval(ENV['DOWNTIME_LENGTH'])
+      }
 
-  desc "Setup application stylesheets"
-  task :setup_stylesheets, :roles => :app do
-    run "cd #{release_path}; rake app:setup:stylesheets --trace"
-  end
+      config = YAML.dump(settings)
 
-  desc "Setup application settings"
-  task :setup_settings, :roles => :app do
-    run "cd #{release_path}; rake app:setup:reimport_settings --trace"
-  end
-
-  desc "Configure warning message about scheduled downtime"
-  task :schedule_maintenance, :roles => :app do
-    settings = {
-      :start  => eval(ENV['DOWNTIME_START']).from_now.utc,
-      :length => eval(ENV['DOWNTIME_LENGTH'])
-    }
-
-    config = YAML.dump(settings)
-
-    put(config, "#{current_path}/public/system/maintenance.yml")
-  end
-
-  desc "Remove maintenance warning"
-  task :finish_maintenance, :roles => :app do
-    run "rm #{current_path}/public/system/maintenance.yml"
-  end
-
-  desc "Generate Facebooker config file"
-  task :generate_facebooker_config do
-    config = YAML.dump(rails_env => facebooker.stringify_keys)
-
-    put(config, "#{release_path}/config/facebooker.yml")
+      put(config, "#{current_path}/public/system/maintenance.yml")
+    end
   end
 end
 
-["deploy:dependencies:system_gems"].each do |t|
-  after "deploy:setup", t
+# Application setup
+after "deploy:setup", "deploy:dependencies:system_gems"
+
+
+# All deploys
+after "deploy:update_code", "deploy:dependencies:bundled_gems"
+after "deploy:update_code", "deploy:configure:facebooker"
+
+["deploy", "deploy:migrations", "deploy:cold"].each do |t|
+  after t, "deploy:configure:apache"
+  after t, "deploy:configure:cron"
+  after t, "deploy:cleanup"
 end
 
+
+# First deploy
+after "deploy:cold", "deploy:app:bootstrap"
+after "deploy:cold", "deploy:app:setup"
+
+
+# Ordinary deploys
 before "deploy:migrations", "deploy:db:backup"
 
-["deploy:dependencies:bundled_gems", "deploy:generate_facebooker_config"].each do |t|
-  after "deploy:update_code", t
-end
-
-on :before, :only => "deploy:cold" do
-  after "deploy:cold", "deploy:setup_stylesheets"
-end
-
 on :before, :only => ["deploy", "deploy:migrations"] do
-  ["deploy:setup_settings", "deploy:import_assets", "deploy:setup_stylesheets"].each do |t|
-    before "deploy:symlink", t
-  end
+  before "deploy:symlink", "deploy:app:setup"
 end
 
-["deploy:update_nginx_config", "deploy:jobs:install_cron", "deploy:cleanup"].each do |t|
-  after "deploy", t
-  after "deploy:migrations", t
-end
 
-["deploy:bootstrap", "deploy:import_assets", "deploy:setup_stylesheets", "deploy:update_apache_config", "deploy:jobs:install_cron"].each do |t|
-  after "deploy:cold", t
-end

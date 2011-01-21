@@ -1,4 +1,7 @@
 namespace :app do
+  desc 'Setup application'
+  task :setup => [:environment, 'setup:assets', 'app:setup:stylesheets', 'app:setup:settings', 'app:setup:subscriptions']
+  
   namespace :setup do
     desc "Setup application stylesheets"
     task :stylesheets => :environment do
@@ -9,8 +12,8 @@ namespace :app do
     end
 
     desc "Re-import development assets. All existing assets will be destroyed!"
-    task :import_assets, :destroy_old, :needs => :environment do |task, options|
-      if options["destroy_old"] == "true"
+    task :assets, :destroy_old, :needs => :environment do |task, options|
+      if options["destroy_old"] == "true" || ENV['DESTROY_ASSETS'] == 'true'
         puts "Destroying existing assets..."
 
         Asset.destroy_all
@@ -22,7 +25,7 @@ namespace :app do
     end
 
     desc "Re-import settings"
-    task :reimport_settings => :environment do
+    task :settings => :environment do
       require Rails.root.join("db", "seeds", "settings")
     end
     
