@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-  ServerName <%= URI.parse(facebooker[:callback_url]).host %>
+  ServerName <%= URI.parse(facebooker_config[:callback_url]).host %>
   DocumentRoot <%= current_path %>/public
   RailsEnv <%= rails_env %>
 

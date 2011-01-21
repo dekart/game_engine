@@ -1,7 +1,7 @@
 server {
   listen 80;
 
-  server_name <%= URI.parse(facebooker[:callback_url]).host %>;
+  server_name <%= URI.parse(facebooker_config[:callback_url]).host %>;
 
   root <%= current_path %>/public;
 
