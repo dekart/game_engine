@@ -14,7 +14,7 @@
 
   <div class="buttons">
     <%= link_to_function(button(:continue),
-          character_level_up_stream_dialog(:callback => "$(document).trigger('character.level_up_publish')"),
+          level_up_stream_dialog(:callback => "$(document).trigger('character.level_up_publish')"),
           :class => "continue button"
         ) %>
   </div>

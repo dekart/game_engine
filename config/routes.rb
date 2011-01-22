@@ -239,6 +239,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :monsters, 
     :member => {:reward => :post}
+    
+  map.resources :stories, :only => :show
 
   # Add your custom routes below this mark
   

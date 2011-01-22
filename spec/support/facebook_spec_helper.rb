@@ -4,7 +4,7 @@ module FacebookSpecHelper
       :id => 123456789, 
       :client => mock("mogli client", 
         :access_token => "fake token",
-        :expiration   => 1.hour.from_now
+        :expiration   => 1.day.from_now
       )
     )
   end

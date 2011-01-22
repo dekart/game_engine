@@ -18,7 +18,7 @@ describe StreamHelper do
 
     it "should not fail with default story" do
       lambda{
-        helper.character_level_up_stream_dialog
+        helper.level_up_stream_dialog
       }.should_not raise_exception
     end
     
@@ -32,7 +32,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:level_up).and_return([@story])
 
       lambda{
-        helper.character_level_up_stream_dialog
+        helper.level_up_stream_dialog
       }.should_not raise_exception
     end
   end
@@ -95,7 +95,7 @@ describe StreamHelper do
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
-      Story.should_receive(:by_alias).with(:mission_complete).and_return([@story])
+      Story.should_receive(:by_alias).with(:mission).and_return([@story])
 
       lambda{
         helper.mission_complete_stream_dialog(@mission)
@@ -304,7 +304,21 @@ describe StreamHelper do
       )
     end
     
-    it 'should not fail' do
+    it 'should not fail with default story' do
+      lambda{
+        helper.new_hit_listing_stream_dialog(@listing)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:hit_listing_new).and_return([@story])
+
       lambda{
         helper.new_hit_listing_stream_dialog(@listing)
       }.should_not raise_exception
@@ -319,7 +333,21 @@ describe StreamHelper do
       )
     end
     
-    it 'should not fail' do
+    it 'should not fail with default story' do
+      lambda{
+        helper.completed_hit_listing_stream_dialog(@listing)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:hit_listing_completed).and_return([@story])
+
       lambda{
         helper.completed_hit_listing_stream_dialog(@listing)
       }.should_not raise_exception
@@ -333,7 +361,21 @@ describe StreamHelper do
       )
     end
     
-    it 'should not fail' do
+    it 'should not fail with default story' do
+      lambda{
+        helper.collection_completed_stream_dialog(@collection)
+      }.should_not raise_exception
+    end
+
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:collection_completed).and_return([@story])
+
       lambda{
         helper.collection_completed_stream_dialog(@collection)
       }.should_not raise_exception

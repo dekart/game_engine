@@ -57,31 +57,42 @@ describe Story do
   
   describe 'when interpolating attributes' do
     before do
-      @story = Factory(:story, :title => "This is title with %{value}")
+      @story = Factory(:story, 
+        :title => 'This is title with %{value}', 
+        :description => 'This is description with %{value}'
+      )
     end
     
-    it 'should raise exception when passed unallowed attribute value' do
-      lambda {
-        @story.interpolate(:state)
-      }.should raise_exception(ArgumentError)
-    end
+    describe 'when interpolating single attribute' do
+      it 'should raise exception when passed unallowed attribute value' do
+        lambda {
+          @story.interpolate(:state)
+        }.should raise_exception(ArgumentError)
+      end
     
-    %w{title description action_link}.each do |attribute|
-      it "should successfully interpolate #{attribute}" do
-        @story[attribute] = 'Text with %{value}'
+      %w{title description action_link}.each do |attribute|
+        it "should successfully interpolate #{attribute}" do
+          @story[attribute] = 'Text with %{value}'
         
-        @story.interpolate(attribute, :value => 123).should == 'Text with 123'
+          @story.interpolate(attribute, :value => 123).should == 'Text with 123'
+        end
+      end
+    
+      it 'should return nil when attribute is blank' do
+        @story.description = ''
+      
+        @story.interpolate(:description, :value => "asd").should be_nil
+      end
+    
+      it 'should insert passed value into text' do
+        @story.interpolate(:title, :value => 123).should == 'This is title with 123'
       end
     end
     
-    it 'should return nil when attribute is blank' do
-      @story.description = ''
-      
-      @story.interpolate(:description, :value => "asd").should be_nil
-    end
-    
-    it 'should insert passed value into text' do
-      @story.interpolate(:title, :value => 123).should == 'This is title with 123'
+    describe 'when interpolating an array of attributes' do
+      it 'should return an array of texts with inserted values' do
+        @story.interpolate([:title, :description], :value => 123).should == ['This is title with 123', 'This is description with 123']
+      end
     end
   end
 end
