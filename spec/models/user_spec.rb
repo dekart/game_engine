@@ -161,7 +161,7 @@ describe User do
   
   describe 'when updating social data' do
     before do
-      @user = Factory(:user, :access_token => 'abc123')
+      @user = Factory(:user)
       
       @mogli_user = mock('Mogli::User',
         :client= => true,
@@ -171,10 +171,16 @@ describe User do
         :last_name => 'Fake Surname',
         :timezone => 5,
         :locale => 'ab_CD',
-        :gender => 'male'
+        :gender => 'male',
+        
+        :third_party_id => 'abcd1234'
       )
       
-      Mogli::User.stub!(:new).and_return(@mogli_user)
+      Mogli::User.stub!(:find).and_return(@mogli_user)
+    end
+    
+    it 'should successfully update data' do
+      @user.update_social_data!.should be_true
     end
     
     it 'should return false if user doesn\'t have access token' do
@@ -183,8 +189,14 @@ describe User do
       @user.update_social_data!.should be_false
     end
     
+    it 'should return false if access token is already expired' do
+      @user.access_token_expire_at = 1.minute.ago
+      
+      @user.update_social_data!.should be_false
+    end
+    
     it 'should fetch user data using Facebook API' do
-      @mogli_user.should_receive(:fetch).and_return(true)
+      Mogli::User.should_receive(:find).and_return(@mogli_user)
       
       @user.update_social_data!
     end
@@ -219,6 +231,12 @@ describe User do
       }.should change(@user, :gender).from(nil).to(1)
     end
     
+    it "should update third-party id to received value" do
+      lambda{
+        @user.update_social_data!
+      }.should change(@user, :third_party_id).from('').to('abcd1234')
+    end
+
     it 'should save user' do
       @user.update_social_data!
       

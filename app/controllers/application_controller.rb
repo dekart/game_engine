@@ -74,6 +74,8 @@ class ApplicationController < ActionController::Base
 
     # Updating user access information
     user.access_token = current_facebook_user.client.access_token
+    user.access_token_expire_at = current_facebook_user.client.expiration
+    
     user.last_visit_at = Time.now if user.last_visit_at.nil? || user.last_visit_at < 30.minutes.ago
     user.last_visit_ip = request.remote_ip
     

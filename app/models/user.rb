@@ -63,20 +63,23 @@ class User < ActiveRecord::Base
   end
   
   def update_social_data!
-    return false if access_token.blank?
+    return false if access_token.blank? || access_token_expired?
     
     client = Mogli::Client.new(access_token)
-    user = Mogli::User.new(:id => facebook_id)
-    user.client = client
-    user.fetch
     
-    %w{first_name last_name timezone locale}.each do |attribute|
+    user = Mogli::User.find(facebook_id, client, :first_name, :last_name, :timezone, :locale, :gender, :third_party_id)
+    
+    %w{first_name last_name timezone locale third_party_id}.each do |attribute|
       self.send("#{attribute}=", user.send(attribute))
     end
     
     self.gender = GENDERS[user.gender.to_sym]
     
     save!
+  end
+  
+  def access_token_expired?
+    access_token_expire_at.nil? or access_token_expire_at < Time.now
   end
   
   protected
