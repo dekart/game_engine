@@ -29,10 +29,17 @@ describe StoriesController do
       )
     end
     
+    def do_request(options = {})
+      get :show, options.reverse_merge(
+        :id => 123, 
+        :story_data => '"drDaHHyJrkDUN6vc5j6iTg4Qqj5mkwp93nEsCh3x/1w=--b7T0SRHS2i4vPs1MSU+txg=="' # {:character_id => 1}
+      )
+    end
+    
     it 'should try to fetch story from the database' do
       Story.should_receive(:find_by_id).with('123').and_return(@story)
       
-      get :show, :id => 123
+      do_request
     end
     
     describe 'when there is a story with given ID' do
@@ -41,9 +48,9 @@ describe StoriesController do
       end
       
       it 'should track character\'s visit to the story' do
-        @story.should_receive(:track_visit!).with(@character).and_return([])
+        @story.should_receive(:track_visit!).with(@character, :character_id => 1).and_return([])
         
-        get :show, :id => 123
+        do_request
       end
       
       describe 'if visit tracking gave some payouts' do
@@ -52,43 +59,58 @@ describe StoriesController do
         end
         
         it 'should display a page with story payout results' do
-          get :show, :id => 123
+          do_request
           
           response.should render_template(:show)
         end
         
         it 'should pass next page url to the template' do
-          get :show, :id => 123
+          do_request
           
           assigns[:next_page].should == 'http://apps.facebook.com/test/'
         end
       end
 
       it 'should redirect to next page if there were no payouts' do
-        get :show, :id => 123
+        do_request
         
         response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
       end
-      
-      
     end
     
     describe 'when ID is a default story alias' do
       it 'should target to home page from level up story' do
-        get :show, :id => 'level_up'
+        do_request :id => 'level_up'
         
         response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
       end
       
       it 'should target to shop page from inventory story' do
-        get :show, :id => 'inventory'
+        do_request :id => 'inventory'
         
         response.should redirect_from_iframe_to('http://apps.facebook.com/test/items')
       end
       
       it 'should target to mission help page from mission help request story'
-      it 'should target to mission group page from mission completion story'
-      it 'should target to mission group page from boss story'
+      
+      it 'should target to mission group page from mission completion story' do
+        do_request(
+          :id => 'mission',
+          :story_data => '"yZc8QppPzioO7o7hLRlnPec83iaHzaHSsRuiGBAqP1eXId5HN6BWe2znPhnw+TI+--UKqsGv+yur295NLWzhjqbw=="' # {:mission_group_id => 1, :character_id => 1}
+        )
+
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/1')
+      end
+      
+      it 'should target to mission group page from boss story' do
+        do_request(
+          :id => 'boss',
+          :story_data => '"yZc8QppPzioO7o7hLRlnPec83iaHzaHSsRuiGBAqP1eXId5HN6BWe2znPhnw+TI+--UKqsGv+yur295NLWzhjqbw=="' # {:mission_group_id => 1, :character_id => 1}
+        )
+
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/1')
+      end
+      
       it 'should target to monster page from monster invitation story'
       it 'should target to monster page from monster defeat story'
       it 'should target to property list page from property purchase story'
