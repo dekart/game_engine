@@ -3,8 +3,12 @@ require "spec_helper"
 describe StreamHelper do
   before :each do
     helper.stub!(:asset_image_path).and_return("/path/to/image.jpg")
-    helper.stub!(:current_user).and_return(mock_model(Character))
+    helper.stub!(:current_character).and_return(mock_model(Character))
     helper.stub!(:reference_code).and_return("The code")
+    
+    helper.stub!(:encryptor).and_return(
+      mock('encryptor', :encrypt => 'asd123')
+    )
   end
 
   describe "when generating stream dialog for level up" do
@@ -143,10 +147,6 @@ describe StreamHelper do
         :image? => true,
         :image  => mock("image", :url => "/path/to/image.jpg")
       )
-      
-      helper.stub!(:encryptor).and_return(
-        mock('encryptor', :encrypt => 'asd123')
-      )
     end
     
     it 'should not fail with default story' do
@@ -176,10 +176,6 @@ describe StreamHelper do
         :name => 'Fake Monster',
         :image? => true,
         :image  => mock("image", :url => "/path/to/image.jpg")
-      )
-      
-      helper.stub!(:encryptor).and_return(
-        mock('encryptor', :encrypt => 'asd123')
       )
     end
     
@@ -390,10 +386,6 @@ describe StreamHelper do
       )
       
       helper.stub!(:current_character).and_return(mock_model(Character))
-
-      helper.stub!(:encryptor).and_return(
-        mock('encryptor', :encrypt => 'asd123')
-      )
     end
     
     it 'should not fail' do

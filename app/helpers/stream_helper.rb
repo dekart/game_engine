@@ -72,10 +72,10 @@ module StreamHelper
       :attachment => {
         :name         => name,
         :description  => description,
-        :href => stream_url(story, :stream_inventory_name, :item_group_id => inventory.item_group),
-        :media => stream_image(image || :stream_inventory, stream_url(story, :stream_inventory_image, :item_group_id => inventory.item_group))
+        :href => stream_url(story, :stream_inventory_name, :item_group_id => inventory.item_group.id),
+        :media => stream_image(image || :stream_inventory, stream_url(story, :stream_inventory_image, :item_group_id => inventory.item_group.id))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_inventory_link))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_inventory_link, :item_group_id => inventory.item_group.id))
     }
     
     stream_dialog(dialog_options)
@@ -104,10 +104,10 @@ module StreamHelper
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_mission_name, :mission_group_id => mission.mission_group),
-        :media => stream_image(image || :stream_mission_complete, stream_url(story, :stream_mission_image, :mission_group_id => mission.mission_group))
+        :href => stream_url(story, :stream_mission_name, :mission_group_id => mission.mission_group.id),
+        :media => stream_image(image || :stream_mission_complete, stream_url(story, :stream_mission_image, :mission_group_id => mission.mission_group.id))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_mission_link, :mission_group_id => mission.mission_group))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_mission_link, :mission_group_id => mission.mission_group.id))
     }
 
     stream_dialog(dialog_options)
@@ -136,10 +136,10 @@ module StreamHelper
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_boss_name, :mission_group_id => boss.mission_group),
-        :media => stream_image(image || :stream_boss, stream_url(story, :stream_boss_image, :mission_group_id => boss.mission_group))
+        :href => stream_url(story, :stream_boss_name, :mission_group_id => boss.mission_group.id),
+        :media => stream_image(image || :stream_boss, stream_url(story, :stream_boss_image, :mission_group_id => boss.mission_group.id))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_boss_link, :mission_group_id => boss.mission_group))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_boss_link, :mission_group_id => boss.mission_group.id))
     }
 
     stream_dialog(dialog_options)
@@ -164,16 +164,14 @@ module StreamHelper
       name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.monster_invite'}.merge(interpolation_options))
     end
 
-    monster_key = encryptor.encrypt(monster.id)
-    
     dialog_options = {
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_monster_invite_name, :monster_key => monster_key),
-        :media => stream_image(image || :stream_monster_invite, stream_url(story, :stream_monster_invite_image, :monster_key => monster_key))
+        :href => stream_url(story, :stream_monster_invite_name, :monster_id => monster.id),
+        :media => stream_image(image || :stream_monster_invite, stream_url(story, :stream_monster_invite_image, :monster_id => monster.id))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_monster_invite_link, :monster_key => monster_key))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_monster_invite_link, :monster_id => monster.id))
     }
 
     stream_dialog(dialog_options)
@@ -198,16 +196,14 @@ module StreamHelper
       name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.monster_defeated'}.merge(interpolation_options))
     end
     
-    monster_key = encryptor.encrypt(monster.id)
-    
     dialog_options = {
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_monster_defeated_name, :monster_key => monster_key),
-        :media => stream_image(image || :stream_monster_defeated, stream_url(story, :stream_monster_defeated_image, :monster_key => monster_key))
+        :href => stream_url(story, :stream_monster_defeated_name, :monster_id => monster.id),
+        :media => stream_image(image || :stream_monster_defeated, stream_url(story, :stream_monster_defeated_image, :monster_id => monster.id))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_monster_defeated_link, :monster_key => monster_key))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_monster_defeated_link, :monster_id => monster.id))
     }
 
     stream_dialog(dialog_options)
@@ -317,10 +313,10 @@ module StreamHelper
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_promotion_name, :promotion_id => promotion),
-        :media => stream_image(image || :stream_promotion, stream_url(story, :stream_promotion_image, :promotion_id => promotion))
+        :href => stream_url(story, :stream_promotion_name, :promotion_id => promotion.id),
+        :media => stream_image(image || :stream_promotion, stream_url(story, :stream_promotion_image, :promotion_id => promotion.id))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_promotion_link, :promotion_id => promotion))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_promotion_link, :promotion_id => promotion.id))
     }
 
     stream_dialog(dialog_options)
@@ -426,16 +422,10 @@ module StreamHelper
 
 
   def collection_missing_items_stream_dialog(collection)
-    missing_items = collection.missing_items(current_character)
-
-    request_data = encryptor.encrypt(
-      :items        => missing_items.collect{|i| i.id },
-      :requester_id => current_character.id,
-      :valid_till   => Setting.i(:collections_request_time).hours.from_now
-    )
-
     image = nil
     
+    missing_items = collection.missing_items(current_character)
+
     interpolation_options = {
       :collection => collection.name,
       :items      => missing_items.collect{|i| i.name }.join(', '),
@@ -452,16 +442,19 @@ module StreamHelper
       name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.collection.missing_items'}.merge(interpolation_options))
     end
 
+    request_data = {
+      :items        => missing_items.collect{|i| i.id },
+      :valid_till   => Setting.i(:collections_request_time).hours.from_now
+    }
+
     dialog_options = {
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_collection_missing_items_name, :request_data => request_data),
-        :media => stream_image(image || :stream_collection_missing_items, 
-          stream_url(story, :stream_collection_missing_items_image, :request_data => request_data)
-        )
+        :href => stream_url(story, :stream_collection_missing_items_name, request_data),
+        :media => stream_image(image || :stream_collection_missing_items, stream_url(story, :stream_collection_missing_items_image, request_data))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_collection_missing_items_link, :request_data => request_data))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_collection_missing_items_link, request_data))
     }
 
     stream_dialog(dialog_options)
@@ -471,17 +464,12 @@ module StreamHelper
   protected
   
   
-  def stream_url(story, reference, url_options = {})
+  def stream_url(story, reference, data = {})
     story_url(story,
-      url_options.reverse_merge(
-        :reference_code => reference_code(reference),
-        :canvas => true
-      )
+      :story_data => encryptor.encrypt(data.merge(:character_id => current_character.id)),
+      :reference_code => reference_code(reference),
+      :canvas => true
     )
-  end
-
-  def default_stream_url(reference = nil)
-    
   end
 
   def stream_action_link(text, url)

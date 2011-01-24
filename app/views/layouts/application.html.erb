@@ -13,6 +13,7 @@
   <%= google_analytics %>
 </head>
 <body>
+  <%#= link_to_function 'hey', mission_complete_stream_dialog(Mission.first) %>
   <% admin_only do %>
     <div id="admin_menu">
       <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :admin)  %>
