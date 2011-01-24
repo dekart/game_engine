@@ -487,7 +487,7 @@ module StreamHelper
   def stream_action_link(text, url)
     [
       {
-        :text => text,
+        :text => text.blank? ? t('stories.default.action_link', :app => t('app_name')) : text,
         :href => url
       }
     ]
