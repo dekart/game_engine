@@ -401,5 +401,19 @@ describe StreamHelper do
         helper.collection_missing_items_stream_dialog(@collection)
       }.should_not raise_exception
     end
+    
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:collection_missing_items).and_return([@story])
+
+      lambda{
+        helper.collection_missing_items_stream_dialog(@collection)
+      }.should_not raise_exception
+    end    
   end
 end
