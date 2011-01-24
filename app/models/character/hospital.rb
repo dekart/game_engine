@@ -12,13 +12,19 @@ class Character
 
       value.minutes
     end
+    
+    def time_to_next_hospital
+      period = (hospital_used_at + hospital_delay) - Time.now
+      
+      period < 0 ? 0 : period
+    end
 
     def hospital!
       if basic_money < hospital_price
         errors.add_to_base(:hospital_not_enough_money)
 
         return false
-      elsif hospital_used_at > hospital_delay.ago
+      elsif time_to_next_hospital > 0
         errors.add_to_base(:hospital_recently_used)
 
         return false

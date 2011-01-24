@@ -20,4 +20,26 @@ describe Character do
       @character.hospital_price.should == 135 # 10 + 2.5 * 10 points * level 5
     end
   end
+  
+  describe 'when getting time to next hospital usage' do
+    before do
+      @character = Factory(:character)
+    end
+    
+    it 'should return time in seconds to next possible usage basing on hospital delay' do
+      # Freezing time in this test
+      time = Time.now
+      Time.stub(:now).and_return(time)
+      
+      @character.should_receive(:hospital_delay).and_return 10.minutes
+      
+      @character.hospital_used_at = 5.minutes.ago
+      
+      @character.time_to_next_hospital.should == 5.minutes
+    end
+    
+    it 'should return zero if hospital delay time has already passed' do
+      @character.time_to_next_hospital.should == 0
+    end
+  end
 end
