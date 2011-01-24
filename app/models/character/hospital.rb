@@ -16,7 +16,7 @@ class Character
     def time_to_next_hospital
       period = (hospital_used_at + hospital_delay) - Time.now
       
-      period < 0 ? 0 : period
+      period < 0 ? 0 : period.to_i
     end
 
     def hospital!

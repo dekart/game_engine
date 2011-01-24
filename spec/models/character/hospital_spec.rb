@@ -41,5 +41,13 @@ describe Character do
     it 'should return zero if hospital delay time has already passed' do
       @character.time_to_next_hospital.should == 0
     end
+    
+    it 'should return integer value' do
+      @character.should_receive(:hospital_delay).and_return 10.minutes
+      @character.hospital_used_at = 5.minutes.ago
+      
+      @character.time_to_next_hospital.should be_kind_of(Integer)
+    end
+    
   end
 end
