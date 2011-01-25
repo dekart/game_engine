@@ -313,10 +313,10 @@ module StreamHelper
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_promotion_name, :promotion_id => promotion.id),
-        :media => stream_image(image || :stream_promotion, stream_url(story, :stream_promotion_image, :promotion_id => promotion.id))
+        :href => stream_url(story, :stream_promotion_name, :promotion_id => promotion.to_param),
+        :media => stream_image(image || :stream_promotion, stream_url(story, :stream_promotion_image, :promotion_id => promotion.to_param))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_promotion_link, :promotion_id => promotion.id))
+      :action_links => stream_action_link(action_link, stream_url(story, :stream_promotion_link, :promotion_id => promotion.to_param))
     }
 
     stream_dialog(dialog_options)

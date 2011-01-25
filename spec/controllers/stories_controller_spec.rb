@@ -105,20 +105,90 @@ describe StoriesController do
       it 'should target to mission group page from boss story' do
         do_request(
           :id => 'boss',
-          :story_data => '"yZc8QppPzioO7o7hLRlnPec83iaHzaHSsRuiGBAqP1eXId5HN6BWe2znPhnw+TI+--UKqsGv+yur295NLWzhjqbw=="' # {:mission_group_id => 1, :character_id => 1}
+          :story_data => 'yZc8QppPzioO7o7hLRlnPec83iaHzaHSsRuiGBAqP1eXId5HN6BWe2znPhnw+TI+--UKqsGv+yur295NLWzhjqbw==' # {:mission_group_id => 1, :character_id => 1}
         )
 
         response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/1')
       end
       
-      it 'should target to monster page from monster invitation story'
-      it 'should target to monster page from monster defeat story'
-      it 'should target to property list page from property purchase story'
-      it 'should target to promotion page from promotion story'
-      it 'should target to hitlist page from new hit listing story'
-      it 'should target to hitlist page from completed hit listing story'
-      it 'should target to collection list page from collection completion story'
-      it 'should target to item giveout page from missing collection items story'
+      it 'should target to monster page from monster invitation story' do
+        controller.send(:encryptor).should_receive(:encrypt).with(1).and_return('securemonsterkey')
+        
+        do_request(
+          :id => 'monster_invite',
+          :story_data => 'cMKj+S40uXVpaez9dt6pGwIyDk76SM0HcjIGYO2RDKgl3oEc/sANp0IGq5G1xmrh--7lGcWvHmmnyuVjkrRGCrVg==' # {:monster_id => 1, :character_id => 1}
+        )
+
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/monsters/1?key=securemonsterkey')
+      end
+      
+      it 'should target to monster page from monster defeat story' do
+        controller.send(:encryptor).should_receive(:encrypt).with(1).and_return('securemonsterkey')
+        
+        do_request(
+          :id => 'monster_defeated',
+          :story_data => 'cMKj+S40uXVpaez9dt6pGwIyDk76SM0HcjIGYO2RDKgl3oEc/sANp0IGq5G1xmrh--7lGcWvHmmnyuVjkrRGCrVg==' # {:monster_id => 1, :character_id => 1}
+        )
+
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/monsters/1?key=securemonsterkey')
+      end
+      
+      it 'should target to property list page from property purchase story' do
+        do_request(:id => 'property')
+        
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/properties')
+      end
+      
+      it 'should target to promotion page from promotion story' do
+        do_request(
+          :id => 'promotion',
+          :story_data => '6ajN8YDGnrbAN69fBsTkhzx0ICF2wBf7VwYDH3d6M9UzFKPiC9V0COwzhdypm90j--NWKSjhogD4O6zPnQvfZ1gQ==' # {:property_id => 'asd123', :character_id => 1}
+        )
+        
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/promotions/asd123')
+      end
+      
+      it 'should target to hitlist page from new hit listing story' do
+        do_request :id => 'hit_listing_new'
+        
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/hit_listings')
+      end
+      
+      it 'should target to hitlist page from completed hit listing story' do
+        do_request :id => 'hit_listing_completed'
+        
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/hit_listings')
+      end
+      
+      it 'should target to collection list page from collection completion story' do
+        do_request :id => 'collection_completed'
+        
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/item_collections')
+      end
+      
+      it 'should target to item giveout page from missing collection items story' do
+        controller.send(:encryptor).should_receive(:encrypt).with(
+          :items => [1, 2, 3],
+          :valid_till => Time.parse('Tue Jan 25 14:18:45 +0500 2011'),
+          :character_id => 1
+        ).and_return('securegiveoutkey')
+        
+        do_request(
+          :id => 'collection_missing_items',
+          :story_data => 'm5d9l+fZpUwLYpn9NuO9aPzaiajMlLJHvyaq9IKq7iHGeWCWwyL/YVKS+OYq5FXXcm83Rolax7XuXCEZPQxnN7FLsdcpxabkzPztnXwLPzkahs+hXl5LvWuHl4TNOz/z--2zGXLYZmoG+CiuQItb5v0w=='
+          # {:items => [1,2,3], :valid_till => Time.parse('Tue Jan 25 14:18:45 +0500 2011'), :character_id => 1}
+        )
+        
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/inventories/give?request_data=securegiveoutkey')
+      end
+    end
+    
+    it 'should redirect to root on invalid story data' do
+      lambda{
+        do_request(:story_data => 'this is just wrong')
+      }.should_not raise_exception
+      
+      response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
     end
   end
 end

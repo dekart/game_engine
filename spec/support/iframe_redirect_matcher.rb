@@ -4,7 +4,7 @@ class RedirectFromIframeTo
   end
 
   def matches?(controller)
-    if controller.body =~ /window.top.location.href = #{ @expected.to_json };/
+    if controller.body =~ /window.top.location.href = #{ Regexp.escape(@expected.to_json) };/
       true
     else
       @actual = controller.body.match(/window.top.location.href = "(.*)";/)[1]

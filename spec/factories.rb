@@ -4,7 +4,7 @@ Factory.define :user do |t|
   t.facebook_id 123456789
   
   t.access_token 'abc123'
-  t.access_token_expire_at 1.hour.from_now
+  t.access_token_expire_at 1.day.from_now
 end
 
 Factory.define :character_type do |t|
