@@ -95,4 +95,16 @@ describe Story do
       end
     end
   end
+  
+  describe 'when tracking story visit' do
+    it 'should create story visit record for current character, story type, and story reference'
+    it 'should apply payouts to character'
+    it 'should return payout result'
+    
+    describe 'when story is already visited' do
+      it 'should not create visit record'
+      it 'should not apply payouts'
+      it 'should return empty array'
+    end
+  end
 end
