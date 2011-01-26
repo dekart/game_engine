@@ -13,11 +13,11 @@ en:
       title: "I just advanced to Level {{level}} in {{app}}!"
       description: ""
       action_link: ""
-    mission:
+    mission_completed:
       title: "I just completed the \"{{mission}}\" mission in {{app}}!"
       description: ""
       action_link: ""
-    boss:
+    boss_defeated:
       title: "I just defeated the {{boss}} in {{app}}!"
       description: ""
       action_link: ""
@@ -37,23 +37,21 @@ en:
       title: "I just bought a \"{{item}}\" in {{app}}!"
       description: ""
       action_link: ""
-    collection:
-      completed:
-        title: "I just finished the '{{collection}}' Collection in {{app}}!"
-      missing_items:
-        title: "Please help me to finish my collection in %{app}!"
-        description: "I need these items to finish the '%{collection}' collection: %{items}."
-        action_link: "Give Items »"
+    collection_completed:
+      title: "I just finished the '{{collection}}' Collection in {{app}}!"
+    collection_missing_items:
+      title: "Please help me to finish my collection in %{app}!"
+      description: "I need these items to finish the '%{collection}' collection: %{items}."
+      action_link: "Give Items »"
     promotion:
       title: "I got a secret bonus link for {{app}}!"
       description: "Click the link to get the game bonus. Hurry up, this special link expires at {{expires_at}}!"
       action_link: "Get Bonus »"
-    hitlist:
-      new_listing:
-        title: "Hitlist Offer"
-        description: "I'm offering a {{amount}} bounty for any friend who'll win my {{level}} level enemy in {{app}}!"
-        action_link: "Attack"
-      completed_listing:
-        title: "Hitlist Reward"
-        description: "I've just received a {{amount}} bounty for hitting the {{level}} level enemy in {{app}}!"
-        action_link: "Get Reward"
+    hit_listing_new:
+      title: "Hitlist Offer"
+      description: "I'm offering a {{amount}} bounty for any friend who'll win my {{level}} level enemy in {{app}}!"
+      action_link: "Attack"
+    hit_listing_completed:
+      title: "Hitlist Reward"
+      description: "I've just received a {{amount}} bounty for hitting the {{level}} level enemy in {{app}}!"
+      action_link: "Get Reward"

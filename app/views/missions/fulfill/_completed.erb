@@ -1,5 +1,5 @@
 <% builder.buttons do %>
-  <%= link_to_function(button(:publish), mission_complete_stream_dialog(mission),
+  <%= link_to_function(button(:publish), stream_dialog(:mission_completed, mission),
         :class => "publish button"
       ) %>
 <% end %>
@@ -40,7 +40,7 @@
 
     <div class="buttons">
       <%= link_to_function(button(:continue),
-            mission_complete_stream_dialog(mission) + "$.dialog.close()",
+            stream_dialog(:mission_completed, mission) + "$.dialog.close()",
             :class => "continue button"
           ) %>
     </div>

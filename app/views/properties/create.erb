@@ -1,7 +1,7 @@
 <% result_for :property do |builder| %>
   <% if @property.errors.empty? %>
     <% builder.buttons do %>
-      <%= link_to_function(button(:publish), property_stream_dialog(@property),
+      <%= link_to_function(button(:publish), stream_dialog(:property, @property),
             :class => "publish button"
           ) %>
     <% end %>

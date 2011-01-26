@@ -14,7 +14,7 @@ class StoriesController < ApplicationController
     @next_page = case key
     when 'inventory'
       items_url(:canvas => true)
-    when 'mission', 'boss'
+    when 'mission', 'boss_defeated'
       mission_group_url(story_data[:mission_group_id], :canvas => true)
     when 'monster_invite', 'monster_defeated'
       monster_url(story_data[:monster_id], 
@@ -24,7 +24,9 @@ class StoriesController < ApplicationController
     when 'property'
       properties_url(:canvas => true)
     when 'promotion'
-      promotion_url(story_data[:promotion_id], :canvas => true)
+      promotion = Promotion.find(story_data[:promotion_id])
+      
+      promotion_url(promotion, :canvas => true)
     when 'hit_listing_new', 'hit_listing_completed'
       hit_listings_url(:canvas => true)
     when 'collection_completed'

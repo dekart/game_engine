@@ -16,7 +16,7 @@
 
         <p><%= t(".forward.text", :app => t("app_name")).html_safe %></p>
 
-        <%= link_to_function(button(:publish), promotion_stream_dialog(@promotion),
+        <%= link_to_function(button(:publish), stream_dialog(:promotion, @promotion),
               :class => "publish button"
             ) %>
       </div>

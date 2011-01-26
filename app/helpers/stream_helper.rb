@@ -1,5 +1,9 @@
 module StreamHelper
-  def stream_dialog(options = {})
+  def stream_dialog(story_alias, *args)
+    options = args.extract_options!
+    
+    options = prepare_story(story_alias, *(send("#{story_alias}_story_options", *args))).deep_merge(options)
+    
     result = "FB.ui(%s, %s);$(document).delay(100).queue(function(){ $(document).trigger('facebook.stream_publish') });" % [
       {
         :method       => 'stream.publish',
@@ -16,197 +20,82 @@ module StreamHelper
     result.html_safe
   end
 
-
-  def level_up_stream_dialog(options = {})
-    image = nil
-    
-    interpolation_options = {
-      :level  => current_character.level, 
-      :app    => t('app_name')
-    }
-    
-    if story = Story.by_alias(:level_up).first
-      image = story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :level_up
-      
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.level_up'}.merge(interpolation_options))
-    end
-    
-    dialog_options = {
-      :attachment => {
-        :name         => name,
-        :description  => description,
-        :href => stream_url(story, :stream_level_up_name),
-        :media => stream_image(image || :stream_level_up, stream_url(story, :stream_level_up_image))
+  protected
+  
+  def level_up_story_options
+    [
+      {
+        :level => current_character.level
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_level_up_link))
-    }
-    dialog_options.deep_merge!(options)
-
-    stream_dialog(dialog_options)
+      {
+        :level => current_character.level
+      }
+    ]
   end
 
 
-  def inventory_stream_dialog(inventory)
-    image = inventory.image.url(:stream) if inventory.image?
-
-    interpolation_options = {
-      :item => inventory.name, 
-      :app  => t('app_name')
-    }
-
-    if story = Story.by_alias(:inventory).first
-      image = story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :inventory
-      
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.inventory'}.merge(interpolation_options))
-    end
-    
-    dialog_options = {
-      :attachment => {
-        :name         => name,
-        :description  => description,
-        :href => stream_url(story, :stream_inventory_name, :item_group_id => inventory.item_group.id),
-        :media => stream_image(image || :stream_inventory, stream_url(story, :stream_inventory_image, :item_group_id => inventory.item_group.id))
+  def item_purchased_story_options(item)
+    [
+      {
+        :item => item.name
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_inventory_link, :item_group_id => inventory.item_group.id))
-    }
-    
-    stream_dialog(dialog_options)
+      {
+        :item_id => item.id
+      },
+      (item.image.url(:stream) if item.image?)
+    ]
   end
 
 
-  def mission_complete_stream_dialog(mission)
-    image = mission.image.url(:stream) if mission.image?
-
-    interpolation_options = {
-      :mission  => mission.name,
-      :app      => t("app_name")
-    }
-    
-    if story = Story.by_alias(:mission).first
-      image = story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :mission
-      
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.mission'}.merge(interpolation_options))
-    end
-    
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_mission_name, :mission_group_id => mission.mission_group.id),
-        :media => stream_image(image || :stream_mission_complete, stream_url(story, :stream_mission_image, :mission_group_id => mission.mission_group.id))
+  def mission_completed_story_options(mission)
+    [
+      {
+        :mission => mission.name
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_mission_link, :mission_group_id => mission.mission_group.id))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :mission_id => mission.id
+      },
+      (mission.image.url(:stream) if mission.image?)
+    ]
   end
 
 
-  def boss_defeated_stream_dialog(boss)
-    image = boss.image.url(:stream) if boss.image?
-    
-    interpolation_options = {
-      :boss => boss.name,
-      :app  => t("app_name")
-    }
-    
-    if story = Story.by_alias(:boss_defeated).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :boss
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.boss'}.merge(interpolation_options))
-    end
-    
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_boss_name, :mission_group_id => boss.mission_group.id),
-        :media => stream_image(image || :stream_boss, stream_url(story, :stream_boss_image, :mission_group_id => boss.mission_group.id))
+  def boss_defeated_story_options(boss)
+    [
+      {
+        :boss => boss.name
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_boss_link, :mission_group_id => boss.mission_group.id))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :boss_id => boss.id
+      },
+      (boss.image.url(:stream) if boss.image?)
+    ]
   end
 
 
-  def monster_invite_stream_dialog(monster)
-    image = monster.image.url(:stream) if monster.image?
-    
-    interpolation_options = {
-      :monster => monster.name,
-      :app => t('app_name')
-    }
-    
-    if story = Story.by_alias(:monster_invite).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :monster_invite
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.monster_invite'}.merge(interpolation_options))
-    end
-
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_monster_invite_name, :monster_id => monster.id),
-        :media => stream_image(image || :stream_monster_invite, stream_url(story, :stream_monster_invite_image, :monster_id => monster.id))
+  def monster_invite_story_options(monster)
+    [
+      {
+        :monster => monster.name
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_monster_invite_link, :monster_id => monster.id))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :monster_id => monster.id
+      },
+      (monster.image.url(:stream) if monster.image?)
+    ]
   end
 
 
-  def monster_defeated_stream_dialog(monster)
-    image = monster.image.url(:stream) if monster.image?
-    
-    interpolation_options = {
-      :monster  => monster.name,
-      :app      => t("app_name")
-    }
-    
-    if story = Story.by_alias(:monster_defeated).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :monster_defeated
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.monster_defeated'}.merge(interpolation_options))
-    end
-    
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_monster_defeated_name, :monster_id => monster.id),
-        :media => stream_image(image || :stream_monster_defeated, stream_url(story, :stream_monster_defeated_image, :monster_id => monster.id))
+  def monster_defeated_story_options(monster)
+    [
+      {
+        :monster => monster.name
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_monster_defeated_link, :monster_id => monster.id))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :monster_id => monster.id
+      },
+      (monster.image.url(:stream) if monster.image?)
+    ]
   end
 
 
@@ -259,209 +148,111 @@ module StreamHelper
   end
 
 
-  def property_stream_dialog(property)
-    image = property.image.url(:stream) if property.image?
-    
-    interpolation_options = {
-      :property => property.name,
-      :app      => t("app_name")
-    }
-    
-    if story = Story.by_alias(:property).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :property
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.property'}.merge(interpolation_options))
-    end
-    
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_property_name),
-        :media => stream_image(image || :stream_property, stream_url(story, :stream_property_image))
+  def property_story_options(property)
+    [
+      {
+        :property => property.name
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_property_link))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :property_id => property.id
+      },
+      (property.image.url(:stream) if property.image?)
+    ]
   end
 
 
-  def promotion_stream_dialog(promotion)
-    image = nil
-    
-    interpolation_options = {
-      :expires_at => l(promotion.valid_till, :format => :short),
-      :app => t("app_name")
-    }
-    
-    if story = Story.by_alias(:promotion).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :promotion
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.promotion'}.merge(interpolation_options))
-    end
-
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_promotion_name, :promotion_id => promotion.to_param),
-        :media => stream_image(image || :stream_promotion, stream_url(story, :stream_promotion_image, :promotion_id => promotion.to_param))
+  def promotion_story_options(promotion)
+    [
+      {
+        :expires_at => l(promotion.valid_till, :format => :short)
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_promotion_link, :promotion_id => promotion.to_param))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :promotion_id => promotion.id
+      }
+    ]
   end
 
 
-  def new_hit_listing_stream_dialog(listing)
-    image = nil
-    
-    interpolation_options = {
-      :amount => listing.reward,
-      :level  => listing.victim.level,
-      :app => t("app_name")
-    }
-    
-    if story = Story.by_alias(:hit_listing_new).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :hit_listing_new
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.hitlist.new_listing'}.merge(interpolation_options))
-    end
-
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_hit_listing_new_name),
-        :media => stream_image(image || :stream_hit_listing_new, stream_url(story, :stream_hit_listing_new_image))
+  def hit_listing_new_story_options(listing)
+    [
+      {
+        :amount => listing.reward,
+        :level  => listing.victim.level
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_hit_listing_new_link))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :hit_listing_id => listing.id
+      }
+    ]
   end
 
 
-  def completed_hit_listing_stream_dialog(listing)
-    image = nil
-    
-    interpolation_options = {
-      :amount => listing.reward,
-      :level  => listing.victim.level,
-      :app => t("app_name")
-    }
-    
-    if story = Story.by_alias(:hit_listing_completed).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :hit_listing_completed
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.hitlist.completed_listing'}.merge(interpolation_options))
-    end
-
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_hit_listing_completed_name),
-        :media => stream_image(image || :stream_hit_listing_completed, stream_url(story, :stream_hit_listing_completed_image))
+  def hit_listing_completed_story_options(listing)
+    [
+      {
+        :amount => listing.reward,
+        :level  => listing.victim.level,
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_hit_listing_completed_link))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :hit_listing_id => listing.id
+      }
+    ]
   end
 
 
-  def collection_completed_stream_dialog(collection)
-    image = nil
-    
-    interpolation_options = {
-      :collection => collection.name,
-      :app => t("app_name")
-    }
-    
-    if story = Story.by_alias(:collection_completed).first
-      image ||= story.image.url if story.image?
-      
-      name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
-    else
-      story = :collection_completed
-
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.collection.completed'}.merge(interpolation_options))
-    end
-
-    dialog_options = {
-      :attachment => {
-        :name => name,
-        :description => description,
-        :href => stream_url(story, :stream_collection_completed_name),
-        :media => stream_image(image || :stream_collection_completed, stream_url(story, :stream_collection_completed_image))
+  def collection_completed_story_options(collection)
+    [
+      {
+        :collection => collection.name
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_collection_completed_link))
-    }
-
-    stream_dialog(dialog_options)
+      {
+        :collection_id => collection.id
+      }
+    ]
   end
 
 
-  def collection_missing_items_stream_dialog(collection)
-    image = nil
-    
+  def collection_missing_items_story_options(collection)
     missing_items = collection.missing_items(current_character)
 
-    interpolation_options = {
-      :collection => collection.name,
-      :items      => missing_items.collect{|i| i.name }.join(', '),
+    [
+      {
+        :collection => collection.name,
+        :items      => missing_items.collect{|i| i.name }.join(', '),
+      },
+      {
+        :collection_id  => collection.id,
+        :items          => missing_items.collect{|i| i.id },
+        :valid_till     => Setting.i(:collections_request_time).hours.from_now
+      }
+    ]
+  end
+  
+  
+  def prepare_story(story_alias, interpolation_options = {}, story_data = {}, image = nil)
+    interpolation_options.reverse_merge!(
       :app => t("app_name")
-    }
+    )
     
-    if story = Story.by_alias(:collection_missing_items).first
+    if story = Story.by_alias(story_alias).first
       image ||= story.image.url if story.image?
       
       name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
     else
-      story = :collection_missing_items
+      story = story_alias
 
-      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => 'stories.collection.missing_items'}.merge(interpolation_options))
+      name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => "stories.#{ story_alias }"}.merge(interpolation_options))
     end
 
-    request_data = {
-      :items        => missing_items.collect{|i| i.id },
-      :valid_till   => Setting.i(:collections_request_time).hours.from_now
-    }
-
-    dialog_options = {
+    {
       :attachment => {
         :name => name,
         :description => description,
-        :href => stream_url(story, :stream_collection_missing_items_name, request_data),
-        :media => stream_image(image || :stream_collection_missing_items, stream_url(story, :stream_collection_missing_items_image, request_data))
+        :href => stream_url(story, :"stream_#{ story_alias }_name", story_data),
+        :media => stream_image(image || :"stream_#{ story_alias }", stream_url(story, :"stream_#{ story_alias }_image", story_data))
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :stream_collection_missing_items_link, request_data))
-    }
-
-    stream_dialog(dialog_options)
+      :action_links => stream_action_link(action_link, stream_url(story, :"stream_#{ story_alias }_link", story_data))
+    }    
   end
-  
-  
-  protected
   
   
   def stream_url(story, reference, data = {})
@@ -472,6 +263,7 @@ module StreamHelper
     )
   end
 
+
   def stream_action_link(text, url)
     [
       {
@@ -480,6 +272,7 @@ module StreamHelper
       }
     ]
   end
+
 
   def stream_image(image, url)
     if image.is_a?(String)
@@ -498,5 +291,4 @@ module StreamHelper
       }
     ]
   end
-  
 end

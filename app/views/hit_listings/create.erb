@@ -11,6 +11,6 @@
   <% d.on_ready do %>
     $(document).trigger('remote_content.received');
 
-    <%= new_hit_listing_stream_dialog(@hit_listing) %>
+    <%= stream_dialog(:hit_listing_new, @hit_listing) %>
   <% end %>
 <% end %>

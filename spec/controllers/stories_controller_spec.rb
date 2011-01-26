@@ -104,7 +104,7 @@ describe StoriesController do
       
       it 'should target to mission group page from boss story' do
         do_request(
-          :id => 'boss',
+          :id => 'boss_defeated',
           :story_data => 'yZc8QppPzioO7o7hLRlnPec83iaHzaHSsRuiGBAqP1eXId5HN6BWe2znPhnw+TI+--UKqsGv+yur295NLWzhjqbw==' # {:mission_group_id => 1, :character_id => 1}
         )
 
@@ -140,9 +140,11 @@ describe StoriesController do
       end
       
       it 'should target to promotion page from promotion story' do
+        Promotion.should_receive(:find).with(123).and_return(mock_model(Promotion, :to_param => 'asd123'))
+        
         do_request(
           :id => 'promotion',
-          :story_data => '6ajN8YDGnrbAN69fBsTkhzx0ICF2wBf7VwYDH3d6M9UzFKPiC9V0COwzhdypm90j--NWKSjhogD4O6zPnQvfZ1gQ==' # {:property_id => 'asd123', :character_id => 1}
+          :story_data => 'WQABey+hEPYwdKsLFWQBFiJfiDrT3sG3RaTA01EM/awLcCpdhPfEHPvW5VAoJBV5--VVYB4eZIDO9zTEu989SUAA==' # {:promotion_id => 123, :character_id => 1}
         )
         
         response.should redirect_from_iframe_to('http://apps.facebook.com/test/promotions/asd123')

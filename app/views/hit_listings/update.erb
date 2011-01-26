@@ -35,7 +35,7 @@
           <p><%= t(".completed.publish") %></p>
 
           <div class="buttons">
-            <%= link_to_function(button(:publish), completed_hit_listing_stream_dialog(@hit_listing),
+            <%= link_to_function(button(:publish), stream_dialog(:hit_listing_completed, @hit_listing),
                   :class => "publish button"
                 ) %>
           </div>

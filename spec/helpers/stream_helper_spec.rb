@@ -22,7 +22,7 @@ describe StreamHelper do
 
     it "should not fail with default story" do
       lambda{
-        helper.level_up_stream_dialog
+        helper.stream_dialog(:level_up)
       }.should_not raise_exception
     end
     
@@ -36,7 +36,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:level_up).and_return([@story])
 
       lambda{
-        helper.level_up_stream_dialog
+        helper.stream_dialog(:level_up)
       }.should_not raise_exception
     end
   end
@@ -45,7 +45,7 @@ describe StreamHelper do
     before :each do
       @item_group = mock_model(ItemGroup)
 
-      @inventory  = mock_model(Inventory,
+      @item = mock_model(Item,
         :name       => "Super Item",
         :item_group => @item_group,
         :image?     => true,
@@ -55,7 +55,7 @@ describe StreamHelper do
 
     it "should not fail with default story" do
       lambda{
-        helper.inventory_stream_dialog(@inventory)
+        helper.stream_dialog(:item_purchased, @item)
       }.should_not raise_exception
     end
     
@@ -66,10 +66,10 @@ describe StreamHelper do
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
-      Story.should_receive(:by_alias).with(:inventory).and_return([@story])
+      Story.should_receive(:by_alias).with(:item_purchased).and_return([@story])
 
       lambda{
-        helper.inventory_stream_dialog(@inventory)
+        helper.stream_dialog(:item_purchased, @item)
       }.should_not raise_exception
     end
   end
@@ -88,7 +88,7 @@ describe StreamHelper do
 
     it "should not fail with default options" do
       lambda{
-        helper.mission_complete_stream_dialog(@mission)
+        helper.stream_dialog(:mission_completed, @mission)
       }.should_not raise_exception
     end
     
@@ -99,10 +99,10 @@ describe StreamHelper do
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
-      Story.should_receive(:by_alias).with(:mission).and_return([@story])
+      Story.should_receive(:by_alias).with(:mission_completed).and_return([@story])
 
       lambda{
-        helper.mission_complete_stream_dialog(@mission)
+        helper.stream_dialog(:mission_completed, @mission)
       }.should_not raise_exception
     end
   end
@@ -121,7 +121,7 @@ describe StreamHelper do
 
     it "should not fail with default story" do
       lambda{
-        helper.boss_defeated_stream_dialog(@boss)
+        helper.stream_dialog(:boss_defeated, @boss)
       }.should_not raise_exception
     end
 
@@ -135,7 +135,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:boss_defeated).and_return([@story])
 
       lambda{
-        helper.boss_defeated_stream_dialog(@boss)
+        helper.stream_dialog(:boss_defeated, @boss)
       }.should_not raise_exception
     end
   end
@@ -151,7 +151,7 @@ describe StreamHelper do
     
     it 'should not fail with default story' do
       lambda{
-        helper.monster_invite_stream_dialog(@monster)
+        helper.stream_dialog(:monster_invite, @monster)
       }.should_not raise_exception
     end
 
@@ -165,7 +165,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:monster_invite).and_return([@story])
 
       lambda{
-        helper.monster_invite_stream_dialog(@monster)
+        helper.stream_dialog(:monster_invite, @monster)
       }.should_not raise_exception
     end
   end
@@ -181,7 +181,7 @@ describe StreamHelper do
     
     it 'should not fail with default story' do
       lambda{
-        helper.monster_defeated_stream_dialog(@monster)
+        helper.stream_dialog(:monster_defeated, @monster)
       }.should_not raise_exception
     end
 
@@ -195,7 +195,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:monster_defeated).and_return([@story])
 
       lambda{
-        helper.monster_defeated_stream_dialog(@monster)
+        helper.stream_dialog(:monster_defeated, @monster)
       }.should_not raise_exception
     end
   end
@@ -245,7 +245,7 @@ describe StreamHelper do
 
     it "should not fail with default story" do
       lambda{
-        helper.property_stream_dialog(@property)
+        helper.stream_dialog(:property, @property)
       }.should_not raise_exception
     end
 
@@ -259,7 +259,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:property).and_return([@story])
 
       lambda{
-        helper.property_stream_dialog(@property)
+        helper.stream_dialog(:property, @property)
       }.should_not raise_exception
     end
   end
@@ -273,7 +273,7 @@ describe StreamHelper do
 
     it "should not fail with default story" do
       lambda{
-        helper.promotion_stream_dialog(@promotion)
+        helper.stream_dialog(:promotion, @promotion)
       }.should_not raise_exception
     end
 
@@ -287,7 +287,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:promotion).and_return([@story])
 
       lambda{
-        helper.promotion_stream_dialog(@promotion)
+        helper.stream_dialog(:promotion, @promotion)
       }.should_not raise_exception
     end
   end
@@ -302,7 +302,7 @@ describe StreamHelper do
     
     it 'should not fail with default story' do
       lambda{
-        helper.new_hit_listing_stream_dialog(@listing)
+        helper.stream_dialog(:hit_listing_new, @listing)
       }.should_not raise_exception
     end
 
@@ -316,7 +316,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:hit_listing_new).and_return([@story])
 
       lambda{
-        helper.new_hit_listing_stream_dialog(@listing)
+        helper.stream_dialog(:hit_listing_new, @listing)
       }.should_not raise_exception
     end
   end
@@ -331,7 +331,7 @@ describe StreamHelper do
     
     it 'should not fail with default story' do
       lambda{
-        helper.completed_hit_listing_stream_dialog(@listing)
+        helper.stream_dialog(:hit_listing_completed, @listing)
       }.should_not raise_exception
     end
 
@@ -345,7 +345,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:hit_listing_completed).and_return([@story])
 
       lambda{
-        helper.completed_hit_listing_stream_dialog(@listing)
+        helper.stream_dialog(:hit_listing_completed, @listing)
       }.should_not raise_exception
     end
   end
@@ -359,7 +359,7 @@ describe StreamHelper do
     
     it 'should not fail with default story' do
       lambda{
-        helper.collection_completed_stream_dialog(@collection)
+        helper.stream_dialog(:collection_completed, @collection)
       }.should_not raise_exception
     end
 
@@ -373,7 +373,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:collection_completed).and_return([@story])
 
       lambda{
-        helper.collection_completed_stream_dialog(@collection)
+        helper.stream_dialog(:collection_completed, @collection)
       }.should_not raise_exception
     end
   end
@@ -390,7 +390,7 @@ describe StreamHelper do
     
     it 'should not fail' do
       lambda{
-        helper.collection_missing_items_stream_dialog(@collection)
+        helper.stream_dialog(:collection_missing_items, @collection)
       }.should_not raise_exception
     end
     
@@ -404,7 +404,7 @@ describe StreamHelper do
       Story.should_receive(:by_alias).with(:collection_missing_items).and_return([@story])
 
       lambda{
-        helper.collection_missing_items_stream_dialog(@collection)
+        helper.stream_dialog(:collection_missing_items, @collection)
       }.should_not raise_exception
     end    
   end
