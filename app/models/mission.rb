@@ -8,7 +8,6 @@ class Mission < ActiveRecord::Base
   belongs_to  :mission_group
   belongs_to  :parent_mission, :class_name => "Mission"
   has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
-  has_many    :help_requests, :as => :context, :dependent => :destroy
 
   acts_as_list :scope => 'mission_group_id = #{mission_group_id} AND missions.state != \'deleted\''
 

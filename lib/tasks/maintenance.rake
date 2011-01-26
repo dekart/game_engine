@@ -672,18 +672,6 @@ namespace :app do
       Relation.update_all "type='FriendRelation'"
     end
 
-    desc "Link all help requests to missions"
-    task :link_help_requests_to_missions => :environment do
-      HelpRequest.update_all("context_type = 'Mission'")
-      Fight.update_all("cause_type = 'Fight'", "cause_id IS NOT NULL")
-    end
-
-    desc "Link all help requests to missions"
-    task :remove_help_requests_not_missions => :environment do
-      HelpRequest.delete_all("context_type != 'Mission'")
-      Fight.delete_all("cause_type != 'Fight'")
-    end
-
     desc "Add counter caches to character"
     task :character_counter_caches => :environment do
       Character.update_all("fights_won = (SELECT COUNT(*) FROM fights WHERE winner_id = characters.id)")

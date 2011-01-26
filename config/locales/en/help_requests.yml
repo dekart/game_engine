@@ -1,6 +1,0 @@
-en:
-  help_requests:
-    latest:
-      text:
-        fight: "{{friend_amount}} of your friends helped you to fight with {{victim}}! You earned {{money_amount}} Gold and {{experience_amount}} experience."
-        mission: "{{friend_amount}} of your friends helped you to fulfill the {{mission}} mission! You earned {{money_amount}} Gold and {{experience_amount}} experience."

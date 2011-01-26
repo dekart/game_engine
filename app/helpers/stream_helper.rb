@@ -113,55 +113,6 @@ module StreamHelper
   end
 
 
-  def help_request_stream_dialog(context)
-    context_type = context.class.to_s.underscore
-
-    help_url = help_request_url(current_character,
-      :canvas => true,
-      :context => context_type,
-      :reference_code => reference_code(:"stream_help_request_#{context_type}_name")
-    )
-
-    image_url = help_request_url(current_character,
-      :canvas => true,
-      :context => context_type,
-      :reference_code => reference_code(:"stream_help_request_#{context_type}_image")
-    )
-
-    case context
-    when Fight
-      attachment = {
-        :name => t("stories.help_request.fight.title",
-          :level  => context.victim.level,
-          :app    => t("app_name")
-        ),
-        :href => help_url,
-        :media => stream_image(:stream_help_request_fight, image_url)
-      }
-    when Mission
-      attachment = {
-        :name         => t("stories.help_request.mission.title",
-          :mission  => context.name,
-          :app      => t("app_name")
-        ),
-        :href         => help_url,
-        :description  => t("stories.help_request.mission.description")
-      }
-
-      attachment[:media] = stream_image(context.image? ? context.image.url(:stream) : :stream_help_request_mission, image_url)
-    end
-
-    stream_dialog(
-      :attachment => attachment,
-      :action_links => stream_action_link(t("stories.help_request.action_link"), help_url),
-      :success => "$.post('%s')" % help_requests_path(
-        :context_id   => context.id,
-        :context_type => context_type
-      )
-    )
-  end
-
-
   def property_story_options(property)
     [
       {
