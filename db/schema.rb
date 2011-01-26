@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110126094055) do
+ActiveRecord::Schema.define(:version => 20110126113218) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -233,30 +233,6 @@ ActiveRecord::Schema.define(:version => 20110126094055) do
   end
 
   add_index "help_pages", ["alias"], :name => "index_help_pages_on_alias"
-
-  create_table "help_requests", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "context_id"
-    t.integer  "help_results_count",               :default => 0
-    t.integer  "money",              :limit => 8,  :default => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "context_type",       :limit => 50, :default => "", :null => false
-    t.integer  "experience",                       :default => 0
-  end
-
-  add_index "help_requests", ["character_id"], :name => "index_help_requests_on_character_id"
-
-  create_table "help_results", :force => true do |t|
-    t.integer  "help_request_id"
-    t.integer  "character_id"
-    t.integer  "money"
-    t.integer  "experience"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "help_results", ["help_request_id", "character_id"], :name => "index_help_results_on_help_request_id_and_character_id"
 
   create_table "hit_listings", :force => true do |t|
     t.integer  "client_id"
