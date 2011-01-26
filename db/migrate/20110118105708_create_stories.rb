@@ -18,9 +18,22 @@ class CreateStories < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    create_table :story_visits do |t|
+      t.integer :character_id
+
+      t.integer :story_id
+      t.string  :story_alias, :limit => 70, :null => false, :default => ''
+      t.integer :reference_id
+      
+      t.timestamps
+    end
+    
+    add_index :story_visits, [:character_id, :story_alias, :reference_id]
   end
 
   def self.down
     drop_table :stories
+    drop_table :story_visits
   end
 end

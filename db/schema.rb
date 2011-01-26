@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110126113218) do
+ActiveRecord::Schema.define(:version => 20110126094055) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -635,6 +635,15 @@ ActiveRecord::Schema.define(:version => 20110126113218) do
     t.datetime "image_updated_at"
     t.text     "payouts"
     t.string   "state",              :limit => 50,  :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "story_visits", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "story_id"
+    t.string   "story_alias",  :limit => 70, :default => "", :null => false
+    t.integer  "reference_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

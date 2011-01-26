@@ -51,4 +51,30 @@ class Story < ActiveRecord::Base
       end
     end
   end
+  
+  TYPE_TO_REFERENCE = {
+    'item_purchased' => :item_id
+  }
+  
+  def track_visit!(character, story_data = {})
+    reference = story_data[TYPE_TO_REFERENCE[self.alias]]
+    
+    if previous_visit = StoryVisit.first(:conditions => {:character_id => character.id, :story_alias => self.alias, :reference_id => reference})
+      []
+    else
+      transaction do
+        StoryVisit.create!(
+          :character    => character,
+          :story_alias  => self.alias,
+          :reference_id => reference
+        )
+        
+        result = payouts.apply(character, :visit)
+        
+        character.save
+        
+        result
+      end
+    end
+  end
 end

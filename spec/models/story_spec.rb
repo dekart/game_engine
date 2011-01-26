@@ -97,14 +97,46 @@ describe Story do
   end
   
   describe 'when tracking story visit' do
-    it 'should create story visit record for current character, story type, and story reference'
-    it 'should apply payouts to character'
-    it 'should return payout result'
+    before do
+      @character = Factory(:character)
+      @story = Factory(:story, :payouts => Payouts::Collection.new(DummyPayout.new(:apply_on => :visit)))
+    end
+    
+    it 'should create story visit record for current character, story type, and story reference' do
+      lambda{
+        @story.track_visit!(@character)
+      }.should change(StoryVisit, :count).from(0).to(1)
+    end
+    
+    it 'should apply payouts to character' do
+      @story.track_visit!(@character)
+      
+      @story.payouts.first.should be_applied
+    end
+    
+    it 'should return payout result' do
+      result = @story.track_visit!(@character)
+      
+      result.should be_kind_of(Payouts::Collection)
+      result.first.should be_applied
+    end
     
     describe 'when story is already visited' do
-      it 'should not create visit record'
+      before do
+        StoryVisit.create(:character_id => @character.id, :story_alias => @story.alias)
+      end
+      
+      it 'should not create visit record' do
+        lambda{
+          @story.track_visit!(@character)
+        }.should_not change(StoryVisit, :count)
+      end
+      
       it 'should not apply payouts'
-      it 'should return empty array'
+      
+      it 'should return empty array' do
+        @story.track_visit!(@character).should == []
+      end
     end
   end
 end
