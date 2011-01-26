@@ -45,6 +45,20 @@ module StreamHelper
       (item.image.url(:stream) if item.image?)
     ]
   end
+  
+  
+  def mission_help_story_options(mission)
+    [
+      {
+        :name => mission.name,
+        :description => mission.description
+      },
+      {
+        :mission_id => mission.id
+      },
+      (mission.image.url(:stream) if mission.image?)
+    ]
+  end
 
 
   def mission_completed_story_options(mission)
@@ -230,6 +244,7 @@ module StreamHelper
   
   def prepare_story(story_alias, interpolation_options = {}, story_data = {}, image = nil)
     interpolation_options.reverse_merge!(
+      :player_name => current_character.user.first_name,
       :app => t("app_name")
     )
     

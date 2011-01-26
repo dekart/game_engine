@@ -18,6 +18,8 @@ class Character
         has_many :mission_groups,
           :through  => :mission_group_ranks,
           :extend   => MissionGroupAssociationExtension
+          
+        has_many :mission_help_results
       end
     end
 

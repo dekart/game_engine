@@ -65,8 +65,8 @@ Setting[:rating_show_limit] ||= 20
 
 Setting[:help_request_expire_period] ||= 24
 Setting[:help_request_display_period] ||= 24
-Setting[:help_request_mission_money] ||= 5
-Setting[:help_request_mission_experience] ||= 10
+Setting[:help_request_mission_money] ||= 25
+Setting[:help_request_mission_experience] ||= 25
 Setting[:help_request_fight_money] ||= 10
 Setting[:help_request_fight_experience] ||= 20
 

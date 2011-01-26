@@ -63,3 +63,6 @@ en:
       level: "Level {{level}}"
       buttons:
         fulfill: "Fulfill"
+    help:
+      success: "You successfully helped {{user}} to fulfill the {{mission}} mission!"
+      you_received: "You received:"

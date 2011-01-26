@@ -1,10 +1,5 @@
 en:
   help_requests:
-    show:
-      success: "You successfully helped {{user}} to fulfill the {{mission}} mission!"
-      you_received: "You received:"
-      friends_only:
-        message: "You cannot help players that are not your friends"
     latest:
       text:
         fight: "{{friend_amount}} of your friends helped you to fight with {{victim}}! You earned {{money_amount}} Gold and {{experience_amount}} experience."

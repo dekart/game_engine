@@ -21,7 +21,7 @@ class MissionLevel < ActiveRecord::Base
   after_create :update_completion_status
 
   def money
-    rand(money_max - money_min) + money_min
+    money_min == money_max ? money_min : (rand(money_max - money_min) + money_min)
   end
 
   def energy_requirement

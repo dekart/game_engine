@@ -2,8 +2,12 @@ require "spec_helper"
 
 describe StreamHelper do
   before :each do
+    @character = mock_model(Character,
+      :user => mock_model(User, :first_name => 'Some Player')
+    )
+    
     helper.stub!(:asset_image_path).and_return("/path/to/image.jpg")
-    helper.stub!(:current_character).and_return(mock_model(Character))
+    helper.stub!(:current_character).and_return(@character)
     helper.stub!(:reference_code).and_return("The code")
     
     helper.stub!(:encryptor).and_return(
@@ -13,11 +17,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for level up" do
     before :each do
-      @character = mock_model(Character,
-        :level => 5
-      )
-
-      helper.stub!(:current_character).and_return(@character)
+      @character.stub!(:level).and_return(5)
     end
 
     it "should not fail with default story" do
@@ -70,6 +70,40 @@ describe StreamHelper do
 
       lambda{
         helper.stream_dialog(:item_purchased, @item)
+      }.should_not raise_exception
+    end
+  end
+
+  describe "when generating stream dialog for mission help request" do
+    before :each do
+      @mission_group = mock_model(MissionGroup)
+
+      @mission  = mock_model(Mission,
+        :name           => "Super Mission",
+        :description    => 'Mission description',
+        :mission_group  => @mission_group,
+        :image?         => true,
+        :image          => mock("image", :url => "/path/to/image.jpg")
+      )
+    end
+
+    it "should not fail with default options" do
+      lambda{
+        helper.stream_dialog(:mission_help, @mission)
+      }.should_not raise_exception
+    end
+    
+    it 'should not fail with custom story' do
+      @story = mock_model(Story, 
+        :interpolate  => 'text',
+        :image?       => true,
+        :image        => mock("image", :url => "/path/to/image.jpg")
+      )
+      
+      Story.should_receive(:by_alias).with(:mission_help).and_return([@story])
+
+      lambda{
+        helper.stream_dialog(:mission_help, @mission)
       }.should_not raise_exception
     end
   end
@@ -196,40 +230,6 @@ describe StreamHelper do
 
       lambda{
         helper.stream_dialog(:monster_defeated, @monster)
-      }.should_not raise_exception
-    end
-  end
-
-  describe "when generating stream dialog for help request" do
-    before :each do
-      @mission_group = mock_model(MissionGroup)
-
-      @mission  = mock_model(Mission,
-        :name           => "Super Mission",
-        :mission_group  => @mission_group,
-        :image?         => true,
-        :image          => mock("image", :url => "/path/to/image.jpg")
-      )
-
-      @victim = mock_model(Character,
-        :level => 5
-      )
-      @fight = mock_model(Fight, :victim => @victim)
-
-      @character = mock_model(Character)
-
-      helper.stub!(:current_character).and_return(@character)
-    end
-
-    it "should not fail for missions" do
-      lambda{
-        helper.help_request_stream_dialog(@mission)
-      }.should_not raise_exception
-    end
-
-    it "should not fail for fights" do
-      lambda{
-        helper.help_request_stream_dialog(@fight)
       }.should_not raise_exception
     end
   end
@@ -384,8 +384,6 @@ describe StreamHelper do
         :name => 'Fake Collection',
         :missing_items => [mock_model(Item, :name => 'Fake Item')]
       )
-      
-      helper.stub!(:current_character).and_return(mock_model(Character))
     end
     
     it 'should not fail' do

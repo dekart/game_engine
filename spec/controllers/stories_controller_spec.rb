@@ -86,29 +86,42 @@ describe StoriesController do
       end
       
       it 'should target to shop page from inventory story' do
-        do_request :id => 'inventory'
+        do_request :id => 'item_purchased'
         
         response.should redirect_from_iframe_to('http://apps.facebook.com/test/items')
       end
       
-      it 'should target to mission help page from mission help request story'
-      
-      it 'should target to mission group page from mission completion story' do
+      it 'should target to mission help page from mission help request story' do
+        controller.send(:encryptor).should_receive(:encrypt).with(:mission_id => 1, :character_id => 1).and_return('securehelpkey')
+        
         do_request(
-          :id => 'mission',
-          :story_data => '"yZc8QppPzioO7o7hLRlnPec83iaHzaHSsRuiGBAqP1eXId5HN6BWe2znPhnw+TI+--UKqsGv+yur295NLWzhjqbw=="' # {:mission_group_id => 1, :character_id => 1}
+          :id => 'mission_help',
+          :story_data => 'MGkvJJvNnYLx4AdeLp+K2rGBbn75MUMmhs9iFolovvIbTPO49ivKMpb4R+1mqTQA--5i8CyrzRPaYSvpRZnkh2oQ==' # {:mission_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/1')
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/missions/1/help?key=securehelpkey')
+      end
+      
+      it 'should target to mission group page from mission completion story' do
+        Mission.should_receive(:find).with(1).and_return(mock_model(Mission, :mission_group_id => 2))
+        
+        do_request(
+          :id => 'mission_completed',
+          :story_data => 'MGkvJJvNnYLx4AdeLp+K2rGBbn75MUMmhs9iFolovvIbTPO49ivKMpb4R+1mqTQA--5i8CyrzRPaYSvpRZnkh2oQ==' # {:mission_id => 1, :character_id => 1}
+        )
+
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/2')
       end
       
       it 'should target to mission group page from boss story' do
+        Boss.should_receive(:find).with(1).and_return(mock_model(Boss, :mission_group_id => 2))
+
         do_request(
           :id => 'boss_defeated',
-          :story_data => 'yZc8QppPzioO7o7hLRlnPec83iaHzaHSsRuiGBAqP1eXId5HN6BWe2znPhnw+TI+--UKqsGv+yur295NLWzhjqbw==' # {:mission_group_id => 1, :character_id => 1}
+          :story_data => 'NCipKIRIkYNlRxDfS7o6QWdydL+Un0/q0e1Q8m9Szkk=--z/LNV+JvdEEClxpkPapxIw==' # {:boss_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/1')
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/2')
       end
       
       it 'should target to monster page from monster invitation story' do

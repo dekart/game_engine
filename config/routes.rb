@@ -173,7 +173,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mission_groups, :only => [:index, :show]
   map.resources :missions, 
     :only   => :fulfill,
-    :member => {:fulfill => :post}
+    :member => {
+      :fulfill  => :post,
+      :help     => :any
+    }
   map.resources :boss_fights,
     :only => [:create, :update]
   
@@ -218,8 +221,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :premium
 
   map.resource :rating, :member => {:global => :any}
-
-  map.resources :help_requests, :only => [:show, :create]
 
   map.resources :gifts,
     :member => {:confirm => :any}

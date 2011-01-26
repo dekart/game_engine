@@ -149,16 +149,6 @@ Factory.define :mission_group do |t|
   t.state 'visible'
 end
 
-Factory.define :mission do |t|
-  t.association :mission_group
-
-  t.name "Some Mission"
-  t.success_text "Success!"
-  t.complete_text "Complete!"
-
-  t.state 'visible'
-end
-
 Factory.define :mission_level do |t|
   t.association :mission
   
@@ -168,6 +158,16 @@ Factory.define :mission_level do |t|
   t.money_min 10
   t.money_max 20
   t.chance 50
+end
+
+Factory.define :mission do |t|
+  t.association :mission_group
+
+  t.name "Some Mission"
+  t.success_text "Success!"
+  t.complete_text "Complete!"
+
+  t.state 'visible'
 end
 
 Factory.define :mission_with_level, :parent => :mission do |t|
@@ -223,4 +223,13 @@ Factory.define :story do |t|
   t.title 'This is the fake story'
   t.description 'This is description'
   t.action_link 'Play our app!'
+end
+
+Factory.define :mission_help_result do |t|
+  t.association :character
+  t.association :requester, :factory => :character
+  t.association :mission
+  
+  t.money 100
+  t.experience 200
 end

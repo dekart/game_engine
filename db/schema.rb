@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110122091203) do
+ActiveRecord::Schema.define(:version => 20110126094055) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -403,6 +403,18 @@ ActiveRecord::Schema.define(:version => 20110122091203) do
     t.integer  "position"
     t.datetime "image_updated_at"
   end
+
+  create_table "mission_help_results", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "requester_id"
+    t.integer  "mission_id"
+    t.integer  "money"
+    t.integer  "experience"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mission_help_results", ["character_id", "requester_id"], :name => "index_mission_help_results_on_character_id_and_requester_id"
 
   create_table "mission_level_ranks", :force => true do |t|
     t.integer  "character_id"

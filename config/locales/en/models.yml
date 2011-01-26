@@ -146,3 +146,6 @@ en:
           attributes:
             items:
               not_enough_items: "Item set should contain at least 1 item"
+        mission_help_result:
+          already_helped: "You already helped your friend with this mission."
+          cannot_help_themself: "You cannot help yourself!"
