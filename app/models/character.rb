@@ -54,8 +54,8 @@ class Character < ActiveRecord::Base
   has_many :bank_deposits
   has_many :bank_withdrawals, :class_name => "BankWithdraw"
 
-  has_many :vip_money_deposits
-  has_many :vip_money_withdrawals
+  has_many :vip_money_deposits, :dependent => :destroy
+  has_many :vip_money_withdrawals, :dependent => :destroy
 
   has_many :market_items
 
