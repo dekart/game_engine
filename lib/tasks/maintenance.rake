@@ -55,7 +55,7 @@ namespace :app do
         end
       end
       
-      puts "Updating"
+      puts "Done!"
     end
 
     # One-time tasks
