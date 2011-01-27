@@ -231,6 +231,14 @@ describe User do
       }.should change(@user, :gender).from(nil).to(1)
     end
     
+    it 'should not try to update gender is there is no gender in received data' do
+      @mogli_user.should_receive(:gender).and_return(nil)
+      
+      lambda{
+        @user.update_social_data!
+      }.should_not change(@user, :gender)
+    end
+    
     it "should update third-party id to received value" do
       lambda{
         @user.update_social_data!
