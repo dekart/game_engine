@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       self.send("#{attribute}=", user.send(attribute))
     end
     
-    self.gender = GENDERS[user.gender.to_sym]
+    self.gender = GENDERS[user.gender.to_sym] if user.gender
     
     save!
   end
