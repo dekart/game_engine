@@ -65,7 +65,7 @@ class Property < ActiveRecord::Base
 
         save(false) && character.charge!(property_type.upgrade_price(level - 1), vip_price, property_type)
 
-        character.news.add(:property_upgrade, :property_id => id)
+        character.news.add(:property_upgrade, :property_id => id, :level => level)
       end
     else
       false

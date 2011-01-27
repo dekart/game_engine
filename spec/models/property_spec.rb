@@ -219,6 +219,19 @@ describe Property do
         @character.reload
       }.should change(@character, :vip_money).from(1).to(0)
     end
+    
+    it 'should post to newsfeed about the upgrade' do
+      lambda{
+        @property.upgrade!
+      }.should change(News::Base, :count)
+      
+      news = News::Base.first
+      
+      news.should be_kind_of(News::PropertyUpgrade)
+      news.character.should == @character
+      news.property.should == @property
+      news.level.should == 2
+    end
   end
 
   describe "when collecting money from property" do
