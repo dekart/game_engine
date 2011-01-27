@@ -78,13 +78,28 @@ class User < ActiveRecord::Base
     save!
   end
   
+  def update_dashboard_counters!
+    authenticator = Mogli::Authenticator.new(Facebooker2.app_id, Facebooker2.secret, Facebooker2.callback_url)
+    
+    client = Mogli::Client.new(authenticator.get_access_token_for_application)
+    
+    client.class.get('https://api.facebook.com/method/dashboard.setCount', 
+      :query => client.default_params.merge(
+        :uid    => facebook_id,
+        :count  => Invitation.for_user(self).count
+      )
+    )
+  end
+  
   def access_token_expired?
     access_token_expire_at.nil? or access_token_expire_at < Time.now
   end
   
-  protected
-  
   def schedule_social_data_update
     Delayed::Job.enqueue Jobs::UserDataUpdate.new([id])
+  end
+
+  def schedule_counter_update
+    Delayed::Job.enqueue Jobs::UserCounterUpdate.new([id])
   end
 end

@@ -10,6 +10,8 @@ class Invitation < ActiveRecord::Base
   }
 
   validates_uniqueness_of :receiver_id, :scope => :sender_id
+  
+  after_create :schedule_user_counter_update
 
   def receiver
     User.find_by_facebook_id(receiver_id)
@@ -28,10 +30,20 @@ class Invitation < ActiveRecord::Base
       )
 
       update_attribute(:accepted, true)
+      
+      schedule_user_counter_update
     end
   end
 
   def ignore!
-    update_attribute(:accepted, :false)
+    transaction do
+      update_attribute(:accepted, :false)
+      
+      schedule_user_counter_update
+    end
+  end
+  
+  def schedule_user_counter_update
+    receiver.try(:schedule_counter_update)
   end
 end
