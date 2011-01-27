@@ -28,8 +28,6 @@ class Invitation < ActiveRecord::Base
       )
 
       update_attribute(:accepted, true)
-
-      Delayed::Job.enqueue Jobs::InvitationNotification.new(id)
     end
   end
 

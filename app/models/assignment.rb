@@ -8,7 +8,6 @@ class Assignment < ActiveRecord::Base
   validates_uniqueness_of :role, :scope => [:context_id, :context_type]
 
   before_create :destroy_current_assignments
-  after_create :update_assignee_dashboard
 
   class << self
     ROLES.each do |role|
@@ -57,7 +56,6 @@ class Assignment < ActiveRecord::Base
 
       chance <= 0 ? 1 : chance.ceil
     end
-
   end
 
   def effect_value
@@ -72,9 +70,5 @@ class Assignment < ActiveRecord::Base
     end
 
     true
-  end
-
-  def update_assignee_dashboard
-    Delayed::Job.enqueue Jobs::AssignmentNotification.new(id)
   end
 end

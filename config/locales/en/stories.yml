@@ -47,17 +47,3 @@ en:
         title: "Hitlist Reward"
         description: "I've just received a {{amount}} bounty for hitting the {{level}} level enemy in {{app}}!"
         action_link: "Get Reward"
-  news:
-    fight:
-      lost:
-        text: "You were attacked by {{user}} and LOST!"
-        link: "Fight back!"
-      won:
-        text: "You were attacked by {{user}} and WON!"
-        link: "Fight back!"
-    assignment:
-      text: "{{user}} promoted you as their {{position}}!"
-      link: "Manage Alliance"
-    invitation:
-      text: "{{user}} joined your Alliance!"
-      link: "Manage Alliance"

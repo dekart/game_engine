@@ -14,7 +14,7 @@ class Fight < ActiveRecord::Base
   }
 
   before_create :calculate_fight
-  after_create  :save_payout, :update_victim_dashboard, :post_to_newsfeed
+  after_create  :save_payout, :post_to_newsfeed
 
   cattr_accessor :fighting_system, :damage_system
   @@fighting_system = FightingSystem::PlayerVsPlayer::Proportion
@@ -132,10 +132,6 @@ class Fight < ActiveRecord::Base
 
     attacker.save!
     victim.save!
-  end
-
-  def update_victim_dashboard
-    Delayed::Job.enqueue Jobs::FightNotification.new(id)
   end
 
   def post_to_newsfeed
