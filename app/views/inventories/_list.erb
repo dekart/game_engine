@@ -31,6 +31,13 @@
               <%= render "items/effects", :item => inventory %>
             </td>
             <td class="controls">
+              <%= link_to_remote(inventory_use_button(inventory),
+                    :url    => use_inventory_path(inventory),
+                    :update => :result,
+                    :before => "$(this).css('visibility', 'hidden')",
+                    :html   => {:class => "use button"}
+                  ) if inventory.usable? %>
+
               <% if inventory.can_be_sold? %>
                 <% form_tag "", :class => :clearfix do %>
                   <%= amount_select_tag %>
@@ -57,13 +64,6 @@
                   <div class="market_listing"><%= t(".listed_on_market") %></div>
                 <% end %>
               <% end %>
-
-              <%= link_to_remote(inventory_use_button(inventory),
-                    :url    => use_inventory_path(inventory),
-                    :update => :result,
-                    :before => "$(this).css('visibility', 'hidden')",
-                    :html   => {:class => "use button"}
-                  ) if inventory.usable? %>
             </td>
           <% end %>
         <% end %>
