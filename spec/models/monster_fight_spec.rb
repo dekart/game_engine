@@ -41,6 +41,14 @@ describe MonsterFight do
 
       MonsterFight.stub!(:damage_system).and_return(@damage_system)
     end
+    
+    it 'expire monster if its time is up and return false' do
+      @monster.update_attribute(:expire_at, 1.second.ago)
+      
+      lambda{
+        @monster_fight.attack!.should be_false
+      }.should change(@monster, :expired?).from(false).to(true)
+    end
 
     it 'should return false if character does not have enough stamina' do
       @character.sp = 0

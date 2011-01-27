@@ -67,6 +67,10 @@
         </td>
       </tr>
     </table>
+  <% elsif @fight.monster.expired? %>
+    <% builder.fail do %>
+      <%= t(".message.expired", :monster => @fight.monster.name).html_safe %>
+    <% end %>
   <% elsif @fight.character.weak? %>
     <%= builder.render("requirements/not_satisfied/health_point",
           :requirement => current_character.weakness_requirement

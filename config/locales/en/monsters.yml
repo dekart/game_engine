@@ -25,10 +25,14 @@ en:
       insignificant_damage: "The monster is defeated and you didn't do any significant damage to it"
       buttons:
         reward: "Get Reward"
+    expired:
+      too_late: "It's too late to join the battle! The monster is already defeated."
+      expired: "You didn't manage to defeat the monster in time."
     update:
       message:
         progress: "You've successfully attacked %{monster}!"
         won: "You've defeated %{monster}!"
+        expired: "You didn't manage to defeat %{monster} in time."
       you_received: "You received:"
       you_spent: "You spent:"
       monster_spent: "Monster spent:"
