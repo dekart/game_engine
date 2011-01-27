@@ -93,7 +93,7 @@
     border-top = !equippables_item_border
 
     .header
-      margin-bottom: 5px
+      margin-bottom: 10px
 
       .name
         font-weight: bold
@@ -103,13 +103,14 @@
       margin-bottom: 5px
 
     .controls
+      float: right
+      
       select
-        float: left
-
+        display: block
+      
       .equip
-        margin-top: 0px
-        float: left
-        clear: none
+        margin-top: 5px
+        float: right
 
         +button(!equippables_equip_icon)
 
