@@ -132,7 +132,11 @@ describe Story do
         }.should_not change(StoryVisit, :count)
       end
       
-      it 'should not apply payouts'
+      it 'should not apply payouts' do
+        lambda{
+          @story.track_visit!(@character)
+        }.should_not change(@story.payouts.first, :applied?)
+      end
       
       it 'should return empty array' do
         @story.track_visit!(@character).should == []
