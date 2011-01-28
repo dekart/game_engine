@@ -69,12 +69,16 @@ class Story < ActiveRecord::Base
           :reference_id => reference
         )
         
-        result = payouts.apply(character, :visit)
+        result = payouts.apply(character, :visit, self)
         
         character.save
         
         result
       end
     end
+  end
+  
+  def name
+    '%s #%d (%s)' % [self.class.human_name, id, self.alias]
   end
 end

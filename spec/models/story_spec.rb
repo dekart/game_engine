@@ -11,6 +11,36 @@ describe Story do
     end
   end
   
+  describe 'scopes' do
+    describe 'when finding by alias' do
+      before do
+        @story1 = Factory(:story)
+        @story2 = Factory(:story)
+        @story3 = Factory(:story)
+        @story4 = Factory(:story, :alias => 'nonmatchingalias')
+      
+        @story1.publish
+        @story2.publish
+      end
+    
+      it 'should find visible stories only' do
+        Story.by_alias('fake_story').should_not include(@story3)
+      end
+    
+      it 'should find stories with matching alias' do
+        Story.by_alias('fake_story').should_not include(@story4)
+      end
+    
+      it 'should order stories randomly' do
+        Story.by_alias('fake_story').proxy_options[:order].should =~ /RAND\(\)/
+      end
+    
+      it 'should work with symbols as well as with strings' do
+        Story.by_alias(:fake_story).should include(@story1, @story2)
+      end
+    end
+  end
+  
   describe 'when creating' do
     before do
       @story = Factory.build(:story)
@@ -24,34 +54,6 @@ describe Story do
 
     it 'should successfully save' do
       @story.save.should be_true
-    end
-  end
-  
-  describe 'when finding by alias' do
-    before do
-      @story1 = Factory(:story)
-      @story2 = Factory(:story)
-      @story3 = Factory(:story)
-      @story4 = Factory(:story, :alias => 'nonmatchingalias')
-      
-      @story1.publish
-      @story2.publish
-    end
-    
-    it 'should find visible stories only' do
-      Story.by_alias('fake_story').should_not include(@story3)
-    end
-    
-    it 'should find stories with matching alias' do
-      Story.by_alias('fake_story').should_not include(@story4)
-    end
-    
-    it 'should order stories randomly' do
-      Story.by_alias('fake_story').proxy_options[:order].should =~ /RAND\(\)/
-    end
-    
-    it 'should work with symbols as well as with strings' do
-      Story.by_alias(:fake_story).should include(@story1, @story2)
     end
   end
   
@@ -141,6 +143,16 @@ describe Story do
       it 'should return empty array' do
         @story.track_visit!(@character).should == []
       end
+    end
+  end
+  
+  describe 'when fetching scope name' do
+    before do
+      @story = Factory(:story)
+    end
+    
+    it 'should return story alias and ID' do
+      @story.name.should == "Story ##{@story.id} (fake_story)"
     end
   end
 end
