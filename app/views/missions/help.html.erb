@@ -1,6 +1,10 @@
 <% content_for :result do %>
-  <% result_for :mission, :inline => true do |builder| %>
-    <% if !@help_result.new_record? %>
+  <% result_for :mission_help, :inline => true do |builder| %>
+    <% builder.buttons do %>
+      <%= link_to(button(:continue), mission_groups_path, :class => 'continue button') %>
+    <% end %>
+
+    <% if !@help_result.new_record? %>      
       <% builder.success do %>
         <%= t(".success",
               :user     => character_name_link(@help_result.requester),

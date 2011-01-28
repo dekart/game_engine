@@ -64,5 +64,7 @@ en:
       buttons:
         fulfill: "Fulfill"
     help:
-      success: "You successfully helped {{user}} to fulfill the {{mission}} mission!"
+      success: "You've successfully helped {{user}} to fulfill the {{mission}} mission!"
       you_received: "You received:"
+      buttons:
+        continue: "Continue"
