@@ -53,7 +53,19 @@ class Story < ActiveRecord::Base
   end
   
   TYPE_TO_REFERENCE = {
-    'item_purchased' => :item_id
+    'level_up'                  => :level,
+    'item_purchased'            => :item_id,
+    'mission_help'              => :mission_id,
+    'mission_completed'         => :mission_id,
+    'boss_defeated'             => :boss_id,
+    'monster_invite'            => :monster_id,
+    'monster_defeated'          => :monster_id,
+    'property'                  => :property_id,
+    'promotion'                 => :promotion_id,
+    'hit_listing_new'           => :hit_listing_id,
+    'hit_listing_completed'     => :hit_listing_id,
+    'collection_completed'      => :collection_id,
+    'collection_missing_items'  => :collection_id
   }
   
   def track_visit!(character, story_data = {})

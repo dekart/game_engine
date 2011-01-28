@@ -144,6 +144,30 @@ describe Story do
         @story.track_visit!(@character).should == []
       end
     end
+    
+    {
+      'level_up'                  => :level,
+      'item_purchased'            => :item_id,
+      'mission_help'              => :mission_id,
+      'mission_completed'         => :mission_id,
+      'boss_defeated'             => :boss_id,
+      'monster_invite'            => :monster_id,
+      'monster_defeated'          => :monster_id,
+      'property'                  => :property_id,
+      'promotion'                 => :promotion_id,
+      'hit_listing_new'           => :hit_listing_id,
+      'hit_listing_completed'     => :hit_listing_id,
+      'collection_completed'      => :collection_id,
+      'collection_missing_items'  => :collection_id
+    }.each do |story_type, reference|      
+      it "should give payouts for different #{reference} in #{story_type} story" do
+        @story.alias = story_type
+      
+        @story.track_visit!(@character, reference => 1).should_not be_empty
+        @story.track_visit!(@character, reference => 1).should be_empty
+        @story.track_visit!(@character, reference => 2).should_not be_empty
+      end
+    end      
   end
   
   describe 'when fetching scope name' do
