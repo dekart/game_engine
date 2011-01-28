@@ -55,7 +55,9 @@ describe StoriesController do
       
       describe 'if visit tracking gave some payouts' do
         before do
-          @story.stub!(:track_visit!).and_return(Payouts::Collection.new(DummyPayout.new))
+          @payouts = Payouts::Collection.new(DummyPayout.new)
+          
+          @story.stub!(:track_visit!).and_return(@payouts)
         end
         
         it 'should display a page with story payout results' do
@@ -64,10 +66,22 @@ describe StoriesController do
           response.should render_template(:show)
         end
         
+        it 'should pass story to the template' do
+          do_request
+          
+          assigns[:story].should == @story
+        end
+        
         it 'should pass next page url to the template' do
           do_request
           
           assigns[:next_page].should == 'http://apps.facebook.com/test/'
+        end
+        
+        it 'should pass payouts to the template' do
+          do_request
+          
+          assigns[:payouts].should == @payouts
         end
       end
 

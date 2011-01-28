@@ -7,6 +7,8 @@ class CreateStories < ActiveRecord::Migration
       t.string    :description, :limit => 200,  :null => false, :default => ''
       t.string    :action_link, :limit => 50,   :null => false, :default => ''
       
+      t.string    :payout_message, :null => false, :default => ''
+      
       t.string    :image_file_name,                   :default => "", :null => false
       t.string    :image_content_type, :limit => 100, :default => "", :null => false
       t.integer   :image_file_size

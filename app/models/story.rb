@@ -38,7 +38,7 @@ class Story < ActiveRecord::Base
     if attribute.is_a?(Array)
       attribute.collect{|a| interpolate(a, options) }
     else
-      raise ArgumentError.new("#{attribute} is not available for interpolation") unless [:title, :description, :action_link].include?(attribute.to_sym)
+      raise ArgumentError.new("#{attribute} is not available for interpolation") unless [:title, :description, :action_link, :payout_message].include?(attribute.to_sym)
 
       if attribute_value = send(attribute) and !attribute_value.blank?
         options.each do |key, value|

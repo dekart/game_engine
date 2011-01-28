@@ -70,7 +70,7 @@ describe Story do
         }.should raise_exception(ArgumentError)
       end
     
-      %w{title description action_link}.each do |attribute|
+      %w{title description action_link payout_message}.each do |attribute|
         it "should successfully interpolate #{attribute}" do
           @story[attribute] = 'Text with %{value}'
         

@@ -4,6 +4,8 @@
   <%= form.text_field :title, :required => true, :size => 80 %>
   <%= form.text_area :description, :required => true, :cols => 80, :rows => 5 %>
   <%= form.text_field :action_link, :required => true %>
+  
+  <%= form.text_area :payout_message, :cols => 80, :rows => 5 %>  
 <% end %>
 
 <%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>

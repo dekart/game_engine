@@ -3,11 +3,11 @@ class StoriesController < ApplicationController
     story_data = encryptor.decrypt(params[:story_data])
     
     if @story = Story.find_by_id(params[:id])
-      payouts = @story.track_visit!(current_character, story_data)
+      @payouts = @story.track_visit!(current_character, story_data)
       
       key = @story.alias
     else
-      payouts = []
+      @payouts = []
       key = params[:id]
     end
         
@@ -58,7 +58,7 @@ class StoriesController < ApplicationController
       root_url(:canvas => true)
     end
     
-    redirect_from_iframe(@next_page) if payouts.empty?
+    redirect_from_iframe(@next_page) if @payouts.empty?
   rescue ActiveSupport::MessageEncryptor::InvalidMessage
     Rails.logger.error "Failed to decrypt story data: #{params[:story_data]}"
     

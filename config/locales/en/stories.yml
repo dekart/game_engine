@@ -1,7 +1,15 @@
 en:
   stories:
+    # Story controller texts
+    show:
+      you_received: "You Received:"
+      buttons:
+        continue: "Continue"
+    
+    # Story content
     default:
       action_link: "Play {{app}} »"
+      payout_message: "Thank you for playing %{app}!"
     mission_help:
       title: "Please help me with the %{name} mission in %{app}!"
       description: "Help your friend with this mission to get bonus gold and experience!"
