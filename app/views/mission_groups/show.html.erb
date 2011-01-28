@@ -2,6 +2,10 @@
 
 <%= render("missions/buttons", :current => :missions) if Setting.b(:monsters_enabled) %>
 
+<% if current_character.mission_helps.uncollected.size > 0 %>
+  <%= render('missions/help_results', :help_results => current_character.mission_helps.uncollected) %>
+<% end%>
+
 <%= render("tabs") %>
 
 <% if @mission_group %>

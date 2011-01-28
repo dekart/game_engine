@@ -19,6 +19,24 @@ describe MissionHelpResult do
     end
   end
   
+  describe 'class' do
+    describe 'when retreiving character list' do
+      before do
+        @character1 = Factory(:mission_help_result).character
+        @character2 = Factory(:mission_help_result).character
+        @character3 = Factory(:mission_help_result, :collected => true).character
+      end
+      
+      it 'should collect characters for help results' do
+        MissionHelpResult.characters.should == [@character1, @character2, @character3]
+      end
+      
+      it 'should collect characters by current scope' do
+        MissionHelpResult.scoped(:conditions => {:collected => false}).characters.should == [@character1, @character2]
+      end
+    end
+  end
+  
   describe 'when creating' do
     before do
       @character  = Factory(:character)
@@ -37,7 +55,7 @@ describe MissionHelpResult do
     it 'should give 25% of mission level money to character' do
       @help_result.save
       
-      @help_result.money.should == 25
+      @help_result.basic_money.should == 25
     end
     
     it 'should give 25% of mission level experience to character' do

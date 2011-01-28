@@ -173,6 +173,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mission_groups, :only => [:index, :show]
   map.resources :missions, 
     :only   => :fulfill,
+    :collection => {
+      :collect_help_reward => :post
+    },
     :member => {
       :fulfill  => :post,
       :help     => :any

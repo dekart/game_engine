@@ -15,7 +15,7 @@
       <div class="payouts">
         <h3><%= t(".you_received") %></h3>
 
-        <%= payout(:basic_money, number_to_currency(@help_result.money)) %>
+        <%= payout(:basic_money, number_to_currency(@help_result.basic_money)) %>
         <%= payout(:experience, @help_result.experience) %>
       </div>
     <% else %>

@@ -226,10 +226,8 @@ Factory.define :story do |t|
 end
 
 Factory.define :mission_help_result do |t|
+  t.association :mission, :factory => :mission_with_level
+
   t.association :character
   t.association :requester, :factory => :character
-  t.association :mission
-  
-  t.money 100
-  t.experience 200
 end

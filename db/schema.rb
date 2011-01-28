@@ -384,13 +384,15 @@ ActiveRecord::Schema.define(:version => 20110126094055) do
     t.integer  "character_id"
     t.integer  "requester_id"
     t.integer  "mission_id"
-    t.integer  "money"
+    t.integer  "basic_money"
     t.integer  "experience"
+    t.boolean  "collected",    :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "mission_help_results", ["character_id", "requester_id"], :name => "index_mission_help_results_on_character_id_and_requester_id"
+  add_index "mission_help_results", ["requester_id", "collected"], :name => "index_mission_help_results_on_requester_id_and_collected"
 
   create_table "mission_level_ranks", :force => true do |t|
     t.integer  "character_id"

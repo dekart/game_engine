@@ -92,4 +92,84 @@ describe Character do
       end
     end
   end
+
+  describe 'mission helps' do
+    describe 'when fetching uncollected mission helps' do
+      before do
+        @character = Factory(:character)
+      end
+    
+      it 'should scope to results for the character' do
+        @result1 = Factory(:mission_help_result, :requester => @character)
+        @result2 = Factory(:mission_help_result)
+      
+        @character.mission_helps.uncollected.should == [@result1]
+      end
+
+      it 'should scope to uncollected help results' do
+        @result1 = Factory(:mission_help_result, :requester => @character)
+        @result2 = Factory(:mission_help_result, :requester => @character, :collected => true)
+      
+        @character.mission_helps.uncollected.should == [@result1]
+      end
+    
+      it 'should order results by creation date (recent first)' do
+        @result1 = Factory(:mission_help_result, :requester => @character)
+
+        time_travel_to(1.minute.ago) do
+          @result2 = Factory(:mission_help_result, :requester => @character)
+        end
+
+        @character.mission_helps.uncollected.should == [@result1, @result2]
+      end
+    end
+    
+    describe 'when collecting reward' do
+      before do
+        @character = Factory(:character)
+        
+        @result1 = Factory(:mission_help_result, :requester => @character)
+        @result2 = Factory(:mission_help_result, :requester => @character)
+        
+        MissionHelpResult.update_all(:basic_money => 10, :experience => 20)
+      end
+      
+      it 'should give all collected money to character' do
+        lambda{
+          @character.mission_helps.collect_reward!
+        }.should change(@character, :basic_money).from(0).to(20)
+      end
+      
+      it 'should give all collected experience to character' do
+        lambda{
+          @character.mission_helps.collect_reward!
+        }.should change(@character, :experience).from(0).to(40)
+      end
+      
+      it 'should save applied payouts' do
+        @character.mission_helps.collect_reward!
+        
+        @character.should_not be_changed
+      end
+      
+      it 'should mark all uncollected results as collected' do
+        lambda{
+          @character.mission_helps.collect_reward!
+        }.should change(@character.mission_helps.uncollected, :size).from(2).to(0)
+      end
+      
+      it 'should not collect reward from already collected results' do
+        @result3 = Factory(:mission_help_result, :requester => @character, :collected => true)
+        
+        @character.mission_helps.collect_reward!
+        
+        @character.basic_money.should == 20
+        @character.experience.should == 40
+      end
+      
+      it 'should return an array with collected money and experience' do
+        @character.mission_helps.collect_reward!.should == [20, 40]
+      end
+    end
+  end
 end

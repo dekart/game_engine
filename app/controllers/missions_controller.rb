@@ -18,6 +18,12 @@ class MissionsController < ApplicationController
     @help_result = current_character.mission_help_results.create(:requester => @requester, :mission => @mission)
   end
   
+  def collect_help_reward
+    @basic_money, @experience = current_character.mission_helps.collect_reward!
+    
+    render :layout => 'ajax'
+  end
+  
   protected
   
   def fetch_missions

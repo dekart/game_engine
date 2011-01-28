@@ -20,6 +20,10 @@ class Character
           :extend   => MissionGroupAssociationExtension
           
         has_many :mission_help_results
+        has_many :mission_helps, 
+          :class_name   => "MissionHelpResult",
+          :foreign_key  => :requester_id,
+          :extend       => MissionHelpAssociationExtension
       end
     end
 
@@ -124,6 +128,28 @@ class Character
             :character      => proxy_owner,
             :mission_group  => group
           )
+      end
+    end
+    
+    module MissionHelpAssociationExtension
+      def uncollected
+        scoped(:conditions => {:collected => false}, :order => "mission_help_results.created_at DESC")
+      end
+      
+      def collect_reward!
+        basic_money = uncollected.sum(:basic_money)
+        experience  = uncollected.sum(:experience)
+        
+        transaction do
+          proxy_owner.charge(- basic_money, 0)
+          proxy_owner.experience += experience
+          
+          proxy_owner.save!
+          
+          uncollected.update_all(:collected => true)
+        end
+        
+        [basic_money, experience]
       end
     end
   end

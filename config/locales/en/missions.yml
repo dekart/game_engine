@@ -68,3 +68,12 @@ en:
       you_received: "You received:"
       buttons:
         continue: "Continue"
+    help_results:
+      message: "%{amount} of your friends helped you to fulfill missions. It's time for you to collect your reward!"
+      reward: "Your Reward:"
+      helpers: "Helpers:"
+      buttons:
+        collect: "Collect"
+    collect_help_reward:
+      message: "You've successfully collected your reward!"
+      you_received: "You Received:"

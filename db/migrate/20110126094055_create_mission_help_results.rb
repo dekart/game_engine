@@ -5,13 +5,16 @@ class CreateMissionHelpResults < ActiveRecord::Migration
       t.integer :requester_id
       t.integer :mission_id
       
-      t.integer :money
+      t.integer :basic_money
       t.integer :experience
+      
+      t.boolean :collected, :null => false, :default => false
       
       t.timestamps
     end
     
     add_index :mission_help_results, [:character_id, :requester_id]
+    add_index :mission_help_results, [:requester_id, :collected]
 
     drop_table :help_requests
     drop_table :help_results
