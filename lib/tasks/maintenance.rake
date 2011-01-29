@@ -1,7 +1,16 @@
 namespace :app do
   namespace :maintenance do
     desc "Update translation keys"
-    task :update_translation_keys => :environment do
+    task :update_translations => :environment do
+      puts "Updating interpolation keys..."
+      
+      Translation.find_each do |translation|
+        translation.value_will_change!
+        translation.value.gsub!(/\{\{([^}]+)\}\}/im, '%{\1}')
+        
+        translation.save!
+      end
+
       puts "Updating translation keys..."
 
       {
@@ -17,23 +26,49 @@ namespace :app do
         "mission_groups.tabs.next.name"         => "mission_groups.tabs.next",
         "mission_groups.tabs.next.level"        => nil,
         "mission_groups.show.locked_group"      => nil,
-        "relations.index.members.title"         => "relations.members.title"
-      }.each do |old_key, new_key|
+        "relations.index.members.title"         => "relations.members.title",
+        
+        'stories.help_request.fight.title'            => nil,
+        'stories.help_request.action_link'            => nil,
+        'stories.help_request.mission.title'          => ['stories.mission_help.title', {:mission => :name}],
+        'stories.help_request.mission.description'    => 'stories.mission_help.description',
+        'stories.inventory.title'                     => ['stories.item_purchased.title', {:item => :name}],
+        'stories.mission.title'                       => ['stories.mission_completed.title', {:mission => :name}],
+        'stories.boss.title'                          => ['stories.boss_defeated.title', {:boss => :name}],
+        'stories.monster_invite.title'                => {:monster => :name},
+        'stories.monster_invite.description'          => {:monster => :name},
+        'stories.monster_defeated.title'              => {:monster => :name},
+        'stories.property.title'                      => {:property => :name},
+        'stories.collection.completed.title'          => ['stories.collection_completed.title', {:collection => :name}],
+        'stories.collection.missing_items.title'        => ['stories.collection_missing_items.title', {:collection => :name}],
+        'stories.collection.missing_items.description'  => ['stories.collection_missing_items.description', {:collection => :name}],
+        'stories.hitlist.new_listing.title'             => 'stories.hit_listing_new.title',
+        'stories.hitlist.new_listing.description'       => 'stories.hit_listing_new.description',
+        'stories.hitlist.new_listing.action_link'       => 'stories.hit_listing_new.action_link',
+        'stories.hitlist.completed_listing.title'       => 'stories.hit_listing_completed.title',
+        'stories.hitlist.completed_listing.description' => 'stories.hit_listing_completed.description',
+        'stories.hitlist.completed_listing.action_link' => 'stories.hit_listing_completed.action_link'
+      }.each do |old_key, update|
         if translation = Translation.find_by_key(old_key)
           print "#{old_key} - "
 
-          if new_key.present?
-            translation.update_attribute(:key, new_key)
-
-            puts "Updated"
-          else
+          if update.nil?
             translation.destroy
 
             puts "Deleted"
+          elsif update.is_a?(String)
+            translation.update_attribute(:key, update)
+
+            puts "Updated"
+          elsif update.is_a?(Hash)
+            translation.update_interpolation_keys(update)
+          elsif update.is_a?(Array)
+            translation.update_attribute(:key, update.first)
+            translation.update_interpolation_keys(update.last)
           end
         end
       end
-
+      
       puts "Done!"
     end
 

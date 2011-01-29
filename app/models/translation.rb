@@ -27,6 +27,16 @@ class Translation < ActiveRecord::Base
     end
     init
   end
+  
+  def update_interpolation_keys(updates = {})
+    updates.each do |old_key, new_key|
+      value.gsub!(/%\{#{old_key}\}/im, "%{#{new_key}}")
+    end
+    
+    value_will_change!
+    
+    save!
+  end
 
   private
 
