@@ -56,8 +56,8 @@ en:
     hit_listing_new:
       title: "Hitlist Offer"
       description: "I'm offering a %{amount} bounty for any friend who'll win my %{level} level enemy in %{app}!"
-      action_link: "Attack"
+      action_link: "Attack! »"
     hit_listing_completed:
       title: "Hitlist Reward"
       description: "I've just received a %{amount} bounty for hitting the %{level} level enemy in %{app}!"
-      action_link: "Get Reward"
+      action_link: ""
