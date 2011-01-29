@@ -36,9 +36,7 @@ module StreamHelper
 
   def item_purchased_story_options(item)
     [
-      {
-        :item => item.name
-      },
+      item.attributes,
       {
         :item_id => item.id
       },
@@ -49,10 +47,7 @@ module StreamHelper
   
   def mission_help_story_options(mission)
     [
-      {
-        :name => mission.name,
-        :description => mission.description
-      },
+      mission.attributes,
       {
         :mission_id => mission.id
       },
@@ -63,9 +58,7 @@ module StreamHelper
 
   def mission_completed_story_options(mission)
     [
-      {
-        :mission => mission.name
-      },
+      mission.attributes,
       {
         :mission_id => mission.id
       },
@@ -76,9 +69,7 @@ module StreamHelper
 
   def boss_defeated_story_options(boss)
     [
-      {
-        :boss => boss.name
-      },
+      boss.attributes,
       {
         :boss_id => boss.id
       },
@@ -89,9 +80,7 @@ module StreamHelper
 
   def monster_invite_story_options(monster)
     [
-      {
-        :monster => monster.name
-      },
+      monster.attributes,
       {
         :monster_id => monster.id
       },
@@ -102,9 +91,7 @@ module StreamHelper
 
   def monster_defeated_story_options(monster)
     [
-      {
-        :monster => monster.name
-      },
+      monster.attributes,
       {
         :monster_id => monster.id
       },
@@ -115,9 +102,7 @@ module StreamHelper
 
   def property_story_options(property)
     [
-      {
-        :property => property.name
-      },
+      property.attributes,
       {
         :property_id => property.id
       },
@@ -166,9 +151,7 @@ module StreamHelper
 
   def collection_completed_story_options(collection)
     [
-      {
-        :collection => collection.name
-      },
+      collection.attributes,
       {
         :collection_id => collection.id
       }
@@ -180,10 +163,9 @@ module StreamHelper
     missing_items = collection.missing_items(current_character)
 
     [
-      {
-        :collection => collection.name,
-        :items      => missing_items.collect{|i| i.name }.join(', '),
-      },
+      collection.attributes.merge(
+        :items => missing_items.collect{|i| i.name }.join(', ')
+      ),
       {
         :collection_id  => collection.id,
         :items          => missing_items.collect{|i| i.id },

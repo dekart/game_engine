@@ -43,11 +43,8 @@ describe StreamHelper do
 
   describe "when generating stream dialog for inventory item" do
     before :each do
-      @item_group = mock_model(ItemGroup)
-
       @item = mock_model(Item,
-        :name       => "Super Item",
-        :item_group => @item_group,
+        :attributes => {:name => "Super Item"},
         :image?     => true,
         :image      => mock("image", :url => "/path/to/image.jpg")
       )
@@ -76,12 +73,11 @@ describe StreamHelper do
 
   describe "when generating stream dialog for mission help request" do
     before :each do
-      @mission_group = mock_model(MissionGroup)
-
       @mission  = mock_model(Mission,
-        :name           => "Super Mission",
-        :description    => 'Mission description',
-        :mission_group  => @mission_group,
+        :attributes     => {
+          :name           => "Super Mission",
+          :description    => 'Mission description'
+        },
         :image?         => true,
         :image          => mock("image", :url => "/path/to/image.jpg")
       )
@@ -110,13 +106,12 @@ describe StreamHelper do
 
   describe "when generating stream dialog for mission completion" do
     before :each do
-      @mission_group = mock_model(MissionGroup)
-
       @mission  = mock_model(Mission,
-        :name           => "Super Mission",
-        :mission_group  => @mission_group,
-        :image?         => true,
-        :image          => mock("image", :url => "/path/to/image.jpg")
+        :attributes => {
+          :name => "Super Mission",
+        },
+        :image? => true,
+        :image  => mock("image", :url => "/path/to/image.jpg")
       )
     end
 
@@ -143,13 +138,12 @@ describe StreamHelper do
 
   describe "when generating stream dialog for boss defeat" do
     before :each do
-      @mission_group = mock_model(MissionGroup)
-
       @boss  = mock_model(Boss,
-        :name           => "Super Boss",
-        :mission_group  => @mission_group,
-        :image?         => true,
-        :image          => mock("image", :url => "/path/to/image.jpg")
+        :attributes => {
+          :name => "Super Boss",
+        },
+        :image? => true,
+        :image  => mock("image", :url => "/path/to/image.jpg")
       )
     end
 
@@ -177,7 +171,9 @@ describe StreamHelper do
   describe 'when generating stream dialog for monster fight invitation' do
     before do
       @monster = mock_model(Monster,
-        :name => 'Fake Monster',
+        :attributes => {
+          :name => 'Fake Monster',
+        },
         :image? => true,
         :image  => mock("image", :url => "/path/to/image.jpg")
       )
@@ -207,7 +203,9 @@ describe StreamHelper do
   describe 'when generating stream dialog for monster defeat' do
     before do
       @monster = mock_model(Monster,
-        :name => 'Fake Monster',
+        :attributes => {
+          :name => 'Fake Monster',
+        },
         :image? => true,
         :image  => mock("image", :url => "/path/to/image.jpg")
       )
@@ -237,7 +235,9 @@ describe StreamHelper do
   describe "when generating stream dialog for property" do
     before :each do
       @property = mock_model(Property,
-        :name   => "Super Property",
+        :attributes => {
+          :name => 'Fake Property',
+        },
         :image? => true,
         :image  => mock("image", :url => "/path/to/image.jpg")
       )
@@ -341,7 +341,7 @@ describe StreamHelper do
         :image?       => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
-      
+
       Story.should_receive(:by_alias).with(:hit_listing_completed).and_return([@story])
 
       lambda{
@@ -353,7 +353,9 @@ describe StreamHelper do
   describe 'when generating stream dialog for completed collection' do
     before do
       @collection = mock_model(ItemCollection,
-        :name => 'Fake Collection'
+        :attributes => {
+          :name => 'Fake Collection',
+        }
       )
     end
     
@@ -381,7 +383,9 @@ describe StreamHelper do
   describe 'when generating stream dialog for missing collection items' do
     before do
       @collection = mock_model(ItemCollection,
-        :name => 'Fake Collection',
+        :attributes => {
+          :name => 'Fake Collection',
+        },
         :missing_items => [mock_model(Item, :name => 'Fake Item')]
       )
     end
