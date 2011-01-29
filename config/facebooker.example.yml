@@ -23,18 +23,11 @@ development:
     local_port: 3301
 
 test:
-  app_id: 330750689413
-  api_key: df3013384e37206cd411e220b78f6384
-  secret_key: 9112b45e52241e49d58b2e0500a629ce
-  canvas_page_name: sword-dev
-  callback_url: http://fb.itvektor.ru
-  pretty_errors: false
-  set_asset_host_to_callback_url: true
-  tunnel:
-    public_host_username: 
-    public_host: 
-    public_port: 4007
-    local_port: 3000
+  app_id: 123456789
+  api_key: abcd1234567890abcd1234567890ab12
+  secret: 21ba0987654321dcba0987654321dcba
+  canvas_page_name: test
+  callback_url: http://callback.url
 
 production:
   app_id: 81958551648

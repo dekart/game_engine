@@ -18,6 +18,7 @@ en:
         titles: "Titles"
         item_collections: "Collections"
         tips: "Tips"
+        stories: "Feed Stories"
         translations: "Translations"
         assets: "Assets"
         help_pages: "Help Pages"
@@ -605,5 +606,30 @@ en:
         add_item: "Add Item..."
       item_fields:
         remove: "Remove"
+
+    stories:
+      index:
+        title: "Stories"
+        empty_set: "No stories"
+        controls:
+          new: "Add Story"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this story visible to players?"
+          hide: "Hide"
+      form_fields:
+        story: "Story Content"
+      new:
+        title: "New Story"
+        submit: "Create"
+      create:
+        success: "Story has been created successfully!"
+      edit:
+        title: "Edit Story"
+        submit: "Update"
+      update:
+        success: "Story has been updated successfully!"
 
     # Add your custom translation strings below this mark

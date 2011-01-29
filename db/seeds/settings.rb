@@ -63,13 +63,6 @@ Setting[:fight_max_difference] = 30
 
 Setting[:rating_show_limit] ||= 20
 
-Setting[:help_request_expire_period] ||= 24
-Setting[:help_request_display_period] ||= 24
-Setting[:help_request_mission_money] ||= 5
-Setting[:help_request_mission_experience] ||= 10
-Setting[:help_request_fight_money] ||= 10
-Setting[:help_request_fight_experience] ||= 20
-
 Setting[:inventory_sell_price] ||= 50
 
 Setting[:item_show_basic] ||= 10
@@ -95,6 +88,8 @@ Setting[:newsletter_send_sleep] ||= 60
 
 Setting[:mission_group_show_limit] ||= 4
 Setting[:mission_completion_dialog] ||= true
+Setting[:mission_help_money] ||= 25
+Setting[:mission_help_experience] ||= 25
 
 Setting[:app_google_analytics_id] ||= ""
 

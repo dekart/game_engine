@@ -42,10 +42,6 @@ class Character < ActiveRecord::Base
     :as         => :context,
     :dependent  => :delete_all
 
-  has_many :help_requests,
-    :dependent  => :destroy,
-    :extend     => Character::HelpRequests
-
   has_many :boss_fights,
     :extend => Character::BossFights
 

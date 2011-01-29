@@ -1,5 +1,5 @@
 <% builder.buttons do %>
-  <%= help_request_link(button(:request_help), mission,
+  <%= link_to_function(button(:request_help), stream_dialog(:mission_help, mission),
         :class => "request_help button"
       ) %>
 

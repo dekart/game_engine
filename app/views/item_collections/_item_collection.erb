@@ -23,7 +23,7 @@
         ) %>
 
     <div class="controls">
-      <%= link_to_function(button(:request), collection_missing_items_stream_dialog(collection),
+      <%= link_to_function(button(:request), stream_dialog(:collection_missing_items, collection),
             :class => 'publish button'
           ) unless collection.missing_items(current_character).empty? %>
 

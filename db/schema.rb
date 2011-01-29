@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110122091203) do
+ActiveRecord::Schema.define(:version => 20110126094055) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -119,41 +119,41 @@ ActiveRecord::Schema.define(:version => 20110122091203) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                     :limit => 100,      :default => "",                    :null => false
+    t.string   "name",                     :limit => 100,        :default => "",                    :null => false
     t.integer  "basic_money"
     t.integer  "vip_money"
-    t.integer  "level",                                        :default => 1
-    t.integer  "experience",                                   :default => 0
+    t.integer  "level",                                          :default => 1
+    t.integer  "experience",                                     :default => 0
     t.integer  "points"
     t.integer  "attack"
     t.integer  "defence"
-    t.integer  "hp",                                           :default => 100
+    t.integer  "hp",                                             :default => 100
     t.integer  "health"
-    t.integer  "ep",                                           :default => 10
+    t.integer  "ep",                                             :default => 10
     t.integer  "energy"
     t.text     "inventory_effects"
     t.datetime "hp_updated_at"
     t.datetime "ep_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "fights_won",                                   :default => 0
-    t.integer  "fights_lost",                                  :default => 0
-    t.integer  "missions_succeeded",                           :default => 0
-    t.integer  "missions_completed",                           :default => 0
-    t.integer  "relations_count",                              :default => 0
-    t.integer  "bank",                     :limit => 8,        :default => 0
+    t.integer  "fights_won",                                     :default => 0
+    t.integer  "fights_lost",                                    :default => 0
+    t.integer  "missions_succeeded",                             :default => 0
+    t.integer  "missions_completed",                             :default => 0
+    t.integer  "relations_count",                                :default => 0
+    t.integer  "bank",                     :limit => 8,          :default => 0
     t.datetime "basic_money_updated_at"
     t.text     "relation_effects"
     t.integer  "current_mission_group_id"
     t.integer  "character_type_id"
     t.integer  "stamina"
-    t.integer  "sp",                                           :default => 10
+    t.integer  "sp",                                             :default => 10
     t.datetime "sp_updated_at"
-    t.text     "placements",               :limit => 16777215
-    t.integer  "total_money",                                  :default => 0
-    t.datetime "hospital_used_at",                             :default => '1970-01-01 05:00:00'
-    t.integer  "missions_mastered",                            :default => 0
-    t.integer  "lock_version",                                 :default => 0
+    t.text     "placements",               :limit => 2147483647
+    t.integer  "total_money",                                    :default => 0
+    t.datetime "hospital_used_at",                               :default => '1970-01-01 05:00:00'
+    t.integer  "missions_mastered",                              :default => 0
+    t.integer  "lock_version",                                   :default => 0
   end
 
   add_index "characters", ["level"], :name => "index_characters_on_level"
@@ -233,30 +233,6 @@ ActiveRecord::Schema.define(:version => 20110122091203) do
   end
 
   add_index "help_pages", ["alias"], :name => "index_help_pages_on_alias"
-
-  create_table "help_requests", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "context_id"
-    t.integer  "help_results_count",               :default => 0
-    t.integer  "money",              :limit => 8,  :default => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "context_type",       :limit => 50, :default => "", :null => false
-    t.integer  "experience",                       :default => 0
-  end
-
-  add_index "help_requests", ["character_id"], :name => "index_help_requests_on_character_id"
-
-  create_table "help_results", :force => true do |t|
-    t.integer  "help_request_id"
-    t.integer  "character_id"
-    t.integer  "money"
-    t.integer  "experience"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "help_results", ["help_request_id", "character_id"], :name => "index_help_results_on_help_request_id_and_character_id"
 
   create_table "hit_listings", :force => true do |t|
     t.integer  "client_id"
@@ -403,6 +379,20 @@ ActiveRecord::Schema.define(:version => 20110122091203) do
     t.integer  "position"
     t.datetime "image_updated_at"
   end
+
+  create_table "mission_help_results", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "requester_id"
+    t.integer  "mission_id"
+    t.integer  "basic_money"
+    t.integer  "experience"
+    t.boolean  "collected",    :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mission_help_results", ["character_id", "requester_id"], :name => "index_mission_help_results_on_character_id_and_requester_id"
+  add_index "mission_help_results", ["requester_id", "collected"], :name => "index_mission_help_results_on_requester_id_and_collected"
 
   create_table "mission_level_ranks", :force => true do |t|
     t.integer  "character_id"
@@ -641,12 +631,22 @@ ActiveRecord::Schema.define(:version => 20110122091203) do
     t.string   "title",              :limit => 200, :default => "", :null => false
     t.string   "description",        :limit => 200, :default => "", :null => false
     t.string   "action_link",        :limit => 50,  :default => "", :null => false
+    t.string   "payout_message",                    :default => "", :null => false
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.text     "payouts"
     t.string   "state",              :limit => 50,  :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "story_visits", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "story_id"
+    t.string   "story_alias",  :limit => 70, :default => "", :null => false
+    t.integer  "reference_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

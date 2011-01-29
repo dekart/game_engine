@@ -4,8 +4,6 @@
 
 <%= render "fights/buttons", :current => :fight %>
 
-<%= latest_help_request_for(:fight) %>
-
 <% if current_character.weak? %>
   <p>
     <%= t(".messages.too_weak",

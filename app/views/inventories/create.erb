@@ -1,7 +1,7 @@
 <% result_for :shop do |builder| %>
   <% if @inventory.valid? %>
     <% builder.buttons do %>
-      <%= link_to_function(button(:publish), inventory_stream_dialog(@inventory),
+      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @inventory.item),
             :class => "publish button"
           ) %>
 

@@ -109,12 +109,6 @@ en:
               not_enough_vip_money: "You don't have enough {{vip_money}} to buy a {{name}}."
               not_enough_vip_money_for_upgrade: "You don't have enough {{vip_money}} to upgrade your {{name}}."
               too_much_properties: "You cannot buy any more {{plural_name}} because you already have too many! Try to purchase other types of properties."
-        help_result:
-          too_late: "You're too late! Next time try to help your friends within 24 hours."
-          already_helped_with_mission: "You already helped your friend with this mission."
-          already_helped_with_fight: "You already helped your friend fight this enemy."
-          cannot_attack_self: "Try to find another oppponent :) We're against suicide"
-          cannot_help_yourself: "You cannot help yourself!"
         boss_fight:
           attributes:
             character:
@@ -146,3 +140,6 @@ en:
           attributes:
             items:
               not_enough_items: "Item set should contain at least 1 item"
+        mission_help_result:
+          already_helped: "You already helped your friend with this mission."
+          cannot_help_themself: "You cannot help yourself!"

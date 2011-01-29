@@ -132,6 +132,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :item_sets,
       :new => { :add_item => :any }
 
+    admin.resources :stories,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+
     # Add your custom admin routes below this mark
     
   end
@@ -167,7 +173,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :mission_groups, :only => [:index, :show]
   map.resources :missions, 
     :only   => :fulfill,
-    :member => {:fulfill => :post}
+    :collection => {
+      :collect_help_reward => :post
+    },
+    :member => {
+      :fulfill  => :post,
+      :help     => :any
+    }
   map.resources :boss_fights,
     :only => [:create, :update]
   
@@ -213,8 +225,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :rating, :member => {:global => :any}
 
-  map.resources :help_requests, :only => [:show, :create]
-
   map.resources :gifts,
     :member => {:confirm => :any}
 
@@ -233,6 +243,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :monsters, 
     :member => {:reward => :post}
+    
+  map.resources :stories, :only => :show
 
   # Add your custom routes below this mark
   

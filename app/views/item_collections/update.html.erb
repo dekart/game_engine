@@ -1,7 +1,7 @@
 <% result_for :item_collection do |builder| %>
   <% if @result.applied %>
     <% builder.buttons do %>
-      <%= link_to_function(button(:publish), collection_completed_stream_dialog(@collection),
+      <%= link_to_function(button(:publish), stream_dialog(:collection_completed, @collection),
             :class => "publish button"
           ) %>
     <% end %>

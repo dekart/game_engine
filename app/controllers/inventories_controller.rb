@@ -72,7 +72,7 @@ class InventoriesController < ApplicationController
     data = encryptor.decrypt(params[:request_data].to_s)
 
     if Time.now < data[:valid_till]
-      @character = Character.find(data[:requester_id])
+      @character = Character.find(data[:character_id])
 
       if @character == current_character
         redirect_from_iframe root_url(:canvas => true)

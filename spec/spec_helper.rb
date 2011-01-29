@@ -8,6 +8,7 @@ Spork.prefork do
   require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
   require 'spec/autorun'
   require 'spec/rails'
+  require "paperclip/matchers"
 end
 
 Spork.each_run do
@@ -21,6 +22,7 @@ end
 
 Spec::Runner.configure do |config|
   config.include Delorean
+  config.include Paperclip::Shoulda::Matchers
   
   # == Mock Framework
   #

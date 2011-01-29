@@ -4,7 +4,7 @@ Factory.define :user do |t|
   t.facebook_id 123456789
   
   t.access_token 'abc123'
-  t.access_token_expire_at 1.hour.from_now
+  t.access_token_expire_at 1.day.from_now
 end
 
 Factory.define :character_type do |t|
@@ -149,16 +149,6 @@ Factory.define :mission_group do |t|
   t.state 'visible'
 end
 
-Factory.define :mission do |t|
-  t.association :mission_group
-
-  t.name "Some Mission"
-  t.success_text "Success!"
-  t.complete_text "Complete!"
-
-  t.state 'visible'
-end
-
 Factory.define :mission_level do |t|
   t.association :mission
   
@@ -168,6 +158,16 @@ Factory.define :mission_level do |t|
   t.money_min 10
   t.money_max 20
   t.chance 50
+end
+
+Factory.define :mission do |t|
+  t.association :mission_group
+
+  t.name "Some Mission"
+  t.success_text "Success!"
+  t.complete_text "Complete!"
+
+  t.state 'visible'
 end
 
 Factory.define :mission_with_level, :parent => :mission do |t|
@@ -215,4 +215,19 @@ Factory.define :wall_post do |t|
   t.association :author, :factory => :character
 
   t.text "This is a Fake Text"
+end
+
+Factory.define :story do |t|
+  t.alias 'fake_story'
+  
+  t.title 'This is the fake story'
+  t.description 'This is description'
+  t.action_link 'Play our app!'
+end
+
+Factory.define :mission_help_result do |t|
+  t.association :mission, :factory => :mission_with_level
+
+  t.association :character
+  t.association :requester, :factory => :character
 end
