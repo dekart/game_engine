@@ -27,15 +27,13 @@ describe Character do
     end
     
     it 'should return time in seconds to next possible usage basing on hospital delay' do
-      # Freezing time in this test
-      time = Time.now
-      Time.stub(:now).and_return(time)
-      
       @character.should_receive(:hospital_delay).and_return 10.minutes
       
-      @character.hospital_used_at = 5.minutes.ago
+      Timecop.freeze(Time.now) do
+        @character.hospital_used_at = 5.minutes.ago
       
-      @character.time_to_next_hospital.should == 5.minutes
+        @character.time_to_next_hospital.should == 5.minutes
+      end
     end
     
     it 'should return zero if hospital delay time has already passed' do

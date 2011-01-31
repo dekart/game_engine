@@ -13,7 +13,7 @@ describe GiftReceipt do
     end
 
     it 'should return facebook ids for gifts in time limit' do
-      time_travel_to((24.hours + 1.minute).ago) do
+      Timecop.travel((24.hours + 1.minute).ago) do
         @gift_receipt2 = Factory(:gift_receipt, :facebook_id => 111222333)
       end
 

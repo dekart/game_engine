@@ -63,7 +63,7 @@ describe Monster do
     end
 
     it "should be invalid if there are current monsters of the same type" do
-      time_travel_to((24.hours - 1.minute).ago) do
+      Timecop.travel((24.hours - 1.minute).ago) do
         @other_monster = Monster.create!(:character => @character, :monster_type => @monster_type)
       end
 

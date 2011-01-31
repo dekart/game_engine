@@ -21,7 +21,6 @@ end
 # in ./support/ and its subdirectories.
 
 Spec::Runner.configure do |config|
-  config.include Delorean
   config.include Paperclip::Shoulda::Matchers
   
   # == Mock Framework
@@ -39,10 +38,6 @@ Spec::Runner.configure do |config|
 
   config.before :all do
     require Rails.root.join("db", "seeds", "settings")
-  end
-  
-  config.after :each do
-    back_to_the_present
   end
 end
 

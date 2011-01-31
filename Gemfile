@@ -29,7 +29,7 @@ group :test do
   gem "shoulda",        "2.11.3"
   gem "factory_girl",   "1.3.2"
   gem "autotest-growl", "0.2.9"
-  gem "delorean",       "0.2.1"
+  gem "timecop",        "0.3.5"
   gem "chronic",        "0.3.0"
   gem "spork"
 end

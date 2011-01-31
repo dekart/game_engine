@@ -57,13 +57,11 @@ describe User do
     end
 
     it "should change landing timestamp" do
-      time = Time.now.utc
-
-      Time.stub!(:now).and_return(time)
-
-      lambda{
-        @user.visit_landing!(:some_page)
-      }.should change(@user, :landing_visited_at).to(time)
+      Time.freeze do
+        lambda{
+          @user.visit_landing!(:some_page)
+        }.should change(@user, :landing_visited_at).to(Time.now)
+      end
     end
 
     it "should save the user" do

@@ -116,7 +116,7 @@ describe Character do
       it 'should order results by creation date (recent first)' do
         @result1 = Factory(:mission_help_result, :requester => @character)
 
-        time_travel_to(1.minute.ago) do
+        Timecop.travel(1.minute.ago) do
           @result2 = Factory(:mission_help_result, :requester => @character)
         end
 
