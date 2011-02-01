@@ -9,11 +9,10 @@ Spork.prefork do
   require 'spec/autorun'
   require 'spec/rails'
   require "paperclip/matchers"
-end
-
-Spork.each_run do
+  
   Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
 end
+
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
 
@@ -22,6 +21,7 @@ end
 
 Spec::Runner.configure do |config|
   config.include Paperclip::Shoulda::Matchers
+  config.include SettingSpecHelper
   
   # == Mock Framework
   #

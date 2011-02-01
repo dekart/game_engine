@@ -32,7 +32,7 @@
         ) %>
   <% else %>
     <% builder.fail do %>
-      <%= @fight.errors.on(:character) %>
+      <%= @fight.errors.collect{|e| e.last }.join(' ') %>
     <% end %>
   <% end %>
 <% end %>
