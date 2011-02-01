@@ -81,9 +81,7 @@ class User < ActiveRecord::Base
   end
   
   def update_dashboard_counters!
-    authenticator = Mogli::Authenticator.new(Facebooker2.app_id, Facebooker2.secret, Facebooker2.callback_url)
-    
-    client = Mogli::Client.new(authenticator.get_access_token_for_application)
+    client = Mogli::Client.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
     
     client.class.get('https://api.facebook.com/method/dashboard.setCount', 
       :query => client.default_params.merge(
