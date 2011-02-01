@@ -271,13 +271,41 @@ describe User do
     it 'should update friend_ids field to a list of friend UIDs' do
       lambda{
         @user.update_social_data!
-      }.should change(@user, :friend_ids).from(nil).to('123,456,789')
+      }.should change(@user, :friend_ids).from(nil).to([123, 456, 789])
     end
 
     it 'should save user' do
       @user.update_social_data!
       
       @user.should_not be_changed
+    end
+  end
+  
+  describe 'when assigning friend UID list' do
+    before do
+      @user = Factory(:user)
+    end
+    
+    it 'should store UIDs to attributes as a comma-separated list' do
+      @user.friend_ids = [123, 456, 789]
+      
+      @user[:friend_ids].should == '123,456,789'
+    end
+  end
+  
+  describe 'when fetching friend UID list' do
+    before do
+      @user = Factory(:user)
+    end
+    
+    it 'should return empty array when there are no UIDs' do
+      @user.friend_ids.should be_empty
+    end
+    
+    it 'should return an array of UIDs' do
+      @user.update_attribute(:friend_ids, '123,456,789')
+      
+      @user.friend_ids.should == [123, 456, 789]
     end
   end
 end

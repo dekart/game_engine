@@ -62,6 +62,14 @@ class User < ActiveRecord::Base
     IPAddr.new(self[:signup_ip], Socket::AF_INET) if self[:signup_ip]
   end
   
+  def friend_ids=(values)
+    self[:friend_ids] = Array.wrap(values).join(',')
+  end
+  
+  def friend_ids
+    self[:friend_ids].blank? ? [] : self[:friend_ids].split(',').collect{|i| i.to_i }
+  end
+  
   def update_social_data!
     return false if access_token.blank? || access_token_expired?
     
@@ -75,7 +83,7 @@ class User < ActiveRecord::Base
     
     self.gender = GENDERS[facebook_user.gender.to_sym] if facebook_user.gender
     
-    self.friend_ids = facebook_user.friends(:id).collect{|f| f.id }.join(',')
+    self.friend_ids = facebook_user.friends(:id).collect{|f| f.id }
     
     save!
   end
