@@ -33,9 +33,7 @@ namespace :app do
     task :subscriptions => :environment do
       puts 'Setting up real-time update subscriptions...'
       
-      authenticator = Mogli::Authenticator.new(Facebooker2.app_id, Facebooker2.secret, nil)
-
-      client = Mogli::AppClient.new(authenticator.get_access_token_for_application)
+      client = Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
       client.application_id = Facebooker2.app_id
       
       client.subscribe_to_model(Mogli::User, 
