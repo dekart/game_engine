@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(:version => 20110131112012) do
     t.datetime "fighting_available_at",                        :default => '1970-01-01 05:00:00'
   end
 
-  add_index "characters", ["level"], :name => "index_characters_on_level"
+  add_index "characters", ["level", "fighting_available_at"], :name => "index_characters_on_level_and_fighting_available_at"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
