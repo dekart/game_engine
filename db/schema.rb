@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110131110317) do
+ActiveRecord::Schema.define(:version => 20110131112012) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20110131110317) do
     t.datetime "hospital_used_at",                             :default => '1970-01-01 05:00:00'
     t.integer  "missions_mastered",                            :default => 0
     t.integer  "lock_version",                                 :default => 0
+    t.datetime "fighting_available_at",                        :default => '1970-01-01 05:00:00'
   end
 
   add_index "characters", ["level"], :name => "index_characters_on_level"

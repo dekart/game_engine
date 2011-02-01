@@ -85,6 +85,7 @@ class Character < ActiveRecord::Base
 
   after_validation_on_create :apply_character_type_defaults
   before_save   :update_level_and_points, :update_total_money
+  before_save :update_fight_availability_time, :if => :hp_changed?
 
   validates_presence_of :character_type, :on => :create
 
@@ -227,6 +228,12 @@ class Character < ActiveRecord::Base
     scope = scope.scoped(
       :conditions => ["level BETWEEN ? AND ?", lowest_opponent_level, highest_opponent_level]
     )
+    
+    unless Setting.b(:fight_weak_opponents)
+      scope = scope.scoped(
+        :conditions => ["fighting_available_at < ?", Time.now.utc]
+      )
+    end
 
     scope.all(
       :include  => :user,
@@ -259,8 +266,9 @@ class Character < ActiveRecord::Base
     level_fits        = (lowest_opponent_level..highest_opponent_level).include?(victim.level)
     attacked_recently = latest_opponent_ids.include?(victim.id)
     friendly_attack   = Setting.b(:fight_alliance_attack) ? false : friend_relations.character_ids.include?(victim.id)
+    weak_opponent     = Setting.b(:fight_weak_opponents) ? false : victim.weak?
 
-    level_fits && !attacked_recently && !friendly_attack
+    level_fits && !attacked_recently && !friendly_attack && !weak_opponent
   end
 
   def can_hitlist?(victim)
@@ -351,5 +359,9 @@ class Character < ActiveRecord::Base
 
   def update_total_money
     self.total_money = basic_money + bank
+  end
+  
+  def update_fight_availability_time
+    self.fighting_available_at = hp_restore_time(weakness_minimum).seconds.from_now
   end
 end

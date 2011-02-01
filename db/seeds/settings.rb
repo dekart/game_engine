@@ -59,7 +59,8 @@ Setting[:fight_alliance_attack] ||= true
 Setting[:fight_max_money] ||= 10000
 Setting[:fight_min_money] ||= 10
 Setting[:fight_min_money_per_level] ||= 1.5
-Setting[:fight_max_difference] = 30
+Setting[:fight_max_difference] ||= 30
+Setting[:fight_weak_opponents] ||= true
 
 Setting[:rating_show_limit] ||= 20
 
