@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :show_next_steps
   
-  after_create :schedule_social_data_update
+  after_save :schedule_social_data_update, :if => :access_token_changed?
 
   def show_tutorial?
     Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
@@ -67,13 +67,15 @@ class User < ActiveRecord::Base
     
     client = Mogli::Client.new(access_token)
     
-    user = Mogli::User.find(facebook_id, client, :first_name, :last_name, :timezone, :locale, :gender, :third_party_id)
+    facebook_user = Mogli::User.find(facebook_id, client, :first_name, :last_name, :timezone, :locale, :gender, :third_party_id)
     
     %w{first_name last_name timezone locale third_party_id}.each do |attribute|
-      self.send("#{attribute}=", user.send(attribute))
+      self.send("#{attribute}=", facebook_user.send(attribute))
     end
     
-    self.gender = GENDERS[user.gender.to_sym] if user.gender
+    self.gender = GENDERS[facebook_user.gender.to_sym] if facebook_user.gender
+    
+    self.friend_ids = facebook_user.friends(:id).collect{|f| f.id }.join(',')
     
     save!
   end
