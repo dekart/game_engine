@@ -1,18 +1,37 @@
 require "spec_helper"
 
 describe User do
+  shared_examples_for 'schedules social data update' do
+    it 'should schedule social data update' do
+      lambda{
+        @user.save!
+      }.should change(Delayed::Job, :count).by(1)
+      
+      Delayed::Job.last.payload_object.should be_kind_of(Jobs::UserDataUpdate)
+      Delayed::Job.last.payload_object.user_ids.should == [@user.id]
+    end
+  end
+  
   describe 'when creating' do
     before do
       @user = Factory.build(:user)
     end
     
-    it 'should schedule user data update' do
-      lambda{
-        @user.save!
-      }.should change(Delayed::Job, :count).from(0).to(1)
+    it_should_behave_like 'schedules social data update'
+  end
+  
+  
+  describe 'when updating' do
+    before do
+      @user = Factory(:user)
+    end
+    
+    describe 'when access token changes' do
+      before do
+        @user.access_token = 'someothertoken'
+      end
       
-      Delayed::Job.first.payload_object.should be_kind_of(Jobs::UserDataUpdate)
-      Delayed::Job.first.payload_object.user_ids.should == [@user.id]
+      it_should_behave_like 'schedules social data update'
     end
   end
   
@@ -171,7 +190,13 @@ describe User do
         :locale => 'ab_CD',
         :gender => 'male',
         
-        :third_party_id => 'abcd1234'
+        :third_party_id => 'abcd1234',
+        
+        :friends => [
+          mock('user 1', :id => 123),
+          mock('user 2', :id => 456),
+          mock('user 3', :id => 789)
+        ]
       )
       
       Mogli::User.stub!(:find).and_return(@mogli_user)
@@ -241,6 +266,12 @@ describe User do
       lambda{
         @user.update_social_data!
       }.should change(@user, :third_party_id).from('').to('abcd1234')
+    end
+    
+    it 'should update friend_ids field to a list of friend UIDs' do
+      lambda{
+        @user.update_social_data!
+      }.should change(@user, :friend_ids).from(nil).to('123,456,789')
     end
 
     it 'should save user' do

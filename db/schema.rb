@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110131112012) do
+ActiveRecord::Schema.define(:version => 20110201142312) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -698,6 +698,7 @@ ActiveRecord::Schema.define(:version => 20110131112012) do
     t.string   "locale",                 :limit => 5,   :default => "en_US", :null => false
     t.datetime "access_token_expire_at"
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
+    t.text     "friend_ids"
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"
