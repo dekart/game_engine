@@ -102,7 +102,7 @@ module StreamHelper
 
   def property_story_options(property)
     [
-      property.attributes,
+      property.property_type.attributes.merge(property.attributes),
       {
         :property_id => property.id
       },

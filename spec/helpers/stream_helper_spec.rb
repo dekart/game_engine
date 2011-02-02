@@ -226,12 +226,8 @@ describe StreamHelper do
 
   describe "when generating stream dialog for property" do
     before :each do
-      @property = mock_model(Property,
-        :attributes => {
-          :name => 'Fake Property',
-        },
-        :image? => true,
-        :image  => mock("image", :url => "/path/to/image.jpg")
+      @property = Factory(:property, 
+        :property_type => Factory(:property_type, :image => File.open('public/images/1px.gif'))
       )
     end
 
