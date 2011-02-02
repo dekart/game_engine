@@ -16,3 +16,33 @@
 
   .continue
     +button(!level_up_continue_icon)
+
+#friends_to_invite_notification
+  .users
+    .user
+      display: inline-block
+      height: 170px
+      width: 160px
+      text-align: center
+      
+      .name
+        font-weight: bold
+        margin-bottom: 5px
+      
+      .picture
+        height: 105px
+        overflow: hidden
+        
+        img
+          height: 100px
+          line-height: 100px
+          vertical-align: middle
+      
+      .invite
+        width: 80px
+        margin: 0 auto
+        text-align: left
+        +button(!friends_to_invite_invite_icon)
+        
+  .invite_other
+    +button(!friends_to_invite_invite_other_icon)

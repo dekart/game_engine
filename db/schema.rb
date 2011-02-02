@@ -9,7 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110201142312) do
+ActiveRecord::Schema.define(:version => 20110202092219) do
+
+  create_table "app_requests", :force => true do |t|
+    t.integer  "facebook_id", :limit => 8
+    t.integer  "sender_id"
+    t.integer  "receiver_id", :limit => 8
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
