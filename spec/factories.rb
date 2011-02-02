@@ -91,6 +91,13 @@ Factory.define :inventory do |t|
   t.amount 1
 end
 
+Factory.define :item_collection do |t|
+  t.name 'Fake Collection'
+  t.item_ids {|c|
+    (1..3).collect{ Factory(:item).id }
+  }
+end
+
 Factory.define :hit_listing do |t|
   t.client {|c| 
     c.association :character, Factory.attributes_for(:character).merge(:basic_money => 10_000)
@@ -215,6 +222,12 @@ Factory.define :wall_post do |t|
   t.association :author, :factory => :character
 
   t.text "This is a Fake Text"
+end
+
+Factory.define :promotion do |t|
+  t.text 'This is fake promotion'
+  
+  t.valid_till 1.day.from_now
 end
 
 Factory.define :story do |t|

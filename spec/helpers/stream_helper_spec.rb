@@ -2,9 +2,7 @@ require "spec_helper"
 
 describe StreamHelper do
   before :each do
-    @character = mock_model(Character,
-      :user => mock_model(User, :first_name => 'Some Player')
-    )
+    @character = Factory(:character)
     
     helper.stub!(:asset_image_path).and_return("/path/to/image.jpg")
     helper.stub!(:current_character).and_return(@character)
@@ -16,10 +14,6 @@ describe StreamHelper do
   end
 
   describe "when generating stream dialog for level up" do
-    before :each do
-      @character.stub!(:level).and_return(5)
-    end
-
     it "should not fail with default story" do
       lambda{
         helper.stream_dialog(:level_up)
@@ -43,11 +37,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for inventory item" do
     before :each do
-      @item = mock_model(Item,
-        :attributes => {:name => "Super Item"},
-        :image?     => true,
-        :image      => mock("image", :url => "/path/to/image.jpg")
-      )
+      @item = Factory(:item, :image => File.open('public/images/1px.gif'))
     end
 
     it "should not fail with default story" do
@@ -73,14 +63,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for mission help request" do
     before :each do
-      @mission  = mock_model(Mission,
-        :attributes     => {
-          :name           => "Super Mission",
-          :description    => 'Mission description'
-        },
-        :image?         => true,
-        :image          => mock("image", :url => "/path/to/image.jpg")
-      )
+      @mission = Factory(:mission, :image => File.open('public/images/1px.gif'))
     end
 
     it "should not fail with default options" do
@@ -106,13 +89,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for mission completion" do
     before :each do
-      @mission  = mock_model(Mission,
-        :attributes => {
-          :name => "Super Mission",
-        },
-        :image? => true,
-        :image  => mock("image", :url => "/path/to/image.jpg")
-      )
+      @mission = Factory(:mission, :image => File.open('public/images/1px.gif'))
     end
 
     it "should not fail with default options" do
@@ -138,13 +115,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for boss defeat" do
     before :each do
-      @boss  = mock_model(Boss,
-        :attributes => {
-          :name => "Super Boss",
-        },
-        :image? => true,
-        :image  => mock("image", :url => "/path/to/image.jpg")
-      )
+      @boss = Factory(:boss, :image => File.open('public/images/1px.gif'))
     end
 
     it "should not fail with default story" do
@@ -254,9 +225,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for promotion" do
     before :each do
-      @promotion = mock_model(Promotion,
-        :valid_till => 1.day.from_now
-      )
+      @promotion = Factory(:promotion, :valid_till => 1.day.from_now)
     end
 
     it "should not fail with default story" do
@@ -282,10 +251,7 @@ describe StreamHelper do
   
   describe 'when generating stream dialog for new hit listing' do
     before do
-      @listing = mock_model(HitListing,
-        :reward => 1000,
-        :victim => mock_model(Character, :level => 123)
-      )
+      @listing = Factory(:hit_listing)
     end
     
     it 'should not fail with default story' do
@@ -311,10 +277,7 @@ describe StreamHelper do
   
   describe 'when generating stream dialog for completed hit listing' do
     before do
-      @listing = mock_model(HitListing,
-        :reward => 1000,
-        :victim => mock_model(Character, :level => 123)
-      )
+      @listing = Factory(:hit_listing)
     end
     
     it 'should not fail with default story' do
@@ -340,11 +303,7 @@ describe StreamHelper do
 
   describe 'when generating stream dialog for completed collection' do
     before do
-      @collection = mock_model(ItemCollection,
-        :attributes => {
-          :name => 'Fake Collection',
-        }
-      )
+      @collection = Factory(:item_collection)
     end
     
     it 'should not fail with default story' do
@@ -370,12 +329,7 @@ describe StreamHelper do
 
   describe 'when generating stream dialog for missing collection items' do
     before do
-      @collection = mock_model(ItemCollection,
-        :attributes => {
-          :name => 'Fake Collection',
-        },
-        :missing_items => [mock_model(Item, :name => 'Fake Item')]
-      )
+      @collection = Factory(:item_collection)
     end
     
     it 'should not fail' do
