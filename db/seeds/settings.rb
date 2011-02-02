@@ -73,9 +73,6 @@ Setting[:property_sell_price] ||= 50
 Setting[:property_upgrade_limit] ||= 2000
 
 Setting[:user_tutorial_enabled] ||= true
-Setting[:user_invite_page_redirect_enabled] ||= true
-Setting[:user_invite_page_first_visit_delay] ||= 1
-Setting[:user_invite_page_recurrent_visit_delay] ||= 48
 Setting[:user_admins] ||= "682180971, 573513043"
 
 Setting[:invitation_direct_link] ||= false
@@ -96,8 +93,6 @@ Setting[:app_google_analytics_id] ||= ""
 
 Setting[:gifting_enabled] ||= true
 Setting[:gifting_item_show_limit] ||= 10
-Setting[:gifting_page_first_visit_delay] ||= 1
-Setting[:gifting_page_recurrent_visit_delay] ||= 24
 Setting[:gifting_repeat_send_delay] ||= 24
 Setting[:gifting_accept_all] ||= false
 
