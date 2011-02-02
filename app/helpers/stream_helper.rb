@@ -181,6 +181,8 @@ module StreamHelper
       :app => t("app_name")
     )
     
+    interpolation_options = interpolation_options.symbolize_keys
+    
     if story = Story.by_alias(story_alias).first
       image ||= story.image.url if story.image?
       
