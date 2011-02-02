@@ -170,12 +170,8 @@ describe StreamHelper do
 
   describe 'when generating stream dialog for monster fight invitation' do
     before do
-      @monster = mock_model(Monster,
-        :attributes => {
-          :name => 'Fake Monster',
-        },
-        :image? => true,
-        :image  => mock("image", :url => "/path/to/image.jpg")
+      @monster = Factory(:monster, 
+        :monster_type => Factory(:monster_type, :image => File.open('public/images/1px.gif'))
       )
     end
     
@@ -202,12 +198,8 @@ describe StreamHelper do
   
   describe 'when generating stream dialog for monster defeat' do
     before do
-      @monster = mock_model(Monster,
-        :attributes => {
-          :name => 'Fake Monster',
-        },
-        :image? => true,
-        :image  => mock("image", :url => "/path/to/image.jpg")
+      @monster = Factory(:monster, 
+        :monster_type => Factory(:monster_type, :image => File.open('public/images/1px.gif'))
       )
     end
     

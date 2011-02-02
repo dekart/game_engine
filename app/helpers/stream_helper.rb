@@ -80,7 +80,7 @@ module StreamHelper
 
   def monster_invite_story_options(monster)
     [
-      monster.attributes,
+      monster.monster_type.attributes.merge(monster.attributes),
       {
         :monster_id => monster.id
       },
@@ -91,7 +91,7 @@ module StreamHelper
 
   def monster_defeated_story_options(monster)
     [
-      monster.attributes,
+      monster.monster_type.attributes.merge(monster.attributes),
       {
         :monster_id => monster.id
       },
