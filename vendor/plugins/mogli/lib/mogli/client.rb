@@ -41,7 +41,7 @@ module Mogli
     end
 
     def self.create_from_code_and_authenticator(code,authenticator)
-      post_data = get(authenticator.access_token_url(code))
+      post_data = get(authenticator.access_token_url(code)).parsed_response
       if (response_is_error?(post_data))
         raise_client_exception(post_data)
       end        
@@ -68,9 +68,8 @@ module Mogli
     end
     
     def self.response_is_error?(post_data)
-      post_data.is_a?(HTTParty::Response) and
-       post_data.parsed_response.kind_of?(Hash) and
-       !post_data.parsed_response["error"].blank?
+       post_data.kind_of?(Hash) and
+       !post_data["error"].blank?
     end
 
     def self.create_from_session_key(session_key, client_id, secret)
@@ -110,7 +109,6 @@ module Mogli
 
     def get_and_map(path,klass=nil,body_args = {})
       data = self.class.get(api_path(path),:query=>default_params.merge(body_args))
-      debugger
       data = data.values if body_args.key?(:ids) && !data.key?('error')
       map_data(data,klass)
     end
@@ -133,8 +131,12 @@ module Mogli
       return nil if hash_or_array == false
       return hash_or_array if hash_or_array.nil? or hash_or_array.kind_of?(Array)
       hash_or_array = hash_or_array.parsed_response if hash_or_array.respond_to?(:parsed_response)
-      return extract_fetching_array(hash_or_array,klass) if hash_or_array.has_key?("data")
+      return extract_fetching_array(hash_or_array,klass) if is_fetching_array?(hash_or_array)
       return hash_or_array
+    end
+    
+    def is_fetching_array?(hash)
+      hash.has_key?("data") and hash["data"].instance_of?(Array)
     end
 
     def extract_fetching_array(hash,klass)
@@ -165,9 +167,13 @@ module Mogli
       end
       klass_to_create.new(data,self)
     end
+    
+    def capitalize_if_required(string)
+      string.downcase == string ? string.capitalize : string
+    end
 
     def constantize_string(klass)
-      klass.is_a?(String) ? Mogli.const_get(klass.capitalize) : klass
+      klass.is_a?(String) ? Mogli.const_get(capitalize_if_required(klass)) : klass
     end
 
     def determine_class(klass_or_klasses,data)
