@@ -245,6 +245,8 @@ ActionController::Routing::Routes.draw do |map|
     :member => {:reward => :post}
     
   map.resources :stories, :only => :show
+  
+  map.resources :app_requests, :only => :create
 
   # Add your custom routes below this mark
   

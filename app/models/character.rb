@@ -325,6 +325,10 @@ class Character < ActiveRecord::Base
     Setting.i(:character_stamina_restore_period).seconds
   end
 
+  def friend_filter
+    @friend_filter ||= FriendFilter.new(self)
+  end
+
   protected
 
   def update_level_and_points

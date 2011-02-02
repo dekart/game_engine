@@ -7,6 +7,12 @@ Factory.define :user do |t|
   t.access_token_expire_at 1.day.from_now
 end
 
+Factory.define :user_with_character, :parent => :user do |t|
+  t.after_create do |u|
+    Factory(:character, :user => u)
+  end
+end
+
 Factory.define :character_type do |t|
   t.name "Character Type"
   t.description "This is our test character type"
@@ -243,4 +249,8 @@ Factory.define :mission_help_result do |t|
 
   t.association :character
   t.association :requester, :factory => :character
+end
+
+Factory.define :app_request do |t|
+  t.facebook_id 123456789
 end

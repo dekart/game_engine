@@ -16,3 +16,10 @@ en:
       title: "Sold on Market!"
       text: "You've successfully sold {{item}} on the Market!"
       you_received: "You received:"
+      
+    friends_to_invite:
+      title: "Recruit Friends To Your Alliance"
+      text: "These friends are not in your Alliance yet! Recruit them to make your Alliance stronger!"
+      buttons:
+        invite: "Invite"
+        invite_other: "Invite Other Friends"

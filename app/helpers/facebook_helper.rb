@@ -89,6 +89,19 @@ module FacebookHelper
   def fb_bookmark_button(options = {})
     content_tag("fb:bookmark", "", options)
   end
+  
+  def fb_request_dialog(options = {})
+    callback_url = options.delete(:callback_url)
+    callback  = options.delete(:callback)
+        
+    'FB.ui(%s, %s)' % [
+      options.merge(:method => 'apprequests').to_json,
+      "function(response){ %s; %s;}" % [
+        callback,
+        callback_url.blank? ? '' : "$.post('#{callback_url}', response)"
+      ]
+    ]
+  end
 
   protected
 
