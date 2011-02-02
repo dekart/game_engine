@@ -62,16 +62,18 @@ describe Mogli::Client do
       client = Mogli::Client.new
       client.default_params.should == {}
     end
+    
 
     it "create get an unescaped access token from an authenticator and code" do
-      Mogli::Client.should_receive(:get).with("url").and_return("access_token=114355055262088%7C2.6_s8VD_HRneAq3_tUEHJhA__.3600.1272920400-12451752|udZzWly7ptI7IMgX7KTdzaoDrhU.&expires=4168")
+      Mogli::Client.should_receive(:get).with("url").and_return(mock("response",:parsed_response=>
+      "access_token=114355055262088%7C2.6_s8VD_HRneAq3_tUEHJhA__.3600.1272920400-12451752|udZzWly7ptI7IMgX7KTdzaoDrhU.&expires=4168"))
       client = Mogli::Client.create_from_code_and_authenticator("code",mock("auth",:access_token_url=>"url"))
       client.access_token.should == "114355055262088|2.6_s8VD_HRneAq3_tUEHJhA__.3600.1272920400-12451752|udZzWly7ptI7IMgX7KTdzaoDrhU."
       client.expiration.should_not be_nil
     end
 
     it "create set the expiration into the future if there is on param" do
-      Mogli::Client.should_receive(:get).with("url").and_return("access_token=114355055262088%7C2.6_s8VD_HRneAq3_tUEHJhA__.3600.1272920400-12451752|udZzWly7ptI7IMgX7KTdzaoDrhU.")
+      Mogli::Client.should_receive(:get).with("url").and_return(mock("response",:parsed_response=>"access_token=114355055262088%7C2.6_s8VD_HRneAq3_tUEHJhA__.3600.1272920400-12451752|udZzWly7ptI7IMgX7KTdzaoDrhU."))
       client = Mogli::Client.create_from_code_and_authenticator("code",mock("auth",:access_token_url=>"url"))
       (client.expiration > Time.now+365*24*60*60).should be_true
     end
@@ -192,19 +194,19 @@ describe Mogli::Client do
     end
 
     it "creates an array of instances when the data is just a hash with a single data parameter" do
-      users = client.map_data({"data"=>[user_data,user_data]},Mogli::User)
+      users = client.map_data({"data"=>[user_data,user_data],"paging"=>{}},Mogli::User)
       users.should be_kind_of(Array)
       users.each {|i| i.should be_an_instance_of(Mogli::User) }
       users.size.should == 2
     end
 
     it "create an instance of fetching array when there is a data element" do
-      users = client.map_data({"data"=>[user_data,user_data]},Mogli::User)
+      users = client.map_data({"data"=>[user_data,user_data],"paging"=>{}},Mogli::User)
       users.should be_an_instance_of(Mogli::FetchingArray)
     end
 
     it "sets the client on the array" do
-      users = client.map_data({"data"=>[user_data,user_data]},Mogli::User)
+      users = client.map_data({"data"=>[user_data,user_data],"paging"=>{}},Mogli::User)
       users.client.should == client
     end
 
