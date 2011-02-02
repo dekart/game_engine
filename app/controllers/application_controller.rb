@@ -62,11 +62,6 @@ class ApplicationController < ActionController::Base
       if reference_data
         user.reference    = reference_data[0]
         user.referrer_id  = reference_data[1]
-      elsif params[:reference]
-        user.reference    = params[:reference]
-        
-        #FIXME Stop parsing referrer passed in unencrypted params
-        user.referrer_id  = params[:referrer]
       end
       
       user.signup_ip = request.remote_ip
