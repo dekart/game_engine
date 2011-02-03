@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe StoriesController do
-  include FacebookSpecHelper
-  
   before do
     controller.stub!(:current_facebook_user).and_return(fake_fb_user)
   end
