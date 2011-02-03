@@ -25,13 +25,16 @@ describe StoriesController do
         :alias => 'somealias', 
         :track_visit! => []
       )
+      
+      @story_data = 'drDaHHyJrkDUN6vc5j6iTg4Qqj5mkwp93nEsCh3x/1w=--b7T0SRHS2i4vPs1MSU+txg==' # {:character_id => 1}
     end
     
     def do_request(options = {})
-      get :show, options.reverse_merge(
-        :id => 123, 
-        :story_data => '"drDaHHyJrkDUN6vc5j6iTg4Qqj5mkwp93nEsCh3x/1w=--b7T0SRHS2i4vPs1MSU+txg=="' # {:character_id => 1}
-      )
+      get(:show, options.reverse_merge(:id => 123, :story_data => @story_data))
+    end
+
+    def do_broken_request(options = {})
+      get(:show, options.reverse_merge(:id => 123, 'amp;story_data' => @story_data))
     end
     
     it 'should try to fetch story from the database' do
@@ -216,6 +219,14 @@ describe StoriesController do
       }.should_not raise_exception
       
       response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
+    end
+    
+    it 'should be able to process story links broken by facebook encoding' do
+      lambda{
+        do_broken_request :id => 'item_purchased'
+      }.should_not raise_exception
+      
+      response.should redirect_from_iframe_to('http://apps.facebook.com/test/items')
     end
   end
 end
