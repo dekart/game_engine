@@ -1,6 +1,6 @@
 class StoriesController < ApplicationController
   def show
-    story_data = encryptor.decrypt(params[:story_data])
+    story_data = encryptor.decrypt(params[:story_data].to_s)
     
     if @story = Story.find_by_id(params[:id])
       @payouts = @story.track_visit!(current_character, story_data)
