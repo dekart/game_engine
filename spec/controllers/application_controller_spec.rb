@@ -1,6 +1,12 @@
 require 'spec_helper'
 
-describe ApplicationController do
+describe ApplicationController do  
+  class FakeController < ApplicationController
+    def index; render :text => "foos"; end
+  end
+  
+  controller_name :fake
+
   describe 'when fetching current user' do
     before do
       controller.stub!(:current_facebook_user).and_return(fake_fb_user)
@@ -64,17 +70,6 @@ describe ApplicationController do
           
           controller.send(:current_user).referrer.should be_nil
         end
-        
-        it 'should schedule request deletion' do
-          lambda{
-            controller.send(:current_user)
-          }.should change(Delayed::Job, :count).by(2)
-          
-          job = Delayed::Job.first(:order => "id DESC", :offset => 1)
-          
-          job.payload_object.should be_kind_of(Jobs::RequestDelete)
-          job.payload_object.request_ids.should == [@request.id]
-        end
       end
     end
     
@@ -92,5 +87,38 @@ describe ApplicationController do
     end
     
     it 'should return nil when not authenticated as Facebook user'
+  end
+  
+  describe 'when performing any action' do
+    describe 'when request IDs are passed' do
+      before do        
+        @request1 = Factory(:app_request, :facebook_id => 123)
+        @request2 = Factory(:app_request, :facebook_id => 456)
+      end
+      
+      def do_request
+        get :index, :request_ids => '123,456'
+      end
+      
+      it 'should schedule request deletion' do
+        controller.stub!(:current_facebook_user).and_return(fake_fb_user)
+        controller.stub!(:current_character).and_return(mock('character'))
+
+        lambda{
+          do_request
+        }.should change(Delayed::Job, :count).by(2)
+        
+        job = Delayed::Job.last
+        
+        job.payload_object.should be_kind_of(Jobs::RequestDelete)
+        job.payload_object.request_ids.should == [@request1.id, @request2.id]
+      end
+      
+      it 'should not delete requests if user is not authenticated' do
+        lambda{
+          do_request
+        }.should_not change(Delayed::Job, :count)
+      end
+    end
   end
 end
