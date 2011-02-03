@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
   facebook_integration_filters
+  after_filter :remove_used_app_requests
   
   landing_redirect
 
@@ -63,11 +64,9 @@ class ApplicationController < ActionController::Base
       if reference_data
         user.reference    = reference_data[0]
         user.referrer_id  = reference_data[1]
-      elsif params[:request_ids] and requests = AppRequest.find_all_by_facebook_id(params[:request_ids].split(',')) and !requests.empty?
+      elsif requests = app_requests and !requests.empty?
         user.reference  = requests.last.reference
         user.referrer   = requests.last.try(:sender)
-        
-        Delayed::Job.enqueue Jobs::RequestDelete.new(requests.collect{|r| r.id })
       end
     end
 
@@ -114,5 +113,15 @@ class ApplicationController < ActionController::Base
     end
 
     redirect_from_iframe(uri)
+  end
+    
+  def remove_used_app_requests
+    if requests = app_requests and !requests.empty?
+      Delayed::Job.enqueue Jobs::RequestDelete.new(requests.collect{|r| r.id })
+    end
+  end
+
+  def app_requests
+    params[:request_ids].present? ? AppRequest.find_all_by_facebook_id(params[:request_ids].split(',')) : []
   end
 end
