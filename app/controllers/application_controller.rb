@@ -63,9 +63,11 @@ class ApplicationController < ActionController::Base
       if reference_data
         user.reference    = reference_data[0]
         user.referrer_id  = reference_data[1]
-      elsif params[:request_ids] and requests = AppRequest.find_all_by_facebook_id(params[:request_ids]) and !requests.empty?
+      elsif params[:request_ids] and requests = AppRequest.find_all_by_facebook_id(params[:request_ids].split(',')) and !requests.empty?
         user.reference  = requests.last.reference
         user.referrer   = requests.last.try(:sender)
+        
+        Delayed::Job.enqueue Jobs::RequestDelete.new(requests.collect{|r| r.id })
       end
     end
 

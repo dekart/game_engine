@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   end
   
   def update_social_data!
-    return false if access_token.blank? || access_token_expired?
+    return false unless access_token_valid?
     
     client = Mogli::Client.new(access_token)
     
@@ -99,12 +99,12 @@ class User < ActiveRecord::Base
     )
   end
   
-  def access_token_expired?
-    access_token_expire_at.nil? or access_token_expire_at < Time.now
+  def access_token_valid?
+    !(access_token.blank? || access_token_expire_at.nil? || access_token_expire_at < Time.now)
   end
   
   def schedule_social_data_update
-    Delayed::Job.enqueue Jobs::UserDataUpdate.new([id])
+    Delayed::Job.enqueue Jobs::UserDataUpdate.new([id]) if access_token_valid?
   end
 
   def schedule_counter_update

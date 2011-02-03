@@ -113,4 +113,32 @@ describe AppRequest do
       @request.reference.should == ''
     end
   end
+  
+  describe 'when deleting request from facebook' do
+    before do
+      @request = Factory(:app_request)
+      
+      @client = mock('mogli client')
+      
+      Mogli::AppClient.stub!(:create_and_authenticate_as_application).and_return(@client)
+      
+      @remote_request = mock('request on facebook', :destroy => true)
+      
+      Mogli::AppRequest.stub!(:new).and_return(@remote_request)
+    end
+    
+    it 'should delete request from facebook using application access token' do
+      Mogli::AppRequest.should_receive(:new).with({:id => 123456789}, @client).and_return(@remote_request)
+      
+      @remote_request.should_receive(:destroy)
+      
+      @request.delete_from_facebook!
+    end
+    
+    it 'should destroy the request' do
+      lambda{
+        @request.delete_from_facebook!
+      }.should change(AppRequest, :count).from(1).to(0)
+    end
+  end
 end

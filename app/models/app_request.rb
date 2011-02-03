@@ -21,6 +21,14 @@ class AppRequest < ActiveRecord::Base
     
     save!
   end
+  
+  def delete_from_facebook!
+    request = Mogli::AppRequest.new({:id => facebook_id}, Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret))
+    
+    request.destroy
+    
+    destroy
+  end
     
   protected
   
