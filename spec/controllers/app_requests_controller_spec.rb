@@ -30,5 +30,11 @@ describe AppRequestsController do
       
       response.body.should be_blank
     end
+    
+    it 'should not fail if request ids are not passed' do
+      lambda{
+        post :create
+      }.should_not raise_exception
+    end
   end
 end
