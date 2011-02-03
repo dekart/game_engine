@@ -56,15 +56,17 @@ class ApplicationController < ActionController::Base
 
     unless user = User.find_by_facebook_id(facebook_id)
       user = User.new
-
+      
       user.facebook_id  = facebook_id
+      user.signup_ip    = request.remote_ip
 
       if reference_data
         user.reference    = reference_data[0]
         user.referrer_id  = reference_data[1]
+      elsif params[:request_ids] and requests = AppRequest.find_all_by_facebook_id(params[:request_ids]) and !requests.empty?
+        user.reference  = requests.last.reference
+        user.referrer   = requests.last.try(:sender)
       end
-      
-      user.signup_ip = request.remote_ip
     end
 
     # Updating user access information

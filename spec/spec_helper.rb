@@ -21,6 +21,7 @@ end
 
 Spec::Runner.configure do |config|
   config.include Paperclip::Shoulda::Matchers
+  config.include FacebookSpecHelper
   config.include SettingSpecHelper
   
   # == Mock Framework
