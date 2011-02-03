@@ -24,7 +24,7 @@ class MonstersController < ApplicationController
     @monster = current_character.monsters.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create!(:character => current_character)
 
-    redirect_to @monster
+    redirect_from_iframe monster_url(@monster, :canvas => true)
   end
 
   def update
