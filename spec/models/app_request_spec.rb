@@ -97,4 +97,20 @@ describe AppRequest do
       end
     end
   end
+  
+  describe 'when getting reference' do
+    before do
+      @request = Factory(:app_request, :data => {"reference" => 'some_reference'})
+    end
+    
+    it 'should return reference value from data' do
+      @request.reference.should == 'some_reference'
+    end
+    
+    it 'should return empty string when data is not set' do
+      @request.data = nil
+      
+      @request.reference.should == ''
+    end
+  end
 end

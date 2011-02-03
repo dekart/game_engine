@@ -8,6 +8,10 @@ class AppRequest < ActiveRecord::Base
   after_create :schedule_data_update
   after_update :process_request, :if => :data_changed?
   
+  def reference
+    data ? data['reference'] : ''
+  end
+  
   def update_data!
     request = Mogli::AppRequest.find(facebook_id, Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret))
     
@@ -29,7 +33,7 @@ class AppRequest < ActiveRecord::Base
 
     case data['type']
     when 'invitation'
-      sender.invitations.create!(:receiver_id => receiver_id)
+      sender.invitations.create(:receiver_id => receiver_id)
     end
   end
 end
