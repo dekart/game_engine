@@ -25,7 +25,7 @@ describe ApplicationController do
       
       describe 'if request IDs are passed' do
         before do
-          controller.params[:request_ids] = '123,456'
+          controller.params[:request_ids] = '456,123'
           
           @sender = Factory(:user, :facebook_id => 111222333)
           
@@ -45,7 +45,7 @@ describe ApplicationController do
         end
         
         it 'should not assign reference or referrer is request ID is wrong' do
-          controller.params[:request_ids] = 987
+          controller.params[:request_ids] = '987'
           
           user = controller.send(:current_user)
           
@@ -63,6 +63,17 @@ describe ApplicationController do
           @request.update_attribute(:sender, nil)
           
           controller.send(:current_user).referrer.should be_nil
+        end
+        
+        it 'should schedule request deletion' do
+          lambda{
+            controller.send(:current_user)
+          }.should change(Delayed::Job, :count).by(2)
+          
+          job = Delayed::Job.first(:order => "id DESC", :offset => 1)
+          
+          job.payload_object.should be_kind_of(Jobs::RequestDelete)
+          job.payload_object.request_ids.should == [@request.id]
         end
       end
     end

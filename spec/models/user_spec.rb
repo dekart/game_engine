@@ -308,4 +308,32 @@ describe User do
       @user.friend_ids.should == [123, 456, 789]
     end
   end
+  
+  describe 'when checking if access token is valid' do
+    before do
+      @user = Factory(:user)
+    end
+    
+    it 'should return true' do
+      @user.access_token_valid?.should be_true
+    end
+    
+    it 'should return false if token is blank' do
+      @user.access_token = ''
+      
+      @user.access_token_valid?.should be_false
+    end
+    
+    it 'should return false if token is already expired' do
+      @user.access_token_expire_at = 1.minute.ago
+      
+      @user.access_token_valid?.should be_false
+    end
+    
+    it 'should return false if token expiration date is not set' do
+      @user.access_token_expire_at = nil
+      
+      @user.access_token_valid?.should be_false
+    end
+  end
 end
