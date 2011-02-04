@@ -94,7 +94,7 @@ module FacebookHelper
     callback_url = options.delete(:callback_url)
     callback  = options.delete(:callback)
         
-    'FB.ui(%s, %s)' % [
+    "if(typeof(FB) != 'undefined'){FB.ui(%s, %s);$(document).trigger('facebook.dialog');}else{alert('The page failed to initialize properly. Please reload it and try again.')}" % [
       options.merge(:method => 'apprequests').to_json,
       "function(response){ %s; %s;}" % [
         callback,

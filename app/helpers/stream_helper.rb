@@ -4,7 +4,7 @@ module StreamHelper
     
     options = prepare_story(story_alias, *(send("#{story_alias}_story_options", *args))).deep_merge(options)
     
-    result = "FB.ui(%s, %s);$(document).delay(100).queue(function(){ $(document).trigger('facebook.stream_publish') });" % [
+    result = "if(typeof(FB)!='undefined'){FB.ui(%s, %s);$(document).trigger('facebook.dialog');}else{alert('The page failed to initialize properly. Please reload it and try again.')}" % [
       {
         :method       => 'stream.publish',
         :attachment   => options[:attachment],

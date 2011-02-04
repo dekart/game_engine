@@ -72,5 +72,7 @@
   
   form.innerHTML = '<%= escape_javascript(friend_selector) %>';
 
-  FB.XFBML.parse(form);
+  if(typeof(FB) != 'undefined'){
+    FB.XFBML.parse(form);
+  }
 </script>
