@@ -62,13 +62,13 @@ class Character
           Setting.i("character_#{attribute}_upgrade")
 
         self[attribute] = new_value
-
       end
 
       self.points += free_points
 
       self.hp = health_points if hp > health_points
       self.ep = energy_points if ep > energy_points
+      self.sp = stamina_points if sp > stamina_points
 
       charge!(0, Setting.i(:premium_reset_attributes_price), :premium_reset_attributes)
     end
