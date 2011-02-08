@@ -8,6 +8,10 @@ class Admin::BaseController < ApplicationController
 
   protected
 
+  def admin_required
+    redirect_from_iframe root_url(:canvas => true) unless current_user.admin?
+  end
+
   def ajax_layout
     "admin/layouts/ajax"
   end
