@@ -90,10 +90,6 @@ class ApplicationController < ActionController::Base
     options
   end
 
-  def admin_required
-    redirect_from_iframe root_url(:canvas => true) unless current_user.admin?
-  end
-
   def get_layout
     (current_character.nil? || current_character.new_record?) ? "unauthorized" : "application"
   end
