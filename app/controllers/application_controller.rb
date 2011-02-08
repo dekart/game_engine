@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
       url_params.merge!(
         :controller => "/characters",
         :action     => :new,
+        :id         => nil,
         :canvas     => true
       )
 
