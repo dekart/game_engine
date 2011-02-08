@@ -71,6 +71,16 @@ describe ApplicationController do
           controller.send(:current_user).referrer.should be_nil
         end
       end
+      
+      describe 'if reference is passed' do
+        before do
+          controller.params[:reference] = 'some_reference'
+        end
+        
+        it 'should assign user reference' do
+          controller.send(:current_user).reference.should == 'some_reference'
+        end
+      end
     end
     
     it 'should store current access token for the user'

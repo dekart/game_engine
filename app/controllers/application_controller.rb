@@ -68,6 +68,8 @@ class ApplicationController < ActionController::Base
       elsif requests = app_requests and !requests.empty?
         user.reference  = requests.last.reference
         user.referrer   = requests.last.try(:sender)
+      elsif params[:reference]
+        user.reference = params[:reference]
       end
     end
 
