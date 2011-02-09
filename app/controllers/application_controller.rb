@@ -59,9 +59,9 @@ class ApplicationController < ActionController::Base
 
       user.facebook_id  = facebook_id
 
-      if params[:reference_code].present? and reference = decrypt_reference_code(params[:reference_code])
-        user.reference    = reference[0]
-        user.referrer_id  = reference[1]
+      if reference_data
+        user.reference    = reference_data[0]
+        user.referrer_id  = reference_data[1]
       elsif params[:reference]
         user.reference    = params[:reference]
         

@@ -17,6 +17,10 @@ class ApplicationController
       
       encryptor.encrypt([reference, user_id, options].to_json)
     end
+    
+    def reference_data
+      @reference_data ||= decrypt_reference_code(params[:reference_code]) if params[:reference_code]
+    end
 
     def decrypt_reference_code(code)
       JSON.parse(encryptor.decrypt(code.to_s))
