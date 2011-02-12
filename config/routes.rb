@@ -138,6 +138,12 @@ ActionController::Routing::Routes.draw do |map|
         :hide     => :put
       }
 
+    admin.resources :global_payouts,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+
     # Add your custom admin routes below this mark
     
   end
