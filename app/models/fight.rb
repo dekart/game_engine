@@ -20,7 +20,7 @@ class Fight < ActiveRecord::Base
   @@fighting_system = FightingSystem::PlayerVsPlayer::Proportion
   @@damage_system = FightingSystem::DamageCalculation::Proportion
 
-  attr_reader :attacker_boost, :victim_boost
+  attr_reader :attacker_boost, :victim_boost, :payouts
 
   def attacker_won?
     self.winner == attacker
@@ -124,6 +124,10 @@ class Fight < ActiveRecord::Base
 
     attacker.inventories.take!(@attacker_boost.item) if @attacker_boost
     victim.inventories.take!(@victim_boost.item) if @victim_boost
+    
+    if global_payout = GlobalPayout.by_alias(:fights)
+      @payouts = global_payout.payouts.apply(attacker, attacker == winner ? :success : :failure)
+    end
 
     winner.fights_won += 1
     loser.fights_lost += 1

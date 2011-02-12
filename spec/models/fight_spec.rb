@@ -6,6 +6,16 @@ describe Fight do
       @attacker = Factory(:character)
       @victim = Factory(:character)
       @fight = Fight.new(:attacker => @attacker, :victim => @victim)
+      
+      @payout = Factory(:global_payout,
+        :alias => 'fights',
+        :payouts => Payouts::Collection.new(
+          DummyPayout.new(:apply_on => :success, :name => 'success'), 
+          DummyPayout.new(:apply_on => :failure, :name => 'failure')
+        )
+      )
+      
+      @payout.publish!
     end
     
     it 'should give an error when attacker doesn\'t have enough stamina'
@@ -30,6 +40,36 @@ describe Fight do
     
     it 'should be successfully created' do
       @fight.save.should be_true
+    end
+    
+    describe 'when won the fight' do
+      before do
+        Fight.fighting_system.stub!(:calculate).and_return(true)
+      end
+      
+      it 'should apply global :success payout' do        
+        @fight.save
+        
+        @fight.payouts.should be_kind_of(Payouts::Collection)
+        @fight.payouts.size.should == 1
+        @fight.payouts.first.should be_applied
+        @fight.payouts.first.name.should == 'success'
+      end
+    end
+    
+    describe 'when lost the fight' do
+      before do
+        Fight.fighting_system.stub!(:calculate).and_return(false)
+      end
+
+      it 'should apply global :success payout' do        
+        @fight.save
+        
+        @fight.payouts.should be_kind_of(Payouts::Collection)
+        @fight.payouts.size.should == 1
+        @fight.payouts.first.should be_applied
+        @fight.payouts.first.name.should == 'failure'
+      end
     end
   end
 end

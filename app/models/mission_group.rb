@@ -54,7 +54,7 @@ class MissionGroup < ActiveRecord::Base
   end
   
   def applicable_payouts
-    if global_payout = GlobalPayout.with_state(:visible).find_by_alias('missions')
+    if global_payout = GlobalPayout.by_alias('missions')
       payouts + global_payout.payouts
     else
       payouts
