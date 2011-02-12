@@ -38,8 +38,10 @@ class Mission < ActiveRecord::Base
     :removable => true
 
   has_requirements
-  has_payouts :success, :failure, :repeat_success, :repeat_failure, :level_complete, :mission_complete,
+  
+  has_payouts(MissionLevel.payout_events + [:mission_complete],
     :apply_on => :mission_complete
+  )
 
   validates_presence_of :mission_group, :name, :success_text, :complete_text
 
@@ -55,5 +57,9 @@ class Mission < ActiveRecord::Base
 
   def visible_for?(character)
     parent_mission.nil? or character.missions.rank_for(parent_mission).completed?
+  end
+  
+  def applicable_payouts
+    payouts + mission_group.applicable_payouts
   end
 end

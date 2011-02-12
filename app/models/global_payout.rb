@@ -3,7 +3,7 @@ class GlobalPayout < ActiveRecord::Base
 
   validates_presence_of :name, :alias
   
-  has_payouts :success
+  has_payouts(*[MissionGroup, Item, ItemCollection, MonsterType, PropertyType, Story, Promotion].collect{|c| c.payout_events }.flatten.uniq)
 
   state_machine :initial => :hidden do
     state :hidden

@@ -38,8 +38,9 @@ class MissionGroup < ActiveRecord::Base
     :removable => true
 
   has_requirements
-  has_payouts :success, :failure, :repeat_success, :repeat_failure, :level_complete, :mission_complete, :group_complete,
+  has_payouts(Mission.payout_events + [:group_complete],
     :apply_on => :group_complete
+  )
 
   validates_presence_of :name
 
@@ -50,5 +51,13 @@ class MissionGroup < ActiveRecord::Base
   def delete_children!
     missions.without_state(:deleted).all.map{|m| m.mark_deleted }
     bosses.without_state(:deleted).all.map{|b| b.mark_deleted }
+  end
+  
+  def applicable_payouts
+    if global_payout = GlobalPayout.with_state(:visible).find_by_alias('missions')
+      payouts + global_payout.payouts
+    else
+      payouts
+    end
   end
 end

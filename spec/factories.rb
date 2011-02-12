@@ -254,3 +254,12 @@ end
 Factory.define :app_request do |t|
   t.facebook_id 123456789
 end
+
+Factory.define :global_payout do |t|
+  t.name 'Fake Payout'
+  t.alias 'fake_payout'
+  
+  t.payouts Payouts::Collection.new(
+    Payouts::BasicMoney.new(:value => 123, :apply_on => :success)
+  )
+end
