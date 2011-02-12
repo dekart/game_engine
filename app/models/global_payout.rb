@@ -22,4 +22,8 @@ class GlobalPayout < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
+  
+  def self.by_alias(value)
+    with_state(:visible).find_by_alias(value.to_s)
+  end
 end
