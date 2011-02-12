@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110202092219) do
+ActiveRecord::Schema.define(:version => 20110212084454) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id", :limit => 8
@@ -231,6 +231,15 @@ ActiveRecord::Schema.define(:version => 20110202092219) do
   end
 
   add_index "gifts", ["character_id"], :name => "index_gifts_on_character_id"
+
+  create_table "global_payouts", :force => true do |t|
+    t.string   "name",       :limit => 100, :default => "", :null => false
+    t.string   "alias",      :limit => 70,  :default => "", :null => false
+    t.text     "payouts"
+    t.string   "state",      :limit => 50,  :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "help_pages", :force => true do |t|
     t.string   "alias",             :limit => 100, :default => "", :null => false
