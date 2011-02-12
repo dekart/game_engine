@@ -78,9 +78,7 @@ class MissionResult
           payout_triggers << (@level_rank.completed? ? :repeat_failure : :failure)
         end
 
-        @payouts = (
-          @level.payouts + @mission.payouts + @mission_group.payouts
-        ).apply(@character, payout_triggers, @mission)
+        @payouts = @level.applicable_payouts.apply(@character, payout_triggers, @mission)
 
         @character.save!
       end

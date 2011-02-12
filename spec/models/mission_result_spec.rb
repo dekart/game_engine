@@ -367,7 +367,7 @@ describe MissionResult do
           it 'should apply mission payouts' do
             result = @result
 
-            result.mission.payouts = @payouts
+            result.level.payouts = @payouts
 
             result.save!
 
@@ -388,7 +388,7 @@ describe MissionResult do
           it 'should apply group payouts if mission group completed' do
             result = @result
 
-            result.mission.mission_group.payouts = @payouts
+            result.level.payouts = @payouts
 
             result.save!
 
@@ -409,30 +409,36 @@ describe MissionResult do
           end
         end
 
-        it 'should apply :success if mission is not completed yet' do
-          result = @result
+        describe 'if mission is not completed yet' do
+          it 'should apply :success payout' do
+            result = @result
 
-          result.level.payouts = @payouts
+            result.level.payouts = @payouts
 
-          result.save!
+            result.save!
 
-          result.payouts.should include(@payout_success)
+            result.payouts.should include(@payout_success)
+          end
         end
 
-        it 'should apply :repeat_success if mission is already completed in past' do
-          @mission.update_attributes(:repeatable => true)
+        describe 'if mission is already completed in past' do
+          before do
+            @mission.update_attributes(:repeatable => true)
 
-          progress_level!(@mission_level, 5)
+            progress_level!(@mission_level, 5)
 
-          @result = MissionResult.new(@character.reload, @mission.reload)
+            @result = MissionResult.new(@character.reload, @mission.reload)
+          end
+          
+          it 'should apply :repeat_success payout' do
+            @result.level.payouts = @payouts
 
-          @result.level.payouts = @payouts
+            @result.save!
 
-          @result.save!
-
-          @result.payouts.size.should == 1
-          @result.payouts.first.should == @payout_repeat_success
-          @result.payouts.first.should be_applied
+            @result.payouts.size.should == 1
+            @result.payouts.first.should == @payout_repeat_success
+            @result.payouts.first.should be_applied
+          end
         end
       end
 

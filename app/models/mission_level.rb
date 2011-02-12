@@ -27,6 +27,10 @@ class MissionLevel < ActiveRecord::Base
   def energy_requirement
     Requirements::EnergyPoint.new(:value => energy)
   end
+  
+  def applicable_payouts
+    payouts + mission.applicable_payouts
+  end
 
   protected
 
