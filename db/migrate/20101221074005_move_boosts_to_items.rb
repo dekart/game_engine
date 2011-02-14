@@ -3,6 +3,8 @@ class MoveBoostsToItems < ActiveRecord::Migration
     change_table :items do |t|
       t.boolean :boost
     end
+    
+    Item.reset_column_information
 
     Rake::Task['app:maintenance:convert_boosts_to_items'].execute
 
