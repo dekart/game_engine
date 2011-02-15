@@ -24,5 +24,7 @@
     $('#upgrade_points').text('<%= current_character.points %>');
   <% end %>
 
-  $(document).trigger('remote_content.received')
+  $(document).trigger('remote_content.received');
+  
+  <%= ga_track_event('Character', 'Attribute Upgrade', params[:attribute].capitalize, current_character.level) %>
 <% end %>

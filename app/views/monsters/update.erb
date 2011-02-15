@@ -14,6 +14,10 @@
       <% builder.success do %>
         <%= t(".message.progress", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
       <% end %>
+      
+      <% builder.on_ready do %>
+        <%= ga_track_event('Monsters', 'Attack', @fight.monster.name, @fight.monster_damage) %>
+      <% end %>
     <% elsif @fight.monster.won? %>
       <% dialog :id => :monster_dialog do %>
         <h2><%= t('.dialog.title', :monster => @fight.monster.name) %></h2>
@@ -39,6 +43,10 @@
 
       <% builder.success do %>
         <%= t(".message.won", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
+      <% end %>
+
+      <% builder.on_ready do %>
+        <%= ga_track_event('Monsters', 'Won', @fight.monster.name) %>
       <% end %>
     <% end %>
 
@@ -71,14 +79,26 @@
     <% builder.fail do %>
       <%= t(".message.expired", :monster => @fight.monster.name).html_safe %>
     <% end %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Monsters', 'Expired', @fight.monster.name) %>
+    <% end %>
   <% elsif @fight.character.weak? %>
     <%= builder.render("requirements/not_satisfied/health_point",
           :requirement => current_character.weakness_requirement
         ) %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Monsters', 'Not Enough Health') %>
+    <% end %>
   <% elsif @fight.character.sp == 0 %>
     <%= builder.render("requirements/not_satisfied/stamina_point",
           :requirement => @fight.stamina_requirement
         ) %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Monsters', 'Not Enough Stamina') %>
+    <% end %>
   <% end %>
 
   <% builder.on_ready do %>

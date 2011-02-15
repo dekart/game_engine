@@ -3,4 +3,10 @@
   $('#equipment_placements').html('<%= escape_javascript(render("placements", :character => current_character)) %>');
 
   Equipment.setup();
+  
+  <%= ga_track_event('Items', 
+        controller.action_name == 'equip' ? 'Equiped' : 'Unequipped', 
+        @inventory ? "#{@inventory.name} (#{@inventory.item.availability})" : 'All Items', 
+        current_character.level
+      ) %>
 <% end %>

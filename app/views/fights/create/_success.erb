@@ -32,3 +32,7 @@
     $('#<%= dom_id(@fight.victim) %>').hide();
   <% end %>
 <% end %>
+
+<% builder.on_ready do %>
+  <%= ga_track_event('Fights', 'Won') %>
+<% end %>

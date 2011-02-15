@@ -6,6 +6,7 @@ class InvitationsController < ApplicationController
 
     @invitation.accept!
 
+    # TODO Unify invitation acceptance and ingnorance methods to use AJAX responses with analytics tracking
     render :text => t("invitations.accept.message"), :layout => false
   end
 

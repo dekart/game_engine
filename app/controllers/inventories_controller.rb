@@ -98,6 +98,7 @@ class InventoriesController < ApplicationController
           end
         end
 
+        # TODO Refactor this to use AJAX instead of redirects
         flash[:success] = t('inventories.give.messages.success')
 
         redirect_from_iframe root_url(:canvas => true)

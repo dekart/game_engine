@@ -21,4 +21,10 @@
   var mission = $('#<%= dom_id(mission) %>');
 
   mission.find('a.fulfill.button').css('visibility', 'visible');
+  
+  <%= ga_track_event('Missions',
+        result.level_rank.completed? ? 'Repeat Failure' : 'Failure', 
+        "#{mission.name} - Level #{result.level.position}", 
+        result.level_rank.progress
+      ) %>
 <% end %>

@@ -13,13 +13,25 @@
         </td>
       </tr>
     </table>
+    
+    <% builder.on_ready do %>
+      <%= ga_track_event('Monsters', 'Reward Collected', @monster.name, @fight.damage) %>
+    <% end %>
   <% elsif @fight.reward_collected? %>
     <% builder.fail do %>
       <%= t(".messages.already_collected").html_safe %>
     <% end %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Monsters', 'Reward Already Collected', @monster.name) %>
+    <% end %>
   <% elsif !@fight.significant_damage? %>
     <% builder.fail do %>
       <%= t(".messages.insignificant_damage").html_safe %>
+    <% end %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Monsters', 'Insignificant Damage', @monster.name, @fight.damage) %>
     <% end %>
   <% end %>
 
