@@ -47,6 +47,8 @@
       Character.initFightAttributes();
 
       $(document).trigger('item.purchase');
+      
+      <%= ga_track_event('Items', 'Purchased', "#{@item.name} (#{@item.availability})", @amount) %>
     <% end %>
   <% else %>
     <% builder.fail do %>

@@ -53,8 +53,8 @@
   <% end %>
 <% end %>
 
-<% if result.level_rank.just_completed? %>
-  <% builder.on_ready do %>
-    $(document).trigger('mission.complete');
-  <% end %>
+<% builder.on_ready do %>
+  $(document).trigger('mission.complete');
+  
+  <%= ga_track_event('Missions', 'Completed', "#{mission.name} - Level #{result.level.position}") %>
 <% end %>

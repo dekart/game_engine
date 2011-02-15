@@ -21,3 +21,7 @@
     </td>
   </tr>
 </table>
+
+<% builder.on_ready do %>
+  <%= ga_track_event('Fights', 'Lost') %>
+<% end %>

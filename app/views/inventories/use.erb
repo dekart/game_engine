@@ -30,5 +30,7 @@
         render("list", :inventories => current_character.inventories)
       )
     %>');
+    
+    <%= ga_track_event('Items', 'Used', "#{@inventory.name} (#{@inventory.item.availability})", current_character.level) %>
   <% end %>
 <% end %>

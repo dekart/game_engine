@@ -26,10 +26,18 @@
     <%= builder.render("requirements/not_satisfied/stamina_point",
           :requirement => @fight.stamina_requirement
         ) %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Fights', 'Not Enough Stamina') %>
+    <% end %>
   <% elsif current_character.weak? %>
     <%= builder.render("requirements/not_satisfied/health_point",
           :requirement => current_character.weakness_requirement
         ) %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Fights', 'Not Enough Health') %>
+    <% end %>
   <% else %>
     <% builder.fail do %>
       <%= @fight.errors.collect{|e| e.last }.join(' ') %>

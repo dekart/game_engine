@@ -37,6 +37,8 @@
 
     <% builder.on_ready do %>
       $('#<%= dom_id(@item) %>').remove();
+
+      <%= ga_track_event('Items', 'Purchased on Market', "#{@item.name} (#{@item.inventory.item.availability})", current_character.level) %>
     <% end %>
   <% else %>
     <% builder.fail do %>

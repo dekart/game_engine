@@ -32,5 +32,7 @@
               :update => :ajax
             ) %>
       });
+
+    <%= ga_track_event('Character', 'Level Up', 'Level', current_character.level) %>
   <% end %>
 <% end %>
