@@ -18,7 +18,8 @@ class CharactersController < ApplicationController
     @alliance_invitations = Invitation.for_user(current_user).find(:all)
 
     @special_items = Item.special_for(current_character).all(
-      :limit => 2
+      :limit => 2,
+      :order => 'RAND()'
     )
   end
 

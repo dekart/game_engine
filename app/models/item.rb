@@ -26,8 +26,7 @@ class Item < ActiveRecord::Base
 
   named_scope :available_by_level, Proc.new {|character|
     {
-      :conditions => ["items.level <= ?", character.level],
-      :order      => "items.level DESC"
+      :conditions => ["items.level <= ?", character.level]
     }
   }
 
@@ -105,7 +104,7 @@ class Item < ActiveRecord::Base
     end
 
     def special_for(character)
-      with_state(:visible).available.available_in(:special).available_for(character).scoped(:order => "RAND()")
+      with_state(:visible).available.available_in(:special).available_for(character)
     end
   end
 
