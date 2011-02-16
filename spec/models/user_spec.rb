@@ -251,7 +251,7 @@ describe User do
     it 'should update gender to received value' do
       lambda{
         @user.update_social_data!
-      }.should change(@user, :gender).from(nil).to(1)
+      }.should change(@user, :gender).from(nil).to(:male)
     end
     
     it 'should not try to update gender is there is no gender in received data' do
@@ -334,6 +334,62 @@ describe User do
       @user.access_token_expire_at = nil
       
       @user.access_token_valid?.should be_false
+    end
+  end
+  
+  describe '#gender=' do
+    before do
+      @user = Factory(:user, :gender => nil)
+    end
+    
+    it 'should store gender value as integer' do
+      @user.gender = :male
+      @user[:gender].should == 1
+
+      @user.gender = :female
+      @user[:gender].should == 2
+    end
+    
+    it 'should accept string values' do
+      @user.gender = 'male'
+      @user[:gender].should == 1
+    end
+
+    it 'should change value to nil if passed blank value' do
+      @user.gender = :male
+      @user.gender = nil
+      
+      @user[:gender].should be_nil
+
+      @user.gender = :male
+      @user.gender = ''
+
+      @user[:gender].should be_nil
+    end
+        
+    it 'should raise exception if passed wrong value' do
+      lambda{
+        @user.gender = :something
+      }.should raise_exception(ArgumentError)
+    end
+  end
+  
+  describe '#gender' do
+    before do
+      @user = Factory(:user)
+    end
+    
+    it 'should return symbols from stored values' do
+      @user[:gender] = 1
+      @user.gender.should == :male
+      
+      @user[:gender] = 2
+      @user.gender.should == :female
+    end
+    
+    it 'should return nil if there is no stored value' do
+      @user[:gender] = nil
+      @user.gender.should be_nil
     end
   end
 end

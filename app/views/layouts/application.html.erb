@@ -13,7 +13,8 @@
   <%= google_analytics %>
   
   <% javascript_tag do %>
-    <%= ga_set_variable(1, 'Level', "Level #{character_level_group(current_character)}", :visitor)%>
+    <%= ga_set_variable(1, 'Level', "Level #{character_level_group(current_character)}", :visitor) %>
+    <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.capitalize, :visitor) %>
   <% end%>
 </head>
 <body>
