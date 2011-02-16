@@ -18,6 +18,12 @@
   <% end%>
 </head>
 <body>
+  <% fb_connect_js(:channel_url => Facebooker2.callback_url + '/channel.html') do %>
+    $(function(){
+      $(document).trigger('facebook.ready');
+    })
+  <% end %>
+
   <% admin_only do %>
     <div id="admin_menu">
       <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :admin)  %>
@@ -67,10 +73,6 @@
   <%= display_notifications %>
 
   <% dom_ready do %>
-    <% fb_connect_async_js(:wrap_tag => false, :channel_url => Facebooker2.callback_url + '/channel.html') do %>
-      $(document).trigger('facebook.ready');
-    <% end %>
-
     $(document).trigger('application.ready');
   <% end %>
 
