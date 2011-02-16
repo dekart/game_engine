@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
       self.send("#{attribute}=", facebook_user.send(attribute))
     end
     
-    self.gender = GENDERS[facebook_user.gender.to_sym] if facebook_user.gender
+    self.gender = facebook_user.gender if facebook_user.gender
     
     self.friend_ids = facebook_user.friends(:id).collect{|f| f.id }
     
@@ -97,6 +97,20 @@ class User < ActiveRecord::Base
         :count  => Invitation.for_user(self).count
       )
     )
+  end
+  
+  def gender=(value)
+    if value.blank?
+      self[:gender] = nil
+    elsif GENDERS[value.to_sym]
+      self[:gender] = GENDERS[value.to_sym]
+    else
+      raise ArgumentError.new("Only #{ GENDERS.keys.join(' and ') } values are allowed")
+    end
+  end
+  
+  def gender
+    GENDERS.index(self[:gender])
   end
   
   def access_token_valid?
