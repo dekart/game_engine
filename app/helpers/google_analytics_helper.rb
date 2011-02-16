@@ -29,6 +29,16 @@ module GoogleAnalyticsHelper
     ga_command('_trackEvent', category, action, label, value > 0 ? value : nil)
   end
   
+  VARIABLE_SCOPES = {
+    :visitor  => 3,
+    :session  => 2,
+    :page     => 1
+  }
+  
+  def ga_set_variable(index, name, value, scope = :page)
+    ga_command('_setCustomVar', index, name, value, VARIABLE_SCOPES[scope])
+  end
+  
   def ga_command(*args)
     "_gaq.push(#{args.compact.to_json});".html_safe
   end

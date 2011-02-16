@@ -11,6 +11,10 @@
   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", "jquery/tooltip", "jquery/carousel", "application", :cache => "cache/all" %>
 
   <%= google_analytics %>
+  
+  <% javascript_tag do %>
+    <%= ga_set_variable(1, 'Level', "Level #{character_level_group(current_character)}", :visitor)%>
+  <% end%>
 </head>
 <body>
   <% admin_only do %>
