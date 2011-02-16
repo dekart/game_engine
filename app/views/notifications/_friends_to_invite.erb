@@ -6,30 +6,35 @@
   </p>
 
   <div class="users clearfix">
-    <% notification.data[:friend_ids].each do |facebook_id| %>
+    <% notification.data[:friend_ids][0, 6].each do |facebook_id| %>
       <div class="user">
         <div class="name"><%= fb_name(facebook_id, :linked => false) %></div>
         <div class="picture"><%= fb_profile_pic(facebook_id, :linked => false, :size => :small) %></div>
-      
-        <%= link_to_function(button(:invite), 
-              fb_request_dialog(
-                :to       => facebook_id,
-                :title    => t('.title'),
-                :message  => t('users.invite.invitation_message', :app_name => t('app_name')),
-                :data     => {
-                  :type => :invitation,
-                  :reference => :invite_dialog
-                },
-                :callback_url => app_requests_path
-              ),
-              :class => 'invite button'
-            ) %>
       </div>
     <% end %>
   </div>
   
   <div class="controls">
     <%= link_to(button(:invite_other), invite_users_path, :class => 'invite_other button')%>
+
+    <%= link_to_function(button(:invite), 
+          fb_request_dialog(
+            :title    => t('.title'),
+            :message  => t('users.invite.invitation_message', :app_name => t('app_name')),
+            :data     => {
+              :type => :invitation,
+              :reference => :invite_dialog
+            },
+            :filters => [
+              {
+                :name     => t('.suggested_users'),
+                :user_ids => notification.data[:friend_ids]
+              }
+            ],
+            :callback_url => app_requests_path
+          ), 
+          :class => 'invite button'
+        ) %>
   </div>
 
   <%= render("notifications/disable", :notification => notification) %>

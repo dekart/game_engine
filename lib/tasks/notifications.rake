@@ -9,7 +9,7 @@ namespace :app do
       i = 0
       
       Character.find_each(:batch_size => 1) do |character|
-        friend_ids = character.friend_filter.for_invitation(6)
+        friend_ids = character.friend_filter.for_invitation(15)
         
         unless friend_ids.empty? || ENV['NEW_ONLY'] && character.notifications.by_type(:friends_to_invite).any?
           character.notifications.schedule(:friends_to_invite, :friend_ids => friend_ids)

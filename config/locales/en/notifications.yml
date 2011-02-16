@@ -20,6 +20,7 @@ en:
     friends_to_invite:
       title: "Recruit Friends To Your Alliance"
       text: "These friends are not in your Alliance yet! Recruit them to make your Alliance stronger!"
+      suggested_users: "Suggested Users"
       buttons:
-        invite: "Invite"
+        invite: "Invite Them"
         invite_other: "Invite Other Friends"

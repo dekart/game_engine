@@ -21,7 +21,7 @@
   .users
     .user
       display: inline-block
-      height: 170px
+      height: 140px
       width: 160px
       text-align: center
       
@@ -38,11 +38,9 @@
           line-height: 100px
           vertical-align: middle
       
-      .invite
-        width: 80px
-        margin: 0 auto
-        text-align: left
-        +button(!friends_to_invite_invite_icon)
+  .invite
+    margin-right: 20px
+    +button(!friends_to_invite_invite_icon)
         
   .invite_other
     +button(!friends_to_invite_invite_other_icon)
