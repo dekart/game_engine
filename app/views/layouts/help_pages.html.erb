@@ -13,7 +13,7 @@
   <%= google_analytics %>
 </head>
 <body>
-  <% fb_connect_js(:channel_url => Facebooker2.callback_url + '/channel.html') do %>
+  <% fb_connect_js(:channel_url => Facebooker2.callback_url + '/channel.html', :cache_url => javascript_path('cache/facebook_connect.js')) do %>
     $(function(){
       $(document).trigger('facebook.ready');
     });
