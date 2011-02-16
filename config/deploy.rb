@@ -147,7 +147,7 @@ namespace :deploy do
     task :cache_fb_connect_js, :roles => :app do
       folder_path = "#{release_path}/public/javascripts/cache"
       
-      run "mkdir -p #{folder_path} && wget http://connect.facebook.net/en_US/all.js -o #{folder_path}/facebook_connect.js"
+      run "mkdir -p #{folder_path} && wget http://connect.facebook.net/en_US/all.js -O #{folder_path}/facebook_connect.js"
     end
   end
   
