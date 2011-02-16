@@ -37,7 +37,8 @@ module Facebooker2
             :cookie   => true,
             :status   => true,
             :xfbml    => true,
-            :locale   => "en_US"
+            :locale   => "en_US",
+            :async    => false
           )
 
           extra_js = capture(&block) if block_given?
@@ -52,9 +53,12 @@ module Facebooker2
             });
           JAVASCRIPT
           
+<<<<<<< HEAD
           js_url = "connect.facebook.net/#{options[:locale]}/all.js"
           js_url << "?#{Time.now.change(:min => 0, :sec => 0, :usec => 0).to_i}" if options[:weak_cache]
           
+=======
+>>>>>>> Use synscronous connect loading
           if options[:async]
             js = <<-JAVASCRIPT
               window.fbAsyncInit = function() {
@@ -67,7 +71,11 @@ module Facebooker2
                 s.setAttribute('id','fb-root');
                 document.documentElement.getElementsByTagName("body")[0].appendChild(s);
                 var e = document.createElement('script');
+<<<<<<< HEAD
                 e.src = document.location.protocol + '//#{ js_url }';
+=======
+                e.src = document.location.protocol + '//connect.facebook.net/#{options[:locale]}/all.js';
+>>>>>>> Use synscronous connect loading
                 e.async = true;
                 s.appendChild(e);
               }());
@@ -77,6 +85,7 @@ module Facebooker2
           else
             js = <<-CODE
               <div id='fb-root'></div>
+<<<<<<< HEAD
               <script src="http://#{ js_url }" type="text/javascript"></script>
             CODE
             
@@ -93,6 +102,11 @@ module Facebooker2
             js << <<-CODE
               <script type="text/javascript">
                 if(typeof FB != 'undefined'){
+=======
+              <script src="http://connect.facebook.net/#{options[:locale]}/all.js" type="text/javascript"></script>
+              <script type="text/javascript">
+                if(typeof(FB) != 'undefined'){
+>>>>>>> Use synscronous connect loading
                   #{init_js}
                   #{extra_js}
                 }

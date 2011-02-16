@@ -9,6 +9,12 @@
   <title><%= @admin_title %></title>
 </head>
 <body>
+  <% fb_connect_js(:channel_url => Facebooker2.callback_url + '/channel.html') do %>
+    $(function(){
+      $(document).trigger('facebook.ready');
+    });
+  <% end %>
+
   <%= render "admin/layouts/main_menu" %>
 
   <div id="content">
@@ -24,12 +30,7 @@
             :version  => File.read(Rails.root.join("VERSION"))
           ).html_safe %>
     </div>
-
   </div>
-
-  <% fb_connect_async_js do %>
-    $(document).trigger('facebook.ready');
-  <% end %>
 
   <%= dom_ready %>
 </body>

@@ -13,6 +13,12 @@
   <%= google_analytics %>
 </head>
 <body>
+  <% fb_connect_js(:channel_url => Facebooker2.callback_url + '/channel.html') do %>
+    $(function(){
+      $(document).trigger('facebook.ready');
+    });
+  <% end %>
+
   <div id="content">
     <div id="header" class="clearfix">
       <%= link_to("", root_path, :id => :logo) %>
@@ -20,12 +26,6 @@
 
     <%= yield %>
   </div>
-
-  <% fb_connect_async_js do %>
-    $(function(){
-      $(document).trigger('facebook.ready');
-    });
-  <% end %>
 
   <%= dom_ready %>
 
