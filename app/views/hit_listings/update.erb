@@ -7,7 +7,10 @@
                 :url    => hit_listing_path(@hit_listing),
                 :method => :put,
                 :update => :result,
-                :html   => {:class => "attack_again button"}
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => "attack_again button"
+                }
               ) %>
         <% end %>
       <% end %>

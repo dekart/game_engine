@@ -6,7 +6,11 @@
           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
                 :url    => unequip_inventory_path(inventory, :placement => placement),
                 :update => :result,
-                :html   => {:class => :remove, :title => t(".remove")}
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => :remove, 
+                  :title => t(".remove")
+                }
               ) if character == current_character %>
 
           <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement]) -%>
@@ -25,7 +29,11 @@
         <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
               :url    => unequip_inventory_path(inventory, :placement => :additional),
               :update => :result,
-              :html   => {:class => :remove, :title => t(".remove")}
+              :html   => {
+                :"data-click-once" => true,
+                :class => :remove, 
+                :title => t(".remove")
+              }
             ) if character == current_character %>
 
         <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional]) -%>

@@ -34,8 +34,10 @@
               <%= link_to_remote(inventory_use_button(inventory),
                     :url    => use_inventory_path(inventory),
                     :update => :result,
-                    :before => "$(this).css('visibility', 'hidden')",
-                    :html   => {:class => "use button"}
+                    :html   => {
+                      :"data-click-once" => true,
+                      :class => "use button"
+                    }
                   ) if inventory.usable? %>
 
               <% if inventory.can_be_sold? %>
@@ -47,7 +49,10 @@
                         :method => :delete,
                         :with   => "$(this).parent('form').serialize()",
                         :update => :result,
-                        :html   => {:class => "sell button"}
+                        :html   => {
+                          :"data-click-once" => true,
+                          :class => "sell button"
+                        }
                       ) %>
                 <% end %>
               <% end %>

@@ -21,7 +21,10 @@
                 :url      => wall_post_path(post, :page => wall_posts.current_page),
                 :update   => :ajax,
                 :method   => :delete,
-                :confirm  => t('.controls.remove_confirm')
+                :confirm  => t('.controls.remove_confirm'),
+                :html     => {
+                  :"data-click-once" => true,
+                }
               ) %>
         </div>
       <% end %>

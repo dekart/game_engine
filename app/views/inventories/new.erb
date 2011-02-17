@@ -40,7 +40,10 @@
               :update => :result,
               :with   => "$(this).parents('form').serialize()",
               :after  => "$.dialog.close()",
-              :html   => {:class => "buy button"}
+              :html   => {
+                :"data-click-once" => true,
+                :class => "buy button"
+              }
             ) %>
       </div>
     <% end %>

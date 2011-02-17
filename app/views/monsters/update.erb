@@ -6,8 +6,10 @@
               :url    => monster_path(@fight.monster),
               :method => :put,
               :update => :result,
-              :before => "$(this).css('visibility', 'hidden')",
-              :html   => {:class => "attack button"}
+              :html   => {
+                :"data-click-once" => true,
+                :class => "attack button"
+              }
             ) %>
       <% end %>
 

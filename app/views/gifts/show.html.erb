@@ -31,7 +31,10 @@
             <%= link_to_remote(inventory_use_button(gift.inventory),
                   :url    => use_inventory_path(gift.inventory),
                   :update => :result,
-                  :html   => {:class => "use button"}
+                  :html   => {
+                    :"data-click-once" => true,
+                    :class => "use button"
+                  }
                 ) if gift.inventory.usable? %>
           </td>
         </tr>

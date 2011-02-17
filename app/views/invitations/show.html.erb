@@ -14,11 +14,13 @@
       <%= link_to(button(:ignore), root_path,
             :class => "ignore button"
           ) %>
+          
       <%= link_to_remote(button(:accept),
             :url    => invitation_path(@character.id),
             :method => :put,
             :update => :result,
             :html => {
+              :"data-click-once" => true,
               :class  => "accept button"
             }
           ) %>

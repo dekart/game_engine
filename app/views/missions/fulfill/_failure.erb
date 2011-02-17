@@ -6,8 +6,10 @@
   <%= link_to_remote(button(:try_again),
         :url    => fulfill_mission_path(mission),
         :update => :result,
-        :before => "$(this).css('visibility', 'hidden')",
-        :html   => {:class => "fulfill_again button"}
+        :html   => {
+          :"data-click-once" => true,
+          :class => "fulfill_again button"
+        }
       ) %>
 <% end %>
 

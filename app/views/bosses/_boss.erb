@@ -34,7 +34,10 @@
         <%= link_to_remote(button(:attack),
               :url    => boss_fights_path(:boss_id => boss),
               :update => :result,
-              :html   => {:class => "button attack"}
+              :html   => {
+                :"data-click-once" => true,
+                :class => "button attack"
+              }
             ) if boss.repeatable || !current_character.boss_fights.won?(boss) %>
       </div>
     </td>

@@ -15,7 +15,10 @@
                 :url    => hit_listing_path(listing),
                 :method => :put,
                 :update => :result,
-                :html   => {:class => "attack button"}
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => "attack button"
+                }
               ) %>
         </td>
       </tr>

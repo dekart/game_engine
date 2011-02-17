@@ -12,7 +12,8 @@
           :update   => :ajax,
           :confirm  => t(".break.confirmation"),
           :html     => {
-            :class    => "delete button"
+            :"data-click-once" => true,
+            :class => "delete button"
           }
         ) %>
   </td>

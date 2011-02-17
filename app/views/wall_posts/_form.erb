@@ -6,6 +6,7 @@
         :update => :ajax,
         :with   => "$(this).parents('form').serialize()",
         :html   => {
+          :"data-click-once" => true,
           :class => 'publish button'
         }
       ) %>

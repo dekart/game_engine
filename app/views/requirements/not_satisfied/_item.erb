@@ -8,7 +8,10 @@
             ),
             :update => :result,
             :before => "$(document).bind('item.purchase', Mission.onItemPurchase);",
-            :html   => {:class => "buy button"}
+            :html   => {
+              :"data-click-once" => true,
+              :class => "buy button"
+            }
           ) %>
     </div>
 
