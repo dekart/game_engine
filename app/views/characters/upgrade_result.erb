@@ -26,5 +26,5 @@
 
   $(document).trigger('remote_content.received');
   
-  <%= ga_track_event('Character', 'Attribute Upgrade', params[:attribute].capitalize, current_character.level) %>
+  <%= ga_track_event('Character', 'Attribute Upgrade', params[:attribute].titleize, current_character.level) %>
 <% end %>
