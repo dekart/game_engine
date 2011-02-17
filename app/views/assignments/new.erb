@@ -45,7 +45,16 @@
       </div>
     <% end %>
 
-    <%= submit_tag t(".submit") %>
+    <%= link_to_remote(button(:promote),
+          :url  => polymorphic_path([@assignment.context, @assignment]),
+          :with   => "$(this).parents('form').serialize()",
+          :update => :ajax,
+          :after  => '$.dialog.close()',
+          :html   => {
+            :'data-click-once' => true,
+            :class => 'promote button'
+          }
+        ) %>
   <% end %>
 
   <% d.on_ready do %>

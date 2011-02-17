@@ -11,7 +11,7 @@ class AssignmentsController < ApplicationController
 
     @assignment.save
 
-    redirect_to_context(@assignment)
+    render :layout => 'ajax'
   end
 
   def destroy
@@ -26,15 +26,5 @@ class AssignmentsController < ApplicationController
     end
 
     render :layout => 'ajax'
-  end
-
-  protected
-
-  def redirect_to_context(assignment)
-    if assignment.context.is_a?(Character)
-      redirect_from_iframe relations_url(:canvas => true)
-    elsif assignment.context.is_a?(Property)
-      redirect_from_iframe properties_url(:canvas => true)
-    end
   end
 end
