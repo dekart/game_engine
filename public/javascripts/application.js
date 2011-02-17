@@ -337,7 +337,11 @@ var Spinner = {
 $(function(){
   if(document.cookie.indexOf('access_token') == -1){
     $('a').live('click', function(){
-      $(this).attr('href', signedUrl($(this).attr('href')));
+      var href = $(this).attr('href');
+      
+      if(typeof(href) != 'undefined'){
+        $(this).attr('href', signedUrl(href));
+      }
     });
 
     $('form').live('submit', function(){
