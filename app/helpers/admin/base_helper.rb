@@ -21,7 +21,7 @@ module Admin::BaseHelper
   end
 
   def admin_state(object)
-    content_tag(:span, object.state.to_s.capitalize, :class => object.state)
+    content_tag(:span, object.state.to_s.titleize, :class => object.state)
   end
 
   def admin_title(value, doc_topic = nil)
