@@ -36,14 +36,20 @@
                   :url    => market_item_path(item),
                   :method => :delete,
                   :update => :result,
-                  :html   => {:class => "delete button"},
-                  :confirm => t(".buttons.delete_confirm")
+                  :confirm => t(".buttons.delete_confirm"),
+                  :html   => {
+                    :"data-click-once" => true,
+                    :class => "delete button"
+                  }
                 ) %>
           <% else %>
             <%= link_to_remote(button(:buy),
                   :url    => buy_market_item_path(item),
                   :update => :result,
-                  :html   => {:class => "buy button"}
+                  :html   => {
+                    :"data-click-once" => true,
+                    :class => "buy button"
+                  }
                 ) %>
           <% end %>
         </td>

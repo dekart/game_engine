@@ -31,7 +31,10 @@
             :url    => item_collection_path(collection),
             :method => :put,
             :update => :result,
-            :html   => {:class => "collect button"}
+            :html   => {
+              :"data-click-once" => true,
+              :class => "collect button"
+            }
           ) %>
     </div>
   </div>

@@ -14,12 +14,18 @@
           <%= link_to_remote(button(:accept),
                 :url    => accept_invitation_path(invitation),
                 :update => dom_id(invitation, :controls),
-                :html   => {:class => "accept button"}
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => "accept button"
+                }
               ) %>
           <%= link_to_remote(button(:ignore),
                 :url    => ignore_invitation_path(invitation),
                 :update => dom_id(invitation, :controls),
-                :html   => {:class => "ignore button"}
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => "ignore button"
+                }
               ) %>
         <% end %>
       </tr>

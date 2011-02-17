@@ -4,7 +4,10 @@
           :url    => collect_money_properties_path,
           :method => :put,
           :update => :result,
-          :html   => {:class => "button collect_all"}
+          :html   => {
+            :"data-click-once" => true,
+            :class => "button collect_all"
+          }
         ) %>
   </div>
 
@@ -30,6 +33,7 @@
                   :method => :put,
                   :update => :result,
                   :html   => {
+                    :"data-click-once" => true,
                     :class => "collect button",
                     :style => ("display: none" unless property.collectable?)
                   }
@@ -39,13 +43,19 @@
                   :url    => upgrade_property_path(property),
                   :method => :put,
                   :update => :result,
-                  :html   => {:class => "upgrade button"}
+                  :html   => {
+                    :"data-click-once" => true,
+                    :class => "upgrade button"
+                  }
                 ) if property.upgradeable? %>
           <% else %>
             <%= link_to_remote(button(:buy),
                   :url    => properties_path(:property_type_id => type.id),
                   :update => :result,
-                  :html   => {:class => "buy button"}
+                  :html   => {
+                    :"data-click-once" => true,
+                    :class => "buy button"
+                  }
                 ) %>
           <% end %>
         </div>

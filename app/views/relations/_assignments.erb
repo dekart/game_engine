@@ -12,7 +12,8 @@
               :update => :ajax,
               :confirm  => t(".buttons.demote_confirm"),
               :html   => {
-                :class    => "demote button",
+                :"data-click-once" => true,
+                :class => "demote button"
               }
             ) %>
       </div>
