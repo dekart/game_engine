@@ -47,4 +47,5 @@ en:
         empty_set: "You have no assigned alliance members"
       columns:
         user: "Alliance member"
-      submit: "Save"
+      buttons:
+        promote: "Promote"
