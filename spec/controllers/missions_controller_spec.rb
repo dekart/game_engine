@@ -14,6 +14,20 @@ describe MissionsController do
     end
   end
   
+  describe 'when helping with a mission' do
+    before do
+      @character = mock_model(Character)
+
+      controller.stub!(:current_character).and_return(@character)
+    end
+
+    it 'should redirect to root if there is no key passed' do
+      get :help
+      
+      response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
+    end
+  end
+  
   describe 'when collection reward from mission help' do
     before do
       @character = mock_model(Character, 
