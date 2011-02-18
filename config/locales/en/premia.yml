@@ -4,13 +4,13 @@ en:
     show:
       title: "Gem Market"
       current:
-        label: "You have {{amount}} gems"
+        label: "You have %{amount} gems"
       hire_mercenary:
         text: "Hire a mercenary to your Alliance"
         button: "Hire"
         maximum: "You have maximum Alliance"
       exchange_money:
-        text: "Add {{amount}} gold to your character"
+        text: "Add %{amount} gold to your character"
         button: "Add Gold"
       refill_energy:
         text: "Refill your energy"
@@ -33,7 +33,7 @@ en:
         confirm: "Are you sure you want to change your name?"
         button: "Change"
       buy_points:
-        text: "Add {{amount}} upgrade points to your character"
+        text: "Add %{amount} upgrade points to your character"
         button: "Add Points"
     get_more_vip:
       title: "How to Get More Gems"
