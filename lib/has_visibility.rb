@@ -25,7 +25,7 @@ module HasVisibility
       {
         :joins      => %{
           LEFT JOIN visibilities ON #{base.table_name}.id = visibilities.target_id
-          AND visibilities.target_type = "#{base.class_name}"
+          AND visibilities.target_type = '#{base.name}'
         },
         :conditions => "visibilities.id IS NULL OR visibilities.character_type_id = #{type_id}"
       }
