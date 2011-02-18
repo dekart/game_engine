@@ -1,11 +1,14 @@
 module GoogleAnalyticsHelper
-  def google_analytics
+  def google_analytics(&block)
     return unless ga_enabled?
     
-    %{
+    additional_code = block_given? ? capture(&block) : ''
+    
+    code = %{
       <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '#{ Setting.s(:app_google_analytics_id) }']);
+        #{additional_code}
         _gaq.push(['_trackPageview']);
 
         (function() {
@@ -15,6 +18,8 @@ module GoogleAnalyticsHelper
         })();
       </script>
     }.html_safe
+    
+    block_given? ? concat(code) : code
   end
   
   def ga_enabled?
