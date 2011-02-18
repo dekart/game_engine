@@ -2,7 +2,13 @@ require 'spec_helper'
 
 describe GlobalPayout do
   describe 'when creating' do
-    should_validate_presence_of :name, :alias
+    it 'should validate name presence' do
+      should validate_presence_of :name
+    end
+
+    it 'should validate alias presence' do
+      should validate_presence_of :alias
+    end
   end
   
   describe '#by_alias' do
