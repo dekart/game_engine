@@ -5,7 +5,7 @@ en:
       submit: "Save"
     invite:
       title: "Recruit To Your Alliance"
-      success_message: "You've successfully sent {{amount}} invitations to your friends!"
+      success_message: "You've successfully sent %{amount} invitations to your friends!"
       invitation_message: "Join my Alliance in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
       buttons:
         invite: "Invite"
@@ -13,11 +13,11 @@ en:
       invite:
         title: "Alliance"
         note: "Invite friends to join your Alliance"
-        message: "{{user}} wants you to join {{pronoun}} alliance in {{app_name}}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
+        message: "%{user} wants you to join %{pronoun} alliance in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
         buttons:
-          accept: "Join {{user}} Alliance"
-          visit_profile: "View {{user}} Character"
+          accept: "Join %{user} Alliance"
+          visit_profile: "View %{user} Character"
       copy_paste:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to \"What's on your mind?\" form and publish it. Or just send this message to your friends:"
-        invitation: "Join my {{app}} Alliance!<br /> {{link}}"
+        invitation: "Join my %{app} Alliance!<br /> %{link}"

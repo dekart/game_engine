@@ -47,7 +47,7 @@ en:
           title: "You received:"
         you_spent:
           title: "You spent:"
-          zero_energy: "{{user}} helped to save energy!"
+          zero_energy: "%{user} helped to save energy!"
           boost: "You've used a boost:"
         progress:
           title: "Mission Progress"
@@ -60,11 +60,11 @@ en:
       empty_set: "You have no missions available at this time"
     mission:
       completed: "Completed!"
-      level: "Level {{level}}"
+      level: "Level %{level}"
       buttons:
         fulfill: "Fulfill"
     help:
-      success: "You've successfully helped {{user}} to fulfill the {{mission}} mission!"
+      success: "You've successfully helped %{user} to fulfill the %{mission} mission!"
       you_received: "You received:"
       buttons:
         continue: "Continue"

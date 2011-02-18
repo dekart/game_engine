@@ -9,17 +9,17 @@ en:
     friend_selector:
       title: "Send Gifts to Your Alliance: Step 2"
       gift:
-        title: "You're sending ({{change}})"
+        title: "You're sending (%{change})"
         change: "change"
       note: "Please choose friends whom you want to send this gift"
       groups:
         all: "All Friends"
-        players: "{{app}} Friends"
+        players: "%{app} Friends"
         non_players: "Facebook Friends"
       request:
         title: "Gift"
-        message: "{{user}} has sent you a {{item}} in {{app}}! Click to accept gift."
-        accept: "Accept {{item}}"
+        message: "%{user} has sent you a %{item} in %{app}! Click to accept gift."
+        accept: "Accept %{item}"
         note: "Send gifts to your Alliance"
     confirm:
       messages:

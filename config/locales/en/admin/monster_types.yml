@@ -18,7 +18,7 @@ en:
       create:
         success: "Monster has been created successfully!"
       edit:
-        title: "{{name}} - Edit Monster"
+        title: "%{name} - Edit Monster"
         submit: "Update"
       update:
         success: "Monster has been updated successfully!"

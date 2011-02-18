@@ -102,16 +102,16 @@ en:
         inventory:
           attributes:
             character:
-              not_enough_basic_money: "You don't have enough gold to buy a {{name}}."
-              not_enough_vip_money: "You don't have enough Gems to buy a {{name}}."
+              not_enough_basic_money: "You don't have enough gold to buy a %{name}."
+              not_enough_vip_money: "You don't have enough Gems to buy a %{name}."
         property:
           attributes:
             character:
-              not_enough_basic_money: "You don't have enough {{basic_money}} to buy a {{name}}."
-              not_enough_basic_money_for_upgrade: "You don't have enough {{basic_money}} to upgrade your {{name}}."
-              not_enough_vip_money: "You don't have enough {{vip_money}} to buy a {{name}}."
-              not_enough_vip_money_for_upgrade: "You don't have enough {{vip_money}} to upgrade your {{name}}."
-              too_much_properties: "You cannot buy any more {{plural_name}} because you already have too many! Try to purchase other types of properties."
+              not_enough_basic_money: "You don't have enough %{basic_money} to buy a %{name}."
+              not_enough_basic_money_for_upgrade: "You don't have enough %{basic_money} to upgrade your %{name}."
+              not_enough_vip_money: "You don't have enough %{vip_money} to buy a %{name}."
+              not_enough_vip_money_for_upgrade: "You don't have enough %{vip_money} to upgrade your %{name}."
+              too_much_properties: "You cannot buy any more %{plural_name} because you already have too many! Try to purchase other types of properties."
         boss_fight:
           attributes:
             character:
@@ -121,7 +121,7 @@ en:
         hit_listing:
           attributes:
             reward:
-              not_enough_basic_money: "You don't have enough {{basic_money}}"
+              not_enough_basic_money: "You don't have enough %{basic_money}"
             victim:
               too_weak: "The target is too weak, you cannot add them to the hitlist"
               already_listed: "This target is already in the hit list"
@@ -129,8 +129,8 @@ en:
           already_completed: "Somebody already took out this target before you got the chance!"
           client_attack: "You cannot claim a bounty from your own listing!"
         market_item:
-          not_enough_basic_money: "You don't have enough gold to buy {{name}}."
-          not_enough_vip_money: "You don't have enough Gems to buy {{name}}."
+          not_enough_basic_money: "You don't have enough gold to buy %{name}."
+          not_enough_vip_money: "You don't have enough Gems to buy %{name}."
         item_collection:
           attributes:
             items:

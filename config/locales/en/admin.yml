@@ -32,7 +32,7 @@ en:
           alt: "Please wait..."
           text: "Please wait for a few seconds..."
         footer:
-          text: "This game is powered by {{engine}} version {{version}}"
+          text: "This game is powered by %{engine} version %{version}"
           engine: "Railorz RPG Engine"
     item_groups:
       index:
@@ -54,7 +54,7 @@ en:
       create:
         success: "Item group has been created successfully!"
       edit:
-        title: "{{name}} - Edit Item Group"
+        title: "%{name} - Edit Item Group"
         submit: "Update"
       update:
         success: "Item group has been updated successfully!"
@@ -86,12 +86,12 @@ en:
       create:
         success: "Item has been created successfully!"
       edit:
-        title: "{{name}} - Edit Item"
+        title: "%{name} - Edit Item"
         submit: "Update"
       update:
         success: "Item has been updated successfully!"
       form_fields:
-        use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '{{default_value}}'"
+        use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '%{default_value}'"
       effect:
         remove: "Remove"
       balance:
@@ -120,7 +120,7 @@ en:
       create:
         success: "Mission group has been created successfully!"
       edit:
-        title: "{{name}} - Edit Mission Group"
+        title: "%{name} - Edit Mission Group"
         submit: "Update"
       update:
         success: "Mission group has been updated successfully!"
@@ -154,7 +154,7 @@ en:
       create:
         success: "Mission has been created successfully!"
       edit:
-        title: "{{name}} - Edit Mission"
+        title: "%{name} - Edit Mission"
         submit: "Update"
       update:
         success: "Mission has been updated successfully!"
@@ -191,7 +191,7 @@ en:
       create:
         success: "Boss has been created successfully!"
       edit:
-        title: "{{name}} - Edit Boss"
+        title: "%{name} - Edit Boss"
         submit: "Update"
       update:
         success: "Boss has been updated successfully!"
@@ -287,7 +287,7 @@ en:
       effect:
         remove: "Remove"
     statistics:
-      amount_change: "(+{{amount}} in last 24 hours)"
+      amount_change: "(+%{amount} in last 24 hours)"
       controls:
         dashboard: "Dashboard"
         users: "Users"
@@ -346,7 +346,7 @@ en:
       create:
         success: "Property type has been created successfully!"
       edit:
-        title: "{{name}} - Edit Property Type"
+        title: "%{name} - Edit Property Type"
         submit: "Update"
       update:
         success: "Property type has been updated successfully!"
@@ -380,7 +380,7 @@ en:
       create:
         success: "Asset has been created successfully!"
       edit:
-        title: "{{name}} - Edit Asset"
+        title: "%{name} - Edit Asset"
         submit: "Update"
       update:
         success: "Asset has been updated successfully!"
@@ -402,7 +402,7 @@ en:
       create:
         success: "Character type has been created successfully!"
       edit:
-        title: "{{name}} - Edit Character Type"
+        title: "%{name} - Edit Character Type"
         submit: "Update"
       update:
         success: "Character type has been updated successfully!"
@@ -428,7 +428,7 @@ en:
       create:
         success: "Skin has been created successfully!"
       edit:
-        title: "{{name}} - Edit Skin"
+        title: "%{name} - Edit Skin"
         submit: "Update"
       update:
         success: "Skin has been updated successfully!"
@@ -462,7 +462,7 @@ en:
       create:
         success: "Help page has been created successfully!"
       edit:
-        title: "{{name}} - Edit Help Page"
+        title: "%{name} - Edit Help Page"
         submit: "Update"
       update:
         success: "Help page has been updated successfully!"
@@ -470,7 +470,7 @@ en:
         comments:
           alias: "Only letters, numbers, dashes, and underscores are allowed."
           content:
-            text: "Please read {{documentation}} to know more about formatting options."
+            text: "Please read %{documentation} to know more about formatting options."
             documentation: "documentation"
     settings:
       index:
@@ -492,10 +492,10 @@ en:
       create:
         success: "Value has been created successfully!"
       edit:
-        title: "{{name}} - Edit Value"
+        title: "%{name} - Edit Value"
         submit: "Update"
       edit_payout:
-        title: "{{name}} - Edit Payout Value"
+        title: "%{name} - Edit Payout Value"
         submit: "Update"
       update:
         success: "Value has been updated successfully!"
@@ -505,7 +505,7 @@ en:
         note: "This page allows you to perform different application-wide tasks. Please be carefull with all the functions at this page - they can cause damage to your application if used without care."
         delete_users:
           title: "Delete All Users"
-          note: "This function allows you to delete all game users (including admins) and clear all their game data. Please use it only when testing your game before oficial launch. For security reasons this function stops working when your application gets more than {{limit}} users. WARNING: User data cannot be restored after deletion!"
+          note: "This function allows you to delete all game users (including admins) and clear all their game data. Please use it only when testing your game before oficial launch. For security reasons this function stops working when your application gets more than %{limit} users. WARNING: User data cannot be restored after deletion!"
           perform: "Delete Users"
           confirm: "Are you sure you want to delete all users? This operation CANNOT BE UNDONE!"
         restart:
@@ -514,7 +514,7 @@ en:
           perform: "Restart"
           confirm: "Are you sure you want to restart the application?"
       delete_users:
-        user_limit_reached: "This task cannot be performed because your application already reached {{limit}} user limit."
+        user_limit_reached: "This task cannot be performed because your application already reached %{limit} user limit."
       restart:
         success: "The application was successfully restarted!"
     characters:
