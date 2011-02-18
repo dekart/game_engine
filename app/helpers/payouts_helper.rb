@@ -47,7 +47,7 @@ module PayoutsHelper
 
     content = ListBuilder.new(self, container, payouts, options).html(&block)
 
-    block_given? ? concat(content) : content
+    block_given? ? concat(content.to_s) : content.to_s
   end
 
   def payout(type, value, options = {}, &block)
