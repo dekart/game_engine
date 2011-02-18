@@ -55,7 +55,7 @@ module CharactersHelper
   def character_level_group(character, group_size = 5)
     delta = character.level % group_size
     
-    "#{character.level - delta + 1} - #{character.level + group_size - delta}"
+    "%03d-%03d" % [character.level - delta + 1, character.level + group_size - delta]
   end
 
   protected

@@ -11,7 +11,7 @@
   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", "jquery/tooltip", "jquery/carousel", "application", :cache => "cache/all" %>
 
   <% google_analytics do %>
-    <%= ga_set_variable(1, 'Level', "Level #{character_level_group(current_character)}", :visitor) %>
+    <%= ga_set_variable(1, 'Level', character_level_group(current_character), :visitor) %>
     <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.titleize, :visitor) if current_user.gender %>
   <% end%>
 </head>
