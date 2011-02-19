@@ -1,9 +1,4 @@
 module News
-  class MonsterFightStart < Base
-    delegate :monster, :to => :monster_fight
-    
-    def monster_fight
-      @monster_fight ||= MonsterFight.find(data[:monster_fight_id])
-    end
+  class MonsterFightStart < News::MonsterFight
   end
 end

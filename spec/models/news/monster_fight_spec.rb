@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe News::MonsterFightStart do
+describe News::MonsterFight do
   it 'should delegate monster to monster figth' do
     @monster_fight = Factory(:monster_fight)
-    @news = News::MonsterFightStart.create(:data => {:monster_fight_id => @monster_fight.id})
+    @news = News::MonsterFight.create(:data => {:monster_fight_id => @monster_fight.id})
     
     @news.monster.should === @monster_fight.monster
   end
@@ -12,7 +12,7 @@ describe News::MonsterFightStart do
     before do
       @monster_fight = Factory(:monster_fight)
       
-      @news = News::MonsterFightStart.create(:data => {:monster_fight_id => @monster_fight.id})
+      @news = News::MonsterFight.create(:data => {:monster_fight_id => @monster_fight.id})
     end
     
     it 'should return monster fight from data' do
