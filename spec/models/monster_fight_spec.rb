@@ -46,7 +46,7 @@ describe MonsterFight do
     end
   end
 
-  describe 'when attacking monster' do
+  describe '#attack' do
     before do
       @monster = Factory(:monster)
 
@@ -167,6 +167,18 @@ describe MonsterFight do
       @monster_fight.attack!
 
       @character.should_not be_changed
+    end
+    
+    describe 'when monster got defeated' do
+      it 'should add news to character newsfeed about the victory' do
+        @monster.should_receive(:won?).and_return(true)
+        
+        lambda{
+          @monster_fight.attack!
+        }.should change(@character.news, :count).by(1)
+        
+        @character.news.last.monster_fight.should == @monster_fight
+      end
     end
 
     it 'should be saved' do

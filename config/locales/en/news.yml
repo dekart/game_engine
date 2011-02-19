@@ -26,3 +26,7 @@ en:
         joined: "%{actor} joined the fight against %{monster}"
       buttons:
         attack: 'Attack'
+    monster_fight_defeat:
+      text: "%{actor} defeated the %{monster}"
+      buttons:
+        reward: "Get Reward"

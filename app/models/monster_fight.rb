@@ -37,7 +37,13 @@ class MonsterFight < ActiveRecord::Base
         save!
         monster.save!
         character.save!
+
+        if monster.won?
+          character.news.add(:monster_fight_defeat, :monster_fight_id => id)
+        end
       end
+      
+      true
     else
       false
     end
