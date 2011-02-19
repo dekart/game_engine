@@ -8,6 +8,8 @@ class MonsterFight < ActiveRecord::Base
   @@damage_system = FightingSystem::PlayerVsMonster::Simple
 
   attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
+  
+  after_create :create_character_news
 
   def attack!
     monster.expire if monster.time_remaining <= 0
@@ -85,5 +87,15 @@ class MonsterFight < ActiveRecord::Base
   
   def significant_damage?
     damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.maximum(:damage))
+  end
+  
+  def summoner?
+    character == monster.character
+  end
+  
+  protected
+  
+  def create_character_news
+    character.news.add(:monster_fight_start, :monster_fight_id => id)
   end
 end

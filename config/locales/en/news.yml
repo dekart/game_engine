@@ -20,3 +20,9 @@ en:
       text: "%{actor} upgraded the %{property} to level %{level}"
     property_collect:
       text: "%{actor} collected income from the %{property}"
+    monster_fight_start:
+      text:
+        summoned: "%{actor} started the fight against %{monster}"
+        joined: "%{actor} joined the fight against %{monster}"
+      buttons:
+        attack: 'Attack'
