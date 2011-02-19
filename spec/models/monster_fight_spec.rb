@@ -28,6 +28,23 @@ describe MonsterFight do
   it 'should use simple damage calculation system' do
     MonsterFight.damage_system.should == FightingSystem::PlayerVsMonster::Simple
   end
+  
+  describe 'when creating' do
+    before do
+      @monster = Factory(:monster)
+      @character = Factory(:character)
+      
+      @monster_fight = MonsterFight.new(:monster => @monster, :character => @character)
+    end
+    
+    it 'should create news about monster fight start' do
+      lambda{
+        @monster_fight.save
+      }.should change(@character.news, :count).from(0).to(1)
+      
+      @character.news.first.monster_fight.should == @monster_fight
+    end
+  end
 
   describe 'when attacking monster' do
     before do
@@ -328,6 +345,25 @@ describe MonsterFight do
     it 'should return requirement for 1 stamina point' do
       @monster_fight.stamina_requirement.should be_kind_of(Requirements::StaminaPoint)
       @monster_fight.stamina_requirement.value.should == 1
+    end
+  end
+  
+  describe '#summoner?' do
+    before do
+      @character = Factory(:character)
+      @monster = Factory(:monster, :character => @character)
+
+      @monster_fight = MonsterFight.create(:monster => @monster, :character => @character)
+    end
+    
+    it 'should return true if monster character equals to fight character' do
+      @monster_fight.summoner?.should be_true
+    end
+    
+    it 'should return false if monster character differs from fight character' do
+      @monster_fight.character = Factory(:character)
+      
+      @monster_fight.summoner?.should be_false
     end
   end
 end
