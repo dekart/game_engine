@@ -219,6 +219,8 @@ ActiveRecord::Schema.define(:version => 20110219113512) do
     t.datetime "updated_at"
   end
 
+  add_index "gifts", ["receiver_id", "state", "sender_id"], :name => "index_gifts_new_on_receiver_id_and_state_and_sender_id"
+
   create_table "global_payouts", :force => true do |t|
     t.string   "name",       :limit => 100, :default => "", :null => false
     t.string   "alias",      :limit => 70,  :default => "", :null => false
