@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110219113512) do
+ActiveRecord::Schema.define(:version => 20110221181654) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id", :limit => 8
@@ -210,10 +210,11 @@ ActiveRecord::Schema.define(:version => 20110219113512) do
   add_index "fights", ["victim_id"], :name => "index_fights_on_victim_id"
 
   create_table "gifts", :force => true do |t|
+    t.integer  "app_request_id"
     t.integer  "sender_id"
-    t.integer  "receiver_id", :limit => 8
+    t.integer  "receiver_id",    :limit => 8
     t.integer  "item_id"
-    t.string   "state",       :limit => 50, :default => "", :null => false
+    t.string   "state",          :limit => 50, :default => "", :null => false
     t.datetime "accepted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -271,10 +272,11 @@ ActiveRecord::Schema.define(:version => 20110219113512) do
 
   create_table "invitations", :force => true do |t|
     t.integer  "sender_id"
-    t.integer  "receiver_id", :limit => 8
+    t.integer  "receiver_id",    :limit => 8
     t.boolean  "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "app_request_id"
   end
 
   add_index "invitations", ["receiver_id", "accepted"], :name => "index_invitations_on_receiver_id_and_accepted"

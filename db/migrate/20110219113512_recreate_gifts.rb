@@ -1,6 +1,7 @@
 class RecreateGifts < ActiveRecord::Migration
   def self.up
     create_table :gifts_new do |t|
+      t.integer :app_request_id
       t.integer :sender_id
       t.column  :receiver_id, :bigint
       

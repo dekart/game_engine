@@ -45,9 +45,16 @@ class AppRequest < ActiveRecord::Base
 
     case data['type']
     when 'invitation'
-      sender.invitations.create(:receiver_id => receiver_id)
+      sender.invitations.create(
+        :app_request => self,
+        :receiver_id => receiver_id
+      )
     when 'gift'
-      sender.character.gifts.create(:receiver_id => receiver_id, :item_id => data['item_id'])
+      sender.character.gifts.create(
+        :app_request  => self, 
+        :receiver_id  => receiver_id, 
+        :item_id      => data['item_id']
+      )
     end
   end
 end

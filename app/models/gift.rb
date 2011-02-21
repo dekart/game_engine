@@ -1,4 +1,5 @@
 class Gift < ActiveRecord::Base
+  belongs_to :app_request
   belongs_to :sender, :class_name => "Character"
   belongs_to :item
   
@@ -25,6 +26,7 @@ class Gift < ActiveRecord::Base
     after_transition :on => :accept do |gift|
       gift.accepted_at = Time.now
       gift.give_item_to_receiver
+      gift.schedule_app_request_deletion
     end
   end
   
@@ -37,7 +39,11 @@ class Gift < ActiveRecord::Base
   def give_item_to_receiver
     @inventory = receiver.inventories.give!(item)
   end
-  
+
+  def schedule_app_request_deletion
+    Delayed::Job.enqueue(Jobs::RequestDelete.new(app_request_id)) if app_request_id
+  end
+
   protected
   
   def repeat_accept_check
