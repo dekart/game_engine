@@ -7,15 +7,23 @@ class Gift < ActiveRecord::Base
       :conditions => {:receiver_id => character.user.facebook_id}
     }
   }
+  named_scope :accepted_recently, Proc.new{
+    {
+      :conditions => ["state = 'accepted' AND created_at >= ?", Setting.i(:gifting_repeat_accept_delay).hours.ago]
+    }
+  }
   
   state_machine :initial => :pending do
-    state :accepted
+    state :accepted do
+      validate :repeat_accept_check
+    end
 
     event :accept do
       transition :pending => :accepted
     end
     
     after_transition :on => :accept do |gift|
+      gift.accepted_at = Time.now
       gift.give_item_to_receiver
     end
   end
@@ -28,5 +36,13 @@ class Gift < ActiveRecord::Base
   
   def give_item_to_receiver
     @inventory = receiver.inventories.give!(item)
+  end
+  
+  protected
+  
+  def repeat_accept_check
+    if Gift.for_character(receiver).accepted_recently.count > 0
+      errors.add(:base, :accepted_recently, :hours => Setting.i(:gifting_repeat_accept_delay))
+    end
   end
 end

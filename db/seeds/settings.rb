@@ -93,7 +93,7 @@ Setting[:app_google_analytics_id] ||= ""
 
 Setting[:gifting_enabled] ||= true
 Setting[:gifting_item_show_limit] ||= 10
-Setting[:gifting_repeat_send_delay] ||= 24
+Setting[:gifting_repeat_accept_delay] ||= 24
 Setting[:gifting_accept_all] ||= false
 
 Setting[:wall_enabled] ||= true
