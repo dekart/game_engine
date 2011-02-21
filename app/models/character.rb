@@ -8,7 +8,6 @@ class Character < ActiveRecord::Base
   include Character::Relations
   include Character::Inventories
   include Character::Properties
-  include Character::Gifts
   include Character::Notifications
   include Character::Titles
   include Character::Missions
@@ -54,6 +53,8 @@ class Character < ActiveRecord::Base
   has_many :vip_money_withdrawals, :dependent => :destroy
 
   has_many :market_items
+  
+  has_many :gifts, :foreign_key => :sender_id
 
   has_many :wall_posts
 

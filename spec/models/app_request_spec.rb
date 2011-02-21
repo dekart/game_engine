@@ -96,6 +96,23 @@ describe AppRequest do
         Invitation.last.receiver_id.should == 456
       end
     end
+    
+    describe 'when request is a gift' do
+      before do
+        @item = Factory(:item)
+        @remote_request.stub!(:data).and_return('{"type":"gift","item_id":"%d"}' % @item.id)
+      end
+      
+      it 'should create a gift from sender to receiver' do
+        lambda{
+          @request.update_data!
+        }.should change(Gift, :count).by(1)
+        
+        Gift.last.sender.should == @sender.character
+        Gift.last.receiver_id.should == 456
+        Gift.last.item.should == @item
+      end
+    end
   end
   
   describe 'when getting reference' do
@@ -139,6 +156,28 @@ describe AppRequest do
       lambda{
         @request.delete_from_facebook!
       }.should change(AppRequest, :count).from(1).to(0)
+    end
+  end
+  
+  describe '#return_to' do
+    before do
+      @request = Factory(:app_request, :data => {'return_to' => '/some/url'})
+    end
+    
+    it 'should return stored value from data' do
+      @request.return_to.should == '/some/url'
+    end
+      
+    it 'should return nil if data is not set' do
+      @request.data = nil
+      
+      @request.return_to.should be_nil
+    end
+    
+    it 'should return nil if data is set, but return url is not set' do
+      @request.data = {:something => 'else'}
+      
+      @request.return_to.should be_nil
     end
   end
 end

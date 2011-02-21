@@ -90,17 +90,28 @@ module FacebookHelper
     content_tag("fb:bookmark", "", options)
   end
   
+  def if_fb_connect_initialized(command = nil, &block)
+    command = capture(&block) if block_given?
+    
+    result = "if(typeof(FB) != 'undefined'){ #{command}; }else{ alert('The page failed to initialize properly. Please reload it and try again.'); }"
+    result = result.html_safe
+    
+    block_given? ? concat(result) : result
+  end
+  
   def fb_request_dialog(options = {})
     callback_url = options.delete(:callback_url)
     callback  = options.delete(:callback)
         
-    "if(typeof(FB) != 'undefined'){FB.ui(%s, %s);$(document).trigger('facebook.dialog');}else{alert('The page failed to initialize properly. Please reload it and try again.')}" % [
-      options.merge(:method => 'apprequests').to_json,
-      "function(response){ %s; %s;}" % [
-        callback,
-        callback_url.blank? ? '' : "$.post('#{callback_url}', response)"
+    if_fb_connect_initialized(
+      "FB.ui(%s, %s); $(document).trigger('facebook.dialog');" % [
+        options.merge(:method => 'apprequests').to_json,
+        "function(response){ if(typeof(response) != 'undefined' && response != null){ %s; %s;} }" % [
+          callback,
+          callback_url.blank? ? '' : "$.post('#{callback_url}', response)"
+        ]
       ]
-    ]
+    )
   end
 
   protected

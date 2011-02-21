@@ -9,69 +9,21 @@ class GiftsController < ApplicationController
 
     redirect_from_iframe root_url(:canvas => true) if @items.empty?
   end
-
-  def edit
-    @gift = Gift.find(params[:id])
-
-    @items = fetch_items
-
+  
+  def success
     render :layout => 'ajax'
   end
-
-  def create
-    unless @gift
-      item = Item.find_by_id(params[:item_id])
-
-      @gift = current_character.gifts.create(:item => item)
-    end
-
-    @group = params[:group] ? params[:group].to_sym : :all
-
-    case @group
-    when :players
-      @exclude_ids = params["friend_ids"].split(",").collect{|id| id.to_i } - current_character.friend_relations.facebook_ids
-    when :non_players
-      @exclude_ids = current_character.friend_relations.facebook_ids
-    else
-      @exclude_ids = []
-    end
-
-    @exclude_ids += current_character.gift_receipts.recent_facebook_ids
-
-    render :action => :create, :layout => 'ajax'
+  
+  def index
+    @gifts = Gift.with_state(:pending).for_character(current_character)
   end
-
+  
   def update
-    @gift = Gift.find(params[:id])
-
-    if item = Item.find_by_id(params[:item_id])
-      @gift.update_attributes(:item => item)
-    end
-
-    create
-  end
-
-  def confirm
-    @gift = Gift.find(params[:id])
-
-    begin
-      if params[:ids]
-        @gift.receipts.sent_to!(params[:ids])
-
-        flash[:success] = t("gifts.confirm.messages.success")
-      end
-
-    rescue ActiveRecord::RecordInvalid
-      flash[:error] = t("gifts.confirm.messages.failure")
-    end
-
-    redirect_from_iframe root_url(:canvas => true)
-  end
-
-  def show
-    @gifts = current_character.gifts.accept!(params[:id])
-
-    redirect_from_iframe root_url(:canvas => true) if @gifts.empty?
+    @gift = Gift.with_state(:pending).for_character(current_character).find(params[:id])
+    
+    @gift.accept
+    
+    render :layout => 'ajax'
   end
 
   protected

@@ -1,0 +1,16 @@
+<% response = capture do %>
+  <p><%= t('.accepted') %></p>
+  
+  <%= link_to_remote(inventory_use_button(@gift.inventory),
+        :url    => use_inventory_path(@gift.inventory),
+        :update => :result,
+        :html   => {
+          :"data-click-once" => true,
+          :class => "use button"
+        }
+      ) if @gift.inventory.usable? %>
+<% end %>
+
+<% dom_ready do %>
+  $('#<%= dom_id(@gift) %> .controls').html('<%= escape_javascript(response) %>')
+<% end %>

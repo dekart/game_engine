@@ -232,7 +232,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :rating, :member => {:global => :any}
 
   map.resources :gifts,
-    :member => {:confirm => :any}
+    :collection => {
+      :success  => :any
+    }
 
   map.resources :hit_listings, :only => [:index, :update]
 

@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
   facebook_integration_filters
+  before_filter :redirect_by_request
   after_filter :remove_used_app_requests
   
   landing_redirect
@@ -105,13 +106,19 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_back(uri)
-    unless session[:return_to].blank?
+    if session[:return_to].present?
       uri = session[:return_to]
 
       session[:return_to] = nil
     end
 
     redirect_from_iframe(uri)
+  end
+  
+  def redirect_by_request
+    if !app_requests.empty? and url = app_requests.last.return_to
+      redirect_back(url)
+    end
   end
     
   def remove_used_app_requests

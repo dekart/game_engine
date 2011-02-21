@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe StreamHelper do
-  before :each do
+  before :each do    
     @character = Factory(:character)
     
     helper.stub!(:asset_image_path).and_return("/path/to/image.jpg")
