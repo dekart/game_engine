@@ -41,7 +41,7 @@ class Gift < ActiveRecord::Base
   protected
   
   def repeat_accept_check
-    if Gift.for_character(receiver).accepted_recently.count > 0
+    if sender.gifts.for_character(receiver).accepted_recently.count > 0
       errors.add(:base, :accepted_recently, :hours => Setting.i(:gifting_repeat_accept_delay))
     end
   end

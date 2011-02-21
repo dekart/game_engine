@@ -15,6 +15,8 @@ class RecreateGifts < ActiveRecord::Migration
     
     Rake::Task['app:maintenance:update_gift_storage_schema'].execute
     
+    add_index :gifts_new, [:receiver_id, :state, :sender_id]
+    
     drop_table :gifts
     drop_table :gift_receipts
     
