@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110212084454) do
+ActiveRecord::Schema.define(:version => 20110219113512) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id", :limit => 8
@@ -209,28 +209,12 @@ ActiveRecord::Schema.define(:version => 20110212084454) do
   add_index "fights", ["cause_id"], :name => "index_fights_on_cause_id"
   add_index "fights", ["victim_id"], :name => "index_fights_on_victim_id"
 
-  create_table "gift_receipts", :force => true do |t|
-    t.integer  "gift_id"
-    t.integer  "character_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "accepted",                  :default => false, :null => false
-    t.integer  "facebook_id",  :limit => 8
-  end
-
-  add_index "gift_receipts", ["character_id", "gift_id"], :name => "index_gift_receipts_on_character_id_and_gift_id"
-
   create_table "gifts", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "item_id"
-    t.text     "recipients"
-    t.integer  "recipients_count"
-    t.integer  "receipts_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "sender_id"
+    t.integer "receiver_id", :limit => 8
+    t.integer "item_id"
+    t.string  "state",       :limit => 50, :default => "", :null => false
   end
-
-  add_index "gifts", ["character_id"], :name => "index_gifts_on_character_id"
 
   create_table "global_payouts", :force => true do |t|
     t.string   "name",       :limit => 100, :default => "", :null => false

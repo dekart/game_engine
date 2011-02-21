@@ -1,23 +1,25 @@
 module StreamHelper
+  include FacebookHelper
+  
   def stream_dialog(story_alias, *args)
     options = args.extract_options!
     
     options = prepare_story(story_alias, *(send("#{story_alias}_story_options", *args))).deep_merge(options)
     
-    result = "if(typeof(FB)!='undefined'){FB.ui(%s, %s);$(document).trigger('facebook.dialog');}else{alert('The page failed to initialize properly. Please reload it and try again.')}" % [
-      {
-        :method       => 'stream.publish',
-        :attachment   => options[:attachment],
-        :action_links => options[:action_links]
-      }.to_json,
-      "function(post_id, exception, data){ if(post_id != 'null'){%s;}else{%s;}; %s }" % [
-        options[:success],
-        options[:failure],
-        options[:callback]
+    if_fb_connect_initialized(
+      "FB.ui(%s, %s); $(document).trigger('facebook.dialog');" % [
+        {
+          :method       => 'stream.publish',
+          :attachment   => options[:attachment],
+          :action_links => options[:action_links]
+        }.to_json,
+        "function(post_id, exception, data){ if(post_id != 'null'){%s;}else{%s;}; %s }" % [
+          options[:success],
+          options[:failure],
+          options[:callback]
+        ]
       ]
-    ]
-    
-    result.html_safe
+    )
   end
 
   protected

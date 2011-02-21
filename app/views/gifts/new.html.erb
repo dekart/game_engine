@@ -5,23 +5,50 @@
 <div class="note"><%= t(".note") %></div>
 
 <div id="gift_form" class="clearfix">
-  <%= render 'item_selector', :items => @items, :gift => @gift %>
-</div>
+  <div class="gifts clearfix">
+    <% @items.each do |item| %>
+      <% 
+        content_tag(:div, 
+          :class => :gift, 
+          :'data-item-id' => item.id, 
+          :'data-message' => t('.request.message', :item => item.name, :app => t('app_name'))
+        ) do %>
+        <div class="image"><%= item_image(item, :small) %></div>
 
-<div id="gift_buttons" class="buttons">
-  <%= link_to(button(:skip), root_path, :class => "skip button") %>
+        <div class="name"><%= item.name %></div>
+
+        <div class="payouts">
+          <%= render "items/effects", :item => item %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
 <% dom_ready do %>
   $('.gifts .gift').live('click', function(){
     var $this = $(this);
 
-    jQuery.ajax({
-      url: $this.attr('data-url'),
-      success: function(request){
-        $('#ajax').html(request);
-      },
-      type: $this.attr('data-method')
-    });
+    <% if_fb_connect_initialized do %>
+      FB.ui({
+        method: 'apprequests',
+        title: '<%= t('.title') %>',
+        message: $this.attr('data-message'),
+        data: {
+          type: 'gift',
+          item_id: $this.attr('data-item-id'),
+          reference: 'gift',
+          return_to: '<%= gifts_url(:canvas => true) %>'
+        }
+      }, function(response){
+        if(typeof(response) != 'undefined' && response != null){
+          $.post('<%= app_requests_path %>', response, function(){
+            $('#ajax').load('<%= success_gifts_path %>')
+          });
+        }
+      });
+      
+      $(document).trigger('facebook.dialog');
+    <% end%>
   })
 <% end %>

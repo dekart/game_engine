@@ -12,6 +12,10 @@ class AppRequest < ActiveRecord::Base
     data ? data['reference'] : ''
   end
   
+  def return_to
+    data && data['return_to'].present? ? data['return_to'] : nil
+  end
+  
   def update_data!
     request = Mogli::AppRequest.find(facebook_id, Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret))
     
@@ -29,7 +33,7 @@ class AppRequest < ActiveRecord::Base
     
     destroy
   end
-    
+
   protected
   
   def schedule_data_update
@@ -42,6 +46,8 @@ class AppRequest < ActiveRecord::Base
     case data['type']
     when 'invitation'
       sender.invitations.create(:receiver_id => receiver_id)
+    when 'gift'
+      sender.character.gifts.create(:receiver_id => receiver_id, :item_id => data['item_id'])
     end
   end
 end

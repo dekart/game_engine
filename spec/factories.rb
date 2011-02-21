@@ -190,14 +190,10 @@ Factory.define :mission_with_level, :parent => :mission do |t|
 end
 
 Factory.define :gift do |t|
-  t.association :character
+  t.association :sender, :factory => :character
   t.association :item
-end
-
-Factory.define :gift_receipt do |t|
-  t.association :gift
-
-  t.facebook_id 987654321
+  
+  t.receiver_id 123456789
 end
 
 Factory.define :item_set do |t|
