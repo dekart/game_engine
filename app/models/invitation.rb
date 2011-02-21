@@ -1,4 +1,5 @@
 class Invitation < ActiveRecord::Base
+  belongs_to :app_request
   belongs_to :sender, :class_name => "User"
 
   named_scope :for_user, Proc.new{|user|
@@ -32,6 +33,7 @@ class Invitation < ActiveRecord::Base
       update_attribute(:accepted, true)
       
       schedule_user_counter_update
+      schedule_app_request_deletion
     end
   end
 
@@ -40,10 +42,15 @@ class Invitation < ActiveRecord::Base
       update_attribute(:accepted, :false)
       
       schedule_user_counter_update
+      schedule_app_request_deletion
     end
   end
   
   def schedule_user_counter_update
     receiver.try(:schedule_counter_update)
+  end
+  
+  def schedule_app_request_deletion
+    Delayed::Job.enqueue(Jobs::RequestDelete.new(app_request_id)) if app_request_id
   end
 end
