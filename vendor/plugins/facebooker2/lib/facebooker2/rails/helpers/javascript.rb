@@ -37,8 +37,7 @@ module Facebooker2
             :cookie   => true,
             :status   => true,
             :xfbml    => true,
-            :locale   => "en_US",
-            :async    => false
+            :locale   => "en_US"
           )
 
           extra_js = capture(&block) if block_given?
