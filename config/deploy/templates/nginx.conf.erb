@@ -14,7 +14,7 @@ server {
   location ~ google-analytics\.com/ga\.js { return 404; }
 
   location / {
-    try_files $uri @passenger;
+    try_files $uri /system/maintenance.html @passenger;
   }
 
   location @passenger {
