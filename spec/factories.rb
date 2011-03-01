@@ -192,6 +192,7 @@ end
 Factory.define :gift do |t|
   t.association :sender, :factory => :character
   t.association :item
+  t.association :app_request
   
   t.receiver_id 123456789
 end

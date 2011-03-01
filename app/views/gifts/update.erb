@@ -1,15 +1,15 @@
 <% response = capture do %>
   <% if @gift.accepted? %>
-  <p><%= t('.accepted') %></p>
+    <p><%= t('.accepted') %></p>
   
-  <%= link_to_remote(inventory_use_button(@gift.inventory),
-        :url    => use_inventory_path(@gift.inventory),
-        :update => :result,
-        :html   => {
-          :"data-click-once" => true,
-          :class => "use button"
-        }
-      ) if @gift.inventory.usable? %>
+    <%= link_to_remote(inventory_use_button(@gift.inventory),
+          :url    => use_inventory_path(@gift.inventory),
+          :update => :result,
+          :html   => {
+            :"data-click-once" => true,
+            :class => "use button"
+          }
+        ) if @gift.inventory.usable? %>
   <% else %>
     <p><%= @gift.errors.on(:base) %></p>
   <% end %>
