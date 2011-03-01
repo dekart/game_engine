@@ -44,19 +44,30 @@ class Character < ActiveRecord::Base
   has_many :boss_fights,
     :extend => Character::BossFights
 
-  has_many :ordered_hit_listings, :foreign_key => :client_id, :class_name => "HitListing"
+  has_many :ordered_hit_listings, 
+    :foreign_key  => :client_id, 
+    :class_name   => "HitListing", 
+    :dependent    => :destroy
 
-  has_many :bank_deposits
-  has_many :bank_withdrawals, :class_name => "BankWithdraw"
+  has_many :bank_deposits, 
+    :dependent => :delete_all
+  has_many :bank_withdrawals, 
+    :class_name => "BankWithdraw", 
+    :dependent  => :delete_all
 
-  has_many :vip_money_deposits, :dependent => :destroy
-  has_many :vip_money_withdrawals, :dependent => :destroy
+  has_many :vip_money_deposits, 
+    :dependent => :destroy
+  has_many :vip_money_withdrawals, 
+    :dependent => :destroy
 
   has_many :market_items
   
-  has_many :gifts, :foreign_key => :sender_id
+  has_many :gifts, 
+    :foreign_key  => :sender_id, 
+    :dependent    => :destroy
 
-  has_many :wall_posts
+  has_many :wall_posts,
+    :dependent => :destroy
 
   named_scope :rated_by, Proc.new{|unit|
     {
