@@ -10,6 +10,10 @@
             :class => "use button"
           }
         ) if @gift.inventory.usable? %>
+    
+    <% dom_ready do %>
+      <%= ga_track_event('Gifts', 'Accepted', @gift.item.name)%>
+    <% end %>
   <% else %>
     <p><%= @gift.errors.on(:base) %></p>
   <% end %>
