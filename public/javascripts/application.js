@@ -21,6 +21,45 @@
       redirectTo($(this).find('a').attr('href'));
     })
   }
+  
+  $.fn.giftForm = function(options){
+    var $gifts = $(this).find('.gifts .gift');
+
+    $gifts.css({
+      height: $gifts.map(function(e){
+          return $(this).outerHeight()
+        }).toArray().sort().reverse()[0]
+    });
+
+    $gifts.live('click', function(){
+      var $this = $(this);
+
+      if_fb_initialized(function(){
+        FB.ui({
+          method: 'apprequests',
+          title: options.request_title,
+          message: $this.attr('data-message'),
+          data: {
+            type: 'gift',
+            item_id: $this.attr('data-item-id'),
+            reference: 'gift',
+            return_to: options.request_url
+          }
+        }, function(response){
+          if(typeof(response) != 'undefined' && response != null){
+            $.post(options.request_callback_url, response, function(){
+              $('#ajax').load(options.gift_callback_url, {
+                item_id: $this.attr('data-item-id'), 
+                request_ids: response.request_ids
+              });
+            });
+          }
+        });
+
+        $(document).trigger('facebook.dialog');
+      })
+    })    
+  }
 })(jQuery);
 
 var CollectionList = {
@@ -409,6 +448,14 @@ $(function(){
     $(document).dequeue('dialog');
   });
 });
+
+function if_fb_initialized(callback){
+  if(typeof(FB) != 'undefined'){ 
+    callback.call()
+  } else { 
+    alert('The page failed to initialize properly. Please reload it and try again.'); 
+  }
+}
 
 function bookmark(){
   if(typeof(FB) != 'undefined'){
