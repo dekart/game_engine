@@ -2,7 +2,7 @@
 
 <%= render "relations/buttons", :current => :gifts %>
 
-<div class="note"><%= t(".note") %></div>
+<div class="note"><%= t(".note", :hours => Setting.i(:gifting_repeat_accept_delay)) %></div>
 
 <div id="gift_form" class="clearfix">
   <div class="gifts clearfix">
