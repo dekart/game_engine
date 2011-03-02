@@ -15,9 +15,15 @@
         :class => "mercenaries button"
       ) %>
 
-  <% unless current == :gifts %>
-    <%= link_to(button(:gift), new_gift_path,
-          :class => "gifts button"
+  <% unless current == :send_gifts %>
+    <%= link_to(button(:send_gifts), new_gift_path,
+          :class => "send_gifts button"
+        ) %>
+  <% end %>
+  
+  <% unless current == :accept_gifts %>
+    <%= link_to(button(:accept_gifts), gifts_path,
+          :class => "accept_gifts button"
         ) %>
   <% end %>
 </div>
