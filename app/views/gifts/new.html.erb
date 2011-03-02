@@ -43,7 +43,10 @@
       }, function(response){
         if(typeof(response) != 'undefined' && response != null){
           $.post('<%= app_requests_path %>', response, function(){
-            $('#ajax').load('<%= success_gifts_path %>')
+            $('#ajax').load('<%= success_gifts_path %>', {
+              item_id: $this.attr('data-item-id'), 
+              request_ids: response.request_ids
+            });
           });
         }
       });

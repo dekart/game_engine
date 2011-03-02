@@ -3,3 +3,7 @@
   
   <p><%= t('.message') %></p>
 <% end %>
+
+<% dom_ready do %>
+  <%= ga_track_event('Gifts', 'Sent', @item.name, @requests_amount) %>
+<% end %>
