@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Gift do
+  def receiver
+    Factory(:character, :user => Factory(:user, :facebook_id => 987654321))
+  end
+  
   context 'associations' do
     before do
       @gift = Gift.new
@@ -21,11 +25,11 @@ describe Gift do
   
   describe '.for_character' do
     before do
-      @receiver = Factory(:character)
+      @receiver = receiver
       
       @gift1 = Factory(:gift)
       @gift2 = Factory(:gift)
-      @gift3 = Factory(:gift, :receiver_id => 987654321)
+      @gift3 = Factory(:gift, :receiver_id => 111222333)
     end
     
     it 'should return gifts sent to passed character' do
@@ -36,10 +40,12 @@ describe Gift do
   
   describe '.accepted_recently' do
     before do
-      @gift1 = Factory(:gift)
-      @gift2 = Factory(:gift)
+      @receiver = receiver
       
+      @gift1 = Factory(:gift)      
       @gift1.accept!
+      
+      @gift2 = Factory(:gift)
       @gift2.accept!
       
       @gift3 = Factory(:gift)
@@ -69,21 +75,48 @@ describe Gift do
     end
   end
   
+  describe 'on create' do
+    it 'should not save gift if sender and receiver are the same user' do
+      @sender = Factory(:character)
+      
+      @gift = Factory.build(:gift, :sender => @sender, :receiver_id => @sender.user.facebook_id)
+      
+      @gift.save.should be_false
+      @gift.errors.on(:receiver_id).should =~ /Sending gifts to self is not allowed/
+    end
+  end
+  
   describe '#receiver' do
     before do
-      @receiver = Factory(:character)
-      @gift = Factory(:gift)
+      @receiver = receiver
     end
     
-    it 'should return user with facebook UID equal to stored receiver ID' do
+    it 'should return character for user with facebook UID equal to stored receiver ID' do
+      @gift = Factory(:gift)
       @gift.receiver.should == @receiver
+    end
+    
+    it 'should return nil if there is no character for such UID' do
+      @gift = Factory(:gift, :receiver_id => 111222333)
+      
+      @gift.receiver.should be_nil
+    end
+    
+    it 'should memoize receiver' do
+      @gift = Factory(:gift)
+      
+      @gift.receiver
+      
+      User.should_not_receive(:find_by_facebook_id)
+      
+      @gift.receiver
     end
   end
   
   describe '#accept' do
     before do
+      @receiver = receiver
       @item     = Factory(:item)
-      @receiver = Factory(:character)
       @gift     = Factory(:gift)
     end
     
@@ -121,6 +154,35 @@ describe Gift do
       
       Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
       Delayed::Job.last.payload_object.request_ids.should == @gift.app_request_id
+    end
+  end
+  
+  describe '#acceptable?' do
+    before do
+      @receiver = receiver
+      @gift = Factory(:gift)
+    end
+    
+    it 'should return false if receiver recently accepted a gift from the sender' do
+      @other_gift = Factory(:gift, :sender => @gift.sender, :receiver_id => @gift.receiver_id)
+      
+      @other_gift.accept
+      
+      @gift.sender.accepted_recently?.should be_true
+      
+      @gift.acceptable?.should be_false
+    end
+    
+    it 'should return false if gift is already accepted' do
+      Timecop.travel(1.week.ago) do
+        @gift.accept
+      end
+      
+      @gift.acceptable?.should be_false
+    end
+    
+    it 'should return true in other cases' do
+      @gift.acceptable?.should be_true
     end
   end
 end
