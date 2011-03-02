@@ -13,7 +13,7 @@
           :'data-item-id' => item.id, 
           :'data-message' => t('.request.message', :item => item.name, :app => t('app_name'))
         ) do %>
-        <div class="image"><%= item_image(item, :small) %></div>
+        <div class="image"><%= item_image(item, :medium) %></div>
 
         <div class="name"><%= item.name %></div>
 
@@ -26,32 +26,11 @@
 </div>
 
 <% dom_ready do %>
-  $('.gifts .gift').live('click', function(){
-    var $this = $(this);
-
-    <% if_fb_connect_initialized do %>
-      FB.ui({
-        method: 'apprequests',
-        title: '<%= t('.title') %>',
-        message: $this.attr('data-message'),
-        data: {
-          type: 'gift',
-          item_id: $this.attr('data-item-id'),
-          reference: 'gift',
-          return_to: '<%= gifts_url(:canvas => true) %>'
-        }
-      }, function(response){
-        if(typeof(response) != 'undefined' && response != null){
-          $.post('<%= app_requests_path %>', response, function(){
-            $('#ajax').load('<%= success_gifts_path %>', {
-              item_id: $this.attr('data-item-id'), 
-              request_ids: response.request_ids
-            });
-          });
-        }
-      });
-      
-      $(document).trigger('facebook.dialog');
-    <% end%>
-  })
+  $('#gift_form').giftForm({
+    request_title: '<%= t('.title') %>', 
+    request_url: '<%= gifts_url(:canvas => true) %>', 
+    request_callback_url: '<%= app_requests_path %>', 
+    gift_callback_url: '<%= success_gifts_path %>'
+  });
+  
 <% end %>
