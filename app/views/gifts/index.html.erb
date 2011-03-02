@@ -3,6 +3,10 @@
 <%= render "relations/buttons", :current => :accept_gifts %>
 
 <% collection(@gifts) do %>
+  <div class="note">
+    <%= t(".note", :hours => Setting.i(:gifting_repeat_accept_delay)) %>
+  </div>
+  
   <table id="gift_list">
     <% @gifts.each do |gift| %>
       <% content_tag_for(:tr, gift) do %>
