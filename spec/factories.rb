@@ -194,7 +194,7 @@ Factory.define :gift do |t|
   t.association :item
   t.association :app_request
   
-  t.receiver_id 123456789
+  t.receiver_id 987654321
 end
 
 Factory.define :item_set do |t|

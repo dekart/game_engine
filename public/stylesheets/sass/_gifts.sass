@@ -42,25 +42,17 @@
       &.current
         border = !gifts_current_group_border
         color = !gifts_current_group_color
-
-#gift_result
-  background-image = !gift_result_icon
-
-  .pending
-    +button(!gift_result_pending_icon, !gift_result_pending_width)
-
-  .details
-    td
-      padding: 15px
-      text-align: center
-
-    .item
-      font-weight: bold
-
-    .sends
-      font-weight: bold
-      vertical-align: middle
-
-    .controls
-      .use
-        +button(!gift_result_use_icon)
+        
+#gift_list
+  td
+    vertical-align: middle
+    padding: 5px
+    
+  .sender_name, .item_name
+    font-weight: bold
+    
+  .controls
+    padding-left: 10px
+    
+    .accept
+      +button(!gifts_list_accept_icon)

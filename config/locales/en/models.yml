@@ -148,3 +148,6 @@ en:
           cannot_help_themself: "You cannot help yourself!"
         gift:
           accepted_recently: "You already accepted a gift from this player recently. You can accept only 1 gift per sender per every %{hours} hours."
+          attributes:
+            receiver_id:
+              self_sending: "Sending gifts to self is not allowed"

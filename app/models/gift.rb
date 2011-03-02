@@ -1,7 +1,13 @@
 class Gift < ActiveRecord::Base
+  module SenderAssociationExtension
+    def accepted_recently?
+      gifts.for_character(proxy_owner.receiver).accepted_recently.count > 0
+    end
+  end
+  
   belongs_to :app_request
-  belongs_to :sender, :class_name => "Character"
   belongs_to :item
+  belongs_to :sender, :class_name => "Character", :extend => SenderAssociationExtension
   
   named_scope :for_character, Proc.new {|character|
     {
@@ -33,8 +39,14 @@ class Gift < ActiveRecord::Base
   
   attr_accessor :inventory
   
+  validate_on_create :self_sending_check
+  
   def receiver
-    @receiver ||= User.find_by_facebook_id(receiver_id).character
+    @receiver ||= User.find_by_facebook_id(receiver_id).try(:character)
+  end
+  
+  def acceptable?
+    !(accepted? || sender.accepted_recently?)
   end
   
   protected
@@ -48,8 +60,14 @@ class Gift < ActiveRecord::Base
   end
   
   def repeat_accept_check
-    if sender.gifts.for_character(receiver).accepted_recently.count > 0
+    if sender.accepted_recently?
       errors.add(:base, :accepted_recently, :hours => Setting.i(:gifting_repeat_accept_delay))
+    end
+  end
+  
+  def self_sending_check
+    if sender == receiver
+      errors.add(:receiver_id, :self_sending)
     end
   end
 end

@@ -15,7 +15,7 @@ class GiftsController < ApplicationController
   end
   
   def index
-    @gifts = Gift.with_state(:pending).for_character(current_character)
+    @gifts = Gift.with_state(:pending).for_character(current_character).all(:order => "sender_id, created_at DESC")
   end
   
   def update
