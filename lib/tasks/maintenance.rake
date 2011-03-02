@@ -106,7 +106,7 @@ namespace :app do
         LEFT JOIN gifts ON(gifts.id = gift_receipts.id) 
         WHERE gift_receipts.accepted != 1
       }).each do |record|
-        Gift.create!(record)
+        Gift.create(record)
       end
     end
 
