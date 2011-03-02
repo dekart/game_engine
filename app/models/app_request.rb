@@ -8,6 +8,14 @@ class AppRequest < ActiveRecord::Base
   after_create :schedule_data_update
   after_update :process_request, :if => :data_changed?
   
+  class << self
+    def schedule_deletion(*ids_or_requests)
+      ids = ids_or_requests.compact.collect{|value| value.is_a?(AppRequest) ? value.id : value}
+      
+      Delayed::Job.enqueue(Jobs::RequestDelete.new(ids)) unless ids.empty?
+    end
+  end
+  
   def reference
     data ? data['reference'] : ''
   end

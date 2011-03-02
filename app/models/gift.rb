@@ -56,7 +56,7 @@ class Gift < ActiveRecord::Base
   end
 
   def schedule_app_request_deletion
-    Delayed::Job.enqueue(Jobs::RequestDelete.new(app_request_id)) if app_request_id
+    AppRequest.schedule_deletion(app_request_id)
   end
   
   def repeat_accept_check

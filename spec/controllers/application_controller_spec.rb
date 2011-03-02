@@ -114,14 +114,9 @@ describe ApplicationController do
         controller.stub!(:current_facebook_user).and_return(fake_fb_user)
         controller.stub!(:current_character).and_return(mock('character'))
 
-        lambda{
-          do_request
-        }.should change(Delayed::Job, :count).by(2)
-        
-        job = Delayed::Job.last
-        
-        job.payload_object.should be_kind_of(Jobs::RequestDelete)
-        job.payload_object.request_ids.should == [@request1.id, @request2.id]
+        AppRequest.should_receive(:schedule_deletion).with(@request1, @request2)
+
+        do_request
       end
       
       it 'should not delete requests if user is not authenticated' do
