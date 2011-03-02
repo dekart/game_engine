@@ -1,6 +1,6 @@
 namespace :app do
   desc "Cleanup old data"
-  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests}
+  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:gifts}
 
   namespace :cleanup do
     def remove_data(scope, batch = 100)
@@ -69,7 +69,18 @@ namespace :app do
 
       puts "Removing old application requests..."
 
-      remove_data(old_news)
+      remove_data(old_requests)
+    end
+
+    desc "Remove old gifts"
+    task :gifts => :environment do
+      time_limit = 15.days.ago
+
+      old_gifts = Gift.scoped(:conditions => ["created_at < ?", time_limit])
+
+      puts "Removing old application requests..."
+
+      remove_data(old_gifts)
     end
   end
 end
