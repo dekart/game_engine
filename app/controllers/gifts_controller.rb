@@ -11,6 +11,9 @@ class GiftsController < ApplicationController
   end
   
   def success
+    @item = Item.find(params[:item_id])
+    @requests_amount = params[:request_ids].size
+    
     render :layout => 'ajax'
   end
   
