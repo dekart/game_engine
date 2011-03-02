@@ -10,6 +10,8 @@ en:
       message: "Gifts have been sent to your friends!"
     index:
       title: 'Accept Gifts'
+      note: "Here you can accept gifts from your friends. You can accept one gift per each friend %{hours} hours."
+      empty_set: "Your friends didn't send you any gifts yet."
       sends: "sends you"
       buttons:
         accept: 'Accept'
