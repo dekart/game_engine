@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
     
   def remove_used_app_requests
     if requests = app_requests and !requests.empty?
-      Delayed::Job.enqueue Jobs::RequestDelete.new(requests.collect{|r| r.id })
+      AppRequest.schedule_deletion(*requests)
     end
   end
 

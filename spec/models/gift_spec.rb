@@ -148,12 +148,9 @@ describe Gift do
     end
     
     it 'should schedule application request deletion' do
-      lambda{
-        @gift.accept
-      }.should change(Delayed::Job, :count).by(1)
-      
-      Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
-      Delayed::Job.last.payload_object.request_ids.should == @gift.app_request_id
+      AppRequest.should_receive(:schedule_deletion).with(@gift.app_request_id)
+
+      @gift.accept
     end
   end
   
