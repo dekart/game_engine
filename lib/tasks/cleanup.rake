@@ -1,6 +1,6 @@
 namespace :app do
   desc "Cleanup old data"
-  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news}
+  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests}
 
   namespace :cleanup do
     def remove_data(scope, batch = 100)
@@ -57,6 +57,17 @@ namespace :app do
       old_news = News::Base.scoped(:conditions => ["created_at < ?", time_limit])
 
       puts "Removing old news..."
+
+      remove_data(old_news)
+    end
+
+    desc "Remove old application requests"
+    task :app_requests => :environment do
+      time_limit = 15.days.ago
+
+      old_requests = AppRequest.scoped(:conditions => ["created_at < ?", time_limit])
+
+      puts "Removing old application requests..."
 
       remove_data(old_news)
     end
