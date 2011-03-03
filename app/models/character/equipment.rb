@@ -38,10 +38,11 @@ class Character::Equipment
 
   def inventories
     unless @inventories
-      ids = @character.placements.values.flatten
+      ids = @character.placements.values
+      ids.flatten!
 
       if ids.any?
-        inventories = Inventory.find_all_by_id(ids, :include => :item)
+        inventories = Inventory.find_all_by_id(ids.uniq, :include => :item)
 
         # Sorting inventories by ID order
         @inventories = ids.collect do |id|
