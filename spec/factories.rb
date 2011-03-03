@@ -61,6 +61,7 @@ Factory.define :property_type do |t|
 end
 
 Factory.define :property do |t|
+  t.association :character
   t.association :property_type, :factory => :property_type
 end
 
@@ -234,7 +235,7 @@ Factory.define :promotion do |t|
 end
 
 Factory.define :story do |t|
-  t.alias 'fake_story'
+  t.alias 'level_up'
   
   t.title 'This is the fake story'
   t.description 'This is description'

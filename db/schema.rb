@@ -9,16 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110221181654) do
+ActiveRecord::Schema.define(:version => 20110303071926) do
 
   create_table "app_requests", :force => true do |t|
-    t.integer  "facebook_id", :limit => 8
+    t.integer  "facebook_id",              :null => false
     t.integer  "sender_id"
     t.integer  "receiver_id", :limit => 8
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -34,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
-    t.integer  "context_id"
+    t.integer  "context_id",                                 :null => false
     t.string   "context_type", :limit => 50, :default => "", :null => false
     t.string   "role",         :limit => 50, :default => "", :null => false
     t.datetime "created_at"
@@ -45,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "assignments", ["relation_id"], :name => "index_assignments_on_relation_id"
 
   create_table "bank_operations", :force => true do |t|
-    t.integer  "character_id"
+    t.integer  "character_id",                               :null => false
     t.integer  "amount",       :limit => 8
     t.string   "type",         :limit => 50, :default => "", :null => false
     t.datetime "created_at"
@@ -92,8 +94,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "bosses", ["mission_group_id"], :name => "index_bosses_on_mission_group_id"
 
   create_table "character_titles", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "title_id"
+    t.integer  "character_id", :null => false
+    t.integer  "title_id",     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -127,8 +129,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "characters", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "name",                     :limit => 100,      :default => "",                    :null => false
+    t.integer  "user_id",                                                                         :null => false
+    t.string   "name",                     :limit => 100,      :default => ""
     t.integer  "basic_money"
     t.integer  "vip_money"
     t.integer  "level",                                        :default => 1
@@ -191,8 +193,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "facebook_templates", ["template_name"], :name => "index_facebook_templates_on_template_name", :unique => true
 
   create_table "fights", :force => true do |t|
-    t.integer  "attacker_id"
-    t.integer  "victim_id"
+    t.integer  "attacker_id",                                    :null => false
+    t.integer  "victim_id",                                      :null => false
     t.integer  "winner_id"
     t.integer  "attacker_hp_loss"
     t.integer  "victim_hp_loss"
@@ -211,8 +213,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
 
   create_table "gifts", :force => true do |t|
     t.integer  "app_request_id"
-    t.integer  "sender_id"
-    t.integer  "receiver_id",    :limit => 8
+    t.integer  "sender_id",                                    :null => false
+    t.integer  "receiver_id",                                  :null => false
     t.integer  "item_id"
     t.string   "state",          :limit => 50, :default => "", :null => false
     t.datetime "accepted_at"
@@ -244,8 +246,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "help_pages", ["alias"], :name => "index_help_pages_on_alias"
 
   create_table "hit_listings", :force => true do |t|
-    t.integer  "client_id"
-    t.integer  "victim_id"
+    t.integer  "client_id",                      :null => false
+    t.integer  "victim_id",                      :null => false
     t.integer  "executor_id"
     t.integer  "reward"
     t.boolean  "completed",   :default => false
@@ -256,7 +258,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "hit_listings", ["client_id"], :name => "index_hit_listings_on_client_id"
 
   create_table "inventories", :force => true do |t|
-    t.integer  "character_id"
+    t.integer  "character_id",                                    :null => false
     t.integer  "item_id"
     t.integer  "usage_count",                      :default => 0
     t.datetime "created_at"
@@ -271,8 +273,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "inventories", ["character_id"], :name => "index_inventories_on_character_id_and_placement"
 
   create_table "invitations", :force => true do |t|
-    t.integer  "sender_id"
-    t.integer  "receiver_id",    :limit => 8
+    t.integer  "sender_id",      :null => false
+    t.integer  "receiver_id",    :null => false
     t.boolean  "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -283,8 +285,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "invitations", ["sender_id"], :name => "index_invitations_on_sender_id"
 
   create_table "item_collection_ranks", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "collection_id"
+    t.integer  "character_id",                    :null => false
+    t.integer  "collection_id",                   :null => false
     t.integer  "collection_count", :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -331,7 +333,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
     t.boolean  "usable"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "item_group_id"
+    t.integer  "item_group_id",                                            :null => false
     t.boolean  "can_be_sold",                          :default => true
     t.integer  "attack",                               :default => 0
     t.integer  "defence",                              :default => 0
@@ -356,8 +358,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
 
   create_table "market_items", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "inventory_id"
+    t.integer  "character_id", :null => false
+    t.integer  "inventory_id", :null => false
     t.integer  "amount"
     t.integer  "basic_price"
     t.integer  "vip_price"
@@ -368,8 +370,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "market_items", ["character_id"], :name => "index_market_items_on_character_id"
 
   create_table "mission_group_ranks", :force => true do |t|
-    t.integer "character_id"
-    t.integer "mission_group_id"
+    t.integer "character_id",     :null => false
+    t.integer "mission_group_id", :null => false
     t.boolean "completed"
   end
 
@@ -391,8 +393,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "mission_help_results", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "requester_id"
+    t.integer  "character_id",                    :null => false
+    t.integer  "requester_id",                    :null => false
     t.integer  "mission_id"
     t.integer  "basic_money"
     t.integer  "experience"
@@ -405,9 +407,9 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "mission_help_results", ["requester_id", "collected"], :name => "index_mission_help_results_on_requester_id_and_collected"
 
   create_table "mission_level_ranks", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "mission_id"
-    t.integer  "level_id"
+    t.integer  "character_id",                    :null => false
+    t.integer  "mission_id",                      :null => false
+    t.integer  "level_id",                        :null => false
     t.integer  "progress",     :default => 0
     t.boolean  "completed",    :default => false
     t.datetime "created_at"
@@ -418,7 +420,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "mission_level_ranks", ["character_id", "mission_id"], :name => "index_mission_level_ranks_on_character_id_and_mission_id"
 
   create_table "mission_levels", :force => true do |t|
-    t.integer  "mission_id"
+    t.integer  "mission_id",                  :null => false
     t.integer  "position"
     t.integer  "win_amount"
     t.integer  "chance",     :default => 100
@@ -434,8 +436,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "mission_levels", ["mission_id"], :name => "index_mission_levels_on_mission_id"
 
   create_table "mission_ranks", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "mission_id"
+    t.integer  "character_id",                        :null => false
+    t.integer  "mission_id",                          :null => false
     t.boolean  "completed",        :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -443,7 +445,6 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   add_index "mission_ranks", ["character_id", "mission_id"], :name => "index_mission_ranks_on_character_id_and_mission_id", :unique => true
-  add_index "mission_ranks", ["character_id", "mission_id"], :name => "index_ranks_on_character_id_and_mission_id"
 
   create_table "missions", :force => true do |t|
     t.string   "name",                              :default => "",  :null => false
@@ -461,7 +462,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
     t.datetime "updated_at"
     t.text     "requirements"
     t.text     "payouts"
-    t.integer  "mission_group_id"
+    t.integer  "mission_group_id",                                   :null => false
     t.string   "image_file_name",                   :default => "",  :null => false
     t.string   "image_content_type", :limit => 100, :default => "",  :null => false
     t.integer  "image_file_size"
@@ -476,13 +477,15 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "missions", ["mission_group_id"], :name => "index_missions_on_mission_group_id"
 
   create_table "monster_fights", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "monster_id"
+    t.integer  "character_id",                    :null => false
+    t.integer  "monster_id",                      :null => false
     t.integer  "damage",           :default => 0
     t.boolean  "reward_collected"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "monster_fights", ["monster_id", "character_id"], :name => "index_monster_fights_on_monster_id_and_character_id"
 
   create_table "monster_types", :force => true do |t|
     t.integer  "level",                             :default => 1
@@ -509,8 +512,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "monsters", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "monster_type_id"
+    t.integer  "character_id",                                  :null => false
+    t.integer  "monster_type_id",                               :null => false
     t.integer  "hp"
     t.string   "state",           :limit => 50, :default => "", :null => false
     t.datetime "expire_at"
@@ -522,7 +525,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
 
   create_table "news", :force => true do |t|
     t.string   "type",         :limit => 100, :default => "", :null => false
-    t.integer  "character_id"
+    t.integer  "character_id",                                :null => false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -541,7 +544,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
 
   create_table "notifications", :force => true do |t|
     t.string   "type",         :limit => 100, :default => "", :null => false
-    t.integer  "character_id"
+    t.integer  "character_id",                                :null => false
     t.string   "state",        :limit => 50,  :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -551,8 +554,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "notifications", ["character_id"], :name => "index_notifications_on_character_id"
 
   create_table "promotion_receipts", :force => true do |t|
-    t.integer  "promotion_id"
-    t.integer  "character_id"
+    t.integer  "promotion_id", :null => false
+    t.integer  "character_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -570,8 +573,8 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "properties", :force => true do |t|
-    t.integer  "property_type_id"
-    t.integer  "character_id"
+    t.integer  "property_type_id",                :null => false
+    t.integer  "character_id",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level",            :default => 1
@@ -604,7 +607,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "relations", :force => true do |t|
-    t.integer  "owner_id"
+    t.integer  "owner_id",                                         :null => false
     t.integer  "character_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -653,10 +656,10 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "story_visits", :force => true do |t|
-    t.integer  "character_id"
+    t.integer  "character_id",                               :null => false
     t.integer  "story_id"
     t.string   "story_alias",  :limit => 70, :default => "", :null => false
-    t.integer  "reference_id"
+    t.integer  "reference_id",                               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -683,7 +686,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "users", :force => true do |t|
-    t.integer  "facebook_id",            :limit => 8
+    t.integer  "facebook_id",                                                :null => false
     t.boolean  "show_next_steps",                       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -715,7 +718,7 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
 
   create_table "vip_money_operations", :force => true do |t|
     t.string   "type",           :limit => 50,  :default => "", :null => false
-    t.integer  "character_id"
+    t.integer  "character_id",                                  :null => false
     t.integer  "amount"
     t.integer  "reference_id"
     t.string   "reference_type", :limit => 100, :default => "", :null => false
@@ -724,9 +727,9 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   end
 
   create_table "visibilities", :force => true do |t|
-    t.integer  "target_id"
+    t.integer  "target_id",                                       :null => false
     t.string   "target_type",       :limit => 50, :default => "", :null => false
-    t.integer  "character_type_id"
+    t.integer  "character_type_id",                               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -734,11 +737,13 @@ ActiveRecord::Schema.define(:version => 20110221181654) do
   add_index "visibilities", ["target_id", "target_type"], :name => "index_visibilities_on_target_id_and_target_type"
 
   create_table "wall_posts", :force => true do |t|
-    t.integer  "character_id"
-    t.integer  "author_id"
+    t.integer  "character_id", :null => false
+    t.integer  "author_id",    :null => false
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "wall_posts", ["character_id"], :name => "index_wall_posts_on_character_id"
 
 end

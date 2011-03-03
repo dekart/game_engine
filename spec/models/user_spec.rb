@@ -110,7 +110,7 @@ describe User do
   
   describe "when retrieving signup IP" do
     before do
-      @user = User.new
+      @user = Factory.build(:user)
       @user.signup_ip = '127.0.0.1'
     end
     
@@ -153,7 +153,7 @@ describe User do
 
   describe "when retrieving last visit IP" do
     before do
-      @user = User.new
+      @user = Factory.build(:user)
       @user.last_visit_ip = '127.0.0.1'
     end
     
