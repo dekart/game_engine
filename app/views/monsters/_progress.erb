@@ -29,11 +29,11 @@
         <%= link_to_function(button(:invite_request),
               fb_request_dialog(
                 :title    => t('.invitation.title'),
-                :message  => t('.invitation.message', :name => @monster.name, :app => t('app_name')),
+                :message  => t('.invitation.message', :name => monster.name, :app => t('app_name')),
                 :data     => {
                   :type => :monster,
                   :reference => :monster_invite,
-                  :return_to => monster_url(@monster.id, :key => encryptor.encrypt(@monster.id), :canvas => true)
+                  :return_to => monster_url(monster.id, :key => encryptor.encrypt(monster.id), :canvas => true)
                 },
                 :callback => "$.dialog.close();",
                 :callback_url => app_requests_path
