@@ -12,7 +12,7 @@
 ActiveRecord::Schema.define(:version => 20110303071926) do
 
   create_table "app_requests", :force => true do |t|
-    t.integer  "facebook_id",              :null => false
+    t.integer  "facebook_id", :limit => 8, :null => false
     t.integer  "sender_id"
     t.integer  "receiver_id", :limit => 8
     t.text     "data"
@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(:version => 20110303071926) do
   create_table "gifts", :force => true do |t|
     t.integer  "app_request_id"
     t.integer  "sender_id",                                    :null => false
-    t.integer  "receiver_id",                                  :null => false
+    t.integer  "receiver_id",    :limit => 8,                  :null => false
     t.integer  "item_id"
     t.string   "state",          :limit => 50, :default => "", :null => false
     t.datetime "accepted_at"
@@ -273,8 +273,8 @@ ActiveRecord::Schema.define(:version => 20110303071926) do
   add_index "inventories", ["character_id"], :name => "index_inventories_on_character_id_and_placement"
 
   create_table "invitations", :force => true do |t|
-    t.integer  "sender_id",      :null => false
-    t.integer  "receiver_id",    :null => false
+    t.integer  "sender_id",                   :null => false
+    t.integer  "receiver_id",    :limit => 8, :null => false
     t.boolean  "accepted"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -686,7 +686,7 @@ ActiveRecord::Schema.define(:version => 20110303071926) do
   end
 
   create_table "users", :force => true do |t|
-    t.integer  "facebook_id",                                                :null => false
+    t.integer  "facebook_id",            :limit => 8,                        :null => false
     t.boolean  "show_next_steps",                       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
