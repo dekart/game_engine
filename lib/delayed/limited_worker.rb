@@ -1,6 +1,6 @@
 module Delayed
   class LimitedWorker < Worker
-    ROUNDS = 10
+    ROUNDS = 100
 
     def start
       say "*** Starting limited job worker #{Delayed::Job.worker_name} at #{Time.now}"
