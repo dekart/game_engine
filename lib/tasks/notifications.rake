@@ -1,7 +1,16 @@
 namespace :app do
+  desc "Deliver pending notifications"
+  task :notifications => :environment do
+    if Setting.time(:notifications_friends_to_invite_displayed_at) + Setting.i(:notifications_friends_to_invite_delay).hours < Time.now
+      Rake::Task['app:notifications:friends_to_invite'].execute
+    end
+  end
+  
   namespace :notifications do
     desc "Deliver 'friends to invite' notification"
     task :friends_to_invite => :environment do
+      Setting[:notifications_friends_to_invite_displayed_at] = Time.now
+
       total = Character.count
       
       puts "Scheduling notifications for #{total} characters..."
@@ -19,7 +28,7 @@ namespace :app do
         
         puts "Processed #{i} of #{total}..." if i % 100 == 0
       end
-      
+            
       puts 'Done!'
     end
   end
