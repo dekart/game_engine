@@ -2,7 +2,7 @@ class OptimizeIndexableColumns < ActiveRecord::Migration
   def self.up
     remove_index :mission_ranks, :name => :index_ranks_on_character_id_and_mission_id
 
-    change_column :app_requests, :facebook_id, :integer, :null => false
+    change_column :app_requests, :facebook_id, :bigint, :null => false
     change_column :assignments, :context_id, :integer, :null => false
     change_column :bank_operations, :character_id, :integer, :null => false
     change_column :character_titles, :character_id, :integer, :null => false
@@ -10,13 +10,13 @@ class OptimizeIndexableColumns < ActiveRecord::Migration
     change_column :characters, :user_id, :integer, :null => false
     change_column :fights, :attacker_id, :integer, :null => false
     change_column :fights, :victim_id, :integer, :null => false
-    change_column :gifts, :receiver_id, :integer, :null => false
+    change_column :gifts, :receiver_id, :bigint, :null => false
     change_column :gifts, :sender_id, :integer, :null => false
     change_column :hit_listings, :client_id, :integer, :null => false
     change_column :hit_listings, :victim_id, :integer, :null => false
     change_column :inventories, :character_id, :integer, :null => false
     change_column :invitations, :sender_id, :integer, :null => false
-    change_column :invitations, :receiver_id, :integer, :null => false
+    change_column :invitations, :receiver_id, :bigint, :null => false
     change_column :item_collection_ranks, :character_id, :integer, :null => false
     change_column :item_collection_ranks, :collection_id, :integer, :null => false
     change_column :items, :item_group_id, :integer, :null => false
@@ -46,7 +46,7 @@ class OptimizeIndexableColumns < ActiveRecord::Migration
     change_column :relations, :owner_id, :integer, :null => false
     change_column :story_visits, :character_id, :integer, :null => false
     change_column :story_visits, :reference_id, :integer, :null => false
-    change_column :users, :facebook_id, :integer, :null => false
+    change_column :users, :facebook_id, :bigint, :null => false
     change_column :vip_money_operations, :character_id, :integer, :null => false
     change_column :visibilities, :character_type_id, :integer, :null => false
     change_column :visibilities, :target_id, :integer, :null => false
@@ -65,7 +65,7 @@ class OptimizeIndexableColumns < ActiveRecord::Migration
     remove_index :story_visits,   :column => [:character_id, :story_alias, :reference_id]
     remove_index :wall_posts,     :column => :character_id
 
-    change_column :app_requests, :facebook_id, :integer, :null => true
+    change_column :app_requests, :facebook_id, :bigint, :null => true
     change_column :assignments, :context_id, :integer, :null => true
     change_column :bank_operations, :character_id, :integer, :null => true
     change_column :character_titles, :character_id, :integer, :null => true
@@ -73,13 +73,13 @@ class OptimizeIndexableColumns < ActiveRecord::Migration
     change_column :characters, :user_id, :integer, :null => true
     change_column :fights, :attacker_id, :integer, :null => true
     change_column :fights, :victim_id, :integer, :null => true
-    change_column :gifts, :receiver_id, :integer, :null => true
+    change_column :gifts, :receiver_id, :bigint, :null => true
     change_column :gifts, :sender_id, :integer, :null => true
     change_column :hit_listings, :client_id, :integer, :null => true
     change_column :hit_listings, :victim_id, :integer, :null => true
     change_column :inventories, :character_id, :integer, :null => true
     change_column :invitations, :sender_id, :integer, :null => true
-    change_column :invitations, :receiver_id, :integer, :null => true
+    change_column :invitations, :receiver_id, :bigint, :null => true
     change_column :item_collection_ranks, :character_id, :integer, :null => true
     change_column :item_collection_ranks, :collection_id, :integer, :null => true
     change_column :items, :item_group_id, :integer, :null => true
@@ -109,7 +109,7 @@ class OptimizeIndexableColumns < ActiveRecord::Migration
     change_column :relations, :owner_id, :integer, :null => true
     change_column :story_visits, :character_id, :integer, :null => true
     change_column :story_visits, :reference_id, :integer, :null => true
-    change_column :users, :facebook_id, :integer, :null => true
+    change_column :users, :facebook_id, :bigint, :null => true
     change_column :vip_money_operations, :character_id, :integer, :null => true
     change_column :visibilities, :character_type_id, :integer, :null => true
     change_column :visibilities, :target_id, :integer, :null => true
