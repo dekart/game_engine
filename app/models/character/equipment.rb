@@ -13,7 +13,7 @@ class Character::Equipment
     :legs       => :medium,
     :additional => :small
   }
-
+  
   class << self
     def placement_name(name)
       I18n.t("inventories.placements.names.#{name}", :default => name.to_s.humanize)
@@ -23,14 +23,18 @@ class Character::Equipment
   def initialize(character)
     @character = character
   end
-
+  
   def effect(name)
+    @effects ||= Rails.cache.read(effect_cache_key)
+    
     unless @effects
       @effects = {}
 
       Item::EFFECTS.each do |effect|
         @effects[effect] = inventories.sum{|i| i.send(effect) }
       end
+      
+      Rails.cache.write(effect_cache_key, @effects, :expire_in => 15.minutes)
     end
 
     @effects[name.to_sym]
@@ -101,8 +105,11 @@ class Character::Equipment
       previous = equip(inventory, placement)
 
       previous.try(:save!)
+      
       inventory.save!
       @character.save!
+      
+      clear_effect_cache!
     end
   end
 
@@ -112,6 +119,8 @@ class Character::Equipment
 
       inventory.save!
       @character.save!
+      
+      clear_effect_cache!
     end
   end
 
@@ -134,6 +143,8 @@ class Character::Equipment
       inventory.save!
 
       @character.save!
+      
+      clear_effect_cache!
     end
   end
 
@@ -158,6 +169,8 @@ class Character::Equipment
       inventory.save! unless inventory.destroyed?
 
       @character.save!
+      
+      clear_effect_cache!
     end
   end
 
@@ -167,6 +180,8 @@ class Character::Equipment
 
       @character.placements = {}
       @character.save!
+      
+      clear_effect_cache!
     end
   end
 
@@ -195,6 +210,8 @@ class Character::Equipment
       end
 
       @character.save!
+      
+      clear_effect_cache!
     end
   end
 
@@ -240,6 +257,18 @@ class Character::Equipment
     inventories.group_by{|i| i.item.item_group_id }.values.collect do |group|
       group.max_by{|i| i.defence }
     end
+  end
+  
+  protected
+  
+  def effect_cache_key
+    "character_#{ @character.id }_equipment_effects"
+  end
+
+  def clear_effect_cache!
+    Rails.cache.delete(effect_cache_key)
+    
+    true
   end
   
   def equipped_amount(inventory)
