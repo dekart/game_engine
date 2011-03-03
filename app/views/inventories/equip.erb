@@ -1,7 +1,9 @@
 <% dom_ready do %>
   $('#equipment_inventories').html('<%= escape_javascript(render("equippables")) %>');
   $('#equipment_placements').html('<%= escape_javascript(render("placements", :character => current_character)) %>');
+  $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
+  Character.initFightAttributes();
   Equipment.setup();
   
   <%= ga_track_event('Items', 
