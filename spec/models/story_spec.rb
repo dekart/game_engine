@@ -24,19 +24,19 @@ describe Story do
       end
     
       it 'should find visible stories only' do
-        Story.by_alias('fake_story').should_not include(@story3)
+        Story.by_alias('level_up').should_not include(@story3)
       end
     
       it 'should find stories with matching alias' do
-        Story.by_alias('fake_story').should_not include(@story4)
+        Story.by_alias('level_up').should_not include(@story4)
       end
     
       it 'should order stories randomly' do
-        Story.by_alias('fake_story').proxy_options[:order].should =~ /RAND\(\)/
+        Story.by_alias('level_up').proxy_options[:order].should =~ /RAND\(\)/
       end
     
       it 'should work with symbols as well as with strings' do
-        Story.by_alias(:fake_story).should include(@story1, @story2)
+        Story.by_alias(:level_up).should include(@story1, @story2)
       end
     end
   end
@@ -106,18 +106,18 @@ describe Story do
     
     it 'should create story visit record for current character, story type, and story reference' do
       lambda{
-        @story.track_visit!(@character)
+        @story.track_visit!(@character, :level => 1)
       }.should change(StoryVisit, :count).from(0).to(1)
     end
     
     it 'should apply payouts to character' do
-      @story.track_visit!(@character)
+      @story.track_visit!(@character, :level => 1)
       
       @story.payouts.first.should be_applied
     end
     
     it 'should return payout result' do
-      result = @story.track_visit!(@character)
+      result = @story.track_visit!(@character, :level => 1)
       
       result.should be_kind_of(Payouts::Collection)
       result.first.should be_applied
@@ -125,23 +125,23 @@ describe Story do
     
     describe 'when story is already visited' do
       before do
-        StoryVisit.create(:character_id => @character.id, :story_alias => @story.alias)
+        StoryVisit.create!(:character_id => @character.id, :story_alias => @story.alias, :reference_id => 1)
       end
       
       it 'should not create visit record' do
         lambda{
-          @story.track_visit!(@character)
+          @story.track_visit!(@character, :level => 1)
         }.should_not change(StoryVisit, :count)
       end
       
       it 'should not apply payouts' do
         lambda{
-          @story.track_visit!(@character)
+          @story.track_visit!(@character, :level => 1)
         }.should_not change(@story.payouts.first, :applied?)
       end
       
       it 'should return empty array' do
-        @story.track_visit!(@character).should == []
+        @story.track_visit!(@character, :level => 1).should == []
       end
     end
     
@@ -176,7 +176,7 @@ describe Story do
     end
     
     it 'should return story alias and ID' do
-      @story.name.should == "Story ##{@story.id} (fake_story)"
+      @story.name.should == "Story ##{@story.id} (level_up)"
     end
   end
 end
