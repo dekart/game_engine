@@ -7,4 +7,4 @@ ActionController::Base.session = {
   :cookie_only      => false
 }
 
-ActionController::Base.session_store = :mem_cache_store_with_headers
+ActionController::Base.session_store = :mem_cache_store
