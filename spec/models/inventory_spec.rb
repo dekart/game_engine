@@ -59,9 +59,8 @@ describe Inventory do
     end
 
     it "should save applied payouts to character" do
-      @inventory.character.should_receive(:save!).and_return(true)
-
       @inventory.use!
+      @inventory.character.should_not be_changed
     end
 
     it "should take item from user's inventory" do
