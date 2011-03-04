@@ -47,7 +47,7 @@ class Character
         inventory.charge_money = true
 
         transaction do
-          if inventory.save
+          if inventory.save! and proxy_owner.save!
             Item.update_counters(inventory.item_id, :owned => effective_amount)
 
             equip!(inventory)
@@ -62,27 +62,8 @@ class Character
       def sell!(item, amount = 1)
         if inventory = find_by_item(item)
           inventory.deposit_money = true
-
-          transaction do
-            if inventory.amount > amount
-              inventory.amount -= amount
-              inventory.save
-
-              Item.update_counters(inventory.item_id, :owned => - amount)
-
-              if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
-                inventory.market_item.destroy
-              end
-            else
-              inventory.destroy
-
-              Item.update_counters(inventory.item_id, :owned => - inventory.amount)
-            end
-
-            unequip!(inventory)
-          end
-
-          inventory
+          
+          take!(inventory, amount)
         else
           false
         end
@@ -93,18 +74,17 @@ class Character
           transaction do
             if inventory.amount > amount
               inventory.amount -= amount
-              inventory.save
-
-              Item.update_counters(inventory.item_id, :owned => - amount)
-
-              if inventory.market_items_count > 0 and inventory.market_item.amount > inventory.amount
-                inventory.market_item.destroy
-              end
+              
+              inventory.save!
             else
+              amount = inventory.amount
+              
               inventory.destroy
-
-              Item.update_counters(inventory.item_id, :owned => - inventory.amount)
             end
+
+            Item.update_counters(inventory.item_id, :owned => - amount)
+            
+            proxy_owner.save!
 
             unequip!(inventory)
           end

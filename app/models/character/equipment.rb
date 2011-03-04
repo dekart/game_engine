@@ -88,6 +88,8 @@ class Character::Equipment
         previous
       end
     end
+    
+    @inventories = nil
   end
 
   def unequip(inventory, placement)
@@ -98,6 +100,8 @@ class Character::Equipment
 
       inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
     end
+    
+    @inventories = nil
   end
 
   def equip!(inventory, placement)
