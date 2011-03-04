@@ -2,7 +2,7 @@ en:
   layouts:
     application:
       admin_interface: "Go to Admin Interface »"
-      maintenance_warning: "The game will be down for a scheduled server maintenance in next {{start_time}}. Downtime shouldn't exceed {{length}}."
+      maintenance_warning: "The game will be down for a scheduled server maintenance in next %{start_time}. Downtime shouldn't exceed %{length}."
     next_steps:
       title: "Next Steps"
       links:
@@ -12,10 +12,10 @@ en:
         invite: "Grow your Alliance"
     fan_specials:
       title: "Fan Specials"
-      text: "{{app}} fans periodically receive free Gold, Gems, weapons, and other useful game items!"
+      text: "%{app} fans periodically receive free Gold, Gems, weapons, and other useful game items!"
     bookmark:
       title: "Bookmark"
-      text: "Don't forget to add {{app}} to your bookmarks!"
+      text: "Don't forget to add %{app} to your bookmarks!"
     main_menu:
       home: "Home"
       missions: "Missions"

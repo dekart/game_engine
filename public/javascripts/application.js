@@ -341,7 +341,7 @@ $(function(){
     });
 
     $('form').live('submit', function(){
-      $(this).append('<input type="hidden" name="signed_request" value="' + signed_request + '">');
+      $(this).append('<input type="hidden" name="stored_signed_request" value="' + signed_request + '">');
     });
 
     $.ajaxSetup({
@@ -411,7 +411,7 @@ function show_result(){
 }
 
 function signedUrl(url){
-  var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'signed_request=' + signed_request;
+  var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
 
   return new_url
 }
