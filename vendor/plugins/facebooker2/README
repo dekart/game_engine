@@ -21,6 +21,7 @@ production:
   app_id: <your application id>
   secret: <your application secret>
   api_key: <your application key>
+  callback_url: <your callback url>
 
 3. Create config/initializers/facebooker2.rb and place the following line in it
 
@@ -66,19 +67,23 @@ production:
 
 3. Add the following lines to your app/controllers/application_controller.rb
 
-include Facebooker2::Rails::Controller::CanvasOAuth
+include Facebooker2::Rails::Controller
 
-ensure_canvas_connected_to_facebook :oauth_url, 'publish_stream'
-create_facebook_oauth_callback :oauth
+before_filter :ensure_canvas_connected_to_facebook
 
 rescue_from Facebooker2::OAuthException do |exception|
   redirect_to 'http://www.facebook.com/'
 end
 
+private
+def ensure_canvas_connected_to_facebook
+  ensure_canvas_connected(:email)
+end
+
 4. Create a route that generates a URL for the OAuth callback and calls the appropriate
 action on your controller:
 
-map.oauth '/oauth', :controller => :application, :action => :oauth
+match '/facebook_oauth_connect' => 'application#facebook_oauth_connect'
 
 5. Your canvas application will now ensure that the current user has authorized
 the application before anything else is allowed.  The authorization and FB.ui dialogs

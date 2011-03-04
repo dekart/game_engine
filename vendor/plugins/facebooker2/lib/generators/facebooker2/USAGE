@@ -1,5 +1,5 @@
 Description:
-    Generate config file, initializer and show the required code that should be added into ApplicationController
+    Generate config file, initializer and add required code into ApplicationController and routes.rb
     Use 'canvas' parameter if you plan to create canvas application.
 
 Example:

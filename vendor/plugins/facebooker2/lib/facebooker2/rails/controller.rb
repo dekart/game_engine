@@ -118,6 +118,10 @@ module Facebooker2
       def facebook_params
         @facebook_param ||= fb_load_facebook_params
       end
+      
+      def params_without_facebook_data
+        params.except(:signed_request)
+      end
 
 
       def facebook_signed_request

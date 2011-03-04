@@ -26,7 +26,7 @@ module Facebooker2
           def ensure_canvas_connected(*scope)
             if current_facebook_user == nil && !params[:code] && !params[:error]
               return_code = facebook_url_encryptor.encrypt(
-                url_for(params.except(:signed_request).merge(:canvas => false, :only_path => true))
+                url_for(params_without_facebook_data.merge(:canvas => false, :only_path => true))
               )
 
               url = 'https://graph.facebook.com/oauth/authorize?client_id=%s&redirect_uri=%s&scope=%s' % [

@@ -18,9 +18,16 @@ module Facebooker2
             str
           end
         end
+        
+        def fb_connect_async_js(*args, &block)
+          options = args.extract_options!
+          
+          app_id  = args.shift || Facebooker2.app_id
+          
+          fb_conntect_js(app_id, options.merge(:async => true))
+        end
 
-
-        def fb_connect_async_js(*args, &proc)
+        def fb_connect_js(*args, &block)
           options = args.extract_options!
           
           app_id  = args.shift || Facebooker2.app_id
@@ -33,32 +40,66 @@ module Facebooker2
             :locale   => "en_US"
           )
 
-          extra_js = capture(&proc) if block_given?
+          extra_js = capture(&block) if block_given?
 
-          js = <<-JAVASCRIPT
-            window.fbAsyncInit = function() {
-              FB.init({
-                appId  : '#{app_id}',
-                status : #{options[:status]}, // check login status
-                cookie : #{options[:cookie]}, // enable cookies to allow the server to access the session
-                xfbml  : #{options[:xfbml]},  // parse XFBML
-                channelUrl : '#{ options[:channel_url] || 'null' }'
-              });
-              #{extra_js}
-            };
-
-            (function() {
-              var s = document.createElement('div');
-              s.setAttribute('id','fb-root');
-              document.documentElement.getElementsByTagName("body")[0].appendChild(s);
-              var e = document.createElement('script');
-              e.src = document.location.protocol + '//connect.facebook.net/#{options[:locale]}/all.js';
-              e.async = true;
-              s.appendChild(e);
-            }());
+          init_js = <<-JAVASCRIPT
+            FB.init({
+              appId  : '#{app_id}',
+              status : #{options[:status]}, // check login status
+              cookie : #{options[:cookie]}, // enable cookies to allow the server to access the session
+              xfbml  : #{options[:xfbml]},  // parse XFBML
+              channelUrl : '#{ options[:channel_url] || 'null' }'
+            });
           JAVASCRIPT
+          
+          js_url = "connect.facebook.net/#{options[:locale]}/all.js"
+          js_url << "?#{Time.now.change(:min => 0, :sec => 0, :usec => 0).to_i}" if options[:weak_cache]
+          
+          if options[:async]
+            js = <<-JAVASCRIPT
+              window.fbAsyncInit = function() {
+                #{init_js}
+                #{extra_js}
+              };
 
-          js = javascript_tag(js) if options[:wrap_tag]
+              (function() {
+                var s = document.createElement('div');
+                s.setAttribute('id','fb-root');
+                document.documentElement.getElementsByTagName("body")[0].appendChild(s);
+                var e = document.createElement('script');
+                e.src = document.location.protocol + '//#{ js_url }';
+                e.async = true;
+                s.appendChild(e);
+              }());
+            JAVASCRIPT
+            
+            js = javascript_tag(js) if options[:wrap_tag]
+          else
+            js = <<-CODE
+              <div id='fb-root'></div>
+              <script src="http://#{ js_url }" type="text/javascript"></script>
+            CODE
+            
+            if options[:cache_url]
+              js << <<-CODE
+                <script type="text/javascript">
+                  if(typeof FB == 'undefined'){
+                    document.write(unescape(\"%3Cscript src='#{options[:cache_url]}' type='text/javascript'%3E%3C/script%3E\"))
+                  }
+                </script>
+              CODE
+            end
+            
+            js << <<-CODE
+              <script type="text/javascript">
+                if(typeof FB != 'undefined'){
+                  #{init_js}
+                  #{extra_js}
+                }
+              </script>
+            CODE
+          end
+
           js = fb_html_safe(js)
 
           block_given? ? fb_concat(js) : js
