@@ -24,7 +24,7 @@ module Facebooker2
           
           app_id  = args.shift || Facebooker2.app_id
           
-          fb_conntect_js(app_id, options.merge(:async => true))
+          fb_connect_js(app_id, options.merge(:async => true), &block)
         end
 
         def fb_connect_js(*args, &block)
