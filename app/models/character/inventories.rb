@@ -136,6 +136,8 @@ class Character
       end
 
       def equip!(inventory)
+        return unless inventory.item.equippable?
+        
         if Setting.b(:character_auto_equipment)
           proxy_owner.equipment.equip_best!(true)
         else
@@ -144,6 +146,8 @@ class Character
       end
 
       def unequip!(inventory)
+        return unless inventory.item.equippable?
+        
         if Setting.b(:character_auto_equipment)
           proxy_owner.equipment.equip_best!(true)
         else
