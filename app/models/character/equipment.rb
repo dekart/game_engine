@@ -108,10 +108,10 @@ class Character::Equipment
     Character.transaction do
       previous = equip(inventory, placement)
 
-      previous.try(:save!)
+      previous.try(:save)
       
-      inventory.save!
-      @character.save!
+      inventory.save
+      @character.save
       
       clear_effect_cache!
     end
@@ -121,8 +121,8 @@ class Character::Equipment
     Character.transaction do
       unequip(inventory, placement)
 
-      inventory.save!
-      @character.save!
+      inventory.save
+      @character.save
       
       clear_effect_cache!
     end
@@ -144,9 +144,9 @@ class Character::Equipment
     Character.transaction do
       auto_equip(inventory, amount)
 
-      inventory.save!
+      inventory.save
 
-      @character.save!
+      @character.save
       
       clear_effect_cache!
     end
@@ -170,9 +170,9 @@ class Character::Equipment
     Character.transaction do
       auto_unequip(inventory)
 
-      inventory.save! unless inventory.destroyed?
+      inventory.save unless inventory.destroyed?
 
-      @character.save!
+      @character.save
       
       clear_effect_cache!
     end
@@ -183,7 +183,7 @@ class Character::Equipment
       @character.inventories.equipped.update_all(:equipped => 0)
 
       @character.placements = {}
-      @character.save!
+      @character.save
       
       clear_effect_cache!
     end
@@ -210,10 +210,10 @@ class Character::Equipment
       end
 
       equippables.each do |inventory|
-        inventory.save! if inventory.changed?
+        inventory.save if inventory.changed?
       end
 
-      @character.save!
+      @character.save
       
       clear_effect_cache!
     end

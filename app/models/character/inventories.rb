@@ -47,7 +47,7 @@ class Character
         inventory.charge_money = true
 
         transaction do
-          if inventory.save! and proxy_owner.save!
+          if inventory.save and proxy_owner.save
             Item.update_counters(inventory.item_id, :owned => effective_amount)
 
             equip!(inventory)
@@ -75,7 +75,7 @@ class Character
             if inventory.amount > amount
               inventory.amount -= amount
               
-              inventory.save!
+              inventory.save
             else
               amount = inventory.amount
               
@@ -84,7 +84,7 @@ class Character
 
             Item.update_counters(inventory.item_id, :owned => - amount)
             
-            proxy_owner.save!
+            proxy_owner.save
 
             unequip!(inventory)
           end
