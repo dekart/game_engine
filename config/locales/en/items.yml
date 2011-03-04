@@ -11,8 +11,6 @@ en:
         buy: "Buy"
     specials:
       header: "Limited Time Offers"
-      sale_limit: "Only %{amount} left!"
-      time_limit: "Time Left: %{amount}"
       buttons:
         buy: "Buy"
     limit:
