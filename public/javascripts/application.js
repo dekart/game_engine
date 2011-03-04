@@ -484,6 +484,6 @@ function redirectTo(url){
 
 function updateCanvasSize() {
   FB.Canvas.setSize({
-    height: $('body').height() + 50 // Additional number compensates admin menu margin that is not included into the body height
+    height: $('body').height() + 100 // Additional number compensates admin menu margin that is not included into the body height
   });
 }
