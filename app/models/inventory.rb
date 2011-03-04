@@ -32,7 +32,8 @@ class Inventory < ActiveRecord::Base
 
   validate :enough_character_money?
 
-  before_save :charge_or_deposit_character
+  before_save   :charge_or_deposit_character
+  after_update  :check_market_items
   after_destroy :deposit_character
 
   def sell_price
@@ -102,6 +103,12 @@ class Inventory < ActiveRecord::Base
       self.basic_money = sell_price * amount
 
       character.charge(- basic_money, 0, item)
+    end
+  end
+  
+  def check_market_items
+    if market_item and market_item.amount > amount
+      market_item.destroy
     end
   end
 end

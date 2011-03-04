@@ -95,6 +95,12 @@ Factory.define :inventory do |t|
   t.association :character
   t.association :item
   
+  t.amount 5
+end
+
+Factory.define :market_item do |t|
+  t.association :inventory
+  
   t.amount 1
 end
 
