@@ -12,11 +12,11 @@ en:
       payout_message: "Thank you for playing %{app}!"
       
     level_up:
-      title: "I just advanced to Level %{level} in %{app}!"
+      title: "I've just advanced to Level %{level} in %{app}!"
       description: ""
       action_link: ""
     item_purchased:
-      title: "I just bought a \"%{name}\" in %{app}!"
+      title: "I've just bought a \"%{name}\" in %{app}!"
       description: ""
       action_link: ""
     mission_help:
@@ -24,11 +24,11 @@ en:
       description: "Help your friend with this mission to get bonus gold and experience!"
       action_link: "Help %{player_name} »"
     mission_completed:
-      title: "I just completed the \"%{name}\" mission in %{app}!"
+      title: "I've just completed the \"%{name}\" mission in %{app}!"
       description: ""
       action_link: ""
     boss_defeated:
-      title: "I just defeated the %{name} in %{app}!"
+      title: "I've just defeated the %{name} in %{app}!"
       description: ""
       action_link: ""
     monster_invite:
@@ -36,15 +36,15 @@ en:
       description: "Join our fight against %{name} in %{app}! Together we can slay this monster and get reward!"
       action_link: "Engage! »"
     monster_defeated:
-      title: "I just defeated %{name} in %{app}!"
+      title: "I've just defeated %{name} in %{app}!"
       description: ""
       action_link: ""
     property:
-      title: "I just bought %{name} in %{app}!"
+      title: "I've just bought %{name} in %{app}!"
       description: ""
       action_link: ""
     collection_completed:
-      title: "I just finished the '%{name}' Collection in %{app}!"
+      title: "I've just finished the '%{name}' Collection in %{app}!"
     collection_missing_items:
       title: "Please help me to finish my collection in %{app}!"
       description: "I need these items to finish the '%{name}' collection: %{items}."
