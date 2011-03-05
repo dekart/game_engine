@@ -47,12 +47,7 @@
           }
         }, function(response){
           if(typeof(response) != 'undefined' && response != null){
-            $.post(options.request_callback_url, response, function(){
-              $('#ajax').load(options.gift_callback_url, {
-                item_id: $this.attr('data-item-id'), 
-                request_ids: response.request_ids
-              });
-            });
+            $('#ajax').load(options.request_callback_url, {ids: response.request_ids, item_id: $this.attr('data-item-id')});
           }
         });
 

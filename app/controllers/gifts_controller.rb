@@ -10,13 +10,6 @@ class GiftsController < ApplicationController
     redirect_from_iframe root_url(:canvas => true) if @items.empty?
   end
   
-  def success
-    @item = Item.find(params[:item_id])
-    @requests_amount = params[:request_ids].size
-    
-    render :layout => 'ajax'
-  end
-  
   def index
     @gifts = Gift.with_state(:pending).for_character(current_character).all(:order => "sender_id, created_at DESC")
   end

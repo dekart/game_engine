@@ -29,8 +29,7 @@
   $('#gift_form').giftForm({
     request_title: '<%= t('.title') %>', 
     request_url: '<%= gifts_url(:canvas => true) %>', 
-    request_callback_url: '<%= app_requests_path %>', 
-    gift_callback_url: '<%= success_gifts_path %>'
+    request_callback_url: '<%= app_requests_path(:type => :gift) %>'
   });
   
 <% end %>
