@@ -395,7 +395,7 @@ $(function(){
   }
   
   $('a[data-click-once=true]').live('click', function(){
-    $(this).attr('onclick', null).css({opacity: 0.3, cursor: 'wait'}).blur();
+    $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
   })
 
   $(document).bind('facebook.ready', function(){
