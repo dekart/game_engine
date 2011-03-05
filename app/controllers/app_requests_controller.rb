@@ -13,6 +13,8 @@ class AppRequestsController < ApplicationController
     case @request_type
     when 'gift'
       @item = Item.find(params[:item_id])
+    when 'monster_invite'
+      @item = Monster.find(params[:monster_id])
     end
 
     render :layout => 'ajax'

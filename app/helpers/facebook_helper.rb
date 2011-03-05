@@ -102,6 +102,7 @@ module FacebookHelper
   def fb_request_dialog(type, options = {})
     callback_url = options.delete(:callback_url)
     callback  = options.delete(:callback)
+    request_params = options.delete(:params) || {}
         
     if_fb_connect_initialized(
       "
@@ -114,7 +115,7 @@ module FacebookHelper
         $(document).trigger('facebook.dialog');
       " % [
         options.merge(:method => 'apprequests').to_json,
-        app_requests_path(:type => type),
+        app_requests_path(request_params.merge(:type => type)),
         callback
       ]
     ).gsub(/\n\s+/, ' ')
