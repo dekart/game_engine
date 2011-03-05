@@ -29,7 +29,7 @@ var CollectionList = {
   },
 
   blurItems: function(collection){
-    collection.removeClass('present').children().css({opacity: 0.4})
+    collection.removeClass('present').children().css({opacity: 0.4, filter: ''})
   }
 };
 var CharacterForm = {
