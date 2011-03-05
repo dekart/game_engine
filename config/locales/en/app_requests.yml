@@ -1,0 +1,10 @@
+en:
+  app_requests:
+    create:
+      gift:
+        title: "Send Gifts to Your Alliance"
+        message: "Your gifts have been sent to your friends! They'll be notified immediately."
+      invite_dialog:
+        title: "Recruit Friends To Your Alliance"
+        message: "Your invitations have been sent to your friends! They'll be notified immediately."
+    

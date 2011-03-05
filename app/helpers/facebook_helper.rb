@@ -99,19 +99,25 @@ module FacebookHelper
     block_given? ? concat(result) : result
   end
   
-  def fb_request_dialog(options = {})
+  def fb_request_dialog(type, options = {})
     callback_url = options.delete(:callback_url)
     callback  = options.delete(:callback)
         
     if_fb_connect_initialized(
-      "FB.ui(%s, %s); $(document).trigger('facebook.dialog');" % [
+      "
+        FB.ui(%s, function(response){ 
+          if(typeof(response) != 'undefined' && response != null){ 
+            $('#ajax').load('%s', {ids: response.request_ids}, function(){ %s }) 
+          } 
+        }); 
+        
+        $(document).trigger('facebook.dialog');
+      " % [
         options.merge(:method => 'apprequests').to_json,
-        "function(response){ if(typeof(response) != 'undefined' && response != null){ %s; %s;} }" % [
-          callback,
-          callback_url.blank? ? '' : "$.post('#{callback_url}', response)"
-        ]
+        app_requests_path(:type => type),
+        callback
       ]
-    )
+    ).gsub(/\n\s+/, ' ')
   end
 
   protected
