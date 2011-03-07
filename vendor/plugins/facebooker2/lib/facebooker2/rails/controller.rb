@@ -167,6 +167,8 @@ module Facebooker2
 
       def redirect_from_iframe(url_options)
         redirect_url = url_options.is_a?(String) ? url_options : url_for(url_options)
+        
+        logger.info "Redirecting from IFRAME to #{redirect_url}"
 
         render :layout => false, :text => <<-HTML
           <html><head>
