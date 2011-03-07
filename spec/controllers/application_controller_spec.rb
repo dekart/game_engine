@@ -104,25 +104,38 @@ describe ApplicationController do
       before do        
         @request1 = Factory(:app_request, :facebook_id => 123)
         @request2 = Factory(:app_request, :facebook_id => 456)
+        
+        AppRequest.stub!(:find_all_by_facebook_id).and_return([@request1, @request2])
+
+        controller.stub!(:current_facebook_user).and_return(fake_fb_user)
+        controller.stub!(:current_character).and_return(mock('character'))
       end
       
       def do_request
         get :index, :request_ids => '123,456'
       end
       
-      it 'should schedule request deletion' do
-        controller.stub!(:current_facebook_user).and_return(fake_fb_user)
-        controller.stub!(:current_character).and_return(mock('character'))
-
-        AppRequest.should_receive(:schedule_deletion).with(@request1, @request2)
+      it 'should fetch requests by passed IDs' do
+        AppRequest.should_receive(:find_all_by_facebook_id).with(['123', '456']).and_return([@request1, @request2])
+        
+        do_request
+      end
+      
+      it 'should mark requests as accepted' do
+        @request1.should_receive(:accept)
+        @request2.should_receive(:accept)
 
         do_request
       end
       
-      it 'should not delete requests if user is not authenticated' do
-        lambda{
-          do_request
-        }.should_not change(Delayed::Job, :count)
+      it 'should not accept requests if user is not authenticated' do
+        controller.stub!(:current_facebook_user).and_return(nil)
+        controller.stub!(:current_character).and_return(nil)
+
+        @request1.should_not_receive(:accept)
+        @request2.should_not_receive(:accept)
+
+        do_request
       end
     end
   end

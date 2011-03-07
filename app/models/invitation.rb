@@ -33,7 +33,7 @@ class Invitation < ActiveRecord::Base
       update_attribute(:accepted, true)
       
       schedule_user_counter_update
-      schedule_app_request_deletion
+      accept_app_request
     end
   end
 
@@ -42,7 +42,7 @@ class Invitation < ActiveRecord::Base
       update_attribute(:accepted, :false)
       
       schedule_user_counter_update
-      schedule_app_request_deletion
+      accept_app_request
     end
   end
   
@@ -50,7 +50,7 @@ class Invitation < ActiveRecord::Base
     receiver.try(:schedule_counter_update)
   end
   
-  def schedule_app_request_deletion
-    AppRequest.schedule_deletion(app_request_id) if app_request_id
+  def accept_app_request
+    app_request.accept_indirectly if app_request
   end
 end

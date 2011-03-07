@@ -1,6 +1,34 @@
 class AppRequest < ActiveRecord::Base
   belongs_to :sender, :class_name => "User"
   
+  state_machine :initial => :pending do
+    state :processed
+    state :accepted
+    state :accepted_indirectly
+
+    event :process do
+      transition :pending => :processed
+    end
+
+    event :accept do
+      transition [:pending, :processed] => :accepted
+    end
+    
+    event :accept_indirectly do
+      transition [:pending, :processed] => :accepted_indirectly
+    end
+    
+    after_transition :on => :process do |request|
+      request.update_attribute(:processed_at, Time.now)
+    end
+
+    after_transition :on => [:accept, :accept_indirectly] do |request|
+      request.update_attribute(:accepted_at, Time.now)
+      
+      request.class.schedule_deletion(request.id)
+    end
+  end
+
   serialize :data
   
   validates_presence_of :facebook_id
@@ -32,14 +60,15 @@ class AppRequest < ActiveRecord::Base
     self.data = JSON.parse(request.data)
     
     save!
+    
+    process
   end
   
   def delete_from_facebook!
-    request = Mogli::AppRequest.new({:id => facebook_id}, Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret))
-    
-    request.destroy
-    
-    destroy
+    Mogli::AppRequest.new(
+      {:id => facebook_id}, 
+      Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
+    ).destroy
   end
 
   protected

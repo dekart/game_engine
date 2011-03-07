@@ -16,7 +16,7 @@ describe AppRequestsController do
     end
     
     def do_request
-      post :create, :request_ids => [123]
+      post :create, :ids => [123]
     end
     
     it 'should create new application request for each passed request ID' do

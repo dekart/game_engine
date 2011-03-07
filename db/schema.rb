@@ -9,15 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110303071926) do
+ActiveRecord::Schema.define(:version => 20110307161330) do
 
   create_table "app_requests", :force => true do |t|
-    t.integer  "facebook_id", :limit => 8, :null => false
+    t.integer  "facebook_id",  :limit => 8,                  :null => false
     t.integer  "sender_id"
-    t.integer  "receiver_id", :limit => 8
+    t.integer  "receiver_id",  :limit => 8
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state",        :limit => 50, :default => "", :null => false
+    t.datetime "processed_at"
+    t.datetime "accepted_at"
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"

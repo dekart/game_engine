@@ -33,7 +33,7 @@ class Gift < ActiveRecord::Base
       gift.update_attribute(:accepted_at, Time.now)
       
       gift.send(:give_item_to_receiver)
-      gift.send(:schedule_app_request_deletion)
+      gift.send(:accept_app_request)
     end
   end
   
@@ -55,8 +55,8 @@ class Gift < ActiveRecord::Base
     @inventory = receiver.inventories.give!(item)
   end
 
-  def schedule_app_request_deletion
-    AppRequest.schedule_deletion(app_request_id)
+  def accept_app_request
+    app_request.accept_indirectly if app_request
   end
   
   def repeat_accept_check

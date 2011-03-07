@@ -147,8 +147,8 @@ describe Gift do
       @gift.inventory.should == @receiver.inventories.first
     end
     
-    it 'should schedule application request deletion' do
-      AppRequest.should_receive(:schedule_deletion).with(@gift.app_request_id)
+    it 'should indirectly accept associated app request' do
+      @gift.app_request.should_receive(:accept_indirectly)
 
       @gift.accept
     end
