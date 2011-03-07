@@ -1,6 +1,6 @@
 class CharactersController < ApplicationController
   skip_before_filter :ensure_canvas_connected_to_facebook, :only => [:new, :index]
-  skip_before_filter :check_character_existance,
+  skip_before_filter :check_character_existance, :redirect_by_request,
     :only => [:new, :create]
 
   skip_landing_redirect :except => [:index, :upgrade]
@@ -64,7 +64,7 @@ class CharactersController < ApplicationController
       @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
       if @character.save
-        redirect_back root_url(:canvas => true)
+        redirect_by_request || redirect_back(root_url(:canvas => true))
       else
         render :action => :new
       end

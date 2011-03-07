@@ -82,6 +82,12 @@ describe AppRequest do
       @request.should_not be_changed
     end
     
+    it 'should mark request as processed' do
+      lambda{
+        @request.update_data!
+      }.should change(@request, :processed?).from(false).to(true)
+    end
+    
     describe 'when request is an invitation request' do
       before do
         @remote_request.stub!(:data).and_return('{"type":"invitation"}')
@@ -115,7 +121,7 @@ describe AppRequest do
     end
   end
   
-  describe 'when getting reference' do
+  describe '#reference' do
     before do
       @request = Factory(:app_request, :data => {"reference" => 'some_reference'})
     end
@@ -131,7 +137,7 @@ describe AppRequest do
     end
   end
   
-  describe 'when deleting request from facebook' do
+  describe '#delete_from_facebook!' do
     before do
       @request = Factory(:app_request)
       
@@ -150,12 +156,6 @@ describe AppRequest do
       @remote_request.should_receive(:destroy)
       
       @request.delete_from_facebook!
-    end
-    
-    it 'should destroy the request' do
-      lambda{
-        @request.delete_from_facebook!
-      }.should change(AppRequest, :count).from(1).to(0)
     end
   end
   
@@ -178,6 +178,45 @@ describe AppRequest do
       @request.data = {:something => 'else'}
       
       @request.return_to.should be_nil
+    end
+  end
+  
+  describe '#process' do
+    before do
+      @request = Factory(:app_request)
+    end
+    
+    it 'should store processing time' do
+      Timecop.freeze(Time.now) do
+        lambda{
+          @request.process
+        }.should change(@request, :processed_at).from(nil).to(Time.now)
+      end
+    end
+  end
+  
+  %w{accept accept_indirectly}.each do |method_name|
+    describe "##{method_name}" do
+      before do
+        @request = Factory(:app_request)
+      end
+    
+      it 'should store acceptance time' do
+        Timecop.freeze(Time.now) do
+          lambda{
+            @request.send(method_name)
+          }.should change(@request, :accepted_at).from(nil).to(Time.now)
+        end
+      end
+    
+      it 'should schedule request deletion' do
+        lambda{
+          @request.send(method_name)
+        }.should change(Delayed::Job, :count).by(1)
+      
+        Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
+        Delayed::Job.last.payload_object.request_ids.should == [@request.id]
+      end
     end
   end
 end
