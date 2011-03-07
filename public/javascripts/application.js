@@ -354,7 +354,7 @@ var Spinner = {
   moveToPosition: function(){
     if(this.x > -1 && this.y > -1){
       $('#spinner').css({
-        top: this.y - $('#spinner').height() - 50
+        top: this.y - $('#spinner').height() / 2
       })
     }
   },
