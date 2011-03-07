@@ -112,13 +112,8 @@ class ApplicationController < ActionController::Base
       uri = session[:return_to]
 
       session[:return_to] = nil
-
-      uri = 'http://apps.facebook.com/%s%s' % [
-        Facebooker2.canvas_page_name,
-        uri
-      ]
     end
 
-    redirect_from_iframe uri
+    redirect_from_iframe(uri)
   end
 end
