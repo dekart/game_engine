@@ -38,7 +38,7 @@ class Admin::CharactersController < Admin::BaseController
       flash[:success] = t(".success")
 
       unless_continue_editing do
-        redirect_to admin_characters_path(:page => params[:page])
+        redirect_to admin_characters_path
       end
     else
       render :edit

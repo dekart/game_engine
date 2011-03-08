@@ -35,7 +35,7 @@
                 <td><%= check_box_tag("ids[]", character.id) %></td>
                 <td><%= link_to(character.id, character_url(character.key, :canvas => true)) %></td>
                 <td>
-                  <%= link_to(character_name(character), edit_admin_character_path(character, :page => params[:page])) %>
+                  <%= link_to(character_name(character), edit_admin_character_path(character)) %>
                   <%= link_to(t(".profile"), fb_profile_url(character.user),
                         :class  => :profile,
                         :target => :_blank
@@ -45,7 +45,7 @@
                 <td><%= l(character.created_at, :format => :short) %></td>
                 <td><%= character.user.reference %></td>
                 <td class="controls">
-                  <%= link_to(t(".controls.edit"), edit_admin_character_path(character, :page => params[:page])) %>
+                  <%= link_to(t(".controls.edit"), edit_admin_character_path(character)) %>
                   <%= link_to(t(".controls.payout"), payout_admin_characters_path(:ids => character)) %>
                 </td>
               </tr>
