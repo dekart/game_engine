@@ -71,7 +71,7 @@ class Character::Equipment
         @character.placements[placement] ||= []
         @character.placements[placement] << inventory.id
 
-        inventory.increment(:equipped)
+        inventory.equipped = equipped_amount(inventory)
       elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
         previous = @character.inventories.find(@character.placements[placement].last)
 
@@ -93,7 +93,7 @@ class Character::Equipment
     placement = placement.to_sym
 
     if @character.placements[placement] and index = @character.placements[placement].index(inventory.id)
-      inventory.decrement(:equipped) unless inventory.frozen?
+      inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
 
       @character.placements[placement].delete_at(index)
     end
@@ -243,5 +243,9 @@ class Character::Equipment
     inventories.group_by{|i| i.item.item_group_id }.values.collect do |group|
       group.max_by{|i| i.defence }
     end
+  end
+  
+  def equipped_amount(inventory)
+    @character.placements.values.flatten.count(inventory)
   end
 end
