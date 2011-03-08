@@ -111,7 +111,7 @@ class Character::Equipment
       previous.try(:save)
       
       inventory.save
-      @character.save
+      @character.save!
       
       clear_effect_cache!
     end
@@ -122,7 +122,7 @@ class Character::Equipment
       unequip(inventory, placement)
 
       inventory.save
-      @character.save
+      @character.save!
       
       clear_effect_cache!
     end
@@ -146,7 +146,7 @@ class Character::Equipment
 
       inventory.save
 
-      @character.save
+      @character.save!
       
       clear_effect_cache!
     end
@@ -172,7 +172,7 @@ class Character::Equipment
 
       inventory.save unless inventory.destroyed?
 
-      @character.save
+      @character.save!
       
       clear_effect_cache!
     end
@@ -183,7 +183,7 @@ class Character::Equipment
       @character.inventories.equipped.update_all(:equipped => 0)
 
       @character.placements = {}
-      @character.save
+      @character.save!
       
       clear_effect_cache!
     end
@@ -213,7 +213,7 @@ class Character::Equipment
         inventory.save if inventory.changed?
       end
 
-      @character.save
+      @character.save!
       
       clear_effect_cache!
     end
