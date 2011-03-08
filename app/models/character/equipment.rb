@@ -120,7 +120,7 @@ class Character::Equipment
 
   def auto_equip(inventory, amount = nil)
     amount ||= inventory.amount_available_for_equipment
-
+    
     amount.times do
       if placement = (placements_with_free_slots & inventory.placements).first
         equip(inventory, placement)
@@ -246,6 +246,6 @@ class Character::Equipment
   end
   
   def equipped_amount(inventory)
-    @character.placements.values.flatten.count(inventory)
+    @character.placements.values.flatten.count(inventory.id)
   end
 end
