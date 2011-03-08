@@ -75,11 +75,17 @@ class Character::Equipment
       @character.placements[placement] ||= []
       @character.placements[placement] << inventory.id
 
+<<<<<<< HEAD
       inventory.equipped = equipped_amount(inventory)
       
       nil
     elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
       previous = @character.inventories.find(@character.placements[placement].last)
+=======
+        inventory.equipped = equipped_amount(inventory)
+      elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
+        previous = @character.inventories.find(@character.placements[placement].last)
+>>>>>>> Re-calculate total amount of equipped inventories on equipment and unequipment
 
       unless previous == inventory # Do not re-equip the same inventory
         unequip(previous, placement)
@@ -96,6 +102,11 @@ class Character::Equipment
     placement = placement.to_sym
 
     if @character.placements[placement] and index = @character.placements[placement].index(inventory.id)
+<<<<<<< HEAD
+=======
+      inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
+
+>>>>>>> Re-calculate total amount of equipped inventories on equipment and unequipment
       @character.placements[placement].delete_at(index)
 
       inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
