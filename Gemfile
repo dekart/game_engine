@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem "rails", "2.3.8", :require => nil
+gem "rails", "2.3.11", :require => nil
 
 gem "mysql",            "2.8.1"
 gem "system_timer",     "1.0"
@@ -15,6 +15,7 @@ gem "jrails",           "0.6.0"
 gem "haml",             "2.2.20"
 gem "RedCloth",         "4.2.3",  :require => "redcloth"
 gem "nokogiri",         "1.4.3.1"
+gem "redis",            "2.1.1"
 
 # facebooker2 dependencies
 gem "crack",      "0.1.8"
