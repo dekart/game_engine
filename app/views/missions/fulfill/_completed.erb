@@ -5,7 +5,7 @@
 <% end %>
 
 <% builder.message :complete do %>
-  <%= t(".message") %> <%= mission.complete_text %>
+  <%= t(".message") %> <%= mission.complete_text.html_safe %>
 <% end %>
 
 <% if mission.child_missions.any? %>
@@ -33,7 +33,7 @@
         <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
       <% end %>
 
-      <p><%= mission.complete_text %></p>
+      <p><%= mission.complete_text.html_safe %></p>
     </div>
 
     <p><%= t(".dialog.message") %></p>

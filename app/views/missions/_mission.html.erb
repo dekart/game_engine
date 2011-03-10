@@ -5,7 +5,7 @@
     <% end %>
 
     <div class="name"><%= mission.name %></div>
-    <div class="description"><%= mission.description %></div>
+    <div class="description"><%= mission.description.html_safe %></div>
 
     <% if mission.repeatable? || rank.nil? || !rank.completed? %>
       <div class="controls">
