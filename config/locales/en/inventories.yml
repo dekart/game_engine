@@ -17,24 +17,24 @@ en:
         publish: "Brag About It!"
         inventory: "Go To Inventory"
       messages:
-        success: "You successfully bought {{amount}} of {{item_name}}"
+        success: "You successfully bought %{amount} of %{item_name}"
       you_spent:
         title: "You spent:"
     destroy:
       messages:
-        success: "You've successfully sold {{amount}} of {{item_name}}!"
+        success: "You've successfully sold %{amount} of %{item_name}!"
       you_received:
         title: "You received:"
     index:
       title: "Inventory"
       free_slots:
         text:
-          one: "You have some unequipped inventory and {{count_label}} equipment slot available for use!"
-          other: "You have some unequipped inventory and {{count_label}} equipment slots available for use!"
+          one: "You have some unequipped inventory and %{count_label} equipment slot available for use!"
+          other: "You have some unequipped inventory and %{count_label} equipment slots available for use!"
         link: "Equip your character »"
     list:
-      owned: "Owned: {{amount}}"
-      used: "In use: {{amount}}"
+      owned: "Owned: %{amount}"
+      used: "In use: %{amount}"
       listed_on_market: "Listed on Market"
       buttons:
         to_left_hand: "To Left Hand"
@@ -43,17 +43,17 @@ en:
         to_body: "To Body"
         to_belt: "To Belt"
         to_legs: "To Legs"
-        sell: "Sell for {{price}}"
+        sell: "Sell for %{price}"
         sell_on_market: "Sell on Market"
         use: "Use"
       empty_set:
-        text: "Your inventory is empty. You can buy new items in the {{shop}}"
+        text: "Your inventory is empty. You can buy new items in the %{shop}"
         shop: "Shop"
     use:
       you_received: "You received:"
       you_spent: "You spent:"
       messages:
-        success: "You've successfully used {{item}}!"
+        success: "You've successfully used %{item}!"
     equipment:
       title: "Your Equipment"
       buttons:
@@ -61,8 +61,8 @@ en:
         unequip: "Unequip All"
     equippables:
       header: "Available Items"
-      item_header: "{{name}} x {{amount}}"
-      equip_to: "Put to {{placement}}"
+      item_header: "%{name} x %{amount}"
+      equip_to: "Put to %{placement}"
       buttons:
         equip: "Put"
       empty_set: "No items available"
@@ -77,9 +77,9 @@ en:
       remove: "Take Off"
       additional:
         free_slots:
-          one: "You have {{count_label}} additional slot left."
-          other: "You have {{count_label}} additional slots left."
-        relations: "Grow your {{relations}} to get more slots. Every {{amount}} Alliance Members bring an extra slot!"
+          one: "You have %{count_label} additional slot left."
+          other: "You have %{count_label} additional slots left."
+        relations: "Grow your %{relations} to get more slots. Every %{amount} Alliance Members bring an extra slot!"
     give:
       title: "Give Items to %{character}"
       you_have: "You have:"

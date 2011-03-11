@@ -16,6 +16,8 @@ class MarketItemsController < ApplicationController
     @item = @inventory.build_market_item(params[:market_item])
 
     if @item.save
+      EventLoggingService.log_market_event(@item, "created")
+
       render :create, :layout => "ajax"
     else
       render :new, :layout => "ajax"
@@ -27,6 +29,10 @@ class MarketItemsController < ApplicationController
 
     @item.buy!(current_character)
 
+    if @item.errors.empty?
+      EventLoggingService.log_market_event(@item, "bought")
+    end
+
     render :buy, :layout => "ajax"
   end
 
@@ -34,6 +40,8 @@ class MarketItemsController < ApplicationController
     @item = current_character.market_items.find(params[:id])
 
     @item.destroy
+
+    EventLoggingService.log_market_event(@item, "destroyed")
 
     render :destroy, :layout => "ajax"
   end

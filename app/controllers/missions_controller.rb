@@ -3,12 +3,20 @@ class MissionsController < ApplicationController
     @mission ||= Mission.find(params[:id])
 
     @result = current_character.missions.fulfill!(@mission)
-
-    @missions = fetch_missions if @result.level_rank.just_completed?
+    
+    if @result.success?
+      EventLoggingService.log_mission_event(@result, false)
+    end
+    
+    if @result.level_rank.just_completed?
+      EventLoggingService.log_mission_event(@result, true)
+      
+      @missions = fetch_missions
+    end
 
     render :fulfill, :layout => "ajax"
   end
-  
+ 
   def help
     request_data = encryptor.decrypt(params[:key])
     
