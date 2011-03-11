@@ -72,6 +72,7 @@ class Character::Equipment
         @character.placements[placement] << inventory.id
 
         inventory.equipped = equipped_amount(inventory)
+        nil
       elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
         previous = @character.inventories.find(@character.placements[placement].last)
 

@@ -23,14 +23,25 @@ class MonstersController < ApplicationController
 
     @monster = current_character.monsters.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create!(:character => current_character)
+  
+    log_engage_event(@monster)
 
     redirect_to @monster
   end
 
   def update
-    @fight = Monster.find(params[:id]).monster_fights.find_or_initialize_by_character_id(current_character.id)
+    @monster = Monster.find(params[:id])
+    @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
     @attack_result = @fight.attack!
+
+    if @attack_result
+      if @fight.monster.progress?
+        EventLoggingService.log_attack_event(@fight, "attacked")
+      elsif @fight.monster.won?
+        EventLoggingService.log_attack_event(@fight, "killed")
+      end
+    end
 
     render :layout => 'ajax'
   end
@@ -39,6 +50,10 @@ class MonstersController < ApplicationController
     @fight = current_character.monster_fights.find_by_monster_id(params[:id])
 
     @reward_collected = @fight.collect_reward!
+
+    if @reward_collected
+      EventLoggingService.log_reward_event(@fight)
+    end
 
     render :layout => 'ajax'
   end

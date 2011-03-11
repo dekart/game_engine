@@ -340,6 +340,8 @@ class Character < ActiveRecord::Base
       self.sp = stamina_points
 
       notifications.schedule(:level_up)
+
+      EventLoggingService.log_levelup_event(self)
     end
   end
 

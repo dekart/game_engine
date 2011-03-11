@@ -15,6 +15,8 @@ class InventoriesController < ApplicationController
 
     @amount = params[:amount].to_i * @item.package_size
 
+    EventLoggingService.log_trade_event(current_character, @item, @amount, "bought")
+
     render :action => :create, :layout => "ajax"
   end
 
@@ -24,6 +26,8 @@ class InventoriesController < ApplicationController
     @item = Item.find(params[:id])
 
     @inventory = current_character.inventories.sell!(@item, @amount)
+
+    EventLoggingService.log_trade_event(current_character, @item, @amount, "sold")
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -47,8 +51,13 @@ class InventoriesController < ApplicationController
   def equip
     if params[:id]
       @inventory = current_character.inventories.find(params[:id])
+      equipped = @inventory.equipped
 
       current_character.equipment.equip!(@inventory, params[:placement])
+
+      if @inventory.equipped == equipped + 1
+        EventLoggingService.log_equip_event(@inventory, params[:placement], "equipped")
+      end
     else
       current_character.equipment.equip_best!
     end
@@ -59,8 +68,11 @@ class InventoriesController < ApplicationController
   def unequip
     if params[:id]
       @inventory = current_character.inventories.find(params[:id])
+      equipped = @inventory.equipped
 
       current_character.equipment.unequip!(@inventory, params[:placement])
+
+      EventLoggingService.log_equip_event(@inventory, params[:placement], "unequipped")
     else
       current_character.equipment.unequip_all!
     end
