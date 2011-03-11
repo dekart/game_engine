@@ -94,9 +94,9 @@ class Character::Equipment
     placement = placement.to_sym
 
     if @character.placements[placement] and index = @character.placements[placement].index(inventory.id)
-      inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
-
       @character.placements[placement].delete_at(index)
+
+      inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
     end
   end
 

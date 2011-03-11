@@ -12,7 +12,7 @@
 <% end %>
 
 <% builder.success do %>
-  <%= t(".message") %> <%= mission.success_text %>
+  <%= t(".message") %> <%= mission.success_text.to_s.html_safe %>
 <% end %>
 
 <%= builder.render "missions/fulfill/payouts", :mission => mission, :result => result %>

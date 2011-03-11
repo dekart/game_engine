@@ -1,6 +1,6 @@
 <% result_for(:invitation) do |builder| %>
   <% builder.success do %>
-    <%= t("invitations.accept.message") %>
+    <%= t("invitations.accept.message").html_safe %>
   <% end %>
 
   <% builder.on_ready do %>

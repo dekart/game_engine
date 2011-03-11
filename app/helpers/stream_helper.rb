@@ -196,7 +196,7 @@ module StreamHelper
     {
       :attachment => {
         :name => name,
-        :description => description,
+        :description => description.to_s.html_safe,
         :href => stream_url(story, :"stream_#{ story_alias }_name", story_data),
         :media => stream_image(image || :"stream_#{ story_alias }", stream_url(story, :"stream_#{ story_alias }_image", story_data))
       },

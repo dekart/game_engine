@@ -21,7 +21,7 @@
 
         <div class="picture"><%= property_image(type, :medium) %></div>
 
-        <div class="description"><%= type.description %></div>
+        <div class="description"><%= type.description.to_s.html_safe %></div>
 
         <div class="controls">
           <% if property %>
