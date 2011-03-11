@@ -22,16 +22,10 @@
     })
   }
   
-  $.fn.giftForm = function(options){
-    var $gifts = $(this).find('.gifts .gift');
-
-    $gifts.css({
-      height: $gifts.map(function(e){
-          return $(this).outerHeight()
-        }).toArray().sort().reverse()[0]
-    });
-
-    $gifts.live('click', function(){
+  $.fn.giftButton = function(options){
+    $(this).live('click', function(e){
+      e.preventDefault();
+      
       var $this = $(this);
 
       if_fb_initialized(function(){
@@ -53,7 +47,19 @@
 
         $(document).trigger('facebook.dialog');
       })
-    })    
+    })
+  }
+  
+  $.fn.giftForm = function(options){
+    var $gifts = $(this).find('.gifts .gift');
+
+    $gifts.css({
+      height: $gifts.map(function(e){
+          return $(this).outerHeight()
+        }).toArray().sort().reverse()[0]
+    });
+
+    $gifts.giftButton(options) 
   }
 })(jQuery);
 
