@@ -1,35 +1,36 @@
 #gift_form
   .gift
     padding: 5px
-    text-align: center
     float: left
     margin: 0 10px 10px 0
-    overflow: hidden
     width = !gifts_item_width
     border = !gifts_item_border
 
     .image
-      height: 130px
+      float: left
+      width = !gifts_item_image_size
+      height = !gifts_item_image_size
       
     .name
       font-weight: bold
+      font-size: 16px
+      margin-bottom: 10px
 
     .payouts
-      margin-top: 5px
+      margin = 0 0 10px !gifts_item_image_size
 
       .payout
-        display: inline
-
-    &.selected
-      margin: 0 auto 15px
-      float: none
-
-  .gifts
-    .gift
-      cursor: pointer
-
-  h3
-    text-align: center
+        clear: none
+        
+    .controls
+      clear: both
+    
+      .button
+        float: none
+        
+      .send
+        margin-left: 0
+        +button(!gifts_item_send_icon, 80px)
 
   .friend_groups
     font-size: 14px

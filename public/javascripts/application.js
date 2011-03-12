@@ -59,7 +59,7 @@
         }).toArray().sort().reverse()[0]
     });
 
-    $gifts.giftButton(options) 
+    $gifts.find('.send').giftButton(options) 
   }
 })(jQuery);
 
