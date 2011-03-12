@@ -31,9 +31,7 @@
                 :title    => t('.invitation.title'),
                 :message  => t('.invitation.message', :name => monster.name, :app => t('app_name')),
                 :data     => {
-                  :type => :monster,
-                  :reference => :monster_invite,
-                  :return_to => monster_url(monster.id, :key => encryptor.encrypt(monster.id), :canvas => true)
+                  :monster_id => monster.id
                 },
                 :params => {
                   :monster_id => monster.id

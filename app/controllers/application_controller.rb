@@ -6,11 +6,10 @@ class ApplicationController < ActionController::Base
   include FacebookIntegration
   include LandingPage
   include ReferenceCode
+  include AppRequests
 
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
   facebook_integration_filters
-  before_filter :redirect_by_request
-  after_filter :accept_used_app_requests
   
   landing_redirect
 
@@ -66,9 +65,9 @@ class ApplicationController < ActionController::Base
       if reference_data
         user.reference    = reference_data[0]
         user.referrer_id  = reference_data[1]
-      elsif requests = app_requests and !requests.empty?
-        user.reference  = requests.last.reference || 'request'
-        user.referrer   = requests.last.try(:sender)
+      elsif app_request = app_requests.last
+        user.reference  = app_request.type_name
+        user.referrer   = app_request.sender.try(:user)
       elsif params[:reference]
         user.reference = params[:reference]
       end
@@ -113,21 +112,5 @@ class ApplicationController < ActionController::Base
     end
     
     redirect_from_iframe(uri)
-  end
-  
-  def redirect_by_request
-    if app_requests.last and url = app_requests.last.return_to
-      session[:return_to] = nil
-      
-      redirect_back(url)
-    end
-  end
-    
-  def accept_used_app_requests
-    app_requests.map{|r| r.accept }
-  end
-
-  def app_requests
-    params[:request_ids].present? ? AppRequest.find_all_by_facebook_id(params[:request_ids].split(',')) : []
   end
 end

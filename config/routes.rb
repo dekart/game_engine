@@ -235,7 +235,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :rating, :member => {:global => :any}
 
-  map.resources :gifts
+  map.resources :gifts, :only => :new
 
   map.resources :hit_listings, :only => [:index, :update]
 
@@ -255,7 +255,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :stories, :only => :show
   
-  map.resources :app_requests, :only => :create
+  map.resources :app_requests
 
   # Add your custom routes below this mark
   

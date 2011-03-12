@@ -1,0 +1,11 @@
+<% response = capture do %>
+  <% if @app_request.accepted? %>
+    <%= render "app_requests/update/#{@app_request.type_name}", :app_request => @app_request %>
+  <% else %>
+    <p><%= @app_request.errors.on(:base) %></p>
+  <% end %>
+<% end %>
+
+<% dom_ready do %>
+  $('#<%= dom_id(@app_request) %> .details').html('<%= escape_javascript(response) %>')
+<% end %>

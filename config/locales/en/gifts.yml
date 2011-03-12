@@ -7,15 +7,3 @@ en:
         message: "Please accept this %{app} gift: %{item}!"
       buttons:
         send: "Send"
-    index:
-      title: 'Accept Gifts'
-      note: "Here you can accept gifts from your friends. You can accept one gift per each friend every %{hours} hours."
-      empty_set: "Your friends didn't send you any gifts yet."
-      sends: "sends you"
-      buttons:
-        accept: 'Accept'
-        accept_all: "Accept All"
-    update:
-      accepted: 'Accepted!'
-      buttons:
-        send: "Send Back"

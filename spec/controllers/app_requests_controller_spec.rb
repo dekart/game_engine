@@ -12,15 +12,15 @@ describe AppRequestsController do
   
   describe 'when creating requests' do
     before do
-      AppRequest.stub!(:create).and_return(true)
+      AppRequest::Base.stub!(:create).and_return(true)
     end
     
     def do_request
-      post :create, :ids => [123]
+      post :create, :ids => ['123']
     end
     
     it 'should create new application request for each passed request ID' do
-      AppRequest.should_receive(:create).with(:facebook_id => 123)
+      AppRequest::Base.should_receive(:create).with(:facebook_id => '123')
       
       do_request
     end

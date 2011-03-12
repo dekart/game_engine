@@ -1,9 +1,10 @@
 require 'spec_helper'
+require 'models/app_requests/common'
 
-describe AppRequest do
+describe AppRequest::Base do
   describe 'associations' do
     before do
-      @request = AppRequest.new
+      @request = AppRequest::Base.new
     end
     
     it 'should belong to sender' do
@@ -11,9 +12,24 @@ describe AppRequest do
     end
   end
   
+  describe '.for_character' do
+    before do
+      @receiver = Factory(:user_with_character).character
+      
+      @request1 = Factory(:app_request_base, :receiver_id => 123456789)
+      @request2 = Factory(:app_request_base, :receiver_id => 123456789)
+      @request3 = Factory(:app_request_base, :receiver_id => 111222333)
+    end
+    
+    it 'should return gifts sent to passed character' do
+      AppRequest::Base.for_character(@receiver).should include(@request1, @request2)
+      AppRequest::Base.for_character(@receiver).should_not include(@request3)
+    end
+  end
+
   describe 'when creating' do
     before do
-      @request = AppRequest.new(:facebook_id => 123)
+      @request = AppRequest::Base.new(:facebook_id => 123)
     end
     
     it 'should validate presence of facebook ID' do
@@ -37,7 +53,7 @@ describe AppRequest do
     before do
       @sender = Factory(:user_with_character, :facebook_id => 123)
       
-      @request = Factory(:app_request)
+      @request = Factory(:app_request_base)
       
       @client = mock('mogli client')
       
@@ -61,7 +77,7 @@ describe AppRequest do
     it 'should assign sender' do
       lambda{
         @request.update_data!
-      }.should change(@request, :sender).from(nil).to(@sender)
+      }.should change(@request, :sender).from(nil).to(@sender.character)
     end
     
     it 'should assign receiver ID' do
@@ -87,59 +103,38 @@ describe AppRequest do
         @request.update_data!
       }.should change(@request, :processed?).from(false).to(true)
     end
-    
-    describe 'when request is an invitation request' do
-      before do
-        @remote_request.stub!(:data).and_return('{"type":"invitation"}')
-      end
-      
-      it 'should create an invitation from sender to receiver' do
-        lambda{
-          @request.update_data!
-        }.should change(Invitation, :count).by(1)
-        
-        Invitation.last.sender.should == @sender
-        Invitation.last.receiver_id.should == 456
-      end
-    end
-    
-    describe 'when request is a gift' do
-      before do
-        @item = Factory(:item)
-        @remote_request.stub!(:data).and_return('{"type":"gift","item_id":"%d"}' % @item.id)
-      end
-      
-      it 'should create a gift from sender to receiver' do
-        lambda{
-          @request.update_data!
-        }.should change(Gift, :count).by(1)
-        
-        Gift.last.sender.should == @sender.character
-        Gift.last.receiver_id.should == 456
-        Gift.last.item.should == @item
-      end
-    end
   end
   
-  describe '#reference' do
+  
+  describe '#receiver' do
     before do
-      @request = Factory(:app_request, :data => {"reference" => 'some_reference'})
+      @receiver = Factory(:user_with_character).character
+      @request = Factory(:app_request_base, :receiver_id => 123456789)
     end
     
-    it 'should return reference value from data' do
-      @request.reference.should == 'some_reference'
+    it 'should return character for user with facebook UID equal to stored receiver ID' do
+      @request.receiver.should == @receiver
     end
     
-    it 'should return empty string when data is not set' do
-      @request.data = nil
+    it 'should return nil if there is no character for such UID' do
+      @request = Factory(:app_request_base, :receiver_id => 111222333)
       
-      @request.reference.should == ''
+      @request.receiver.should be_nil
+    end
+    
+    it 'should memoize receiver' do
+      @request.receiver
+      
+      User.should_not_receive(:find_by_facebook_id)
+      
+      @request.receiver
     end
   end
-  
+
+
   describe '#delete_from_facebook!' do
     before do
-      @request = Factory(:app_request)
+      @request = Factory(:app_request_base)
       
       @client = mock('mogli client')
       
@@ -159,31 +154,9 @@ describe AppRequest do
     end
   end
   
-  describe '#return_to' do
-    before do
-      @request = Factory(:app_request, :data => {'return_to' => '/some/url'})
-    end
-    
-    it 'should return stored value from data' do
-      @request.return_to.should == '/some/url'
-    end
-      
-    it 'should return nil if data is not set' do
-      @request.data = nil
-      
-      @request.return_to.should be_nil
-    end
-    
-    it 'should return nil if data is set, but return url is not set' do
-      @request.data = {:something => 'else'}
-      
-      @request.return_to.should be_nil
-    end
-  end
-  
   describe '#process' do
     before do
-      @request = Factory(:app_request)
+      @request = Factory(:app_request_base)
     end
     
     it 'should store processing time' do
@@ -194,29 +167,26 @@ describe AppRequest do
       end
     end
   end
-  
-  %w{accept accept_indirectly}.each do |method_name|
-    describe "##{method_name}" do
-      before do
-        @request = Factory(:app_request)
-      end
+
+  describe '#visit' do
+    before do
+      @request = Factory(:app_request_base)
+    end
     
-      it 'should store acceptance time' do
-        Timecop.freeze(Time.now) do
-          lambda{
-            @request.send(method_name)
-          }.should change(@request, :accepted_at).from(nil).to(Time.now)
-        end
-      end
-    
-      it 'should schedule request deletion' do
+    it 'should store visit time' do
+      Timecop.freeze(Time.now) do
         lambda{
-          @request.send(method_name)
-        }.should change(Delayed::Job, :count).by(1)
-      
-        Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
-        Delayed::Job.last.payload_object.request_ids.should == [@request.id]
+          @request.visit
+        }.should change(@request, :visited_at).from(nil).to(Time.now)
       end
     end
+  end
+  
+  describe "#accept" do
+    before do
+      @request = Factory(:app_request_base)
+    end
+  
+    it_should_behave_like 'application request accept'
   end
 end

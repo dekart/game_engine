@@ -8,11 +8,11 @@ describe Jobs::RequestDelete do
       @request1 = mock_model(AppRequest, :delete_from_facebook! => true)
       @request2 = mock_model(AppRequest, :delete_from_facebook! => true)
       
-      AppRequest.stub!(:find_all_by_id).and_return([@request1, @request2])
+      AppRequest::Base.stub!(:find_all_by_id).and_return([@request1, @request2])
     end
     
     it 'should find all requests by passed ID' do
-      AppRequest.should_receive(:find_all_by_id).and_return([@request1, @request2])
+      AppRequest::Base.should_receive(:find_all_by_id).and_return([@request1, @request2])
       
       @job.perform
     end

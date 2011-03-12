@@ -5,6 +5,7 @@ class Character < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   
   include Character::Levels
+  include Character::AppRequests
   include Character::Relations
   include Character::Inventories
   include Character::Properties
@@ -62,10 +63,6 @@ class Character < ActiveRecord::Base
 
   has_many :market_items
   
-  has_many :gifts, 
-    :foreign_key  => :sender_id, 
-    :dependent    => :destroy
-
   has_many :wall_posts,
     :dependent => :destroy
 
@@ -102,6 +99,7 @@ class Character < ActiveRecord::Base
   validates_presence_of :character_type, :on => :create
 
   delegate(*(CharacterType::BONUSES + [:to => :character_type]))
+  delegate(:facebook_id, :to => :user)
 
   class << self
     def rating_position(character, field)
