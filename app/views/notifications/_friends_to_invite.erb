@@ -18,13 +18,9 @@
     <%= link_to(button(:invite_other), invite_users_path, :class => 'invite_other button')%>
 
     <%= link_to_function(button(:invite), 
-          fb_request_dialog(:invite_dialog,
+          fb_request_dialog(:invitation,
             :title    => t('.title'),
             :message  => t('users.invite.invitation_message', :app_name => t('app_name')),
-            :data     => {
-              :type => :invitation,
-              :reference => :invite_dialog
-            },
             :filters => [
               {
                 :name     => t('.suggested_users'),

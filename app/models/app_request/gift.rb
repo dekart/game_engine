@@ -10,7 +10,7 @@ class AppRequest::Gift < AppRequest::Base
   class << self
     def accepted_recently?(sender, receiver)
       with_state(:accepted).
-      scoped(:conditions => {:sender_id => sender.id, :receiver_id => receiver.facebook_id}).
+      between(sender, receiver).
       scoped(:conditions => ["accepted_at >= ?", Setting.i(:gifting_repeat_accept_delay).hours.ago]).
       count > 0
     end

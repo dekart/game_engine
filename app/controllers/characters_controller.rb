@@ -15,8 +15,6 @@ class CharactersController < ApplicationController
       :limit => Setting.i(:fight_latest_show_limit)
     )
 
-    @alliance_invitations = Invitation.for_user(current_user).find(:all)
-
     @special_items = Item.special_for(current_character).all(
       :limit => 2,
       :order => 'RAND()'
