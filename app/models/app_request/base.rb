@@ -8,11 +8,17 @@ class AppRequest::Base < ActiveRecord::Base
       :conditions => {:receiver_id => character.user.facebook_id}
     }
   }
+  named_scope :between, Proc.new{|sender, receiver|
+    {
+      :conditions => {:sender_id => sender.id, :receiver_id => receiver.facebook_id}
+    }
+  }
 
   state_machine :initial => :pending do
     state :processed
     state :visited
     state :accepted
+    state :ignored
 
     event :process do
       transition :pending => :processed
@@ -24,6 +30,10 @@ class AppRequest::Base < ActiveRecord::Base
     
     event :accept do
       transition [:pending, :processed] => :accepted
+    end
+    
+    event :ignore do
+      transition [:pending, :processed] => :ignored
     end
     
     after_transition :on => :process do |request|
@@ -62,7 +72,7 @@ class AppRequest::Base < ActiveRecord::Base
     
     self.sender = User.find_by_facebook_id(request.from.id).character
     self.receiver_id = request.to.id
-    self.data = JSON.parse(request.data)
+    self.data = JSON.parse(request.data) if request.data
     
     save!
     

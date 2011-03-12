@@ -29,6 +29,13 @@ class Character
     end
     
     module FriendRelationsAssociationExtension
+      def establish!(target)
+        transaction do
+          create(:character => target)
+          target.friend_relations.create(:character => proxy_owner)
+        end
+      end
+      
       def character_ids
         all(:select => "character_id").collect{|r| r[:character_id] }
       end

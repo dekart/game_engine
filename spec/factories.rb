@@ -262,6 +262,25 @@ Factory.define :app_request_gift, :class => 'AppRequest::Gift' do |t|
   }
 end
 
+Factory.define :app_request_monster_invite, :class => 'AppRequest::MonsterInvite' do |t|
+  t.facebook_id 123456789
+  t.receiver_id 123456789
+  t.sender {|g| 
+    g.association(:user_with_character, :facebook_id => 111222333).character
+  }
+  t.data { 
+    {'monster_id' => Factory(:monster).id} 
+  }
+end
+
+Factory.define :app_request_invitation, :class => 'AppRequest::Invitation' do |t|
+  t.facebook_id 123456789
+  t.receiver_id 123456789
+  t.sender {|g| 
+    g.association(:user_with_character, :facebook_id => 111222333).character
+  }
+end
+
 Factory.define :global_payout do |t|
   t.name 'Fake Payout'
   t.alias 'fake_payout'

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'models/app_requests/common'
+require 'models/app_request/common'
 
 describe AppRequest::Base do
   describe 'associations' do
@@ -90,6 +90,14 @@ describe AppRequest::Base do
       lambda{
         @request.update_data!
       }.should change(@request, :data).from(nil).to('abc' => 'dfg')
+    end
+    
+    it 'should not try to parse empty request data' do
+      @remote_request.should_receive(:data).and_return(nil)
+      
+      lambda{
+        @request.update_data!
+      }.should_not change(@request, :data)
     end
     
     it 'should save request' do

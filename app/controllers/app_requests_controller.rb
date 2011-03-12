@@ -17,6 +17,8 @@ class AppRequestsController < ApplicationController
       klass = AppRequest::MonsterInvite
 
       @item = Monster.find(params[:monster_id])
+    when 'invitation'
+      klass = AppRequest::Invitation
     else
       klass = AppRequest::Base
     end

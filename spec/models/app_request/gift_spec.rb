@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'models/app_request/common'
 
 describe AppRequest::Gift do
   describe '.accepted_recently?' do
@@ -46,9 +47,10 @@ describe AppRequest::Gift do
   describe '#accept' do
     before do
       @receiver = Factory(:user_with_character)
-      @item     = Factory(:item)
       @request  = Factory(:app_request_gift)
     end
+    
+    it_should_behave_like 'application request accept'
     
     it 'should fail if receiver already accepted a gift from the same sender recently' do
       @other_request = @request.clone
