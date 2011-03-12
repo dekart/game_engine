@@ -1,0 +1,9 @@
+<div class="success"><%= t('.accepted') %></div>
+
+<div class="controls">
+  <%= link_to(button(:fight), monster_path(app_request.monster), :class => 'fight button') %>
+</div>
+
+<% dom_ready do %>
+  <%#= ga_track_event('Gifts', 'Accepted', app_request.item.name)%>
+<% end %>

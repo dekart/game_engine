@@ -9,6 +9,8 @@ class MonsterFight < ActiveRecord::Base
 
   attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
   
+  validates_uniqueness_of :character_id, :scope => :monster_id, :on => :create
+  
   after_create :create_character_news
 
   def attack!

@@ -22,7 +22,7 @@
   <% end %>
   
   <% unless current == :accept_requests %>
-    <%= link_to(button(:accept_requests), gifts_path,
+    <%= link_to(button(:accept_requests), app_requests_path,
           :class => "accept_requests button"
         ) %>
   <% end %>
