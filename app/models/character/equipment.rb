@@ -64,28 +64,24 @@ class Character::Equipment
   def equip(inventory, placement)
     placement = placement.to_sym
 
-    return unless inventory.placements.include?(placement)
+    return unless inventory.placements.include?(placement) && inventory.equippable?
 
-    if inventory.equippable?
-      if placement_free_slots(placement) > 0
-        @character.placements[placement] ||= []
-        @character.placements[placement] << inventory.id
+    if placement_free_slots(placement) > 0
+      @character.placements[placement] ||= []
+      @character.placements[placement] << inventory.id
 
-        inventory.equipped = equipped_amount(inventory)
-      elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
-        previous = @character.inventories.find(@character.placements[placement].last)
+      inventory.equipped = equipped_amount(inventory)
+      
+      nil
+    elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
+      previous = @character.inventories.find(@character.placements[placement].last)
 
-        unless previous == inventory # Do not re-equip the same inventory
-          unequip(previous, placement)
-          equip(inventory, placement)
+      unless previous == inventory # Do not re-equip the same inventory
+        unequip(previous, placement)
+        equip(inventory, placement)
 
-          previous
-        end
-      else
-        #TODO Message that there is no place
+        previous
       end
-    else
-      #TODO Message that all items are equipped
     end
   end
 
