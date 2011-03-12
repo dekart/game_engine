@@ -65,22 +65,11 @@ namespace :app do
     task :app_requests => :environment do
       time_limit = 15.days.ago
 
-      old_requests = AppRequest.scoped(:conditions => ["created_at < ?", time_limit])
+      old_requests = AppRequest::Base.scoped(:conditions => ["created_at < ?", time_limit])
 
       puts "Removing old application requests..."
 
       remove_data(old_requests)
-    end
-
-    desc "Remove old gifts"
-    task :gifts => :environment do
-      time_limit = 15.days.ago
-
-      old_gifts = Gift.scoped(:conditions => ["created_at < ?", time_limit])
-
-      puts "Removing old application requests..."
-
-      remove_data(old_gifts)
     end
   end
 end

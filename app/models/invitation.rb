@@ -51,6 +51,6 @@ class Invitation < ActiveRecord::Base
   end
   
   def accept_app_request
-    app_request.accept_indirectly if app_request
+    app_request.try(:accept)
   end
 end

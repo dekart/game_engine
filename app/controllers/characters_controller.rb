@@ -1,15 +1,15 @@
 class CharactersController < ApplicationController
   skip_before_filter :ensure_canvas_connected_to_facebook, :only => [:new, :index]
-  skip_before_filter :check_character_existance, :redirect_by_request,
+  skip_before_filter :check_character_existance,
     :only => [:new, :create]
 
   skip_landing_redirect :except => [:index, :upgrade]
 
   prepend_before_filter :check_character_existance_or_create, :only => :index
 
-  before_filter :fetch_character_types,
-    :only => [:new, :create, :edit, :update]
-
+  before_filter :fetch_character_types, :only   => [:new, :create, :edit, :update]
+  before_filter :redirect_by_app_request,   :except => [:new, :create]
+    
   def index
     @latest_fights = Fight.with_participant(current_character).find(:all,
       :limit => Setting.i(:fight_latest_show_limit)

@@ -34,10 +34,7 @@
           title: options.request_title,
           message: $this.attr('data-message'),
           data: {
-            type: 'gift',
             item_id: $this.attr('data-item-id'),
-            reference: 'gift',
-            return_to: options.request_url
           }
         }, function(response){
           if(typeof(response) != 'undefined' && response != null){

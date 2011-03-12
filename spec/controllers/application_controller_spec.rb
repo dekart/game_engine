@@ -33,36 +33,29 @@ describe ApplicationController do
         before do
           controller.params[:request_ids] = '456,123'
           
-          @sender = Factory(:user, :facebook_id => 111222333)
+          @sender = Factory(:user_with_character, :facebook_id => 111222333)
           
-          @request = Factory(:app_request, 
+          @request = Factory(:app_request_base, 
             :facebook_id => 123, 
-            :sender => @sender,
-            :data => {'reference' => 'some_reference'}
+            :sender => @sender.character
           )
         end
         
-        it 'should assign user reference from request data' do
-          controller.send(:current_user).reference.should == 'some_reference'
+        it 'should assign user reference from request type' do
+          controller.send(:current_user).reference.should == 'base'
         end
         
         it 'should assign user referrer from request sender' do
           controller.send(:current_user).referrer.should == @sender
         end
         
-        it 'should not assign reference or referrer is request ID is wrong' do
+        it 'should not assign reference and referrer if request ID is wrong' do
           controller.params[:request_ids] = '987'
           
           user = controller.send(:current_user)
           
           user.reference.should be_empty
           user.referrer.should be_nil
-        end
-        
-        it 'should not assign reference request data is empty' do
-          @request.update_attribute(:data, nil)
-          
-          controller.send(:current_user).reference.should be_empty
         end
         
         it 'should not assign refererr request sender is not set' do
@@ -102,10 +95,10 @@ describe ApplicationController do
   describe 'when performing any action' do
     describe 'when request IDs are passed' do
       before do        
-        @request1 = Factory(:app_request, :facebook_id => 123)
-        @request2 = Factory(:app_request, :facebook_id => 456)
+        @request1 = Factory(:app_request_base, :facebook_id => 123)
+        @request2 = Factory(:app_request_base, :facebook_id => 456)
         
-        AppRequest.stub!(:find_all_by_facebook_id).and_return([@request1, @request2])
+        AppRequest::Base.stub!(:find_all_by_facebook_id).and_return([@request1, @request2])
 
         controller.stub!(:current_facebook_user).and_return(fake_fb_user)
         controller.stub!(:current_character).and_return(mock('character'))
@@ -116,24 +109,24 @@ describe ApplicationController do
       end
       
       it 'should fetch requests by passed IDs' do
-        AppRequest.should_receive(:find_all_by_facebook_id).with(['123', '456']).and_return([@request1, @request2])
+        AppRequest::Base.should_receive(:find_all_by_facebook_id).with(['123', '456']).and_return([@request1, @request2])
         
         do_request
       end
       
-      it 'should mark requests as accepted' do
-        @request1.should_receive(:accept)
-        @request2.should_receive(:accept)
+      it 'should mark requests as visited' do
+        @request1.should_receive(:visit)
+        @request2.should_receive(:visit)
 
         do_request
       end
       
-      it 'should not accept requests if user is not authenticated' do
+      it 'should not visit requests if user is not authenticated' do
         controller.stub!(:current_facebook_user).and_return(nil)
         controller.stub!(:current_character).and_return(nil)
 
-        @request1.should_not_receive(:accept)
-        @request2.should_not_receive(:accept)
+        @request1.should_not_receive(:visit)
+        @request2.should_not_receive(:visit)
 
         do_request
       end

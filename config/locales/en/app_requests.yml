@@ -1,5 +1,19 @@
 en:
   app_requests:
+    index:
+      title: 'Friend Requests'
+      note: "Here you can accept requests from your friends. You can accept one gift per each friend every %{hours} hours."
+      empty_set: "Your friends didn't send you any requests yet."
+      buttons:
+        accept: 'Accept'
+    details:
+      gift:
+        sends: "sends you"
+    update:
+      gift:
+        accepted: 'Gift accepted!'
+        buttons:
+          send: "Send Back"
     create:
       gift:
         title: "Send Gifts to Your Alliance"

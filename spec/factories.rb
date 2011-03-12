@@ -196,14 +196,6 @@ Factory.define :mission_with_level, :parent => :mission do |t|
   end
 end
 
-Factory.define :gift do |t|
-  t.association :sender, :factory => :character
-  t.association :item
-  t.association :app_request
-  
-  t.receiver_id 987654321
-end
-
 Factory.define :item_set do |t|
   t.name 'Fake Item Set'
   t.item_ids do
@@ -255,8 +247,19 @@ Factory.define :mission_help_result do |t|
   t.association :requester, :factory => :character
 end
 
-Factory.define :app_request do |t|
+Factory.define :app_request_base, :class => 'AppRequest::Base' do |t|
   t.facebook_id 123456789
+end
+
+Factory.define :app_request_gift, :class => 'AppRequest::Gift' do |t|
+  t.facebook_id 123456789
+  t.receiver_id 123456789
+  t.sender {|g| 
+    g.association(:user_with_character, :facebook_id => 111222333).character
+  }
+  t.data { 
+    {'item_id' => Factory(:item).id} 
+  }
 end
 
 Factory.define :global_payout do |t|
