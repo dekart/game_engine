@@ -1,23 +1,4 @@
 class InvitationsController < ApplicationController
-  skip_landing_redirect :only => :show
-
-  def accept
-    @invitation = Invitation.find(params[:id])
-
-    @invitation.accept!
-
-    # TODO Unify invitation acceptance and ingnorance methods to use AJAX responses with analytics tracking
-    render :text => t("invitations.accept.message"), :layout => false
-  end
-
-  def ignore
-    @invitation = Invitation.find(params[:id])
-
-    @invitation.ignore!
-
-    render :text => t("invitations.ignore.message"), :layout => false
-  end
-
   def show
     @character = Character.find_by_invitation_key(params[:id])
 
