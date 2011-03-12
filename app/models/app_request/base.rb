@@ -81,7 +81,7 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def acceptable?
-    raise 'Not Implemented'
+    true
   end
 
   protected

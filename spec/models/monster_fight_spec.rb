@@ -44,6 +44,14 @@ describe MonsterFight do
       
       @character.news.first.monster_fight.should == @monster_fight
     end
+    
+    it 'should fail when character already fights with this monster' do
+      MonsterFight.create(:monster => @monster, :character => @character)
+      
+      @monster_fight.save.should be_false
+      @monster_fight.should_not be_valid
+      @monster_fight.errors.on(:character_id).should_not be_empty
+    end
   end
 
   describe '#attack' do

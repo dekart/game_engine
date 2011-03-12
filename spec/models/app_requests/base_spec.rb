@@ -130,6 +130,13 @@ describe AppRequest::Base do
       @request.receiver
     end
   end
+  
+  
+  describe '#acceptable?' do
+    it 'should always return true' do
+      Factory(:app_request_base).acceptable?.should be_true
+    end
+  end
 
 
   describe '#delete_from_facebook!' do

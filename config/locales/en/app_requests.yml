@@ -9,11 +9,17 @@ en:
     details:
       gift:
         sends: "sends you"
+      monster_invite:
+        invites: "invites you to join fight against"
     update:
       gift:
         accepted: 'Gift accepted!'
         buttons:
           send: "Send Back"
+      monster_invite:
+        accepted: 'Invitation accepted!'
+        buttons:
+          fight: "Fight Now"
     create:
       gift:
         title: "Send Gifts to Your Alliance"
