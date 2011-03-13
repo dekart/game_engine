@@ -1,6 +1,133 @@
 require 'spec_helper'
 
 describe Character::Equipment do
+  describe '#effect' do
+    before do
+      @character  = Factory(:character)
+      @item       = Factory(:item, :attack => 1, :defence => 2)
+      @inventory  = Factory(:inventory, :item => @item, :character => @character)
+      
+      @character.equipment.auto_equip!(@inventory)
+      
+      @cache = mock('cache', :read => {:attack => 123}, :write => true)
+      @character.equipment.instance_variable_set(:@cache, @cache)
+
+        
+      @character.equipment.stub!(:inventories).and_return([@inventory])
+    end
+    
+    it 'should try to read cached values from Rails cache' do
+      @cache.should_receive(:read).and_return({})
+      
+      @character.equipment.effect(:attack)
+    end
+    
+    describe 'when cache is empty' do
+      before do
+        @cache.stub!(:read).and_return(nil)
+      end
+      
+      it 'should collect all effects from equipped inventories' do
+        %w{attack defence health energy stamina}.each do |attribute|
+          @inventory.should_receive(attribute).and_return(1)
+        end
+        
+        @character.equipment.effect(:attack)
+      end
+      
+      it 'should store collected values to cache for 15 minutes' do
+        @cache.should_receive(:write).with(
+          "character_#{ @character.id }_equipment_effects", 
+          {:attack => 0, :defence => 1, :health => 2, :energy => 3, :stamina => 4}, 
+          {:expire_in => 15.minutes}
+        )
+
+        %w{attack defence health energy stamina}.each_with_index do |attribute, index|
+          @inventory.stub!(attribute).and_return(index)
+        end
+        
+        @character.equipment.effect(:attack)
+      end
+
+      it 'should not re-collect effects' do
+        @inventory.should_receive(:attack).once
+        
+        @character.equipment.effect(:attack)
+        @character.equipment.effect(:attack)
+      end
+    end
+    
+    it 'should return value of the requested effect' do
+      @character.equipment.effect(:attack).should == 123
+    end
+  end
+  
+  
+  describe '#inventories' do
+    before do
+      @character = Factory(:character)
+      @inventory1 = Factory(:inventory, :character => @character)
+      @inventory2 = Factory(:inventory, :character => @character)
+
+      
+      @character.placements = {
+        :additional => [@inventory1.id, @inventory2.id], 
+        :left_hand  => [@inventory1.id],
+        :right_hand => [@inventory2.id]
+      }
+    end
+    
+    it 'should find inventories by IDs stored in placements' do
+      Inventory.should_receive(:find_all_by_id).with([@inventory1.id, @inventory2.id], {:include => :item}).and_return([@inventory1, @inventory2])
+      
+      @character.equipment.inventories
+    end
+    
+    it 'should collect an array of inventories respective to number of their IDs' do
+      @character.equipment.inventories.count(@inventory1).should == 2
+      @character.equipment.inventories.count(@inventory2).should == 2
+    end
+    
+    it 'should return empty array if character doesn\'t have equipped inventories' do
+      @character.placements = {}
+      
+      @character.equipment.inventories.should == []
+    end
+
+    it 'should not re-collect inventories' do
+      Inventory.should_receive(:find_all_by_id).once.and_return([@inventory1])
+      
+      @character.equipment.inventories
+      @character.equipment.inventories
+    end
+  end
+  
+  
+  describe '#inventories_by_placement' do
+    before do
+      @character = Factory(:character)
+      @inventory1 = Factory(:inventory, :character => @character)
+      @inventory2 = Factory(:inventory, :character => @character)
+
+      
+      @character.placements = {
+        :additional => [@inventory1.id, @inventory2.id], 
+        :left_hand  => [@inventory1.id],
+        :right_hand => [@inventory2.id]
+      }
+    end
+
+    it 'should return array of inventories by their IDs stored in defined placement' do
+      @character.equipment.inventories_by_placement(:additional).should == [@inventory1, @inventory2]
+      @character.equipment.inventories_by_placement(:left_hand).should == [@inventory1]
+    end
+    
+    it 'should return empty array if there are no equipped items in the placement' do
+      @character.equipment.inventories_by_placement(:empty_placement).should == []
+    end
+  end
+  
+  
   describe '#unequip' do
     before do
       @character = Factory(:character)
@@ -27,6 +154,7 @@ describe Character::Equipment do
       }.should change(@character.equipment, :inventories)
     end
   end
+  
   
   describe '#unequip!' do
     before do
