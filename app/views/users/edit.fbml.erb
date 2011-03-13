@@ -1,7 +1,5 @@
 <%= title(t(".title")) %>
 
 <% form_for(@user) do |form| %>
-  <%= form.check_box(:show_next_steps) %>
-
   <%= submit_tag t(".save") %>
 <% end %>

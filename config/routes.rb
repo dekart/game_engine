@@ -208,11 +208,6 @@ ActionController::Routing::Routes.draw do |map|
     }
   map.resources :fights,
     :member     => {:respond => :post, :used_items => :post}
-  map.resources :invitations, 
-    :member => {
-      :accept => :any, 
-      :ignore => :any
-    }
   map.resources :relations
   map.resources :bank_operations,
     :only => :new,

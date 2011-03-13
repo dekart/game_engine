@@ -113,8 +113,6 @@ Setting[:hit_list_reward_fee] ||= 20
 Setting[:hit_list_display_limit] ||= 20
 Setting[:hit_list_repeat_listing_delay] ||= 12
 
-Setting[:landing_pages_visit_delay] ||= 24
-
 Setting[:hospital_enabled] ||= true
 Setting[:hospital_price] ||= 10
 Setting[:hospital_price_per_point_per_level] ||= 2.5

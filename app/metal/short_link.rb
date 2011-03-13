@@ -4,7 +4,7 @@ class ShortLink
   def self.call(env)
     if match_data = env["PATH_INFO"].match(/^\/cil\/(\d+-[a-z0-9]+)/) and key = match_data[1]
       if user_id = user_id(key)
-        target_url = "%s/invitations/%s?reference_code=%s" % [
+        target_url = "%s/relations/%s?reference_code=%s" % [
           Facebooker2.canvas_page_url,
           key,
           CGI.escape(reference_code(:invite_link, user_id))

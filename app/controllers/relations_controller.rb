@@ -1,12 +1,39 @@
 class RelationsController < ApplicationController
+  def new
+  end
+  
+  def create
+    @character = Character.find(params[:character_id])
+    
+    current_character.friend_relations.establish!(@character)
+    
+    render :layout => 'ajax'
+  end
+  
   def index
     if current_character.relations.size == 0 and params[:noredirect].nil?
-      redirect_from_iframe invite_users_url(:canvas => true)
+      redirect_from_iframe new_relation_url(:canvas => true)
     else
       @relations = fetch_relations
     end
   end
+  
+  def show
+    @character = Character.find_by_invitation_key(params[:id])
 
+    if @character.nil? or @character == current_character
+      redirect_from_iframe root_url(:canvas => true)
+    elsif current_character.friend_relations.established?(@character)
+      flash[:notice] = t("relations.show.messages.already_joined")
+
+      redirect_from_iframe root_url(:canvas => true)
+    elsif Setting.b(:relation_friends_only) && !current_facebook_user.friend_ids.include?(@character.facebook_id)
+      flash[:notice] = t("relations.show.messages.only_friends")
+
+      redirect_from_iframe root_url(:canvas => true)
+    end
+  end
+  
   def destroy
     @target = Character.find(params[:id])
 

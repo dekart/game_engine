@@ -1,0 +1,52 @@
+<%= title(t(".title")) %>
+
+<%= render "relations/buttons", :current => :invite %>
+
+<%= render "relations/note" %>
+
+<div id="users_to_invite" class="invitation_method">
+  <div class="users clearfix">
+    <% current_character.friend_filter.for_invitation(12).each do |facebook_id| %>
+      <div class="user">
+        <div class="name"><%= fb_name(facebook_id, :linked => false) %></div>
+        <div class="image"><%= fb_profile_pic(facebook_id, :linked => false, :size => :small) %></div>
+      
+        <%= link_to_function(button(:invite), 
+              fb_request_dialog(:invitation,
+                :to       => facebook_id,
+                :title    => t('.title'),
+                :message  => t('.invitation_message', :app_name => t('app_name'))
+              ),
+              :class => 'invite button'
+            ) %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="controls">
+    <%= link_to_function(button(:invite_other), 
+          fb_request_dialog(:invitation,
+            :title    => t('.title'),
+            :message  => t('.invitation_message', :app_name => t('app_name')),
+            :data     => {
+              :reference => :invite_page
+            },
+            :filters => [:non_app_users]
+          ),
+          :class => 'invite button'
+        ) %>
+  </div>
+</div>
+
+<div class="invitation_method">
+  <h2><%= t(".copy_paste.title") %></h2>
+
+  <p><%= t(".copy_paste.note") %></p>
+
+  <p class="invitation_text">
+    <%= t(".copy_paste.invitation",
+          :app  => t("app_name"),
+          :link => invitation_short_url(current_character)
+        ).html_safe %>
+  </p>
+</div>

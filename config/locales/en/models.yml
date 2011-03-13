@@ -41,7 +41,6 @@ en:
         upgrade_cost_increase: "Upgrade cost increase per level"
         collect_period: "Income collection period, hours"
       user:
-        show_next_steps: "Show 'Next Steps' block"
         show_fan_specials: "Show 'Fan Specials' block"
       character_type:
         health_restore_bonus: "Decrease of health restore period, %"

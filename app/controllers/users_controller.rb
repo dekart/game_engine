@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
   skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook, :only => :subscribe
   
-  landing_page :invite, :only => :invite
-
   def toggle_block
     @user = current_user
 
@@ -31,27 +29,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def invite
-    if request.post?
-      @sent_invitations = []
-
-      if params[:ids]
-        Invitation.transaction do
-          params[:ids].each do |receiver|
-            invitation = current_user.invitations.create(:receiver_id => receiver)
-
-            @sent_invitations << invitation unless invitation.new_record?
-          end
-        end
-
-        flash[:success] = t("users.invite.success_message", :amount => @sent_invitations.size)
-      end
-
-      redirect_from_iframe invite_users_url(:canvas => true)
-    elsif params[:from_selector]
-      redirect_from_iframe root_url(:canvas => true)
-    end
-  end
   
   def subscribe
     if request.get?

@@ -1,6 +1,4 @@
 class PromotionsController < ApplicationController
-  skip_landing_redirect
-
   def show
     id, secret = params[:id].split("-")
 

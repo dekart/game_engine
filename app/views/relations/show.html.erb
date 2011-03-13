@@ -16,8 +16,7 @@
           ) %>
           
       <%= link_to_remote(button(:accept),
-            :url    => invitation_path(@character.id),
-            :method => :put,
+            :url    => relations_path(:character_id => @character.id),
             :update => :result,
             :html => {
               :"data-click-once" => true,

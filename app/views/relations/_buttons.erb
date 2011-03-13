@@ -6,7 +6,7 @@
   <% end %>
 
   <% unless current == :invite %>
-    <%= link_to(button(:recruit), invite_users_path,
+    <%= link_to(button(:recruit), new_relation_path,
           :class => "invite button"
         ) %>
   <% end %>
