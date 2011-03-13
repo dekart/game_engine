@@ -1,6 +1,6 @@
 module InventoriesHelper
   def inventory_additonal_slots_note
-    free_slots = current_character.equipment.placement_free_slots(:additional)
+    free_slots = current_character.equipment.available_capacity(:additional)
 
     yield(free_slots)
   end
