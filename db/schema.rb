@@ -21,23 +21,11 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
     t.string   "state",        :limit => 50, :default => "", :null => false
     t.datetime "processed_at"
     t.datetime "accepted_at"
+    t.datetime "visited_at"
+    t.string   "type",         :limit => 50, :default => "", :null => false
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
-
-  create_table "app_requests_new", :force => true do |t|
-    t.integer  "facebook_id",  :limit => 8,                  :null => false
-    t.integer  "sender_id"
-    t.integer  "receiver_id",  :limit => 8
-    t.text     "data"
-    t.string   "state",        :limit => 50, :default => "", :null => false
-    t.datetime "processed_at"
-    t.datetime "visited_at"
-    t.datetime "accepted_at"
-    t.string   "type",         :limit => 50, :default => "", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -179,10 +167,10 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
     t.datetime "sp_updated_at"
     t.text     "placements",               :limit => 16777215
     t.integer  "total_money",              :limit => 8,        :default => 0
-    t.datetime "hospital_used_at",                             :default => '1970-01-01 05:00:00'
+    t.datetime "hospital_used_at",                             :default => '1970-01-01 00:00:00'
     t.integer  "missions_mastered",                            :default => 0
     t.integer  "lock_version",                                 :default => 0
-    t.datetime "fighting_available_at",                        :default => '1970-01-01 05:00:00'
+    t.datetime "fighting_available_at",                        :default => '1970-01-01 00:00:00'
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
@@ -227,19 +215,6 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
   add_index "fights", ["attacker_id", "winner_id"], :name => "index_fights_on_attacker_id_and_winner_id"
   add_index "fights", ["cause_id"], :name => "index_fights_on_cause_id"
   add_index "fights", ["victim_id"], :name => "index_fights_on_victim_id"
-
-  create_table "gifts", :force => true do |t|
-    t.integer  "app_request_id"
-    t.integer  "sender_id",                                    :null => false
-    t.integer  "receiver_id",    :limit => 8,                  :null => false
-    t.integer  "item_id"
-    t.string   "state",          :limit => 50, :default => "", :null => false
-    t.datetime "accepted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "gifts", ["receiver_id", "state", "sender_id"], :name => "index_gifts_new_on_receiver_id_and_state_and_sender_id"
 
   create_table "global_payouts", :force => true do |t|
     t.string   "name",       :limit => 100, :default => "", :null => false
@@ -288,18 +263,6 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
   end
 
   add_index "inventories", ["character_id"], :name => "index_inventories_on_character_id_and_placement"
-
-  create_table "invitations", :force => true do |t|
-    t.integer  "sender_id",                   :null => false
-    t.integer  "receiver_id",    :limit => 8, :null => false
-    t.boolean  "accepted"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "app_request_id"
-  end
-
-  add_index "invitations", ["receiver_id", "accepted"], :name => "index_invitations_on_receiver_id_and_accepted"
-  add_index "invitations", ["sender_id"], :name => "index_invitations_on_sender_id"
 
   create_table "item_collection_ranks", :force => true do |t|
     t.integer  "character_id",                    :null => false

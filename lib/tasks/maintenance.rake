@@ -95,6 +95,71 @@ namespace :app do
 
     # One-time tasks
     
+    desc 'Unify application requests into a single table'
+    task :unify_requests => :environment do
+      puts "Updating request types..."
+      
+      AppRequest::Base.transaction do
+        AppRequest::Base.delete_all ["created_at <= ?", 2.weeks.ago]
+        
+        AppRequest::Base.update_all "state='accepted'", "state='accepted_indirectly'"
+
+        AppRequest::Base.update_all "type = 'AppRequest::Gift'", "data LIKE '%type: gift%'"
+        AppRequest::Base.update_all "type = 'AppRequest::MonsterInvite'", "data LIKE '%type: monster%'"
+        AppRequest::Base.update_all "type = 'AppRequest::Invitation'", "data LIKE '%type: monster_invite%'"
+        AppRequest::Base.delete_all 'data IS NULL'
+      end
+      
+      puts "Updating sender IDs for #{AppRequest::Base.count} requests..."
+      
+      i = 0
+      
+      AppRequest::Base.transaction do
+        AppRequest::Base.find_each do |request|
+          request.update_attribute(:sender_id, Character.find_by_user_id(request.sender_id).id)
+          
+          i += 1
+          
+          puts "Processed #{i}..." if i % 100 == 0
+        end
+      end
+      
+      monster_invites = AppRequest::MonsterInvite.with_state(:processed)
+      
+      puts "Processing #{monster_invites.size} monster invites..."
+      
+      AppRequest::MonsterInvite.transaction do
+        i = 0
+        
+        monster_invites.find_each do |request|
+          request.data['monster_id'] = request.data['return_to'].match(/\/monsters\/([0-9]+)/)[1]
+          request.save
+          
+          i += 1
+          
+          puts "Processed #{i}..." if i % 100 == 0
+        end
+      end
+      
+      puts 'Updating requests for accepted gifts...'
+      
+      ids = ActiveRecord::Base.connection.select_values("SELECT DISTINCT app_request_id FROM gifts WHERE gifts.state = 'accepted'")
+      
+      puts "Update #{ids.size} requests..."
+      
+      i = 0
+      
+      ids.each do |id|
+        AppRequest::Base.update_all "state = 'accepted'", {:id => id}
+        
+        i += 1
+        
+        puts "Processed #{i}..." if i % 100 == 0
+      end
+      
+      puts 'Done!'
+    end
+    
     desc 'Update gift storage schema'
     task :update_gift_storage_schema => :environment do
       Gift.set_table_name 'gifts_new'
