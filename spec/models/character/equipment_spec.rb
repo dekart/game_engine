@@ -128,6 +128,26 @@ describe Character::Equipment do
   end
   
   
+  describe '#equip' do
+    describe 'when placement have free space' do
+      it 'should inventory ID to the placement'
+      it 'recalculate equipped amount for inventory'
+    end
+    
+    describe 'when placement does not have free space' do
+      describe 'when placement is a main placement' do
+        it 'should unequip previous inventory'
+        it 'should equip passed inventory'
+        it 'should return previous inventory'
+        it 'should not try to re-equip inventory'
+      end
+    end
+    
+    it 'should return nil if inventory is not equippable'
+    it 'should return nil if inventory cannot be put to this placement'
+  end
+  
+  
   describe '#unequip' do
     before do
       @character = Factory(:character)
