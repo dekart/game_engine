@@ -128,21 +128,67 @@
     +button(!assignments_promote_icon)
     
     
-.invitation_type
+.invitation_method
   padding-bottom: 10px
   margin-bottom: 10px
   border-bottom = !invitation_form_type_border
-
+    
   .invitation_text
     margin: 15px
     font-weight: bold
     font-size: 16px
     color = !invitation_form_text_color
 
-  .publish
-    +button(!invitation_form_publish_icon, !invitation_form_publish_width)
+  &#users_to_invite
+    .users
+      .user
+        float: left
+        margin: 0 10px 10px 0
+        border = !main_border
+        width: 150px
+        padding: 10px
 
-#invitation_form
-  width: 900px
-  overflow: hidden
-  margin-left: -60px
+        .name
+          font-weight: bold
+          text-align: center
+          margin-bottom: 10px
+          height: 25px
+
+        .image
+          height: 105px
+          overflow: hidden
+          margin-bottom: 10px
+          text-align: center
+          
+        .invite
+          margin: 0 auto
+          +button(!invitation_form_invite_icon, !invitation_form_invite_width)
+          
+    .controls
+      .invite
+        float: none
+        margin: 20px auto
+        +button(!invitation_form_invite_icon, !invitation_form_invite_other_width)
+        
+
+#invitation
+  td
+    padding: 5px
+    vertical-align: middle
+
+  .picture
+    width: 55px
+
+  .level
+    width: 70px
+
+  .controls
+    .accept
+      +button(!invitation_accept_icon)
+
+    .ignore
+      +button(!invitation_decline_icon)
+
+
+  #invitation_result
+    background-image = !invitation_result_icon

@@ -4,15 +4,12 @@
 class ApplicationController < ActionController::Base
   include ExceptionLogging
   include FacebookIntegration
-  include LandingPage
   include ReferenceCode
   include AppRequests
 
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
   facebook_integration_filters
   
-  landing_redirect
-
   layout :get_layout
 
   helper_method :current_user, :current_character, :current_skin

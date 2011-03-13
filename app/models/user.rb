@@ -3,10 +3,6 @@ class User < ActiveRecord::Base
   
   has_one     :character, :dependent => :destroy
   belongs_to  :referrer, :class_name => "User"
-  has_many    :invitations,
-    :foreign_key  => :sender_id,
-    :dependent    => :destroy,
-    :extend       => User::Invitations
 
   named_scope :after, Proc.new{|user|
     {
@@ -15,8 +11,6 @@ class User < ActiveRecord::Base
     }
   }
 
-  attr_accessible :show_next_steps
-  
   after_save :schedule_social_data_update, :if => :access_token_changed?
 
   def show_tutorial?
@@ -29,17 +23,6 @@ class User < ActiveRecord::Base
 
   def touch!
     update_attribute(:updated_at, Time.now)
-  end
-
-  def should_visit_landing_page?
-    (landing_visited_at || created_at) < Setting.i(:landing_pages_visit_delay).hours.ago
-  end
-
-  def visit_landing!(name)
-    self.landing_visited_at = Time.now
-    self.last_landing = name.to_s
-
-    save
   end
 
   def admin?
@@ -88,17 +71,6 @@ class User < ActiveRecord::Base
     save!
   end
   
-  def update_dashboard_counters!
-    client = Mogli::Client.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
-    
-    client.class.get('https://api.facebook.com/method/dashboard.setCount', 
-      :query => client.default_params.merge(
-        :uid    => facebook_id,
-        :count  => Invitation.for_user(self).count
-      )
-    )
-  end
-  
   def gender=(value)
     if value.blank?
       self[:gender] = nil
@@ -119,9 +91,5 @@ class User < ActiveRecord::Base
   
   def schedule_social_data_update
     Delayed::Job.enqueue Jobs::UserDataUpdate.new([id]) if access_token_valid?
-  end
-
-  def schedule_counter_update
-    Delayed::Job.enqueue Jobs::UserCounterUpdate.new([id])
   end
 end

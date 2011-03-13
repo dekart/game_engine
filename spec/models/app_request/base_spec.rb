@@ -22,8 +22,8 @@ describe AppRequest::Base do
     end
     
     it 'should return gifts sent to passed character' do
-      AppRequest::Base.for_character(@receiver).should include(@request1, @request2)
-      AppRequest::Base.for_character(@receiver).should_not include(@request3)
+      AppRequest::Base.for(@receiver).should include(@request1, @request2)
+      AppRequest::Base.for(@receiver).should_not include(@request3)
     end
   end
 

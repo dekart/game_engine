@@ -81,7 +81,7 @@
 
             <p><%= t(".step_4.text") %></p>
 
-            <%= link_to(button(:continue), invite_users_path, :class => "button continue") %>
+            <%= link_to(button(:continue), new_relation_path, :class => "button continue") %>
           <% else %>
             <%= link_to_remote(t(".step_4.title"),
                   :url => upgrade_character_path(:current),
@@ -104,13 +104,13 @@
       <% end %>
 
       <% tutorial_step("users", "invite") do |current, reload_tutorial| %>
-        <div class="step clearfix <%= "current" if current %> <%= "completed" if current_user.invitations.count != 0 %>">
+        <div class="step clearfix <%= "current" if current %> <%= "completed" if AppRequest::Invitation.from(current_character).count != 0 %>">
           <% if current %>
             <strong><%= t(".step_5.title") %> <%= completed_mark %></strong>
 
             <p><%= t(".step_5.text") %></p>
           <% else %>
-            <%= link_to(t(".step_5.title"), invite_users_path) %> <%= completed_mark %>
+            <%= link_to(t(".step_5.title"), new_relation_path) %> <%= completed_mark %>
           <% end %>
         </div>
       <% end %>

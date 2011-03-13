@@ -3,9 +3,14 @@ class AppRequest::Base < ActiveRecord::Base
   
   belongs_to :sender, :class_name => "Character"
   
-  named_scope :for_character, Proc.new {|character|
+  named_scope :for, Proc.new {|character|
     {
-      :conditions => {:receiver_id => character.user.facebook_id}
+      :conditions => {:receiver_id => character.facebook_id}
+    }
+  }
+  named_scope :from, Proc.new{|character|
+    {
+      :conditions => {:sender_id => character.id}
     }
   }
   named_scope :between, Proc.new{|sender, receiver|
@@ -60,6 +65,10 @@ class AppRequest::Base < ActiveRecord::Base
       ids = ids_or_requests.compact.collect{|value| value.is_a?(AppRequest) ? value.id : value}
       
       Delayed::Job.enqueue(Jobs::RequestDelete.new(ids)) unless ids.empty?
+    end
+    
+    def receiver_ids
+      all(:select => :receiver_id).collect{|r| r.receiver_id }
     end
   end
   
