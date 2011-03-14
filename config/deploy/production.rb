@@ -24,3 +24,11 @@ set :facebooker_config, {
 
   :set_asset_host_to_callback_url => true
 }
+
+set :database_config, {
+  :adapter  => "mysql",
+  :host     => "localhost",
+  :database => "sword_production",
+  :username => "sword",
+  :password => "alskdjf85hg"
+}

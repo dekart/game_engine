@@ -11,8 +11,6 @@ set :use_sudo, false
 set :scm, "git"
 set :deploy_via, :remote_cache
 
-set :db_config, YAML.load_file(File.expand_path("../database.yml", __FILE__))
-
 default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
@@ -61,6 +59,13 @@ namespace :deploy do
       put(config, "#{release_path}/config/facebooker.yml")
     end
 
+    desc "Generate Facebooker config file"
+    task :facebooker do
+      config = YAML.dump(rails_env => database.stringify_keys)
+
+      put(config, "#{release_path}/config/database.yml")
+    end
+
     desc "Install cron jobs"
     task :cron, :roles => :app do
       template = ERB.new(
@@ -93,12 +98,12 @@ namespace :deploy do
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :db do
-      dump_path = '%s/dump.%s.%d.sql' % [shared_path, db_config[rails_env]["database"], Time.now.to_i]
+      dump_path = '%s/dump.%s.%d.sql' % [shared_path, database_config["database"], Time.now.to_i]
 
       run "mysqldump -u %s --password='%s' %s > %s" % [
-        db_config[rails_env]["username"],
-        db_config[rails_env]["password"],
-        db_config[rails_env]["database"],
+        database_config["username"],
+        database_config["password"],
+        database_config["database"],
         dump_path
       ]
       

@@ -17,3 +17,4 @@ public/stylesheets/*.css
 .*.sw?
 
 config/facebooker.yml
+config/database.yml
