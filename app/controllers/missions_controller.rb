@@ -5,11 +5,11 @@ class MissionsController < ApplicationController
     @result = current_character.missions.fulfill!(@mission)
     
     if @result.success?
-      EventLoggingService.log_mission_event(@result, false)
+      EventLoggingService.log_event(:mission_fulfilled, mission_event_data(@result))
     end
     
     if @result.level_rank.just_completed?
-      EventLoggingService.log_mission_event(@result, true)
+      EventLoggingService.log_event(:mission_completed, mission_event_data(@result))
       
       @missions = fetch_missions
     end
@@ -36,5 +36,15 @@ class MissionsController < ApplicationController
   
   def fetch_missions
     current_character.mission_groups.current.missions.with_state(:visible).visible_for(current_character)
+  end
+
+  def mission_event_data(result)
+    {
+      :character_id => result.character.id,
+      :character_level => result.character.level,
+      :mission_id => result.mission.id,
+      :money => result.money,
+      :experience => result.experience
+    }.to_json
   end
 end

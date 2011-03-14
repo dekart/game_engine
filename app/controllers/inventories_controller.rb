@@ -15,7 +15,7 @@ class InventoriesController < ApplicationController
 
     @amount = params[:amount].to_i * @item.package_size
 
-    EventLoggingService.log_trade_event(current_character, @item, @amount, "bought")
+    EventLoggingService.log_event(:item_bought, trade_event_data(current_character, @item, @amount))
 
     render :action => :create, :layout => "ajax"
   end
@@ -27,7 +27,7 @@ class InventoriesController < ApplicationController
 
     @inventory = current_character.inventories.sell!(@item, @amount)
 
-    EventLoggingService.log_trade_event(current_character, @item, @amount, "sold")
+    EventLoggingService.log_event(:item_sold, trade_event_data(current_character, @item, @amount))
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -56,10 +56,15 @@ class InventoriesController < ApplicationController
       current_character.equipment.equip!(@inventory, params[:placement])
 
       if @inventory.equipped == equipped + 1
-        EventLoggingService.log_equip_event(@inventory, params[:placement], "equipped")
+        EventLoggingService.log_event(:item_equipped, equip_event_data(@inventory, params[:placement]))
       end
     else
+      placements = current_character.placements.clone
       current_character.equipment.equip_best!
+
+      if placements != current_character.placements
+        EventLoggingService.log_event(:all_equipped, equip_all_event_data(current_character))
+      end
     end
 
     render :layout => "ajax"
@@ -68,13 +73,17 @@ class InventoriesController < ApplicationController
   def unequip
     if params[:id]
       @inventory = current_character.inventories.find(params[:id])
-      equipped = @inventory.equipped
 
       current_character.equipment.unequip!(@inventory, params[:placement])
 
-      EventLoggingService.log_equip_event(@inventory, params[:placement], "unequipped")
+      EventLoggingService.log_event(:item_unequipped, equip_event_data(@inventory, params[:placement]))
     else
+      placements = current_character.placements.clone
       current_character.equipment.unequip_all!
+
+      if placements != current_character.placements
+        EventLoggingService.log_event(:all_unequipped, equip_all_event_data(current_character))
+      end
     end
 
     render :action => "equip", :layout => "ajax"
@@ -110,6 +119,8 @@ class InventoriesController < ApplicationController
           end
         end
 
+        EventLoggingService.log_event(:items_given, give_event_data(current_character, @character, @inventories))
+
         flash[:success] = t('inventories.give.messages.success')
 
         redirect_from_iframe root_url(:canvas => true)
@@ -129,5 +140,42 @@ class InventoriesController < ApplicationController
 
   def check_auto_equipment
     redirect_from_iframe inventories_url(:canvas => true) if Setting.b(:character_auto_equipment)
+  end
+
+  def trade_event_data(character, item, amount)
+    {
+      :character_id => character.id,
+      :character_level => character.level,
+      :item_id => item.id,
+      :basic_price => item.basic_price,
+      :vip_price => item.vip_price,
+      :amount => amount
+    }.to_json
+  end
+
+  def equip_event_data(inventory, placement)
+    {
+      :character_id => inventory.character.id,
+      :character_level => inventory.character.level,
+      :item_id => inventory.item.id,
+      :placement => placement
+    }.to_json
+  end
+
+  def equip_all_event_data(character)
+    {
+      :character_id => character.id,
+      :character_level => character.level
+    }.to_json
+  end
+
+  def give_event_data(character, receiver, inventories)
+    {
+      :character_id => character.id,
+      :character_level => character.level,
+      :receiver_id => receiver.id,
+      :receiver_level => receiver.level,
+      :ids => inventories.collect{|i| i.item.id}
+    }.to_json
   end
 end

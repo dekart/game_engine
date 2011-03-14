@@ -9,6 +9,10 @@ class PropertiesController < ApplicationController
 
     @property = current_character.properties.buy!(@property_type)
 
+    if @property.errors.empty?
+      EventLoggingService.log_event(:property_bought, property_event_data(@property))
+    end
+
     @properties = current_character.properties(true)
 
     render :create, :layout => "ajax"
@@ -18,6 +22,10 @@ class PropertiesController < ApplicationController
     @property = current_character.properties.find(params[:id])
 
     @property.upgrade!
+
+    if @property.errors.empty?
+      EventLoggingService.log_event(:property_upgraded, property_event_data(@property))
+    end
 
     @properties = current_character.properties(true)
 
@@ -35,6 +43,26 @@ class PropertiesController < ApplicationController
       @result = @properties.collect_money!
     end
 
+    if @result
+      properties = @property.nil? ? @properties : [@property]
+      properties.each do |property|
+        EventLoggingService.log_event(:properties_income_collected, property_event_data(property))
+      end
+    end
+
     render :collect_money, :layout => "ajax"
+  end
+
+  protected
+
+  def property_event_data(property)
+    {
+      :character_id => property.character.id,
+      :character_level => property.character.level,
+      :property_id => property.id,
+      :property_type_id => property.property_type.id,
+      :property_level => property.level,
+      :income => property.total_income
+    }.to_json
   end
 end

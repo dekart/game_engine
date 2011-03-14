@@ -341,8 +341,15 @@ class Character < ActiveRecord::Base
 
       notifications.schedule(:level_up)
 
-      EventLoggingService.log_levelup_event(self)
+      EventLoggingService.log_event(:character_levelup, levelup_event_data(self))
     end
+  end
+
+  def leveup_event_data(character)
+    {
+      :character_id => character.id,
+      :character_level => character.level
+    }.to_json
   end
 
   def vip_money_per_upgrade

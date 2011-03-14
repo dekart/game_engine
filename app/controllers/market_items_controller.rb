@@ -16,7 +16,7 @@ class MarketItemsController < ApplicationController
     @item = @inventory.build_market_item(params[:market_item])
 
     if @item.save
-      EventLoggingService.log_market_event(@item, "created")
+      EventLoggingService.log_event(:market_item_created, market_event_data(@item))
 
       render :create, :layout => "ajax"
     else
@@ -30,7 +30,7 @@ class MarketItemsController < ApplicationController
     @item.buy!(current_character)
 
     if @item.errors.empty?
-      EventLoggingService.log_market_event(@item, "bought")
+      EventLoggingService.log_event(:market_item_bought, market_event_data(@item))
     end
 
     render :buy, :layout => "ajax"
@@ -41,8 +41,21 @@ class MarketItemsController < ApplicationController
 
     @item.destroy
 
-    EventLoggingService.log_market_event(@item, "destroyed")
+    EventLoggingService.log_event(:market_item_destroyed, market_event_data(@item))
 
     render :destroy, :layout => "ajax"
+  end
+
+  protected
+
+  def market_event_data(item)
+    {
+      :character_id => item.character.id,
+      :character_level => item.character.level,
+      :item_id => item.id,
+      :basic_price => item.basic_price,
+      :vip_price => item.vip_price,
+      :amount => item.amount
+    }.to_json
   end
 end

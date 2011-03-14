@@ -3,7 +3,7 @@ en:
     item:
       name: "Item"
       missing: "Missing item!"
-      label: "{{name}} X {{amount}}"
+      label: "%{name} X %{amount}"
     property:
       name: "Property"
       missing: "Missing property type!"
