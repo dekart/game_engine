@@ -11,6 +11,10 @@ class AssignmentsController < ApplicationController
 
     @assignment.save
 
+    if @assignment.errors.empty
+      EventLoggingService.log_event(:assignment_created, assignment_event_data(@assignment))
+    end
+
     redirect_to_context(@assignment)
   end
 
@@ -22,6 +26,8 @@ class AssignmentsController < ApplicationController
 
       if @assignment.context == current_character or @assignment.context.character == current_character
         @assignment.destroy
+
+        EventLoggingService.log_event(:assignment_destroyed, assignment_event_data(@assignment))
       end
     end
 
@@ -36,5 +42,15 @@ class AssignmentsController < ApplicationController
     elsif assignment.context.is_a?(Property)
       redirect_from_iframe properties_url(:canvas => true)
     end
+  end
+
+  def assignment_event_data(assignment)
+    {
+      :character_id => assignment.relation.owner.id,
+      :character_level => assignment.relation.owner.level,
+      :target_id => assignment.relation.character.id,
+      :target_level => assignment.relation.character.level,
+      :role => assignment.role
+    }.to_json
   end
 end

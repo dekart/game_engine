@@ -24,7 +24,7 @@ class MonstersController < ApplicationController
     @monster = current_character.monsters.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create!(:character => current_character)
   
-    log_engage_event(@monster)
+    EventLoggingService.log_event(:monster_engaged, engage_event_data(@monster))
 
     redirect_to @monster
   end
@@ -37,9 +37,9 @@ class MonstersController < ApplicationController
 
     if @attack_result
       if @fight.monster.progress?
-        EventLoggingService.log_attack_event(@fight, "attacked")
+        EventLoggingService.log_event(:monster_attacked, attack_event_data(@monster))
       elsif @fight.monster.won?
-        EventLoggingService.log_attack_event(@fight, "killed")
+        EventLoggingService.log_event(:monster_killed, attack_event_data(@monster))
       end
     end
 
@@ -52,9 +52,44 @@ class MonstersController < ApplicationController
     @reward_collected = @fight.collect_reward!
 
     if @reward_collected
-      EventLoggingService.log_reward_event(@fight)
+      EventLoggingService.log_event(:reward_collected, reward_event_data(@fight))
     end
 
     render :layout => 'ajax'
+  end
+
+  protected
+
+  def engage_event_data(monster)
+    {
+      :monster_id => monster.id,
+      :monster_type_id => monster.monster_type_id,
+      :character_id => monster.character.id,
+      :character_level => monster.character.level
+    }.to_json
+  end
+
+  def attack_event_data(fight)
+    monster = fight.monster
+    {
+      :monster_id => monster.id,
+      :monster_type_id => monster.monster_type_id,
+      :character_id => monster.character.id,
+      :character_level => monster.character.level,
+      :monster_damage => fight.monster_damage,
+      :character_damage => fight.character_damage,
+      :money => fight.money,
+      :experience => fight.experience
+    }.to_json
+  end
+
+  def reward_event_data(fight)
+    monster = fight.monster
+    {
+      :monster_id => monster.id,
+      :monster_type_id => monster.monster_type_id,
+      :character_id => monster.character.id,
+      :character_level => monster.character.level
+    }.to_json
   end
 end
