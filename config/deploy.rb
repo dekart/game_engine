@@ -11,8 +11,6 @@ set :use_sudo, false
 set :scm, "git"
 set :deploy_via, :remote_cache
 
-set :db_config, YAML.load_file(File.expand_path("../database.yml", __FILE__))
-
 default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
