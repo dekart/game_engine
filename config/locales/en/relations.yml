@@ -4,9 +4,10 @@ en:
       title: "Recruit To Your Alliance"
       success_message: "You've successfully sent %{amount} invitations to your friends!"
       invitation_message: "Join my Alliance in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
+      recommended: "We recommend you to invite these friends:"
       buttons:
         invite: "Invite"
-        invite_other: "Invite Other Friends"
+        invite_all: "Invite Other Friends"
       copy_paste:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to the 'What's on your mind?' form and publish it. Or just send this message to your friends:"

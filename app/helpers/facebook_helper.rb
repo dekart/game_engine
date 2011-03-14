@@ -100,7 +100,6 @@ module FacebookHelper
   end
   
   def fb_request_dialog(type, options = {})
-    callback_url = options.delete(:callback_url)
     callback  = options.delete(:callback)
     request_params = options.delete(:params) || {}
         
