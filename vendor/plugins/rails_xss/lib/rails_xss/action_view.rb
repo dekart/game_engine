@@ -15,6 +15,15 @@ module ActionView
   end
 
   module Helpers
+    module CaptureHelper
+      def content_for(name, content = nil, &block)
+        ivar = "@content_for_#{name}"
+        content = capture(&block) if block_given?
+        instance_variable_set(ivar, "#{instance_variable_get(ivar)}#{ERB::Util.h(content)}".html_safe)
+        nil
+      end
+    end    
+
     module TextHelper
       def concat(string, unused_binding = nil)
         if unused_binding
@@ -33,7 +42,7 @@ module ActionView
     module TagHelper
       private
         def content_tag_string_with_escaping(name, content, options, escape = true)
-          content_tag_string_without_escaping(name, ERB::Util.h(content), options, escape)
+          content_tag_string_without_escaping(name, escape ? ERB::Util.h(content) : content, options, escape)
         end
         alias_method_chain :content_tag_string, :escaping
     end
