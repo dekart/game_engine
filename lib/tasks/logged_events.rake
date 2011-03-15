@@ -5,20 +5,23 @@ namespace :app do
       puts "Retrieving data from Redis..."
       
       batch_size = 100
-      
-      begin
-        LoggedEvent.transaction do
-          events = EventLoggingService.get_next_batch(batch_size)
 
-          events.each do |e|
-            puts "Storing event: #{e}"
-            LoggedEvent.create(JSON.parse(e))
+      until EventLoggingService.empty_event_list?
+        begin
+          LoggedEvent.transaction do
+            events = EventLoggingService.get_next_batch(batch_size)
+
+            events.each do |e|
+              puts "Storing event: #{e}"
+              LoggedEvent.create(JSON.parse(e))
+            end
           end
+        rescue Exception => exc
+          puts "Exception raised: #{exc}"
+          break
+        else
+          EventLoggingService.trim_event_list(batch_size)
         end
-      rescue Exception => exc
-        puts "Exception raised: #{exc}"
-      else
-        EventLoggingService.trim_event_list(batch_size)
       end
 
       puts "Done"
