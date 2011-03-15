@@ -61,7 +61,7 @@ namespace :deploy do
 
     desc "Generate DB config file"
     task :database do
-      config = YAML.dump(rails_env => database.stringify_keys)
+      config = YAML.dump(rails_env => database_config.stringify_keys)
 
       put(config, "#{release_path}/config/database.yml")
     end
