@@ -1,9 +1,14 @@
-<div class="success"><%= t('.accepted') %></div>
+<% message = capture do %>
+  <p class="success"><%= t('.accepted') %></p>
+<% end %>
 
-<div class="controls">
+<% controls = capture do %>
   <%= link_to(button(:fight), monster_path(app_request.monster), :class => 'fight button') %>
-</div>
+<% end %>
 
 <% dom_ready do %>
-  <%#= ga_track_event('Gifts', 'Accepted', app_request.item.name)%>
+  var $request = $('#<%= dom_id(app_request) %>');
+
+  $request.find('.message').html('<%= escape_javascript(message) %>');
+  $request.find('.controls').html('<%= escape_javascript(controls) %>');
 <% end %>

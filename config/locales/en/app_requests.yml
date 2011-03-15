@@ -8,11 +8,11 @@ en:
         accept: 'Accept'
     details:
       gift:
-        sends: "sends you"
+        text: "%{user} sends you %{item}"
       monster_invite:
-        invites: "invites you to join fight against"
+        text: "%{user} invites you to join fight against %{monster}"
       invitation:
-        invites: "invites you to join their Alliance"
+        text: "%{user} invites you to join their Alliance"
     update:
       gift:
         accepted: 'Gift accepted!'

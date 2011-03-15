@@ -1,3 +1,7 @@
-<div class="invites"><%= t(".invites") %></div>
-<div class="monster_image"><%= monster_image(app_request.monster, :small) %></div>
-<div class="monster_name"><%= app_request.monster.name %></div>
+<td class="message">
+  <%= t(".text", 
+        :user => character_name_link(app_request.sender), 
+        :monster => app_request.monster.name
+      ).html_safe %>
+</td>
+<td class="image"><%= monster_image(app_request.monster, :small) %></td>
