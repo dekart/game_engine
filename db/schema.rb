@@ -167,10 +167,10 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
     t.datetime "sp_updated_at"
     t.text     "placements",               :limit => 16777215
     t.integer  "total_money",              :limit => 8,        :default => 0
-    t.datetime "hospital_used_at",                             :default => '1970-01-01 00:00:00'
+    t.datetime "hospital_used_at",                             :default => '1970-01-01 05:00:00'
     t.integer  "missions_mastered",                            :default => 0
     t.integer  "lock_version",                                 :default => 0
-    t.datetime "fighting_available_at",                        :default => '1970-01-01 00:00:00'
+    t.datetime "fighting_available_at",                        :default => '1970-01-01 05:00:00'
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
@@ -667,7 +667,6 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
 
   create_table "users", :force => true do |t|
     t.integer  "facebook_id",            :limit => 8,                        :null => false
-    t.boolean  "show_next_steps",                       :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "show_fan_specials",                     :default => true
@@ -675,8 +674,6 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
     t.boolean  "show_tips",                             :default => true
     t.string   "reference",              :limit => 100, :default => "",      :null => false
     t.boolean  "show_tutorial",                         :default => true
-    t.datetime "landing_visited_at"
-    t.string   "last_landing",           :limit => 100, :default => "",      :null => false
     t.integer  "referrer_id"
     t.string   "access_token",                          :default => "",      :null => false
     t.integer  "wall_privacy_level",                    :default => 2
