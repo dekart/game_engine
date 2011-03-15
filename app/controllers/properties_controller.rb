@@ -55,9 +55,9 @@ class PropertiesController < ApplicationController
 
   protected
 
-  def property_event_data(event_data, property)
+  def property_event_data(event_type, property)
     {
-      :event_data => event_data,
+      :event_type => event_type,
       :character_id => property.character.id,
       :level => property.character.level,
       :reference_id => property.id,

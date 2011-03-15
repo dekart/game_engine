@@ -151,8 +151,6 @@ class InventoriesController < ApplicationController
       :level => character.level,
       :reference_id => item.id,
       :reference_type => "Item",
-      :basic_price => item.basic_price,
-      :vip_price => item.vip_price,
       :amount => amount,
       :occurred_at => Time.now
     }.to_json

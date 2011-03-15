@@ -24,7 +24,7 @@ class MonstersController < ApplicationController
     @monster = current_character.monsters.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create!(:character => current_character)
   
-    EventLoggingService.log_event(:monster_engaged, engage_event_data(@monster))
+    EventLoggingService.log_event(engage_event_data(:monster_engaged, @monster))
 
     redirect_to @monster
   end
@@ -37,9 +37,9 @@ class MonstersController < ApplicationController
 
     if @attack_result
       if @fight.monster.progress?
-        EventLoggingService.log_event(:monster_attacked, attack_event_data(@monster))
+        EventLoggingService.log_event(attack_event_data(:monster_attacked, @fight))
       elsif @fight.monster.won?
-        EventLoggingService.log_event(:monster_killed, attack_event_data(@monster))
+        EventLoggingService.log_event(attack_event_data(:monster_killed, @fight))
       end
     end
 
@@ -52,7 +52,7 @@ class MonstersController < ApplicationController
     @reward_collected = @fight.collect_reward!
 
     if @reward_collected
-      EventLoggingService.log_event(:reward_collected, reward_event_data(@fight))
+      EventLoggingService.log_event(reward_event_data(:reward_collected, @fight))
     end
 
     render :layout => 'ajax'
@@ -60,9 +60,9 @@ class MonstersController < ApplicationController
 
   protected
 
-  def engage_event_data(event_data, monster)
+  def engage_event_data(event_type, monster)
     {
-      :event_data => event_data,
+      :event_type => event_type,
       :character_id => monster.character.id,
       :level => monster.character.level,
       :reference_id => monster.id,
@@ -71,10 +71,10 @@ class MonstersController < ApplicationController
     }.to_json
   end
 
-  def attack_event_data(event_data, fight)
+  def attack_event_data(event_type, fight)
     monster = fight.monster
     {
-      :event_data => event_data,
+      :event_type => event_type,
       :character_id => monster.character.id,
       :level => monster.character.level,
       :reference_id => monster.id,
@@ -87,10 +87,10 @@ class MonstersController < ApplicationController
     }.to_json
   end
 
-  def reward_event_data(event_data, fight)
+  def reward_event_data(event_type, fight)
     monster = fight.monster
     {
-      :event_data => event_data,
+      :event_type => event_type,
       :character_id => monster.character.id,
       :level => monster.character.level,
       :reference_id => monster.id,
