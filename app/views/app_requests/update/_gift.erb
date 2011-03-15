@@ -29,5 +29,5 @@
     request_callback_url: '<%= app_requests_path(:type => :gift) %>'
   });
 
-  <%= ga_track_event('Gifts', 'Accepted', app_request.item.name)%>
+  <%= ga_track_event('Requests', "#{app_request.type_name.titleize} - Accepted", app_request.item.name) %>
 <% end %>
