@@ -27,7 +27,7 @@ class RelationsController < ApplicationController
       flash[:notice] = t("relations.show.messages.already_joined")
 
       redirect_from_iframe root_url(:canvas => true)
-    elsif Setting.b(:relation_friends_only) && !current_facebook_user.friend_ids.include?(@character.facebook_id)
+    elsif Setting.b(:relation_friends_only) && !friends_with?
       flash[:notice] = t("relations.show.messages.only_friends")
 
       redirect_from_iframe root_url(:canvas => true)
@@ -51,5 +51,10 @@ class RelationsController < ApplicationController
       :page     => params[:page],
       :per_page => Setting.i(:relation_show_limit)
     )
+  end
+  
+  def friend_with?(character)
+    current_user.friend_ids.include?(character.facebook_id) || 
+    current_facebook_user.friends(:id).collect{|f| f.id }.include?(character.facebook_id)
   end
 end
