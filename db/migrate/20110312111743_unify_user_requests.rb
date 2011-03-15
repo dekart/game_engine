@@ -11,7 +11,7 @@ class UnifyUserRequests < ActiveRecord::Migration
     drop_table :invitations
     drop_table :gifts
     
-    change_table :characters do |t|
+    change_table :users do |t|
       t.remove :landing_visited_at
       t.remove :last_landing
       t.remove :show_next_steps
@@ -19,7 +19,7 @@ class UnifyUserRequests < ActiveRecord::Migration
   end
 
   def self.down
-    change_table :characters do |t|
+    change_table :users do |t|
       t.boolean  "show_next_steps",                       :default => true
       t.datetime "landing_visited_at"
       t.string   "last_landing",           :limit => 100, :default => "",      :null => false
