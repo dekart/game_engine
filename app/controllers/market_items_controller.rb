@@ -48,15 +48,13 @@ class MarketItemsController < ApplicationController
 
   protected
 
-  def market_event_data(event_data, item)
+  def market_event_data(event_type, item)
     {
-      :event_data => event_data,
+      :event_type => event_type,
       :character_id => item.character.id,
       :level => item.character.level,
       :reference_id => item.id,
       :reference_type => "MarketItem",
-      :basic_price => item.basic_price,
-      :vip_price => item.vip_price,
       :amount => item.amount,
       :occurred_at => Time.now
     }.to_json
