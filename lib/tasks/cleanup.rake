@@ -60,5 +60,17 @@ namespace :app do
 
       remove_data(old_news)
     end
+
+    desc "Remove old logged_events"
+    task :news => :environment do
+      time_limit = 3.month.ago
+
+      old_events= LoggedEvent.scoped(:conditions => ["created_at < ?", time_limit])
+
+      puts "Removing logged_events..."
+
+      remove_data(old_events)
+    end
   end
+
 end
