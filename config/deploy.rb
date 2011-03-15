@@ -126,14 +126,14 @@ namespace :deploy do
 
       put(config, ".gemrc")
 
-      run "gem install bundler -v=0.9.26 && gem cleanup bundler"
+      run "gem install bundler -v=1.0.10"
       run "gem install rails -v=2.3.8"
       run "gem install rack -v=1.0.1"
     end
 
     desc "Install required gems"
     task :bundled_gems, :roles => :app do
-      run "cd #{release_path}; bundle install --without=test"
+      run "cd #{release_path}; bundle install --deployment --without development test"
     end
   end
   
