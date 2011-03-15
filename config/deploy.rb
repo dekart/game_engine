@@ -61,6 +61,13 @@ namespace :deploy do
       put(config, "#{release_path}/config/facebooker.yml")
     end
 
+    desc "Generate Redis config file"
+    task :redis do
+      config = YAML.dump(rails_env => redis_config.stringify_keys)
+
+      put(config, "#{release_path}/config/redis.yml")
+    end
+
     desc "Install cron jobs"
     task :cron, :roles => :app do
       template = ERB.new(
