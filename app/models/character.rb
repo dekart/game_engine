@@ -341,14 +341,16 @@ class Character < ActiveRecord::Base
 
       notifications.schedule(:level_up)
 
-      EventLoggingService.log_event(:character_levelup, levelup_event_data(self))
+      EventLoggingService.log_event(levelup_event_data(:character_levelup, self))
     end
   end
 
-  def leveup_event_data(character)
+  def levelup_event_data(event_type, character)
     {
+      :event_type => event_type,
       :character_id => character.id,
-      :character_level => character.level
+      :level => character.level,
+      :occurred_at => Time.now
     }.to_json
   end
 

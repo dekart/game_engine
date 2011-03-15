@@ -10,7 +10,7 @@ class PropertiesController < ApplicationController
     @property = current_character.properties.buy!(@property_type)
 
     if @property.errors.empty?
-      EventLoggingService.log_event(:property_bought, property_event_data(@property))
+      EventLoggingService.log_event(property_event_data(:property_bought, @property))
     end
 
     @properties = current_character.properties(true)
@@ -24,7 +24,7 @@ class PropertiesController < ApplicationController
     @property.upgrade!
 
     if @property.errors.empty?
-      EventLoggingService.log_event(:property_upgraded, property_event_data(@property))
+      EventLoggingService.log_event(property_event_data(:property_upgraded, @property))
     end
 
     @properties = current_character.properties(true)
@@ -46,7 +46,7 @@ class PropertiesController < ApplicationController
     if @result
       properties = @property.nil? ? @properties : [@property]
       properties.each do |property|
-        EventLoggingService.log_event(:properties_income_collected, property_event_data(property))
+        EventLoggingService.log_event(property_event_data(:property_income_collected, property))
       end
     end
 
@@ -55,14 +55,16 @@ class PropertiesController < ApplicationController
 
   protected
 
-  def property_event_data(property)
+  def property_event_data(event_data, property)
     {
+      :event_data => event_data,
       :character_id => property.character.id,
-      :character_level => property.character.level,
-      :property_id => property.id,
-      :property_type_id => property.property_type.id,
-      :property_level => property.level,
-      :income => property.total_income
+      :level => property.character.level,
+      :reference_id => property.id,
+      :reference_type => "Property",
+      :reference_level => property.level,
+      :basic_money => property.total_income,
+      :occurred_at => Time.now
     }.to_json
   end
 end

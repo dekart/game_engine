@@ -12,7 +12,7 @@ class AssignmentsController < ApplicationController
     @assignment.save
 
     if @assignment.errors.empty
-      EventLoggingService.log_event(:assignment_created, assignment_event_data(@assignment))
+      EventLoggingService.log_event(assignment_event_data(:assignment_created, @assignment))
     end
 
     redirect_to_context(@assignment)
@@ -27,7 +27,7 @@ class AssignmentsController < ApplicationController
       if @assignment.context == current_character or @assignment.context.character == current_character
         @assignment.destroy
 
-        EventLoggingService.log_event(:assignment_destroyed, assignment_event_data(@assignment))
+        EventLoggingService.log_event(assignment_event_data(:assignment_destroyed, @assignment))
       end
     end
 
@@ -44,13 +44,16 @@ class AssignmentsController < ApplicationController
     end
   end
 
-  def assignment_event_data(assignment)
+  def assignment_event_data(event_type, assignment)
     {
+      :event_type => event_type,
       :character_id => assignment.relation.owner.id,
-      :character_level => assignment.relation.owner.level,
-      :target_id => assignment.relation.character.id,
-      :target_level => assignment.relation.character.level,
-      :role => assignment.role
+      :level => assignment.relation.owner.level,
+      :reference_id => assignment.relation.character.id,
+      :reference_type => "Character",
+      :reference_level => assignment.relation.character.level,
+      :string_value => assignment.role,
+      :occurred_at => Time.now
     }.to_json
   end
 end

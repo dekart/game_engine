@@ -15,7 +15,7 @@ class InventoriesController < ApplicationController
 
     @amount = params[:amount].to_i * @item.package_size
 
-    EventLoggingService.log_event(:item_bought, trade_event_data(current_character, @item, @amount))
+    EventLoggingService.log_event(trade_event_data(:item_bought, current_character, @item, @amount))
 
     render :action => :create, :layout => "ajax"
   end
@@ -27,7 +27,7 @@ class InventoriesController < ApplicationController
 
     @inventory = current_character.inventories.sell!(@item, @amount)
 
-    EventLoggingService.log_event(:item_sold, trade_event_data(current_character, @item, @amount))
+    EventLoggingService.log_event(trade_event_data(:item_sold, current_character, @item, @amount))
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -56,14 +56,14 @@ class InventoriesController < ApplicationController
       current_character.equipment.equip!(@inventory, params[:placement])
 
       if @inventory.equipped == equipped + 1
-        EventLoggingService.log_event(:item_equipped, equip_event_data(@inventory, params[:placement]))
+        EventLoggingService.log_event(equip_event_data(:item_equipped, @inventory, params[:placement]))
       end
     else
       placements = current_character.placements.clone
       current_character.equipment.equip_best!
 
       if placements != current_character.placements
-        EventLoggingService.log_event(:all_equipped, equip_all_event_data(current_character))
+        EventLoggingService.log_event(equip_all_event_data(:all_equipped, current_character))
       end
     end
 
@@ -76,13 +76,13 @@ class InventoriesController < ApplicationController
 
       current_character.equipment.unequip!(@inventory, params[:placement])
 
-      EventLoggingService.log_event(:item_unequipped, equip_event_data(@inventory, params[:placement]))
+      EventLoggingService.log_event(equip_event_data(:item_unequipped, @inventory, params[:placement]))
     else
       placements = current_character.placements.clone
       current_character.equipment.unequip_all!
 
       if placements != current_character.placements
-        EventLoggingService.log_event(:all_unequipped, equip_all_event_data(current_character))
+        EventLoggingService.log_event(equip_all_event_data(:all_unequipped, current_character))
       end
     end
 
@@ -119,7 +119,9 @@ class InventoriesController < ApplicationController
           end
         end
 
-        EventLoggingService.log_event(:items_given, give_event_data(current_character, @character, @inventories))
+        @inventories.each do |inventory|
+          EventLoggingService.log_event(give_event_data(:items_given, current_character, @character, inventory))
+        end
 
         flash[:success] = t('inventories.give.messages.success')
 
@@ -142,40 +144,51 @@ class InventoriesController < ApplicationController
     redirect_from_iframe inventories_url(:canvas => true) if Setting.b(:character_auto_equipment)
   end
 
-  def trade_event_data(character, item, amount)
+  def trade_event_data(event_type, character, item, amount)
     {
+      :event_type => event_type,
       :character_id => character.id,
-      :character_level => character.level,
-      :item_id => item.id,
+      :level => character.level,
+      :reference_id => item.id,
+      :reference_type => "Item",
       :basic_price => item.basic_price,
       :vip_price => item.vip_price,
-      :amount => amount
+      :amount => amount,
+      :occurred_at => Time.now
     }.to_json
   end
 
-  def equip_event_data(inventory, placement)
+  def equip_event_data(event_type, inventory, placement)
     {
+      :event_type => event_type,
       :character_id => inventory.character.id,
-      :character_level => inventory.character.level,
-      :item_id => inventory.item.id,
-      :placement => placement
+      :level => inventory.character.level,
+      :reference_id => inventory.item.id,
+      :reference_type => "Item",
+      :string_value => placement,
+      :occurred_at => Time.now
     }.to_json
   end
 
-  def equip_all_event_data(character)
+  def equip_all_event_data(event_type, character)
     {
+      :event_type => event_type,
       :character_id => character.id,
-      :character_level => character.level
+      :level => character.level,
+      :occurred_at => Time.now
     }.to_json
   end
 
-  def give_event_data(character, receiver, inventories)
+  def give_event_data(event_type, character, receiver, inventory)
     {
+      :event_type => event_type,
       :character_id => character.id,
-      :character_level => character.level,
-      :receiver_id => receiver.id,
-      :receiver_level => receiver.level,
-      :ids => inventories.collect{|i| i.item.id}
+      :level => character.level,
+      :reference_id => receiver.id,
+      :reference_type => "Character",
+      :reference_level => receiver.level,
+      :int_value => inventory.item.id,
+      :occurred_at => Time.now
     }.to_json
   end
 end
