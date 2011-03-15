@@ -5,8 +5,8 @@ class CharactersController < ApplicationController
 
   prepend_before_filter :check_character_existance_or_create, :only => :index
 
-  before_filter :fetch_character_types, :only   => [:new, :create, :edit, :update]
-  before_filter :redirect_by_app_request,   :except => [:new, :create]
+  before_filter :fetch_character_types,   :only   => [:new, :create, :edit, :update]
+  before_filter :redirect_by_app_request, :except => [:new, :create]
     
   def index
     @latest_fights = Fight.with_participant(current_character).find(:all,

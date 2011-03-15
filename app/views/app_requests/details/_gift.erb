@@ -1,3 +1,7 @@
-<div class="sends"><%= t(".sends") %></div>
-<div class="item_image"><%= item_image(app_request.item, :small) %></div>
-<div class="item_name"><%= app_request.item.name %></div>
+<td class="message">
+  <%= t('.text', 
+        :user => character_name_link(app_request.sender), 
+        :item => app_request.item.name
+      ).html_safe %>
+</td>
+<td class="image"><%= item_image(app_request.item, :small) %></td>

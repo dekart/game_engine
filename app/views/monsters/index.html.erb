@@ -10,7 +10,7 @@
       <% content_tag_for :div, monster do %>
         <div class="name"><%= monster.name %></div>
 
-        <div class="image"><%= link_to(monster_image(monster, :small), monster) %></div>
+        <div class="image"><%= link_to(monster_image(monster, :normal), monster) %></div>
 
         <div class="status">
           <% if monster.progress? %>
@@ -50,7 +50,7 @@
       <div class="monster">
         <div class="name"><%= type.name %></div>
 
-        <div class="image"><%= monster_image(type, :small) %></div>
+        <div class="image"><%= monster_image(type, :normal) %></div>
 
         <div class="controls">
           <%= link_to(button(:attack), new_monster_path(:monster_type_id => type), :class => "attack button") %>

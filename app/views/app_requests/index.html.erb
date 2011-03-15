@@ -3,26 +3,24 @@
 <%= render "relations/buttons", :current => :accept_requests %>
 
 <% collection(@app_requests) do %>
-  <div id="app_request_list">
+  <table id="app_request_list">
     <% @app_requests.each do |app_request| %>
-      <% div_for(app_request) do %>
-        <div class="sender_picture"><%= character_picture_link(app_request.sender) %></div>
-        <div class="sender_name"><%= character_name_link(app_request.sender) %></div>
-        <div class="details">
-          <%= render "app_requests/details/#{ app_request.type_name }", :app_request => app_request %>
+      <% content_tag_for(:tr, app_request) do %>
+        <td class="sender_picture"><%= character_picture_link(app_request.sender) %></td>
+
+        <%= render "app_requests/details/#{ app_request.type_name }", :app_request => app_request %>
           
-          <div class="controls">
-            <%= link_to_remote(button(:accept),
-                  :url => app_request_path(app_request),
-                  :update => :ajax,
-                  :method => :put,
-                  :html => {
-                    :'data-click-once' => true,
-                    :class => 'accept button'
-                  }
-                ) if app_request.acceptable? %>
-          </div>
-        </div>
+        <td class="controls">
+          <%= link_to_remote(button(:accept),
+                :url => app_request_path(app_request),
+                :update => :ajax,
+                :method => :put,
+                :html => {
+                  :'data-click-once' => true,
+                  :class => 'accept button'
+                }
+              ) if app_request.acceptable? %>
+        </td>
       <% end %>
     <% end %>
   </div>
