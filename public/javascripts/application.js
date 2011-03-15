@@ -352,9 +352,8 @@ $(function(){
   }
 
   $(document).bind('facebook.ready', function(){
-    FB.Canvas.setAutoResize();
-    FB.Canvas.setSize({height: $(document.body).height()});
-  })
+    window.setInterval(updateCanvasSize, 100);
+  });
 
   $(document).bind('result.received', function(){
     $(document).trigger('remote_content.received');
@@ -384,6 +383,7 @@ $(function(){
       }).first();
 
       $.scrollTo(dialog);
+      
       Spinner.alignTo(dialog);
       Spinner.blink();
     });
@@ -424,5 +424,11 @@ function signedUrl(url){
 }
 
 function redirectTo(url){
-  document.location = signedUrl(url)
+  document.location = signedUrl(url);
+}
+
+function updateCanvasSize() {
+  FB.Canvas.setSize({
+    height: $('body').height() + 50 // Additional number compensates admin menu margin that is not included into the body height
+  });
 }
