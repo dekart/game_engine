@@ -60,36 +60,42 @@ class MonstersController < ApplicationController
 
   protected
 
-  def engage_event_data(monster)
+  def engage_event_data(event_data, monster)
     {
-      :monster_id => monster.id,
-      :monster_type_id => monster.monster_type_id,
+      :event_data => event_data,
       :character_id => monster.character.id,
-      :character_level => monster.character.level
+      :level => monster.character.level,
+      :reference_id => monster.id,
+      :reference_type => "Monster",
+      :occurred_at => Time.now
     }.to_json
   end
 
-  def attack_event_data(fight)
+  def attack_event_data(event_data, fight)
     monster = fight.monster
     {
-      :monster_id => monster.id,
-      :monster_type_id => monster.monster_type_id,
+      :event_data => event_data,
       :character_id => monster.character.id,
-      :character_level => monster.character.level,
-      :monster_damage => fight.monster_damage,
-      :character_damage => fight.character_damage,
-      :money => fight.money,
-      :experience => fight.experience
+      :level => monster.character.level,
+      :reference_id => monster.id,
+      :reference_type => "Monster",
+      :attacker_damage => fight.character_damage,
+      :victim_damage => fight.monster_damage,
+      :basic_money => fight.money,
+      :experience => fight.experience,
+      :occurred_at => Time.now
     }.to_json
   end
 
-  def reward_event_data(fight)
+  def reward_event_data(event_data, fight)
     monster = fight.monster
     {
-      :monster_id => monster.id,
-      :monster_type_id => monster.monster_type_id,
+      :event_data => event_data,
       :character_id => monster.character.id,
-      :character_level => monster.character.level
+      :level => monster.character.level,
+      :reference_id => monster.id,
+      :reference_type => "Monster",
+      :occurred_at => Time.now
     }.to_json
   end
 end

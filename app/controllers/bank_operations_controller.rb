@@ -11,7 +11,7 @@ class BankOperationsController < ApplicationController
     @deposit = current_character.bank_deposits.build(params[:bank_operation])
 
     if @deposit.save
-      EventLoggingService.log_event(:bank_deposit, bank_event_data(@deposit))
+      EventLoggingService.log_event(bank_event_data(:bank_deposit, @deposit))
 
       current_character.reload
 
@@ -25,7 +25,7 @@ class BankOperationsController < ApplicationController
     @withdrawal = current_character.bank_withdrawals.build(params[:bank_operation])
 
     if @withdrawal.save
-      EventLoggingService.log_event(:bank_withdraw, bank_event_data(@withdrawal))
+      EventLoggingService.log_event(bank_event_data(:bank_withdraw, @withdrawal))
 
       current_character.reload
 
@@ -37,11 +37,13 @@ class BankOperationsController < ApplicationController
 
   protected
 
-  def bank_event_data(operation)
+  def bank_event_data(event_type, operation)
     {
+      :event_type => event_type,
       :character_id => operation.character.id,
-      :character_level => operation.character.level,
-      :amount => operation.amount
+      :level => operation.character.level,
+      :basic_money => operation.amount,
+      :occurred_at => Time.now
     }.to_json
   end
 end

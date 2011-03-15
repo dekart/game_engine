@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110131112012) do
+ActiveRecord::Schema.define(:version => 20110314082020) do
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -119,45 +119,45 @@ ActiveRecord::Schema.define(:version => 20110131112012) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                     :limit => 100,      :default => "",                    :null => false
+    t.string   "name",                     :limit => 100,        :default => "",                    :null => false
     t.integer  "basic_money"
     t.integer  "vip_money"
-    t.integer  "level",                                        :default => 1
-    t.integer  "experience",                                   :default => 0
+    t.integer  "level",                                          :default => 1
+    t.integer  "experience",                                     :default => 0
     t.integer  "points"
     t.integer  "attack"
     t.integer  "defence"
-    t.integer  "hp",                                           :default => 100
+    t.integer  "hp",                                             :default => 100
     t.integer  "health"
-    t.integer  "ep",                                           :default => 10
+    t.integer  "ep",                                             :default => 10
     t.integer  "energy"
     t.text     "inventory_effects"
     t.datetime "hp_updated_at"
     t.datetime "ep_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "fights_won",                                   :default => 0
-    t.integer  "fights_lost",                                  :default => 0
-    t.integer  "missions_succeeded",                           :default => 0
-    t.integer  "missions_completed",                           :default => 0
-    t.integer  "relations_count",                              :default => 0
-    t.integer  "bank",                     :limit => 8,        :default => 0
+    t.integer  "fights_won",                                     :default => 0
+    t.integer  "fights_lost",                                    :default => 0
+    t.integer  "missions_succeeded",                             :default => 0
+    t.integer  "missions_completed",                             :default => 0
+    t.integer  "relations_count",                                :default => 0
+    t.integer  "bank",                     :limit => 8,          :default => 0
     t.datetime "basic_money_updated_at"
     t.text     "relation_effects"
     t.integer  "current_mission_group_id"
     t.integer  "character_type_id"
     t.integer  "stamina"
-    t.integer  "sp",                                           :default => 10
+    t.integer  "sp",                                             :default => 10
     t.datetime "sp_updated_at"
-    t.text     "placements",               :limit => 16777215
-    t.integer  "total_money",              :limit => 8,        :default => 0
-    t.datetime "hospital_used_at",                             :default => '1970-01-01 05:00:00'
-    t.integer  "missions_mastered",                            :default => 0
-    t.integer  "lock_version",                                 :default => 0
-    t.datetime "fighting_available_at",                        :default => '1970-01-01 05:00:00'
+    t.text     "placements",               :limit => 2147483647
+    t.integer  "total_money",              :limit => 8,          :default => 0
+    t.datetime "hospital_used_at",                               :default => '1970-01-01 05:00:00'
+    t.integer  "missions_mastered",                              :default => 0
+    t.integer  "lock_version",                                   :default => 0
+    t.datetime "fighting_available_at",                          :default => '1970-01-01 05:00:00'
   end
 
-  add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
+  add_index "characters", ["level"], :name => "by_level_and_fighting_time"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
@@ -345,6 +345,28 @@ ActiveRecord::Schema.define(:version => 20110131112012) do
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
+
+  create_table "logged_events", :force => true do |t|
+    t.string   "event_type"
+    t.integer  "character_id"
+    t.integer  "level"
+    t.integer  "reference_id"
+    t.string   "reference_type"
+    t.integer  "reference_level"
+    t.integer  "amount"
+    t.integer  "experience"
+    t.integer  "basic_money",     :limit => 8
+    t.integer  "vip_money",       :limit => 8
+    t.integer  "attacker_damage"
+    t.integer  "victim_damage"
+    t.string   "string_value"
+    t.integer  "int_value"
+    t.datetime "occurred_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "logged_events", ["event_type"], :name => "index_logged_events_on_event_type"
 
   create_table "market_items", :force => true do |t|
     t.integer  "character_id"

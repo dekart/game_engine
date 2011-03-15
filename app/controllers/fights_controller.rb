@@ -11,7 +11,7 @@ class FightsController < ApplicationController
       :victim   => @victim
     )
 
-    EventLoggingService.log_event(:character_fight, fight_event_data(@fight))
+    EventLoggingService.log_event(fight_event_data(:character_fight, @fight))
 
     render :action => :create, :layout => "ajax"
   end
@@ -40,19 +40,20 @@ class FightsController < ApplicationController
 
   protected
 
-  def fight_event_data(fight)
+  def fight_event_data(event_type, fight)
     {
+      :event_type => event_type,
       :character_id => fight.attacker.id,
-      :character_level => fight.attacker.level,
-      :victim_id => fight.victim.id,
-      :victim_level => fight.victim.level,
-      :won => fight.attacker_won?,
-      :is_responce => fight.is_response?,
+      :level => fight.attacker.level,
+      :reference_id => fight.victim.id,
+      :reference_type => "Character",
+      :reference_level => fight.victim.level,
       :attacker_damage => fight.attacker_damage,
       :victim_damage => fight.victim_damage,
-      :winner_money => fight.winner_money,
-      :loser_money => fight.loser_money,
-      :experience => fight.experience
+      :basic_money => fight.attacker_won? ? fight.winner_money : fight.loser_money,
+      :victim_money => fight.attacker_won? ? fight.loser_money : fight.winner_money,
+      :experience => fight.experience,
+      :occurred_at => Time.now
     }.to_json
   end
 end
