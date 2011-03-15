@@ -12,7 +12,7 @@ namespace :app do
             events = EventLoggingService.get_next_batch(batch_size)
 
             events.each do |e|
-              puts "Storing event: #{e}"
+              #puts "Storing event: #{e}"
               LoggedEvent.create(JSON.parse(e))
             end
           end

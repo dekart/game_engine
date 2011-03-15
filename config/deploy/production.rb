@@ -24,3 +24,9 @@ set :facebooker_config, {
 
   :set_asset_host_to_callback_url => true
 }
+
+set :redis_config, {
+    :host => "127.0.0.1",
+    :port => 6379,
+    :db => 0
+}
