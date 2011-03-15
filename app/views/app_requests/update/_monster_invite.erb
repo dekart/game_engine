@@ -11,4 +11,6 @@
 
   $request.find('.message').html('<%= escape_javascript(message) %>');
   $request.find('.controls').html('<%= escape_javascript(controls) %>');
+
+  <%= ga_track_event('Requests', "#{app_request.type_name.titleize} - Accepted", app_request.monster.name) %>
 <% end %>
