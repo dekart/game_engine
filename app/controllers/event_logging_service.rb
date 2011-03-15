@@ -10,4 +10,8 @@ class EventLoggingService
   def self.trim_event_list(size)
     $redis.ltrim(:logged_events, size, -1)
   end
+
+  def self.empty_event_list?
+    $redis.llen(:logged_events) == 0
+  end
 end
