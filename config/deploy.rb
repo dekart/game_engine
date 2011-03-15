@@ -61,6 +61,13 @@ namespace :deploy do
       put(config, "#{release_path}/config/facebooker.yml")
     end
 
+    desc "Generate DB config file"
+    task :database do
+      config = YAML.dump(rails_env => database.stringify_keys)
+
+      put(config, "#{release_path}/config/database.yml")
+    end
+
     desc "Install cron jobs"
     task :cron, :roles => :app do
       template = ERB.new(
@@ -166,6 +173,7 @@ after "deploy:setup", "deploy:dependencies:system_gems"
 # All deploys
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 after "deploy:update_code", "deploy:configure:facebooker"
+after "deploy:update_code", "deploy:configure:database"
 
 ["deploy", "deploy:migrations", "deploy:cold"].each do |t|
   after t, "deploy:configure:apache"
