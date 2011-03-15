@@ -19,7 +19,8 @@
                   :to       => facebook_id,
                   :title    => t('.title'),
                   :message  => t('.invitation_message', :app_name => t('app_name')),
-                  :callback => "$('#user_#{facebook_id}').hide()"
+                  :params   => {:no_dialog => true},
+                  :callback => "$('#user_#{facebook_id}').fadeOut('slow')"
                 ),
                 :class => 'invite button'
               ) %>
