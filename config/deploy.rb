@@ -98,12 +98,12 @@ namespace :deploy do
   namespace :db do
     desc "Backup database"
     task :backup, :roles => :db do
-      dump_path = '%s/dump.%s.%d.sql' % [shared_path, database_config["database"], Time.now.to_i]
+      dump_path = '%s/dump.%s.%d.sql' % [shared_path, database_config[:database], Time.now.to_i]
 
       run "mysqldump -u %s --password='%s' %s > %s" % [
-        database_config["username"],
-        database_config["password"],
-        database_config["database"],
+        database_config[:username],
+        database_config[:password],
+        database_config[:database],
         dump_path
       ]
       
