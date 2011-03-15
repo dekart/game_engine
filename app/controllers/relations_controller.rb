@@ -27,7 +27,7 @@ class RelationsController < ApplicationController
       flash[:notice] = t("relations.show.messages.already_joined")
 
       redirect_from_iframe root_url(:canvas => true)
-    elsif Setting.b(:relation_friends_only) && !friend_with?
+    elsif Setting.b(:relation_friends_only) && !friend_with?(@character)
       flash[:notice] = t("relations.show.messages.only_friends")
 
       redirect_from_iframe root_url(:canvas => true)
