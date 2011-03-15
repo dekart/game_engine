@@ -106,7 +106,7 @@ namespace :app do
 
         AppRequest::Base.update_all "type = 'AppRequest::Gift'", "data LIKE '%type: gift%'"
         AppRequest::Base.update_all "type = 'AppRequest::MonsterInvite'", "data LIKE '%type: monster%'"
-        AppRequest::Base.update_all "type = 'AppRequest::Invitation'", "data LIKE '%type: monster_invite%'"
+        AppRequest::Base.update_all "type = 'AppRequest::Invitation'", "data LIKE '%type: invitation%'"
         AppRequest::Base.delete_all 'data IS NULL'
       end
       
