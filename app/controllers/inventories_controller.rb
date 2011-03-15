@@ -120,7 +120,7 @@ class InventoriesController < ApplicationController
         end
 
         @inventories.each do |inventory|
-          EventLoggingService.log_event(give_event_data(:items_given, current_character, @character, inventory))
+          EventLoggingService.log_event(give_event_data(:item_given, current_character, @character, inventory))
         end
 
         flash[:success] = t('inventories.give.messages.success')

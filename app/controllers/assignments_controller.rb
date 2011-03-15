@@ -11,7 +11,7 @@ class AssignmentsController < ApplicationController
 
     @assignment.save
 
-    if @assignment.errors.empty
+    if @assignment.errors.empty?
       EventLoggingService.log_event(assignment_event_data(:assignment_created, @assignment))
     end
 
