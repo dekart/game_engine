@@ -1,174 +1,3 @@
-(function($){
-  $.fn.missionGroups = function(current_group, show_limit){
-    var $container = $(this)
-    var $items = $container.find('li');
-    var $current = $(current_group);
-
-    $container.find('.container').jCarouselLite({
-      btnNext:  $container.find('.next'),
-      btnPrev:  $container.find('.previous'),
-      visible:  show_limit,
-      start:    Math.floor($items.index($current) / show_limit) * show_limit,
-      circular: false
-    });
-
-    $current.addClass('current');
-
-    $items.click(function(e){
-      e.preventDefault();
-      e.stopPropagation();
-
-      redirectTo($(this).find('a').attr('href'));
-    })
-  }
-  
-  $.fn.giftButton = function(options){
-    $(this).live('click', function(e){
-      e.preventDefault();
-      
-      var $this = $(this);
-
-      if_fb_initialized(function(){
-        FB.ui({
-          method: 'apprequests',
-          title: options.request_title,
-          message: $this.attr('data-message'),
-          data: {
-            item_id: $this.attr('data-item-id'),
-          }
-        }, function(response){
-          if(typeof(response) != 'undefined' && response != null){
-            $('#ajax').load(options.request_callback_url, {ids: response.request_ids, item_id: $this.attr('data-item-id')});
-          }
-        });
-
-        $(document).trigger('facebook.dialog');
-      })
-    })
-  }
-  
-  $.fn.giftForm = function(options){
-    var $gifts = $(this).find('.gifts .gift');
-
-    $gifts.css({
-      height: $gifts.map(function(e){
-          return $(this).outerHeight()
-        }).toArray().sort().reverse()[0]
-    });
-
-    $gifts.find('.send').giftButton(options) 
-  }
-})(jQuery);
-
-var CollectionList = {
-  setup: function(){
-    CollectionList.blurItems($('#item_collection_list').find('.info .item:not(.present)'));
-  },
-
-  blurItems: function(collection){
-    collection.removeClass('present').children().css({opacity: 0.4, filter: ''})
-  }
-};
-var CharacterForm = {
-  setup: function(selector){
-    var form = $(selector);
-
-    form.find('#character_types .character_type').click(function(){
-      CharacterForm.set_character_type(this)
-    }).tooltip({
-      id: 'tooltip',
-      delay: 0,
-      bodyHandler: function(){
-        return $('#description_character_type_' + $(this).attr('value')).html();
-      }
-    });
-
-    form.find('input[type=submit]').click(function(e){
-      e.preventDefault();
-
-      form.submit();
-
-      Spinner.show(200);
-    });
-
-    form.find('a.skip').click(function(e){
-      var link = e.target;
-
-      e.preventDefault();
-
-      redirectTo($(link).attr('href'));
-
-      Spinner.show(200);
-    });
-  },
-
-  set_character_type: function(selector){
-    var $this = $(selector);
-
-    $this.addClass('selected').
-      siblings('.character_type').removeClass('selected');
-
-    $('#character_character_type_id').val(
-      $this.attr('value')
-    );
-  }
-}
-
-var Character = {
-  update: function(a){
-    var c = a.character;
-
-    if(c == undefined) return;
-    
-    $("#co .basic_money .value").text(c.formatted_basic_money);
-    $("#co .vip_money .value").text(c.formatted_vip_money);
-    $("#co .experience .value").text(c.experience + "/" + c.next_level_experience);
-    $("#co .experience .percentage").css({width: c.level_progress_percentage + "%"})
-    $("#co .level .value").text(c.level);
-    $("#co .health .value").text(c.hp + "/" + c.health_points);
-    $("#co .energy .value").text(c.ep + "/" + c.energy_points);
-    $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
-
-    Timer.start('#co .health .timer', c.time_to_hp_restore, this.update_from_remote);
-    Timer.start('#co .energy .timer', c.time_to_ep_restore, this.update_from_remote);
-    Timer.start('#co .stamina .timer', c.time_to_sp_restore, this.update_from_remote);
-
-    $('#co .timer').unbind('click').click(Character.update_from_remote);
-
-    c.points > 0 ? $("#co .level .upgrade").show() : $("#co .level .upgrade").hide();
-    c.hp == c.health_points ? $('#co .health .hospital').hide() : $('#co .health .hospital').show();
-  },
-
-  update_from_remote: function(){
-    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
-      Character.update(data)
-    });
-  },
-
-  initFightAttributes: function(){
-    $('#fight_attributes .inventories .inventory').tooltip({
-      delay: 0,
-      track: true,
-      showURL: false,
-      bodyHandler: function(){
-        return $('#' + $(this).attr('tooltip')).clone();
-      }
-    })
-  }
-};
-
-var PropertyList = {
-  enableCollection: function(timer_element){
-    $(timer_element).parent('.timer').hide();
-    $(timer_element).parents('.property_type').find('.button.collect').show();
-
-    var collectables = $('#property_collect_all').find('.value');
-
-    collectables.text(parseInt(collectables.text()) + 1);
-    collectables.parent().show();
-  }
-}
-
 var Timer = {
   timers: {},
 
@@ -208,10 +37,10 @@ var Timer = {
   update: function(id){
     var element = $(id);
 
-    if(element == null){
+    if(element === 'null'){
       this.timers[id].running = false;
 
-      return
+      return;
     }
 
     if(this.timers[id].value > 0){
@@ -237,7 +66,7 @@ var Timer = {
   },
 
   start: function(id, value, callback){
-    if(value == 0){ return; }
+    if(value === '0'){ return; }
 
     if(this.timers[id]){
       this.timers[id].value = value;
@@ -251,6 +80,216 @@ var Timer = {
     }
   }
 };
+
+
+var Spinner = {
+  x: -1,
+  y: -1,
+  setup: function(){
+    $('#spinner').ajaxStart(function(){
+        Spinner.show();
+      }).ajaxStop(function(){
+        Spinner.hide();
+      });
+      
+    $('body').mousemove(this.alignToMouse);
+  },
+  show: function(speed){
+    Spinner.moveToPosition();
+
+    $('#spinner').fadeIn(speed);
+  },
+  hide: function(speed){
+    $('#spinner').fadeOut(speed);
+  },
+  blink: function(speed, delay){
+    Spinner.moveToPosition();
+
+    $('#spinner').fadeIn(speed).delay(delay).fadeOut(speed);
+  },
+  storePosition: function(x, y){
+    Spinner.x = x;
+    Spinner.y = y;
+  },
+  moveToPosition: function(){
+    if(this.x > -1 && this.y > -1){
+      $('#spinner').css({
+        top: this.y - $('#spinner').height() / 2
+      });
+    }
+  },
+  alignToMouse: function(e){
+    Spinner.storePosition(e.pageX, e.pageY);
+  },
+  alignTo: function(selector){
+    var position = $(selector).offset();
+
+    Spinner.storePosition(position.left, position.top);
+  }
+};
+
+
+function if_fb_initialized(callback){
+  if(typeof(FB) != 'undefined'){ 
+    callback.call();
+  } else { 
+    alert('The page failed to initialize properly. Please reload it and try again.'); 
+  }
+}
+
+function bookmark(){
+  if(typeof(FB) != 'undefined'){
+    FB.ui({method : 'bookmark.add'});
+    $(document).trigger('facebook.dialog');
+  }
+
+  $.scrollTo('body');
+}
+
+function show_result(){
+  $('#result').show();
+
+  $.scrollTo('#result');
+}
+
+function signedUrl(url){
+  var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
+
+  return new_url;
+}
+
+function redirectTo(url){
+  document.location = signedUrl(url);
+}
+
+function updateCanvasSize() {
+  FB.Canvas.setSize({
+    height: $('body').height() + 100 // Additional number compensates admin menu margin that is not included into the body height
+  });
+}
+
+
+var CollectionList = {
+  setup: function(){
+    CollectionList.blurItems($('#item_collection_list').find('.info .item:not(.present)'));
+  },
+
+  blurItems: function(collection){
+    collection.removeClass('present').children().css({opacity: 0.4, filter: ''});
+  }
+};
+
+
+var CharacterForm = {
+  setup: function(selector){
+    var form = $(selector);
+
+    form.find('#character_types .character_type').click(function(){
+      CharacterForm.set_character_type(this);
+    }).tooltip({
+      id: 'tooltip',
+      delay: 0,
+      bodyHandler: function(){
+        return $('#description_character_type_' + $(this).attr('value')).html();
+      }
+    });
+
+    form.find('input[type=submit]').click(function(e){
+      e.preventDefault();
+
+      form.submit();
+
+      Spinner.show(200);
+    });
+
+    form.find('a.skip').click(function(e){
+      var link = e.target;
+
+      e.preventDefault();
+
+      redirectTo($(link).attr('href'));
+
+      Spinner.show(200);
+    });
+  },
+
+  set_character_type: function(selector){
+    var $this = $(selector);
+
+    $this.addClass('selected').siblings('.character_type').removeClass('selected');
+
+    $('#character_character_type_id').val(
+      $this.attr('value')
+    );
+  }
+};
+
+
+var Character = {
+  update: function(a){
+    var c = a.character;
+
+    if(c === 'undefined'){ return; }
+    
+    $("#co .basic_money .value").text(c.formatted_basic_money);
+    $("#co .vip_money .value").text(c.formatted_vip_money);
+    $("#co .experience .value").text(c.experience + "/" + c.next_level_experience);
+    $("#co .experience .percentage").css({width: c.level_progress_percentage + "%"});
+    $("#co .level .value").text(c.level);
+    $("#co .health .value").text(c.hp + "/" + c.health_points);
+    $("#co .energy .value").text(c.ep + "/" + c.energy_points);
+    $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
+
+    Timer.start('#co .health .timer', c.time_to_hp_restore, this.update_from_remote);
+    Timer.start('#co .energy .timer', c.time_to_ep_restore, this.update_from_remote);
+    Timer.start('#co .stamina .timer', c.time_to_sp_restore, this.update_from_remote);
+
+    $('#co .timer').unbind('click').click(Character.update_from_remote);
+
+    if (c.points > 0) {
+      $("#co .level .upgrade").show();
+    } else {
+      $("#co .level .upgrade").hide();
+    }
+    
+    if (c.hp == c.health_points) {
+      $('#co .health .hospital').hide();
+    } else {
+      $('#co .health .hospital').show();
+    }
+  },
+
+  update_from_remote: function(){
+    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
+      Character.update(data);
+    });
+  },
+
+  initFightAttributes: function(){
+    $('#fight_attributes .inventories .inventory').tooltip({
+      delay: 0,
+      track: true,
+      showURL: false,
+      bodyHandler: function(){
+        return $('#' + $(this).attr('tooltip')).clone();
+      }
+    });
+  }
+};
+
+
+var PropertyList = {
+  enableCollection: function(timer_element){
+    $(timer_element).parent('.timer').hide();
+    $(timer_element).parents('.property_type').find('.button.collect').show();
+
+    var collectables = $('#property_collect_all').find('.value');
+
+    collectables.text(parseInt(collectables.text(), 10) + 1);
+    collectables.parent().show();
+  }
+};
+
 
 var BossFight = {
   initBlock: function(){
@@ -275,17 +314,18 @@ var BossFight = {
   hide_reminder: function(fight_id){
     $('#boss_fight_' + fight_id).hide();
 
-    if($('#boss_fight_block .boss_fight:visible').length == 0){
+    if($('#boss_fight_block .boss_fight:visible').length === '0'){
       $('#boss_fight_block').hide();
     }
   }
-}
+};
+
 
 var AssignmentForm = {
   setup: function(){
     $('#new_assignment .tabs').tabs();
 
-    $('#new_assignment .relations .relation').click(AssignmentForm.select_relation)
+    $('#new_assignment .relations .relation').click(AssignmentForm.select_relation);
   },
 
   select_relation: function(){
@@ -297,7 +337,8 @@ var AssignmentForm = {
 
     $('#assignment_relation_id').val($this.attr('value'));
   }
-}
+};
+
 
 var Equipment = {
   setup: function(){
@@ -307,9 +348,10 @@ var Equipment = {
       bodyHandler: function(){
         return $(this).find('.tooltip_content').clone();
       }
-    })
+    });
   }
-}
+};
+
 
 var Mission = {
   requirementCallback: function(){},
@@ -322,54 +364,71 @@ var Mission = {
     $(document).unbind('item.purchase', Mission.onItemPurchase);
     $(document).trigger('requirement.satisfy');
   }
-}
+};
 
-var Spinner = {
-  x: -1,
-  y: -1,
-  setup: function(){
-    $('#spinner').
-      ajaxStart(function(){
-        Spinner.show();
-      }).
-      ajaxStop(function(){
-        Spinner.hide();
+
+(function($){
+  $.fn.missionGroups = function(current_group, show_limit){
+    var $container = $(this);
+    var $items = $container.find('li');
+    var $current = $(current_group);
+
+    $container.find('.container').jCarouselLite({
+      btnNext:  $container.find('.next'),
+      btnPrev:  $container.find('.previous'),
+      visible:  show_limit,
+      start:    Math.floor($items.index($current) / show_limit) * show_limit,
+      circular: false
+    });
+
+    $current.addClass('current');
+
+    $items.click(function(e){
+      e.preventDefault();
+      e.stopPropagation();
+
+      redirectTo($(this).find('a').attr('href'));
+    });
+  };
+  
+  $.fn.giftButton = function(options){
+    $(this).live('click', function(e){
+      e.preventDefault();
+      
+      var $this = $(this);
+
+      if_fb_initialized(function(){
+        FB.ui({
+          method: 'apprequests',
+          title: options.request_title,
+          message: $this.attr('data-message'),
+          data: {
+            item_id: $this.attr('data-item-id')
+          }
+        }, function(response){
+          if(typeof(response) != 'undefined' && response !== 'null'){
+            $('#ajax').load(options.request_callback_url, {ids: response.request_ids, item_id: $this.attr('data-item-id')});
+          }
+        });
+
+        $(document).trigger('facebook.dialog');
       });
-    $('body').mousemove(this.alignToMouse);
-  },
-  show: function(speed){
-    Spinner.moveToPosition();
+    });
+  };
+  
+  $.fn.giftForm = function(options){
+    var $gifts = $(this).find('.gifts .gift');
 
-    $('#spinner').fadeIn(speed);
-  },
-  hide: function(speed){
-    $('#spinner').fadeOut(speed)
-  },
-  blink: function(speed, delay){
-    Spinner.moveToPosition();
+    $gifts.css({
+      height: $gifts.map(function(e){
+          return $(this).outerHeight();
+        }).toArray().sort().reverse()[0]
+    });
 
-    $('#spinner').fadeIn(speed).delay(delay).fadeOut(speed);
-  },
-  storePosition: function(x, y){
-    Spinner.x = x;
-    Spinner.y = y;
-  },
-  moveToPosition: function(){
-    if(this.x > -1 && this.y > -1){
-      $('#spinner').css({
-        top: this.y - $('#spinner').height() / 2
-      })
-    }
-  },
-  alignToMouse: function(e){
-    Spinner.storePosition(e.pageX, e.pageY)
-  },
-  alignTo: function(selector){
-    var position = $(selector).offset();
+    $gifts.find('.send').giftButton(options) ;
+  };
+})(jQuery);
 
-    Spinner.storePosition(position.left, position.top);
-  }
-}
 
 $(function(){
   if(document.cookie.indexOf('access_token') == -1){
@@ -394,7 +453,7 @@ $(function(){
   
   $('a[data-click-once=true]').live('click', function(){
     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
-  })
+  });
 
   $(document).bind('facebook.ready', function(){
     window.setInterval(updateCanvasSize, 100);
@@ -402,10 +461,10 @@ $(function(){
 
   $(document).bind('result.received', function(){
     $(document).trigger('remote_content.received');
-    $(document).trigger('result.available')
+    $(document).trigger('result.available');
   });
 
-  $(document).bind('result.available', show_result)
+  $(document).bind('result.available', show_result);
 
   $(document).bind('remote_content.received', function(){
     if(typeof(FB) != 'undefined'){
@@ -432,7 +491,7 @@ $(function(){
       Spinner.alignTo(dialog);
       Spinner.blink();
     });
-  })
+  });
 
   Spinner.setup();
 
@@ -446,42 +505,3 @@ $(function(){
     $(document).dequeue('dialog');
   });
 });
-
-function if_fb_initialized(callback){
-  if(typeof(FB) != 'undefined'){ 
-    callback.call()
-  } else { 
-    alert('The page failed to initialize properly. Please reload it and try again.'); 
-  }
-}
-
-function bookmark(){
-  if(typeof(FB) != 'undefined'){
-    FB.ui({method : 'bookmark.add'});
-    $(document).trigger('facebook.dialog');
-  }
-
-  $.scrollTo('body');
-}
-
-function show_result(){
-  $('#result').show();
-
-  $.scrollTo('#result');
-}
-
-function signedUrl(url){
-  var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
-
-  return new_url
-}
-
-function redirectTo(url){
-  document.location = signedUrl(url);
-}
-
-function updateCanvasSize() {
-  FB.Canvas.setSize({
-    height: $('body').height() + 100 // Additional number compensates admin menu margin that is not included into the body height
-  });
-}
