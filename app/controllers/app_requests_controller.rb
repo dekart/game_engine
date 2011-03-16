@@ -1,5 +1,5 @@
 class AppRequestsController < ApplicationController
-  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook
+  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook, :only => :create
   
   def index
     @app_requests = current_character.app_requests.with_state(:processed, :visited).all(:order => "sender_id, created_at DESC")
