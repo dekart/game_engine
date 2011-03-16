@@ -37,7 +37,7 @@ var Timer = {
   update: function(id){
     var element = $(id);
 
-    if(element === 'null'){
+    if(element.length === 0){
       this.timers[id].running = false;
 
       return;
@@ -49,7 +49,7 @@ var Timer = {
       this.timers[id].value = this.timers[id].value - 1;
 
       this.rerun(id);
-    }else{
+    } else {
       element.text('');
 
       this.timers[id].running = false;
@@ -62,11 +62,12 @@ var Timer = {
 
   rerun: function(id){
     setTimeout(function() { Timer.update(id); }, 1000);
+    
     this.timers[id].running = true;
   },
 
   start: function(id, value, callback){
-    if(value === '0'){ return; }
+    if(value == 0){ return; }
 
     if(this.timers[id]){
       this.timers[id].value = value;
@@ -314,7 +315,7 @@ var BossFight = {
   hide_reminder: function(fight_id){
     $('#boss_fight_' + fight_id).hide();
 
-    if($('#boss_fight_block .boss_fight:visible').length === '0'){
+    if($('#boss_fight_block .boss_fight:visible').length == 0){
       $('#boss_fight_block').hide();
     }
   }
