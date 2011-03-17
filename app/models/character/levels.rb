@@ -3,20 +3,10 @@ class Character
     def self.included(base)
       base.extend(ClassMethods)
     end
+    
+    DATA_FILE = Rails.root.join('db', 'data', 'experience.txt')
         
-    module ClassMethods
-      def level_for_experience(value)
-        EXPERIENCE.each_with_index do |experience, level|
-          return level if experience >= value
-        end
-      end
-    end
-
-    EXPERIENCE = [0]
-
-    1000.times do |i|
-      EXPERIENCE[i + 1] = ((EXPERIENCE[i].to_i * 1.02 + (i + 1) * 10).round / 10.0).round * 10
-    end
+    EXPERIENCE = File.file?(DATA_FILE) ? File.read(DATA_FILE).split(/\s+/im).map{|v| v.strip.to_i } : []
     
     def experience_to_next_level
       next_level_experience - experience

@@ -1,6 +1,6 @@
 namespace :app do
   desc 'Setup application'
-  task :setup => [:environment, 'setup:assets', 'setup:stylesheets', 'setup:settings', 'setup:subscriptions']
+  task :setup => [:environment, 'setup:assets', 'setup:stylesheets', 'setup:settings', 'setup:experience', 'setup:subscriptions']
   
   namespace :setup do
     desc "Setup application stylesheets"
@@ -43,6 +43,25 @@ namespace :app do
       )
       
       puts 'Done!'
+    end
+    
+    desc "Generate experience table for levels"
+    task :experience, :regenerate, :needs => :environment do |task, options|
+      if Character::Levels::EXPERIENCE.empty? || options['regenerate'] == 'true'
+        puts 'Generating experience table for levels...'
+        
+        experience = [0]
+      
+        1000.times do |i|
+          experience[i + 1] = ((experience[i].to_i * 1.02 + (i + 1) * 10).round / 10.0).round * 10
+        end
+        
+        File.open(Character::Levels::DATA_FILE, 'w+') do |file|
+          file.puts(*experience)
+        end
+        
+        puts 'Done!'
+      end
     end
   end
 end
