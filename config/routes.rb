@@ -153,7 +153,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tutorials, :only => :show
 
   map.resources(:users,
-    :collection => { :invite => :any, :subscribe => :any },
+    :collection => {
+      :subscribe => :any
+    },
     :member => {
       :toggle_block => :any
     }

@@ -15,7 +15,7 @@
   </div>
   
   <div class="controls">
-    <%= link_to(button(:invite_other), invite_users_path, :class => 'invite_other button')%>
+    <%= link_to(button(:invite_other), new_relation_path, :class => 'invite_other button')%>
 
     <%= link_to_function(button(:invite), 
           fb_request_dialog(:invitation,
