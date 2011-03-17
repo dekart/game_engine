@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base
   def store_return_to(uri = nil)
     session[:return_to] = uri
     session[:return_to] ||= params[:return_to]
-    session[:return_to] ||= url_for(params_without_facebook_data.merge(:canvas => true))
+    session[:return_to] ||= url_for(params_without_facebook_data.merge(:canvas => true)) unless controller_name == 'characters' && action_name == 'index'
   end
 
   def redirect_back(uri)
