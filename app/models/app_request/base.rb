@@ -34,11 +34,11 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     event :accept do
-      transition [:pending, :processed, :visited] => :accepted
+      transition [:processed, :visited] => :accepted
     end
     
     event :ignore do
-      transition [:pending, :processed, :visited] => :ignored
+      transition [:processed, :visited] => :ignored
     end
     
     after_transition :on => :process do |request|

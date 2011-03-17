@@ -249,6 +249,7 @@ end
 
 Factory.define :app_request_base, :class => 'AppRequest::Base' do |t|
   t.facebook_id 123456789
+  t.state 'processed'
 end
 
 Factory.define :app_request_gift, :class => 'AppRequest::Gift' do |t|
@@ -260,6 +261,7 @@ Factory.define :app_request_gift, :class => 'AppRequest::Gift' do |t|
   t.data { 
     {'item_id' => Factory(:item).id} 
   }
+  t.state 'processed'
 end
 
 Factory.define :app_request_monster_invite, :class => 'AppRequest::MonsterInvite' do |t|
@@ -271,6 +273,7 @@ Factory.define :app_request_monster_invite, :class => 'AppRequest::MonsterInvite
   t.data { 
     {'monster_id' => Factory(:monster).id} 
   }
+  t.state 'processed'
 end
 
 Factory.define :app_request_invitation, :class => 'AppRequest::Invitation' do |t|
@@ -279,6 +282,7 @@ Factory.define :app_request_invitation, :class => 'AppRequest::Invitation' do |t
   t.sender {|g| 
     g.association(:user_with_character, :facebook_id => 111222333).character
   }
+  t.state 'processed'
 end
 
 Factory.define :global_payout do |t|

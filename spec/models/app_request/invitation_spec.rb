@@ -6,7 +6,7 @@ describe AppRequest::Invitation do
     before do
       @receiver = Factory(:character)
 
-      @request  = Factory(:app_request_invitation)
+      @request  = Factory(:app_request_invitation, :state => 'processed')
     end
     
     it_should_behave_like 'application request accept'
@@ -24,7 +24,7 @@ describe AppRequest::Invitation do
         @request.accept
         
         @other_request.reload
-      }.should change(@other_request, :state).from('pending').to('ignored')
+      }.should change(@other_request, :state).from('processed').to('ignored')
     end
   end
 end

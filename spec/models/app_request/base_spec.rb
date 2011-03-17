@@ -12,6 +12,58 @@ describe AppRequest::Base do
     end
   end
   
+  describe 'states' do
+    before do
+      @request = Factory(:app_request_base)
+    end
+    
+    describe 'when pending' do
+      before do
+        @request.update_attribute(:state, 'pending')
+      end
+      
+      it 'should be processable' do
+        @request.can_process?.should be_true
+      end
+      
+      it 'should be visitable' do
+        @request.can_visit?.should be_true
+      end
+
+      it 'should not be acceptable' do
+        @request.can_accept?.should_not be_true
+      end
+    end
+    
+    describe 'when processed' do
+      it 'should be acceptable' do
+        @request.can_accept?.should be_true
+      end
+      
+      it 'should be ignorable' do
+        @request.can_ignore?.should be_true
+      end
+
+      it 'should be visitable' do
+        @request.can_visit?.should be_true
+      end
+    end
+    
+    describe 'when visited' do
+      before do
+        @request.update_attribute(:state, 'visited')
+      end
+      
+      it 'should be acceptable' do
+        @request.can_accept?.should be_true
+      end
+      
+      it 'should be ignorable' do
+        @request.can_ignore?.should be_true
+      end
+    end
+  end
+  
   describe '.for_character' do
     before do
       @receiver = Factory(:user_with_character).character
@@ -53,7 +105,7 @@ describe AppRequest::Base do
     before do
       @sender = Factory(:user_with_character, :facebook_id => 123)
       
-      @request = Factory(:app_request_base)
+      @request = Factory(:app_request_base, :state => 'pending')
       
       @client = mock('mogli client')
       
@@ -171,7 +223,7 @@ describe AppRequest::Base do
   
   describe '#process' do
     before do
-      @request = Factory(:app_request_base)
+      @request = Factory(:app_request_base, :state => 'pending')
     end
     
     it 'should store processing time' do

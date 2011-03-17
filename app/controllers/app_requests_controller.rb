@@ -35,8 +35,8 @@ class AppRequestsController < ApplicationController
   def update
     @app_request = current_character.app_requests.find(params[:id])
 
-    if @app_request.can_accept?
-      @app_request.accept
+    if @app_request.acceptable?
+      @app_request.accept!
       
       render :layout => 'ajax'
     else
