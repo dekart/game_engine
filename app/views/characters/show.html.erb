@@ -25,7 +25,7 @@
             :url    => fights_path(:victim_id => @character),
             :update => :result,
             :html   => {:class => "attack button"}
-          ) if current_character.can_attack?(@character) %>
+          ) if Fight.opponents(current_character).can_attack?(@character) %>
 
       <%= link_to_remote(button(:hitlist),
             :url    => new_character_hit_listing_path(@character),

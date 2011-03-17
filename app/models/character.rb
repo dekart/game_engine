@@ -226,65 +226,6 @@ class Character < ActiveRecord::Base
     )
   end
 
-  def possible_victims(scope_options = {})
-    scope = Character.scoped(scope_options)
-
-    # Exclude recent opponents, friends, and self
-    exclude_ids = latest_opponent_ids
-    exclude_ids.push(*friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
-    exclude_ids.push(id)
-
-    scope = scope.scoped(
-      :conditions => ["characters.id NOT IN (?)", exclude_ids]
-    )
-
-    # Scope by level
-    scope = scope.scoped(
-      :conditions => ["level BETWEEN ? AND ?", lowest_opponent_level, highest_opponent_level]
-    )
-    
-    unless Setting.b(:fight_weak_opponents)
-      scope = scope.scoped(
-        :conditions => ["fighting_available_at < ?", Time.now.utc]
-      )
-    end
-
-    scope.all(
-      :include  => :user,
-      :order    => "ABS(level - #{level}), RAND()",
-      :limit    => Setting.i(:fight_victim_show_limit)
-    ).tap do |result|
-      result.shuffle!
-    end
-  end
-
-  def latest_opponent_ids
-    attacks.all(
-      :select     => "DISTINCT victim_id",
-      :conditions => ["winner_id = ? AND created_at > ?",
-        self.id,
-        Setting.i(:fight_attack_repeat_delay).minutes.ago
-      ]
-    ).collect{|a| a.victim_id }
-  end
-
-  def lowest_opponent_level
-    level - Setting.i(:fight_victim_levels_lower)
-  end
-
-  def highest_opponent_level
-    level + Setting.i(:fight_victim_levels_higher)
-  end
-
-  def can_attack?(victim)
-    level_fits        = (lowest_opponent_level..highest_opponent_level).include?(victim.level)
-    attacked_recently = latest_opponent_ids.include?(victim.id)
-    friendly_attack   = Setting.b(:fight_alliance_attack) ? false : friend_relations.character_ids.include?(victim.id)
-    weak_opponent     = Setting.b(:fight_weak_opponents) ? false : victim.weak?
-
-    level_fits && !attacked_recently && !friendly_attack && !weak_opponent
-  end
-
   def can_hitlist?(victim)
     friendly_attack = Setting.b(:fight_alliance_attack) ? false : friend_relations.established?(victim)
 

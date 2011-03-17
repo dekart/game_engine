@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Fight do
+  describe '.opponents' do
+    before do
+      @attacker = Factory(:character)
+    end
+    
+    it 'should return simple opponent selector for attacker' do
+      Fight.opponents(@attacker).should be_kind_of(Fight::OpponentSelector::Simple)
+      Fight.opponents(@attacker).attacker.should == @attacker
+    end
+  end
+  
+  
   describe 'when creating' do
     before do
       @attacker = Factory(:character)
