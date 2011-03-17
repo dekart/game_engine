@@ -26,7 +26,7 @@ describe Fight do
       
       @fight.should be_valid
       
-      with_setting(:fight_weak_opponents, false) do
+      with_setting(:fight_weak_opponents => false) do
         @fight.should_not be_valid
         @fight.errors.on(:victim).should =~ /too weak/
       end

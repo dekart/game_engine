@@ -1,13 +1,19 @@
 module SettingSpecHelper
-  def with_setting(key, value)
-    old_value = Setting[key]
+  def with_setting(values = {}, &block)
+    old_values = {}
     
-    Setting[key] = value
-    Setting.update_cache!(true)
+    values.each do |key, value|
+      old_values[key] = Setting[key]
     
-    yield
+      Setting[key] = value
+      Setting.update_cache!(true)
+    end
     
-    Setting[key] = old_value
-    Setting.update_cache!(true)
+    block.call
+    
+    values.each_key do |key|
+      Setting[key] = old_values[key]
+      Setting.update_cache!(true)
+    end
   end
 end

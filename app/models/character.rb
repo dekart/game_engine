@@ -93,13 +93,16 @@ class Character < ActiveRecord::Base
     :restore_bonus  => :stamina_restore_bonus
 
   after_validation_on_create :apply_character_type_defaults
-  before_save   :update_level_and_points, :update_total_money
+  before_save :update_level_and_points, :unless => :level_up_applied
+  before_save :update_total_money
   before_save :update_fight_availability_time, :if => :hp_changed?
 
   validates_presence_of :character_type, :on => :create
 
   delegate(*(CharacterType::BONUSES + [:to => :character_type]))
   delegate(:facebook_id, :to => :user)
+
+  attr_accessor :level_up_applied
 
   class << self
     def rating_position(character, field)
@@ -338,14 +341,14 @@ class Character < ActiveRecord::Base
   def friend_filter
     @friend_filter ||= FriendFilter.new(self)
   end
-
+  
   protected
 
   def update_level_and_points
-    if experience_to_next_level <= 0
-      self.level      += 1
-
-      self.points     += Setting.i(:character_points_per_upgrade)
+    self.level = [level, level_for_current_experience].max
+    
+    if level_changed?
+      self.points += level_up_amount * Setting.i(:character_points_per_upgrade)
 
       charge(0, - vip_money_per_upgrade, :level_up)
 
@@ -354,11 +357,17 @@ class Character < ActiveRecord::Base
       self.sp = stamina_points
 
       notifications.schedule(:level_up)
+      
+      self.level_up_applied = true
     end
+  end
+  
+  def level_up_amount
+    level_change[1] - level_change[0]
   end
 
   def vip_money_per_upgrade
-    (Setting.i(:character_vip_money_per_upgrade) + level * Setting.f(:character_vip_money_per_upgrade_per_level)).round
+    (Setting.i(:character_vip_money_per_upgrade) * level_up_amount + level * Setting.f(:character_vip_money_per_upgrade_per_level)).round
   end
 
   def apply_character_type_defaults
