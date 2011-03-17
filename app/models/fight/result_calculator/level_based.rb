@@ -1,14 +1,14 @@
-module FightingSystem
-  module PlayerVsPlayer
-    module LevelBased
-      def self.calculate(attacker, victim)
-        if attacker.level - victim.level > Setting.i(:fight_level_threshold)
+class Fight
+  module ResultCalculator
+    class LevelBased < Base
+      def calculate
+        if @attacker.level - @victim.level > Setting.i(:fight_level_threshold)
           rand(1000) > Setting.i(:fight_level_theshold_chance) * 10
-        elsif victim.level - attacker.level > Setting.i(:fight_level_threshold)
+        elsif @victim.level - @attacker.level > Setting.i(:fight_level_threshold)
           rand(1000) < Setting.i(:fight_level_theshold_chance) * 10
         else
-          attack_points   = attacker.attack_points
-          defence_points  = victim.defence_points
+          attack_points   = @attacker.attack_points
+          defence_points  = @victim.defence_points
 
           attack_bonus    = 1.0
           defence_bonus   = 1.0

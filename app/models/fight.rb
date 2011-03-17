@@ -16,15 +16,19 @@ class Fight < ActiveRecord::Base
   before_create :calculate_fight
   after_create  :save_payout, :post_to_newsfeed, :log_event
 
-  cattr_accessor :fighting_system, :damage_system
-  @@fighting_system = FightingSystem::PlayerVsPlayer::Proportion
-  @@damage_system = FightingSystem::DamageCalculation::Proportion
-
   attr_reader :attacker_boost, :victim_boost, :payouts
   
   class << self
-    def opponents(attacker)
-      Fight::OpponentSelector::Simple.new(attacker)
+    def opponents(*args)
+      Fight::OpponentSelector::Simple.new(*args)
+    end
+    
+    def damage_calculator(*args)
+      Fight::DamageCalculator::Proportion.new(*args)
+    end
+    
+    def result_calculator(*args)
+      Fight::ResultCalculator::Proportion.new(*args)
     end
   end
 
@@ -109,9 +113,9 @@ class Fight < ActiveRecord::Base
   end
 
   def calculate_fight
-    won = self.class.fighting_system.calculate(attacker, victim)
+    won = self.class.result_calculator(attacker, victim).calculate
 
-    victim_damage, attacker_damage = self.class.damage_system.calculate(attacker, victim, won)
+    victim_damage, attacker_damage = self.class.damage_calculator(attacker, victim, won).calculate
 
     self.winner = won ? attacker : victim
 

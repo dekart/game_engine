@@ -56,7 +56,7 @@ describe Fight do
     
     describe 'when won the fight' do
       before do
-        Fight.fighting_system.stub!(:calculate).and_return(true)
+        Fight.stub!(:result_calculator).and_return(mock('calculator', :calculate => true))
       end
       
       it 'should apply global :success payout' do        
@@ -71,7 +71,7 @@ describe Fight do
     
     describe 'when lost the fight' do
       before do
-        Fight.fighting_system.stub!(:calculate).and_return(false)
+        Fight.stub!(:result_calculator).and_return(mock('calculator', :calculate => false))
       end
 
       it 'should apply global :success payout' do        
