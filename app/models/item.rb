@@ -106,6 +106,10 @@ class Item < ActiveRecord::Base
     def special_for(character)
       with_state(:visible).available.available_in(:special).available_for(character)
     end
+    
+    def gifts_for(character)
+      with_state(:visible).available.available_in(:gift).available_for(character).scoped(:order => "items.level DESC")
+    end
   end
 
   (Item::EFFECTS + %w{basic_price vip_price}).each do |attribute|

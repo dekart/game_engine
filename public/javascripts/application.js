@@ -408,6 +408,8 @@ var Mission = {
           }
         }, function(response){
           if(typeof(response) != 'undefined' && response !== 'null'){
+            $this.trigger('request_sent');
+            
             $('#ajax').load(options.request_callback_url, {ids: response.request_ids, item_id: $this.attr('data-item-id')});
           }
         });
@@ -426,7 +428,9 @@ var Mission = {
         }).toArray().sort().reverse()[0]
     });
 
-    $gifts.find('.send').giftButton(options) ;
+    $gifts.find('.send').giftButton(options);
+    
+    return $(this);
   };
 })(jQuery);
 

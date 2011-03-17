@@ -24,3 +24,10 @@ en:
       buttons:
         invite: "Invite Them"
         invite_other: "Invite Other Friends"
+        
+    send_gift:
+      title: "Send Free Gifts To Your Friends"
+      text: "You can send these items to your friends for free and they'll be able to send them back to you! Click 'Send' and choose whom to send the item:"
+      buttons:
+        send: "Send"
+        send_other: "Send Other Items"

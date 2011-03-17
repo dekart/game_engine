@@ -1,4 +1,4 @@
-#gift_form
+#new_gift
   .gift
     padding: 5px
     float: left
@@ -32,23 +32,3 @@
         margin-left: 0
         +button(!gifts_item_send_icon, 80px)
 
-
-#gift_list
-  td
-    vertical-align: middle
-    padding: 5px
-    
-  .sender_name, .item_name
-    font-weight: bold
-    
-  .controls
-    padding-left: 10px
-    
-    .accept
-      +button(!gifts_list_accept_icon)
-
-    .send
-      +button(!gifts_list_send_icon)
-      
-    .use
-      +button(!inventory_item_use_icon)
