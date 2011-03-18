@@ -52,8 +52,6 @@ class ItemSet < ActiveRecord::Base
   end
 
   def random_item(shift = 0)
-    logger.debug shift
-
     if items.empty?
       raise Exception.new('Item list is empty')
     else

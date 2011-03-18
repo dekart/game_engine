@@ -49,7 +49,7 @@ class Character::Equipment
       ids = @character.placements.values.flatten
 
       if ids.any?
-        inventories = Inventory.find_all_by_id(ids.uniq, :include => :item)
+        inventories = Inventory.find_all_by_id(ids.uniq.sort, :include => :item)
 
         # Sorting inventories by ID order
         @inventories = ids.collect do |id|
@@ -76,39 +76,25 @@ class Character::Equipment
 
     return unless inventory.placements.include?(placement) && inventory.equippable?
 
+    previous = nil
+    
     if available_capacity(placement) > 0
       @character.placements[placement] ||= []
       @character.placements[placement] << inventory.id
 
       inventory.equipped = equipped_amount(inventory)
-      
-      nil
     elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
       previous = @character.inventories.find(@character.placements[placement].last)
-
+      
       unless previous == inventory # Do not re-equip the same inventory
         unequip(previous, placement)
         equip(inventory, placement)
-
-        previous
       end
     end
     
     @inventories = nil
-  end
-  
-
-  def equip!(inventory, placement)
-    Character.transaction do
-      previous = equip(inventory, placement)
-
-      previous.try(:save)
-      
-      inventory.save
-      @character.save!
-      
-      clear_effect_cache!
-    end
+    
+    previous
   end
   
 
@@ -122,6 +108,20 @@ class Character::Equipment
     end
     
     @inventories = nil
+  end
+
+
+  def equip!(inventory, placement)
+    Character.transaction do
+      previous = equip(inventory, placement)
+
+      previous.try(:save)
+      
+      inventory.save
+      @character.save!
+      
+      clear_effect_cache!
+    end
   end
   
 

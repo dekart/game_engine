@@ -148,6 +148,55 @@ describe Character::Equipment do
   end
   
   
+  describe '#equip!' do
+    before do
+      @character = Factory(:character)
+      @inventory = Factory(:inventory, :character => @character)
+    end
+    
+    it 'should equip inventory' do
+      @character.equipment.should_receive(:equip).with(@inventory, :left_hand).and_return(nil)
+      
+      @character.equipment.equip!(@inventory, :left_hand)
+    end
+    
+    it 'should save previous inventory if equipping to non-free placement' do
+      @other = mock_model(Inventory, :save => true)
+      
+      @character.equipment.stub!(:equip).and_return(@other)
+      @other.should_receive(:save)
+      
+      @character.equipment.equip!(@inventory, :left_hand)
+    end
+    
+    it 'should save inventory' do
+      @character.equipment.equip!(@inventory, :left_hand)
+      
+      @inventory.should_not be_changed
+    end
+    
+    it 'should save character' do
+      @character.equipment.equip!(@inventory, :left_hand)
+      
+      @character.should_not be_changed
+    end
+    
+    it 'should clear effect cache' do
+      @character.equipment.should_receive(:clear_effect_cache!)
+      
+      @character.equipment.equip!(@inventory, :left_hand)
+    end
+    
+    it 'should actually put inventory to the placement' do
+      @character.equipment.inventories_by_placement(:left_hand).should be_empty
+      
+      @character.equipment.equip!(@inventory, :left_hand)
+      
+      @character.reload.equipment.inventories_by_placement(:left_hand).should include(@inventory)
+    end
+  end
+  
+  
   describe '#unequip' do
     before do
       @character = Factory(:character)

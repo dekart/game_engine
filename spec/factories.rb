@@ -88,7 +88,7 @@ Factory.define :item do |t|
     Payouts::BasicMoney.new(:value => 100, :apply_on => :use)
   )
 
-  t.placements [:additional]
+  t.placements [:left_hand, :additional]
 end
 
 Factory.define :inventory do |t|
