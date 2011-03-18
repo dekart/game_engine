@@ -45,6 +45,8 @@ en:
       action_link: ""
     collection_completed:
       title: "I've just finished the '%{name}' Collection in %{app}!"
+      description: ""
+      action_link: ""
     collection_missing_items:
       title: "Please help me to finish my collection in %{app}!"
       description: "I need these items to finish the '%{name}' collection: %{items}."
