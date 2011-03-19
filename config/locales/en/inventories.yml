@@ -37,12 +37,6 @@ en:
       used: "In use: %{amount}"
       listed_on_market: "Listed on Market"
       buttons:
-        to_left_hand: "To Left Hand"
-        to_right_hand: "To Right Hand"
-        to_head: "To Head"
-        to_body: "To Body"
-        to_belt: "To Belt"
-        to_legs: "To Legs"
         sell: "Sell for %{price}"
         sell_on_market: "Sell on Market"
         use: "Use"
