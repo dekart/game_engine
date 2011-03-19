@@ -11,7 +11,6 @@ en:
         hitlist: "Hitlist"
     create:
       buttons:
-        request_help: "Ask Friends to Attack"
         attack_again: "Attack Again!"
       success:
         message: "You attacked %{user_name} and WON the battle against %{pronoun}!"
