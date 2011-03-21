@@ -9,7 +9,6 @@ class ApplicationController
     end
     
     def redirect_by_app_request
-      puts app_requests.inspect
       if app_requests.last
         session[:return_to] = nil
 

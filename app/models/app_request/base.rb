@@ -90,7 +90,7 @@ class AppRequest::Base < ActiveRecord::Base
   
   def delete_from_facebook!
     Mogli::AppRequest.new(
-      {:id => facebook_id}, 
+      {:id => facebook_id},
       Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
     ).destroy
   end
