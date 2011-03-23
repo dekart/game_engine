@@ -1,13 +1,11 @@
-set :application, "sword"
+set :application, "your_app_alias"
 
-set :repository,  "git@itvektor.ru:facebook/knights.git"
+set :repository,  "git@git.railorz.com:facebook/#{application}.git"
 set :branch,  "master"
 
-role :app, "173.45.238.123"
-role :web, "173.45.238.123"
-role :db,  "173.45.238.123", :primary => true
+server "your_server", :web, :app, :db, :primary => true
 
-set :user, "game"
+set :user, "your_user_name"
 
 set :deploy_to, "/home/#{user}/#{application}"
 
@@ -16,11 +14,11 @@ set :rails_env, "production"
 default_environment["RAILS_ENV"] = "production"
 
 set :facebooker_config, {
-  :app_id           => "81958551648",
-  :api_key          => "eccd02101c4a358ffe9590fdfa347954",
-  :secret           => "1a7e8b3eb1e5d3999d54d286b5d1c5e4",
-  :canvas_page_name => "sword-and-magic",
-  :callback_url     => "http://sword.it-vektor.ru",
+  :app_id           => "your_fb_app_id",
+  :api_key          => "your_fb_api_key",
+  :secret           => "your_fb_api_secret",
+  :canvas_page_name => "your_fb_canvas_page",
+  :callback_url     => "http://your_domain",
 
   :set_asset_host_to_callback_url => true
 }
@@ -28,7 +26,7 @@ set :facebooker_config, {
 set :database_config, {
   :adapter  => "mysql",
   :host     => "localhost",
-  :database => "sword_production",
-  :username => "sword",
-  :password => "alskdjf85hg"
+  :database => "your_db_name",
+  :username => "your_db_user",
+  :password => "your_db_password"
 }
