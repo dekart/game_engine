@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'models/fight/result_calculator/common'
 
 describe Fight::ResultCalculator::Base do
   describe '#initialize' do
@@ -9,12 +10,6 @@ describe Fight::ResultCalculator::Base do
       @calculator = Fight::ResultCalculator::Base.new(@attacker, @victim)
     end
     
-    it 'should assign attacker' do
-      @calculator.attacker.should == @attacker
-    end
-    
-    it 'should assign victim' do
-      @calculator.victim.should == @victim
-    end
+    it_should_behave_like 'generic fight result calculator'
   end
 end

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'models/fight/result_calculator/common'
 
 describe Fight::ResultCalculator::Proportion do
   describe '#calculate' do
@@ -9,8 +10,6 @@ describe Fight::ResultCalculator::Proportion do
       @calculator = Fight::ResultCalculator::Proportion.new(@attacker, @victim)
     end
     
-    it 'should return true or false' do
-      [true, false].should include(@calculator.calculate)
-    end
+    it_should_behave_like 'generic fight result calculator'
   end
 end

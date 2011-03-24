@@ -7,6 +7,11 @@ class Fight
         @attacker = attacker
         @victim = victim
       end
+      
+      # Determines the winner. Should be re-defined in subclasses.
+      def calculate
+        true
+      end
     end
   end
 end
