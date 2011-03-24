@@ -1,6 +1,29 @@
 require 'spec_helper'
 
 describe Mission do
+  describe 'when updating' do
+    before do
+      @character = Factory(:character)
+      @mission = Factory(:mission)
+      @rank = MissionRank.create!(:mission => @mission, :character => @character)
+    end
+    
+    describe 'if mission group is changed' do
+      before do
+        @new_group = Factory(:mission_group)
+        
+        @mission.mission_group = @new_group
+      end
+      
+      it 'should update group ID in all linked mission ranks' do
+        lambda{
+          @mission.save
+          @rank.reload
+        }.should change(@rank, :mission_group_id).to(@new_group.id)
+      end
+    end
+  end
+  
   describe '#applicable_payouts' do
     before do
       @mission = Factory(:mission, 

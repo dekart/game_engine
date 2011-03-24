@@ -44,6 +44,8 @@ class Mission < ActiveRecord::Base
   )
 
   validates_presence_of :mission_group, :name, :success_text, :complete_text
+  
+  after_update :update_group_in_ranks, :if => :mission_group_id_changed?
 
   def self.to_grouped_dropdown
     {}.tap do |result|
@@ -61,5 +63,11 @@ class Mission < ActiveRecord::Base
   
   def applicable_payouts
     payouts + mission_group.applicable_payouts
+  end
+  
+  protected
+  
+  def update_group_in_ranks
+    ranks.update_all :mission_group_id => mission_group_id
   end
 end
