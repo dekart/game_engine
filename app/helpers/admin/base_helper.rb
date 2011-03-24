@@ -45,4 +45,5 @@ module Admin::BaseHelper
   def admin_documentation_url(topic)
     "http://railorz.com/help/#{topic}"
   end
+
 end

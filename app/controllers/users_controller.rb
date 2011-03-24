@@ -47,4 +47,8 @@ class UsersController < ApplicationController
       render :text => 'OK'
     end
   end
+  
+  def settings
+    render :layout => "ajax"
+  end
 end
