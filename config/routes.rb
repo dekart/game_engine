@@ -58,12 +58,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :requirements,  :only => [:new]
     admin.resources :effects,       :only => [:new]
 
-    admin.resources :newsletters,
-      :member => {
-        :deliver  => :post,
-        :pause    => :post
-      }
-
     admin.resources :promotions
     admin.resources :statistics, 
       :only => :index,
@@ -154,7 +148,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources(:users,
     :collection => {
-      :subscribe => :any
+      :subscribe => :any, 
+      :settings => :any
     },
     :member => {
       :toggle_block => :any

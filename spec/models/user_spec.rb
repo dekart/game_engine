@@ -9,9 +9,26 @@ describe User do
       
       Delayed::Job.last.payload_object.should be_kind_of(Jobs::UserDataUpdate)
       Delayed::Job.last.payload_object.user_ids.should == [@user.id]
-    end
+    end    
   end
   
+  
+  describe 'scopes' do
+    before :each do 
+      @user = Factory(:user)
+    end
+    
+    it 'should not return users without email' do
+      User.with_email.should be_empty
+    end
+    
+    it 'should return users with email' do
+      @user.update_attribute(:email, "test@test.com")
+      User.with_email.should == [@user]
+    end
+  end
+
+
   describe 'when creating' do
     before do
       @user = Factory.build(:user)
@@ -135,6 +152,7 @@ describe User do
         :timezone => 5,
         :locale => 'ab_CD',
         :gender => 'male',
+        :email => 'user@test.com',
         
         :third_party_id => 'abcd1234',
         

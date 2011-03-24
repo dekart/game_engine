@@ -13,6 +13,10 @@ Factory.define :user_with_character, :parent => :user do |t|
   end
 end
 
+Factory.define :user_with_email, :parent => :user do |t|
+  t.email "test@test.com"
+end
+
 Factory.define :character_type do |t|
   t.name "Character Type"
   t.description "This is our test character type"

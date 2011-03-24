@@ -13,7 +13,6 @@ en:
         global_payouts: "Global Payouts"
         statistics: "Statistics"
         characters: "Characters"
-        newsletter: "Newsletter"
         promotions: "Promotions"
         skins: "Skins"
         titles: "Titles"
@@ -197,29 +196,7 @@ en:
         success: "Boss has been updated successfully!"
       form_fields:
         minutes: "minutes"
-    newsletters:
-      index:
-        title: "Newsletters"
-        empty_set: "No newsletters"
-        controls:
-          new: "Add Newsletter"
-          edit: "Edit"
-          deliver: "Deliver"
-          deliver_confirm: "Start delivery?"
-          pause: "Pause"
-          pause_confirm: "Pause delivery?"
-          delete: "Delete"
-          delete_confirm: "Are you sure?"
-      new:
-        title: "New Newsletter"
-        submit: "Create"
-      create:
-        success: "Newsletter has been created successfully!"
-      edit:
-        title: "Edit Newsletter"
-        submit: "Update"
-      update:
-        success: "Newsletter has been updated successfully!"
+
     tips:
       index:
         title: "Tips"

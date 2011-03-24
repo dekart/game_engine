@@ -6,12 +6,14 @@ class User < ActiveRecord::Base
 
   named_scope :after, Proc.new{|user|
     {
-      :conditions => ["id > ?", user.is_a?(User) ? user.id : user.to_i],
-      :order      => "id ASC"
+      :conditions => ["`users`.id > ?", user.is_a?(User) ? user.id : user.to_i],
+      :order      => "`users`.id ASC"
     }
   }
-
-  after_save :schedule_social_data_update, :if => :access_token_changed?
+  
+  named_scope :with_email, {:conditions => "email != ''"}
+  
+  after_save :schedule_social_data_update, :if => :access_token_changed?  
 
   def show_tutorial?
     Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
@@ -58,9 +60,9 @@ class User < ActiveRecord::Base
     
     client = Mogli::Client.new(access_token)
     
-    facebook_user = Mogli::User.find(facebook_id, client, :first_name, :last_name, :timezone, :locale, :gender, :third_party_id)
+    facebook_user = Mogli::User.find(facebook_id, client, :first_name, :last_name, :timezone, :locale, :gender, :third_party_id, :email)
     
-    %w{first_name last_name timezone locale third_party_id}.each do |attribute|
+    %w{first_name last_name timezone locale third_party_id email}.each do |attribute|
       self.send("#{attribute}=", facebook_user.send(attribute))
     end
     

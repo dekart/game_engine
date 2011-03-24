@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110312111743) do
+ActiveRecord::Schema.define(:version => 20110324095627) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -688,6 +688,7 @@ ActiveRecord::Schema.define(:version => 20110312111743) do
     t.datetime "access_token_expire_at"
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
+    t.string   "email",                                 :default => "",      :null => false
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"
