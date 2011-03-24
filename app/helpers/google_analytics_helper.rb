@@ -45,6 +45,6 @@ module GoogleAnalyticsHelper
   end
   
   def ga_command(*args)
-    "_gaq.push(#{args.compact.to_json});".html_safe
+    "_gaq.push(#{args.to_json});".html_safe
   end
 end
