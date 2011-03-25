@@ -8,7 +8,7 @@ namespace :app do
       puts "Running httperf..."
 
       httperf_report do |r|
-        #r.cookies :signed_request => 'asdasd'
+        r.cookies :signed_request => 'asdasd'
 
         r.group 'Mission List' do |g|
           100.times do
