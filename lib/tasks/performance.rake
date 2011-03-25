@@ -5,7 +5,6 @@ namespace :app do
   namespace :performance do
     desc "Check app performance"
     task :check => :environment do
-      puts "Running httperf..."
 
       httperf_report do |r|
         r.cookies :signed_request => 'asdasd'

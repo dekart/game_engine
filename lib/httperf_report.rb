@@ -18,7 +18,6 @@ module HttperfReport
     end
 
     def group(name)
-      puts "adding file #{name} to list"
       @files << {
         :name => name,
         :path => filepath = Rails.root.join("tmp", name.split.join('_'))
@@ -31,22 +30,21 @@ module HttperfReport
 
     def work
       printf "Performance Report\n------------------\n\n"
-      printf("%-24s%-20s%-10s%-18s%-18s%-18s\n\n", 'Group', 'Number of Requests', 'Total', 'Average', 'Min', 'Max')
+      printf("%-24s%-20s%-10s%-14s%-14s\n\n", 'Group', 'Number of Requests', 'Total', 'Reply Rate', 'Reply Time')
 
       host = YAML.load_file(Rails.root.join('config', 'facebooker.yml'))['performance_test']['callback_url'].sub('http://', '')
       header = @cookies.empty? ? "" : "Cookie: #{@cookies}"
 
       @files.each do |file|
-        output = `httperf --hog --server=#{host} --rate=10 --verbose --wsesslog=100,2,#{file[:path]} --add-header='#{header}\n'`
+        output = `httperf --hog --server=#{host} --rate=10 --verbose --wsesslog=1,2,#{file[:path]} --add-header='#{header}\n'`
         res = parse_output(output)
 
-        printf("%-24s%-20s%-10s%-18s%-18s%-18s\n",
+        printf("%-24s%-20s%-10s%-14s%-14s\n",
           file[:name],
           "#{res['requests']} requests",
           "#{res['total']}s",
-          "#{res['avg']}r/s (#{res['tavg']}ms)",
-          "#{res['min']}r/s (#{res['tmin']}ms)",
-          "#{res['max']}r/s (#{res['tmax']}ms)")
+          "#{res['rate']}r/s",
+          "#{res['time']}ms")
       end
 
       @files.each do |file|
@@ -62,13 +60,8 @@ module HttperfReport
           when /^Total: .*requests (\d+) .* test-duration (\d+.\d+)/ then
             res['requests'] = $1
             res['total'] = $2
-          when /^Reply rate .* min (\d+\.\d) avg (\d+\.\d) max (\d+\.\d)/
-            %w{min avg max}.each_with_index do |x, ind|
-              rate = $~[ind].to_f
-
-              res[x] = rate
-              res["t#{x}"] = rate > 0 ? (100000/rate).to_i.to_f/100 : '--'
-            end
+          when /^Reply rate .* avg (\d+\.\d)/ then res['rate'] = $1
+          when /^Reply time .* response (\d+\.\d)/ then res['time'] = $1
         end
       end
 
