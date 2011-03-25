@@ -3,7 +3,8 @@ shared_examples_for 'application request accept' do
     Timecop.freeze(Time.now) do
       lambda{
         @request.accept
-      }.should change(@request, :accepted_at).from(nil).to(Time.now)
+        @request.reload
+      }.should change(@request, :accepted_at).from(nil).to(Time.at(Time.now.to_i))
     end
   end
 

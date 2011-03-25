@@ -113,7 +113,7 @@ module FacebookHelper
         
         $(document).trigger('facebook.dialog');
       " % [
-        options.merge(:method => 'apprequests').to_json,
+        options.deep_merge(:method => 'apprequests', :data => {:type => type}).to_json,
         app_requests_path(request_params.merge(:type => type)),
         callback
       ]

@@ -404,6 +404,7 @@ var Mission = {
           title: options.request_title,
           message: $this.attr('data-message'),
           data: {
+            type: 'gift',
             item_id: $this.attr('data-item-id')
           }
         }, function(response){

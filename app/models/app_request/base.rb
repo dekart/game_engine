@@ -41,12 +41,16 @@ class AppRequest::Base < ActiveRecord::Base
       transition [:processed, :visited] => :ignored
     end
     
-    after_transition :on => :process do |request|
-      request.update_attribute(:processed_at, Time.now)
+    before_transition :on => :process do |request|
+      request.processed_at = Time.now
     end
 
-    after_transition :on => :visit do |request|
-      request.update_attribute(:visited_at, Time.now)
+    before_transition :on => :visit do |request|
+      request.visited_at = Time.now
+    end
+    
+    before_transition :on => :accept do |request|
+      request.accepted_at = Time.now
     end
 
     after_transition :on => :accept do |request|
@@ -61,6 +65,10 @@ class AppRequest::Base < ActiveRecord::Base
   after_create :schedule_data_update
   
   class << self
+    def mogli_client
+      Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
+    end
+
     def schedule_deletion(*ids_or_requests)
       ids = ids_or_requests.compact.collect{|value| value.is_a?(AppRequest) ? value.id : value}
       
@@ -70,29 +78,45 @@ class AppRequest::Base < ActiveRecord::Base
     def receiver_ids
       all(:select => :receiver_id).collect{|r| r.receiver_id }
     end
+    
+    def check_user_requests(user)
+      facebook_user = Mogli::User.find(user.facebook_id, mogli_client, :apprequests)
+      
+      facebook_user.apprequests.each do |facebook_request|
+        request = AppRequest::Base.find_or_initialize_by_facebook_id(facebook_request.id)
+        
+        request.update_from_facebook_request(facebook_request) if request.pending?
+      end
+    end
   end
   
   def receiver
     @receiver ||= User.find_by_facebook_id(receiver_id).try(:character)
   end
+  
+  def update_from_facebook_request(facebook_request)
+    self.data = JSON.parse(facebook_request.data) if facebook_request.data
+  
+    becomes(request_class_from_data).tap do |request|
+      # Ensure that the new type will be saved correctly
+      request.type = request.class.sti_name
+      
+      request.sender = User.find_by_facebook_id(facebook_request.from.id).character
+      request.receiver_id = facebook_request.to.id
+      
+      request.transaction do
+        request.save!
+        request.process
+      end
+    end
+  end
 
   def update_data!
-    request = Mogli::AppRequest.find(facebook_id, Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret))
-    
-    self.sender = User.find_by_facebook_id(request.from.id).character
-    self.receiver_id = request.to.id
-    self.data = JSON.parse(request.data) if request.data
-    
-    save!
-    
-    process
+    update_from_facebook_request(Mogli::AppRequest.find(facebook_id, self.class.mogli_client))
   end
   
   def delete_from_facebook!
-    Mogli::AppRequest.new(
-      {:id => facebook_id},
-      Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
-    ).destroy
+    Mogli::AppRequest.new({:id => facebook_id}, self.class.mogli_client).destroy
   end
 
   def type_name
@@ -105,9 +129,19 @@ class AppRequest::Base < ActiveRecord::Base
 
   protected
   
+  def request_class_from_data
+    if data.nil?
+      'AppRequest::Invitation'
+    elsif data['type']
+      "AppRequest::#{ data['type'].classify }"
+    elsif data['item_id']
+      'AppRequest::Gift'
+    elsif data['monster_id']
+      'AppRequest::MonsterInvite'
+    end.constantize
+  end
+  
   def after_accept
-    update_attribute(:accepted_at, Time.now)
-    
     self.class.schedule_deletion(id)
   end
   

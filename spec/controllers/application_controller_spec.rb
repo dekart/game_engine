@@ -91,45 +91,4 @@ describe ApplicationController do
     
     it 'should return nil when not authenticated as Facebook user'
   end
-  
-  describe 'when performing any action' do
-    describe 'when request IDs are passed' do
-      before do        
-        @request1 = Factory(:app_request_base, :facebook_id => 123)
-        @request2 = Factory(:app_request_base, :facebook_id => 456)
-        
-        AppRequest::Base.stub!(:find_all_by_facebook_id).and_return([@request1, @request2])
-
-        controller.stub!(:current_facebook_user).and_return(fake_fb_user)
-        controller.stub!(:current_character).and_return(mock('character'))
-      end
-      
-      def do_request
-        get :index, :request_ids => '123,456'
-      end
-      
-      it 'should fetch requests by passed IDs' do
-        AppRequest::Base.should_receive(:find_all_by_facebook_id).with(['123', '456']).and_return([@request1, @request2])
-        
-        do_request
-      end
-      
-      it 'should mark requests as visited' do
-        @request1.should_receive(:visit)
-        @request2.should_receive(:visit)
-
-        do_request
-      end
-      
-      it 'should not visit requests if user is not authenticated' do
-        controller.stub!(:current_facebook_user).and_return(nil)
-        controller.stub!(:current_character).and_return(nil)
-
-        @request1.should_not_receive(:visit)
-        @request2.should_not_receive(:visit)
-
-        do_request
-      end
-    end
-  end
 end
