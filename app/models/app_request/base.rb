@@ -138,6 +138,8 @@ class AppRequest::Base < ActiveRecord::Base
       'AppRequest::Gift'
     elsif data['monster_id']
       'AppRequest::MonsterInvite'
+    else
+      'AppRequest::Invitation'
     end.constantize
   end
   
