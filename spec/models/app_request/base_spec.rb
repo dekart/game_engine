@@ -30,6 +30,10 @@ describe AppRequest::Base do
         @request.can_visit?.should be_true
       end
 
+      it 'should be ignorable' do
+        @request.can_ignore?.should be_true
+      end
+
       it 'should not be acceptable' do
         @request.can_accept?.should_not be_true
       end
@@ -221,6 +225,14 @@ describe AppRequest::Base do
       }.should change(@request, :processed?).from(false).to(true)
     end
     
+    it 'should ignore request if remote request sender is not defined' do
+      @remote_request.stub!(:from).and_return(nil)
+      
+      lambda{
+        @request.update_from_facebook_request(@remote_request)
+      }.should change(@request, :ignored?).from(false).to(true)
+    end
+    
     describe 'when reuest type is set' do
       it 'should change request class to gift if request is a gift request' do
         @remote_request.stub!(:data).and_return('{"type":"gift"}')
@@ -258,6 +270,14 @@ describe AppRequest::Base do
 
       it 'should change request class to invitation if data is not set' do
         @remote_request.stub!(:data).and_return(nil)
+
+        @request.update_from_facebook_request(@remote_request)
+
+        AppRequest::Base.find(@request.id).should be_kind_of(AppRequest::Invitation)
+      end
+
+      it 'should change request class to invitation if data is set but no item or monster ID' do
+        @remote_request.stub!(:data).and_return('{"something":"else"}')
 
         @request.update_from_facebook_request(@remote_request)
 

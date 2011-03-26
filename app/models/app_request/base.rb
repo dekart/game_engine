@@ -38,7 +38,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     event :ignore do
-      transition [:processed, :visited] => :ignored
+      transition [:pending, :processed, :visited] => :ignored
     end
     
     before_transition :on => :process do |request|
@@ -95,18 +95,22 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def update_from_facebook_request(facebook_request)
-    self.data = JSON.parse(facebook_request.data) if facebook_request.data
+    if facebook_request.from.nil?
+      ignore!
+    else
+      self.data = JSON.parse(facebook_request.data) if facebook_request.data
   
-    becomes(request_class_from_data).tap do |request|
-      # Ensure that the new type will be saved correctly
-      request.type = request.class.sti_name
+      becomes(request_class_from_data).tap do |request|
+        # Ensure that the new type will be saved correctly
+        request.type = request.class.sti_name
       
-      request.sender = User.find_by_facebook_id(facebook_request.from.id).character
-      request.receiver_id = facebook_request.to.id
+        request.sender = User.find_by_facebook_id(facebook_request.from.id).character
+        request.receiver_id = facebook_request.to.id
       
-      request.transaction do
-        request.save!
-        request.process
+        request.transaction do
+          request.save!
+          request.process
+        end
       end
     end
   end
