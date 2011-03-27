@@ -56,6 +56,10 @@ class AppRequest::Base < ActiveRecord::Base
     after_transition :on => :accept do |request|
       request.send(:after_accept)
     end
+
+    after_transition :on => :ignore do |request|
+      request.send(:after_ignore)
+    end
   end
 
   serialize :data
@@ -148,7 +152,11 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def after_accept
-    self.class.schedule_deletion(id)
+    self.class.schedule_deletion(self)
+  end
+  
+  def after_ignore
+    self.class.schedule_deletion(self)
   end
   
   def schedule_data_update

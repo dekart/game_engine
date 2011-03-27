@@ -433,7 +433,8 @@ describe AppRequest::Base do
       @request.delete_from_facebook!
     end
   end
-  
+
+
   describe '#process' do
     before do
       @request = Factory(:app_request_base, :state => 'pending')
@@ -449,6 +450,7 @@ describe AppRequest::Base do
     end
   end
 
+
   describe '#visit' do
     before do
       @request = Factory(:app_request_base)
@@ -463,12 +465,29 @@ describe AppRequest::Base do
       end
     end
   end
-  
+
+
   describe "#accept" do
     before do
       @request = Factory(:app_request_base)
     end
   
     it_should_behave_like 'application request accept'
+  end
+
+
+  describe '#ignore' do
+    before do
+      @request = Factory(:app_request_base)
+    end
+    
+    it 'should schedule request deletion' do
+      lambda{
+        @request.ignore
+      }.should change(Delayed::Job, :count).by(1)
+
+      Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
+      Delayed::Job.last.payload_object.request_ids.should == [@request.id]
+    end
   end
 end
