@@ -150,6 +150,65 @@ describe AppRequest::Base do
     end
   end
   
+  
+  describe '.schedule_deletion' do
+    before do
+      @request1 = Factory(:app_request_base)
+      @request2 = Factory(:app_request_gift)
+    end
+    
+    it 'should schedule deletion for passed request IDs' do
+      lambda{
+        AppRequest::Base.schedule_deletion(@request1.id, @request2.id)
+      }.should change(Delayed::Job, :count).by(1)
+      
+      Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
+      Delayed::Job.last.payload_object.request_ids.should == [@request1.id, @request2.id]
+    end
+    
+    it 'should correctly accept array of requests' do
+      lambda{
+        AppRequest::Base.schedule_deletion(@request1, @request2)
+      }.should change(Delayed::Job, :count).by(1)
+      
+      Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
+      Delayed::Job.last.payload_object.request_ids.should == [@request1.id, @request2.id]
+    end
+    
+    it 'should ignore nil values in passed params' do
+      lambda{
+        AppRequest::Base.schedule_deletion(@request1, nil)
+      }.should change(Delayed::Job, :count).by(1)
+      
+      Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
+      Delayed::Job.last.payload_object.request_ids.should == [@request1.id]
+    end
+    
+    it 'should not schedule any jobs if result ID array is empty' do
+      lambda{
+        AppRequest::Base.schedule_deletion(nil)
+      }.should_not change(Delayed::Job, :count)
+    end
+    
+    it 'should accept nested arrays' do
+      lambda{
+        AppRequest::Base.schedule_deletion([@request1], @request2)
+      }.should change(Delayed::Job, :count).by(1)
+      
+      Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
+      Delayed::Job.last.payload_object.request_ids.should == [@request1.id, @request2.id]
+    end
+    
+    it 'should now repeatedly schedule deletion if requests do repeat' do
+      lambda{
+        AppRequest::Base.schedule_deletion([@request1, @request2], @request1, @request1.id, @request2, @request2.id)
+      }.should change(Delayed::Job, :count).by(1)
+      
+      Delayed::Job.last.payload_object.should be_kind_of(Jobs::RequestDelete)
+      Delayed::Job.last.payload_object.request_ids.should == [@request1.id, @request2.id]
+    end
+  end
+  
 
   describe 'when creating' do
     before do

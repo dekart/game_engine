@@ -70,7 +70,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def schedule_deletion(*ids_or_requests)
-      ids = ids_or_requests.compact.collect{|value| value.is_a?(AppRequest) ? value.id : value}
+      ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.id : value}.uniq
       
       Delayed::Job.enqueue(Jobs::RequestDelete.new(ids)) unless ids.empty?
     end
