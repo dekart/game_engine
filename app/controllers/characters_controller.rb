@@ -23,6 +23,10 @@ class CharactersController < ApplicationController
     if request.post?
       @success = current_character.upgrade_attribute!(params[:attribute])
 
+      if @success
+        EventLoggingService.log_event(upgrade_event_data(:character_upgraded, current_character, params[:attribute]))
+      end
+
       render :action => :upgrade_result, :layout => "ajax"
     else
       render :action => :upgrade, :layout => "ajax"
@@ -112,5 +116,16 @@ class CharactersController < ApplicationController
     else
       check_character_existance
     end
+  end
+
+  def upgrade_event_data(event_type, character, attribute_name)
+    {
+      :event_type => event_type,
+      :character_id => character.id,
+      :level => character.level,
+      :reference_type => attribute_name,
+      :int_value => character.attributes[attribute_name],
+      :occurred_at => Time.now
+    }.to_json
   end
 end

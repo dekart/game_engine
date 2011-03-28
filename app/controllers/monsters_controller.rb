@@ -23,14 +23,25 @@ class MonstersController < ApplicationController
 
     @monster = current_character.monsters.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create!(:character => current_character)
+  
+    EventLoggingService.log_event(engage_event_data(:monster_engaged, @monster))
 
     redirect_from_iframe monster_url(@monster, :canvas => true)
   end
 
   def update
-    @fight = Monster.find(params[:id]).monster_fights.find_or_initialize_by_character_id(current_character.id)
+    @monster = Monster.find(params[:id])
+    @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
     @attack_result = @fight.attack!
+
+    if @attack_result
+      if @fight.monster.progress?
+        EventLoggingService.log_event(attack_event_data(:monster_attacked, @fight))
+      elsif @fight.monster.won?
+        EventLoggingService.log_event(attack_event_data(:monster_killed, @fight))
+      end
+    end
 
     render :layout => 'ajax'
   end
@@ -40,6 +51,51 @@ class MonstersController < ApplicationController
 
     @reward_collected = @fight.collect_reward!
 
+    if @reward_collected
+      EventLoggingService.log_event(reward_event_data(:reward_collected, @fight))
+    end
+
     render :layout => 'ajax'
+  end
+
+  protected
+
+  def engage_event_data(event_type, monster)
+    {
+      :event_type => event_type,
+      :character_id => monster.character.id,
+      :level => monster.character.level,
+      :reference_id => monster.id,
+      :reference_type => "Monster",
+      :occurred_at => Time.now
+    }.to_json
+  end
+
+  def attack_event_data(event_type, fight)
+    monster = fight.monster
+    {
+      :event_type => event_type,
+      :character_id => monster.character.id,
+      :level => monster.character.level,
+      :reference_id => monster.id,
+      :reference_type => "Monster",
+      :attacker_damage => fight.character_damage,
+      :victim_damage => fight.monster_damage,
+      :basic_money => fight.money,
+      :experience => fight.experience,
+      :occurred_at => Time.now
+    }.to_json
+  end
+
+  def reward_event_data(event_type, fight)
+    monster = fight.monster
+    {
+      :event_type => event_type,
+      :character_id => monster.character.id,
+      :level => monster.character.level,
+      :reference_id => monster.id,
+      :reference_type => "Monster",
+      :occurred_at => Time.now
+    }.to_json
   end
 end

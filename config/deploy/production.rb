@@ -30,3 +30,9 @@ set :database_config, {
   :username => "your_db_user",
   :password => "your_db_password"
 }
+
+set :redis_config, {
+    :host => "127.0.0.1",
+    :port => 6379,
+    :db => 0
+}

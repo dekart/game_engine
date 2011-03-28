@@ -337,6 +337,28 @@ ActiveRecord::Schema.define(:version => 20110324095627) do
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
 
+  create_table "logged_events", :force => true do |t|
+    t.string   "event_type"
+    t.integer  "character_id"
+    t.integer  "level"
+    t.integer  "reference_id"
+    t.string   "reference_type"
+    t.integer  "reference_level"
+    t.integer  "amount"
+    t.integer  "experience"
+    t.integer  "basic_money",     :limit => 8
+    t.integer  "vip_money",       :limit => 8
+    t.integer  "attacker_damage"
+    t.integer  "victim_damage"
+    t.string   "string_value"
+    t.integer  "int_value"
+    t.datetime "occurred_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "logged_events", ["event_type"], :name => "index_logged_events_on_event_type"
+
   create_table "market_items", :force => true do |t|
     t.integer  "character_id", :null => false
     t.integer  "inventory_id", :null => false

@@ -15,6 +15,7 @@ gem "jrails",           "0.6.0"
 gem "haml",             "2.2.20"
 gem "RedCloth",         "4.2.3",  :require => "redcloth"
 gem "nokogiri",         "1.4.3.1"
+gem "redis",            "2.1.1"
 
 
 # facebooker2 dependencies

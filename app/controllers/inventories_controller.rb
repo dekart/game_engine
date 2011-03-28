@@ -15,6 +15,8 @@ class InventoriesController < ApplicationController
 
     @amount = params[:amount].to_i * @item.package_size
 
+    EventLoggingService.log_event(trade_event_data(:item_bought, current_character, @item, @amount))
+
     render :action => :create, :layout => "ajax"
   end
 
@@ -24,6 +26,8 @@ class InventoriesController < ApplicationController
     @item = Item.find(params[:id])
 
     @inventory = current_character.inventories.sell!(@item, @amount)
+
+    EventLoggingService.log_event(trade_event_data(:item_sold, current_character, @item, @amount))
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -47,10 +51,20 @@ class InventoriesController < ApplicationController
   def equip
     if params[:id]
       @inventory = current_character.inventories.find(params[:id])
+      equipped = @inventory.equipped
 
       current_character.equipment.equip!(@inventory, params[:placement])
+
+      if @inventory.equipped == equipped + 1
+        EventLoggingService.log_event(equip_event_data(:item_equipped, @inventory, params[:placement]))
+      end
     else
+      placements = current_character.placements.clone
       current_character.equipment.equip_best!
+
+      if placements != current_character.placements
+        EventLoggingService.log_event(equip_all_event_data(:all_equipped, current_character))
+      end
     end
 
     render :layout => "ajax"
@@ -61,8 +75,15 @@ class InventoriesController < ApplicationController
       @inventory = current_character.inventories.find(params[:id])
 
       current_character.equipment.unequip!(@inventory, params[:placement])
+
+      EventLoggingService.log_event(equip_event_data(:item_unequipped, @inventory, params[:placement]))
     else
+      placements = current_character.placements.clone
       current_character.equipment.unequip_all!
+
+      if placements != current_character.placements
+        EventLoggingService.log_event(equip_all_event_data(:all_unequipped, current_character))
+      end
     end
 
     render :action => "equip", :layout => "ajax"
@@ -98,9 +119,13 @@ class InventoriesController < ApplicationController
           end
         end
 
-        # TODO Refactor this to use AJAX instead of redirects
+        @inventories.each do |inventory|
+          EventLoggingService.log_event(give_event_data(:item_given, current_character, @character, inventory))
+        end
+
         flash[:success] = t('inventories.give.messages.success')
 
+        # TODO Refactor this to use AJAX instead of redirects
         redirect_from_iframe root_url(:canvas => true)
       end
     else
@@ -118,5 +143,51 @@ class InventoriesController < ApplicationController
 
   def check_auto_equipment
     redirect_from_iframe inventories_url(:canvas => true) if Setting.b(:character_auto_equipment)
+  end
+
+  def trade_event_data(event_type, character, item, amount)
+    {
+      :event_type => event_type,
+      :character_id => character.id,
+      :level => character.level,
+      :reference_id => item.id,
+      :reference_type => "Item",
+      :amount => amount,
+      :occurred_at => Time.now
+    }.to_json
+  end
+
+  def equip_event_data(event_type, inventory, placement)
+    {
+      :event_type => event_type,
+      :character_id => inventory.character.id,
+      :level => inventory.character.level,
+      :reference_id => inventory.item.id,
+      :reference_type => "Item",
+      :string_value => placement,
+      :occurred_at => Time.now
+    }.to_json
+  end
+
+  def equip_all_event_data(event_type, character)
+    {
+      :event_type => event_type,
+      :character_id => character.id,
+      :level => character.level,
+      :occurred_at => Time.now
+    }.to_json
+  end
+
+  def give_event_data(event_type, character, receiver, inventory)
+    {
+      :event_type => event_type,
+      :character_id => character.id,
+      :level => character.level,
+      :reference_id => receiver.id,
+      :reference_type => "Character",
+      :reference_level => receiver.level,
+      :int_value => inventory.item.id,
+      :occurred_at => Time.now
+    }.to_json
   end
 end
