@@ -17,6 +17,7 @@ test
 
 config/facebooker.yml
 config/database.yml
+config/redis.yml
 
 public/javascripts/cache
 public/stylesheets/sass/_assets.sass
