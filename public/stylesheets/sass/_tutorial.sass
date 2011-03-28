@@ -1,27 +1,58 @@
 #tutorial
-  border = !tutorial_border
-  padding: 10px
+  position: absolute
+  top: 0
+  left: 0
+  
+  #tutorial_overlay
+    /* set it to fill the whil screen */
+    width: 100%
+    height: 100%
+    filter:alpha(opacity=50) 
+    -moz-opacity: 0.5
+    -khtml-opacity: 0.5 
+    opacity: 0.5
+    background: #000 
+    position: fixed 
+    top: 0 
+    left: 0 
+    z-index: 200
 
-  .step
-    margin-bottom: 5px
+  #tutorial_progress
+    background: #fff
+    padding: 5px
+    border: 1px solid #D8DFEA
+    width: 300px
+    text-align: center
+    position: absolute
+    z-index: 300
+    
+    #skip_tutorial
+      text-align: right
 
-  .current
-    font-size: 15px
-
-  .complete_mark
-    color = !tutorial_complete_color
-    vertical-align: super
-    font-size: 10px
-    display: none
-
-  .continue
-    +button(!tutorial_continue_icon)
-    margin: 10px
-    display: none
-
-  .completed
-    .complete_mark
-      display: inline
-
-    .button
-      display: block
+// #tutorial
+//   border = !tutorial_border
+//   padding: 10px
+// 
+//   .step
+//     margin-bottom: 5px
+// 
+//   .current
+//     font-size: 15px
+// 
+//   .complete_mark
+//     color = !tutorial_complete_color
+//     vertical-align: super
+//     font-size: 10px
+//     display: none
+// 
+//   .continue
+//     +button(!tutorial_continue_icon)
+//     margin: 10px
+//     display: none
+// 
+//   .completed
+//     .complete_mark
+//       display: inline
+// 
+//     .button
+//       display: block

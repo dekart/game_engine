@@ -1,4 +1,16 @@
 en:
+  tutorial:
+    skip: "Skip tutorial"
+    progress: "Tutorial progress"
+    steps:
+      current: "Current step:"
+      finish: "Finish"
+      next: "Next step:"
+      hello_new_user: 
+        title: "Hello new user"
+      choose_character:
+        title: "Choose your character"
+      
   tutorials:
     block:
       title: "Game Tutorial"

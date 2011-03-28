@@ -4,4 +4,5 @@ class TutorialsController < ApplicationController
 
     render :partial => "tutorials/block", :layout => false
   end
+  
 end

@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   
   named_scope :with_email, {:conditions => "email != ''"}
   
-  after_save :schedule_social_data_update, :if => :access_token_changed?  
+  after_save :schedule_social_data_update, :if => :access_token_changed?
 
   def show_tutorial?
     Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
