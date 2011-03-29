@@ -34,13 +34,4 @@ module TutorialsHelper
     current_step.to_sym 
   end
   
-  def target_trigger(selector)
-    <<-SCRIPT
-      $('#{selector}').css('position', 'relative').css('z-index', 300)
-        .bind('click', function() {
-          $(document).trigger('tutorial.next_step');
-        });
-    SCRIPT
-  end
-  
 end

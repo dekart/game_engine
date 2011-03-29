@@ -20,7 +20,9 @@
 <% end %>
 
 <div id="tutorial">
+  
   <div id="tutorial_overlay"></div>
+  
   <div id="tutorial_progress">
     <div id="skip_tutorial" class="block">
       <%= hide_block_link('tutorial', t("tutorial.skip")) %>
@@ -50,22 +52,29 @@
     <% case current_step %>
       <% when :hello_new_user %>
         <% dom_ready do %>
-          $("a.missions").qtip({
-            content: 'This is missions',
-            show: { ready: true },
-            hide: false
+          $("a.missions").tutorialTip({
+            content: "Click to the missions",
+            position: {
+              corner: {
+                tooltip: 'topMiddle',
+                target: 'bottomMiddle'
+              }
+            },
+            style: {
+              border: {
+                 width: 5,
+                 radius: 10
+              },
+              padding: 10, 
+              textAlign: 'center',
+              tip: true, // Give it a speech bubble tip with automatic corner detection
+           }
+            
           });
-          <%= target_trigger("a.missions") %>
+          $("a.missions").tutorialSpot();
+          $("a.missions").tutorialClickTarget();
         <% end %>
       <% when :choose_character %>
-        <% dom_ready do %>
-          $("a.missions").qtip({
-            content: 'This is missions',
-            show: { ready: true },
-            hide: false
-          });
-          <%= target_trigger("a.missions") %>
-        <% end %>
     <% end %>
   </div>
 </div>
