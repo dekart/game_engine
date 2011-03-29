@@ -7,7 +7,7 @@ class AddStateToAppRequests < ActiveRecord::Migration
       t.datetime :accepted_at
     end
     
-    AppRequest.update_all "state = 'processed'"
+    ActiveRecord::Base.connection.execute "UPDATE app_requests SET state = 'processed'"
   end
 
   def self.down
