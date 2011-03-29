@@ -160,20 +160,6 @@ namespace :app do
       puts 'Done!'
     end
     
-    desc 'Update gift storage schema'
-    task :update_gift_storage_schema => :environment do
-      Gift.set_table_name 'gifts_new'
-      Gift.reset_column_information
-      
-      ActiveRecord::Base.connection.select_all(%{
-        SELECT gifts.character_id AS sender_id, gifts.item_id, gift_receipts.facebook_id AS receiver_id
-        FROM gift_receipts 
-        LEFT JOIN gifts ON(gifts.id = gift_receipts.id) 
-        WHERE gift_receipts.accepted != 1
-      }).each do |record|
-        Gift.create(record)
-      end
-    end
 
     desc 'Convert payout triggers'
     task :convert_loot_to_random_payout => :environment do

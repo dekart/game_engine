@@ -14,7 +14,20 @@ class RecreateGifts < ActiveRecord::Migration
       t.timestamps
     end
     
-    Rake::Task['app:maintenance:update_gift_storage_schema'].execute
+    ActiveRecord::Base.connection.execute %{
+      INSERT INTO 
+        gifts_new (sender_id, item_id, receiver_id) 
+      SELECT 
+        gifts.character_id AS sender_id, 
+        gifts.item_id, 
+        gift_receipts.facebook_id AS receiver_id
+      FROM 
+        gift_receipts          
+      LEFT JOIN 
+        gifts ON (gifts.id = gift_receipts.id)
+      WHERE 
+        gift_receipts.accepted != 1;
+    }
     
     add_index :gifts_new, [:receiver_id, :state, :sender_id]
     
