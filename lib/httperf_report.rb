@@ -6,15 +6,13 @@ module HttperfReport
   end
 
   class Report
-    @files
-
     def initialize
       @files = []
-      @cookies = ""
+      @params = {}
     end
 
-    def cookies(args)
-      @cookies = args.collect{|key,value| "#{key.to_s}=#{value.to_s}"}.join(";")
+    def params(args)
+      @params = args
     end
 
     def group(name)
@@ -23,9 +21,9 @@ module HttperfReport
         :path => filepath = Rails.root.join("tmp", name.split.join('_'))
       }
 
-      file = File.open(filepath, 'w')
-      yield Group.new(file)
-      file.close
+      File.open(filepath, 'w') do |file|
+        yield Group.new(file, @params)
+      end
     end
 
     def work
@@ -33,10 +31,10 @@ module HttperfReport
       printf("%-24s%-20s%-10s%-14s%-14s\n\n", 'Group', 'Number of Requests', 'Total', 'Reply Rate', 'Reply Time')
 
       host = YAML.load_file(Rails.root.join('config', 'facebooker.yml'))['performance_test']['callback_url'].sub('http://', '')
-      header = @cookies.empty? ? "" : "Cookie: #{@cookies}"
 
       @files.each do |file|
-        output = `httperf --hog --server=#{host} --rate=10 --verbose --wsesslog=1,2,#{file[:path]} --add-header='#{header}\n'`
+        output = `httperf --hog --server=localhost --port=3305 --rate=100 --verbose --wsesslog=1,0,#{file[:path]}\n`
+        #`--add-header="#{header}\n"`
         res = parse_output(output)
 
         printf("%-24s%-20s%-10s%-14s%-14s\n",
@@ -71,18 +69,30 @@ module HttperfReport
 
   class Group
     @file
+    @params
 
-    def initialize(file)
+    def initialize(file, params)
       @file = file
+      @params = params
     end
 
-    def get(url)
-      @file.puts("#{url}")
+    def get(url, args = {})
+      args = @params.merge(args)
+      @file.puts("#{url}?#{serialize(args)}")
     end
 
-    def post(url, args)
-      arglist = args.collect{|key,value| "#{key.to_s}=#{value.to_s}"}.join("&")
-      @file.puts("#{url} method=POST contents=#{arglist}")
+    def post(url, args = {})
+      args = {:_method => 'post'}.merge(@params).merge(args)
+      @file.puts("#{url} method=POST contents='#{serialize(args)}'")
+    end
+
+    def put(url, args = {})
+      args = {:_method => 'put'}.merge(@params).merge(args)
+      @file.puts("#{url} method=POST contents='#{serialize(args)}'")
+    end
+
+    def serialize(params)
+      return params.collect{|key,value| "#{key.to_s}=#{value.to_s}"}.join("&")
     end
   end
 end
