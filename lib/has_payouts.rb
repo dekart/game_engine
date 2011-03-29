@@ -7,6 +7,8 @@ module HasPayouts
     options.reverse_merge!(
       :apply_on => args.first
     )
+    
+    args.flatten!
 
     cattr_accessor :payout_events
     self.payout_events  = args
