@@ -1,5 +1,3 @@
-<% current_step = exract_current_step %>
-
 <% dom_ready do %>
 
   tutorialClearEffects();
@@ -15,7 +13,7 @@
             :url => update_step_tutorials_path,
             :method => :put,
             :update => :tutorial,
-            :with => "'tutorial_step=#{next_step(current_step)}'"
+            :with => "'tutorial_step=#{next_step}'"
           ) %>
     <% end %>
   });
@@ -40,23 +38,46 @@
     
     <div id="current_step">
       <%= t("tutorial.steps.current") %>
-      <%= step_title(current_step) %>
+      <%= step_title %>
     </div>
     
     <div>
       <%= t("tutorial.steps.next") %>
-      <% if final_step?(current_step) %>
+      <% if final_step? %>
         <%= t("tutorial.steps.finish") %>
       <% else %>
-        <%= step_title(next_step(current_step)) %>
+        <%= step_title(next_step) %>
       <% end %>
     </div>
   </div>
   
   <% case current_step %>
     <% when :hello_new_user %>
-      <%= show_standard_dialog(:step => current_step) %>
+    
+      <%= show_standard_dialog %>
+      
     <% when :complete_first_mission %>
+    
+      <% dom_ready do %>
+        $("a.missions").tutorialTip({
+          content: "Click to the missions",
+          position: {
+            corner: {
+              tooltip: 'topMiddle',
+              target: 'bottomMiddle'
+            }
+          }
+        });
+        $("a.missions").tutorialSpot();
+        $("a.missions").tutorialClickTarget();
+      <% end %>
+      
+    <% when :first_mission_bonus %>
+    <% when :first_mission_expenses %>
+    <% when :first_mission_level_up %>
+    <% when :mission_complete_increase_character %>
+    
+    <% when :shop_go %>
       <% dom_ready do %>
         $("a.missions").tutorialTip({
           content: "Click to the missions",
@@ -72,5 +93,3 @@
       <% end %>
   <% end %>
 </div>
-
-  
