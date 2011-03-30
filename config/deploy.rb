@@ -14,14 +14,17 @@ set :deploy_via, :remote_cache
 default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
+  desc "Deploy 'cold' application"
+  task :cold do
+    update
+    db.setup
+    app.setup
+    app.cache_fb_connect_js
+  end
+  
   desc "Restart service"
   task :restart, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
-  end
-
-  desc "Start service"
-  task :start, :roles => :app do
-    puts "Start task not implemented"
   end
 
   desc "Stop service"
@@ -109,6 +112,11 @@ namespace :deploy do
       
       run "gzip #{dump_path}"
     end
+    
+    desc "Setup database"
+    task :setup, :roles => :db, :only => {:primary => true} do
+      run "cd #{current_path}; rake db:setup --trace"
+    end
   end
 
   namespace :dependencies do
@@ -138,11 +146,6 @@ namespace :deploy do
   end
   
   namespace :app do
-    desc "Bootstrap application data"
-    task :bootstrap, :roles => :app do
-      run "cd #{current_path}; rake db:seed --trace"
-    end
-
     desc "Setup application"
     task :setup, :roles => :app do
       run "cd #{release_path}; rake app:setup --trace"
@@ -181,15 +184,10 @@ after "deploy:update_code", "deploy:configure:facebooker"
 after "deploy:update_code", "deploy:configure:database"
 
 ["deploy", "deploy:migrations", "deploy:cold"].each do |t|
-  after t, "deploy:configure:apache"
+  after t, "deploy:configure:nginx"
   after t, "deploy:configure:cron"
   after t, "deploy:cleanup"
 end
-
-
-# First deploy
-after "deploy:cold", "deploy:app:bootstrap"
-after "deploy:cold", "deploy:app:setup"
 
 
 # Ordinary deploys
