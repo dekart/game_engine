@@ -47,6 +47,13 @@ class Monster < ActiveRecord::Base
     (expire_at - Time.now).to_i
   end
 
+  def event_data
+    {
+      :reference_id => self.id,
+      :reference_type => "Monster"
+    }
+  end
+
   protected
 
   def assign_initial_attributes

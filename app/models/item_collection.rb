@@ -56,6 +56,13 @@ class ItemCollection < ActiveRecord::Base
     items - character.items
   end
 
+  def event_data
+    {
+      :reference_id => self.id,
+      :reference_type => "Collection"
+    }
+  end
+
   protected
 
   def check_item_list

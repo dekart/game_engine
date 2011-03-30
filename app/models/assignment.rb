@@ -62,6 +62,15 @@ class Assignment < ActiveRecord::Base
     self.class.effect_value(context, relation, role)
   end
 
+  def event_data
+    {
+      :reference_id => self.relation.character.id,
+      :reference_type => "Character",
+      :reference_level => self.relation.character.level,
+      :string_value => self.role
+    }
+  end
+
   protected
 
   def destroy_current_assignments

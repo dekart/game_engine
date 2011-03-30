@@ -182,4 +182,5 @@ class Item < ActiveRecord::Base
   def can_be_sold?
     self[:can_be_sold] && package_size == 1
   end
+
 end

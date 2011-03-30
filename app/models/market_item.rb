@@ -80,6 +80,14 @@ class MarketItem < ActiveRecord::Base
     end
   end
 
+  def event_data
+    {
+      :reference_id => self.id,
+      :reference_type => "MarketItem",
+      :amount => self.amount
+    }
+  end
+
   protected
 
   def check_amount

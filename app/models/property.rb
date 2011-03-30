@@ -92,6 +92,15 @@ class Property < ActiveRecord::Base
     end
   end
 
+  def event_data
+    {
+      :reference_id => self.id,
+      :reference_type => "Property",
+      :reference_level => self.level,
+      :basic_money => self.total_income
+    }
+  end
+
   protected
 
   def check_upgrade_possibility

@@ -100,7 +100,18 @@ class MonsterFight < ActiveRecord::Base
   def summoner?
     character == monster.character
   end
-  
+
+  def event_data
+    {
+      :reference_id => self.id,
+      :reference_type => "Monster",
+      :attacker_damage => self.character_damage,
+      :victim_damage => self.monster_damage,
+      :basic_money => self.money,
+      :experience => self.experience
+    }
+  end
+
   protected
   
   def create_character_news

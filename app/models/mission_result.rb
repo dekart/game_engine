@@ -127,6 +127,15 @@ class MissionResult
     !(@money.nil? && @experience.nil? && @payouts.by_action(:add).empty?)
   end
 
+  def event_data
+    {
+      :reference_id => self.mission.id,
+      :reference_type => "Mission",
+      :basic_money => self.money,
+      :experience => self.experience
+    }
+  end
+
   protected
 
   def valid?

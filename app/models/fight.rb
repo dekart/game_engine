@@ -60,6 +60,18 @@ class Fight < ActiveRecord::Base
     Requirements::StaminaPoint.new(:value => Setting.i(:fight_stamina_required))
   end
 
+  def event_data
+    {
+      :reference_id => self.victim.id,
+      :reference_type => "Character",
+      :reference_level => self.victim.level,
+      :attacker_damage => self.attacker_hp_loss,
+      :victim_damage => self.victim_hp_loss,
+      :basic_money => self.attacker_won? ? self.winner_money : self.loser_money,
+      :experience => self.experience
+    }
+  end
+
   protected
 
   def validate

@@ -67,12 +67,15 @@ describe PropertiesController do
 
       PropertyType.stub!(:available_in).and_return(@shop_and_special_types)
 
-      @property = mock_model(Property)
+      @property = mock_model(Property, :errors => [], :event_data => {})
 
       @character_properties = mock(:properties, :buy! => @property)
-      @character = mock_model(Character, :properties => @character_properties)
+      @character = mock_model(Character, :properties => @character_properties, :event_data => {})
 
+      @property.stub!(:character).and_return(@character)
       controller.stub!(:current_character).and_return(@character)
+
+      EventLoggingService.stub!(:log_event).and_return(nil)
     end
 
     it "should filter property types by availability" do
@@ -100,7 +103,25 @@ describe PropertiesController do
 
       assigns[:property].should == @property
     end
-    
+
+    it "should be checked for errors" do
+      @property.should_receive(:errors).and_return([])
+
+      post :create, :property_type_id => 1
+
+      assigns[:property].should == @property
+    end
+
+    describe "if a property was purchased successfully" do
+      it "should log the event" do
+          EventLoggingService.should_receive(:log_event).and_return(nil)
+
+          post :create, :property_type_id => 1
+
+          assigns[:property].should == @property
+      end
+    end
+
     it "should fetch character properties without cache and pass them to the template" do
       @character.should_receive(:properties).with(true).and_return(@character_properties)
 
@@ -119,12 +140,13 @@ describe PropertiesController do
 
   describe "when upgrading a property" do
     before :each do
-      @property = mock_model(Property, :upgrade! => true)
+      @property = mock_model(Property, :upgrade! => true, :errors => [], :event_data => {})
 
       @character_properties = mock(:properties, :find => @property)
 
-      @character = mock_model(Character, :properties => @character_properties)
+      @character = mock_model(Character, :properties => @character_properties, :event_data => {})
 
+      @property.stub!(:character).and_return(@character)
       controller.stub!(:current_character).and_return(@character)
     end
 
@@ -141,7 +163,21 @@ describe PropertiesController do
 
       put :upgrade, :id => 1
     end
-    
+
+    it "should be checked for errors" do
+      @property.should_receive(:errors).and_return([])
+
+      put :upgrade, :id => 1
+    end
+
+    describe "if a property was upgraded successfully" do
+      it "should log the event" do
+          EventLoggingService.should_receive(:log_event).and_return(nil)
+
+          put :upgrade, :id => 1
+      end
+    end
+
     it "should fetch character properties without cache and pass them to the template" do
       @character.should_receive(:properties).with(true).and_return(@character_properties)
 
@@ -160,13 +196,20 @@ describe PropertiesController do
 
   describe "when collecting money from properties" do
     before :each do
-      @property = mock_model(Property, :collect_money! => true)
+      @property = mock_model(Property, :collect_money! => true, :event_data => {})
 
-      @character_properties = mock(:properties, :find => @property, :collect_money! => true)
+      @character_properties = mock(:properties, 
+        :find => @property,
+        :collect_money! => true,
+        :each => Proc.new {yield @property}
+      )
 
-      @character = mock_model(Character, :properties => @character_properties)
+      @character = mock_model(Character, :properties => @character_properties, :event_data => {})
+
+      @property.stub!(:character).and_return(@character)
 
       controller.stub!(:current_character).and_return(@character)
+      EventLoggingService.stub!(:log_event).and_return(nil)
     end
 
     describe "when collecting money from a single property" do
@@ -182,6 +225,12 @@ describe PropertiesController do
         put :collect_money, :id => 1
 
         assigns[:result].should == 123
+      end
+
+      it "should log the collecting event for property" do
+        EventLoggingService.should_receive(:log_event).and_return(nil)
+
+        put :collect_money, :id => 1
       end
 
       it "should pass the property to the template" do
@@ -213,6 +262,14 @@ describe PropertiesController do
         put :collect_money
 
         assigns[:result].should == 456
+      end
+
+      it "should log the collecting event for properties" do
+        @character_properties.each do |p|
+          EventLoggingService.should_receive(:log_event).and_return(nil)
+        end
+
+        put :collect_money, :id => 1
       end
 
       it "should pass character properties to the template" do

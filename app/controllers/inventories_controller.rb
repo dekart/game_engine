@@ -15,7 +15,7 @@ class InventoriesController < ApplicationController
 
     @amount = params[:amount].to_i * @item.package_size
 
-    EventLoggingService.log_event(trade_event_data(:item_bought, current_character, @item, @amount))
+    EventLoggingService.log_event(:item_bought, current_character, @item, @amount)
 
     render :action => :create, :layout => "ajax"
   end
@@ -27,7 +27,7 @@ class InventoriesController < ApplicationController
 
     @inventory = current_character.inventories.sell!(@item, @amount)
 
-    EventLoggingService.log_event(trade_event_data(:item_sold, current_character, @item, @amount))
+    EventLoggingService.log_event(:item_sold, current_character, @item, @amount)
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -56,14 +56,14 @@ class InventoriesController < ApplicationController
       current_character.equipment.equip!(@inventory, params[:placement])
 
       if @inventory.equipped == equipped + 1
-        EventLoggingService.log_event(equip_event_data(:item_equipped, @inventory, params[:placement]))
+        EventLoggingService.log_event(:item_equipped, @inventory, params[:placement])
       end
     else
       placements = current_character.placements.clone
       current_character.equipment.equip_best!
 
       if placements != current_character.placements
-        EventLoggingService.log_event(equip_all_event_data(:all_equipped, current_character))
+        EventLoggingService.log_event(:all_equipped, current_character)
       end
     end
 
@@ -76,13 +76,13 @@ class InventoriesController < ApplicationController
 
       current_character.equipment.unequip!(@inventory, params[:placement])
 
-      EventLoggingService.log_event(equip_event_data(:item_unequipped, @inventory, params[:placement]))
+      EventLoggingService.log_event(:item_unequipped, @inventory, params[:placement])
     else
       placements = current_character.placements.clone
       current_character.equipment.unequip_all!
 
       if placements != current_character.placements
-        EventLoggingService.log_event(equip_all_event_data(:all_unequipped, current_character))
+        EventLoggingService.log_event(:all_unequipped, current_character)
       end
     end
 
@@ -120,7 +120,7 @@ class InventoriesController < ApplicationController
         end
 
         @inventories.each do |inventory|
-          EventLoggingService.log_event(give_event_data(:item_given, current_character, @character, inventory))
+          EventLoggingService.log_event(:item_given, current_character, @character, inventory.item)
         end
 
         flash[:success] = t('inventories.give.messages.success')
@@ -145,49 +145,4 @@ class InventoriesController < ApplicationController
     redirect_from_iframe inventories_url(:canvas => true) if Setting.b(:character_auto_equipment)
   end
 
-  def trade_event_data(event_type, character, item, amount)
-    {
-      :event_type => event_type,
-      :character_id => character.id,
-      :level => character.level,
-      :reference_id => item.id,
-      :reference_type => "Item",
-      :amount => amount,
-      :occurred_at => Time.now
-    }.to_json
-  end
-
-  def equip_event_data(event_type, inventory, placement)
-    {
-      :event_type => event_type,
-      :character_id => inventory.character.id,
-      :level => inventory.character.level,
-      :reference_id => inventory.item.id,
-      :reference_type => "Item",
-      :string_value => placement,
-      :occurred_at => Time.now
-    }.to_json
-  end
-
-  def equip_all_event_data(event_type, character)
-    {
-      :event_type => event_type,
-      :character_id => character.id,
-      :level => character.level,
-      :occurred_at => Time.now
-    }.to_json
-  end
-
-  def give_event_data(event_type, character, receiver, inventory)
-    {
-      :event_type => event_type,
-      :character_id => character.id,
-      :level => character.level,
-      :reference_id => receiver.id,
-      :reference_type => "Character",
-      :reference_level => receiver.level,
-      :int_value => inventory.item.id,
-      :occurred_at => Time.now
-    }.to_json
-  end
 end

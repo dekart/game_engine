@@ -87,15 +87,19 @@ describe BankOperationsController do
 
   describe "when depositing money" do
     before :each do
-      @deposit = mock_model(BankDeposit, :save => true)
+      @deposit = mock_model(BankDeposit, :save => true, :event_data => {})
       @character_deposits = mock("deposits", :build => @deposit)
       
       @character = mock_model(Character, 
         :bank_deposits  => @character_deposits,
-        :reload         => true
+        :reload         => true,
+        :event_data     => {}
       )
 
+      @deposit.stub!(:character).and_return(@character)
       controller.stub!(:current_character).and_return(@character)
+
+      EventLoggingService.stub!(:log_event).and_return(nil)
     end
 
     def do_request
@@ -121,6 +125,12 @@ describe BankOperationsController do
     end
 
     describe "if deposit was saved successfully" do
+      it "should log the event" do
+        EventLoggingService.should_receive(:log_event).and_return(nil)
+
+        do_request
+      end
+
       it "should reload current character" do
         @character.should_receive(:reload).and_return(true)
 
@@ -151,15 +161,19 @@ describe BankOperationsController do
 
   describe "when withdrawing money" do
     before :each do
-      @withdrawal = mock_model(BankWithdraw, :save => true)
+      @withdrawal = mock_model(BankWithdraw, :save => true, :event_data => {})
       @character_withdrawals = mock("withdrawals", :build => @withdrawal)
 
       @character = mock_model(Character,
         :bank_withdrawals => @character_withdrawals,
-        :reload           => true
+        :reload           => true,
+        :event_data => {}
       )
 
+      @withdrawal.stub!(:character).and_return(@character)
       controller.stub!(:current_character).and_return(@character)
+
+      EventLoggingService.stub!(:log_event).and_return(nil)
     end
 
     def do_request
@@ -185,6 +199,12 @@ describe BankOperationsController do
     end
 
     describe "if withdrawal was saved successfully" do
+      it "should log the event" do
+        EventLoggingService.should_receive(:log_event).and_return(nil)
+
+        do_request
+      end
+
       it "should reload current character" do
         @character.should_receive(:reload).and_return(true)
 

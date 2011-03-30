@@ -341,6 +341,13 @@ class Character < ActiveRecord::Base
   def friend_filter
     @friend_filter ||= FriendFilter.new(self)
   end
+
+  def event_data
+    {
+      :character_id => self.id,
+      :level => self.level
+    }
+  end
   
   protected
 
@@ -360,21 +367,12 @@ class Character < ActiveRecord::Base
       
       self.level_up_applied = true
 
-      EventLoggingService.log_event(levelup_event_data(:character_levelup, self))
+      EventLoggingService.log_event(:character_levelup, self)
     end
   end
   
   def level_up_amount
     level_change[1] - level_change[0]
-  end
-
-  def levelup_event_data(event_type, character)
-    {
-      :event_type => event_type,
-      :character_id => character.id,
-      :level => character.level,
-      :occurred_at => Time.now
-    }.to_json
   end
 
   def vip_money_per_upgrade
