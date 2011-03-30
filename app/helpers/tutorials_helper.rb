@@ -11,8 +11,12 @@ module TutorialsHelper
     yield(current, reload_function)
   end
   
-  def step_title(step_name)
-    t("tutorial.steps.#{step_name}.title")
+  def t_step(property, step = exract_current_step)
+    t("tutorial.steps.#{step}.#{property}")
+  end
+  
+  def step_title(step = exract_current_step)
+    t_step("title", step)
   end
   
   def final_step?(step = exract_current_step)
@@ -32,6 +36,15 @@ module TutorialsHelper
       current_step = Tutorial::STEPS.first
     end
     current_step.to_sym 
+  end
+  
+  def show_standard_dialog(options = {})
+    current_step = options[:step] || exract_current_step
+    options[:title] ||= escape_javascript(t_step("window_title", current_step))
+    options[:text] ||= escape_javascript(t_step("window_text", current_step))
+    options[:button_name] ||= escape_javascript(t_step("window_button_name", current_step))
+    
+    dom_ready("$.showTutorialStandardDialog('#{options[:title]}', '#{options[:text]}', '#{options[:button_name]}');")
   end
   
 end

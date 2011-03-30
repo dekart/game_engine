@@ -145,7 +145,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => "characters", :action => "index"
 
-  map.resources :tutorials, :only => :show
+  map.resources :tutorials,
+    :collection => {
+      :update_step => :put
+    }
 
   map.resources(:users,
     :collection => {

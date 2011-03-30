@@ -3,17 +3,20 @@
 %>
 
 <% dom_ready do %>
-  $(document).bind('tutorial.next_step', function() {
-    <% if final_step?() %>
+  // unbind previously binded trigger (actually in ajax)
+  $("#tutorial").unbind('next_step.change_tutorial_step');
+  $("#tutorial").bind('next_step.change_tutorial_step', function() {
+    <% if final_step? %>
       <%= remote_function(
             :url => toggle_block_user_path(current_user, :block => 'tutorial'),
             :before => "$('#tutorial').hide()"
           ) %>
     <% else %>
       <%= remote_function(
-            :url => user_path(current_user),
+            :url => update_step_tutorials_path,
             :method => :put,
-            :with => "'user[tutorial_step]=#{next_step(current_step)}'"
+            :update => :tutorial,
+            :with => "'tutorial_step=#{next_step(current_step)}'"
           ) %>
     <% end %>
   });
@@ -40,43 +43,32 @@
     
     <div>
       <%= t("tutorial.steps.next") %>
-      <% if Tutorial::STEPS.size == step_index.next %>
+      <% if final_step?(current_step) %>
         <%= t("tutorial.steps.finish") %>
       <% else %>
-        <%= step_title(Tutorial::STEPS[step_index.next]) %>
+        <%= step_title(next_step(current_step)) %>
       <% end %>
     </div>
   </div>
   
-  <div id="current_step">
-    <% case current_step %>
-      <% when :hello_new_user %>
-        <% dom_ready do %>
-          $("a.missions").tutorialTip({
-            content: "Click to the missions",
-            position: {
-              corner: {
-                tooltip: 'topMiddle',
-                target: 'bottomMiddle'
-              }
-            },
-            style: {
-              border: {
-                 width: 5,
-                 radius: 10
-              },
-              padding: 10, 
-              textAlign: 'center',
-              tip: true, // Give it a speech bubble tip with automatic corner detection
-           }
-            
-          });
-          $("a.missions").tutorialSpot();
-          $("a.missions").tutorialClickTarget();
-        <% end %>
-      <% when :choose_character %>
-    <% end %>
-  </div>
+  <% case current_step %>
+    <% when :hello_new_user %>
+      <%= show_standard_dialog(:step => current_step) %>
+    <% when :complete_first_mission %>
+      <% dom_ready do %>
+        $("a.missions").tutorialTip({
+          content: "Click to the missions",
+          position: {
+            corner: {
+              tooltip: 'topMiddle',
+              target: 'bottomMiddle'
+            }
+          }
+        });
+        $("a.missions").tutorialSpot();
+        $("a.missions").tutorialClickTarget();
+      <% end %>
+  <% end %>
 </div>
 
   

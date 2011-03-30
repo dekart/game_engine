@@ -8,7 +8,10 @@ en:
       next: "Next step:"
       hello_new_user: 
         title: "Hello new user"
-      choose_character:
+        window_title: "Hello new user"
+        window_text: "Hello new user. This is text about our game"
+        window_button_name: "Ok"
+      complete_first_mission:
         title: "Choose your character"
       
   tutorials:

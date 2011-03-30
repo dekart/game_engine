@@ -1,7 +1,7 @@
-/**
- * Javascript for tutorial
+/*
+ * See http://craigsworks.com/projects/qtip/docs/ for documentation about qTip plugin.
  */
- 
+
 /*
 * Makes target object visible and responsible in tutorial layout 
 */
@@ -16,7 +16,7 @@ $.fn.tutorialVisible = function() {
 $.fn.tutorialClickTarget = function() {
   $(this).tutorialVisible();
   $(this).bind('click', function() {
-    $(document).trigger('tutorial.next_step');
+    $("#tutorial").trigger('next_step');
   });
 }
 
@@ -27,11 +27,20 @@ $.fn.tutorialClickTarget = function() {
 $.fn.tutorialTip = function(options) {
   var defaultOptions = {
     show: { ready: true },
-    hide: false
+    hide: false, 
+    style: {
+      border: {
+         width: 5,
+         radius: 10
+      },
+      padding: 10, 
+      textAlign: 'center',
+      tip: true, // Give it a speech bubble tip with automatic corner detection
+    }
   };
   
   // merge options 
-  $.extend(true, defaultOptions, options)
+  $.extend(true, defaultOptions, options);
   
   $(this).qtip(defaultOptions);
 }
@@ -45,4 +54,62 @@ $.fn.tutorialSpot = function() {
   var left = $(this).offset().left - spot.width() / 2 + $(this).width() / 2;
   var top = $(this).offset().top - spot.height() / 2 + $(this).height() / 2;
   spot.css({ left: left, top: top });
+}
+
+/*
+ * Show tutorial dialog box. It's create by qTip.
+ */
+$.showTutorialDialog = function(options) {
+  var defaultOptions = {
+    show: { ready: true },
+    hide: false, 
+    position: { 
+      target: $("#content"),
+      corner: 'topMiddle'
+    },
+    style: {
+      width: { max: 350 },
+      padding: '14px',
+      border: {
+        width: 9,
+        radius: 9,
+        color: '#666666'
+      },
+      name: 'light'
+    },
+    api: {
+      // trigger next_step after modal window is closed
+      onDestroy: function() {
+        $("#tutorial").trigger('next_step');
+      }
+    }
+  };
+  
+  // merge options 
+  $.extend(true, defaultOptions, options);
+ 
+  $(document.body).qtip(defaultOptions);
+}
+
+/*
+ * Standard tutorial dialog box with title, text and one button, which close dialog box. 
+ */
+$.showTutorialStandardDialog = function(title, text, buttonName) {
+  text += '<div id="dialog_button"><input type="button" value="' + buttonName + '"/>';
+  
+  var options = {
+    content: {
+      title: {
+        text: title
+      },
+      text: text
+    }
+  };
+  
+  $.showTutorialDialog(options);
+  
+  // close dialog window on button click
+  $("#dialog_button > input").bind('click', function() {
+    $(document.body).qtip('destroy');
+  });
 }
