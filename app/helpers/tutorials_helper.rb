@@ -19,6 +19,10 @@ module TutorialsHelper
     t_step("title", step)
   end
   
+  def step_text(step = current_step)
+    t_step("text", step)
+  end
+  
   def final_step?(step = current_step)
     Tutorial::STEPS.last == step
   end
@@ -39,7 +43,7 @@ module TutorialsHelper
   end
   
   def show_standard_dialog(options = {})
-    current_step = options[:step] || current_step
+    options[:step] ||= current_step
     options[:title] ||= escape_javascript(t_step("window_title", current_step))
     options[:text] ||= escape_javascript(t_step("window_text", current_step))
     options[:button_name] ||= escape_javascript(t_step("window_button_name", current_step))
@@ -47,4 +51,33 @@ module TutorialsHelper
     dom_ready("$.showTutorialStandardDialog('#{options[:title]}', '#{options[:text]}', '#{options[:button_name]}');")
   end
   
+  def tip_on(target, options = {})
+    options[:text] ||= step_text()
+    options[:position_corner_target] ||= 'bottomRight'
+    options[:position_corner_tooltip] ||= 'topLeft'
+    
+    tip_options = {
+      :content => options[:text],
+      :position => {
+        :corner => {
+          :target => options[:position_corner_target],
+          :tooltip => options[:position_corner_tooltip]
+        }
+      }
+    }
+    
+    dom_ready("$('#{target}').tutorialTip(#{tip_options.to_json});")
+  end
+  
+  def spot_on(target)
+    dom_ready("$('#{target}').tutorialSpot();")
+  end
+  
+  def click_on(target)
+    dom_ready("$('#{target}').tutorialClickTarget();")
+  end
+  
+  def make_visible(target)
+    dom_ready("$('#{target}').tutorialVisible();")
+  end
 end

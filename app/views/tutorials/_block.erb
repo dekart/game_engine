@@ -58,23 +58,31 @@
       
     <% when :complete_first_mission %>
     
-      <% dom_ready do %>
-        $("a.missions").tutorialTip({
-          content: "Click to the missions",
-          position: {
-            corner: {
-              tooltip: 'topMiddle',
-              target: 'bottomMiddle'
-            }
-          }
-        });
-        $("a.missions").tutorialSpot();
-        $("a.missions").tutorialClickTarget();
-      <% end %>
+      <%= tip_on("#mission_list .mission:first a.fulfill",
+            :position_corner_target => 'bottomMiddle',
+            :position_corner_tooltip => 'topMiddle'
+          ) %>
+      <%= click_on("#mission_list .mission:first a.fulfill") %>
       
-    <% when :first_mission_bonus %>
-    <% when :first_mission_expenses %>
-    <% when :first_mission_level_up %>
+    <% when :first_mission_receive %>
+    
+      <%= tip_on("#result .received",
+            :position_corner_target => 'bottomMiddle',
+            :position_corner_tooltip => 'topMiddle' 
+          ) %>
+      <%= spot_on("#result .received") %>
+      <%= click_on("#result a.fulfill_again") %>
+      
+    <% when :first_mission_spent %>
+    
+      <%= tip_on("#result .spent",
+        :position_corner_target => 'bottomMiddle',
+        :position_corner_tooltip => 'topMiddle' 
+      ) %>
+      <%= spot_on("#result .spent") %>
+      <%= click_on("#result a.fulfill_again") %>
+      
+    <% when :first_level_up %>
     <% when :mission_complete_increase_character %>
     
     <% when :shop_go %>

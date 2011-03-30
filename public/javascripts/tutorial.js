@@ -6,7 +6,7 @@
 * Makes target object visible and responsible in tutorial layout 
 */
 $.fn.tutorialVisible = function() {
-  $(this).css('position', 'relative').css('z-index', 300);
+  $(this).addClass('tutorialVisible');
 };
 
 /*
@@ -119,6 +119,7 @@ $.showTutorialStandardDialog = function(title, text, buttonName) {
  * This actually after ajax update.
  */
 function tutorialClearEffects() {
+  $(".tutorialVisible").removeClass("tutorialVisible");
   $(".tutorialTipTarget").qtip("destroy").removeClass("tutorialTipTarget");
   // unbind previously binded trigger
   $("#tutorial").unbind('next_step.change_tutorial_step');
