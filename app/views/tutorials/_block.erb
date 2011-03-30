@@ -1,15 +1,14 @@
-<%
-  current_step = exract_current_step
-%>
+<% current_step = exract_current_step %>
 
 <% dom_ready do %>
-  // unbind previously binded trigger (actually in ajax)
-  $("#tutorial").unbind('next_step.change_tutorial_step');
+
+  tutorialClearEffects();
+  
   $("#tutorial").bind('next_step.change_tutorial_step', function() {
     <% if final_step? %>
       <%= remote_function(
             :url => toggle_block_user_path(current_user, :block => 'tutorial'),
-            :before => "$('#tutorial').hide()"
+            :before => "tutorialHide()"
           ) %>
     <% else %>
       <%= remote_function(
@@ -28,13 +27,16 @@
   
   <div id="tutorial_progress">
     <div id="skip_tutorial" class="block">
-      <%= hide_block_link('tutorial', t("tutorial.skip")) %>
+      <%= hide_block_link('tutorial', 
+            :title => t("tutorial.skip"),
+            :before => "tutorialHide()"
+          ) %>
     </div>
     <h3><%= t("tutorial.progress") %></h3>
     <div>
-      <%= step_index.next %> / <%= Tutorial::STEPS.size %>
+      <%= step_index %> / <%= (Tutorial::STEPS.size - 1) %>
     </div>
-    <%= percentage_bar(step_index.next.to_f / Tutorial::STEPS.size.to_f * 100) %>
+    <%= percentage_bar(step_index.to_f / (Tutorial::STEPS.size - 1).to_f * 100) %>
     
     <div id="current_step">
       <%= t("tutorial.steps.current") %>

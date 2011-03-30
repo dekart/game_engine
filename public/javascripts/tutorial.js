@@ -7,7 +7,7 @@
 */
 $.fn.tutorialVisible = function() {
   $(this).css('position', 'relative').css('z-index', 300);
-}
+};
 
 /*
  * Makes target object visible and responsible + binds trigger 
@@ -18,7 +18,7 @@ $.fn.tutorialClickTarget = function() {
   $(this).bind('click', function() {
     $("#tutorial").trigger('next_step');
   });
-}
+};
 
 /* 
  * Show tip on target object.
@@ -36,14 +36,17 @@ $.fn.tutorialTip = function(options) {
       padding: 10, 
       textAlign: 'center',
       tip: true, // Give it a speech bubble tip with automatic corner detection
-    }
+      classes: {
+        target: 'tutorialTipTarget'
+      }
+    }, 
   };
   
   // merge options 
   $.extend(true, defaultOptions, options);
   
   $(this).qtip(defaultOptions);
-}
+};
 
 /*
  * Show spot circle on center of object 
@@ -54,7 +57,7 @@ $.fn.tutorialSpot = function() {
   var left = $(this).offset().left - spot.width() / 2 + $(this).width() / 2;
   var top = $(this).offset().top - spot.height() / 2 + $(this).height() / 2;
   spot.css({ left: left, top: top });
-}
+};
 
 /*
  * Show tutorial dialog box. It's create by qTip.
@@ -75,21 +78,18 @@ $.showTutorialDialog = function(options) {
         radius: 9,
         color: '#666666'
       },
-      name: 'light'
-    },
-    api: {
-      // trigger next_step after modal window is closed
-      onDestroy: function() {
-        $("#tutorial").trigger('next_step');
+      name: 'light',
+      classes: {
+        target: 'tutorialTipTarget'
       }
-    }
+    },
   };
   
   // merge options 
   $.extend(true, defaultOptions, options);
  
   $(document.body).qtip(defaultOptions);
-}
+};
 
 /*
  * Standard tutorial dialog box with title, text and one button, which close dialog box. 
@@ -110,6 +110,21 @@ $.showTutorialStandardDialog = function(title, text, buttonName) {
   
   // close dialog window on button click
   $("#dialog_button > input").bind('click', function() {
-    $(document.body).qtip('destroy');
+    $("#tutorial").trigger('next_step');
   });
-}
+};
+
+/*
+ * Clear tutorial tips, dialog box and old javascript triggers.
+ * This actually after ajax update.
+ */
+function tutorialClearEffects() {
+  $(".tutorialTipTarget").qtip("destroy").removeClass("tutorialTipTarget");
+  // unbind previously binded trigger
+  $("#tutorial").unbind('next_step.change_tutorial_step');
+};
+
+function tutorialHide() {
+  tutorialClearEffects();
+  $('#tutorial').hide();
+};

@@ -13,6 +13,10 @@ en:
         window_button_name: "Ok"
       complete_first_mission:
         title: "Choose your character"
+      first_mission_bonus:
+        title: "Get mission bonus"
+      first_mission_expenses:
+        title: "Mission expenses"
       
   tutorials:
     block:
