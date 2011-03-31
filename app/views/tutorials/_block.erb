@@ -1,8 +1,10 @@
 <% dom_ready do %>
-
-  tutorialClearEffects();
+  // move dialog box after tutorial box
+  $('#dialog').offset({top: $('#tutorial').offset().top + $('#tutorial').height() + 25 });
   
-  $("#tutorial").bind('next_step.change_tutorial_step', function() {
+  $(document).bind('tutorial.next_step', function() {
+    tutorialClearEffects();
+    
     <% if final_step? %>
       <%= remote_function(
             :url => toggle_block_user_path(current_user, :block => 'tutorial'),
@@ -54,50 +56,58 @@
   <% case current_step %>
     <% when :hello_new_user %>
     
-      <%= show_standard_dialog %>
+      <% show_standard_dialog %>
       
     <% when :complete_first_mission %>
     
-      <%= tip_on("#mission_list .mission:first a.fulfill",
-            :position_corner_target => 'bottomMiddle',
-            :position_corner_tooltip => 'topMiddle'
-          ) %>
-      <%= click_on("#mission_list .mission:first a.fulfill") %>
+      <% tip_on("#mission_list .mission:first a.fulfill") %>
+      <% click_trigger("#mission_list .mission:first a.fulfill") %>
       
     <% when :first_mission_receive %>
     
-      <%= tip_on("#result .received",
-            :position_corner_target => 'bottomMiddle',
-            :position_corner_tooltip => 'topMiddle' 
-          ) %>
-      <%= spot_on("#result .received") %>
-      <%= click_on("#result a.fulfill_again") %>
+      <% tip_on("#result .received") %>
+      <% spot_on("#result .received") %>
+      <% click_trigger("#result a.fulfill_again") %>
       
     <% when :first_mission_spent %>
     
-      <%= tip_on("#result .spent",
-        :position_corner_target => 'bottomMiddle',
-        :position_corner_tooltip => 'topMiddle' 
-      ) %>
-      <%= spot_on("#result .spent") %>
-      <%= click_on("#result a.fulfill_again") %>
+      <% tip_on("#result .spent") %>
+      <% spot_on("#result .spent") %>
+      <% click_trigger("#result a.fulfill_again") %>
       
     <% when :first_level_up %>
-    <% when :mission_complete_increase_character %>
     
-    <% when :shop_go %>
       <% dom_ready do %>
-        $("a.missions").tutorialTip({
-          content: "Click to the missions",
-          position: {
-            corner: {
-              tooltip: 'topMiddle',
-              target: 'bottomMiddle'
-            }
-          }
-        });
-        $("a.missions").tutorialSpot();
-        $("a.missions").tutorialClickTarget();
+        $("#dialog .close").hide();
+        $("#dialog .buttons a.continue").hide();
+        $("#dialog .disable_notification").hide()
       <% end %>
+      
+      <% make_visible("#dialog") %>
+      
+      <% click_trigger("#dialog .buttons a.upgrade") %>
+    
+    <% when :first_upgrade_character %>
+    
+      <% make_visible("#dialog") %>
+      <% tip_on("#dialog a.upgrade:first", 
+          :position_corner_target => 'topMiddle',
+          :position_corner_tooltip => 'bottomMiddle'
+         ) %>
+         
+      <% dom_ready do %>
+        // close next dialog box and change current step
+        // TODO:
+        $(document).bind('close.dialog.tutorial', function() {
+          $(document).trigger('close.dialog').trigger('tutorial.next_step');
+        });
+      <% end %>
+    
+    <% when :goto_shop %>
+    
+     <% tip_on("a.missions") %>
+     <% spot_on("a.missions") %>
+     <% click_trigger("a.missions") %>
+     
   <% end %>
 </div>

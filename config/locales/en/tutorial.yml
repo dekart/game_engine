@@ -24,3 +24,13 @@ en:
         title: "Level up"
         window_title: "Level up"
         window_text: "You got first level up"
+      first_upgrade_character:
+        title: "Upgrade your character"
+        text: "Spent your points"
+      goto_shop:
+        title: "Shop"
+        text: "Go to the shop and by items"
+      shop_buy_item:
+        title: "Buy items"
+        text: "Buy this item"
+        

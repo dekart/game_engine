@@ -53,8 +53,8 @@ module TutorialsHelper
   
   def tip_on(target, options = {})
     options[:text] ||= step_text()
-    options[:position_corner_target] ||= 'bottomRight'
-    options[:position_corner_tooltip] ||= 'topLeft'
+    options[:position_corner_target] ||= 'bottomMiddle'
+    options[:position_corner_tooltip] ||= 'topMiddle'
     
     tip_options = {
       :content => options[:text],
@@ -73,7 +73,7 @@ module TutorialsHelper
     dom_ready("$('#{target}').tutorialSpot();")
   end
   
-  def click_on(target)
+  def click_trigger(target)
     dom_ready("$('#{target}').tutorialClickTarget();")
   end
   

@@ -15,8 +15,9 @@ $.fn.tutorialVisible = function() {
  */
 $.fn.tutorialClickTarget = function() {
   $(this).tutorialVisible();
-  $(this).bind('click', function() {
-    $("#tutorial").trigger('next_step');
+  $(this).unbind('click.tutorial.next_step');
+  $(this).bind('click.tutorial.next_step', function() {
+    $(document).trigger('tutorial.next_step');
   });
 };
 
@@ -110,7 +111,7 @@ $.showTutorialStandardDialog = function(title, text, buttonName) {
   
   // close dialog window on button click
   $("#dialog_button > input").bind('click', function() {
-    $("#tutorial").trigger('next_step');
+    $(document).trigger('tutorial.next_step');
   });
 };
 
@@ -120,9 +121,11 @@ $.showTutorialStandardDialog = function(title, text, buttonName) {
  */
 function tutorialClearEffects() {
   $(".tutorialVisible").removeClass("tutorialVisible");
+  
   $(".tutorialTipTarget").qtip("destroy").removeClass("tutorialTipTarget");
+  
   // unbind previously binded trigger
-  $("#tutorial").unbind('next_step.change_tutorial_step');
+  $(document).unbind('tutorial.next_step');
 };
 
 function tutorialHide() {

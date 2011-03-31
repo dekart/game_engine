@@ -6,7 +6,7 @@ en:
 
     level_up:
       title: "New Level!"
-      text: "You've gained enough experience to upgrade to the new level! You received %{point_amount} upgrade points that you can spend to increase your attributes. Go to %{upgrade} page and use your points as you wish. Additionally, your energy and health have been refilled."
+      text: "You've gained enough experience to upgrade to the new level! You received %{point_amount} upgrade points that you can spend to increase your attributes. Additionally, your energy and health have been refilled."
       upgrade_link: "upgrade"
       buttons:
         continue: "Continue"

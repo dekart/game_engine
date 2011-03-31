@@ -5,9 +5,10 @@ module Tutorial
     :complete_first_mission,
     :first_mission_receive,
     :first_mission_spent,
-    :first_mission_level_up,
-    :mission_complete_increase_character,
-    :shop_go,
+    :first_level_up,
+    :first_upgrade_character,
+    
+    :goto_shop,
     :shop_buy_item
   ]
   
