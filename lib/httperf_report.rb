@@ -30,11 +30,8 @@ module HttperfReport
       printf "Performance Report\n------------------\n\n"
       printf("%-24s%-20s%-10s%-14s%-14s\n\n", 'Group', 'Number of Requests', 'Total', 'Reply Rate', 'Reply Time')
 
-      host = YAML.load_file(Rails.root.join('config', 'facebooker.yml'))['performance_test']['callback_url'].sub('http://', '')
-
       @files.each do |file|
         output = `httperf --hog --server=localhost --port=3305 --rate=100 --verbose --wsesslog=1,0,#{file[:path]}\n`
-        #`--add-header="#{header}\n"`
         res = parse_output(output)
 
         printf("%-24s%-20s%-10s%-14s%-14s\n",
@@ -46,7 +43,7 @@ module HttperfReport
       end
 
       @files.each do |file|
-        #File.delete(file[:path])
+        File.delete(file[:path])
       end
     end
 
@@ -68,9 +65,6 @@ module HttperfReport
   end
 
   class Group
-    @file
-    @params
-
     def initialize(file, params)
       @file = file
       @params = params
@@ -96,3 +90,5 @@ module HttperfReport
     end
   end
 end
+
+include HttperfReport
