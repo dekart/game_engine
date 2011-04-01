@@ -77,7 +77,7 @@ namespace :deploy do
     end
 
     desc "Install cron jobs"
-    task :cron, :roles => :app do
+    task :cron do
       template = ERB.new(
         File.read(File.expand_path("../deploy/templates/crontab.erb", __FILE__))
       )
