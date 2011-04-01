@@ -1,24 +1,24 @@
 <table id="main_menu" cellspacing="0" cellpadding="0">
   <tr>
     <td>
-      <%= link_to(t(".home"), root_path, :class => :home) %>
-      <%= link_to(t(".character"), character_path(current_character.key), :class => :profile) %>
+      <%= link_to(t(".missions"), mission_groups_path, :class => :missions) %>
+      <%= link_to(t(".monsters"), monsters_path, :class => :monsters) %>
     </td>
     <td>
-      <%= link_to(t(".missions"), mission_groups_path, :class => :missions) %>
       <%= link_to(t(".fights"), new_fight_path, :class => :fights) %>
+      <%= link_to(t(".relations") + " (%d)" % current_character.relations.effective_size, relations_path, :class => :alliance) %>
     </td>
     <td>
       <%= link_to(t(".items"), items_path, :class => :shop) %>
-      <%= link_to(t(".vip"), premium_path, :class => :premium) %>
-    </td>
-    <td>
       <%= link_to(t(".inventories"), inventories_path, :class => :inventory) %>
-      <%= link_to(t(".properties"), properties_path, :class => :properties) %>
     </td>
     <td>
-      <%= link_to(t(".relations") + " (%d)" % current_character.relations.effective_size, relations_path, :class => :alliance) %>
+      <%= link_to(t(".properties"), properties_path, :class => :properties) %>
+      <%= link_to(t(".character"), character_path(current_character.key), :class => :profile) %>
+    </td>
+    <td>
       <%= link_to(t(".rating"), rating_path, :class => :rating) %>
+      <%= link_to(t(".vip"), premium_path, :class => :premium) %>
     </td>
   </tr>
 </table>

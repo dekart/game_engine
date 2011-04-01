@@ -20,6 +20,7 @@ en:
       relations: "Alliance"
       rating: "Rating"
       properties: "Properties"
+      monsters: "Monsters"
     spinner:
       alt: "Please wait..."
       text: "Please wait for a few seconds..."
