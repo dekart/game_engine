@@ -189,6 +189,7 @@ after "deploy:setup", "deploy:dependencies:system_gems"
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 after "deploy:update_code", "deploy:configure:facebooker"
 after "deploy:update_code", "deploy:configure:database"
+after "deploy:update_code", "deploy:configure:settings"
 
 ["deploy", "deploy:migrations", "deploy:cold"].each do |t|
   after t, "deploy:configure:nginx"
