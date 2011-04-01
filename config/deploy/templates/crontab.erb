@@ -1,7 +1,14 @@
 RAILS_ENV=<%= rails_env %>
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-* * * * * cd <%= current_path %> && test `ps ax | grep -E 'delayed_job' | wc -l` -le 3 && <%= current_path %>/script/delayed_job >> <%= shared_path %>/log/delayed_job.log 2>&1
-2 * * * * cd <%= current_path %> && rake app:notifications --trace >> <%= shared_path %>/log/notifications.log 2>&1
-*/30 * * * * cd <%= current_path %> && rake app:market:remove_expired_listings --trace >> <%= shared_path %>/log/market.log 2>&1
-0 5 * * * cd <%= current_path %> && rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1
+# Delayed Job Processor
+
+* * * * *     cd <%= current_path %> && flock -n ./tmp/pids/delayed_job <%= current_path %>/script/delayed_job >> <%= shared_path %>/log/delayed_job.log 2>&1
+
+# Rake Tasks
+
+*/30 * * * *  cd <%= current_path %> && flock ./tmp/pids/rake rake app:market:remove_expired_listings --trace >> <%= shared_path %>/log/market.log 2>&1
+*/5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:logged_events:store --trace >> <%= shared_path %>/log/logged_events.log 2>&1
+
+2 * * * *     cd <%= current_path %> && flock ./tmp/pids/rake rake app:notifications --trace >> <%= shared_path %>/log/notifications.log 2>&1
+0 5 * * *     cd <%= current_path %> && flock ./tmp/pids/rake rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1
