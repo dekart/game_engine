@@ -24,6 +24,12 @@ gem "hashie",     "0.4.0"
 gem "httparty",   "0.6.1"
 gem "ruby-hmac",  "0.4.0"
 
+group :development do
+  gem "capistrano",     "2.5.20"
+  gem "capistrano-ext", '1.2.1'
+end
+
+
 group :test do
   gem "rspec",          "1.3.0"
   gem "rspec-rails",    "1.3.2"
