@@ -73,10 +73,14 @@ class Character
       charge!(0, Setting.i(:premium_reset_attributes_price), :premium_reset_attributes)
     end
 
-    def change_name!
+    def change_name!(new_name)
       return if vip_money < Setting.i(:premium_change_name_price)
 
-      charge!(0, Setting.i(:premium_change_name_price), :premium_change_name)
+      transaction do
+        update_attribute(:name, new_name)
+        
+        charge!(0, Setting.i(:premium_change_name_price), :premium_change_name)
+      end
     end
   end
 end

@@ -1,0 +1,23 @@
+<% dialog :id => :premia_change_name_dialog do %>
+  <h2><%= t('.title') %></h2>
+  
+  <p class="note"><%= t('.note') %></p>
+  
+  <% remote_form_for(current_character, :url => premium_path, :update => :result, :after=> '$.dialog.close()') do |f| %>
+    <%= hidden_field_tag :type, :change_name %>
+  
+    <%= f.text_field :name, :label => t('.label') %>
+    
+    <%= link_to_remote(button(:apply),
+          :url    => premium_path,
+          :with   => "$(this).parents('form').serialize()",
+          :method => :put,
+          :update => :result,
+          :after  => '$.dialog.close()',
+          :html   => {
+            :'data-click-once' => true,
+            :class => 'apply button'
+          }
+        ) %>
+  <% end %>
+<% end %>

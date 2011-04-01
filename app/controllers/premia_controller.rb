@@ -21,11 +21,7 @@ class PremiaController < ApplicationController
       when :reset_attributes
         current_character.reset_attributes!
       when :change_name
-        if current_character.change_name!
-          flash[:premium_change_name] = true
-
-          @redirect_to = edit_character_path(:current)
-        end
+        current_character.change_name!(params[:character][:name])
       else
         false
       end
@@ -36,6 +32,10 @@ class PremiaController < ApplicationController
       flash.now[:error] = t("premia.update.messages.failure")
     end
 
+    render :layout => 'ajax'
+  end
+  
+  def change_name
     render :layout => 'ajax'
   end
 end

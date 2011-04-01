@@ -153,10 +153,9 @@
     </td>
     <td class="controls">
       <%= link_to_remote(button(t(".change_name.button")),
-            :url      => premium_path(:type => :change_name),
-            :method   => :put,
+            :url      => change_name_premium_path,
+            :method   => :get,
             :update   => :ajax,
-            :confirm  => t(".change_name.confirm"),
             :html     => {:class => :button}
           ) %>
     </td>

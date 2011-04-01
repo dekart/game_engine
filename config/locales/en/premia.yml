@@ -30,14 +30,16 @@ en:
         confirm: "Are you sure you want to reset your character attributes? You'll need to re-assign all attributes when you'll get all your upgrade points back."
       change_name:
         text: "Change character name"
-        confirm: "Are you sure you want to change your name?"
         button: "Change"
       buy_points:
         text: "Add %{amount} upgrade points to your character"
         button: "Add Points"
-    get_more_vip:
-      title: "How to Get More Gems"
-      text: "You can earn gems by completing offers. Check the offer list daily to complete new offers and receive gems every day. You can also buy as many gems as you need using a credit card, PayPal, etc."
+    change_name:
+      title: "Change Your Nickname"
+      note: "Please enter your new nickname below. Please note that each name change will charge Gems from your character so try to avoid typos. If you want to use your real Facebook name - keep the field blank and click 'Apply'."
+      label: "New Nickname"
+      buttons:
+        apply: 'Apply'
     update:
       messages:
         success:
@@ -48,5 +50,5 @@ en:
           buy_points: "Upgrade points have been added to your character!"
           hire_mercenary: "You successfully hired new mercenary!"
           reset_attributes: "You successfully reseted all attributes!"
-          change_name: "You were charged for changing the name! Please choose your new name."
+          change_name: "You successafully changed your name"
         failure: "You don't have enough Gems"
