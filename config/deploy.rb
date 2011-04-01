@@ -69,11 +69,11 @@ namespace :deploy do
       put(config, "#{release_path}/config/database.yml")
     end
 
-    desc "Generate Redis config file"
-    task :redis do
-      config = YAML.dump(rails_env => redis_config.stringify_keys)
+    desc "Generate Application config file"
+    task :settings do
+      config = YAML.dump(rails_env => settings)
 
-      put(config, "#{release_path}/config/redis.yml")
+      put(config, "#{release_path}/config/settings.yml")
     end
 
     desc "Install cron jobs"

@@ -17,6 +17,8 @@ gem "RedCloth",         "4.2.3",  :require => "redcloth"
 gem "nokogiri",         "1.4.3.1"
 gem "redis",            "2.1.1"
 
+gem 'cubus-settingslogic', '2.2.0'
+
 
 # facebooker2 dependencies
 gem "crack",      "0.1.8"

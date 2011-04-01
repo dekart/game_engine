@@ -21,8 +21,3 @@ config.action_controller.perform_caching             = true
 config.action_mailer.raise_delivery_errors = true
 
 config.log_level = :debug
-
-CACHE_SERVER    = "localhost"
-SESSION_SERVER  = "localhost"
-
-config.cache_store = :mem_cache_store, CACHE_SERVER, {:namespace => Rails.env}

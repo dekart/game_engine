@@ -1,1 +1,1 @@
-ActionController::Base.cache_store = :mem_cache_store, CACHE_SERVER, {:namespace => Rails.env}
+ActionController::Base.cache_store = :mem_cache_store, Rails::Config.cache.server, {:namespace => Rails.env}

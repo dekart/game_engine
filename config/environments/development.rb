@@ -15,8 +15,3 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
-
-CACHE_SERVER    = "localhost"
-SESSION_SERVER  = "localhost"
-
-config.cache_store = :mem_cache_store, CACHE_SERVER, {:namespace => Rails.env}

@@ -31,8 +31,18 @@ set :database_config, {
   :password => "your_db_password"
 }
 
-set :redis_config, {
-    :host => "127.0.0.1",
+set :settings, {
+  :cache => {
+    :server => 'localhost'
+  },
+  :session => {
+    :memcache_server  => 'localhost',
+    :key              => '_game_engine2',
+    :secret           => 'ab08c85360590a72ea4c70ff82fcf09714f333ba13723cb9f477eb8f50c7dd4f3328ca981cc7ee2df27367f6daeedd29c51cb00fb5fc3bf146ab1e90ccb1f878'
+  },
+  :redis => {
+    :host => '127.0.0.1',
     :port => 6379,
-    :db => 0
+    :db   => 0,
+  }
 }
