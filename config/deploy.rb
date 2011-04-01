@@ -71,7 +71,7 @@ namespace :deploy do
 
     desc "Generate Application config file"
     task :settings do
-      config = YAML.dump(rails_env => settings)
+      config = YAML.dump(rails_env => settings_config)
 
       put(config, "#{release_path}/config/settings.yml")
     end

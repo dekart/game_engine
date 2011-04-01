@@ -31,7 +31,7 @@ set :database_config, {
   :password => "your_db_password"
 }
 
-set :settings, {
+set :settings_config, {
   :cache => {
     :server => 'localhost'
   },
