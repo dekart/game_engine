@@ -34,7 +34,7 @@ module TutorialsHelper
     '<input type="button" onclick="$(document).trigger(\'tutorial.next_step\')" value="' + value + '">'
   end
   
-  def show_standard_dialog(options = {})
+  def tutorial_dialog(options = {})
     options[:step] ||= current_step
     options[:title] ||= escape_javascript(t_step("window_title", current_step))
     options[:text] ||= escape_javascript(t_step("window_text", current_step))
@@ -76,4 +76,26 @@ module TutorialsHelper
   def make_visible(target)
     dom_ready("$('#{target}').tutorialVisible();")
   end
+  
+  def goto_main_menu_item(item_name, tip_options = {})
+    selector = "#main_menu a.#{item_name}"
+    tip_on(selector, tip_options)
+    spot_on(selector)
+    click_trigger(selector)
+  end
+  
+  def step(step_name, options = {}, &block)
+    if current_step == step_name
+      
+      if options[:dont_close_dialog]
+        # move dialog box after tutorial box
+        dom_ready("$('#dialog').offset({top: $('#tutorial').offset().top + $('#tutorial').height() + 25 });")
+      else
+        dom_ready("$(document).trigger('close.dialog');")
+      end
+      
+      yield
+    end
+  end
+  
 end

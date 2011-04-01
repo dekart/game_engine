@@ -40,7 +40,7 @@ en:
         text: "Click here"
       equip_character:
         title: "Character equipment"
-        text: "Already equip"
+        text: "Already equiped"
         tip_button_name: "Ok"
       goto_monsters:
         title: "Monstes"
