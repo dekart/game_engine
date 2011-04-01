@@ -69,10 +69,11 @@ Rails::Initializer.run do |config|
   end
 end
 
+require "core_ext/rails"
+require "core_ext/hash"
 require 'ipaddr'
 require "facebook_money"
 require "i18n/backend/yaml_db"
-require "rails_restart"
 require "div_form_builder/extensions"
 
 I18n.backend = I18n::Backend::YamlDb.new

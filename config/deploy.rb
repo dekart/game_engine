@@ -2,6 +2,7 @@ require "active_support"
 require "yaml"
 require "uri"
 require "capistrano/ext/multistage"
+require "lib/core_ext/hash"
 
 set :stages, %w(staging production)
 set :default_stage, "production"
@@ -57,21 +58,21 @@ namespace :deploy do
 
     desc "Generate Facebooker config file"
     task :facebooker do
-      config = YAML.dump(rails_env => facebooker_config.stringify_keys)
+      config = YAML.dump(rails_env => facebooker_config.deep_stringify_keys)
 
       put(config, "#{release_path}/config/facebooker.yml")
     end
     
     desc "Generate DB config file"
     task :database do
-      config = YAML.dump(rails_env => database_config.stringify_keys)
+      config = YAML.dump(rails_env => database_config.deep_stringify_keys)
 
       put(config, "#{release_path}/config/database.yml")
     end
 
     desc "Generate Application config file"
     task :settings do
-      config = YAML.dump(rails_env => settings_config)
+      config = YAML.dump(rails_env => settings_config.deep_stringify_keys)
 
       put(config, "#{release_path}/config/settings.yml")
     end
