@@ -43,14 +43,12 @@
       <%= step_title %>
     </div>
     
-    <div>
-      <%= t("tutorial.steps.next") %>
-      <% if final_step? %>
-        <%= t("tutorial.steps.finish") %>
-      <% else %>
+    <% unless final_step? %>
+      <div>
+        <%= t("tutorial.steps.next") %>
         <%= step_title(next_step) %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
   
   <% case current_step %>
@@ -90,24 +88,152 @@
     <% when :first_upgrade_character %>
     
       <% make_visible("#dialog") %>
-      <% tip_on("#dialog a.upgrade:first", 
-          :position_corner_target => 'topMiddle',
-          :position_corner_tooltip => 'bottomMiddle'
+      <% tip_on("#dialog #upgrade_list", 
+          :position_corner_target => 'rightMiddle',
+          :position_corner_tooltip => 'leftMiddle'
          ) %>
          
       <% dom_ready do %>
-        // close next dialog box and change current step
-        // TODO:
-        $(document).bind('close.dialog.tutorial', function() {
+        $("#dialog #upgrade_list .points a").hide();
+        // change current step when user spents points
+        $(document).bind('character.upgrade_complete.tutorial', function() {
+          // close next dialog and trigger next step
           $(document).trigger('close.dialog').trigger('tutorial.next_step');
         });
       <% end %>
     
     <% when :goto_shop %>
     
-     <% tip_on("a.missions") %>
-     <% spot_on("a.missions") %>
-     <% click_trigger("a.missions") %>
+     <% tip_on("a.shop") %>
+     <% spot_on("a.shop") %>
+     <% click_trigger("a.shop") %>
      
+    <% when :shop_buy_item %>
+    
+      <% make_visible("#item_list .item:first") %>
+      <% click_trigger("#item_list .item:first a.buy") %>
+      <% tip_on("#item_list .item:first a.buy", 
+          :position_corner_target => 'leftBottom',
+          :position_corner_tooltip => 'rightTop'
+         ) %>
+    
+    <% when :goto_inventory %>
+    
+      <% click_trigger("#result a.inventory") %>
+      <% tip_on("#result a.inventory") %>
+      <% spot_on("#result a.inventory") %>
+    
+    <% when :goto_equip %>
+      
+      <% click_trigger("#content a.equipment") %>
+      <% tip_on("#content a.equipment") %>
+    
+    <% when :equip_character %>
+    
+      <% spot_on("#placements > .placement > .inventory") %>
+      <% tip_on("#placements > .placement > .inventory", :with_ok_button => true) %>
+      
+    <% when :goto_monsters %>
+      
+      <% tip_on("a.monsters") %>
+      <% spot_on("a.monsters") %>
+      <% click_trigger("a.monsters") %>
+    
+    <% when :attack_monster %>
+    
+      <% make_visible("#available_monsters .monster:first") %>
+      <% click_trigger("#available_monsters .monster:first a.attack") %>
+      <% tip_on("#available_monsters .monster:first a.attack",
+          :position_corner_target => 'rightMiddle',
+          :position_corner_tooltip => 'leftMiddle'
+         ) %>
+    
+    <% when :attack_monster_first_time %>
+      
+      <% spot_on("#monster a.attack") %>
+      <% tip_on("#monster a.attack") %>
+      <% click_trigger("#monster a.attack") %>
+    
+    <% when :fight_with_monster_until_he_live %>
+    
+      <% make_visible("#monster .health") %>
+      <% tip_on("#monster .health",
+          :position_corner_target => 'topRight',
+          :position_corner_tooltip => 'bottomLeft'
+         ) %>
+      <% click_trigger("#monster a.attack") %>
+    
+    <% when :monster_spent %>
+      
+      <% spot_on("#result .received") %>
+      <% tip_on("#result .received") %>
+      <% click_trigger("#result a.attack") %>
+      
+    <% when :monster_die %>
+    
+      <% make_visible("#dialog") %>
+      <% click_trigger("#dialog a.continue") %>
+      <% dom_ready "$('#dialog a.close').hide();" %>
+    
+    <% when :goto_fight %>
+    
+      <% tip_on("a.fight") %>
+      <% spot_on("a.fight") %>
+      <% click_trigger("a.fight") %>
+    
+    <% when :attack_other_player %>
+    
+      <% tip_on("#victim_list .character:first a.attack",
+          :position_corner_target => 'topMiddle',
+          :position_corner_tooltip => 'bottomMiddle'
+         ) %>
+      <% click_trigger("a.fight") %>
+    
+    <% when :fight_result %>
+    
+      <% make_visible("#result .payouts") %>
+      <% tip_on("#result .payouts",
+          :position_corner_target => 'topMiddle',
+          :position_corner_tooltip => 'bottomMiddle',
+          :with_ok_button => true
+         ) %>
+    
+    <% when :goto_estate %>
+    
+      <% tip_on("a.properties") %>
+      <% spot_on("a.properties") %>
+      <% click_trigger("a.properties") %>
+    
+    <% when :buy_estate %>
+    
+      <% click_trigger("#property_list .property_type:first a.buy") %>
+      <% tip_on("#property_list .property_type:first a.buy") %>
+    
+    <% when :periodically_collect_property_income %>
+    
+      <% make_visible("#property_list .property_type:first .timer") %>
+      <% tip_on("#property_list .property_type:first .timer", 
+          :with_ok_button => true
+         ) %>
+    
+    
+    <% when :goto_gem_market %>
+    
+      <% tip_on("a.premium") %>
+      <% spot_on("a.premium") %>
+      <% click_trigger("a.premium") %>
+    
+    <% when :spend_gems %>
+    
+      <% tip_on("#current_vip_money", 
+          :position_corner_target => 'topMiddle',
+          :position_corner_tooltip => 'bottomMiddle',
+          :with_ok_button => true
+         ) %>
+    
+    <% when :finish %>
+      
+      <% show_standard_dialog %>
+    
   <% end %>
 </div>

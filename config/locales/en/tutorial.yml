@@ -4,7 +4,6 @@ en:
     progress: "Tutorial progress"
     steps:
       current: "Current step:"
-      finish: "Finish"
       next: "Next step:"
       hello_new_user: 
         title: "Hello new user"
@@ -32,5 +31,59 @@ en:
         text: "Go to the shop and by items"
       shop_buy_item:
         title: "Buy items"
-        text: "Buy this item"
-        
+        text: "Click here"
+      goto_inventory:
+        title: "Inventory"
+        text: "Click here"
+      goto_equip:
+        title: "Equip"
+        text: "Click here"
+      equip_character:
+        title: "Character equipment"
+        text: "Already equip"
+        tip_button_name: "Ok"
+      goto_monsters:
+        title: "Monstes"
+        text: "Click here"
+      attack_monster:
+        title: "Attack monster"
+        text: "Attack"
+      attack_monster_first_time:
+        title: "Attack monster first time"
+        text: "Attack them"
+      fight_with_monster_until_he_live:
+        title: "Fight until the end"
+        text: "Fight with monster until he live"
+      monster_spent:
+        title: "Monster spent"
+        text: "You spent"
+      monster_die:
+        title: "Monster die"
+      goto_fight:
+        title: "Fight"
+        text: "Click here"
+      attack_other_player:
+        title: "Attack other player"
+        text: "Attack this player"
+      fight_result:
+        title: "Fight result"
+        text: "This is your fight result"
+      goto_estate:
+        title: "Estate"
+        text: "Click here"
+      buy_estate:
+        title: "Buy estate"
+        text: "Click here to buy property"
+      periodically_collect_property_income:
+        title: "Collect property"
+        text: "Periodically collect income from property"
+      goto_gem_market:
+        title: "Go to gem market"
+        text: "Click here"
+      spend_gems:
+        title: "Spend gems"
+        text: "Spend your gems"
+      finish:
+        title: "Finish"
+        window_title: "Well done"
+        window_text: "Thank you"

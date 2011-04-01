@@ -96,7 +96,7 @@ $.showTutorialDialog = function(options) {
  * Standard tutorial dialog box with title, text and one button, which close dialog box. 
  */
 $.showTutorialStandardDialog = function(title, text, buttonName) {
-  text += '<div id="dialog_button"><input type="button" value="' + buttonName + '"/>';
+  text += '<div id="dialog_button"><input type="button" onclick="$(document).trigger(\'tutorial.next_step\')" value="' + buttonName + '"/>';
   
   var options = {
     content: {
@@ -108,11 +108,6 @@ $.showTutorialStandardDialog = function(title, text, buttonName) {
   };
   
   $.showTutorialDialog(options);
-  
-  // close dialog window on button click
-  $("#dialog_button > input").bind('click', function() {
-    $(document).trigger('tutorial.next_step');
-  });
 };
 
 /*

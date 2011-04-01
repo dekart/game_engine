@@ -1,16 +1,4 @@
 module TutorialsHelper
-  def tutorial_step(controller, action)
-    current = (controller_name == controller && action_name == action) || (@current_step == "#{controller}-#{action}")
-
-    reload_function = remote_function(
-      :url    => tutorial_path("#{controller}-#{action}"),
-      :method => :get,
-      :update => :tutorial_container
-    )
-
-    yield(current, reload_function)
-  end
-  
   def t_step(property, step = current_step)
     t("tutorial.steps.#{step}.#{property}")
   end
@@ -42,6 +30,10 @@ module TutorialsHelper
     current_step.to_sym 
   end
   
+  def next_step_button(value)
+    '<input type="button" onclick="$(document).trigger(\'tutorial.next_step\')" value="' + value + '">'
+  end
+  
   def show_standard_dialog(options = {})
     options[:step] ||= current_step
     options[:title] ||= escape_javascript(t_step("window_title", current_step))
@@ -55,6 +47,10 @@ module TutorialsHelper
     options[:text] ||= step_text()
     options[:position_corner_target] ||= 'bottomMiddle'
     options[:position_corner_tooltip] ||= 'topMiddle'
+    
+    if (options.delete(:with_ok_button))
+      options[:text] << next_step_button(t_step("tip_button_name"))
+    end
     
     tip_options = {
       :content => options[:text],
