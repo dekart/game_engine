@@ -77,7 +77,7 @@
     
   <% end %>
       
-  <% step :first_level_up, :close_dialog => false do %>
+  <% step :first_level_up, :dont_close_dialog => true do %>
   
     <% dom_ready do %>
       $("#dialog .close").hide();
@@ -173,8 +173,8 @@
   
     <% make_visible("#monster .health") %>
     <% tip_on("#monster .health",
-        :position_corner_target => 'topRight',
-        :position_corner_tooltip => 'bottomLeft'
+        :position_corner_target => 'topMiddle',
+        :position_corner_tooltip => 'bottomMiddle'
        ) %>
     <% click_trigger("#monster a.attack") %>
   <% end %>

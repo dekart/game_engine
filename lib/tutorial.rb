@@ -17,6 +17,8 @@ module Tutorial
     :goto_monsters,
     :attack_monster,
     :attack_monster_first_time,
+    :fight_with_monster_until_he_live,
+    :monster_spent,
     :monster_die,
     
     :goto_fight,
