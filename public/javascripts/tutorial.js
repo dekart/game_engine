@@ -56,8 +56,8 @@ $.fn.tutorialTip = function(options) {
 $.fn.tutorialSpot = function() {
   var spot = $('<div></div>').addClass('spot');
   $('#tutorial_overlay').append(spot);
-  var left = $(this).offset().left - spot.width() / 2 + $(this).width() / 2;
-  var top = $(this).offset().top - spot.height() / 2 + $(this).height() / 2;
+  var left = $(this).offset().left + $(this).outerWidth() / 2 - spot.width() / 2;
+  var top = $(this).offset().top + $(this).outerHeight() / 2 - spot.height() / 2;
   spot.css({ left: left, top: top });
 };
 
