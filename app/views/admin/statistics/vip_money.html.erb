@@ -5,107 +5,118 @@
 <table id="vip_money_operations">
   <tr>
     <td>
-      <h2><%= t(".deposit.overview") %></h2>
+      <div class="section">
+        <h2><%= t(".deposit.overview") %></h2>
 
-      <p>
-        <strong><%= t(".amount.total") %>:</strong>
+        <p>
+          <strong><%= t(".amount.total") %>:</strong>
 
-        <strong>
-          <%= link_to(@all.total_deposit, admin_vip_money_operations_path(:type => :deposit),
-                :title => t(".deposit.operations")
-              ) %>
-        </strong>
+          <strong>
+            <%= link_to(@all.total_deposit, admin_vip_money_operations_path(:type => :deposit),
+                  :title => t(".deposit.operations")
+                ) %>
+          </strong>
 
-        <%= admin_statistics_amount_change(@day.total_deposit) %>
-      </p>
+          <%= admin_statistics_amount_change(@day.total_deposit) %>
+        </p>
+      </div>
 
-      <h2><%= t(".deposit.reference_types") %></h2>
+      <div class="section">
+        <h2><%= t(".deposit.reference_types") %></h2>
 
-      
-      <table class="data">
-        <tr>
-          <th><%= t(".reference_type") %></th>
-          <th><%= t(".amount.total") %></th>
-          <th><%= t(".amount.by_period") %></th>
-        </tr>
-        
-        <% admin_statistics_references(@all.deposit_reference_types, @day.deposit_reference_types) do |reference, total, period| %>
+        <table class="data">
           <tr>
-            <td><%= reference.humanize %></td>
-            <td><%= total %></td>
-            <td><%= "+%d" % period if period %></td>
+            <th><%= t(".reference_type") %></th>
+            <th><%= t(".amount.total") %></th>
+            <th><%= t(".amount.by_period") %></th>
           </tr>
-        <% end %>
-      </table>
-
-      <h2><%= t(".deposit.popular_references") %></h2>
-
-      <table class="data">
-        <tr>
-          <th><%= t(".reference") %></th>
-          <th><%= t(".amount.total") %></th>
-          <th><%= t(".amount.by_period") %></th>
-        </tr>
         
-        <% admin_statistics_references(@all.popular_deposit_references, @day.popular_deposit_references) do |reference, total, period| %>
+          <% admin_statistics_references(@all.deposit_reference_types, @day.deposit_reference_types) do |reference, total, period| %>
+            <tr>
+              <td><%= reference.humanize %></td>
+              <td><%= total %></td>
+              <td><%= "+%d" % period if period %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2><%= t(".deposit.popular_references") %></h2>
+
+        <table class="data">
           <tr>
-            <td><%= admin_statistics_reference(reference) %></td>
-            <td><%= total %></td>
-            <td><%= "+%d" % period if period %></td>
+            <th><%= t(".reference") %></th>
+            <th><%= t(".amount.total") %></th>
+            <th><%= t(".amount.by_period") %></th>
           </tr>
-        <% end %>
-      </table>
+        
+          <% admin_statistics_references(@all.popular_deposit_references, @day.popular_deposit_references) do |reference, total, period| %>
+            <tr>
+              <td><%= admin_statistics_reference(reference) %></td>
+              <td><%= total %></td>
+              <td><%= "+%d" % period if period %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     </td>
     <td>
-      <h2><%= t(".withdraw.overview") %></h2>
+      <div class="section">
+        <h2><%= t(".withdraw.overview") %></h2>
 
-      <p>
-        <strong><%= t(".amount.total") %>:</strong>
+        <p>
+          <strong><%= t(".amount.total") %>:</strong>
 
-        <strong>
-          <%= link_to(@all.total_withdrawal, admin_vip_money_operations_path(:type => :withdrawal),
-                :title => t(".withdraw.operations")
-              )%>
-        </strong>
+          <strong>
+            <%= link_to(@all.total_withdrawal, admin_vip_money_operations_path(:type => :withdrawal),
+                  :title => t(".withdraw.operations")
+                )%>
+          </strong>
 
-        <%= admin_statistics_amount_change(@day.total_withdrawal) %>
-      </p>
+          <%= admin_statistics_amount_change(@day.total_withdrawal) %>
+        </p>
+      </div>
 
-      <h2><%= t(".withdraw.reference_types") %></h2>
+      <div class="section">
+        <h2><%= t(".withdraw.reference_types") %></h2>
 
-      <table class="data">
-        <tr>
-          <th><%= t(".reference_type") %></th>
-          <th><%= t(".amount.total") %></th>
-          <th><%= t(".amount.by_period") %></th>
-        </tr>
-        
-        <% admin_statistics_references(@all.withdrawal_reference_types, @day.withdrawal_reference_types) do |reference, total, period| %>
+        <table class="data">
           <tr>
-            <td><%= reference.humanize %></td>
-            <td><%= total %></td>
-            <td><%= "+%d" % period if period %></td>
+            <th><%= t(".reference_type") %></th>
+            <th><%= t(".amount.total") %></th>
+            <th><%= t(".amount.by_period") %></th>
           </tr>
-        <% end %>
-      </table>
-
-      <h2><%= t(".withdraw.popular_references") %></h2>
-
-      <table class="data">
-        <tr>
-          <th><%= t(".reference") %></th>
-          <th><%= t(".amount.total") %></th>
-          <th><%= t(".amount.by_period") %></th>
-        </tr>
         
-        <% admin_statistics_references(@all.popular_withdrawal_references, @day.popular_withdrawal_references) do |reference, total, period| %>
+          <% admin_statistics_references(@all.withdrawal_reference_types, @day.withdrawal_reference_types) do |reference, total, period| %>
+            <tr>
+              <td><%= reference.humanize %></td>
+              <td><%= total %></td>
+              <td><%= "+%d" % period if period %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2><%= t(".withdraw.popular_references") %></h2>
+
+        <table class="data">
           <tr>
-            <td><%= admin_statistics_reference(reference) %></td>
-            <td><%= total %></td>
-            <td><%= "+%d" % period if period %></td>
+            <th><%= t(".reference") %></th>
+            <th><%= t(".amount.total") %></th>
+            <th><%= t(".amount.by_period") %></th>
           </tr>
-        <% end %>
-      </table>
+        
+          <% admin_statistics_references(@all.popular_withdrawal_references, @day.popular_withdrawal_references) do |reference, total, period| %>
+            <tr>
+              <td><%= admin_statistics_reference(reference) %></td>
+              <td><%= total %></td>
+              <td><%= "+%d" % period if period %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     </td>
   </tr>
 </table>
