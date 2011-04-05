@@ -16,4 +16,16 @@ class Statistics
   def scoped(scope)
     self.class.new(@time_range, self.scope.scoped(scope))
   end
+
+  def scope=(value)
+    if value.class == ActiveRecord::NamedScope::Scope
+      @scope = value
+    else
+      @scope = default_scope.scoped(value)
+    end
+  end
+  
+  def scope
+    @scope || default_scope
+  end
 end

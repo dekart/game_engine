@@ -6,11 +6,8 @@ module Admin::StatisticsHelper
   end
   
   def admin_statistics_references(totals, day)
-    total_references = totals.references
-    day_references = day.references
-    
-    total_references.each do |reference, count|
-      yield(reference, count, day_references.assoc(reference).try(:last))
+    totals.each do |reference, count|
+      yield(reference, count, day.assoc(reference).try(:last))
     end
   end
 

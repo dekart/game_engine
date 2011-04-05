@@ -1,6 +1,7 @@
 class Admin::StatisticsController < Admin::BaseController
   def index
-    @statistics = Statistics::Dashboard.new(24.hours.ago)
+    @all = Statistics::Dashboard.new
+    @day = Statistics::Dashboard.new(24.hours.ago)
   end
 
   def user
@@ -10,6 +11,7 @@ class Admin::StatisticsController < Admin::BaseController
   end
 
   def vip_money
-    @statistics = Statistics::VipMoney.new(24.hours.ago)
+    @all = Statistics::VipMoney.new
+    @day = Statistics::VipMoney.new(24.hours.ago)
   end
 end

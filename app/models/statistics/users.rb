@@ -1,17 +1,9 @@
 class Statistics
   class Users < self
-    def scope=(value)
-      if value.class == ActiveRecord::NamedScope::Scope
-        @scope = value
-      else
-        @scope = User.scoped(value)
-      end
+    def default_scope
+      @time_range ? User.scoped(:conditions => ["users.created_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) : User
     end
-    
-    def scope
-      @scope || User
-    end
-    
+        
     def total_users
       scope.count
     end

@@ -11,20 +11,20 @@
   </tr>
   <tr>
     <td><%= t(".values.users") %></td>
-    <td><%= @statistics.total_users %></td>
-    <td>+ <%= @statistics.users_by_period %></td>
+    <td><%= @all.users.total_users %></td>
+    <td><%= @day.users.total_users %></td>
     <td class="controls"><%= link_to(t(".details"), user_admin_statistics_path) %></td>
   </tr>
   <tr>
     <td><%= t(".values.deposit") %></td>
-    <td><%= @statistics.total_deposit %></td>
-    <td><%= @statistics.deposit_by_period %></td>
+    <td><%= @all.vip_money.total_deposit %></td>
+    <td><%= @day.vip_money.total_deposit %></td>
     <td class="controls"><%= link_to(t(".details"), vip_money_admin_statistics_path) %></td>
   </tr>
   <tr>
     <td><%= t(".values.withdraw") %></td>
-    <td><%= @statistics.total_withdrawal %></td>
-    <td><%= @statistics.withdrawal_by_period %></td>
+    <td><%= @all.vip_money.total_withdrawal %></td>
+    <td><%= @day.vip_money.total_withdrawal %></td>
     <td class="controls"><%= link_to(t(".details"), vip_money_admin_statistics_path) %></td>
   </tr>
 </table>

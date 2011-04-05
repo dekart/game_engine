@@ -1,27 +1,19 @@
 class Statistics
   class VipMoney < self
-    def scope=(value)
-      if value.class == ActiveRecord::NamedScope::Scope
-        @scope = value
-      else
-        @scope = VipMoneyOperation.scoped(value)
-      end
+    def default_scope
+      @time_range ? VipMoneyOperation.scoped(:conditions => ["vip_money_operations.created_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) : VipMoneyOperation
+    end
+    
+    def scope_by_class(klass)
+      scope.scoped(:conditions => {:type => klass.sti_name})
     end
     
     def total_deposit
-      VipMoneyDeposit.sum(:amount)
+      scope_by_class(VipMoneyDeposit).sum(:amount)
     end
 
     def total_withdrawal
-      VipMoneyWithdrawal.sum(:amount)
-    end
-
-    def deposit_by_period
-      VipMoneyDeposit.scoped(:conditions => {:created_at => @time_range}).sum(:amount)
-    end
-
-    def withdrawal_by_period
-      VipMoneyWithdrawal.scoped(:conditions => {:created_at => @time_range}).sum(:amount)
+      scope_by_class(VipMoneyWithdrawal).sum(:amount)
     end
 
     def deposit_reference_types
@@ -43,7 +35,7 @@ class Statistics
     protected
 
     def reference_types_by_class(klass)
-      totals = klass.all(
+      totals = scope_by_class(klass).all(
         :select => "reference_type, sum(amount) as total_amount",
         :group  => :reference_type,
         :order  => :reference_type
@@ -51,7 +43,7 @@ class Statistics
 
       totals.collect!{|d| [d[:reference_type], d[:total_amount].to_i] }
 
-      by_period = klass.scoped(:conditions => {:created_at => @time_range}).all(
+      by_period = scope_by_class(klass).scoped(:conditions => {:created_at => @time_range}).all(
         :select => "reference_type, sum(amount) as total_amount",
         :group  => :reference_type,
         :order  => :reference_type
@@ -69,14 +61,14 @@ class Statistics
     end
 
     def popular_references_by_class(klass)
-      totals = klass.all(
+      totals = scope_by_class(klass).all(
         :select => "reference_id, reference_type, sum(amount) as total_amount",
         :group  => "reference_id, reference_type"
       )
 
       totals.collect!{|d| [d.reference, d[:total_amount].to_i]}
 
-      by_period = klass.scoped(:conditions => {:created_at => @time_range}).all(
+      by_period = scope_by_class(klass).scoped(:conditions => {:created_at => @time_range}).all(
         :select => "reference_id, reference_type, sum(amount) as total_amount",
         :group  => "reference_id, reference_type"
       )
