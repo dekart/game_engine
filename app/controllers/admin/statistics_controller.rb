@@ -4,7 +4,9 @@ class Admin::StatisticsController < Admin::BaseController
   end
 
   def user
-    @statistics = Statistics::Users.new(24.hours.ago)
+    @all = Statistics::Users.new
+    @day = Statistics::Users.new(24.hours.ago)
+    @week = Statistics::Users.new(7.days.ago.beginning_of_day)
   end
 
   def vip_money

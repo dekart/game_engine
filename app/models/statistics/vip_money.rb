@@ -1,5 +1,13 @@
 class Statistics
   class VipMoney < self
+    def scope=(value)
+      if value.class == ActiveRecord::NamedScope::Scope
+        @scope = value
+      else
+        @scope = VipMoneyOperation.scoped(value)
+      end
+    end
+    
     def total_deposit
       VipMoneyDeposit.sum(:amount)
     end

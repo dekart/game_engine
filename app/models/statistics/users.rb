@@ -1,45 +1,37 @@
 class Statistics
   class Users < self
+    def scope=(value)
+      if value.class == ActiveRecord::NamedScope::Scope
+        @scope = value
+      else
+        @scope = User.scoped(value)
+      end
+    end
+    
+    def scope
+      @scope || User
+    end
+    
     def total_users
-      User.count
+      scope.count
     end
-
-    def users_by_period
-      User.count(:conditions => {:created_at => @time_range})
-    end
-
-    def latest_users(limit = 100)
-      User.all(
-        :include  => {:character => :character_type},
-        :order    => "created_at DESC",
-        :limit    => limit
-      )
+    
+    def users_by_day
+      [].tap do |result|
+        numeric_time_range.step(1.day) do |seconds|
+          time = Time.at(seconds)
+          
+          result << [time.to_date, scope.count(:conditions => ['users.created_at BETWEEN ? AND ?', time, time.end_of_day])]
+        end
+      end
     end
 
     def references
-      totals = User.all(
+      scope.all(
         :select => "reference, count(id) as user_count",
         :group  => :reference,
         :order  => :reference
-      )
-
-      totals.collect!{|c| [c.reference, c[:user_count].to_i] }
-
-      by_period = User.scoped(:conditions => {:created_at => @time_range}).all(
-        :select => "reference, count(id) as user_count",
-        :group  => :reference,
-        :order  => :reference
-      )
-
-      by_period.collect!{|c| [c.reference, c[:user_count].to_i] }
-
-      result = totals.collect do |name, count|
-        [name, count, by_period.assoc(name).try(:last).to_i]
-      end
-
-      result.sort!{|a, b| b.last <=> a.last }
-
-      result
+      ).collect!{|c| [c.reference, c[:user_count].to_i] }
     end
   end
 end

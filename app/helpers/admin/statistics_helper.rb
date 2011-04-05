@@ -4,6 +4,15 @@ module Admin::StatisticsHelper
       :amount => content_tag(:strong, value)
     ).html_safe
   end
+  
+  def admin_statistics_references(totals, day)
+    total_references = totals.references
+    day_references = day.references
+    
+    total_references.each do |reference, count|
+      yield(reference, count, day_references.assoc(reference).try(:last))
+    end
+  end
 
   def admin_statistics_reference(reference)
     if reference.is_a?(ActiveRecord::Base)

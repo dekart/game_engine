@@ -2,24 +2,69 @@
 
 <%= render "controls" %>
 
-<h2><%= t(".total_users") %></h2>
+<div class="section">
+  <h2><%= t(".total_users") %></h2>
 
-<p id="total_users">
-  <strong><%= @statistics.total_users %></strong>
+  <p id="total_users">
+    <strong><%= @all.total_users %></strong>
 
-  <%= admin_statistics_amount_change(@statistics.users_by_period) %>
-</p>
+    <%= admin_statistics_amount_change(@day.total_users) %>
+  </p>
+</div>
+
+<div class="section">
+  <h2><%= t('.new_users') %></h2>
+
+  <div class="jqPlot" id="users_chart"></div>
+</div>
+<% dom_ready do %>
+  $.jqplot.config.enablePlugins = true;
+  
+  var all     = <%= @week.users_by_day.to_json.html_safe %>;
+  var level5  = <%= @week.scoped(:joins => :character, :conditions => 'characters.level >= 5').users_by_day.to_json.html_safe %>;
+  var level10 = <%= @week.scoped(:joins => :character, :conditions => 'characters.level >= 10').users_by_day.to_json.html_safe %>;
+
+  $.jqplot('users_chart', [all, level5, level10], {
+    title:'<%= t('.new_users_chart.title') %>',
+    series: [
+      { label: '<%= t('.new_users_chart.total') %>' }, 
+      { label: '<%= t('.new_users_chart.level5') %>' },
+      { label: '<%= t('.new_users_chart.level10') %>' },
+    ],
+    legend: {
+      show: true, 
+      location:'ne'
+    },
+    axes:{
+        xaxis:{
+            renderer:$.jqplot.DateAxisRenderer,
+            rendererOptions:{tickRenderer:$.jqplot.CanvasAxisTickRenderer},
+            tickOptions:{
+                formatString:'%b %#d', 
+                fontSize:'10pt', 
+                fontFamily:'Tahoma'
+            }
+        },
+        yaxis:{
+          rendererOptions:{tickRenderer:$.jqplot.CanvasAxisTickRenderer},
+          tickOptions:{formatString:'%d'}
+        }
+    },
+    highlighter: {sizeAdjust: 7.5}
+  });
+<% end %>
+
 
 <h2><%= t(".references") %> <%= admin_documentation_link(:references) %></h2>
 
 <table class="data">
-<% @statistics.references.each do |reference, total, period| %>
-  <tr>
-    <td><%= reference.present? ? reference : content_tag(:span, t(".no_reference"), :class => :empty) %></td>
-    <td><%= total %></td>
-    <td><%= "+%d" % period if period > 0 %></td>
-  </tr>
-<% end %>
+  <% admin_statistics_references(@all, @day) do |reference, total, day| %>
+    <tr>
+      <td><%= reference.present? ? reference : content_tag(:span, t(".no_reference"), :class => :empty) %></td>
+      <td><%= total %></td>
+      <td><%= "+%d" % day if day %></td>
+    </tr>
+  <% end %>
 </table>
 
 <h2><%= t(".latest_users") %></h2>
@@ -32,7 +77,7 @@
     <th><%= User.human_attribute_name("reference") %></th>
     <th><%= User.human_attribute_name("referrer") %></th>
   </tr>
-  <% @statistics.latest_users.each do |user| %>
+  <% User.latest.each do |user| %>
     <tr>
       <td><%= l(user.created_at, :format => :short) %></td>
       <td><%= link_to(user.facebook_id, fb_profile_url(user), :target => :_blank) %></td>

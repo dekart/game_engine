@@ -282,6 +282,12 @@ en:
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
+        new_users: 'New Users'
+        new_users_chart:
+          title: 'New Users By Day'
+          total: 'Total'
+          level5: 'Level 5'
+          level10: 'Level 10'
         latest_users: "Latest Users"
         profile: "FB Profile"
         references: "References"

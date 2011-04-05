@@ -4,6 +4,11 @@ class User < ActiveRecord::Base
   has_one     :character, :dependent => :destroy
   belongs_to  :referrer, :class_name => "User"
 
+  named_scope :latest, {
+    :order    => 'users.created_at DESC',
+    :include  => :character,
+    :limit    => 50
+  }
   named_scope :after, Proc.new{|user|
     {
       :conditions => ["`users`.id > ?", user.is_a?(User) ? user.id : user.to_i],
