@@ -712,7 +712,7 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",                         :default => ""
+    t.string   "tutorial_step",          :limit => 50,  :default => ""
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

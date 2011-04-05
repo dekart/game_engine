@@ -49,219 +49,264 @@
   </div>
   
   <% step :hello_new_user do %>
-  
-     <% tutorial_dialog %>
      
+     <%= tutorial_dialog(
+          :with_title => true,
+          :with_close_button => true 
+        ) %>
+        
   <% end %>
       
   <% step :complete_first_mission do %>
   
-    <% tip_on("#mission_list .mission:first a.fulfill") %>
-    <% click_trigger("#mission_list .mission:first a.fulfill") %>
+    <%= tip_on("#mission_list .mission:first a.fulfill") %>
+    <%= click_trigger("#mission_list .mission:first a.fulfill") %>
     
   <% end %>
       
   <% step :first_mission_receive do %>
     
-    <% tip_on("#result .received") %>
-    <% spot_on("#result .received") %>
-    <% click_trigger("#result a.fulfill_again") %>
+    <%= tip_on("#result .received") %>
+    <%= spot_on("#result .received") %>
+    <%= click_trigger("#result a.fulfill_again") %>
     
   <% end %>
       
   <% step :first_mission_spent do %>
     
-    <% tip_on("#result .spent") %>
-    <% spot_on("#result .spent") %>
-    <% click_trigger("#result a.fulfill_again") %>
+    <%= tip_on("#result .spent") %>
+    <%= spot_on("#result .spent") %>
+    <%= click_trigger("#result a.fulfill_again") %>
     
   <% end %>
-      
-  <% step :first_level_up, :dont_close_dialog => true do %>
+
+  <% step :first_level_up, :dont_control_upgrade => true do %>
   
-    <% dom_ready do %>
-      $("#dialog .close").hide();
-      $("#dialog .buttons a.continue").hide();
-      $("#dialog .disable_notification").hide()
-    <% end %>
-    <% make_visible("#dialog") %>
-    <% click_trigger("#dialog .buttons a.upgrade") %>
+    $('#dialog').find('.close, a.continue, .disable_notification').hide();
+    tutorialPrepareDialog();
+    
+    <%= click_trigger("#dialog .buttons a.upgrade") %>
     
   <% end %>
     
-  <% step :first_upgrade_character, :dont_close_dialog => true do %>
+  <% step :first_upgrade_character, :dont_control_upgrade => true do %>
   
-    <% make_visible("#dialog") %>
-    <% tip_on("#dialog #upgrade_list", 
-        :position_corner_target => 'rightMiddle',
-        :position_corner_tooltip => 'leftMiddle'
+    $('#dialog').find('.close, a.continue, .disable_notification').hide();
+    tutorialPrepareDialog();
+        
+    $("#dialog #upgrade_list .points a").hide();
+    // change current step when user spents points
+    $(document).bind('character.upgrade_complete.tutorial', function() {
+      // close next dialog and trigger next step
+      $(document).trigger('close.dialog').trigger('tutorial.next_step');
+    });
+    
+    <%= tip_on("#dialog #upgrade_list",
+        :position => {
+          :corner => {
+            :target => 'rightMiddle',
+            :tooltip => 'leftMiddle'
+          }
+        }
        ) %>
-    <% dom_ready do %>
-      $("#dialog #upgrade_list .points a").hide();
-      // change current step when user spents points
-      $(document).bind('character.upgrade_complete.tutorial', function() {
-        // close next dialog and trigger next step
-        $(document).trigger('close.dialog').trigger('tutorial.next_step');
-      });
-    <% end %>
+       
   <% end %>
     
   <% step :goto_shop do %>
   
-   <% goto_main_menu_item("shop") %>
+   <%= goto_main_menu_item("shop") %>
    
   <% end %>
      
   <% step :shop_buy_item do %>
   
-    <% make_visible("#item_list .item:first") %>
-    <% click_trigger("#item_list .item:first a.buy") %>
-    <% tip_on("#item_list .item:first a.buy", 
-        :position_corner_target => 'leftBottom',
-        :position_corner_tooltip => 'rightTop'
+    <%= make_visible("#item_list .item:first") %>
+    <%= click_trigger("#item_list .item:first a.buy") %>
+    <%= tip_on("#item_list .item:first a.buy", 
+        :position => {
+          :corner => {
+            :target => 'leftBottom',
+            :tooltip => 'rightTop'
+          }
+        }
        ) %>
   <% end %>
     
   <% step :goto_inventory do %>
   
-    <% click_trigger("#result a.inventory") %>
-    <% tip_on("#result a.inventory") %>
-    <% spot_on("#result a.inventory") %>
+    <%= click_trigger("#result a.inventory") %>
+    <%= tip_on("#result a.inventory") %>
+    <%= spot_on("#result a.inventory") %>
     
   <% end %>
   
   <% step :goto_equip do %>
       
-    <% click_trigger("#content a.equipment") %>
-    <% tip_on("#content a.equipment") %>
+    <%= click_trigger("#content a.equipment") %>
+    <%= tip_on("#content a.equipment") %>
     
   <% end %>
   
   <% step :equip_character do %>
   
-    <% spot_on("#placements > .placement > .inventory") %>
-    <% tip_on("#placements > .placement > .inventory", :with_ok_button => true) %>
+    <%= spot_on("#placements > .placement > .inventory") %>
+    <%= tip_on("#placements > .placement > .inventory", 
+        :with_close_button => true
+      ) %>
     
   <% end %>
   
   <% step :goto_monsters do %>
     
-    <% goto_main_menu_item("monsters") %>
+    <%= goto_main_menu_item("monsters") %>
     
   <% end %>
   
   <% step :attack_monster do %>
   
-    <% make_visible("#available_monsters .monster:first") %>
-    <% click_trigger("#available_monsters .monster:first a.attack") %>
-    <% tip_on("#available_monsters .monster:first a.attack",
-        :position_corner_target => 'rightMiddle',
-        :position_corner_tooltip => 'leftMiddle'
+    <%= make_visible("#available_monsters .monster:first") %>
+    <%= click_trigger("#available_monsters .monster:first a.attack") %>
+    <%= tip_on("#available_monsters .monster:first a.attack",
+        :position => {
+          :corner => {
+            :target => 'rightMiddle',
+            :tooltip => 'leftMiddle'
+          }
+        }
        ) %>
        
   <% end %>
   
   <% step :attack_monster_first_time do %>
     
-    <% spot_on("#monster a.attack") %>
-    <% tip_on("#monster a.attack") %>
-    <% click_trigger("#monster a.attack") %>
+    <%= spot_on("#monster a.attack") %>
+    <%= tip_on("#monster a.attack") %>
+    <%= click_trigger("#monster a.attack") %>
     
   <% end %>
   
   <% step :fight_with_monster_until_he_live do %>
   
-    <% make_visible("#monster .health") %>
-    <% tip_on("#monster .health",
-        :position_corner_target => 'topMiddle',
-        :position_corner_tooltip => 'bottomMiddle'
+    <%= make_visible("#monster .health") %>
+    <%= tip_on("#monster .health",
+        :position => {
+          :corner => {
+            :target => 'topMiddle',
+            :tooltip => 'bottomMiddle'
+          }
+        }
        ) %>
-    <% click_trigger("#monster a.attack") %>
+    <%= click_trigger("#monster a.attack") %>
   <% end %>
   
   <% step :monster_spent do %>
     
-    <% spot_on("#result .received") %>
-    <% tip_on("#result .received") %>
-    <% click_trigger("#result a.attack") %>
+    <%= spot_on("#result .monster_spent") %>
+    <%= tip_on("#result .monster_spent") %>
+    <%= click_trigger("#result a.attack") %>
     
   <% end %>
   
   <% step :monster_die do %>
-  
-    <% make_visible("#dialog") %>
-    <% click_trigger("#dialog a.continue") %>
-    <% dom_ready "$('#dialog a.close').hide();" %>
+    
+    tutorialPrepareDialog();
+    $(document).bind('close.dialog.tutorial', function() {
+      $(document).trigger('tutorial.next_step');
+    });
   <% end %>
     
   <% step :goto_fight do %>
   
-    <% goto_main_menu_item("fight") %>
+    <%= goto_main_menu_item("fights") %>
     
   <% end %>
   
   <% step :attack_other_player do %>
   
-    <% tip_on("#victim_list .character:first a.attack",
-        :position_corner_target => 'topMiddle',
-        :position_corner_tooltip => 'bottomMiddle'
+    <%= tip_on("#victim_list .character:first a.attack",
+        :position => {
+          :corner => {
+            :target => 'topMiddle',
+            :tooltip => 'bottomMiddle'
+          }
+        }
        ) %>
-    <% click_trigger("a.fight") %>
+    <%= click_trigger("#victim_list .character:first a.attack") %>
     
   <% end %>
   
   <% step :fight_result do %>
   
-    <% make_visible("#result .payouts") %>
-    <% tip_on("#result .payouts",
-        :position_corner_target => 'topMiddle',
-        :position_corner_tooltip => 'bottomMiddle',
-        :with_ok_button => true
+    <%= make_visible("#result .payouts") %>
+    <%= tip_on("#result .payouts",
+        :position => {
+          :corner => {
+            :target => 'topMiddle',
+            :tooltip => 'bottomMiddle'
+          }
+        },
+        :with_close_button => true
        ) %>
        
   <% end %>
   
   <% step :goto_estate do %>
   
-    <% goto_main_menu_item("properties") %>
+    <%= goto_main_menu_item("properties") %>
     
   <% end %>
   
   <% step :buy_estate do %>
   
-    <% click_trigger("#property_list .property_type:first a.buy") %>
-    <% tip_on("#property_list .property_type:first a.buy") %>
+    <%= click_trigger("#property_list .property_type:first a.buy") %>
+    <%= tip_on("#property_list .property_type:first a.buy", 
+          :position => {
+            :corner => {
+              :target => 'bottomLeft',
+              :tooltip => 'topRight'
+            }
+          }) %>
     
   <% end %>
   
   <% step :periodically_collect_property_income do %>
   
-    <% make_visible("#property_list .property_type:first .timer") %>
-    <% tip_on("#property_list .property_type:first .timer", 
-        :with_ok_button => true
-       ) %>
+    <%= make_visible("#property_list .property_type:first .timer") %>
+    <%= tip_on("#property_list .property_type:first .timer", 
+          :position => {
+              :corner => {
+                :target => 'rightMiddle',
+                :tooltip => 'leftMiddle'
+              }
+            },
+          :with_close_button => true
+         ) %>
        
   <% end %>
     
   <% step :goto_gem_market do %>
   
-    <% goto_main_menu_item("premium") %>
+    <%= goto_main_menu_item("premium") %>
     
   <% end %>
   
   <% step :spend_gems do %>
   
-    <% tip_on("#current_vip_money", 
-        :position_corner_target => 'topMiddle',
-        :position_corner_tooltip => 'bottomMiddle',
-        :with_ok_button => true
+    <%= tip_on("#current_vip_money", 
+        :position => {
+          :corner => {
+            :target => 'topMiddle',
+            :tooltip => 'bottomMiddle'
+          }
+        },
+        :with_close_button => true
        ) %>
        
   <% end %>
   
   <% step :finish do %>
   
-    <% tutorial_dialog %>
+    <%= tutorial_dialog :with_close_button => true %>
     
   <% end %>
 </div>

@@ -6,10 +6,10 @@ en:
       current: "Current step:"
       next: "Next step:"
       hello_new_user: 
-        title: "Hello new user"
-        window_title: "Hello new user"
-        window_text: "Hello new user. This is text about our cool game."
-        window_button_name: "Ok"
+        title: "Hello"
+        dialog_title: "Hello"
+        dialog_text: "Hello new user. This is text about our cool game."
+        close_button_value: "Ok"
       complete_first_mission:
         title: "Complete first mission"
         text: "Click it"
@@ -21,8 +21,8 @@ en:
         text: "You spent"
       first_level_up:
         title: "Level up"
-        window_title: "Level up"
-        window_text: "You got first level up"
+        dialog_title: "Level up"
+        dialog_text: "You got first level up"
       first_upgrade_character:
         title: "Upgrade your character"
         text: "Spent your points"
@@ -41,7 +41,7 @@ en:
       equip_character:
         title: "Character equipment"
         text: "Already equiped"
-        tip_button_name: "Ok"
+        close_button_value: "Ok"
       goto_monsters:
         title: "Monstes"
         text: "Click here"
@@ -56,7 +56,7 @@ en:
         text: "Fight with monster until he live"
       monster_spent:
         title: "Monster spent"
-        text: "You spent"
+        text: "Monster spent"
       monster_die:
         title: "Monster die"
       goto_fight:
@@ -68,6 +68,7 @@ en:
       fight_result:
         title: "Fight result"
         text: "This is your fight result"
+        close_button_value: "Ok"
       goto_estate:
         title: "Estate"
         text: "Click here"
@@ -77,13 +78,15 @@ en:
       periodically_collect_property_income:
         title: "Collect property"
         text: "Periodically collect income from property"
+        close_button_value: "Ok"
       goto_gem_market:
         title: "Go to gem market"
         text: "Click here"
       spend_gems:
         title: "Spend gems"
         text: "Spend your gems"
+        close_button_value: "Ok"
       finish:
         title: "Finish"
-        window_title: "Well done"
-        window_text: "Thank you"
+        dialog_text: "Thank you"
+        close_button_value: "Ok"

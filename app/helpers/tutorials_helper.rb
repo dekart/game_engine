@@ -30,71 +30,80 @@ module TutorialsHelper
     current_step.to_sym 
   end
   
-  def next_step_button(value)
-    '<input type="button" onclick="$(document).trigger(\'tutorial.next_step\')" value="' + value + '">'
+  def next_step_button(value = step_button_value)
+    button_to_function(escape_javascript(value), 
+      :onclick => '$(document).trigger("tutorial.next_step")'
+    )
   end
   
   def tutorial_dialog(options = {})
-    options[:step] ||= current_step
-    options[:title] ||= escape_javascript(t_step("window_title", current_step))
-    options[:text] ||= escape_javascript(t_step("window_text", current_step))
-    options[:button_name] ||= escape_javascript(t_step("window_button_name", current_step))
+    options[:content] ||= {}
     
-    dom_ready("$.showTutorialStandardDialog('#{options[:title]}', '#{options[:text]}', '#{options[:button_name]}');")
+    if options.delete(:with_title)
+      options[:content][:title] = escape_javascript(t_step("dialog_title"))
+    end
+    options[:content][:text] = escape_javascript(options[:content][:text] || t_step("dialog_text"))
+    
+    if options.delete(:with_close_button)
+      close_button = escape_javascript(t_step("close_button_value"))
+      options[:content][:text] << content_tag(:div, next_step_button(close_button), :class => 'buttons')
+    end
+    
+    "$.showTutorialDialog(#{options.to_json});".html_safe
   end
   
   def tip_on(target, options = {})
-    options[:text] ||= step_text()
-    options[:position_corner_target] ||= 'bottomMiddle'
-    options[:position_corner_tooltip] ||= 'topMiddle'
+    options[:content] ||= escape_javascript(step_text)
     
-    if (options.delete(:with_ok_button))
-      options[:text] << next_step_button(t_step("tip_button_name"))
+    options[:position] ||= {}
+    
+    options[:position][:corner] ||= {}
+    options[:position][:corner][:target] ||= 'bottomMiddle'
+    options[:position][:corner][:tooltip] ||= 'topMiddle'
+    
+    if options.delete(:with_close_button)
+      close_button_value = escape_javascript(t_step("close_button_value"))
+      options[:content] << content_tag(:div, next_step_button(close_button_value), :class => 'buttons')
     end
     
-    tip_options = {
-      :content => options[:text],
-      :position => {
-        :corner => {
-          :target => options[:position_corner_target],
-          :tooltip => options[:position_corner_tooltip]
-        }
-      }
-    }
-    
-    dom_ready("$('#{target}').tutorialTip(#{tip_options.to_json});")
+    "$('#{target}').tutorialTip(#{options.to_json});".html_safe
   end
   
   def spot_on(target)
-    dom_ready("$('#{target}').tutorialSpot();")
+    "$('#{target}').tutorialSpot();".html_safe
   end
   
   def click_trigger(target)
-    dom_ready("$('#{target}').tutorialClickTarget();")
+    "$('#{target}').tutorialClickTarget();".html_safe
   end
   
   def make_visible(target)
-    dom_ready("$('#{target}').tutorialVisible();")
+    "$('#{target}').tutorialVisible();".html_safe
   end
   
   def goto_main_menu_item(item_name, tip_options = {})
     selector = "#main_menu a.#{item_name}"
-    tip_on(selector, tip_options)
-    spot_on(selector)
-    click_trigger(selector)
+    result = ""
+    result << tip_on(selector, tip_options)
+    result << spot_on(selector)
+    result << click_trigger(selector)
+    result.html_safe
   end
   
   def step(step_name, options = {}, &block)
     if current_step == step_name
       
-      if options[:dont_close_dialog]
-        # move dialog box after tutorial box
-        dom_ready("$('#dialog').offset({top: $('#tutorial').offset().top + $('#tutorial').height() + 25 });")
+      step_actions = capture(&block)
+      
+      dom_ready("$(document).unbind('tutorial.show');")
+      dom_ready("$(document).bind('tutorial.show', function() { #{step_actions} });")
+      
+      if options.include?(:dont_control_upgrade)
+        dom_ready("$(document).trigger('tutorial.show');")
       else
-        dom_ready("$(document).trigger('close.dialog');")
+        dom_ready("tutorialAllowUpdradeDialog();")
       end
       
-      yield
     end
   end
   

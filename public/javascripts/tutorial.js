@@ -19,6 +19,7 @@ $.fn.tutorialClickTarget = function() {
   $(this).bind('click.tutorial.next_step', function() {
     $(document).trigger('tutorial.next_step');
   });
+  $.scrollTo(this);
 };
 
 /* 
@@ -93,24 +94,6 @@ $.showTutorialDialog = function(options) {
 };
 
 /*
- * Standard tutorial dialog box with title, text and one button, which close dialog box. 
- */
-$.showTutorialStandardDialog = function(title, text, buttonName) {
-  text += '<div id="dialog_button"><input type="button" onclick="$(document).trigger(\'tutorial.next_step\')" value="' + buttonName + '"/>';
-  
-  var options = {
-    content: {
-      title: {
-        text: title
-      },
-      text: text
-    }
-  };
-  
-  $.showTutorialDialog(options);
-};
-
-/*
  * Clear tutorial tips, dialog box and old javascript triggers.
  * This actually after ajax update.
  */
@@ -127,3 +110,36 @@ function tutorialHide() {
   tutorialClearEffects();
   $('#tutorial').hide();
 };
+
+function tutorialPrepareDialog() {
+  // move dialog box after tutorial box
+  $('#dialog').offset({top: $('#tutorial').offset().top + $('#tutorial').height() + 25 });
+  $('#dialog').tutorialVisible();
+}
+
+function tutorialAllowUpdradeDialog() {
+  
+  if ($("#level_up_notification").is(":visible")) {
+    tutorialPrepareDialog();
+    
+    $(document).unbind('character.upgrade_dialog.tutorial');
+    $(document).bind('character.upgrade_dialog.tutorial', function() {
+        $("#dialog #upgrade_list .points a").hide();
+        tutorialPrepareDialog();
+      });
+    
+    $(document).unbind('character.upgrade_complete.tutorial');
+    $(document).bind('character.upgrade_complete.tutorial', function() {
+        $(document).trigger('close.dialog');
+      });
+    
+    $(document).unbind('close.dialog.tutorial');
+    $(document).bind('close.dialog.tutorial', function() {
+      // if dialog was closed, we show our tutorial step
+      $(document).trigger('tutorial.show');
+    });
+    
+  } else {
+    $(document).trigger('tutorial.show');
+  }
+}
