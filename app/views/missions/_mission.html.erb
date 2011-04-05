@@ -7,8 +7,8 @@
     <div class="name"><%= mission.name %></div>
     <div class="description"><%= mission.description.to_s.html_safe %></div>
 
-    <% if mission.repeatable? || rank.nil? || !rank.completed? %>
-      <div class="controls">
+    <div class="controls">
+      <% if mission.repeatable? || rank.nil? || !rank.completed? %>
         <%= link_to_remote(button(:fulfill),
               :url    => fulfill_mission_path(mission),
               :update => :result,
@@ -17,8 +17,10 @@
                 :class => "fulfill button"
               }
             ) %>
-      </div>
-    <% end %>
+      <% else %>
+        <div class="completed"><%= t('.completed') %></div>
+      <% end %>
+    </div>
 
     <div class="progress"><%= mission_progress(rank) %></div>
   </td>

@@ -26,7 +26,9 @@ module MissionsHelper
         :label => "%s: %d%" % [Mission.human_attribute_name("progress"), 0]
       )
     elsif rank.completed?
-      result << percentage_bar(100, :label => t("missions.mission.completed"))
+      result << percentage_bar(100, 
+        :label => "%s: %d%" % [Mission.human_attribute_name("progress"), 100]
+      )
     else
       percentage = rank.progress_percentage
 
