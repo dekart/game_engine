@@ -15,9 +15,10 @@ class DivFormBuilder
 
   def attachment_preview(name, style)
     if object.send("#{name}?")
-      result = @template.image_tag(object.send(name).url(style))
+      result = @template.link_to(@template.image_tag(object.send(name).url(style)), object.send(name).url, :target => :_blank)
       
       if object.respond_to?("remove_#{name}")
+        result << '<br />'.html_safe
         result << @template.link_to(@template.t(".remove_attachment", :default => @template.t('form_builder.remove_attachment')), '#',
           :class => :remove_attachment,
           :"data-field" => "#{object_name}[remove_#{name}]"
