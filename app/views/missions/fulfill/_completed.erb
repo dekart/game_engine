@@ -47,13 +47,11 @@
   <% end %>
 <% end %>
 
-<% if missions %>
-  <% builder.on_ready do %>
+<% builder.on_ready do %>
+  <% if missions %>
     $('#mission_list').html('<%= escape_javascript(render("list", :missions => missions)) %>');
   <% end %>
-<% end %>
-
-<% builder.on_ready do %>
+  
   $(document).trigger('mission.complete');
   
   <%= ga_track_event('Missions', 'Completed', "#{mission.name} - Level #{result.level.position}") %>
