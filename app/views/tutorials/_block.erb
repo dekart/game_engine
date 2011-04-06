@@ -95,7 +95,7 @@
     $('#dialog').find('.close, a.continue, .disable_notification').hide();
     tutorialPrepareDialog();
         
-    $("#dialog #upgrade_list .points a").hide();
+    $("#dialog #upgrade_list .points .buy_more").hide();
     // change current step when user spents points
     $(document).bind('character.upgrade_complete.tutorial', function() {
       // close next dialog and trigger next step
