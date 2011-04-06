@@ -23,6 +23,7 @@ en:
         title: "Level up"
         dialog_title: "Level up"
         dialog_text: "You got first level up"
+        text: "Click here"
       first_upgrade_character:
         title: "Upgrade your character"
         text: "Spent your points"
