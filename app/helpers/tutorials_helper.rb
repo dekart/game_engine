@@ -96,7 +96,7 @@ module TutorialsHelper
       step_actions = capture(&block)
       
       dom_ready("$(document).unbind('tutorial.show');")
-      dom_ready("$(document).bind('tutorial.show', function() { #{step_actions} });")
+      dom_ready("$(document).bind('tutorial.show', function() { #{step_actions}; $.scrollTo('.tutorialScrollTarget') });")
       
       if options.include?(:dont_control_upgrade)
         dom_ready("$(document).trigger('tutorial.show');")

@@ -15,11 +15,12 @@ $.fn.tutorialVisible = function() {
  */
 $.fn.tutorialClickTarget = function() {
   $(this).tutorialVisible();
+  $(this).addClass('tutorialScrollTarget');
+  
   $(this).unbind('click.tutorial.next_step');
   $(this).bind('click.tutorial.next_step', function() {
     $(document).trigger('tutorial.next_step');
   });
-  $.scrollTo(this);
 };
 
 /* 
@@ -54,7 +55,7 @@ $.fn.tutorialTip = function(options) {
  * Show spot circle on center of object 
  */
 $.fn.tutorialSpot = function() {
-  var spot = $('<div></div>').addClass('spot');
+  var spot = $('<div></div>').addClass('spot tutorialScrollTarget');
   $('#tutorial_overlay').append(spot);
   var left = $(this).offset().left + $(this).outerWidth() / 2 - spot.width() / 2;
   var top = $(this).offset().top + $(this).outerHeight() / 2 - spot.height() / 2;
@@ -98,6 +99,7 @@ $.showTutorialDialog = function(options) {
  * This actually after ajax update.
  */
 function tutorialClearEffects() {
+  $(".tutorialScrollTarget").removeClass("tutorialScrollTarget");
   $(".tutorialVisible").removeClass("tutorialVisible");
   
   $(".tutorialTipTarget").qtip("destroy").removeClass("tutorialTipTarget");
