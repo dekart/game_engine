@@ -66,16 +66,16 @@
       
   <% step :first_mission_receive do %>
     
-    <%= tip_on("#result .received") %>
-    <%= spot_on("#result .received") %>
+    <%= tip_on("#result .received .value:last") %>
+    <%= spot_on("#result .received .label:first") %>
     <%= click_trigger("#result a.fulfill_again") %>
     
   <% end %>
       
   <% step :first_mission_spent do %>
     
-    <%= tip_on("#result .spent") %>
-    <%= spot_on("#result .spent") %>
+    <%= tip_on("#result .spent .value:last") %>
+    <%= spot_on("#result .spent .label:first") %>
     <%= click_trigger("#result a.fulfill_again") %>
     
   <% end %>
@@ -275,8 +275,8 @@
     <%= tip_on("#property_list .property_type:first .timer", 
           :position => {
               :corner => {
-                :target => 'rightMiddle',
-                :tooltip => 'leftMiddle'
+                :target => 'topMiddle',
+                :tooltip => 'bottomMiddle'
               }
             },
           :with_close_button => true
