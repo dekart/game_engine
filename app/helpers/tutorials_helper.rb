@@ -12,22 +12,22 @@ module TutorialsHelper
   end
   
   def final_step?(step = current_step)
-    Tutorial::STEPS.last == step
+    Tutorial.final_step?(step)
   end
   
   def step_index(step = current_step)
-    Tutorial::STEPS.index(step)
+    Tutorial.step_index(step)
   end
   
   def next_step(step = current_step)
-    final_step?(step) ? "" : Tutorial::STEPS[step_index(step) + 1] 
+    Tutorial.next_step(step) 
   end
   
   def current_step
-    if (current_step = current_user.tutorial_step).empty?
-      current_step = Tutorial::STEPS.first
+    if (step = current_user.tutorial_step).empty?
+      step = Tutorial::STEPS.first
     end
-    current_step.to_sym 
+    step.to_sym 
   end
   
   def next_step_button(value = step_button_value)
@@ -90,13 +90,35 @@ module TutorialsHelper
     result.html_safe
   end
   
+  def javascript_for_next_step_trigger()
+    if final_step?
+      func_options = {
+        :url => toggle_block_user_path(current_user, :block => 'tutorial'),
+        :before => "tutorialHide()"
+      }
+    else
+      func_options = {
+        :url => update_step_tutorials_path,
+        :method => :put,
+        :update => :tutorial,
+        :with => "'tutorial_step=#{next_step}'"
+      }
+    end
+    remote_function(func_options)
+  end
+  
   def step(step_name, options = {}, &block)
     if current_step == step_name
       
       step_actions = capture(&block)
       
-      dom_ready("$(document).unbind('tutorial.show');")
-      dom_ready("$(document).bind('tutorial.show', function() { #{step_actions}; $.scrollTo('.tutorialScrollTarget') });")
+      if options[:ajax]
+        dom_ready("bindTutorialTrigger(function() { #{javascript_for_next_step_trigger} } );") 
+      end
+      
+      dom_ready("$(document).unbind('tutorial.show').bind('tutorial.show', function() { #{step_actions};" <<
+          "if ($('.tutorialScrollTarget').is(':visible')) $.scrollTo('.tutorialScrollTarget'); " <<
+        "});")
       
       if options.include?(:dont_control_upgrade)
         dom_ready("$(document).trigger('tutorial.show');")
@@ -104,7 +126,22 @@ module TutorialsHelper
         dom_ready("tutorialAllowUpdradeDialog();")
       end
       
+      flash[:show_tutorial] = true
     end
+  end
+  
+  def resolve_tutorial_changes
+    if !current_user.tutorial_step.empty? && !flash[:tutorial_step_updated]
+      # update on non-ajax tutorial step
+      current_user.update_attribute(:tutorial_step, Tutorial.next_step(current_user.tutorial_step))
+    end
+    
+    # if flash[:show_tutorial] 
+    # else
+    #   Rails.logger.debug("Disable tutorial")
+    #   # user exit game on some tutorial step and now returns. we don't show tutorial
+    #   current_user.update_attribute(:show_tutorial, false)
+    # end
   end
   
 end

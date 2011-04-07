@@ -37,4 +37,21 @@ module Tutorial
     
   ]
   
+  class << self
+    
+    def final_step?(step)
+      STEPS.last == step.to_sym
+    end
+    
+    def step_index(step)
+      STEPS.index(step.to_sym)
+    end
+    
+    def next_step(step)
+      final_step?(step) ? "" : STEPS[step_index(step) + 1].to_s
+    end
+    
+  end
+  
+  
 end

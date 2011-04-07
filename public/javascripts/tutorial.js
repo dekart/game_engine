@@ -17,10 +17,10 @@ $.fn.tutorialClickTarget = function() {
   $(this).tutorialVisible();
   $(this).addClass('tutorialScrollTarget');
   
-  $(this).unbind('click.tutorial.next_step');
-  $(this).bind('click.tutorial.next_step', function() {
-    $(document).trigger('tutorial.next_step');
-  });
+  $(this).unbind('click.tutorial.next_step')
+    .bind('click.tutorial.next_step', function() {
+      $(document).trigger('tutorial.next_step');
+    });
 };
 
 /* 
@@ -103,9 +103,6 @@ function tutorialClearEffects() {
   $(".tutorialVisible").removeClass("tutorialVisible");
   
   $(".tutorialTipTarget").qtip("destroy").removeClass("tutorialTipTarget");
-  
-  // unbind previously binded trigger
-  $(document).unbind('tutorial.next_step');
 };
 
 function tutorialHide() {
@@ -144,4 +141,13 @@ function tutorialAllowUpdradeDialog() {
   } else {
     $(document).trigger('tutorial.show');
   }
+}
+
+
+function bindTutorialTrigger(trigger) {
+  $(document).unbind('tutorial.next_step')
+    .bind('tutorial.next_step', function() {
+      tutorialClearEffects();
+      trigger();
+    });
 }
