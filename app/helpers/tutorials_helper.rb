@@ -119,18 +119,11 @@ module TutorialsHelper
       else
         dom_ready("tutorialAllowUpdradeDialog();")
       end
-      
-      # set this for controlling that user iterates on tuturial steps and don't exit from game
-      flash[:show_tutorial] = true unless final_step?
     end
   end
   
-  # def resolve_tutorial_changes
-  #   if !current_user.tutorial_step.empty? && !flash[:tutorial_step_updated]
-  #     # update non-ajax tutorial step
-  #     # TODO: not so good to update some attrs in helper method
-  #     current_user.update_attribute(:tutorial_step, Tutorial.next_step(current_user.tutorial_step))
-  #   end
-  # end
+  def tutorial_visible?
+    current_user.show_tutorial? && flash[:show_tutorial] 
+  end
   
 end
