@@ -44,3 +44,8 @@ group :test do
   gem "chronic",        "0.3.0"
   gem "spork"
 end
+
+group :development do
+  gem "ruby-debug"
+end
+
