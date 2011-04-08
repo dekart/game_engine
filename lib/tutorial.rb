@@ -51,6 +51,10 @@ module Tutorial
       final_step?(step) ? "" : STEPS[step_index(step) + 1].to_s
     end
     
+    def first_step
+      STEPS.first.to_s
+    end
+    
   end
   
   

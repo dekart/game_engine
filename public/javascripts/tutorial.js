@@ -13,14 +13,27 @@ $.fn.tutorialVisible = function() {
  * Makes target object visible and responsible + binds trigger 
  * to change current tutorial step if user click on object
  */
-$.fn.tutorialClickTarget = function() {
+$.fn.tutorialClickTarget = function(redirector_url) {
+  
   $(this).tutorialVisible();
   $(this).addClass('tutorialScrollTarget');
   
-  $(this).unbind('click.tutorial.next_step')
-    .bind('click.tutorial.next_step', function() {
-      $(document).trigger('tutorial.next_step');
-    });
+  if (redirector_url) {
+    
+    // change href param in <a> tag
+    var originalHref = encodeURIComponent($(this).attr('href'));
+    // TODO: this is very simple link generation and don't consider link params
+    var changedHref = redirector_url + '?redirect_to=' +  originalHref;
+    $(this).attr('href', changedHref)
+    
+  } else {
+    
+    $(this).unbind('click.tutorial.next_step')
+      .bind('click.tutorial.next_step', function() {
+        $(document).trigger('tutorial.next_step');
+      });
+  }
+  
 };
 
 /* 
@@ -151,3 +164,12 @@ function bindTutorialTrigger(trigger) {
       trigger();
     });
 }
+
+function bindTutorialShow(trigger) {
+  $(document).unbind('tutorial.show').bind('tutorial.show', function() {
+    trigger();
+    if ($('.tutorialScrollTarget').is(':visible')) 
+      $.scrollTo('.tutorialScrollTarget');
+  });
+}
+

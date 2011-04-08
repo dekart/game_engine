@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   named_scope :with_email, {:conditions => "email != ''"}
   
   after_save :schedule_social_data_update, :if => :access_token_changed?
+  
+  before_create :set_first_tutorial_step
 
   def show_tutorial?
     Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
@@ -98,5 +100,9 @@ class User < ActiveRecord::Base
   
   def schedule_social_data_update
     Delayed::Job.enqueue Jobs::UserDataUpdate.new([id]) if access_token_valid?
+  end
+  
+  def set_first_tutorial_step
+    self.tutorial_step = Tutorial.first_step
   end
 end

@@ -57,14 +57,12 @@ module ApplicationHelper
     select_tag(:amount, options_for_select(values, options[:selected]), options.except(:selected))
   end
 
-  def dom_ready(content = nil, &block)
+  def dom_ready(content = nil, options = {}, &block)
     @dom_ready ||= []
 
-    if content
-      @dom_ready << content
-      nil
-    elsif block_given?
-      @dom_ready << capture(&block)
+    if content || block_given?
+      content = capture(&block) unless content 
+      options[:prepend] ? @dom_ready.insert(0, content) : @dom_ready << content
       nil
     else
       javascript_tag("$(function(){ #{ @dom_ready.join("\n") } });")

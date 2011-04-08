@@ -26,15 +26,12 @@
     })
   <% end %>
 
-  <%= flash.inspect %>
-  
   <% admin_only do %>
     <div id="admin_menu">
       <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :admin)  %>
     </div>
   <% end %>
   <% if current_user.show_tutorial? %>
-    <% resolve_tutorial_changes %>
     <%= render "tutorials/block" %>
   <% end %>
 

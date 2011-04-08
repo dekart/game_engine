@@ -24,10 +24,7 @@ module TutorialsHelper
   end
   
   def current_step
-    if (step = current_user.tutorial_step).empty?
-      step = Tutorial::STEPS.first
-    end
-    step.to_sym 
+    current_user.tutorial_step.to_sym 
   end
   
   def next_step_button(value = step_button_value)
@@ -74,7 +71,8 @@ module TutorialsHelper
   end
   
   def click_trigger(target)
-    "$('#{target}').tutorialClickTarget();".html_safe
+    redirector_url = @ajax_step ? "" : "'#{update_step_tutorials_path}'" 
+    "$('#{target}').tutorialClickTarget(#{redirector_url});".html_safe
   end
   
   def make_visible(target)
@@ -99,9 +97,7 @@ module TutorialsHelper
     else
       func_options = {
         :url => update_step_tutorials_path,
-        :method => :put,
         :update => :tutorial,
-        :with => "'tutorial_step=#{next_step}'"
       }
     end
     remote_function(func_options)
@@ -110,15 +106,13 @@ module TutorialsHelper
   def step(step_name, options = {}, &block)
     if current_step == step_name
       
-      step_actions = capture(&block)
-      
       if options[:ajax]
-        dom_ready("bindTutorialTrigger(function() { #{javascript_for_next_step_trigger} } );") 
+        @ajax_step = true
+        dom_ready("bindTutorialTrigger(function() { #{javascript_for_next_step_trigger} });")
       end
       
-      dom_ready("$(document).unbind('tutorial.show').bind('tutorial.show', function() { #{step_actions};" <<
-          "if ($('.tutorialScrollTarget').is(':visible')) $.scrollTo('.tutorialScrollTarget'); " <<
-        "});")
+      step_actions = capture(options, &block)
+      dom_ready("bindTutorialShow(function() { #{step_actions}; });")
       
       if options.include?(:dont_control_upgrade)
         dom_ready("$(document).trigger('tutorial.show');")
@@ -126,22 +120,17 @@ module TutorialsHelper
         dom_ready("tutorialAllowUpdradeDialog();")
       end
       
-      flash[:show_tutorial] = true
+      # set this for controlling that user iterates on tuturial steps and don't exit from game
+      flash[:show_tutorial] = true unless final_step?
     end
   end
   
-  def resolve_tutorial_changes
-    if !current_user.tutorial_step.empty? && !flash[:tutorial_step_updated]
-      # update on non-ajax tutorial step
-      current_user.update_attribute(:tutorial_step, Tutorial.next_step(current_user.tutorial_step))
-    end
-    
-    # if flash[:show_tutorial] 
-    # else
-    #   Rails.logger.debug("Disable tutorial")
-    #   # user exit game on some tutorial step and now returns. we don't show tutorial
-    #   current_user.update_attribute(:show_tutorial, false)
-    # end
-  end
+  # def resolve_tutorial_changes
+  #   if !current_user.tutorial_step.empty? && !flash[:tutorial_step_updated]
+  #     # update non-ajax tutorial step
+  #     # TODO: not so good to update some attrs in helper method
+  #     current_user.update_attribute(:tutorial_step, Tutorial.next_step(current_user.tutorial_step))
+  #   end
+  # end
   
 end

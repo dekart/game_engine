@@ -28,7 +28,7 @@
     <% end %>
   </div>
   
-  <% step :hello_new_user, :ajax => true do %>
+  <% step :hello_new_user, :ajax => true do |builder| %>
      
      <%= tutorial_dialog(
           :with_title => true,
@@ -53,7 +53,6 @@
   <% end %>
       
   <% step :first_mission_spent, :ajax => true do %>
-    
     <%= tip_on("#result .spent .value:last") %>
     <%= spot_on("#result .spent .label:first") %>
     <%= click_trigger("#result a.fulfill_again") %>
@@ -194,6 +193,7 @@
     $(document).bind('close.dialog.tutorial', function() {
       $(document).trigger('tutorial.next_step');
     });
+    
   <% end %>
     
   <% step :goto_fight do %>

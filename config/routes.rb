@@ -147,7 +147,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :tutorials,
     :collection => {
-      :update_step => :put
+      :update_step => :get
     }
 
   map.resources(:users,
