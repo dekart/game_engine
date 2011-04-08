@@ -142,9 +142,7 @@ namespace :deploy do
 
       put(config, ".gemrc")
 
-      run "gem install bundler -v=1.0.10"
-      run "gem install rails -v=2.3.8"
-      run "gem install rack -v=1.0.1"
+      run "gem install bundler -v=1.0.11"
     end
 
     desc "Install required gems"
