@@ -19,7 +19,10 @@
     top = !mission_group_border_top
     bottom = !mission_group_border_bottom
 
-  // UL styles are necessary for IE7 compatibility
+  // The following styles are necessary for IE7 compatibility
+  
+  position: relative
+
   ul 
     list-style-type: none
     overflow: hidden
@@ -29,6 +32,8 @@
 
     li
       float: left
+      
+  // end of IE7 hacks
 
   .container
     margin-left: 20px
