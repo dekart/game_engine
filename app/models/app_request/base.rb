@@ -24,9 +24,14 @@ class AppRequest::Base < ActiveRecord::Base
     state :visited
     state :accepted
     state :ignored
+    state :broken
 
     event :process do
       transition :pending => :processed
+    end
+
+    event :mark_broken do
+      transition :pending => :broken
     end
 
     event :visit do
@@ -41,7 +46,7 @@ class AppRequest::Base < ActiveRecord::Base
       transition [:pending, :processed, :visited] => :ignored
     end
     
-    before_transition :on => :process do |request|
+    before_transition :on => [:process, :mark_broken] do |request|
       request.processed_at = Time.now
     end
 
@@ -120,7 +125,11 @@ class AppRequest::Base < ActiveRecord::Base
   end
 
   def update_data!
-    update_from_facebook_request(Mogli::AppRequest.find(facebook_id, self.class.mogli_client))
+    begin
+      update_from_facebook_request(Mogli::AppRequest.find(facebook_id, self.class.mogli_client))
+    rescue Mogli::Client::ClientException => e
+      mark_broken!
+    end
   end
   
   def delete_from_facebook!

@@ -26,6 +26,10 @@ describe AppRequest::Base do
         @request.can_process?.should be_true
       end
       
+      it 'should be markable as broken' do
+        @request.can_mark_broken?.should be_true
+      end
+      
       it 'should be visitable' do
         @request.can_visit?.should be_true
       end
@@ -292,7 +296,7 @@ describe AppRequest::Base do
       }.should change(@request, :ignored?).from(false).to(true)
     end
     
-    describe 'when reuest type is set' do
+    describe 'when request type is set' do
       it 'should change request class to gift if request is a gift request' do
         @remote_request.stub!(:data).and_return('{"type":"gift"}')
 
@@ -356,7 +360,7 @@ describe AppRequest::Base do
   
   describe '#update_data!' do
     before do
-      @request = Factory(:app_request_base)
+      @request = Factory(:app_request_base, :state => 'pending')
       @request.stub!(:update_from_facebook_request).and_return(true)
 
       @client = mock('mogli client')
@@ -375,6 +379,15 @@ describe AppRequest::Base do
       @request.should_receive(:update_from_facebook_request).and_return(true)
       
       @request.update_data!
+    end
+    
+    it 'should mark request as broken if failed to fetch request data' do
+      puts @request.inspect
+      Mogli::AppRequest.should_receive(:find).with(123456789, @client).and_raise(Mogli::Client::ClientException.new)
+      
+      lambda{
+        @request.update_data!
+      }.should change(@request, :broken?).from(false).to(true)
     end
   end
   
