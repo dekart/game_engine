@@ -6,8 +6,15 @@ module Admin::StatisticsHelper
   end
   
   def admin_statistics_references(totals, day)
-    totals.each do |reference, count|
-      yield(reference, count, day.assoc(reference).try(:last))
+    table = totals.map{|reference, count| 
+      [reference, count, day.assoc(reference).try(:last)] 
+    }.sort_by{|v| 
+      [v[2] || 0, v[1]]
+    }
+    table.reverse!
+    
+    table.each do |values|
+      yield(*values)
     end
   end
 
