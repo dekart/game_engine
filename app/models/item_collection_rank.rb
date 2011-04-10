@@ -16,7 +16,7 @@ class ItemCollectionRank < ActiveRecord::Base
       increment(:collection_count)
 
       character.save
-      save
+      save!
 
       @applied = true
     end
