@@ -2,7 +2,7 @@ class ItemCollectionRank < ActiveRecord::Base
   belongs_to :character
   belongs_to :collection, :class_name => "ItemCollection"
 
-  attr_reader :payouts, :applied
+  attr_reader :payouts
 
   validate :check_items
 
@@ -10,13 +10,12 @@ class ItemCollectionRank < ActiveRecord::Base
     return unless valid?
 
     transaction do
-      @payouts = collection.payouts.apply(character, (collected? ? :repeat_collected : :collected), collection)
+      increment!(:collection_count)
+
+      @payouts = collection.payouts.apply(character, (collection_count > 1 ? :repeat_collected : :collected), collection)
       @payouts += collection.spendings.apply(character, :collected, collection)
-
-      increment(:collection_count)
-
-      character.save
-      save!
+      
+      character.save!
 
       @applied = true
     end
@@ -24,6 +23,10 @@ class ItemCollectionRank < ActiveRecord::Base
 
   def collected?
     collection_count > 0
+  end
+  
+  def applied?
+    @applied
   end
 
   protected

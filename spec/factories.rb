@@ -113,6 +113,10 @@ Factory.define :item_collection do |t|
   t.item_ids {|c|
     (1..3).collect{ Factory(:item).id }
   }
+  t.payouts Payouts::Collection.new(
+    Payouts::BasicMoney.new(:value => 123, :apply_on => :collected),
+    Payouts::VipMoney.new(:value => 1, :apply_on => :repeat_collected)
+  )
 end
 
 Factory.define :hit_listing do |t|

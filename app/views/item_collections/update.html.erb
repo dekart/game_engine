@@ -1,5 +1,5 @@
 <% result_for :item_collection do |builder| %>
-  <% if @result.applied %>
+  <% if @result.applied? %>
     <% builder.buttons do %>
       <%= link_to_function(button(:publish), stream_dialog(:collection_completed, @collection),
             :class => "publish button"
@@ -30,7 +30,7 @@
 <% end %>
 
 <% dom_ready do %>
-  <% if @result.applied %>
+  <% if @result.applied? %>
     CollectionList.blurItems(
       $('<%= @collection.missing_items(current_character).collect{|i| ".#{dom_id(i)}" }.join(",") %>')
     );
