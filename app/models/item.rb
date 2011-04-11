@@ -94,7 +94,7 @@ class Item < ActiveRecord::Base
         ItemGroup.without_state(:deleted).all(:order => :position).each do |group|
           result[group.name] = group.items.without_state(:deleted).collect{|i|
             ["%s (%s)" % [i.name, i.availability], i.id]
-          }
+          }.sort
         end
       end
     end
