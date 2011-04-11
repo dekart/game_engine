@@ -320,6 +320,14 @@ describe AppRequest::Base do
 
         AppRequest::Base.find(@request.id).should be_kind_of(AppRequest::MonsterInvite)
       end
+      
+      it 'should not fail if request type is set incorrectly' do
+        @remote_request.stub!(:data).and_return('{"type":"monster"}')
+
+        lambda {
+          @request.update_from_facebook_request(@remote_request)
+        }.should_not raise_exception
+      end
     end
     
     describe 'when type is not set' do
@@ -382,7 +390,6 @@ describe AppRequest::Base do
     end
     
     it 'should mark request as broken if failed to fetch request data' do
-      puts @request.inspect
       Mogli::AppRequest.should_receive(:find).with(123456789, @client).and_raise(Mogli::Client::ClientException.new)
       
       lambda{

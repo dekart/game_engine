@@ -149,7 +149,7 @@ class AppRequest::Base < ActiveRecord::Base
   def request_class_from_data
     if data.nil?
       'AppRequest::Invitation'
-    elsif data['type']
+    elsif data['type'] && %w{gift invitation monster_invite}.include?(data['type'])
       "AppRequest::#{ data['type'].classify }"
     elsif data['item_id']
       'AppRequest::Gift'
