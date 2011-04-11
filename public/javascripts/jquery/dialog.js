@@ -7,9 +7,6 @@
     else if (data.div) filldialogFromHref(data.div, options)
     else if ($.isFunction(data)) data.call($)
     else $.dialog.reveal(data, options)
-    
-    // TODO: trigger after init
-    $(document).trigger('dialog.afterInit');
   }
 
   /*

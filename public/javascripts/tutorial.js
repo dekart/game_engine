@@ -125,32 +125,41 @@ function tutorialHide() {
 
 function tutorialPrepareDialog() {
   // move dialog box after tutorial box
-  $('#dialog').offset({top: $('#tutorial').offset().top + $('#tutorial').height() + 25 });
+  var newDialogTop =  $('#tutorial').offset().top + $('#tutorial').height() + 25;
+  $('#dialog').offset({ top: newDialogTop });
   $('#dialog').tutorialVisible();
 }
 
 function tutorialAllowUpdradeDialog() {
   
-  if ($("#level_up_notification").is(":visible")) {
-    tutorialPrepareDialog();
+  if ($(document).queue('dialog').length > 0) {
     
-    $(document).unbind('character.upgrade_dialog.tutorial');
-    $(document).bind('character.upgrade_dialog.tutorial', function() {
-        $("#dialog #upgrade_list .points a").hide();
-        tutorialPrepareDialog();
+    $(document).unbind('application.ready.tutorial.upgrade_dialog')
+      .bind('application.ready.tutorial.upgrade_dialog', function() {
+        
+        if ($("#level_up_notification").is(":visible")) {
+          
+          tutorialPrepareDialog();
+          
+          $(document).unbind('character.upgrade_dialog.tutorial')
+            .bind('character.upgrade_dialog.tutorial', function() {
+              $("#dialog #upgrade_list .points a").hide();
+              tutorialPrepareDialog();
+            });
+          
+          $(document).unbind('character.upgrade_complete.tutorial')
+            .bind('character.upgrade_complete.tutorial', function() {
+              $(document).trigger('close.dialog');
+            });
+          
+          $(document).unbind('close.dialog.tutorial')
+            .bind('close.dialog.tutorial', function() {
+              // if dialog was closed, we show our tutorial step
+              $(document).trigger('tutorial.show');
+            });
+        }
+        
       });
-    
-    $(document).unbind('character.upgrade_complete.tutorial');
-    $(document).bind('character.upgrade_complete.tutorial', function() {
-        $(document).trigger('close.dialog');
-      });
-    
-    $(document).unbind('close.dialog.tutorial');
-    $(document).bind('close.dialog.tutorial', function() {
-      // if dialog was closed, we show our tutorial step
-      $(document).trigger('tutorial.show');
-    });
-    
   } else {
     $(document).trigger('tutorial.show');
   }
