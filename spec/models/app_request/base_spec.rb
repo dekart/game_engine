@@ -396,6 +396,16 @@ describe AppRequest::Base do
         @request.update_data!
       }.should change(@request, :broken?).from(false).to(true)
     end
+    
+    it 'should not try to mark request as broken if it\'s not possible' do
+      @request.ignore!
+      
+      Mogli::AppRequest.should_receive(:find).and_raise(Mogli::Client::ClientException.new)
+      
+      lambda{
+        @request.update_data!
+      }.should_not change(@request, :broken?)
+    end
   end
   
   

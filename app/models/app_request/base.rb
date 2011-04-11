@@ -128,7 +128,7 @@ class AppRequest::Base < ActiveRecord::Base
     begin
       update_from_facebook_request(Mogli::AppRequest.find(facebook_id, self.class.mogli_client))
     rescue Mogli::Client::ClientException => e
-      mark_broken!
+      mark_broken! if can_mark_broken?
     end
   end
   
