@@ -29,6 +29,7 @@ gem "ruby-hmac",  "0.4.0"
 group :development do
   gem "capistrano",     "2.5.20"
   gem "capistrano-ext", '1.2.1'
+  gem "net-scp",        '1.0.4'
 end
 
 
