@@ -510,4 +510,9 @@ $(function(){
   $(document).bind('dialog.close_complete application.ready', function(){
     $(document).dequeue('dialog');
   });
+  
+  $('#app_requests_counter').tooltip({
+    delay: 0,
+    showURL: false
+  })
 });

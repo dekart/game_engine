@@ -1,5 +1,7 @@
 en:
   app_requests:
+    counter:
+      text: "You have %{count} requests from your friends"
     index:
       title: 'Friend Requests'
       note: "Here you can accept requests from your friends. You can accept one gift per each friend every %{hours} hours."
