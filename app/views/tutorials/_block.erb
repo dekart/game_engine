@@ -1,3 +1,10 @@
+<% dom_ready do %>
+  $(document).unbind('tutorial.next_step').bind('tutorial.next_step', function() {
+    console.log('Event: Tutorial.next_step')
+    <%= javascript_for_next_step_trigger %>
+  });
+<% end %>
+
 <div id="tutorial">
   
   <div id="tutorial_overlay"></div>
@@ -28,7 +35,7 @@
     <% end %>
   </div>
   
-  <% step :hello_new_user, :ajax => true do %>
+  <% step :hello_new_user, :change_event => 'qtip.dialog.close' do %>
      
      <%= tutorial_dialog(
           :with_title => true,
@@ -37,14 +44,14 @@
         
   <% end %>
       
-  <% step :complete_first_mission, :ajax => true do %>
+  <% step :complete_first_mission, :change_event => 'result.received' do %>
   
     <%= tip_on("#mission_list .mission:first a.fulfill") %>
     <%= click_trigger("#mission_list .mission:first a.fulfill") %>
     
   <% end %>
       
-  <% step :first_mission_receive, :ajax => true do %>
+  <% step :first_mission_receive, :change_event => 'result.received' do %>
     
     <%= tip_on("#result .received .value:last") %>
     <%= spot_on("#result .received .label:first") %>
@@ -52,14 +59,15 @@
     
   <% end %>
       
-  <% step :first_mission_spent, :ajax => true do %>
+  <% step :first_mission_spent, :change_event => 'result.received' do %>
+  
     <%= tip_on("#result .spent .value:last") %>
     <%= spot_on("#result .spent .label:first") %>
     <%= click_trigger("#result a.fulfill_again") %>
     
   <% end %>
 
-  <% step :first_level_up, :dont_control_upgrade => true, :ajax => true do %>
+  <% step :first_level_up, :control_upgrade_dialog => false, :change_event => 'afterReveal.dialog' do %>
   
     $('#dialog').find('.close, a.continue, .disable_notification').hide();
     tutorialPrepareDialog();
@@ -69,17 +77,10 @@
     
   <% end %>
     
-  <% step :first_upgrade_character, :dont_control_upgrade => true, :ajax => true do %>
+  <% step :first_upgrade_character, :control_upgrade_dialog => false, :change_event => 'character.upgrade_complete' do %>
   
-    $('#dialog').find('.close, a.continue, .disable_notification').hide();
+    $('#dialog').find('.close, a.continue, .disable_notification, .buy_more').hide();
     tutorialPrepareDialog();
-        
-    $("#dialog #upgrade_list .points .buy_more").hide();
-    // change current step when user spents points
-    $(document).bind('character.upgrade_complete.tutorial', function() {
-      // close next dialog and trigger next step
-      $(document).trigger('close.dialog').trigger('tutorial.next_step');
-    });
     
     <%= tip_on("#dialog #upgrade_list",
         :position => {
@@ -89,6 +90,11 @@
           }
         }
        ) %>
+        
+    $(document).bind('character.upgrade_complete', function() {
+      // close next dialog
+      $(document).trigger('close.dialog');
+    });
        
   <% end %>
     
@@ -98,7 +104,7 @@
    
   <% end %>
      
-  <% step :shop_buy_item, :ajax => true do %>
+  <% step :shop_buy_item, :change_event => 'result.received' do %>
   
     <%= make_visible("#item_list .item:first") %>
     <%= click_trigger("#item_list .item:first a.buy") %>
@@ -127,7 +133,7 @@
     
   <% end %>
   
-  <% step :equip_character, :ajax => true do %>
+  <% step :equip_character, :change_event => 'qtip.dialog.close' do %>
   
     <%= spot_on("#placements > .placement > .inventory") %>
     <%= tip_on("#placements > .placement > .inventory", 
@@ -142,7 +148,7 @@
     
   <% end %>
   
-  <% step :attack_monster, :ajax => true do %>
+  <% step :attack_monster do %>
   
     <%= make_visible("#available_monsters .monster:first") %>
     <%= click_trigger("#available_monsters .monster:first a.attack") %>
@@ -157,7 +163,7 @@
        
   <% end %>
   
-  <% step :attack_monster_first_time, :ajax => true do %>
+  <% step :attack_monster_first_time, :change_event => 'result.received' do %>
     
     <%= spot_on("#monster a.attack") %>
     <%= tip_on("#monster a.attack") %>
@@ -165,7 +171,7 @@
     
   <% end %>
   
-  <% step :fight_with_monster_until_he_live, :ajax => true do %>
+  <% step :fight_with_monster_until_he_live, :change_event => 'result.received' do %>
   
     <%= make_visible("#monster .health") %>
     <%= tip_on("#monster .health",
@@ -177,9 +183,10 @@
         }
        ) %>
     <%= click_trigger("#monster a.attack") %>
+    
   <% end %>
   
-  <% step :monster_spent, :ajax => true do %>
+  <% step :monster_spent, :change_event => 'result.received' do %>
     
     <%= spot_on("#result .monster_spent") %>
     <%= tip_on("#result .monster_spent") %>
@@ -187,12 +194,9 @@
     
   <% end %>
   
-  <% step :monster_die, :ajax => true do %>
+  <% step :monster_die, :change_event => 'close.dialog.tutorial' do %>
     
     tutorialPrepareDialog();
-    $(document).bind('close.dialog.tutorial', function() {
-      $(document).trigger('tutorial.next_step');
-    });
     
   <% end %>
     
@@ -202,7 +206,7 @@
     
   <% end %>
   
-  <% step :attack_other_player, :ajax => true do %>
+  <% step :attack_other_player, :change_event => 'result.received' do %>
   
     <%= tip_on("#victim_list .character:first a.attack",
         :position => {
@@ -216,7 +220,7 @@
     
   <% end %>
   
-  <% step :fight_result, :ajax => true do %>
+  <% step :fight_result, :change_event => 'qtip.dialog.close' do %>
   
     <%= make_visible("#result .payouts") %>
     <%= tip_on("#result .payouts",
@@ -237,7 +241,7 @@
     
   <% end %>
   
-  <% step :buy_estate, :ajax => true do %>
+  <% step :buy_estate, :change_event => 'result.received' do %>
   
     <%= click_trigger("#property_list .property_type:first a.buy") %>
     <%= tip_on("#property_list .property_type:first a.buy", 
@@ -250,7 +254,7 @@
     
   <% end %>
   
-  <% step :periodically_collect_property_income, :ajax => true do %>
+  <% step :periodically_collect_property_income, :change_event => 'qtip.dialog.close' do %>
   
     <%= make_visible("#property_list .property_type:first .timer") %>
     <%= tip_on("#property_list .property_type:first .timer", 
@@ -271,7 +275,7 @@
     
   <% end %>
   
-  <% step :spend_gems, :ajax => true do %>
+  <% step :spend_gems, :change_event => 'qtip.dialog.close' do %>
   
     <%= tip_on("#current_vip_money", 
         :position => {
@@ -285,7 +289,7 @@
        
   <% end %>
   
-  <% step :finish, :ajax => true do %>
+  <% step :finish, :change_event => 'qtip.dialog.close' do %>
   
     <%= tutorial_dialog :with_close_button => true %>
     

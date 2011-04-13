@@ -13,25 +13,24 @@ $.fn.tutorialVisible = function() {
  * Makes target object visible and responsible + binds trigger 
  * to change current tutorial step if user click on object
  */
-$.fn.tutorialClickTarget = function(redirector_url) {
+$.fn.tutorialClickTarget = function(options) {
   
   $(this).tutorialVisible();
   $(this).addClass('tutorialScrollTarget');
   
-  if (redirector_url) {
+  if (options['redirector_url']) {
     
     // change href param in <a> tag
     var originalHref = encodeURIComponent($(this).attr('href'));
     // TODO: this is very simple link generation and don't consider link params
-    var changedHref = redirector_url + '?redirect_to=' +  originalHref;
-    $(this).attr('href', changedHref)
+    var changedHref = options['redirector_url'] + '?redirect_to=' +  originalHref;
+    $(this).attr('href', changedHref);
     
-  } else {
+    $(this).bind('click', function(){
+      // prevent double click
+      $(this).removeClass('tutorialVisible');
+    });
     
-    $(this).unbind('click.tutorial.next_step')
-      .bind('click.tutorial.next_step', function() {
-        $(document).trigger('tutorial.next_step');
-      });
   }
   
 };
@@ -130,55 +129,76 @@ function tutorialPrepareDialog() {
   $('#dialog').tutorialVisible();
 }
 
-function tutorialAllowUpdradeDialog() {
+
+
+function tutorialAllowUpgradeDialog() {
   
-  if ($(document).queue('dialog').length > 0) {
+  if ($("#level_up_notification").is(":visible")) {
     
-    $(document).unbind('application.ready.tutorial.upgrade_dialog')
-      .bind('application.ready.tutorial.upgrade_dialog', function() {
-        
-        if ($("#level_up_notification").is(":visible")) {
-          
-          tutorialPrepareDialog();
-          
-          $(document).unbind('character.upgrade_dialog.tutorial')
-            .bind('character.upgrade_dialog.tutorial', function() {
-              $("#dialog #upgrade_list .points a").hide();
-              tutorialPrepareDialog();
-            });
-          
-          $(document).unbind('character.upgrade_complete.tutorial')
-            .bind('character.upgrade_complete.tutorial', function() {
-              $(document).trigger('close.dialog');
-            });
-          
-          $(document).unbind('close.dialog.tutorial')
-            .bind('close.dialog.tutorial', function() {
-              // if dialog was closed, we show our tutorial step
-              $(document).trigger('tutorial.show');
-            });
-        }
-        
+    console.log('Level up detected');
+    
+    tutorialPrepareDialog();
+    
+    $(document).unbind('character.upgrade_dialog.tutorial')
+      .bind('character.upgrade_dialog.tutorial', function() {
+        $("#dialog #upgrade_list .points a").hide();
+        tutorialPrepareDialog();
       });
+    
+    $(document).unbind('character.upgrade_complete.tutorial')
+      .bind('character.upgrade_complete.tutorial', function() {
+        $(document).trigger('close.dialog');
+      });
+    
+    $(document).unbind('close.dialog.tutorial')
+      .bind('close.dialog.tutorial', function() {
+        // if dialog was closed, we show our tutorial step
+        $(document).trigger('tutorial.show');
+      });
+        
   } else {
     $(document).trigger('tutorial.show');
   }
 }
 
-
-function bindTutorialTrigger(trigger) {
-  $(document).unbind('tutorial.next_step')
-    .bind('tutorial.next_step', function() {
-      tutorialClearEffects();
-      trigger();
-    });
-}
-
-function bindTutorialShow(trigger) {
-  $(document).unbind('tutorial.show').bind('tutorial.show', function() {
-    trigger();
+function step(stepActions, options) {
+  options = options || {};
+  
+  $(document).unbind('tutorial.show').bind('tutorial.show', function (event){
+    
+    stepActions();
+    
+    // scroll browser to target object
+    // TODO: not work if scroll target appears not immediately (fadeIn effect for example)
     if ($('.tutorialScrollTarget').is(':visible')) 
       $.scrollTo('.tutorialScrollTarget');
   });
+  
+  if (options['change_event']) {
+    ajaxStep(options['change_event'], options);
+  }
+  
+  if (options['control_upgrade_dialog']) {
+    tutorialAllowUpgradeDialog();
+  } else {
+    $(document).trigger('tutorial.show');
+  }
 }
 
+/*
+ * Show actions for ajax tutorial step.
+ * Waits for @event and executes after it.
+ *
+ * @options['control_upgrade_dialog'] - allow to appear character upgrade dialog. 
+ *                                      Tutorial step shows after dialog close.
+ */
+function ajaxStep(changeEvent, options) {
+  changeEvent += '.tutorial';
+  
+  $(document).unbind(changeEvent).bind(changeEvent, function(event) {
+    
+    tutorialClearEffects();
+    // fire loading next tutorial step
+    $(document).trigger('tutorial.next_step');
+  });
+}

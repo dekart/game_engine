@@ -55,7 +55,9 @@ module Tutorial
       STEPS.first.to_s
     end
     
+    def first_step?(step)
+      STEPS.first == step.to_sym
+    end
+    
   end
-  
-  
 end

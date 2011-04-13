@@ -1,4 +1,5 @@
 module TutorialsHelper
+  
   def t_step(property, step = current_step)
     t("tutorial.steps.#{step}.#{property}")
   end
@@ -28,14 +29,16 @@ module TutorialsHelper
   end
   
   def next_step_button(value = step_button_value)
+    # TODO: onclick event name
     button_to_function(escape_javascript(value), 
-      :onclick => '$(document).trigger("tutorial.next_step")'
+      :onclick => '$(document).trigger("qtip.dialog.close")'
     )
   end
   
   def tutorial_dialog(options = {})
     options[:content] ||= {}
     
+    # TODO: clean options
     if options.delete(:with_title)
       options[:content][:title] = escape_javascript(t_step("dialog_title"))
     end
@@ -70,9 +73,9 @@ module TutorialsHelper
     "$('#{target}').tutorialSpot();".html_safe
   end
   
-  def click_trigger(target)
-    redirector_url = @ajax_step ? "" : "'#{update_step_tutorials_path}'" 
-    "$('#{target}').tutorialClickTarget(#{redirector_url});".html_safe
+  def click_trigger(target, options = {})
+    options[:redirector_url] = update_step_tutorials_path unless @evented_step
+    "$('#{target}').tutorialClickTarget(#{options.to_json});".html_safe
   end
   
   def make_visible(target)
@@ -97,7 +100,7 @@ module TutorialsHelper
     else
       func_options = {
         :url => update_step_tutorials_path,
-        :update => :tutorial,
+        :update => :tutorial
       }
     end
     remote_function(func_options)
@@ -106,20 +109,20 @@ module TutorialsHelper
   def step(step_name, options = {}, &block)
     if current_step == step_name
       
-      if options[:ajax]
-        @ajax_step = true
-        dom_ready("bindTutorialTrigger(function() { #{javascript_for_next_step_trigger} });")
-      end
+      @evented_step = true if options[:change_event]
+      options.reverse_merge!(
+        :control_upgrade_dialog => true
+      )
       
       step_actions = capture(options, &block)
-      dom_ready("bindTutorialShow(function() { #{step_actions}; });")
       
-      if options.include?(:dont_control_upgrade)
-        dom_ready("$(document).trigger('tutorial.show');")
-      else
-        dom_ready("tutorialAllowUpdradeDialog();")
-      end
+      dom_ready("step(#{wrap_to_function(step_actions)}, #{options.to_json})")
     end
+  end
+  
+  # TODO: 
+  def wrap_to_function(javascript)
+    "function() { #{javascript} }"
   end
   
   def tutorial_visible?
