@@ -119,6 +119,8 @@ $.showTutorialDialog = function(options) {
  * This actually after ajax update.
  */
 function tutorialClearEffects() {
+  $("#tutorial_overlay").empty();
+  
   $(".tutorialScrollTarget").removeClass("tutorialScrollTarget");
   $(".tutorialVisible").removeClass("tutorialVisible");
   
