@@ -433,6 +433,10 @@ var Mission = {
     
     return $(this);
   };
+  
+  // qTip z-index
+  $.fn.qtip.zindex = 400;
+  
 })(jQuery);
 
 
