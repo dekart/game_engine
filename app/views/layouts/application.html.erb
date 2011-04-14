@@ -6,10 +6,11 @@
   </script>
 
   <%= stylesheet_link_tag(skin_path) %>
+  <%= stylesheet_link_tag("jquery.qtip.css") %>
 
   <%= include_jquery_from_google %>
   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", 
-        "jquery/tooltip", "jquery/carousel", "jquery/qtip", "application", 
+        "jquery/tooltip", "jquery/carousel", "jquery/qtip2", "application", 
         :cache => "cache/all" %>
         
   <%= javascript_include_tag "tutorial" if tutorial_visible? %>

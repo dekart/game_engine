@@ -1,6 +1,5 @@
 <% dom_ready do %>
   $(document).unbind('tutorial.next_step').bind('tutorial.next_step', function() {
-    console.log('Event: Tutorial.next_step')
     <%= javascript_for_next_step_trigger %>
   });
 <% end %>
@@ -41,12 +40,13 @@
           :with_title => true,
           :with_close_button => true 
         ) %>
-        
+     
   <% end %>
       
   <% step :complete_first_mission, :change_event => 'result.received' do %>
   
     <%= tip_on("#mission_list .mission:first a.fulfill") %>
+    <%= make_visible("#mission_list .mission:first") %>
     <%= click_trigger("#mission_list .mission:first a.fulfill") %>
     
   <% end %>
@@ -84,10 +84,8 @@
     
     <%= tip_on("#dialog #upgrade_list",
         :position => {
-          :corner => {
-            :target => 'rightMiddle',
-            :tooltip => 'leftMiddle'
-          }
+          :at => 'right middle',
+          :my => 'left middle'
         }
        ) %>
         
@@ -107,13 +105,12 @@
   <% step :shop_buy_item, :change_event => 'result.received' do %>
   
     <%= make_visible("#item_list .item:first") %>
+    <%= make_responsible("#item_list .item:first") %>
     <%= click_trigger("#item_list .item:first a.buy") %>
     <%= tip_on("#item_list .item:first a.buy", 
         :position => {
-          :corner => {
-            :target => 'leftBottom',
-            :tooltip => 'rightTop'
-          }
+          :at => 'leftBottom',
+          :my => 'rightTop'
         }
        ) %>
   <% end %>
@@ -154,10 +151,8 @@
     <%= click_trigger("#available_monsters .monster:first a.attack") %>
     <%= tip_on("#available_monsters .monster:first a.attack",
         :position => {
-          :corner => {
-            :target => 'rightMiddle',
-            :tooltip => 'leftMiddle'
-          }
+          :at => 'rightMiddle',
+          :my => 'leftMiddle'
         }
        ) %>
        
@@ -173,13 +168,11 @@
   
   <% step :fight_with_monster_until_he_live, :change_event => 'result.received' do %>
   
-    <%= make_visible("#monster .health") %>
+    <%= make_visible("#monster") %>
     <%= tip_on("#monster .health",
         :position => {
-          :corner => {
-            :target => 'topMiddle',
-            :tooltip => 'bottomMiddle'
-          }
+          :at => 'topMiddle',
+          :my => 'bottomMiddle'
         }
        ) %>
     <%= click_trigger("#monster a.attack") %>
@@ -188,8 +181,8 @@
   
   <% step :monster_spent, :change_event => 'result.received' do %>
     
-    <%= spot_on("#result .monster_spent") %>
-    <%= tip_on("#result .monster_spent") %>
+    <%= tip_on("#result .monster_spent .value:last") %>
+    <%= spot_on("#result .monster_spent .label:first") %>
     <%= click_trigger("#result a.attack") %>
     
   <% end %>
@@ -210,25 +203,22 @@
   
     <%= tip_on("#victim_list .character:first a.attack",
         :position => {
-          :corner => {
-            :target => 'topMiddle',
-            :tooltip => 'bottomMiddle'
-          }
+          :at => 'topMiddle',
+          :my => 'bottomMiddle'
         }
        ) %>
+    <%= make_visible("#victim_list") %>
     <%= click_trigger("#victim_list .character:first a.attack") %>
     
   <% end %>
   
   <% step :fight_result, :change_event => 'qtip.dialog.close' do %>
   
-    <%= make_visible("#result .payouts") %>
-    <%= tip_on("#result .payouts",
+    <%= make_visible("#result") %>
+    <%= tip_on("#result",
         :position => {
-          :corner => {
-            :target => 'topMiddle',
-            :tooltip => 'bottomMiddle'
-          }
+          :at => 'topMiddle',
+          :my => 'bottomMiddle'
         },
         :with_close_button => true
        ) %>
@@ -243,26 +233,23 @@
   
   <% step :buy_estate, :change_event => 'result.received' do %>
   
-    <%= click_trigger("#property_list .property_type:first a.buy") %>
     <%= tip_on("#property_list .property_type:first a.buy", 
           :position => {
-            :corner => {
-              :target => 'bottomLeft',
-              :tooltip => 'topRight'
-            }
+            :at => 'bottomLeft',
+            :my => 'topRight'
           }) %>
+    <%= make_visible("#property_list .property_type:first .picture img") %>
+    <%= click_trigger("#property_list .property_type:first a.buy") %>
     
   <% end %>
   
   <% step :periodically_collect_property_income, :change_event => 'qtip.dialog.close' do %>
   
-    <%= make_visible("#property_list .property_type:first .timer") %>
+    <%= spot_on("#property_list .property_type:first .timer") %>
     <%= tip_on("#property_list .property_type:first .timer", 
           :position => {
-              :corner => {
-                :target => 'topMiddle',
-                :tooltip => 'bottomMiddle'
-              }
+              :at => 'topMiddle',
+              :my => 'bottomMiddle'
             },
           :with_close_button => true
          ) %>
@@ -279,13 +266,12 @@
   
     <%= tip_on("#current_vip_money", 
         :position => {
-          :corner => {
-            :target => 'topMiddle',
-            :tooltip => 'bottomMiddle'
-          }
+          :at => 'topMiddle',
+          :my => 'bottomMiddle'
         },
         :with_close_button => true
        ) %>
+    <%= make_visible("#premia") %>
        
   <% end %>
   

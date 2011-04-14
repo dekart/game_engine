@@ -53,13 +53,7 @@ module TutorialsHelper
   end
   
   def tip_on(target, options = {})
-    options[:content] ||= escape_javascript(step_text)
-    
-    options[:position] ||= {}
-    
-    options[:position][:corner] ||= {}
-    options[:position][:corner][:target] ||= 'bottomMiddle'
-    options[:position][:corner][:tooltip] ||= 'topMiddle'
+    options[:content] = escape_javascript(step_text)
     
     if options.delete(:with_close_button)
       close_button_value = escape_javascript(t_step("close_button_value"))
@@ -76,6 +70,10 @@ module TutorialsHelper
   def click_trigger(target, options = {})
     options[:redirector_url] = update_step_tutorials_path unless @evented_step
     "$('#{target}').tutorialClickTarget(#{options.to_json});".html_safe
+  end
+  
+  def make_responsible(target)
+    "$('#{target}').tutorialResponsible();".html_safe
   end
   
   def make_visible(target)

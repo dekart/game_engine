@@ -1,13 +1,33 @@
 /*
- * See http://craigsworks.com/projects/qtip/docs/ for documentation about qTip plugin.
+ * See http://craigsworks.com/projects/qtip2/docs for documentation about qTip2 plugin.
  */
 
 /*
-* Makes target object visible and responsible in tutorial layout 
+* Makes target object responsible in tutorial layout 
 */
-$.fn.tutorialVisible = function() {
+$.fn.tutorialResponsible = function() {
   $(this).addClass('tutorialVisible');
 };
+
+
+/** 
+ * Make some element visible, but not responsible
+ */
+$.fn.tutorialVisible = function() {
+  var offset = $(this).offset();
+  
+  var visibleBlock = $('<div></div>').addClass('visibleBlock');
+  $('#tutorial_overlay').append(visibleBlock);
+  
+  visibleBlock.css({ 
+    opacity: 1,
+    left: offset.left, 
+    top: offset.top,
+    width: $(this).innerWidth(),
+    height: $(this).innerHeight()
+  });
+};
+
 
 /*
  * Makes target object visible and responsible + binds trigger 
@@ -15,7 +35,7 @@ $.fn.tutorialVisible = function() {
  */
 $.fn.tutorialClickTarget = function(options) {
   
-  $(this).tutorialVisible();
+  $(this).tutorialResponsible();
   $(this).addClass('tutorialScrollTarget');
   
   if (options['redirector_url']) {
@@ -35,34 +55,6 @@ $.fn.tutorialClickTarget = function(options) {
   
 };
 
-/* 
- * Show tip on target object.
- * You may pass qTip options by @options parameter
- */
-$.fn.tutorialTip = function(options) {
-  var defaultOptions = {
-    show: { ready: true },
-    hide: false, 
-    style: {
-      border: {
-         width: 5,
-         radius: 10
-      },
-      padding: 10, 
-      textAlign: 'center',
-      tip: true, // Give it a speech bubble tip with automatic corner detection
-      classes: {
-        target: 'tutorialTipTarget'
-      }
-    }, 
-  };
-  
-  // merge options 
-  $.extend(true, defaultOptions, options);
-  
-  $(this).qtip(defaultOptions);
-};
-
 /*
  * Show spot circle on center of object 
  */
@@ -74,30 +66,46 @@ $.fn.tutorialSpot = function() {
   spot.css({ left: left, top: top });
 };
 
+
+/* 
+ * Show tip on target object.
+ * You may pass qTip options by @options parameter
+ */
+$.fn.tutorialTip = function(options) {
+  var defaultOptions = {
+   position: {
+    at: 'bottom center',
+    my: 'top center'
+   },
+   show: {
+     event: false, 
+     ready: true,
+    },
+    hide: false, 
+  };
+  
+  // merge options 
+  $.extend(true, defaultOptions, options);
+  
+  $(this).qtip(defaultOptions);
+};
+
+
 /*
  * Show tutorial dialog box. It's create by qTip.
  */
 $.showTutorialDialog = function(options) {
   var defaultOptions = {
-    show: { ready: true },
-    hide: false, 
-    position: { 
-      target: $("#content"),
-      corner: 'topMiddle'
+    position: {
+      target: $("#header"),
+      at: 'center',
+      my: 'center'
     },
-    style: {
-      width: { max: 350 },
-      padding: '14px',
-      border: {
-        width: 9,
-        radius: 9,
-        color: '#666666'
-      },
-      name: 'light',
-      classes: {
-        target: 'tutorialTipTarget'
-      }
+    show: {
+       event: false, 
+       ready: true,
     },
+    hide: false
   };
   
   // merge options 
@@ -114,7 +122,7 @@ function tutorialClearEffects() {
   $(".tutorialScrollTarget").removeClass("tutorialScrollTarget");
   $(".tutorialVisible").removeClass("tutorialVisible");
   
-  $(".tutorialTipTarget").qtip("destroy").removeClass("tutorialTipTarget");
+  $(".qtip").qtip("destroy");
 };
 
 function tutorialHide() {
@@ -126,7 +134,7 @@ function tutorialPrepareDialog() {
   // move dialog box after tutorial box
   var newDialogTop =  $('#tutorial').offset().top + $('#tutorial').height() + 25;
   $('#dialog').offset({ top: newDialogTop });
-  $('#dialog').tutorialVisible();
+  $('#dialog').tutorialResponsible();
 }
 
 
@@ -134,8 +142,6 @@ function tutorialPrepareDialog() {
 function tutorialAllowUpgradeDialog() {
   
   if ($("#level_up_notification").is(":visible")) {
-    
-    console.log('Level up detected');
     
     tutorialPrepareDialog();
     
