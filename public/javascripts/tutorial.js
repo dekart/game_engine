@@ -19,13 +19,14 @@ $.fn.tutorialVisible = function() {
   var visibleBlock = $('<div></div>').addClass('visibleBlock');
   $('#tutorial_overlay').append(visibleBlock);
   
-  visibleBlock.css({ 
-    opacity: 1,
+  visibleBlock.css({
+    display: 'none',
     left: offset.left, 
     top: offset.top,
-    width: $(this).innerWidth(),
-    height: $(this).innerHeight()
+    width: $(this).outerWidth(),
+    height: $(this).outerHeight()
   });
+  visibleBlock.fadeIn('slow');
 };
 
 
@@ -63,7 +64,12 @@ $.fn.tutorialSpot = function() {
   $('#tutorial_overlay').append(spot);
   var left = $(this).offset().left + $(this).outerWidth() / 2 - spot.width() / 2;
   var top = $(this).offset().top + $(this).outerHeight() / 2 - spot.height() / 2;
-  spot.css({ left: left, top: top });
+  spot.css({
+    display: 'none',
+    left: left, 
+    top: top 
+  });
+  spot.fadeIn('slow');
 };
 
 
@@ -81,7 +87,15 @@ $.fn.tutorialTip = function(options) {
      event: false, 
      ready: true,
     },
-    hide: false, 
+    hide: false,
+    events: {
+      hide: function() {
+        console.log('qTip hide');
+      },
+      destroy: function() {
+        console.log('qTip destroyed');
+      }
+    } 
   };
   
   // merge options 
@@ -105,7 +119,12 @@ $.showTutorialDialog = function(options) {
        event: false, 
        ready: true,
     },
-    hide: false
+    hide: false, 
+    events: {
+      hide: function() {
+        console.log('qTip hide');
+      }
+    } 
   };
   
   // merge options 
