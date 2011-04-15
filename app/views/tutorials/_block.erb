@@ -38,7 +38,7 @@
      
      <%= tutorial_dialog(
           :with_title => true,
-          :with_close_button => true 
+          :buttons => next_step_button
         ) %>
      
   <% end %>
@@ -134,7 +134,7 @@
   
     <%= spot_on("#placements > .placement > .inventory") %>
     <%= tip_on("#placements > .placement > .inventory", 
-        :with_close_button => true
+        :buttons => next_step_button
       ) %>
     
   <% end %>
@@ -207,7 +207,7 @@
           :my => 'bottomMiddle'
         }
        ) %>
-    <%= make_visible("#victim_list") %>
+    <%= make_visible("#victim_list .character:first") %>
     <%= click_trigger("#victim_list .character:first a.attack") %>
     
   <% end %>
@@ -220,7 +220,7 @@
           :at => 'topMiddle',
           :my => 'bottomMiddle'
         },
-        :with_close_button => true
+        :buttons => next_step_button
        ) %>
        
   <% end %>
@@ -251,7 +251,7 @@
               :at => 'topMiddle',
               :my => 'bottomMiddle'
             },
-          :with_close_button => true
+          :buttons => next_step_button
          ) %>
        
   <% end %>
@@ -269,7 +269,7 @@
           :at => 'topMiddle',
           :my => 'bottomMiddle'
         },
-        :with_close_button => true
+        :buttons => next_step_button
        ) %>
     <%= make_visible("#premia") %>
        
@@ -277,7 +277,9 @@
   
   <% step :finish, :change_event => 'qtip.dialog.close' do %>
   
-    <%= tutorial_dialog :with_close_button => true %>
+    <%= tutorial_dialog(
+          :buttons => next_step_button
+        ) %>
     
   <% end %>
 </div>

@@ -367,6 +367,11 @@ var Mission = {
   }
 };
 
+function debug(s) {
+  if (this.console && typeof(console.log) != "undefined")
+    console.log(s);
+}
+
 
 (function($){
   $.fn.missionGroups = function(current_group, show_limit){
@@ -434,6 +439,7 @@ var Mission = {
     return $(this);
   };
   
+  if ($.fn.qtip && typeof($.fn.qtip) != "undefined")
   // qTip z-index
   $.fn.qtip.zindex = 400;
   

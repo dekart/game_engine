@@ -88,14 +88,9 @@ $.fn.tutorialTip = function(options) {
      ready: true,
     },
     hide: false,
-    events: {
-      hide: function() {
-        console.log('qTip hide');
-      },
-      destroy: function() {
-        console.log('qTip destroyed');
-      }
-    } 
+    style: {
+      classes: 'ui-tooltip-youtube'
+    }
   };
   
   // merge options 
@@ -120,11 +115,9 @@ $.showTutorialDialog = function(options) {
        ready: true,
     },
     hide: false, 
-    events: {
-      hide: function() {
-        console.log('qTip hide');
-      }
-    } 
+    style: {
+      classes: 'ui-tooltip-youtube'
+    }
   };
   
   // merge options 
@@ -229,3 +222,4 @@ function ajaxStep(changeEvent, options) {
     $(document).trigger('tutorial.next_step');
   });
 }
+

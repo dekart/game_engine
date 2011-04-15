@@ -28,11 +28,23 @@ module TutorialsHelper
     current_user.tutorial_step.to_sym 
   end
   
-  def next_step_button(value = step_button_value)
+  def next_step_button(value = t_step("close_button_value"))
     # TODO: onclick event name
     button_to_function(escape_javascript(value), 
       :onclick => '$(document).trigger("qtip.dialog.close")'
     )
+  end
+  
+  def append_buttons(options = {})
+    if (buttons = options[:buttons])
+      
+      if buttons.respond_to?(:join)
+        buttons = buttons.join
+      end
+      
+      options[:content][:text] ||= ""
+      options[:content][:text] << content_tag(:div, buttons, :class => 'buttons')
+    end
   end
   
   def tutorial_dialog(options = {})
@@ -44,21 +56,16 @@ module TutorialsHelper
     end
     options[:content][:text] = escape_javascript(options[:content][:text] || t_step("dialog_text"))
     
-    if options.delete(:with_close_button)
-      close_button = escape_javascript(t_step("close_button_value"))
-      options[:content][:text] << content_tag(:div, next_step_button(close_button), :class => 'buttons')
-    end
+    append_buttons(options)
     
     "$.showTutorialDialog(#{options.to_json});".html_safe
   end
   
   def tip_on(target, options = {})
-    options[:content] = escape_javascript(step_text)
+    options[:content] ||= {}
+    options[:content][:text] = escape_javascript(options[:content][:text] || step_text)
     
-    if options.delete(:with_close_button)
-      close_button_value = escape_javascript(t_step("close_button_value"))
-      options[:content] << content_tag(:div, next_step_button(close_button_value), :class => 'buttons')
-    end
+    append_buttons(options)
     
     "$('#{target}').tutorialTip(#{options.to_json});".html_safe
   end
