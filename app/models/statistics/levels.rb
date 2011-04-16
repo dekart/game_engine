@@ -24,8 +24,8 @@ class Statistics
           AVG(missions_succeeded) AS missions_succeeded,
           AVG(missions_mastered) AS missions_mastered,
           AVG(missions_completed) AS missions_completed,
-          (SELECT count(relations.id) FROM relations WHERE character_id = characters.id AND type = 'MercenaryRelation') AS mercenaries,
-          (SELECT count(relations.id) FROM relations WHERE character_id = characters.id AND type = 'FriendRelation') AS friends
+          (SELECT count(relations.id) FROM relations WHERE owner_id = characters.id AND relations.type = 'MercenaryRelation') AS mercenaries,
+          (SELECT count(relations.id) FROM relations WHERE owner_id = characters.id AND relations.type = 'FriendRelation') AS friends
         }, 
         :group  => :level
       ).collect do |record|
