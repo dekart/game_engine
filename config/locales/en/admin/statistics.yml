@@ -50,8 +50,14 @@ en:
           popular_references: "Popular Withdraw References"
       level:
         title: "Statistics: Attributes by Levels"
-        users: 'Users'
-        mercenaries: 'Mercenaries'
-        friends: 'Friends'
-        fights: 'Fights'
+        filter:
+          title: 'Filter by Last Visit'
+          all: 'All Time'
+          3days: 'Last 3 days'
+          week: 'Last Week'
+        columns:
+          users: 'Users'
+          mercenaries: 'Mercenaries'
+          friends: 'Friends'
+          fights: 'Fights'
           

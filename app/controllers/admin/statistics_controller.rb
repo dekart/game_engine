@@ -11,7 +11,9 @@ class Admin::StatisticsController < Admin::BaseController
   end
   
   def level
-    @all = Statistics::Levels.new
+    @filter = Statistics::Levels::FILTERS.include?(params[:filter]) ? params[:filter] : 'all'
+    
+    @stats = Statistics::Levels.new(Statistics::Levels.time_frame_by_filter(@filter))
   end
 
   def vip_money

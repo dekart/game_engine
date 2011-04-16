@@ -1,5 +1,18 @@
 class Statistics
   class Levels < self
+    FILTERS = %w{all 3days week}
+    
+    def self.time_frame_by_filter(value)
+      case value
+      when '3days'
+        3.days.ago .. Time.now
+      when 'week'
+        1.week.ago .. Time.now
+      else
+        nil
+      end
+    end
+    
     def default_scope
       @time_range ? Character.scoped(:joins => :user, :conditions => ["users.last_visit_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) : Character
     end
@@ -12,7 +25,7 @@ class Statistics
       scope.all(
         :select => %{
           level, 
-          COUNT(id) AS total, 
+          COUNT(characters.id) AS total, 
           AVG(total_money) AS basic_money,
           AVG(vip_money) AS vip_money,
           AVG(attack) AS attack,
@@ -69,8 +82,15 @@ class Statistics
             s.send("#{attr}=", record[attr].to_f.round)
           end
           
-          s.mercenaries = MercenaryRelation.count(:joins => :owner, :conditions => ["characters.level = ?", record.level]).to_f / s.total
-          s.friends = FriendRelation.count(:joins => :owner, :conditions => ["characters.level = ?", record.level]).to_f / s.total
+          relation_scope = Relation.scoped(
+            :joins => {:owner => :user}, 
+            :conditions => ["characters.level = ?", record.level]
+          )
+          relation_scope.scoped(:conditions => ["users.last_visit_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) if @time_range
+          
+          s.mercenaries = relation_scope.scoped(:conditions => {:type => 'MercenaryRelation'}).count.to_f / s.total
+          
+          s.friends = relation_scope.scoped(:conditions => {:type => 'FriendRelation'}).count.to_f / s.total
         end
       end
     end

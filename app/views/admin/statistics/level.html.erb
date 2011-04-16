@@ -2,10 +2,22 @@
 
 <%= render "controls" %>
 
+<div class="data_filter clearfix">
+  <h2><%= t(".filter.title") %></h2>
+  
+  <% Statistics::Levels::FILTERS.each do |filter| %>
+    <% if @filter == filter %>
+      <strong><%= t(".filter.#{filter}") %></strong>
+    <% else %>
+      <%= link_to(t(".filter.#{filter}"), :filter => filter) %>
+    <% end %>
+  <% end %>
+</div>
+
 <table class="data">
   <tr class="subheader">
     <th><%= Character.human_attribute_name("level") %></th>
-    <th><%= t('.users') %></th>
+    <th><%= t('.columns.users') %></th>
     <th><%= Character.human_attribute_name("basic_money") %> AVG</th>
     <th><%= Character.human_attribute_name("basic_money") %> MAX</th>
     <th><%= Character.human_attribute_name("vip_money") %> AVG</th>
@@ -20,19 +32,19 @@
     <th><%= Character.human_attribute_name("energy") %> MAX</th>
     <th><%= Character.human_attribute_name("stamina") %> AVG</th>
     <th><%= Character.human_attribute_name("stamina") %> MAX</th>
-    <th><%= t('.fights') %> AVG</th>
-    <th><%= t('.fights') %> MAX</th>
+    <th><%= t('.columns.fights') %> AVG</th>
+    <th><%= t('.columns.fights') %> MAX</th>
     <th><%= Character.human_attribute_name("missions_succeeded") %> AVG</th>
     <th><%= Character.human_attribute_name("missions_succeeded") %> MAX</th>
     <th><%= Character.human_attribute_name("missions_mastered") %> AVG</th>
     <th><%= Character.human_attribute_name("missions_mastered") %> MAX</th>
     <th><%= Character.human_attribute_name("missions_completed") %> AVG</th>
     <th><%= Character.human_attribute_name("missions_completed") %> MAX</th>
-    <th><%= t('.mercenaries') %> AVG</th>
-    <th><%= t('.friends') %> AVG</th>
+    <th><%= t('.columns.mercenaries') %> AVG</th>
+    <th><%= t('.columns.friends') %> AVG</th>
   </tr>
   
-  <% @all.average_values.each do |character| %>
+  <% @stats.average_values.each do |character| %>
     <tr>
       <% 
         %w{
