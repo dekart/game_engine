@@ -88,9 +88,9 @@ class Statistics
           )
           relation_scope.scoped(:conditions => ["users.last_visit_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) if @time_range
           
-          s.mercenaries = relation_scope.scoped(:conditions => {:type => 'MercenaryRelation'}).count.to_f / s.total
+          s.mercenaries = (relation_scope.scoped(:conditions => {:type => 'MercenaryRelation'}).count.to_f / s.total).round
           
-          s.friends = relation_scope.scoped(:conditions => {:type => 'FriendRelation'}).count.to_f / s.total
+          s.friends = (relation_scope.scoped(:conditions => {:type => 'FriendRelation'}).count.to_f / s.total).round
         end
       end
     end
