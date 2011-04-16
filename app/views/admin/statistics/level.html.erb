@@ -1,0 +1,43 @@
+<%= admin_title(t('.title'))%>
+
+<%= render "controls" %>
+
+<table class="data">
+  <tr class="subheader">
+    <th><%= Character.human_attribute_name("level") %></th>
+    <th><%= t('.users') %></th>
+    <th><%= Character.human_attribute_name("basic_money") %></th>
+    <th><%= Character.human_attribute_name("vip_money") %></th>
+    <th><%= Character.human_attribute_name("attack") %></th>
+    <th><%= Character.human_attribute_name("defence") %></th>
+    <th><%= Character.human_attribute_name("health") %></th>
+    <th><%= Character.human_attribute_name("energy") %></th>
+    <th><%= Character.human_attribute_name("stamina") %></th>
+    <th><%= t('.mercenaries') %></th>
+    <th><%= t('.friends') %></th>
+    <th><%= t('.fights') %></th>
+    <th><%= Character.human_attribute_name("missions_succeeded") %></th>
+    <th><%= Character.human_attribute_name("missions_mastered") %></th>
+    <th><%= Character.human_attribute_name("missions_completed") %></th>
+  </tr>
+  
+  <% @all.average_values.each do |character| %>
+    <tr>
+      <td><%= character.level %></td>
+      <td><%= character.total %></td>
+      <td><%= character.basic_money %></td>
+      <td><%= character.vip_money %></td>
+      <td><%= character.attack %></td>
+      <td><%= character.defence %></td>
+      <td><%= character.health %></td>
+      <td><%= character.energy %></td>
+      <td><%= character.stamina %></td>
+      <td><%= character.mercenaries %></td>
+      <td><%= character.friends %></td>
+      <td><%= character.fights %></td>
+      <td><%= character.missions_succeeded %></td>
+      <td><%= character.missions_mastered %></td>
+      <td><%= character.missions_completed %></td>
+    </tr>
+  <% end %>
+</table>

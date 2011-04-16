@@ -263,53 +263,6 @@ en:
         add_effect: "Add Effect:"
       effect:
         remove: "Remove"
-    statistics:
-      amount_change: "(+%{amount} in last 24 hours)"
-      controls:
-        dashboard: "Dashboard"
-        users: "Users"
-        vip_money: "VIP Money"
-      index:
-        title: "Statistics"
-        parameter: "Parameter"
-        value: "Value"
-        change: "Last 24 hours"
-        details: "Details »"
-        values:
-          users: "Total Users"
-          deposit: "VIP Money Deposit"
-          withdraw: "VIP Money Withdraw"
-      user:
-        title: "Statistics: New Users"
-        total_users: "Total Users"
-        new_users: 'New Users'
-        new_users_chart:
-          title: 'New Users By Day'
-          total: 'Total'
-          level5: 'Level 5'
-          level10: 'Level 10'
-        latest_users: "Latest Users"
-        profile: "FB Profile"
-        references: "References"
-        no_reference: "No reference"
-        no_character: "(No character)"
-      vip_money:
-        title: "Statistics: VIP Money"
-        reference_type: "Reference Type"
-        reference: "Reference"
-        amount:
-          total: "Total Amount"
-          by_period: "24 hours"
-        deposit:
-          overview: "Deposit"
-          operations: "See latest deposits"
-          reference_types: "Deposit Reference Types"
-          popular_references: "Popular Deposit References"
-        withdraw:
-          overview: "Withdraw"
-          operations: "See latest withdrawals"
-          reference_types: "Withdraw Reference Types"
-          popular_references: "Popular Withdraw References"
         
     property_types:
       index:

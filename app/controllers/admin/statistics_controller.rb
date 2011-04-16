@@ -9,6 +9,10 @@ class Admin::StatisticsController < Admin::BaseController
     @day = Statistics::Users.new(24.hours.ago)
     @week = Statistics::Users.new(7.days.ago.beginning_of_day)
   end
+  
+  def level
+    @all = Statistics::Levels.new
+  end
 
   def vip_money
     @all = Statistics::VipMoney.new

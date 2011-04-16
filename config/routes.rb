@@ -63,7 +63,8 @@ ActionController::Routing::Routes.draw do |map|
       :only => :index,
       :collection => {
         :user       => :any,
-        :vip_money  => :any
+        :vip_money  => :any,
+        :level      => :any
       }
     admin.resources :skins,
       :member => {:activate => :post, :changelog => :post}
