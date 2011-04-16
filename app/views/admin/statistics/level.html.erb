@@ -6,38 +6,65 @@
   <tr class="subheader">
     <th><%= Character.human_attribute_name("level") %></th>
     <th><%= t('.users') %></th>
-    <th><%= Character.human_attribute_name("basic_money") %></th>
-    <th><%= Character.human_attribute_name("vip_money") %></th>
-    <th><%= Character.human_attribute_name("attack") %></th>
-    <th><%= Character.human_attribute_name("defence") %></th>
-    <th><%= Character.human_attribute_name("health") %></th>
-    <th><%= Character.human_attribute_name("energy") %></th>
-    <th><%= Character.human_attribute_name("stamina") %></th>
-    <th><%= t('.mercenaries') %></th>
-    <th><%= t('.friends') %></th>
-    <th><%= t('.fights') %></th>
-    <th><%= Character.human_attribute_name("missions_succeeded") %></th>
-    <th><%= Character.human_attribute_name("missions_mastered") %></th>
-    <th><%= Character.human_attribute_name("missions_completed") %></th>
+    <th><%= Character.human_attribute_name("basic_money") %> AVG</th>
+    <th><%= Character.human_attribute_name("basic_money") %> MAX</th>
+    <th><%= Character.human_attribute_name("vip_money") %> AVG</th>
+    <th><%= Character.human_attribute_name("vip_money") %> MAX</th>
+    <th><%= Character.human_attribute_name("attack") %> AVG</th>
+    <th><%= Character.human_attribute_name("attack") %> MAX</th>
+    <th><%= Character.human_attribute_name("defence") %> AVG</th>
+    <th><%= Character.human_attribute_name("defence") %> MAX</th>
+    <th><%= Character.human_attribute_name("health") %> AVG</th>
+    <th><%= Character.human_attribute_name("health") %> MAX</th>
+    <th><%= Character.human_attribute_name("energy") %> AVG</th>
+    <th><%= Character.human_attribute_name("energy") %> MAX</th>
+    <th><%= Character.human_attribute_name("stamina") %> AVG</th>
+    <th><%= Character.human_attribute_name("stamina") %> MAX</th>
+    <th><%= t('.fights') %> AVG</th>
+    <th><%= t('.fights') %> MAX</th>
+    <th><%= Character.human_attribute_name("missions_succeeded") %> AVG</th>
+    <th><%= Character.human_attribute_name("missions_succeeded") %> MAX</th>
+    <th><%= Character.human_attribute_name("missions_mastered") %> AVG</th>
+    <th><%= Character.human_attribute_name("missions_mastered") %> MAX</th>
+    <th><%= Character.human_attribute_name("missions_completed") %> AVG</th>
+    <th><%= Character.human_attribute_name("missions_completed") %> MAX</th>
+    <th><%= t('.mercenaries') %> AVG</th>
+    <th><%= t('.friends') %> AVG</th>
   </tr>
   
   <% @all.average_values.each do |character| %>
     <tr>
-      <td><%= character.level %></td>
-      <td><%= character.total %></td>
-      <td><%= character.basic_money %></td>
-      <td><%= character.vip_money %></td>
-      <td><%= character.attack %></td>
-      <td><%= character.defence %></td>
-      <td><%= character.health %></td>
-      <td><%= character.energy %></td>
-      <td><%= character.stamina %></td>
-      <td><%= character.mercenaries %></td>
-      <td><%= character.friends %></td>
-      <td><%= character.fights %></td>
-      <td><%= character.missions_succeeded %></td>
-      <td><%= character.missions_mastered %></td>
-      <td><%= character.missions_completed %></td>
+      <% 
+        %w{
+          level 
+          total
+          basic_money
+          basic_money_max
+          vip_money
+          vip_money_max
+          attack
+          attack_max
+          defence
+          defence_max
+          health
+          health_max
+          energy
+          energy_max
+          stamina
+          stamina_max
+          fights
+          fights_max
+          missions_succeeded
+          missions_succeeded_max
+          missions_mastered
+          missions_mastered_max
+          missions_completed
+          missions_completed_max
+          mercenaries
+          friends
+        }.each do |attr| %>
+        <td><%= character.send(attr) %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
