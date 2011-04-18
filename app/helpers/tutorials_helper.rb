@@ -57,7 +57,7 @@ module TutorialsHelper
     
     append_buttons(options)
     
-    "$.showTutorialDialog(#{options.to_json});".html_safe
+    "Tutorial.showDialog(#{options.to_json});".html_safe
   end
   
   def tip_on(target, options = {})
@@ -66,24 +66,24 @@ module TutorialsHelper
     
     append_buttons(options)
     
-    "$('#{target}').tutorialTip(#{options.to_json});".html_safe
+    "$('#{target}').tutorial('tip', #{options.to_json});".html_safe
   end
   
   def spot_on(target)
-    "$('#{target}').tutorialSpot();".html_safe
+    "$('#{target}').tutorial('spot');".html_safe
   end
   
   def click_trigger(target, options = {})
     options[:redirector_url] = update_step_tutorials_path unless @evented_step
-    "$('#{target}').tutorialClickTarget(#{options.to_json});".html_safe
+    "$('#{target}').tutorial('clickTarget', #{options.to_json});".html_safe
   end
   
   def make_responsible(target)
-    "$('#{target}').tutorialResponsible();".html_safe
+    "$('#{target}').tutorial('responsible');".html_safe
   end
   
   def make_visible(target)
-    "$('#{target}').tutorialVisible();".html_safe
+    "$('#{target}').tutorial('visible');".html_safe
   end
   
   def goto_main_menu_item(item_name, tip_options = {})
@@ -99,7 +99,7 @@ module TutorialsHelper
     if final_step?
       func_options = {
         :url => toggle_block_user_path(current_user, :block => 'tutorial'),
-        :before => "tutorialHide()"
+        :before => "Tutorial.hide()"
       }
     else
       func_options = {
@@ -120,7 +120,7 @@ module TutorialsHelper
       
       step_actions = capture(options, &block)
       
-      dom_ready("step(#{wrap_to_function(step_actions)}, #{options.to_json})")
+      dom_ready("Tutorial.step(#{wrap_to_function(step_actions)}, #{options.to_json})")
     end
   end
   

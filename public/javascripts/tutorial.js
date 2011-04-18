@@ -1,225 +1,264 @@
-/*
- * See http://craigsworks.com/projects/qtip2/docs for documentation about qTip2 plugin.
- */
+/**
+ * Tutorial module
+ * 
+ * Provides Tutorial class and adds some methods to $.fn
+ */ 
 
-/*
-* Makes target object responsible in tutorial layout 
-*/
-$.fn.tutorialResponsible = function() {
-  $(this).addClass('tutorialVisible');
-};
-
-
-/** 
- * Make some element visible, but not responsible
- */
-$.fn.tutorialVisible = function() {
-  var offset = $(this).offset();
+var Tutorial = (function(){
   
-  var visibleBlock = $('<div></div>').addClass('visibleBlock');
-  $('#tutorial_overlay').append(visibleBlock);
+  tutorial = {};
   
-  visibleBlock.css({
-    display: 'none',
-    left: offset.left, 
-    top: offset.top,
-    width: $(this).outerWidth(),
-    height: $(this).outerHeight()
-  });
-  visibleBlock.fadeIn('slow');
-};
-
-
-/*
- * Makes target object visible and responsible + binds trigger 
- * to change current tutorial step if user click on object
- */
-$.fn.tutorialClickTarget = function(options) {
-  
-  $(this).tutorialResponsible();
-  $(this).addClass('tutorialScrollTarget');
-  
-  if (options['redirector_url']) {
-    
-    // change href param in <a> tag
-    var originalHref = encodeURIComponent($(this).attr('href'));
-    // TODO: this is very simple link generation and don't consider link params
-    var changedHref = options['redirector_url'] + '?redirect_to=' +  originalHref;
-    $(this).attr('href', changedHref);
-    
-    $(this).bind('click', function(){
-      // prevent double click
-      $(this).removeClass('tutorialVisible');
-    });
-    
-  }
-  
-};
-
-/*
- * Show spot circle on center of object 
- */
-$.fn.tutorialSpot = function() {
-  var spot = $('<div></div>').addClass('spot tutorialScrollTarget');
-  $('#tutorial_overlay').append(spot);
-  var left = $(this).offset().left + $(this).outerWidth() / 2 - spot.width() / 2;
-  var top = $(this).offset().top + $(this).outerHeight() / 2 - spot.height() / 2;
-  spot.css({
-    display: 'none',
-    left: left, 
-    top: top 
-  });
-  spot.fadeIn('slow');
-};
-
-
-/* 
- * Show tip on target object.
- * You may pass qTip options by @options parameter
- */
-$.fn.tutorialTip = function(options) {
-  var defaultOptions = {
-   position: {
-    at: 'bottom center',
-    my: 'top center'
-   },
-   show: {
-     event: false, 
-     ready: true,
+  var fnMethods = {
+    /*
+    * Makes target object responsible(clickable) in tutorial layout 
+    */
+    responsible: function() {
+      $(this).addClass('tutorialVisible');
     },
-    hide: false,
-    style: {
-      classes: 'ui-tooltip-youtube'
+    
+    /** 
+     * Make some element visible(with white transparency), but not responsible.
+     */
+    visible: function() {
+      
+      var offset = $(this).offset();
+
+      var visibleBlock = $('<div></div>').addClass('visibleBlock');
+      $('#tutorial_overlay').append(visibleBlock);
+      
+      visibleBlock.css({
+        display: 'none',
+        left: offset.left, 
+        top: offset.top,
+        width: $(this).outerWidth(),
+        height: $(this).outerHeight()
+      });
+      visibleBlock.fadeIn('slow');
+    },
+    
+    /*
+     * Makes target object visible and responsible + binds trigger 
+     * to change current tutorial step if user click on object
+     */
+    clickTarget: function(options) {
+      
+      $(this).tutorial('responsible');
+      $(this).addClass('tutorialScrollTarget');
+      
+      if (options['redirector_url']) {
+        
+        // change href param in <a> tag
+        var originalHref = encodeURIComponent($(this).attr('href'));
+        // TODO: this is very simple link generation and don't consider link params
+        var changedHref = options['redirector_url'] + '?redirect_to=' +  originalHref;
+        $(this).attr('href', changedHref);
+        
+        $(this).bind('click', function(){
+          // prevent double click
+          $(this).removeClass('tutorialVisible');
+        });
+        
+      }
+    },
+    
+    
+    /*
+     * Show spot circle on center of object 
+     */
+    spot: function() {
+      var spot = $('<div></div>').addClass('spot tutorialScrollTarget');
+      $('#tutorial_overlay').append(spot);
+      var left = $(this).offset().left + $(this).outerWidth() / 2 - spot.width() / 2;
+      var top = $(this).offset().top + $(this).outerHeight() / 2 - spot.height() / 2;
+      spot.css({
+        display: 'none',
+        left: left, 
+        top: top 
+      });
+      spot.fadeIn('slow'); 
+    },
+    
+    
+    tip: function(options) {
+      var defaultOptions = {
+        position: {
+          at: 'bottom center',
+          my: 'top center'
+         },
+       show: {
+         event: false, 
+         ready: true,
+        },
+        hide: false,
+        style: {
+          classes: 'ui-tooltip-youtube'
+        }
+      };
+      
+      // merge options 
+      $.extend(true, defaultOptions, options);
+      
+      $(this).qtip(defaultOptions);
+    }
+    
+    
+  };
+  
+  
+  $.fn.tutorial = function(method) {
+    // Method calling logic
+    if ( fnMethods[method] ) {
+      return fnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else {
+      $.error( 'Method ' +  method + ' does not exist on jQuery.tutorial' );
     }
   };
   
-  // merge options 
-  $.extend(true, defaultOptions, options);
   
-  $(this).qtip(defaultOptions);
-};
-
-
-/*
- * Show tutorial dialog box. It's create by qTip.
- */
-$.showTutorialDialog = function(options) {
-  var defaultOptions = {
-    position: {
-      target: $("#header"),
-      at: 'center',
-      my: 'center'
+  // add functions to module
+  $.extend(tutorial, {
+    
+    /*
+     * Clear tutorial tips, dialog box and old javascript triggers.
+     * This actually after ajax update.
+     */
+    clearEffects: function() {
+      $("#tutorial_overlay").empty();
+    
+      $(".tutorialScrollTarget").removeClass("tutorialScrollTarget");
+      $(".tutorialVisible").removeClass("tutorialVisible");
+      
+      $(".qtip").qtip("destroy");
     },
-    show: {
-       event: false, 
-       ready: true,
+    
+    /**
+     * Fully hide tutorial
+     */
+    hide: function() {
+      Tutorial.clearEffects();
+      $('#tutorial').hide();
     },
-    hide: false, 
-    style: {
-      classes: 'ui-tooltip-youtube'
-    }
-  };
-  
-  // merge options 
-  $.extend(true, defaultOptions, options);
- 
-  $(document.body).qtip(defaultOptions);
-};
-
-/*
- * Clear tutorial tips, dialog box and old javascript triggers.
- * This actually after ajax update.
- */
-function tutorialClearEffects() {
-  $("#tutorial_overlay").empty();
-  
-  $(".tutorialScrollTarget").removeClass("tutorialScrollTarget");
-  $(".tutorialVisible").removeClass("tutorialVisible");
-  
-  $(".qtip").qtip("destroy");
-};
-
-function tutorialHide() {
-  tutorialClearEffects();
-  $('#tutorial').hide();
-};
-
-function tutorialPrepareDialog() {
-  // move dialog box after tutorial box
-  var newDialogTop =  $('#tutorial').offset().top + $('#tutorial').height() + 25;
-  $('#dialog').offset({ top: newDialogTop });
-  $('#dialog').tutorialResponsible();
-}
-
-
-
-function tutorialAllowUpgradeDialog() {
-  
-  if ($("#level_up_notification").is(":visible")) {
     
-    tutorialPrepareDialog();
+    /**
+     * Move dialog after tutorial step block and make it responsible for user interaction.
+     */
+    prepareDialog: function() {
+      // move dialog box after tutorial box
+      var newDialogTop =  $('#tutorial').offset().top + $('#tutorial').height() + 25;
+      $('#dialog').offset({ top: newDialogTop });
+      $('#dialog').tutorial('responsible');
+    },
     
-    $(document).unbind('character.upgrade_dialog.tutorial')
-      .bind('character.upgrade_dialog.tutorial', function() {
-        $("#dialog #upgrade_list .points a").hide();
-        tutorialPrepareDialog();
-      });
+    /**
+     * Allow to appear character upgrade dialog. Wait while it closed and
+     * triggers next tutorial step
+     */
+    allowUpgradeDialog: function() {
+      
+       if ($("#level_up_notification").is(":visible")) {
     
-    $(document).unbind('character.upgrade_complete.tutorial')
-      .bind('character.upgrade_complete.tutorial', function() {
-        $(document).trigger('close.dialog');
-      });
-    
-    $(document).unbind('close.dialog.tutorial')
-      .bind('close.dialog.tutorial', function() {
-        // if dialog was closed, we show our tutorial step
+        Tutorial.prepareDialog();
+        
+        $(document).unbind('character.upgrade_dialog.tutorial')
+          .bind('character.upgrade_dialog.tutorial', function() {
+            $("#dialog #upgrade_list .points a").hide();
+            Tutorial.prepareDialog();
+          });
+        
+        $(document).unbind('character.upgrade_complete.tutorial')
+          .bind('character.upgrade_complete.tutorial', function() {
+            $(document).trigger('close.dialog');
+          });
+        
+        $(document).unbind('close.dialog.tutorial')
+          .bind('close.dialog.tutorial', function() {
+            // if dialog was closed, we show our tutorial step
+            $(document).trigger('tutorial.show');
+          });
+            
+      } else {
         $(document).trigger('tutorial.show');
+      }
+    },
+    
+    /**
+     * Execute tutorial step actions
+     * 
+     * @stepActions - function which contains tutorial step actions
+     * @options['change_event'] - event name, which triggers next tutorial step
+     * @options['control_upgrade_dialog'] - true/false - close or not popup upgrade character dialogs.
+     */
+    step: function(stepActions, options) {
+      options = options || {};
+  
+      $(document).unbind('tutorial.show').bind('tutorial.show', function (event){
+        
+        stepActions();
+        
+        // scroll browser to target object
+        if ($('.tutorialScrollTarget').is(':visible')) 
+            $.scrollTo('.tutorialScrollTarget');
       });
         
-  } else {
-    $(document).trigger('tutorial.show');
-  }
-}
-
-function step(stepActions, options) {
-  options = options || {};
+      if (options['change_event']) {
+        Tutorial.ajaxStep(options['change_event'], options);
+      }
+      
+      if (options['control_upgrade_dialog']) {
+        Tutorial.allowUpgradeDialog();
+      } else {
+        $(document).trigger('tutorial.show');
+      }
+      
+    },
+    
+    /*
+     * Show actions for ajax tutorial step.
+     * 
+     * @changeEvent - executes tutorial step after this event
+     * @options['control_upgrade_dialog'] - allow to appear character upgrade dialog. 
+     *                                      Tutorial step shows after dialog close.
+     */
+    ajaxStep: function(changeEvent, options) {
+      changeEvent += '.tutorial';
   
-  $(document).unbind('tutorial.show').bind('tutorial.show', function (event){
+      $(document).unbind(changeEvent).bind(changeEvent, function(event) {
+        Tutorial.clearEffects();
+        // fire loading next tutorial step
+        $(document).trigger('tutorial.next_step');
+      });
+    },
     
-    stepActions();
     
-    // scroll browser to target object
-    // TODO: not work if scroll target appears not immediately (fadeIn effect for example)
-    if ($('.tutorialScrollTarget').is(':visible')) 
-      $.scrollTo('.tutorialScrollTarget');
+    /**
+     *  Show tutorial dialog box. It's create by qTip2.
+     */
+    showDialog: function(options) {
+      var defaultOptions = {
+        position: {
+          target: $("#header"),
+          at: 'center',
+          my: 'center'
+        },
+        show: {
+           event: false, 
+           ready: true,
+        },
+        hide: false, 
+        style: {
+          classes: 'ui-tooltip-youtube'
+        }
+      };
+      
+      // merge options 
+      $.extend(true, defaultOptions, options);
+     
+      $(document.body).qtip(defaultOptions);
+    }
+    
+    
+    
   });
   
-  if (options['change_event']) {
-    ajaxStep(options['change_event'], options);
-  }
-  
-  if (options['control_upgrade_dialog']) {
-    tutorialAllowUpgradeDialog();
-  } else {
-    $(document).trigger('tutorial.show');
-  }
-}
-
-/*
- * Show actions for ajax tutorial step.
- * Waits for @event and executes after it.
- *
- * @options['control_upgrade_dialog'] - allow to appear character upgrade dialog. 
- *                                      Tutorial step shows after dialog close.
- */
-function ajaxStep(changeEvent, options) {
-  changeEvent += '.tutorial';
-  
-  $(document).unbind(changeEvent).bind(changeEvent, function(event) {
-    
-    tutorialClearEffects();
-    // fire loading next tutorial step
-    $(document).trigger('tutorial.next_step');
-  });
-}
-
+  return tutorial;
+}());

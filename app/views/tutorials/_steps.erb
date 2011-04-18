@@ -34,7 +34,7 @@
 <% step :first_level_up, :control_upgrade_dialog => false, :change_event => 'afterReveal.dialog' do %>
 
   $('#dialog').find('.close, a.continue, .disable_notification').hide();
-  tutorialPrepareDialog();
+  Tutorial.prepareDialog();
   
   <%= click_trigger("#dialog .buttons a.upgrade") %>
   <%= tip_on("#dialog .buttons a.upgrade") %>
@@ -44,7 +44,7 @@
 <% step :first_upgrade_character, :control_upgrade_dialog => false, :change_event => 'character.upgrade_complete' do %>
 
   $('#dialog').find('.close, a.continue, .disable_notification, .buy_more').hide();
-  tutorialPrepareDialog();
+  Tutorial.prepareDialog();
   
   <%= tip_on("#dialog #upgrade_list",
         :position => {
@@ -153,7 +153,7 @@
 
 <% step :monster_die, :change_event => 'close.dialog.tutorial' do %>
   
-  tutorialPrepareDialog();
+  Tutorial.prepareDialog();
   
 <% end %>
   
