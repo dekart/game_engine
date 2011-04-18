@@ -83,10 +83,10 @@
     tutorialPrepareDialog();
     
     <%= tip_on("#dialog #upgrade_list",
-        :position => {
-          :at => 'right middle',
-          :my => 'left middle'
-        }
+          :position => {
+            :at => 'right middle',
+            :my => 'left middle'
+          }
        ) %>
         
     $(document).bind('character.upgrade_complete', function() {
@@ -108,10 +108,10 @@
     <%= make_responsible("#item_list .item:first") %>
     <%= click_trigger("#item_list .item:first a.buy") %>
     <%= tip_on("#item_list .item:first a.buy", 
-        :position => {
-          :at => 'leftBottom',
-          :my => 'rightTop'
-        }
+          :position => {
+            :at => 'leftBottom',
+            :my => 'rightTop'
+          }
        ) %>
   <% end %>
     
@@ -135,8 +135,12 @@
   
     <%= spot_on("#placements > .placement > .inventory") %>
     <%= tip_on("#placements > .placement > .inventory", 
-        :buttons => next_step_button
-      ) %>
+          :buttons => next_step_button,
+          :position => {
+            :at => 'topMiddle',
+            :my => 'bottomMiddle'
+          }
+        ) %>
     
   <% end %>
   
@@ -151,10 +155,10 @@
     <%= make_visible("#available_monsters .monster:first") %>
     <%= click_trigger("#available_monsters .monster:first a.attack") %>
     <%= tip_on("#available_monsters .monster:first a.attack",
-        :position => {
-          :at => 'rightMiddle',
-          :my => 'leftMiddle'
-        }
+          :position => {
+            :at => 'rightMiddle',
+            :my => 'leftMiddle'
+          }
        ) %>
        
   <% end %>
@@ -170,13 +174,8 @@
   <% step :fight_with_monster_until_he_live, :change_event => 'result.received' do %>
   
     <%= make_visible("#monster") %>
-    <%= tip_on("#monster .health",
-        :position => {
-          :at => 'topMiddle',
-          :my => 'bottomMiddle'
-        }
-       ) %>
     <%= click_trigger("#monster a.attack") %>
+    <%= tip_on("#monster a.attack") %>
     
   <% end %>
   
@@ -203,10 +202,10 @@
   <% step :attack_other_player, :change_event => 'result.received' do %>
   
     <%= tip_on("#victim_list .character:first a.attack",
-        :position => {
-          :at => 'topMiddle',
-          :my => 'bottomMiddle'
-        }
+          :position => {
+            :at => 'topLeft',
+            :my => 'bottomRight'
+          }
        ) %>
     <%= make_visible("#victim_list .character:first") %>
     <%= click_trigger("#victim_list .character:first a.attack") %>
@@ -217,11 +216,11 @@
   
     <%= make_visible("#result") %>
     <%= tip_on("#result",
-        :position => {
-          :at => 'topMiddle',
-          :my => 'bottomMiddle'
-        },
-        :buttons => next_step_button
+          :position => {
+            :at => 'topMiddle',
+            :my => 'bottomMiddle'
+          },
+          :buttons => next_step_button
        ) %>
        
   <% end %>
@@ -279,7 +278,12 @@
   <% step :finish, :change_event => 'qtip.dialog.close' do %>
   
     <%= tutorial_dialog(
-          :buttons => next_step_button
+          :buttons => [
+            button_to_function(escape_javascript(t_step("goto_missions_button_value")), 
+              :onclick => "window.location.href='#{mission_groups_url}'"
+            ), 
+            next_step_button
+          ]
         ) %>
     
   <% end %>

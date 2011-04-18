@@ -28,11 +28,10 @@ module TutorialsHelper
     current_user.tutorial_step.to_sym 
   end
   
-  def next_step_button(value = t_step("close_button_value"))
-    # TODO: onclick event name
-    button_to_function(escape_javascript(value), 
-      :onclick => '$(document).trigger("qtip.dialog.close")'
-    )
+  def next_step_button(value = t_step("close_button_value"), options = {})
+    options[:onclick] ||= '$(document).trigger("qtip.dialog.close")' 
+    
+    button_to_function(escape_javascript(value), options)
   end
   
   def append_buttons(options = {})
@@ -43,7 +42,7 @@ module TutorialsHelper
       end
       
       options[:content][:text] ||= ""
-      options[:content][:text] << content_tag(:div, buttons, :class => 'buttons')
+      options[:content][:text] << content_tag(:div, buttons.html_safe, :class => 'buttons')
     end
   end
   

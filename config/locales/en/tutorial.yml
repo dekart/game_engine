@@ -90,4 +90,5 @@ en:
       finish:
         title: "Finish"
         dialog_text: "Thank you"
-        close_button_value: "Ok"
+        goto_missions_button_value: "Go to missions"
+        close_button_value: "Stay here"
