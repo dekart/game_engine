@@ -30,8 +30,8 @@ var Tutorial = (function(){
         display: 'none',
         left: offset.left, 
         top: offset.top,
-        width: $(this).outerWidth(),
-        height: $(this).outerHeight()
+        width: $(this).innerWidth(),
+        height: $(this).innerHeight()
       });
       visibleBlock.fadeIn('slow');
     },

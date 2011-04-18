@@ -229,13 +229,13 @@
 <% step :spend_gems, :change_event => 'qtip.dialog.close' do %>
 
   <%= tip_on("#current_vip_money", 
-      :position => {
-        :at => 'topMiddle',
-        :my => 'bottomMiddle'
-      },
-      :buttons => next_step_button
-     ) %>
-  <%= make_visible("#premia") %>
+        :position => {
+          :at => 'topMiddle',
+          :my => 'bottomMiddle'
+        },
+        :buttons => next_step_button
+      ) %>
+  <%= make_visible("#current_vip_money") %>
      
 <% end %>
 
