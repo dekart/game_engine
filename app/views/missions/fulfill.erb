@@ -1,4 +1,11 @@
 <% result_for(:mission) do |builder| %>
+
+  <% builder.on_ready do %>
+    var mission = $('#<%= dom_id(@mission) %>');
+
+    mission.replaceWith('<%= escape_javascript(render('mission', :mission => @mission, :level => @result.level, :rank => @result.level_rank)) %>');
+  <% end %>
+
   <% if @result.saved? %>
     <% if @result.level_rank.just_completed? %>
       <%= builder.render("missions/fulfill/completed",

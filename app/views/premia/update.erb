@@ -6,6 +6,11 @@
   <% else %>
     <% builder.fail do %>
       <%= flash[:error] %>
+      <p>
+        <%= t(".premium.text", 
+                :premium_page => link_to(t(".premium.page"), premium_path(:anchor => "get_more_vip"))
+             ).html_safe %>
+      </p>
     <% end %>
   <% end %>
 

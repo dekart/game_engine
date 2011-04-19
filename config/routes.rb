@@ -227,7 +227,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :promotions, :only => :show
 
-  map.resource :premium, :member => {:change_name => :get}
+  map.resource :premium, 
+    :member => {
+      :change_name => :get
+    },
+    :collection => {
+      :refill_dialog => :post
+    }
 
   map.resource :rating, :member => {:global => :any}
 

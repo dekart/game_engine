@@ -1,8 +1,13 @@
 <% requirement(requirement.name, false) do %>
   <% if current_character.stamina_points >= requirement.value %>
     <div class="buttons">
-      <%= link_to(button(:refill), premium_path,
-            :class => "premium button"
+     <%= link_to_remote(button(:refill), 
+            :url    => refill_dialog_premium_path(
+              :type => :refill_stamina, 
+              :vip_money => Setting.i(:premium_stamina_price)
+            ),
+            :update => :ajax,
+            :html   => {:class => "premium button"}
           ) %>
     </div>
 

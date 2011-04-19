@@ -20,10 +20,6 @@
 <%= builder.render "missions/fulfill/payouts", :mission => mission, :result => result %>
 
 <% builder.on_ready do %>
-  var mission = $('#<%= dom_id(mission) %>');
-  
-  mission.replaceWith('<%= escape_javascript(render('mission', :mission => mission, :level => result.level, :rank => result.level_rank)) %>');
-  
   <%= ga_track_event('Missions',
         result.level_rank.completed? ? 'Repeat Success' : 'Success', 
         "#{mission.name} - Level #{result.level.position}", 

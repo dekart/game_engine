@@ -1,0 +1,25 @@
+<% dialog do %>
+
+  <div id="refill_dialog">
+  
+    <div id="refill_content">
+      <%= t(".#{@type}.text") %>
+    </div>
+    
+    <div class="requirements">
+      <%= attribute_requirement(:vip_money, @vip_money) %>
+    </div>
+    
+    <div class="buttons">
+      
+      <%= link_to_remote(button(:refill), 
+            :url    => premium_path(:type => @type),
+            :method => :put,
+            :update => :result,
+            :html   => {:class => "premium button", :onclick => "$(document).trigger('close.dialog')"}
+          ) %>
+          
+    </div>
+  </div>
+  
+<% end %>

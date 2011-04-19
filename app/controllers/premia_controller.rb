@@ -38,4 +38,10 @@ class PremiaController < ApplicationController
   def change_name
     render :layout => 'ajax'
   end
+  
+  def refill_dialog
+    @type = params[:type].to_sym
+    @vip_money = params[:vip_money].to_i
+    render :layout => 'ajax'
+  end
 end

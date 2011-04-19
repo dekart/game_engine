@@ -52,3 +52,17 @@ en:
           reset_attributes: "You successfully reseted all attributes!"
           change_name: "You successafully changed your name"
         failure: "You don't have enough Gems"
+      premium:
+        text: "You can buy gems in the %{premium_page}."
+        page: "Gem Market"
+    refill_dialog:
+      buttons:
+        refill: "Refill"
+        cancel: "Cancel"
+      refill_health:
+        text: "Are you shure to refill your health? It costs:"
+      refill_energy:
+        text: "Are you shure to refill your energy? It costs:"
+      refill_stamina:
+        text: "Are you shure to refill your stamina? It costs:"
+      
