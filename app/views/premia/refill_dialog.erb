@@ -8,7 +8,7 @@
         <% if enough_vip_money %>
           <%= t(".#{@type}.text") %>
         <% else %>
-          <%= t(".dont_have_gems.text").html_safe %>
+          <%= t(".dont_have_gems").html_safe %>
         <% end %>
       </div>
       
@@ -16,20 +16,20 @@
         <%= attribute_requirement(:vip_money, @vip_money) %>
       </div>
       
-      <% if enough_vip_money %>
-        <div class="buttons">
+      <div class="buttons">
+        <% if enough_vip_money %>
           <%= link_to_remote(button(:refill), 
                 :url    => premium_path(:type => @type),
                 :method => :put,
                 :update => :result,
                 :html   => {:class => "premium button", :onclick => "$(document).trigger('close.dialog')"}
               ) %>
-        </div>
-      <% else %>
-        <%= t(".dont_have_gems.link", 
-              :premium_page => link_to(t(".dont_have_gems.page"), premium_path) 
-             ).html_safe %>
-      <% end %>
+        <% else %>
+          <%= link_to(button(:gem_market), premium_path, 
+                :class => "premium button"
+              ) %>
+        <% end %>
+      </div>
   </div>
   
 <% end %>

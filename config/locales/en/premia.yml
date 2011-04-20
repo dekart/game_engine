@@ -59,15 +59,12 @@ en:
       buttons:
         refill: "Refill"
         cancel: "Cancel"
+        gem_market: "Get more gems"
       refill_health:
         text: "Are you shure to refill your health? It costs:"
       refill_energy:
         text: "Are you shure to refill your energy? It costs:"
       refill_stamina:
         text: "Are you shure to refill your stamina? It costs:"
-      dont_have_gems: 
-        text: "You don't have enough gems to refill."
-        page: "Gem Market"
-        link: "You can go to %{premium_page} and buy gems."
-        
+      dont_have_gems: "You don't have enough gems to refill."
       

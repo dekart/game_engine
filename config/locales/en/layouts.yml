@@ -29,5 +29,6 @@ en:
       premium: "Get More"
       upgrade: "Upgrade!"
       hospital: "Hospital"
+      refill: "Refill"
     tip:
       label: "Tip:"

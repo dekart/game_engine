@@ -258,6 +258,19 @@ var Character = {
     } else {
       $('#co .health .hospital').show();
     }
+    
+    if (c.ep > (c.energy_points / 2)) {
+      $('#co .energy .refill').hide();
+    } else {
+      $('#co .energy .refill').show();
+    }
+    
+    if (c.sp > (c.stamina_points / 2)) {
+      $('#co .stamina .refill').hide();
+    } else {
+      $('#co .stamina .refill').show();
+    }
+    
   },
 
   update_from_remote: function(){
