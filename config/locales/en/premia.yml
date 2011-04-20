@@ -65,4 +65,9 @@ en:
         text: "Are you shure to refill your energy? It costs:"
       refill_stamina:
         text: "Are you shure to refill your stamina? It costs:"
+      dont_have_gems: 
+        text: "You don't have enough gems to refill."
+        page: "Gem Market"
+        link: "You can go to %{premium_page} and buy gems."
+        
       

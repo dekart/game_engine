@@ -2,24 +2,34 @@
 
   <div id="refill_dialog">
   
-    <div id="refill_content">
-      <%= t(".#{@type}.text") %>
-    </div>
+    <% enough_vip_money = current_character.vip_money >= @vip_money %>
     
-    <div class="requirements">
-      <%= attribute_requirement(:vip_money, @vip_money) %>
-    </div>
-    
-    <div class="buttons">
+      <div class="text">
+        <% if enough_vip_money %>
+          <%= t(".#{@type}.text") %>
+        <% else %>
+          <%= t(".dont_have_gems.text").html_safe %>
+        <% end %>
+      </div>
       
-      <%= link_to_remote(button(:refill), 
-            :url    => premium_path(:type => @type),
-            :method => :put,
-            :update => :result,
-            :html   => {:class => "premium button", :onclick => "$(document).trigger('close.dialog')"}
-          ) %>
-          
-    </div>
+      <div class="requirements">
+        <%= attribute_requirement(:vip_money, @vip_money) %>
+      </div>
+      
+      <% if enough_vip_money %>
+        <div class="buttons">
+          <%= link_to_remote(button(:refill), 
+                :url    => premium_path(:type => @type),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => "premium button", :onclick => "$(document).trigger('close.dialog')"}
+              ) %>
+        </div>
+      <% else %>
+        <%= t(".dont_have_gems.link", 
+              :premium_page => link_to(t(".dont_have_gems.page"), premium_path) 
+             ).html_safe %>
+      <% end %>
   </div>
   
 <% end %>
