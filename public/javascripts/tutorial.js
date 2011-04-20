@@ -135,6 +135,7 @@ var Tutorial = (function(){
      * Fully hide tutorial
      */
     hide: function() {
+      $(document).unbind('tutorial');
       Tutorial.clearEffects();
       $('#tutorial').hide();
     },
