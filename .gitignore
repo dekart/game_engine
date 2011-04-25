@@ -1,6 +1,7 @@
 # IDE- and OS-specific
  
 .project
+.rvmrc
 nbproject
 *~
 .*.sw?
