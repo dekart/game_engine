@@ -56,7 +56,7 @@ describe MonsterFight do
 
   describe '#attack' do
     before do
-      @monster = Factory(:monster)
+      @monster = Factory(:monster, :monster_type => Factory(:monster_type, :experience => 1))
 
       @character = Factory(:character)
 
@@ -98,73 +98,39 @@ describe MonsterFight do
 
       @monster_fight.attack!
     end
-
-    it 'should apply damage to monster' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@monster, :hp).from(1000).to(980)
+    
+    # test monster attack and power attack
+    [
+      {:who => :@monster, :what => :hp, :from => 1000, :to => 980},
+      {:who => :@monster_fight, :what => :monster_damage, :from => nil, :to => 20},
+      {:who => :@character, :what => :hp, :from => 100, :to => 90},
+      {:who => :@monster_fight, :what => :character_damage, :from => nil, :to => 10},
+      {:who => :@character, :what => :experience, :from => 0, :to => 1},
+      {:who => :@monster_fight, :what => :experience, :from => nil, :to => 1},
+      {:who => :@character, :what => :basic_money, :from => 0, :to => 5},
+      {:who => :@monster_fight, :what => :money, :from => nil, :to => 5},
+      {:who => :@character, :what => :sp, :from => 10, :to => 9},
+      {:who => :@monster_fight, :what => :stamina, :from => nil, :to => 1},
+      {:who => :@monster_fight, :what => :damage, :from => 0, :to => 20},
+    ].each do |t|
+      
+      it "should change #{t[:who]} #{t[:what]} from #{t[:from]} to #{t[:to]}" do
+        lambda {
+          @monster_fight.attack!
+        }.should change(instance_variable_get(t[:who]), t[:what]).from(t[:from]).to(t[:to])
+      end
+      
+      from = t[:from].nil? ? 0 : t[:from]
+      power_attack_diff = (t[:to] - from) * Setting.i(:monster_fight_power_attack_factor)
+      power_attack_to = from + power_attack_diff
+      
+      it "power_attack should change #{t[:who]} #{t[:what]} from #{t[:from]} to #{power_attack_to}" do
+        lambda {
+          @monster_fight.attack!(true)
+        }.should change(instance_variable_get(t[:who]), t[:what]).from(t[:from]).to(power_attack_to)
+      end
     end
-
-    it 'should store damage dealt to monster to a variable' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@monster_fight, :monster_damage).from(nil).to(20)
-    end
-
-    it 'should apply damage to character' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@character, :hp).from(100).to(90)
-    end
-
-    it 'should store damage dealt to character to a variable' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@monster_fight, :character_damage).from(nil).to(10)
-    end
-
-    it 'should apply experience reward to character' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@character, :experience).from(0).to(5)
-    end
-
-    it 'should store experience reward to a variable' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@monster_fight, :experience).from(nil).to(5)
-    end
-
-    it 'should apply money reward to character' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@character, :basic_money).from(0).to(5)
-    end
-
-    it 'should store money reward to a variable' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@monster_fight, :money).from(nil).to(5)
-    end
-
-    it 'should take stamina from character' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@character, :sp).from(10).to(9)
-    end
-
-    it 'should store stamina spending to a variable' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@monster_fight, :stamina).from(nil).to(1)
-    end
-
-    it 'should append damage dealt to monster' do
-      lambda {
-        @monster_fight.attack!
-      }.should change(@monster_fight, :damage).from(0).to(20)
-    end
-
+    
     it 'should save monster' do
       @monster_fight.attack!
 
@@ -198,6 +164,7 @@ describe MonsterFight do
     it 'should return true' do
       @monster_fight.attack!.should be_true
     end
+    
   end
   
   describe "when checking if player dealt significant damage to monster" do

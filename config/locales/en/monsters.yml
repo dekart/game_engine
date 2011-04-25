@@ -23,6 +23,7 @@ en:
         attack: "Attack"
         invite: "Call to Arms"
         invite_request: "Ask friends to join"
+        power_attack: "Power Attack (x%{factor})"
     won:
       too_late: "It's too late to join the battle! The monster is already defeated."
       reward_collected: "The monster is defeated and the reward is collected."

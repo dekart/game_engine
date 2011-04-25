@@ -173,7 +173,7 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
     t.datetime "fighting_available_at",                          :default => '1970-01-01 05:00:00'
   end
 
-  add_index "characters", ["level"], :name => "by_level_and_fighting_time"
+  add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
@@ -712,7 +712,7 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",          :limit => 50,  :default => ""
+    t.string   "tutorial_step",                         :default => ""
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

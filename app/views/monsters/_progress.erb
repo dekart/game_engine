@@ -25,6 +25,16 @@
                 :class => "attack button"
               }
             ) %>
+        <%= link_to_remote(button(:power_attack, :factor => Setting.i(:monster_fight_power_attack_factor)),
+              :url    => monster_path(monster),
+              :method => :put,
+              :update => :result,
+              :with   => "'power_attack=1'",
+              :html   => {
+                :"data-click-once" => true,
+                :class => "attack button"
+              }
+            ) %>
         
         <%= link_to_function(button(:invite_request),
               fb_request_dialog(:monster_invite,

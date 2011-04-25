@@ -13,10 +13,11 @@ class MonsterFight < ActiveRecord::Base
   
   after_create :create_character_news
 
-  def attack!
+  # @power_attack - this is usual attack but effects multiplied by special factor
+  def attack!(power_attack = false)
     monster.expire if monster.time_remaining <= 0
     
-    if monster.progress? && character.sp > 0 && !character.weak?
+    if monster.progress? && character.sp >= stamina_limit(power_attack) && !character.weak?
       @character_damage, @monster_damage = self.class.damage_system.calculate_damage(character, monster)
 
       @experience = monster.experience
@@ -24,17 +25,10 @@ class MonsterFight < ActiveRecord::Base
 
       @stamina = 1
 
-      character.sp  -= @stamina
-
-      character.hp  -= @character_damage
-      monster.hp    -= @monster_damage
-
-      self.damage   += @monster_damage
-
-      character.experience += @experience
-
-      character.charge(- @money, 0, :monster_attack)
-
+      power_attack_effect if power_attack
+      
+      attack_actions
+      
       transaction do
         save!
         monster.save!
@@ -50,7 +44,11 @@ class MonsterFight < ActiveRecord::Base
       false
     end
   end
-
+  
+  def stamina_limit(power_attack = false)
+    power_attack ? Setting.i(:monster_fight_power_attack_factor) : 1
+  end
+  
   def collect_reward!
     return false unless reward_collectable?
 
@@ -69,8 +67,8 @@ class MonsterFight < ActiveRecord::Base
     !new_record? && monster.won? && !reward_collected? && significant_damage?
   end
 
-  def stamina_requirement
-    Requirements::StaminaPoint.new(:value => 1)
+  def stamina_requirement(power_attack = false)
+    Requirements::StaminaPoint.new(:value => stamina_limit(power_attack))
   end
 
   def repeat_fight?
@@ -114,7 +112,30 @@ class MonsterFight < ActiveRecord::Base
 
   protected
   
-  def create_character_news
-    character.news.add(:monster_fight_start, :monster_fight_id => id)
-  end
+    def attack_actions
+      character.sp  -= @stamina
+
+      character.hp  -= @character_damage
+      monster.hp    -= @monster_damage
+
+      self.damage   += @monster_damage
+
+      character.experience += @experience
+
+      character.charge(- @money, 0, :monster_attack)
+    end
+  
+    def power_attack_effect
+      power_factor = Setting.i(:monster_fight_power_attack_factor)
+      
+      @character_damage *= power_factor
+      @monster_damage *= power_factor
+      @experience *= power_factor
+      @money *= power_factor
+      @stamina *= power_factor
+    end
+  
+    def create_character_news
+      character.news.add(:monster_fight_start, :monster_fight_id => id)
+    end
 end

@@ -6,6 +6,7 @@
               :url    => monster_path(@fight.monster),
               :method => :put,
               :update => :result,
+              :with   => (@power_attack ? "'power_attack=1'" : nil),
               :html   => {
                 :"data-click-once" => true,
                 :class => "attack button"
@@ -93,9 +94,9 @@
     <% builder.on_ready do %>
       <%= ga_track_event('Monsters', 'Not Enough Health') %>
     <% end %>
-  <% elsif @fight.character.sp == 0 %>
+  <% elsif @fight.character.sp < @fight.stamina_limit(@power_attack) %>
     <%= builder.render("requirements/not_satisfied/stamina_point",
-          :requirement => @fight.stamina_requirement
+          :requirement => @fight.stamina_requirement(@power_attack)
         ) %>
 
     <% builder.on_ready do %>

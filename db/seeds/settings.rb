@@ -130,6 +130,8 @@ Setting[:monsters_enabled] ||= true
 Setting[:monsters_reward_time] ||= 24
 Setting[:monster_minimum_damage] ||= 10
 
+Setting[:monster_fight_power_attack_factor] ||= 5
+
 Setting[:notifications_friends_to_invite_delay] ||= 48
 Setting[:notifications_friends_to_invite_displayed_at] ||= Time.now
 
