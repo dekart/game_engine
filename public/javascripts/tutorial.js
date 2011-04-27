@@ -145,7 +145,7 @@ var Tutorial = (function(){
      */
     prepareDialog: function() {
       // move dialog box after tutorial box
-      var newDialogTop =  $('#tutorial').offset().top + $('#tutorial').height() + 25;
+      var newDialogTop =  $('#tutorial_progress').offset().top + $('#tutorial_progress').height() + 25;
       $('#dialog').offset({ top: newDialogTop });
       $('#dialog').tutorial('responsible');
     },
