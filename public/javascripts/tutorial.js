@@ -248,7 +248,7 @@ var Tutorial = (function(){
     showDialog: function(options) {
       var defaultOptions = {
         position: {
-          target: $("#header"),
+          target: $("#main_menu"),
           at: 'center',
           my: 'center'
         },
