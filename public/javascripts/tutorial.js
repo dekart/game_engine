@@ -33,7 +33,18 @@ var Tutorial = (function(){
         width: $(this).innerWidth(),
         height: $(this).innerHeight()
       });
+      
       visibleBlock.fadeIn('slow');
+      
+      // resize visible block, if images exists inside block
+      $(this).find("img").bind('load', {visibleObject: $(this), visibleBlock: visibleBlock}, function(e){
+        
+        e.data.visibleBlock.css({
+          width: e.data.visibleObject.innerWidth(),
+          height: e.data.visibleObject.innerHeight()
+        });
+        
+      });
     },
     
     /*
