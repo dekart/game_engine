@@ -1,0 +1,11 @@
+=opacity(!value)
+  -ms-filter "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{!value*100})"
+  filter alpha(opacity: !value*100)
+  -moz-opacity = !value
+  -khtml-opacity = !value
+  opacity = !value
+  
+=border-radius(!radius)
+  border-radius = !radius
+  -moz-border-radius = !radius
+  -webkit-border-radius = !radius
