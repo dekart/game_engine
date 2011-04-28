@@ -1,6 +1,6 @@
 namespace :app do
   desc "Cleanup old data"
-  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:gifts}
+  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:gifts app:cleanup:events}
 
   namespace :cleanup do
     def remove_data(scope, batch = 100)
@@ -75,7 +75,7 @@ namespace :app do
     
     desc "Remove old logged events"
     task :events => :environment do
-      time_limit = 3.month.ago
+      time_limit = 2.weeks.ago
 
       old_events = LoggedEvent.scoped(:conditions => ["created_at < ?", time_limit])
 

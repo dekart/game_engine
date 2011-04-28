@@ -97,7 +97,7 @@ class Property < ActiveRecord::Base
       :reference_id => self.id,
       :reference_type => "Property",
       :reference_level => self.level,
-      :basic_money => self.total_income
+      :basic_money => -self.total_income
     }
   end
 

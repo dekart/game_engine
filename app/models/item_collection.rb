@@ -57,7 +57,7 @@ class ItemCollection < ActiveRecord::Base
   end
 
   def event_data
-    {
+    data = {
       :reference_id => self.id,
       :reference_type => "Collection"
     }

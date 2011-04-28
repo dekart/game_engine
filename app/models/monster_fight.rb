@@ -103,9 +103,10 @@ class MonsterFight < ActiveRecord::Base
     {
       :reference_id => self.id,
       :reference_type => "Monster",
-      :attacker_damage => self.character_damage,
-      :victim_damage => self.monster_damage,
+      :reference_damage => -self.monster_damage,
+      :health => -self.character_damage,
       :basic_money => self.money,
+      :stamina => -self.stamina,
       :experience => self.experience
     }
   end

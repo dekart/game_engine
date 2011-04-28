@@ -3,7 +3,7 @@ class MissionsController < ApplicationController
     @mission ||= Mission.find(params[:id])
 
     @result = current_character.missions.fulfill!(@mission)
-    
+        
     if @result.success?
       EventLoggingService.log_event(:mission_fulfilled, @result)
     end

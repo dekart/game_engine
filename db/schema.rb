@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110325101816) do
+ActiveRecord::Schema.define(:version => 20110426114405) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -346,15 +346,18 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
     t.integer  "reference_level"
     t.integer  "amount"
     t.integer  "experience"
-    t.integer  "basic_money",     :limit => 8
-    t.integer  "vip_money",       :limit => 8
-    t.integer  "attacker_damage"
-    t.integer  "victim_damage"
+    t.integer  "basic_money",      :limit => 8
+    t.integer  "vip_money",        :limit => 8
     t.string   "string_value"
     t.integer  "int_value"
     t.datetime "occurred_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "health"
+    t.integer  "reference_damage"
+    t.integer  "energy"
+    t.integer  "stamina"
+    t.boolean  "export",                        :default => false
   end
 
   add_index "logged_events", ["event_type"], :name => "index_logged_events_on_event_type"
@@ -537,12 +540,11 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
 
   create_table "newsletters", :force => true do |t|
     t.string   "text"
-    t.string   "state",             :limit => 50, :default => "",    :null => false
+    t.string   "state",             :limit => 50, :default => "", :null => false
     t.integer  "last_recipient_id"
     t.integer  "delivery_job_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "send_to_new_users",               :default => false
   end
 
   create_table "notifications", :force => true do |t|
@@ -712,7 +714,7 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",                         :default => ""
+    t.string   "tutorial_step",          :limit => 50,  :default => ""
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

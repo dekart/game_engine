@@ -5,7 +5,7 @@ class EventLoggingService
       :occurred_at => Time.now
     }.merge self.new.send("#{event_type}_event_data", *args)
 
-    $redis.lpush(:logged_events, data.to_json)
+    $redis.rpush(:logged_events, data.to_json)
   end
 
   def self.get_next_batch(size)
@@ -44,19 +44,41 @@ class EventLoggingService
     }.merge character.event_data
   end
 
-  def character_fight_event_data(fight)
-    fight.attacker.event_data.merge fight.event_data
+  def character_attacked_event_data(fight)
+    fight.attacker.event_data.
+      merge(fight.attacker_event_data).
+      merge({:export => true})
+  end
+  
+  def character_under_attack_event_data(fight)
+    fight.victim.event_data.
+      merge(fight.victim_event_data).
+      merge({:export => true})
   end
 
   def item_bought_event_data(character, item, amount)
     {
       :reference_id => item.id,
       :reference_type => "Item",
-      :amount => amount
+      :string_value => item.name,
+      :amount => amount,
+      :basic_money => -item.basic_price * amount,
+      :vip_money => -item.vip_price * amount,
+      :export => true,
     }.merge character.event_data
   end
 
-  alias item_sold_event_data item_bought_event_data
+  def item_sold_event_data(character, inventory, amount)
+    {
+      :reference_id => inventory.item.id,
+      :reference_type => "Item",
+      :string_value => inventory.item.name,
+      :amount => amount,
+      :basic_money => inventory.sell_price * amount,
+      :vip_money => 0,
+      :export => true,
+    }.merge character.event_data
+  end
 
   def item_equipped_event_data(inventory, placement)
     {
@@ -83,19 +105,36 @@ class EventLoggingService
     }.merge character.event_data
   end
 
-  def collection_applied_event_data(character, collection)
-    character.event_data.merge collection.event_data
+  def collection_applied_event_data(character, result)
+    character.event_data.
+      merge(result.collection.event_data).
+      merge(payouts_event_data(result.payouts)).
+      merge({:export => true})
   end
 
   def market_item_created_event_data(market_item)
-    market_item.character.event_data.merge market_item.event_data
+    market_item.character.event_data.merge market_item.event_data(false)
   end
-
-  alias market_item_bought_event_data market_item_created_event_data
+    
   alias market_item_destroyed_event_data market_item_created_event_data
 
+  def market_item_bought_event_data(market_item, buyer)
+    buyer.event_data.
+      merge(market_item.event_data(true)).
+      merge({:export => true})
+  end
+
+  def market_item_sold_event_data(market_item)
+    market_item.character.event_data.
+      merge(market_item.event_data(false)).
+      merge({:export => true})
+  end
+
   def mission_fulfilled_event_data(result)
-    result.character.event_data.merge result.event_data
+    result.character.event_data.
+      merge(result.event_data).
+      merge(payouts_event_data(result.payouts)).
+      merge({:export => true})
   end
 
   alias mission_completed_event_data mission_fulfilled_event_data
@@ -106,20 +145,72 @@ class EventLoggingService
 
   def monster_attacked_event_data(monster_fight)
     character = monster_fight.monster.character
-    character.event_data.merge monster_fight.event_data
+    character.event_data.
+      merge(monster_fight.event_data).
+      merge({:export => true})
   end
 
   alias monster_killed_event_data monster_attacked_event_data
 
   def reward_collected_event_data(fight)
     monster = fight.monster
-    monster.character.event_data.merge monster.event_data
+    monster.character.event_data.
+      merge(monster.event_data).
+      merge(payouts_event_data(fight.payouts)).
+      merge({:export => true})
   end
 
   def property_bought_event_data(property)
-    property.character.event_data.merge property.event_data
+    property.character.event_data.
+      merge(property.event_data).
+      merge({:export => true})
   end
 
-  alias property_upgraded_event_data property_bought_event_data
-  alias property_income_collected_event_data property_bought_event_data
+  def property_upgraded_event_data(property)
+    property.character.event_data.
+      merge(property.event_data).
+      merge({:basic_money => -property.property_type.upgrade_price(property.level - 1), :export => true})
+  end
+  
+  def property_income_collected_event_data(property, payouts)
+    property.character.event_data.
+      merge(property.event_data).
+      merge(payouts_event_data(payouts)).
+      merge({:export => true})
+  end
+
+  def properties_income_collected_event_data(properties, payouts)
+    properties.first.character.event_data.
+      merge(:reference_id => properties.collect(&:id).join(','), :reference_type => "Property").
+      merge(payouts_event_data(payouts)).
+      merge({:export => true})
+  end
+  
+  def payouts_event_data(payouts)
+    if !payouts.nil?   
+      data = {:basic_money => 0, :vip_money => 0, :health => 0, :energy => 0, :stamina => 0, :experience => 0}
+      payouts.items.each do |item|
+        case
+        when item.instance_of?(Payouts::BasicMoney)
+          data[:basic_money] += (item.action == :add ? item.valuecation : -item.value)
+        when item.instance_of?(Payouts::VipMoney)
+          data[:vip_money] += (item.action == :add ? item.value : -item.value)
+        when item.instance_of?(Payouts::HealthPoint)
+          data[:health] += (item.action == :add ? item.value : -item.value)
+        when item.instance_of?(Payouts::EnergyPoint)
+          data[:energy] += (item.action == :add ? item.value : -item.value)
+        when item.instance_of?(Payouts::StaminaPoint)
+          data[:stamina] += (item.action == :add ? item.value : -item.value)
+        when item.instance_of?(Payouts::Experience)
+          data[:experience] += (item.action == :add ? item.value : -item.value)
+        when item.instance_of?(Payouts::Item)
+          data[:string_value] = item.item.name if item.action == :add
+        end
+      end
+      
+      data.reject{|d,v| v == 0}
+    else
+      {}
+    end
+  end
 end

@@ -80,10 +80,13 @@ class MarketItem < ActiveRecord::Base
     end
   end
 
-  def event_data
+  def event_data(bought)
     {
       :reference_id => self.id,
       :reference_type => "MarketItem",
+      :string_value => self.name,
+      :basic_money => bought ? -self.basic_price : self.basic_price,
+      :vip_money => bought ? -self.vip_price : self.basic_price,
       :amount => self.amount
     }
   end

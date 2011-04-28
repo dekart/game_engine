@@ -30,7 +30,8 @@ class MarketItemsController < ApplicationController
     @item.buy!(current_character)
 
     if @item.errors.empty?
-      EventLoggingService.log_event(:market_item_bought, @item)
+      EventLoggingService.log_event(:market_item_bought, @item, current_character)
+      EventLoggingService.log_event(:market_item_sold, @item)
     end
 
     render :buy, :layout => "ajax"

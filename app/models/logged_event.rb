@@ -21,4 +21,19 @@ class LoggedEvent < ActiveRecord::Base
   rescue NameError
     reference_type
   end
+  
+  def csv_line
+    [
+      self.occurred_at.strftime("%d-%m-%Y %H:%M"), 
+      self.character_id, 
+      self.basic_money || 0, 
+      self.vip_money || 0, 
+      self.health || 0, 
+      self.energy || 0, 
+      self.stamina || 0, 
+      self.experience || 0, 
+      self.string_value, 
+      self.event_type
+    ].join(',')
+  end
 end
