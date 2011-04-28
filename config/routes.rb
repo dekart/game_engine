@@ -42,6 +42,11 @@ ActionController::Routing::Routes.draw do |map|
           :move => :put
         }
     end
+    
+    admin.resources :messages,
+      :member => {
+        :publish => :put
+      }
 
     admin.resources :bosses,
       :member => {

@@ -1,0 +1,9 @@
+<% dialog :id => :information do |d| %>
+  <h2><%= t(".title") %></h2>
+
+  <p class="text">
+    <%= notification.message.content %>
+  </p>
+
+  <%= render("notifications/disable", :notification => notification) %>
+<% end %>

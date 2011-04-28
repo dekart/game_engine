@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110426114405) do
+ActiveRecord::Schema.define(:version => 20110428061612) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -373,6 +373,16 @@ ActiveRecord::Schema.define(:version => 20110426114405) do
   end
 
   add_index "market_items", ["character_id"], :name => "index_market_items_on_character_id"
+
+  create_table "messages", :force => true do |t|
+    t.string   "content"
+    t.integer  "min_level"
+    t.integer  "amount_sent",                     :default => 0
+    t.integer  "last_recipient_id"
+    t.string   "state",             :limit => 50, :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "mission_group_ranks", :force => true do |t|
     t.integer "character_id",     :null => false
