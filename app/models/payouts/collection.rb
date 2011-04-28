@@ -52,7 +52,7 @@ module Payouts
     end
 
     def to_s
-      items.collect{|i| i.to_s}.join(", ")
+      items.collect{|i| i.to_s }.join("; ")
     end
   end
 end

@@ -42,6 +42,6 @@ class Skin < ActiveRecord::Base
   end
 
   def sass_path
-    Rails.root.join("public", "stylesheets", "sass", "skins", "#{name.parameterize}.sass")
+    Rails.root.join("public", "stylesheets", "sass", "skins", "#{name.parameterize}.sass").to_s
   end
 end

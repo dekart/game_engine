@@ -7,5 +7,15 @@ module Payouts
         character.energy += @value
       end
     end
+    
+    def to_s
+      "%s: %d %s (%d%% %s)" % [
+        apply_on_label,
+        value,
+        Character.human_attribute_name("energy"),
+        chance,
+        action
+      ]
+    end
   end
 end

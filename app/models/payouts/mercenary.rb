@@ -17,5 +17,15 @@ module Payouts
         end
       end
     end
+    
+    def to_s
+      "%s: %d %s (%d%% %s)" % [
+        apply_on_label,
+        value,
+        Character.human_attribute_name("mercenaries"),
+        chance,
+        action
+      ]
+    end
   end
 end

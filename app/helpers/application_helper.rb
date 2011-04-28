@@ -1,5 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  MAINTENANCE_SETTINGS_PATH = Rails.root.join("public", "system", "maintenance.yml").to_s
+  
   def include_jquery_from_google(version = "1.4.4")
     javascript_include_tag("http://ajax.googleapis.com/ajax/libs/jquery/#{version}/jquery.min.js") +
     javascript_tag("if(typeof jQuery == 'undefined'){document.write(unescape(\"%3Cscript src='#{javascript_path("jquery")}' type='text/javascript'%3E%3C/script%3E\"))}")
@@ -94,9 +96,7 @@ module ApplicationHelper
   end
 
   def maintenance_warning
-    settings_path = Rails.root.join("public", "system", "maintenance.yml")
-
-    if File.file?(settings_path)
+    if File.file?(MAINTENANCE_SETTINGS_PATH)
       settings = YAML.load(File.read(settings_path))
 
       yield(settings) if settings[:start] > Time.now
