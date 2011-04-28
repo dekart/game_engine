@@ -3,7 +3,7 @@ module Admin::RequirementsHelper
     result = ""
 
     requirements.each do |requirement|
-      result << render("admin/requirements/preview/#{requirement.name}", :requirement => requirement)
+      result << render("admin/requirements/preview", :requirement => requirement)
     end
 
     result.html_safe

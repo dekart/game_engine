@@ -9,7 +9,13 @@ module Payouts
     end
 
     def to_s
-      I18n.t("payouts.basic_money.value", :value => @value)
+      "%s: %d %s (%d%% %s)" % [
+        apply_on_label,
+        value,
+        Character.human_attribute_name("basic_money"),
+        chance,
+        action
+      ]
     end
   end
 end

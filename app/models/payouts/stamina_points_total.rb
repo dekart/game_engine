@@ -7,5 +7,15 @@ module Payouts
         character.stamina += @value
       end
     end
+    
+    def to_s
+      "%s: %d %s (%d%% %s)" % [
+        apply_on_label,
+        value,
+        Character.human_attribute_name("stamina"),
+        chance,
+        action
+      ]
+    end
   end
 end

@@ -1,5 +1,7 @@
 module Requirements
   class Item < Base
+    delegate :state, :to => :item
+    
     def value=(value)
       @value = value.is_a?(::Item) ? value.id : value.to_i
     end
@@ -28,6 +30,13 @@ module Requirements
       else
         amount
       end
+    end
+    
+    def to_s
+      I18n.t('requirements.item.text', 
+        :name   => item.try(:name) || I18n.t("requirements.item.missing"), 
+        :amount => amount
+      )
     end
   end
 end

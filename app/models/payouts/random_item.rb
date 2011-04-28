@@ -27,6 +27,26 @@ module Payouts
     def shift_item_set=(value)
       @shift_item_set = (value.to_i == 1)
     end
+    
+    def to_s
+      if item_set
+        "%s: Random Item from '%s' (%d%% %s)" % [
+          apply_on_label,
+          item_set.name,
+          chance,
+          action
+        ]
+      else
+        "%s: Random Item %s %s %s (%d%% %s)" % [
+          apply_on_label,
+          availability || "any",
+          value,
+          allow_vip ? "vip" : "basic",
+          chance,
+          action
+        ]
+      end 
+    end
 
     protected
 
