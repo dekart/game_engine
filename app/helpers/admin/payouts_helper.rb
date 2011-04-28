@@ -3,7 +3,7 @@ module Admin::PayoutsHelper
     result = ""
 
     payouts.each do |payout|
-      result << render("admin/payouts/preview/#{payout.name}", :payout => payout)
+      result << render("admin/payouts/preview", :payout => payout)
     end
 
     result.html_safe

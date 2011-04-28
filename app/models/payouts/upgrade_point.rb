@@ -8,5 +8,15 @@ module Payouts
         character.points += @value
       end
     end
+    
+    def to_s
+      "%s: %d %s (%d%% %s)" % [
+        apply_on_label,
+        value,
+        Character.human_attribute_name("points"),
+        chance,
+        action
+      ]
+    end
   end
 end
