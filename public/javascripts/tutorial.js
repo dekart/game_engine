@@ -33,7 +33,18 @@ var Tutorial = (function(){
         width: $(this).innerWidth(),
         height: $(this).innerHeight()
       });
+      
       visibleBlock.fadeIn('slow');
+      
+      // resize visible block, if images exists inside block
+      $(this).find("img").bind('load', {visibleObject: $(this), visibleBlock: visibleBlock}, function(e){
+        
+        e.data.visibleBlock.css({
+          width: e.data.visibleObject.innerWidth(),
+          height: e.data.visibleObject.innerHeight()
+        });
+        
+      });
     },
     
     /*
@@ -145,7 +156,7 @@ var Tutorial = (function(){
      */
     prepareDialog: function() {
       // move dialog box after tutorial box
-      var newDialogTop =  $('#tutorial').offset().top + $('#tutorial').height() + 25;
+      var newDialogTop =  $('#tutorial_progress').offset().top + $('#tutorial_progress').height() + 25;
       $('#dialog').offset({ top: newDialogTop });
       $('#dialog').tutorial('responsible');
     },
@@ -237,7 +248,7 @@ var Tutorial = (function(){
     showDialog: function(options) {
       var defaultOptions = {
         position: {
-          target: $("#header"),
+          target: $("#main_menu"),
           at: 'center',
           my: 'center'
         },

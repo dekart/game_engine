@@ -4,13 +4,8 @@
     /* set it to fill the whil screen */
     width: 100%
     height: 100%
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"
-    filter: alpha(opacity=50)
-    -moz-opacity: 0.5
-    -khtml-opacity: 0.5 
-    opacity: 0.5
-    background: 
-      color: #000 
+    +opacity(0.5)
+    background-color: #000 
     position: fixed 
     top: 0 
     left: 0 
@@ -21,8 +16,8 @@
       background-color: #FFF
     
     .spot
-      width: 200px
-      height: 200px
+      width: 279px
+      height: 279px
       position: relative
       background:
         image = !asset_spot
@@ -45,7 +40,7 @@
       margin: 0 0
       padding: 0 0
       
-      a
+      .hide
         float: none
       
 .qtip
