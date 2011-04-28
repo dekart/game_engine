@@ -16,9 +16,11 @@ module HttperfReport
     end
 
     def group(name)
+      filepath = Rails.root.join("tmp", name.split.join('_')).to_s
+      
       @files << {
         :name => name,
-        :path => filepath = Rails.root.join("tmp", name.split.join('_'))
+        :path => file_path
       }
 
       File.open(filepath, 'w') do |file|

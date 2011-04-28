@@ -17,7 +17,7 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory are automatically loaded.
   # See Rails::Configuration for more options.
   
-  require File.join(Rails.root.join('lib', 'rails', 'config'))
+  require Rails.root.join('lib', 'rails', 'config').to_s
 
   config.cache_store = :mem_cache_store, Rails::Config.cache.server, {:namespace => Rails.env}
 
@@ -45,7 +45,7 @@ Rails::Initializer.run do |config|
   # The internationalization framework can be changed to have another default locale (standard is :en) or more load paths.
   # All files from config/locales/*.rb,yml are added automatically.
   # config.i18n.default_locale = :de
-  config.i18n.load_path << Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+  config.i18n.load_path << Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,

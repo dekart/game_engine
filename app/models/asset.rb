@@ -13,7 +13,7 @@ class Asset < ActiveRecord::Base
     end
 
     def sass_path
-      Rails.root.join("public", "stylesheets", "sass", "_assets.sass")
+      Rails.root.join("public", "stylesheets", "sass", "_assets.sass").to_s
     end
 
     def update_sass

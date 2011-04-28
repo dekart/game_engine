@@ -1,5 +1,5 @@
 class Admin::SkinsController < Admin::BaseController
-  DEFAULT_SKIN_PATH = Rails.root.join("public", "stylesheets", "sass", "_default_skin.sass")
+  DEFAULT_SKIN_PATH = Rails.root.join("public", "stylesheets", "sass", "_default_skin.sass").to_s
 
   def index
     @skins = Skin.all
