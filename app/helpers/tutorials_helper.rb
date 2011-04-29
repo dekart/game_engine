@@ -31,7 +31,7 @@ module TutorialsHelper
   def next_step_button(value = t_step("close_button_value"), options = {})
     options[:onclick] ||= '$(document).trigger("qtip.dialog.close")' 
     
-    button_to_function(escape_javascript(value), options)
+    button_to_function(value, options)
   end
   
   def append_buttons(options = {})
@@ -51,9 +51,9 @@ module TutorialsHelper
     
     # TODO: clean options
     if options.delete(:with_title)
-      options[:content][:title] = escape_javascript(t_step("dialog_title"))
+      options[:content][:title] = t_step("dialog_title")
     end
-    options[:content][:text] = escape_javascript(options[:content][:text] || t_step("dialog_text"))
+    options[:content][:text] = options[:content][:text] || t_step("dialog_text")
     
     append_buttons(options)
     
@@ -62,7 +62,7 @@ module TutorialsHelper
   
   def tip_on(target, options = {})
     options[:content] ||= {}
-    options[:content][:text] = escape_javascript(options[:content][:text] || step_text)
+    options[:content][:text] = options[:content][:text] || step_text
     
     append_buttons(options)
     
