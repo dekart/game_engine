@@ -44,7 +44,7 @@ en:
       buttons:
         attack: "Attack Again"
         publish: "Brag About It"
-        continue: "Continue"
+        reward: "Get Reward"
       dialog:
         title: "You defeated %{monster}!"
         message: "You did it! %{monster} is defeated and you're the winner! Let your friends know about your success!"

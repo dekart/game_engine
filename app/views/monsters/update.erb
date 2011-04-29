@@ -30,16 +30,26 @@
         <p><%= t('.dialog.message', :monster => content_tag(:strong, @fight.monster.name)).html_safe %></p>
 
         <div class="buttons">
-          <%= link_to_function(button(:continue),
+          <%= link_to_function(button(:publish),
                 stream_dialog(:monster_defeated, @fight.monster) + "$.dialog.close()",
-                :class => "continue button"
+                :class => "publish button"
+              ) %>
+              
+          <%= link_to_remote(button(:reward),
+                :url    => reward_monster_path(@fight.monster),
+                :before => '$.dialog.close()',
+                :update => :result,
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => "reward button"
+                }
               ) %>
         </div>
       <% end %>
 
       <% builder.buttons do %>
         <%= link_to_function(button(:publish),
-              stream_dialog(:monster_defeated, @fight.monster) + "$.dialog.close()",
+              stream_dialog(:monster_defeated, @fight.monster),
               :class => "publish button"
             ) %>
       <% end %>
