@@ -44,9 +44,10 @@ class PropertiesController < ApplicationController
     end
 
     if @result
-      properties = @property.nil? ? @properties : [@property]
-      properties.each do |property|
-        EventLoggingService.log_event(:property_income_collected, property)
+      if !@property.nil?
+        EventLoggingService.log_event(:property_income_collected, @property, @result)
+      else
+        EventLoggingService.log_event(:properties_income_collected, @properties, @result)
       end
     end
 

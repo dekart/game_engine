@@ -24,6 +24,7 @@ en:
         help_pages: "Help Pages"
         settings: "Settings"
         global_tasks: "Global Tasks"
+        messages: "Messages"
         # Add your custom menu items below this mark
         
       application:
@@ -569,4 +570,23 @@ en:
       update:
         success: "Story has been updated successfully!"
 
+    messages:
+      index:
+        title: "Messages"
+        controls:
+          edit: "Edit"
+          publish: "Publish"
+          delete: "Delete"
+          publish_confirm: "Are you sure you want to send this message to players?"
+      new:
+        title: "New Message"
+      edit:
+        title: "Edit Message"
+      create:
+        success: "Message has been created successfully!"
+      update:
+        success: "Message has been updated successfully!"
+      controls:
+        new: "Add Message"
+      
     # Add your custom translation strings below this mark

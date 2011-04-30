@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110325101816) do
+ActiveRecord::Schema.define(:version => 20110428061612) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -346,15 +346,18 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
     t.integer  "reference_level"
     t.integer  "amount"
     t.integer  "experience"
-    t.integer  "basic_money",     :limit => 8
-    t.integer  "vip_money",       :limit => 8
-    t.integer  "attacker_damage"
-    t.integer  "victim_damage"
+    t.integer  "basic_money",      :limit => 8
+    t.integer  "vip_money",        :limit => 8
     t.string   "string_value"
     t.integer  "int_value"
     t.datetime "occurred_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "health"
+    t.integer  "reference_damage"
+    t.integer  "energy"
+    t.integer  "stamina"
+    t.boolean  "export",                        :default => false
   end
 
   add_index "logged_events", ["event_type"], :name => "index_logged_events_on_event_type"
@@ -370,6 +373,16 @@ ActiveRecord::Schema.define(:version => 20110325101816) do
   end
 
   add_index "market_items", ["character_id"], :name => "index_market_items_on_character_id"
+
+  create_table "messages", :force => true do |t|
+    t.string   "content"
+    t.integer  "min_level"
+    t.integer  "amount_sent",                     :default => 0
+    t.integer  "last_recipient_id"
+    t.string   "state",             :limit => 50, :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "mission_group_ranks", :force => true do |t|
     t.integer "character_id",     :null => false

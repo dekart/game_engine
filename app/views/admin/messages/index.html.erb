@@ -1,0 +1,44 @@
+<%= admin_title(t(".title")) %>
+
+<%= render "controls" %>
+
+<% collection @messages do %>
+
+  <%= will_paginate @messages %>
+
+  <table id="message_list" class="data">
+    <tr>
+      <th><%= Message.human_attribute_name("content") %></th>
+      <th><%= Message.human_attribute_name("min_level") %></th>
+      <th><%= Message.human_attribute_name("amount_sent") %></th>
+      <th><%= Message.human_attribute_name("created_at") %></th>
+      <th><%= Message.human_attribute_name("state") %></th>
+      <th></th>
+    </tr>
+
+    <% @messages.each do |message| %>
+      <tr>
+        <td class="content"><%= message.content %></td>
+        <td class="level"><%= message.min_level %></td>
+        <td class="level"><%= message.amount_sent %></td>
+        <td class="created_at"><%= message.created_at.strftime("%d:%m:%Y %H:%M") %></td>
+        <td class="state"><%= admin_state(message) %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_message_path(message)) %>
+
+          <%= link_to(t(".controls.publish"), publish_admin_message_path(message),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              )  if message.can_start_sending? %>
+
+          <%= link_to(t(".controls.delete"), admin_message_path(message),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) if message.can_mark_deleted? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate @messages %>
+<% end %>

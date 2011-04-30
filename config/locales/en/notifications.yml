@@ -31,3 +31,6 @@ en:
       buttons:
         send: "Send"
         send_other: "Send Other Items"
+    
+    information:
+      title: "Witchcraft News"

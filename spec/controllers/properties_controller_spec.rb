@@ -140,7 +140,13 @@ describe PropertiesController do
 
   describe "when upgrading a property" do
     before :each do
-      @property = mock_model(Property, :upgrade! => true, :errors => [], :event_data => {})
+      @property_type = mock_model(PropertyType, :upgrade_price => 0)
+      @property = mock_model(Property, 
+        :upgrade! => true, 
+        :errors => [], 
+        :event_data => {}, 
+        :property_type => @property_type,
+        :level => 1)
 
       @character_properties = mock(:properties, :find => @property)
 

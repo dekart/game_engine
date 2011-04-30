@@ -132,7 +132,8 @@ class MissionResult
       :reference_id => self.mission.id,
       :reference_type => "Mission",
       :basic_money => self.money,
-      :experience => self.experience
+      :experience => self.experience,
+      :energy => self.energy.nil? ? nil : -(self.energy)
     }
   end
 

@@ -27,7 +27,9 @@ class InventoriesController < ApplicationController
 
     @inventory = current_character.inventories.sell!(@item, @amount)
 
-    EventLoggingService.log_event(:item_sold, current_character, @item, @amount)
+    if @inventory 
+      EventLoggingService.log_event(:item_sold, current_character, @inventory, @amount)
+    end
 
     render :action => :destroy, :layout => "ajax"
   end
