@@ -20,6 +20,7 @@ module Tutorial
     :fight_with_monster_until_he_live,
     :monster_spent,
     :monster_die,
+    :monster_reward,
     
     :goto_estate,
     :buy_estate,
