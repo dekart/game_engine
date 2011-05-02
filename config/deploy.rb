@@ -147,7 +147,7 @@ namespace :deploy do
 
     desc "Install required gems"
     task :bundled_gems, :roles => :app do
-      run "cd #{release_path}; bundle install --deployment --without development test"
+      run "rm -rf ~/.gems/ruby/1.8/cache; cd #{release_path}; bundle install --deployment --without development test"
     end
   end
   
