@@ -189,10 +189,11 @@ class EventLoggingService
   def payouts_event_data(payouts)
     if !payouts.nil?   
       data = {:basic_money => 0, :vip_money => 0, :health => 0, :energy => 0, :stamina => 0, :experience => 0}
+      
       payouts.items.each do |item|
         case
         when item.instance_of?(Payouts::BasicMoney)
-          data[:basic_money] += (item.action == :add ? item.valuecation : -item.value)
+          data[:basic_money] += (item.action == :add ? item.value : -item.value)
         when item.instance_of?(Payouts::VipMoney)
           data[:vip_money] += (item.action == :add ? item.value : -item.value)
         when item.instance_of?(Payouts::HealthPoint)
