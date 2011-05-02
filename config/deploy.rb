@@ -117,13 +117,16 @@ namespace :deploy do
         database_config[:database],
         dump_path
       ]
-      
-      run "gzip #{dump_path}"
     end
     
     desc "Setup database"
     task :setup, :roles => :db, :only => {:primary => true} do
       run "cd #{current_path}; rake db:setup --trace"
+    end
+    
+    desc "Package all non-packaged backups"
+    task :package_backups, :roles => :db, :only => {:primary => true} do
+      run "gzip *.sql"
     end
   end
 
@@ -199,6 +202,7 @@ end
 
 # Ordinary deploys
 before "deploy:migrations", "deploy:db:backup"
+after "deploy:migrations", "deploy:db:package_backups"
 
 on :before, :only => ["deploy", "deploy:migrations"] do
   before "deploy:symlink", "deploy:app:setup"
