@@ -66,8 +66,9 @@ class CharactersController < ApplicationController
       if @character.save
         if current_user.show_tutorial?
           flash[:show_tutorial] = true
+          
           # we always redirect to missions in tutorial
-          redirect_back(mission_groups_url(:canvas => true))
+          redirect_from_iframe(mission_groups_url(:canvas => true))
         else
           redirect_by_app_request || redirect_back(mission_groups_url(:canvas => true))
         end
