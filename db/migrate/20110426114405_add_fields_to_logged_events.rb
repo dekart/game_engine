@@ -1,12 +1,16 @@
 class AddFieldsToLoggedEvents < ActiveRecord::Migration
   def self.up
-    remove_column :logged_events, :attacker_damage
-    remove_column :logged_events, :victim_damage
-    add_column :logged_events, :health, :integer
-    add_column :logged_events, :reference_damage, :integer
-    add_column :logged_events, :energy, :integer
-    add_column :logged_events, :stamina, :integer
-    add_column :logged_events, :export, :boolean, :default => false
+    ActiveRecord::Migration.execute 'TRUNCATE TABLE logged_events'
+    
+    change_table :logged_events do |t|
+      t.remove :attacker_damage
+      t.remove :victim_damage
+      
+      t.integer :health, :energy, :stamina
+      t.integer :reference_damage
+      
+      t.boolean :export, :default => false
+    end
   end
 
   def self.down

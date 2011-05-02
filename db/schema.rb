@@ -354,9 +354,9 @@ ActiveRecord::Schema.define(:version => 20110428061612) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
-    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
+    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
