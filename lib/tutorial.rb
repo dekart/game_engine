@@ -21,13 +21,13 @@ module Tutorial
     :monster_spent,
     :monster_die,
     
-    :goto_fight,
-    :attack_other_player,
-    :fight_result,
-    
     :goto_estate,
     :buy_estate,
     :periodically_collect_property_income,
+
+    :goto_fight,
+    :attack_other_player,
+    :fight_result,
     
     # :goto_alliance,
     

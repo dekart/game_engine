@@ -60,35 +60,35 @@ en:
         text: "Each attack inflicts some damage to monster. The more powerful weapons you have the better you fight."
       monster_die:
         title: "Fight With Monster"
+      goto_estate:
+        title: "Property"
+        text: "Now you have enough money to purchase your first estate. Click this link to proceed."
+      buy_estate:
+        title: "Property"
+        text: "You should have enough money to purchase this property"
+      periodically_collect_property_income:
+        title: "Property"
+        text: "You should periodically collect income from your properties. The timer displays how much time left before the next payment."
+        close_button_value: "Ok, Let's Proceed"
       goto_fight:
         title: "Fight With Players"
         text: "Another way to test your combat skills is to fight with other players. Please go to fighting page to see your opponent list."
       attack_other_player:
         title: "Fight With Players"
-        text: "Attack this player"
+        text: "Fighting with other players gives you experience and money and consumes your stamina. Attack any of these players to proceed."
       fight_result:
-        title: "Fight result"
-        text: "This is your fight result"
-        close_button_value: "Ok"
-      goto_estate:
-        title: "Estate"
-        text: "Click here"
-      buy_estate:
-        title: "Buy estate"
-        text: "Click here to buy property"
-      periodically_collect_property_income:
-        title: "Collect property"
-        text: "Periodically collect income from property"
-        close_button_value: "Ok"
+        title: "Fight With Players"
+        text: "Fight result and details are displayed here"
+        close_button_value: "Ok, Let's Proceed"
       goto_gem_market:
-        title: "Go to gem market"
-        text: "Click here"
+        title: "Gem Market"
+        text: "The last important part of the game is the Gem Market. Go to it to check what we have there."
       spend_gems:
-        title: "Spend gems"
-        text: "Spend your gems"
+        title: "Gem Market"
+        text: "You already have some gems that you can spend to purchase special items or refill your attributes"
         close_button_value: "Ok"
       finish:
-        title: "Finish"
-        dialog_text: "Thank you"
-        goto_missions_button_value: "Go to missions"
-        close_button_value: "Stay here"
+        title: "Well Done!"
+        dialog_text: "Thank you for finishing tutorial! Now you're familiar with all main parts of the game. We would like to recommend to start with missions and then proceed to other game parts."
+        goto_missions_button_value: "Go To Missions"
+        close_button_value: "Stay Here"

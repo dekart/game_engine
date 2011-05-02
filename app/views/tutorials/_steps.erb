@@ -33,7 +33,7 @@
 
 <% step :first_level_up, :control_upgrade_dialog => false, :change_event => 'afterReveal.dialog' do %>
 
-  $('#dialog').find('.close, a.continue, .disable_notification').hide();
+  $('#dialog').find('.close, a.publish, .disable_notification').hide();
   Tutorial.prepareDialog();
   
   <%= click_trigger("#dialog .buttons a.upgrade") %>
@@ -43,7 +43,7 @@
   
 <% step :first_upgrade_character, :control_upgrade_dialog => false, :change_event => 'character.upgrade_complete' do %>
 
-  $('#dialog').find('.close, a.continue, .disable_notification, .buy_more').hide();
+  $('#dialog').find('.close, .buy_more').hide();
   Tutorial.prepareDialog();
   
   <%= tip_on("#dialog #upgrade_list",
@@ -154,6 +154,8 @@
 
 <% step :monster_die, :change_event => 'close.dialog.tutorial' do %>
   
+  $('#dialog').find('.close, a.publish').hide();
+  
   Tutorial.prepareDialog();
   
 <% end %>
@@ -203,7 +205,7 @@
           :at => 'bottomLeft',
           :my => 'topRight'
         }) %>
-  <%= make_visible("#property_list .property_type:first .picture img") %>
+  <%= make_visible("#property_list .property_type:first") %>
   <%= click_trigger("#property_list .property_type:first a.buy") %>
   
 <% end %>
@@ -223,7 +225,7 @@
   
 <% step :goto_gem_market do %>
 
-  <%= goto_main_menu_item("premium") %>
+  <%= goto_main_menu_item("premium", :position => {:my => 'top right'}) %>
   
 <% end %>
 
@@ -245,10 +247,10 @@
   <%= tutorial_dialog(
         :buttons => [
           button_to_function(escape_javascript(t_step("goto_missions_button_value")), 
-            :onclick => "window.location.href='#{mission_groups_url}'"
+            :onclick => "redirectTo('#{mission_groups_url}')"
           ), 
           next_step_button
-        ]
+        ].join(' ')
       ) %>
   
 <% end %>

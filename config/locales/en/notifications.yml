@@ -9,7 +9,7 @@ en:
       text: "You've gained enough experience to upgrade to the new level! You received %{point_amount} upgrade points that you can spend to increase your attributes. Additionally, your energy and health have been refilled."
       upgrade_link: "upgrade"
       buttons:
-        continue: "Continue"
+        publish: "Brag About It"
         upgrade: "Upgrade"
 
     market_item_sold:
