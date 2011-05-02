@@ -1,7 +1,7 @@
 module TutorialsHelper
   
   def t_step(property, step = current_step)
-    t("tutorial.steps.#{step}.#{property}")
+    t("tutorial.steps.#{step}.#{property}", :app => t('app_name'))
   end
   
   def step_title(step = current_step)

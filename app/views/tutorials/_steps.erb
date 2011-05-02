@@ -17,7 +17,7 @@
     
 <% step :first_mission_receive, :change_event => 'result.received' do %>
   
-  <%= tip_on("#result .received .value:last") %>
+  <%= tip_on("#result .received .value:last", :position => {:my => 'top left'}) %>
   <%= spot_on("#result .received .label:first") %>
   <%= click_trigger("#result a.fulfill_again") %>
   
@@ -48,8 +48,8 @@
   
   <%= tip_on("#dialog #upgrade_list",
         :position => {
-          :at => 'right middle',
-          :my => 'left middle'
+          :at => 'top center',
+          :my => 'bottom center'
         }
      ) %>
       
@@ -90,7 +90,7 @@
 <% step :goto_equip do %>
     
   <%= click_trigger("#content a.equipment") %>
-  <%= tip_on("#content a.equipment") %>
+  <%= tip_on("#content a.equipment", :position => {:my => 'top left'}) %>
   <%= spot_on("#content a.equipment") %>
   
 <% end %>
@@ -101,16 +101,17 @@
   <%= tip_on("#placements > .placement > .inventory", 
         :buttons => next_step_button,
         :position => {
-          :at => 'topMiddle',
-          :my => 'bottomMiddle'
+          :at => 'center left',
+          :my => 'center right'
         }
       ) %>
+  <%= make_responsible("#placements > .placement > .inventory") %>
   
 <% end %>
 
 <% step :goto_monsters do %>
   
-  <%= goto_main_menu_item("monsters") %>
+  <%= goto_main_menu_item("monsters", :position => {:my => 'top left'}) %>
   
 <% end %>
 
@@ -167,8 +168,8 @@
 
   <%= tip_on("#victim_list .character:first a.attack",
         :position => {
-          :at => 'topLeft',
-          :my => 'bottomRight'
+          :at => 'top center',
+          :my => 'bottom right'
         }
      ) %>
   <%= make_visible("#victim_list .character:first") %>

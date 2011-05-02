@@ -1,70 +1,70 @@
 en:
   tutorial:
-    skip: "Skip tutorial"
-    progress: "Tutorial progress"
+    skip: "Skip Tutorial"
+    progress: "Tutorial Progress"
     steps:
       current: "Current step:"
       next: "Next step:"
       hello_new_user: 
-        title: "Hello"
-        dialog_title: "Hello"
-        dialog_text: "Hello new user. This is text about our cool game."
-        close_button_value: "Ok"
+        title: "Welcome to %{app}!"
+        dialog_title: "Welcome to %{app}!"
+        dialog_text: "We're glad to welcome you in %{app} - a magic game played on Facebook. This quick tutorial will guide you through the whole game process. If you'll decide to skip tutorial - feel free to close it at the top of the game page."
+        close_button_value: "Ok, Let's Start"
       complete_first_mission:
-        title: "Complete first mission"
-        text: "Click it"
+        title: "First Mission"
+        text: "Do missions to earn gold and gain experience"
       first_mission_receive:
-        title: "Mission receive"
-        text: "Your bonus"
+        title: "Mission In Progress"
+        text: "This is your reward for doing the mission. Experience will help you to reach new levels. Now please click 'Fulfill Again!' at the top right of the result block to continue."
       first_mission_spent:
-        title: "Mission spent"
-        text: "You spent"
+        title: "Mission In Progress"
+        text: "Doing missions consumes your energy. Energy level restores in the course of time. You can also restore it in the Guild."
       first_level_up:
-        title: "Level up"
-        dialog_title: "Level up"
+        title: "Level Up"
+        dialog_title: "Level Up" # FIXME: I think these are not required
         dialog_text: "You got first level up"
-        text: "Click here"
+        text: "Please proceed to upgrade your character."
       first_upgrade_character:
-        title: "Upgrade your character"
-        text: "Spent your points"
+        title: "Upgrade Character"
+        text: "You can spend received upgrade points to improve your attributes. Please do this now to proceed."
       goto_shop:
         title: "Shop"
-        text: "Go to the shop and by items"
+        text: "Ok, it's time to purchase your first item. Please go to the Shop to proceed."
       shop_buy_item:
-        title: "Buy items"
-        text: "Click here"
+        title: "Buy Items"
+        text: "Please purchase your first weapon. You'll need it later to fight with monsters and other players."
       goto_inventory:
         title: "Inventory"
-        text: "Click here"
+        text: "Your newly purchase item is in your Inventory now. Let's see how does it look like. Please click the button to proceed."
       goto_equip:
-        title: "Equip"
-        text: "Click here"
+        title: "Equipment"
+        text: "Your inventory displays the list of all your items (both equipped and not). Proceed to see how does the Equipment page look like."
       equip_character:
-        title: "Character equipment"
-        text: "Already equiped"
-        close_button_value: "Ok"
+        title: "Equipment"
+        text: "As you can see, your recently purchased item was automatically equipped. You can re-equip it to another slot later."
+        close_button_value: "Ok, Let's Proceed"
       goto_monsters:
-        title: "Monstes"
-        text: "Click here"
+        title: "Monsters"
+        text: "You already have a weapond so you're ready to fight with Monsters. Please click the 'Monsters' link to proceed."
       attack_monster:
-        title: "Attack monster"
-        text: "Attack"
+        title: "Attack Monster"
+        text: "Defeating monsters is a way to get more gold, experience, and special items. Let's attack this one!"
       attack_monster_first_time:
-        title: "Attack monster first time"
-        text: "Attack them"
+        title: "Fight With Monster"
+        text: "The fight has begun! Now you should attack the monster. Each attack consumes 1 stamina point."
       fight_with_monster_until_he_live:
-        title: "Fight until the end"
-        text: "Fight with monster until he live"
+        title: "Fight With Monster"
+        text: "Monster's health is displayed at the top. Continue attacking the monster until their health reaches 0."
       monster_spent:
-        title: "Monster spent"
-        text: "Monster spent"
+        title: "Fight With Monster"
+        text: "Each attack inflicts some damage to monster. The more powerful weapons you have the better you fight."
       monster_die:
-        title: "Monster die"
+        title: "Fight With Monster"
       goto_fight:
-        title: "Fight"
-        text: "Click here"
+        title: "Fight With Players"
+        text: "Another way to test your combat skills is to fight with other players. Please go to fighting page to see your opponent list."
       attack_other_player:
-        title: "Attack other player"
+        title: "Fight With Players"
         text: "Attack this player"
       fight_result:
         title: "Fight result"
