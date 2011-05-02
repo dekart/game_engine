@@ -45,7 +45,7 @@ en:
         close_button_value: "Ok, Let's Proceed"
       goto_monsters:
         title: "Monsters"
-        text: "You already have a weapond so you're ready to fight with Monsters. Please click the 'Monsters' link to proceed."
+        text: "You already have a weapon so you're ready to fight with Monsters. Please click the 'Monsters' link to proceed."
       attack_monster:
         title: "Attack Monster"
         text: "Defeating monsters is a way to get more gold, experience, and special items. Let's attack this one!"
