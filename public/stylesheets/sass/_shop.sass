@@ -4,7 +4,7 @@
     bottom = !item_group_border
   margin: 10px 0 15px 0
 
-  a, .current
+  a
     padding: 0 15px
     line-height: 30px
     height: 30px
@@ -12,16 +12,15 @@
     float: left
     font-weight: bold
     border: 1px solid transparent
+    font-size: 14px
+
+    &:hover
+      background-color = !item_group_current_bg_color
 
   .current
     font-size: 16px
     background-color = !item_group_current_bg_color
 
-  a
-    font-size: 14px
-
-    &:hover
-      background-color = !item_group_current_bg_color
 
 #item_list
   width: 100%

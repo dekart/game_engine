@@ -6,19 +6,9 @@
 
 <%= render "inventories/buttons", :current => :shop %>
 
-<div id="item_groups" class="clearfix">
-  <% @item_groups.each do |group| %>
-    <% if group == @current_group %>
-      <span class="current"><%= group.name %></span>
-    <% else %>
-      <%= link_to(group.name, item_group_items_path(:item_group_id => group.id)) %>
-    <% end %>
-  <% end %>
-</div>
+<%= render 'items/tabs', :groups => @item_groups, :current => @current_group %>
 
-<% if @special_items.any? %>
-  <%= render "specials", :items => @special_items %>
-<% end %>
+<%= render("specials", :items => @special_items) unless @special_items.empty? %>
 
 <%= will_paginate @items %>
 
