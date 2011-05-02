@@ -14,7 +14,7 @@ class Fight < ActiveRecord::Base
   }
 
   before_create :calculate_fight
-  after_create  :save_payout, :post_to_newsfeed
+  after_create  :save_payout, :post_to_newsfeed, :log_event
 
   cattr_accessor :fighting_system, :damage_system
   @@fighting_system = FightingSystem::PlayerVsPlayer::Proportion
@@ -163,5 +163,10 @@ class Fight < ActiveRecord::Base
   def post_to_newsfeed
     attacker.news.add(:fight_result, :fight_id => id)
     victim.news.add(:fight_result, :fight_id => id)
+  end
+  
+  def log_event
+    EventLoggingService.log_event(:character_attacked, self)
+    EventLoggingService.log_event(:character_under_attack, self)
   end
 end

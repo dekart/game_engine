@@ -11,9 +11,6 @@ class FightsController < ApplicationController
       :victim   => @victim
     )
 
-    EventLoggingService.log_event(:character_attacked, @fight)
-    EventLoggingService.log_event(:character_under_attack, @fight)
-    
     render :action => :create, :layout => "ajax"
   end
 
