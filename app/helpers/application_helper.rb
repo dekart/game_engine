@@ -97,7 +97,7 @@ module ApplicationHelper
 
   def maintenance_warning
     if File.file?(MAINTENANCE_SETTINGS_PATH)
-      settings = YAML.load(File.read(settings_path))
+      settings = YAML.load(File.read(MAINTENANCE_SETTINGS_PATH))
 
       yield(settings) if settings[:start] > Time.now
     end
