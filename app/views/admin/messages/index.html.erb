@@ -10,6 +10,7 @@
     <tr>
       <th><%= Message.human_attribute_name("content") %></th>
       <th><%= Message.human_attribute_name("min_level") %></th>
+      <th><%= Message.human_attribute_name("notify_new_users") %></th>
       <th><%= Message.human_attribute_name("amount_sent") %></th>
       <th><%= Message.human_attribute_name("created_at") %></th>
       <th><%= Message.human_attribute_name("state") %></th>
@@ -20,6 +21,7 @@
       <tr>
         <td class="content"><%= message.content %></td>
         <td class="level"><%= message.min_level %></td>
+        <td class="level"><%= message.notify_new_users %></td>
         <td class="level"><%= message.amount_sent %></td>
         <td class="created_at"><%= message.created_at.strftime("%d:%m:%Y %H:%M") %></td>
         <td class="state"><%= admin_state(message) %></td>

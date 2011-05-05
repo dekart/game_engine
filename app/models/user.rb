@@ -94,6 +94,10 @@ class User < ActiveRecord::Base
     GENDERS.index(self[:gender])
   end
   
+  def anonymous_id
+    third_party_id.present? ? third_party_id : id
+  end
+  
   def access_token_valid?
     !(access_token.blank? || access_token_expire_at.nil? || access_token_expire_at < Time.now)
   end

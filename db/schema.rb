@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110504083736) do
+ActiveRecord::Schema.define(:version => 20110505075929) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -358,9 +358,9 @@ ActiveRecord::Schema.define(:version => 20110504083736) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
+    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
-    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -383,9 +383,10 @@ ActiveRecord::Schema.define(:version => 20110504083736) do
     t.integer  "min_level"
     t.integer  "amount_sent",                     :default => 0
     t.integer  "last_recipient_id"
-    t.string   "state",             :limit => 50, :default => "", :null => false
+    t.string   "state",             :limit => 50, :default => "",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "notify_new_users",                :default => false
   end
 
   create_table "mission_group_ranks", :force => true do |t|

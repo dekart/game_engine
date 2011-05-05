@@ -66,7 +66,7 @@ class Admin::MessagesController < Admin::BaseController
   end
 
   def destroy
-    @message = Mission.find(params[:id])
+    @message = Message.find(params[:id])
 
     @message.mark_deleted if @message.can_mark_deleted?
 
