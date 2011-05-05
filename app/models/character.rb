@@ -96,6 +96,7 @@ class Character < ActiveRecord::Base
   before_save :update_level_and_points, :unless => :level_up_applied
   before_save :update_total_money
   before_save :update_fight_availability_time, :if => :hp_changed?
+  after_create :schedule_notifications
 
   validates_presence_of :character_type, :on => :create
 
@@ -395,5 +396,11 @@ class Character < ActiveRecord::Base
   
   def update_fight_availability_time
     self.fighting_available_at = hp_restore_time(weakness_minimum).seconds.from_now
+  end
+  
+  def schedule_notifications
+    message = Message.last(:conditions => {:notify_new_users => true, :state => ["sending", "sent"]})
+    
+    self.notifications.schedule(:information, :message_id => message.id) if message
   end
 end

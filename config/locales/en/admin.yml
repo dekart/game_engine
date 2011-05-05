@@ -578,6 +578,7 @@ en:
           publish: "Publish"
           delete: "Delete"
           publish_confirm: "Are you sure you want to send this message to players?"
+          delete_confirm: "Are you sure you want to delete this message?"
       new:
         title: "New Message"
       edit:
