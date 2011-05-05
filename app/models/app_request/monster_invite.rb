@@ -1,6 +1,6 @@
 class AppRequest::MonsterInvite < AppRequest::Base
   def monster
-    @monster ||= Monster.find(data['monster_id']) if data && data['monster_id']
+    target
   end
   
   protected

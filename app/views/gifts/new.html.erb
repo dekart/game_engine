@@ -17,11 +17,7 @@
         </div>
 
         <div class="controls">
-          <%= link_to_function(button(:send), '', 
-                :'data-item-id' => item.id, 
-                :'data-message' => t('.request.message', :item => item.name, :app => t('app_name')),
-                :class => 'send button'
-              ) %>
+          <%= gift_send_button(item) %>
         </div>
       </div>
     <% end %>
@@ -29,8 +25,5 @@
 </div>
 
 <% dom_ready do %>
-  $('#gift_form').giftForm({
-    request_title: '<%= t('.title') %>', 
-    request_callback_url: '<%= app_requests_path(:type => :gift) %>'
-  });
+  $('#gift_form').giftForm();
 <% end %>

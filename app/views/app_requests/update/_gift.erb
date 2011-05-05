@@ -12,11 +12,8 @@
         }
       ) if app_request.inventory.usable? %>
     
-  <%= link_to(button(:send), new_gift_path, 
-        :class => 'send button',     
-        :'data-item-id' => app_request.item.id, 
-        :'data-message' => t('gifts.new.request.message', :item => app_request.item.name, :app => t('app_name'))
-      ) %>
+  <%= gift_send_button(app_request.item) %>
+
 <% end %>
 
 <% dom_ready do %>
@@ -24,10 +21,6 @@
 
   $request.find('.message').html('<%= escape_javascript(message) %>');
   $request.find('.controls').html('<%= escape_javascript(controls) %>');
-  $request.find('.send').giftButton({
-    request_title: '<%= t('gifts.new.title') %>', 
-    request_callback_url: '<%= app_requests_path(:type => :gift) %>'
-  });
 
   <%= ga_track_event('Requests', "#{app_request.type_name.titleize} - Accepted", app_request.item.name) %>
 <% end %>

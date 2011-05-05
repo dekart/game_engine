@@ -869,5 +869,13 @@ namespace :app do
         i+= 1
       end
     end
+  
+    desc "Expire attacked monsters"
+    task :expire_monsters => :environment do
+      Monster.find_each(:conditions => ['state = ? and expire_at <= ?', 'progress', Time.now]) do |monster|
+        puts "Processing monster #{monster.id}"
+        monster.expire!
+      end
+    end
   end
 end

@@ -7,6 +7,10 @@ class Item < ActiveRecord::Base
 
   belongs_to  :item_group
   has_many    :inventories, :dependent => :destroy
+  
+  has_many    :app_requests, 
+    :as => :target, 
+    :class_name => 'AppRequest::Base'
 
   named_scope :available, Proc.new{
     {

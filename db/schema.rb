@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110428061612) do
+ActiveRecord::Schema.define(:version => 20110504083736) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -23,9 +23,13 @@ ActiveRecord::Schema.define(:version => 20110428061612) do
     t.datetime "accepted_at"
     t.datetime "visited_at"
     t.string   "type",         :limit => 50, :default => "", :null => false
+    t.datetime "expired_at"
+    t.integer  "target_id"
+    t.string   "target_type",  :limit => 50
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
+  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -550,11 +554,12 @@ ActiveRecord::Schema.define(:version => 20110428061612) do
 
   create_table "newsletters", :force => true do |t|
     t.string   "text"
-    t.string   "state",             :limit => 50, :default => "", :null => false
+    t.string   "state",             :limit => 50, :default => "",    :null => false
     t.integer  "last_recipient_id"
     t.integer  "delivery_job_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "send_to_new_users",               :default => false
   end
 
   create_table "notifications", :force => true do |t|
@@ -724,7 +729,7 @@ ActiveRecord::Schema.define(:version => 20110428061612) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",          :limit => 50,  :default => ""
+    t.string   "tutorial_step",                         :default => ""
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

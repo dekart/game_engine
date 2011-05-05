@@ -14,11 +14,7 @@
 
         <%= item_tooltip(item) %>
 
-        <%= link_to_function(button(:send), '', 
-              :'data-item-id' => item.id, 
-              :'data-message' => t('gifts.new.request.message', :item => item.name, :app => t('app_name')),
-              :class => 'send button'
-            ) %>
+        <%= gift_send_button(item) %>
       </div>
     <% end %>
   </div>
@@ -30,10 +26,7 @@
   <%= render("notifications/disable", :notification => notification) %>
   
   <% d.on_ready do %>
-    $('#send_gift_notification').giftForm({
-      request_title: '<%= t('.title') %>', 
-      request_callback_url: '<%= app_requests_path(:type => :gift) %>'
-    });
+    $('#send_gift_notification').giftForm();
     
     $('#send_gift_notification .gift img').tooltip({
       delay: 0,

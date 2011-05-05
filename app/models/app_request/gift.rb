@@ -21,7 +21,7 @@ class AppRequest::Gift < AppRequest::Base
   end
   
   def item
-    @item ||= Item.find(data['item_id']) if data && data['item_id']
+    target
   end
   
   protected

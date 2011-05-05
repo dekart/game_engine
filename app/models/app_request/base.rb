@@ -3,6 +3,8 @@ class AppRequest::Base < ActiveRecord::Base
   
   belongs_to :sender, :class_name => "Character"
   
+  belongs_to :target, :polymorphic => true
+  
   named_scope :for, Proc.new {|character|
     {
       :conditions => {:receiver_id => character.facebook_id}
@@ -18,13 +20,16 @@ class AppRequest::Base < ActiveRecord::Base
       :conditions => {:sender_id => sender.id, :receiver_id => receiver.facebook_id}
     }
   }
-
+  
+  named_scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
+  
   state_machine :initial => :pending do
     state :processed
     state :visited
     state :accepted
     state :ignored
     state :broken
+    state :expired # when user don't accept request in time
 
     event :process do
       transition :pending => :processed
@@ -46,6 +51,10 @@ class AppRequest::Base < ActiveRecord::Base
       transition [:pending, :processed, :visited] => :ignored
     end
     
+    event :expire do
+      transition [:pending, :processed, :visited] => :expired
+    end
+    
     before_transition :on => [:process, :mark_broken] do |request|
       request.processed_at = Time.now
     end
@@ -64,6 +73,14 @@ class AppRequest::Base < ActiveRecord::Base
 
     after_transition :on => :ignore do |request|
       request.send(:after_ignore)
+    end
+    
+    before_transition :on => :expire do |request|
+      request.expired_at = Time.now
+    end
+    
+    after_transition :on => :expire do |request|
+      request.send(:after_expire)
     end
   end
 
@@ -115,9 +132,16 @@ class AppRequest::Base < ActiveRecord::Base
       
         request.sender = User.find_by_facebook_id(facebook_request.from.id).character
         request.receiver_id = facebook_request.to.id
-      
+        
         request.transaction do
           request.save!
+          
+          # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
+          if data && data['target_id'] && data['target_type']
+            request.target = data['target_type'].constantize.find(data['target_id'])
+            request.save!
+          end
+          
           request.process
         end
       end
@@ -151,10 +175,6 @@ class AppRequest::Base < ActiveRecord::Base
       'AppRequest::Invitation'
     elsif data['type'] && %w{gift invitation monster_invite}.include?(data['type'])
       "AppRequest::#{ data['type'].classify }"
-    elsif data['item_id']
-      'AppRequest::Gift'
-    elsif data['monster_id']
-      'AppRequest::MonsterInvite'
     else
       'AppRequest::Invitation'
     end.constantize
@@ -165,6 +185,10 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def after_ignore
+    self.class.schedule_deletion(self)
+  end
+  
+  def after_expire
     self.class.schedule_deletion(self)
   end
   

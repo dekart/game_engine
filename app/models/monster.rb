@@ -2,6 +2,10 @@ class Monster < ActiveRecord::Base
   belongs_to  :monster_type
   belongs_to  :character
   has_many    :monster_fights
+  
+  has_many    :app_requests, 
+    :as => :target, 
+    :class_name => 'AppRequest::Base'
 
   named_scope :current, Proc.new{
     {
@@ -27,6 +31,12 @@ class Monster < ActiveRecord::Base
 
     event :expire do
       transition :progress => :expired
+    end
+    
+    after_transition :on => [:win, :expire] do |monster|
+      monster.app_requests.for_expire.each do |app_request|
+        app_request.expire!
+      end
     end
   end
 

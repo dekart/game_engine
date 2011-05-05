@@ -8,11 +8,8 @@ class AppRequestsController < ApplicationController
   def create
     @request_type = params[:type]
     
-    case @request_type
-    when 'gift'
-      @item = Item.find(params[:item_id])
-    when 'monster_invite'
-      @item = Monster.find(params[:monster_id])
+    if params[:target_id] && params[:target_type]
+      @target = params[:target_type].constantize.find(params[:target_id])
     end
     
     @requests = Array.wrap(params[:ids])

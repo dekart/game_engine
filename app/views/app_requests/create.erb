@@ -7,5 +7,5 @@
 <% end %>
 
 <% dom_ready do %>
-  <%= ga_track_event('Requests', "#{@request_type.titleize} - Sent", @item.try(:name), @requests.size) %>
+  <%= ga_track_event('Requests', "#{@request_type.titleize} - Sent", @target.try(:name), @requests.size) %>
 <% end %>

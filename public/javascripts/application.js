@@ -410,34 +410,6 @@ function debug(s) {
     });
   };
   
-  $.fn.giftButton = function(options){
-    $(this).live('click', function(e){
-      e.preventDefault();
-      
-      var $this = $(this);
-
-      if_fb_initialized(function(){
-        FB.ui({
-          method: 'apprequests',
-          title: options.request_title,
-          message: $this.attr('data-message'),
-          data: {
-            type: 'gift',
-            item_id: $this.attr('data-item-id')
-          }
-        }, function(response){
-          if(typeof(response) != 'undefined' && response !== 'null'){
-            $this.trigger('request_sent');
-            
-            $('#ajax').load(options.request_callback_url, {ids: response.request_ids, item_id: $this.attr('data-item-id')});
-          }
-        });
-
-        $(document).trigger('facebook.dialog');
-      });
-    });
-  };
-  
   $.fn.giftForm = function(options){
     var $gifts = $(this).find('.gifts .gift');
 
@@ -447,8 +419,6 @@ function debug(s) {
         }).toArray().sort().reverse()[0]
     });
 
-    $gifts.find('.send').giftButton(options);
-    
     return $(this);
   };
   
