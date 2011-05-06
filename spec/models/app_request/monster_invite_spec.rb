@@ -8,14 +8,9 @@ describe AppRequest::MonsterInvite do
     end
     
     it 'should return monster by ID stored in data' do
-      @request.monster.should == Monster.first
+      @request.monster.should == @request.data['target_type'].constantize.find(@request.data['target_id'])
     end
     
-    it 'should return nil if ID is not set' do
-      @request.data = nil
-      
-      @request.monster.should be_nil
-    end
   end
   
   

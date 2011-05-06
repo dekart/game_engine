@@ -33,13 +33,11 @@ describe AppRequest::Gift do
     end
     
     it 'should return item by ID stored in data' do
-      @request.item.should == Item.first
+      @request.item.should == @request.data['target_type'].constantize.find(@request.data['target_id'])
     end
     
-    it 'should return nil if ID is not set' do
-      @request.data = nil
-      
-      @request.item.should be_nil
+    it 'should return item target' do
+      @request.target.should == @request.item
     end
   end
   

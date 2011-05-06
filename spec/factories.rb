@@ -266,8 +266,13 @@ Factory.define :app_request_gift, :class => 'AppRequest::Gift' do |t|
   t.sender {|g| 
     g.association(:user_with_character, :facebook_id => 111222333).character
   }
-  t.data { 
-    {'item_id' => Factory(:item).id} 
+  
+  t.association :target, :factory => :item
+  
+  t.data { |g|
+    { 'target_id' => g.target.id,
+      'target_type' => Item.name,
+      'type' => 'gift' } 
   }
   t.state 'processed'
 end
@@ -278,8 +283,13 @@ Factory.define :app_request_monster_invite, :class => 'AppRequest::MonsterInvite
   t.sender {|g| 
     g.association(:user_with_character, :facebook_id => 111222333).character
   }
-  t.data { 
-    {'monster_id' => Factory(:monster).id} 
+  
+  t.association :target, :factory => :monster
+   
+  t.data { |g|
+    { 'target_id' => g.target.id,
+      'target_type' => Monster.name,
+      'type' => 'monster_invite' } 
   }
   t.state 'processed'
 end

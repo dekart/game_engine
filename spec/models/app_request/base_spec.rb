@@ -331,13 +331,6 @@ describe AppRequest::Base do
     end
     
     describe 'when type is not set' do
-      it 'should change request class to gift if tiem ID is set' do
-        @remote_request.stub!(:data).and_return('{"item_id":123}')
-
-        @request.update_from_facebook_request(@remote_request)
-
-        AppRequest::Base.find(@request.id).should be_kind_of(AppRequest::Gift)
-      end
 
       it 'should change request class to invitation if data is not set' do
         @remote_request.stub!(:data).and_return(nil)
@@ -347,7 +340,7 @@ describe AppRequest::Base do
         AppRequest::Base.find(@request.id).should be_kind_of(AppRequest::Invitation)
       end
 
-      it 'should change request class to invitation if data is set but no item or monster ID' do
+      it 'should change request class to invitation if data is set but without type' do
         @remote_request.stub!(:data).and_return('{"something":"else"}')
 
         @request.update_from_facebook_request(@remote_request)
@@ -355,13 +348,6 @@ describe AppRequest::Base do
         AppRequest::Base.find(@request.id).should be_kind_of(AppRequest::Invitation)
       end
 
-      it 'should change request class to monster invite if monster ID is set' do
-        @remote_request.stub!(:data).and_return('{"monster_id":123}')
-
-        @request.update_from_facebook_request(@remote_request)
-
-        AppRequest::Base.find(@request.id).should be_kind_of(AppRequest::MonsterInvite)
-      end
     end
   end
   
