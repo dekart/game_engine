@@ -188,7 +188,7 @@ class Character < ActiveRecord::Base
   end
 
   def weakness_minimum
-    Setting.p(:character_weakness_minimum, health).to_i
+    Setting.i(:character_weakness_minimum)
   end
 
   def formatted_basic_money
