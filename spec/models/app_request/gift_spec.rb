@@ -95,4 +95,22 @@ describe AppRequest::Gift do
       @request.acceptable?.should be_true
     end
   end
+  
+  
+  describe 'on update' do
+    before do
+      @receiver = Factory(:user_with_character)
+      @request  = Factory(:app_request_gift)
+    end
+    
+    it 'should not fail to save if already accepted' do
+      @request.accept!
+      
+      @request.data = {:something => 'else'}
+      
+      @request.save.should be_true
+      @request.errors.should be_empty
+      @request.should_not be_changed
+    end
+  end
 end

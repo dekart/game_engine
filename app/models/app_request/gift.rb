@@ -33,6 +33,8 @@ class AppRequest::Gift < AppRequest::Base
   end
   
   def repeat_accept_check
-    errors.add(:base, :accepted_recently, :hours => Setting.i(:gifting_repeat_accept_delay)) if self.class.accepted_recently?(sender, receiver)
+    if state_changed? and self.class.accepted_recently?(sender, receiver)
+      errors.add(:base, :accepted_recently, :hours => Setting.i(:gifting_repeat_accept_delay))
+    end
   end
 end
