@@ -20,8 +20,9 @@ class AppRequest::Gift < AppRequest::Base
     !(accepted? || self.class.accepted_recently?(sender, receiver))
   end
   
+  # FIXME remove temporary support of old data keys
   def item
-    target
+    target || (Item.find(data['item_id']) if data && data['item_id'])
   end
   
   protected

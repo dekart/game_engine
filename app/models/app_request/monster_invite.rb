@@ -1,6 +1,7 @@
 class AppRequest::MonsterInvite < AppRequest::Base
+  # FIXME remove temporary support of old data keys
   def monster
-    target
+    target || (Monster.find(data['monster_id']) if data && data['monster_id'])
   end
   
   protected
