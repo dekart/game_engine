@@ -56,7 +56,7 @@ module ResultHelper
       dom_ready(@on_ready)
       dom_ready("$(document).trigger('result.#{options[:inline] ? :available : :received}');")
 
-      content_tag(:div, "#{buttons_html} #{message_html} #{content}".html_safe,
+      content_tag(:div, [message_html, buttons_html, content].join.html_safe,
         :id     => "#{type}_result",
         :class  => "result_content clearfix"
       )
@@ -65,7 +65,7 @@ module ResultHelper
     protected
 
     def buttons_html
-      content_tag(:div, @buttons.html_safe, :class => :buttons) unless @buttons.blank?
+      content_tag(:div, @buttons.html_safe, :class => 'buttons clearfix') unless @buttons.blank?
     end
 
     def message_html
