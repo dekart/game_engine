@@ -10,10 +10,9 @@
           :"data-click-once" => true,
           :class => "use button"
         }
-      ) if app_request.inventory.usable? %>
+      ) if app_request.inventory.try(:usable?) %>
     
   <%= gift_send_button(app_request.item) %>
-
 <% end %>
 
 <% dom_ready do %>
