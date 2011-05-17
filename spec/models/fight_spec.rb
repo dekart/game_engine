@@ -1,18 +1,6 @@
 require 'spec_helper'
 
 describe Fight do
-  describe '.opponents' do
-    before do
-      @attacker = Factory(:character)
-    end
-    
-    it 'should return simple opponent selector for attacker' do
-      Fight.opponents(@attacker).should be_kind_of(Fight::OpponentSelector::Simple)
-      Fight.opponents(@attacker).attacker.should == @attacker
-    end
-  end
-  
-  
   describe 'when creating' do
     before do
       @attacker = Factory(:character)
@@ -56,7 +44,7 @@ describe Fight do
     
     describe 'when won the fight' do
       before do
-        Fight.stub!(:result_calculator).and_return(mock('calculator', :calculate => true))
+        @fight.stub!(:attacker_won?).and_return(true)
       end
       
       it 'should apply global :success payout' do        
@@ -71,7 +59,7 @@ describe Fight do
     
     describe 'when lost the fight' do
       before do
-        Fight.stub!(:result_calculator).and_return(mock('calculator', :calculate => false))
+        @fight.stub!(:attacker_won?).and_return(false)
       end
 
       it 'should apply global :success payout' do        

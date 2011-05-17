@@ -18,26 +18,20 @@ class Fight < ActiveRecord::Base
 
   attr_reader :attacker_boost, :victim_boost, :payouts
   
-  class << self
-    def opponents(*args)
-      Fight::OpponentSelector::Simple.new(*args)
-    end
-    
-    def damage_calculator(*args)
-      Fight::DamageCalculator::Proportion.new(*args)
-    end
-    
-    def result_calculator(*args)
-      Fight::ResultCalculator::Proportion.new(*args)
-    end
-  end
-
+  include Fight::DamageCalculator::Proportion
+  include Fight::OpponentSelector::Simple
+  include Fight::ResultCalculator::Proportion
+  
   def attacker_won?
-    self.winner == attacker
+    if @attacker_won.nil?
+      @attacker_won = calculate_attacker_victory
+    else
+      @attacker_won
+    end
   end
 
   def victim_won?
-    self.winner == victim
+    !attacker_won?
   end
 
   def loser
@@ -105,7 +99,7 @@ class Fight < ActiveRecord::Base
       errors.add(:victim, :too_weak)
     elsif !Setting.b(:fight_alliance_attack) && attacker.friend_relations.established?(victim)
       errors.add(:character, :cannot_attack_friends)
-    elsif (is_response? && cause.is_a?(Fight) && !cause.respondable?) || (!is_response? && !self.class.opponents(attacker).can_attack?(victim))
+    elsif (is_response? && cause.is_a?(Fight) && !cause.respondable?) || (!is_response? && !can_attack?(victim))
       errors.add(:character, :cannot_attack)
     elsif attacker == victim
       errors.add(:character, :cannot_attack_self)
@@ -113,11 +107,9 @@ class Fight < ActiveRecord::Base
   end
 
   def calculate_fight
-    won = self.class.result_calculator(attacker, victim).calculate
+    self.winner = attacker_won? ? attacker : victim
 
-    victim_damage, attacker_damage = self.class.damage_calculator(attacker, victim, won).calculate
-
-    self.winner = won ? attacker : victim
+    victim_damage, attacker_damage = calculate_damage
 
     self.victim_hp_loss = victim_damage
     self.attacker_hp_loss = attacker_damage

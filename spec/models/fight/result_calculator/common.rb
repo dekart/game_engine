@@ -8,6 +8,6 @@ shared_examples_for "generic fight result calculator" do
   end
 
   it 'should return true or false' do
-    [true, false].should include(@calculator.calculate)
+    [true, false].should include(@calculator.calculate_attacker_victory)
   end
 end

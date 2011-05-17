@@ -1,12 +1,17 @@
 require 'spec_helper'
 
 describe Fight::OpponentSelector::Simple do
+  class Selector < Struct.new(:attacker)
+    include Fight::OpponentSelector::Simple
+  end
+  
+  
   describe '#can_attack?' do
     before do
       @attacker = Factory(:character)
       @victim   = Factory(:character)
       
-      @selector = Fight::OpponentSelector::Simple.new(@attacker)
+      @selector = Selector.new(@attacker)
     end
     
     it 'should return false if victim level is lower than attacker level' do
@@ -63,28 +68,29 @@ describe Fight::OpponentSelector::Simple do
     end
   end
   
-  describe '#list' do
+  
+  describe '#opponents' do
     before do
       @attacker = Factory(:character)
       @victim   = Factory(:character)
       
-      @selector = Fight::OpponentSelector::Simple.new(@attacker)
+      @selector = Selector.new(@attacker)
     end
     
     it 'should not include opponents from levels below attacker' do
-      @selector.victims.should include(@victim)
+      @selector.opponents.should include(@victim)
 
       @attacker.level = 2
       
-      @selector.victims.should_not include(@victim)
+      @selector.opponents.should_not include(@victim)
     end
     
     it 'should not include opponents from more than 5 levels above attacker' do
-      @selector.victims.should include(@victim)
+      @selector.opponents.should include(@victim)
 
       @victim.update_attribute(:level, 7)
 
-      @selector.victims.should_not include(@victim)
+      @selector.opponents.should_not include(@victim)
     end
     
     it 'should not include victims defeated less than 1 hour ago' do
@@ -92,41 +98,41 @@ describe Fight::OpponentSelector::Simple do
       
       Fight.last.update_attribute(:winner_id, @victim.id)      
             
-      @selector.victims.should include(@victim)
+      @selector.opponents.should include(@victim)
       
       Fight.last.update_attribute(:winner_id, @attacker.id)
       
-      @selector.victims.should_not include(@victim)
+      @selector.opponents.should_not include(@victim)
       
       Fight.last.update_attribute(:created_at, 61.minute.ago)
       
-      @selector.victims.should include(@victim)
+      @selector.opponents.should include(@victim)
     end
     
     it 'should not include alliance members to the list (if configured that way)' do
       @attacker.friend_relations.establish!(@victim)
 
-      @selector.victims.should include(@victim)
+      @selector.opponents.should include(@victim)
 
       with_setting(:fight_alliance_attack => false) do
-        @selector.victims.should_not include(@victim)
+        @selector.opponents.should_not include(@victim)
       end
     end
     
     it 'should not include attacker to the list' do
-      @selector.victims.should_not include(@attacker)
+      @selector.opponents.should_not include(@attacker)
     end
     
     it 'should not include weak opponents if configured that way' do
-      @selector.victims.should include(@victim)
+      @selector.opponents.should include(@victim)
       
       @victim.hp = 0
       @victim.save!
             
-      @selector.victims.should include(@victim)
+      @selector.opponents.should include(@victim)
       
       with_setting(:fight_weak_opponents => false) do
-        @selector.victims.should_not include(@victim)
+        @selector.opponents.should_not include(@victim)
       end
     end
     
@@ -135,7 +141,7 @@ describe Fight::OpponentSelector::Simple do
         Factory(:character)
       end
       
-      @selector.victims.size.should == 10
+      @selector.opponents.size.should == 10
     end
     
     it 'should randomize opponents' do
@@ -143,7 +149,7 @@ describe Fight::OpponentSelector::Simple do
         Factory(:character)
       end
       
-      @selector.victims.should_not == @selector.victims
+      @selector.opponents.should_not == @selector.opponents
     end
   end
 end

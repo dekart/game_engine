@@ -1,9 +1,9 @@
 class Fight
   module ResultCalculator
-    class Proportion < Base
-      def calculate
-        attack_points   = @attacker.attack_points
-        defence_points  = @victim.defence_points
+    module Proportion
+      def calculate_attacker_victory
+        attack_points   = attacker.attack_points
+        defence_points  = victim.defence_points
         attack_bonus    = 1.0
         defence_bonus   = 1.0
 

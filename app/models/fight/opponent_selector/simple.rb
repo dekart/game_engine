@@ -1,30 +1,34 @@
 class Fight
   module OpponentSelector
-    class Simple
-      attr_reader :attacker
+    module Simple
+      def self.included(base)
+        base.extend(ClassMethods)
+      end
       
-      def initialize(attacker)
-        @attacker = attacker
+      module ClassMethods
+        def can_attack?(attacker, victim)
+          Fight.new(:attacker => attacker).can_attack?(victim)
+        end
       end
       
       def can_attack?(victim)
         level_fits        = (lowest_opponent_level .. highest_opponent_level).include?(victim.level)
         attacked_recently = latest_opponent_ids.include?(victim.id)
-        friendly_attack   = Setting.b(:fight_alliance_attack) ? false : @attacker.friend_relations.character_ids.include?(victim.id)
+        friendly_attack   = Setting.b(:fight_alliance_attack) ? false : attacker.friend_relations.character_ids.include?(victim.id)
         weak_opponent     = Setting.b(:fight_weak_opponents) ? false : victim.weak?
 
         level_fits && !attacked_recently && !friendly_attack && !weak_opponent
       end
       
-      def victims
+      def opponents
         scope = Character.scoped(
           :conditions => ["level BETWEEN ? AND ?", lowest_opponent_level, highest_opponent_level]
         )
 
         # Exclude recent opponents, friends, and self
         exclude_ids = latest_opponent_ids
-        exclude_ids.push(*@attacker.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
-        exclude_ids.push(@attacker.id)
+        exclude_ids.push(*attacker.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
+        exclude_ids.push(attacker.id)
 
         scope = scope.scoped(
           :conditions => ["characters.id NOT IN (?)", exclude_ids]
@@ -39,7 +43,7 @@ class Fight
 
         scope.all(
           :include  => :user,
-          :order    => "ABS(level - #{@attacker.level}) ASC, RAND()",
+          :order    => "ABS(level - #{ attacker.level }) ASC, RAND()",
           :limit    => Setting.i(:fight_victim_show_limit)
         ).tap do |result|
           result.shuffle!
@@ -49,20 +53,17 @@ class Fight
       protected
       
       def lowest_opponent_level
-        @attacker.level - Setting.i(:fight_victim_levels_lower)
+        attacker.level - Setting.i(:fight_victim_levels_lower)
       end
 
       def highest_opponent_level
-        @attacker.level + Setting.i(:fight_victim_levels_higher)
+        attacker.level + Setting.i(:fight_victim_levels_higher)
       end
 
       def latest_opponent_ids
-        @attacker.attacks.all(
+        attacker.attacks.all(
           :select     => "DISTINCT victim_id",
-          :conditions => ["winner_id = ? AND created_at > ?",
-            @attacker.id,
-            Setting.i(:fight_attack_repeat_delay).minutes.ago
-          ]
+          :conditions => ["winner_id = ? AND created_at > ?", attacker.id, Setting.i(:fight_attack_repeat_delay).minutes.ago]
         ).collect{|a| a.victim_id }
       end
     end

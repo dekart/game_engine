@@ -1,6 +1,6 @@
 class FightsController < ApplicationController
   def new
-    @victims = Fight.opponents(current_character).victims
+    @victims = Fight.new(:attacker => current_character).opponents
   end
 
   def create
