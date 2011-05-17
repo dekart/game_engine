@@ -1,8 +1,5 @@
 <% builder.success do %>
-  <%= t(".message",
-        :pronoun    => fb_pronoun(fight.victim.user, :objective => true),
-        :user_name  => character_name_link(fight.victim)
-      ).html_safe %>
+  <%= t(".message", :name  => character_name_link(fight.victim)).html_safe %>
 <% end %>
 
 <table class="payouts" cellspacing="0" cellpadding="0">

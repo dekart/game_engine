@@ -13,12 +13,12 @@ en:
       buttons:
         attack_again: "Attack Again!"
       success:
-        message: "You attacked %{user_name} and WON the battle against %{pronoun}!"
+        message: "You WON the battle against %{name}!"
         you_received: "You received:"
         you_lost: "You lost:"
         victim_lost: "%{user_name} lost:"
       failure:
-        message: "You attacked %{user_name} and LOST the battle against %{pronoun}!"
+        message: "You LOST the battle against %{name}!"
         you_lost: "You lost:"
         victim_lost: "%{user_name} lost:"
       details:
