@@ -16,6 +16,14 @@
         </div>
       </div>
 
+      <% if fight.attacker_boost %>
+        <div class="best_items">
+          <strong><%= t(".best_attacking_boost") %></strong>
+          
+          <%= item_image(fight.attacker_boost, :icon) %>
+        </div>
+      <% end %>
+
       <% if offence = fight.attacker.equipment.best_offence and offence.any? %>
         <div class="best_items">
           <strong><%= t(".best_offence") %></strong>
@@ -23,14 +31,6 @@
           <% offence.each do |inventory| %>
             <%= item_image(inventory, :icon) %>
           <% end %>
-        </div>
-      <% end %>
-
-      <% if fight.attacker_boost %>
-        <div class="best_items">
-          <strong><%= t(".best_attacking_boost") %></strong>
-          
-          <%= item_image(fight.attacker_boost, :icon) %>
         </div>
       <% end %>
     </td>
@@ -51,6 +51,14 @@
         </div>
       </div>
 
+      <% if fight.victim_boost %>
+        <div class="best_items">
+          <strong><%= t(".best_defending_boost") %></strong>
+
+          <%= item_image(fight.victim_boost, :icon) %>
+        </div>
+      <% end %>
+
       <% if defence = fight.victim.equipment.best_defence and defence.any? %>
         <div class="best_items">
           <strong><%= t(".best_defence") %></strong>
@@ -58,14 +66,6 @@
           <% defence.each do |inventory| %>
             <%= item_image(inventory, :icon) %>
           <% end %>
-        </div>
-      <% end %>
-
-      <% if fight.victim_boost %>
-        <div class="best_items">
-          <strong><%= t(".best_defending_boost") %></strong>
-
-          <%= item_image(fight.victim_boost, :icon) %>
         </div>
       <% end %>
     </td>
