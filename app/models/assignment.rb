@@ -64,10 +64,10 @@ class Assignment < ActiveRecord::Base
 
   def event_data
     {
-      :reference_id => self.relation.character.id,
-      :reference_type => "Character",
-      :reference_level => self.relation.character.level,
-      :string_value => self.role
+      :reference_id     => relation.character.id,
+      :reference_type   => "Character",
+      :reference_level  => relation.level,
+      :string_value     => role
     }
   end
 
