@@ -1,10 +1,10 @@
 <%= title(t(".title")) %>
 
+<%= render "inventories/buttons", :current => :equipment %>
+
 <div id="inventory_fight_attributes">
   <%= render "characters/fight_attributes" %>
 </div>
-
-<%= render "inventories/buttons", :current => :equipment %>
 
 <table id="equipment">
   <tr>
