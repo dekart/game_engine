@@ -22,7 +22,7 @@
                 :url    => premium_path(:type => @type),
                 :method => :put,
                 :update => :result,
-                :html   => {:class => "premium button", :onclick => "$(document).trigger('close.dialog')"}
+                :html   => {:class => "refill button", :onclick => "$(document).trigger('close.dialog')"}
               ) %>
         <% else %>
           <%= link_to(button(:gem_market), premium_path, 

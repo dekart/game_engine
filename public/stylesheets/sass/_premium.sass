@@ -65,11 +65,14 @@
     +button(!premium_accept_icon)
     
 #refill_dialog
-  .buttons
-    overflow: hidden
-  .button
-    float: left
-    clear: right
-    margin: 10px 10px 0 0
   .requirements
     padding-top: 10px
+    
+  .button
+    margin: 10px 10px 0 0
+    
+    &.refill
+      +button(!premium_dialog_refill_icon)
+      
+    &.premium
+      +button(!premium_dialog_premium_icon)
