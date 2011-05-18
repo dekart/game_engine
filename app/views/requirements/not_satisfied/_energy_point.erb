@@ -1,16 +1,5 @@
 <% requirement(requirement.name, false) do %>
   <% if current_character.energy_points >= requirement.value %>
-    <div class="buttons">
-      <%= link_to_remote(button(:refill), 
-            :url    => refill_dialog_premium_path(
-              :type => :refill_energy, 
-              :vip_money => Setting.i(:premium_energy_price)
-            ),
-            :update => :ajax,
-            :html   => {:class => "premium button"}
-          ) %>
-    </div>
-
     <p>
       <%= t(".restorable.message",
             :required_value => content_tag(:strong, requirement.value),
@@ -23,17 +12,28 @@
             :premium_page => link_to(t(".premium_page"), premium_path)
           ).html_safe %>
     </p>
-  <% else %>
+
     <div class="buttons">
-      <%= link_to(button(:get_points), premium_path,
-            :class => "premium button"
+      <%= link_to_remote(button(:refill), 
+            :url    => refill_dialog_premium_path(
+              :type => :refill_energy, 
+              :vip_money => Setting.i(:premium_energy_price)
+            ),
+            :update => :ajax,
+            :html   => {:class => "premium button"}
           ) %>
     </div>
-
+  <% else %>
     <p>
       <%= t(".low_base_level.message",
             :premium_page => link_to(t(".premium_page"), premium_path)
           ).html_safe %>
     </p>
+
+    <div class="buttons">
+      <%= link_to(button(:get_points), premium_path,
+            :class => "premium button"
+          ) %>
+    </div>
   <% end %>
 <% end %>
