@@ -52,6 +52,75 @@ describe Fight do
   end
   
   
+  describe '#opponents' do
+    before do
+      @attacker = Factory(:character)
+      @victim   = Factory(:character)
+      
+      @fight = Fight.new(:attacker => @attacker)
+    end
+        
+    it 'should not include victims defeated less than 1 hour ago' do
+      Fight.create!(:attacker => @attacker, :victim => @victim)
+      
+      Fight.last.update_attribute(:winner_id, @victim.id)      
+            
+      @fight.opponents.should include(@victim)
+      
+      Fight.last.update_attribute(:winner_id, @attacker.id)
+      
+      @fight.opponents.should_not include(@victim)
+      
+      Fight.last.update_attribute(:created_at, 61.minute.ago)
+      
+      @fight.opponents.should include(@victim)
+    end
+    
+    it 'should not include alliance members to the list (if configured that way)' do
+      @attacker.friend_relations.establish!(@victim)
+
+      @fight.opponents.should include(@victim)
+
+      with_setting(:fight_alliance_attack => false) do
+        @fight.opponents.should_not include(@victim)
+      end
+    end
+    
+    it 'should not include attacker to the list' do
+      @fight.opponents.should_not include(@attacker)
+    end
+    
+    it 'should not include weak opponents if configured that way' do
+      @fight.opponents.should include(@victim)
+      
+      @victim.hp = 0
+      @victim.save!
+            
+      @fight.opponents.should include(@victim)
+      
+      with_setting(:fight_weak_opponents => false) do
+        @fight.opponents.should_not include(@victim)
+      end
+    end
+    
+    it 'should limit list to 10 opponents' do
+      10.times do
+        Factory(:character)
+      end
+      
+      @fight.opponents.size.should == 10
+    end
+    
+    it 'should randomize opponents' do
+      10.times do
+        Factory(:character)
+      end
+      
+      @fight.opponents.should_not == @fight.opponents
+    end
+  end
+
+
   describe 'when creating' do
     before do
       @attacker = Factory(:character)

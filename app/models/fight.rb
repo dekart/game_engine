@@ -35,6 +35,33 @@ class Fight < ActiveRecord::Base
 
     super && !attacked_recently && !friendly_attack && !weak_opponent
   end
+  
+  def opponents
+    scope = super
+    
+    # Exclude recent opponents, friends, and self
+    exclude_ids = latest_opponent_ids
+    exclude_ids.push(*attacker.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
+    exclude_ids.push(attacker.id)
+
+    scope = scope.scoped(
+      :include    => :user,
+      :conditions => ["characters.id NOT IN (?)", exclude_ids],
+      :limit      => Setting.i(:fight_victim_show_limit)
+    )
+
+    unless Setting.b(:fight_weak_opponents)
+      scope = scope.scoped(
+        :conditions => ["fighting_available_at < ?", Time.now.utc]
+      )
+    end
+    
+    scope.all(
+      :order => "ABS(level - #{ attacker.level }) ASC, RAND()"
+    ).tap do |result|
+      result.shuffle!
+    end
+  end
     
   def attacker_won?
     if @attacker_won.nil?
@@ -184,5 +211,12 @@ class Fight < ActiveRecord::Base
   def log_event
     EventLoggingService.log_event(:character_attacked, self)
     EventLoggingService.log_event(:character_under_attack, self)
+  end
+  
+  def latest_opponent_ids
+    attacker.attacks.all(
+      :select     => "DISTINCT victim_id",
+      :conditions => ["winner_id = ? AND created_at > ?", attacker.id, Setting.i(:fight_attack_repeat_delay).minutes.ago]
+    ).collect{|a| a.victim_id }
   end
 end
