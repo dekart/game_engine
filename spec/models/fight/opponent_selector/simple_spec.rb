@@ -1,70 +1,29 @@
 require 'spec_helper'
 
 describe Fight::OpponentSelector::Simple do
-  class Selector < Struct.new(:attacker)
+  class SimpleSelector < Struct.new(:attacker, :victim)
     include Fight::OpponentSelector::Simple
   end
   
-  
+
   describe '#can_attack?' do
     before do
       @attacker = Factory(:character)
       @victim   = Factory(:character)
       
-      @selector = Selector.new(@attacker)
+      @selector = SimpleSelector.new(@attacker, @victim)
     end
     
     it 'should return false if victim level is lower than attacker level' do
       @attacker.level = 2
       
-      @selector.can_attack?(@victim).should be_false
+      @selector.can_attack?.should be_false
     end
     
     it 'should return false if victim level is more than 5 levels higher than attacker level' do
       @victim.level = 7
       
-      @selector.can_attack?(@victim).should be_false
-    end
-    
-    it 'should return false if defeated this opponent less than 1 hour ago' do
-      Fight.create!(:attacker => @attacker, :victim => @victim)
-      
-      Fight.last.update_attribute(:winner_id, @victim.id)      
-            
-      @selector.can_attack?(@victim).should be_true
-      
-      Fight.last.update_attribute(:winner_id, @attacker.id)
-      
-      @selector.can_attack?(@victim).should be_false
-
-      Fight.last.update_attribute(:created_at, 61.minute.ago)
-
-      @selector.can_attack?(@victim).should be_true
-    end
-    
-    it 'should return false when attacking alliance member (if configured that way)' do
-      @attacker.friend_relations.establish!(@victim)
-      
-      @selector.can_attack?(@victim).should be_true
-      
-      with_setting(:fight_alliance_attack => false) do
-        @selector.can_attack?(@victim).should be_false
-      end
-    end
-    
-    it 'should return false when attacking weak opponent (if configured that way)' do
-      @victim.hp = 0
-      @victim.save!
-      
-      @selector.can_attack?(@victim).should be_true
-      
-      with_setting(:fight_weak_opponents => false) do
-        @selector.can_attack?(@victim).should be_false
-      end
-    end
-    
-    it 'should return true if all requirements are met' do
-      @selector.can_attack?(@victim).should be_true
+      @selector.can_attack?.should be_false
     end
   end
   
@@ -74,7 +33,7 @@ describe Fight::OpponentSelector::Simple do
       @attacker = Factory(:character)
       @victim   = Factory(:character)
       
-      @selector = Selector.new(@attacker)
+      @selector = SimpleSelector.new(@attacker)
     end
     
     it 'should not include opponents from levels below attacker' do

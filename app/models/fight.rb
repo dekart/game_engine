@@ -22,6 +22,20 @@ class Fight < ActiveRecord::Base
   include Fight::OpponentSelector::Simple
   include Fight::ResultCalculator::Proportion
   
+  class << self
+    def can_attack?(attacker, victim)
+      new(:attacker => attacker).can_attack?
+    end
+  end
+  
+  def can_attack?
+    attacked_recently = latest_opponent_ids.include?(victim.id)
+    friendly_attack   = Setting.b(:fight_alliance_attack) ? false : attacker.friend_relations.character_ids.include?(victim.id)
+    weak_opponent     = Setting.b(:fight_weak_opponents) ? false : victim.weak?
+
+    super && !attacked_recently && !friendly_attack && !weak_opponent
+  end
+    
   def attacker_won?
     if @attacker_won.nil?
       @attacker_won = calculate_attacker_victory
@@ -99,7 +113,7 @@ class Fight < ActiveRecord::Base
       errors.add(:victim, :too_weak)
     elsif !Setting.b(:fight_alliance_attack) && attacker.friend_relations.established?(victim)
       errors.add(:character, :cannot_attack_friends)
-    elsif (is_response? && cause.is_a?(Fight) && !cause.respondable?) || (!is_response? && !can_attack?(victim))
+    elsif (is_response? && cause.is_a?(Fight) && !cause.respondable?) || (!is_response? && !can_attack?)
       errors.add(:character, :cannot_attack)
     elsif attacker == victim
       errors.add(:character, :cannot_attack_self)

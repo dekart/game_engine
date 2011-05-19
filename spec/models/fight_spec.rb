@@ -1,6 +1,57 @@
 require 'spec_helper'
 
 describe Fight do
+  describe '#can_attack?' do
+    before do
+      @attacker = Factory(:character)
+      @victim   = Factory(:character)
+      
+      @fight = Fight.new(:attacker => @attacker, :victim => @victim)
+    end
+    
+    it 'should return false if defeated this opponent less than 1 hour ago' do
+      Fight.create!(:attacker => @attacker, :victim => @victim)
+      
+      Fight.last.update_attribute(:winner_id, @victim.id)      
+            
+      @fight.can_attack?.should be_true
+      
+      Fight.last.update_attribute(:winner_id, @attacker.id)
+      
+      @fight.can_attack?.should be_false
+
+      Fight.last.update_attribute(:created_at, 61.minute.ago)
+
+      @fight.can_attack?.should be_true
+    end
+    
+    it 'should return false when attacking alliance member (if configured that way)' do
+      @attacker.friend_relations.establish!(@victim)
+      
+      @fight.can_attack?.should be_true
+      
+      with_setting(:fight_alliance_attack => false) do
+        @fight.can_attack?.should be_false
+      end
+    end
+    
+    it 'should return false when attacking weak opponent (if configured that way)' do
+      @victim.hp = 0
+      @victim.save!
+      
+      @fight.can_attack?.should be_true
+      
+      with_setting(:fight_weak_opponents => false) do
+        @fight.can_attack?.should be_false
+      end
+    end
+    
+    it 'should return true if all requirements are met' do
+      @fight.can_attack?.should be_true
+    end
+  end
+  
+  
   describe 'when creating' do
     before do
       @attacker = Factory(:character)

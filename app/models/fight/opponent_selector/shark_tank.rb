@@ -1,8 +1,27 @@
 class Fight
   module OpponentSelector
-    module Simple
-      def can_attack?
-        (lowest_opponent_level .. highest_opponent_level).include?(victim.level)
+    module SharkTank
+      LEVEL_RANGES = [
+        1 .. 1, 
+        2 .. 2, 
+        3 .. 3, 
+        4 .. 4, 
+        5 .. 5, 
+        6 .. 10, 
+        11 .. 15, 
+        16 .. 25, 
+        26 .. 50, 
+        51 .. 100, 
+        101 .. Character::Levels::EXPERIENCE.size
+      ]
+      
+      def can_attack?(victim)
+        level_fits        = attacker_tank.include?(victim.level)
+        attacked_recently = latest_opponent_ids.include?(victim.id)
+        friendly_attack   = Setting.b(:fight_alliance_attack) ? false : attacker.friend_relations.character_ids.include?(victim.id)
+        weak_opponent     = Setting.b(:fight_weak_opponents) ? false : victim.weak?
+
+        level_fits && !attacked_recently && !friendly_attack && !weak_opponent
       end
       
       def opponents
