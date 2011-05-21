@@ -24,7 +24,7 @@ class Fight < ActiveRecord::Base
   
   class << self
     def can_attack?(attacker, victim)
-      new(:attacker => attacker).can_attack?
+      new(:attacker => attacker, :victim => victim).can_attack?
     end
   end
   
