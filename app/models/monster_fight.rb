@@ -72,13 +72,12 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def repeat_fight?
-    fights_won = character.monsters.count(:conditions => {:monster_type_id => monster.monster_type_id, :state => 'won'})
-
-    if monster.won?
-      fights_won > 1
-    else
-      fights_won > 0
-    end
+    character.monster_fights.count(
+      :joins => :monster,
+      :conditions => [
+        'monsters.monster_type_id = ? AND monster_fights.reward_collected = ?', monster.monster_type_id, true
+      ]
+    ) > 0
   end
 
   def payout_triggers
