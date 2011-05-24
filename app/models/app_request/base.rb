@@ -21,6 +21,7 @@ class AppRequest::Base < ActiveRecord::Base
     }
   }
   
+  named_scope :visible, :conditions => {:state => ['processed', 'visited']}
   named_scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
   
   state_machine :initial => :pending do

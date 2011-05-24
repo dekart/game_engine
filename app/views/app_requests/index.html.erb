@@ -6,11 +6,9 @@
   <table id="app_request_list">
     <% @app_requests.each do |app_request| %>
       <% content_tag_for(:tr, app_request) do %>
-        <% group_header(app_request.sender, :sender_picture) do %>
-          <td class="sender_picture" rowspan="<%= @app_requests.count{|r| r.sender == app_request.sender } %>">
-            <%= character_picture_link(app_request.sender, {}, {:size => :small}) %>
-          </td>
-        <% end %>
+        <td class="sender_picture">
+          <%= character_picture_link(app_request.sender, {}, {:size => :small}) %>
+        </td>
 
         <%= render "app_requests/details/#{ app_request.type_name }", :app_request => app_request %>
           
@@ -27,12 +25,22 @@
                 ) %>
           </td>
         <% else %>
-          <% group_header(app_request.sender, :acceptance_error) do %>
-            <td class="controls" rowspan="<%= @app_requests.count{|r| r.sender == app_request.sender && r.is_a?(app_request.class) } %>">
-              <%= app_request.acceptance_error %>
-            </td>
-          <% end %>
+          <td class="controls">
+            <%= app_request.acceptance_error %>
+          </td>
         <% end %>
+        
+        <td class="ignore">
+          <%= link_to_remote(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore'), :title => t('.buttons.ignore')),
+                :url => ignore_app_request_path(app_request),
+                :update => :ajax,
+                :method => :put,
+                :html => {
+                  :'data-click-once' => true,
+                  :class => :ignore
+                }
+              ) %>
+        </td>
       <% end %>
     <% end %>
   </table>

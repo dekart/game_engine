@@ -262,7 +262,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :stories, :only => :show
   
-  map.resources :app_requests
+  map.resources :app_requests, :member => {:ignore => :put}
 
   # Add your custom routes below this mark
   

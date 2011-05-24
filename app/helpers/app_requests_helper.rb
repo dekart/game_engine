@@ -1,6 +1,6 @@
 module AppRequestsHelper
   def app_requests_counter
-    amount = current_character.app_requests.with_state(:processed, :visited).count
+    amount = current_character.app_requests.visible.count
     
     if amount > 0
       link_to(amount, app_requests_path, 
