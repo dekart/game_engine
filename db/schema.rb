@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524103257) do
+ActiveRecord::Schema.define(:version => 20110524112710) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -509,8 +509,8 @@ ActiveRecord::Schema.define(:version => 20110524103257) do
   add_index "monster_fights", ["monster_id", "character_id"], :name => "index_monster_fights_on_monster_id_and_character_id"
 
   create_table "monster_types", :force => true do |t|
-    t.integer  "level",                             :default => 1
-    t.string   "name",               :limit => 100, :default => "", :null => false
+    t.integer  "level",                                       :default => 1
+    t.string   "name",                         :limit => 100, :default => "",   :null => false
     t.text     "description"
     t.integer  "health"
     t.integer  "attack"
@@ -523,13 +523,14 @@ ActiveRecord::Schema.define(:version => 20110524103257) do
     t.integer  "money"
     t.text     "requirements"
     t.text     "payouts"
-    t.string   "image_file_name",                   :default => "", :null => false
-    t.string   "image_content_type", :limit => 100, :default => "", :null => false
+    t.string   "image_file_name",                             :default => "",   :null => false
+    t.string   "image_content_type",           :limit => 100, :default => "",   :null => false
     t.integer  "image_file_size"
-    t.integer  "fight_time",                        :default => 12
-    t.string   "state",              :limit => 50,  :default => "", :null => false
+    t.integer  "fight_time",                                  :default => 12
+    t.string   "state",                        :limit => 50,  :default => "",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "available_for_friends_invite",                :default => true
   end
 
   create_table "monsters", :force => true do |t|

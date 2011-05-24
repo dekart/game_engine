@@ -36,25 +36,27 @@
               }
             ) %>
         
-        <%= link_to_function(button(:invite_request),
-              fb_request_dialog(:monster_invite,
-                :title    => t('.invitation.title'),
-                :message  => t('.invitation.message', :name => monster.name, :app => t('app_name')),
-                :data     => {
-                  :target_id => monster.id,
-                  :target_type => Monster.name
-                },
-                :params => {
-                  :target_id => monster.id,
-                  :target_type => Monster.name
-                }
-              ),
-              :class => "invite button"
-            ) %>
-
-        <%= link_to_function(button(:invite), stream_dialog(:monster_invite, monster),
-              :class => "invite button"
-            ) %>
+        <% if monster.monster_type.available_for_friends_invite %>
+          <%= link_to_function(button(:invite_request),
+                fb_request_dialog(:monster_invite,
+                  :title    => t('.invitation.title'),
+                  :message  => t('.invitation.message', :name => monster.name, :app => t('app_name')),
+                  :data     => {
+                    :target_id => monster.id,
+                    :target_type => Monster.name
+                  },
+                  :params => {
+                    :target_id => monster.id,
+                    :target_type => Monster.name
+                  }
+                ),
+                :class => "invite button"
+              ) %>
+  
+          <%= link_to_function(button(:invite), stream_dialog(:monster_invite, monster),
+                :class => "invite button"
+              ) %>
+        <% end %>
       </div>
 
       <% payout_list(monster, monster.monster_type.payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
