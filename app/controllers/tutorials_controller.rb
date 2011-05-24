@@ -5,7 +5,7 @@ class TutorialsController < ApplicationController
     
     if params[:redirect_to]
       flash[:show_tutorial] = true
-      redirect_to URI.decode(params[:redirect_to])
+      redirect_from_iframe(URI.decode(params[:redirect_to]))
     else
       flash.now[:show_tutorial] = true
       render :partial => "tutorials/block", :layout => "ajax"

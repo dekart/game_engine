@@ -29,7 +29,7 @@ module TutorialsHelper
   end
   
   def next_step_button(value = t_step("close_button_value"), options = {})
-    options[:onclick] ||= '$(document).trigger("qtip.dialog.close")' 
+    options[:onclick] ||= '$(document).trigger("close.dialog")' 
     
     button_to_function(value, options)
   end

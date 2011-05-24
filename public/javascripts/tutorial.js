@@ -156,7 +156,7 @@ var Tutorial = (function(){
      */
     prepareDialog: function() {
       // move dialog box after tutorial box
-      var newDialogTop =  $('#tutorial_progress').offset().top + $('#tutorial_progress').height() + 25;
+      var newDialogTop =  $('#tutorial_progress').offset().top + $('#tutorial_progress').outerHeight() + 75;
       $('#dialog').offset({ top: newDialogTop });
       $('#dialog').tutorial('responsible');
     },
@@ -234,7 +234,9 @@ var Tutorial = (function(){
     ajaxStep: function(changeEvent, options) {
       changeEvent += '.tutorial';
   
-      $(document).unbind(changeEvent).bind(changeEvent, function(event) {
+      $(document).unbind(changeEvent).bind(changeEvent, changeEvent, function(event) {
+        $(document).unbind(event.data);
+        
         Tutorial.clearEffects();
         // fire loading next tutorial step
         $(document).trigger('tutorial.next_step');
@@ -243,29 +245,33 @@ var Tutorial = (function(){
     
     
     /**
-     *  Show tutorial dialog box. It's create by qTip2.
+     *  Show tutorial dialog box.
      */
     showDialog: function(options) {
-      var defaultOptions = {
-        position: {
-          target: $("#main_menu"),
-          at: 'center',
-          my: 'center'
-        },
-        show: {
-           event: false, 
-           ready: true,
-        },
-        hide: false, 
-        style: {
-          classes: 'ui-tooltip-youtube'
+      $(document).queue('dialog', function() {
+        
+        // hack on dialog settings. we save old settings and restore it after show dialog
+        // it needs for change settings only for tutorial dialog
+        var oldSettings = $.dialog.settings;
+        
+        $.extend($.dialog.settings, {
+          overlay: false, 
+          container: $(document.body)}
+        );
+        
+        var title = "";
+        if (options['content']['title']) {
+          title = "<div class='title'>" + options['content']['title'] + "</div>";
         }
-      };
-      
-      // merge options 
-      $.extend(true, defaultOptions, options);
-     
-      $(document.body).qtip(defaultOptions);
+        
+        var content = "<div class='tutorial'>" + title + "<div class='content'>" + options['content']['text'] + "</div></div>";
+        
+        $.dialog(content);
+        
+        Tutorial.prepareDialog();
+        
+        $.dialog.settings = oldSettings;
+      });
     }
     
     

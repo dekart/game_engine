@@ -1,4 +1,4 @@
-<% step :hello_new_user, :change_event => 'qtip.dialog.close' do %>
+<% step :hello_new_user, :change_event => 'close.dialog' do %>
    
    <%= tutorial_dialog(
         :with_title => true,
@@ -95,7 +95,7 @@
   
 <% end %>
 
-<% step :equip_character, :change_event => 'qtip.dialog.close' do %>
+<% step :equip_character, :change_event => 'close.dialog' do %>
 
   <%= spot_on("#placements > .placement > .inventory") %>
   <%= tip_on("#placements > .placement > .inventory", 
@@ -105,7 +105,7 @@
           :my => 'center right'
         }
       ) %>
-  <%= make_responsible("#placements > .placement > .inventory") %>
+  <%= make_responsible("#placements > .placement > .inventory img") %>
   
 <% end %>
 
@@ -152,7 +152,7 @@
   
 <% end %>
 
-<% step :monster_die, :change_event => 'close.dialog.tutorial' do %>
+<% step :monster_reward, :change_event => 'close.dialog' do %>
   
   $('#dialog').find('.close, a.publish').hide();
   
@@ -179,7 +179,7 @@
   
 <% end %>
 
-<% step :fight_result, :change_event => 'qtip.dialog.close' do %>
+<% step :fight_result, :change_event => 'close.dialog' do %>
 
   <%= make_visible("#result") %>
   <%= tip_on("#result",
@@ -210,7 +210,7 @@
   
 <% end %>
 
-<% step :periodically_collect_property_income, :change_event => 'qtip.dialog.close' do %>
+<% step :periodically_collect_property_income, :change_event => 'close.dialog' do %>
 
   <%= spot_on("#property_list .property_type:first .timer") %>
   <%= tip_on("#property_list .property_type:first .timer", 
@@ -229,7 +229,7 @@
   
 <% end %>
 
-<% step :spend_gems, :change_event => 'qtip.dialog.close' do %>
+<% step :spend_gems, :change_event => 'close.dialog' do %>
 
   <%= tip_on("#current_vip_money", 
         :position => {
@@ -242,7 +242,7 @@
      
 <% end %>
 
-<% step :finish, :change_event => 'qtip.dialog.close' do %>
+<% step :finish, :change_event => 'close.dialog' do %>
 
   <%= tutorial_dialog(
         :buttons => [

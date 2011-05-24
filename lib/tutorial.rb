@@ -19,7 +19,6 @@ module Tutorial
     :attack_monster_first_time,
     :fight_with_monster_until_he_live,
     :monster_spent,
-    :monster_die,
     :monster_reward,
     
     :goto_estate,

@@ -58,8 +58,6 @@ en:
       monster_spent:
         title: "Fight With Monster"
         text: "Each attack inflicts some damage to monster. The more powerful weapons you have the better you fight."
-      monster_die:
-        title: "Fight With Monster"
       monster_reward:
         title: "Fight With Monster"
       goto_estate:
