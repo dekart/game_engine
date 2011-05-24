@@ -6,21 +6,33 @@
   <table id="app_request_list">
     <% @app_requests.each do |app_request| %>
       <% content_tag_for(:tr, app_request) do %>
-        <td class="sender_picture"><%= character_picture_link(app_request.sender) %></td>
+        <% group_header(app_request.sender, :sender_picture) do %>
+          <td class="sender_picture" rowspan="<%= @app_requests.count{|r| r.sender == app_request.sender } %>">
+            <%= character_picture_link(app_request.sender, {}, {:size => :small}) %>
+          </td>
+        <% end %>
 
         <%= render "app_requests/details/#{ app_request.type_name }", :app_request => app_request %>
           
-        <td class="controls">
-          <%= link_to_remote(button(:accept),
-                :url => app_request_path(app_request),
-                :update => :ajax,
-                :method => :put,
-                :html => {
-                  :'data-click-once' => true,
-                  :class => 'accept button'
-                }
-              ) if app_request.acceptable? %>
-        </td>
+        <% if app_request.acceptable? %>
+          <td class="controls">
+            <%= link_to_remote(button(:accept),
+                  :url => app_request_path(app_request),
+                  :update => :ajax,
+                  :method => :put,
+                  :html => {
+                    :'data-click-once' => true,
+                    :class => 'accept button'
+                  }
+                ) %>
+          </td>
+        <% else %>
+          <% group_header(app_request.sender, :acceptance_error) do %>
+            <td class="controls" rowspan="<%= @app_requests.count{|r| r.sender == app_request.sender && r.is_a?(app_request.class) } %>">
+              <%= app_request.acceptance_error %>
+            </td>
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
   </table>
