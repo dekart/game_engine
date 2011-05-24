@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110505075929) do
+ActiveRecord::Schema.define(:version => 20110524103257) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20110505075929) do
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
-  add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
+  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -304,32 +304,32 @@ ActiveRecord::Schema.define(:version => 20110505075929) do
   end
 
   create_table "items", :force => true do |t|
-    t.string   "availability",          :limit => 30,  :default => "shop", :null => false
+    t.string   "availability",            :limit => 30,  :default => "shop", :null => false
     t.integer  "level"
-    t.integer  "basic_price",           :limit => 8
+    t.integer  "basic_price",             :limit => 8
     t.integer  "vip_price"
-    t.string   "name",                  :limit => 100, :default => "",     :null => false
-    t.string   "description",                          :default => "",     :null => false
-    t.string   "placements",                           :default => "",     :null => false
-    t.string   "image_file_name",                      :default => "",     :null => false
-    t.string   "image_content_type",    :limit => 100, :default => "",     :null => false
+    t.string   "name",                    :limit => 100, :default => "",     :null => false
+    t.string   "description",                            :default => "",     :null => false
+    t.string   "placements",                             :default => "",     :null => false
+    t.string   "image_file_name",                        :default => "",     :null => false
+    t.string   "image_content_type",      :limit => 100, :default => "",     :null => false
     t.integer  "image_file_size"
     t.boolean  "usable"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "item_group_id",                                            :null => false
-    t.boolean  "can_be_sold",                          :default => true
-    t.integer  "attack",                               :default => 0
-    t.integer  "defence",                              :default => 0
-    t.integer  "owned",                                :default => 0
+    t.integer  "item_group_id",                                              :null => false
+    t.boolean  "can_be_sold",                            :default => true
+    t.integer  "attack",                                 :default => 0
+    t.integer  "defence",                                :default => 0
+    t.integer  "owned",                                  :default => 0
     t.integer  "limit"
     t.datetime "available_till"
-    t.string   "plural_name",           :limit => 100, :default => "",     :null => false
-    t.string   "state",                 :limit => 50,  :default => "",     :null => false
-    t.boolean  "equippable",                           :default => false
+    t.string   "plural_name",             :limit => 100, :default => "",     :null => false
+    t.string   "state",                   :limit => 50,  :default => "",     :null => false
+    t.boolean  "equippable",                             :default => false
     t.text     "payouts"
-    t.string   "use_button_label",      :limit => 50,  :default => "",     :null => false
-    t.string   "use_message",                          :default => "",     :null => false
+    t.string   "use_button_label",        :limit => 50,  :default => "",     :null => false
+    t.string   "use_message",                            :default => "",     :null => false
     t.integer  "health"
     t.integer  "energy"
     t.integer  "stamina"
@@ -337,6 +337,7 @@ ActiveRecord::Schema.define(:version => 20110505075929) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.boolean  "boost"
+    t.integer  "max_vip_price_in_market"
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"

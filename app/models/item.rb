@@ -52,6 +52,8 @@ class Item < ActiveRecord::Base
     }
   }
 
+  before_save :update_max_vip_price_in_market, :if => :vip_price_changed?
+
   named_scope :vip, {:conditions => "items.vip_price > 0"}
   named_scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
 
@@ -87,7 +89,7 @@ class Item < ActiveRecord::Base
     :visible => true
 
   validates_presence_of :name, :item_group, :availability, :level
-  validates_numericality_of :level, :basic_price, :vip_price, :allow_blank => true
+  validates_numericality_of :level, :basic_price, :vip_price, :max_vip_price_in_market, :allow_blank => true
   validates_numericality_of :package_size, 
     :greater_than => 0,
     :allow_blank  => true
@@ -185,6 +187,10 @@ class Item < ActiveRecord::Base
 
   def can_be_sold?
     self[:can_be_sold] && package_size == 1
+  end
+  
+  def update_max_vip_price_in_market
+    self.max_vip_price_in_market = vip_price
   end
 
 end

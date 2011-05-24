@@ -16,6 +16,8 @@ class MarketItem < ActiveRecord::Base
   validates_presence_of :amount
   validates_numericality_of :amount, :allow_nil => true, :greater_than => 0
   validates_numericality_of :basic_price, :vip_price, :allow_nil => true, :greater_than => -1
+  
+  validate_on_create :vip_price_dont_more_than_max
 
   validate_on_create :check_amount
 
@@ -92,6 +94,16 @@ class MarketItem < ActiveRecord::Base
   end
 
   protected
+
+  def vip_price_dont_more_than_max
+    if vip_price
+      max_vip_price = inventory.item.max_vip_price_in_market || 0
+       
+      if vip_price > max_vip_price
+        errors.add(:vip_price, :less_than_or_equal_to, :count => max_vip_price)
+      end
+    end
+  end
 
   def check_amount
     if amount.to_i > inventory.amount
