@@ -2,7 +2,7 @@
    
    <%= tutorial_dialog(
         :with_title => true,
-        :buttons => next_step_button
+        :buttons => link_to_next_step_button
       ) %>
    
 <% end %>
@@ -246,11 +246,10 @@
 
   <%= tutorial_dialog(
         :buttons => [
-          button_to_function(escape_javascript(t_step("goto_missions_button_value")), 
-            :onclick => "redirectTo('#{mission_groups_url}')"
-          ), 
-          next_step_button
-        ].join(' ')
+          link_to_next_step_button(t_step("goto_missions_button_value"), 
+            :onclick => "redirectTo('#{mission_groups_url}')"),
+          link_to_next_step_button
+        ]
       ) %>
   
 <% end %>

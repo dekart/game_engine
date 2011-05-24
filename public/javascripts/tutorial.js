@@ -254,14 +254,11 @@ var Tutorial = (function(){
         // it needs for change settings only for tutorial dialog
         var oldSettings = $.dialog.settings;
         
-        $.extend($.dialog.settings, {
-          overlay: false, 
-          container: $(document.body)}
-        );
+        $.extend($.dialog.settings, {overlay: false});
         
         var title = "";
         if (options['content']['title']) {
-          title = "<div class='title'>" + options['content']['title'] + "</div>";
+          title = "<h2>" + options['content']['title'] + "</h2>";
         }
         
         var content = "<div class='tutorial'>" + title + "<div class='content'>" + options['content']['text'] + "</div></div>";

@@ -28,6 +28,13 @@ module TutorialsHelper
     current_user.tutorial_step.to_sym 
   end
   
+  def link_to_next_step_button(value = t_step("close_button_value"), html_options = {})
+    html_options[:onclick] ||= '$(document).trigger("close.dialog")'
+    html_options[:class] = html_options[:class] ? html_options[:class] + ' button' : 'button'
+    
+    link_to(button(value), '#', html_options)
+  end
+  
   def next_step_button(value = t_step("close_button_value"), options = {})
     options[:onclick] ||= '$(document).trigger("close.dialog")' 
     
