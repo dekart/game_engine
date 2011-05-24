@@ -166,14 +166,27 @@ module Facebooker2
 
 
       def redirect_from_iframe(url_options)
-        redirect_url = url_options.is_a?(String) ? url_options : url_for(url_options)
+        
+        signed_request = params[:signed_request] || params[:stored_signed_request]
+        
+        if url_options.is_a?(String)
+          # append signed_request param to query string
+          uri = URI.parse(url_options)
+          uri.query = (uri.query ? "#{uri.query}&"  : "") + "signed_request=#{signed_request}"
+          redirect_url = uri.to_s
+        else
+          if !url_options[:signed_request]
+            url_options[:signed_request] = signed_request
+          end
+          redirect_url = url_for(url_options)
+        end
         
         logger.info "Redirecting from IFRAME to #{redirect_url}"
 
         render :layout => false, :text => <<-HTML
           <html><head>
             <script type="text/javascript">
-              window.top.location.href = #{redirect_url.to_json};
+              window.location.href = #{redirect_url.to_json};
             </script>
             <noscript>
               <meta http-equiv="refresh" content="0;url=#{redirect_url}" />
