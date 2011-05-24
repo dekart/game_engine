@@ -156,7 +156,13 @@ var Tutorial = (function(){
      */
     prepareDialog: function() {
       // move dialog box after tutorial box
-      var newDialogTop =  $('#tutorial_progress').offset().top + $('#tutorial_progress').outerHeight() + 75;
+      var baseElement;
+      if ($('#tutorial_progress').length > 0) {
+        baseElement = $('#tutorial_progress');
+      } else {
+        baseElement = $('#main_menu');
+      }
+      var newDialogTop = baseElement.offset().top + baseElement.outerHeight() + 75;
       $('#dialog').offset({ top: newDialogTop });
       $('#dialog').tutorial('responsible');
     },

@@ -122,8 +122,11 @@ module TutorialsHelper
       
       @evented_step = true if options[:change_event]
       options.reverse_merge!(
-        :control_upgrade_dialog => true
+        :control_upgrade_dialog => true,
+        :show_progress => true
       )
+      
+      @show_progress = options[:show_progress]
       
       step_actions = capture(options, &block)
       
