@@ -8,6 +8,7 @@ en:
       empty_set: "Your friends didn't send you any requests yet."
       buttons:
         accept: 'Accept'
+        ignore: 'Ignore this request'
     details:
       gift:
         text: "%{user} sends you %{item}"

@@ -20,6 +20,10 @@ class AppRequest::Gift < AppRequest::Base
     !(accepted? || self.class.accepted_recently?(sender, receiver))
   end
   
+  def acceptance_error
+    I18n.t('activerecord.errors.models.app_request/gift.accepted_recently', :hours => Setting.i(:gifting_repeat_accept_delay))
+  end
+  
   # FIXME remove temporary support of old data keys
   def item
     target || (Item.find(data['item_id']) if data && data['item_id'])

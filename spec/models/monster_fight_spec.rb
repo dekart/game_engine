@@ -278,29 +278,42 @@ describe MonsterFight do
     end
   end
 
-  describe 'when checking if fight is repeat fight' do
+
+  describe '#repeat_fight?' do
     before do
       @monster_fight = Factory(:monster_fight)
     end
 
-    it 'should return false if there is no won fights with this monster type' do
+    it 'should return false if there is no collected rewards for fights with this monster type' do
       @monster_fight.repeat_fight?.should be_false
     end
 
-    it 'should return false if there is no won fight with this monster type and the fight is won' do
+    it 'should return false if there are no fights with this monster type and the fight is won' do
+      @monster_fight.monster.win
+
+      @monster_fight.repeat_fight?.should be_false
+    end
+
+    it 'should return false if there are won fights with this monster type but reward isn\'t collected' do
+      @second_monster = Factory(:monster, :monster_type => @monster_fight.monster.monster_type)
+      @second_monster_fight = Factory(:monster_fight, :character => @monster_fight.character, :monster => @second_monster)
+      @second_monster.win
+
       @monster_fight.monster.win
 
       @monster_fight.repeat_fight?.should be_false
     end
     
-    it 'should return true if there is a won fight with this monster type' do
+    it 'should return true if there is a fight with this monster type and the reward for this fight is collected' do
       @second_monster = Factory(:monster, :monster_type => @monster_fight.monster.monster_type)
       @second_monster_fight = Factory(:monster_fight, :character => @monster_fight.character, :monster => @second_monster)
       @second_monster.win
+      @second_monster_fight.collect_reward!.should be_true
 
       @monster_fight.repeat_fight?.should be_true
     end
   end
+
 
   describe 'when getting payout triggers' do
     before do

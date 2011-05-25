@@ -2,7 +2,7 @@ class AppRequestsController < ApplicationController
   skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook, :only => :create
   
   def index
-    @app_requests = current_character.app_requests.with_state(:processed, :visited).all(:order => "sender_id, created_at DESC")
+    @app_requests = current_character.app_requests.visible.all(:order => "sender_id, type, created_at DESC")
   end
   
   def create
@@ -26,6 +26,14 @@ class AppRequestsController < ApplicationController
 
     @app_request.accept
       
+    render :layout => 'ajax'
+  end
+  
+  def ignore
+    @app_request = current_character.app_requests.find(params[:id])
+    
+    @app_request.ignore
+    
     render :layout => 'ajax'
   end
 end
