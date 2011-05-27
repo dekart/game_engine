@@ -34,7 +34,7 @@ en:
         link: "Equip your character »"
     list:
       owned: "Owned: %{amount}"
-      used: "In use: %{amount}"
+      equipped: "Equipped: %{amount}"
       listed_on_market: "Listed on Market"
       buttons:
         sell: "Sell for %{price}"

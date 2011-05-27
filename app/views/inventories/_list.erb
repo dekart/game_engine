@@ -20,7 +20,7 @@
 
                 <% if inventory.equipped > 0 %>
                   <div class="used">
-                    <%= t(".used",
+                    <%= t(".equipped",
                           :amount => content_tag(:span, inventory.equipped, :class => :value)
                         ).html_safe %>
                   </div>
