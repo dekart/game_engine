@@ -4,6 +4,8 @@
   <%= t(".current.label",
         :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
       ).html_safe %>
+  <br>
+  <%= link_to(t('.current.get_more').html_safe, earn_premium_path)%>
 </div>
 
 <% if @special_items.any? %>
@@ -161,7 +163,3 @@
     </td>
   </tr>
 </table>
-
-<div id="get_more_vip">
-  <%= facebook_money(current_character) %>
-</div>

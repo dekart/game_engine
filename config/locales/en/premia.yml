@@ -1,10 +1,14 @@
 en:
   premia:
     get_vip: "Earn"
+    earn:
+      title: 'Get More %{vip_money}'
+      note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to do the purchase or you can complete some offers provided by our partners. Please note that it may take up to few minutes to process direct payments and up to few hours to check offer completion.'
     show:
       title: "Gem Market"
       current:
         label: "You have %{amount} gems"
+        get_more: "Get More &raquo;"
       hire_mercenary:
         text: "Hire a mercenary to your Alliance"
         button: "Hire"
@@ -52,9 +56,8 @@ en:
           reset_attributes: "You successfully reseted all attributes!"
           change_name: "You successafully changed your name"
         failure: "You don't have enough Gems"
-      premium:
-        text: "You can buy gems in the %{premium_page}."
-        page: "Gem Market"
+      buttons:
+        get_more_vip: "Get More Gems"
     refill_dialog:
       buttons:
         refill: "Refill"

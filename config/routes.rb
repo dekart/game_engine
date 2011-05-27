@@ -234,7 +234,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :premium, 
     :member => {
-      :change_name => :get
+      :change_name => :get,
+      :earn => :get
     },
     :collection => {
       :refill_dialog => :post
