@@ -22,7 +22,7 @@ class Inventory < ActiveRecord::Base
         item_group  name plural_name description image image?
         basic_price vip_price can_be_sold? can_be_sold_on_market?
         placements placement_options_for_select
-        usable? payouts payouts? use_button_label use_message effects effects?
+        payouts payouts? use_button_label use_message effects effects?
       } +
       [{:to => :item}]
     )
@@ -39,13 +39,17 @@ class Inventory < ActiveRecord::Base
   def sell_price
     Setting.p(:inventory_sell_price, item.basic_price).ceil
   end
+  
+  def usable?
+    !frozen? && item.usable?
+  end
 
   def use!
     return false unless usable?
 
     transaction do
       payouts.apply(character, :use, item).tap do
-        character.inventories.take!(item)
+        character.inventories.take!(self)
       end
     end
   end

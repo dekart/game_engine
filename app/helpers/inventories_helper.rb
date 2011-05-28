@@ -20,4 +20,12 @@ module InventoriesHelper
       inventory.use_button_label.blank? ? t('inventories.list.buttons.use') : inventory.use_button_label
     )
   end
+
+  def inventory_use_again_button(inventory)
+    button(
+      t('inventories.list.buttons.use_again',
+        :use => inventory.use_button_label.blank? ? t('inventories.list.buttons.use') : inventory.use_button_label
+      )
+    )
+  end
 end

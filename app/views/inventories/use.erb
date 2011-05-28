@@ -6,6 +6,17 @@
       <%= t(".messages.success", :item => @inventory.name).html_safe %>
     <% end %>
   <% end %>
+  
+  <% builder.buttons do %>
+    <%= link_to_remote(inventory_use_again_button(@inventory),
+          :url    => use_inventory_path(@inventory),
+          :update => :result,
+          :html   => {
+            :"data-click-once" => true,
+            :class => "use button"
+          }
+        ) if @inventory.usable? %>
+  <% end %>
 
   <table class="payouts" cellspacing="0" cellpadding="0">
     <tr>

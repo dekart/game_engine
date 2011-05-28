@@ -40,6 +40,7 @@ en:
         sell: "Sell for %{price}"
         sell_on_market: "Sell on Market"
         use: "Use"
+        use_again: "%{use} Again"
       empty_set:
         text: "Your inventory is empty. You can buy new items in the %{shop}"
         shop: "Shop"
