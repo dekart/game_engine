@@ -1,5 +1,8 @@
 <div class="fighters">
-  <h3><%= t(".title") %></h3>
+  <h3>
+    <%= t(".title") %> 
+    <%= help_link(:monsters_damage_leaders)%>
+  </h3>
 
   <% monster.monster_fights.top_damage.each do |fight| %>
     <div class="fighter clearfix">
