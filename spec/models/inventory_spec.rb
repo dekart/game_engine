@@ -42,8 +42,26 @@ describe Inventory do
       end
     end
   end
+  
+  describe '#usable?' do
+    it 'should return true' do
+      @inventory.should be_usable
+    end
+    
+    it 'should return false if item is not usable' do
+      @inventory.item.should_receive(:usable?).and_return(false)
+      
+      @inventory.should_not be_usable
+    end
+    
+    it 'should return false if inventory was destroyed' do
+      @inventory.destroy
+      
+      @inventory.should_not be_usable
+    end
+  end
 
-  describe "when using it" do
+  describe '#use' do
     it "should return false if item is not usable" do
       @inventory.should_receive(:usable?).and_return(false)
 
