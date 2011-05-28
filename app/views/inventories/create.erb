@@ -29,6 +29,11 @@
     <% if @item.price? %>
       <table class="payouts">
         <tr>
+          <td class="received">
+            <h3><%= t(".you_received.title") %></h3>
+
+            <%= payout(:item, item_image(@inventory, :medium), :label => @inventory.name) %>
+          </td>
           <td class="spent">
             <h3><%= t(".you_spent.title") %></h3>
 

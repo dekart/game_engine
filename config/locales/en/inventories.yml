@@ -18,6 +18,8 @@ en:
         inventory: "Go To Inventory"
       messages:
         success: "You successfully bought %{amount} of %{item_name}"
+      you_received:
+        title: "You received:"
       you_spent:
         title: "You spent:"
     destroy:
