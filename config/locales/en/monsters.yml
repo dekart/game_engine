@@ -14,6 +14,8 @@ en:
         engage: "Engage"
         view: "View"
         reward: "Get Reward"
+    show:
+      health: "%{monster}'s Health"
     progress:
       timer: "Time Remaining:"
       invitation:

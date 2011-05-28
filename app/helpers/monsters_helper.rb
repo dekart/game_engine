@@ -12,7 +12,7 @@ module MonstersHelper
 
     percentage_bar(percentage,
       :label => '%s: <span class="value">%d/%d</span>' % [
-        MonsterType.human_attribute_name("health"),
+        t('monsters.show.health', :monster => monster.name),
         monster.hp,
         monster.health
       ]
