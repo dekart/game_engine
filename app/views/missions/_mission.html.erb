@@ -9,7 +9,7 @@
 
     <div class="controls">
       <% if mission.repeatable? || rank.nil? || !rank.completed? %>
-        <%= link_to_remote(button(:fulfill),
+        <%= link_to_remote(button(rank.nil? || rank.progress == 0 ? :start : :fulfill),
               :url    => fulfill_mission_path(mission),
               :update => :result,
               :html   => {

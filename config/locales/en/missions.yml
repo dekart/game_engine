@@ -62,6 +62,7 @@ en:
       completed: "Completed!"
       level: "Level %{level}"
       buttons:
+        start: "Start Mission"
         fulfill: "Fulfill"
     help:
       success: "You've successfully helped %{user} to fulfill the %{mission} mission!"
