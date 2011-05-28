@@ -43,7 +43,6 @@ en:
       monster_spent: "Monster spent:"
       buttons:
         attack: "Attack Again"
-        publish: "Brag About It"
         reward: "Get Reward"
       dialog:
         title: "You defeated %{monster}!"
@@ -54,5 +53,7 @@ en:
         already_collected: "You've already collected reward for this fight."
         insignificant_damage: "You didn't do any significant damage to this monster."
       you_received: "You received:"
+      buttons:
+        publish: "Brag About It"
     fighters:
       title: "Damage Leaders"

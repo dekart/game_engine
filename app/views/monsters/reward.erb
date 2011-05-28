@@ -3,6 +3,13 @@
     <% builder.success do %>
       <%= t(".messages.success", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
     <% end %>
+    
+    <% builder.buttons do %>
+      <%= link_to_function(button(:publish),
+            stream_dialog(:monster_defeated, @fight.monster) + "$.dialog.close()",
+            :class => "publish button"
+          ) %>
+    <% end %>
 
     <table class="payouts">
       <tr>
