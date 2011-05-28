@@ -28,7 +28,7 @@ en:
         power_attack: "Power Attack (x%{factor})"
     won:
       too_late: "It's too late to join the battle! The monster is already defeated."
-      reward_collected: "The monster is defeated and the reward is collected."
+      reward_collected: "The monster is defeated and you already collected your reward."
       insignificant_damage: "The monster is defeated and you didn't do any significant damage to it"
       buttons:
         reward: "Get Reward"
