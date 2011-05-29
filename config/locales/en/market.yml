@@ -5,7 +5,7 @@ en:
       free: "FREE"
       buttons:
         buy: "Buy"
-        delete: "Remove Listing"
+        delete: "Remove"
         delete_confirm: "Are you sure?"
       empty_set: "There are no items listed right now. Try again later."
     new:
