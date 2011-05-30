@@ -128,7 +128,7 @@ Setting[:boosts_enabled] ||= false
 
 Setting[:monsters_enabled] ||= true
 Setting[:monsters_reward_time] ||= 24
-Setting[:monster_minimum_damage] ||= 10
+Setting[:monsters_maximum_reward_collectors] ||= 5
 
 Setting[:monster_fight_power_attack_factor] ||= 5
 

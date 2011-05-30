@@ -168,23 +168,43 @@ describe MonsterFight do
   end
   
   describe "when checking if player dealt significant damage to monster" do
-    before do
+    it 'should return true if user is in monsters_maximum_reward_collectors limit and false otherwise with default settings' do
       @monster = Factory(:monster)
-      @monster_fight = Factory(:monster_fight, :monster => @monster)
+      @monster_fight1 = Factory(:monster_fight, :monster => @monster)
+      @monster_fight2 = Factory(:monster_fight, :monster => @monster)
+      @monster_fight3 = Factory(:monster_fight, :monster => @monster)
+      @monster_fight4 = Factory(:monster_fight, :monster => @monster)
+      @monster_fight5 = Factory(:monster_fight, :monster => @monster)
+      @monster_fight6 = Factory(:monster_fight, :monster => @monster)
       
-      Factory(:monster_fight, :monster => @monster, :damage => 900)
+      @monster_fight1.damage = 50
+      @monster_fight2.damage = 50
+      @monster_fight3.damage = 50
+      @monster_fight4.damage = 50
+      @monster_fight5.damage = 50
+      @monster_fight6.damage = 40
+      
+      @monster_fight1.significant_damage?.should be_true
+      @monster_fight2.significant_damage?.should be_true
+      @monster_fight3.significant_damage?.should be_true
+      @monster_fight4.significant_damage?.should be_true
+      @monster_fight5.significant_damage?.should be_true
+      
+      @monster_fight6.significant_damage?.should be_false
     end
     
-    it 'should return true if user damaged monster for at least 10% of highest damage' do
-      @monster_fight.damage = 91
-      @monster_fight.significant_damage?.should be_true
-    end
-    
-    it 'should return false if user damaged monster for less than 10% of highest damage' do
-      @monster_fight.damage = 89
-      @monster_fight.significant_damage?.should be_false
+    it 'should return true if user is in monsters_maximum_reward_collectors limit and false otherwise with default settings' do
+      @monster = Factory(:monster, :monster_type => Factory(:monster_type, :maximum_reward_collectors => 1))
+      @monster_fight1 = Factory(:monster_fight, :monster => @monster)
+      @monster_fight2 = Factory(:monster_fight, :monster => @monster)
+      
+      @monster_fight1.damage = 50
+      
+      @monster_fight1.significant_damage?.should be_true
+      @monster_fight2.significant_damage?.should be_false
     end
   end
+  
 
   describe 'when checking if reward is collectable' do
     before do

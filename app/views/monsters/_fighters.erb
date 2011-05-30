@@ -4,8 +4,8 @@
     <%= help_link(:monsters_damage_leaders)%>
   </h3>
 
-  <% monster.monster_fights.top_damage.each do |fight| %>
-    <div class="fighter clearfix">
+  <% monster.monster_fights.top_damage.each_with_index do |fight, i| %>
+    <div class="fighter clearfix <%= 'collectors_border' if i == fight.monster.monster_type.number_of_maximum_reward_collectors %>">
       <div class="damage"><%= fight.damage %></div>
       <div class="name"><%= character_name_link(fight.character) %></div>
     </div>

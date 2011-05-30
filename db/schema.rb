@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524112710) do
+ActiveRecord::Schema.define(:version => 20110530093338) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20110524112710) do
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
-  add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
+  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -531,6 +531,7 @@ ActiveRecord::Schema.define(:version => 20110524112710) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "available_for_friends_invite",                :default => true
+    t.integer  "maximum_reward_collectors"
   end
 
   create_table "monsters", :force => true do |t|

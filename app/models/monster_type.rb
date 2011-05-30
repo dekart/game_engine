@@ -41,7 +41,11 @@ class MonsterType < ActiveRecord::Base
   validates_presence_of :name, :level, :health, :attack, :defence, :experience, :money, :fight_time,
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response
   validates_numericality_of :level, :attack, :defence, :experience, :money, :fight_time,
-    :minimum_damage, :maximum_damage, :minimum_response, :maximum_response,
+    :minimum_damage, :maximum_damage, :minimum_response, :maximum_response, :maximum_reward_collectors,
     :allow_nil    => true,
     :greater_than => 0
+    
+  def number_of_maximum_reward_collectors
+    maximum_reward_collectors || Setting.i(:monsters_maximum_reward_collectors)
+  end
 end

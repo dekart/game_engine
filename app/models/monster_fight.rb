@@ -91,7 +91,7 @@ class MonsterFight < ActiveRecord::Base
   end
   
   def significant_damage?
-    damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.maximum(:damage))
+    self.class.top_damage.index(self) < monster.monster_type.number_of_maximum_reward_collectors
   end
   
   def summoner?
