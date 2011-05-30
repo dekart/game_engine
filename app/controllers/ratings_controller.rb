@@ -7,6 +7,7 @@ class RatingsController < ApplicationController
     @fights      = @rating_scope.rated_by(:fights_won)
     @missions    = @rating_scope.rated_by(:missions_succeeded)
     @relations   = @rating_scope.rated_by(:relations_count)
+    @monsters    = @rating_scope.rated_by(:killed_monsters_count)
 
     render :action => :show
   end

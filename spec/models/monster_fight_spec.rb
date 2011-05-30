@@ -153,6 +153,30 @@ describe MonsterFight do
         
         @character.news.last.monster_fight.should == @monster_fight
       end
+      
+      it 'should save killer' do
+        @monster.should_receive(:won?).and_return(true)
+        @monster_fight.attack!
+        @monster.killer.should == @character
+      end
+      
+      it 'should updated stats for killer' do
+        @monster.should_receive(:won?).and_return(true)
+        @monster_fight.attack!
+        @character.killed_monsters_count.should == 1
+      end
+      
+      it 'should update stats for attacker and killer' do
+        @monster.should_receive(:won?).and_return(true)
+        
+        @killer = Factory(:character)
+        @killed_monster_fight = MonsterFight.create(:character => @killer, :monster => @monster)
+        
+        @killed_monster_fight.attack!
+        
+        @monster.character.killed_monsters_count.should == 1
+        @killer.killed_monsters_count.should == 1
+      end
     end
 
     it 'should be saved' do

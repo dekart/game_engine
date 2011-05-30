@@ -33,8 +33,20 @@ class MonsterFight < ActiveRecord::Base
         save!
         monster.save!
         character.save!
-
+        
         if monster.won?
+          monster.killer = character
+          monster.save!
+          
+          # update stats for killer and player, who inited attack
+          if character != monster.character
+            monster.character.killed_monsters_count += 1
+            monster.character.save!
+          end 
+          
+          character.killed_monsters_count += 1
+          character.save!
+          
           character.news.add(:monster_fight_defeat, :monster_fight_id => id)
         end
       end

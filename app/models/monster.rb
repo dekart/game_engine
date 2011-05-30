@@ -1,6 +1,9 @@
 class Monster < ActiveRecord::Base
   belongs_to  :monster_type
   belongs_to  :character
+  
+  belongs_to :killer, :class_name => "Character"
+  
   has_many    :monster_fights
   
   has_many    :app_requests, 
