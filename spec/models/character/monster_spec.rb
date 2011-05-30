@@ -20,5 +20,10 @@ describe Character do
 
       @character.monster_types.available_for_fight.should_not include(@monster_type1)
     end
+    
+    it 'should fetch next available monsters' do
+      @character.monster_types.available_in_future.should include(@monster_type3)
+      @character.monster_types.available_in_future.should_not include(@monster_type1, @monster_type2)
+    end
   end
 end

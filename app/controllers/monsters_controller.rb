@@ -2,6 +2,7 @@ class MonstersController < ApplicationController
   def index
     @monsters       = current_character.monsters.current
     @monster_types  = current_character.monster_types.available_for_fight
+    @locked_monster   = current_character.monster_types.available_in_future.first
   end
 
   def show

@@ -59,3 +59,15 @@
     <% end %>
   </div>
 <% end %>
+
+<% if @locked_monster %>
+  <div id="locked_monster" class="monster_list clearfix">
+    <h2><%= t(".locked.title") %></h2>
+
+    <div class="monster">
+      <div class="name"><%= @locked_monster.name %></div>
+
+      <div class="image"><%= monster_image(@locked_monster, :normal) %></div>
+    </div>
+  </div>
+<% end %>

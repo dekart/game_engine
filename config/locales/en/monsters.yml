@@ -9,6 +9,8 @@ en:
         expired: "You lost"
       available:
         title: "Available Monsters"
+      locked:
+        title: "Locked Monster"
       buttons:
         attack: "Attack"
         engage: "Engage"
