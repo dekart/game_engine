@@ -31,7 +31,7 @@
         <% end %>
         
         <td class="ignore">
-          <%= link_to_remote(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore'), :title => t('.buttons.ignore')),
+          <%= link_to_remote(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore')),
                 :url => ignore_app_request_path(app_request),
                 :update => :ajax,
                 :method => :put,

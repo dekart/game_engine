@@ -1,5 +1,5 @@
 <tr>
-  <td class="picture"><%= asset_image_tag(:mercenary) %></td>
+  <td class="picture"><%= asset_image_tag(:mercenary, :alt => relation.name) %></td>
   <td class="name"><%= relation.name %></td>
   <td class="level">
     <span class="label"><%= Character.human_attribute_name("level") %></span>

@@ -10,6 +10,8 @@ module AssetsHelper
   end
 
   def asset_image_tag(asset_alias, options = {})
+    options[:title] ||= options[:alt]
+    
     image_tag(asset_image_path(asset_alias), options)
   end
 end

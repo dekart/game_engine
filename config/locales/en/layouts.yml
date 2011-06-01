@@ -9,6 +9,7 @@ en:
     bookmark:
       title: "Bookmark"
       text: "Don't forget to add %{app} to your bookmarks!"
+      add: 'Add to Bookmarks'
     main_menu:
       home: "Home"
       missions: "Missions"
