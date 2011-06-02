@@ -1,11 +1,15 @@
 <%= title(t(".title")) %>
 
 <div id="current_vip_money">
-  <%= t(".current.label",
-        :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
-      ).html_safe %>
-  <br>
-  <%= link_to(t('.current.get_more').html_safe, earn_premium_path)%>
+  <p>
+    <%= t(".current",
+          :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
+        ).html_safe %>
+  </p>
+  
+  <div class="buttons">
+    <%= link_to(button(:get_more), earn_premium_path, :class => "get_more button")%>
+  </div>
 </div>
 
 <% if @special_items.any? %>
@@ -163,3 +167,7 @@
     </td>
   </tr>
 </table>
+
+<div id="need_more_vip">
+  <%= link_to(button(:get_more), earn_premium_path, :class => "get_more button")%>
+</div>

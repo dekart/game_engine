@@ -13,7 +13,10 @@
       image = !premium_current_vip_money_icon
       position: center left
       repeat: no-repeat
-
+  
+  .get_more
+    margin: auto
+    +button(!premium_current_vip_money_icon, 180px)
 
 #premia
   margin:
@@ -52,6 +55,12 @@
       float: none
       margin: auto
       +button(!premium_accept_icon, !premium_accept_width)
+
+#need_more_vip
+  .button
+    margin: auto
+    font-size: 18px
+    +button(!asset_icons_vip_money, 180px)
 
 #premia_result
   background-image = !premium_result_icon
