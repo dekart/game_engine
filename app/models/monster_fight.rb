@@ -103,7 +103,9 @@ class MonsterFight < ActiveRecord::Base
   end
   
   def significant_damage?
-    monster.monster_fights.top_damage.index(self) < monster.monster_type.number_of_maximum_reward_collectors
+    # user caused significant damage and was in top damage players
+    damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.maximum(:damage)) &&
+      monster.monster_fights.top_damage.index(self) < monster.monster_type.number_of_maximum_reward_collectors
   end
   
   def summoner?
