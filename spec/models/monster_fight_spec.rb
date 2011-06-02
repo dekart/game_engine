@@ -86,6 +86,20 @@ describe MonsterFight do
       
       @monster_fight.attack!.should be_false
     end
+    
+    it 'should return false if character hp is less than monster average response' do
+      @monster.monster_type.should_receive(:average_response).and_return(8)
+      @character.hp = 7
+      
+      @monster_fight.attack!.should be_false
+    end
+    
+    it 'should return false if character hp is more than monster average response' do
+      @monster.monster_type.should_receive(:average_response).and_return(8)
+      @character.hp = 8
+      
+      @monster_fight.attack!.should be_true
+    end
 
     it 'should return false if monster is not in the progress' do
       @monster.win

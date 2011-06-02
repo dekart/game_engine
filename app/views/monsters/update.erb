@@ -100,6 +100,14 @@
     <% builder.on_ready do %>
       <%= ga_track_event('Monsters', 'Not Enough Stamina') %>
     <% end %>
+  <% elsif @fight.character.hp < @fight.hp_average_response_limit(@power_attack) %>
+    <%= builder.render("requirements/not_satisfied/health_point",
+          :requirement => @fight.hp_average_response_requirement(@power_attack)
+        ) %>
+
+    <% builder.on_ready do %>
+      <%= ga_track_event('Monsters', 'Not Enough Health') %>
+    <% end %>
   <% end %>
 
   <% builder.on_ready do %>
