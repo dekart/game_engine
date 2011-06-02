@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20110601084620) do
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
-  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
+  add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false

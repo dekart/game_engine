@@ -145,7 +145,7 @@ namespace :deploy do
 
       put(config, ".gemrc")
 
-      run "gem install bundler -v=1.0.12"
+      run "gem install bundler -v=1.0.14"
     end
 
     desc "Install required gems"
