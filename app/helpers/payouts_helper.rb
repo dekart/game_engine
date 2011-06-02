@@ -53,7 +53,7 @@ module PayoutsHelper
 
   def payout(type, value, options = {}, &block)
     result = content_tag(:div,
-      content_tag(:span, value.is_a?(Numeric) && value > 0 ? '+%d' % value : value, :class => :value) +
+      content_tag(:span, value, :class => :value) +
       (block_given? ? capture(&block) : "") +
       content_tag(:span, options.delete(:label) || Character.human_attribute_name(type.to_s), :class => :label),
       :class => "#{type} payout"
