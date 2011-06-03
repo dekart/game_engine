@@ -17,7 +17,7 @@ class MonsterFight < ActiveRecord::Base
   def attack!(power_attack = false)
     monster.expire if monster.time_remaining <= 0
     
-    if monster.progress? && character.sp >= stamina_limit(power_attack) && !character.weak?
+    if monster.progress? && character.sp >= stamina_limit(power_attack) && !character.weak? && character.hp >= hp_average_response_limit(power_attack)
       @character_damage, @monster_damage = self.class.damage_system.calculate_damage(character, monster)
 
       @experience = monster.experience
@@ -61,6 +61,10 @@ class MonsterFight < ActiveRecord::Base
     power_attack ? Setting.i(:monster_fight_power_attack_factor) : 1
   end
   
+  def hp_average_response_limit(power_attack = false)
+    monster.average_response * (power_attack ? Setting.i(:monster_fight_power_attack_factor) : 1)
+  end
+  
   def collect_reward!
     return false unless reward_collectable?
 
@@ -81,6 +85,10 @@ class MonsterFight < ActiveRecord::Base
 
   def stamina_requirement(power_attack = false)
     Requirements::StaminaPoint.new(:value => stamina_limit(power_attack))
+  end
+  
+  def hp_average_response_requirement(power_attack = false)
+    Requirements::HealthPoint.new(:value => hp_average_response_limit(power_attack))
   end
 
   def repeat_fight?
@@ -103,7 +111,9 @@ class MonsterFight < ActiveRecord::Base
   end
   
   def significant_damage?
-    monster.monster_fights.top_damage.index(self) < monster.monster_type.number_of_maximum_reward_collectors
+    # user caused significant damage and was in top damage players
+    damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.maximum(:damage)) &&
+      monster.monster_fights.top_damage.index(self) < monster.monster_type.number_of_maximum_reward_collectors
   end
   
   def summoner?

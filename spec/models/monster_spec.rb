@@ -21,7 +21,7 @@ describe Monster do
       @monster = @monster_type.monsters.create(:character => Factory(:character))
     end
 
-    %w{name health level experience money attack defence minimum_damage maximum_damage minimum_response maximum_response}.each do |attribute|
+    %w{name health level experience money attack defence minimum_damage maximum_damage minimum_response maximum_response average_response}.each do |attribute|
       it "should delegate #{attribute.humanize} to monster type" do
         @monster.send(attribute).should == @monster_type.send(attribute)
       end

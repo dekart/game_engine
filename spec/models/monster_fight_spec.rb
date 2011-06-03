@@ -86,6 +86,20 @@ describe MonsterFight do
       
       @monster_fight.attack!.should be_false
     end
+    
+    it 'should return false if character hp is less than monster average response' do
+      @monster.monster_type.should_receive(:average_response).and_return(8)
+      @character.hp = 7
+      
+      @monster_fight.attack!.should be_false
+    end
+    
+    it 'should return false if character hp is more than monster average response' do
+      @monster.monster_type.should_receive(:average_response).and_return(8)
+      @character.hp = 8
+      
+      @monster_fight.attack!.should be_true
+    end
 
     it 'should return false if monster is not in the progress' do
       @monster.win
@@ -194,19 +208,13 @@ describe MonsterFight do
   describe "when checking if player dealt significant damage to monster" do
     it 'should return true if user is in monsters_maximum_reward_collectors limit and false otherwise with default settings' do
       @monster = Factory(:monster)
-      @monster_fight1 = Factory(:monster_fight, :monster => @monster)
-      @monster_fight2 = Factory(:monster_fight, :monster => @monster)
-      @monster_fight3 = Factory(:monster_fight, :monster => @monster)
-      @monster_fight4 = Factory(:monster_fight, :monster => @monster)
-      @monster_fight5 = Factory(:monster_fight, :monster => @monster)
-      @monster_fight6 = Factory(:monster_fight, :monster => @monster)
       
-      @monster_fight1.damage = 50
-      @monster_fight2.damage = 50
-      @monster_fight3.damage = 50
-      @monster_fight4.damage = 50
-      @monster_fight5.damage = 50
-      @monster_fight6.damage = 40
+      @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 50)
+      @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 50)
+      @monster_fight3 = Factory(:monster_fight, :monster => @monster, :damage => 50)
+      @monster_fight4 = Factory(:monster_fight, :monster => @monster, :damage => 50)
+      @monster_fight5 = Factory(:monster_fight, :monster => @monster, :damage => 50)
+      @monster_fight6 = Factory(:monster_fight, :monster => @monster, :damage => 40)
       
       @monster_fight1.significant_damage?.should be_true
       @monster_fight2.significant_damage?.should be_true
@@ -219,10 +227,39 @@ describe MonsterFight do
     
     it 'should return true if user is in monsters_maximum_reward_collectors limit and false otherwise with default settings' do
       @monster = Factory(:monster, :monster_type => Factory(:monster_type, :maximum_reward_collectors => 1))
-      @monster_fight1 = Factory(:monster_fight, :monster => @monster)
-      @monster_fight2 = Factory(:monster_fight, :monster => @monster)
       
-      @monster_fight1.damage = 50
+      @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 50)
+      @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 40)
+      
+      @monster_fight1.significant_damage?.should be_true
+      @monster_fight2.significant_damage?.should be_false
+    end
+    
+    it 'should not return true if user dont do significant damage, because one user dont attack monster' do
+      @monster = Factory(:monster, :monster_type => Factory(:monster_type, :maximum_reward_collectors => 2))
+      
+      @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 50)
+      @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 0)
+      
+      @monster_fight1.significant_damage?.should be_true
+      @monster_fight2.significant_damage?.should be_false
+    end
+    
+    it 'should return true if users do significant damage' do
+      @monster = Factory(:monster, :monster_type => Factory(:monster_type, :maximum_reward_collectors => 2))
+      
+      @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 10)
+      @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 1)
+      
+      @monster_fight1.significant_damage?.should be_true
+      @monster_fight2.significant_damage?.should be_true
+    end
+    
+    it 'should return false for users who dont do significant damage, because its too little' do
+      @monster = Factory(:monster, :monster_type => Factory(:monster_type, :maximum_reward_collectors => 2))
+      
+      @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 20)
+      @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 1)
       
       @monster_fight1.significant_damage?.should be_true
       @monster_fight2.significant_damage?.should be_false

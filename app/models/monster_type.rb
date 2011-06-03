@@ -48,4 +48,8 @@ class MonsterType < ActiveRecord::Base
   def number_of_maximum_reward_collectors
     maximum_reward_collectors || Setting.i(:monsters_maximum_reward_collectors)
   end
+  
+  def average_response
+    (minimum_response + maximum_response) / 2
+  end
 end

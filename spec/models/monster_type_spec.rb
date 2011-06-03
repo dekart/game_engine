@@ -20,6 +20,17 @@ describe MonsterType do
       @monster_type.fight_time.should == 12
     end
   end
+  
+  describe 'methods' do
+    before do
+      @monster_type = Factory(:monster_type)
+    end
+    
+    it 'should have average response = 3' do
+      @monster_type.average_response.should == 3
+    end
+  end
+  
 
   describe 'when creating' do
     before do
