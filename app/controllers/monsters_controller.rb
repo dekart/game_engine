@@ -3,6 +3,8 @@ class MonstersController < ApplicationController
     @monsters       = current_character.monsters.current
     @monster_types  = current_character.monster_types.available_for_fight
     @locked_monster   = current_character.monster_types.available_in_future.first
+    
+    render :index
   end
 
   def show
@@ -23,11 +25,17 @@ class MonstersController < ApplicationController
     @monster_type = MonsterType.find(params[:monster_type_id])
 
     @monster = current_character.monsters.own.current.by_type(@monster_type).first
-    @monster ||= @monster_type.monsters.create!(:character => current_character)
+    @monster ||= @monster_type.monsters.create(:character => current_character)
   
-    EventLoggingService.log_event(:monster_engaged, @monster)
+    if @monster.new_record?
+      flash.now[:error] = @monster.errors.full_messages
+      
+      index
+    else
+      EventLoggingService.log_event(:monster_engaged, @monster)
 
-    redirect_from_iframe monster_url(@monster, :canvas => true)
+      redirect_from_iframe monster_url(@monster, :canvas => true)
+    end
   end
 
   def update
