@@ -1,4 +1,9 @@
 class FightsController < ApplicationController
+  def index
+    @victims = Fight.new(:attacker => current_character).opponents
+    render :layout => "ajax"
+  end
+  
   def new
     @victims = Fight.new(:attacker => current_character).opponents
   end
