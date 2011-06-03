@@ -59,9 +59,5 @@ class StoriesController < ApplicationController
     end
     
     redirect_from_iframe(@next_page) if @payouts.empty?
-  rescue ActiveSupport::MessageEncryptor::InvalidMessage
-    Rails.logger.error "Failed to decrypt story data: #{params[:story_data]}"
-    
-    redirect_from_exception
   end
 end

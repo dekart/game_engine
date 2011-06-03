@@ -135,10 +135,6 @@ class InventoriesController < ApplicationController
 
       redirect_from_iframe root_url(:canvas => true)
     end
-  rescue ActiveSupport::MessageEncryptor::InvalidMessage
-    Rails.logger.error "Failed to decrypt collection request data: #{params[:request_data]}"
-    
-    redirect_from_exception
   end
 
   protected

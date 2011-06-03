@@ -17,3 +17,6 @@ en:
     remove_attachment: "Remove Image"
   blocks:
     hide: "Hide"
+
+  errors:
+    broken_url: "It seems that you clicked a broken link. Maybe the person who gave you this link didn\'t copy it in full?"

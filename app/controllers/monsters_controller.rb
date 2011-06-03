@@ -15,10 +15,6 @@ class MonstersController < ApplicationController
     end
 
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
-  rescue ActiveSupport::MessageEncryptor::InvalidMessage
-    Rails.logger.error "Failed to decrypt monster ID: #{ params[:id] }"
-
-    redirect_from_exception
   end
 
   def new
