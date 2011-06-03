@@ -39,7 +39,7 @@ en:
       expired: "You didn't manage to defeat the monster in time."
     update:
       message:
-        progress: "You've successfully attacked %{monster}!"
+        progress: "You've successfully attacked %{monster}! Keep attacking!"
         won: "You've defeated %{monster}!"
         expired: "You didn't manage to defeat %{monster} in time."
       you_received: "You received:"

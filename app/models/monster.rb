@@ -82,7 +82,7 @@ class Monster < ActiveRecord::Base
   def validate_on_create
     return unless character && monster_type
 
-    errors.add(:base, :recently_attacked) if character.monsters.current.by_type(monster_type).count > 0
+    errors.add_to_base(:recently_attacked) if character.monsters.own.current.by_type(monster_type).count > 0
 
     errors.add(:character, :low_level) if character.level < level
 

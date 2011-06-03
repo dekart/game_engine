@@ -8,6 +8,7 @@ class ApplicationController
           [ActionController::RoutingError,      :rescue_routing_error],
           [ActionController::UnknownAction,     :rescue_unknown_action],
           [ActiveRecord::StaleObjectError,      :rescue_locking_error],
+          [ActiveSupport::MessageEncryptor::InvalidMessage, :rescue_decryption_error],
           [Facebooker2::OAuthException,         :rescue_facebooker_oauth_exception]
         ].each do |exception, method|
           base.rescue_from(exception, :with => method)
@@ -49,6 +50,7 @@ class ApplicationController
 
     def rescue_unknown_action(exception)
       logger.fatal("Unknown action for #{request.request_uri} [#{request.method.to_s.upcase}]")
+      
       fatal_log_processing_for_parameters
 
       log_error(exception)
@@ -66,6 +68,15 @@ class ApplicationController
       Rails.logger.fatal "Stale object update error"
 
       render :text => "You're clicking too fast. Please calm down :)"
+    end
+    
+    def rescue_decryption_error(exception)
+      fatal_log_processing_for_request_id
+      fatal_log_processing_for_parameters
+
+      flash[:error] = t('errors.broken_url')
+
+      redirect_from_exception
     end
 
     protected
