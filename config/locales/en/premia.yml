@@ -3,7 +3,7 @@ en:
     get_vip: "Earn"
     earn:
       title: 'Get More %{vip_money}'
-      note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to do the purchase or you can complete some offers provided by our partners. Please note that it may take up to few minutes to process direct payments and up to few hours to check offer completion.'
+      note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to do the purchase or you can complete some offers provided by our partners.'
     show:
       title: "Gem Market"
       buttons:
