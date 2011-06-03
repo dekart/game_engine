@@ -45,4 +45,8 @@
       <%= @fight.errors.collect{|e| e.last }.join(' ') %>
     <% end %>
   <% end %>
+
+  <% builder.on_ready do %>
+    $(document).trigger('fights.create');
+  <% end %>
 <% end %>

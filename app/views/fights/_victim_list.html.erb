@@ -8,11 +8,27 @@
 </table>
 
 <% dom_ready do %>
-  // reload opponents on levelup
-  $(document).bind('character.new_level', function() {
-    $.get('<%= fights_path %>', function(data) {
-      $('#victim_list .character').remove();
-      $('#victim_list').append(data);
-    });
+  $(document).bind({
+    // reload opponents on levelup
+    'character.new_level.reload_victims': function() {
+      $.get('/fights', function(data) {
+        $('#victim_list .character').remove();
+        $('#victim_list').append(data);
+      });
+    },
+
+    // load new victims if list is empty
+    'fights.create.reload_victims': function() {
+      if ($('#victim_list .character:visible').length == 0) {
+
+        $.get('/fights', function(data) {
+          // double checking. if user gets new level and won last player in list
+          if ($('#victim_list .character:visible').length == 0) {
+            $('#victim_list').append(data);
+          }
+        });
+
+      }
+    }
   });
 <% end %>
