@@ -19,4 +19,15 @@
   <% collection(@victims) do %>
     <%= render "victim_list", :victims => @victims %>
   <% end %>
+
+  <div class="more_opponents controls">
+    <%= link_to_remote(button(:more_opponents), 
+          :url => fights_path,
+          :method => :get,
+          :success => "$('#victim_list').append(request)",
+          :html   => {
+              :class => "button more_opponents"
+            }
+        ) %>
+  </div>
 <% end %>

@@ -1,1 +1,5 @@
 <%= render "victims", :victims => @victims %>
+
+<% dom_ready do %>
+  $(document).trigger('remote_content.received');
+<% end %>

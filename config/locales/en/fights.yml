@@ -38,6 +38,8 @@ en:
         too_weak: "You are too weak to fight! Take a rest until your health will grow to %{hp_number} points. You need to wait about %{minute_number} minutes."
         not_enough_stamina: "You don't have enough stamina to fight! Take a rest until your stamina will grow. You need to wait about %{minute_number} minutes."
       empty_set: "There are no opponents for you at this time."
+      buttons:
+        more_opponents: "More Opponents"
     victims:
       buttons:
         attack: "Attack!"
