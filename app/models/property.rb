@@ -128,6 +128,11 @@ class Property < ActiveRecord::Base
   end
 
   def assign_collected_at
-    update_attribute(:collected_at, created_at)
+    # if it is first property, set short collect time
+    if character.properties.count == 1 && Setting.i(:property_first_collect_time) != 0
+      update_attribute(:collected_at, (collect_period.hours - Setting.i(:property_first_collect_time).seconds).ago)
+    else
+      update_attribute(:collected_at, created_at)
+    end
   end
 end

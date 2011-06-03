@@ -20,10 +20,34 @@ describe Property do
     @property.level.should == 1
   end
 
-  it "should be already collected by default" do
+  it "should be already collected by default if first property collect time not set" do
+    with_setting(:property_first_collect_time => 0) do
+      @property.save
+      @property.collected_at.should == @property.created_at
+    end
+  end
+  
+  it 'should set short collect time if first property collect time is set' do
+    Timecop.freeze(Time.now) do
+      @property.save
+      
+      collected_at = (@property.collect_period.hours - Setting.i(:property_first_collect_time).seconds).ago
+      @property.collected_at.should == collected_at
+      
+      @property.time_to_next_collection.should == Setting.i(:property_first_collect_time).seconds
+    end
+  end
+  
+  it 'should not set short collect time if character have more than one property' do
     @property.save
     
-    @property.collected_at.should == @property.created_at
+    @property_type2 = Factory(:property_type, :basic_price => 1)
+    @property2 = Factory(:property, :property_type => @property_type2, :character => @character)
+    
+    Timecop.freeze(Time.now) do
+      @property2.save
+      @property2.collected_at.should == @property2.created_at
+    end
   end
 
   it "should return correct total income" do
