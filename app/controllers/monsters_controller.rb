@@ -22,7 +22,7 @@ class MonstersController < ApplicationController
   def new
     @monster_type = MonsterType.find(params[:monster_type_id])
 
-    @monster = current_character.monsters.current.by_type(@monster_type).first
+    @monster = current_character.monsters.own.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create!(:character => current_character)
   
     EventLoggingService.log_event(:monster_engaged, @monster)

@@ -147,3 +147,8 @@ en:
           cannot_help_themself: "You cannot help yourself!"
         app_request/gift:
           accepted_recently: "You already accepted a gift from this player recently. You can accept only 1 gift per sender per every %{hours} hours."
+          
+        monster:
+          attributes:
+            base:
+              recently_attacked: 'You already attacked this monster recently'
