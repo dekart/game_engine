@@ -6,7 +6,7 @@ module Facebooker2
           if ::Rails::VERSION::STRING.to_i > 2
             str
           else
-            concat(str)
+            concat(str); ""
           end
         end
 
@@ -33,7 +33,6 @@ module Facebooker2
           app_id  = args.shift || Facebooker2.app_id
 
           options.reverse_merge!(
-            :wrap_tag => true,
             :cookie   => true,
             :status   => true,
             :xfbml    => true,
@@ -63,21 +62,21 @@ module Facebooker2
               };
 
               (function() {
-                var s = document.createElement('div');
-                s.setAttribute('id','fb-root');
-                document.documentElement.getElementsByTagName("body")[0].appendChild(s);
                 var e = document.createElement('script');
                 e.src = document.location.protocol + '//#{ js_url }';
                 e.async = true;
-                s.appendChild(e);
+                document.getElementById('fb-root').appendChild(e);
               }());
             JAVASCRIPT
             
-            js = javascript_tag(js) if options[:wrap_tag]
+            js = <<-CODE
+              <div id="fb-root"></div>
+              <script type="text/javascript">#{ js }</script>
+            CODE
           else
             js = <<-CODE
-              <div id='fb-root'></div>
-              <script src="http://#{ js_url }" type="text/javascript"></script>
+              <div id="fb-root"></div>
+              <script src="#{request.protocol}#{ js_url }" type="text/javascript"></script>
             CODE
             
             if options[:cache_url]

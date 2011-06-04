@@ -13,9 +13,8 @@ development:
   api_key: eb10c2f51295fd4060c8355b1bd0e041
   secret: e60fff396d3307bdf9a48e91eebbb131
   canvas_page_name: hoodwars-dev
-  callback_url: http://fb2.itvektor.ru
+  callback_domain: fb2.itvektor.ru
   pretty_errors: false
-  set_asset_host_to_callback_url: true
   tunnel:
     public_host_username: fb
     public_host: itvektor.ru
@@ -27,13 +26,13 @@ test:
   api_key: abcd1234567890abcd1234567890ab12
   secret: 21ba0987654321dcba0987654321dcba
   canvas_page_name: test
-  callback_url: http://callback.url
+  callback_domain: callback.url
 
 production:
   app_id: 81958551648
   api_key: eccd02101c4a358ffe9590fdfa347954
   secret_key: 1a7e8b3eb1e5d3999d54d286b5d1c5e4
   canvas_page_name: sword-and-magic
-  callback_url: http://sword.it-vektor.ru
+  callback_domain: sword.it-vektor.ru
   set_asset_host_to_callback_url: true
   

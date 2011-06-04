@@ -13,6 +13,11 @@ describe Facebooker2::Rails::Controller do
   let :controller do
     controller = FakeController.new
     controller.stub!(:params).and_return({})
+    controller.stub!(:request).and_return(
+      mock('environment variables', 
+        :env => {'HTTP_SIGNED_REQUEST' => 'N1JJFILX63MufS1zpHZwN109VK1ggzEsD0N4pH-yPtc.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImV4cGlyZXMiOjEyNzk4MjE2MDAsIm9hdXRoX3Rva2VuIjoiMTAzMTg4NzE2Mzk2NzI1fDIucnJRSktyRzFRYXpGYTFoa2Z6MWpMZ19fLjM2MDAuMTI3OTgyMTYwMC01MzI4Mjg4Njh8TWF4QVdxTWtVS3lKbEFwOVgwZldGWEF0M004LiIsInVzZXJfaWQiOiI1MzI4Mjg4NjgifQ'}
+      )
+    )
     controller.stub!(:cookies).and_return("fbs_12345"=>"\"access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.&expires=0&secret=1e3375dcc4527e7ead0f82c095421690&session_key=57f0206b01ad48bf84ac86f1-12451752&sig=4337fcdee4cc68bb70ec495c0eebf89c&uid=12451752\"")
     controller
   end
@@ -25,16 +30,17 @@ describe Facebooker2::Rails::Controller do
   describe "Cookie handling" do
     
     it "knows if a cookie exists for this app" do
-      controller.fb_cookie_for_app_id?(12345).should be_true
+      controller.fb_cookie.should be_true
     end
     
     it "knows when there isn't a cookie" do
-      controller.fb_cookie_for_app_id?(432432).should be_false      
+      controller.stub!(:cookies).and_return("")
+      controller.fb_cookie?.should be_false      
     end
     
     it "gets the hash from the cookie" do
       controller.stub!(:cookies).and_return("fbs_12345"=>"param1=val1&param2=val2")
-      controller.fb_cookie_hash_for_app_id(12345).should == {"param1"=>"val1", "param2"=>"val2"}
+      controller.fb_cookie_hash.should == {"param1"=>"val1", "param2"=>"val2"}
     end
     
     it "creates a user from the cookie" do
@@ -59,6 +65,7 @@ describe Facebooker2::Rails::Controller do
     end
     
     it "creates a client from params" do
+      controller.stub!(:fb_cookie_hash).and_return({})
       controller.stub!(:cookies).and_return({})
       controller.stub!(:facebook_params).and_return(
         :oauth_token => "103188716396725|2.N0kBq5D0cbwjTGm9J4xRgA__.3600.1279814400-585612657|Txwy8S7sWBIJnyAXebEgSx6ntgY.",
@@ -93,7 +100,39 @@ describe Facebooker2::Rails::Controller do
       
     end
     
-    
+    it "does not set a cookie if it is not required" do
+      controller.stub!(:cookies).and_return("")
+      controller.set_fb_cookie(nil,
+                              Time.now,
+                              "5436785463785",
+                              "4337fcdee4cc68bb70ec495c0eebf89c").should be_nil
+      controller.fb_cookie.should be_nil
+    end
+
+    it "sets a valid cookie if the access token is not nil" do
+      tn = Time.now
+      controller.set_fb_cookie("114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.",
+                               tn,
+                               "5436785463785",
+                               "4337fcdee4cc68bb70ec495c0eebf89c").should be_true
+     controller.fb_cookie[:value].should == "\"session_key=57f0206b01ad48bf84ac86f1-12451752&expires=#{tn.to_i}&uid=5436785463785&sig=4337fcdee4cc68bb70ec495c0eebf89c&secret=1e3375dcc4527e7ead0f82c095421690&access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.\""
+    end
+
+    it "sets a cookie with an expires value of 0 if the access token expires value is far in the future" do
+      controller.set_fb_cookie("114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.",
+                               Time.now+2.year,
+                               "5436785463785",
+                               "4337fcdee4cc68bb70ec495c0eebf89c").should be_true
+     controller.fb_cookie[:value].should == "\"session_key=57f0206b01ad48bf84ac86f1-12451752&expires=0&uid=5436785463785&sig=4337fcdee4cc68bb70ec495c0eebf89c&secret=1e3375dcc4527e7ead0f82c095421690&access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.\""
+    end
+
+   it "sets a cookie with the value deleted if the access token is nil" do
+     controller.set_fb_cookie(nil,
+                              Time.now,
+                              "5436785463785",
+                              "4337fcdee4cc68bb70ec495c0eebf89c").should be_true
+     controller.fb_cookie[:value].should == "deleted"
+   end
   end
   
   describe "Signed Request handling" do
@@ -111,9 +150,40 @@ describe Facebooker2::Rails::Controller do
     it "doesn't provide facebook params if the sig is invalid" do
       Facebooker2.secret = "mysecretkey"
       controller.stub!(:params).and_return(:signed_request=>"invalid.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImV4cGlyZXMiOjEyNzk4MjE2MDAsIm9hdXRoX3Rva2VuIjoiMTAzMTg4NzE2Mzk2NzI1fDIucnJRSktyRzFRYXpGYTFoa2Z6MWpMZ19fLjM2MDAuMTI3OTgyMTYwMC01MzI4Mjg4Njh8TWF4QVdxTWtVS3lKbEFwOVgwZldGWEF0M004LiIsInVzZXJfaWQiOiI1MzI4Mjg4NjgifQ")
-      controller.facebook_params.should be_blank
-      
+      controller.facebook_params.should be_blank      
     end
+    
+    it "writes a cookie to the client if the sig is valid" do
+      controller.stub!(:params).and_return(:signed_request=>"N1JJFILX63MufS1zpHZwN109VK1ggzEsD0N4pH-yPtc.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImV4cGlyZXMiOjEyNzk4MjE2MDAsIm9hdXRoX3Rva2VuIjoiMTAzMTg4NzE2Mzk2NzI1fDIucnJRSktyRzFRYXpGYTFoa2Z6MWpMZ19fLjM2MDAuMTI3OTgyMTYwMC01MzI4Mjg4Njh8TWF4QVdxTWtVS3lKbEFwOVgwZldGWEF0M004LiIsInVzZXJfaWQiOiI1MzI4Mjg4NjgifQ")
+      Facebooker2.secret = "mysecretkey"
+      controller.fetch_client_and_user.should be_true
+      controller.fb_cookie.should_not be_nil
+      sig = controller.generate_signature({"uid"=>controller.facebook_params[:user_id],
+                                          "access_token"=>controller.facebook_params[:oauth_token],
+                                          "expires"=>controller.facebook_params[:expires]},
+                                         Facebooker2.secret)
+
+      controller.fb_cookie[:value].should == "\"session_key=57f0206b01ad48bf84ac86f1-12451752&"+
+                                             "expires=1279821600&"+
+                                             "uid=532828868&"+
+                                             "sig=0d82b1bb944e5bf8e753a71ee72e9e23&"+
+                                             "secret=1e3375dcc4527e7ead0f82c095421690&"+
+                                             "access_token=103188716396725|2.rrQJKrG1QazFa1hkfz1jLg__.3600.1279821600-532828868|MaxAWqMkUKyJlAp9X0fWFXAt3M8.\""
+
+    end
+    
+    it "uses the cookie if no signed_request is provided" do
+      controller.fetch_client_and_user.should be_true
+      controller.current_facebook_user.id.should == "12451752"
+    end
+    
+    it "deletes the cookie if the signed_request does not contain a oauth token (logged out or unauthorized user)" do
+      controller.stub!(:facebook_params).and_return({"algorithm"=>"HMAC-SHA256", "issued_at"=>1300976861, "user"=>{"country"=>"ca", "locale"=>"fr_CA", "age"=>{"min"=>21}}})
+      controller.fetch_client_and_user.should be_true
+      controller.fb_cookie[:value].should == "deleted"
+      controller.current_facebook_user.should be_nil
+    end
+    
   end
   
   describe "Methods" do

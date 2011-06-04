@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_character_existance
+    logger.debug request.protocol
     unless current_character
       store_return_to
 

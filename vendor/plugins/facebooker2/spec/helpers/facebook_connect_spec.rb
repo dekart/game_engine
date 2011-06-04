@@ -30,21 +30,21 @@ describe Facebooker2::Rails::Helpers::FacebookConnect, :type=>:helper do
       fb_server_fbml do
         
       end
-      output_buffer.should == "<fb:serverFbml><script type='text/fbml'></script></fb:serverFbml>"
+      output_buffer.should == "<fb:serverFbml><script type=\"text/fbml\"></script></fb:serverFbml>"
     end
     
     it "includes the content inside the block" do
       fb_server_fbml do
         "inner text"
       end
-      output_buffer.should == "<fb:serverFbml><script type='text/fbml'>inner text</script></fb:serverFbml>"      
+      output_buffer.should == "<fb:serverFbml><script type=\"text/fbml\">inner text</script></fb:serverFbml>"      
     end
     
     it "allows specifying style attributes" do
       fb_server_fbml "width: 750px;" do
         
       end
-      output_buffer.should == "<fb:serverFbml style=\"width: 750px;\"><script type='text/fbml'></script></fb:serverFbml>"
+      output_buffer.should == "<fb:serverFbml style=\"width: 750px;\"><script type=\"text/fbml\"></script></fb:serverFbml>"
       
     end
   end

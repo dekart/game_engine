@@ -32,18 +32,17 @@ describe Facebooker2 do
     end
     
     it "can load the configuration via facebooker.yml" do
-      ::Rails=mock("rails",:env=>"spec",:root=>File.dirname(__FILE__))
       Facebooker2.load_facebooker_yaml
       Facebooker2.app_id.should == "1234fromyaml"
       Facebooker2.secret.should == "fromyaml"
     end
     
     it "raises an error if there is no configuration for the env" do
-      ::Rails=mock("rails",:env=>"invalid",:root=>File.dirname(__FILE__))
+      ::Rails.stub!(:env).and_return('invalid')
+
       lambda do
         Facebooker2.load_facebooker_yaml
       end.should raise_error(Facebooker2::NotConfigured)
-      
     end
   end
   

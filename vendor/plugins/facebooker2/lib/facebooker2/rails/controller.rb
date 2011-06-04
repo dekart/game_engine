@@ -14,6 +14,8 @@ module Facebooker2
         controller.helper_method :current_facebook_client
         controller.helper_method :facebook_params
         controller.helper_method :facebook_signed_request
+        controller.helper_method :facebook_canvas_page_url
+        controller.helper_method :facebook_callback_url
       end
 
 
@@ -29,37 +31,49 @@ module Facebooker2
 
         @_current_facebook_client
       end
-
-
+      
+      # This mimics the getSession logic from the php facebook SDK
+      # https://github.com/facebook/php-sdk/blob/master/src/facebook.php#L333
+      #
       def fetch_client_and_user
         return if @_fb_user_fetched
-
-        fetch_client_and_user_from_cookie
-        fetch_client_and_user_from_signed_request unless @_current_facebook_client
-
+        
+        # Try to authenticate from the signed request first
+        sig = fetch_client_and_user_from_signed_request
+        sig = fetch_client_and_user_from_cookie if @_current_facebook_client.nil? and !signed_request_from_logged_out_user?
+        
+        #write the authentication params to a new cookie
+        if !@_current_facebook_client.nil? 
+          #we may have generated the signature based on the params in @facebook_params, and the expiration here is different
+          
+          set_fb_cookie(@_current_facebook_client.access_token, @_current_facebook_client.expiration, @_current_facebook_user.id, sig)
+        else
+          # if we do not have a client, delete the cookie
+          set_fb_cookie(nil,nil,nil,nil)
+        end
+        
         @_fb_user_fetched = true
       end
 
 
       def fetch_client_and_user_from_cookie
-        app_id = Facebooker2.app_id
-
-        hash_data = fb_cookie_hash_for_app_id(app_id)
-
-        if hash_data and fb_cookie_signature_correct?(hash_data, Facebooker2.secret)
+        hash_data = fb_cookie_hash
+        
+        if hash_data and fb_cookie_signature_correct?(fb_cookie_hash, Facebooker2.secret)
           fb_create_user_and_client(
             hash_data["access_token"],
             hash_data["expires"],
             hash_data["uid"]
           )
+          
+          fb_cookie_hash["sig"]
         end
       end
-
-
-      def fb_create_user_and_client(token, expires, userid)
-        client  = Mogli::Client.new(token,expires.to_i)
-        user    = Mogli::User.new(:id => userid)
-
+      
+      def fb_create_user_and_client(token, expires, user_id)
+        client = Mogli::Client.new(token, expires.to_i)
+        user = Mogli::User.new(:id => user_id)
+        
         fb_sign_in_user_and_client(user, client)
       end
 
@@ -71,38 +85,58 @@ module Facebooker2
         @_current_facebook_client = client
         @_fb_user_fetched = true
       end
-
-
-      def fb_cookie_hash_for_app_id(app_id)
-        return unless fb_cookie = fb_cookie_for_app_id(app_id)
-
-        {}.tap do |hash|
-          data = fb_cookie.gsub(/"/,"")
-
-          data.split("&").each do |str|
-            parts = str.split("=")
-            hash[parts.first] = parts.last
-          end
+      
+      def fb_cookie_hash
+        return nil unless fb_cookie?
+        
+        hash = {}
+        
+        data = fb_cookie.gsub(/"/, "")
+        
+        data.split("&").each do |str|
+          parts = str.split("=")
+          
+          hash[parts.first] = parts.last
         end
+        
+        hash
       end
-
-
-      def fb_cookie_for_app_id(app_id)
-        cookies["fbs_#{app_id}"]
+      
+      def fb_cookie?
+        !fb_cookie.nil?
       end
-
-
+      
+      def fb_cookie
+        cookies[fb_cookie_name]
+      end
+      
+      def fb_cookie_name
+        "fbs_#{Facebooker2.app_id}"
+      end
+      
+      # check if the expected signature matches the one from facebook
       def fb_cookie_signature_correct?(hash, secret)
+        generate_signature(hash, secret) == hash["sig"]
+      end
+      
+      # If the signed request is valid but contains no oauth token,
+      # the user is either logged out from Facebook or has not authorized the app
+      def signed_request_from_logged_out_user?
+        !facebook_params.empty? && facebook_params[:oauth_token].nil?
+      end
+      
+      # compute the md5 sig based on access_token,expires,uid, and the app secret
+      def generate_signature(hash, secret)
         sorted_keys = hash.keys.reject {|k| k == "sig" }.sort
         test_string = ""
 
         sorted_keys.each do |key|
-          test_string += "#{key}=#{hash[key]}"
+          test_string << "#{key}=#{hash[key]}"
         end
 
-        test_string += secret
-
-        Digest::MD5.hexdigest(test_string) == hash["sig"]
+        test_string << secret
+        
+        Digest::MD5.hexdigest(test_string)
       end
 
 
@@ -161,24 +195,98 @@ module Facebooker2
             facebook_params[:expires],
             facebook_params[:user_id]
           )
+          
+          if @_current_facebook_client
+            #compute a signature so we can store it in the cookie
+            sig_hash = {
+              "uid"           => facebook_params[:user_id],
+              "access_token"  => facebook_params[:oauth_token],
+              "expires"       => facebook_params[:expires]
+            }
+            
+            generate_signature(sig_hash, Facebooker2.secret)
+          end
         end
       end
+      
+      
+      # /**
+      #   This method was shamelessly stolen from the php facebook SDK:
+      #   https://github.com/facebook/php-sdk/blob/master/src/facebook.php
+      #   
+      #    Set a JS Cookie based on the _passed in_ session. It does not use the
+      #    currently stored session -- you need to explicitly pass it in.
+      #   
+      #   If a nil access_token is passed in this method will actually delete the fbs_ cookie
+      #
+      #   */
+      def set_fb_cookie(access_token,expires,uid,sig) 
+        
+        #default values for the cookie
+        value = 'deleted'
+        expires = Time.now.utc - 3600 unless expires != nil
 
-      # appends facebook signed_request to params of redirect
-      # this needs for facebook auth
+        # If the expires value is set to some large value in the future, then the 'offline access' permission has been
+        # granted.  In the Facebook JS SDK, this causes a value of 0 to be set for the expires parameter.  This value 
+        # needs to be correct otherwise the request signing fails, so if the expires parameter retrieved from the graph
+        # api is more than a year in the future, then we set expires to 0 to match the JS SDK.
+        expires = 0 if expires > Time.now + 1.year
+        
+        if access_token
+          # Retrieve the existing cookie data
+          data = fb_cookie_hash || {}
+          # Remove the deleted value if this has previously been set, as we don't want to include it as part of the 
+          # request signing parameters
+          data.delete('deleted') if data.key?('deleted')
+          # Keep existing cookie data that could have been set by FB JS SDK
+          data.merge!('access_token' => access_token, 'uid' => uid, 'sig' => sig, 'expires' => expires.to_i.to_s)
+          # Create string to store in cookie
+          value = '"'
+          data.each do |k,v|
+            value += "#{k.to_s}=#{v.to_s}&"
+          end
+          value.chop!
+          value+='"'
+        end
+  
+        # if an existing cookie is not set, we dont need to delete it
+        if (value == 'deleted' && (!fb_cookie? || fb_cookie == "" ))
+          return;
+        end
+        
+        #My browser doesn't seem to save the cookie if I set expires
+        cookies[fb_cookie_name] = { :value=>value }#, :expires=>expires}
+      end
+      
+    
+      # For canvas apps, You need to set the p3p header in order to get IE 6/7 to accept the third-party cookie
+      # For details http://www.softwareprojects.com/resources/programming/t-how-to-get-internet-explorer-to-use-cookies-inside-1612.html
+      def set_p3p_header_for_third_party_cookies
+        response.headers['P3P'] = 'CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"'
+      end
+      
+      
+      def facebook_canvas_page_url
+        Facebooker2.canvas_page_url(request.protocol)
+      end
+      
+      def facebook_callback_url
+        Facebooker2.callback_url(request.protocol)
+      end
+      
+
+      # Appends facebook signed_request to params on redirect
       def redirect_to(options = {}, response_status = {})
-        case options
-          when %r{^\w[\w\d+.-]*:.*}
-            # this is full url. do nothing
+        unless facebook_signed_request.blank?
+          case options
           when String
             # append signed_request param to query string
             uri = URI.parse(options)
             uri.query = (uri.query ? "#{uri.query}&"  : "") + "signed_request=#{facebook_signed_request}"
             options = uri.to_s
           when Hash
-            if !options[:signed_request]
-              options[:signed_request] = facebook_signed_request
-            end
+            options[:signed_request] ||= facebook_signed_request
+          end
         end
         
         super(options, response_status)

@@ -6,7 +6,7 @@ module Facebooker2
 
 
   class << self
-    attr_accessor :api_key, :secret, :app_id, :canvas_page_name, :callback_url
+    attr_accessor :api_key, :secret, :app_id, :canvas_page_name, :callback_url, :callback_domain
   end
 
 
@@ -19,8 +19,12 @@ module Facebooker2
     @app_id || raise_unconfigured_exception
   end
 
-  def self.canvas_page_url
-    "http://apps.facebook.com/#{canvas_page_name}"
+  def self.canvas_page_url(protocol = 'http://')
+    "#{protocol}apps.facebook.com/#{canvas_page_name}"
+  end
+  
+  def self.callback_url(protocol = 'http://')
+    @callback_domain ? "#{protocol}#{@callback_domain}" : @callback_url
   end
 
 
@@ -35,6 +39,7 @@ module Facebooker2
     self.app_id = hash[:app_id]
     self.canvas_page_name = hash[:canvas_page_name]
     self.callback_url = hash[:callback_url]
+    self.callback_domain = hash[:callback_domain]
   end
 
 
@@ -70,4 +75,5 @@ require "facebooker2/rails/helpers/javascript"
 require "facebooker2/rails/helpers/request_forms"
 require "facebooker2/rails/helpers/user"
 require "facebooker2/rails/helpers"
+require "facebooker2/rack/post_canvas"
 require "facebooker2/oauth_exception"

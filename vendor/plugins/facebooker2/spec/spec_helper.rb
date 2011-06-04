@@ -1,4 +1,18 @@
 require "rubygems"
+
+begin
+  require 'bundler'
+  begin
+    Bundler.setup(:default, :development)
+  rescue Bundler::BundlerError => e
+    $stderr.puts e.message
+    $stderr.puts "Run `bundle install` to install missing gems"
+    exit e.status_code
+  end
+rescue LoadError
+  # Not using bundler
+end
+
 require "active_support"
 require "action_pack"
 require "action_view"
@@ -23,4 +37,16 @@ require 'spec/rails/interop/testcase'
 
 Spec::Example::ExampleGroupFactory.default(ActiveSupport::TestCase)
 
-
+class Rails
+  def self.env
+    'spec'
+  end
+  
+  def self.root
+    Pathname.new(File.dirname(__FILE__))
+  end
+  
+  def self.logger
+    Logger.new(STDOUT)
+  end
+end
