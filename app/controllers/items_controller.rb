@@ -4,7 +4,9 @@ class ItemsController < ApplicationController
 
     @current_group = parents.item_group || @item_groups.first(:order => :position)
 
-    item_scope = @current_group.items.with_state(:visible).available.available_for(current_character).scoped(:order => 'items.level DESC')
+    item_scope = @current_group.items.with_state(:visible).available.available_for(current_character).scoped(
+        :order => 'items.level DESC, vip_price DESC'
+      )
 
     @items = item_scope.available_in(:shop).paginate(
       :page     => params[:page],
