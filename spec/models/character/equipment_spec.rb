@@ -257,4 +257,34 @@ describe Character::Equipment do
       @character.equipment.unequip!(@inventory, :additional)
     end
   end
+  
+  describe 'best inventory' do
+    before do
+      @character  = Factory(:character)
+      
+      @item1 = Factory(:item, :attack => 10, :defence => 1)
+      @item2 = Factory(:item, :attack => 1, :defence => 10)
+      @item3 = Factory(:item, :attack => 5, :defence => 5)
+      @item4 = Factory(:item, :attack => 2, :defence => 2)
+      
+      @inventory1 = Factory(:inventory, :character => @character, :item => @item1)
+      @inventory2 = Factory(:inventory, :character => @character, :item => @item2)
+      @inventory3 = Factory(:inventory, :character => @character, :item => @item3)
+      @inventory4 = Factory(:inventory, :character => @character, :item => @item4)
+      
+      @character.placements = {
+        :additional => [@inventory3.id, @inventory4.id], 
+        :left_hand  => [@inventory1.id],
+        :right_hand => [@inventory2.id]
+      }
+    end
+    
+    it 'should return best offence items' do
+      @character.equipment.best_offence.should == [@inventory1, @inventory3, @inventory4]
+    end
+    
+    it 'should return best defence items' do
+      @character.equipment.best_defence.should == [@inventory2, @inventory3, @inventory4]
+    end
+  end
 end

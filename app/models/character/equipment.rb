@@ -245,16 +245,12 @@ class Character::Equipment
   
 
   def best_offence
-    inventories.group_by{|i| i.item.item_group_id }.values.collect do |group|
-      group.max_by{|i| i.attack }
-    end
+    inventories.select{|i| i.attack > 0 }.sort{|a, b| b.attack <=> a.attack }[0..2]
   end
 
 
   def best_defence
-    inventories.group_by{|i| i.item.item_group_id }.values.collect do |group|
-      group.max_by{|i| i.defence }
-    end
+    inventories.select{|i| i.defence > 0 }.sort{|a, b| b.defence <=> a.defence }[0..2]
   end
   
   protected
