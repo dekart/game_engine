@@ -19,12 +19,12 @@ module Facebooker2
     @app_id || raise_unconfigured_exception
   end
 
-  def self.canvas_page_url(protocol = 'http://')
-    "#{protocol}apps.facebook.com/#{canvas_page_name}"
+  def self.canvas_page_url(protocol = nil)
+    "#{ protocol || 'http://' }apps.facebook.com/#{canvas_page_name}"
   end
   
-  def self.callback_url(protocol = 'http://')
-    @callback_domain ? "#{protocol}#{@callback_domain}" : @callback_url
+  def self.callback_url(protocol = nil)
+    @callback_domain ? "#{ protocol || 'http://' }#{@callback_domain}" : @callback_url
   end
 
 
