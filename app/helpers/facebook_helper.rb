@@ -35,15 +35,15 @@ module FacebookHelper
   end
 
   def fb_profile_url(user)
-    "http://www.facebook.com/profile.php?id=#{user.facebook_id}"
+    "#{request.protocol}www.facebook.com/profile.php?id=#{user.facebook_id}"
   end
 
   def fb_app_page_url
-    "http://www.facebook.com/apps/application.php?id=#{Facebooker2.app_id}"
+    "#{request.protocol}www.facebook.com/apps/application.php?id=#{Facebooker2.app_id}"
   end
 
   def fb_app_requests_url
-    "http://www.facebook.com/reqs.php#confirm_#{Facebooker2.app_id}_0"
+    "#{request.protocol}www.facebook.com/reqs.php#confirm_#{Facebooker2.app_id}_0"
   end
 
   def fb_i(*args, &block)

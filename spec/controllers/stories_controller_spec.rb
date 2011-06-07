@@ -213,14 +213,6 @@ describe StoriesController do
       end
     end
     
-    it 'should redirect to root on invalid story data' do
-      lambda{
-        do_request(:story_data => 'this is just wrong')
-      }.should_not raise_exception
-      
-      response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
-    end
-    
     it 'should be able to process story links broken by facebook encoding' do
       lambda{
         do_broken_request :id => 'item_purchased'

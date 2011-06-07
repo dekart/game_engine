@@ -18,7 +18,7 @@ module Facebooker2
 
             url = url_for_without_facebooker(options)
 
-            canvas ? Facebooker2.canvas_page_url + url : url
+            canvas ? facebook_canvas_page_url + url : url
           else
             url_for_without_facebooker(options)
           end
