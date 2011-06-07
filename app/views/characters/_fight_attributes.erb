@@ -23,16 +23,10 @@
         <% current_character.equipment.send(group).each do |inventory| %>
           <%= item_image(inventory, :icon,
                 :class    => :inventory,
-                :tooltip  => dom_id(inventory, :tooltip)
+                :tooltip  => true
               ) %>
-
-          <%= item_tooltip(inventory) %>
         <% end %>
       </td>
     <% end %>
   </tr>
 </table>
-
-<% dom_ready do %>
-  Character.initFightAttributes();
-<% end %>

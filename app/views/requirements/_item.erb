@@ -4,7 +4,8 @@
       <span class="image">
         <%= item_image(requirement.item, :icon,
               :alt    => t(".shop_link_title", :item => requirement.item.plural_name),
-              :title  => t(".shop_link_title", :item => requirement.item.plural_name)
+              :title  => t(".shop_link_title", :item => requirement.item.plural_name),
+              :tooltip => true
             ) %>
       </span>
 
@@ -32,7 +33,7 @@
   <% else %>
     <p>
       <span class="image">
-        <%= item_image(requirement.item, :icon) %>
+        <%= item_image(requirement.item, :icon, :tooltip => true) %>
       </span>
 
       <span class="label">

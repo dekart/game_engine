@@ -4,4 +4,6 @@
         :item => content_tag(:strong, app_request.item.name)
       ).html_safe %>
 </td>
-<td class="image"><%= item_image(app_request.item, :small) %></td>
+<td class="image">
+  <%= item_image(app_request.item, :small, :tooltip => true) %>
+</td>

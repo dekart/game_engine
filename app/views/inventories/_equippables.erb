@@ -24,9 +24,7 @@
           <% end %>
         </div>
 
-        <div class="image"><%= item_image(inventory, :small) %></div>
-        
-        <%= item_tooltip(inventory) %>
+        <div class="image"><%= item_image(inventory, :small, :tooltip => true) %></div>
       <% end %>
     <% end %>
   <% end %>

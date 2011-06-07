@@ -1,4 +1,4 @@
-<%= payout(:item, item_image(payout.item, :icon),
+<%= payout(:item, item_image(payout.item, :icon, :tooltip => true),
       :label => t("payouts.item.label",
         :name   => content_tag(:span, payout.item.name, :class => :name),
         :amount => payout.amount

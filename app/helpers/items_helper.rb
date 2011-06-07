@@ -1,10 +1,24 @@
 module ItemsHelper
   def item_image(item, format, options = {})
-    if item.image?
-      image_tag(item.image.url(format), options.reverse_merge(:alt => item.name, :title => item.name))
-    else
-      item.name
+    
+    tooltip_js = ""
+    if with_tooltip = options.delete(:tooltip)
+      options['data-item-tooltip'] = dom_id(item, :tooltip)
+      tooltip_js = item_tooltip_js(item)
     end
+    
+    if item.image?
+      options.reverse_merge!(
+        :alt => item.name, 
+        :title => item.name
+      )
+      
+      image = image_tag(item.image.url(format), options)
+    else
+      image = content_tag(:p, item.name, options)
+    end
+    
+    image << tooltip_js
   end
 
   def item_tooltip(item)
@@ -14,7 +28,12 @@ module ItemsHelper
       :id     => dom_id(item, :tooltip)
     )
   end
-
+  
+  def item_tooltip_js(item)
+    id = dom_id(item, :tooltip)
+    javascript_tag("$('[data-item-tooltip=\"#{id}\"]').itemTooltip('#{escape_javascript(item_tooltip(item))}');")
+  end
+  
   def item_price_inline(item, amount = 1)
     if item.price?
       result = [].tap do |prices|

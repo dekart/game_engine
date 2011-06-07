@@ -10,9 +10,7 @@
       <div class="gift">
         <div class="name"><%= item.name %></div>
         
-        <div class="image"><%= item_image(item, :medium, :tooltip => dom_id(item, :tooltip)) %></div>
-
-        <%= item_tooltip(item) %>
+        <div class="image"><%= item_image(item, :medium, :tooltip => true) %></div>
 
         <%= gift_send_button(item) %>
       </div>
@@ -27,14 +25,5 @@
   
   <% d.on_ready do %>
     $('#send_gift_notification').giftForm();
-    
-    $('#send_gift_notification .gift img').tooltip({
-      delay: 0,
-      track: true,
-      showURL: false,
-      bodyHandler: function(){
-        return $('#' + $(this).attr('tooltip')).clone();
-      }
-    });
   <% end %>
 <% end %>

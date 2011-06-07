@@ -13,9 +13,7 @@
                 }
               ) if character == current_character %>
 
-          <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement]) -%>
-
-          <%= item_tooltip(inventory) %>
+          <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement], :tooltip => true) -%>
         <% end %>
       <% end %>
     <% end %>
@@ -36,9 +34,7 @@
               }
             ) if character == current_character %>
 
-        <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional]) -%>
-
-        <%= item_tooltip(inventory) %>
+        <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true) -%>
       <% end %>
     <% end %>
 

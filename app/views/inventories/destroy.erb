@@ -17,8 +17,6 @@
 
     $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
-    Character.initFightAttributes();
-
     <%= ga_track_event('Items', 'Sold', "#{@item.name} (#{@item.availability})", @amount) %>
   <% end %>
 <% end %>

@@ -279,16 +279,6 @@ var Character = {
     });
   },
 
-  initFightAttributes: function(){
-    $('#fight_attributes .inventories .inventory').tooltip({
-      delay: 0,
-      track: true,
-      showURL: false,
-      bodyHandler: function(){
-        return $('#' + $(this).attr('tooltip')).clone();
-      }
-    });
-  }
 };
 
 
@@ -303,7 +293,6 @@ var PropertyList = {
     collectables.parent().show();
   }
 };
-
 
 var BossFight = {
   initBlock: function(){
@@ -356,13 +345,6 @@ var AssignmentForm = {
 
 var Equipment = {
   setup: function(){
-    $('#equippables .inventory, #placements .inventory').tooltip({
-      delay: 0,
-      track: true,
-      bodyHandler: function(){
-        return $(this).find('.tooltip_content').clone();
-      }
-    });
   }
 };
 
@@ -425,6 +407,17 @@ function debug(s) {
   if ($.fn.qtip && typeof($.fn.qtip) != "undefined")
   // qTip z-index
   $.fn.qtip.zindex = 400;
+  
+  $.fn.itemTooltip = function(content) {
+    $(this).tooltip({
+      delay: 0,
+      track: true,
+      showURL: false,
+      bodyHandler: function() {
+        return content;
+      }
+    });
+  };
   
 })(jQuery);
 
@@ -507,5 +500,5 @@ $(function(){
   $('#app_requests_counter').tooltip({
     delay: 0,
     showURL: false
-  })
+  });
 });
