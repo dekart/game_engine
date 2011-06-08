@@ -5,12 +5,12 @@
 <%= render "relations/note" %>
 
 <div id="users_to_invite" class="invitation_method">
-  <% if recommended = current_character.friend_filter.for_invitation(12) and recommended.any? %>
+  <% if @recommended.any? %>
     <h2><%= t('.recommended' )%></h2>
   
     <div class="users clearfix">
-      <% recommended.each do |facebook_id| %>
-        <% content_tag(:div, :id => "user_#{facebook_id}", :class => :user) do %>
+      <% @recommended.each do |facebook_id| %>
+        <div id="<%= "user_#{facebook_id}" %>" class="user <%= "already_playing" if @app_users.include?(facebook_id) %>">
           <div class="name"><%= fb_name(facebook_id, :linked => false) %></div>
           <div class="image"><%= fb_profile_pic(facebook_id, :linked => false, :size => :small) %></div>
       
@@ -24,7 +24,7 @@
                 ),
                 :class => 'invite button'
               ) %>
-        <% end %>
+        </div>
       <% end %>
     </div>
   <% end %>
