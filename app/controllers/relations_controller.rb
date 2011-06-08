@@ -1,5 +1,7 @@
 class RelationsController < ApplicationController
   def new
+    @app_users = current_character.friend_filter.app_users.to_set
+    @recommended = current_character.friend_filter.for_invitation(12)
   end
   
   def create

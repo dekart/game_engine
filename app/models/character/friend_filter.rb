@@ -25,8 +25,10 @@ class Character
     end
     
     def for_invitation(limit = 10)
-      ids = all - invited_recently - in_relation
-      ids.shuffle!
+      ids = app_users.shuffle + all.shuffle
+      ids.uniq!
+      
+      ids = ids - invited_recently - in_relation
       ids[0, limit]
     end
         
