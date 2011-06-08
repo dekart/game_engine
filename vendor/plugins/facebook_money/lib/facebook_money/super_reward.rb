@@ -16,7 +16,8 @@ module FacebookMoney
 
     def html_code(template, recipient_id, options = {})
       default_options = {
-        :src          => "http://www.superrewards-offers.com/super/offers?h=%s&uid=%s" % [
+        :src          => "%s/super/offers?h=%s&uid=%s" % [
+          template.request.ssl? ? 'https://secure2.kitnmedia.com' : 'http://www.superrewards-offers.com',
           FacebookMoney.config["key"],
           recipient_id
         ],
