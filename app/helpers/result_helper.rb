@@ -34,7 +34,7 @@ module ResultHelper
     def fail(content = nil, &block)
       message(:fail, content, &block)
     end
-
+    
     def render(path, options = {})
       @template.render(path, options.merge(:builder => self))
     end
@@ -49,6 +49,10 @@ module ResultHelper
       @on_ready << (content || capture(&block))
       @on_ready << ";"
     end
+    
+    def help_link(*args)
+      @help_link = args
+    end
 
     def html(content = nil, &block)
       content ||= capture(self, &block)
@@ -56,7 +60,7 @@ module ResultHelper
       dom_ready(@on_ready)
       dom_ready("$(document).trigger('result.#{options[:inline] ? :available : :received}');")
 
-      content_tag(:div, [message_html, buttons_html, content].join.html_safe,
+      content_tag(:div, [message_html, help_link_html, buttons_html, content].join.html_safe,
         :id     => "#{type}_result",
         :class  => "result_content clearfix"
       )
@@ -69,7 +73,11 @@ module ResultHelper
     end
 
     def message_html
-      content_tag(:p, @message[:content], :class => @message[:type]) if @message
+      content_tag(:div, @message[:content], :class => "#{ @message[:type] } message") unless @message.blank?
+    end
+    
+    def help_link_html
+      content_tag(:div, @template.help_link(*@help_link), :class => :help) unless @help_link.blank?
     end
   end
 

@@ -75,13 +75,18 @@
     text-align: center
     font-size: 25px
     font-weight: bold
-    margin-bottom: 20px
 
   .lost b, .victim_lost b
     width: 55px
 
   .attack_again
+    float: none
+    margin: 0px auto
     +button(!fight_result_attack_again_icon)
+    
+  .help
+    width: 120px
+    margin: 0 auto
 
   .details
     border-top = !fight_result_details_border

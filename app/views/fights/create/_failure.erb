@@ -2,6 +2,8 @@
   <%= t(".message", :name => character_name_link(fight.victim)).html_safe %>
 <% end %>
 
+<% builder.help_link(:fights_failure, t('.why_lose')) %>
+
 <% builder.buttons do %>
   <%= link_to_remote(button(:attack_again),
         :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),

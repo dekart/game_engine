@@ -17,6 +17,7 @@ en:
         victim_lost: "%{user_name} lost:"
       failure:
         message: "You LOST the battle against %{name}!"
+        why_lose: "Why do I lose?"
         buttons:
           attack_again: "Attack Again!"
         you_lost: "You lost:"
