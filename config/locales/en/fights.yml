@@ -10,8 +10,6 @@ en:
         fight: "Fights"
         hitlist: "Hitlist"
     create:
-      buttons:
-        attack_again: "Attack Again!"
       success:
         message: "You WON the battle against %{name}!"
         you_received: "You received:"
@@ -19,6 +17,8 @@ en:
         victim_lost: "%{user_name} lost:"
       failure:
         message: "You LOST the battle against %{name}!"
+        buttons:
+          attack_again: "Attack Again!"
         you_lost: "You lost:"
         victim_lost: "%{user_name} lost:"
       details:

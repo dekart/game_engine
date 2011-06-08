@@ -1,21 +1,8 @@
 <% result_for :fight do |builder| %>
   <% if !@fight.new_record? %>
-    <% if @fight.winner == current_character %>
-      <%= builder.render "fights/create/success", :fight => @fight %>
-    <% else %>
-      <% builder.buttons do %>
-        <%= link_to_remote(button(:attack_again),
-              :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
-              :update => :result,
-              :html   => {
-                :"data-click-once" => true,
-                :class => "attack_again button"
-              }
-            ) %>
-      <% end %>
-
-      <%= builder.render "fights/create/failure", :fight => @fight %>
-    <% end %>
+    <%= builder.render("fights/create/#{ @fight.winner == current_character ? 'success' : 'failure' }", 
+          :fight => @fight
+        ) %>
 
     <%= builder.render "fights/create/details", :fight => @fight %>
 

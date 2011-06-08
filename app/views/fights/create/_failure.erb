@@ -2,6 +2,17 @@
   <%= t(".message", :name => character_name_link(fight.victim)).html_safe %>
 <% end %>
 
+<% builder.buttons do %>
+  <%= link_to_remote(button(:attack_again),
+        :url    => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
+        :update => :result,
+        :html   => {
+          :"data-click-once" => true,
+          :class => "attack_again button"
+        }
+      ) %>
+<% end %>
+
 <table class="payouts" cellspacing="0" cellpadding="0">
   <tr>
     <td class="lost">
