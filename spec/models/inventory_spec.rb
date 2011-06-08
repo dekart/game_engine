@@ -21,6 +21,12 @@ describe Inventory do
         @market_item = Factory(:market_item, :inventory => @inventory, :amount => 4)
       end
       
+      [:name, :plural_name, :description, :image, :image?, :effects, :effects?, :payouts, :placements].each do |method|
+        it "should delegate :#{method} method to inventory" do
+          @market_item.send(method).should === @market_item.inventory.send(method)
+        end
+      end
+      
       it 'should destroy market item if new amount is less than amount listed on market' do
         @inventory.amount = 3
         
