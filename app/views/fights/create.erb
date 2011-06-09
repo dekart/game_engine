@@ -6,9 +6,11 @@
 
     <%= builder.render "fights/create/details", :fight => @fight %>
 
-    <% if @fight.cause %>
-      <% builder.on_ready do %>
-        $('#<%= dom_id(@fight.cause, :respond) %>').hide();
+    <% builder.on_ready do %>
+      <% if @fight.cause %>
+        $('#<%= dom_id(@fight.cause, :respond) %>').remove();
+      <% else %>
+        $('#<%= dom_id(@fight.victim) %>').remove();
       <% end %>
     <% end %>
   <% elsif !@fight.enough_stamina? %>
