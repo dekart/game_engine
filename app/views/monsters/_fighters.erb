@@ -5,7 +5,7 @@
   </h3>
 
   <% monster.monster_fights.top_damage.each do |fight| %>
-    <div class="fighter clearfix <%= yield_once(:monster_collector_border){ 'collectors_border' if !fight.significant_damage? } %>">
+    <div class="fighter <%= 'current' if fight.character == current_character %> <%= yield_once(:monster_collector_border){ 'collectors_border' if !fight.significant_damage? } %> clearfix">
       <div class="damage"><%= fight.damage %></div>
       <div class="name"><%= character_name_link(fight.character) %></div>
     </div>
