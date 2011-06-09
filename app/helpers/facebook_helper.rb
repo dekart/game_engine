@@ -35,10 +35,6 @@ module FacebookHelper
   end
   
   def fb_profile_pic(user, options = {})
-    options = options.dup
-    
-    validate_fb_profile_pic_size(options)
-    
     options[:title] ||= options[:alt]
     
     image_tag('https://graph.facebook.com/%s/picture?type=%s' % [Facebooker2.cast_to_facebook_id(user), options[:size]], 
