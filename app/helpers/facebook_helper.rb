@@ -39,7 +39,12 @@ module FacebookHelper
     
     validate_fb_profile_pic_size(options)
     
-    image_tag('https://graph.facebook.com/%s/picture?type=%s' % [Facebooker2.cast_to_facebook_id(user), options[:size]])
+    options[:title] ||= options[:alt]
+    
+    image_tag('https://graph.facebook.com/%s/picture?type=%s' % [Facebooker2.cast_to_facebook_id(user), options[:size]], 
+      :alt    => options[:alt] || '',
+      :title  => options[:title] || ''
+    )
   end
 
   def fb_profile_url(user)
