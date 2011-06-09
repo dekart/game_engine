@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110601084620) do
+ActiveRecord::Schema.define(:version => 20110609041936) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20110601084620) do
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
-  add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
+  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -469,28 +469,22 @@ ActiveRecord::Schema.define(:version => 20110601084620) do
   add_index "mission_ranks", ["character_id", "mission_id"], :name => "index_mission_ranks_on_character_id_and_mission_id", :unique => true
 
   create_table "missions", :force => true do |t|
-    t.string   "name",                              :default => "",  :null => false
+    t.string   "name",                              :default => "", :null => false
     t.text     "description"
     t.text     "success_text"
     t.text     "failure_text"
     t.text     "complete_text"
-    t.integer  "win_amount"
-    t.integer  "success_chance",                    :default => 100
-    t.integer  "ep_cost"
-    t.integer  "experience"
-    t.integer  "money_min",          :limit => 8
-    t.integer  "money_max",          :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "requirements"
     t.text     "payouts"
-    t.integer  "mission_group_id",                                   :null => false
-    t.string   "image_file_name",                   :default => "",  :null => false
-    t.string   "image_content_type", :limit => 100, :default => "",  :null => false
+    t.integer  "mission_group_id",                                  :null => false
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_content_type", :limit => 100, :default => "", :null => false
     t.integer  "image_file_size"
     t.integer  "parent_mission_id"
     t.boolean  "repeatable"
-    t.string   "state",              :limit => 50,  :default => "",  :null => false
+    t.string   "state",              :limit => 50,  :default => "", :null => false
     t.integer  "levels_count",                      :default => 0
     t.integer  "position"
     t.datetime "image_updated_at"
