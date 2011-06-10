@@ -31,8 +31,11 @@ module ItemsHelper
   end
   
   def item_tooltip_js(item)
-    id = dom_id(item, :tooltip)
-    javascript_tag("$('[data-item-tooltip=\"#{id}\"]').itemTooltip('#{escape_javascript(item_tooltip(item))}');")
+    javascript_tag(%{
+      $(function(){
+        $('[data-item-tooltip="#{ dom_id(item, :tooltip) }"]').itemTooltip('#{ escape_javascript(item_tooltip(item)) }')
+      });
+    })
   end
   
   def item_price_inline(item, amount = 1)
