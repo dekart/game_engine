@@ -36,37 +36,25 @@ module Facebooker2
       # https://github.com/facebook/php-sdk/blob/master/src/facebook.php#L333
       #
       def fetch_client_and_user
-        return if @_fb_user_fetched
+        unless @_fb_user_fetched
+          # Try to authenticate from the signed request first
+          fetch_client_and_user_from_signed_request
+          fetch_client_and_user_from_cookie if @_current_facebook_client.nil? and !signed_request_from_logged_out_user?
         
-        # Try to authenticate from the signed request first
-        sig = fetch_client_and_user_from_signed_request
-        sig = fetch_client_and_user_from_cookie if @_current_facebook_client.nil? and !signed_request_from_logged_out_user?
-        
-        #write the authentication params to a new cookie
-        if !@_current_facebook_client.nil? 
-          #we may have generated the signature based on the params in @facebook_params, and the expiration here is different
-          
-          set_fb_cookie(@_current_facebook_client.access_token, @_current_facebook_client.expiration, @_current_facebook_user.id, sig)
-        else
-          # if we do not have a client, delete the cookie
-          set_fb_cookie(nil,nil,nil,nil)
+          @_fb_user_fetched = true
         end
-        
-        @_fb_user_fetched = true
       end
 
 
       def fetch_client_and_user_from_cookie
-        hash_data = fb_cookie_hash
-        
-        if hash_data and fb_cookie_signature_correct?(fb_cookie_hash, Facebooker2.secret)
+        if hash_data = fb_cookie_hash and fb_cookie_signature_correct?(hash_data, Facebooker2.secret)
           fb_create_user_and_client(
             hash_data["access_token"],
             hash_data["expires"],
             hash_data["uid"]
           )
           
-          fb_cookie_hash["sig"]
+          hash_data["sig"]
         end
       end
       
