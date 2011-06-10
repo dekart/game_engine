@@ -16,9 +16,9 @@
       <%= payout(:vip_money, number_to_currency(@property.vip_price)) if @property.vip_price > 0 %>
     </div>
   <% else %>
-    <% builder.fail do %>
-      <%= @property.errors.on(:character) %>
-    <% end %>
+    <div class="unsatisfied_requirements">
+      <%= unsatisfied_requirement_first(@property.property_type.requirements) %>
+    </div>
   <% end %>
 
   <% builder.on_ready do %>

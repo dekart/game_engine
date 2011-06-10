@@ -28,8 +28,6 @@ class PremiaController < ApplicationController
 
     if @result
       flash.now[:success] = t("premia.update.messages.success.#{params[:type]}")
-    else
-      flash.now[:error] = t("premia.update.messages.failure")
     end
 
     render :layout => 'ajax'

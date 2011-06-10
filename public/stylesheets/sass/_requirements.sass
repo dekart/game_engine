@@ -95,3 +95,29 @@
       float: left
       width: 100%
       margin: 0 10px 10px 0px
+
+
+.unsatisfied_requirements
+  .get_more_gems
+    +button(!premium_current_vip_money_icon, 180px)
+      
+  .get_more_money
+    +button(!asset_icons_basic_money, 150px)
+ 
+  .requirement
+    color: red
+    
+    .basic_money, .vip_money
+      line-height: 22px
+      height: 22px
+      padding: 5px 0 5px 21px
+      font-weight: bold
+      background:
+        position: center left
+        repeat: no-repeat
+   
+    .vip_money
+      background-image = !asset_icons_vip_money
+      
+    .basic_money
+      background-image = !asset_icons_basic_money

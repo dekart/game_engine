@@ -34,6 +34,12 @@ en:
     level:
       name: "Level"
       text: "Level %{required_value}+"
+    basic_money:
+      name: "Money"
+      text: "%{amount} Money"
+    vip_money:
+      name: "Gems"
+      text: "%{amount} Gems"
 
     not_satisfied:
       title:
@@ -90,3 +96,16 @@ en:
         buy_missing: "You need %{amount} more. You can buy them from Shop for %{price}."
         buttons:
           buy: "Buy"
+          
+      basic_money:
+        message: "You don't have enough Money! You need %{required_value} Money"
+        get_more: "You can also visit the %{premium_page} to get more Money."
+        premium_page: "Gem Market"
+        buttons:
+          get_more_money: "Get More Money"
+          
+      vip_money:
+        message: "You don't have enough Gems! You need %{required_value} Gems."
+        message_without_value: "You don't have enough Gems!"
+        buttons:
+          get_more_vip: "Get More Gems"

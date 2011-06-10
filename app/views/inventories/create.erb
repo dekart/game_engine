@@ -57,8 +57,8 @@
       <%= ga_track_event('Items', 'Purchased', "#{@item.name} (#{@item.availability})", @amount) %>
     <% end %>
   <% else %>
-    <% builder.fail do %>
-      <%= @inventory.errors.on(:character) %>
-    <% end %>
+    <div class="unsatisfied_requirements">
+      <%= unsatisfied_requirement_first(@inventory.item.requirements) %>
+    </div>
   <% end %>
 <% end %>

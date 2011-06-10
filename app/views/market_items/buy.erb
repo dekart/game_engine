@@ -41,8 +41,8 @@
       <%= ga_track_event('Items', 'Purchased on Market', "#{@item.name} (#{@item.inventory.item.availability})", current_character.level) %>
     <% end %>
   <% else %>
-    <% builder.fail do %>
-      <%= @item.errors.on_base %>
-    <% end %>
+    <div class="unsatisfied_requirements">
+      <%= unsatisfied_requirement_first(@item.requirements) %>
+    </div>
   <% end %>
 <% end %>

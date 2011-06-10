@@ -4,13 +4,11 @@
       <%= flash[:success] %>
     <% end %>
   <% else %>
-    <% builder.fail do %>
-      <%= flash[:error] %>
-    <% end %>
-      
-    <%= link_to(button(:get_more_vip), earn_premium_path, 
-          :class => 'get_more button'
-        ) %>
+    <div class="unsatisfied_requirements">
+      <%= render("requirements/not_satisfied/vip_money",
+            :requirement  => Requirements::VipMoney.new()
+          ) %>
+    </div>
   <% end %>
 
   <% builder.on_ready do %>

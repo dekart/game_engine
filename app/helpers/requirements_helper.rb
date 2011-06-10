@@ -37,6 +37,21 @@ module RequirementsHelper
 
     result.html_safe
   end
+  
+  def unsatisfied_requirement_first(requirements)
+    result = ""
+    
+    requirements.each do |requirement|
+      unless requirement.satisfies?(current_character)
+        result = render("requirements/not_satisfied/#{requirement.name}",
+          :requirement  => requirement
+        )
+        break
+      end
+    end
+    
+    result.html_safe
+  end
 
   def attribute_requirement_text(attribute, value)
     t("requirements.attribute.text",
