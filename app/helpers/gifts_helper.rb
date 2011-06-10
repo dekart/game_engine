@@ -9,6 +9,7 @@ module GiftsHelper
     
     link_to_function(button(:send),
       fb_request_dialog(:gift,
+        :to       => options[:to],
         :title    => options[:title],
         :message  => options[:message],
         :data     => {
