@@ -22,6 +22,14 @@ module ApplicationHelper
       block_given? ? yield(text) : text
     end
   end
+  
+  def yield_once(group)
+    @yield_once ||= {}
+    
+    if !@yield_once[group] and @yield_once[group] = yield
+      @yield_once[group]
+    end
+  end
 
   def reset_group_header(group_name)
     @group_headers[group_name] = nil

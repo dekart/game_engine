@@ -21,22 +21,28 @@
 
   <div class="additional clearfix">
     <h2><%= Character::Equipment.placement_name(:additional) %></h2>
-
-    <% character.equipment.inventories_by_placement(:additional).each do |inventory| %>
-      <% content_tag :div, :class => :inventory do %>
-        <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
-              :url    => unequip_inventory_path(inventory, :placement => :additional),
-              :update => :result,
-              :html   => {
-                :"data-click-once" => true,
-                :class => :remove, 
-                :title => t(".remove")
-              }
-            ) if character == current_character %>
-
-        <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true) -%>
-      <% end %>
+    
+    <% help_link(:equipment_additional, t('.additional.about')) do |link| %>
+      <div class="help"><%= link %></div>
     <% end %>
+
+    <div class="items">
+      <% character.equipment.inventories_by_placement(:additional).each do |inventory| %>
+        <% content_tag :div, :class => :inventory do %>
+          <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
+                :url    => unequip_inventory_path(inventory, :placement => :additional),
+                :update => :result,
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => :remove, 
+                  :title => t(".remove")
+                }
+              ) if character == current_character %>
+
+          <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true) -%>
+        <% end %>
+      <% end %>
+    </div>
 
     <% inventory_additonal_slots_note do |free_slots| %>
       <div class="note">

@@ -22,19 +22,15 @@ class StoriesController < ApplicationController
         ),
         :canvas => true
       )
-    when 'mission_completed'
-      mission = Mission.find(story_data[:mission_id])
-      
-      mission_group_url(mission.mission_group_id, :canvas => true)
-    when 'boss_defeated'
-      boss = Boss.find(story_data[:boss_id])
-      
-      mission_group_url(boss.mission_group_id, :canvas => true)
-    when 'monster_invite', 'monster_defeated'
+    when 'mission_completed', 'boss_defeated'
+      mission_groups_url(:canvas => true)
+    when 'monster_invite'
       monster_url(story_data[:monster_id], 
         :key => encryptor.encrypt(story_data[:monster_id]), 
         :canvas => true
       )
+    when 'monster_defeated'
+      monsters_url(:canvas => true)
     when 'property'
       properties_url(:canvas => true)
     when 'promotion'
