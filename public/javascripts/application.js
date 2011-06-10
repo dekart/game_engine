@@ -277,8 +277,7 @@ var Character = {
     $.getJSON('/character_status/?rand=' + Math.random(), function(data){
       Character.update(data);
     });
-  },
-
+  }
 };
 
 
