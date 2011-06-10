@@ -18,9 +18,7 @@ set :facebooker_config, {
   :api_key          => "your_fb_api_key",
   :secret           => "your_fb_api_secret",
   :canvas_page_name => "your_fb_canvas_page",
-  :callback_domain  => "your_domain",
-
-  :set_asset_host_to_callback_url => true
+  :callback_domain  => "your_domain"
 }
 
 set :database_config, {
