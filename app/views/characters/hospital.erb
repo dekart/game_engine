@@ -29,11 +29,10 @@
   <% elsif @result %>
     <p><%= t(".messages.success") %></p>
   <% else %>
-    <p><%= current_character.errors.on_base %></p>
-    <p>
-      <%= t(".premium_refill.text",
-            :premium => link_to(t(".premium_refill.link"), premium_path)
-          ).html_safe %>
-    </p>
+    <div class="unsatisfied_requirements">
+      <%= render("requirements/not_satisfied/basic_money",
+            :requirement  => Requirements::BasicMoney.new(:value => current_character.hospital_price)
+          ) %>
+    </div>
   <% end %>
 <% end %>

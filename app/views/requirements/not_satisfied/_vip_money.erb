@@ -1,0 +1,12 @@
+<% requirement(requirement.name, false) do %>
+  <p>
+    <% if requirement.value %>
+      <%= t(".message", :required_value => vip_money_tag(requirement.value)).html_safe %>
+    <% else %>
+      <%= t(".message_without_value").html_safe %>
+    <% end %>
+  </p>
+  <%= link_to(button(:get_more_vip), earn_premium_path, 
+        :class => 'get_more_gems button'
+      ) %>
+<% end %>

@@ -25,16 +25,19 @@
                 :class => "attack button"
               }
             ) %>
-        <%= link_to_remote(button(:power_attack, :factor => Setting.i(:monster_fight_power_attack_factor)),
-              :url    => monster_path(monster),
-              :method => :put,
-              :update => :result,
-              :with   => "'power_attack=1'",
-              :html   => {
-                :"data-click-once" => true,
-                :class => "power_attack button"
-              }
-            ) %>
+
+        <% if monster.monster_type.power_attack_enabled? %>
+          <%= link_to_remote(button(:power_attack, :factor => Setting.i(:monster_fight_power_attack_factor)),
+                :url    => monster_path(monster),
+                :method => :put,
+                :update => :result,
+                :with   => "'power_attack=1'",
+                :html   => {
+                  :"data-click-once" => true,
+                  :class => "power_attack button"
+                }
+              ) %>
+        <% end %>
         
         <% if monster.monster_type.available_for_friends_invite %>
           <%= link_to_function(button(:invite_request),

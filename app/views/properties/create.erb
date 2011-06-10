@@ -24,8 +24,8 @@
       $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
     <% end %>
   <% else %>
-    <% builder.fail do %>
-      <%= @property.errors.on(:character) %>
-    <% end %>
+    <div class="unsatisfied_requirements">
+      <%= unsatisfied_requirement_first(@property.property_type.requirements) %>
+    </div>
   <% end %>
 <% end %>

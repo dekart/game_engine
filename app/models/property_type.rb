@@ -1,5 +1,6 @@
 class PropertyType < ActiveRecord::Base
   extend HasPayouts
+  extend HasRequirements
   include HasVisibility
 
   AVAILABILITIES = [:shop, :mission, :loot]
@@ -89,5 +90,13 @@ class PropertyType < ActiveRecord::Base
 
   def upgrade_price(level)
     upgrade_cost_increase ? basic_price + upgrade_cost_increase * level : basic_price
+  end
+  
+  def requirements
+    @requirements ||= Requirements::Collection.new(
+      Requirements::BasicMoney.new(:value => basic_price),
+      Requirements::VipMoney.new(:value => vip_price),
+      Requirements::Level.new(:value => level)
+    )
   end
 end

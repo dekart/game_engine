@@ -38,7 +38,7 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
-    @power_attack = (params[:power_attack] != nil)
+    @power_attack = (!params[:power_attack].nil? && @monster.monster_type.power_attack_enabled?)
     @attack_result = @fight.attack!(@power_attack)
 
     if @attack_result

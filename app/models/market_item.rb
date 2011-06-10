@@ -1,4 +1,6 @@
 class MarketItem < ActiveRecord::Base
+  extend HasRequirements
+  
   belongs_to :character
   belongs_to :inventory, :counter_cache => true
 
@@ -91,6 +93,13 @@ class MarketItem < ActiveRecord::Base
       :vip_money      => (bought ? -1 : 1) * vip_price,
       :amount         => amount
     }
+  end
+  
+  def requirements
+    @requirements ||= Requirements::Collection.new(
+      Requirements::BasicMoney.new(:value => basic_price),
+      Requirements::VipMoney.new(:value => vip_price)
+    )
   end
 
   protected
