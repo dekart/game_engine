@@ -26,7 +26,6 @@ en:
         child_missions: "You also opened new missions:"
         buttons:
           publish: "Brag About It!"
-          continue: "Continue"
         dialog:
           title: "You've just completed this mission!"
           message: "Let your friends know about your success!"
