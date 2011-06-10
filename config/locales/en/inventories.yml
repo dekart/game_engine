@@ -73,6 +73,7 @@ en:
         additional: "Bag"
       remove: "Take Off"
       additional:
+        about: "What's this?"
         free_slots:
           one: "You have %{count_label} additional slot left."
           other: "You have %{count_label} additional slots left."
