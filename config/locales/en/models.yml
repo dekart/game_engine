@@ -74,6 +74,8 @@ en:
         price: "Price"
       item_collection:
         payouts: "Payouts"
+      credit_package:
+        price: 'Price in Credits'
     errors:
       models:
         character:

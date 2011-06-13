@@ -143,6 +143,12 @@ ActionController::Routing::Routes.draw do |map|
         :publish  => :put,
         :hide     => :put
       }
+      
+    admin.resources :credit_packages,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
 
     # Add your custom admin routes below this mark
     

@@ -22,6 +22,7 @@
       [:assets,           admin_assets_path],
       [:settings,         admin_settings_path],
       [:global_tasks,     admin_global_task_path],
+      [:credit_packages,  admin_global_task_path],
       [:messages,         admin_messages_path]
     ].each do |title, link, controllers| %>
     <%= link_to(t(".#{title}"), link,

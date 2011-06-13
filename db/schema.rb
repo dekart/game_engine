@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110609062901) do
+ActiveRecord::Schema.define(:version => 20110613051716) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20110609062901) do
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
-  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
+  add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -180,6 +180,22 @@ ActiveRecord::Schema.define(:version => 20110609062901) do
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
+
+  create_table "credit_orders", :force => true do |t|
+    t.integer  "facebook_id",  :limit => 8, :null => false
+    t.integer  "character_id"
+    t.integer  "package_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "credit_packages", :force => true do |t|
+    t.integer  "vip_money"
+    t.integer  "price"
+    t.string   "state",      :limit => 30
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
