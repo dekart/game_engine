@@ -3,7 +3,10 @@ en:
     documentation: "What's this?"
     layouts:
       main_menu:
-        title: "Admin Menu"
+        users: 'Users'
+        content: 'Game Content'
+        support: 'Support'
+        configuration: 'Configuration'
         character_types: "Character Types"
         items: "Items"
         missions: "Missions"

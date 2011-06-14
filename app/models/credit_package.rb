@@ -18,7 +18,19 @@ class CreditPackage < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
+  
+  has_attached_file :image
 
   validates_presence_of :vip_money, :price
   validates_numericality_of :vip_money, :price, :allow_blank => true, :greater_than => 0
+  
+  before_save :reset_default
+  
+  protected
+  
+  def reset_default
+    if default_changed? and default?
+      self.class.update_all(:default => false)
+    end
+  end
 end

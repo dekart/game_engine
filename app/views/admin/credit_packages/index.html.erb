@@ -7,6 +7,7 @@
 <% collection @packages do %>
   <table id="credit_package_list" class="data">
     <tr>
+      <th></th>
       <th><%= Character.human_attribute_name("vip_money") %></th>
       <th><%= CreditPackage.human_attribute_name("price") %></th>
       <th><%= CreditPackage.human_attribute_name("state") %></th>
@@ -15,6 +16,7 @@
     
     <% @packages.each do |package| %>
       <tr>
+        <td class="default"><%= CreditPackage.human_attribute_name("default") if package.default? %></td>
         <td class="vip_money"><%= package.vip_money %></td>
         <td class="price"><%= package.price %></td>
         <td class="state"><%= admin_state(package) %></td>

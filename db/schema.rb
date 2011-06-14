@@ -182,9 +182,10 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "credit_orders", :force => true do |t|
-    t.integer  "facebook_id",  :limit => 8, :null => false
+    t.integer  "facebook_id",  :limit => 8,  :null => false
     t.integer  "character_id"
     t.integer  "package_id"
+    t.string   "state",        :limit => 30
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -192,7 +193,12 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
   create_table "credit_packages", :force => true do |t|
     t.integer  "vip_money"
     t.integer  "price"
-    t.string   "state",      :limit => 30
+    t.boolean  "default"
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_content_type", :limit => 100, :default => "", :null => false
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "state",              :limit => 30
     t.datetime "created_at"
     t.datetime "updated_at"
   end

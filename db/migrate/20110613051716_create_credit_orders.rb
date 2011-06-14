@@ -6,6 +6,8 @@ class CreateCreditOrders < ActiveRecord::Migration
       t.integer :character_id
       t.integer :package_id
       
+      t.string  :state, :limit => 30
+      
       t.timestamps
       
       t.index :facebook_id

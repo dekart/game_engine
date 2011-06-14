@@ -2,3 +2,7 @@
       :label => Character.human_attribute_name('vip_money') %>
 
 <%= form.text_field :price %>
+
+<%= form.check_box :default %>
+
+<%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>

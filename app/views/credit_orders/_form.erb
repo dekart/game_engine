@@ -1,0 +1,18 @@
+<div class="credit_packages">
+  <% CreditPackage.with_state(:visible).each do |package| %>
+    <% div_for(package) do %>
+      <%= radio_button_tag(:credit_package_id, package.id, package.default?) %>
+      
+      <%= t('.item_text', 
+            :vip_money  => content_tag(:span, package.vip_money, :class => :vip_money),
+            :price      => content_tag(:span, package.price, :class => :price)
+          ).html_safe %>
+    <% end %>
+  <% end %>
+  
+  <span class="purchase button"><%= button(:purchase) %></span>
+</div>
+
+<% dom_ready do %>
+  $('.credit_packages').creditPackageForm();
+<% end %>
