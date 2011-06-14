@@ -1,6 +1,7 @@
 en:
   monsters:
     index:
+      timer: "Time limit"
       title: "Monsters"
       current:
         title: "Current Monster Fights"
@@ -61,3 +62,21 @@ en:
         publish: "Brag About It"
     fighters:
       title: "Damage Leaders"
+    monster_available:
+      buttons:
+        attack: "Attack!"
+    monster_current:
+      current:
+        won: "You won!"
+        time_remaining: "Time remaining"
+      buttons:
+        engage: "Engage"
+        reward: "Reward"
+        view: "View"
+    monster_completed:
+      buttons:
+        view: "View"
+      current:
+        won: "You won!"
+        lost: "You lost!"
+        not_enought_damage: "You havn't deal anought damage."

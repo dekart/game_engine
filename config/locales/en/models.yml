@@ -67,6 +67,8 @@ en:
         reward: "Bounty Amount"
       boss:
         health: "Health"
+      monster:
+        health: "Health"
       market_item:
         character: "Seller"
         price: "Price"

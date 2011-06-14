@@ -7,38 +7,13 @@
     <h2><%= t(".current.title") %></h2>
 
     <% monster_list(@monsters) do |monster, fight| %>
-      <% content_tag_for :div, monster do %>
-        <div class="name"><%= monster.name %></div>
-
-        <div class="image"><%= link_to(monster_image(monster, :normal), monster) %></div>
-
-        <div class="status">
-          <% if monster.progress? %>
-            <%= t('.current.time_remaining') %>
-
-            <span class="timer"></span>
-
-            <% dom_ready do %>
-              Timer.start('#<%= dom_id(monster) %> .status .timer', <%= monster.time_remaining %>)
-            <% end %>
-          <% elsif monster.won? %>
-            <%= t('.current.won') %>
-          <% else %>
-            <%= t('.current.expired') %>
-          <% end %>
-        </div>
-
-        <div class="controls">
-          <% if monster.progress? %>
-            <%= link_to(button(:engage), monster, :class => "engage button") %>
-          <% elsif monster.expired? || !fight.reward_collectable? %>
-            <%= link_to(button(:view), monster, :class => "view button") %>
-          <% else %>
-            <%= link_to(button(:reward), monster, :class => "reward button") %>
-          <% end %>
-        </div>
+      <% if monster.progress? %>
+        <%= render "monster_current", :monster => monster, :fight => fight%>
+      <% elsif monster.expired? || !fight.reward_collectable?%>
+        <%= render "monster_completed", :monster => monster, :fight => fight %>
       <% end %>
     <% end %>
+
   </div>
 <% end %>
 
@@ -47,27 +22,15 @@
     <h2><%= t(".available.title") %></h2>
 
     <% @monster_types.each do |type| %>
-      <div class="monster">
-        <div class="name"><%= type.name %></div>
-
-        <div class="image"><%= monster_image(type, :normal) %></div>
-
-        <div class="controls">
-          <%= link_to(button(:attack), new_monster_path(:monster_type_id => type), :class => "attack button") %>
-        </div>
-      </div>
+      <%= render "monster_available", :type => type%>
     <% end %>
+
   </div>
 <% end %>
 
 <% if @locked_monster %>
   <div id="locked_monster" class="monster_list clearfix">
     <h2><%= t(".locked.title") %></h2>
-
-    <div class="monster">
-      <div class="name"><%= @locked_monster.name %></div>
-
-      <div class="image"><%= monster_image(@locked_monster, :normal) %></div>
-    </div>
+    
   </div>
 <% end %>

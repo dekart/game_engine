@@ -1,9 +1,8 @@
 .monster_list
   .monster
-    float: left
+    float: none
     margin: 0 15px 15px 0
     border = !main_border
-    text-align: center
     padding: 15px
 
     .name
@@ -11,8 +10,18 @@
       font-weight: bold
       margin-bottom: 10px
 
+    .description
+      font-size: 13px
+      text-align: justify
+
     .image
       margin-bottom: 10px
+
+    .payouts
+      text-align: left
+
+    .requirements
+      text-align: left
 
     .status
       margin-bottom: 10px
@@ -20,7 +29,16 @@
 
       .timer
         font-weight: normal
-
+    
+    .health
+      text-align: left
+      font-weight: bold
+      .value
+        padding-left: 21px
+        padding-bottom: 2px
+        background-repeat: no-repeat
+        background-image = !co_icons_health
+        
     .button
       text-align: left
       float: none

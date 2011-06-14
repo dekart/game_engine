@@ -1,0 +1,18 @@
+<% content_tag_for :div, monster do %>
+  <div class="image"><%= link_to(monster_image(monster, :normal), monster) %></div>
+  <div class="name"><%= monster.name %></div>
+  <div class="description"><%= monster.description %></div>
+  <div class="status">
+    <% if monster.progress? %>
+      <% true %>
+    <% elsif monster.won? %>
+      <%= t('.current.won') %>
+    <% else %>
+      <%= t('.current.expired') %>
+    <% end %>
+  </div>
+
+  <div class="controls">
+      <%= link_to(button(:view), monster, :class => "view button") %>
+  </div>
+<% end %>
