@@ -324,3 +324,10 @@ Factory.define :credit_order do |t|
   t.association :character
   t.association :package, :factory => :credit_package
 end
+
+Factory.define :contest do |t|
+  t.name 'Fake contest'
+  t.description 'Fake contest'
+  
+  t.duration_time 7
+end

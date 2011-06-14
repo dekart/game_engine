@@ -1,0 +1,41 @@
+<%= admin_title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_contest_path) %>
+</div>
+
+<% collection @contests do %>
+  <table id="contest_list" class="data">
+    <tr>
+      <th><%= Contest.human_attribute_name("image") %></th>
+      <th><%= Contest.human_attribute_name("name") %></th>
+      <th><%= Contest.human_attribute_name("started_at") %></th>
+      <th><%= Contest.human_attribute_name("finished_at") %></th>
+      <th><%= Contest.human_attribute_name("state") %></th>
+      <th></th>
+    </tr>
+    <% @contests.each do |contest| %>
+      <tr>
+        <td class="image"><%= image_tag(contest.image) if contest.image? %></td>
+        <td class="name"><%= link_to(contest.name, edit_admin_contest_path(contest)) %></td>
+        <td class="started_at"><%= contest.started_at %></td>
+        <td class="finished_at"><%= contest.finished_at %></td>
+        <td class="state"><%= admin_state(contest) %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_contest_path(contest)) %>
+          <%= link_to(t(".controls.publish"), publish_admin_contest_path(contest),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              ) if contest.can_publish? %>
+          <%= link_to(t(".controls.finish"), finish_admin_contest_path(contest),
+                :method => :put
+              ) if contest.can_finish? %>
+          <%= link_to(t(".controls.delete"), admin_contest_path(contest),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) if contest.can_mark_deleted? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

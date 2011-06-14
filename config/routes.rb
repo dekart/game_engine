@@ -150,6 +150,11 @@ ActionController::Routing::Routes.draw do |map|
         :hide     => :put
       }
 
+    admin.resources :contests,
+      :member => {
+        :publish  => :put,
+        :finish   => :put
+      }
     # Add your custom admin routes below this mark
     
   end
@@ -269,6 +274,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :stories, :only => :show
   
   map.resources :app_requests, :member => {:ignore => :put}
+  
+  map.resources :contests, :only => :show
 
   # Add your custom routes below this mark
   

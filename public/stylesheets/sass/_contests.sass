@@ -1,0 +1,43 @@
+#current_contest
+  border = !contests_current_item_border
+  margin-bottom: 10px
+  padding: 10px
+  
+  #contest_info
+    .name
+    
+    .description
+    
+    .image
+    
+    .current_position
+      .value
+        font-weight: bold
+        
+    .timer
+      .value
+        font-weight: bold
+        
+    .buttons
+      .button
+        float: left
+        width: auto
+        margin-right: 15px
+        
+      .fight
+        +button(!fight_buttons_fight_icon)
+        
+      .contest
+        +button(!rating_buttons_rating_icon)
+
+#contest
+  .buttons
+    margin-bottom: 15px
+    .button
+      +button(!rating_buttons_rating_icon, !rating_buttons_rating_width)
+      float: left
+      margin-right: 15px
+        
+  .results
+      
+  

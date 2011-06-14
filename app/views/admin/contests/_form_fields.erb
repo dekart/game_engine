@@ -1,0 +1,7 @@
+<%= form.text_field :name, :required => true, :size => 50 %>
+<%= form.text_area :description, :cols => 80, :rows => 5 %>
+
+<%= form.datetime_select :started_at, :required => true %>
+<%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
+
+<%= form.text_field :duration_time, :required => true, :size => 6, :autocomplete => :off %>

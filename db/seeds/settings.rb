@@ -143,4 +143,7 @@ Setting[:notifications_friends_to_invite_displayed_at] ||= Time.now
 Setting[:notifications_send_gift_delay] ||= 48
 Setting[:notifications_send_gift_displayed_at] ||= Time.now + 24.hours
 
+Setting[:contests_show_after_finished_time] ||= 5
+Setting[:contests_leaders_show_limit] ||= 100
+
 # Put your custom settings below this line

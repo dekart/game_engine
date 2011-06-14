@@ -70,7 +70,7 @@
     <% if (current_boss_fights = current_character.boss_fights.with_state(:progress)).any? %>
       <%= render "boss_fights/block", :fights => current_boss_fights %>
     <% end %>
-
+    
     <%= yield %>
   </div>
 
