@@ -44,6 +44,7 @@ Setting[:premium_mercenary_price] ||= 10
 Setting[:premium_change_name_price] ||= 10
 Setting[:premium_reset_attributes_price] ||= 10
 Setting[:premium_stamina_price] ||= 5
+Setting[:premium_credits_enabled] ||= false
 
 Setting[:fight_victim_show_limit] ||= 10
 Setting[:fight_victim_levels_lower] ||= 0

@@ -33,6 +33,9 @@ class CreditOrder < ActiveRecord::Base
     after_transition :placed => :settled, :do => :deposit_vip_money
   end
   
+  validates_presence_of   :facebook_id, :character, :package
+  validates_uniqueness_of :facebook_id
+  
   protected
   
   def deposit_vip_money

@@ -71,6 +71,25 @@ describe CreditOrder do
   end
   
   
+  describe '#create' do
+    before do
+      @order = Factory.build(:credit_order)
+    end
+    
+    %w{facebook_id character package}.each do |attr|
+      it "should validate presence of #{attr}" do
+        @order.should validate_presence_of(attr)
+      end
+    end
+    
+    it 'should validate uniqueness of facebook_id' do
+      @other_order = Factory(:credit_order)
+      
+      @order.should validate_uniqueness_of(:facebook_id)
+    end
+  end
+  
+  
   describe '#settle' do
     before do
       @character = Factory(:character, :vip_money => 50)
