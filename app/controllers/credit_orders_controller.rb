@@ -21,8 +21,8 @@ class CreditOrdersController < ApplicationController
       :content  => [
         {
           :item_id      => order.package_id,
-          :title        => t('credit_orders.package_info.title', :amount => package.vip_money),
-          :description  => t('credit_orders.package_info.description', :amount => package.vip_money),
+          :title        => t('credit_orders.package_info.title', :amount => package.vip_money, :app => t('app_name')),
+          :description  => t('credit_orders.package_info.description', :amount => package.vip_money, :app => t('app_name')),
           :image_url    => image_path(package.image? ? package.image.url : asset_url(:credit_package)),
           :product_url  => premium_url(:canvas => true),
           :price        => package.price

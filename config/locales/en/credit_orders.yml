@@ -1,10 +1,12 @@
 en:
   credit_orders:
     form:
-      item_text: "Get %{vip_money} Gems for %{price} Facebook Credits"
+      title: 'Purchase %{vip_money} using Facebook Credits'
+      select_package: 'Select Package:'
+      credits: "Facebook Credits"
       buttons:
         purchase: "Purchase"
         
     package_info:
       title: "Pack of %{amount} Gems"
-      description: "Pack of %{amount} Gems. Gems can be used to buy premium items and services."
+      description: "Pack of %{amount} %{app} Gems. Gems can be used to buy premium items and services in %{app} game."

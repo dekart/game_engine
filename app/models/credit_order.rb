@@ -15,7 +15,7 @@ class CreditOrder < ActiveRecord::Base
     end
     
     event :settle do
-      transition :placed => :settled
+      transition [:placed, :disputed] => :settled
     end
     
     event :cancel do
@@ -29,5 +29,13 @@ class CreditOrder < ActiveRecord::Base
     event :refund do
       transition [:settled, :disputed] => :refunded
     end
+    
+    after_transition :placed => :settled, :do => :deposit_vip_money
+  end
+  
+  protected
+  
+  def deposit_vip_money
+    character.charge!(0, - package.vip_money, :credits)
   end
 end

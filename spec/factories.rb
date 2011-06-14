@@ -311,3 +311,16 @@ Factory.define :global_payout do |t|
     Payouts::BasicMoney.new(:value => 123, :apply_on => :success)
   )
 end
+
+Factory.define :credit_package do |t|
+  t.vip_money 10
+  t.price     10
+  
+  t.default   true
+end
+
+Factory.define :credit_order do |t|
+  t.facebook_id 123456789
+  t.association :character
+  t.association :package, :factory => :credit_package
+end

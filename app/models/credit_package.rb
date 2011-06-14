@@ -24,13 +24,11 @@ class CreditPackage < ActiveRecord::Base
   validates_presence_of :vip_money, :price
   validates_numericality_of :vip_money, :price, :allow_blank => true, :greater_than => 0
   
-  before_save :reset_default
+  after_save :reset_default
   
   protected
   
   def reset_default
-    if default_changed? and default?
-      self.class.update_all(:default => false)
-    end
+    self.class.update_all({:default => false}, ['id != ?', self.id]) if default?
   end
 end
