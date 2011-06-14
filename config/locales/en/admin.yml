@@ -3,7 +3,10 @@ en:
     documentation: "What's this?"
     layouts:
       main_menu:
-        title: "Admin Menu"
+        users: 'Users'
+        content: 'Game Content'
+        support: 'Support'
+        configuration: 'Configuration'
         character_types: "Character Types"
         items: "Items"
         missions: "Missions"
@@ -24,6 +27,7 @@ en:
         help_pages: "Help Pages"
         settings: "Settings"
         global_tasks: "Global Tasks"
+        credit_packages: "Facebook Credits"
         messages: "Messages"
         # Add your custom menu items below this mark
         

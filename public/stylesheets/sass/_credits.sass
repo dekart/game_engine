@@ -1,0 +1,48 @@
+#credit_packages
+  width: 350px
+  margin: 20px auto
+  padding: 10px
+  border = !main_border
+  
+  .select_package
+    font-weight: bold
+    margin-bottom: 10px
+  
+  .credit_package
+    line-height: 20px
+    
+    .selector, .vip_money, .credits
+      padding: 5px 0
+      border-bottom = !splitter_border
+    
+    .vip_money, .credits
+      .value
+        padding-left: 20px
+        font-weight: bold
+        background:
+          repeat: no-repeat
+          position: left
+
+    .vip_money
+      padding-left: 30px
+      text-align: right
+      
+      .value
+        background-image = !asset_icons_vip_money
+      
+    .credits
+      padding-left: 30px
+      
+      .value
+        background-image = !asset_icons_credits
+  
+  .selected
+    background-color = !current_item_bg_color
+    
+  .buttons
+    margin: 15px 0 0 0
+    
+    .purchase
+      cursor: pointer
+      +button(!asset_icons_credits)
+    

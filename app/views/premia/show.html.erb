@@ -12,6 +12,8 @@
   </div>
 </div>
 
+<%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>
+
 <% if @special_items.any? %>
   <%= render "items/specials", :items => @special_items %>
 <% end %>
