@@ -118,25 +118,21 @@ describe StoriesController do
       end
       
       it 'should target to mission group page from mission completion story' do
-        Mission.should_receive(:find).with(1).and_return(mock_model(Mission, :mission_group_id => 2))
-        
         do_request(
           :id => 'mission_completed',
           :story_data => 'MGkvJJvNnYLx4AdeLp+K2rGBbn75MUMmhs9iFolovvIbTPO49ivKMpb4R+1mqTQA--5i8CyrzRPaYSvpRZnkh2oQ==' # {:mission_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/2')
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups')
       end
       
-      it 'should target to mission group page from boss story' do
-        Boss.should_receive(:find).with(1).and_return(mock_model(Boss, :mission_group_id => 2))
-
+      it 'should target to current mission group page from boss story' do
         do_request(
           :id => 'boss_defeated',
           :story_data => 'NCipKIRIkYNlRxDfS7o6QWdydL+Un0/q0e1Q8m9Szkk=--z/LNV+JvdEEClxpkPapxIw==' # {:boss_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups/2')
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups')
       end
       
       it 'should target to monster page from monster invitation story' do
@@ -151,14 +147,12 @@ describe StoriesController do
       end
       
       it 'should target to monster page from monster defeat story' do
-        controller.send(:encryptor).should_receive(:encrypt).with(1).and_return('securemonsterkey')
-        
         do_request(
           :id => 'monster_defeated',
           :story_data => 'cMKj+S40uXVpaez9dt6pGwIyDk76SM0HcjIGYO2RDKgl3oEc/sANp0IGq5G1xmrh--7lGcWvHmmnyuVjkrRGCrVg==' # {:monster_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/monsters/1?key=securemonsterkey')
+        response.should redirect_from_iframe_to('http://apps.facebook.com/test/monsters')
       end
       
       it 'should target to property list page from property purchase story' do
