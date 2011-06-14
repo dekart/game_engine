@@ -22,9 +22,7 @@
         <td class="valid_till"><%= content_tag(:span, l(promotion.valid_till, :format => :short), :class => (Time.now < promotion.valid_till ? :valid : :invalid)) %></td>
         <td class="text"><%= promotion.text.html_safe %></td>
         <td class="promotions">
-          <% promotion.payouts.each do |payout| %>
-            <%= render "admin/payouts/preview/#{payout.name}", :payout => payout %>
-          <% end %>
+          <%= admin_payouts_preview(promotion.payouts) %>
         </td>
         <td class="receipts"><%= promotion.promotion_receipts.size %></td>
         <td class="link"><%= link_to(t(".link"), promotion_url(promotion, :canvas => true), :target => :_blank) %></td>
