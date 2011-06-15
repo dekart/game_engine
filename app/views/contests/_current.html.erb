@@ -1,12 +1,6 @@
 <% if current_contest %>
-
-  <div id="current_contest" class="clearfix">
-    <h2><%= t(".header") %></h2>
+  <% contest_current_tag(current_contest) do %>
     <div id="contest_info">
-      <div class="name"><%= current_contest.name %></div>
-      
-      <%= contest_image(current_contest, :normal) %>
-      
       <div class="description"><%= current_contest.description.html_safe %></div>
       <div class="current_position">
         <%= t('.current_position', 
@@ -22,11 +16,13 @@
         <%= contest_timer(current_contest) %>
       <% end %>
       
-      <div class="buttons">
-        <%= link_to(button(:fights), new_fight_path, :class => 'button fight') %>
-        <%= link_to(button(:contest), contest_path(current_contest), :class => 'button contest') %>
-      </div>
+      <% if current_contest.available? %>
+        <div class="buttons clearfix">
+          <%= contest_fight_button %>
+          <%= link_to(button(:contest), contest_path(current_contest), :class => 'button contest') %>
+        </div>
+      <% end %>
     </div>
-  </div>
+  <% end %>
   
 <% end%>

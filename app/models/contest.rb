@@ -35,16 +35,8 @@ class Contest < ActiveRecord::Base
       Setting.i(:contests_show_after_finished_time).days.since] 
   }
     
-  
-  has_attached_file :image,
-    :styles => {
-      :icon   => "40x40#",
-      :small  => "120x120>",
-      :normal => "200x200>",
-      :large  => "350x350>",
-      :stream => "90x90#"
-    }
-  
+  has_attached_file :image
+    
   validates_presence_of :name, :description
   
   validates_numericality_of :duration_time, 
@@ -98,6 +90,10 @@ class Contest < ActiveRecord::Base
     character_contest = character_contests.find_or_create_by_character_id(character.id)
     character_contest.points += 1
     character_contest.save!
+  end
+  
+  def available?
+    started? || finished?
   end
   
   protected

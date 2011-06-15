@@ -8,7 +8,7 @@ en:
       finished: "Contest was finished"
       buttons:
         fights: "Fights"
-        contest: "Contest Rating"
+        contest: "Contest Results"
     show:
       title: "Current contest"
       buttons:

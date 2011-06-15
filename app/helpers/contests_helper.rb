@@ -23,12 +23,19 @@ module ContestsHelper
     end
   end
   
-  def contest_image(contest, format, options = {})
+  def contest_current_tag(contest, &block)
+    result = content_tag(:div, capture(&block),
+      :id     => 'current_contest',
+      :class  => 'clearfix',
+      :style  => contest_logo_background(contest)
+    )
+    
+    concat(result.html_safe)
+  end
+  
+  def contest_logo_background(contest)
     if contest.image?
-      content_tag(:div, 
-        image_tag(contest.image.url(format), options),
-        :class => 'image'
-      )
+      "background-image: url('#{contest.image.url}'); background-repeat: no-repeat;"
     end
   end
   
@@ -59,5 +66,11 @@ module ContestsHelper
     end
     
     block_given? ? concat(result.html_safe) : result.html_safe
+  end
+  
+  def contest_fight_button
+    unless params[:controller] == 'fights' || current_contest.finished?
+      link_to(button(:fights), new_fight_path, :class => 'button fight') 
+    end
   end
 end

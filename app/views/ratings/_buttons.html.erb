@@ -7,7 +7,7 @@
     <%= link_to(button(:global), global_rating_path, :class => :button) %>
   <% end %>
   
-  <% if current_contest %>
+  <% if current_contest && current_contest.available? %>
     <%= link_to(button(:contest), contest_path(current_contest), :class => :button)%>
   <% end %>
 </div>
