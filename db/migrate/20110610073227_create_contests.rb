@@ -20,14 +20,12 @@ class CreateContests < ActiveRecord::Migration
       t.integer  :character_id, :null => false
       t.integer  :contest_id,   :null => false
       
-      t.integer  :current_points, :default => 0
-      t.integer  :previous_points, :default => 0
-      t.datetime :previous_points_updated_at
+      t.integer  :points, :default => 0
       
       t.timestamps
     end
     
-    add_index :character_contests, :current_points
+    add_index :character_contests, :points
     
     add_index :character_contests, :character_id
     add_index :character_contests, :contest_id

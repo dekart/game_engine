@@ -19,7 +19,7 @@
       <%= contest_timer(current_contest) %>
       
       <div class="buttons">
-        <%= link_to(button(:fights), fights_path, :class => 'button fight') %>
+        <%= link_to(button(:fights), new_fight_path, :class => 'button fight') %>
         <%= link_to(button(:contest), contest_path(current_contest), :class => 'button contest') %>
       </div>
     </div>

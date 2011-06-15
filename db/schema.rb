@@ -103,11 +103,9 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
   add_index "bosses", ["mission_group_id"], :name => "index_bosses_on_mission_group_id"
 
   create_table "character_contests", :force => true do |t|
-    t.integer  "character_id",                              :null => false
-    t.integer  "contest_id",                                :null => false
-    t.integer  "current_points",             :default => 0
-    t.integer  "previous_points",            :default => 0
-    t.datetime "previous_points_updated_at"
+    t.integer  "character_id",                :null => false
+    t.integer  "contest_id",                  :null => false
+    t.integer  "points",       :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,7 +113,7 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
   add_index "character_contests", ["character_id", "contest_id"], :name => "index_character_contests_on_character_id_and_contest_id"
   add_index "character_contests", ["character_id"], :name => "index_character_contests_on_character_id"
   add_index "character_contests", ["contest_id"], :name => "index_character_contests_on_contest_id"
-  add_index "character_contests", ["current_points"], :name => "index_character_contests_on_current_points"
+  add_index "character_contests", ["points"], :name => "index_character_contests_on_points"
 
   create_table "character_titles", :force => true do |t|
     t.integer  "character_id", :null => false

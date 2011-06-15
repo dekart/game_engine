@@ -331,3 +331,8 @@ Factory.define :contest do |t|
   
   t.duration_time 7
 end
+
+Factory.define :character_contest do |t|
+  t.association :contest
+  t.association :character
+end

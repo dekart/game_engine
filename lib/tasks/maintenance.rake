@@ -877,5 +877,13 @@ namespace :app do
         monster.expire!
       end
     end
+    
+    desc "Finish current contests"
+    task :finish_contests => :environment do
+      Contest.with_state(:visible).all(:conditions => ['finished_at <= ?', Time.now]).each do |contest|
+        contest.finish!
+        puts "Contest #{contest.name} finished"
+      end
+    end
   end
 end

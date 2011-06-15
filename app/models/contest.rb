@@ -50,10 +50,10 @@ class Contest < ActiveRecord::Base
   validates_numericality_of :duration_time, 
     :greater_than => 0
 
-  def leaders(options = {})
+  def leaders_with_points(options = {})
     options.reverse_merge!({
       :include => :character,
-      :order => 'current_points DESC'
+      :order => 'points DESC'
     })
     
     character_contests.scoped(options)
@@ -68,30 +68,36 @@ class Contest < ActiveRecord::Base
   end
 
   def started?
-    visible? && !finished? && started_at <= Time.now
+    visible? && started_at <= Time.now
   end
   
   def starting_soon?
-    visible? && started_at >= Time.now
+    visible? && started_at > Time.now
   end
-
+  
   def position(character)
     character_contest = character.character_contests.first(
-      :select => 'current_points', 
+      :select => 'points', 
       :conditions => {:contest_id => id}
     )
     
-    @conditions = ['current_points > ?', character_contest.current_points] if character_contest
+    @conditions = ['points > ?', character_contest.points] if character_contest
     
     character_contests.count(:conditions => @conditions) + 1
   end
   
   def time_left_to_start
-    (Time.now - started_at).to_i
+    (started_at - Time.now).to_i
   end
   
   def time_left_to_finish
     (finished_at - Time.now).to_i
+  end
+  
+  def inc_points!(character)
+    character_contest = character_contests.find_or_create_by_character_id(character.id)
+    character_contest.points += 1
+    character_contest.save!
   end
   
   protected

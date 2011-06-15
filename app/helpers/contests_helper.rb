@@ -47,14 +47,15 @@ module ContestsHelper
       
       current_in_leaders = true if character == options[:current]
       
-      result << capture(character, character_result, position + 1, (character == options[:current]), &block)
+      result << capture(character, character_result.points, index + 1, (character == options[:current]), &block)
     end
     
-    if options[:include_current] && current_in_leaders
+    if options[:include_current] && !current_in_leaders
       position = contest.position(options[:current])
       character_result = contest.result_for(options[:current])
+      points = (character_result ? character_result.points : 0)
       
-      result << capture(options[:current], character_result, position, true, &block)
+      result << capture(options[:current], points, position, true, &block)
     end
     
     block_given? ? concat(result.html_safe) : result.html_safe

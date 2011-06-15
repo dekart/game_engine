@@ -198,10 +198,14 @@ class Fight < ActiveRecord::Base
     end
 
     # update statistics only for current character
-    if current_character == winner
-      current_character.fights_won += 1
+    if attacker == winner
+      attacker.fights_won += 1
+      
+      if contest = Contest.current.first and contest.started?
+        contest.inc_points!(attacker)
+      end
     else
-      current_character.fights_lost += 1
+      attacker.fights_lost += 1
     end
 
     attacker.save!

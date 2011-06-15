@@ -14,15 +14,15 @@
       <tr>
         <th>#</th>
         <th colspan="2"><%= Character.human_name %></th>
-        <th><%= Character.human_attribute_name("position") %></th>
+        <th><%= Character.human_attribute_name("contest_points") %></th>
       </tr>
     
-      <% contest_table(@contest, @leaders) do |character, character_result, position, current| %>
+      <% contest_table(@contest, @leaders_with_points) do |character, points, position, current| %>
         <% content_tag(:tr, :class => (:current if current)) do %>
           <td class="position"><%= position %></td>
           <td class="picture"><%= character_picture_link(character) %></td>
           <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
-          <td class="fights_won last"><%= character_result.current_points %></td>
+          <td class="points last"><%= points %></td>
         <% end %>
       <% end %>
     </table>
