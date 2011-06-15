@@ -26,4 +26,21 @@ describe Character do
       @character.monster_types.available_in_future.should_not include(@monster_type1, @monster_type2)
     end
   end
+  
+  describe '#payout_triggers' do
+    before do
+      @character = Factory(:character)
+      @monster_type = Factory(:monster_type)
+    end
+
+    it 'should return :victory if there are no collected rewards for this monster type' do
+      @character.monster_types.payout_triggers(@monster_type).should == [:victory]
+    end
+
+    it 'should return :repeat_victory if character already collected reward from this monster type' do
+      @character.monster_types.collected.should_receive(:ids).and_return([@monster_type.id])
+      
+      @character.monster_types.payout_triggers(@monster_type).should == [:repeat_victory]
+    end
+  end
 end

@@ -118,11 +118,7 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def payout_triggers
-    if reward_collected?
-      []
-    else
-      character.monster_types.payout_triggers(monster_type)
-    end
+    reward_collected? ? [] : character.monster_types.payout_triggers(monster_type)
   end
   
   def significant_damage?

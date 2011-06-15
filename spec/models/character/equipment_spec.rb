@@ -9,22 +9,18 @@ describe Character::Equipment do
       
       @character.equipment.auto_equip!(@inventory)
       
-      @cache = mock('cache', :read => {:attack => 123}, :write => true)
-      @character.equipment.instance_variable_set(:@cache, @cache)
-
-        
       @character.equipment.stub!(:inventories).and_return([@inventory])
     end
     
-    it 'should try to read cached values from Rails cache' do
-      @cache.should_receive(:read).and_return({})
+    it 'should read cached values from Rails cache' do
+      Rails.cache.write("character_#{@character.id}_equipment_effects", {:attack => 123})
       
-      @character.equipment.effect(:attack)
+      @character.equipment.effect(:attack).should == 123
     end
     
     describe 'when cache is empty' do
       before do
-        @cache.stub!(:read).and_return(nil)
+        Rails.cache.clear
       end
       
       it 'should collect all effects from equipped inventories' do
@@ -35,30 +31,16 @@ describe Character::Equipment do
         @character.equipment.effect(:attack)
       end
       
-      it 'should store collected values to cache for 15 minutes' do
-        @cache.should_receive(:write).with(
-          "character_#{ @character.id }_equipment_effects", 
-          {:attack => 0, :defence => 1, :health => 2, :energy => 3, :stamina => 4}, 
-          {:expire_in => 15.minutes}
-        )
-
-        %w{attack defence health energy stamina}.each_with_index do |attribute, index|
-          @inventory.stub!(attribute).and_return(index)
-        end
-        
-        @character.equipment.effect(:attack)
-      end
-
       it 'should not re-collect effects' do
         @inventory.should_receive(:attack).once
         
         @character.equipment.effect(:attack)
         @character.equipment.effect(:attack)
       end
-    end
     
-    it 'should return value of the requested effect' do
-      @character.equipment.effect(:attack).should == 123
+      it 'should return value of the requested effect' do
+        @character.equipment.effect(:attack).should == 1
+      end
     end
   end
   

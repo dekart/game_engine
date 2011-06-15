@@ -165,26 +165,4 @@ describe Monster do
       @monster.time_remaining.should == 599
     end
   end
-
-  describe "scopes" do
-    describe "when fetching current monsters" do
-      it "should fetch monsters who expired less than 24 hours ago" do
-        @monster1 = Factory.create(:monster)
-        @monster2 = Factory.create(:monster)
-
-        Monster.update_all({:expire_at => (24.hours + 1.minute).ago}, {:id => @monster2.id})
-
-        Monster.current.should include(@monster1)
-        Monster.current.should_not include(@monster2)
-      end
-
-      it "should fetch monsters defeated less than 24 hours ago" do
-        @monster1 = Factory.create(:monster)
-        @monster2 = Factory.create(:monster, :defeated_at => (24.hours.days + 1.minute).ago)
-
-        Monster.current.should include(@monster1)
-        Monster.current.should_not include(@monster2)
-      end
-    end
-  end
 end
