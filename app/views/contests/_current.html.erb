@@ -2,13 +2,16 @@
   <% contest_current_tag(current_contest) do %>
     <div id="contest_info">
       <div class="description"><%= current_contest.description.html_safe %></div>
-      <div class="current_position">
-        <%= t('.current_position', 
-              :value => content_tag(:span, 
-                current_contest.position(current_character),
-                :class => 'value') 
-              ).html_safe %>
-      </div>
+      
+      <% if current_contest.available? %>
+        <div class="current_position">
+          <%= t('.current_position', 
+                :value => content_tag(:span, 
+                  current_contest.position(current_character),
+                  :class => 'value') 
+                ).html_safe %>
+        </div>
+      <% end%>
       
       <% if current_contest.finished? %>
         <%= content_tag(:div, t(".finished"), :class => "finished") %>
