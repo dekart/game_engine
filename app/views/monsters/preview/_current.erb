@@ -1,0 +1,41 @@
+<% div_for(monster, :class => :clearfix) do %>
+  <div class="image"><%= link_to(monster_image(monster, :normal), monster) %></div>
+  
+  <div class="info">
+    <div class="name"><%= monster.name %></div>
+    <div class="description"><%= monster.description %></div>
+  </div>
+  
+  <% payout_list(monster.monster_type, monster.monster_type.payouts, :format => :preview, :trigger => current_character.monster_types.payout_triggers(monster.monster_type)) do |p| %>
+    <div class="payouts info">
+      <h3><%= Monster.human_attribute_name("payouts") %></h3>
+
+      <%= p.payout_list %>
+    </div>
+  <% end %>
+  
+  <div class="info">
+    <div class="fight_time">
+      <span class="label"><%= t('.time_remaining') %></span>
+      <span class="value"></span>
+    </div>
+    
+    <div class="health">
+      <%= monster_health_bar(monster) %>
+    </div>
+  </div>
+
+  <div class="controls">
+    <% if monster.progress? %>
+      <%= link_to(button(:engage), monster, :class => "engage button") %>
+    <% elsif monster.expired? || !fight.reward_collectable? %>
+      <%= link_to(button(:view), monster, :class => "view button") %>
+    <% else %>
+      <%= link_to(button(:reward), monster, :class => "reward button") %>
+    <% end %>
+  </div>
+<% end %>
+
+<% dom_ready do %>
+  Timer.start('#<%= dom_id(monster) %> .fight_time .value', <%= monster.time_remaining %>)
+<% end %>

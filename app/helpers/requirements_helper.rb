@@ -10,8 +10,10 @@ module RequirementsHelper
         :satisfied    => requirement.satisfies?(current_character)
       )
     end
+    
+    result = result.html_safe
 
-    result.html_safe
+    block_given? && !result.blank? ? yield(result) : result
   end
 
   def requirement(*args, &block)

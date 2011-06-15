@@ -3,11 +3,31 @@ class MonsterFight < ActiveRecord::Base
   belongs_to :monster
 
   named_scope :top_damage, :order => "damage DESC", :include => :character
+  named_scope :current, Proc.new {
+    {
+      :joins => :monster,
+      :conditions => ["(monsters.defeated_at IS NULL AND monsters.expire_at >= :time) OR (monsters.defeated_at >= :time)",
+        {:time => Setting.i(:monsters_reward_time).hours.ago}
+      ]
+    }
+  }
+  named_scope :own, 
+    :joins      => :monster,
+    :conditions => 'monsters.character_id = monster_fights.character_id'
+  named_scope :by_type, Proc.new{|type|
+    {
+      :joins => :monster,
+      :conditions => ["monsters.monster_type_id = ?", type.id]
+    }
+  }
+  
   
   cattr_reader :damage_system
   @@damage_system = FightingSystem::PlayerVsMonster::Simple
 
   attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
+  
+  delegate :monster_type, :to => :monster
   
   validates_uniqueness_of :character_id, :scope => :monster_id, :on => :create
   
@@ -69,11 +89,13 @@ class MonsterFight < ActiveRecord::Base
     return false unless reward_collectable?
 
     transaction do
-      @payouts = monster.monster_type.payouts.apply(character, repeat_fight? ? :repeat_victory : :victory, monster.monster_type)
+      @payouts = monster_type.payouts.apply(character, character.monster_types.payout_triggers(monster_type), monster_type)
 
       character.save!
 
       self.reward_collected = true
+      
+      character.monster_types.collected.clear_cache!
 
       save!
     end
@@ -92,28 +114,21 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def repeat_fight?
-    character.monster_fights.count(
-      :joins => :monster,
-      :conditions => [
-        'monsters.monster_type_id = ? AND monster_fights.reward_collected = ?', monster.monster_type_id, true
-      ]
-    ) > 0
+    character.monster_types.repeat_fight?(monster_type)
   end
 
   def payout_triggers
     if reward_collected?
       []
-    elsif repeat_fight?
-      [:repeat_victory]
     else
-      [:victory]
+      character.monster_types.payout_triggers(monster_type)
     end
   end
   
   def significant_damage?
     # user caused significant damage and was in top damage players
     damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.maximum(:damage)) &&
-      monster.monster_fights.top_damage.index(self) < monster.monster_type.number_of_maximum_reward_collectors
+      monster.monster_fights.top_damage.index(self) < monster_type.number_of_maximum_reward_collectors
   end
   
   def summoner?

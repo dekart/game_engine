@@ -1,8 +1,12 @@
 class MonstersController < ApplicationController
   def index
-    @monsters       = current_character.monsters.current
+    monster_fights = current_character.monster_fights.current
+    
+    @active_monster_fights = monster_fights.select{|f| f.monster.progress? || f.reward_collectable? }
+    @previous_monster_fights = monster_fights - @active_monster_fights
+    
     @monster_types  = current_character.monster_types.available_for_fight
-    @locked_monster   = current_character.monster_types.available_in_future.first
+    @locked_monster = current_character.monster_types.available_in_future.first
     
     render :index
   end
@@ -20,7 +24,7 @@ class MonstersController < ApplicationController
   def new
     @monster_type = MonsterType.find(params[:monster_type_id])
 
-    @monster = current_character.monsters.own.current.by_type(@monster_type).first
+    @monster = current_character.monster_fights.own.current.by_type(@monster_type).first
     @monster ||= @monster_type.monsters.create(:character => current_character)
   
     if @monster.new_record?

@@ -43,7 +43,6 @@ module PayoutsHelper
   end
 
   def payout_list(container, payouts, options = {}, &block)
-    #return unless payouts
     return if payouts.nil? || payouts.empty?
 
     content = ListBuilder.new(self, container, payouts, options).html(&block)

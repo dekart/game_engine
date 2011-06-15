@@ -3,15 +3,10 @@ en:
     index:
       timer: "Time limit"
       title: "Monsters"
-      current:
-        title: "Current Monster Fights"
-        time_remaining: "Time remaining:"
-        won: "Victory!"
-        expired: "You lost"
-      available:
-        title: "Available Monsters"
-      locked:
-        title: "Locked Monster"
+      current: "Current Monster Fights"
+      available: "Available Monsters"
+      locked: "Locked Monster"
+      previous: "Previous Monsters"
       buttons:
         attack: "Attack"
         engage: "Engage"
@@ -62,21 +57,19 @@ en:
         publish: "Brag About It"
     fighters:
       title: "Damage Leaders"
-    monster_available:
-      buttons:
-        attack: "Attack!"
-    monster_current:
+    preview:
+      available:
+        fight_time: "%{amount} Hours"
+        buttons:
+          attack: "Attack!"
       current:
-        won: "You won!"
-        time_remaining: "Time remaining"
-      buttons:
-        engage: "Engage"
-        reward: "Reward"
-        view: "View"
-    monster_completed:
-      buttons:
-        view: "View"
-      current:
-        won: "You won!"
-        lost: "You lost!"
-        not_enought_damage: "You havn't deal anought damage."
+        time_remaining: "Time Left:"
+        buttons:
+          engage: "Engage"
+          view: "View"
+      completed:
+        won: "Monster defeated!"
+        expired: "Time is up"
+        buttons:
+          reward: "Get Reward"
+          view: "View"

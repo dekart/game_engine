@@ -5,45 +5,54 @@
     border = !main_border
     padding: 15px
 
-    .name
-      font-size: 16px
-      font-weight: bold
-      margin-bottom: 10px
-
-    .description
-      font-size: 13px
-      text-align: justify
-
     .image
-      margin-bottom: 10px
+      float: left
+
+    .info
+      margin-left: 220px
+      margin-bottom: 15px
+      
+      .name
+        font-size: 16px
+        font-weight: bold
+        margin-bottom: 10px
+
+      .description
+        font-size: 14px
+        
+      .health, .fight_time
+        line-height: 25px
+        
+        .label
+          font-weight: bold
+        .value
+          padding-left: 21px
+          background:
+            position: left
+            repeat: no-repeat
+
+      .health
+        .value
+          background-image = !asset_icons_health
+
+      .fight_time
+        float: right
+        
+        .value
+          background-image = !asset_icons_time
 
     .payouts
-      text-align: left
+      .payout
+        clear: none
 
     .requirements
-      text-align: left
+      .requirement
+        clear: none
 
     .status
-      margin-bottom: 10px
       font-weight: bold
 
-      .timer
-        font-weight: normal
-    
-    .health
-      text-align: left
-      font-weight: bold
-      .value
-        padding-left: 21px
-        padding-bottom: 2px
-        background-repeat: no-repeat
-        background-image = !co_icons_health
-        
     .button
-      text-align: left
-      float: none
-      margin: 0 auto
-
       &.attack
         +button(!monster_list_attack_icon, !monster_list_attack_width)
 

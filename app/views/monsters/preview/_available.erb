@@ -1,0 +1,42 @@
+<div class="monster clearfix">
+  <div class="image"><%= monster_image(type, :normal) %></div>
+
+  <div class="info">
+    <div class="name"><%= type.name %></div>
+    <div class="description"> <%= type.description%> </div>
+  </div>
+  
+  <div class="info">
+    <div class="fight_time">
+      <span class="label"><%= Monster.human_attribute_name("fight_time") %>:</span>
+      <span class="value"><%= t('.fight_time', :amount => type.fight_time) %></span>
+    </div>
+
+    <div class="health">
+      <span class="label"><%= Monster.human_attribute_name("health") %>:</span>
+      <span class="value"><%= type.health %></span>
+    </div>
+  </div>
+  
+  <% payout_list(type, type.payouts, :format => :preview, :triggers => current_character.monster_types.payout_triggers(type)) do |p| %>
+    <div class='payouts info'>
+      <h3><%= Monster.human_attribute_name("payouts") %></h3>
+
+      <%= p.payout_list %>
+    </div>
+  <% end %>
+
+  <% requirement_list(type.requirements) do |requirements| %>
+    <div class='requirements info'>
+      <h3><%= Monster.human_attribute_name("requirements") %></h3>
+
+      <%= requirements %>
+    </div>
+  <% end %>
+  
+  <% unless locked %>
+    <div class="controls">
+      <%= link_to(button(:attack), new_monster_path(:monster_type_id => type), :class => "attack button") %>
+    </div>
+  <% end %>
+</div>

@@ -2,35 +2,46 @@
 
 <%= render "missions/buttons", :current => :monsters %>
 
-<% if @monsters.any? %>
+<% unless @active_monster_fights.empty? %>
   <div id="current_monsters" class="monster_list clearfix">
-    <h2><%= t(".current.title") %></h2>
+    <h2><%= t(".current") %></h2>
 
-    <% monster_list(@monsters) do |monster, fight| %>
-      <% if monster.progress? %>
-        <%= render "monster_current", :monster => monster, :fight => fight%>
-      <% elsif monster.expired? || !fight.reward_collectable?%>
-        <%= render "monster_completed", :monster => monster, :fight => fight %>
-      <% end %>
+    <% @active_monster_fights.each do |fight| %>
+      <%= render(fight.monster.progress? ? "monsters/preview/current" : "monsters/preview/completed", 
+            :monster  => fight.monster, 
+            :fight    => fight
+          ) %>
     <% end %>
-
   </div>
 <% end %>
 
-<% if @monster_types.any? %>
+<% unless @monster_types.empty? %>
   <div id="available_monsters" class="monster_list clearfix">
-    <h2><%= t(".available.title") %></h2>
+    <h2><%= t(".available") %></h2>
 
     <% @monster_types.each do |type| %>
-      <%= render "monster_available", :type => type%>
+      <%= render("monsters/preview/available", :type => type, :locked => false) %>
     <% end %>
-
   </div>
 <% end %>
 
 <% if @locked_monster %>
   <div id="locked_monster" class="monster_list clearfix">
-    <h2><%= t(".locked.title") %></h2>
+    <h2><%= t(".locked") %></h2>
     
+    <%= render("monsters/preview/available", :type => @locked_monster, :locked => true) %>
+  </div>
+<% end %>
+
+<% unless @previous_monster_fights.empty? %>
+  <div id="previous_monsters" class="monster_list clearfix">
+    <h2><%= t(".previous") %></h2>
+
+    <% @previous_monster_fights.each do |fight| %>
+      <%= render("monsters/preview/completed", 
+            :monster  => fight.monster, 
+            :fight    => fight
+          ) %>
+    <% end %>
   </div>
 <% end %>

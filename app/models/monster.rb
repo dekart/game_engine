@@ -10,19 +10,6 @@ class Monster < ActiveRecord::Base
     :as => :target, 
     :class_name => 'AppRequest::Base'
 
-  named_scope :current, Proc.new{
-    {
-      :conditions => ["(defeated_at IS NULL AND expire_at >= :time) OR (defeated_at >= :time)",
-        {:time => Setting.i(:monsters_reward_time).hours.ago}
-      ]
-    }
-  }
-  named_scope :by_type, Proc.new{|type|
-    {
-      :conditions => {:monster_type_id => type.id}
-    }
-  }
-
   state_machine :initial => :progress do
     state :progress
     state :won
@@ -82,7 +69,7 @@ class Monster < ActiveRecord::Base
   def validate_on_create
     return unless character && monster_type
 
-    errors.add_to_base(:recently_attacked) if character.monsters.own.current.by_type(monster_type).count > 0
+    errors.add_to_base(:recently_attacked) if character.monster_fights.own.current.by_type(monster_type).count > 0
 
     errors.add(:character, :low_level) if character.level < level
 
