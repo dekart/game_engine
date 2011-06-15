@@ -28,16 +28,12 @@ class Character::Equipment
   
   
   def effect(name)
-    @effects ||= @cache.read(effect_cache_key)
-    
-    unless @effects
-      @effects = {}
-
-      Item::EFFECTS.each do |effect|
-        @effects[effect] = inventories.sum{|i| i.send(effect) }
+    @effects ||= @cache.fetch(effect_cache_key, :expire_in => 15.minutes) do
+      {}.tap do |effects|
+        Item::EFFECTS.each do |effect|
+          effects[effect] = inventories.sum{|i| i.send(effect) }
+        end
       end
-      
-      @cache.write(effect_cache_key, @effects, :expire_in => 15.minutes)
     end
 
     @effects[name.to_sym]
