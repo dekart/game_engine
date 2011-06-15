@@ -16,7 +16,11 @@
               ).html_safe %>
       </div>
       
-      <%= contest_timer(current_contest) %>
+      <% if current_contest.finished? %>
+        <%= content_tag(:div, t(".finished"), :class => "finished") %>
+      <% else %>
+        <%= contest_timer(current_contest) %>
+      <% end %>
       
       <div class="buttons">
         <%= link_to(button(:fights), new_fight_path, :class => 'button fight') %>

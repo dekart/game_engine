@@ -4,7 +4,8 @@ en:
       header: "Current contest"
       start_time: "Contest will start over %{value}"
       finish_time: "Contest will finish over %{value}"
-      current_position: "You are currently %{value} in contest"
+      current_position: "You are %{value} in contest"
+      finished: "Contest was finished"
       buttons:
         fights: "Fights"
         contest: "Contest Rating"
