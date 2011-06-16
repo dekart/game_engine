@@ -23,6 +23,10 @@ class Monster < ActiveRecord::Base
       transition :progress => :expired
     end
     
+    before_transition :on => :win do |monster|
+      monster.defeated_at = Time.now
+    end
+    
     after_transition :on => [:win, :expire] do |monster|
       monster.app_requests.for_expire.each do |app_request|
         app_request.expire!
