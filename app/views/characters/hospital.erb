@@ -8,7 +8,7 @@
       <p>
         <strong><%= t(".price") %></strong>
 
-        <span class="basic_money"><%= number_to_currency(current_character.hospital_price) %></span>
+        <%= basic_money_tag(number_to_currency(current_character.hospital_price)) %>
       </p>
     <% end %>
 
