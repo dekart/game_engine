@@ -1,5 +1,4 @@
 <div id="contest">
-  
   <%= title(@contest.name) %>
   
   <div class="buttons clearfix">
@@ -12,7 +11,7 @@
       <tr>
         <th>#</th>
         <th colspan="2"><%= Character.human_name %></th>
-        <th><%= Character.human_attribute_name("contest_points") %></th>
+        <th><%= Character.human_attribute_name("fights_won") %></th>
       </tr>
     
       <% contest_table(@contest, @leaders_with_points) do |character, points, position, current| %>

@@ -12,6 +12,3 @@ en:
       buttons:
         relations: "Alliance Rating"
         global: "Global Rating"
-    type:
-      fight:
-        title: "Fight contest"
