@@ -111,8 +111,26 @@ describe Contest do
     end
     
     it 'should increment character points' do
+      @contest.started_at = 1.hours.ago
+      @contest.save!
+      
+      @contest.publish!
+      
       @contest.inc_points!(@character_contest1.character)
       @character_contest1.reload.points.should == 1
+    end
+    
+    it 'should not increment character points if contest finish time has come' do
+      @contest.started_at = 1.hours.ago
+      @contest.save!
+      
+      @contest.publish!
+      
+      @contest.finished_at = 1.minute.ago
+      @contest.save!
+      
+      @contest.inc_points!(@character_contest1.character)
+      @character_contest1.reload.points.should == 0
     end
     
     it 'should return result object for character' do

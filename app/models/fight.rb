@@ -201,7 +201,7 @@ class Fight < ActiveRecord::Base
     if attacker == winner
       attacker.fights_won += 1
       
-      if contest = Contest.current.first and contest.started?
+      if contest = Contest.current.first and contest.active?
         contest.inc_points!(attacker)
       end
     else

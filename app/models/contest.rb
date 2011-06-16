@@ -87,13 +87,19 @@ class Contest < ActiveRecord::Base
   end
   
   def inc_points!(character)
-    character_contest = character_contests.find_or_create_by_character_id(character.id)
-    character_contest.points += 1
-    character_contest.save!
+    if active?
+      character_contest = character_contests.find_or_create_by_character_id(character.id)
+      character_contest.points += 1
+      character_contest.save!
+    end
   end
   
   def available?
     started? || finished?
+  end
+  
+  def active?
+    started? && time_left_to_finish >= 0
   end
   
   protected
