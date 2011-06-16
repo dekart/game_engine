@@ -1,8 +1,6 @@
 #current_vip_money
   font-size: 18px
-  margin: 15px auto
-  text-align: center
-  width: 250px
+  float: right
 
   .value
     font-weight: bold
@@ -14,9 +12,22 @@
       position: center left
       repeat: no-repeat
   
-  .get_more
-    margin: auto
-    +button(!premium_current_vip_money_icon, 180px)
+#premia_buttons
+  margin-bottom: 20px
+  
+  .button
+    float: left
+    width: auto
+    margin-right: 15px
+    
+  .special_items
+    +button(!asset_icons_shop)
+    
+  .services
+    +button(!asset_icons_vip_money)
+    
+  .earn
+    +button(!asset_icons_add)
 
 #premia
   margin:

@@ -240,8 +240,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resource :premium, 
     :member => {
-      :change_name => :get,
-      :earn => :get
+      :change_name => :get
     },
     :collection => {
       :refill_dialog => :post

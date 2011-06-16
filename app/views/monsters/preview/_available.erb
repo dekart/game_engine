@@ -19,7 +19,7 @@
   </div>
   
   <% payout_list(type, type.payouts, :format => :preview, :triggers => current_character.monster_types.payout_triggers(type)) do |p| %>
-    <div class='payouts info'>
+    <div class="payouts info">
       <h3><%= Monster.human_attribute_name("payouts") %></h3>
 
       <%= p.payout_list %>
@@ -27,7 +27,7 @@
   <% end %>
 
   <% requirement_list(type.requirements) do |requirements| %>
-    <div class='requirements info'>
+    <div class="requirements info">
       <h3><%= Monster.human_attribute_name("requirements") %></h3>
 
       <%= requirements %>
