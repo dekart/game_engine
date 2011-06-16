@@ -190,6 +190,13 @@ class Character < ActiveRecord::Base
   def weakness_minimum
     Setting.i(:character_weakness_minimum)
   end
+  
+  def fight_requirements
+    @requirements ||= Requirements::Collection.new(
+      weakness_requirement,
+      Requirements::StaminaPoint.new(:value => Setting.i(:fight_stamina_required))
+    )
+  end
 
   def formatted_basic_money
     number_to_currency(basic_money)

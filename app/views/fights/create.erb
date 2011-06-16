@@ -6,25 +6,22 @@
 
     <%= builder.render "fights/create/details", :fight => @fight %>
 
-    <% builder.on_ready do %>
-      <% if @fight.cause %>
-        $('#<%= dom_id(@fight.cause, :respond) %>').remove();
-      <% else %>
-        $('#<%= dom_id(@fight.victim) %>').remove();
-      <% end %>
-    <% end %>
   <% elsif !@fight.enough_stamina? %>
-    <%= builder.render("requirements/not_satisfied/stamina_point",
-          :requirement => @fight.stamina_requirement
-        ) %>
+    <div class="unsatisfied_requirements">
+      <%= builder.render("requirements/not_satisfied/stamina_point",
+            :requirement => @fight.stamina_requirement
+          ) %>
+    </div>
 
     <% builder.on_ready do %>
       <%= ga_track_event('Fights', 'Not Enough Stamina') %>
     <% end %>
   <% elsif current_character.weak? %>
-    <%= builder.render("requirements/not_satisfied/health_point",
-          :requirement => current_character.weakness_requirement
-        ) %>
+    <div class="unsatisfied_requirements">
+      <%= builder.render("requirements/not_satisfied/health_point",
+            :requirement => current_character.weakness_requirement
+          ) %>
+    </div>
 
     <% builder.on_ready do %>
       <%= ga_track_event('Fights', 'Not Enough Health') %>
@@ -36,6 +33,12 @@
   <% end %>
 
   <% builder.on_ready do %>
+    <% if @fight.cause %>
+      $('#<%= dom_id(@fight.cause, :respond) %>').remove();
+    <% else %>
+      $('#<%= dom_id(@fight.victim) %>').remove();
+    <% end %>
+  
     $(document).trigger('fights.create');
   <% end %>
 <% end %>

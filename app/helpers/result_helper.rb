@@ -89,4 +89,8 @@ module ResultHelper
 
     block_given? ? concat(content) : content
   end
+  
+  def render_to_result(&block)
+    dom_ready("$('#result').html('#{escape_javascript(capture(&block))}')")
+  end
 end
