@@ -27,7 +27,7 @@ class MonsterFight < ActiveRecord::Base
 
   attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
   
-  delegate :monster_type, :to => :monster
+  delegate :monster_type, :time_remaining, :to => :monster
   
   validates_uniqueness_of :character_id, :scope => :monster_id, :on => :create
   
