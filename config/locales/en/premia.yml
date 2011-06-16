@@ -6,7 +6,7 @@ en:
       buttons:
         special_items: "Special Items"
         services: "Services"
-        earn: "Earn Gems"
+        buy: "Buy Gems"
       current: "You have %{amount} Gems."
       get_more: "Get More »"
       hire_mercenary:
@@ -38,7 +38,7 @@ en:
       buy_points:
         text: "Add %{amount} upgrade points to your character"
         button: "Add Points"
-      earn:
+      buy:
         note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to do the purchase or you can complete some offers provided by our partners.'
     change_name:
       title: "Change Your Nickname"

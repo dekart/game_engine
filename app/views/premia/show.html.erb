@@ -5,11 +5,11 @@
         :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
       ).html_safe %>
   
-  <%= link_to(t('.get_more'), {:anchor => :earn}, {:class => :get_more})%>
+  <%= link_to(t('.get_more'), {:anchor => :buy}, {:class => :get_more})%>
 </div>
 
 <div id="premia_buttons" class="hash_tabs clearfix">
-  <% %w{special_items services earn}.each do |anchor| %>
+  <% %w{special_items services buy}.each do |anchor| %>
     <%= link_to(button(anchor.to_sym), {:anchor => anchor}, {:class => "#{anchor} button"}) %>
   <% end %>
 </div>
@@ -172,9 +172,9 @@
   </table>
 </div>
 
-<div id="tab_earn" class="hash_tab">
+<div id="tab_buy" class="hash_tab">
   <div id="get_more_vip">
-    <div class="note"><%= t('.earn.note', :vip_money => Character.human_attribute_name('vip_money'))%></div>
+    <div class="note"><%= t('.buy.note', :vip_money => Character.human_attribute_name('vip_money'))%></div>
 
     <%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>
 
