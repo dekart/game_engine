@@ -135,11 +135,11 @@ class MonsterFight < ActiveRecord::Base
     {
       :reference_id => self.id,
       :reference_type => "Monster",
-      :reference_damage => -self.monster_damage,
-      :health => -self.character_damage,
-      :basic_money => self.money,
-      :stamina => -self.stamina,
-      :experience => self.experience
+      :reference_damage => -self.monster_damage.to_i,
+      :health => -self.character_damage.to_i,
+      :basic_money => self.money.to_i,
+      :stamina => -self.stamina.to_i,
+      :experience => self.experience.to_i
     }
   end
 
