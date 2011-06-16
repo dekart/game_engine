@@ -1,5 +1,7 @@
 en:
   help_pages:
+    link:
+      title: "What's this?"
     show:
       buttons:
         close: "Close"
