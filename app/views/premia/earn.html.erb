@@ -1,9 +1,0 @@
-<%= title(t('.title', :vip_money => Character.human_attribute_name('vip_money'))) %>
-
-<div class="note"><%= t('.note', :vip_money => Character.human_attribute_name('vip_money'))%></div>
-
-<%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>
-
-<div id="get_more_vip">
-  <%= facebook_money(current_character) %>
-</div>
