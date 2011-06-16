@@ -140,6 +140,16 @@ describe Monster do
         @monster.save
       }.should change(@monster, :state).from('progress').to('won')
     end
+    
+    it 'should set defeated at time before monster become won' do
+      @monster.hp = 0
+
+      Timecop.freeze(Time.now) do
+        lambda {
+          @monster.save
+        }.should change(@monster, :defeated_at).from(nil).to(Time.now)
+      end
+    end
 
     it 'should stay in progress if health is greater than 0' do
       @monster.hp = 1
