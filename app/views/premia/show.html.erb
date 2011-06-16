@@ -1,3 +1,11 @@
+<% need_more_vip = capture do %>
+  <div class="need_more_vip">
+    <p><%= t('.need_more') %></p>
+    
+    <%= link_to(button(:buy), {:anchor => :buy}, {:class => "buy button"})%>
+  </div>
+<% end %>
+
 <%= title(t(".title")) %>
 
 <div id="current_vip_money">
@@ -16,6 +24,8 @@
 
 <div id="tab_special_items" class="hash_tab">
   <%= render "items/specials", :items => @special_items %>
+
+  <%= need_more_vip %>
 </div>
 
 <div id="tab_services" class="hash_tab">
@@ -170,6 +180,8 @@
       </td>
     </tr>
   </table>
+
+  <%= need_more_vip %>
 </div>
 
 <div id="tab_buy" class="hash_tab">

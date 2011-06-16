@@ -9,6 +9,7 @@ en:
         buy: "Buy Gems"
       current: "You have %{amount} Gems."
       get_more: "Get More »"
+      need_more: "Need more Gems? You can buy them using a major Credit Card or Paypal!"
       hire_mercenary:
         text: "Hire a mercenary to your Alliance"
         button: "Hire"
