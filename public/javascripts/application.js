@@ -154,7 +154,13 @@ function show_result(){
 }
 
 function signedUrl(url){
-  var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
+  var url_parts = url.split('#', 2);
+  
+  var new_url = url_parts[0] + (url_parts[0].indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
+  
+  if(url_parts.length == 2) {
+    new_url = new_url + '#' + url_parts[1]
+  }
 
   return new_url;
 }
