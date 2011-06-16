@@ -77,5 +77,11 @@ $(function(){
 
   $('#character_list :checkbox').click(function(){
     $('#character_list :checked').length > 0 ? $('#character_batch').show() : $('#character_batch').hide();
-  })
+  });
+  
+  $('#admin_menu .item_group h3').click(function(){
+    $('#admin_menu .item_group:not(:has(a.current))').removeClass('expanded');
+    $(this).parents('.item_group').toggleClass('expanded');
+  });
+  $('#admin_menu .item_group:has(a.current)').addClass('expanded');
 });
