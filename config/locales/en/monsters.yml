@@ -5,7 +5,7 @@ en:
       title: "Monsters"
       current: "Current Monster Fights"
       available: "Available Monsters"
-      locked: "Locked Monster"
+      locked: "Locked Monster (unlocks at level %{level})"
       previous: "Previous Monsters"
       buttons:
         attack: "Attack"

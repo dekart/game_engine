@@ -27,7 +27,7 @@
 
 <% if @locked_monster %>
   <div id="locked_monster" class="monster_list clearfix">
-    <h2><%= t(".locked") %></h2>
+    <h2><%= t(".locked", :level => @locked_monster.level) %></h2>
     
     <%= render("monsters/preview/available", :type => @locked_monster, :locked => true) %>
   </div>
