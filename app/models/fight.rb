@@ -187,7 +187,8 @@ class Fight < ActiveRecord::Base
     attacker.sp  -= Setting.i(:fight_stamina_required)
 
     attacker.hp  -= attacker_hp_loss
-    victim.hp    -= victim_hp_loss
+    
+    victim.hp    -= victim_hp_loss if decrease_victim_health?
 
     attacker.inventories.take!(@attacker_boost.item) if @attacker_boost
     victim.inventories.take!(@victim_boost.item) if @victim_boost
@@ -218,5 +219,9 @@ class Fight < ActiveRecord::Base
       :select     => "DISTINCT victim_id",
       :conditions => ["winner_id = ? AND created_at > ?", attacker.id, Setting.i(:fight_attack_repeat_delay).minutes.ago]
     ).collect{|a| a.victim_id }
+  end
+  
+  def decrease_victim_health?
+    victim.user.last_visit_at && victim.user.last_visit_at > Setting.i(:fight_victim_hp_decrease_if_character_was_online).hours.ago 
   end
 end

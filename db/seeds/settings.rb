@@ -62,6 +62,7 @@ Setting[:fight_min_money] ||= 10
 Setting[:fight_min_money_per_level] ||= 1.5
 Setting[:fight_max_difference] ||= 30
 Setting[:fight_weak_opponents] ||= true
+Setting[:fight_victim_hp_decrease_if_character_was_online] ||= 1
 
 Setting[:rating_show_limit] ||= 20
 

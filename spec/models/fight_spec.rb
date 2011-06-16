@@ -152,6 +152,32 @@ describe Fight do
       end
     end
     
+    it 'should decrease victim hp if victim visited game less then 1 hour ago' do
+      @victim.user.last_visit_at = Time.now
+      @victim.user.save!
+      
+      @fight.stub!(:calculate_damage).and_return([2, 0])
+      
+      with_setting(:fight_victim_hp_decrease_if_character_was_online => 1) do
+        lambda {
+          @fight.save! 
+        }.should change(@victim, :hp)
+      end
+    end
+    
+    it 'should not decrease victim hp if victim visited game more then 1 hour ago' do
+      @victim.user.last_visit_at = 2.hours.ago
+      @victim.user.save!
+      
+      @fight.stub!(:calculate_damage).and_return([2, 0])
+      
+      with_setting(:fight_victim_hp_decrease_if_character_was_online => 1) do
+        lambda {
+          @fight.save! 
+        }.should_not change(@victim, :hp)
+      end
+    end
+    
     it 'should give an error when attacking alliance member if configured that way'
     it 'should give an error when attacker is weak'
     it 'should give an error when trying to attack yourself'
