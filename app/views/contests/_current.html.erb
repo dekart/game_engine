@@ -1,31 +1,28 @@
-<% if current_contest %>
-  <% contest_current_tag(current_contest) do %>
-    <div id="contest_info">
-      <div class="description"><%= current_contest.description.html_safe %></div>
-      
-      <% if current_contest.available? %>
-        <div class="current_position">
-          <%= t('.current_position', 
-                :value => content_tag(:span, 
-                  current_contest.position(current_character),
-                  :class => 'value') 
-                ).html_safe %>
-        </div>
-      <% end%>
-      
-      <% if current_contest.finished? %>
-        <%= content_tag(:div, t(".finished"), :class => "finished") %>
-      <% else %>
-        <%= contest_timer(current_contest) %>
-      <% end %>
-      
-      <% if current_contest.available? %>
-        <div class="buttons clearfix">
-          <%= contest_fight_button %>
-          <%= link_to(button(:contest), contest_path(current_contest), :class => 'button contest') %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-  
-<% end%>
+<% content_tag(:div, :id => :current_contest, :class => :clearfix, :style => contest_logo_background(current_contest)) do %>
+  <div id="current_contest_info">
+    <div class="description"><%= current_contest.description.html_safe %></div>
+    
+    <% if current_contest.available? %>
+      <div class="current_position">
+        <%= t('.current_position', 
+              :value => content_tag(:span, 
+                current_contest.position(current_character),
+                :class => 'value') 
+              ).html_safe %>
+      </div>
+    <% end%>
+    
+    <% if current_contest.finished? %>
+      <div class="finished"><%= t(".finished") %></div>
+    <% else %>
+      <%= contest_timer(current_contest) %>
+    <% end %>
+    
+    <% if current_contest.available? %>
+      <div class="buttons clearfix">
+        <%= contest_fight_button %>
+        <%= link_to(button(:current_contest), contest_path(current_contest), :class => 'button current_contest') %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
