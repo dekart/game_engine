@@ -1,14 +1,14 @@
 en:
   premia:
     get_vip: "Earn"
-    earn:
-      title: 'Get More %{vip_money}'
-      note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to do the purchase or you can complete some offers provided by our partners.'
     show:
       title: "Gem Market"
       buttons:
-        get_more: "Get More Gems"
-      current: "You have %{amount} Gems"
+        special_items: "Special Items"
+        services: "Services"
+        earn: "Earn Gems"
+      current: "You have %{amount} Gems."
+      get_more: "Get More »"
       hire_mercenary:
         text: "Hire a mercenary to your Alliance"
         button: "Hire"
@@ -38,6 +38,8 @@ en:
       buy_points:
         text: "Add %{amount} upgrade points to your character"
         button: "Add Points"
+      earn:
+        note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to do the purchase or you can complete some offers provided by our partners.'
     change_name:
       title: "Change Your Nickname"
       note: "Please enter your new nickname below. Please note that each name change will charge Gems from your character so try to avoid typos. If you want to use your real Facebook name - keep the field blank and click 'Apply'."
