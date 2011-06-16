@@ -1,5 +1,5 @@
 <% content_tag(:div, :id => :current_contest, :class => :clearfix, :style => contest_logo_background(current_contest)) do %>
-  <div id="current_contest_info">
+  <div id="contest_info">
     <div class="description"><%= current_contest.description.html_safe %></div>
     
     <% if current_contest.available? %>
@@ -21,7 +21,7 @@
     <% if current_contest.available? %>
       <div class="buttons clearfix">
         <%= contest_fight_button %>
-        <%= link_to(button(:current_contest), contest_path(current_contest), :class => 'button current_contest') %>
+        <%= link_to(button(:rating), contest_path(current_contest), :class => 'button current_contest') %>
       </div>
     <% end %>
   </div>

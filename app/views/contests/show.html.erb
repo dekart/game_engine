@@ -1,6 +1,6 @@
 <div id="contest">
   
-  <%= title(t(".title")) %>
+  <%= title(@contest.name) %>
   
   <div class="buttons clearfix">
     <%= link_to(button(:relations), rating_path, :class => :button) %>
@@ -8,8 +8,6 @@
   </div>
   
   <div class="results">
-    <h2><%= @contest.name %></h2>
-
     <table class="contest_table" cellspacing="0" cellpadding="0">
       <tr>
         <th>#</th>

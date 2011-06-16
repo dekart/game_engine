@@ -1,20 +1,17 @@
 en:
   contests:
     current:
-      header: "Current contest"
-      start_time: "Contest will start over %{value}"
-      finish_time: "Contest will finish over %{value}"
-      current_position: "You are %{value} in contest"
-      finished: "Contest was finished"
+      start_time: "Contest will start in %{value}"
+      finish_time: "Time Left: %{value}"
+      current_position: "You are #%{value}"
+      finished: "Contest Finished"
       buttons:
-        fights: "Fights"
-        contest: "Contest Results"
+        fights: "Fight!"
+        rating: "View Rating"
     show:
-      title: "Current contest"
       buttons:
         relations: "Alliance Rating"
-        global: "Global rating"
+        global: "Global Rating"
     type:
       fight:
         title: "Fight contest"
-          
