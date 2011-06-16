@@ -201,6 +201,7 @@
   $.History.bind(function(state){
     $('.hash_tab').hide();
     $('#tab_' + state).show();
+    $.scrollTo('#tab_' + state);
     $('.hash_tabs a.button').removeClass('current').filter('.' +state).addClass('current');
   })
 <% end %>

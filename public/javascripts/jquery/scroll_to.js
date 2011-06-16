@@ -25,7 +25,7 @@
     }
     
     $bottom.
-      css({ visibility: 'visible', top: $offset.top + $target.outerHeight() + 70 }).
+      css({ visibility: 'visible', top: $offset.top + 500 }).
       delay(100).
       focus().
       delay(100).
