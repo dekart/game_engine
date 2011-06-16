@@ -17,7 +17,7 @@
     </div>
   <% else %>
     <div class="unsatisfied_requirements">
-      <%= unsatisfied_requirement_first(@property.property_type.requirements) %>
+      <%= unsatisfied_requirement_first(@property.upgrade_requirements) %>
     </div>
   <% end %>
 

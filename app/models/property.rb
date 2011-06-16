@@ -100,39 +100,45 @@ class Property < ActiveRecord::Base
       :basic_money => -self.total_income
     }
   end
+  
+  def upgrade_requirements
+    @requirements ||= Requirements::Collection.new(
+      Requirements::BasicMoney.new(:value => upgrade_price)
+    )
+  end
 
   protected
 
-  def check_upgrade_possibility
-    unless upgradeable?
-      errors.add(:character, :too_much_properties, :plural_name => plural_name)
-    end
-  end
-
-  def enough_character_money?
-    if @validate_money
-      if character.basic_money < (new_record? ? basic_price : upgrade_price)
-        errors.add(:character, new_record? ? :not_enough_basic_money : :not_enough_basic_money_for_upgrade,
-          :name         => name,
-          :basic_money  => Character.human_attribute_name("basic_money")
-        )
-      end
-
-      if character.vip_money < vip_price
-        errors.add(:character, new_record? ? :not_enough_vip_money : :not_enough_vip_money_for_upgrade,
-          :name       => name,
-          :vip_money  => Character.human_attribute_name("vip_money")
-        )
+    def check_upgrade_possibility
+      unless upgradeable?
+        errors.add(:character, :too_much_properties, :plural_name => plural_name)
       end
     end
-  end
-
-  def assign_collected_at
-    # if it is first property, set short collect time
-    if character.properties.count == 1 && Setting.i(:property_first_collect_time) != 0
-      update_attribute(:collected_at, (collect_period.hours - Setting.i(:property_first_collect_time).seconds).ago)
-    else
-      update_attribute(:collected_at, created_at)
+  
+    def enough_character_money?
+      if @validate_money
+        if character.basic_money < (new_record? ? basic_price : upgrade_price)
+          errors.add(:character, new_record? ? :not_enough_basic_money : :not_enough_basic_money_for_upgrade,
+            :name         => name,
+            :basic_money  => Character.human_attribute_name("basic_money")
+          )
+        end
+  
+        if character.vip_money < vip_price
+          errors.add(:character, new_record? ? :not_enough_vip_money : :not_enough_vip_money_for_upgrade,
+            :name       => name,
+            :vip_money  => Character.human_attribute_name("vip_money")
+          )
+        end
+      end
     end
-  end
+  
+    def assign_collected_at
+      # if it is first property, set short collect time
+      if character.properties.count == 1 && Setting.i(:property_first_collect_time) != 0
+        update_attribute(:collected_at, (collect_period.hours - Setting.i(:property_first_collect_time).seconds).ago)
+      else
+        update_attribute(:collected_at, created_at)
+      end
+    end
 end
