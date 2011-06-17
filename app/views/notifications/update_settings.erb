@@ -1,3 +1,5 @@
-<% result_for :update_notification_settings do %>
-  <%= t(".success") %>
+<% result_for :update_notification_settings do |r| %>
+  <% r.success do %>
+    <%= t(".success") %>
+  <% end %>
 <% end %>
