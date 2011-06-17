@@ -14,15 +14,18 @@ class NotificationsController < ApplicationController
   end
   
   def update_settings
-    if params[:notification] and notification_ids = params[:notification][:ids]
+    if params[:notification] && params[:notification][:ids]
+      notification_ids = params[:notification][:ids]
       notification_ids.collect! {|n| n.to_i}
-      
-      current_character.notifications.each do |notification|
-        if notification_ids.include?(notification.id)
-          notification.enable! if notification.disabled?
-        else
-          notification.disable!
-        end
+    else
+      notification_ids = []
+    end
+    
+    current_character.notifications.each do |notification|
+      if notification_ids.include?(notification.id)
+        notification.enable! if notification.disabled?
+      else
+        notification.disable!
       end
     end
     
