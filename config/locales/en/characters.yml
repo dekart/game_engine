@@ -24,13 +24,10 @@ en:
         title: "%{user} Wall"
     upgrade:
       title: "Upgrade"
-      buy_more:
-        text: "Buy more points at the %{premium_page}"
-        premium_page: "Gem Market"
+      buy_more: "Get more Points »"
       finished:
-        note: "You spent all your upgrade points. Now you can %{profile} or %{get_more} to get more points"
-        profile: "go to profile"
-        get_more: "visit the Gem Market"
+        note: "You spent all your upgrade points."
+        get_more: "Get more Points »"
       points:
         one: "1 upgrade point"
         other: "%{count} upgrade points"
@@ -67,6 +64,3 @@ en:
         success: "Your health has been restored!"
       buttons:
         heal: "Heal"
-      premium_refill:
-        text: "You can also visit the %{premium} to refill your health."
-        link: "Gem Market"

@@ -2,7 +2,6 @@ en:
   premia:
     get_vip: "Get More"
     show:
-      title: "Gem Market"
       buttons:
         buy: "Buy Gems"
       current: "You have %{amount} Gems."
