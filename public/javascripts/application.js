@@ -440,13 +440,12 @@ $(function(){
   }
   
   // Display tooltips
-  $('#content [data-tooltip]').qtip({
-    metadata: {
-      type: 'html5',
-      name: 'tooltip'
-    }
-  })
-  
+  $('#content [data-tooltip]').each(function(){
+    var $element = $(this);
+    
+    $element.qtip($element.data('tooltip'))
+  });
+       
   $('a[data-click-once=true]').live('click', function(){
     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
   });

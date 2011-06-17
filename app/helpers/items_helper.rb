@@ -27,7 +27,7 @@ module ItemsHelper
       <div class="tooltip_content">
         <h2>#{item.name}</h2>
         <div class="description">#{ item.description }</div>
-        <did class="payouts">#{ render("items/effects", :item => item) }</div>
+        <div class="payouts">#{ render("items/effects", :item => item) }</div>
       </div>
     }.gsub!(/[\n\s]+/, ' ').html_safe
   end
