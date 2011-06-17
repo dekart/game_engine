@@ -34,3 +34,14 @@ en:
     
     information:
       title: "Witchcraft News"
+    
+    settings:
+      title: "Notification settings"
+      types:
+        friends_to_invite: "Friends to invite"
+        information: "Information"
+        level_up: "Level up"
+        market_item_sold: "Market item sold"
+        send_gift: "Send gift"
+    update_settings:
+      success: "Notification settings was successfully updated"

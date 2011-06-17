@@ -254,7 +254,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :help_pages, :only => :show
 
-  map.resources :notifications, :only => [], :member => {:disable => :post}
+  map.resources :notifications, 
+    :only => [], 
+    :member => {:disable => :post},
+    :collection => {
+      :settings => :post, 
+      :update_settings => :post
+    }
 
   map.resources :market_items,
     :only => [:index, :new, :create, :destroy],

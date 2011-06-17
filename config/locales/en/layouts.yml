@@ -33,3 +33,5 @@ en:
       refill: "Refill"
     tip:
       label: "Tip:"
+    footer:
+      notification_settings: "Notifications Settings"

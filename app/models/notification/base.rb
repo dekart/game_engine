@@ -21,6 +21,10 @@ module Notification
       event :disable do
         transition any => :disabled
       end
+      
+      event :enable do
+        transition :disabled => :displayed
+      end
     end
 
     named_scope :by_type, Proc.new{|type|
@@ -38,12 +42,14 @@ module Notification
       }
     }
 
-    def self.type_to_class_name(type)
-      "Notification::#{type.to_s.classify}"
-    end
-
-    def self.type_to_class(type)
-      type_to_class_name(type).constantize
+    class << self
+      def type_to_class_name(type)
+        "Notification::#{type.to_s.classify}"
+      end
+  
+      def type_to_class(type)
+        type_to_class_name(type).constantize
+      end
     end
 
     def class_to_type
