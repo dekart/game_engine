@@ -1,5 +1,9 @@
 <% if @app_request.accepted? %>
   <%= render "app_requests/update/#{@app_request.type_name}", :app_request => @app_request %>
+  
+  <% dom_ready do %>
+    $('#<%= dom_id(@app_request) %> .ignore').empty()
+  <% end %>
 <% else %>
   <% dom_ready do %>
     $('#<%= dom_id(@app_request) %> .controls').html('<%= escape_javascript(@app_request.errors.on(:base)) %>')

@@ -502,8 +502,13 @@ $(function(){
     $(document).dequeue('dialog');
   });
   
-  $('#app_requests_counter').tooltip({
-    delay: 0,
-    showURL: false
-  });
+  $('#app_requests_counter').qtip({
+    position: {
+      my: 'top right',
+      at: 'bottom left'
+    },
+    show: {
+      delay: 0
+    }
+  })
 });

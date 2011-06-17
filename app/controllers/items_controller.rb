@@ -13,9 +13,7 @@ class ItemsController < ApplicationController
       :per_page => Setting.i(:item_show_basic)
     )
 
-    @special_items = item_scope.available_in(:special).all(
-      :limit => Setting.i(:item_show_special)
-    )
+    @special_items = Item.special_for(current_character).all(:limit => Setting.i(:item_show_special))
 
     @next_item = @current_group.items.next_for(current_character).first
   end

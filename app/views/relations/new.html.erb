@@ -12,7 +12,7 @@
       <% @recommended.each do |facebook_id| %>
         <div id="<%= "user_#{facebook_id}" %>" class="user <%= "already_playing" if @app_users.include?(facebook_id) %>">
           <div class="name"><%= fb_name(facebook_id, :linked => false) %></div>
-          <div class="image"><%= fb_profile_pic(facebook_id, :linked => false, :size => :small) %></div>
+          <div class="image"><%= fb_profile_pic(facebook_id, :linked => false, :size => :normal) %></div>
       
           <%= link_to_function(button(:invite), 
                 fb_request_dialog(:invitation,
