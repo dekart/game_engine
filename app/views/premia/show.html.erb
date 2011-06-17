@@ -15,6 +15,63 @@
 
   <table id="premia" cellspacing="0" cellpadding="0">
     <tr>
+      <td class="name"><%= t(".refill_energy.text") %></td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_energy_price)) %>
+      </td>
+      <td class="controls">
+        <% if current_character.full_ep? %>
+          <%= t(".refill_energy.full") %>
+        <% else %>
+          <%= link_to_remote(button(t(".refill_energy.button")),
+                :url    => premium_path(:type => :refill_energy),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => :button}
+              ) %>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="name"><%= t(".refill_stamina.text") %></td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_stamina_price)) %>
+      </td>
+      <td class="controls">
+        <% if current_character.full_sp? %>
+          <%= t(".refill_stamina.full") %>
+        <% else %>
+          <%= link_to_remote(button(t(".refill_stamina.button")),
+                :url    => premium_path(:type => :refill_stamina),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => :button}
+              ) %>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="name"><%= t(".refill_health.text") %></td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_health_price)) %>
+      </td>
+      <td class="controls">
+        <% if current_character.full_hp? %>
+          <%= t(".refill_health.full") %>
+        <% else %>
+          <%= link_to_remote(button(t(".refill_health.button")),
+                :url    => premium_path(:type => :refill_health),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => :button}
+              ) %>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr>
       <td class="name">
         <%= t(".buy_points.text",
               :amount => content_tag(:span, Setting.i(:premium_points_amount), :class => :points)
@@ -69,63 +126,6 @@
               :update => :result,
               :html   => {:class => :button}
             ) %>
-      </td>
-    </tr>
-
-    <tr>
-      <td class="name"><%= t(".refill_energy.text") %></td>
-      <td class="requirements">
-        <%= attribute_requirement(:vip_money, Setting.i(:premium_energy_price)) %>
-      </td>
-      <td class="controls">
-        <% if current_character.full_ep? %>
-          <%= t(".refill_energy.full") %>
-        <% else %>
-          <%= link_to_remote(button(t(".refill_energy.button")),
-                :url    => premium_path(:type => :refill_energy),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => :button}
-              ) %>
-        <% end %>
-      </td>
-    </tr>
-
-    <tr>
-      <td class="name"><%= t(".refill_stamina.text") %></td>
-      <td class="requirements">
-        <%= attribute_requirement(:vip_money, Setting.i(:premium_stamina_price)) %>
-      </td>
-      <td class="controls">
-        <% if current_character.full_sp? %>
-          <%= t(".refill_stamina.full") %>
-        <% else %>
-          <%= link_to_remote(button(t(".refill_stamina.button")),
-                :url    => premium_path(:type => :refill_stamina),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => :button}
-              ) %>
-        <% end %>
-      </td>
-    </tr>
-
-    <tr>
-      <td class="name"><%= t(".refill_health.text") %></td>
-      <td class="requirements">
-        <%= attribute_requirement(:vip_money, Setting.i(:premium_health_price)) %>
-      </td>
-      <td class="controls">
-        <% if current_character.full_hp? %>
-          <%= t(".refill_health.full") %>
-        <% else %>
-          <%= link_to_remote(button(t(".refill_health.button")),
-                :url    => premium_path(:type => :refill_health),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => :button}
-              ) %>
-        <% end %>
       </td>
     </tr>
 
