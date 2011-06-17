@@ -193,11 +193,14 @@ var CharacterForm = {
 
     form.find('#character_types .character_type').click(function(){
       CharacterForm.set_character_type(this);
-    }).tooltip({
-      id: 'tooltip',
-      delay: 0,
-      bodyHandler: function(){
-        return $('#description_character_type_' + $(this).attr('value')).html();
+    }).qtip({
+      show: {
+        delay : 0
+      },
+      content: {
+        text: function(){
+          return $('#description_character_type_' + $(this).attr('value')).html();
+        }
       }
     });
 
@@ -409,21 +412,9 @@ function debug(s) {
     return $(this);
   };
   
-  if ($.fn.qtip && typeof($.fn.qtip) != "undefined")
-  // qTip z-index
-  $.fn.qtip.zindex = 400;
-  
-  $.fn.itemTooltip = function(content) {
-    $(this).tooltip({
-      delay: 0,
-      track: true,
-      showURL: false,
-      bodyHandler: function() {
-        return content;
-      }
-    });
-  };
-  
+  if($.fn.qtip && typeof($.fn.qtip) != "undefined") {
+    $.fn.qtip.zindex = 400;
+  }
 })(jQuery);
 
 
@@ -447,6 +438,14 @@ $(function(){
       }
     });
   }
+  
+  // Display tooltips
+  $('#content [data-tooltip]').qtip({
+    metadata: {
+      type: 'html5',
+      name: 'tooltip'
+    }
+  })
   
   $('a[data-click-once=true]').live('click', function(){
     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();

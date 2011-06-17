@@ -7,7 +7,7 @@
 
   <% collection(character.news.latest(10)) do |newsfeed| %>
     <% newsfeed.each do |news| %>
-      <% content_tag(:div, :class => [news.type_name, :news, :clearfix].join(' ')) do %>
+      <% content_tag(:div, :class => [news.type_name, :news, :clearfix].join(' '), :id => dom_id(news)) do %>
         <div class="time"><%= l(news.created_at, :format => :short) %>:</div>
 
         <%= render "news/#{news.type_name}", :news => news %>

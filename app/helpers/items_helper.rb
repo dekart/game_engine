@@ -1,41 +1,35 @@
 module ItemsHelper
   def item_image(item, format, options = {})
-    
-    tooltip_js = ""
-    if with_tooltip = options.delete(:tooltip)
-      options['data-item-tooltip'] = dom_id(item, :tooltip)
-      tooltip_js = item_tooltip_js(item)
-    end
-    
-    if item.image?
-      options.reverse_merge!(
-        :alt => item.name, 
-        :title => item.name
-      )
-      
-      image = image_tag(item.image.url(format), options)
-    else
-      image = content_tag(:p, item.name, options)
-    end
-    
-    image << tooltip_js
-  end
+    if tooltip = options.delete(:tooltip)
+      tooltip = {} unless tooltip.is_a?(Hash)
 
-  def item_tooltip(item)
-    content_tag(:div,
-      content_tag(:h2, item.name) << content_tag(:div, item.description, :class => 'description') << 
-        render("items/effects", :item => item),
-      :class  => "payouts tooltip_content",
-      :id     => dom_id(item, :tooltip)
+      tooltip = {
+        :content => {:text => item_tooltip_content(item)},
+        :position => {
+          :my => 'bottom center',
+          :at => 'top center'
+        }
+      }.deep_merge(tooltip)
+
+      options['data-tooltip'] = tooltip.to_json
+    end
+    
+    options.reverse_merge!(
+      :alt => item.name, 
+      :title => item.name
     )
+      
+    image_tag(item.image.url(format), options)
   end
   
-  def item_tooltip_js(item)
-    javascript_tag(%{
-      $(function(){
-        $('[data-item-tooltip="#{ dom_id(item, :tooltip) }"]').itemTooltip('#{ escape_javascript(item_tooltip(item)) }')
-      });
-    })
+  def item_tooltip_content(item)
+    %{
+      <div class="tooltip_content">
+        <h2>#{item.name}</h2>
+        <div class="description">#{ item.description }</div>
+        <did class="payouts">#{ render("items/effects", :item => item) }</div>
+      </div>
+    }.gsub!(/[\n\s]+/, ' ').html_safe
   end
   
   def item_price_inline(item, amount = 1)
