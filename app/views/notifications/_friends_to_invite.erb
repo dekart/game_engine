@@ -9,7 +9,7 @@
     <% notification.data[:friend_ids][0, 6].each do |facebook_id| %>
       <div class="user">
         <div class="name"><%= fb_name(facebook_id, :linked => false) %></div>
-        <div class="picture"><%= fb_profile_pic(facebook_id, :linked => false, :size => :small) %></div>
+        <div class="picture"><%= fb_profile_pic(facebook_id, :linked => false, :size => :normal) %></div>
       </div>
     <% end %>
   </div>
