@@ -4,8 +4,6 @@ en:
     show:
       title: "Gem Market"
       buttons:
-        special_items: "Special Items"
-        services: "Services"
         buy: "Buy Gems"
       current: "You have %{amount} Gems."
       get_more: "Get More »"

@@ -16,3 +16,6 @@ en:
     limit:
       amount_limit: "Only %{amount} left!"
       time_limit: "Time Left: %{amount}"
+    tabs:
+      services: "Services"
+      buy_vip: "Buy Gems"
