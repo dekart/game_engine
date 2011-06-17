@@ -346,7 +346,7 @@ var AssignmentForm = {
 
     $this.addClass('selected');
 
-    $('#assignment_relation_id').val($this.attr('value'));
+    $('#assignment_relation_id').val($this.data('value'));
   }
 };
 
