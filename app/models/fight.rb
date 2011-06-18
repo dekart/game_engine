@@ -222,6 +222,6 @@ class Fight < ActiveRecord::Base
   end
   
   def decrease_victim_health?
-    victim.user.last_visit_at && victim.user.last_visit_at > Setting.i(:fight_victim_hp_decrease_if_character_was_online).hours.ago 
+    cause || (victim.user.last_visit_at && victim.user.last_visit_at > Setting.i(:fight_victim_hp_decrease_if_character_was_online).hours.ago)
   end
 end
