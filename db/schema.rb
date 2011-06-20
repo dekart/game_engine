@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110613051716) do
+ActiveRecord::Schema.define(:version => 20110620171115) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
+  add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
 
   create_table "assets", :force => true do |t|
