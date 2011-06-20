@@ -469,6 +469,7 @@ en:
         profile: "FB Profile"
         controls:
           edit: "Edit"
+          edit_user: "Edit User"
           payout: "Apply Payout"
         batch:
           title: "Batch Operations"

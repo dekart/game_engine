@@ -105,6 +105,7 @@ ActionController::Routing::Routes.draw do |map|
         :search => :any,
         :payout => :any
       }
+    admin.resources :users
 
     admin.resources :vip_money_operations, :only => :index
 

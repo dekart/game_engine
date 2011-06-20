@@ -47,6 +47,7 @@
                 <td class="controls">
                   <%= link_to(t(".controls.edit"), edit_admin_character_path(character)) %>
                   <%= link_to(t(".controls.payout"), payout_admin_characters_path(:ids => character)) %>
+                  <%= link_to(t(".controls.edit_user"), edit_admin_user_path(character.user)) %>
                 </td>
               </tr>
             <% end %>

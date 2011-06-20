@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110620171115) do
+ActiveRecord::Schema.define(:version => 20110620190817) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -754,6 +754,8 @@ ActiveRecord::Schema.define(:version => 20110620171115) do
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
     t.string   "tutorial_step",                         :default => ""
+    t.boolean  "banned"
+    t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"
