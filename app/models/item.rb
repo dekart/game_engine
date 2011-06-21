@@ -194,10 +194,10 @@ class Item < ActiveRecord::Base
     self.max_vip_price_in_market = vip_price
   end
 
-  def requirements
+  def requirements(amount = 1)
     @requirements ||= Requirements::Collection.new(
-      Requirements::BasicMoney.new(:value => basic_price),
-      Requirements::VipMoney.new(:value => vip_price),
+      Requirements::BasicMoney.new(:value => basic_price * amount),
+      Requirements::VipMoney.new(:value => vip_price * amount),
       Requirements::Level.new(:value => level)
     )
   end

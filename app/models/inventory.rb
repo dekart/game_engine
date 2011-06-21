@@ -65,34 +65,36 @@ class Inventory < ActiveRecord::Base
   def equipped?
     equipped > 0
   end
+  
+  def requirements
+    item.requirements(purchase_amount)
+  end
+  
+  def purchase_amount
+    changes["amount"] ? (changes["amount"].last - changes["amount"].first) / item.package_size : 0
+  end
 
   protected
 
   def enough_character_money?
-    return unless charge_money and changes["amount"]
+    return unless charge_money && purchase_amount > 0
 
-    difference = (changes["amount"].last - changes["amount"].first) / item.package_size
-
-    if difference > 0
-      errors.add(:character, :not_enough_basic_money, :name => name) if character.basic_money < basic_price * difference
-      errors.add(:character, :not_enough_vip_money, :name => name) if character.vip_money < vip_price * difference
-    end
+    errors.add(:character, :not_enough_basic_money, :name => name) if character.basic_money < basic_price * purchase_amount
+    errors.add(:character, :not_enough_vip_money, :name => name) if character.vip_money < vip_price * purchase_amount
   end
 
   def charge_or_deposit_character
     return unless changes["amount"]
 
-    difference = (changes["amount"].first - changes["amount"].last) / item.package_size
-
-    if difference < 0 # Buying properties, should charge
+    if purchase_amount > 0 # Buying items, should charge
       if charge_money
-        self.basic_money = basic_price * difference.abs
-        self.vip_money = vip_price * difference.abs
+        self.basic_money = basic_price * purchase_amount
+        self.vip_money = vip_price * purchase_amount
 
         character.charge(basic_money, vip_money, item)
       end
-    else # Selling properties, should deposit
-      deposit_character(difference)
+    else # Selling items, should deposit
+      deposit_character(purchase_amount.abs)
     end
   end
 
