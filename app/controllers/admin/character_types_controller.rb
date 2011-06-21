@@ -19,7 +19,7 @@ class Admin::CharacterTypesController < Admin::BaseController
     if @character_type.save
       flash[:success] = t(".success")
 
-      unless_cotinue_editing do
+      unless_continue_editing do
         redirect_to admin_character_types_path
       end
     else
