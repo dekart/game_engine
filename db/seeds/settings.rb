@@ -34,6 +34,8 @@ Setting[:character_stamina_restore_period] ||= 180
 Setting[:character_income_calculation_period] ||= 60
 Setting[:character_weakness_minimum] ||= 5
 
+Setting[:dashboard_news_count] ||= 30
+
 Setting[:premium_money_price] ||= 5
 Setting[:premium_money_amount] ||= 1000
 Setting[:premium_energy_price] ||= 5
@@ -55,7 +57,6 @@ Setting[:fight_experience] ||= 50
 Setting[:fight_money_loot] ||= 10
 Setting[:fight_max_loser_damage] ||= 50
 Setting[:fight_max_winner_damage] ||= 90
-Setting[:fight_latest_show_limit] ||= 10
 Setting[:fight_alliance_attack] ||= true
 Setting[:fight_max_money] ||= 10000
 Setting[:fight_min_money] ||= 10

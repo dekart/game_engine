@@ -12,7 +12,7 @@
     <td class="wall">
       <%= render("items/specials", :items => @special_items) if @special_items.any? %>
 
-      <%= render "news/feed", :character => current_character %>
+      <%= render "news/feed", :news => @news, :character => current_character %>
     </td>
   </tr>
 </table>
