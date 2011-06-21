@@ -1,0 +1,16 @@
+<div class="actor">
+  <%= character_picture_link(news.sender) %>
+</div>
+
+<div class="subject">
+  <%= item_image(news.items.first.first, :icon, :tooltip => true) %>
+</div>
+
+<div class="description">
+  <%= t(".text",
+        :actor  => character_name_link(news.character),
+        :items  => news.items.collect{|item, amount| 
+          content_tag(:strong, t('.item', :name => item.name, :amount => amount))
+        }.join(', ').html_safe
+      ).html_safe %>
+</div>

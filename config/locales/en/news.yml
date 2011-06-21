@@ -14,6 +14,9 @@ en:
         respond: "Fight Back!"
     item_purchase:
       text: "%{actor} purchased %{amount} %{item}"
+    item_transfer:
+      text: "%{actor} gave you the following items: %{items}"
+      item: "%{name} X %{amount}"
     property_purchase:
       text: "%{actor} purchased the %{property}"
     property_upgrade:
