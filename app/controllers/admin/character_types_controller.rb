@@ -1,6 +1,6 @@
 class Admin::CharacterTypesController < Admin::BaseController
   def index
-    @character_types = CharacterType.with_state(:visible)
+    @character_types = CharacterType.without_state(:deleted)
   end
 
   def new
