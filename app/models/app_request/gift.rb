@@ -8,8 +8,12 @@ class AppRequest::Gift < AppRequest::Base
   attr_accessor :inventory
   
   class << self
+    def receiver_cache_key(receiver)
+      "character_#{ receiver.id }_accepted_gift_senders"
+    end
+    
     def accepted_recently?(sender, receiver)
-      ids = Rails.cache.fetch("character_#{ receiver.id }_accepted_gift_senders", :expires_in => 15.minutes) do
+      ids = Rails.cache.fetch(receiver_cache_key(receiver), :expires_in => 15.minutes) do
         with_state(:accepted).
         scoped(:conditions => ["accepted_at >= ?", Setting.i(:gifting_repeat_accept_delay).hours.ago]).
         all(:select => "sender_id").map{|r| r.sender_id }
@@ -38,6 +42,8 @@ class AppRequest::Gift < AppRequest::Base
     super
     
     @inventory = receiver.inventories.give!(item)
+    
+    Rails.cache.delete(self.class.receiver_cache_key(receiver))
   end
   
   def repeat_accept_check
