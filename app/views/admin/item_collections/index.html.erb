@@ -8,6 +8,7 @@
   <table id="item_collection_list" class="data">
     <tr>
       <th><%= ItemCollection.human_attribute_name("name") %></th>
+      <th><%= ItemCollection.human_attribute_name("level") %></th>
       <th><%= ItemCollection.human_attribute_name("items") %></th>
       <th><%= ItemCollection.human_attribute_name("payouts") %></th>
       <th><%= ItemCollection.human_attribute_name("state") %></th>
@@ -17,6 +18,7 @@
     <% @item_collections.each do |item_collection| %>
       <tr>
         <td class="name"><%= link_to(item_collection.name, edit_admin_item_collection_path(item_collection)) %></td>
+        <td class="level"><%= item_collection.level %></div>
         <td class="items">
           <% item_collection.items.each do |item| %>
             <div class="item">

@@ -1,6 +1,6 @@
 class Admin::ItemCollectionsController < Admin::BaseController
   def index
-    @item_collections = ItemCollection.without_state(:deleted).all(:order => "name ASC")
+    @item_collections = ItemCollection.without_state(:deleted).all
   end
 
   def new

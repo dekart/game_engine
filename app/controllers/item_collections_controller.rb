@@ -1,6 +1,6 @@
 class ItemCollectionsController < ApplicationController
   def index
-    @collections = ItemCollection.with_state(:visible)
+    @collections = ItemCollection.with_state(:visible).available_by_level(current_character).all
   end
 
   def update
