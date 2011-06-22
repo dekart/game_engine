@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110620190817) do
+ActiveRecord::Schema.define(:version => 20110622041727) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -309,6 +309,7 @@ ActiveRecord::Schema.define(:version => 20110620190817) do
     t.string   "state",      :limit => 50,  :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "level",                     :default => 1
   end
 
   create_table "item_groups", :force => true do |t|
@@ -383,9 +384,9 @@ ActiveRecord::Schema.define(:version => 20110620190817) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
+    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
-    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -578,12 +579,11 @@ ActiveRecord::Schema.define(:version => 20110620190817) do
 
   create_table "newsletters", :force => true do |t|
     t.string   "text"
-    t.string   "state",             :limit => 50, :default => "",    :null => false
+    t.string   "state",             :limit => 50, :default => "", :null => false
     t.integer  "last_recipient_id"
     t.integer  "delivery_job_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "send_to_new_users",               :default => false
   end
 
   create_table "notifications", :force => true do |t|
@@ -753,7 +753,7 @@ ActiveRecord::Schema.define(:version => 20110620190817) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",                         :default => ""
+    t.string   "tutorial_step",          :limit => 50,  :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end

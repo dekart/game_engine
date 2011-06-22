@@ -5,9 +5,18 @@ class ItemCollection < ActiveRecord::Base
     :apply_on => [:collected, :repeat_collected],
     :visible  => true
 
-  validates_presence_of :name
+  validates_presence_of :name, :level
+  validates_numericality_of :level, :greater_than => 0, :only_integer => true
 
   validate_on_create :check_item_list
+
+  default_scope :order => "level DESC"
+
+  named_scope :available_by_level, Proc.new {|character|
+    {
+      :conditions => ["item_collections.level <= ?", character.level]
+    }
+  }
 
   state_machine :initial => :hidden do
     state :hidden
