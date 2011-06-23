@@ -131,7 +131,7 @@ var Spinner = {
 
 
 function if_fb_initialized(callback){
-  if(typeof(FB) != 'undefined'){ 
+  if(!$.isEmptyObject(FB)){ 
     callback.call();
   } else { 
     alert('The page failed to initialize properly. Please reload it and try again.'); 
@@ -139,7 +139,7 @@ function if_fb_initialized(callback){
 }
 
 function bookmark(){
-  if(typeof(FB) != 'undefined'){
+  if(!$.isEmptyObject(FB)){
     FB.ui({method : 'bookmark.add'});
     $(document).trigger('facebook.dialog');
   }
@@ -239,7 +239,7 @@ var Character = {
   update: function(a){
     var c = a.character;
 
-    if(c === 'undefined'){ return; }
+    if($.isEmptyObject(c)){ return; }
     
     $("#co .basic_money .value").text(c.formatted_basic_money);
     $("#co .vip_money .value").text(c.formatted_vip_money);
@@ -371,7 +371,7 @@ var Mission = {
 };
 
 function debug(s) {
-  if (this.console && typeof(console.log) != "undefined")
+  if (!$.isEmptyObject(console))
     console.log(s);
 }
 
@@ -412,7 +412,7 @@ function debug(s) {
     return $(this);
   };
   
-  if($.fn.qtip && typeof($.fn.qtip) != "undefined") {
+  if(!$.isEmptyObject($.fn.qtip)) {
     $.fn.qtip.zindex = 400;
   }
 })(jQuery);
@@ -423,7 +423,7 @@ $(function(){
     $('a').live('click', function(){
       var href = $(this).attr('href');
       
-      if(typeof(href) != 'undefined'){
+      if(!$.isEmptyObject(href)){
         $(this).attr('href', signedUrl(href));
       }
     });
@@ -462,7 +462,7 @@ $(function(){
   $(document).bind('result.available', show_result);
 
   $(document).bind('remote_content.received', function(){
-    if(typeof(FB) != 'undefined'){
+    if(!$.isEmptyObject(FB)){
       FB.XFBML.parse();
     }
   });
