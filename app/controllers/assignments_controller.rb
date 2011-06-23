@@ -9,7 +9,7 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = parents.last.assignments.build(params[:assignment])
 
-    @assignment.save!
+    @assignment.save
 
     if @assignment.errors.empty?
       EventLoggingService.log_event(:assignment_created, @assignment)
