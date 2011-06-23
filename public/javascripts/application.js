@@ -229,7 +229,7 @@ var CharacterForm = {
     $this.addClass('selected').siblings('.character_type').removeClass('selected');
 
     $('#character_character_type_id').val(
-      $this.attr('value')
+      $this.data('value')
     );
   }
 };
