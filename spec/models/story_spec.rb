@@ -127,6 +127,10 @@ describe Story do
 
     it_should_behave_like "successfully track visit"
     
+    it 'should not give any bonus when visiting their own story' do
+      @story.track_visit!(@character, :level => 1, :character_id => @character.id).should be_empty
+    end
+    
     describe 'when story is already visited' do
       before do
         StoryVisit.create!(:character_id => @character.id, :story_alias => @story.alias, :reference_id => 1, :publisher_id => 1)

@@ -69,8 +69,6 @@ class Story < ActiveRecord::Base
   }
   
   def track_visit!(character, story_data = {})
-    story_data = story_data.symbolize_keys
-    
     reference = story_data[TYPE_TO_REFERENCE[self.alias]]
     
     visit_attributes = {
@@ -84,13 +82,15 @@ class Story < ActiveRecord::Base
       []
     else
       transaction do
-        StoryVisit.create!(visit_attributes)
+        visit = StoryVisit.create!(visit_attributes)
         
-        result = payouts.apply(character, :visit, self)
-        
-        character.save
-        
-        result
+        if visit.character_id != visit.publisher_id
+          payouts.apply(character, :visit, self).tap do
+            character.save
+          end
+        else
+          []
+        end
       end
     end
   end
