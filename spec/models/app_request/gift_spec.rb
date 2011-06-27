@@ -91,6 +91,16 @@ describe AppRequest::Gift do
       @request.acceptable?.should be_false
     end
     
+    it 'should return false if item not acceptable in gift' do
+      @request.item.update_attribute(:availability, 'shop')
+      @request.acceptable?.should be_false
+    end
+    
+    it 'should return false if user send gift for yourself' do
+      @request.update_attribute(:receiver_id, @request.sender.user.facebook_id)
+      @request.acceptable?.should be_false
+    end
+    
     it 'should return true in other cases' do
       @request.acceptable?.should be_true
     end
