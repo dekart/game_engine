@@ -89,9 +89,14 @@ class AppRequest::Base < ActiveRecord::Base
   
   validates_presence_of :facebook_id
   
-  after_create :schedule_data_update
+  after_create  :schedule_data_update
+  after_save    :clear_counter_cache, :if => :receiver_id?
   
   class << self
+    def cache_key(target)
+      "user_#{ target.is_a?(User) ? target.facebook_id : target.to_i }_app_request_counter"
+    end
+    
     def mogli_client
       Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
     end
@@ -195,5 +200,9 @@ class AppRequest::Base < ActiveRecord::Base
   
   def schedule_data_update
     Delayed::Job.enqueue Jobs::RequestDataUpdate.new(id)
+  end
+  
+  def clear_counter_cache
+    Rails.cache.delete(self.class.cache_key(receiver_id))
   end
 end

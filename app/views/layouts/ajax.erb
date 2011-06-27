@@ -1,10 +1,18 @@
-<%= yield %>
+<div id="ajax_response" style="display:none">
+  <%= yield %>
+</div>
 
-<%= display_notifications %>
+<% if current_character %>
+  <%= display_notifications %>
+
+  <% dom_ready do %>
+    Character.update(<%= current_character(true).to_json_for_overview.html_safe %>);
+  <% end %>
+<% end %>
 
 <% dom_ready do %>
-  Character.update(<%= current_character(true).to_json_for_overview.html_safe %>);
   $(document).trigger('application.ready');
+  $('#ajax_response').fadeIn(500);
 <% end %>
 
 <%= dom_ready %>

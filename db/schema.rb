@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110613051716) do
+ActiveRecord::Schema.define(:version => 20110624121658) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
+  add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
 
   create_table "assets", :force => true do |t|
@@ -332,6 +333,7 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
     t.string   "state",      :limit => 50,  :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "level",                     :default => 1
   end
 
   create_table "item_groups", :force => true do |t|
@@ -599,16 +601,6 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
 
   add_index "news", ["character_id"], :name => "index_news_on_character_id"
 
-  create_table "newsletters", :force => true do |t|
-    t.string   "text"
-    t.string   "state",             :limit => 50, :default => "",    :null => false
-    t.integer  "last_recipient_id"
-    t.integer  "delivery_job_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "send_to_new_users",               :default => false
-  end
-
   create_table "notifications", :force => true do |t|
     t.string   "type",         :limit => 100, :default => "", :null => false
     t.integer  "character_id",                                :null => false
@@ -729,6 +721,7 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
     t.integer  "reference_id",                               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "publisher_id"
   end
 
   create_table "tips", :force => true do |t|
@@ -777,6 +770,8 @@ ActiveRecord::Schema.define(:version => 20110613051716) do
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
     t.string   "tutorial_step",                         :default => ""
+    t.boolean  "banned"
+    t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end
 
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"

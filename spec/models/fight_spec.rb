@@ -161,20 +161,35 @@ describe Fight do
       with_setting(:fight_victim_hp_decrease_if_character_was_online => 1) do
         lambda {
           @fight.save! 
-        }.should change(@victim, :hp)
+        }.should change(@victim, :hp).by(-2)
       end
     end
     
-    it 'should not decrease victim hp if victim visited game more then 1 hour ago' do
-      @victim.user.last_visit_at = 2.hours.ago
-      @victim.user.save!
+    describe 'if victim visited the game more than 1 hour ago' do
+      before do
+        @victim.user.last_visit_at = 2.hours.ago
+        @victim.user.save!
       
-      @fight.stub!(:calculate_damage).and_return([2, 0])
+        @fight.stub!(:calculate_damage).and_return([2, 0])
+      end
       
-      with_setting(:fight_victim_hp_decrease_if_character_was_online => 1) do
-        lambda {
-          @fight.save! 
-        }.should_not change(@victim, :hp)
+      it 'should not decrease victim hp' do
+        with_setting(:fight_victim_hp_decrease_if_character_was_online => 1) do
+          lambda {
+            @fight.save! 
+          }.should_not change(@victim, :hp)
+        end
+      end
+    
+      it 'should decrease victim hp if fight has a cause' do
+        @other_fight = Fight.create(:attacker => @victim, :victim => @attacker)
+        @fight.cause = @other_fight
+        
+        with_setting(:fight_victim_hp_decrease_if_character_was_online => 1) do
+          lambda {
+            @fight.save! 
+          }.should change(@victim, :hp).by(-2)
+        end
       end
     end
     

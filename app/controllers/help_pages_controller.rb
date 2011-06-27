@@ -4,9 +4,6 @@ class HelpPagesController < ApplicationController
   def show
     @page = HelpPage.find_by_alias(params[:id])
 
-    respond_to do |format|
-      format.js { render :layout => false }
-      format.html
-    end
+    render :layout => false if request.xhr?
   end
 end

@@ -1,25 +1,76 @@
-<%= title(t(".title")) %>
+<%= title(t("items.index.title")) %>
 
-<div id="current_vip_money">
-  <%= t(".current",
-        :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
-      ).html_safe %>
-  
-  <%= link_to(t('.get_more'), {:anchor => :earn}, {:class => :get_more})%>
-</div>
+<%= render "inventories/buttons", :current => :shop %>
 
-<div id="premia_buttons" class="hash_tabs clearfix">
-  <% %w{special_items services earn}.each do |anchor| %>
-    <%= link_to(button(anchor.to_sym), {:anchor => anchor}, {:class => "#{anchor} button"}) %>
-  <% end %>
-</div>
-
-<div id="tab_special_items" class="hash_tab">
-  <%= render "items/specials", :items => @special_items %>
-</div>
+<%= render 'items/tabs', :groups => ItemGroup.with_state(:visible).visible_in_shop, :current => :premium %>
 
 <div id="tab_services" class="hash_tab">
+  <div class="current_vip_money">
+    <%= t(".current",
+          :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
+        ).html_safe %>
+
+    <%= link_to(t('.get_more'), {:anchor => :buy}, {:class => :get_more})%>
+  </div>
+
   <table id="premia" cellspacing="0" cellpadding="0">
+    <tr>
+      <td class="name"><%= t(".refill_energy.text") %></td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_energy_price)) %>
+      </td>
+      <td class="controls">
+        <% if current_character.full_ep? %>
+          <%= t(".refill_energy.full") %>
+        <% else %>
+          <%= link_to_remote(button(t(".refill_energy.button")),
+                :url    => premium_path(:type => :refill_energy),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => :button}
+              ) %>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="name"><%= t(".refill_stamina.text") %></td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_stamina_price)) %>
+      </td>
+      <td class="controls">
+        <% if current_character.full_sp? %>
+          <%= t(".refill_stamina.full") %>
+        <% else %>
+          <%= link_to_remote(button(t(".refill_stamina.button")),
+                :url    => premium_path(:type => :refill_stamina),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => :button}
+              ) %>
+        <% end %>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="name"><%= t(".refill_health.text") %></td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_health_price)) %>
+      </td>
+      <td class="controls">
+        <% if current_character.full_hp? %>
+          <%= t(".refill_health.full") %>
+        <% else %>
+          <%= link_to_remote(button(t(".refill_health.button")),
+                :url    => premium_path(:type => :refill_health),
+                :method => :put,
+                :update => :result,
+                :html   => {:class => :button}
+              ) %>
+        <% end %>
+      </td>
+    </tr>
+
     <tr>
       <td class="name">
         <%= t(".buy_points.text",
@@ -78,63 +129,6 @@
       </td>
     </tr>
 
-    <tr>
-      <td class="name"><%= t(".refill_energy.text") %></td>
-      <td class="requirements">
-        <%= attribute_requirement(:vip_money, Setting.i(:premium_energy_price)) %>
-      </td>
-      <td class="controls">
-        <% if current_character.full_ep? %>
-          <%= t(".refill_energy.full") %>
-        <% else %>
-          <%= link_to_remote(button(t(".refill_energy.button")),
-                :url    => premium_path(:type => :refill_energy),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => :button}
-              ) %>
-        <% end %>
-      </td>
-    </tr>
-
-    <tr>
-      <td class="name"><%= t(".refill_stamina.text") %></td>
-      <td class="requirements">
-        <%= attribute_requirement(:vip_money, Setting.i(:premium_stamina_price)) %>
-      </td>
-      <td class="controls">
-        <% if current_character.full_sp? %>
-          <%= t(".refill_stamina.full") %>
-        <% else %>
-          <%= link_to_remote(button(t(".refill_stamina.button")),
-                :url    => premium_path(:type => :refill_stamina),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => :button}
-              ) %>
-        <% end %>
-      </td>
-    </tr>
-
-    <tr>
-      <td class="name"><%= t(".refill_health.text") %></td>
-      <td class="requirements">
-        <%= attribute_requirement(:vip_money, Setting.i(:premium_health_price)) %>
-      </td>
-      <td class="controls">
-        <% if current_character.full_hp? %>
-          <%= t(".refill_health.full") %>
-        <% else %>
-          <%= link_to_remote(button(t(".refill_health.button")),
-                :url    => premium_path(:type => :refill_health),
-                :method => :put,
-                :update => :result,
-                :html   => {:class => :button}
-              ) %>
-        <% end %>
-      </td>
-    </tr>
-
     <% if current_character.character_type %>
       <tr>
         <td class="name"><%= t(".reset_attributes.text") %></td>
@@ -170,12 +164,24 @@
       </td>
     </tr>
   </table>
+
+  <div class="need_more_vip">
+    <p><%= t('.need_more') %></p>
+    
+    <%= link_to(button(:buy), {:anchor => :buy}, {:class => "buy button"})%>
+  </div>
 </div>
 
-<div id="tab_earn" class="hash_tab">
-  <div id="get_more_vip">
-    <div class="note"><%= t('.earn.note', :vip_money => Character.human_attribute_name('vip_money'))%></div>
+<div id="tab_buy" class="hash_tab">
+  <div class="current_vip_money">
+    <%= t(".current",
+          :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
+        ).html_safe %>
+  </div>
 
+  <div class="note"><%= t('.buy.note', :vip_money => Character.human_attribute_name('vip_money'))%></div>
+
+  <div id="get_more_vip">
     <%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>
 
     <%= facebook_money(current_character) %>
@@ -184,11 +190,12 @@
 
 <% dom_ready do %>
   $('.hash_tab').hide().first().show();
-  $('.hash_tabs a.button').first().addClass('current');
+  $('#item_groups a.services').addClass('current');
   
   $.History.bind(function(state){
     $('.hash_tab').hide();
     $('#tab_' + state).show();
-    $('.hash_tabs a.button').removeClass('current').filter('.' +state).addClass('current');
+    $.scrollTo('#tab_' + state);
+    $('#item_groups a').removeClass('current').filter('.' +state).addClass('current');
   })
 <% end %>

@@ -1,4 +1,6 @@
 class CharacterStatus
+  extend Facebooker2::SignedRequest
+  
   def self.call(env)
     if env["PATH_INFO"] =~ /^\/character_status/
       request = Rack::Request.new(env)
@@ -12,12 +14,16 @@ class CharacterStatus
             hash[parts.first] = parts.last
           end
         end
+        
+        user_id = facebook_session['uid']
+      elsif request.env['HTTP_SIGNED_REQUEST']
+        user_id = fb_decode_signed_request(request.env['HTTP_SIGNED_REQUEST'])[:user_id]
+      end
+      
+      Rails.logger.debug(user_id)
 
-        if facebook_session['uid'] and character = User.find_by_facebook_id(facebook_session['uid']).try(:character)
-          [200, {"Content-Type" => "application/json"}, character.to_json_for_overview]
-        else
-          [200, {"Content-Type" => "application/json"}, {}.to_json]
-        end
+      if user_id and character = User.find_by_facebook_id(user_id).try(:character)
+        [200, {"Content-Type" => "application/json"}, character.to_json_for_overview]
       else
         [200, {"Content-Type" => "application/json"}, {}.to_json]
       end

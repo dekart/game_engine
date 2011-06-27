@@ -131,7 +131,7 @@ var Spinner = {
 
 
 function if_fb_initialized(callback){
-  if(typeof(FB) != 'undefined'){ 
+  if(!$.isEmptyObject(FB)){ 
     callback.call();
   } else { 
     alert('The page failed to initialize properly. Please reload it and try again.'); 
@@ -139,7 +139,7 @@ function if_fb_initialized(callback){
 }
 
 function bookmark(){
-  if(typeof(FB) != 'undefined'){
+  if(!$.isEmptyObject(FB)){
     FB.ui({method : 'bookmark.add'});
     $(document).trigger('facebook.dialog');
   }
@@ -154,7 +154,13 @@ function show_result(){
 }
 
 function signedUrl(url){
-  var new_url = url + (url.indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
+  var url_parts = url.split('#', 2);
+  
+  var new_url = url_parts[0] + (url_parts[0].indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
+  
+  if(url_parts.length == 2) {
+    new_url = new_url + '#' + url_parts[1]
+  }
 
   return new_url;
 }
@@ -187,11 +193,14 @@ var CharacterForm = {
 
     form.find('#character_types .character_type').click(function(){
       CharacterForm.set_character_type(this);
-    }).tooltip({
-      id: 'tooltip',
-      delay: 0,
-      bodyHandler: function(){
-        return $('#description_character_type_' + $(this).attr('value')).html();
+    }).qtip({
+      show: {
+        delay : 0
+      },
+      content: {
+        text: function(){
+          return $('#description_character_type_' + $(this).attr('value')).html();
+        }
       }
     });
 
@@ -220,7 +229,7 @@ var CharacterForm = {
     $this.addClass('selected').siblings('.character_type').removeClass('selected');
 
     $('#character_character_type_id').val(
-      $this.attr('value')
+      $this.data('value')
     );
   }
 };
@@ -230,7 +239,7 @@ var Character = {
   update: function(a){
     var c = a.character;
 
-    if(c === 'undefined'){ return; }
+    if($.isEmptyObject(c)){ return; }
     
     $("#co .basic_money .value").text(c.formatted_basic_money);
     $("#co .vip_money .value").text(c.formatted_vip_money);
@@ -337,7 +346,7 @@ var AssignmentForm = {
 
     $this.addClass('selected');
 
-    $('#assignment_relation_id').val($this.attr('value'));
+    $('#assignment_relation_id').val($this.data('value'));
   }
 };
 
@@ -362,7 +371,7 @@ var Mission = {
 };
 
 function debug(s) {
-  if (this.console && typeof(console.log) != "undefined")
+  if (!$.isEmptyObject(console))
     console.log(s);
 }
 
@@ -403,21 +412,9 @@ function debug(s) {
     return $(this);
   };
   
-  if ($.fn.qtip && typeof($.fn.qtip) != "undefined")
-  // qTip z-index
-  $.fn.qtip.zindex = 400;
-  
-  $.fn.itemTooltip = function(content) {
-    $(this).tooltip({
-      delay: 0,
-      track: true,
-      showURL: false,
-      bodyHandler: function() {
-        return content;
-      }
-    });
-  };
-  
+  if(!$.isEmptyObject($.fn.qtip)) {
+    $.fn.qtip.zindex = 400;
+  }
 })(jQuery);
 
 
@@ -426,7 +423,7 @@ $(function(){
     $('a').live('click', function(){
       var href = $(this).attr('href');
       
-      if(typeof(href) != 'undefined'){
+      if(!$.isEmptyObject(href)){
         $(this).attr('href', signedUrl(href));
       }
     });
@@ -442,6 +439,13 @@ $(function(){
     });
   }
   
+  // Display tooltips
+  $('#content [data-tooltip]').each(function(){
+    var $element = $(this);
+    
+    $element.qtip($element.data('tooltip'))
+  });
+       
   $('a[data-click-once=true]').live('click', function(){
     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
   });
@@ -458,7 +462,7 @@ $(function(){
   $(document).bind('result.available', show_result);
 
   $(document).bind('remote_content.received', function(){
-    if(typeof(FB) != 'undefined'){
+    if(!$.isEmptyObject(FB)){
       FB.XFBML.parse();
     }
   });
@@ -496,8 +500,13 @@ $(function(){
     $(document).dequeue('dialog');
   });
   
-  $('#app_requests_counter').tooltip({
-    delay: 0,
-    showURL: false
-  });
+  $('#app_requests_counter').qtip({
+    position: {
+      my: 'top right',
+      at: 'bottom left'
+    },
+    show: {
+      delay: 0
+    }
+  })
 });

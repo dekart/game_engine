@@ -9,14 +9,12 @@ class CharactersController < ApplicationController
   around_filter :check_user_app_requests, :only => :index
     
   def index
-    @latest_fights = Fight.with_participant(current_character).find(:all,
-      :limit => Setting.i(:fight_latest_show_limit)
-    )
-
     @special_items = Item.special_for(current_character).all(
       :limit => 2,
       :order => 'RAND()'
     )
+    
+    @news = current_character.news.latest(Setting.i(:dashboard_news_count))
   end
 
   def upgrade

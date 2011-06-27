@@ -104,44 +104,62 @@ describe Story do
       @story = Factory(:story, :payouts => Payouts::Collection.new(DummyPayout.new(:apply_on => :visit)))
     end
     
-    it 'should create story visit record for current character, story type, and story reference' do
-      lambda{
-        @story.track_visit!(@character, :level => 1)
-      }.should change(StoryVisit, :count).from(0).to(1)
+    shared_examples_for "successfully track visit" do
+      it 'should create story visit record for current character, story type, and story reference' do
+        lambda{
+          @story.track_visit!(@character, :level => 1, :character_id => 1)
+        }.should change(StoryVisit, :count).by(1)
+      end
+
+      it 'should apply payouts to character' do
+        @story.track_visit!(@character, :level => 1, :character_id => 1)
+
+        @story.payouts.first.should be_applied
+      end
+
+      it 'should return payout result' do
+        result = @story.track_visit!(@character, :level => 1, :character_id => 1)
+
+        result.should be_kind_of(Payouts::Collection)
+        result.first.should be_applied
+      end
     end
+
+    it_should_behave_like "successfully track visit"
     
-    it 'should apply payouts to character' do
-      @story.track_visit!(@character, :level => 1)
-      
-      @story.payouts.first.should be_applied
-    end
-    
-    it 'should return payout result' do
-      result = @story.track_visit!(@character, :level => 1)
-      
-      result.should be_kind_of(Payouts::Collection)
-      result.first.should be_applied
+    it 'should not give any bonus when visiting their own story' do
+      @story.track_visit!(@character, :level => 1, :character_id => @character.id).should be_empty
     end
     
     describe 'when story is already visited' do
       before do
-        StoryVisit.create!(:character_id => @character.id, :story_alias => @story.alias, :reference_id => 1)
+        StoryVisit.create!(:character_id => @character.id, :story_alias => @story.alias, :reference_id => 1, :publisher_id => 1)
       end
       
-      it 'should not create visit record' do
-        lambda{
-          @story.track_visit!(@character, :level => 1)
-        }.should_not change(StoryVisit, :count)
+      describe 'when visiting a story published by the same user' do
+        it 'should not create visit record' do
+          lambda{
+            @story.track_visit!(@character, :level => 1, :character_id => 1)
+          }.should_not change(StoryVisit, :count)
+        end
+      
+        it 'should not apply payouts' do
+          lambda{
+            @story.track_visit!(@character, :level => 1, :character_id => 1)
+          }.should_not change(@story.payouts.first, :applied?)
+        end
+      
+        it 'should return empty array' do
+          @story.track_visit!(@character, :level => 1, :character_id => 1).should == []
+        end
       end
       
-      it 'should not apply payouts' do
-        lambda{
-          @story.track_visit!(@character, :level => 1)
-        }.should_not change(@story.payouts.first, :applied?)
-      end
-      
-      it 'should return empty array' do
-        @story.track_visit!(@character, :level => 1).should == []
+      describe 'when visiting a story published by another user' do
+        before do
+          StoryVisit.last.update_attribute(:publisher_id, 2)
+        end
+        
+        it_should_behave_like "successfully track visit"
       end
     end
     

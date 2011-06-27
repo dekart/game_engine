@@ -1,7 +1,7 @@
 <% requirement(requirement.name, false) do %>
   <p>
     <%= t(".message",
-          :premium_page => link_to(t(".premium_page"), premium_path)
+          :premium_page => link_to(t("layouts.main_menu.items"), premium_path(:anchor => :services))
         ).html_safe %>
   </p>
 <% end %>

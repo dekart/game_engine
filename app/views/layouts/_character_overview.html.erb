@@ -14,7 +14,7 @@
       <div class="label"><%= Character.human_attribute_name("vip_money") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".premium"), premium_path(:anchor => :earn), :class => :premium) %>
+      <%= link_to(t(".premium"), premium_path(:anchor => :buy), :class => :premium) %>
     </td>
     <td class="health">
       <div class="timer"></div>
@@ -71,8 +71,7 @@
             :method => :get,
             :update => :ajax,
             :html   => {
-              :class => :upgrade,
-              :style => "display:none;"
+              :class => :upgrade
             }
           ) %>
     </td>

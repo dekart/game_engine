@@ -1,17 +1,24 @@
 class StoriesController < ApplicationController
   def show
     story_data = encryptor.decrypt((params[:story_data] || params['amp;story_data']).to_s)
-    
+
     if @story = Story.find_by_id(params[:id])
       @payouts = @story.track_visit!(current_character, story_data)
       
-      key = @story.alias
+      @next_page = next_page_for_story(@story.alias, story_data)
     else
       @payouts = []
-      key = params[:id]
+      
+      @next_page = next_page_for_story(params[:id], story_data)
     end
-        
-    @next_page = case key
+    
+    redirect_from_iframe(@next_page) if @payouts.empty?
+  end
+  
+  protected
+  
+  def next_page_for_story(key, story_data)
+    case key
     when 'item_purchased'
       items_url(:canvas => true)
     when 'mission_help'
@@ -53,7 +60,5 @@ class StoriesController < ApplicationController
     else
       root_url(:canvas => true)
     end
-    
-    redirect_from_iframe(@next_page) if @payouts.empty?
   end
 end

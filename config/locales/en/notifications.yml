@@ -34,3 +34,18 @@ en:
     
     information:
       title: "Witchcraft News"
+    
+    settings:
+      title: "Notification Settings"
+      note: "You can enable or disable all in-game notifications in this dialog. Check notifications that you want to receive and click 'Save'."
+      types:
+        friends_to_invite: "Recommendations to invite friends"
+        information: "Information messages"
+        level_up: "Level Up messages"
+        market_item_sold: "Market item sales"
+        send_gift: "Recommendations to send gifts to your friends"
+      buttons: 
+        save: "Save"
+      
+    update_settings:
+      success: "Your notification settings were updated!"

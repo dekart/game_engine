@@ -81,11 +81,11 @@ en:
         text: "Fight result and details are displayed here"
         close_button_value: "Ok, Let's Proceed"
       goto_gem_market:
-        title: "Gem Market"
-        text: "The last important part of the game is the Gem Market. Go to it to check what we have there."
+        title: "Service Shop"
+        text: "The last important part of the game is the Service Shop. Go to it to check what we have there."
       spend_gems:
-        title: "Gem Market"
-        text: "You already have some gems that you can spend to purchase special items or refill your attributes"
+        title: "Service Shop"
+        text: "You already have some gems that you can spend to purchase special services or refill your attributes"
         close_button_value: "Ok"
       finish:
         title: "Well Done!"

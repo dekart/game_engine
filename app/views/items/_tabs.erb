@@ -4,4 +4,7 @@
           :class => (:current if group == current)
         ) %>
   <% end %>
+  
+  <%= link_to(t('.services'), premium_path(:anchor => :services), :class => :services) %>
+  <%= link_to(t('.buy_vip'), premium_path(:anchor => :buy), :class => :buy) %>
 </div>

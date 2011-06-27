@@ -1,0 +1,22 @@
+<% dialog :id => :notification_settings do %>
+  <%= title(t(".title")) %>
+  
+  <div class="note"><%= t('.note') %></div>
+
+  <% remote_form_for(current_character, :url => update_settings_notifications_path, :update => :result,
+       :after => '$.dialog.close()') do |form| %>
+  
+    <div class="notifications">
+      <% @notifications.each do |notification| %>
+        <div class="notification">
+          <%= check_box_tag "notification[ids][]", 
+                notification.id, !notification.disabled?, 
+                :id => "notification_#{notification.id}" %>
+          <%= label_tag "notification_#{notification.id}", t(".types.#{notification.class.name.split("::").last.underscore}") %>
+        </div>
+      <% end %>
+    </div>
+      
+    <%= link_to_function(button(:save), "$(this).parents('form').submit()", :class => 'save button')%>
+  <% end %>
+<% end %>

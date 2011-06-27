@@ -67,11 +67,12 @@ module RequirementsHelper
   end
 
   def vip_money_requirement(value)
+    requirement_text = attribute_requirement_text(:vip_money, number_to_currency(value))
+       
     requirement(:vip_money,
-      "%s (%s)" % [
-        attribute_requirement_text(:vip_money, number_to_currency(value)),
-        link_to(t("premia.get_vip"), premium_path(:anchor => :earn))
-      ],
+      current_character.vip_money >= value ? 
+        requirement_text :
+        "%s (%s)" % [requirement_text, link_to(t("premia.get_vip"), premium_path(:anchor => :buy))],
       current_character.vip_money >= value
     )
   end

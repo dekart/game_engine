@@ -6,7 +6,7 @@
     <div class="description"><%= monster.description %></div>
   </div>
   
-  <% payout_list(monster.monster_type, monster.monster_type.payouts, :format => :preview, :trigger => fight.payout_triggers) do |p| %>
+  <% payout_list(monster.monster_type, monster.monster_type.payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
     <div class="payouts info">
       <h3><%= Monster.human_attribute_name("payouts") %></h3>
 

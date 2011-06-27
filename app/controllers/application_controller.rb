@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   include AppRequests
 
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
+  before_filter :check_user_ban
+  
   facebook_integration_filters
   
   layout :get_layout
@@ -19,7 +21,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_character_existance
-    logger.debug request.protocol
     unless current_character
       store_return_to
 
@@ -81,6 +82,14 @@ class ApplicationController < ActionController::Base
     user.save!
 
     user
+  end
+  
+  def check_user_ban
+    if current_user and current_user.banned?
+      render :text => "You're banned. The reason: #{ current_user.ban_reason }"
+      
+      return false
+    end
   end
 
   def default_url_options(options = {})

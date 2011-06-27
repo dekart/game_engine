@@ -4,6 +4,7 @@ require "hmac-sha2"
 module Facebooker2
   module Rails
     module Controller
+      include Facebooker2::SignedRequest
 
       def self.included(controller)
         controller.send(:include, CanvasOAuth)
@@ -128,15 +129,6 @@ module Facebooker2
       end
 
 
-      def fb_signed_request_json(encoded)
-        chars_to_add = 4 - (encoded.size % 4)
-
-        encoded += ("=" * chars_to_add)
-
-        Base64.decode64(encoded)
-      end
-
-
       def facebook_params
         @facebook_param ||= fb_load_facebook_params
       end
@@ -152,27 +144,7 @@ module Facebooker2
 
 
       def fb_load_facebook_params
-        signed_request = facebook_signed_request
-
-        return {} if signed_request.blank?
-
-        sig, encoded_json = signed_request.split(".")
-
-        return {} unless fb_signed_request_sig_valid?(sig, encoded_json)
-
-        ActiveSupport::JSON.decode(fb_signed_request_json(encoded_json)).with_indifferent_access
-      end
-
-
-      def fb_signed_request_sig_valid?(sig, encoded)
-        base64 = Base64.encode64(
-          HMAC::SHA256.digest(Facebooker2.secret, encoded)
-        )
-
-        #now make the url changes that facebook makes
-        url_escaped_base64 = base64.gsub(/=*\n?$/, "").tr("+/", "-_")
-
-        sig == url_escaped_base64
+        fb_decode_signed_request(facebook_signed_request)
       end
 
 

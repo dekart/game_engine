@@ -17,7 +17,7 @@ describe CharactersController do
     describe 'when user is already registered' do
       before do
         controller.stub!(:current_facebook_user).and_return(fake_fb_user)
-        controller.stub!(:current_user).and_return(mock_model(User, :id => 123456789))
+        controller.stub!(:current_user).and_return(mock_model(User, :id => 123456789, :banned? => false))
         controller.stub!(:current_character).and_return(mock_model(Character))
       end
       

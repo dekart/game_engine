@@ -1,6 +1,8 @@
 module AppRequestsHelper
   def app_requests_counter
-    amount = current_character.app_requests.visible.count
+    amount = Rails.cache.fetch(AppRequest::Base.cache_key(current_user)) do
+      current_character.app_requests.visible.count
+    end
     
     if amount > 0
       link_to(amount, app_requests_path, 

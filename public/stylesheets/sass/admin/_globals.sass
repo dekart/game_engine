@@ -26,19 +26,16 @@ th
   padding: 10px
   border: 2px solid green
   float: left
-  width: 170px
+  width: 190px
   position: fixed
-
-  h2
-    margin-top: 0
 
   a
     margin-right: 10px
     font-size: 14px
     color: black
+    display: none
 
     &.item
-      display: block
       padding: 3px 5px
       margin-bottom: 2px
 
@@ -49,9 +46,24 @@ th
       background-color: #e9f4Ff
       outline: 1px solid #BEDDFE
       font-weight: bold
+      
+  .item_group
+    padding-left: 20px
+    background:
+      image = !asset_admin_collapsed
+      repeat: no-repeat
+  
+    h3
+      cursor: pointer
+  
+    &.expanded
+      background-image = !asset_admin_expanded
+    
+      a
+        display: block
 
 #content
-  margin-left: 220px
+  margin-left: 230px
 
 #flash
   margin: 20px 0

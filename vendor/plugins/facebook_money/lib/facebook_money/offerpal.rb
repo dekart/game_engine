@@ -16,7 +16,8 @@ module FacebookMoney
 
     def html_code(template, recipient_id, options = {})
       default_options = {
-        :src          => "http://pub.myofferpal.com/%s/showoffers.action?snuid=%s" % [
+        :src          => "%s/%s/showoffers.action?snuid=%s" % [
+          template.request.ssl? ? "https://pubs.myofferpal.com" : "http://pub.myofferpal.com",
           FacebookMoney.config["application_id"],
           recipient_id
         ],

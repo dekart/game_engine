@@ -10,7 +10,7 @@
 
   <%= include_jquery_from_google %>
   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", 
-        "jquery/tooltip", "jquery/carousel", "jquery/qtip2", 'jquery/history', 'facebook_credits', "application", 
+        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'facebook_credits', "application", 
         :cache => "cache/all" %>
         
   <%= javascript_include_tag "tutorial" if tutorial_visible? %>
@@ -72,6 +72,8 @@
     <% end %>
     
     <%= yield %>
+    
+    <%= render "layouts/footer" %>
   </div>
 
   <div id="ajax" style="display:none;"></div>

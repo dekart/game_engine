@@ -15,7 +15,6 @@ en:
       missions: "Missions"
       fights: "Fight"
       items: "Shop"
-      vip: "Gem Market"
       inventories: "Inventory"
       character: "Profile"
       relations: "Alliance"
@@ -33,3 +32,5 @@ en:
       refill: "Refill"
     tip:
       label: "Tip:"
+    footer:
+      notification_settings: "Notifications Settings"

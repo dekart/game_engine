@@ -115,10 +115,18 @@ class InventoriesController < ApplicationController
           }
         )
 
-        @inventories.each do |inventory|
-          if amount = params[:inventory][inventory.id.to_s].to_i and amount > 0
-            current_character.inventories.transfer!(@character, inventory, amount)
+        Inventory.transaction do
+          given = []
+          
+          @inventories.each do |inventory|
+            if amount = params[:inventory][inventory.id.to_s].to_i and amount > 0
+              current_character.inventories.transfer!(@character, inventory, amount)
+              
+              given << [inventory.item_id, amount]
+            end
           end
+          
+          @character.news.add(:item_transfer, :sender_id => current_character.id, :items => given) unless given.empty?
         end
 
         @inventories.each do |inventory|

@@ -71,21 +71,26 @@ class Story < ActiveRecord::Base
   def track_visit!(character, story_data = {})
     reference = story_data[TYPE_TO_REFERENCE[self.alias]]
     
-    if previous_visit = StoryVisit.first(:conditions => {:character_id => character.id, :story_alias => self.alias, :reference_id => reference})
+    visit_attributes = {
+      :character_id => character.id, 
+      :story_alias  => self.alias, 
+      :reference_id => reference, 
+      :publisher_id => story_data[:character_id]
+    }
+    
+    if StoryVisit.first(:conditions => visit_attributes)
       []
     else
       transaction do
-        StoryVisit.create!(
-          :character    => character,
-          :story_alias  => self.alias,
-          :reference_id => reference
-        )
+        visit = StoryVisit.create!(visit_attributes)
         
-        result = payouts.apply(character, :visit, self)
-        
-        character.save
-        
-        result
+        if visit.character_id != visit.publisher_id
+          payouts.apply(character, :visit, self).tap do
+            character.save
+          end
+        else
+          []
+        end
       end
     end
   end
