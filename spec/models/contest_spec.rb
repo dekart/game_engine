@@ -15,7 +15,7 @@ describe Contest do
     end
     
     it 'should return current not started contests' do
-      @contest.started_at = 1.hour.since
+      @contest.started_at = 1.hour.ago
       @contest.save!
       
       @contest.publish!
@@ -38,7 +38,7 @@ describe Contest do
       
       @contest.publish!
       
-      Timecop.travel(1.day.since) do
+      Timecop.travel(1.day.ago) do
         @contest.finish!
       end
       
@@ -51,7 +51,7 @@ describe Contest do
       
       @contest.publish!
       
-      Timecop.travel((5.days + 1.hour).since) do
+      Timecop.travel((5.days + 1.hour).ago) do
         @contest.finish!
       end
       
@@ -94,7 +94,7 @@ describe Contest do
     
     it 'should return time left to start contest' do
       Timecop.freeze(Time.now) do
-        @contest.started_at = 1.day.since
+        @contest.started_at = 1.day.from_now
         @contest.save!
         
         @contest.time_left_to_start.should == 1.day.to_i
@@ -103,7 +103,7 @@ describe Contest do
     
     it 'should return time left to finish contest' do
       Timecop.freeze(Time.now) do
-        @contest.finished_at = 1.day.since
+        @contest.finished_at = 1.day.from_now
         @contest.save!
         
         @contest.time_left_to_finish.should == 1.day.to_i
@@ -167,19 +167,19 @@ describe Contest do
     end
     
     it 'should be published after setting start time' do
-      @contest.update_attribute(:started_at, 1.hour.since)
+      @contest.update_attribute(:started_at, 1.hour.ago)
       
       @contest.can_publish?.should be_true
     end
     
     it 'should successfully published' do
-      @contest.update_attribute(:started_at, 1.hour.since)
+      @contest.update_attribute(:started_at, 1.hour.ago)
       
       @contest.publish.should be_true
     end
     
     it 'should sets contest finish time' do
-      @contest.update_attribute(:started_at, 1.hour.since)
+      @contest.update_attribute(:started_at, 1.hour.ago)
       
       Timecop.freeze(Time.now) do
         lambda {
@@ -191,7 +191,7 @@ describe Contest do
   
   describe 'when finished' do
     before do
-      @contest = Factory(:contest, :started_at => 1.hour.since)
+      @contest = Factory(:contest, :started_at => 1.hour.ago)
       @contest.publish!
     end
     

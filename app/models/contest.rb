@@ -31,8 +31,8 @@ class Contest < ActiveRecord::Base
   end
 
   named_scope :current, {
-    :conditions => ["state = 'visible' OR (state = 'finished' AND finished_at <= ?)", 
-      Setting.i(:contests_show_after_finished_time).days.since] 
+    :conditions => ["state = 'visible' OR (state = 'finished' AND finished_at > ?)", 
+      Setting.i(:contests_show_after_finished_time).days.ago] 
   }
     
   has_attached_file :image
