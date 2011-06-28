@@ -58,9 +58,13 @@ en:
     hospital:
       title: "Hospital"
       note: "You can ask a healer to increase your health. Be careful, you can only do this every now and then!"
+      recently_used: "You've already visited hospital recently and you cannot restore health for money now. Try to refill your health for Gems."
+      not_enough_money: "You can't ask a healer to increase your health, because you don't have enough money. Try to refill your health for Gems."
       price: "Full Heal Price:"
       messages:
         full_health: "Your health is now full. Please visit Hospital when you'll need healing."
-        success: "Your health has been restored!"
       buttons:
         heal: "Heal"
+        refill_health: "Refill health"
+    hospital_heal:
+      success: "Your health has been restored!"
