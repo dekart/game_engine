@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110624121658) do
+ActiveRecord::Schema.define(:version => 20110628085341) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -190,9 +190,11 @@ ActiveRecord::Schema.define(:version => 20110624121658) do
     t.integer  "lock_version",                                   :default => 0
     t.datetime "fighting_available_at",                          :default => '1970-01-01 05:00:00'
     t.integer  "killed_monsters_count",                          :default => 0
+    t.integer  "total_monsters_damage",                          :default => 0
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
+  add_index "characters", ["total_monsters_damage"], :name => "index_characters_on_total_monsters_damage"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "contests", :force => true do |t|
