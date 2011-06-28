@@ -49,6 +49,8 @@ class MonsterFight < ActiveRecord::Base
       
       attack_actions
       
+      character.total_monsters_damage += @monster_damage
+      
       transaction do
         save!
         monster.save!

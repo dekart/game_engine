@@ -267,7 +267,7 @@ Factory.define :app_request_gift, :class => 'AppRequest::Gift' do |t|
     g.association(:user_with_character, :facebook_id => 111222333).character
   }
   
-  t.association :target, :factory => :item
+  t.target {|target| target.association(:item, :availability => :gift) } 
   
   t.data { |g|
     { 'target_id' => g.target.id,

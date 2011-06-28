@@ -134,6 +134,14 @@ describe MonsterFight do
       @monster_fight.attack!
     end
     
+    it 'should update character total_monsters_damage stats' do
+      @damage_system.stub!(:calculate_damage).and_return([10, 20])
+
+      @monster_fight.attack!
+      
+      @character.total_monsters_damage.should == 20
+    end
+    
     # test monster attack and power attack
     [
       {:who => :@monster, :what => :hp, :from => 1000, :to => 980},

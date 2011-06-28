@@ -31,6 +31,7 @@ class AppRequest::Base < ActiveRecord::Base
     state :ignored
     state :broken
     state :expired # when user don't accept request in time
+    state :incorrect
 
     event :process do
       transition :pending => :processed
@@ -38,6 +39,10 @@ class AppRequest::Base < ActiveRecord::Base
 
     event :mark_broken do
       transition :pending => :broken
+    end
+    
+    event :mark_incorrect do
+      transition :processed => :incorrect
     end
 
     event :visit do
@@ -58,6 +63,10 @@ class AppRequest::Base < ActiveRecord::Base
     
     before_transition :on => [:process, :mark_broken] do |request|
       request.processed_at = Time.now
+    end
+    
+    after_transition :on => :process do |request|
+      request.mark_incorrect unless request.correct?
     end
 
     before_transition :on => :visit do |request|
@@ -171,6 +180,10 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def acceptable?
+    true
+  end
+  
+  def correct?
     true
   end
 
