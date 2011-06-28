@@ -1,0 +1,13 @@
+<% result_for(:hospital_heal) do |builder| %>
+  <% if @result %>
+    <% builder.success do %>
+      <%= t(".success") %>
+    <% end %>
+  <% else %>
+    <% if current_character.errors.any? %>
+      <% builder.fail do %>
+        <%= current_character.errors.on_base %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

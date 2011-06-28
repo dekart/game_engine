@@ -20,11 +20,11 @@ class Character
     end
 
     def hospital!
-      if basic_money < hospital_price
+      if !hospital_enough_money?
         errors.add_to_base(:hospital_not_enough_money)
 
         return false
-      elsif time_to_next_hospital > 0
+      elsif hospital_recently_used?
         errors.add_to_base(:hospital_recently_used)
 
         return false
@@ -37,6 +37,18 @@ class Character
       self.hospital_used_at = Time.now
 
       save
+    end
+    
+    def hospital_recently_used?
+      time_to_next_hospital > 0
+    end
+    
+    def hospital_enough_money?
+      basic_money > hospital_price
+    end
+    
+    def hospital_may_heal?
+      hospital_enough_money? && !hospital_recently_used?
     end
   end
 end

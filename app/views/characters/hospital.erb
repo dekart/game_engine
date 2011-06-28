@@ -1,38 +1,52 @@
 <% dialog :id => :hospital do %>
   <h2><%= t(".title") %></h2>
 
-  <% if @result.nil? %>
-    <p><%= t(".note") %></p>
-
-    <% if current_character.hospital_price > 0 %>
-      <p>
-        <strong><%= t(".price") %></strong>
-
-        <%= basic_money_tag(number_to_currency(current_character.hospital_price)) %>
-      </p>
-    <% end %>
-
-    <% if current_character.full_hp? %>
-      <p><%= t(".messages.full_health") %></p>
+  <% if current_character.hospital_price < 0 %>
+  
+    <p><%= t(".messages.full_health") %></p>
+    
+  <% else %>
+  
+    <% if current_character.hospital_recently_used? %>
+      <p><%= t(".recently_used") %></p>
     <% else %>
-      <div class="buttons">
+      <% if current_character.hospital_enough_money? %>
+        <p><%= t(".note") %></p>
+      <% else %>
+        <p><%= t(".not_enough_money") %></p>
+      <% end %>
+    <% end %>
+  
+    <p>
+      <strong><%= t(".price") %></strong>
+
+      <% if current_character.hospital_may_heal? %>
+        <%= basic_money_tag(number_to_currency(current_character.hospital_price)) %>
+      <% else %>
+        <%= vip_money_tag(Setting.i(:premium_health_price)) %>
+      <% end %>
+    </p>
+
+    <div class="buttons clearfix">
+      <% if current_character.hospital_may_heal? %>
         <%= link_to_remote(button(:heal),
-              :url    => hospital_character_path(:current),
-              :update => :ajax,
+              :url    => hospital_heal_character_path(:current),
+              :update => :result,
+              :success => "$(document).trigger('close.dialog')",
               :html   => {
                 :"data-click-once" => true,
                 :class => "button heal"
               }
             ) %>
-      </div>
-    <% end %>
-  <% elsif @result %>
-    <p><%= t(".messages.success") %></p>
-  <% else %>
-    <div class="unsatisfied_requirements">
-      <%= render("requirements/not_satisfied/basic_money",
-            :requirement  => Requirements::BasicMoney.new(:value => current_character.hospital_price)
-          ) %>
+      <% else %>
+        <%= link_to_remote(button(:refill_health),
+                :url    => premium_path(:type => :refill_health),
+                :method => :put,
+                :update => :result,
+                :success => "$(document).trigger('close.dialog')",
+                :html   => {:class => 'button premium'}
+              ) %>
+      <% end %>
     </div>
   <% end %>
 <% end %>

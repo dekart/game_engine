@@ -885,5 +885,16 @@ namespace :app do
         puts "Contest #{contest.name} finished"
       end
     end
+    
+    task :remove_hacked_gifts => :environment do
+      AppRequest::Gift.find_each(
+        :joins => 'INNER JOIN items ON app_requests.target_id = items.id', 
+        :conditions => ['items.availability != ?', 'gift'],
+        :batch_size => 100) do |gift_request|
+          
+        gift_request.destroy
+        puts "Hacked gift from sender #{gift_request.sender_id} to receiver #{gift_request.receiver_id} was deleted"
+      end
+    end
   end
 end

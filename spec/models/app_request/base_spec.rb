@@ -246,7 +246,7 @@ describe AppRequest::Base do
       @remote_request = mock('request on facebook',
         :from => mock('sender', :id => 123),
         :to => mock('receiver', :id => 456),
-        :data => '{"type":"gift"}'
+        :data => '{"type":"invite"}'
       )
     end
     
@@ -265,7 +265,7 @@ describe AppRequest::Base do
     it 'should parse and assign request data' do
       lambda{
         @request.update_from_facebook_request(@remote_request)
-      }.should change(@request, :data).from(nil).to('type' => 'gift')
+      }.should change(@request, :data).from(nil).to('type' => 'invite')
     end
     
     it 'should not try to parse empty request data' do
@@ -327,6 +327,16 @@ describe AppRequest::Base do
         lambda {
           @request.update_from_facebook_request(@remote_request)
         }.should_not raise_exception
+      end
+      
+      it 'should be incorrect after processing' do
+        #  TODO: hack. it doesnt work without it, because after update_from_facebook_request object becomes another object
+        @request.stub!(:becomes).and_return(@request)
+        @request.stub!(:correct?).and_return(false)
+        
+        lambda {
+          @request.update_from_facebook_request(@remote_request)
+        }.should change(@request, :state).from('pending').to('incorrect')
       end
     end
     

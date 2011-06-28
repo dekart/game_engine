@@ -185,7 +185,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources(:characters,
     :member => {
       :upgrade  => :any,
-      :hospital => :any
+      :hospital => :get,
+      :hospital_heal => :post,
     }
   ) do |character|
     character.resources :assignments, :shallow => true

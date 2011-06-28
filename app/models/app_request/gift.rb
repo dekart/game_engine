@@ -25,7 +25,22 @@ class AppRequest::Gift < AppRequest::Base
   end
   
   def acceptable?
-    !(accepted? || self.class.accepted_recently?(sender, receiver))
+    !(accepted? || self.class.accepted_recently?(sender, receiver)) && 
+      item_gift? && !gift_for_yourself?
+  end
+  
+  #prevent hacking
+  def item_gift?
+    item && item.availability == :gift
+  end
+  
+  #prevent hacking
+  def gift_for_yourself?
+    sender == receiver 
+  end
+  
+  def correct?
+    item_gift? && !gift_for_yourself?
   end
   
   def acceptance_error
