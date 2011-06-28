@@ -15,7 +15,7 @@ class CreditOrdersController < ApplicationController
   def package_info
     @package = CreditPackage.find(params[:order_info])
     
-    @order = CreditOrder.create!(
+    @order = CreditOrder.find_by_facebook_id(params[:order_id]) || CreditOrder.create!(
       :facebook_id  => params[:order_id], 
       :character    => current_character,
       :package      => @package
