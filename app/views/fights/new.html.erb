@@ -1,4 +1,4 @@
-<%= render("contests/current") if current_contest %>
+<%= render 'contests/current' if current_contest && current_contest.points_type == 'fights_won' %>
 
 <%= title(t(".title")) %>
 

@@ -73,4 +73,10 @@ module ContestsHelper
       link_to(button(:fights), new_fight_path, :class => 'button fight') 
     end
   end
+  
+  def contest_monsters_button
+    unless params[:controller] == 'monsters' || current_contest.finished?
+      link_to(button(:monsters), monsters_path, :class => 'button monsters') 
+    end
+  end
 end

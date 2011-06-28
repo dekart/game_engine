@@ -1,4 +1,7 @@
 class Contest < ActiveRecord::Base
+  # contest type names related to character attributes
+  POINTS_TYPES = [:fights_won, :total_monsters_damage]
+  
   has_many :character_contests
     
   has_many :characters, 
@@ -37,7 +40,7 @@ class Contest < ActiveRecord::Base
     
   has_attached_file :image
     
-  validates_presence_of :name, :description
+  validates_presence_of :name, :description, :points_type
   
   validates_numericality_of :duration_time, 
     :greater_than => 0
@@ -86,10 +89,10 @@ class Contest < ActiveRecord::Base
     (finished_at - Time.now).to_i
   end
   
-  def inc_points!(character)
+  def inc_points!(character, points = 1)
     if active?
       character_contest = character_contests.find_or_create_by_character_id(character.id)
-      character_contest.points += 1
+      character_contest.points += points
       character_contest.save!
     end
   end

@@ -328,6 +328,7 @@ end
 Factory.define :contest do |t|
   t.name 'Fake contest'
   t.description 'Fake contest'
+  t.points_type 'fights_won'
   
   t.duration_time 7
 end

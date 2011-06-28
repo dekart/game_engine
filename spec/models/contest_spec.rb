@@ -222,7 +222,7 @@ describe Contest do
       
       @fight = Fight.new(:attacker => @attacker, :victim => @victim)
       
-      @contest = Factory(:contest, :started_at => Time.now)
+      @contest = Factory(:contest, :started_at => Time.now, :points_type => 'fights_won')
     end
     
     it 'should not increment points if contest not published' do
@@ -254,6 +254,32 @@ describe Contest do
       
       @contest.result_for(@attacker).should be_nil
       @contest.result_for(@victim).should be_nil
+    end
+  end
+  
+  describe 'monsters' do
+    before do
+      @character = Factory(:character)
+      
+      @monster_fight = Factory(:monster_fight, :character => @character)
+      
+      @damage_system = mock('damage system', :calculate_damage => [10, 20])
+      MonsterFight.stub!(:damage_system).and_return(@damage_system)
+      
+      @contest = Factory(:contest, :started_at => Time.now, :points_type => 'total_monsters_damage')
+    end
+    
+    it 'should not increment points if contest not published' do
+      @monster_fight.attack!
+      @contest.result_for(@character).should be_nil
+    end
+    
+    it 'should increment points if contest was starts and character make damage' do
+      @contest.publish!
+      
+      @monster_fight.attack!
+      
+      @contest.result_for(@character).points.should == 20
     end
   end
 end

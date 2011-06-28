@@ -11,6 +11,7 @@
       <th><%= Contest.human_attribute_name("started_at") %></th>
       <th><%= Contest.human_attribute_name("finished_at") %></th>
       <th><%= Contest.human_attribute_name("state") %></th>
+      <th><%= Contest.human_attribute_name("points_type") %></th>
       <th></th>
     </tr>
     <% @contests.each do |contest| %>
@@ -19,6 +20,7 @@
         <td class="started_at"><%= contest.started_at %></td>
         <td class="finished_at"><%= contest.finished_at %></td>
         <td class="state"><%= admin_state(contest) %></td>
+        <td class="state"><%= contest.points_type %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_contest_path(contest)) %>
           <%= link_to(t(".controls.publish"), publish_admin_contest_path(contest),

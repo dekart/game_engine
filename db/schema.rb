@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110628085341) do
+ActiveRecord::Schema.define(:version => 20110628093400) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -209,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20110628085341) do
     t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "points_type",                       :default => ""
   end
 
   create_table "credit_orders", :force => true do |t|
@@ -229,17 +230,6 @@ ActiveRecord::Schema.define(:version => 20110628085341) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "state",              :limit => 30
-
-  create_table "contests", :force => true do |t|
-    t.string   "name",               :limit => 100, :default => "", :null => false
-    t.text     "description",                                       :null => false
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.integer  "duration_time",                     :default => 7
-    t.string   "state",              :limit => 50,  :default => "", :null => false
-    t.string   "image_file_name",                   :default => "", :null => false
-    t.string   "image_content_type", :limit => 100, :default => "", :null => false
-    t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
