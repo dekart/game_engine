@@ -111,12 +111,12 @@ namespace :deploy do
     task :backup, :roles => :db, :only => {:primary => true} do
       dump_path = 'dump.%s.%d.sql' % [database_config[:database], Time.now.to_i]
 
-      run "mysqldump -u %s --password='%s' %s > %s" % [
-        database_config[:username],
-        database_config[:password],
-        database_config[:database],
-        dump_path
-      ]
+      run %{
+        mysqldump \
+          -u #{ database_config[:username] } --password='#{ database_config[:password] }' \
+          --ignore-table=#{ database_config[:database] }.logged_events \
+          #{ database_config[:database] } > #{ dump_path }
+      }
     end
     
     desc "Setup database"
