@@ -68,15 +68,14 @@ module ContestsHelper
     block_given? ? concat(result.html_safe) : result.html_safe
   end
   
-  def contest_fight_button
-    unless params[:controller] == 'fights' || current_contest.finished?
-      link_to(button(:fights), new_fight_path, :class => 'button fight') 
-    end
-  end
-  
-  def contest_monsters_button
-    unless params[:controller] == 'monsters' || current_contest.finished?
-      link_to(button(:monsters), monsters_path, :class => 'button monsters') 
+  def contest_points_type_button(contest)
+    unless contest.finished?
+      case contest.points_type
+      when 'fights_won'
+        link_to(button(:fights), new_fight_path, :class => 'button fight') unless params[:controller] == 'fights' 
+      when 'total_monsters_damage'
+        link_to(button(:monsters), monsters_path, :class => 'button monsters') unless params[:controller] == 'monsters'
+      end
     end
   end
 end
