@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110628085341) do
+ActiveRecord::Schema.define(:version => 20110629084419) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20110628085341) do
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
-  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
+  add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -554,6 +554,7 @@ ActiveRecord::Schema.define(:version => 20110628085341) do
     t.datetime "updated_at"
   end
 
+  add_index "monster_fights", ["character_id"], :name => "index_monster_fights_on_character_id"
   add_index "monster_fights", ["monster_id", "character_id"], :name => "index_monster_fights_on_monster_id_and_character_id"
 
   create_table "monster_types", :force => true do |t|
