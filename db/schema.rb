@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110629084419) do
+ActiveRecord::Schema.define(:version => 20110629092458) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110629084419) do
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
+  add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -597,6 +598,8 @@ ActiveRecord::Schema.define(:version => 20110629084419) do
     t.integer  "killer_id"
   end
 
+  add_index "monsters", ["defeated_at", "expire_at"], :name => "index_monsters_on_defeated_at_and_expire_at"
+
   create_table "news", :force => true do |t|
     t.string   "type",         :limit => 100, :default => "", :null => false
     t.integer  "character_id",                                :null => false
@@ -780,6 +783,7 @@ ActiveRecord::Schema.define(:version => 20110629084419) do
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end
 
+  add_index "users", ["created_at"], :name => "index_users_on_created_at"
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id"
   add_index "users", ["reference"], :name => "index_users_on_reference"
 
@@ -792,6 +796,8 @@ ActiveRecord::Schema.define(:version => 20110629084419) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "vip_money_operations", ["type", "reference_type", "reference_id"], :name => "index_on_name_ref_type_ref_id"
 
   create_table "visibilities", :force => true do |t|
     t.integer  "target_id",                                       :null => false
