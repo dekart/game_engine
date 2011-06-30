@@ -15,22 +15,69 @@
 <div class="section">
   <h2><%= t('.new_users') %></h2>
 
-  <div class="jqPlot" id="users_chart"></div>
+  <div class="jqPlot" id="new_users_chart"></div>
 </div>
 
 <% dom_ready do %>
   $.jqplot.config.enablePlugins = true;
   
-  var all     = <%= @week.users_by_day.to_json.html_safe %>;
-  var level5  = <%= @week.scoped(:joins => :character, :conditions => 'characters.level >= 5').users_by_day.to_json.html_safe %>;
-  var level10 = <%= @week.scoped(:joins => :character, :conditions => 'characters.level >= 10').users_by_day.to_json.html_safe %>;
+  var all     = <%= @month.users_by_day.to_json.html_safe %>;
+  var level5  = <%= @month.scoped(:joins => :character, :conditions => 'characters.level >= 5').users_by_day.to_json.html_safe %>;
+  var level10 = <%= @month.scoped(:joins => :character, :conditions => 'characters.level >= 10').users_by_day.to_json.html_safe %>;
 
-  $.jqplot('users_chart', [all, level5, level10], {
+  $.jqplot('new_users_chart', [all, level5, level10], {
     title:'<%= t('.new_users_chart.title') %>',
     series: [
       { label: '<%= t('.new_users_chart.total') %>' }, 
       { label: '<%= t('.new_users_chart.level5') %>' },
       { label: '<%= t('.new_users_chart.level10') %>' },
+    ],
+    legend: {
+      show: true, 
+      location:'ne'
+    },
+    axes:{
+        xaxis:{
+            renderer:$.jqplot.DateAxisRenderer,
+            rendererOptions:{tickRenderer:$.jqplot.CanvasAxisTickRenderer},
+            tickOptions:{
+                formatString:'%b %#d', 
+                fontSize:'10pt', 
+                fontFamily:'Tahoma'
+            }
+        },
+        yaxis:{
+          rendererOptions:{tickRenderer:$.jqplot.CanvasAxisTickRenderer},
+          tickOptions:{formatString:'%d'}
+        }
+    },
+    highlighter: {sizeAdjust: 7.5}
+  });
+<% end %>
+
+<div class="section">
+  <h2><%= t('.returning_users') %></h2>
+
+  <div class="jqPlot" id="returning_users_chart"></div>
+</div>
+
+<% dom_ready do %>
+  $.jqplot.config.enablePlugins = true;
+  
+  var all         = <%= @month.users_by_day.to_json.html_safe %>;
+  var same_day    = <%= @month.scoped(:conditions => "last_visit_at < created_at + INTERVAL 1 DAY").users_by_day.to_json.html_safe %>;
+  var next_day    = <%= @month.scoped(:conditions => "last_visit_at BETWEEN (created_at + INTERVAL 1 DAY) AND (created_at + INTERVAL 2 DAY)").users_by_day.to_json.html_safe %>;
+  var three_days  = <%= @month.scoped(:conditions => "last_visit_at BETWEEN (created_at + INTERVAL 2 DAY) AND (created_at + INTERVAL 3 DAY)").users_by_day.to_json.html_safe %>;
+  var more_days   = <%= @month.scoped(:conditions => "last_visit_at > created_at + INTERVAL 3 DAY").users_by_day.to_json.html_safe %>;
+
+  $.jqplot('returning_users_chart', [all, same_day, next_day, three_days, more_days], {
+    title:'<%= t('.returning_users_chart.title') %>',
+    series: [
+      { label: '<%= t('.returning_users_chart.total') %>' }, 
+      { label: '<%= t('.returning_users_chart.same_day') %>' },
+      { label: '<%= t('.returning_users_chart.next_day') %>' },
+      { label: '<%= t('.returning_users_chart.three_days') %>' },
+      { label: '<%= t('.returning_users_chart.more_days') %>' },
     ],
     legend: {
       show: true, 

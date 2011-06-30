@@ -26,6 +26,14 @@ en:
           total: 'Total'
           level5: 'Level 5'
           level10: 'Level 10'
+        returning_users: 'Returning Users'
+        returning_users_chart:
+          title: 'Returning Users By Day'
+          total: 'Total'
+          same_day: 'Same Day'
+          next_day: 'Next Day'
+          three_days: 'Day 3'
+          more_days: 'Day 4+'
         latest_users: "Latest Users"
         profile: "FB Profile"
         references: "References"

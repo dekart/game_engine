@@ -7,7 +7,7 @@ class Admin::StatisticsController < Admin::BaseController
   def user
     @all = Statistics::Users.new
     @day = Statistics::Users.new(24.hours.ago)
-    @week = Statistics::Users.new(7.days.ago.beginning_of_day)
+    @month = Statistics::Users.new(30.days.ago.beginning_of_day)
   end
   
   def level
