@@ -12,7 +12,7 @@
         }
       ) if app_request.inventory.try(:usable?) %>
     
-  <%= gift_send_button(app_request.item, :to => app_request.sender.facebook_id) %>
+  <%= gift_send_button(app_request.item, :to => app_request.sender.facebook_id, :before => '$(this).remove()') %>
 <% end %>
 
 <% dom_ready do %>

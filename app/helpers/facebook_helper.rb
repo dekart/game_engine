@@ -109,22 +109,25 @@ module FacebookHelper
   end
   
   def fb_request_dialog(type, options = {})
-    callback  = options.delete(:callback)
-    request_params = options.delete(:params) || {}
+    before_callback = options.delete(:before)
+    after_callback  = options.delete(:callback)
+    request_params  = options.delete(:params) || {}
         
     if_fb_connect_initialized(
       "
+        %s;
         FB.ui(%s, function(response){ 
           if(typeof(response) != 'undefined' && response != null){ 
-            $('#ajax').load('%s', {ids: response.request_ids}, function(){ %s }) 
+            $('#ajax').load('%s', {ids: response.request_ids}, function(){ %s; }) 
           } 
         }); 
         
         $(document).trigger('facebook.dialog');
       " % [
+        before_callback,
         options.deep_merge(:method => 'apprequests', :data => {:type => type}).to_json,
         app_requests_path(request_params.merge(:type => type)),
-        callback
+        after_callback
       ]
     ).gsub(/\n\s+/, ' ')
   end
