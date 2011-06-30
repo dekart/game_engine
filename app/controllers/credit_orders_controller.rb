@@ -1,6 +1,8 @@
 class CreditOrdersController < ApplicationController
   include ActionView::Helpers::AssetTagHelper 
   include AssetsHelper
+
+  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook
   
   def index
     case params[:method]
@@ -18,7 +20,7 @@ class CreditOrdersController < ApplicationController
     
     @order = CreditOrder.find_by_facebook_id(params[:order_id]) || CreditOrder.create!(
       :facebook_id  => params[:order_id], 
-      :character    => current_character,
+      :character    => User.find_by_facebook_id(params[:receiver]).character,
       :package      => @package
     )
     
