@@ -29,5 +29,12 @@ module Requirements
         not r.satisfies?(character)
       }.nil?
     end
+
+    def +(other)
+      Requirements::Collection.new.tap do |result|
+        result.items.push(*items)
+        result.items.push(*other.items)
+      end
+    end
   end
 end

@@ -36,7 +36,7 @@
     <% end %>
 
     <div class="requirements clearfix">
-      <%= unsatisfied_requirement_list(@mission.requirements) %>
+      <%= unsatisfied_requirement_list(@mission.applicable_requirements) %>
     </div>
 
     <% builder.on_ready do %>

@@ -65,6 +65,10 @@ class Mission < ActiveRecord::Base
     payouts + mission_group.applicable_payouts
   end
   
+  def applicable_requirements
+    requirements + mission_group.requirements
+  end
+  
   protected
   
   def update_group_in_ranks

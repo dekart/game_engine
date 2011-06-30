@@ -117,7 +117,7 @@ class MissionResult
 
   def requirements_satisfied?
     if @requirements_satisfied.nil?
-      @requirements_satisfied = @mission.requirements.satisfies?(@character)
+      @requirements_satisfied = @mission.applicable_requirements.satisfies?(@character)
     end
 
     @requirements_satisfied
