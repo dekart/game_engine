@@ -9,6 +9,15 @@ server {
 
   access_log off;
 
+
+  # GZIP compression
+  
+  gzip            on;
+  gzip_min_length 500;
+  gzip_comp_level 3;
+  gzip_types      text/plain text/css text/javascript application/x-javascript application/json;
+
+
   # Ignored URLs
   location ~ null { return 404; }
   location ~ google-analytics\.com/ga\.js { return 404; }
@@ -23,7 +32,7 @@ server {
     passenger_enabled on;
   }
 
-  location /system {
+  location ~* /(stylesheets|javascripts|system) {
     expires 1y;
 
     try_files $uri =404;
