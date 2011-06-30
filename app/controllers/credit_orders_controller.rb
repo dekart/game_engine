@@ -1,5 +1,6 @@
 class CreditOrdersController < ApplicationController
   include ActionView::Helpers::AssetTagHelper 
+  include AssetsHelper
   
   def index
     case params[:method]
@@ -34,7 +35,7 @@ class CreditOrdersController < ApplicationController
             :amount => @package.vip_money, 
             :app    => t('app_name')
           ),
-          :image_url    => image_path(@package.image? ? @package.image.url : asset_image_path(:credit_package)),
+          :image_url    => @package.image? ? image_path(@package.image.url) : asset_image_path(:credit_package),
           :product_url  => premium_url(:canvas => true),
           :price        => @package.price
         }
