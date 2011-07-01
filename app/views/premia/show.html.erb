@@ -184,7 +184,7 @@
   <div id="get_more_vip">
     <%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>
 
-    <%= facebook_money(current_character) %>
+    <%= facebook_money(current_character) if Setting.b(:premium_offer_wall_enabled) %>
   </div>
 </div>
 
