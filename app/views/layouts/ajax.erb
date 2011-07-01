@@ -1,6 +1,4 @@
-<div id="ajax_response" style="display:none">
-  <%= yield %>
-</div>
+<%= yield %>
 
 <% if current_character %>
   <%= display_notifications %>
@@ -12,7 +10,6 @@
 
 <% dom_ready do %>
   $(document).trigger('application.ready');
-  $('#ajax_response').fadeIn(500);
 <% end %>
 
 <%= dom_ready %>

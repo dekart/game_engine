@@ -148,7 +148,7 @@ function bookmark(){
 }
 
 function show_result(){
-  $('#result').show();
+  $('#result').fadeIn(500);
 
   $.scrollTo('#result');
 }
