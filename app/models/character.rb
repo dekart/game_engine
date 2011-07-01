@@ -74,6 +74,7 @@ class Character < ActiveRecord::Base
   }
 
   serialize :placements
+  serialize :active_boosts
 
   attr_accessible :name
 
@@ -274,7 +275,28 @@ class Character < ActiveRecord::Base
   def placements
     self[:placements] ||= {}
   end
-
+  
+  def active_boosts
+    self[:active_boosts] ||= {}
+  end
+  
+  def active_boost(boost, destination)
+    destination = destination.to_sym
+    boost_type = boost.boost_type.to_sym
+    
+    if active_boosts[boost_type] && active_boosts[boost_type][destination] == boost.id
+      active_boosts[boost_type].delete(destination)
+    else
+      active_boosts[boost_type] ||= {}
+      active_boosts[boost_type][destination] = boost.id
+    end
+  end
+  
+  def active_boost!(boost, destination)
+    active_boost(boost, destination)
+    save!
+  end
+  
   def health_restore_period
     Setting.i(:character_health_restore_period).seconds
   end

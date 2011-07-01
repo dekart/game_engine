@@ -110,3 +110,37 @@
 
   .give.button
     +button(!inventory_give_button_icon)
+    
+
+.boosts
+  .previous, .next
+    width: 20px
+    height: 20px
+    cursor: pointer
+    display: block
+    line-height: 90px
+
+  .previous, .next, .container 
+    float: left
+  
+  .description
+    font-weight: bold
+  .container
+    .boost
+      width: 72px
+      height: 72px
+      +opacity(0.5)
+      margin: 5px
+      
+      &.active
+        +opacity(1)
+  .buy
+    .buttons
+      padding: 5px
+      .button
+        &.shop
+          +button(!inventory_buttons_shop_icon)
+
+.inventory_image
+  .count
+    position: absolute

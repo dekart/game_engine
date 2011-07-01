@@ -1,0 +1,50 @@
+<div class="boosts <%= type %> <%= destination %>">
+  <div class="description">
+    <%= t(".types.#{type}.#{destination}") %>
+  </div>
+  
+  <div class="boost_content">
+    <% if boosts = current_character.boosts.for(type, destination) and boosts.any? %>
+      <div class="previous">
+        <%= asset_image_tag(:icons_previous, :alt => t(".previous.name")) %>
+      </div>
+      
+      <div class="container">
+        <ul>
+          <% boosts_list(boosts, type, destination) do |boost, active| %>
+            <li class="boost <%= 'active' if active %>" id="<%= boost_dom_id(boost, destination) %>">
+              <%= link_to_remote(inventory_item_image(boost, :small, :tooltip => true, :count => true),
+                    :url => active_boost_inventory_path(boost),
+                    :with => "'destination=#{destination}'",
+                    :update => :ajax
+                  ) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      
+      <div class="next">
+        <%= asset_image_tag(:icons_next, :alt => t(".next.name")) %>
+      </div>
+      
+      <% dom_ready do %>
+        var $boosts = $('.boosts.<%= type %>.<%= destination %>');
+      
+        $boosts.find('.container').jCarouselLite({
+          btnNext:  $boosts.find('.next'),
+          btnPrev:  $boosts.find('.previous'),
+          visible:  3,
+          circular: false
+        });
+      <% end %>
+      
+    <% else %>
+      <div class="buy">
+        <%= t(".buy_boosts") %>
+        <div class="buttons">
+          <%= link_to(button(:shop), items_path, :class => 'button shop') %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

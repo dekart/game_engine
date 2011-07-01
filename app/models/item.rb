@@ -5,6 +5,11 @@ class Item < ActiveRecord::Base
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
   EFFECTS = [:attack, :defence, :health, :energy, :stamina]
+  
+  BOOST_TYPES = {
+    :fight => [:damage, :defence], 
+    :monster => [:damage]
+  }
 
   belongs_to  :item_group
   has_many    :inventories, :dependent => :destroy
@@ -52,12 +57,21 @@ class Item < ActiveRecord::Base
       :order      => "items.level"
     }
   }
+  
+  named_scope :boosts, Proc.new{|type|
+    {
+      :conditions => (
+        type ? { :boost_type => type } : ["boost_type != ''"]
+      )
+    } 
+  }
+
 
   before_save :update_max_vip_price_in_market, :if => :vip_price_changed?
 
   named_scope :vip, {:conditions => "items.vip_price > 0"}
   named_scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
-
+  
   state_machine :initial => :hidden do
     state :hidden
     state :visible
@@ -116,6 +130,10 @@ class Item < ActiveRecord::Base
     
     def gifts_for(character)
       with_state(:visible).available.available_in(:gift).available_for(character).scoped(:order => "items.level DESC")
+    end
+    
+    def boost_types_to_dropdown
+      BOOST_TYPES.keys.map {|b| b.to_s}
     end
   end
 
@@ -201,5 +219,9 @@ class Item < ActiveRecord::Base
       Requirements::Level.new(:value => level)
     )
   end
-
+  
+  def boost?
+    !boost_type.blank?
+  end
+  
 end
