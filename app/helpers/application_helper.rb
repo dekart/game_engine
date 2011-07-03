@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def admin_only(&block)
-    if current_user && current_user.admin?
+    if current_user && current_user.admin? || ENV['OFFLINE']
       concat(capture(&block))
     end
   end

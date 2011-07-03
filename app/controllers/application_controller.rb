@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_character_existance, :except => [:facebook_oauth_connect]
   before_filter :check_user_ban
   
-  facebook_integration_filters
+  facebook_integration_filters unless ENV['OFFLINE']
   
   layout :get_layout
 
@@ -49,6 +49,8 @@ class ApplicationController < ActionController::Base
   def current_user
     if current_facebook_user
       @current_user ||= find_or_create_current_user
+    elsif ENV['OFFLINE']
+      @current_user ||= find_or_create_offline_user
     end
   end
 
@@ -80,8 +82,12 @@ class ApplicationController < ActionController::Base
     user.last_visit_ip = request.remote_ip
     
     user.save!
-
+    
     user
+  end
+  
+  def find_or_create_offline_user
+    User.find_or_create_by_facebook_id(1)
   end
   
   def check_user_ban
