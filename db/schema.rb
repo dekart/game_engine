@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110629092458) do
+ActiveRecord::Schema.define(:version => 20110703064713) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -360,7 +360,7 @@ ActiveRecord::Schema.define(:version => 20110629092458) do
 
   create_table "items", :force => true do |t|
     t.string   "availability",            :limit => 30,  :default => "shop", :null => false
-    t.integer  "level"
+    t.integer  "level",                                  :default => 1
     t.integer  "basic_price",             :limit => 8
     t.integer  "vip_price"
     t.string   "name",                    :limit => 100, :default => "",     :null => false
