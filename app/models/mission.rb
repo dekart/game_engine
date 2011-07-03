@@ -43,7 +43,7 @@ class Mission < ActiveRecord::Base
     :apply_on => :mission_complete
   )
 
-  validates_presence_of :mission_group, :name, :success_text, :complete_text
+  validates_presence_of :mission_group, :name
   
   after_update :update_group_in_ranks, :if => :mission_group_id_changed?
 
