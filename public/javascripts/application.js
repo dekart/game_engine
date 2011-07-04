@@ -138,15 +138,6 @@ function if_fb_initialized(callback){
   }
 }
 
-function bookmark(){
-  if(!$.isEmptyObject(FB)){
-    FB.ui({method : 'bookmark.add'});
-    $(document).trigger('facebook.dialog');
-  }
-
-  $.scrollTo('body');
-}
-
 function show_result(){
   $('#result').fadeIn(500);
 

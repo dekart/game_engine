@@ -95,10 +95,6 @@ module FacebookHelper
     )
   end
 
-  def fb_bookmark_button(options = {})
-    content_tag("fb:bookmark", "", options)
-  end
-  
   def if_fb_connect_initialized(command = nil, &block)
     command = capture(&block) if block_given?
     

@@ -6,10 +6,6 @@ en:
     fan_specials:
       title: "Fan Specials"
       text: "%{app} fans periodically receive free Gold, Gems, weapons, and other useful game items!"
-    bookmark:
-      title: "Bookmark"
-      text: "Don't forget to add %{app} to your bookmarks!"
-      add: 'Add to Bookmarks'
     main_menu:
       home: "Home"
       missions: "Missions"

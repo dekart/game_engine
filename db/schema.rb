@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110703064713) do
+ActiveRecord::Schema.define(:version => 20110704122358) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -759,7 +759,6 @@ ActiveRecord::Schema.define(:version => 20110703064713) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "show_fan_specials",                     :default => true
-    t.boolean  "show_bookmark",                         :default => true
     t.boolean  "show_tips",                             :default => true
     t.string   "reference",              :limit => 100, :default => "",      :null => false
     t.boolean  "show_tutorial",                         :default => true
