@@ -2,7 +2,7 @@
 module ApplicationHelper
   MAINTENANCE_SETTINGS_PATH = Rails.root.join("public", "system", "maintenance.yml").to_s
   
-  def include_jquery_from_google(version = "1.6.1")
+  def include_jquery_from_google(version = "1.6.2")
     javascript_include_tag("#{request.protocol}ajax.googleapis.com/ajax/libs/jquery/#{version}/jquery.min.js") +
     javascript_tag("if(typeof jQuery == 'undefined'){document.write(unescape(\"%3Cscript src='#{javascript_path("jquery")}' type='text/javascript'%3E%3C/script%3E\"))}")
   end
