@@ -412,7 +412,7 @@ function debug(s) {
 $(function(){
   if(document.cookie.indexOf('access_token') == -1){
     $('a').live('click', function(){
-      var href = $(this).attr('href');
+      var href = $(this).attr('href') || '';
       
       if(href != ''){
         $(this).attr('href', signedUrl(href));
