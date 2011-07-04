@@ -98,7 +98,7 @@ module FacebookHelper
   def if_fb_connect_initialized(command = nil, &block)
     command = capture(&block) if block_given?
     
-    result = "if(typeof(FB) != 'undefined'){ #{command}; }else{ alert('The page failed to initialize properly. Please reload it and try again.'); }"
+    result = "if(!$.isEmptyObject(FB)){ #{command}; }else{ alert('The page failed to initialize properly. Please reload it and try again.'); }"
     result = result.html_safe
     
     block_given? ? concat(result) : result
@@ -113,7 +113,7 @@ module FacebookHelper
       "
         %s;
         FB.ui(%s, function(response){ 
-          if(typeof(response) != 'undefined' && response != null){ 
+          if(!$.isEmptyObject(response)){ 
             $('#ajax').load('%s', {ids: response.request_ids}, function(){ %s; }) 
           } 
         }); 
