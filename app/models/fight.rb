@@ -64,11 +64,7 @@ class Fight < ActiveRecord::Base
   end
     
   def attacker_won?
-    if @attacker_won.nil?
-      @attacker_won = calculate_attacker_victory
-    else
-      @attacker_won
-    end
+    @attacker_won ||= winner ? (winner == attacker) : calculate_attacker_victory
   end
 
   def victim_won?

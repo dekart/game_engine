@@ -233,4 +233,41 @@ describe Fight do
       end
     end
   end
+  
+  describe '#attacker_won?' do
+    before do
+      @attacker = Factory(:character)
+      @victim   = Factory(:character)
+      
+      @fight = Fight.new(:attacker => @attacker, :victim => @victim)
+    end
+    
+    it 'should calculate attacker victory' do
+      @fight.should_receive(:calculate_attacker_victory).and_return(true)
+      
+      @fight.attacker_won?.should be_true
+    end
+    
+    it 'should not re-calculate attacker victory if calculated once' do
+      @fight.should_receive(:calculate_attacker_victory).once.and_return(false)
+      
+      @fight.attacker_won?.should be_false
+    end
+    
+    describe 'when winner is already set' do
+      it 'should return true if winner is attacker' do
+        @fight.should_not_receive(:calculate_attacker_victory)
+
+        @fight.winner = @attacker
+        @fight.attacker_won?.should be_true
+      end
+
+      it 'should return false if winner is victim' do
+        @fight.should_not_receive(:calculate_attacker_victory)
+
+        @fight.winner = @victim
+        @fight.attacker_won?.should be_false
+      end
+    end
+  end
 end
