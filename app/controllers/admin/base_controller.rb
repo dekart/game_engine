@@ -1,5 +1,5 @@
 class Admin::BaseController < ApplicationController
-  skip_before_filter :check_character_existance, :check_bookmark_reference
+  skip_before_filter :check_character_existance
 
   before_filter :admin_required
 
