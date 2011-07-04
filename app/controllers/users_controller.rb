@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook, :only => :subscribe
+  skip_authentication_filters :only => :subscribe
   
   def toggle_block
     @user = current_user

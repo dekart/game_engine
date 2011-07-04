@@ -2,7 +2,7 @@ class CreditOrdersController < ApplicationController
   include ActionView::Helpers::AssetTagHelper 
   include AssetsHelper
 
-  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook
+  skip_authentication_filters
   
   def index
     case params[:method]

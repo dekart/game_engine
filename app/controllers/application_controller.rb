@@ -19,7 +19,11 @@ class ApplicationController < ActionController::Base
   helper :all
 
   protected
-
+  
+  def self.skip_authentication_filters(options = {})
+    skip_before_filter(:check_character_existance, :ensure_canvas_connected_to_facebook, :check_user_ban, options)
+  end
+  
   def check_character_existance
     unless current_character
       store_return_to

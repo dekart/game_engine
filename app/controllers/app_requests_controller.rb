@@ -1,5 +1,5 @@
 class AppRequestsController < ApplicationController
-  skip_before_filter :check_character_existance, :ensure_canvas_connected_to_facebook, :only => :create
+  skip_authentication_filters :only => :create
   
   def index
     @app_requests = current_character.app_requests.visible.all(:order => "sender_id, type, created_at DESC")
