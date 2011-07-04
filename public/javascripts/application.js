@@ -414,7 +414,7 @@ $(function(){
     $('a').live('click', function(){
       var href = $(this).attr('href');
       
-      if(!$.isEmptyObject(href)){
+      if(href != ''){
         $(this).attr('href', signedUrl(href));
       }
     });
