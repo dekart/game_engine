@@ -131,7 +131,7 @@ var Spinner = {
 
 
 function if_fb_initialized(callback){
-  if(!$.isEmptyObject(FB)){ 
+  if(typeof FB !== 'undefined'){ 
     callback.call();
   } else { 
     alert('The page failed to initialize properly. Please reload it and try again.'); 
@@ -453,7 +453,7 @@ $(function(){
   $(document).bind('result.available', show_result);
 
   $(document).bind('remote_content.received', function(){
-    if(!$.isEmptyObject(FB)){
+    if(typeof FB !== 'undefined'){
       FB.XFBML.parse();
     }
   });
