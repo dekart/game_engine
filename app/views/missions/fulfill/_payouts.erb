@@ -27,16 +27,6 @@
         <%= payout(:energy, result.energy) %>
       <% end %>
 
-      <% if result.boost %>
-        <div class="boost">
-          <h3><%= t(".you_spent.boost") %></h3>
-
-          <%= builder.render("payouts/result/item",
-            :payout => result.boost
-          ) %>
-        </div>
-      <% end %>
-
       <%= payout_list(result, result.payouts, :action => :remove) %>
     </td>
     <td class="progress">

@@ -88,3 +88,15 @@ en:
         success: "You've successfully gave items to your friend!"
         expired: "Sorry but this item request already expired."
         no_items: "You don't have any of the requested items."
+    boosts:
+      types:
+        fight:
+          attack: "Attack Boosts"
+          defence: "Defence Boosts"
+        monster: 
+          attack: "Monster attack Boosts"
+      previous: "Previous"
+      next: "Next"
+      buy_boosts: "You can buy boosts in the shop"
+      buttons:
+        shop: "Shop"

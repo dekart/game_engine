@@ -34,7 +34,7 @@
 <% end %>
 
 <% form.field_set Item.human_attribute_name("effects") do %>
-  <%= form.check_box :boost %>
+  <%= form.select :boost_type, Item.boost_types_to_dropdown, :include_blank => true %>
 
   <% Item::EFFECTS.each do |attribute| %>
     <%= form.text_field(attribute, :size => 6, :autocomplete => :off) %>

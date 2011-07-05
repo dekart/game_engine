@@ -402,6 +402,25 @@ function debug(s) {
     });
   };
   
+  $.setupBoost = function(type, destination, show_limit) {
+    var $boosts = $('.boosts.' + type + '.' + destination);
+    var $items = $boosts.find('li');
+    var $current = $boosts.find('.active');
+    
+    var startIndex = 0;
+    if ($items.index($current) != -1) {
+      startIndex = Math.floor($items.index($current) / show_limit) * show_limit;
+    }
+    
+    $boosts.find('.container').jCarouselLite({
+      btnNext:  $boosts.find('.next'),
+      btnPrev:  $boosts.find('.previous'),
+      visible:  show_limit,
+      start:    startIndex,
+      circular: false
+    });
+  };
+  
   $.fn.giftForm = function(options){
     var $gifts = $(this).find('.gifts .gift');
 

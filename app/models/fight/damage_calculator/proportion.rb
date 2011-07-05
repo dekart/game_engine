@@ -26,8 +26,8 @@ class Fight
           )
         end
 
-        attacker_boost_damage = attacker.boosts.best_attacking.try(:health) || 0
-        victim_boost_damage = attacker.boosts.best_defending.try(:health) || 0
+        attacker_boost_damage = attacker.boosts.active_for(:fight, :attack).try(:health) || 0
+        victim_boost_damage = attacker.boosts.active_for(:fight, :defence).try(:health) || 0
 
         [
           (attack_damage / 1000).ceil + attacker_boost_damage,

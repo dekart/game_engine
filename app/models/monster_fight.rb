@@ -25,7 +25,7 @@ class MonsterFight < ActiveRecord::Base
   cattr_reader :damage_system
   @@damage_system = FightingSystem::PlayerVsMonster::Simple
 
-  attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts
+  attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts, :boost
   
   delegate :monster_type, :time_remaining, :to => :monster
   
@@ -39,6 +39,8 @@ class MonsterFight < ActiveRecord::Base
     
     if monster.progress? && character.sp >= stamina_limit(power_attack) && !character.weak? && character.hp >= hp_average_response_limit(power_attack)
       @character_damage, @monster_damage = self.class.damage_system.calculate_damage(character, monster)
+
+      @boost = character.boosts.active_for(:monster, :attack)
 
       @experience = monster.experience
       @money      = monster.money
@@ -54,6 +56,8 @@ class MonsterFight < ActiveRecord::Base
       transaction do
         save!
         monster.save!
+        
+        character.inventories.take!(@boost.item) if @boost
         character.save!
         
         if monster.won?
@@ -152,6 +156,7 @@ class MonsterFight < ActiveRecord::Base
 
       character.hp  -= @character_damage
       monster.hp    -= @monster_damage
+      monster.hp    -= @boost.health if @boost
 
       self.damage   += @monster_damage
 
