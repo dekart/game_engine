@@ -67,7 +67,7 @@ var Timer = {
   },
 
   start: function(id, value, callback){
-    if(value == 0){ return; }
+    if(value === 0){ return; }
 
     if(this.timers[id]){
       this.timers[id].value = value;
@@ -150,7 +150,7 @@ function signedUrl(url){
   var new_url = url_parts[0] + (url_parts[0].indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
   
   if(url_parts.length == 2) {
-    new_url = new_url + '#' + url_parts[1]
+    new_url = new_url + '#' + url_parts[1];
   }
 
   return new_url;
@@ -228,7 +228,7 @@ var CharacterForm = {
 
 var Character = {
   update: function(a){
-    if(typeof a === 'undefined' || a == null){ return; }
+    if(typeof a === 'undefined' || a === null){ return; }
     
     var c = a.character;
 
@@ -318,7 +318,7 @@ var BossFight = {
   hide_reminder: function(fight_id){
     $('#boss_fight_' + fight_id).hide();
 
-    if($('#boss_fight_block .boss_fight:visible').length == 0){
+    if($('#boss_fight_block .boss_fight:visible').length === 0){
       $('#boss_fight_block').hide();
     }
   }
@@ -366,14 +366,15 @@ var Mission = {
 var Fighting = {
   loadMoreOpponents : function(){
     $.get('/fights', function(response){
-      $('#victim_list').append(response)
-    })
+      $('#victim_list').append(response);
+    });
   }
-}
+};
 
 function debug(s) {
-  if (!$.isEmptyObject(console))
+  if(!$.isEmptyObject(console)) {
     console.log(s);
+  }
 }
 
 
@@ -424,7 +425,7 @@ $(function(){
     $('a').live('click', function(){
       var href = $(this).attr('href') || '';
       
-      if(href != ''){
+      if(href !== ''){
         $(this).attr('href', signedUrl(href));
       }
     });
@@ -444,7 +445,7 @@ $(function(){
   $('#content [data-tooltip]').each(function(){
     var $element = $(this);
     
-    $element.qtip($element.data('tooltip'))
+    $element.qtip($element.data('tooltip'));
   });
        
   $('a[data-click-once=true]').live('click', function(){
@@ -496,5 +497,5 @@ $(function(){
     show: {
       delay: 0
     }
-  })
+  });
 });

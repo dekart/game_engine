@@ -114,7 +114,9 @@ module FacebookHelper
         %s;
         FB.ui(%s, function(response){ 
           if(!$.isEmptyObject(response)){ 
-            $('#ajax').load('%s', {ids: response.request_ids}, function(){ %s; }) 
+            $('#ajax').load('%s', {ids: response.request_ids}, function(){ 
+              %s; 
+            });
           } 
         }); 
         
