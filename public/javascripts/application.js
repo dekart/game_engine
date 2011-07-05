@@ -468,19 +468,6 @@ $(function(){
     $.scrollTo('#dialog .popup .body');
   });
 
-  $(document).bind('facebook.dialog', function(){
-    $(document).delay(100).queue(function(){  
-      var dialog = $('.fb_dialog').filter(function(){ 
-        return $(this).offset().top > 0;
-      }).first();
-
-      $.scrollTo(dialog);
-      
-      Spinner.alignTo(dialog);
-      Spinner.blink();
-    });
-  });
-
   Spinner.setup();
 
   $('a.help').live('click', function(e){
