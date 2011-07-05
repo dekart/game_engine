@@ -113,6 +113,9 @@
     
 
 .boosts
+  overflow: hidden
+  padding-bottom: 10px
+  
   .previous, .next
     width: 20px
     height: 20px
@@ -125,15 +128,20 @@
   
   .description
     font-weight: bold
+    padding: 2px
   .container
     .boost
+      img
+        cursor: pointer
       width: 72px
       height: 72px
-      +opacity(0.5)
       margin: 5px
+      +opacity(0.8)
       
       &.active
-        +opacity(1)
+        border = !boosts_active_border
+        margin: 1px
+        +opacity(1.0)
   .buy
     .buttons
       padding: 5px
@@ -142,5 +150,14 @@
           +button(!inventory_buttons_shop_icon)
 
 .inventory_image
+  position: relative
   .count
     position: absolute
+    &.small
+      right: 0px
+      bottom: 5px
+      background-color: black
+      color: white
+      padding:
+        left: 2px
+        right: 2px

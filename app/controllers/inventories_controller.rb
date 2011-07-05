@@ -145,11 +145,11 @@ class InventoriesController < ApplicationController
     end
   end
   
-  def active_boost
+  def toggle_boost
     @destination = params[:destination]
     @boost = current_character.boosts.inventories.find(params[:id])
     
-    current_character.active_boost!(@boost, @destination)
+    current_character.toggle_boost!(@boost, @destination)
     
     render :layout => "ajax"
   end

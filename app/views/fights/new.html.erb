@@ -2,9 +2,7 @@
 
 <%= render "fights/buttons", :current => :fight %>
 
-<%= render "inventories/boosts", :type => :fight, :destination => :damage %>
-<%= render "inventories/boosts", :type => :fight, :destination => :defence %>
-<div class="clearfix"></div>
+<%= render "boosts" %>
 
 <% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
   <% render_to_result do %>

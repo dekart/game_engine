@@ -219,7 +219,7 @@ ActionController::Routing::Routes.draw do |map|
       :use      => :any,
       :equip    => :post,
       :unequip  => :post,
-      :active_boost => :post
+      :toggle_boost => :post
     }
   map.resources :fights,
     :member     => {:respond => :post, :used_items => :post}

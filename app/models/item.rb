@@ -7,8 +7,8 @@ class Item < ActiveRecord::Base
   EFFECTS = [:attack, :defence, :health, :energy, :stamina]
   
   BOOST_TYPES = {
-    :fight => [:damage, :defence], 
-    :monster => [:damage]
+    :fight => [:attack, :defence], 
+    :monster => [:attack]
   }
 
   belongs_to  :item_group

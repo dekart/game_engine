@@ -39,6 +39,8 @@
       $('#<%= dom_id(@fight.victim) %>').remove();
     <% end %>
   
+    $("#fight_boosts").replaceWith('<%= escape_javascript(render('boosts')) %>');
+  
     $(document).trigger('fights.create');
   <% end %>
 <% end %>

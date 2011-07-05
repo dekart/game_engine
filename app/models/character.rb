@@ -154,14 +154,14 @@ class Character < ActiveRecord::Base
     attack + 
       equipment.effect(:attack) +
       assignments.attack_effect +
-      boosts.best_attacking.try(:attack).to_i
+      boosts.active_for(:fight, :attack).try(:attack).to_i
   end
 
   def defence_points
     defence +
       equipment.effect(:defence) +
       assignments.defence_effect +
-      boosts.best_defending.try(:defence).to_i
+      boosts.active_for(:fight, :defence).try(:defence).to_i
   end
 
   def health_points
@@ -280,20 +280,36 @@ class Character < ActiveRecord::Base
     self[:active_boosts] ||= {}
   end
   
-  def active_boost(boost, destination)
-    destination = destination.to_sym
-    boost_type = boost.boost_type.to_sym
-    
-    if active_boosts[boost_type] && active_boosts[boost_type][destination] == boost.id
-      active_boosts[boost_type].delete(destination)
+  def activate_boost(boost, destination)
+    active_boosts[boost.boost_type] ||= {}
+    active_boosts[boost.boost_type][destination] = boost.id
+  end
+  
+  def activate_boost!(boost, destination)
+    activate_boost(boost, destination)
+    save!
+  end
+  
+  def deactivate_boost(boost, destination)
+    active_boosts[boost.boost_type].delete(destination) if active_boosts[boost.boost_type] && 
+      active_boosts[boost.boost_type][destination] == boost.id
+  end
+  
+  def deactivate_boost!(boost, destination)
+    deactivate_boost(boost, destination)
+    save!
+  end
+  
+  def toggle_boost(boost, destination)
+    if active_boosts[boost.boost_type] && active_boosts[boost.boost_type][destination] == boost.id
+      deactivate_boost(boost, destination)
     else
-      active_boosts[boost_type] ||= {}
-      active_boosts[boost_type][destination] = boost.id
+      activate_boost(boost, destination) 
     end
   end
   
-  def active_boost!(boost, destination)
-    active_boost(boost, destination)
+  def toggle_boost!(boost, destination)
+    toggle_boost(boost, destination)
     save!
   end
   

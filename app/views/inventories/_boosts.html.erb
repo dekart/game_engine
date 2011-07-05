@@ -1,12 +1,13 @@
 <div class="boosts <%= type %> <%= destination %>">
   <div class="description">
     <%= t(".types.#{type}.#{destination}") %>
+    <%= help_link("boosts_#{type}_#{destination}") %>
   </div>
   
   <div class="boost_content">
     <% if boosts = current_character.boosts.for(type, destination) and boosts.any? %>
       <div class="previous">
-        <%= asset_image_tag(:icons_previous, :alt => t(".previous.name")) %>
+        <%= asset_image_tag(:icons_previous, :alt => t(".previous")) %>
       </div>
       
       <div class="container">
@@ -14,7 +15,7 @@
           <% boosts_list(boosts, type, destination) do |boost, active| %>
             <li class="boost <%= 'active' if active %>" id="<%= boost_dom_id(boost, destination) %>">
               <%= link_to_remote(inventory_item_image(boost, :small, :tooltip => true, :count => true),
-                    :url => active_boost_inventory_path(boost),
+                    :url => toggle_boost_inventory_path(boost),
                     :with => "'destination=#{destination}'",
                     :update => :ajax
                   ) %>
@@ -24,18 +25,11 @@
       </div>
       
       <div class="next">
-        <%= asset_image_tag(:icons_next, :alt => t(".next.name")) %>
+        <%= asset_image_tag(:icons_next, :alt => t(".next")) %>
       </div>
       
-      <% dom_ready do %>
-        var $boosts = $('.boosts.<%= type %>.<%= destination %>');
-      
-        $boosts.find('.container').jCarouselLite({
-          btnNext:  $boosts.find('.next'),
-          btnPrev:  $boosts.find('.previous'),
-          visible:  3,
-          circular: false
-        });
+      <% javascript_tag do %>
+        $.setupBoost('<%= type %>', '<%= destination %>', 3);
       <% end %>
       
     <% else %>

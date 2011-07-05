@@ -30,9 +30,6 @@ module InventoriesHelper
   end
   
   def boosts_list(boosts, type, destination, &block)
-    type = type.to_sym
-    destination = destination.to_sym
-    
     active_boost_id = current_character.active_boosts[type][destination] if current_character.active_boosts[type]
     
     boosts.each do |boost|
@@ -49,7 +46,7 @@ module InventoriesHelper
   def inventory_item_image(inventory, format, options = {})
     result = "".html_safe
     if count = options.delete(:count)
-      count = content_tag(:span, inventory.amount, :class => 'count') if count.is_a?(TrueClass)
+      count = content_tag(:span, inventory.amount, :class => "count #{format}") if count.is_a?(TrueClass)
       result << count 
     end
     

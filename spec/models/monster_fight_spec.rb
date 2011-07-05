@@ -436,4 +436,47 @@ describe MonsterFight do
       @monster_fight.summoner?.should be_false
     end
   end
+  
+  describe 'boosts effects' do
+    before do
+      @monster_fight = Factory(:monster_fight)
+      
+      @damage_system = mock('damage system', :calculate_damage => [10, 20])
+      MonsterFight.stub!(:damage_system).and_return(@damage_system)
+      
+      @character = @monster_fight.character
+      @monster = @monster_fight.monster
+      
+      monster_attack_item_boost = Factory(:item, :boost_type => 'monster', :health => 1)
+      @monster_attack_boost = @character.inventories.give!(monster_attack_item_boost)
+    end
+    
+    it 'should increase monster damage if boost is active' do
+      @character.activate_boost!(@monster_attack_boost, 'attack')
+      
+      lambda {
+        @monster_fight.attack!
+      }.should change(@monster, :hp).by(-21)
+    end
+    
+    it 'should not increase monster damage if boost is not active' do
+      lambda {
+        @monster_fight.attack!
+      }.should change(@monster, :hp).by(-20)
+    end
+    
+    it 'should take monster attack boost if it is active' do
+      @character.activate_boost!(@monster_attack_boost, 'attack')
+      
+      lambda {
+        @monster_fight.attack!
+      }.should change {@character.boosts.inventories.count}.by(-1)
+    end
+    
+    it 'should not take monster attack boost if it is not active' do
+      lambda {
+        @monster_fight.attack!
+      }.should_not change {@character.boosts.inventories.count}
+    end
+  end
 end

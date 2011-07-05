@@ -91,10 +91,12 @@ en:
     boosts:
       types:
         fight:
-          damage: "Attack Boosts"
+          attack: "Attack Boosts"
           defence: "Defence Boosts"
         monster: 
-          damage: "Monster damage Boosts"
+          attack: "Monster attack Boosts"
+      previous: "Previous"
+      next: "Next"
       buy_boosts: "You can buy boosts in the shop"
       buttons:
         shop: "Shop"

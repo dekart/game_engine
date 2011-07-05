@@ -161,7 +161,7 @@ class Fight < ActiveRecord::Base
     self.winner_money = winner_reward
     self.loser_money  = (loser.basic_money >= winner_money ? winner_money : loser.basic_money)
 
-    @attacker_boost = attacker.boosts.active_for(:fight, :damage)
+    @attacker_boost = attacker.boosts.active_for(:fight, :attack)
     @victim_boost = victim.boosts.active_for(:fight, :defence)
   end
 

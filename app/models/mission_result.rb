@@ -23,19 +23,7 @@ class MissionResult
     if valid?
       MissionLevelRank.transaction do
         # Checking if energy assignment encountered free fulfillment
-        if free_fulfillment?
-          @energy = 0
-        else
-          if boost = @character.boosts.best_energy and boost.energy <= @level.energy
-            @boost = boost
-            
-            @energy = (@level.energy - @boost.energy)
-
-            @character.inventories.take!(@boost.item)
-          else
-            @energy = @level.energy
-          end
-        end
+        @energy = (free_fulfillment? ? 0 : @level.energy)
 
         @character.ep -= @energy
 
