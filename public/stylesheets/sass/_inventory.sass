@@ -126,6 +126,10 @@
   .previous, .next, .container 
     float: left
   
+  .previous, .next
+    &.disabled
+      display: none
+  
   .description
     font-weight: bold
     padding: 2px
