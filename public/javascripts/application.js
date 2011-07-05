@@ -228,6 +228,8 @@ var CharacterForm = {
 
 var Character = {
   update: function(a){
+    if(typeof a === 'undefined' || a == null){ return; }
+    
     var c = a.character;
 
     if($.isEmptyObject(c)){ return; }
