@@ -16,13 +16,8 @@
   <%= render "victim_list", :victims => @victims %>
 <% end %>
 
-<div class="more_opponents controls">
-  <%= link_to_remote(button(:more_opponents), 
-        :url => fights_path,
-        :method => :get,
-        :success => "$('#victim_list').append(request)",
-        :html   => {
-            :class => "button more_opponents"
-          }
+<div id="more_fight_opponents">
+  <%= link_to_function(button(:more_opponents), "Fighting.loadMoreOpponents()",
+        :class => "button more_opponents"
       ) %>
 </div>

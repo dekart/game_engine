@@ -363,6 +363,14 @@ var Mission = {
   }
 };
 
+var Fighting = {
+  loadMoreOpponents : function(){
+    $.get('/fights', function(response){
+      $('#victim_list').append(response)
+    })
+  }
+}
+
 function debug(s) {
   if (!$.isEmptyObject(console))
     console.log(s);
