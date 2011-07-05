@@ -139,7 +139,7 @@ function if_fb_initialized(callback){
 }
 
 function show_result(){
-  $('#result').fadeIn(500);
+  $('#result').hide().fadeIn(500);
 
   $.scrollTo('#result');
 }
