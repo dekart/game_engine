@@ -182,7 +182,7 @@ describe Fight do
       end
     
       it 'should decrease victim hp if fight has a cause' do
-        @other_fight = Fight.create(:attacker => @victim, :victim => @attacker)
+        @other_fight = Fight.create(:attacker => @victim, :victim => @attacker, :winner => @victim)
         @fight.cause = @other_fight
         
         with_setting(:fight_victim_hp_decrease_if_character_was_online => 1) do
