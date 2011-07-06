@@ -117,7 +117,7 @@ class Item < ActiveRecord::Base
     def to_grouped_dropdown
       {}.tap do |result|
         ItemGroup.without_state(:deleted).all(:order => :position).each do |group|
-          result[group.name] = group.items.without_state(:deleted).collect{|i|
+          result[group.name] = without_state(:deleted).all(:conditions =>{:item_group_id => group.id}).collect{|i|
             ["%s (%s)" % [i.name, i.availability], i.id]
           }.sort
         end
