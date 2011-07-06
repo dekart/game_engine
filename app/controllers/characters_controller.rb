@@ -108,6 +108,10 @@ class CharactersController < ApplicationController
 
   def fetch_character_types
     @character_types = CharacterType.with_state(:visible).all
+    
+    if params[:default_type_id] && default_type = @character_types.detect{|t| t.id == params[:default_type_id].to_i }
+      @character_types.unshift(@character_types.delete(default_type))
+    end
   end
 
   def check_character_existance_or_create
