@@ -1,14 +1,10 @@
 class ItemsController < ApplicationController
   def index
-    @item_groups = ItemGroup.with_state(:visible).visible_in_shop
+    @item_groups = ItemGroup.visible_in_shop
 
     @current_group = parents.item_group || @item_groups.first(:order => :position)
 
-    item_scope = @current_group.items.with_state(:visible).available.available_for(current_character).scoped(
-        :order => 'items.level DESC, vip_price DESC'
-      )
-
-    @items = item_scope.available_in(:shop).paginate(
+    @items = @current_group.items.in_shop_for(current_character).paginate(
       :page     => params[:page],
       :per_page => Setting.i(:item_show_basic)
     )

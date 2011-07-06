@@ -2,14 +2,14 @@ class InventoriesController < ApplicationController
   before_filter :check_auto_equipment, :only => [:equipment, :equip, :unequip]
 
   def new
-    @item = Item.available.available_in(:shop, :special).available_for(current_character).find_by_id(params[:item_id])
+    @item = Item.purchaseable_for(current_character).find_by_id(params[:item_id])
     @amount = params[:amount].to_i
 
     render :action => :new, :layout => "ajax"
   end
 
   def create
-    @item = Item.available.available_in(:shop, :special).available_for(current_character).find(params[:item_id])
+    @item = Item.purchaseable_for(current_character).find(params[:item_id])
 
     @inventory = current_character.inventories.buy!(@item, params[:amount].to_i)
 
