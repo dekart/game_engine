@@ -110,6 +110,10 @@ class Item < ActiveRecord::Base
     :allow_blank  => true
 
   class << self
+    def select_option(item)
+      ["%s (%s)" % [item.name, item.availability], item.id]
+    end
+
     def to_grouped_dropdown
       {}.tap do |result|
         ItemGroup.without_state(:deleted).all(:order => :position).each do |group|
