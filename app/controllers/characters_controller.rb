@@ -49,7 +49,6 @@ class CharactersController < ApplicationController
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
-      @character.character_type ||= CharacterType.find_by_id(params[:character_type_id]) if params[:character_type_id]
       @character.character_type ||= @character_types.first
     end
   end
@@ -109,6 +108,10 @@ class CharactersController < ApplicationController
 
   def fetch_character_types
     @character_types = CharacterType.with_state(:visible).all
+    
+    if params[:default_type_id] && default_type = @character_types.detect{|t| t.id == params[:default_type_id].to_i }
+      @character_types.unshift(@character_types.delete(default_type))
+    end
   end
 
   def check_character_existance_or_create
