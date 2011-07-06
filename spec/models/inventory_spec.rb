@@ -4,7 +4,7 @@ describe Inventory do
   before :each do
     @character = Factory(:character)
     @item = Factory(:item)
-    @inventory = @character.inventories.create!(:item => @item)
+    @inventory = @character.inventories.create!(:item => @item, :amount => 1)
   end
 
   it "should delegate payouts to item" do
@@ -16,6 +16,13 @@ describe Inventory do
       @inventory = Factory(:inventory)
     end
     
+    it 'should validate that inventory has at least 1 item' do
+      @inventory.amount = 0
+      @inventory.should_not be_valid
+      @inventory.amount = 1
+      @inventory.should be_valid
+    end
+
     describe 'when listed on market' do
       before do
         @market_item = Factory(:market_item, :inventory => @inventory, :amount => 4)

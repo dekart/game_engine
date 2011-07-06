@@ -121,15 +121,25 @@ class Item < ActiveRecord::Base
     end
 
     def available_for(character)
-      visible_for(character).available_by_level(character)
+      with_state(:visible).available.visible_for(character).available_by_level(character)
+    end
+    
+    def in_shop_for(character)
+      available_in(:shop).available_for(character).scoped(
+        :order => 'items.level DESC, vip_price DESC'
+      )
     end
 
     def special_for(character)
-      with_state(:visible).available.available_in(:special).available_for(character)
+      available_in(:special).available_for(character)
+    end
+    
+    def purchaseable_for(character)
+      available_in(:shop, :special).available_for(character)
     end
     
     def gifts_for(character)
-      with_state(:visible).available.available_in(:gift).available_for(character).scoped(:order => "items.level DESC")
+      available_in(:gift).available_for(character).scoped(:order => "items.level DESC")
     end
     
     def boost_types_to_dropdown
