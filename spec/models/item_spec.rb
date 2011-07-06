@@ -3,17 +3,23 @@ require 'spec_helper'
 describe Item do
   describe 'scopes' do
     before do
-      item_group = Factory.create :item_group
-      @item_1 = Factory.create :item, :basic_price => 10, :name => 'item_1', :item_group => item_group, :level => 1
-      @item_2 = Factory.create :item, :basic_price => 20, :name => 'item_2', :item_group => item_group, :level => 1
-      @item_3 = Factory.create :item, :basic_price => 30, :name => 'item_3', :item_group => item_group, :level => 3
+      @item_1 = Factory(:item, :basic_price => 10, :level => 1, :state => 'visible')
+      @item_2 = Factory(:item, :basic_price => 20, :level => 1, :state => 'visible')
+      @item_3 = Factory(:item, :basic_price => 30, :level => 3, :state => 'visible')
 
-      @ctype = Factory.create :character_type
-      @character = Factory.create :character, :character_type => @ctype, :level => 1
+      @character = Factory(:character)
     end
 
-    it 'should select items, available for character for given level' do
-      Item.available_for(@character).all.should == [@item_1, @item_2]
+    describe '.available_for' do
+      it 'should select items, available for character for given level' do
+        Item.available_for(@character).all.should == [@item_1, @item_2]
+      end
+    
+      it 'should not include invisible items' do
+        @item_1.hide
+        
+        Item.available_for(@character).all.should == [@item_2]
+      end
     end
   end
 

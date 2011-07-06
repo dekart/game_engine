@@ -31,6 +31,7 @@ class Inventory < ActiveRecord::Base
   attr_accessor :charge_money, :deposit_money, :basic_money, :vip_money
 
   validate :enough_character_money?
+  validates_numericality_of :amount, :greater_than => 0
 
   before_save   :charge_or_deposit_character
   after_update  :check_market_items
