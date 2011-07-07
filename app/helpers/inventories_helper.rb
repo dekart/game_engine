@@ -28,4 +28,28 @@ module InventoriesHelper
       )
     )
   end
+  
+  def boosts_list(boosts, type, destination, &block)
+    active_boost_id = current_character.active_boosts[type][destination] if current_character.active_boosts[type]
+    
+    boosts.each do |boost|
+      concat(
+        capture(boost, active_boost_id == boost.id, &block)
+      )
+    end
+  end
+  
+  def boost_dom_id(boost, destination)
+    dom_id(boost, "boost_#{boost.boost_type}_#{destination}")
+  end
+  
+  def inventory_item_image(inventory, format, options = {})
+    result = "".html_safe
+    if count = options.delete(:count)
+      count = content_tag(:span, inventory.amount, :class => "count #{format}") if count.is_a?(TrueClass)
+      result << count 
+    end
+    
+    content_tag(:div, result << item_image(inventory, format, options), :class => 'inventory_image')
+  end
 end

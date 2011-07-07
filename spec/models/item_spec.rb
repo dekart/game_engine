@@ -21,6 +21,47 @@ describe Item do
         Item.available_for(@character).all.should == [@item_2]
       end
     end
+    
+    it 'should select boost items' do
+      @boost = Factory(:item, :boost_type => 'fight')
+      
+      Item.boosts.should == [@boost]
+      Item.boosts('fight').should == [@boost]
+    end
+  end
+  
+  describe '.to_grouped_dropdown' do
+    before do
+      @item_group_1 = Factory(:item_group)
+      @item_group_2 = Factory(:item_group)
+      
+      @item_1 = Factory(:item, :item_group => @item_group_1)
+      @item_2 = Factory(:item, :item_group => @item_group_1, :level => 2)
+      @item_3 = Factory(:item, :item_group => @item_group_2)
+    end
+    
+    it 'should return grouped groupdown with all items' do
+      Item.to_grouped_dropdown.should == { 
+        @item_group_1.name => [
+          Item.select_option(@item_1), 
+          Item.select_option(@item_2)
+        ],
+        @item_group_2.name => [
+          Item.select_option(@item_3)
+        ]
+      }
+    end
+    
+    it 'should scope items returned by dropdown' do
+      Item.scoped(:conditions => 'level = 1').to_grouped_dropdown.should == {
+        @item_group_1.name => [
+          Item.select_option(@item_1)
+        ],
+        @item_group_2.name => [
+          Item.select_option(@item_3)
+        ]
+      }
+    end
   end
 
   describe 'when creating' do

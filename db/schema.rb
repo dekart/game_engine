@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20110704122358) do
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
+  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -192,6 +193,7 @@ ActiveRecord::Schema.define(:version => 20110704122358) do
     t.datetime "fighting_available_at",                          :default => '1970-01-01 05:00:00'
     t.integer  "killed_monsters_count",                          :default => 0
     t.integer  "total_monsters_damage",                          :default => 0
+    t.text     "active_boosts"
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
@@ -210,6 +212,7 @@ ActiveRecord::Schema.define(:version => 20110704122358) do
     t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "points_type",                       :default => ""
   end
 
   create_table "credit_orders", :force => true do |t|
@@ -391,8 +394,8 @@ ActiveRecord::Schema.define(:version => 20110704122358) do
     t.boolean  "can_be_sold_on_market"
     t.datetime "image_updated_at"
     t.integer  "package_size"
-    t.boolean  "boost"
     t.integer  "max_vip_price_in_market"
+    t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"

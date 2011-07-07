@@ -5,19 +5,46 @@ class Character
     end
 
     def inventories
-      @inventories ||= @character.inventories.all(:joins => :item, :conditions => "boost = 1")
+      @character.inventories.scoped(:joins => :item, :conditions => "items.boost_type != ''")
     end
 
-    def best_attacking
-      inventories.select{|i| i.attack > 0 || i.health > 0 }.max_by{|i| [i.attack, i.health] }
+    def for(type, destination)
+      send("for_#{type}_#{destination}")
     end
-
-    def best_defending
-      inventories.select{|i| i.defence > 0 || i.health > 0 }.max_by{|i| [i.defence, i.health] }
+    
+    def for_fight_attack
+      by_type('fight').scoped(:conditions => ['items.attack > 0 OR items.health > 0'])
     end
-
-    def best_energy
-      inventories.select{|i| i.energy > 0 }.max_by{|i| i.energy }
+    
+    def for_fight_defence
+      by_type('fight').scoped(:conditions => ['items.defence > 0'])
+    end
+    
+    def for_monster_attack
+      by_type('monster')
+    end
+    
+    def by_type(boost_type)
+      @character.inventories.scoped(:joins => :item, :conditions => {
+        'items.boost_type' => boost_type
+      })
+    end
+    
+    def active_for(type, destination)
+      boost_id = send("active_for_#{type}_#{destination}")
+      @character.inventories.find_by_id(boost_id) if boost_id
+    end
+    
+    def active_for_fight_attack
+      @character.active_boosts['fight']['attack'] if @character.active_boosts['fight']
+    end
+    
+    def active_for_fight_defence
+      @character.active_boosts['fight']['defence'] if @character.active_boosts['fight']
+    end
+    
+    def active_for_monster_attack
+      @character.active_boosts['monster']['attack'] if @character.active_boosts['monster']
     end
   end
 end

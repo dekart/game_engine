@@ -2,6 +2,8 @@
 
 <%= render "fights/buttons", :current => :fight %>
 
+<%= render "boosts" %>
+
 <% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
   <% render_to_result do %>
     <% result_for :fight do %>

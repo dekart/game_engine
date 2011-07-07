@@ -1,0 +1,4 @@
+<% dom_ready do %>
+  $('#<%= boost_dom_id(@boost, @destination) %>').toggleClass('active');
+  $('.<%= @boost.boost_type %>.<%= @destination %> .active[id!="<%= boost_dom_id(@boost, @destination) %>"]').removeClass('active');
+<% end %>

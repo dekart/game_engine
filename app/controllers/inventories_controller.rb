@@ -144,6 +144,15 @@ class InventoriesController < ApplicationController
       redirect_from_iframe root_url(:canvas => true)
     end
   end
+  
+  def toggle_boost
+    @destination = params[:destination]
+    @boost = current_character.boosts.inventories.find(params[:id])
+    
+    current_character.toggle_boost!(@boost, @destination)
+    
+    render :layout => "ajax"
+  end
 
   protected
 

@@ -74,6 +74,7 @@ class Character < ActiveRecord::Base
   }
 
   serialize :placements
+  serialize :active_boosts
 
   attr_accessible :name
 
@@ -153,14 +154,14 @@ class Character < ActiveRecord::Base
     attack + 
       equipment.effect(:attack) +
       assignments.attack_effect +
-      boosts.best_attacking.try(:attack).to_i
+      boosts.active_for(:fight, :attack).try(:attack).to_i
   end
 
   def defence_points
     defence +
       equipment.effect(:defence) +
       assignments.defence_effect +
-      boosts.best_defending.try(:defence).to_i
+      boosts.active_for(:fight, :defence).try(:defence).to_i
   end
 
   def health_points
@@ -274,7 +275,44 @@ class Character < ActiveRecord::Base
   def placements
     self[:placements] ||= {}
   end
-
+  
+  def active_boosts
+    self[:active_boosts] ||= {}
+  end
+  
+  def activate_boost(boost, destination)
+    active_boosts[boost.boost_type] ||= {}
+    active_boosts[boost.boost_type][destination] = boost.id
+  end
+  
+  def activate_boost!(boost, destination)
+    activate_boost(boost, destination)
+    save!
+  end
+  
+  def deactivate_boost(boost, destination)
+    active_boosts[boost.boost_type].delete(destination) if active_boosts[boost.boost_type] && 
+      active_boosts[boost.boost_type][destination] == boost.id
+  end
+  
+  def deactivate_boost!(boost, destination)
+    deactivate_boost(boost, destination)
+    save!
+  end
+  
+  def toggle_boost(boost, destination)
+    if active_boosts[boost.boost_type] && active_boosts[boost.boost_type][destination] == boost.id
+      deactivate_boost(boost, destination)
+    else
+      activate_boost(boost, destination) 
+    end
+  end
+  
+  def toggle_boost!(boost, destination)
+    toggle_boost(boost, destination)
+    save!
+  end
+  
   def health_restore_period
     Setting.i(:character_health_restore_period).seconds
   end
