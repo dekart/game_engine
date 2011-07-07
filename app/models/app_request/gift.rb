@@ -24,6 +24,7 @@ class AppRequest::Gift < AppRequest::Base
     end
   end
   
+  #FIXME Checking gift item hack should be done on processing rather than when checking acceptability
   def acceptable?
     !(accepted? || self.class.accepted_recently?(sender, receiver)) && 
       item_gift? && !gift_for_yourself?
