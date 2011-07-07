@@ -1,6 +1,6 @@
 class MissionsController < ApplicationController
   def fulfill
-    @mission ||= Mission.find(params[:id])
+    @mission ||= Mission.available_for(current_character).find(params[:id])
 
     @result = current_character.missions.fulfill!(@mission)
         
@@ -11,7 +11,7 @@ class MissionsController < ApplicationController
     if @result.level_rank.just_completed?
       EventLoggingService.log_event(:mission_completed, @result)
       
-      @missions = fetch_missions
+      @missions = current_character.mission_groups.current.missions.available_for(current_character)
     end
 
     render :fulfill, :layout => "ajax"
@@ -35,11 +35,4 @@ class MissionsController < ApplicationController
     
     render :layout => 'ajax'
   end
-  
-  protected
-  
-  def fetch_missions
-    current_character.mission_groups.current.missions.with_state(:visible).visible_for(current_character)
-  end
-
 end
