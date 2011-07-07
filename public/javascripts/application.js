@@ -444,29 +444,56 @@ function debug(s) {
       }, updateTime * 1000);
     },
     
+    lastMessageId: function() {
+      var lastMessageId = "";
+      if ($(this).find('.message').length > 0) {
+        lastMessageId = $(this).find('.message:last').data('message-id');
+      }
+      return lastMessageId;
+    },
+    
     loadMessages: function() {
       var $chat = $(this);
       
-      var data = {};
-      if ($chat.find('.message').length > 0) {
-        data.from_id = $chat.find('.message:last').data('message-id');
-      }
-      
-      $.getJSON('/chats/' + $chat.data('chat-id'), data, function(messages) {
-        for (var i = 0; i < messages.length; i++) {
-          $chat.chat('appendMessage', $.parseJSON(messages[i]));
-        }
+      $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $(this).chat('lastMessageId')}, function(messages) {
+        $chat.chat('appendMessages', messages);
       });
     },
     
-    appendMessage: function(message) {
-      var messageContent = $(this).chat('template').tmpl(message); 
-      $(this).find('.messages').append(messageContent);
+    appendMessages: function(messages) {
+      for (var i = 0; i < messages.length; i++) {
+        var message = $.parseJSON(messages[i]);
+        var messageContent = $(this).chat('template').tmpl(message);
+         
+        $(this).find('.messages').append(messageContent);
+      }
     },
     
     template: function() {
       var templateId = $(this).data('template');
       return $('#' + templateId);
+    },
+    
+    onSubmit: function() {
+      var $chat = $(this).parent('.chat');
+      
+      var lastMessageId = $chat.chat('lastMessageId');
+      
+      var data = $(this).serializeArray();
+      data.push({name: 'last_message_id', value: lastMessageId});
+      
+      jQuery.post(
+        $(this).attr('action'), 
+        $.param(data), 
+        function(request) {
+          $chat.chat('appendMessages', request)
+        }, 
+        'json'
+      );
+       
+      $(this).find("[name='chat_text']").val(""); 
+      
+      return false;
     }
   };
   
@@ -477,7 +504,7 @@ function debug(s) {
       $.error('Method ' +  method + ' does not exist on jQuery.chat');
     }
   }
-  
+
   
   if(!$.isEmptyObject($.fn.qtip)) {
     $.fn.qtip.zindex = 400;

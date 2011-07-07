@@ -5,11 +5,11 @@ class Chats
       params = request.params
       
       if request.post?
-        message = Chat.save_message(chat_id, params['character_id'], params['text'])
+        Chat.save_message(chat_id, params['chat_character_id'], params['chat_text'])
         
-        [200, {"Content-Type" => "application/json"}, message.to_json]
+        [200, {"Content-Type" => "application/json"}, Chat.messages(chat_id, params['last_message_id']).to_json]
       elsif request.get?
-        [200, {"Content-Type" => "application/json"}, Chat.messages(chat_id, params['from_id']).to_json]
+        [200, {"Content-Type" => "application/json"}, Chat.messages(chat_id, params['last_message_id']).to_json]
       end
     else
       [404, {"Content-Type" => "text/html"}, "Not Found"]
