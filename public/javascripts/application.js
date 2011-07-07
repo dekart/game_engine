@@ -433,6 +433,52 @@ function debug(s) {
     return $(this);
   };
   
+  // Chat
+  var chatFnMethods = {
+    init: function(updateTime) {
+      var $chat = $(this);
+      $chat.chat('loadMessages');
+      
+      setInterval(function() {
+        $chat.chat('loadMessages');
+      }, updateTime * 1000);
+    },
+    
+    loadMessages: function() {
+      var $chat = $(this);
+      
+      var data = {};
+      if ($chat.find('.message').length > 0) {
+        data.from_id = $chat.find('.message:last').data('message-id');
+      }
+      
+      $.getJSON('/chats/' + $chat.data('chat-id'), data, function(messages) {
+        for (var i = 0; i < messages.length; i++) {
+          $chat.chat('appendMessage', $.parseJSON(messages[i]));
+        }
+      });
+    },
+    
+    appendMessage: function(message) {
+      var messageContent = $(this).chat('template').tmpl(message); 
+      $(this).find('.messages').append(messageContent);
+    },
+    
+    template: function() {
+      var templateId = $(this).data('template');
+      return $('#' + templateId);
+    }
+  };
+  
+  $.fn.chat = function(method) {
+    if ( chatFnMethods[method] ) {
+      return chatFnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else {
+      $.error('Method ' +  method + ' does not exist on jQuery.chat');
+    }
+  }
+  
+  
   if(!$.isEmptyObject($.fn.qtip)) {
     $.fn.qtip.zindex = 400;
   }

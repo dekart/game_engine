@@ -145,4 +145,7 @@ Setting[:notifications_friends_to_invite_displayed_at] ||= Time.now
 Setting[:notifications_send_gift_delay] ||= 48
 Setting[:notifications_send_gift_displayed_at] ||= Time.now + 24.hours
 
+Setting[:chat_max_messages] ||= 50
+Setting[:chat_update_time] ||= 10.seconds.to_i
+
 # Put your custom settings below this line
