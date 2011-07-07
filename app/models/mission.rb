@@ -46,6 +46,12 @@ class Mission < ActiveRecord::Base
   validates_presence_of :mission_group, :name
   
   after_update :update_group_in_ranks, :if => :mission_group_id_changed?
+  
+  class << self
+    def available_for(character)
+      with_state(:visible).visible_for(character)
+    end
+  end
 
   def self.to_grouped_dropdown
     {}.tap do |result|
