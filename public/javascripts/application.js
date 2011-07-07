@@ -457,15 +457,30 @@ function debug(s) {
       
       $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $(this).chat('lastMessageId')}, function(messages) {
         $chat.chat('appendMessages', messages);
+        
+        $(document).trigger('remote_content.received');
       });
     },
     
     appendMessages: function(messages) {
-      for (var i = 0; i < messages.length; i++) {
-        var message = $.parseJSON(messages[i]);
-        var messageContent = $(this).chat('template').tmpl(message);
-         
-        $(this).find('.messages').append(messageContent);
+      if (messages.length > 0) {
+        var lastReceivedMessageId = $.parseJSON(messages[messages.length - 1]).id;
+        var lastMessageId = $(this).chat('lastMessageId');
+        
+        // prevent double appending, when timer and send query happens
+        if (lastReceivedMessageId != lastMessageId) {
+          var $messages = $(this).find('.messages');
+           
+          for (var i = 0; i < messages.length; i++) {
+            var message = $.parseJSON(messages[i]);
+            var messageContent = $(this).chat('template').tmpl(message);
+             
+            $messages.append(messageContent);
+          }
+        
+          var $message = $messages.find('.message');
+          $messages.scrollTop($message.length * $message.height());
+        }
       }
     },
     

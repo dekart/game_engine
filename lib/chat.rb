@@ -14,13 +14,11 @@ class Chat
     def save_message(chat_id, character_id, text)
       character = Character.find(character_id, :joins => :user)
       
-      time = Time.now
-      
       message = {
-        :id =>  Digest::MD5.hexdigest("%s-%s" % [time, character.id]),
+        :id =>  Digest::MD5.hexdigest("%s-%s" % [Time.now, character.id]),
         :facebook_id => character.user.facebook_id,
         :text => text,
-        :created_at => time,
+        :created_at => Time.now.strftime("%m.%d.%y %H:%M:%S"),
         :name => character.name,
         :character_key => character.key
       }
