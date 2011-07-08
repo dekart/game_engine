@@ -97,6 +97,6 @@ en:
           attack: "Monster attack Boosts"
       previous: "Previous"
       next: "Next"
-      buy_boosts: "You can buy boosts in the shop"
+      buy_boosts: "Now you don't have boosts. You can buy boosts in the shop"
       buttons:
-        shop: "Shop"
+        buy_boosts: "Buy boosts"

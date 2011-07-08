@@ -115,6 +115,8 @@
 .boosts
   overflow: hidden
   padding-bottom: 10px
+  margin-bottom: 15px
+  border-bottom = !thin_border
   
   .previous, .next
     width: 20px
@@ -125,10 +127,6 @@
 
   .previous, .next, .container 
     float: left
-  
-  .previous, .next
-    &.disabled
-      visibility: hidden
   
   .description
     font-weight: bold
@@ -143,7 +141,8 @@
       +opacity(0.8)
       
       &.active
-        border = !boosts_active_border
+        border = !main_border 
+        border-width: 4px
         margin: 1px
         +opacity(1.0)
   .buy
@@ -151,7 +150,7 @@
       padding: 5px
       .button
         &.shop
-          +button(!inventory_buttons_shop_icon)
+          +button(!inventory_buttons_shop_icon, 200px)
 
 .inventory_image
   position: relative
