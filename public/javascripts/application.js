@@ -439,6 +439,18 @@ function debug(s) {
       var $chat = $(this);
       $chat.chat('loadMessages');
       
+      $chat.find('.send.button').addClass('disabled');
+      
+      $chat.find('.text').bind('keyup keydown change', function() {
+        var $button = $chat.find('.send.button'); 
+        
+        if ($(this).val() == '') {
+          $button.addClass('disabled');
+        } else {
+          $button.removeClass('disabled');
+        }
+      });
+      
       setInterval(function() {
         $chat.chat('loadMessages');
       }, updateTime * 1000);
@@ -478,8 +490,7 @@ function debug(s) {
             $messages.append(messageContent);
           }
         
-          var $message = $messages.find('.message');
-          $messages.scrollTop($message.length * $message.height());
+          $(this).find('.container').scrollTop($messages.outerHeight());
         }
       }
     },
@@ -492,23 +503,26 @@ function debug(s) {
     onSubmit: function() {
       var $chat = $(this).parent('.chat');
       
-      var lastMessageId = $chat.chat('lastMessageId');
-      
-      var data = $(this).serializeArray();
-      data.push({name: 'last_message_id', value: lastMessageId});
-      
-      jQuery.post(
-        $(this).attr('action'), 
-        $.param(data), 
-        function(request) {
-          $chat.chat('appendMessages', request)
-        }, 
-        'json'
-      );
-       
-      $(this).find("[name='chat_text']").val(""); 
-      
-      return false;
+      if (!$chat.find('.send.button').hasClass('disabled')) {
+        
+        var lastMessageId = $chat.chat('lastMessageId');
+        
+        var data = $(this).serializeArray();
+        data.push({name: 'last_message_id', value: lastMessageId});
+        
+        jQuery.post(
+          $(this).attr('action'), 
+          $.param(data), 
+          function(request) {
+            $chat.chat('appendMessages', request)
+          }, 
+          'json'
+        );
+        
+        var $chatText = $(this).find("[name='chat_text']");
+        $chatText.val("");
+        $chatText.trigger('change'); 
+      }
     }
   };
   

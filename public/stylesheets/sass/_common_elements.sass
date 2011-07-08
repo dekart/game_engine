@@ -31,6 +31,19 @@
   width: 130px
   background:
     color = !button_bg_color
+  
+  &.disabled
+    color = !button_disabled_color
+    cursor: default
+    background:
+      color = !button_bg_color
+    
+    span
+      border = !button_disabled_border
+      
+      &:hover span
+        background:
+          color = !button_bg_color_hover
 
   span
     display: block
