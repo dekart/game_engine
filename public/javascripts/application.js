@@ -86,16 +86,16 @@ var Timer = {
 var Spinner = {
   x: -1,
   y: -1,
+  enabled: true,
+  
   setup: function(){
-    $('#spinner').ajaxStart(function(){
-        Spinner.show();
-      }).ajaxStop(function(){
-        Spinner.hide();
-      });
+    $('#spinner').ajaxStart(this.show).ajaxStop(this.hide);
       
     $('body').mousemove(this.alignToMouse);
   },
   show: function(speed){
+    if(!this.enabled){ return; }
+    
     Spinner.moveToPosition();
 
     $('#spinner').fadeIn(speed);
@@ -104,6 +104,8 @@ var Spinner = {
     $('#spinner').fadeOut(speed);
   },
   blink: function(speed, delay){
+    if(!this.enabled){ return; }
+
     Spinner.moveToPosition();
 
     $('#spinner').fadeIn(speed).delay(delay).fadeOut(speed);
@@ -126,6 +128,11 @@ var Spinner = {
     var position = $(selector).offset();
 
     Spinner.storePosition(position.left, position.top);
+  },
+  disable: function(callback){
+    Spinner.enabled = false;
+    callback.call(this);
+    Spinner.enabled = true;
   }
 };
 
@@ -467,10 +474,12 @@ function debug(s) {
     loadMessages: function() {
       var $chat = $(this);
       
-      $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $(this).chat('lastMessageId')}, function(messages) {
-        $chat.chat('appendMessages', messages);
+      Spinner.disable(function(){
+        $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $(this).chat('lastMessageId')}, function(messages) {
+          $chat.chat('appendMessages', messages);
         
-        $(document).trigger('remote_content.received');
+          $(document).trigger('remote_content.received');
+        });
       });
     },
     
@@ -510,7 +519,7 @@ function debug(s) {
         var data = $(this).serializeArray();
         data.push({name: 'last_message_id', value: lastMessageId});
         
-        jQuery.post(
+        $.post(
           $(this).attr('action'), 
           $.param(data), 
           function(request) {
