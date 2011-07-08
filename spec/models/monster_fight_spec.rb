@@ -142,35 +142,43 @@ describe MonsterFight do
       @character.total_monsters_damage.should == 20
     end
     
+    def monster
+      @monster
+    end
+    
+    def monster_fight
+      @monster_fight
+    end
+    
+    def character
+      @character
+    end
+    
     # test monster attack and power attack
     [
-      {:who => :@monster, :what => :hp, :from => 1000, :to => 980},
-      {:who => :@monster_fight, :what => :monster_damage, :from => nil, :to => 20},
-      {:who => :@character, :what => :hp, :from => 100, :to => 90},
-      {:who => :@monster_fight, :what => :character_damage, :from => nil, :to => 10},
-      {:who => :@character, :what => :experience, :from => 0, :to => 1},
-      {:who => :@monster_fight, :what => :experience, :from => nil, :to => 1},
-      {:who => :@character, :what => :basic_money, :from => 0, :to => 5},
-      {:who => :@monster_fight, :what => :money, :from => nil, :to => 5},
-      {:who => :@character, :what => :sp, :from => 10, :to => 9},
-      {:who => :@monster_fight, :what => :stamina, :from => nil, :to => 1},
-      {:who => :@monster_fight, :what => :damage, :from => 0, :to => 20},
+      {:who => :monster, :what => :hp, :from => 1000, :to => 980, :power_to => 900},
+      {:who => :monster_fight, :what => :monster_damage, :from => nil, :to => 20},
+      {:who => :character, :what => :hp, :from => 100, :to => 90},
+      {:who => :monster_fight, :what => :character_damage, :from => nil, :to => 10},
+      {:who => :character, :what => :experience, :from => 0, :to => 1},
+      {:who => :monster_fight, :what => :experience, :from => nil, :to => 1},
+      {:who => :character, :what => :basic_money, :from => 0, :to => 5},
+      {:who => :monster_fight, :what => :money, :from => nil, :to => 5},
+      {:who => :character, :what => :sp, :from => 10, :to => 9},
+      {:who => :monster_fight, :what => :stamina, :from => nil, :to => 1},
+      {:who => :monster_fight, :what => :damage, :from => 0, :to => 20},
     ].each do |t|
       
       it "should change #{t[:who]} #{t[:what]} from #{t[:from]} to #{t[:to]}" do
         lambda {
           @monster_fight.attack!
-        }.should change(instance_variable_get(t[:who]), t[:what]).from(t[:from]).to(t[:to])
+        }.should change(send(t[:who]), t[:what]).from(t[:from]).to(t[:to])
       end
-      
-      from = t[:from].nil? ? 0 : t[:from]
-      power_attack_diff = (t[:to] - from) * Setting.i(:monster_fight_power_attack_factor)
-      power_attack_to = from + power_attack_diff
-      
-      it "power_attack should change #{t[:who]} #{t[:what]} from #{t[:from]} to #{power_attack_to}" do
+            
+      it "power_attack should change #{t[:who]} #{t[:what]} from #{t[:from]} to #{t[:power_to]}" do
         lambda {
           @monster_fight.attack!(true)
-        }.should change(instance_variable_get(t[:who]), t[:what]).from(t[:from]).to(power_attack_to)
+        }.should change(send(t[:who]), t[:what]).from(t[:from]).to(t[:power_to])
       end
     end
     
