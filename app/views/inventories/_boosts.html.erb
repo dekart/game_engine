@@ -1,8 +1,8 @@
 <div class="boosts <%= type %> <%= destination %>">
-  <div class="description">
+  <h3 class="description">
     <%= t(".types.#{type}.#{destination}") %>
     <%= help_link("boosts_#{type}_#{destination}") %>
-  </div>
+  </h3>
   
   <div class="boost_content">
     <% if boosts = current_character.boosts.for(type, destination) and boosts.any? %>
@@ -33,11 +33,10 @@
       <% end %>
       
     <% else %>
-      <div class="buy">
-        <%= t(".buy_boosts") %>
-        <div class="buttons">
-          <%= link_to(button(:buy_boosts), items_path, :class => 'button shop') %>
-        </div>
+      <div class="buy"><%= t(".buy_boosts") %></div>
+        
+      <div class="buttons">
+        <%= link_to(button(:buy_boosts), items_path, :class => 'button shop') %>
       </div>
     <% end %>
   </div>
