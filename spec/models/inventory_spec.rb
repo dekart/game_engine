@@ -25,6 +25,8 @@ describe Inventory do
 
     describe 'when listed on market' do
       before do
+        @inventory.item.update_attribute(:can_be_sold_on_market, true)
+        
         @market_item = Factory(:market_item, :inventory => @inventory, :amount => 4)
       end
       

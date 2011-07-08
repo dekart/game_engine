@@ -23,11 +23,10 @@ class HitListing < ActiveRecord::Base
 
   validates_presence_of :client, :victim, :reward
   validates_numericality_of :reward,
-    :greater_than_or_equal_to => Setting.i(:hit_list_minimum_reward),
     :allow_blank => true,
     :on => :create
 
-  validate_on_create :check_victim_weakness, :check_victim_listed, :check_client_balance
+  validate_on_create :check_minimum_reward, :check_victim_weakness, :check_victim_listed, :check_client_balance
 
   before_create :charge_client, :take_fee_from_reward
 
@@ -52,6 +51,12 @@ class HitListing < ActiveRecord::Base
   end
 
   protected
+  
+  def check_minimum_reward
+    if reward and reward.to_i < Setting.i(:hit_list_minimum_reward)
+      errors.add(:reward, :greater_than_or_equal_to, :count => Setting.i(:hit_list_minimum_reward))
+    end
+  end
 
   def check_victim_weakness
     if victim && victim.weak?
