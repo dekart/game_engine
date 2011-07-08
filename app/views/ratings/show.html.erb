@@ -1,3 +1,5 @@
+<%= render("contests/current") if current_contest %>
+
 <% if action_name == "global" %>
   <%= title(t(".title.global")) %>
 

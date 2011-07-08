@@ -193,8 +193,12 @@ class Fight < ActiveRecord::Base
       @payouts = global_payout.payouts.apply(attacker, attacker == winner ? :success : :failure)
     end
 
-    winner.fights_won += 1
-    loser.fights_lost += 1
+    # update statistics only for current character
+    if attacker == winner
+      attacker.fights_won += 1
+    else
+      attacker.fights_lost += 1
+    end
 
     attacker.save!
     victim.save!

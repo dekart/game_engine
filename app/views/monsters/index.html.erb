@@ -1,3 +1,5 @@
+<%= render 'contests/current' if current_contest && current_contest.points_type == 'total_monsters_damage' %>
+
 <%= title(t(".title")) %>
 
 <%= render "missions/buttons", :current => :monsters %>

@@ -1,0 +1,20 @@
+en:
+  contests:
+    current:
+      start_time: "Contest will start in %{value}"
+      finish_time: "Time Left: %{value}"
+      current_position: "You are #%{value}"
+      finished: "Contest Finished"
+      buttons:
+        fights: "Fight!"
+        rating: "View Rating"
+        monsters: "Monsters"
+    show:
+      buttons:
+        relations: "Alliance Rating"
+        global: "Global Rating"
+      points_types:
+        fights_won: "Fights Won"
+        total_monsters_damage: "Total Monsters Damage"
+        
+        

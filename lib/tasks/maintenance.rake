@@ -878,6 +878,14 @@ namespace :app do
       end
     end
     
+    desc "Finish current contests"
+    task :finish_contests => :environment do
+      Contest.with_state(:visible).all(:conditions => ['finished_at <= ?', Time.now]).each do |contest|
+        contest.finish!
+        puts "Contest #{contest.name} finished"
+      end
+    end
+    
     task :remove_hacked_gifts => :environment do
       AppRequest::Gift.find_each(
         :joins => 'INNER JOIN items ON app_requests.target_id = items.id', 

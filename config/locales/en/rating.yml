@@ -9,6 +9,7 @@ en:
       buttons:
         relations: "Alliance Rating"
         global: "Global Rating"
+        contest: "Contest Results"
 
     level: 
       title: "Highest Level"

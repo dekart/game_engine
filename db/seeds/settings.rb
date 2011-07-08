@@ -149,4 +149,7 @@ Setting[:chat_max_messages] ||= 50
 Setting[:chat_update_time] ||= 10.seconds.to_i
 Setting[:chat_max_length] ||= 500
 
+Setting[:contests_show_after_finished_time] ||= 5
+Setting[:contests_leaders_show_limit] ||= 100
+
 # Put your custom settings below this line

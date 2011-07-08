@@ -29,6 +29,7 @@ en:
         global_tasks: "Global Tasks"
         credit_packages: "Facebook Credits"
         messages: "Messages"
+        contests: "Contests" 
         # Add your custom menu items below this mark
         
       application:
@@ -594,5 +595,4 @@ en:
         success: "Message has been updated successfully!"
       controls:
         new: "Add Message"
-      
     # Add your custom translation strings below this mark
