@@ -9,7 +9,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110704122358) do
+ActiveRecord::Schema.define(:version => 20110708182950) do
+
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
     t.integer  "sender_id"
@@ -657,7 +658,7 @@ ActiveRecord::Schema.define(:version => 20110704122358) do
     t.string   "name",                  :limit => 100, :default => "",     :null => false
     t.text     "description"
     t.string   "availability",          :limit => 30,  :default => "shop", :null => false
-    t.integer  "level"
+    t.integer  "level",                                :default => 1
     t.integer  "basic_price",           :limit => 8
     t.integer  "vip_price"
     t.string   "image_file_name",                      :default => "",     :null => false
