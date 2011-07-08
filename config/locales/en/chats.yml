@@ -2,5 +2,6 @@ en:
   chats:
     chat:
       title: "Chat"
+      say_something: "Say something:"
       buttons:
         send: "Send"
