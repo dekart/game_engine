@@ -34,6 +34,10 @@ en:
         name: "Character Name"
         bank: "Bank"
         total_money: "Total Money"
+        monster_boost_health: "Damage To Monster"
+        fight_boost_attack: "Attack in Fight"
+        fight_boost_defence: "Defence in Fight"
+        
       property_type:
         income: "Income"
         price: "Price"
