@@ -8,6 +8,8 @@
   <%= render(@monster.state, :monster => @monster, :fight => @fight) %>
 </div>
 
+<%= chat(dom_id(@monster)) %>
+
 <% if @monster.created_at > 5.seconds.ago %>
   <% dom_ready do %>
     <%= ga_track_event('Monsters', 'Summoned', @monster.name, current_character.level) %>

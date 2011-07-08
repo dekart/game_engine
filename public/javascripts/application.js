@@ -433,6 +433,108 @@ function debug(s) {
     return $(this);
   };
   
+  // Chat
+  var chatFnMethods = {
+    init: function(updateTime) {
+      var $chat = $(this);
+      $chat.chat('loadMessages');
+      
+      $chat.find('.send.button').addClass('disabled');
+      
+      $chat.find('.text').bind('keyup keydown change', function() {
+        var $button = $chat.find('.send.button'); 
+        
+        if ($(this).val() == '') {
+          $button.addClass('disabled');
+        } else {
+          $button.removeClass('disabled');
+        }
+      });
+      
+      setInterval(function() {
+        $chat.chat('loadMessages');
+      }, updateTime * 1000);
+    },
+    
+    lastMessageId: function() {
+      var lastMessageId = "";
+      if ($(this).find('.message').length > 0) {
+        lastMessageId = $(this).find('.message:last').data('message-id');
+      }
+      return lastMessageId;
+    },
+    
+    loadMessages: function() {
+      var $chat = $(this);
+      
+      $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $(this).chat('lastMessageId')}, function(messages) {
+        $chat.chat('appendMessages', messages);
+        
+        $(document).trigger('remote_content.received');
+      });
+    },
+    
+    appendMessages: function(messages) {
+      if (messages.length > 0) {
+        var lastReceivedMessageId = $.parseJSON(messages[messages.length - 1]).id;
+        var lastMessageId = $(this).chat('lastMessageId');
+        
+        // prevent double appending, when timer and send query happens
+        if (lastReceivedMessageId != lastMessageId) {
+          var $messages = $(this).find('.messages');
+           
+          for (var i = 0; i < messages.length; i++) {
+            var message = $.parseJSON(messages[i]);
+            var messageContent = $(this).chat('template').tmpl(message);
+             
+            $messages.append(messageContent);
+          }
+        
+          $(this).find('.container').scrollTop($messages.outerHeight());
+        }
+      }
+    },
+    
+    template: function() {
+      var templateId = $(this).data('template');
+      return $('#' + templateId);
+    },
+    
+    onSubmit: function() {
+      var $chat = $(this).parent('.chat');
+      
+      if (!$chat.find('.send.button').hasClass('disabled')) {
+        
+        var lastMessageId = $chat.chat('lastMessageId');
+        
+        var data = $(this).serializeArray();
+        data.push({name: 'last_message_id', value: lastMessageId});
+        
+        jQuery.post(
+          $(this).attr('action'), 
+          $.param(data), 
+          function(request) {
+            $chat.chat('appendMessages', request)
+          }, 
+          'json'
+        );
+        
+        var $chatText = $(this).find("[name='chat_text']");
+        $chatText.val("");
+        $chatText.trigger('change'); 
+      }
+    }
+  };
+  
+  $.fn.chat = function(method) {
+    if ( chatFnMethods[method] ) {
+      return chatFnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else {
+      $.error('Method ' +  method + ' does not exist on jQuery.chat');
+    }
+  }
+
+  
   if(!$.isEmptyObject($.fn.qtip)) {
     $.fn.qtip.zindex = 400;
   }

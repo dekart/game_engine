@@ -1,0 +1,19 @@
+<%= render 'chats/js_template' %>
+
+<div class="chat" id="<%= chat_dom_id(chat_id) %>" data-chat-id="<%= chat_id %>" data-template="chat_template">
+  <%= title(t(".title")) %>
+  <div class="container">
+    <div class="messages">
+    </div>
+  </div>
+  
+  <% form_tag("/chats/#{chat_id}", :onsubmit => "$(this).chat('onSubmit'); return false", :class => 'send_message') do |form| %>
+    <%= hidden_field_tag :chat_character_id, current_character.id %>
+    <%= text_field_tag :chat_text, nil, :class => 'text', :maxlength => Setting.i(:chat_max_length) %>
+    <%= link_to_function(button(:send), "$(this).parents('form').submit()", :class => 'send button')%>
+  <% end %>
+</div>
+
+<% dom_ready do %>
+  $('#<%= chat_dom_id(chat_id) %>').chat('init', <%= Setting.i(:chat_update_time) %>);
+<% end %>
