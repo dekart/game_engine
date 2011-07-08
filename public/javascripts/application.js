@@ -562,12 +562,16 @@ $(function(){
     });
   }
   
-  // Display tooltips
-  $('#content [data-tooltip]').each(function(){
-    var $element = $(this);
-    
-    $element.qtip($element.data('tooltip'));
-  });
+  $(document).bind('tooltips.setup', function(){
+    // Display tooltips
+    $('#content [data-tooltip]').each(function(){
+      var $element = $(this);
+      
+      $element.qtip($element.data('tooltip'));
+    });
+  })
+  
+  $(document).trigger('tooltips.setup');
        
   $('a[data-click-once=true]').live('click', function(){
     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
@@ -588,6 +592,7 @@ $(function(){
     if(typeof FB !== 'undefined'){
       FB.XFBML.parse();
     }
+    $(document).trigger('tooltips.setup');
   });
 
   $(document).bind('loading.dialog', function(){
