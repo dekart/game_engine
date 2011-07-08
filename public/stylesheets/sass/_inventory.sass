@@ -118,6 +118,7 @@
 .boosts
   overflow: hidden
   padding-bottom: 10px
+  width: 335px
   
   .previous, .next
     width: 20px
@@ -131,7 +132,8 @@
   
   .description
     font-weight: bold
-    padding: 2px
+    text-align: center
+    
   .container
     .boost
       img
@@ -146,12 +148,14 @@
         border-width: 4px
         margin: 1px
         +opacity(1.0)
+      
   .buy
-    .buttons
-      padding: 5px
-      .button
-        &.shop
-          +button(!inventory_buttons_shop_icon, 200px)
+    text-align: center
+    margin-bottom: 10px
+    
+  .button.shop
+    margin: 0 auto
+    +button(!inventory_buttons_shop_icon, 120px)
 
 .inventory_image
   position: relative
