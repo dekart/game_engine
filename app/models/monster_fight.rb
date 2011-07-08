@@ -155,8 +155,9 @@ class MonsterFight < ActiveRecord::Base
       character.sp  -= @stamina
 
       character.hp  -= @character_damage
+      
+      @monster_damage += @boost.health if @boost
       monster.hp    -= @monster_damage
-      monster.hp    -= @boost.health if @boost
 
       self.damage   += @monster_damage
 
