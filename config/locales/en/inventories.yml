@@ -38,6 +38,7 @@ en:
       owned: "Owned: %{amount}"
       equipped: "Equipped: %{amount}"
       listed_on_market: "Listed on Market"
+      sell_confirm: "Are you sure you want to sell this item"
       buttons:
         sell: "Sell for %{price}"
         sell_on_market: "Sell on Market"

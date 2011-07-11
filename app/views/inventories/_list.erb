@@ -49,6 +49,7 @@
                         :method => :delete,
                         :with   => "$(this).parent('form').serialize()",
                         :update => :result,
+                        :confirm  => t(".sell_confirm"),
                         :html   => {
                           :"data-click-once" => true,
                           :class => "sell button"
