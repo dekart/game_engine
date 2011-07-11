@@ -132,7 +132,7 @@ class Fight < ActiveRecord::Base
       errors.add(:character, :not_enough_stamina)
     elsif attacker.weak?
       errors.add(:character, :too_weak)
-    elsif !Setting.b(:fight_weak_opponents) && victim.weak?
+    elsif !Setting.b(:fight_weak_opponents) && victim.weak? && !cause.is_a?(HitListing)
       errors.add(:victim, :too_weak)
     elsif !Setting.b(:fight_alliance_attack) && attacker.friend_relations.established?(victim)
       errors.add(:character, :cannot_attack_friends)
