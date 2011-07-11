@@ -28,7 +28,7 @@ class Character::Equipment
   
   
   def effect(name)
-    @effects ||= @cache.fetch(effect_cache_key, :expire_in => 15.minutes) do
+    @effects ||= @cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
       {}.tap do |effects|
         Item::EFFECTS.each do |effect|
           effects[effect] = inventories.sum{|i| i.send(effect) }
