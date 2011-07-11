@@ -4,7 +4,7 @@
 
 <% builder.help_link(:fights_failure, t('.why_lose')) %>
 
-<% unless @fight.cause.as_a?(HitListing) %>
+<% unless @fight.cause.is_a?(HitListing) %>
   <% builder.buttons do %>
     <%= link_to_remote(button(:attack_again),
             :url => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
