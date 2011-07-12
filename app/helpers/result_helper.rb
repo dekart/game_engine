@@ -91,6 +91,6 @@ module ResultHelper
   end
   
   def render_to_result(&block)
-    dom_ready("$('#result').html('#{escape_javascript(capture(&block))}')")
+    dom_ready("$('#result').html('#{escape_javascript(capture(&block))}');")
   end
 end

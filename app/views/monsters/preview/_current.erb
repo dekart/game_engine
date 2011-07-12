@@ -37,5 +37,5 @@
 <% end %>
 
 <% dom_ready do %>
-  Timer.start('#<%= dom_id(monster) %> .fight_time .value', <%= monster.time_remaining %>)
+  Timer.start('#<%= dom_id(monster) %> .fight_time .value', <%= monster.time_remaining %>);
 <% end %>

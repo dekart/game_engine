@@ -28,7 +28,7 @@
 
     <% if type = form.object.character_type || @character_types.first %>
       <% dom_ready do %>
-        CharacterForm.set_character_type('#<%= dom_id(type) %>')
+        CharacterForm.set_character_type('#<%= dom_id(type) %>');
       <% end %>
     <% end %>
   <% end %>

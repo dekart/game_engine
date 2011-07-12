@@ -130,13 +130,8 @@ module TutorialsHelper
       
       step_actions = capture(options, &block)
       
-      dom_ready("Tutorial.step(#{wrap_to_function(step_actions)}, #{options.to_json})")
+      dom_ready("Tutorial.step(function(){ #{ step_actions } }, #{options.to_json});")
     end
-  end
-  
-  # TODO: 
-  def wrap_to_function(javascript)
-    "function() { #{javascript} }"
   end
   
   def tutorial_visible?
