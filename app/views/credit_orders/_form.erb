@@ -16,6 +16,10 @@
         <td class="credits">
           <span class="value"><%= package.price %></span>
           <%= t('.credits') %>
+          
+          <% if discount = package.discount %>
+            <span class="discount"><%= t(".discount", :discount => discount) %></span>
+          <% end %>
         </td>
       <% end %>
     <% end %>

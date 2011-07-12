@@ -1,5 +1,5 @@
 #credit_packages
-  width: 350px
+  width: 400px
   margin: 20px auto
   padding: 10px
   border = !main_border
@@ -35,6 +35,10 @@
       
       .value
         background-image = !asset_icons_credits
+        
+      .discount
+        margin-left: 10px
+        color: red
   
   .selected
     background-color = !current_item_bg_color
@@ -44,5 +48,6 @@
     
     .purchase
       cursor: pointer
-      +button(!asset_icons_credits)
+      margin: 0 auto
+      +button(!asset_icons_credits, 120px)
     

@@ -26,6 +26,17 @@ class CreditPackage < ActiveRecord::Base
   
   after_save :reset_default
   
+  def discount
+    first = self.class.with_state(:visible).first
+    
+    vip_proportion = vip_money.to_f / first.vip_money
+    credit_proportion = price.to_f / first.price
+    
+    if vip_proportion > credit_proportion
+      ((vip_proportion - credit_proportion) / credit_proportion * 100).round
+    end
+  end
+  
   protected
   
   def reset_default

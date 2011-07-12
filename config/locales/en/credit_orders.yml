@@ -4,6 +4,7 @@ en:
       title: 'Buy %{vip_money} using Facebook Credits'
       select_package: 'Select Package:'
       credits: "Facebook Credits"
+      discount: "%{discount}% off!"
       buttons:
         purchase: "Continue"
         
