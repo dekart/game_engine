@@ -1,10 +1,4 @@
 <div id="credit_packages">
-  <% if Setting.b(:premium_offer_wall_enabled) %>
-    <div class="earn">
-      <span class="earn_credits button"><%= button(:earn_credits) %></span>
-    </div>
-  <% end %>
-
   <h2><%= t('.title', :vip_money => Character.human_attribute_name('vip_money')) %></h2>
 
   <div class="select_package"><%= t('.select_package') %></div>
@@ -33,6 +27,10 @@
     
   <div class="buttons">
     <span class="purchase button"><%= button(:purchase) %></span>
+
+    <% if Setting.b(:premium_offer_wall_enabled) %>
+      <span class="earn_credits button"><%= button(:earn_credits) %></span>
+    <% end %>
   </div>
 </div>
 
