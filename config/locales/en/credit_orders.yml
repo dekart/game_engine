@@ -7,6 +7,7 @@ en:
       discount: "%{discount}% off!"
       buttons:
         purchase: "Continue"
+        earn_credits: "Earn Credits"
         
     package_info:
       title: "Pack of %{amount} Gems"

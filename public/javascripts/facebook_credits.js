@@ -16,5 +16,12 @@
         order_info: parseInt($form.find('input:checked').val())
       });
     });
-  }
+    
+    $form.find('.earn_credits.button').click(function(){
+      FB.ui({
+        method: 'pay', 
+        credits_purchase: true
+      });
+    });
+  };
 })(jQuery);

@@ -1,9 +1,18 @@
 #credit_packages
-  width: 400px
+  width: 430px
   margin: 20px auto
   padding: 10px
   border = !main_border
   
+  h2
+    margin-bottom: 15px
+  
+  .earn
+    float: right
+    
+    .button
+      +button(!asset_icons_credits)
+    
   .select_package
     font-weight: bold
     margin-bottom: 10px
@@ -47,7 +56,6 @@
     margin: 15px 0 0 0
     
     .purchase
-      cursor: pointer
       margin: 0 auto
       +button(!asset_icons_credits, 120px)
     
