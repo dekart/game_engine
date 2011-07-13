@@ -14,8 +14,8 @@
   .credit_package
     line-height: 20px
     
-    .selector, .vip_money, .credits
-      padding: 5px 0
+    .selector, .vip_money, .credits, .discount
+      padding: 5px 10px
       border-bottom = !splitter_border
     
     .vip_money, .credits
@@ -27,21 +27,18 @@
           position: left
 
     .vip_money
-      padding-left: 30px
       text-align: right
       
       .value
         background-image = !asset_icons_vip_money
       
     .credits
-      padding: 0 10px 0 30px
-      
       .value
         background-image = !asset_icons_credits
         
-      .discount
-        margin-left: 10px
-        color: red
+    .discount
+      padding-left: 10px
+      color: red
   
   .selected
     background-color = !current_item_bg_color
