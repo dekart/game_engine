@@ -1,10 +1,12 @@
 (function($){
   $.fn.creditPackageForm = function(){
-    var $form = $(this)
+    var $form = $(this);
+    var $packages = $form.find('.credit_package');
     
-    $form.find(':radio').change(function(){
-      $form.find('.credit_package').removeClass('selected');
-      $(this).parents('.credit_package').addClass('selected')
+    $packages.click(function(){
+      $packages.removeClass('selected');
+      
+      $(this).addClass('selected').find(':radio').attr('checked', 'true');
     });
     
     $form.find(':radio:checked').parents('.credit_package').addClass('selected');
