@@ -20,7 +20,8 @@
     $form.find('.earn_credits.button').click(function(){
       FB.ui({
         method: 'pay', 
-        credits_purchase: true
+        credits_purchase: true,
+        dev_purchase_params: {"shortcut":"offer"}
       });
     });
   };
