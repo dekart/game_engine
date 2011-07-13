@@ -38,6 +38,7 @@ en:
       owned: "Owned: %{amount}"
       equipped: "Equipped: %{amount}"
       listed_on_market: "Listed on Market"
+      sell_confirm: "Are you sure you want to sell for %{price} money"
       buttons:
         sell: "Sell for %{price}"
         sell_on_market: "Sell on Market"
@@ -88,3 +89,15 @@ en:
         success: "You've successfully gave items to your friend!"
         expired: "Sorry but this item request already expired."
         no_items: "You don't have any of the requested items."
+    boosts:
+      types:
+        fight:
+          attack: "Attacking Boosts"
+          defence: "Defensive Boosts"
+        monster: 
+          attack: "Monster Fighting Boosts"
+      previous: "Previous"
+      next: "Next"
+      buy_boosts: "You don't have any boosts of this type"
+      buttons:
+        buy_boosts: "Buy Boosts"
