@@ -22,20 +22,22 @@
               <th><%= t("assignments.roles.#{@assignment.role}.description") %></th>
             </tr>
             <% relations.each do |relation| %>
-              <% content_tag_for(:tr, relation.becomes(Relation), :"data-value" => relation.id) do %>
-                <% if relation.is_a?(FriendRelation) %>
-                  <td class="picture"><%= character_picture(relation.character) %></td>
-                  <td class="name"><%= character_name(relation.character) %></td>
-                <% else %>
-                  <td class="picture"><%= asset_image_tag(:mercenary, :alt => relation.name) %></td>
-                  <td class="name"><%= relation.name %></td>
-                <% end %>
+              <% if !@banned.include?(relation.character_id) %>
+                <% content_tag_for(:tr, relation.becomes(Relation), :"data-value" => relation.id) do %>
+                  <% if relation.is_a?(FriendRelation) %>
+                    <td class="picture"><%= character_picture(relation.character) %></td>
+                    <td class="name"><%= character_name(relation.character) %></td>
+                  <% else %>
+                    <td class="picture"><%= asset_image_tag(:mercenary, :alt => relation.name) %></td>
+                    <td class="name"><%= relation.name %></td>
+                  <% end %>
 
-                <td class="level">
-                  <%= Character.human_attribute_name("level") %>
-                  <%= relation.level %>
-                </td>
-                <td class="effect"><%= assignment_effect(@assignment, relation, :format => :short) %></td>
+                  <td class="level">
+                    <%= Character.human_attribute_name("level") %>
+                    <%= relation.level %>
+                  </td>
+                  <td class="effect"><%= assignment_effect(@assignment, relation, :format => :short) %></td>
+                <% end %>
               <% end %>
             <% end %>
           </table>

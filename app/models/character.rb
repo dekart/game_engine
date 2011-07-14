@@ -68,6 +68,7 @@ class Character < ActiveRecord::Base
 
   named_scope :rated_by, Proc.new{|unit|
     {
+      :conditions => ['banned <> ? or banned IS NULL', true],
       :order => "characters.#{unit} DESC",
       :limit => Setting.i(:rating_show_limit)
     }
