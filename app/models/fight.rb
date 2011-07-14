@@ -43,6 +43,7 @@ class Fight < ActiveRecord::Base
     exclude_ids = latest_opponent_ids
     exclude_ids.push(*attacker.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
     exclude_ids.push(attacker.id)
+    exclude_ids += User.all(:conditions => ['banned is true'], :joins => [:character]).collect{|i| i.character.id if i.character}
 
     scope = scope.scoped(
       :include    => :user,

@@ -1,3 +1,6 @@
+<% if @character.user.banned? %>
+  <%= title(t(".banned", :user => character_name(@character))) %>
+<% else %>
 <% if @character == current_character %>
   <%= title(t(".title_my", :user => character_name(@character))) %>
 <% else %>
@@ -125,3 +128,5 @@
     </div>
   <% end %>
 </div>
+
+<% end %>

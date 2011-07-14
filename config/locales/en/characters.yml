@@ -6,6 +6,7 @@ en:
       overview:
         title: "Profile Overview"
     show:
+      banned: "This character banned!"
       title: "%{user} Profile"
       title_my: "My Profile: %{user}"
       buttons:
