@@ -1,4 +1,6 @@
 class VipMoneyDeposit < VipMoneyOperation
+  PAYMENT_PROVIDERS = %w{offerpal super_rewards credits}
+
   after_create :deposit_money
 
   protected
