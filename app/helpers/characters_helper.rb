@@ -33,8 +33,7 @@ module CharactersHelper
         :canvas => true,
         :reference_code => reference_code(:comment)
       ),
-      :width  => 700,
-      :css    => skin_path
+      :width  => 700
     )
 
     fb_comments(dom_id(character, :wall), options.merge(:numposts => Setting.i(:wall_posts_show_limit)))

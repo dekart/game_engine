@@ -79,12 +79,6 @@ module ApplicationHelper
     end
   end
 
-  def skin_path
-    path = current_skin ? "skins/#{current_skin.name.parameterize}" : "application"
-
-    stylesheet_path(path)
-  end
-
   def flash_block(*args, &block)
     display_keys = args.any? ? args : [:success, :error, :notice]
 

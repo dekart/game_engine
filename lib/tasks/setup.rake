@@ -6,7 +6,6 @@ namespace :app do
     desc "Setup application stylesheets"
     task :stylesheets => :environment do
       Asset.update_sass
-      Skin.update_sass
 
       Sass::Plugin.update_stylesheets
     end

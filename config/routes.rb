@@ -71,8 +71,7 @@ ActionController::Routing::Routes.draw do |map|
         :vip_money  => :any,
         :level      => :any
       }
-    admin.resources :skins,
-      :member => {:activate => :post, :changelog => :post}
+
     admin.resources :tips,
       :member => {
         :publish  => :put,
