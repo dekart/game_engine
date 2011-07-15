@@ -80,6 +80,8 @@ en:
         payouts: "Payouts"
       credit_package:
         price: 'Price in Credits'
+      story:  
+        action_link: 'Action Link Text'
     errors:
       models:
         character:

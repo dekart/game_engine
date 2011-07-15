@@ -71,8 +71,7 @@ ActionController::Routing::Routes.draw do |map|
         :vip_money  => :any,
         :level      => :any
       }
-    admin.resources :skins,
-      :member => {:activate => :post, :changelog => :post}
+
     admin.resources :tips,
       :member => {
         :publish  => :put,
@@ -97,8 +96,9 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resource :global_task, 
       :member => {
-        :delete_users => :delete,
-        :restart      => :post
+        :delete_users   => :delete,
+        :restart        => :post,
+        :update_styles  => :post
       }
     admin.resources :characters, :only => [:index, :edit, :update],
       :collection => {

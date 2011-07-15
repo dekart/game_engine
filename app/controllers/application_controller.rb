@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   
   layout :get_layout
 
-  helper_method :current_user, :current_character, :current_skin
+  helper_method :current_user, :current_character
 
   helper :all
 
@@ -102,17 +102,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def default_url_options(options = {})
-    options[:try_skin] = params[:try_skin] unless params[:try_skin].blank?
-    options
-  end
-
   def get_layout
     (current_character.nil? || current_character.new_record?) ? "unauthorized" : "application"
-  end
-
-  def current_skin
-    params[:try_skin] ? Skin.find_by_id(params[:try_skin]) : Skin.with_state(:active).first
   end
 
   def store_return_to(uri = nil)

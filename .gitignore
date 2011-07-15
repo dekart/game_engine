@@ -22,8 +22,6 @@ config/settings.yml
 
 public/javascripts/cache
 public/stylesheets/sass/_assets.sass
-public/stylesheets/sass/skins/*
-public/stylesheets/skins/*
 public/stylesheets/admin.css
 public/stylesheets/application.css
 
