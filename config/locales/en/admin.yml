@@ -424,6 +424,10 @@ en:
           note: "This function allows you to restart your application. When restarting application will reload all code, templates, and settings. Please note that the application will be unavailable for all users while restarting. Restart process may take up to a minute or two."
           perform: "Restart"
           confirm: "Are you sure you want to restart the application?"
+        update_styles:
+          title: "Update Styles"
+          note: "This function allows you to rebuild CSS stylesheet files for the application. Use it to apply changes when you edit SASS files directly on your server. Please note that all changes done in CSS files instead of SASS files will be lost."
+          perform: "Update Styles"
       delete_users:
         user_limit_reached: "This task cannot be performed because your application already reached %{limit} user limit."
       restart:

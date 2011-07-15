@@ -27,3 +27,15 @@
         ) %>
   </p>
 </div>
+
+<div class="feature">
+  <h2><%= t(".update_styles.title") %></h2>
+
+  <p><%= t(".update_styles.note") %></p>
+
+  <p>
+    <%= link_to(t(".update_styles.perform"), update_styles_admin_global_task_path,
+          :method   => :post
+        ) %>
+  </p>
+</div>

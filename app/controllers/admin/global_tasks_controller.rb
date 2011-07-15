@@ -18,6 +18,14 @@ class Admin::GlobalTasksController < Admin::BaseController
 
     redirect_to admin_global_task_path
   end
+  
+  def update_styles
+    Asset.update_sass
+
+    Sass::Plugin.update_stylesheets
+    
+    redirect_to admin_global_task_path
+  end
 
   protected
 
