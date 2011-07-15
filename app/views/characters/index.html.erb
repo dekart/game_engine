@@ -1,4 +1,4 @@
-<%= render("contests/current") if current_contest %>
+<%= render('layouts/promo_block', :context => :home) %>
 
 <table id="dashboard" cellspacing="0" cellpadding="0">
   <tr>
@@ -11,8 +11,6 @@
     </td>
 
     <td class="wall">
-      <%= render("items/specials", :items => @special_items) if @special_items.any? %>
-
       <%= render "news/feed", :news => @news, :character => current_character %>
     </td>
   </tr>

@@ -154,6 +154,13 @@ Setting[:chat_enabled] ||= true
 Setting[:contests_show_after_finished_time] ||= 5
 Setting[:contests_leaders_show_limit] ||= 100
 
+Setting[:personal_discount_enabled] ||= false
+Setting[:personal_discount_minimum_price] ||= 10
+Setting[:personal_discount_minimum_discount] ||= 5
+Setting[:personal_discount_maximum_discount] ||= 25
+Setting[:personal_discount_time_frame] ||= 60
+Setting[:personal_discount_period] ||= 24
+
 Setting[:friends_invite_enabled] ||= true
 Setting[:stream_dialog_enabled] ||= true
 

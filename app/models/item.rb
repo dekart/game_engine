@@ -134,6 +134,12 @@ class Item < ActiveRecord::Base
         :order => 'items.level DESC, vip_price DESC'
       )
     end
+    
+    def discountable_for(character)
+      available_in(:shop).available_for(character).scoped(
+        :conditions => ["vip_price >= ?", Setting.i(:personal_discount_minimum_price)]
+      )
+    end
 
     def special_for(character)
       available_in(:special).available_for(character)

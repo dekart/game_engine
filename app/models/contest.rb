@@ -1,6 +1,8 @@
 class Contest < ActiveRecord::Base
-  # contest type names related to character attributes
-  POINTS_TYPES = [:fights_won, :total_monsters_damage]
+  CONTEXTS = {
+    :fights_won             => :fights, 
+    :total_monsters_damage  => :monsters
+  }
   
   has_many :character_contests
     
@@ -44,6 +46,10 @@ class Contest < ActiveRecord::Base
   
   validates_numericality_of :duration_time, 
     :greater_than => 0
+    
+  def context
+    CONTEXTS[points_type.to_sym]
+  end
 
   def leaders_with_points(options = {})
     options.reverse_merge!({

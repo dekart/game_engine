@@ -19,6 +19,7 @@ class Character < ActiveRecord::Base
   include Character::Premium
   include Character::SecretKeys
   include Character::Contests
+  include Character::PersonalDiscounts
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 

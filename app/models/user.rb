@@ -18,7 +18,8 @@ class User < ActiveRecord::Base
   
   named_scope :with_email, {:conditions => "email != ''"}
   
-  after_save :schedule_social_data_update, :if => :access_token_changed?
+  after_save :schedule_social_data_update,  :if => :access_token_changed?
+  after_save :generate_personal_discount,   :if => :last_visit_at_changed?
   
   before_create :set_first_tutorial_step
   
@@ -108,6 +109,10 @@ class User < ActiveRecord::Base
   
   def schedule_social_data_update
     Delayed::Job.enqueue Jobs::UserDataUpdate.new([id]) if access_token_valid?
+  end
+  
+  def generate_personal_discount
+    character.personal_discounts.generate_if_possible! if character
   end
   
   def set_first_tutorial_step

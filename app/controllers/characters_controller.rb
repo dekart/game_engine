@@ -9,11 +9,6 @@ class CharactersController < ApplicationController
   around_filter :check_user_app_requests, :only => :index
     
   def index
-    @special_items = Item.special_for(current_character).all(
-      :limit => 2,
-      :order => 'RAND()'
-    )
-    
     @news = current_character.news.latest(Setting.i(:dashboard_news_count))
   end
 

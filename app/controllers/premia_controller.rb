@@ -1,6 +1,5 @@
 class PremiaController < ApplicationController
   def show
-    @special_items = Item.special_for(current_character).all(:limit => 3, :order => 'created_at DESC')
   end
 
   def update

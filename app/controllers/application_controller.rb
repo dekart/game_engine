@@ -14,11 +14,18 @@ class ApplicationController < ActionController::Base
   
   layout :get_layout
 
-  helper_method :current_user, :current_character
+  helper_method :current_user, :current_character, :special_items
 
   helper :all
 
   protected
+  
+  def special_items
+    @special_items ||= Item.special_for(current_character).all(
+      :limit => Setting.i(:item_show_special),
+      :order => 'RAND()'
+    )
+  end
   
   def self.skip_authentication_filters(options = {})
     skip_before_filter(:check_character_existance, :ensure_canvas_connected_to_facebook, :check_user_ban, options)

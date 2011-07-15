@@ -628,6 +628,16 @@ ActiveRecord::Schema.define(:version => 20110728070118) do
 
   add_index "notifications", ["character_id"], :name => "index_notifications_on_character_id"
 
+  create_table "personal_discounts", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "item_id"
+    t.integer  "price"
+    t.datetime "available_till"
+    t.string   "state",          :limit => 50, :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "promotion_receipts", :force => true do |t|
     t.integer  "promotion_id", :null => false
     t.integer  "character_id", :null => false

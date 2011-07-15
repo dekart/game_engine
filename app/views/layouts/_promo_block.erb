@@ -1,0 +1,19 @@
+<% promo_block(context) do |promo| %>
+  <% if current_character.personal_discounts.current %>
+    <% promo.page :personal_discount, :context => [:home, :shop, :premium] do %>
+      <%= render("personal_discounts/current") %>
+    <% end %>
+  <% end %>
+
+  <% if current_contest %>
+    <% promo.page :contest, :context => [:home, current_contest.context] do %>
+      <%= render("contests/current") %>
+    <% end %>
+  <% end %>
+  
+  <% unless special_items.empty? %>
+    <% promo.page :special_items, :context => [:home, :shop, :premium] do %>
+      <%= render("items/specials", :items => special_items) %>
+    <% end %>
+  <% end %>
+<% end %>
