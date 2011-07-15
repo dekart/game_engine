@@ -94,6 +94,10 @@ class User < ActiveRecord::Base
     GENDERS.index(self[:gender])
   end
   
+  def full_name
+    [first_name, last_name].join(' ')
+  end
+  
   def anonymous_id
     third_party_id.present? ? third_party_id : id
   end
