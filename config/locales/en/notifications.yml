@@ -33,7 +33,7 @@ en:
         send_other: "Send Other Items"
     
     information:
-      title: "Witchcraft News"
+      title: "%{app} News"
     
     settings:
       title: "Notification Settings"
