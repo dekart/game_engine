@@ -1,18 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-  <script type="text/javascript">
-    var signed_request = '<%= escape_javascript(facebook_signed_request) %>';
-  </script>
-
-  <%= stylesheet_link_tag('application', 'qtip') %>
-
-  <%= include_jquery_from_google %>
-  <%= javascript_include_tag "jrails", "jquery/labelify", "jquery/dialog", "jquery/scroll_to", 
-        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'jquery/tmpl', 'jquery/jcarousel',
-        'jquery/ui/core', 'jquery/ui/widget', 'jquery/ui/mouse',  'jquery/ui/draggable', 'jquery/ui/droppable',
-        'jquery/ui/tabs', 'facebook_credits', "application", 
-        :cache => "cache/all" %>
+  <%= render('layouts/unauthorized') %>
 
   <%= google_analytics %>
 </head>

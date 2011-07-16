@@ -1,0 +1,18 @@
+<script type="text/javascript">
+  var signed_request = '<%= escape_javascript(facebook_signed_request) %>';
+</script>
+
+<%= stylesheet_link_tag(%w{qtip application ui-custom}) %>
+
+<%= include_jquery_from_google %>
+
+<%= javascript_include_tag(
+      %w{
+        jrails 
+        jquery/labelify jquery/dialog jquery/scroll_to jquery/carousel jquery/qtip2 jquery/history jquery/tmpl jquery/jcarousel
+        jquery/ui/core jquery/ui/widget jquery/ui/mouse jquery/ui/draggable jquery/ui/droppable jquery/ui/tabs
+        facebook_credits promo_block 
+        application
+      }, 
+      :cache => "cache/all"
+    ) %>

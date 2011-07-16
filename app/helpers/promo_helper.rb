@@ -18,6 +18,8 @@ module PromoHelper
     def html(&block)
       content ||= capture(self, &block)
       
+      dom_ready('$("#promo_block").promoBlock()')
+      
       content_tag(:div, html_for_pages, options.reverse_merge(:id => :promo_block))
     end
     
@@ -28,7 +30,7 @@ module PromoHelper
       
       @pages.each do |id, block, options|
         if (!options.has_key?(:context) || options.has_key?(:context) && Array.wrap(options[:context]).include?(context))
-          result << content_tag(:div, capture(&block), :id => "promo_block_page_#{id}", :class => 'promo_block_page clearfix')
+          result << content_tag(:div, capture(&block), :id => "promo_block_page_#{id}", :class => 'page clearfix')
         end
       end
       
