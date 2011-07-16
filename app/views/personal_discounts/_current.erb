@@ -1,1 +1,51 @@
-<%= debug current_character.personal_discounts.current %>
+<div id="personal_discount">
+  <h2><%= t(".title") %></h2>
+  
+  <table cellspacing="0" cellpadding="0">
+    <tr>
+      <td>
+        <div class="picture">
+          <%= item_image(discount.item, :large) %>
+        </div>
+      </td>
+      <td>
+        <div class="name"><%= discount.item.name %> <%= item_package(discount.item) %></div>
+                    
+        <div class="description"><%= discount.item.description %></div>
+
+        <div class="requirements">
+          <h3><%= PersonalDiscount.human_attribute_name("price") %></h3>
+
+          <%= attribute_requirement(:basic_money, number_to_currency(discount.item.basic_price)) if discount.item.basic_price > 0 %>
+          <%= vip_money_requirement(discount.price, 
+                content_tag(:span, t('.discount', :amount => discount.percentage), :class => :discount)
+              ) %>
+
+          <div class="limit">
+            <span class="time_limit">
+              <%= t(".time_limit") %>
+              <span class="value" id="<%= dom_id(discount, :timer) %>"></span>
+            </span>
+
+            <% dom_ready do %>
+              Timer.start('#<%= dom_id(discount, :timer) %>', <%= discount.time_left %>);
+            <% end %>
+          </div>
+
+          <div class="controls">
+              <%= link_to_remote(button(:buy),
+                    :url    => personal_discount_path(discount),
+                    :method => :put,
+                    :update => :result,
+                    :html   => {:class => "buy button"}
+                  ) %>
+          </div>
+        </div>
+
+        <div class="payouts">
+          <%= render("items/effects", :item => discount.item) %>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

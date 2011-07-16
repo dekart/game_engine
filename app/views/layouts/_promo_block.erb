@@ -1,7 +1,13 @@
 <% promo_block(context) do |promo| %>
-  <% if current_character.personal_discounts.current %>
+  <% if discount = current_character.personal_discounts.current %>
     <% promo.page :personal_discount, :context => [:home, :shop, :premium] do %>
-      <%= render("personal_discounts/current") %>
+      <%= render("personal_discounts/current", :discount => discount) %>
+      
+      <% dom_ready do %>
+        $(document).bind('disable.personal_discount', function(){
+          $('#promo_block').promoBlock().removePage('personal_discount');
+        });
+      <% end %>
     <% end %>
   <% end %>
 

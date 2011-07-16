@@ -7,6 +7,7 @@ en:
         inventory: "Go to Inventory"
     item:
       free: "FREE"
+      package_size: "(Pack of %{amount}) %{help_link}"
       buttons:
         buy: "Buy"
     specials:

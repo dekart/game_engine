@@ -5,3 +5,46 @@
   
   .page
     display: none
+    
+  #personal_discount
+    .description, .requirements, .payouts
+      margin-bottom: 10px
+
+    .picture
+      padding-right: 20px
+
+    .name
+      font-weight: bold
+      font-size: 18px
+      padding-bottom: 15px
+      
+    .payouts, .requirements
+      float: left
+      width: 200px
+
+    .requirements .requirement, .payouts .payout
+      clear: none
+    
+    .controls
+      margin-top: 10px
+      
+      .button
+        float: left
+        clear: none
+        margin: 0
+
+      .buy
+        +button(!shop_special_item_buy_icon, 100px)
+
+    .limit
+      clear: both
+      padding: 10px 0
+      color = !shop_special_item_limit_color
+    
+    .package_size
+      font-weight: normal
+    
+    .discount
+      color: red
+      font-style: italic
+      margin-left: 10px

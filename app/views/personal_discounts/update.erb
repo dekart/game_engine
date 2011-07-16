@@ -1,0 +1,62 @@
+<% result_for :shop do |builder| %>
+  <% if @discount.try(:used?) %>
+    <% builder.buttons do %>
+      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @discount.item),
+            :class => "publish button"
+          ) %>
+
+      <%= link_to(button(:inventory), inventories_url,
+            :class => "inventory button"
+          ) %>
+
+      <%= link_to_remote(inventory_use_button(@discount.inventory),
+            :url    => use_inventory_path(@discount.inventory),
+            :update => :result,
+            :html   => {
+              :"data-click-once" => true,
+              :class => "use button"
+            }
+          ) if @discount.inventory.usable? %>
+    <% end %>
+
+    <% builder.success do %>
+      <%= t(".messages.success", :item_name  => content_tag(:b, @discount.item.name)).html_safe %>
+    <% end %>
+
+    <table class="payouts">
+      <tr>
+        <td class="received">
+          <h3><%= t(".you_received.title") %></h3>
+
+          <%= payout(:item, item_image(@discount.inventory, :medium), :label => @discount.item.name) %>
+        </td>
+        <td class="spent">
+          <h3><%= t(".you_spent.title") %></h3>
+
+          <% if @discount.item.basic_price > 0 %>
+            <%= payout(:basic_money, number_to_currency(@discount.item.basic_money)) %>
+          <% end %>
+
+          <% if @discount.price > 0 %>
+            <%= payout(:vip_money, number_to_currency(@discount.price)) %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+
+    <% builder.on_ready do %>
+      $(document).trigger('item.purchase');
+      $(document).trigger('disable.personal_discount');
+      
+      <%= ga_track_event('Items', 'Purchased with discount', "#{@discount.item.name} (#{@discount.item.availability})", 1) %>
+    <% end %>
+  <% elsif @discount %>
+    <div class="unsatisfied_requirements">
+      <%= unsatisfied_requirement_first(@discount.requirements) %>
+    </div>
+  <% else %>
+    <% builder.fail do %>
+      <%= t(".messages.already_used") %>
+    <% end %>
+  <% end %>
+<% end %>

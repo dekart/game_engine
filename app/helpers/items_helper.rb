@@ -61,4 +61,16 @@ module ItemsHelper
       t("items.item.free")
     end
   end
+
+  def item_package(item, &block)
+    if item.package_size > 1
+      content_tag(:span, 
+        t('items.item.package_size', 
+          :amount     => item.package_size, 
+          :help_link  => help_link(:items_package)
+        ).html_safe, 
+        :class => :package_size
+      )
+    end
+  end
 end

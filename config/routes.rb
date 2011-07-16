@@ -213,6 +213,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :item_groups do |group|
     group.resources :items
   end
+  
+  map.resources :personal_discounts, :only => :update
+  
   map.resources :inventories,
     :collection => {
       :equipment  => :any,

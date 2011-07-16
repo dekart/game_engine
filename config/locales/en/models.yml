@@ -60,7 +60,7 @@ en:
         payouts: "Reward"
       item:
         price: "Price"
-        effects: "Effects"
+        effects: "Item Effects"
         payouts: "On Use"
         use_button_label: "Custom label for 'Use' button"
       help_page:
@@ -82,6 +82,9 @@ en:
         price: 'Price in Credits'
       story:  
         action_link: 'Action Link Text'
+      personal_discount:
+        price: "Exclusive Price"
+        
     errors:
       models:
         character:
