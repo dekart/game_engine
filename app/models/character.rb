@@ -188,7 +188,11 @@ class Character < ActiveRecord::Base
   end
 
   def weakness_minimum
-    Setting.i(:character_weakness_minimum)
+    if Setting.s(:character_weakness_minimum_formula) == 'percentage'
+      Setting.p(:character_weakness_minimum, health_points)
+    else
+      Setting.i(:character_weakness_minimum)
+    end
   end
   
   def fight_requirements
