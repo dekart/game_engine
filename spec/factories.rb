@@ -86,6 +86,8 @@ Factory.define :item do |t|
   t.level         1
 
   t.basic_price   10
+  
+  t.can_be_sold_on_market true
 
   t.usable  true
   t.payouts Payouts::Collection.new(
