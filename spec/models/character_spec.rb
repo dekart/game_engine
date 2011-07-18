@@ -115,4 +115,27 @@ describe Character do
       end
     end
   end
+
+  
+  describe '#weakness_minimum' do
+    before do
+      @character = Factory(:character, :health => 1000)
+    end
+    
+    it 'should return value from settings when using absolute formula' do
+      with_setting(:character_weakness_minimum_formula => 'absolute') do
+        @character.weakness_minimum.should == 5
+      end
+    end
+    
+    it 'should use absolute formula by default' do
+      @character.weakness_minimum.should == 5
+    end
+    
+    it 'should return calculated value when using percentage-based formula' do
+      with_setting(:character_weakness_minimum_formula => 'percentage') do
+        @character.weakness_minimum.should == 50
+      end
+    end
+  end
 end
