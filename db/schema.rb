@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110715064750) do
+ActiveRecord::Schema.define(:version => 20110718075616) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -396,6 +396,10 @@ ActiveRecord::Schema.define(:version => 20110715064750) do
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
     t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
+    t.integer  "original_vip_price"
+    t.integer  "hp_restore_rate",                        :default => 0
+    t.integer  "sp_restore_rate",                        :default => 0
+    t.integer  "ep_restore_rate",                        :default => 0
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
