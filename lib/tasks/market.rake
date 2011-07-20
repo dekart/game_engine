@@ -4,8 +4,8 @@ namespace :app do
     task :remove_expired_listings => :environment do
       puts "Removing expired market listings (#{MarketItem.expired.count})..."
 
-      MarketItem.expired.find_each do |item|
-        item.destroy
+      MarketItem.transaction do
+        MarketItem.expired.destroy_all
       end
 
       puts "Done"
