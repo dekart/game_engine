@@ -20,9 +20,15 @@ class AppRequest::Base < ActiveRecord::Base
       :conditions => {:sender_id => sender.id, :receiver_id => receiver.facebook_id}
     }
   }
+  named_scope :sent_recently, Proc.new{
+    {
+      :conditions => ["app_requests.created_at > ?", 24.hours.ago]
+    }
+  }
   
   named_scope :visible, :conditions => {:state => ['processed', 'visited']}
   named_scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
+  
   
   state_machine :initial => :pending do
     state :processed
