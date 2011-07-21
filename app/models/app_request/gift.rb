@@ -8,6 +8,10 @@ class AppRequest::Gift < AppRequest::Base
   attr_accessor :inventory
   
   class << self
+    def ids_to_exclude_for(character)
+      from(character).sent_recently.receiver_ids
+    end
+    
     def receiver_cache_key(receiver)
       "character_#{ receiver.id }_accepted_gift_senders"
     end
