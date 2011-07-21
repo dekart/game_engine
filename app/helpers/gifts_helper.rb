@@ -9,6 +9,7 @@ module GiftsHelper
         :target_id => item.id,
         :target_type => Item.name
       },
+      :exclude_ids => AppRequest::Gift.ids_to_exclude_for(current_character),
       :params => {
         :target_id => item.id,
         :target_type => Item.name

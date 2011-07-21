@@ -36,7 +36,8 @@
             :message  => t('.invitation_message', :app_name => t('app_name')),
             :data     => {
               :reference => :invite_page
-            }
+            },
+            :exclude_ids => AppRequest::Invitation.ids_to_exclude_for(current_character)
           ),
           :class => 'invite button'
         ) %>
