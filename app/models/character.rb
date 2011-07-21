@@ -192,7 +192,11 @@ class Character < ActiveRecord::Base
   end
 
   def weakness_minimum
-    Setting.i(:character_weakness_minimum)
+    if Setting.s(:character_weakness_minimum_formula) == 'percentage'
+      Setting.p(:character_weakness_minimum, health_points)
+    else
+      Setting.i(:character_weakness_minimum)
+    end
   end
   
   def fight_requirements
@@ -317,15 +321,15 @@ class Character < ActiveRecord::Base
   end
   
   def health_restore_period
-    Setting.i(:character_health_restore_period).seconds
+    (Setting.i(:character_health_restore_period) * (1 - equipment.effect(:hp_restore_rate).to_f / 100)).seconds  
   end
 
   def energy_restore_period
-    Setting.i(:character_energy_restore_period).seconds
+    (Setting.i(:character_energy_restore_period) * (1 - equipment.effect(:ep_restore_rate).to_f / 100)).seconds
   end
 
   def stamina_restore_period
-    Setting.i(:character_stamina_restore_period).seconds
+    (Setting.i(:character_stamina_restore_period) * (1 - equipment.effect(:sp_restore_rate).to_f / 100)).seconds
   end
 
   def friend_filter

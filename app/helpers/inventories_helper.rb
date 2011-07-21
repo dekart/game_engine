@@ -46,7 +46,9 @@ module InventoriesHelper
   def inventory_item_image(inventory, format, options = {})
     result = "".html_safe
     if count = options.delete(:count)
-      count = content_tag(:span, inventory.amount, :class => "count #{format}") if count.is_a?(TrueClass)
+      amount = count.is_a?(TrueClass) ? inventory.amount : count
+      count = content_tag(:span, amount, :class => "count #{format}")
+      
       result << count 
     end
     

@@ -42,6 +42,30 @@ describe Character::Equipment do
         @character.equipment.effect(:attack).should == 1
       end
     end
+    
+    describe 'restore rate' do
+      it 'should increase hp restore rate' do
+        lambda {
+          @item.update_attributes!(:hp_restore_rate => 10)
+          @character.equipment.auto_equip!(@inventory)
+        }.should change(@character, :health_restore_period).from(60).to(54)
+      end
+      
+      it 'should increase ep restore rate' do
+        lambda {
+          @item.update_attributes!(:ep_restore_rate => 10)
+          @character.equipment.auto_equip!(@inventory)
+        }.should change(@character, :energy_restore_period).from(120).to(108)
+      end
+      
+      it 'should increase sp restore rate' do
+        lambda {
+          @item.update_attributes!(:sp_restore_rate => 10)
+          @character.equipment.auto_equip!(@inventory)
+        }.should change(@character, :stamina_restore_period).from(180).to(162)
+      end
+    end
+    
   end
   
   

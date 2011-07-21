@@ -33,6 +33,7 @@ Setting[:character_energy_restore_period] ||= 120
 Setting[:character_stamina_restore_period] ||= 180
 Setting[:character_income_calculation_period] ||= 60
 Setting[:character_weakness_minimum] ||= 5
+Setting[:character_weakness_minimum_formula] ||= 'absolute'
 
 Setting[:dashboard_news_count] ||= 30
 

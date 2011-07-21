@@ -4,7 +4,8 @@ class Item < ActiveRecord::Base
   include HasVisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
-  EFFECTS = [:attack, :defence, :health, :energy, :stamina]
+  EFFECTS = [:attack, :defence, :health, :energy, :stamina, 
+              :hp_restore_rate, :sp_restore_rate, :ep_restore_rate]
   
   BOOST_TYPES = {
     :fight => [:attack, :defence], 

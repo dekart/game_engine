@@ -89,12 +89,12 @@ var Spinner = {
   enabled: true,
   
   setup: function(){
-    $('#spinner').ajaxStart(this.show).ajaxStop(this.hide);
+    $('#spinner').ajaxStart(Spinner.show).ajaxStop(Spinner.hide);
       
-    $('body').mousemove(this.alignToMouse);
+    $('body').mousemove(Spinner.alignToMouse);
   },
   show: function(speed){
-    if(!this.enabled){ return; }
+    if(!Spinner.enabled){ return; }
     
     Spinner.moveToPosition();
 
@@ -104,7 +104,7 @@ var Spinner = {
     $('#spinner').fadeOut(speed);
   },
   blink: function(speed, delay){
-    if(!this.enabled){ return; }
+    if(!Spinner.enabled){ return; }
 
     Spinner.moveToPosition();
 
@@ -115,9 +115,9 @@ var Spinner = {
     Spinner.y = y;
   },
   moveToPosition: function(){
-    if(this.x > -1 && this.y > -1){
+    if(Spinner.x > -1 && Spinner.y > -1){
       $('#spinner').css({
-        top: this.y - $('#spinner').height() / 2
+        top: Spinner.y - $('#spinner').height() / 2
       });
     }
   },
