@@ -2,6 +2,7 @@
  
 .project
 .rvmrc
+.idea
 nbproject
 *~
 .*.sw?
