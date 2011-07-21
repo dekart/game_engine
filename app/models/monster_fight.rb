@@ -46,6 +46,10 @@ class MonsterFight < ActiveRecord::Base
       @money      = monster.money
 
       @stamina = 1
+      
+      if global_payout = GlobalPayout.by_alias(:monsters)
+        @payouts = global_payout.payouts.apply(character, power_attack ? :repeat_success : :success)
+      end
 
       power_attack_effect if power_attack
       

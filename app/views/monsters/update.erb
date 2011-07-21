@@ -59,6 +59,8 @@
           <%= payout(:experience, @fight.experience) %>
 
           <%= payout(:basic_money, number_to_currency(@fight.money)) %>
+          
+          <%= payout_list(@fight, @fight.payouts) %>
         </td>
 
         <td class="spent">
