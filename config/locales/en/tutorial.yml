@@ -15,7 +15,7 @@ en:
         text: "Do missions to earn gold and gain experience"
       first_mission_receive:
         title: "Mission In Progress"
-        text: "This is your reward for doing the mission. Experience will help you to reach new levels. Now please click 'Fulfill Again!' at the top right of the result block to continue."
+        text: "This is your reward for doing the mission. Experience will help you to reach new levels. Now please click 'Complete Again!' at the top right of the result block to continue."
       first_mission_spent:
         title: "Mission In Progress"
         text: "Doing missions consumes your energy. Energy level restores in the course of time. You can also restore it in the Guild."
@@ -26,7 +26,7 @@ en:
         text: "Please proceed to upgrade your character."
       first_upgrade_character:
         title: "Upgrade Character"
-        text: "You can spend received upgrade points to improve your attributes. Please do this now to proceed."
+        text: "You can spend received attribute points to improve your attributes. Please do this now to proceed."
       goto_shop:
         title: "Shop"
         text: "Ok, it's time to purchase your first item. Please go to the Shop to proceed."
@@ -68,7 +68,7 @@ en:
         text: "You should have enough money to purchase this property"
       periodically_collect_property_income:
         title: "Property"
-        text: "You should periodically collect income from your properties. The timer displays how much time left before the next payment."
+        text: "You should periodically collect income from your estates. The timer displays how much time left before the next payment."
         close_button_value: "Ok, Let's Proceed"
       goto_fight:
         title: "Fight With Players"

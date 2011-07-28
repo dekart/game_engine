@@ -8,9 +8,9 @@ en:
       get_more: "Get More »"
       need_more: "Need more Gems? You can buy them using a major Credit Card or Paypal!"
       hire_mercenary:
-        text: "Hire a mercenary to your Alliance"
+        text: "Hire Mercenary to join your Party"
         button: "Hire"
-        maximum: "You have maximum Alliance"
+        maximum: "You have maximum Party"
       exchange_money:
         text: "Add %{amount} gold to your character"
         button: "Add Gold"
@@ -29,15 +29,15 @@ en:
       reset_attributes:
         text: "Reset character attributes"
         button: "Reset"
-        confirm: "Are you sure you want to reset your character attributes? You'll need to re-assign all attributes when you'll get all your upgrade points back."
+        confirm: "Are you sure you want to reset your character attributes? You'll need to re-assign all attributes when you'll get all your attribute points back."
       change_name:
         text: "Change character name"
         button: "Change"
       buy_points:
-        text: "Add %{amount} upgrade points to your character"
+        text: "Add %{amount} attribute points to your character"
         button: "Add Points"
       buy:
-        note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to do the purchase or you can complete some offers provided by our partners.'
+        note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to make the purchase or you can complete some offers provided by our partners.'
     change_name:
       title: "Change Your Nickname"
       note: "Please enter your new nickname below. Please note that each name change will charge Gems from your character so try to avoid typos. If you want to use your real Facebook name - keep the field blank and click 'Apply'."
@@ -51,7 +51,7 @@ en:
           refill_energy: "Now you have maximum energy!"
           refill_health: "Now you have maximum health!"
           refill_stamina: "Now you have maximum stamina!"
-          buy_points: "Upgrade points have been added to your character!"
+          buy_points: "Attribute points have been added to your character!"
           hire_mercenary: "You successfully hired new mercenary!"
           reset_attributes: "You successfully reseted all attributes!"
           change_name: "You successafully changed your name"
@@ -64,10 +64,10 @@ en:
         cancel: "Cancel"
         gem_market: "Get More Gems"
       refill_health:
-        text: "Do you want to refill your health using Gems? Full health refull would cost:"
+        text: "Would you like to refill your health using Gems? Full health refull would cost:"
       refill_energy:
-        text: "Do you want to refill your energy using Gems? Full energy refull would cost:"
+        text: "Would you like to refill your energy using Gems? Full energy refull would cost:"
       refill_stamina:
-        text: "Do you want to refill your stamina using Gems? Full stamina refull would cost:"
+        text: "Would you like to refill your stamina using Gems? Full stamina refull would cost:"
       dont_have_gems: "You don't have enough gems to refill."
       

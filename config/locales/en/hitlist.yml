@@ -5,10 +5,10 @@ en:
     list:
       buttons:
         attack: "Attack"
-      empty_set: "Right now there are not listings. Please try again later."
+      empty_set: "Here are no listings. Please try again later."
     new:
       title: "Add to Hitlist"
-      submit: "Tell Your Alliance"
+      submit: "Tell Your Party"
       note: "Note: A %{fee}% security fee will be charged to safeguard your bounty."
     create:
       title: "Hitlist"

@@ -30,6 +30,6 @@ en:
       buttons:
         attack: 'Attack'
     monster_fight_defeat:
-      text: "%{actor} defeated the %{monster}"
+      text: "%{actor} defeated %{monster}"
       buttons:
         reward: "Get Reward"

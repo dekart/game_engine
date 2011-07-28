@@ -6,7 +6,7 @@ en:
       current: "Current Monster Fights"
       available: "Available Monsters"
       locked: "Locked Monster (unlocks at level %{level})"
-      previous: "Previous Monsters"
+      previous: "Defeated Monsters"
       buttons:
         attack: "Attack"
         engage: "Engage"
@@ -25,13 +25,13 @@ en:
         invite_request: "Ask friends to join"
         power_attack: "Power Attack (x%{factor})"
     won:
-      too_late: "It's too late to join the battle! The monster is already defeated."
-      reward_collected: "The monster is defeated and you already collected your reward."
-      insignificant_damage: "The monster is defeated and you didn't do any significant damage to it"
+      too_late: "It's too late to join the battle! Monster is already defeated."
+      reward_collected: "Monster is defeated and you already collected your reward."
+      insignificant_damage: "Monster is defeated and you didn't do any significant damage to it"
       buttons:
         reward: "Get Reward"
     expired:
-      too_late: "It's too late to join the battle! The monster is already defeated."
+      too_late: "It's too late to join the battle! Monster is already defeated."
       expired: "You didn't manage to defeat the monster in time."
     update:
       message:

@@ -29,7 +29,7 @@ en:
         title: "Scout"
         description: "Saves energy on missions"
         effect:
-          full: "%{value}% chance to fulfill mission for free"
+          full: "%{value}% chance to complete mission for free"
           short: "%{value}%"
       mission_income:
         title: "Bagman"
@@ -38,14 +38,14 @@ en:
           full: "%{value}% more money from missions"
           short: "+%{value}%"
     new:
-      title: "Promote Alliance Member"
+      title: "Promote Party Member"
       not_assigned:
         title: "Not Assigned"
-        empty_set: "You have no free alliance members"
+        empty_set: "You have no free party members"
       assigned:
         title: "Reassign"
-        empty_set: "You have no assigned alliance members"
+        empty_set: "You have no assigned party members"
       columns:
-        user: "Alliance member"
+        user: "Party member"
       buttons:
         promote: "Promote"

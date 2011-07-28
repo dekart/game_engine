@@ -4,8 +4,8 @@ en:
       text: "You have %{count} requests from your friends"
     index:
       title: 'Friend Requests'
-      note: "Here you can accept requests from your friends. You can accept one gift per each friend every %{hours} hours."
-      empty_set: "Your friends didn't send you any requests yet."
+      note: "Here you can accept requests from your friends. You can only accept one gift per person every %{hours} hours."
+      empty_set: "Your friends haven't sent you any requests yet."
       buttons:
         accept: 'Accept'
         ignore: 'Ignore this request'
@@ -15,7 +15,7 @@ en:
       monster_invite:
         text: "%{user} invites you to join fight against %{monster}"
       invitation:
-        text: "%{user} invites you to join their Alliance"
+        text: "%{user} invites you to join their Party"
     update:
       gift:
         accepted: 'Gift accepted!'
@@ -28,13 +28,13 @@ en:
       invitation:
         accepted: 'Invitation accepted!'
         buttons:
-          alliance: 'View Alliance'
+          alliance: 'View Party'
     create:
       gift:
-        title: "Send Gifts to Your Alliance"
+        title: "Send Gifts to Your Party"
         message: "Your gifts have been sent to your friends! They'll be notified immediately."
       invitation:
-        title: "Recruit Friends To Your Alliance"
+        title: "Recruit Friends To Your Party"
         message: "Your invitations have been sent to your friends! They'll be notified immediately."
       monster_invite:
         title: "Call to Arms"

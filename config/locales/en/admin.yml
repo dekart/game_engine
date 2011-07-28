@@ -277,7 +277,7 @@ en:
           new: "Add Property Type"
           edit: "Edit"
           delete: "Delete"
-          delete_confirm: "Are you sure? Properties of this type will be also removed from all users!"
+          delete_confirm: "Are you sure? Estates of this type will be also removed from all users!"
           publish: "Publish"
           publish_confirm: "Are you sure you want to make this property type visible to players?"
           hide: "Hide"

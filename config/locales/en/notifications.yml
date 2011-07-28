@@ -6,7 +6,7 @@ en:
 
     level_up:
       title: "New Level!"
-      text: "You've gained enough experience to upgrade to the new level! You received %{point_amount} upgrade points that you can spend to increase your attributes. Additionally, your energy and health have been refilled."
+      text: "You've gained enough experience to level up! You received %{point_amount} attribute points that you can spend to increase your attributes. Additionally, your energy and health have been refilled."
       upgrade_link: "upgrade"
       buttons:
         publish: "Brag About It"
@@ -18,8 +18,8 @@ en:
       you_received: "You received:"
       
     friends_to_invite:
-      title: "Recruit Friends To Your Alliance"
-      text: "These friends are not in your Alliance yet! Recruit them to make your Alliance stronger!"
+      title: "Recruit Friends To Your Party"
+      text: "These friends are not in your Party yet! Recruit them to make your Party stronger!"
       suggested_users: "Suggested Users"
       buttons:
         invite: "Invite Them"
@@ -27,7 +27,7 @@ en:
         
     send_gift:
       title: "Send Free Gifts To Your Friends"
-      text: "You can send these items to your friends for free and they'll be able to send them back to you! Click 'Send' and choose whom to send the item:"
+      text: "You can send these items to your friends for free and they'll be able to send some gifts to you! Click 'Send' and choose whom to send the item:"
       buttons:
         send: "Send"
         send_other: "Send Other Items"
@@ -42,7 +42,7 @@ en:
         friends_to_invite: "Recommendations to invite friends"
         information: "Information messages"
         level_up: "Level Up messages"
-        market_item_sold: "Market item sales"
+        market_item_sold: "Market item sold"
         send_gift: "Recommendations to send gifts to your friends"
       buttons: 
         save: "Save"

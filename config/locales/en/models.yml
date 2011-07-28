@@ -26,10 +26,10 @@ en:
         missions_succeeded: "Missions Succeded"
         missions_completed: "Missions Completed"
         missions_mastered: "Missions Mastered"
-        relations: "Alliance"
-        relations_count: "Alliance Size"
+        relations: "Party"
+        relations_count: "Party Size"
         mercenaries: "Mercenaries"
-        points: "Upgrade Points"
+        points: "Attribute Points"
         rating: "Rating"
         name: "Character Name"
         bank: "Bank"
@@ -57,7 +57,7 @@ en:
       mission:
         progress: "Progress"
         requirements: "Requirements"
-        payouts: "Payouts"
+        payouts: "Reward"
       item:
         price: "Price"
         effects: "Effects"
@@ -77,7 +77,7 @@ en:
         character: "Seller"
         price: "Price"
       item_collection:
-        payouts: "Payouts"
+        payouts: "Reward"
       credit_package:
         price: 'Price in Credits'
       story:  
@@ -120,7 +120,7 @@ en:
               not_enough_basic_money_for_upgrade: "You don't have enough %{basic_money} to upgrade your %{name}."
               not_enough_vip_money: "You don't have enough %{vip_money} to buy a %{name}."
               not_enough_vip_money_for_upgrade: "You don't have enough %{vip_money} to upgrade your %{name}."
-              too_much_properties: "You cannot buy any more %{plural_name} because you already have too many! Try to purchase other types of properties."
+              too_much_properties: "You cannot buy any more %{plural_name} because you already have too many! Try to purchase other types of estates."
         boss_fight:
           attributes:
             character:

@@ -31,8 +31,8 @@ en:
       title: "Inventory"
       free_slots:
         text:
-          one: "You have some unequipped inventory and %{count_label} equipment slot available for use!"
-          other: "You have some unequipped inventory and %{count_label} equipment slots available for use!"
+          one: "You have some unequipped items and %{count_label} equipment slot available for use!"
+          other: "You have some unequipped items and %{count_label} equipment slots available for use!"
         link: "Equip your character »"
     list:
       owned: "Owned: %{amount}"
@@ -60,9 +60,9 @@ en:
     equippables:
       header: "Available Items"
       item_header: "%{name} x %{amount}"
-      equip_to: "Put to %{placement}"
+      equip_to: "Equip to %{placement}"
       buttons:
-        equip: "Put"
+        equip: "Equip"
       empty_set: "No items available"
     placements:
       names:
@@ -78,7 +78,7 @@ en:
         free_slots:
           one: "You have %{count_label} additional slot left."
           other: "You have %{count_label} additional slots left."
-        relations: "Grow your %{relations} to get more slots. Every %{amount} Alliance Members bring an extra slot!"
+        relations: "Grow your %{relations} to get more slots. Every %{amount} Party Members bring an extra slot!"
     give:
       title: "Give Items to %{character}"
       you_have: "You have:"
@@ -92,12 +92,12 @@ en:
     boosts:
       types:
         fight:
-          attack: "Attacking Boosts"
-          defence: "Defensive Boosts"
+          attack: "Attacking Power-ups"
+          defence: "Defensive Power-ups"
         monster: 
-          attack: "Monster Fighting Boosts"
+          attack: "Monster Fighting Power-ups"
       previous: "Previous"
       next: "Next"
-      buy_boosts: "You don't have any boosts of this type"
+      buy_boosts: "You don't have any power-ups of this type"
       buttons:
-        buy_boosts: "Buy Boosts"
+        buy_boosts: "Buy Power-ups"

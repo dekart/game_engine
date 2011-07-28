@@ -19,7 +19,7 @@ en:
       items:
         amount: "%{name} X&nbsp;%{amount}"
       properties:
-        title: "Properties"
+        title: "Estates"
         name: "%{name} (Level %{level})"
       wall:
         title: "%{user} Wall"
@@ -27,11 +27,11 @@ en:
       title: "Upgrade"
       buy_more: "Get more Points »"
       finished:
-        note: "You spent all your upgrade points."
+        note: "You spent all your attribute points."
         get_more: "Get more Points »"
       points:
-        one: "1 upgrade point"
-        other: "%{count} upgrade points"
+        one: "1 attribute point"
+        other: "%{count} attribute points"
     upgrade_result:
       messages:
         success: "You've successfully upgraded %{attribute} to %{number}"
@@ -39,7 +39,7 @@ en:
     fight_attributes:
       personal: "Your Skills"
       inventory: "Your Inventory"
-      relations: "Your Alliance"
+      relations: "Your Party"
       offence: "Best Offence"
       defence: "Best Defence"
     new:

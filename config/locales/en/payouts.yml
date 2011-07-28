@@ -24,7 +24,7 @@ en:
     stamina_point:
       name: "Stamina Points"
     upgrade_point:
-      name: "Upgrade Points"
+      name: "Attribute Points"
     mercenary:
       name: "Mercenaries"
     experience:

@@ -28,7 +28,7 @@ en:
       description: ""
       action_link: ""
     boss_defeated:
-      title: "I've just defeated the %{name} in %{app}!"
+      title: "I've just defeated %{name} in %{app}!"
       description: ""
       action_link: ""
     monster_invite:

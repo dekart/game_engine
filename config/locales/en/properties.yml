@@ -8,11 +8,11 @@ en:
       you_spent:
         title: "You spent:"
     index:
-      title: "My Properties"
-      note: "Properties bring you income, it's a great way to make additional money. Some properties take less time to pay out than others, so check back as often as possible to collect the take and maximize your income."
+      title: "My Estates"
+      note: "Estates bring you an extra income, it's a great way to make additional money. Some estates generate revenue more often than the others, so check back as often as possible to collect and maximize your income."
     list:
       name_with_level: "%{name} (Level %{level})"
-      collect_all: "You have %{amount} properties ready for collection"
+      collect_all: "You have %{amount} estates ready for collection"
       collect_in: "Collect in: %{value}"
       buttons:
         buy: "Buy"
@@ -27,7 +27,7 @@ en:
     collect_money:
       messages:
         success_single: "You successfully collected %{basic_money} from your %{property_name}"
-        success_collection: "You successfully collected %{basic_money} from your properties"
+        success_collection: "You successfully collected %{basic_money} from your estates"
         failure: "You haven't collected anything"
       you_received:
         title: "You received:"

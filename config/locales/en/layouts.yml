@@ -13,9 +13,9 @@ en:
       items: "Shop"
       inventories: "Inventory"
       character: "Profile"
-      relations: "Alliance"
+      relations: "Party"
       rating: "Rating"
-      properties: "Properties"
+      properties: "Estates"
       monsters: "Monsters"
     spinner:
       alt: "Please wait..."

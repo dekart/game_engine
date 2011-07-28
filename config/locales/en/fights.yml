@@ -1,9 +1,9 @@
 en:
   fights:
     descriptions:
-      attack_won: "%{attacker} attacked %{victim} and WON the battle! You received %{money}, %{experience_points} points of experience, and %{attacker_damage} points of damage. %{victim} was damaged for %{victim_damage} points"
+      attack_won: "%{attacker} attacked %{victim} and WON the battle! You received %{money}, %{experience_points} points of experience, and %{attacker_damage} points of damage. %{victim} received %{victim_damage} points of damage"
       attack_lost: "%{attacker} attacked %{victim} and LOST the battle! You lost %{money} and took %{attacker_damage} points of damage. %{victim} received %{victim_damage} points of damage."
-      defence_won: "%{attacker} attacked %{victim} and you WON the battle!  You received %{money}, %{experience_points} points of experience, and %{victim_damage} points of damage. %{attacker} was damaged for %{attacker_damage} points"
+      defence_won: "%{attacker} attacked %{victim} and you WON the battle!  You received %{money}, %{experience_points} points of experience, and %{victim_damage} points of damage. %{attacker} received %{attacker_damage} points of damage"
       defence_lost: "%{attacker} attacked %{victim} and you LOST the battle! You lost %{money} and took %{victim_damage} points of damage. %{attacker} received %{attacker_damage} points of damage."
     buttons:
       buttons:
@@ -27,8 +27,8 @@ en:
         best_offence: "Your Best Offence:"
         best_defence: "Their Best Defence:"
         show_items: "Show all items used"
-        best_attacking_boost: "Your attacking boost:"
-        best_defending_boost: "Their defending boost:"
+        best_attacking_boost: "Your attacking power-up:"
+        best_defending_boost: "Their defending power-up:"
     used_items:
       attacker: "Your items:"
       victim: "Their items:"
@@ -36,8 +36,8 @@ en:
     new:
       title: "Fighting Arena"
       messages:
-        too_weak: "You are too weak to fight! Take a rest until your health will grow to %{hp_number} points. You need to wait about %{minute_number} minutes."
-        not_enough_stamina: "You don't have enough stamina to fight! Take a rest until your stamina will grow. You need to wait about %{minute_number} minutes."
+        too_weak: "You are too weak to fight! Take a rest until your health replenishes to %{hp_number} points. You need to wait for about %{minute_number} minutes."
+        not_enough_stamina: "You don't have enough stamina to fight! Take a rest until your stamina replenishes. You need to wait for about %{minute_number} minutes."
       empty_set: "There are no opponents for you at this time."
       buttons:
         more_opponents: "More Opponents"
