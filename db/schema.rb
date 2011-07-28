@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110718075616) do
+ActiveRecord::Schema.define(:version => 20110728070118) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -679,6 +679,7 @@ ActiveRecord::Schema.define(:version => 20110718075616) do
     t.integer  "collect_period",                       :default => 1
     t.text     "payouts"
     t.datetime "image_updated_at"
+    t.integer  "income_by_level",                      :default => 0
   end
 
   create_table "relations", :force => true do |t|

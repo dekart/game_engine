@@ -16,6 +16,7 @@
       <th><%= PropertyType.human_attribute_name("basic_price") %></th>
       <th><%= PropertyType.human_attribute_name("vip_price") %></th>
       <th><%= PropertyType.human_attribute_name("income") %></th>
+      <th><%= PropertyType.human_attribute_name("income_by_level") %></th>
       <th><%= PropertyType.human_attribute_name("upgrade_limit") %></th>
       <th><%= PropertyType.human_attribute_name("owned") %></th>
       <th><%= PropertyType.human_attribute_name("state") %></th>
@@ -30,6 +31,7 @@
         <td class="basic_price"><%= number_to_currency(type.basic_price) %></td>
         <td class="vip_price"><%= number_to_currency(type.vip_price) %></td>
         <td class="income"><%= number_to_currency(type.income) %></td>
+        <td class="income"><%= number_to_currency(type.income_by_level) %></td>
         <td class="limit">
           <% if type.upgrade_limit %>
             <%= type.upgrade_limit %>

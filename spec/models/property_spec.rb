@@ -10,7 +10,7 @@ describe Property do
     @property.character = @character
   end
 
-  [:name, :plural_name, :description, :image, :image?, :basic_price, :vip_price, :income, :collect_period].each do |method|
+  [:name, :plural_name, :description, :image, :image?, :basic_price, :vip_price, :income, :collect_period, :income_by_level].each do |method|
     it "should delegate :#{method} method to property type" do
       @property.send(method).should === @property_type.send(method)
     end
@@ -54,6 +54,13 @@ describe Property do
     @property.level = 5
     
     @property.total_income.should == 50
+  end
+  
+  it "should return correct total income when property have income by level" do
+    @property.level = 5
+    @property.property_type.income_by_level = 10
+    
+    @property.total_income.should == 100
   end
 
   it "should return correct upgrade price" do

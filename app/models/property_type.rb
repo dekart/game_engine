@@ -55,8 +55,9 @@ class PropertyType < ActiveRecord::Base
     end
   end
 
-  validates_presence_of :name, :availability, :basic_price, :income
-  validates_numericality_of :basic_price, :vip_price, :income, :upgrade_limit, :allow_nil => true
+  validates_presence_of :name, :availability, :basic_price, :income, :income_by_level
+  validates_numericality_of :basic_price, :vip_price, :income, :upgrade_limit, :income_by_level,
+    :allow_nil => true
 
   class << self
     def to_dropdown(*args)
@@ -99,4 +100,5 @@ class PropertyType < ActiveRecord::Base
       Requirements::Level.new(:value => level)
     )
   end
+  
 end

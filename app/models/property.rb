@@ -2,7 +2,8 @@ class Property < ActiveRecord::Base
   belongs_to :character
   belongs_to :property_type
 
-  delegate :name, :plural_name, :description, :image, :image?, :basic_price, :vip_price, :income, :collect_period, :payouts,
+  delegate :name, :plural_name, :description, :image, :image?, :basic_price, :vip_price, 
+    :income, :collect_period, :payouts, :income_by_level,
     :to => :property_type
 
   attr_accessor :charge_money
@@ -29,7 +30,7 @@ class Property < ActiveRecord::Base
   end
 
   def total_income
-    income * level
+    income * level + income_by_level * level
   end
 
   def time_to_next_collection
