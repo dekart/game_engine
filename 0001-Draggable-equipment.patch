@@ -1,0 +1,1700 @@
+From 8435ed1f9eb997d8377e0fd90427948680c716cc Mon Sep 17 00:00:00 2001
+From: Mikhail Khomutetskiy <khomutetskiy@gmail.com>
+Date: Thu, 4 Aug 2011 13:02:40 +0600
+Subject: [PATCH] Draggable equipment
+
+---
+ app/controllers/inventories_controller.rb         |   10 +
+ app/helpers/inventories_helper.rb                 |   21 ++
+ app/views/inventories/_equippables.erb            |   57 ++---
+ app/views/inventories/_placements.erb             |   20 +-
+ app/views/inventories/equip.erb                   |    2 +
+ app/views/inventories/equipment.html.erb          |   48 ++--
+ app/views/layouts/application.html.erb            |    7 +-
+ app/views/layouts/help_pages.html.erb             |    5 +-
+ app/views/layouts/unauthorized.html.erb           |    6 +-
+ config/routes.rb                                  |    3 +-
+ public/images/jcarousel/next-horizontal.png       |  Bin 0 -> 4375 bytes
+ public/images/jcarousel/next-vertical.png         |  Bin 0 -> 3817 bytes
+ public/images/jcarousel/prev-horizontal.png       |  Bin 0 -> 4322 bytes
+ public/images/jcarousel/prev-vertical.png         |  Bin 0 -> 3962 bytes
+ public/javascripts/application.js                 |  104 +++++++-
+ public/javascripts/jquery/jcarousel.js            |   16 ++
+ public/javascripts/jquery/ui/core.js              |   17 ++
+ public/javascripts/jquery/ui/draggable.js         |   50 ++++
+ public/javascripts/jquery/ui/droppable.js         |   27 ++
+ public/javascripts/jquery/ui/mouse.js             |   17 ++
+ public/javascripts/jquery/ui/tabs.js              |   35 +++
+ public/javascripts/jquery/ui/widget.js            |   15 +
+ public/stylesheets/sass/_character_equipment.sass |   70 +++--
+ public/stylesheets/sass/_default_skin.sass        |    2 +-
+ public/stylesheets/sass/_inventory.sass           |   15 +-
+ public/stylesheets/sass/_jcarousel.sass           |  137 ++++++++++
+ public/stylesheets/sass/application.sass          |    1 +
+ public/stylesheets/ui-custom.css                  |  301 +++++++++++++++++++++
+ 28 files changed, 871 insertions(+), 115 deletions(-)
+ create mode 100644 public/images/jcarousel/next-horizontal.png
+ create mode 100644 public/images/jcarousel/next-vertical.png
+ create mode 100644 public/images/jcarousel/prev-horizontal.png
+ create mode 100644 public/images/jcarousel/prev-vertical.png
+ create mode 100644 public/javascripts/jquery/jcarousel.js
+ create mode 100644 public/javascripts/jquery/ui/core.js
+ create mode 100644 public/javascripts/jquery/ui/draggable.js
+ create mode 100644 public/javascripts/jquery/ui/droppable.js
+ create mode 100644 public/javascripts/jquery/ui/mouse.js
+ create mode 100644 public/javascripts/jquery/ui/tabs.js
+ create mode 100644 public/javascripts/jquery/ui/widget.js
+ create mode 100644 public/stylesheets/sass/_jcarousel.sass
+ create mode 100644 public/stylesheets/ui-custom.css
+
+diff --git a/app/controllers/inventories_controller.rb b/app/controllers/inventories_controller.rb
+index 71b6f7c..c339dfc 100644
+--- a/app/controllers/inventories_controller.rb
++++ b/app/controllers/inventories_controller.rb
+@@ -90,6 +90,16 @@ class InventoriesController < ApplicationController
+ 
+     render :action => "equip", :layout => "ajax"
+   end
++  
++  def move
++    @inventory = current_character.inventories.find(params[:id])
++    
++    # TODO: refactor to one action from equipment
++    current_character.equipment.unequip!(@inventory, params[:from_placement])
++    current_character.equipment.equip!(@inventory, params[:to_placement])
++    
++    render :action => "equip", :layout => "ajax"
++  end
+ 
+   def give
+     data = encryptor.decrypt(params[:request_data].to_s)
+diff --git a/app/helpers/inventories_helper.rb b/app/helpers/inventories_helper.rb
+index 040508f..349a172 100644
+--- a/app/helpers/inventories_helper.rb
++++ b/app/helpers/inventories_helper.rb
+@@ -28,4 +28,25 @@ module InventoriesHelper
+       )
+     )
+   end
++  
++  def inventory_item_image(inventory, format, options = {})
++    result = "".html_safe
++    if count = options.delete(:count)
++      amount = count.is_a?(TrueClass) ? inventory.amount : count
++      count = content_tag(:span, amount, :class => "count #{format}")
++      
++      result << count 
++    end
++    
++    content_tag(:div, result << item_image(inventory, format, options), :class => 'inventory_image')
++  end
++  
++  def inventories_grouped_by_item_group
++    @inventories_grouped_by_item_group ||= current_character.inventories.equippable.all.group_by {|i| i.item_group }
++  end
++  
++  def inventories_equipment_additional(character = current_character)
++    @inventories_equipment_additional ||= character.equipment.inventories_by_placement(:additional)
++  end
++  
+ end
+diff --git a/app/views/inventories/_equippables.erb b/app/views/inventories/_equippables.erb
+index f31942c..57b21e8 100644
+--- a/app/views/inventories/_equippables.erb
++++ b/app/views/inventories/_equippables.erb
+@@ -1,40 +1,31 @@
+ <div id="equippables">
+   <h2><%= t(".header") %></h2>
+ 
+-  <% collection(current_character.inventories.equippable.all) do |inventories| %>
+-    <% inventories.each do |inventory| %>
+-      <% content_tag(:div, :id => dom_id(inventory, :equipment), :class => :inventory) do %>        
+-        <div class="header">
+-          <%= t(".item_header",
+-                :name   => content_tag(:span, inventory.name, :class => :name),
+-                :amount => content_tag(:span, inventory.amount_available_for_equipment, :class => :amount)
+-              ).html_safe %>
+-        </div>
++  <% if inventories_grouped_by_item_group.any? %>
+ 
+-        <div class="controls">
+-          <% form_tag "" do %>
+-            <%= select_tag(:placement, options_for_select(inventory.placement_options_for_select)) %>
+-
+-            <%= link_to_remote(button(:equip),
+-                  :url    => equip_inventory_path(inventory),
+-                  :update => :result,
+-                  :with   => "$(this).parent('form').serialize()",
+-                  :html   => {:class => "equip button"}
+-                ) %>
+-          <% end %>
+-        </div>
+-
+-        <div class="image">
+-          <%= item_image(inventory, :small, 
+-                :tooltip => {
+-                  :position => {
+-                    :my => 'top left',
+-                    :at => 'bottom right'
+-                  }
+-                }
+-              ) %>
+-        </div>
++    <div id="equippables-tabs">
++      <ul>
++        <% inventories_grouped_by_item_group.each do |item_group, inventories| %>
++          <li><%= link_to(item_group.name, "##{dom_id(item_group, :inventories)}") %></li>
++        <% end %>
++      </ul>
++      
++      <% inventories_grouped_by_item_group.each do |item_group, inventories| %>
++        <% div_for(item_group, :inventories) do %>
++          <ul class="carousel-container">
++            <% inventories.each do |inventory| %>
++              <% content_tag_for(:li, inventory, :equipment, 
++                  :'data-placements' => inventory.placements.join(','),
++                  :'data-equip' => equip_inventory_path(inventory)) do %>
++                <%= inventory_item_image(inventory, :small, :tooltip => true, :count => inventory.amount_available_for_equipment) %>
++              <% end %>
++            <% end %>
++          </ul>
++        <% end %>
+       <% end %>
+-    <% end %>
++    </div>
++    
++  <% else %>
++    <%= empty_set %>
+   <% end %>
+ </div>
+diff --git a/app/views/inventories/_placements.erb b/app/views/inventories/_placements.erb
+index ad3f255..f211a16 100644
+--- a/app/views/inventories/_placements.erb
++++ b/app/views/inventories/_placements.erb
+@@ -1,8 +1,12 @@
+ <div id="placements">
+   <% (Character::Equipment::MAIN_PLACEMENTS).each do |placement| %>
+-    <% content_tag(:div, :class => "placement #{placement}") do %>
++    <% content_tag(:div, :class => "placement #{placement}", :'data-placement' => placement) do %>
+       <% character.equipment.inventories_by_placement(placement).each do |inventory| %>
+-        <% content_tag :div, :class => :inventory do %>
++        <% content_tag :div, :class => :inventory, 
++            :"data-placements" => inventory.placements.join(","),
++            :"data-equip" => equip_inventory_path(inventory),
++            :"data-unequip" => unequip_inventory_path(inventory, :placement => placement),
++            :"data-move" => move_inventory_path(inventory, :from_placement => placement) do %>
+           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
+                 :url    => unequip_inventory_path(inventory, :placement => placement),
+                 :update => :result,
+@@ -26,9 +30,13 @@
+       <div class="help"><%= link %></div>
+     <% end %>
+ 
+-    <div class="items">
+-      <% character.equipment.inventories_by_placement(:additional).each do |inventory| %>
+-        <% content_tag :div, :class => :inventory do %>
++    <ul class="items" data-placement="additional">
++      <% inventories_equipment_additional.each do |inventory| %>
++        <% content_tag :li, :class => :inventory, 
++            :'data-placements' => inventory.placements.join(','),
++            :"data-equip" => equip_inventory_path(inventory),
++            :"data-unequip" => unequip_inventory_path(inventory, :placement => 'additional'),
++            :"data-move" => move_inventory_path(inventory, :from_placement => 'additional') do %>
+           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
+                 :url    => unequip_inventory_path(inventory, :placement => :additional),
+                 :update => :result,
+@@ -42,7 +50,7 @@
+           <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true) -%>
+         <% end %>
+       <% end %>
+-    </div>
++    </ul>
+ 
+     <% inventory_additonal_slots_note do |free_slots| %>
+       <div class="note">
+diff --git a/app/views/inventories/equip.erb b/app/views/inventories/equip.erb
+index 3d9d673..a8c9006 100644
+--- a/app/views/inventories/equip.erb
++++ b/app/views/inventories/equip.erb
+@@ -10,4 +10,6 @@
+         @inventory ? "#{@inventory.name} (#{@inventory.item.availability})" : 'All Items', 
+         current_character.level
+       ) %>
++      
++  $(document).trigger('remote_content.received');
+ <% end %>
+diff --git a/app/views/inventories/equipment.html.erb b/app/views/inventories/equipment.html.erb
+index f42b0f4..9bd59fe 100644
+--- a/app/views/inventories/equipment.html.erb
++++ b/app/views/inventories/equipment.html.erb
+@@ -6,34 +6,26 @@
+   <%= render "characters/fight_attributes" %>
+ </div>
+ 
+-<table id="equipment">
+-  <tr>
+-    <td>
+-      <div id="equipment_inventories">
+-        <%= render "equippables" %>
+-      </div>
+-    </td>
+-
+-    <td>
+-      <div id="equipment_buttons" class="buttons clearfix">
+-        <%= link_to_remote(button(:auto_equip),
+-              :url => equip_inventories_path,
+-              :update => :result,
+-              :html => {:class => "button auto_equip"}
+-            ) %>
+-        <%= link_to_remote(button(:unequip),
+-              :url => unequip_inventories_path,
+-              :update => :result,
+-              :html => {:class => "button unequip"}
+-            ) %>
+-      </div>
+-
+-      <div id="equipment_placements">
+-        <%= render "placements", :character => current_character %>
+-      </div>
+-    </td>
+-  </tr>
+-</table>
++<div id="equipment">
++  <div id="equipment_inventories">
++    <%= render "equippables" %>
++  </div>
++  <div id="equipment_buttons" class="buttons clearfix">
++    <%= link_to_remote(button(:auto_equip),
++          :url => equip_inventories_path,
++          :update => :result,
++          :html => {:class => "button auto_equip"}
++        ) %>
++    <%= link_to_remote(button(:unequip),
++          :url => unequip_inventories_path,
++          :update => :result,
++          :html => {:class => "button unequip"}
++        ) %>
++  </div>
++  <div id="equipment_placements">
++    <%= render "placements", :character => current_character %>
++  </div>
++</div>
+ 
+ <% dom_ready do %>
+   Equipment.setup();
+diff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb
+index b7da62a..18914b4 100644
+--- a/app/views/layouts/application.html.erb
++++ b/app/views/layouts/application.html.erb
+@@ -6,12 +6,13 @@
+   </script>
+ 
+   <%= stylesheet_link_tag(skin_path) %>
+-  <%= stylesheet_link_tag("qtip.css") %>
++  <%= stylesheet_link_tag("qtip.css", "ui-custom.css") %>
+ 
+   <%= include_jquery_from_google %>
+   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", 
+-        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'facebook_credits', "application", 
+-        :cache => "cache/all" %>
++        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'jquery/jcarousel', 
++        'jquery/ui/core', 'jquery/ui/widget', 'jquery/ui/mouse',  'jquery/ui/draggable', 'jquery/ui/droppable', 
++        'jquery/ui/tabs', 'facebook_credits', "application", :cache => "cache/all" %>
+         
+   <%= javascript_include_tag "tutorial" if tutorial_visible? %>
+ 
+diff --git a/app/views/layouts/help_pages.html.erb b/app/views/layouts/help_pages.html.erb
+index 57cf23d..7732c65 100644
+--- a/app/views/layouts/help_pages.html.erb
++++ b/app/views/layouts/help_pages.html.erb
+@@ -9,8 +9,9 @@
+ 
+   <%= include_jquery_from_google %>
+   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", 
+-        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'facebook_credits', "application", 
+-        :cache => "cache/all" %>
++        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'jquery/jcarousel', 
++        'jquery/ui/core', 'jquery/ui/widget', 'jquery/ui/mouse',  'jquery/ui/draggable', 'jquery/ui/droppable', 
++        'jquery/ui/tabs', 'facebook_credits', "application", :cache => "cache/all" %>
+ 
+   <%= google_analytics %>
+ </head>
+diff --git a/app/views/layouts/unauthorized.html.erb b/app/views/layouts/unauthorized.html.erb
+index 178d983..8a583cb 100644
+--- a/app/views/layouts/unauthorized.html.erb
++++ b/app/views/layouts/unauthorized.html.erb
+@@ -9,10 +9,10 @@
+   <%= stylesheet_link_tag("qtip.css") %>
+ 
+   <%= include_jquery_from_google %>
+-  <%= include_jquery_from_google %>
+   <%= javascript_include_tag "jrails", "jquery/tabs", "jquery/dialog", "jquery/scroll_to", 
+-        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'facebook_credits', "application", 
+-        :cache => "cache/all" %>
++        "jquery/carousel", "jquery/qtip2", 'jquery/history', 'jquery/jcarousel', 
++        'jquery/ui/core', 'jquery/ui/widget', 'jquery/ui/mouse',  'jquery/ui/draggable', 'jquery/ui/droppable', 
++        'jquery/ui/tabs', 'facebook_credits', "application", :cache => "cache/all" %>
+ 
+   <%= google_analytics %>
+ </head>
+diff --git a/config/routes.rb b/config/routes.rb
+index 3ccf35d..b4ae2e6 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -218,7 +218,8 @@ ActionController::Routing::Routes.draw do |map|
+     :member     => {
+       :use      => :any,
+       :equip    => :post,
+-      :unequip  => :post
++      :unequip  => :post,
++      :move     => :post
+     }
+   map.resources :fights,
+     :member     => {:respond => :post, :used_items => :post}
+diff --git a/public/images/jcarousel/next-horizontal.png b/public/images/jcarousel/next-horizontal.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..6fcd3d908e67338072f0d680ddca684d7c745923
+GIT binary patch
+literal 4375
+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
+Ka(d!OP5vJaH7VBs
+
+literal 0
+HcmV?d00001
+
+diff --git a/public/images/jcarousel/next-vertical.png b/public/images/jcarousel/next-vertical.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..066a3e0211ece6fb981cc9251196a56bd8e1d51e
+GIT binary patch
+literal 3817
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/public/images/jcarousel/prev-horizontal.png b/public/images/jcarousel/prev-horizontal.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..36472c05105d0242fd27866af8a276572d1f51d3
+GIT binary patch
+literal 4322
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/public/images/jcarousel/prev-vertical.png b/public/images/jcarousel/prev-vertical.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..bb30f85df92a9fe1a77f2948c71734a597579373
+GIT binary patch
+literal 3962
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/public/javascripts/application.js b/public/javascripts/application.js
+index 928664c..0ff5c02 100644
+--- a/public/javascripts/application.js
++++ b/public/javascripts/application.js
+@@ -345,7 +345,92 @@ var AssignmentForm = {
+ 
+ 
+ var Equipment = {
+-  setup: function(){
++  setup: function() {
++    $("#equippables-tabs").tabs();
++    
++    $("#equipment_inventories .carousel-container").each(function() {
++      $(this).jcarousel(); 
++    });
++    
++    $("#placements .additional .items").jcarousel({
++      vertical: true
++    });
++    
++    $("#equippables .inventory").draggable({
++      appendTo: $("#equipment"),
++      helper: function() {
++        var clone = $(this).clone();
++        clone.find("span").remove();
++        return clone;
++      },
++      revert: "invalid",
++      cursor: "move"
++    });
++    
++    $("#placements .inventory").draggable({
++      appendTo: $("#equipment"),
++      helper: function() {
++        var clone = $(this).clone();
++        return clone;
++      },
++      revert: "invalid",
++      cursor: "move"
++    });
++    
++    var elementInContainer = function(container, el) {
++      return $(el).parents("[data-placement='" + $(container).data('placement') + "']").length == 1;
++    }
++    
++    var checkPlacementAcceptance = function(container, el) {
++      return $.inArray($(container).data('placement'), $(el).data('placements').split(',')) != -1;
++    };
++    
++    var droppableDefaults = {
++      activeClass: "state-active",
++      hoverClass: "state-hover",
++      activate: function(){ 
++        $(this).css('opacity', 0.7);
++      },
++      deactivate: function(){
++        $(this).css('opacity', 1);
++      }
++    };
++    
++    $("#placements .placement, #placements .additional .items").droppable($.extend(droppableDefaults, {
++      accept: function(el) {
++        if (checkPlacementAcceptance(this, el) && !elementInContainer(this, el)) {
++          return true;
++        }
++        return false;
++      },
++      drop: function(event, ui) {
++        if ($(ui.draggable).data('move')) {
++          // move inventory from one placement to another
++          $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')}, function(request) {
++            $("#result").html(request);
++          });
++        } else {
++          // simply equip inventory in this placement
++          $.post($(ui.draggable).data('equip'), {placement: $(this).data('placement')}, function(request) {
++            $("#result").html(request);
++          });
++        }
++      }
++    }));
++    
++    $("#equippables-tabs .jcarousel-clip").droppable($.extend(droppableDefaults, {
++      accept: function(el) {
++        if ($(el).parents("#equippables-tabs").length == 0) {
++          return true;
++        }
++        return false;
++      },
++      drop: function(event, ui) {
++        $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')}, function(request) {
++          $("#result").html(request);
++        });
++      }
++    }));
+   }
+ };
+ 
+@@ -441,12 +526,16 @@ $(function(){
+     });
+   }
+   
+-  // Display tooltips
+-  $('#content [data-tooltip]').each(function(){
+-    var $element = $(this);
+-    
+-    $element.qtip($element.data('tooltip'));
+-  });
++  $(document).bind('tooltips.setup', function(){
++    // Display tooltips
++    $('#content [data-tooltip]').each(function(){
++      var $element = $(this);
++      
++      $element.qtip($element.data('tooltip'));
++    });
++  })
++  
++  $(document).trigger('tooltips.setup');
+        
+   $('a[data-click-once=true]').live('click', function(){
+     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
+@@ -467,6 +556,7 @@ $(function(){
+     if(typeof FB !== 'undefined'){
+       FB.XFBML.parse();
+     }
++    $(document).trigger('tooltips.setup');
+   });
+ 
+   $(document).bind('loading.dialog', function(){
+diff --git a/public/javascripts/jquery/jcarousel.js b/public/javascripts/jquery/jcarousel.js
+new file mode 100644
+index 0000000..5d9a91e
+--- /dev/null
++++ b/public/javascripts/jquery/jcarousel.js
+@@ -0,0 +1,16 @@
++/*!
++ * jCarousel - Riding carousels with jQuery
++ *   http://sorgalla.com/jcarousel/
++ *
++ * Copyright (c) 2006 Jan Sorgalla (http://sorgalla.com)
++ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
++ * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
++ *
++ * Built on top of the jQuery library
++ *   http://jquery.com
++ *
++ * Inspired by the "Carousel Component" by Bill Scott
++ *   http://billwscott.com/carousel/
++ */
++
++(function(g){var q={vertical:!1,rtl:!1,start:1,offset:1,size:null,scroll:3,visible:null,animation:"normal",easing:"swing",auto:0,wrap:null,initCallback:null,setupCallback:null,reloadCallback:null,itemLoadCallback:null,itemFirstInCallback:null,itemFirstOutCallback:null,itemLastInCallback:null,itemLastOutCallback:null,itemVisibleInCallback:null,itemVisibleOutCallback:null,animationStepCallback:null,buttonNextHTML:"<div></div>",buttonPrevHTML:"<div></div>",buttonNextEvent:"click",buttonPrevEvent:"click", buttonNextCallback:null,buttonPrevCallback:null,itemFallbackDimension:null},m=!1;g(window).bind("load.jcarousel",function(){m=!0});g.jcarousel=function(a,c){this.options=g.extend({},q,c||{});this.autoStopped=this.locked=!1;this.buttonPrevState=this.buttonNextState=this.buttonPrev=this.buttonNext=this.list=this.clip=this.container=null;if(!c||c.rtl===void 0)this.options.rtl=(g(a).attr("dir")||g("html").attr("dir")||"").toLowerCase()=="rtl";this.wh=!this.options.vertical?"width":"height";this.lt=!this.options.vertical? this.options.rtl?"right":"left":"top";for(var b="",d=a.className.split(" "),f=0;f<d.length;f++)if(d[f].indexOf("jcarousel-skin")!=-1){g(a).removeClass(d[f]);b=d[f];break}a.nodeName.toUpperCase()=="UL"||a.nodeName.toUpperCase()=="OL"?(this.list=g(a),this.clip=this.list.parents(".jcarousel-clip"),this.container=this.list.parents(".jcarousel-container")):(this.container=g(a),this.list=this.container.find("ul,ol").eq(0),this.clip=this.container.find(".jcarousel-clip"));if(this.clip.size()===0)this.clip= this.list.wrap("<div></div>").parent();if(this.container.size()===0)this.container=this.clip.wrap("<div></div>").parent();b!==""&&this.container.parent()[0].className.indexOf("jcarousel-skin")==-1&&this.container.wrap('<div class=" '+b+'"></div>');this.buttonPrev=g(".jcarousel-prev",this.container);if(this.buttonPrev.size()===0&&this.options.buttonPrevHTML!==null)this.buttonPrev=g(this.options.buttonPrevHTML).appendTo(this.container);this.buttonPrev.addClass(this.className("jcarousel-prev"));this.buttonNext= g(".jcarousel-next",this.container);if(this.buttonNext.size()===0&&this.options.buttonNextHTML!==null)this.buttonNext=g(this.options.buttonNextHTML).appendTo(this.container);this.buttonNext.addClass(this.className("jcarousel-next"));this.clip.addClass(this.className("jcarousel-clip")).css({position:"relative"});this.list.addClass(this.className("jcarousel-list")).css({overflow:"hidden",position:"relative",top:0,margin:0,padding:0}).css(this.options.rtl?"right":"left",0);this.container.addClass(this.className("jcarousel-container")).css({position:"relative"}); !this.options.vertical&&this.options.rtl&&this.container.addClass("jcarousel-direction-rtl").attr("dir","rtl");var j=this.options.visible!==null?Math.ceil(this.clipping()/this.options.visible):null,b=this.list.children("li"),e=this;if(b.size()>0){var h=0,i=this.options.offset;b.each(function(){e.format(this,i++);h+=e.dimension(this,j)});this.list.css(this.wh,h+100+"px");if(!c||c.size===void 0)this.options.size=b.size()}this.container.css("display","block");this.buttonNext.css("display","block");this.buttonPrev.css("display", "block");this.funcNext=function(){e.next()};this.funcPrev=function(){e.prev()};this.funcResize=function(){e.resizeTimer&&clearTimeout(e.resizeTimer);e.resizeTimer=setTimeout(function(){e.reload()},100)};this.options.initCallback!==null&&this.options.initCallback(this,"init");!m&&g.browser.safari?(this.buttons(!1,!1),g(window).bind("load.jcarousel",function(){e.setup()})):this.setup()};var f=g.jcarousel;f.fn=f.prototype={jcarousel:"0.2.8"};f.fn.extend=f.extend=g.extend;f.fn.extend({setup:function(){this.prevLast= this.prevFirst=this.last=this.first=null;this.animating=!1;this.tail=this.resizeTimer=this.timer=null;this.inTail=!1;if(!this.locked){this.list.css(this.lt,this.pos(this.options.offset)+"px");var a=this.pos(this.options.start,!0);this.prevFirst=this.prevLast=null;this.animate(a,!1);g(window).unbind("resize.jcarousel",this.funcResize).bind("resize.jcarousel",this.funcResize);this.options.setupCallback!==null&&this.options.setupCallback(this)}},reset:function(){this.list.empty();this.list.css(this.lt, "0px");this.list.css(this.wh,"10px");this.options.initCallback!==null&&this.options.initCallback(this,"reset");this.setup()},reload:function(){this.tail!==null&&this.inTail&&this.list.css(this.lt,f.intval(this.list.css(this.lt))+this.tail);this.tail=null;this.inTail=!1;this.options.reloadCallback!==null&&this.options.reloadCallback(this);if(this.options.visible!==null){var a=this,c=Math.ceil(this.clipping()/this.options.visible),b=0,d=0;this.list.children("li").each(function(f){b+=a.dimension(this, c);f+1<a.first&&(d=b)});this.list.css(this.wh,b+"px");this.list.css(this.lt,-d+"px")}this.scroll(this.first,!1)},lock:function(){this.locked=!0;this.buttons()},unlock:function(){this.locked=!1;this.buttons()},size:function(a){if(a!==void 0)this.options.size=a,this.locked||this.buttons();return this.options.size},has:function(a,c){if(c===void 0||!c)c=a;if(this.options.size!==null&&c>this.options.size)c=this.options.size;for(var b=a;b<=c;b++){var d=this.get(b);if(!d.length||d.hasClass("jcarousel-item-placeholder"))return!1}return!0}, get:function(a){return g(">.jcarousel-item-"+a,this.list)},add:function(a,c){var b=this.get(a),d=0,p=g(c);if(b.length===0)for(var j,e=f.intval(a),b=this.create(a);;){if(j=this.get(--e),e<=0||j.length){e<=0?this.list.prepend(b):j.after(b);break}}else d=this.dimension(b);p.get(0).nodeName.toUpperCase()=="LI"?(b.replaceWith(p),b=p):b.empty().append(c);this.format(b.removeClass(this.className("jcarousel-item-placeholder")),a);p=this.options.visible!==null?Math.ceil(this.clipping()/this.options.visible): null;d=this.dimension(b,p)-d;a>0&&a<this.first&&this.list.css(this.lt,f.intval(this.list.css(this.lt))-d+"px");this.list.css(this.wh,f.intval(this.list.css(this.wh))+d+"px");return b},remove:function(a){var c=this.get(a);if(c.length&&!(a>=this.first&&a<=this.last)){var b=this.dimension(c);a<this.first&&this.list.css(this.lt,f.intval(this.list.css(this.lt))+b+"px");c.remove();this.list.css(this.wh,f.intval(this.list.css(this.wh))-b+"px")}},next:function(){this.tail!==null&&!this.inTail?this.scrollTail(!1): this.scroll((this.options.wrap=="both"||this.options.wrap=="last")&&this.options.size!==null&&this.last==this.options.size?1:this.first+this.options.scroll)},prev:function(){this.tail!==null&&this.inTail?this.scrollTail(!0):this.scroll((this.options.wrap=="both"||this.options.wrap=="first")&&this.options.size!==null&&this.first==1?this.options.size:this.first-this.options.scroll)},scrollTail:function(a){if(!this.locked&&!this.animating&&this.tail){this.pauseAuto();var c=f.intval(this.list.css(this.lt)), c=!a?c-this.tail:c+this.tail;this.inTail=!a;this.prevFirst=this.first;this.prevLast=this.last;this.animate(c)}},scroll:function(a,c){!this.locked&&!this.animating&&(this.pauseAuto(),this.animate(this.pos(a),c))},pos:function(a,c){var b=f.intval(this.list.css(this.lt));if(this.locked||this.animating)return b;this.options.wrap!="circular"&&(a=a<1?1:this.options.size&&a>this.options.size?this.options.size:a);for(var d=this.first>a,g=this.options.wrap!="circular"&&this.first<=1?1:this.first,j=d?this.get(g): this.get(this.last),e=d?g:g-1,h=null,i=0,k=!1,l=0;d?--e>=a:++e<a;){h=this.get(e);k=!h.length;if(h.length===0&&(h=this.create(e).addClass(this.className("jcarousel-item-placeholder")),j[d?"before":"after"](h),this.first!==null&&this.options.wrap=="circular"&&this.options.size!==null&&(e<=0||e>this.options.size)))j=this.get(this.index(e)),j.length&&(h=this.add(e,j.clone(!0)));j=h;l=this.dimension(h);k&&(i+=l);if(this.first!==null&&(this.options.wrap=="circular"||e>=1&&(this.options.size===null||e<= this.options.size)))b=d?b+l:b-l}for(var g=this.clipping(),m=[],o=0,n=0,j=this.get(a-1),e=a;++o;){h=this.get(e);k=!h.length;if(h.length===0){h=this.create(e).addClass(this.className("jcarousel-item-placeholder"));if(j.length===0)this.list.prepend(h);else j[d?"before":"after"](h);if(this.first!==null&&this.options.wrap=="circular"&&this.options.size!==null&&(e<=0||e>this.options.size))j=this.get(this.index(e)),j.length&&(h=this.add(e,j.clone(!0)))}j=h;l=this.dimension(h);if(l===0)throw Error("jCarousel: No width/height set for items. This will cause an infinite loop. Aborting..."); this.options.wrap!="circular"&&this.options.size!==null&&e>this.options.size?m.push(h):k&&(i+=l);n+=l;if(n>=g)break;e++}for(h=0;h<m.length;h++)m[h].remove();i>0&&(this.list.css(this.wh,this.dimension(this.list)+i+"px"),d&&(b-=i,this.list.css(this.lt,f.intval(this.list.css(this.lt))-i+"px")));i=a+o-1;if(this.options.wrap!="circular"&&this.options.size&&i>this.options.size)i=this.options.size;if(e>i){o=0;e=i;for(n=0;++o;){h=this.get(e--);if(!h.length)break;n+=this.dimension(h);if(n>=g)break}}e=i-o+ 1;this.options.wrap!="circular"&&e<1&&(e=1);if(this.inTail&&d)b+=this.tail,this.inTail=!1;this.tail=null;if(this.options.wrap!="circular"&&i==this.options.size&&i-o+1>=1&&(d=f.intval(this.get(i).css(!this.options.vertical?"marginRight":"marginBottom")),n-d>g))this.tail=n-g-d;if(c&&a===this.options.size&&this.tail)b-=this.tail,this.inTail=!0;for(;a-- >e;)b+=this.dimension(this.get(a));this.prevFirst=this.first;this.prevLast=this.last;this.first=e;this.last=i;return b},animate:function(a,c){if(!this.locked&& !this.animating){this.animating=!0;var b=this,d=function(){b.animating=!1;a===0&&b.list.css(b.lt,0);!b.autoStopped&&(b.options.wrap=="circular"||b.options.wrap=="both"||b.options.wrap=="last"||b.options.size===null||b.last<b.options.size||b.last==b.options.size&&b.tail!==null&&!b.inTail)&&b.startAuto();b.buttons();b.notify("onAfterAnimation");if(b.options.wrap=="circular"&&b.options.size!==null)for(var c=b.prevFirst;c<=b.prevLast;c++)c!==null&&!(c>=b.first&&c<=b.last)&&(c<1||c>b.options.size)&&b.remove(c)}; this.notify("onBeforeAnimation");if(!this.options.animation||c===!1)this.list.css(this.lt,a+"px"),d();else{var f=!this.options.vertical?this.options.rtl?{right:a}:{left:a}:{top:a},d={duration:this.options.animation,easing:this.options.easing,complete:d};if(g.isFunction(this.options.animationStepCallback))d.step=this.options.animationStepCallback;this.list.animate(f,d)}}},startAuto:function(a){if(a!==void 0)this.options.auto=a;if(this.options.auto===0)return this.stopAuto();if(this.timer===null){this.autoStopped= !1;var c=this;this.timer=window.setTimeout(function(){c.next()},this.options.auto*1E3)}},stopAuto:function(){this.pauseAuto();this.autoStopped=!0},pauseAuto:function(){if(this.timer!==null)window.clearTimeout(this.timer),this.timer=null},buttons:function(a,c){if(a==null&&(a=!this.locked&&this.options.size!==0&&(this.options.wrap&&this.options.wrap!="first"||this.options.size===null||this.last<this.options.size),!this.locked&&(!this.options.wrap||this.options.wrap=="first")&&this.options.size!==null&& this.last>=this.options.size))a=this.tail!==null&&!this.inTail;if(c==null&&(c=!this.locked&&this.options.size!==0&&(this.options.wrap&&this.options.wrap!="last"||this.first>1),!this.locked&&(!this.options.wrap||this.options.wrap=="last")&&this.options.size!==null&&this.first==1))c=this.tail!==null&&this.inTail;var b=this;this.buttonNext.size()>0?(this.buttonNext.unbind(this.options.buttonNextEvent+".jcarousel",this.funcNext),a&&this.buttonNext.bind(this.options.buttonNextEvent+".jcarousel",this.funcNext), this.buttonNext[a?"removeClass":"addClass"](this.className("jcarousel-next-disabled")).attr("disabled",a?!1:!0),this.options.buttonNextCallback!==null&&this.buttonNext.data("jcarouselstate")!=a&&this.buttonNext.each(function(){b.options.buttonNextCallback(b,this,a)}).data("jcarouselstate",a)):this.options.buttonNextCallback!==null&&this.buttonNextState!=a&&this.options.buttonNextCallback(b,null,a);this.buttonPrev.size()>0?(this.buttonPrev.unbind(this.options.buttonPrevEvent+".jcarousel",this.funcPrev), c&&this.buttonPrev.bind(this.options.buttonPrevEvent+".jcarousel",this.funcPrev),this.buttonPrev[c?"removeClass":"addClass"](this.className("jcarousel-prev-disabled")).attr("disabled",c?!1:!0),this.options.buttonPrevCallback!==null&&this.buttonPrev.data("jcarouselstate")!=c&&this.buttonPrev.each(function(){b.options.buttonPrevCallback(b,this,c)}).data("jcarouselstate",c)):this.options.buttonPrevCallback!==null&&this.buttonPrevState!=c&&this.options.buttonPrevCallback(b,null,c);this.buttonNextState= a;this.buttonPrevState=c},notify:function(a){var c=this.prevFirst===null?"init":this.prevFirst<this.first?"next":"prev";this.callback("itemLoadCallback",a,c);this.prevFirst!==this.first&&(this.callback("itemFirstInCallback",a,c,this.first),this.callback("itemFirstOutCallback",a,c,this.prevFirst));this.prevLast!==this.last&&(this.callback("itemLastInCallback",a,c,this.last),this.callback("itemLastOutCallback",a,c,this.prevLast));this.callback("itemVisibleInCallback",a,c,this.first,this.last,this.prevFirst, this.prevLast);this.callback("itemVisibleOutCallback",a,c,this.prevFirst,this.prevLast,this.first,this.last)},callback:function(a,c,b,d,f,j,e){if(!(this.options[a]==null||typeof this.options[a]!="object"&&c!="onAfterAnimation")){var h=typeof this.options[a]=="object"?this.options[a][c]:this.options[a];if(g.isFunction(h)){var i=this;if(d===void 0)h(i,b,c);else if(f===void 0)this.get(d).each(function(){h(i,this,d,b,c)});else for(var a=function(a){i.get(a).each(function(){h(i,this,a,b,c)})},k=d;k<=f;k++)k!== null&&!(k>=j&&k<=e)&&a(k)}}},create:function(a){return this.format("<li></li>",a)},format:function(a,c){for(var a=g(a),b=a.get(0).className.split(" "),d=0;d<b.length;d++)b[d].indexOf("jcarousel-")!=-1&&a.removeClass(b[d]);a.addClass(this.className("jcarousel-item")).addClass(this.className("jcarousel-item-"+c)).css({"float":this.options.rtl?"right":"left","list-style":"none"}).attr("jcarouselindex",c);return a},className:function(a){return a+" "+a+(!this.options.vertical?"-horizontal":"-vertical")}, dimension:function(a,c){var b=g(a);if(c==null)return!this.options.vertical?b.outerWidth(!0)||f.intval(this.options.itemFallbackDimension):b.outerHeight(!0)||f.intval(this.options.itemFallbackDimension);else{var d=!this.options.vertical?c-f.intval(b.css("marginLeft"))-f.intval(b.css("marginRight")):c-f.intval(b.css("marginTop"))-f.intval(b.css("marginBottom"));g(b).css(this.wh,d+"px");return this.dimension(b)}},clipping:function(){return!this.options.vertical?this.clip[0].offsetWidth-f.intval(this.clip.css("borderLeftWidth"))- f.intval(this.clip.css("borderRightWidth")):this.clip[0].offsetHeight-f.intval(this.clip.css("borderTopWidth"))-f.intval(this.clip.css("borderBottomWidth"))},index:function(a,c){if(c==null)c=this.options.size;return Math.round(((a-1)/c-Math.floor((a-1)/c))*c)+1}});f.extend({defaults:function(a){return g.extend(q,a||{})},intval:function(a){a=parseInt(a,10);return isNaN(a)?0:a},windowLoaded:function(){m=!0}});g.fn.jcarousel=function(a){if(typeof a=="string"){var c=g(this).data("jcarousel"),b=Array.prototype.slice.call(arguments, 1);return c[a].apply(c,b)}else return this.each(function(){var b=g(this).data("jcarousel");b?(a&&g.extend(b.options,a),b.reload()):g(this).data("jcarousel",new f(this,a))})}})(jQuery);
+diff --git a/public/javascripts/jquery/ui/core.js b/public/javascripts/jquery/ui/core.js
+new file mode 100644
+index 0000000..577548e
+--- /dev/null
++++ b/public/javascripts/jquery/ui/core.js
+@@ -0,0 +1,17 @@
++/*!
++ * jQuery UI 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI
++ */
++(function(c,j){function k(a,b){var d=a.nodeName.toLowerCase();if("area"===d){b=a.parentNode;d=b.name;if(!a.href||!d||b.nodeName.toLowerCase()!=="map")return false;a=c("img[usemap=#"+d+"]")[0];return!!a&&l(a)}return(/input|select|textarea|button|object/.test(d)?!a.disabled:"a"==d?a.href||b:b)&&l(a)}function l(a){return!c(a).parents().andSelf().filter(function(){return c.curCSS(this,"visibility")==="hidden"||c.expr.filters.hidden(this)}).length}c.ui=c.ui||{};if(!c.ui.version){c.extend(c.ui,{version:"1.8.14",
++keyCode:{ALT:18,BACKSPACE:8,CAPS_LOCK:20,COMMA:188,COMMAND:91,COMMAND_LEFT:91,COMMAND_RIGHT:93,CONTROL:17,DELETE:46,DOWN:40,END:35,ENTER:13,ESCAPE:27,HOME:36,INSERT:45,LEFT:37,MENU:93,NUMPAD_ADD:107,NUMPAD_DECIMAL:110,NUMPAD_DIVIDE:111,NUMPAD_ENTER:108,NUMPAD_MULTIPLY:106,NUMPAD_SUBTRACT:109,PAGE_DOWN:34,PAGE_UP:33,PERIOD:190,RIGHT:39,SHIFT:16,SPACE:32,TAB:9,UP:38,WINDOWS:91}});c.fn.extend({_focus:c.fn.focus,focus:function(a,b){return typeof a==="number"?this.each(function(){var d=this;setTimeout(function(){c(d).focus();
++b&&b.call(d)},a)}):this._focus.apply(this,arguments)},scrollParent:function(){var a;a=c.browser.msie&&/(static|relative)/.test(this.css("position"))||/absolute/.test(this.css("position"))?this.parents().filter(function(){return/(relative|absolute|fixed)/.test(c.curCSS(this,"position",1))&&/(auto|scroll)/.test(c.curCSS(this,"overflow",1)+c.curCSS(this,"overflow-y",1)+c.curCSS(this,"overflow-x",1))}).eq(0):this.parents().filter(function(){return/(auto|scroll)/.test(c.curCSS(this,"overflow",1)+c.curCSS(this,
++"overflow-y",1)+c.curCSS(this,"overflow-x",1))}).eq(0);return/fixed/.test(this.css("position"))||!a.length?c(document):a},zIndex:function(a){if(a!==j)return this.css("zIndex",a);if(this.length){a=c(this[0]);for(var b;a.length&&a[0]!==document;){b=a.css("position");if(b==="absolute"||b==="relative"||b==="fixed"){b=parseInt(a.css("zIndex"),10);if(!isNaN(b)&&b!==0)return b}a=a.parent()}}return 0},disableSelection:function(){return this.bind((c.support.selectstart?"selectstart":"mousedown")+".ui-disableSelection",
++function(a){a.preventDefault()})},enableSelection:function(){return this.unbind(".ui-disableSelection")}});c.each(["Width","Height"],function(a,b){function d(f,g,m,n){c.each(e,function(){g-=parseFloat(c.curCSS(f,"padding"+this,true))||0;if(m)g-=parseFloat(c.curCSS(f,"border"+this+"Width",true))||0;if(n)g-=parseFloat(c.curCSS(f,"margin"+this,true))||0});return g}var e=b==="Width"?["Left","Right"]:["Top","Bottom"],h=b.toLowerCase(),i={innerWidth:c.fn.innerWidth,innerHeight:c.fn.innerHeight,outerWidth:c.fn.outerWidth,
++outerHeight:c.fn.outerHeight};c.fn["inner"+b]=function(f){if(f===j)return i["inner"+b].call(this);return this.each(function(){c(this).css(h,d(this,f)+"px")})};c.fn["outer"+b]=function(f,g){if(typeof f!=="number")return i["outer"+b].call(this,f);return this.each(function(){c(this).css(h,d(this,f,true,g)+"px")})}});c.extend(c.expr[":"],{data:function(a,b,d){return!!c.data(a,d[3])},focusable:function(a){return k(a,!isNaN(c.attr(a,"tabindex")))},tabbable:function(a){var b=c.attr(a,"tabindex"),d=isNaN(b);
++return(d||b>=0)&&k(a,!d)}});c(function(){var a=document.body,b=a.appendChild(b=document.createElement("div"));c.extend(b.style,{minHeight:"100px",height:"auto",padding:0,borderWidth:0});c.support.minHeight=b.offsetHeight===100;c.support.selectstart="onselectstart"in b;a.removeChild(b).style.display="none"});c.extend(c.ui,{plugin:{add:function(a,b,d){a=c.ui[a].prototype;for(var e in d){a.plugins[e]=a.plugins[e]||[];a.plugins[e].push([b,d[e]])}},call:function(a,b,d){if((b=a.plugins[b])&&a.element[0].parentNode)for(var e=
++0;e<b.length;e++)a.options[b[e][0]]&&b[e][1].apply(a.element,d)}},contains:function(a,b){return document.compareDocumentPosition?a.compareDocumentPosition(b)&16:a!==b&&a.contains(b)},hasScroll:function(a,b){if(c(a).css("overflow")==="hidden")return false;b=b&&b==="left"?"scrollLeft":"scrollTop";var d=false;if(a[b]>0)return true;a[b]=1;d=a[b]>0;a[b]=0;return d},isOverAxis:function(a,b,d){return a>b&&a<b+d},isOver:function(a,b,d,e,h,i){return c.ui.isOverAxis(a,d,h)&&c.ui.isOverAxis(b,e,i)}})}})(jQuery);
+diff --git a/public/javascripts/jquery/ui/draggable.js b/public/javascripts/jquery/ui/draggable.js
+new file mode 100644
+index 0000000..6779996
+--- /dev/null
++++ b/public/javascripts/jquery/ui/draggable.js
+@@ -0,0 +1,50 @@
++/*
++ * jQuery UI Draggable 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Draggables
++ *
++ * Depends:
++ *	jquery.ui.core.js
++ *	jquery.ui.mouse.js
++ *	jquery.ui.widget.js
++ */
++(function(d){d.widget("ui.draggable",d.ui.mouse,{widgetEventPrefix:"drag",options:{addClasses:true,appendTo:"parent",axis:false,connectToSortable:false,containment:false,cursor:"auto",cursorAt:false,grid:false,handle:false,helper:"original",iframeFix:false,opacity:false,refreshPositions:false,revert:false,revertDuration:500,scope:"default",scroll:true,scrollSensitivity:20,scrollSpeed:20,snap:false,snapMode:"both",snapTolerance:20,stack:false,zIndex:false},_create:function(){if(this.options.helper==
++"original"&&!/^(?:r|a|f)/.test(this.element.css("position")))this.element[0].style.position="relative";this.options.addClasses&&this.element.addClass("ui-draggable");this.options.disabled&&this.element.addClass("ui-draggable-disabled");this._mouseInit()},destroy:function(){if(this.element.data("draggable")){this.element.removeData("draggable").unbind(".draggable").removeClass("ui-draggable ui-draggable-dragging ui-draggable-disabled");this._mouseDestroy();return this}},_mouseCapture:function(a){var b=
++this.options;if(this.helper||b.disabled||d(a.target).is(".ui-resizable-handle"))return false;this.handle=this._getHandle(a);if(!this.handle)return false;d(b.iframeFix===true?"iframe":b.iframeFix).each(function(){d('<div class="ui-draggable-iframeFix" style="background: #fff;"></div>').css({width:this.offsetWidth+"px",height:this.offsetHeight+"px",position:"absolute",opacity:"0.001",zIndex:1E3}).css(d(this).offset()).appendTo("body")});return true},_mouseStart:function(a){var b=this.options;this.helper=
++this._createHelper(a);this._cacheHelperProportions();if(d.ui.ddmanager)d.ui.ddmanager.current=this;this._cacheMargins();this.cssPosition=this.helper.css("position");this.scrollParent=this.helper.scrollParent();this.offset=this.positionAbs=this.element.offset();this.offset={top:this.offset.top-this.margins.top,left:this.offset.left-this.margins.left};d.extend(this.offset,{click:{left:a.pageX-this.offset.left,top:a.pageY-this.offset.top},parent:this._getParentOffset(),relative:this._getRelativeOffset()});
++this.originalPosition=this.position=this._generatePosition(a);this.originalPageX=a.pageX;this.originalPageY=a.pageY;b.cursorAt&&this._adjustOffsetFromHelper(b.cursorAt);b.containment&&this._setContainment();if(this._trigger("start",a)===false){this._clear();return false}this._cacheHelperProportions();d.ui.ddmanager&&!b.dropBehaviour&&d.ui.ddmanager.prepareOffsets(this,a);this.helper.addClass("ui-draggable-dragging");this._mouseDrag(a,true);d.ui.ddmanager&&d.ui.ddmanager.dragStart(this,a);return true},
++_mouseDrag:function(a,b){this.position=this._generatePosition(a);this.positionAbs=this._convertPositionTo("absolute");if(!b){b=this._uiHash();if(this._trigger("drag",a,b)===false){this._mouseUp({});return false}this.position=b.position}if(!this.options.axis||this.options.axis!="y")this.helper[0].style.left=this.position.left+"px";if(!this.options.axis||this.options.axis!="x")this.helper[0].style.top=this.position.top+"px";d.ui.ddmanager&&d.ui.ddmanager.drag(this,a);return false},_mouseStop:function(a){var b=
++false;if(d.ui.ddmanager&&!this.options.dropBehaviour)b=d.ui.ddmanager.drop(this,a);if(this.dropped){b=this.dropped;this.dropped=false}if((!this.element[0]||!this.element[0].parentNode)&&this.options.helper=="original")return false;if(this.options.revert=="invalid"&&!b||this.options.revert=="valid"&&b||this.options.revert===true||d.isFunction(this.options.revert)&&this.options.revert.call(this.element,b)){var c=this;d(this.helper).animate(this.originalPosition,parseInt(this.options.revertDuration,
++10),function(){c._trigger("stop",a)!==false&&c._clear()})}else this._trigger("stop",a)!==false&&this._clear();return false},_mouseUp:function(a){this.options.iframeFix===true&&d("div.ui-draggable-iframeFix").each(function(){this.parentNode.removeChild(this)});d.ui.ddmanager&&d.ui.ddmanager.dragStop(this,a);return d.ui.mouse.prototype._mouseUp.call(this,a)},cancel:function(){this.helper.is(".ui-draggable-dragging")?this._mouseUp({}):this._clear();return this},_getHandle:function(a){var b=!this.options.handle||
++!d(this.options.handle,this.element).length?true:false;d(this.options.handle,this.element).find("*").andSelf().each(function(){if(this==a.target)b=true});return b},_createHelper:function(a){var b=this.options;a=d.isFunction(b.helper)?d(b.helper.apply(this.element[0],[a])):b.helper=="clone"?this.element.clone().removeAttr("id"):this.element;a.parents("body").length||a.appendTo(b.appendTo=="parent"?this.element[0].parentNode:b.appendTo);a[0]!=this.element[0]&&!/(fixed|absolute)/.test(a.css("position"))&&
++a.css("position","absolute");return a},_adjustOffsetFromHelper:function(a){if(typeof a=="string")a=a.split(" ");if(d.isArray(a))a={left:+a[0],top:+a[1]||0};if("left"in a)this.offset.click.left=a.left+this.margins.left;if("right"in a)this.offset.click.left=this.helperProportions.width-a.right+this.margins.left;if("top"in a)this.offset.click.top=a.top+this.margins.top;if("bottom"in a)this.offset.click.top=this.helperProportions.height-a.bottom+this.margins.top},_getParentOffset:function(){this.offsetParent=
++this.helper.offsetParent();var a=this.offsetParent.offset();if(this.cssPosition=="absolute"&&this.scrollParent[0]!=document&&d.ui.contains(this.scrollParent[0],this.offsetParent[0])){a.left+=this.scrollParent.scrollLeft();a.top+=this.scrollParent.scrollTop()}if(this.offsetParent[0]==document.body||this.offsetParent[0].tagName&&this.offsetParent[0].tagName.toLowerCase()=="html"&&d.browser.msie)a={top:0,left:0};return{top:a.top+(parseInt(this.offsetParent.css("borderTopWidth"),10)||0),left:a.left+(parseInt(this.offsetParent.css("borderLeftWidth"),
++10)||0)}},_getRelativeOffset:function(){if(this.cssPosition=="relative"){var a=this.element.position();return{top:a.top-(parseInt(this.helper.css("top"),10)||0)+this.scrollParent.scrollTop(),left:a.left-(parseInt(this.helper.css("left"),10)||0)+this.scrollParent.scrollLeft()}}else return{top:0,left:0}},_cacheMargins:function(){this.margins={left:parseInt(this.element.css("marginLeft"),10)||0,top:parseInt(this.element.css("marginTop"),10)||0,right:parseInt(this.element.css("marginRight"),10)||0,bottom:parseInt(this.element.css("marginBottom"),
++10)||0}},_cacheHelperProportions:function(){this.helperProportions={width:this.helper.outerWidth(),height:this.helper.outerHeight()}},_setContainment:function(){var a=this.options;if(a.containment=="parent")a.containment=this.helper[0].parentNode;if(a.containment=="document"||a.containment=="window")this.containment=[a.containment=="document"?0:d(window).scrollLeft()-this.offset.relative.left-this.offset.parent.left,a.containment=="document"?0:d(window).scrollTop()-this.offset.relative.top-this.offset.parent.top,
++(a.containment=="document"?0:d(window).scrollLeft())+d(a.containment=="document"?document:window).width()-this.helperProportions.width-this.margins.left,(a.containment=="document"?0:d(window).scrollTop())+(d(a.containment=="document"?document:window).height()||document.body.parentNode.scrollHeight)-this.helperProportions.height-this.margins.top];if(!/^(document|window|parent)$/.test(a.containment)&&a.containment.constructor!=Array){a=d(a.containment);var b=a[0];if(b){a.offset();var c=d(b).css("overflow")!=
++"hidden";this.containment=[(parseInt(d(b).css("borderLeftWidth"),10)||0)+(parseInt(d(b).css("paddingLeft"),10)||0),(parseInt(d(b).css("borderTopWidth"),10)||0)+(parseInt(d(b).css("paddingTop"),10)||0),(c?Math.max(b.scrollWidth,b.offsetWidth):b.offsetWidth)-(parseInt(d(b).css("borderLeftWidth"),10)||0)-(parseInt(d(b).css("paddingRight"),10)||0)-this.helperProportions.width-this.margins.left-this.margins.right,(c?Math.max(b.scrollHeight,b.offsetHeight):b.offsetHeight)-(parseInt(d(b).css("borderTopWidth"),
++10)||0)-(parseInt(d(b).css("paddingBottom"),10)||0)-this.helperProportions.height-this.margins.top-this.margins.bottom];this.relative_container=a}}else if(a.containment.constructor==Array)this.containment=a.containment},_convertPositionTo:function(a,b){if(!b)b=this.position;a=a=="absolute"?1:-1;var c=this.cssPosition=="absolute"&&!(this.scrollParent[0]!=document&&d.ui.contains(this.scrollParent[0],this.offsetParent[0]))?this.offsetParent:this.scrollParent,f=/(html|body)/i.test(c[0].tagName);return{top:b.top+
++this.offset.relative.top*a+this.offset.parent.top*a-(d.browser.safari&&d.browser.version<526&&this.cssPosition=="fixed"?0:(this.cssPosition=="fixed"?-this.scrollParent.scrollTop():f?0:c.scrollTop())*a),left:b.left+this.offset.relative.left*a+this.offset.parent.left*a-(d.browser.safari&&d.browser.version<526&&this.cssPosition=="fixed"?0:(this.cssPosition=="fixed"?-this.scrollParent.scrollLeft():f?0:c.scrollLeft())*a)}},_generatePosition:function(a){var b=this.options,c=this.cssPosition=="absolute"&&
++!(this.scrollParent[0]!=document&&d.ui.contains(this.scrollParent[0],this.offsetParent[0]))?this.offsetParent:this.scrollParent,f=/(html|body)/i.test(c[0].tagName),e=a.pageX,h=a.pageY;if(this.originalPosition){var g;if(this.containment){if(this.relative_container){g=this.relative_container.offset();g=[this.containment[0]+g.left,this.containment[1]+g.top,this.containment[2]+g.left,this.containment[3]+g.top]}else g=this.containment;if(a.pageX-this.offset.click.left<g[0])e=g[0]+this.offset.click.left;
++if(a.pageY-this.offset.click.top<g[1])h=g[1]+this.offset.click.top;if(a.pageX-this.offset.click.left>g[2])e=g[2]+this.offset.click.left;if(a.pageY-this.offset.click.top>g[3])h=g[3]+this.offset.click.top}if(b.grid){h=b.grid[1]?this.originalPageY+Math.round((h-this.originalPageY)/b.grid[1])*b.grid[1]:this.originalPageY;h=g?!(h-this.offset.click.top<g[1]||h-this.offset.click.top>g[3])?h:!(h-this.offset.click.top<g[1])?h-b.grid[1]:h+b.grid[1]:h;e=b.grid[0]?this.originalPageX+Math.round((e-this.originalPageX)/
++b.grid[0])*b.grid[0]:this.originalPageX;e=g?!(e-this.offset.click.left<g[0]||e-this.offset.click.left>g[2])?e:!(e-this.offset.click.left<g[0])?e-b.grid[0]:e+b.grid[0]:e}}return{top:h-this.offset.click.top-this.offset.relative.top-this.offset.parent.top+(d.browser.safari&&d.browser.version<526&&this.cssPosition=="fixed"?0:this.cssPosition=="fixed"?-this.scrollParent.scrollTop():f?0:c.scrollTop()),left:e-this.offset.click.left-this.offset.relative.left-this.offset.parent.left+(d.browser.safari&&d.browser.version<
++526&&this.cssPosition=="fixed"?0:this.cssPosition=="fixed"?-this.scrollParent.scrollLeft():f?0:c.scrollLeft())}},_clear:function(){this.helper.removeClass("ui-draggable-dragging");this.helper[0]!=this.element[0]&&!this.cancelHelperRemoval&&this.helper.remove();this.helper=null;this.cancelHelperRemoval=false},_trigger:function(a,b,c){c=c||this._uiHash();d.ui.plugin.call(this,a,[b,c]);if(a=="drag")this.positionAbs=this._convertPositionTo("absolute");return d.Widget.prototype._trigger.call(this,a,b,
++c)},plugins:{},_uiHash:function(){return{helper:this.helper,position:this.position,originalPosition:this.originalPosition,offset:this.positionAbs}}});d.extend(d.ui.draggable,{version:"1.8.14"});d.ui.plugin.add("draggable","connectToSortable",{start:function(a,b){var c=d(this).data("draggable"),f=c.options,e=d.extend({},b,{item:c.element});c.sortables=[];d(f.connectToSortable).each(function(){var h=d.data(this,"sortable");if(h&&!h.options.disabled){c.sortables.push({instance:h,shouldRevert:h.options.revert});
++h.refreshPositions();h._trigger("activate",a,e)}})},stop:function(a,b){var c=d(this).data("draggable"),f=d.extend({},b,{item:c.element});d.each(c.sortables,function(){if(this.instance.isOver){this.instance.isOver=0;c.cancelHelperRemoval=true;this.instance.cancelHelperRemoval=false;if(this.shouldRevert)this.instance.options.revert=true;this.instance._mouseStop(a);this.instance.options.helper=this.instance.options._helper;c.options.helper=="original"&&this.instance.currentItem.css({top:"auto",left:"auto"})}else{this.instance.cancelHelperRemoval=
++false;this.instance._trigger("deactivate",a,f)}})},drag:function(a,b){var c=d(this).data("draggable"),f=this;d.each(c.sortables,function(){this.instance.positionAbs=c.positionAbs;this.instance.helperProportions=c.helperProportions;this.instance.offset.click=c.offset.click;if(this.instance._intersectsWith(this.instance.containerCache)){if(!this.instance.isOver){this.instance.isOver=1;this.instance.currentItem=d(f).clone().removeAttr("id").appendTo(this.instance.element).data("sortable-item",true);
++this.instance.options._helper=this.instance.options.helper;this.instance.options.helper=function(){return b.helper[0]};a.target=this.instance.currentItem[0];this.instance._mouseCapture(a,true);this.instance._mouseStart(a,true,true);this.instance.offset.click.top=c.offset.click.top;this.instance.offset.click.left=c.offset.click.left;this.instance.offset.parent.left-=c.offset.parent.left-this.instance.offset.parent.left;this.instance.offset.parent.top-=c.offset.parent.top-this.instance.offset.parent.top;
++c._trigger("toSortable",a);c.dropped=this.instance.element;c.currentItem=c.element;this.instance.fromOutside=c}this.instance.currentItem&&this.instance._mouseDrag(a)}else if(this.instance.isOver){this.instance.isOver=0;this.instance.cancelHelperRemoval=true;this.instance.options.revert=false;this.instance._trigger("out",a,this.instance._uiHash(this.instance));this.instance._mouseStop(a,true);this.instance.options.helper=this.instance.options._helper;this.instance.currentItem.remove();this.instance.placeholder&&
++this.instance.placeholder.remove();c._trigger("fromSortable",a);c.dropped=false}})}});d.ui.plugin.add("draggable","cursor",{start:function(){var a=d("body"),b=d(this).data("draggable").options;if(a.css("cursor"))b._cursor=a.css("cursor");a.css("cursor",b.cursor)},stop:function(){var a=d(this).data("draggable").options;a._cursor&&d("body").css("cursor",a._cursor)}});d.ui.plugin.add("draggable","opacity",{start:function(a,b){a=d(b.helper);b=d(this).data("draggable").options;if(a.css("opacity"))b._opacity=
++a.css("opacity");a.css("opacity",b.opacity)},stop:function(a,b){a=d(this).data("draggable").options;a._opacity&&d(b.helper).css("opacity",a._opacity)}});d.ui.plugin.add("draggable","scroll",{start:function(){var a=d(this).data("draggable");if(a.scrollParent[0]!=document&&a.scrollParent[0].tagName!="HTML")a.overflowOffset=a.scrollParent.offset()},drag:function(a){var b=d(this).data("draggable"),c=b.options,f=false;if(b.scrollParent[0]!=document&&b.scrollParent[0].tagName!="HTML"){if(!c.axis||c.axis!=
++"x")if(b.overflowOffset.top+b.scrollParent[0].offsetHeight-a.pageY<c.scrollSensitivity)b.scrollParent[0].scrollTop=f=b.scrollParent[0].scrollTop+c.scrollSpeed;else if(a.pageY-b.overflowOffset.top<c.scrollSensitivity)b.scrollParent[0].scrollTop=f=b.scrollParent[0].scrollTop-c.scrollSpeed;if(!c.axis||c.axis!="y")if(b.overflowOffset.left+b.scrollParent[0].offsetWidth-a.pageX<c.scrollSensitivity)b.scrollParent[0].scrollLeft=f=b.scrollParent[0].scrollLeft+c.scrollSpeed;else if(a.pageX-b.overflowOffset.left<
++c.scrollSensitivity)b.scrollParent[0].scrollLeft=f=b.scrollParent[0].scrollLeft-c.scrollSpeed}else{if(!c.axis||c.axis!="x")if(a.pageY-d(document).scrollTop()<c.scrollSensitivity)f=d(document).scrollTop(d(document).scrollTop()-c.scrollSpeed);else if(d(window).height()-(a.pageY-d(document).scrollTop())<c.scrollSensitivity)f=d(document).scrollTop(d(document).scrollTop()+c.scrollSpeed);if(!c.axis||c.axis!="y")if(a.pageX-d(document).scrollLeft()<c.scrollSensitivity)f=d(document).scrollLeft(d(document).scrollLeft()-
++c.scrollSpeed);else if(d(window).width()-(a.pageX-d(document).scrollLeft())<c.scrollSensitivity)f=d(document).scrollLeft(d(document).scrollLeft()+c.scrollSpeed)}f!==false&&d.ui.ddmanager&&!c.dropBehaviour&&d.ui.ddmanager.prepareOffsets(b,a)}});d.ui.plugin.add("draggable","snap",{start:function(){var a=d(this).data("draggable"),b=a.options;a.snapElements=[];d(b.snap.constructor!=String?b.snap.items||":data(draggable)":b.snap).each(function(){var c=d(this),f=c.offset();this!=a.element[0]&&a.snapElements.push({item:this,
++width:c.outerWidth(),height:c.outerHeight(),top:f.top,left:f.left})})},drag:function(a,b){for(var c=d(this).data("draggable"),f=c.options,e=f.snapTolerance,h=b.offset.left,g=h+c.helperProportions.width,n=b.offset.top,o=n+c.helperProportions.height,i=c.snapElements.length-1;i>=0;i--){var j=c.snapElements[i].left,l=j+c.snapElements[i].width,k=c.snapElements[i].top,m=k+c.snapElements[i].height;if(j-e<h&&h<l+e&&k-e<n&&n<m+e||j-e<h&&h<l+e&&k-e<o&&o<m+e||j-e<g&&g<l+e&&k-e<n&&n<m+e||j-e<g&&g<l+e&&k-e<o&&
++o<m+e){if(f.snapMode!="inner"){var p=Math.abs(k-o)<=e,q=Math.abs(m-n)<=e,r=Math.abs(j-g)<=e,s=Math.abs(l-h)<=e;if(p)b.position.top=c._convertPositionTo("relative",{top:k-c.helperProportions.height,left:0}).top-c.margins.top;if(q)b.position.top=c._convertPositionTo("relative",{top:m,left:0}).top-c.margins.top;if(r)b.position.left=c._convertPositionTo("relative",{top:0,left:j-c.helperProportions.width}).left-c.margins.left;if(s)b.position.left=c._convertPositionTo("relative",{top:0,left:l}).left-c.margins.left}var t=
++p||q||r||s;if(f.snapMode!="outer"){p=Math.abs(k-n)<=e;q=Math.abs(m-o)<=e;r=Math.abs(j-h)<=e;s=Math.abs(l-g)<=e;if(p)b.position.top=c._convertPositionTo("relative",{top:k,left:0}).top-c.margins.top;if(q)b.position.top=c._convertPositionTo("relative",{top:m-c.helperProportions.height,left:0}).top-c.margins.top;if(r)b.position.left=c._convertPositionTo("relative",{top:0,left:j}).left-c.margins.left;if(s)b.position.left=c._convertPositionTo("relative",{top:0,left:l-c.helperProportions.width}).left-c.margins.left}if(!c.snapElements[i].snapping&&
++(p||q||r||s||t))c.options.snap.snap&&c.options.snap.snap.call(c.element,a,d.extend(c._uiHash(),{snapItem:c.snapElements[i].item}));c.snapElements[i].snapping=p||q||r||s||t}else{c.snapElements[i].snapping&&c.options.snap.release&&c.options.snap.release.call(c.element,a,d.extend(c._uiHash(),{snapItem:c.snapElements[i].item}));c.snapElements[i].snapping=false}}}});d.ui.plugin.add("draggable","stack",{start:function(){var a=d(this).data("draggable").options;a=d.makeArray(d(a.stack)).sort(function(c,f){return(parseInt(d(c).css("zIndex"),
++10)||0)-(parseInt(d(f).css("zIndex"),10)||0)});if(a.length){var b=parseInt(a[0].style.zIndex)||0;d(a).each(function(c){this.style.zIndex=b+c});this[0].style.zIndex=b+a.length}}});d.ui.plugin.add("draggable","zIndex",{start:function(a,b){a=d(b.helper);b=d(this).data("draggable").options;if(a.css("zIndex"))b._zIndex=a.css("zIndex");a.css("zIndex",b.zIndex)},stop:function(a,b){a=d(this).data("draggable").options;a._zIndex&&d(b.helper).css("zIndex",a._zIndex)}})})(jQuery);
+diff --git a/public/javascripts/jquery/ui/droppable.js b/public/javascripts/jquery/ui/droppable.js
+new file mode 100644
+index 0000000..f8d4f7a
+--- /dev/null
++++ b/public/javascripts/jquery/ui/droppable.js
+@@ -0,0 +1,27 @@
++/*
++ * jQuery UI Droppable 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Droppables
++ *
++ * Depends:
++ *	jquery.ui.core.js
++ *	jquery.ui.widget.js
++ *	jquery.ui.mouse.js
++ *	jquery.ui.draggable.js
++ */
++(function(d){d.widget("ui.droppable",{widgetEventPrefix:"drop",options:{accept:"*",activeClass:false,addClasses:true,greedy:false,hoverClass:false,scope:"default",tolerance:"intersect"},_create:function(){var a=this.options,b=a.accept;this.isover=0;this.isout=1;this.accept=d.isFunction(b)?b:function(c){return c.is(b)};this.proportions={width:this.element[0].offsetWidth,height:this.element[0].offsetHeight};d.ui.ddmanager.droppables[a.scope]=d.ui.ddmanager.droppables[a.scope]||[];d.ui.ddmanager.droppables[a.scope].push(this);
++a.addClasses&&this.element.addClass("ui-droppable")},destroy:function(){for(var a=d.ui.ddmanager.droppables[this.options.scope],b=0;b<a.length;b++)a[b]==this&&a.splice(b,1);this.element.removeClass("ui-droppable ui-droppable-disabled").removeData("droppable").unbind(".droppable");return this},_setOption:function(a,b){if(a=="accept")this.accept=d.isFunction(b)?b:function(c){return c.is(b)};d.Widget.prototype._setOption.apply(this,arguments)},_activate:function(a){var b=d.ui.ddmanager.current;this.options.activeClass&&
++this.element.addClass(this.options.activeClass);b&&this._trigger("activate",a,this.ui(b))},_deactivate:function(a){var b=d.ui.ddmanager.current;this.options.activeClass&&this.element.removeClass(this.options.activeClass);b&&this._trigger("deactivate",a,this.ui(b))},_over:function(a){var b=d.ui.ddmanager.current;if(!(!b||(b.currentItem||b.element)[0]==this.element[0]))if(this.accept.call(this.element[0],b.currentItem||b.element)){this.options.hoverClass&&this.element.addClass(this.options.hoverClass);
++this._trigger("over",a,this.ui(b))}},_out:function(a){var b=d.ui.ddmanager.current;if(!(!b||(b.currentItem||b.element)[0]==this.element[0]))if(this.accept.call(this.element[0],b.currentItem||b.element)){this.options.hoverClass&&this.element.removeClass(this.options.hoverClass);this._trigger("out",a,this.ui(b))}},_drop:function(a,b){var c=b||d.ui.ddmanager.current;if(!c||(c.currentItem||c.element)[0]==this.element[0])return false;var e=false;this.element.find(":data(droppable)").not(".ui-draggable-dragging").each(function(){var g=
++d.data(this,"droppable");if(g.options.greedy&&!g.options.disabled&&g.options.scope==c.options.scope&&g.accept.call(g.element[0],c.currentItem||c.element)&&d.ui.intersect(c,d.extend(g,{offset:g.element.offset()}),g.options.tolerance)){e=true;return false}});if(e)return false;if(this.accept.call(this.element[0],c.currentItem||c.element)){this.options.activeClass&&this.element.removeClass(this.options.activeClass);this.options.hoverClass&&this.element.removeClass(this.options.hoverClass);this._trigger("drop",
++a,this.ui(c));return this.element}return false},ui:function(a){return{draggable:a.currentItem||a.element,helper:a.helper,position:a.position,offset:a.positionAbs}}});d.extend(d.ui.droppable,{version:"1.8.14"});d.ui.intersect=function(a,b,c){if(!b.offset)return false;var e=(a.positionAbs||a.position.absolute).left,g=e+a.helperProportions.width,f=(a.positionAbs||a.position.absolute).top,h=f+a.helperProportions.height,i=b.offset.left,k=i+b.proportions.width,j=b.offset.top,l=j+b.proportions.height;
++switch(c){case "fit":return i<=e&&g<=k&&j<=f&&h<=l;case "intersect":return i<e+a.helperProportions.width/2&&g-a.helperProportions.width/2<k&&j<f+a.helperProportions.height/2&&h-a.helperProportions.height/2<l;case "pointer":return d.ui.isOver((a.positionAbs||a.position.absolute).top+(a.clickOffset||a.offset.click).top,(a.positionAbs||a.position.absolute).left+(a.clickOffset||a.offset.click).left,j,i,b.proportions.height,b.proportions.width);case "touch":return(f>=j&&f<=l||h>=j&&h<=l||f<j&&h>l)&&(e>=
++i&&e<=k||g>=i&&g<=k||e<i&&g>k);default:return false}};d.ui.ddmanager={current:null,droppables:{"default":[]},prepareOffsets:function(a,b){var c=d.ui.ddmanager.droppables[a.options.scope]||[],e=b?b.type:null,g=(a.currentItem||a.element).find(":data(droppable)").andSelf(),f=0;a:for(;f<c.length;f++)if(!(c[f].options.disabled||a&&!c[f].accept.call(c[f].element[0],a.currentItem||a.element))){for(var h=0;h<g.length;h++)if(g[h]==c[f].element[0]){c[f].proportions.height=0;continue a}c[f].visible=c[f].element.css("display")!=
++"none";if(c[f].visible){e=="mousedown"&&c[f]._activate.call(c[f],b);c[f].offset=c[f].element.offset();c[f].proportions={width:c[f].element[0].offsetWidth,height:c[f].element[0].offsetHeight}}}},drop:function(a,b){var c=false;d.each(d.ui.ddmanager.droppables[a.options.scope]||[],function(){if(this.options){if(!this.options.disabled&&this.visible&&d.ui.intersect(a,this,this.options.tolerance))c=c||this._drop.call(this,b);if(!this.options.disabled&&this.visible&&this.accept.call(this.element[0],a.currentItem||
++a.element)){this.isout=1;this.isover=0;this._deactivate.call(this,b)}}});return c},dragStart:function(a,b){a.element.parentsUntil("body").bind("scroll.droppable",function(){a.options.refreshPositions||d.ui.ddmanager.prepareOffsets(a,b)})},drag:function(a,b){a.options.refreshPositions&&d.ui.ddmanager.prepareOffsets(a,b);d.each(d.ui.ddmanager.droppables[a.options.scope]||[],function(){if(!(this.options.disabled||this.greedyChild||!this.visible)){var c=d.ui.intersect(a,this,this.options.tolerance);if(c=
++!c&&this.isover==1?"isout":c&&this.isover==0?"isover":null){var e;if(this.options.greedy){var g=this.element.parents(":data(droppable):eq(0)");if(g.length){e=d.data(g[0],"droppable");e.greedyChild=c=="isover"?1:0}}if(e&&c=="isover"){e.isover=0;e.isout=1;e._out.call(e,b)}this[c]=1;this[c=="isout"?"isover":"isout"]=0;this[c=="isover"?"_over":"_out"].call(this,b);if(e&&c=="isout"){e.isout=0;e.isover=1;e._over.call(e,b)}}}})},dragStop:function(a,b){a.element.parentsUntil("body").unbind("scroll.droppable");
++a.options.refreshPositions||d.ui.ddmanager.prepareOffsets(a,b)}}})(jQuery);
+diff --git a/public/javascripts/jquery/ui/mouse.js b/public/javascripts/jquery/ui/mouse.js
+new file mode 100644
+index 0000000..1da85e9
+--- /dev/null
++++ b/public/javascripts/jquery/ui/mouse.js
+@@ -0,0 +1,17 @@
++/*!
++ * jQuery UI Mouse 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Mouse
++ *
++ * Depends:
++ *	jquery.ui.widget.js
++ */
++(function(b){var d=false;b(document).mousedown(function(){d=false});b.widget("ui.mouse",{options:{cancel:":input,option",distance:1,delay:0},_mouseInit:function(){var a=this;this.element.bind("mousedown."+this.widgetName,function(c){return a._mouseDown(c)}).bind("click."+this.widgetName,function(c){if(true===b.data(c.target,a.widgetName+".preventClickEvent")){b.removeData(c.target,a.widgetName+".preventClickEvent");c.stopImmediatePropagation();return false}});this.started=false},_mouseDestroy:function(){this.element.unbind("."+
++this.widgetName)},_mouseDown:function(a){if(!d){this._mouseStarted&&this._mouseUp(a);this._mouseDownEvent=a;var c=this,f=a.which==1,g=typeof this.options.cancel=="string"?b(a.target).closest(this.options.cancel).length:false;if(!f||g||!this._mouseCapture(a))return true;this.mouseDelayMet=!this.options.delay;if(!this.mouseDelayMet)this._mouseDelayTimer=setTimeout(function(){c.mouseDelayMet=true},this.options.delay);if(this._mouseDistanceMet(a)&&this._mouseDelayMet(a)){this._mouseStarted=this._mouseStart(a)!==
++false;if(!this._mouseStarted){a.preventDefault();return true}}true===b.data(a.target,this.widgetName+".preventClickEvent")&&b.removeData(a.target,this.widgetName+".preventClickEvent");this._mouseMoveDelegate=function(e){return c._mouseMove(e)};this._mouseUpDelegate=function(e){return c._mouseUp(e)};b(document).bind("mousemove."+this.widgetName,this._mouseMoveDelegate).bind("mouseup."+this.widgetName,this._mouseUpDelegate);a.preventDefault();return d=true}},_mouseMove:function(a){if(b.browser.msie&&
++!(document.documentMode>=9)&&!a.button)return this._mouseUp(a);if(this._mouseStarted){this._mouseDrag(a);return a.preventDefault()}if(this._mouseDistanceMet(a)&&this._mouseDelayMet(a))(this._mouseStarted=this._mouseStart(this._mouseDownEvent,a)!==false)?this._mouseDrag(a):this._mouseUp(a);return!this._mouseStarted},_mouseUp:function(a){b(document).unbind("mousemove."+this.widgetName,this._mouseMoveDelegate).unbind("mouseup."+this.widgetName,this._mouseUpDelegate);if(this._mouseStarted){this._mouseStarted=
++false;a.target==this._mouseDownEvent.target&&b.data(a.target,this.widgetName+".preventClickEvent",true);this._mouseStop(a)}return false},_mouseDistanceMet:function(a){return Math.max(Math.abs(this._mouseDownEvent.pageX-a.pageX),Math.abs(this._mouseDownEvent.pageY-a.pageY))>=this.options.distance},_mouseDelayMet:function(){return this.mouseDelayMet},_mouseStart:function(){},_mouseDrag:function(){},_mouseStop:function(){},_mouseCapture:function(){return true}})})(jQuery);
+diff --git a/public/javascripts/jquery/ui/tabs.js b/public/javascripts/jquery/ui/tabs.js
+new file mode 100644
+index 0000000..11a67c1
+--- /dev/null
++++ b/public/javascripts/jquery/ui/tabs.js
+@@ -0,0 +1,35 @@
++/*
++ * jQuery UI Tabs 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Tabs
++ *
++ * Depends:
++ *	jquery.ui.core.js
++ *	jquery.ui.widget.js
++ */
++(function(d,p){function u(){return++v}function w(){return++x}var v=0,x=0;d.widget("ui.tabs",{options:{add:null,ajaxOptions:null,cache:false,cookie:null,collapsible:false,disable:null,disabled:[],enable:null,event:"click",fx:null,idPrefix:"ui-tabs-",load:null,panelTemplate:"<div></div>",remove:null,select:null,show:null,spinner:"<em>Loading&#8230;</em>",tabTemplate:"<li><a href='#{href}'><span>#{label}</span></a></li>"},_create:function(){this._tabify(true)},_setOption:function(b,e){if(b=="selected")this.options.collapsible&&
++e==this.options.selected||this.select(e);else{this.options[b]=e;this._tabify()}},_tabId:function(b){return b.title&&b.title.replace(/\s/g,"_").replace(/[^\w\u00c0-\uFFFF-]/g,"")||this.options.idPrefix+u()},_sanitizeSelector:function(b){return b.replace(/:/g,"\\:")},_cookie:function(){var b=this.cookie||(this.cookie=this.options.cookie.name||"ui-tabs-"+w());return d.cookie.apply(null,[b].concat(d.makeArray(arguments)))},_ui:function(b,e){return{tab:b,panel:e,index:this.anchors.index(b)}},_cleanup:function(){this.lis.filter(".ui-state-processing").removeClass("ui-state-processing").find("span:data(label.tabs)").each(function(){var b=
++d(this);b.html(b.data("label.tabs")).removeData("label.tabs")})},_tabify:function(b){function e(g,f){g.css("display","");!d.support.opacity&&f.opacity&&g[0].style.removeAttribute("filter")}var a=this,c=this.options,h=/^#.+/;this.list=this.element.find("ol,ul").eq(0);this.lis=d(" > li:has(a[href])",this.list);this.anchors=this.lis.map(function(){return d("a",this)[0]});this.panels=d([]);this.anchors.each(function(g,f){var i=d(f).attr("href"),l=i.split("#")[0],q;if(l&&(l===location.toString().split("#")[0]||
++(q=d("base")[0])&&l===q.href)){i=f.hash;f.href=i}if(h.test(i))a.panels=a.panels.add(a.element.find(a._sanitizeSelector(i)));else if(i&&i!=="#"){d.data(f,"href.tabs",i);d.data(f,"load.tabs",i.replace(/#.*$/,""));i=a._tabId(f);f.href="#"+i;f=a.element.find("#"+i);if(!f.length){f=d(c.panelTemplate).attr("id",i).addClass("ui-tabs-panel ui-widget-content ui-corner-bottom").insertAfter(a.panels[g-1]||a.list);f.data("destroy.tabs",true)}a.panels=a.panels.add(f)}else c.disabled.push(g)});if(b){this.element.addClass("ui-tabs ui-widget ui-widget-content ui-corner-all");
++this.list.addClass("ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all");this.lis.addClass("ui-state-default ui-corner-top");this.panels.addClass("ui-tabs-panel ui-widget-content ui-corner-bottom");if(c.selected===p){location.hash&&this.anchors.each(function(g,f){if(f.hash==location.hash){c.selected=g;return false}});if(typeof c.selected!=="number"&&c.cookie)c.selected=parseInt(a._cookie(),10);if(typeof c.selected!=="number"&&this.lis.filter(".ui-tabs-selected").length)c.selected=
++this.lis.index(this.lis.filter(".ui-tabs-selected"));c.selected=c.selected||(this.lis.length?0:-1)}else if(c.selected===null)c.selected=-1;c.selected=c.selected>=0&&this.anchors[c.selected]||c.selected<0?c.selected:0;c.disabled=d.unique(c.disabled.concat(d.map(this.lis.filter(".ui-state-disabled"),function(g){return a.lis.index(g)}))).sort();d.inArray(c.selected,c.disabled)!=-1&&c.disabled.splice(d.inArray(c.selected,c.disabled),1);this.panels.addClass("ui-tabs-hide");this.lis.removeClass("ui-tabs-selected ui-state-active");
++if(c.selected>=0&&this.anchors.length){a.element.find(a._sanitizeSelector(a.anchors[c.selected].hash)).removeClass("ui-tabs-hide");this.lis.eq(c.selected).addClass("ui-tabs-selected ui-state-active");a.element.queue("tabs",function(){a._trigger("show",null,a._ui(a.anchors[c.selected],a.element.find(a._sanitizeSelector(a.anchors[c.selected].hash))[0]))});this.load(c.selected)}d(window).bind("unload",function(){a.lis.add(a.anchors).unbind(".tabs");a.lis=a.anchors=a.panels=null})}else c.selected=this.lis.index(this.lis.filter(".ui-tabs-selected"));
++this.element[c.collapsible?"addClass":"removeClass"]("ui-tabs-collapsible");c.cookie&&this._cookie(c.selected,c.cookie);b=0;for(var j;j=this.lis[b];b++)d(j)[d.inArray(b,c.disabled)!=-1&&!d(j).hasClass("ui-tabs-selected")?"addClass":"removeClass"]("ui-state-disabled");c.cache===false&&this.anchors.removeData("cache.tabs");this.lis.add(this.anchors).unbind(".tabs");if(c.event!=="mouseover"){var k=function(g,f){f.is(":not(.ui-state-disabled)")&&f.addClass("ui-state-"+g)},n=function(g,f){f.removeClass("ui-state-"+
++g)};this.lis.bind("mouseover.tabs",function(){k("hover",d(this))});this.lis.bind("mouseout.tabs",function(){n("hover",d(this))});this.anchors.bind("focus.tabs",function(){k("focus",d(this).closest("li"))});this.anchors.bind("blur.tabs",function(){n("focus",d(this).closest("li"))})}var m,o;if(c.fx)if(d.isArray(c.fx)){m=c.fx[0];o=c.fx[1]}else m=o=c.fx;var r=o?function(g,f){d(g).closest("li").addClass("ui-tabs-selected ui-state-active");f.hide().removeClass("ui-tabs-hide").animate(o,o.duration||"normal",
++function(){e(f,o);a._trigger("show",null,a._ui(g,f[0]))})}:function(g,f){d(g).closest("li").addClass("ui-tabs-selected ui-state-active");f.removeClass("ui-tabs-hide");a._trigger("show",null,a._ui(g,f[0]))},s=m?function(g,f){f.animate(m,m.duration||"normal",function(){a.lis.removeClass("ui-tabs-selected ui-state-active");f.addClass("ui-tabs-hide");e(f,m);a.element.dequeue("tabs")})}:function(g,f){a.lis.removeClass("ui-tabs-selected ui-state-active");f.addClass("ui-tabs-hide");a.element.dequeue("tabs")};
++this.anchors.bind(c.event+".tabs",function(){var g=this,f=d(g).closest("li"),i=a.panels.filter(":not(.ui-tabs-hide)"),l=a.element.find(a._sanitizeSelector(g.hash));if(f.hasClass("ui-tabs-selected")&&!c.collapsible||f.hasClass("ui-state-disabled")||f.hasClass("ui-state-processing")||a.panels.filter(":animated").length||a._trigger("select",null,a._ui(this,l[0]))===false){this.blur();return false}c.selected=a.anchors.index(this);a.abort();if(c.collapsible)if(f.hasClass("ui-tabs-selected")){c.selected=
++-1;c.cookie&&a._cookie(c.selected,c.cookie);a.element.queue("tabs",function(){s(g,i)}).dequeue("tabs");this.blur();return false}else if(!i.length){c.cookie&&a._cookie(c.selected,c.cookie);a.element.queue("tabs",function(){r(g,l)});a.load(a.anchors.index(this));this.blur();return false}c.cookie&&a._cookie(c.selected,c.cookie);if(l.length){i.length&&a.element.queue("tabs",function(){s(g,i)});a.element.queue("tabs",function(){r(g,l)});a.load(a.anchors.index(this))}else throw"jQuery UI Tabs: Mismatching fragment identifier.";
++d.browser.msie&&this.blur()});this.anchors.bind("click.tabs",function(){return false})},_getIndex:function(b){if(typeof b=="string")b=this.anchors.index(this.anchors.filter("[href$="+b+"]"));return b},destroy:function(){var b=this.options;this.abort();this.element.unbind(".tabs").removeClass("ui-tabs ui-widget ui-widget-content ui-corner-all ui-tabs-collapsible").removeData("tabs");this.list.removeClass("ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all");this.anchors.each(function(){var e=
++d.data(this,"href.tabs");if(e)this.href=e;var a=d(this).unbind(".tabs");d.each(["href","load","cache"],function(c,h){a.removeData(h+".tabs")})});this.lis.unbind(".tabs").add(this.panels).each(function(){d.data(this,"destroy.tabs")?d(this).remove():d(this).removeClass("ui-state-default ui-corner-top ui-tabs-selected ui-state-active ui-state-hover ui-state-focus ui-state-disabled ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide")});b.cookie&&this._cookie(null,b.cookie);return this},add:function(b,
++e,a){if(a===p)a=this.anchors.length;var c=this,h=this.options;e=d(h.tabTemplate.replace(/#\{href\}/g,b).replace(/#\{label\}/g,e));b=!b.indexOf("#")?b.replace("#",""):this._tabId(d("a",e)[0]);e.addClass("ui-state-default ui-corner-top").data("destroy.tabs",true);var j=c.element.find("#"+b);j.length||(j=d(h.panelTemplate).attr("id",b).data("destroy.tabs",true));j.addClass("ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide");if(a>=this.lis.length){e.appendTo(this.list);j.appendTo(this.list[0].parentNode)}else{e.insertBefore(this.lis[a]);
++j.insertBefore(this.panels[a])}h.disabled=d.map(h.disabled,function(k){return k>=a?++k:k});this._tabify();if(this.anchors.length==1){h.selected=0;e.addClass("ui-tabs-selected ui-state-active");j.removeClass("ui-tabs-hide");this.element.queue("tabs",function(){c._trigger("show",null,c._ui(c.anchors[0],c.panels[0]))});this.load(0)}this._trigger("add",null,this._ui(this.anchors[a],this.panels[a]));return this},remove:function(b){b=this._getIndex(b);var e=this.options,a=this.lis.eq(b).remove(),c=this.panels.eq(b).remove();
++if(a.hasClass("ui-tabs-selected")&&this.anchors.length>1)this.select(b+(b+1<this.anchors.length?1:-1));e.disabled=d.map(d.grep(e.disabled,function(h){return h!=b}),function(h){return h>=b?--h:h});this._tabify();this._trigger("remove",null,this._ui(a.find("a")[0],c[0]));return this},enable:function(b){b=this._getIndex(b);var e=this.options;if(d.inArray(b,e.disabled)!=-1){this.lis.eq(b).removeClass("ui-state-disabled");e.disabled=d.grep(e.disabled,function(a){return a!=b});this._trigger("enable",null,
++this._ui(this.anchors[b],this.panels[b]));return this}},disable:function(b){b=this._getIndex(b);var e=this.options;if(b!=e.selected){this.lis.eq(b).addClass("ui-state-disabled");e.disabled.push(b);e.disabled.sort();this._trigger("disable",null,this._ui(this.anchors[b],this.panels[b]))}return this},select:function(b){b=this._getIndex(b);if(b==-1)if(this.options.collapsible&&this.options.selected!=-1)b=this.options.selected;else return this;this.anchors.eq(b).trigger(this.options.event+".tabs");return this},
++load:function(b){b=this._getIndex(b);var e=this,a=this.options,c=this.anchors.eq(b)[0],h=d.data(c,"load.tabs");this.abort();if(!h||this.element.queue("tabs").length!==0&&d.data(c,"cache.tabs"))this.element.dequeue("tabs");else{this.lis.eq(b).addClass("ui-state-processing");if(a.spinner){var j=d("span",c);j.data("label.tabs",j.html()).html(a.spinner)}this.xhr=d.ajax(d.extend({},a.ajaxOptions,{url:h,success:function(k,n){e.element.find(e._sanitizeSelector(c.hash)).html(k);e._cleanup();a.cache&&d.data(c,
++"cache.tabs",true);e._trigger("load",null,e._ui(e.anchors[b],e.panels[b]));try{a.ajaxOptions.success(k,n)}catch(m){}},error:function(k,n){e._cleanup();e._trigger("load",null,e._ui(e.anchors[b],e.panels[b]));try{a.ajaxOptions.error(k,n,b,c)}catch(m){}}}));e.element.dequeue("tabs");return this}},abort:function(){this.element.queue([]);this.panels.stop(false,true);this.element.queue("tabs",this.element.queue("tabs").splice(-2,2));if(this.xhr){this.xhr.abort();delete this.xhr}this._cleanup();return this},
++url:function(b,e){this.anchors.eq(b).removeData("cache.tabs").data("load.tabs",e);return this},length:function(){return this.anchors.length}});d.extend(d.ui.tabs,{version:"1.8.14"});d.extend(d.ui.tabs.prototype,{rotation:null,rotate:function(b,e){var a=this,c=this.options,h=a._rotate||(a._rotate=function(j){clearTimeout(a.rotation);a.rotation=setTimeout(function(){var k=c.selected;a.select(++k<a.anchors.length?k:0)},b);j&&j.stopPropagation()});e=a._unrotate||(a._unrotate=!e?function(j){j.clientX&&
++a.rotate(null)}:function(){t=c.selected;h()});if(b){this.element.bind("tabsshow",h);this.anchors.bind(c.event+".tabs",e);h()}else{clearTimeout(a.rotation);this.element.unbind("tabsshow",h);this.anchors.unbind(c.event+".tabs",e);delete this._rotate;delete this._unrotate}return this}})})(jQuery);
+diff --git a/public/javascripts/jquery/ui/widget.js b/public/javascripts/jquery/ui/widget.js
+new file mode 100644
+index 0000000..39ab91a
+--- /dev/null
++++ b/public/javascripts/jquery/ui/widget.js
+@@ -0,0 +1,15 @@
++/*!
++ * jQuery UI Widget 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Widget
++ */
++(function(b,j){if(b.cleanData){var k=b.cleanData;b.cleanData=function(a){for(var c=0,d;(d=a[c])!=null;c++)b(d).triggerHandler("remove");k(a)}}else{var l=b.fn.remove;b.fn.remove=function(a,c){return this.each(function(){if(!c)if(!a||b.filter(a,[this]).length)b("*",this).add([this]).each(function(){b(this).triggerHandler("remove")});return l.call(b(this),a,c)})}}b.widget=function(a,c,d){var e=a.split(".")[0],f;a=a.split(".")[1];f=e+"-"+a;if(!d){d=c;c=b.Widget}b.expr[":"][f]=function(h){return!!b.data(h,
++a)};b[e]=b[e]||{};b[e][a]=function(h,g){arguments.length&&this._createWidget(h,g)};c=new c;c.options=b.extend(true,{},c.options);b[e][a].prototype=b.extend(true,c,{namespace:e,widgetName:a,widgetEventPrefix:b[e][a].prototype.widgetEventPrefix||a,widgetBaseClass:f},d);b.widget.bridge(a,b[e][a])};b.widget.bridge=function(a,c){b.fn[a]=function(d){var e=typeof d==="string",f=Array.prototype.slice.call(arguments,1),h=this;d=!e&&f.length?b.extend.apply(null,[true,d].concat(f)):d;if(e&&d.charAt(0)==="_")return h;
++e?this.each(function(){var g=b.data(this,a),i=g&&b.isFunction(g[d])?g[d].apply(g,f):g;if(i!==g&&i!==j){h=i;return false}}):this.each(function(){var g=b.data(this,a);g?g.option(d||{})._init():b.data(this,a,new c(d,this))});return h}};b.Widget=function(a,c){arguments.length&&this._createWidget(a,c)};b.Widget.prototype={widgetName:"widget",widgetEventPrefix:"",options:{disabled:false},_createWidget:function(a,c){b.data(c,this.widgetName,this);this.element=b(c);this.options=b.extend(true,{},this.options,
++this._getCreateOptions(),a);var d=this;this.element.bind("remove."+this.widgetName,function(){d.destroy()});this._create();this._trigger("create");this._init()},_getCreateOptions:function(){return b.metadata&&b.metadata.get(this.element[0])[this.widgetName]},_create:function(){},_init:function(){},destroy:function(){this.element.unbind("."+this.widgetName).removeData(this.widgetName);this.widget().unbind("."+this.widgetName).removeAttr("aria-disabled").removeClass(this.widgetBaseClass+"-disabled ui-state-disabled")},
++widget:function(){return this.element},option:function(a,c){var d=a;if(arguments.length===0)return b.extend({},this.options);if(typeof a==="string"){if(c===j)return this.options[a];d={};d[a]=c}this._setOptions(d);return this},_setOptions:function(a){var c=this;b.each(a,function(d,e){c._setOption(d,e)});return this},_setOption:function(a,c){this.options[a]=c;if(a==="disabled")this.widget()[c?"addClass":"removeClass"](this.widgetBaseClass+"-disabled ui-state-disabled").attr("aria-disabled",c);return this},
++enable:function(){return this._setOption("disabled",false)},disable:function(){return this._setOption("disabled",true)},_trigger:function(a,c,d){var e=this.options[a];c=b.Event(c);c.type=(a===this.widgetEventPrefix?a:this.widgetEventPrefix+a).toLowerCase();d=d||{};if(c.originalEvent){a=b.event.props.length;for(var f;a;){f=b.event.props[--a];c[f]=c.originalEvent[f]}}this.element.trigger(c,d);return!(b.isFunction(e)&&e.call(this.element[0],c,d)===false||c.isDefaultPrevented())}}})(jQuery);
+diff --git a/public/stylesheets/sass/_character_equipment.sass b/public/stylesheets/sass/_character_equipment.sass
+index b7f68a6..cd16d36 100644
+--- a/public/stylesheets/sass/_character_equipment.sass
++++ b/public/stylesheets/sass/_character_equipment.sass
+@@ -5,14 +5,17 @@
+     position: top left
+     repeat: no-repeat
+   padding-top = !placements_height
++  margin-left: 300px
+   width: 100%
+ 
+   .inventory
+     position: relative
++    cursor: pointer
+ 
+     .remove
+       position: absolute
+       right: 0
++      top: 0
+       display: block
+       width = !placements_remove_width
+       height = !placements_remove_height
+@@ -23,55 +26,47 @@
+ 
+   .placement
+     position: absolute
+-
++    
+   .head
+     top = !placements_head_top
+     left = !placements_head_left
+-
+-    .inventory
+-      width = !placements_head_width
+-      height = !placements_head_height
++    width = !placements_head_width
++    height = !placements_head_height
+ 
+   .right_hand
+     top = !placements_right_hand_top
+     left = !placements_right_hand_left
+-
+-    .inventory
+-      width = !placements_right_hand_width
+-      height = !placements_right_hand_height
++    width = !placements_right_hand_width
++    height = !placements_right_hand_height
+ 
+   .left_hand
+     top = !placements_left_hand_top
+     left = !placements_left_hand_left
+-
+-    .inventory
+-      width = !placements_left_hand_width
+-      height = !placements_left_hand_height
++    width = !placements_left_hand_width
++    height = !placements_left_hand_height
+ 
+   .body
+     top = !placements_body_top
+     left = !placements_body_left
+-
+-    .inventory
+-      width = !placements_body_width
+-      height = !placements_body_height
++    width = !placements_body_width
++    height = !placements_body_height
+ 
+   .legs
+     top = !placements_legs_top
+     left = !placements_legs_left
+-
+-    .inventory
+-      width = !placements_legs_width
+-      height = !placements_legs_height
++    width = !placements_legs_width
++    height = !placements_legs_height
+ 
+   .additional
+-    position: relative
++    position: absolute
++    top: 0px
++    left: -300px
+     
+     .help
+       margin-bottom: 15px
+ 
+     .inventory
+-      margin: 0 10px 10px 0
++      margin: 5px
+       float: left
+       width = !placements_additional_width
+       height = !placements_additional_height
+@@ -79,11 +74,29 @@
+ 
+     .note
+       clear: both
++      width: 250px
+ 
+       .zero
+         font-size: 16px
+         color = !placements_additional_zero_color
+-
++    
++    .jcarousel-container-vertical
++      width: 170px
++      
++      .jcarousel-prev-vertical, .jcarousel-next-vertical
++        left: 90px
++    
++      .jcarousel-clip-vertical
++        width: 170px
++        height: 250px
++    
++    
++#equipment
++  .placement, .additional .items, #equippables-tabs .jcarousel-clip
++    &.state-active
++      background-color: #C4CDDF
++    &.state-hover
++      background-color: #6094c5
+ 
+ #equippables
+   padding-right: 10px
+@@ -92,9 +105,9 @@
+   width = !equippables_width
+ 
+   .inventory
+-    padding: 10px 0
+-    border-top = !equippables_item_border
+-
++    border = !equippables_item_border
++    cursor: pointer
++    
+     .header
+       margin-bottom: 10px
+ 
+@@ -102,9 +115,6 @@
+         font-weight: bold
+         font-size: 14px
+ 
+-    .image
+-      margin-bottom: 5px
+-
+     .controls
+       float: right
+       text-align: right
+diff --git a/public/stylesheets/sass/_default_skin.sass b/public/stylesheets/sass/_default_skin.sass
+index aa6b690..cf70b08 100644
+--- a/public/stylesheets/sass/_default_skin.sass
++++ b/public/stylesheets/sass/_default_skin.sass
+@@ -588,7 +588,7 @@
+ 
+ // Unequipped items at the equipment page
+ 
+-!equippables_width = 210px
++!equippables_width = 100%
+ !equippables_border = 2px solid #BDC7D8
+ !equippables_item_border = !splitter_border
+ !equippables_equip_icon = !asset_icons_accept
+diff --git a/public/stylesheets/sass/_inventory.sass b/public/stylesheets/sass/_inventory.sass
+index df36baa..b5f22d4 100644
+--- a/public/stylesheets/sass/_inventory.sass
++++ b/public/stylesheets/sass/_inventory.sass
+@@ -109,4 +109,17 @@
+       font-weight: bold
+ 
+   .give.button
+-    +button(!inventory_give_button_icon)
+\ No newline at end of file
++    +button(!inventory_give_button_icon)
++    
++.inventory_image
++  position: relative
++  .count
++    position: absolute
++    &.small
++      right: 0px
++      bottom: 5px
++      background-color: black
++      color: white
++      padding:
++        left: 2px
++        right: 2px
+\ No newline at end of file
+diff --git a/public/stylesheets/sass/_jcarousel.sass b/public/stylesheets/sass/_jcarousel.sass
+new file mode 100644
+index 0000000..76896e7
+--- /dev/null
++++ b/public/stylesheets/sass/_jcarousel.sass
+@@ -0,0 +1,137 @@
++.jcarousel-container
++
++.jcarousel-direction-rtl
++  direction: rtl
++
++.jcarousel-container-horizontal
++  width: 90%
++  padding: 10px 40px
++
++.jcarousel-container-vertical
++  width: 75px
++  height: 245px
++  padding: 40px 20px
++
++.jcarousel-clip
++  overflow: hidden
++
++.jcarousel-clip-horizontal
++  width: 100%
++  height: 85px
++
++.jcarousel-clip-vertical
++  width: 75px
++  height: 245px
++
++.jcarousel-item
++  width: 72px
++  height: 72px
++
++.jcarousel-item-horizontal
++  margin: 5px
++
++.jcarousel-direction-rtl .jcarousel-item-horizontal
++  margin-left: 10px
++  margin-right: 0
++
++.jcarousel-item-vertical
++  margin-bottom: 10px
++
++.jcarousel-item-placeholder
++  color: #000
++
++//  Horizontal Buttons
++.jcarousel-next-horizontal
++  position: absolute
++  top: 33px
++  right: 5px
++  width: 32px
++  height: 32px
++  cursor: pointer
++  background: transparent url(/images/jcarousel/next-horizontal.png) no-repeat 0 0
++
++.jcarousel-direction-rtl .jcarousel-next-horizontal
++  left: 5px
++  right: auto
++  background-image: url(/images/jcarousel/prev-horizontal.png)
++
++.jcarousel-next-horizontal
++  &:hover, &:focus
++    background-position: -32px 0
++  &:active
++    background-position: -64px 0
++
++.jcarousel-next-disabled-horizontal
++  cursor: default
++  background-position: -96px 0
++  &:hover, &:focus, &:active
++    cursor: default
++    background-position: -96px 0
++
++.jcarousel-prev-horizontal
++  position: absolute
++  top: 33px
++  left: 5px
++  width: 32px
++  height: 32px
++  cursor: pointer
++  background: transparent url(/images/jcarousel/prev-horizontal.png) no-repeat 0 0
++
++.jcarousel-direction-rtl .jcarousel-prev-horizontal
++  left: auto
++  right: 5px
++  background-image: url(/images/jcarousel/next-horizontal.png)
++
++.jcarousel-prev-horizontal
++  &:hover, &:focus
++    background-position: -32px 0
++  &:active
++    background-position: -64px 0
++
++.jcarousel-prev-disabled-horizontal
++  cursor: default
++  background-position: -96px 0
++  &:hover, &:focus, &:active
++    cursor: default
++    background-position: -96px 0
++
++//  Vertical Buttons
++.jcarousel-next-vertical
++  position: absolute
++  bottom: 5px
++  left: 43px
++  width: 32px
++  height: 32px
++  cursor: pointer
++  background: transparent url(/images/jcarousel/next-vertical.png) no-repeat 0 0
++  &:hover, &:focus
++    background-position: 0 -32px
++  &:active
++    background-position: 0 -64px
++
++.jcarousel-next-disabled-vertical
++  cursor: default
++  background-position: 0 -96px
++  &:hover, &:focus, &:active
++    cursor: default
++    background-position: 0 -96px
++
++.jcarousel-prev-vertical
++  position: absolute
++  top: 5px
++  left: 43px
++  width: 32px
++  height: 32px
++  cursor: pointer
++  background: transparent url(/images/jcarousel/prev-vertical.png) no-repeat 0 0
++  &:hover, &:focus
++    background-position: 0 -32px
++  &:active
++    background-position: 0 -64px
++
++.jcarousel-prev-disabled-vertical
++  cursor: default
++  background-position: 0 -96px
++  &:hover, &:focus, &:active
++    cursor: default
++    background-position: 0 -96px
+\ No newline at end of file
+diff --git a/public/stylesheets/sass/application.sass b/public/stylesheets/sass/application.sass
+index dda6566..ed0184c 100644
+--- a/public/stylesheets/sass/application.sass
++++ b/public/stylesheets/sass/application.sass
+@@ -15,6 +15,7 @@
+ 
+ // <-- Skin settings will be placed here - do not delete this row!
+ 
++@import jcarousel
+ @import clearfix
+ @import globals
+ @import forms
+diff --git a/public/stylesheets/ui-custom.css b/public/stylesheets/ui-custom.css
+new file mode 100644
+index 0000000..d749bb9
+--- /dev/null
++++ b/public/stylesheets/ui-custom.css
+@@ -0,0 +1,301 @@
++/*
++ * jQuery UI CSS Framework 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Theming/API
++ */
++
++/* Layout helpers
++----------------------------------*/
++.ui-helper-hidden { display: none; }
++.ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px 1px 1px 1px); clip: rect(1px,1px,1px,1px); }
++.ui-helper-reset { margin: 0; padding: 0; border: 0; outline: 0; line-height: 1.3; text-decoration: none; font-size: 100%; list-style: none; }
++.ui-helper-clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
++.ui-helper-clearfix { display: inline-block; }
++/* required comment for clearfix to work in Opera \*/
++* html .ui-helper-clearfix { height:1%; }
++.ui-helper-clearfix { display:block; }
++/* end clearfix */
++.ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
++
++
++/* Interaction Cues
++----------------------------------*/
++.ui-state-disabled { cursor: default !important; }
++
++
++/* Icons
++----------------------------------*/
++
++/* states and images */
++.ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
++
++
++/* Misc visuals
++----------------------------------*/
++
++/* Overlays */
++.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
++
++
++/*
++ * jQuery UI CSS Framework 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Theming/API
++ *
++ * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Trebuchet%20MS,%20Tahoma,%20Verdana,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=f6a828&bgTextureHeader=12_gloss_wave.png&bgImgOpacityHeader=35&borderColorHeader=e78f08&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=eeeeee&bgTextureContent=03_highlight_soft.png&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=333333&iconColorContent=222222&bgColorDefault=f6f6f6&bgTextureDefault=02_glass.png&bgImgOpacityDefault=100&borderColorDefault=cccccc&fcDefault=1c94c4&iconColorDefault=ef8c08&bgColorHover=fdf5ce&bgTextureHover=02_glass.png&bgImgOpacityHover=100&borderColorHover=fbcb09&fcHover=c77405&iconColorHover=ef8c08&bgColorActive=ffffff&bgTextureActive=02_glass.png&bgImgOpacityActive=65&borderColorActive=fbd850&fcActive=eb8f00&iconColorActive=ef8c08&bgColorHighlight=ffe45c&bgTextureHighlight=03_highlight_soft.png&bgImgOpacityHighlight=75&borderColorHighlight=fed22f&fcHighlight=363636&iconColorHighlight=228ef1&bgColorError=b81900&bgTextureError=08_diagonals_thick.png&bgImgOpacityError=18&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffd27a&bgColorOverlay=666666&bgTextureOverlay=08_diagonals_thick.png&bgImgOpacityOverlay=20&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=01_flat.png&bgImgOpacityShadow=10&opacityShadow=20&thicknessShadow=5px&offsetTopShadow=-5px&offsetLeftShadow=-5px&cornerRadiusShadow=5px
++ */
++
++
++/* Component containers
++----------------------------------*/
++.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em; }
++.ui-widget .ui-widget { font-size: 1em; }
++.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1em; }
++.ui-widget-content { color: #333333; }
++.ui-widget-content a { color: #333333; }
++.ui-widget-header { color: #ffffff; font-weight: bold; }
++.ui-widget-header a { color: #ffffff; }
++
++/* Interaction states
++----------------------------------*/
++.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: 1px solid #cccccc; background-color: #c4cddf; font-weight: bold; color: #1c94c4; }
++.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #3B5998; text-decoration: none; }
++.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px solid #fbcb09; background-color: #fdf5ce; font-weight: bold; color: #c77405; }
++.ui-state-hover a, .ui-state-hover a:hover { color: #c77405; text-decoration: none; }
++.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #fbd850; background-color: #ffffff; font-weight: bold; color: #eb8f00; }
++.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #eb8f00; text-decoration: none; }
++.ui-widget :active { outline: none; }
++
++/* Interaction Cues
++----------------------------------*/
++.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: 1px solid #fed22f; background-color: #ffe45c; color: #363636; }
++.ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: #363636; }
++.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {border: 1px solid #cd0a0a; background-color: #b81900; color: #ffffff; }
++.ui-state-error a, .ui-widget-content .ui-state-error a, .ui-widget-header .ui-state-error a { color: #ffffff; }
++.ui-state-error-text, .ui-widget-content .ui-state-error-text, .ui-widget-header .ui-state-error-text { color: #ffffff; }
++.ui-priority-primary, .ui-widget-content .ui-priority-primary, .ui-widget-header .ui-priority-primary { font-weight: bold; }
++.ui-priority-secondary, .ui-widget-content .ui-priority-secondary,  .ui-widget-header .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
++.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
++
++/* Icons
++----------------------------------*/
++
++/* states and images */
++.ui-icon { width: 16px; height: 16px; }
++
++/* positioning */
++.ui-icon-carat-1-n { background-position: 0 0; }
++.ui-icon-carat-1-ne { background-position: -16px 0; }
++.ui-icon-carat-1-e { background-position: -32px 0; }
++.ui-icon-carat-1-se { background-position: -48px 0; }
++.ui-icon-carat-1-s { background-position: -64px 0; }
++.ui-icon-carat-1-sw { background-position: -80px 0; }
++.ui-icon-carat-1-w { background-position: -96px 0; }
++.ui-icon-carat-1-nw { background-position: -112px 0; }
++.ui-icon-carat-2-n-s { background-position: -128px 0; }
++.ui-icon-carat-2-e-w { background-position: -144px 0; }
++.ui-icon-triangle-1-n { background-position: 0 -16px; }
++.ui-icon-triangle-1-ne { background-position: -16px -16px; }
++.ui-icon-triangle-1-e { background-position: -32px -16px; }
++.ui-icon-triangle-1-se { background-position: -48px -16px; }
++.ui-icon-triangle-1-s { background-position: -64px -16px; }
++.ui-icon-triangle-1-sw { background-position: -80px -16px; }
++.ui-icon-triangle-1-w { background-position: -96px -16px; }
++.ui-icon-triangle-1-nw { background-position: -112px -16px; }
++.ui-icon-triangle-2-n-s { background-position: -128px -16px; }
++.ui-icon-triangle-2-e-w { background-position: -144px -16px; }
++.ui-icon-arrow-1-n { background-position: 0 -32px; }
++.ui-icon-arrow-1-ne { background-position: -16px -32px; }
++.ui-icon-arrow-1-e { background-position: -32px -32px; }
++.ui-icon-arrow-1-se { background-position: -48px -32px; }
++.ui-icon-arrow-1-s { background-position: -64px -32px; }
++.ui-icon-arrow-1-sw { background-position: -80px -32px; }
++.ui-icon-arrow-1-w { background-position: -96px -32px; }
++.ui-icon-arrow-1-nw { background-position: -112px -32px; }
++.ui-icon-arrow-2-n-s { background-position: -128px -32px; }
++.ui-icon-arrow-2-ne-sw { background-position: -144px -32px; }
++.ui-icon-arrow-2-e-w { background-position: -160px -32px; }
++.ui-icon-arrow-2-se-nw { background-position: -176px -32px; }
++.ui-icon-arrowstop-1-n { background-position: -192px -32px; }
++.ui-icon-arrowstop-1-e { background-position: -208px -32px; }
++.ui-icon-arrowstop-1-s { background-position: -224px -32px; }
++.ui-icon-arrowstop-1-w { background-position: -240px -32px; }
++.ui-icon-arrowthick-1-n { background-position: 0 -48px; }
++.ui-icon-arrowthick-1-ne { background-position: -16px -48px; }
++.ui-icon-arrowthick-1-e { background-position: -32px -48px; }
++.ui-icon-arrowthick-1-se { background-position: -48px -48px; }
++.ui-icon-arrowthick-1-s { background-position: -64px -48px; }
++.ui-icon-arrowthick-1-sw { background-position: -80px -48px; }
++.ui-icon-arrowthick-1-w { background-position: -96px -48px; }
++.ui-icon-arrowthick-1-nw { background-position: -112px -48px; }
++.ui-icon-arrowthick-2-n-s { background-position: -128px -48px; }
++.ui-icon-arrowthick-2-ne-sw { background-position: -144px -48px; }
++.ui-icon-arrowthick-2-e-w { background-position: -160px -48px; }
++.ui-icon-arrowthick-2-se-nw { background-position: -176px -48px; }
++.ui-icon-arrowthickstop-1-n { background-position: -192px -48px; }
++.ui-icon-arrowthickstop-1-e { background-position: -208px -48px; }
++.ui-icon-arrowthickstop-1-s { background-position: -224px -48px; }
++.ui-icon-arrowthickstop-1-w { background-position: -240px -48px; }
++.ui-icon-arrowreturnthick-1-w { background-position: 0 -64px; }
++.ui-icon-arrowreturnthick-1-n { background-position: -16px -64px; }
++.ui-icon-arrowreturnthick-1-e { background-position: -32px -64px; }
++.ui-icon-arrowreturnthick-1-s { background-position: -48px -64px; }
++.ui-icon-arrowreturn-1-w { background-position: -64px -64px; }
++.ui-icon-arrowreturn-1-n { background-position: -80px -64px; }
++.ui-icon-arrowreturn-1-e { background-position: -96px -64px; }
++.ui-icon-arrowreturn-1-s { background-position: -112px -64px; }
++.ui-icon-arrowrefresh-1-w { background-position: -128px -64px; }
++.ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }
++.ui-icon-arrowrefresh-1-e { background-position: -160px -64px; }
++.ui-icon-arrowrefresh-1-s { background-position: -176px -64px; }
++.ui-icon-arrow-4 { background-position: 0 -80px; }
++.ui-icon-arrow-4-diag { background-position: -16px -80px; }
++.ui-icon-extlink { background-position: -32px -80px; }
++.ui-icon-newwin { background-position: -48px -80px; }
++.ui-icon-refresh { background-position: -64px -80px; }
++.ui-icon-shuffle { background-position: -80px -80px; }
++.ui-icon-transfer-e-w { background-position: -96px -80px; }
++.ui-icon-transferthick-e-w { background-position: -112px -80px; }
++.ui-icon-folder-collapsed { background-position: 0 -96px; }
++.ui-icon-folder-open { background-position: -16px -96px; }
++.ui-icon-document { background-position: -32px -96px; }
++.ui-icon-document-b { background-position: -48px -96px; }
++.ui-icon-note { background-position: -64px -96px; }
++.ui-icon-mail-closed { background-position: -80px -96px; }
++.ui-icon-mail-open { background-position: -96px -96px; }
++.ui-icon-suitcase { background-position: -112px -96px; }
++.ui-icon-comment { background-position: -128px -96px; }
++.ui-icon-person { background-position: -144px -96px; }
++.ui-icon-print { background-position: -160px -96px; }
++.ui-icon-trash { background-position: -176px -96px; }
++.ui-icon-locked { background-position: -192px -96px; }
++.ui-icon-unlocked { background-position: -208px -96px; }
++.ui-icon-bookmark { background-position: -224px -96px; }
++.ui-icon-tag { background-position: -240px -96px; }
++.ui-icon-home { background-position: 0 -112px; }
++.ui-icon-flag { background-position: -16px -112px; }
++.ui-icon-calendar { background-position: -32px -112px; }
++.ui-icon-cart { background-position: -48px -112px; }
++.ui-icon-pencil { background-position: -64px -112px; }
++.ui-icon-clock { background-position: -80px -112px; }
++.ui-icon-disk { background-position: -96px -112px; }
++.ui-icon-calculator { background-position: -112px -112px; }
++.ui-icon-zoomin { background-position: -128px -112px; }
++.ui-icon-zoomout { background-position: -144px -112px; }
++.ui-icon-search { background-position: -160px -112px; }
++.ui-icon-wrench { background-position: -176px -112px; }
++.ui-icon-gear { background-position: -192px -112px; }
++.ui-icon-heart { background-position: -208px -112px; }
++.ui-icon-star { background-position: -224px -112px; }
++.ui-icon-link { background-position: -240px -112px; }
++.ui-icon-cancel { background-position: 0 -128px; }
++.ui-icon-plus { background-position: -16px -128px; }
++.ui-icon-plusthick { background-position: -32px -128px; }
++.ui-icon-minus { background-position: -48px -128px; }
++.ui-icon-minusthick { background-position: -64px -128px; }
++.ui-icon-close { background-position: -80px -128px; }
++.ui-icon-closethick { background-position: -96px -128px; }
++.ui-icon-key { background-position: -112px -128px; }
++.ui-icon-lightbulb { background-position: -128px -128px; }
++.ui-icon-scissors { background-position: -144px -128px; }
++.ui-icon-clipboard { background-position: -160px -128px; }
++.ui-icon-copy { background-position: -176px -128px; }
++.ui-icon-contact { background-position: -192px -128px; }
++.ui-icon-image { background-position: -208px -128px; }
++.ui-icon-video { background-position: -224px -128px; }
++.ui-icon-script { background-position: -240px -128px; }
++.ui-icon-alert { background-position: 0 -144px; }
++.ui-icon-info { background-position: -16px -144px; }
++.ui-icon-notice { background-position: -32px -144px; }
++.ui-icon-help { background-position: -48px -144px; }
++.ui-icon-check { background-position: -64px -144px; }
++.ui-icon-bullet { background-position: -80px -144px; }
++.ui-icon-radio-off { background-position: -96px -144px; }
++.ui-icon-radio-on { background-position: -112px -144px; }
++.ui-icon-pin-w { background-position: -128px -144px; }
++.ui-icon-pin-s { background-position: -144px -144px; }
++.ui-icon-play { background-position: 0 -160px; }
++.ui-icon-pause { background-position: -16px -160px; }
++.ui-icon-seek-next { background-position: -32px -160px; }
++.ui-icon-seek-prev { background-position: -48px -160px; }
++.ui-icon-seek-end { background-position: -64px -160px; }
++.ui-icon-seek-start { background-position: -80px -160px; }
++/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
++.ui-icon-seek-first { background-position: -80px -160px; }
++.ui-icon-stop { background-position: -96px -160px; }
++.ui-icon-eject { background-position: -112px -160px; }
++.ui-icon-volume-off { background-position: -128px -160px; }
++.ui-icon-volume-on { background-position: -144px -160px; }
++.ui-icon-power { background-position: 0 -176px; }
++.ui-icon-signal-diag { background-position: -16px -176px; }
++.ui-icon-signal { background-position: -32px -176px; }
++.ui-icon-battery-0 { background-position: -48px -176px; }
++.ui-icon-battery-1 { background-position: -64px -176px; }
++.ui-icon-battery-2 { background-position: -80px -176px; }
++.ui-icon-battery-3 { background-position: -96px -176px; }
++.ui-icon-circle-plus { background-position: 0 -192px; }
++.ui-icon-circle-minus { background-position: -16px -192px; }
++.ui-icon-circle-close { background-position: -32px -192px; }
++.ui-icon-circle-triangle-e { background-position: -48px -192px; }
++.ui-icon-circle-triangle-s { background-position: -64px -192px; }
++.ui-icon-circle-triangle-w { background-position: -80px -192px; }
++.ui-icon-circle-triangle-n { background-position: -96px -192px; }
++.ui-icon-circle-arrow-e { background-position: -112px -192px; }
++.ui-icon-circle-arrow-s { background-position: -128px -192px; }
++.ui-icon-circle-arrow-w { background-position: -144px -192px; }
++.ui-icon-circle-arrow-n { background-position: -160px -192px; }
++.ui-icon-circle-zoomin { background-position: -176px -192px; }
++.ui-icon-circle-zoomout { background-position: -192px -192px; }
++.ui-icon-circle-check { background-position: -208px -192px; }
++.ui-icon-circlesmall-plus { background-position: 0 -208px; }
++.ui-icon-circlesmall-minus { background-position: -16px -208px; }
++.ui-icon-circlesmall-close { background-position: -32px -208px; }
++.ui-icon-squaresmall-plus { background-position: -48px -208px; }
++.ui-icon-squaresmall-minus { background-position: -64px -208px; }
++.ui-icon-squaresmall-close { background-position: -80px -208px; }
++.ui-icon-grip-dotted-vertical { background-position: 0 -224px; }
++.ui-icon-grip-dotted-horizontal { background-position: -16px -224px; }
++.ui-icon-grip-solid-vertical { background-position: -32px -224px; }
++.ui-icon-grip-solid-horizontal { background-position: -48px -224px; }
++.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
++.ui-icon-grip-diagonal-se { background-position: -80px -224px; }
++
++
++/* Misc visuals
++----------------------------------*/
++
++/* Corner radius */
++.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -khtml-border-top-left-radius: 4px; border-top-left-radius: 4px; }
++.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; -khtml-border-top-right-radius: 4px; border-top-right-radius: 4px; }
++.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -khtml-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
++.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; -khtml-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
++
++/* Overlays */
++.ui-widget-overlay { background-color: #666666; opacity: .50;filter:Alpha(Opacity=50); }
++.ui-widget-shadow { margin: -5px 0 0 -5px; padding: 5px; background-color: #000000; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }/*
++ * jQuery UI Tabs 1.8.14
++ *
++ * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
++ * Dual licensed under the MIT or GPL Version 2 licenses.
++ * http://jquery.org/license
++ *
++ * http://docs.jquery.com/UI/Tabs#theming
++ */
++.ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
++.ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
++.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
++.ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
++.ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
++.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
++.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
++.ui-tabs .ui-tabs-panel { display: block; border-width: 0; background: none; background-color: #EDEFF4; }
++/* this for correctly initialisation of dynamic components */
++.ui-tabs .ui-tabs-hide { position: absolute; left: -10000px; }
+\ No newline at end of file
+-- 
+1.7.1
+

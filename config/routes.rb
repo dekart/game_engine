@@ -218,7 +218,8 @@ ActionController::Routing::Routes.draw do |map|
     :member     => {
       :use      => :any,
       :equip    => :post,
-      :unequip  => :post
+      :unequip  => :post,
+      :move     => :post
     }
   map.resources :fights,
     :member     => {:respond => :post, :used_items => :post}

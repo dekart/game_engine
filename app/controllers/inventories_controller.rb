@@ -90,6 +90,16 @@ class InventoriesController < ApplicationController
 
     render :action => "equip", :layout => "ajax"
   end
+  
+  def move
+    @inventory = current_character.inventories.find(params[:id])
+    
+    # TODO: refactor to one action from equipment
+    current_character.equipment.unequip!(@inventory, params[:from_placement])
+    current_character.equipment.equip!(@inventory, params[:to_placement])
+    
+    render :action => "equip", :layout => "ajax"
+  end
 
   def give
     data = encryptor.decrypt(params[:request_data].to_s)

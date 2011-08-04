@@ -345,7 +345,92 @@ var AssignmentForm = {
 
 
 var Equipment = {
-  setup: function(){
+  setup: function() {
+    $("#equippables-tabs").tabs();
+    
+    $("#equipment_inventories .carousel-container").each(function() {
+      $(this).jcarousel(); 
+    });
+    
+    $("#placements .additional .items").jcarousel({
+      vertical: true
+    });
+    
+    $("#equippables .inventory").draggable({
+      appendTo: $("#equipment"),
+      helper: function() {
+        var clone = $(this).clone();
+        clone.find("span").remove();
+        return clone;
+      },
+      revert: "invalid",
+      cursor: "move"
+    });
+    
+    $("#placements .inventory").draggable({
+      appendTo: $("#equipment"),
+      helper: function() {
+        var clone = $(this).clone();
+        return clone;
+      },
+      revert: "invalid",
+      cursor: "move"
+    });
+    
+    var elementInContainer = function(container, el) {
+      return $(el).parents("[data-placement='" + $(container).data('placement') + "']").length == 1;
+    }
+    
+    var checkPlacementAcceptance = function(container, el) {
+      return $.inArray($(container).data('placement'), $(el).data('placements').split(',')) != -1;
+    };
+    
+    var droppableDefaults = {
+      activeClass: "state-active",
+      hoverClass: "state-hover",
+      activate: function(){ 
+        $(this).css('opacity', 0.7);
+      },
+      deactivate: function(){
+        $(this).css('opacity', 1);
+      }
+    };
+    
+    $("#placements .placement, #placements .additional .items").droppable($.extend(droppableDefaults, {
+      accept: function(el) {
+        if (checkPlacementAcceptance(this, el) && !elementInContainer(this, el)) {
+          return true;
+        }
+        return false;
+      },
+      drop: function(event, ui) {
+        if ($(ui.draggable).data('move')) {
+          // move inventory from one placement to another
+          $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')}, function(request) {
+            $("#result").html(request);
+          });
+        } else {
+          // simply equip inventory in this placement
+          $.post($(ui.draggable).data('equip'), {placement: $(this).data('placement')}, function(request) {
+            $("#result").html(request);
+          });
+        }
+      }
+    }));
+    
+    $("#equippables-tabs .jcarousel-clip").droppable($.extend(droppableDefaults, {
+      accept: function(el) {
+        if ($(el).parents("#equippables-tabs").length == 0) {
+          return true;
+        }
+        return false;
+      },
+      drop: function(event, ui) {
+        $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')}, function(request) {
+          $("#result").html(request);
+        });
+      }
+    }));
   }
 };
 
@@ -441,12 +526,16 @@ $(function(){
     });
   }
   
-  // Display tooltips
-  $('#content [data-tooltip]').each(function(){
-    var $element = $(this);
-    
-    $element.qtip($element.data('tooltip'));
-  });
+  $(document).bind('tooltips.setup', function(){
+    // Display tooltips
+    $('#content [data-tooltip]').each(function(){
+      var $element = $(this);
+      
+      $element.qtip($element.data('tooltip'));
+    });
+  })
+  
+  $(document).trigger('tooltips.setup');
        
   $('a[data-click-once=true]').live('click', function(){
     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
@@ -467,6 +556,7 @@ $(function(){
     if(typeof FB !== 'undefined'){
       FB.XFBML.parse();
     }
+    $(document).trigger('tooltips.setup');
   });
 
   $(document).bind('loading.dialog', function(){
