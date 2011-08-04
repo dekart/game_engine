@@ -1,40 +1,31 @@
 <div id="equippables">
   <h2><%= t(".header") %></h2>
 
-  <% collection(current_character.inventories.equippable.all) do |inventories| %>
-    <% inventories.each do |inventory| %>
-      <% content_tag(:div, :id => dom_id(inventory, :equipment), :class => :inventory) do %>        
-        <div class="header">
-          <%= t(".item_header",
-                :name   => content_tag(:span, inventory.name, :class => :name),
-                :amount => content_tag(:span, inventory.amount_available_for_equipment, :class => :amount)
-              ).html_safe %>
-        </div>
+  <% if inventories_grouped_by_item_group.any? %>
 
-        <div class="controls">
-          <% form_tag "" do %>
-            <%= select_tag(:placement, options_for_select(inventory.placement_options_for_select)) %>
-
-            <%= link_to_remote(button(:equip),
-                  :url    => equip_inventory_path(inventory),
-                  :update => :result,
-                  :with   => "$(this).parent('form').serialize()",
-                  :html   => {:class => "equip button"}
-                ) %>
-          <% end %>
-        </div>
-
-        <div class="image">
-          <%= item_image(inventory, :small, 
-                :tooltip => {
-                  :position => {
-                    :my => 'top left',
-                    :at => 'bottom right'
-                  }
-                }
-              ) %>
-        </div>
+    <div id="equippables-tabs">
+      <ul>
+        <% inventories_grouped_by_item_group.each do |item_group, inventories| %>
+          <li><%= link_to(item_group.name, "##{dom_id(item_group, :inventories)}") %></li>
+        <% end %>
+      </ul>
+      
+      <% inventories_grouped_by_item_group.each do |item_group, inventories| %>
+        <% div_for(item_group, :inventories) do %>
+          <ul class="carousel-container">
+            <% inventories.each do |inventory| %>
+              <% content_tag_for(:li, inventory, :equipment, 
+                  :'data-placements' => inventory.placements.join(','),
+                  :'data-equip' => equip_inventory_path(inventory)) do %>
+                <%= inventory_item_image(inventory, :small, :tooltip => true, :count => inventory.amount_available_for_equipment) %>
+              <% end %>
+            <% end %>
+          </ul>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
+    
+  <% else %>
+    <%= empty_set %>
   <% end %>
 </div>

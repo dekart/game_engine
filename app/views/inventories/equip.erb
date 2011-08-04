@@ -10,4 +10,6 @@
         @inventory ? "#{@inventory.name} (#{@inventory.item.availability})" : 'All Items', 
         current_character.level
       ) %>
+      
+  $(document).trigger('remote_content.received');
 <% end %>

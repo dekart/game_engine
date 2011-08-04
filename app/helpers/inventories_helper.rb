@@ -54,4 +54,13 @@ module InventoriesHelper
     
     content_tag(:div, result << item_image(inventory, format, options), :class => 'inventory_image')
   end
+  
+  def inventories_grouped_by_item_group
+    @inventories_grouped_by_item_group ||= current_character.inventories.equippable.all.group_by {|i| i.item_group }
+  end
+  
+  def inventories_equipment_additional(character = current_character)
+    @inventories_equipment_additional ||= character.equipment.inventories_by_placement(:additional)
+  end
+  
 end
