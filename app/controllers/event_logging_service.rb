@@ -1,5 +1,7 @@
 class EventLoggingService
   def self.log_event(event_type, *args)
+    return unless Rails::Config.event_logging.enabled
+    
     data = {
       :event_type => event_type,
       :occurred_at => Time.now
