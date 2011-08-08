@@ -19,27 +19,50 @@
   border-bottom = !fight_attributes_border
 
   th
-    font-size: 14px
-
+    font-size: 12px
+    
+    &.personal
+      width = !fight_attributes_personal_width
+      
+    &.inventory
+      width = !fight_attributes_inventory_width
+      
+    &.best
+      text-align: right
+      width = !fight_attributes_best_width
+      
   td
     padding: 5px 0
 
-  .values div
-    display: inline
-    line-height: 22px
-    height: 22px
-    padding: 2px 5px 2px 21px
-    background-position: center left
-    background-repeat: no-repeat
+  .values
+    .value, .sign
+      line-height: 22px
+      height: 22px
+      padding: 2px 5px
+      
+    .attack, .defence, .relations
+      padding: 2px 5px 2px 21px
+      background-position: center left
+      background-repeat: no-repeat
+    
+    .sign
+      font-weight: bold
+  
+    .result
+      border = !fight_attributes_result_effects_border
+      margin-right: 4px
+      padding: 0 2px
 
-  .attack
-    background-image = !fight_attributes_attack_icon
-
-  .defence
-    background-image = !fight_attributes_defence_icon
-
-  .relations
-    background-image = !fight_attributes_relations_icon
+    .attack
+      background-image = !fight_attributes_attack_icon
+  
+    .defence
+      background-image = !fight_attributes_defence_icon
+  
+    .relations
+      background-image = !fight_attributes_relations_icon
+      padding-left: 25px
+  
 
 #victim_list
   width: 100%
