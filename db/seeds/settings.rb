@@ -154,4 +154,7 @@ Setting[:chat_enabled] ||= true
 Setting[:contests_show_after_finished_time] ||= 5
 Setting[:contests_leaders_show_limit] ||= 100
 
+Setting[:friends_invite_enabled] ||= true
+Setting[:stream_dialog_enabled] ||= true
+
 # Put your custom settings below this line

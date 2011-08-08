@@ -39,7 +39,7 @@
               ) %>
         <% end %>
         
-        <% if monster.monster_type.available_for_friends_invite %>
+        <% if Setting.b(:friends_invite_enabled) && monster.monster_type.available_for_friends_invite %>
           <%= link_to_function(button(:invite_request),
                 fb_request_dialog(:monster_invite,
                   :title    => t('.invitation.title'),
@@ -58,7 +58,7 @@
   
           <%= link_to_function(button(:invite), stream_dialog(:monster_invite, monster),
                 :class => "invite button"
-              ) %>
+              ) if Setting.b(:stream_dialog_enabled) %>
         <% end %>
       </div>
 

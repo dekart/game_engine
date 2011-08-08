@@ -10,7 +10,7 @@
       <%= payout_list(@promotion, @result.payouts) %>
     </div>
 
-    <% if @promotion.forwardable? %>
+    <% if @promotion.forwardable? && Setting.b(:stream_dialog_enabled) %>
       <div class="forward">
         <h3><%= t(".forward.title") %></h3>
 

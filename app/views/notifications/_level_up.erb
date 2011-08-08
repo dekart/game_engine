@@ -10,7 +10,7 @@
   <div class="buttons">
     <%= link_to_function(button(:publish), stream_dialog(:level_up, :callback => "$(document).trigger('character.level_up_publish')"),
           :class => "publish button"
-        ) %>
+        ) if Setting.b(:stream_dialog_enabled) %>
         
     <%= link_to_function(button(:upgrade), 
           remote_function(:url => upgrade_character_url(current_character),

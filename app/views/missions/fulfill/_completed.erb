@@ -1,7 +1,7 @@
 <% builder.buttons do %>
   <%= link_to_function(button(:publish), stream_dialog(:mission_completed, mission),
         :class => "publish button"
-      ) %>
+      ) if Setting.b(:stream_dialog_enabled) %>
 <% end %>
 
 <% builder.message :complete do %>
@@ -42,7 +42,7 @@
       <%= link_to_function(button(:publish),
             stream_dialog(:mission_completed, mission) + "$.dialog.close()",
             :class => "continue button"
-          ) %>
+          ) if Setting.b(:stream_dialog_enabled) %>
     </div>
   <% end %>
 <% end %>
