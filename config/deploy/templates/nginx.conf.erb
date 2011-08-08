@@ -21,6 +21,7 @@ server {
   # Ignored URLs
   location ~ null { return 404; }
   location ~ google-analytics\.com/ga\.js { return 404; }
+  location ~ avg_ls_dom\.js { return 404; }
 
   location / {
     error_page 405 = /system/maintenance.html;
