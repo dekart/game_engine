@@ -11,6 +11,6 @@
   <% d.on_ready do %>
     $(document).trigger('remote_content.received');
 
-    <%= stream_dialog(:hit_listing_new, @hit_listing) %>
+    <%= stream_dialog(:hit_listing_new, @hit_listing) if Setting.b(:stream_dialog_enabled) %>
   <% end %>
 <% end %>

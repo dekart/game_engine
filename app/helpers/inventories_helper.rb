@@ -1,6 +1,10 @@
 module InventoriesHelper
+  def inventory_available_additonal_slots_count
+    @inventory_available_additonal_slots_count ||= current_character.equipment.available_capacity(:additional)
+  end
+  
   def inventory_additonal_slots_note
-    free_slots = current_character.equipment.available_capacity(:additional)
+    free_slots = inventory_available_additonal_slots_count
 
     yield(free_slots)
   end
@@ -60,7 +64,9 @@ module InventoriesHelper
   end
   
   def inventories_equipment_additional(character = current_character)
-    @inventories_equipment_additional ||= character.equipment.inventories_by_placement(:additional)
+    @inventories_equipment_additional ||= begin
+      character.equipment.inventories_by_placement(:additional).inject(Hash.new(0)) {|h, v| h[v] += 1; h}
+    end
   end
   
 end

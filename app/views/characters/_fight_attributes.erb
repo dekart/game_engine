@@ -1,22 +1,39 @@
 <table id="fight_attributes" cellspacing="0" cellpadding="0">
   <tr>
-    <th><%= t(".personal") %></th>
+    <th class="personal"><%= t(".personal") %></th>
+    <th></th>
+    <th class="inventory"><%= t(".inventory") %></th>
+    <th></th>
+    <th></th>
     <th><%= t(".relations") %></th>
-    <th><%= t(".inventory") %></th>
-    <th><%= t(".offence") %></th>
-    <th><%= t(".defence") %></th>
+    <th class="best"><%= t(".offence") %></th>
+    <th class="best"><%= t(".defence") %></th>
   </tr>
   <tr>
     <td class="values">
-      <div class="attack"><%= current_character.attack %></div>
-      <div class="defence"><%= current_character.defence %></div>
+      <div class="attack value"><%= current_character.attack %></div>
+      <div class="defence value"><%= current_character.defence %></div>
     </td>
     <td class="values">
-      <div class="relations"><%= current_character.relations.effective_size %></div>
+      <div class="sign">+</div>
+      <div class="sign">+</div>
     </td>
     <td class="values">
-      <div class="attack"><%= current_character.equipment.effect(:attack) %></div>
-      <div class="defence"><%= current_character.equipment.effect(:defence) %></div>
+      <div class="attack value"><%= current_character.equipment.effect(:attack) %></div>
+      <div class="defence value"><%= current_character.equipment.effect(:defence) %></div>
+    </td>
+    <td class="values">
+      <div class="sign">=</div>
+      <div class="sign">=</div>
+    </td>
+    <td class="values">
+      <div class="result">
+        <div class="attack value"><%= current_character.attack + current_character.equipment.effect(:attack) %></div>
+        <div class="defence value"><%= current_character.defence + current_character.equipment.effect(:defence) %></div>
+      </div>
+    </td>
+    <td class="values">
+      <div class="relations value"><%= current_character.relations.effective_size %></div>
     </td>
     <% %w(best_offence best_defence).each do |group| %>
       <td class="inventories">

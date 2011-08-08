@@ -23,9 +23,11 @@
         ) %>
 
     <div class="controls">
-      <%= link_to_function(button(:request), stream_dialog(:collection_missing_items, collection),
-            :class => 'publish button'
-          ) unless collection.missing_items(current_character).empty? %>
+      <% if Setting.b(:stream_dialog_enabled) %>
+        <%= link_to_function(button(:request), stream_dialog(:collection_missing_items, collection),
+              :class => 'publish button'
+            ) unless collection.missing_items(current_character).empty? %>
+      <% end %>
 
       <%= link_to_remote(button(:collect),
             :url    => item_collection_path(collection),

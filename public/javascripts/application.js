@@ -392,6 +392,11 @@ var Equipment = {
       return $.inArray($(container).data('placement'), $(el).data('placements').split(',')) != -1;
     };
     
+    var disableDraggables = function() {
+      $("#equippables .inventory").draggable("disable");
+      $("#placements .inventory").draggable("disable");
+    };
+    
     var droppableDefaults = {
       activeClass: "state-active",
       hoverClass: "state-hover",
@@ -405,12 +410,18 @@ var Equipment = {
     
     $("#placements .placement, #placements .additional .items").droppable($.extend(droppableDefaults, {
       accept: function(el) {
+        if ($(this).attr('data-free-slots') == 0) {
+          return false;
+        }
+          
         if (checkPlacementAcceptance(this, el) && !elementInContainer(this, el)) {
           return true;
         }
         return false;
       },
       drop: function(event, ui) {
+        disableDraggables();
+        
         if ($(ui.draggable).data('move')) {
           // move inventory from one placement to another
           $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')}, function(request) {
@@ -433,6 +444,8 @@ var Equipment = {
         return false;
       },
       drop: function(event, ui) {
+        disableDraggables();
+        
         $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')}, function(request) {
           $("#result").html(request);
         });

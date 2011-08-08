@@ -8,7 +8,7 @@
       <%= link_to_function(button(:publish),
             stream_dialog(:monster_defeated, @fight.monster) + "$.dialog.close()",
             :class => "publish button"
-          ) %>
+          ) if Setting.b(:stream_dialog_enabled) %>
     <% end %>
 
     <table class="payouts">
