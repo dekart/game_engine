@@ -30,13 +30,17 @@
       <div class="help"><%= link %></div>
     <% end %>
 
-    <ul class="items" data-placement="additional">
-      <% inventories_equipment_additional.each do |inventory| %>
+    <% content_tag :ul, :class => 'items', :'data-placement' => 'additional', 
+                    :'data-free-slots' => inventory_available_additonal_slots_count do %>
+      <% inventories_equipment_additional.each_pair do |inventory, count| %>
         <% content_tag :li, :class => :inventory, 
             :'data-placements' => inventory.placements.join(','),
             :"data-equip" => equip_inventory_path(inventory),
             :"data-unequip" => unequip_inventory_path(inventory, :placement => 'additional'),
             :"data-move" => move_inventory_path(inventory, :from_placement => 'additional') do %>
+
+          <%= inventory_item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true, :count => count) -%>
+          
           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
                 :url    => unequip_inventory_path(inventory, :placement => :additional),
                 :update => :result,
@@ -46,11 +50,9 @@
                   :title => t(".remove")
                 }
               ) if character == current_character %>
-
-          <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true) -%>
         <% end %>
       <% end %>
-    </ul>
+    <% end %>
 
     <% inventory_additonal_slots_note do |free_slots| %>
       <div class="note">
