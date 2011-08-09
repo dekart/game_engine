@@ -30,7 +30,7 @@ class Property < ActiveRecord::Base
   end
 
   def total_income
-    income * level + income_by_level * level
+    income_by_level == 0 ? income * level : income + income_by_level * (level - 1)
   end
 
   def time_to_next_collection

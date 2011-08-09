@@ -50,17 +50,19 @@ describe Property do
     end
   end
 
-  it "should return correct total income" do
+  it "should return correct total income when property haven't income by level" do
     @property.level = 5
+    @property.property_type.income = 5
     
-    @property.total_income.should == 50
+    @property.total_income.should == 25
   end
   
   it "should return correct total income when property have income by level" do
     @property.level = 5
+    @property.property_type.income = 5
     @property.property_type.income_by_level = 10
     
-    @property.total_income.should == 100
+    @property.total_income.should == 45
   end
 
   it "should return correct upgrade price" do
