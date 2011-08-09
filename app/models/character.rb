@@ -68,10 +68,10 @@ class Character < ActiveRecord::Base
 
   named_scope :rated_by, Proc.new{|unit|
     {
-      :joins => [:user],
-      :conditions => ['banned IS NOT TRUE'],
-      :order => "characters.#{unit} DESC",
-      :limit => Setting.i(:rating_show_limit)
+      :joins      => :user,
+      :conditions => ['characters.id NOT IN (?)', Character.banned_ids],
+      :order      => "characters.#{unit} DESC",
+      :limit      => Setting.i(:rating_show_limit)
     }
   }
 
@@ -112,6 +112,12 @@ class Character < ActiveRecord::Base
   class << self
     def rating_position(character, field)
       count(:conditions => ["#{field} > ?", character.send(field)]) + 1
+    end
+    
+    def banned_ids
+      Rails.cache.fetch('character_banned_ids', :expires_in => 5.minutes) do
+        [0] + Character.all(:select => "characters.id", :joins => :user, :conditions => 'banned IS TRUE').map{|c| c.id }
+      end
     end
   end
 

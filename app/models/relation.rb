@@ -11,6 +11,12 @@ class Relation < ActiveRecord::Base
   named_scope :assigned,
     :include    => [:assignment, :character],
     :conditions => "assignments.id IS NOT NULL"
+  named_scope :not_banned, Proc.new{
+    {
+      :include    => :character,
+      :conditions => ["characters.id NOT IN(?)", Character.banned_ids]
+    }
+  }
 
   #TODO Check size of the 'bag' placement when relation is getting removed
 

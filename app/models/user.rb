@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   after_save :schedule_social_data_update, :if => :access_token_changed?
   
   before_create :set_first_tutorial_step
-
+  
   def show_tutorial?
     Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
   end

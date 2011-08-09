@@ -1,8 +1,7 @@
 class AssignmentsController < ApplicationController
   def new
     @assignment = parents.last.assignments.build(:role => params[:role])
-    @banned = User.all(:conditions => ['banned is true'], :joins => [:character]).collect{|i| i.character.id}
-    @relations = Setting.b(:assignment_mercenaries) ? current_character.relations : current_character.friend_relations
+    @relations = current_character.send(Setting.b(:assignment_mercenaries) ? :relations : :friend_relations).not_banned
 
     render :new, :layout => "ajax"
   end
