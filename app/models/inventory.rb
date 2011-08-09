@@ -112,7 +112,7 @@ class Inventory < ActiveRecord::Base
   
   def check_market_items
     if market_item and market_item.amount > amount
-      market_item.destroy
+      market_item.destroy unless market_item.destroyed?
     end
   end
 end
