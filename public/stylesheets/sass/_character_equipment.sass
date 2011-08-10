@@ -62,6 +62,9 @@
     top: 0px
     left: -300px
     
+    .items
+      width: 210px
+    
     .help
       margin-bottom: 15px
 
@@ -70,7 +73,6 @@
       float: left
       width = !placements_additional_width
       height = !placements_additional_height
-      border = !placements_additional_border
 
     .note
       clear: both
@@ -92,7 +94,7 @@
     
     
 #equipment
-  .placement, .additional .items, #equippables-tabs .jcarousel-clip
+  .placement, .additional .items, #equippables-tabs .item_group
     &.state-active
       background-color: #C4CDDF
     &.state-hover
@@ -105,7 +107,6 @@
   width = !equippables_width
 
   .inventory
-    border = !equippables_item_border
     cursor: move
     
     .header
