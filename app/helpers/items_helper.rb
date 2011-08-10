@@ -7,7 +7,13 @@ module ItemsHelper
         :content => {:text => item_tooltip_content(item)},
         :position => {
           :my => 'bottom center',
-          :at => 'top center'
+          :at => 'top center',
+          :viewport => true,
+          :adjust => {
+           :x => 0,
+           :y => 0,
+           :method => 'shift'
+          }
         }
       }.deep_merge(tooltip)
 
