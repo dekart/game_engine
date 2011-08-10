@@ -298,4 +298,4 @@
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel { display: block; border-width: 0; background: none; background-color: #EDEFF4; }
 /* this for correctly initialisation of dynamic components */
-.ui-tabs .ui-tabs-hide { position: absolute; left: -10000px; }
+.ui-tabs .ui-tabs-hide { display: none; }
