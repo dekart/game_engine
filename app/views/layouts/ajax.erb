@@ -1,11 +1,11 @@
 <%= yield %>
 
-<% if current_character %>
-  <%= display_notifications %>
-
+<% if current_character(true) %>
   <% dom_ready do %>
-    Character.update(<%= current_character(true).to_json_for_overview.html_safe %>);
+    Character.update(<%= current_character.to_json_for_overview.html_safe %>);
   <% end %>
+
+  <%= display_notifications %>
 <% end %>
 
 <% dom_ready do %>
