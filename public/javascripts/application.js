@@ -353,15 +353,21 @@ var AssignmentForm = {
 
 var Equipment = {
   setup: function() {
-    $("#equippables-tabs").tabs();
     
-    $("#equipment_inventories .carousel-container").each(function() {
-      $(this).jcarousel(); 
+    $("#equippables-tabs").tabs({
+      show: function(event, ui) {
+        $(ui.panel).find(".carousel-container").jcarousel({
+          visible: 8,
+          itemFallbackDimension: 8
+        }); 
+      }
     });
     
-    $("#placements .additional .items").jcarousel({
-      vertical: true
+    $("#placements .additional .carousel-container").jcarousel({
+      vertical: true,
+      itemFallbackDimension: 3
     });
+    
     
     $("#equippables .inventory").draggable({
       appendTo: $("#equipment"),
@@ -436,7 +442,7 @@ var Equipment = {
       }
     }));
     
-    $("#equippables-tabs .jcarousel-clip").droppable($.extend(droppableDefaults, {
+    $("#equippables-tabs .item_group").droppable($.extend(droppableDefaults, {
       accept: function(el) {
         if ($(el).parents("#equippables-tabs").length == 0) {
           return true;

@@ -60,7 +60,9 @@ module InventoriesHelper
   end
   
   def inventories_grouped_by_item_group
-    @inventories_grouped_by_item_group ||= current_character.inventories.equippable.all.group_by {|i| i.item_group }
+    @inventories_grouped_by_item_group ||= begin
+      current_character.inventories.equippable.all.group_by {|i| i.item_group }.sort{|a,b| a.first.name <=> b.first.name}
+    end
   end
   
   def inventories_equipment_additional(character = current_character)
