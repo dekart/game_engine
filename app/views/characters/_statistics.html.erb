@@ -29,6 +29,12 @@
       <%= character.missions_mastered %>
     </td>
   </tr>
+  <tr class="monsters_killed">
+    <th><%= Character.human_attribute_name("monsters_killed") %></th>
+    <td class="value">
+      <%= character.killed_monsters_count %>
+    </td>
+  </tr>
   <tr class="alliance_size">
     <th><%= Character.human_attribute_name("relations_count") %></th>
     <td class="value">
