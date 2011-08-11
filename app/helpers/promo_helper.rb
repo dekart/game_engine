@@ -15,12 +15,16 @@ module PromoHelper
       @pages << [id, block, options]
     end
     
-    def html(&block)
-      content ||= capture(self, &block)
+    def html
+      yield(self)
       
-      dom_ready('$("#promo_block").promoBlock()')
+      content = html_for_pages
+
+      unless content.blank?
+        dom_ready('$("#promo_block").promoBlock();')
       
-      content_tag(:div, html_for_pages, options.reverse_merge(:id => :promo_block))
+        content_tag(:div, content, options.reverse_merge(:id => :promo_block))
+      end
     end
     
     protected

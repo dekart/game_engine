@@ -2,9 +2,9 @@
 
 <%= render "inventories/buttons", :current => :shop %>
 
-<%= render 'items/tabs', :groups => @item_groups, :current => @current_group %>
+<%= render('layouts/promo_block', :context => :shop) %>
 
-<%= render("specials", :items => @special_items) unless @special_items.empty? %>
+<%= render 'items/tabs', :groups => @item_groups, :current => @current_group %>
 
 <%= will_paginate @items %>
 

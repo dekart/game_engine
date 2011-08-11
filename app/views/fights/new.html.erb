@@ -1,8 +1,8 @@
-<%= render 'contests/current' if current_contest && current_contest.points_type == 'fights_won' %>
-
 <%= title(t(".title")) %>
 
 <%= render "fights/buttons", :current => :fight %>
+
+<%= render('layouts/promo_block', :context => :fights) %>
 
 <%= render "boosts" %>
 

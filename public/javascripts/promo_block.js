@@ -13,7 +13,7 @@
       element: element,
       options: $.extend(
         {
-          delay : 10
+          delay : 10 // seconds
         }, 
         options
       ),
@@ -43,21 +43,22 @@
         var pages = block.pages();
         
         var visible_page = pages.filter('.current');
-
-        if(visible_page.length == 0){
-          var visible_page = pages.last();
-        }
-
         var next_page = visible_page.next('.page');
 
         if(next_page.length == 0){
           var next_page = pages.first();
         }
+        console.log(visible_page)
+        console.log(next_page)
         
         if(next_page[0] != visible_page[0]){
-          visible_page.removeClass('current').fadeOut(function(){
-            next_page.addClass('current').fadeIn();
-          });
+          if(visible_page.length == 0){
+            next_page.addClass('current').show();
+          } else {
+            visible_page.removeClass('current').fadeOut(function(){
+              next_page.addClass('current').fadeIn();
+            });
+          }
         }
       },
       
