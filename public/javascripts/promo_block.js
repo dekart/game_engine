@@ -48,8 +48,6 @@
         if(next_page.length == 0){
           var next_page = pages.first();
         }
-        console.log(visible_page)
-        console.log(next_page)
         
         if(next_page[0] != visible_page[0]){
           if(visible_page.length == 0){
