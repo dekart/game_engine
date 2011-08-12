@@ -24,7 +24,7 @@
           return $(this).outerHeight();
         }).toArray().sort(function(i,j){ return i > j ? -1 : 1; })[0];
 
-        block.element.height(block.element.innerHeight() + max_height);
+        block.element.height(block.element.outerHeight() + max_height);
         
         block.element.hover(block.pauseRotation, block.resumeRotation)
         
