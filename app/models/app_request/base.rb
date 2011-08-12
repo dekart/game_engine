@@ -20,9 +20,9 @@ class AppRequest::Base < ActiveRecord::Base
       :conditions => {:sender_id => sender.id, :receiver_id => receiver.facebook_id}
     }
   }
-  named_scope :sent_recently, Proc.new{
+  named_scope :sent_recently, Proc.new{|period|
     {
-      :conditions => ["app_requests.created_at > ?", 24.hours.ago]
+      :conditions => ["app_requests.created_at > ?", period.ago]
     }
   }
   

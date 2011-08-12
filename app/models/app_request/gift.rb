@@ -9,7 +9,7 @@ class AppRequest::Gift < AppRequest::Base
   
   class << self
     def ids_to_exclude_for(character)
-      from(character).sent_recently.receiver_ids
+      from(character).sent_recently(Setting.i(:gifting_repeat_accept_delay).hours).receiver_ids
     end
     
     def receiver_cache_key(receiver)
