@@ -11,7 +11,7 @@ en:
         monsters: "Monsters"
     show:
       buttons:
-        relations: "Party Rating"
+        relations: "Alliance Rating"
         global: "Global Rating"
       points_types:
         fights_won: "Fights Won"

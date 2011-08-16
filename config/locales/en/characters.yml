@@ -37,9 +37,9 @@ en:
         success: "You've successfully upgraded %{attribute} to %{number}"
         not_enough_points: "You cannot upgrade %{attribute} because you don't have enough points"
     fight_attributes:
-      personal: "Your Skills"
-      inventory: "Your Inventory"
-      relations: "Your Party"
+      personal: "Skills"
+      inventory: "Inventory"
+      relations: "Alliance"
       offence: "Best Offence"
       defence: "Best Defence"
     new:

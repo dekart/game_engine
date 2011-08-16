@@ -8,7 +8,7 @@ en:
       empty_set: "Here are no listings. Please try again later."
     new:
       title: "Add to Hitlist"
-      submit: "Tell Your Party"
+      submit: "Tell Your Alliance"
       note: "Note: A %{fee}% security fee will be charged to safeguard your bounty."
     create:
       title: "Hitlist"

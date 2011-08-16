@@ -3,11 +3,11 @@ en:
     show:
       title:
         global: "Hall of Fame: Global"
-        relations: "Hall of Fame: Party"
+        relations: "Hall of Fame: Alliance"
         
     buttons:
       buttons:
-        relations: "Party Rating"
+        relations: "Alliance Rating"
         global: "Global Rating"
         contest: "Contest Results"
 
@@ -20,6 +20,6 @@ en:
     missions:
       title: "Missions Succeeded"
     relations:
-      title: "Strongest Party"
+      title: "Strongest Alliance"
     monsters:
       title: "Monsters Killed"

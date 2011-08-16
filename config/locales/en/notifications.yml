@@ -18,8 +18,8 @@ en:
       you_received: "You received:"
       
     friends_to_invite:
-      title: "Recruit Friends To Your Party"
-      text: "These friends are not in your Party yet! Recruit them to make your Party stronger!"
+      title: "Recruit Friends To Your Alliance"
+      text: "These friends are not in your alliance yet! Recruit them to make your alliance stronger!"
       suggested_users: "Suggested Users"
       buttons:
         invite: "Invite Them"

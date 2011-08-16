@@ -38,14 +38,14 @@ en:
           full: "%{value}% more money from missions"
           short: "+%{value}%"
     new:
-      title: "Promote Party Member"
+      title: "Promote Alliance Member"
       not_assigned:
         title: "Not Assigned"
-        empty_set: "You have no free party members"
+        empty_set: "You have no free alliance members"
       assigned:
         title: "Reassign"
-        empty_set: "You have no assigned party members"
+        empty_set: "You have no assigned alliance members"
       columns:
-        user: "Party member"
+        user: "Alliance Member"
       buttons:
         promote: "Promote"

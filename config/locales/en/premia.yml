@@ -8,9 +8,9 @@ en:
       get_more: "Get More »"
       need_more: "Need more Gems? You can buy them using a major Credit Card or Paypal!"
       hire_mercenary:
-        text: "Hire Mercenary to join your Party"
+        text: "Hire Mercenary to join your Alliance"
         button: "Hire"
-        maximum: "You have maximum Party"
+        maximum: "You have maximum alliance"
       exchange_money:
         text: "Add %{amount} gold to your character"
         button: "Add Gold"

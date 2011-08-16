@@ -4,7 +4,7 @@ en:
       title: "Collections"
     item_collection:
       buttons:
-        request: "Ask from Party"
+        request: "Ask from Alliance"
         collect: "Collect"
     update:
       buttons:

@@ -1,9 +1,9 @@
 en:
   relations:
     new:
-      title: "Recruit To Your Party"
+      title: "Recruit To Your Alliance"
       success_message: "You've successfully sent %{amount} invitations to your friends!"
-      invitation_message: "Join my Party in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
+      invitation_message: "Join my Alliance in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
       recommended: "We recommend you to invite these friends:"
       invitation_sent: "Invitation was sent"
       buttons:
@@ -11,48 +11,48 @@ en:
         invite_all: "Invite More Friends"
       copy_paste:
         title: "Your Invitation Link"
-        note: "Use your status message to recruit more friends to your Party. Copy and paste the following message to the 'What's on your mind?' form and publish it. Or just send this message to your friends:"
-        invitation: "Join my %{app} Party! %{link}"
+        note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to the 'What's on your mind?' form and publish it. Or just send this message to your friends:"
+        invitation: "Join my %{app} Alliance! %{link}"
         
     create:
-      message: "Invitation accepted! The player became part of your Party!"
+      message: "Invitation accepted! The player became part of your Alliance!"
       
     show:
-      title: "Party Invitation"
-      note: "This user invites you to join their Party."
+      title: "Alliance Invitation"
+      note: "This user invites you to join their Alliance."
       buttons:
         accept: "Accept"
         ignore: "Ignore"
       messages:
-        only_friends: "Only friends can join your Party"
-        already_joined: "This user is already in your Party"
+        only_friends: "Only friends can join your Alliance"
+        already_joined: "This user is already in your Alliance"
         
     index:
-      title: "Your Party"
-      empty_set: "You don't have any members in your Party"
+      title: "Your Alliance"
+      empty_set: "You don't have any members in your Alliance"
       
     members:
-      title: "Party Members"
+      title: "Alliance Members"
     friend_relation:
       buttons:
-        break: "Break Party"
+        break: "Break Alliance"
       break:
-        confirmation: "Do you really want to break Party with this member?"
+        confirmation: "Do you really want to remove this person from your alliance?"
     assignments:
       title: "Assignments"
       buttons:
         promote: "Promote"
         demote: "Demote"
-        demote_confirm: "Do you really want to demote this Party member?"
+        demote_confirm: "Do you really want to demote this alliance member?"
         demote_all: "Demote all"
-        demote_all_confirm: "Do you really want to demote all Party members?"
+        demote_all_confirm: "Do you really want to demote all alliance members?"
     buttons:
       buttons:
-        relations: "My Party"
-        recruit: "Recruit to Party"
-        send_gifts: "Send Gifts to Party"
+        relations: "My Alliance"
+        recruit: "Recruit to Alliance"
+        send_gifts: "Send Gifts to Alliance"
         accept_requests: "Accept Requests"
         hire: "Hire Mercenaries"
     note:
-      text: "Recruit your friends to become stronger and fight better! The more friends join the Party, the more chance you win the Battle."
-      placements: "Additionally, every %{amount} Party Members bring an extra equipment slot!"
+      text: "Recruit your friends to become stronger and fight better! The more friends join your alliance, the more chance you win the Battle."
+      placements: "Additionally, every %{amount} alliance Members bring an extra equipment slot!"

@@ -78,7 +78,7 @@ en:
         free_slots:
           one: "You have %{count_label} additional slot left."
           other: "You have %{count_label} additional slots left."
-        relations: "Grow your %{relations} to get more slots. Every %{amount} Party Members bring an extra slot!"
+        relations: "Grow your %{relations} to get more slots. Every %{amount} alliance members bring an extra slot!"
     give:
       title: "Give Items to %{character}"
       you_have: "You have:"
