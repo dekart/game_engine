@@ -13,8 +13,11 @@ en:
       buttons:
         relations: "Alliance Rating"
         global: "Global Rating"
+    group:
       points_types:
         fights_won: "Fights Won"
         total_monsters_damage: "Total Monsters Damage"
+    winners_table:
+      payouts: "Prize"
         
         

@@ -1,6 +1,7 @@
 class ContestsController < ApplicationController
   def show  
     @contest = Contest.find(params[:id])
-    @leaders_with_points = @contest.leaders_with_points(:limit => Setting.i(:contests_leaders_show_limit))
+    
+    @current_group = @contest.group_for(current_character)
   end
 end

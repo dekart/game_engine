@@ -37,6 +37,12 @@
               ) if contest.can_mark_deleted? %>
         </td>
       </tr>
+      <tr>
+        <td></td>
+        <td colspan="5">
+          <%= render "groups", :contest => contest %>
+        </td>
+      </tr>
     <% end %>
   </table>
 <% end %>

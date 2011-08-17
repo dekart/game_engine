@@ -1,0 +1,37 @@
+<div class="results">
+  <div class="tabs">
+    <ul>
+      <% contest.groups_in_natural_order.each do |group| %>
+        <% content_tag_for(:li, group, :tab) do %>
+          <%= link_to group.title, "##{dom_id(group)}" %>
+        <% end %>
+      <% end %>
+    </ul>
+      
+    <% contest.groups_in_natural_order.each do |group| %>
+      <% content_tag_for(:table, group, 
+        :class => 'contest_table', :cellspacing => 0, :cellpadding => 0) do %>
+        <tr>
+          <th>#</th>
+          <th colspan="2"><%= Character.human_name %></th>
+          <th><%= t("contests.group.points_types.#{group.contest.points_type}") %></th>
+          <th><%= t(".payouts") %></th>
+        </tr>
+        
+        <% group.winners_with_points.each_with_index do |winner_with_point, i| %>
+          <tr>
+            <td class="position"><%= i + 1  %></td>
+            <td class="picture"><%= character_picture_link(winner_with_point.character) %></td>
+            <td class="name"><%= character_name_link(winner_with_point.character, {}, {:capitalize => true}) %></td>
+            <td class="points"><%= winner_with_point.points %></td>
+            <td class="payouts"><%= payout_list(winner_with_point.character, group.payouts_for(winner_with_point.character)) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<% dom_ready do %>
+  Contest.setup();
+<% end %>

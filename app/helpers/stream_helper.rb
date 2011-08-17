@@ -176,6 +176,19 @@ module StreamHelper
     ]
   end
   
+  def won_contest_story_options(notification)
+    [
+      {
+        :position => notification.contest_position, 
+        :name => notification.contest.name 
+      },
+      {
+        :position => notification.contest_position, 
+        :name => notification.contest.name 
+      }
+    ]
+  end
+  
   
   def prepare_story(story_alias, interpolation_options = {}, story_data = {}, image = nil)
     interpolation_options.reverse_merge!(

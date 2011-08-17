@@ -1,0 +1,17 @@
+<% content_tag_for(:table, group, 
+    :class => 'contest_table', :cellspacing => 0, :cellpadding => 0) do %>
+    <tr>
+      <th>#</th>
+      <th colspan="2"><%= Character.human_name %></th>
+      <th><%= t(".points_types.#{group.contest.points_type}") %></th>
+    </tr>
+  
+    <% contest_group_table(group) do |character, points, position, current| %>
+      <% content_tag(:tr, :class => (:current if current)) do %>
+        <td class="position"><%= position %></td>
+        <td class="picture"><%= character_picture_link(character) %></td>
+        <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
+        <td class="points last"><%= points %></td>
+      <% end %>
+    <% end %>
+<% end %>

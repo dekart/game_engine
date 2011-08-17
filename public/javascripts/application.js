@@ -482,6 +482,19 @@ var Fighting = {
   }
 };
 
+var Contest = {
+  setup: function(contestGroup) {
+    var $tabs = $(".contest .results .tabs");
+    
+    if ($tabs.length > 0) {
+      $tabs.tabs();
+      
+      var tabIndex = $tabs.find('.ui-tabs-nav .contest_group').index($('#' + contestGroup));
+      $tabs.tabs('select', tabIndex);
+    }
+  }
+};
+
 function debug(s) {
   if(!$.isEmptyObject(console)) {
     console.log(s);

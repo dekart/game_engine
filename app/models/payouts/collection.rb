@@ -25,11 +25,15 @@ module Payouts
     end
 
     def apply(character, trigger, reference = nil)
+      find_all(trigger).tap do |payouts|
+        payouts.each {|payout| payout.apply(character, reference) }
+      end
+    end
+    
+    def find_all(trigger)
       Payouts::Collection.new.tap do |result|
         items.each do |payout|
           if payout.applicable?(*trigger)
-            payout.apply(character, reference)
-
             result.items << payout
           end
         end

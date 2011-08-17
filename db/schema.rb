@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110728070118) do
+ActiveRecord::Schema.define(:version => 20110811053836) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -105,18 +105,17 @@ ActiveRecord::Schema.define(:version => 20110728070118) do
 
   add_index "bosses", ["mission_group_id"], :name => "index_bosses_on_mission_group_id"
 
-  create_table "character_contests", :force => true do |t|
-    t.integer  "character_id",                :null => false
-    t.integer  "contest_id",                  :null => false
-    t.integer  "points",       :default => 0
+  create_table "character_contest_groups", :force => true do |t|
+    t.integer  "character_id",                    :null => false
+    t.integer  "points",           :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "contest_group_id",                :null => false
   end
 
-  add_index "character_contests", ["character_id", "contest_id"], :name => "index_character_contests_on_character_id_and_contest_id"
-  add_index "character_contests", ["character_id"], :name => "index_character_contests_on_character_id"
-  add_index "character_contests", ["contest_id"], :name => "index_character_contests_on_contest_id"
-  add_index "character_contests", ["points"], :name => "index_character_contests_on_points"
+  add_index "character_contest_groups", ["character_id"], :name => "index_character_contests_on_character_id"
+  add_index "character_contest_groups", ["character_id"], :name => "index_character_contests_on_character_id_and_contest_id"
+  add_index "character_contest_groups", ["points"], :name => "index_character_contests_on_points"
 
   create_table "character_titles", :force => true do |t|
     t.integer  "character_id", :null => false
@@ -199,6 +198,14 @@ ActiveRecord::Schema.define(:version => 20110728070118) do
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
   add_index "characters", ["total_monsters_damage"], :name => "index_characters_on_total_monsters_damage"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
+
+  create_table "contest_groups", :force => true do |t|
+    t.integer "contest_id"
+    t.integer "max_character_level"
+    t.text    "payouts"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contests", :force => true do |t|
     t.string   "name",               :limit => 100, :default => "", :null => false

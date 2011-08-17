@@ -155,7 +155,9 @@ ActionController::Routing::Routes.draw do |map|
       :member => {
         :publish  => :put,
         :finish   => :put
-      }
+      } do |contest|
+      contest.resources :contest_groups
+    end
     # Add your custom admin routes below this mark
     
   end

@@ -1,4 +1,4 @@
-<% content_tag(:div, :id => :current_contest, :class => :clearfix, :style => contest_logo_background(current_contest)) do %>
+<% content_tag(:div, :id => :current_contest, :class => 'contest clearfix', :style => contest_logo_background(current_contest)) do %>
   <div id="contest_info">
     <div class="description"><%= current_contest.description.html_safe %></div>
     
@@ -10,10 +10,10 @@
                 :class => 'value') 
               ).html_safe %>
       </div>
-    <% end%>
+    <% end %>
     
     <% if current_contest.finished? %>
-      <div class="finished"><%= t(".finished") %></div>
+      <%= render 'contests/winners_table', :contest => current_contest %>
     <% else %>
       <%= contest_timer(current_contest) %>
     <% end %>

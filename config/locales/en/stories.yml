@@ -63,3 +63,7 @@ en:
       title: "Hitlist Reward"
       description: "I've just received a %{amount} bounty for hitting the %{level} level enemy in %{app}!"
       action_link: ""
+    won_contest:
+      title: "I'm just won the %{name}"
+      description: "I won %{position} place in the %{name}"
+      action_link: ""

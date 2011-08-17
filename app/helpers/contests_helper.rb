@@ -39,7 +39,9 @@ module ContestsHelper
     end
   end
   
-  def contest_table(contest, collection, options = {}, &block)
+  def contest_group_table(contest_group, options = {}, &block)
+    contest = contest_group.contest
+    
     options.reverse_merge!({
       :include_current => true,
       :current => current_character
@@ -49,7 +51,7 @@ module ContestsHelper
     
     current_in_leaders = false
     
-    collection.each_with_index do |character_result, index|
+    contest_group.leaders_with_points_for_rating.each_with_index do |character_result, index|
       character = character_result.character
       
       current_in_leaders = true if character == options[:current]
@@ -57,7 +59,7 @@ module ContestsHelper
       result << capture(character, character_result.points, index + 1, (character == options[:current]), &block)
     end
     
-    if options[:include_current] && !current_in_leaders
+    if options[:include_current] && !current_in_leaders && contest.group_for(options[:current]) == contest_group
       position = contest.position(options[:current])
       character_result = contest.result_for(options[:current])
       points = (character_result ? character_result.points : 0)

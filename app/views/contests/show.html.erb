@@ -1,4 +1,4 @@
-<div id="contest">
+<div id="contest" class="contest">
   <%= title(@contest.name) %>
   
   <div class="buttons clearfix">
@@ -7,21 +7,32 @@
   </div>
   
   <div class="results">
-    <table class="contest_table" cellspacing="0" cellpadding="0">
-      <tr>
-        <th>#</th>
-        <th colspan="2"><%= Character.human_name %></th>
-        <th><%= t(".points_types.#{@contest.points_type}") %></th>
-      </tr>
     
-      <% contest_table(@contest, @leaders_with_points) do |character, points, position, current| %>
-        <% content_tag(:tr, :class => (:current if current)) do %>
-          <td class="position"><%= position %></td>
-          <td class="picture"><%= character_picture_link(character) %></td>
-          <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
-          <td class="points last"><%= points %></td>
+    <% if @contest.groups.length > 1 %>
+    
+      <div class="tabs">
+        <ul>
+          <% @contest.groups_in_natural_order.each do |group| %>
+            <% content_tag_for(:li, group, :tab) do %>
+              <%= link_to group.title, "##{dom_id(group)}" %>
+            <% end %>
+          <% end %>
+        </ul>
+        
+        <% @contest.groups_in_natural_order.each do |group| %>
+          <%= render 'group', :group => group %>
         <% end %>
-      <% end %>
-    </table>
+      </div>
+      
+    <% else %>
+    
+      <%= render 'group', :group => @contest.groups.first %>
+      
+    <% end %>
+    
   </div>
 </div>
+
+<% dom_ready do %>
+  Contest.setup('<%= dom_id(@current_group, :tab) %>');
+<% end %>

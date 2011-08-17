@@ -1,0 +1,7 @@
+<%= admin_title(t(".title")) %>
+
+<% form_for([:admin, @contest_group.contest, @contest_group]) do |form| %>
+  <%= form.fields %>
+
+  <%= form.submit_and_continue %>
+<% end %>

@@ -61,35 +61,10 @@ describe Contest do
   
   describe 'methods' do
     before do
-      @contest = Factory(:contest)
+      @contest = Factory(:contest) 
+      @contest_group = @contest.groups.first
       
-      @character_contest1 = Factory(:character_contest, :contest => @contest)
-      @character_contest2 = Factory(:character_contest, :contest => @contest)
-    end
-    
-    it 'should return contest leaders_with_points' do
-      @character_contest1.update_attribute(:points, 1)
-      
-      @contest.leaders_with_points.should == [@character_contest1, @character_contest2]
-    end
-    
-    it 'should limit leaders_with_points' do
-      @character_contest1.update_attribute(:points, 1)
-      
-      @contest.leaders_with_points(:limit => 1).should == [@character_contest1]
-    end
-    
-    it 'should return positions of character in rating' do
-      @character_contest1.update_attribute(:points, 1)
-      
-      @contest.position(@character_contest1.character).should == 1
-      @contest.position(@character_contest2.character).should == 2
-    end
-    
-    it 'should return last position of character that not participate in contest' do
-      @non_participant = Factory(:character)
-      
-      @contest.position(@non_participant).should == @contest.characters.count + 1
+      @character = Factory(:character)
     end
     
     it 'should return time left to start contest' do
@@ -116,8 +91,8 @@ describe Contest do
       
       @contest.publish!
       
-      @contest.inc_points!(@character_contest1.character)
-      @character_contest1.reload.points.should == 1
+      @contest.inc_points!(@character)
+      @contest.result_for(@character).points.should == 1
     end
     
     it 'should not increment character points if contest finish time has come' do
@@ -129,13 +104,8 @@ describe Contest do
       @contest.finished_at = 1.minute.ago
       @contest.save!
       
-      @contest.inc_points!(@character_contest1.character)
-      @character_contest1.reload.points.should == 0
-    end
-    
-    it 'should return result object for character' do
-      @contest.result_for(@character_contest1.character).should == @character_contest1
-      @contest.result_for(@character_contest2.character).should == @character_contest2
+      @contest.inc_points!(@character)
+      @contest.result_for(@character).should be_nil
     end
   end
   
@@ -154,6 +124,10 @@ describe Contest do
     
     it 'should not be started soon' do
       @contest.starting_soon?.should be_false
+    end
+    
+    it 'should create default contest group' do
+      @contest.groups.length == 1
     end
   end
   
@@ -193,14 +167,68 @@ describe Contest do
     before do
       @contest = Factory(:contest, :started_at => 1.hour.ago)
       @contest.publish!
+      
+      @contest_group = @contest.groups.first
+      
+      @contest_group.payouts = Payouts::Collection.new(
+        Payouts::BasicMoney.new(:value => 100, :apply_on => :first),
+        Payouts::BasicMoney.new(:value => 50, :apply_on => :second),
+        Payouts::BasicMoney.new(:value => 10, :apply_on => :third)
+      )
+      @contest_group.save!
+      
+      @character = Factory(:character)
     end
     
-    it 'should set finish time' do
+    it 'should set finish time if it finished before finished_at' do
       Timecop.freeze(Time.now) do
         lambda {
           @contest.finish!
         }.should change(@contest, :finished_at).from(@contest.started_at + @contest.duration_time.days).to(Time.now)
       end
+    end
+    
+    it 'should not set finish time if it finished after finished_at' do
+      Timecop.freeze(@contest.finished_at + 1.minute) do
+        lambda {
+          @contest.finish!
+        }.should_not change(@contest, :finished_at)
+      end
+    end
+    
+    it 'should apply payouts to winners' do
+      @character2 = Factory(:character)
+      @character3 = Factory(:character)
+      @character4 = Factory(:character)
+      
+      @contest.inc_points!(@character, 5)
+      @contest.inc_points!(@character2, 4)
+      @contest.inc_points!(@character3, 3)
+      @contest.inc_points!(@character4, 2)
+      
+      @contest.finish!
+      
+      @character.reload.basic_money.should == 100
+      @character2.reload.basic_money.should == 50
+      @character3.reload.basic_money.should == 10
+      
+      @character4.reload.basic_money.should == 0
+    end
+      
+    
+    it 'should create notifications for winners' do
+      @character2 = Factory(:character)
+      @character3 = Factory(:character)
+      
+      @contest.inc_points!(@character)
+      @contest.inc_points!(@character2)
+      @contest.inc_points!(@character3)
+      
+      @contest.finish!
+      
+      @character.notifications.first.class.should == Notification::ContestWinner
+      @character2.notifications.first.class.should == Notification::ContestWinner
+      @character3.notifications.first.class.should == Notification::ContestWinner
     end
   end
   
@@ -280,6 +308,45 @@ describe Contest do
       @monster_fight.attack!
       
       @contest.result_for(@character).points.should == 20
+    end
+  end
+  
+  describe 'group_for selection' do
+    before do
+      @contest = Factory(:contest) 
+      
+      @contest_group1 = @contest.groups.first
+      @contest_group2 = @contest.groups.create!(:max_character_level => 5)
+      @contest_group3 = @contest.groups.create!(:max_character_level => 10)
+      
+      @character = Factory(:character, :level => 5)
+      @high_level_character = Factory(:character, :level => 11)
+      
+      @contest.started_at = 1.minute.ago
+      @contest.publish!
+    end
+    
+    it 'should select appropriate group for character if they dont paricipate in contest' do
+      @contest.group_for(@character).should == @contest_group2
+      
+      @contest.group_for(@high_level_character).should == @contest_group1
+    end
+    
+    it 'should select appropriate group for character if they paricipate in contest' do
+      @contest.inc_points!(@character)
+      @contest.inc_points!(@high_level_character)
+      
+      @contest.group_for(@character).should == @contest_group2
+      
+      @contest.group_for(@high_level_character).should == @contest_group1
+    end
+    
+    it 'characters should stay in groups where they started contest after level-ups' do
+      @contest.inc_points!(@character)
+      
+      @character.update_attribute(:level, 6)
+      
+      @contest.group_for(@character).should == @contest_group2
     end
   end
 end
