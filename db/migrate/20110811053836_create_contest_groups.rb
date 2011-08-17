@@ -13,7 +13,7 @@ class CreateContestGroups < ActiveRecord::Migration
     
     puts "Create default contest groups for current contests"
     Contest.all.each do |contest|
-      contest_group = contest.contest_groups.create!
+      contest_group = contest.groups.create!
       
       puts "Migrate data for contest #{contest.id}"
       CharacterContestGroup.update_all("contest_group_id = #{contest_group.id}", "contest_id = #{contest.id}")
