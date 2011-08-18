@@ -200,9 +200,9 @@ ActiveRecord::Schema.define(:version => 20110811053836) do
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "contest_groups", :force => true do |t|
-    t.integer "contest_id"
-    t.integer "max_character_level"
-    t.text    "payouts"
+    t.integer  "contest_id"
+    t.integer  "max_character_level"
+    t.text     "payouts"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
