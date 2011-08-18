@@ -4,7 +4,7 @@
     <th>#</th>
     <th colspan="2"><%= Character.human_name %></th>
     <th><%= t("contests.group.points_types.#{group.contest.points_type}") %></th>
-    <th><%= t(".payouts") %></th>
+    <th><%= t("contests.winners_table.payouts") %></th>
   </tr>
   
   <% group.winners_with_points.each_with_index do |winner_with_point, i| %>
