@@ -63,6 +63,10 @@ class User < ActiveRecord::Base
     self[:friend_ids].blank? ? [] : self[:friend_ids].split(',').collect{|i| i.to_i }
   end
   
+  def friends_with?(player)
+    friend_ids.include?(player.facebook_id)
+  end
+  
   def update_social_data!
     return false unless access_token_valid?
     

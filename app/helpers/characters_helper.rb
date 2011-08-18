@@ -1,18 +1,36 @@
 module CharactersHelper
+  def character_nickname(character)
+    if current_user.friends_with?(character)
+      t('characters.real_name_with_nickname',
+        :first_name => character.user.first_name, 
+        :last_name  => character.user.last_name, 
+        :nickname   => character.name
+      )
+    else
+      character.name
+    end
+  end
+  
   def character_name(character_or_user, options = {})
     character = character_for(character_or_user)
 
     if character.name.blank?
-      fb_name(character.user, {:linked => false, :useyou => false, :firstnameonly => true}.merge(options))
+      fb_name(character.user, {:linked => false, :useyou => false}.merge(options))
     else
-      character.name
+      character_nickname(character)
     end
   end
 
   def character_picture(character_or_user, options = {})
     character = character_for(character_or_user)
 
-    fb_profile_pic(character.user, {:linked => false, :size => :square, :alt => character.name}.merge(options))
+    fb_profile_pic(character.user, 
+      {
+        :linked => false, 
+        :size   => :square, 
+        :alt    => character_nickname(character)
+      }.merge(options)
+    )
   end
 
   def character_name_link(character_or_user, link_options = {}, name_options = {})
