@@ -1,5 +1,5 @@
 <div class="results">
-  <% if @contest.groups.length > 1 %>
+  <% if contest.groups.length > 1 %>
   
     <div class="tabs">
       <ul>
@@ -16,7 +16,7 @@
     </div>
   
   <% else %>
-    <%= render 'contests/winner_group', :group => @contest.groups.first %>
+    <%= render 'contests/winner_group', :group => contest.groups.first %>
   <% end %>
 </div>
 
