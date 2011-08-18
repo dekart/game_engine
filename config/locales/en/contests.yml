@@ -19,5 +19,7 @@ en:
         total_monsters_damage: "Total Monsters Damage"
     winners_table:
       payouts: "Prize"
-        
-        
+  contest_groups:
+    title:
+      level_from_to: "Level %{from}-%{to}"
+      level_to: "Level %{from}+"

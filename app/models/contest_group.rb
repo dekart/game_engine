@@ -108,9 +108,12 @@ class ContestGroup < ActiveRecord::Base
   
   def title
     if max_character_level
-     "#{start_level}-#{max_character_level}"
+      I18n.t("contest_groups.title.level_from_to",
+        :from => start_level,
+        :to   => max_character_level
+      )
     else
-      "#{start_level}+"
+      I18n.t("contest_groups.title.level_to", :from => start_level)
     end
   end
   
