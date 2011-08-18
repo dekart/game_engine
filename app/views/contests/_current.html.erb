@@ -13,7 +13,7 @@
     <% end %>
     
     <% if current_contest.finished? %>
-      <%= render 'contests/winners_table', :contest => current_contest %>
+      <div class="finished"><%= t(".finished") %></div>
     <% else %>
       <%= contest_timer(current_contest) %>
     <% end %>

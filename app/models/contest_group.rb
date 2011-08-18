@@ -117,13 +117,16 @@ class ContestGroup < ActiveRecord::Base
     end
   end
   
+  def payouts_for_position(position)
+    position = POSITION_TO_SYM[position] if position.is_a?(Integer)
+    
+    payouts.find_all(position) if position
+  end
+  
   protected
     
     def position_sym(character)
       POSITION_TO_SYM[position(character)]
     end
     
-    def payouts_for_position(position_sym)
-      payouts.find_all(position_sym) if position_sym
-    end
 end

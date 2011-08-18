@@ -17,7 +17,6 @@ en:
       points_types:
         fights_won: "Fights Won"
         total_monsters_damage: "Total Monsters Damage"
-    winners_table:
       payouts: "Prize"
   contest_groups:
     title:
