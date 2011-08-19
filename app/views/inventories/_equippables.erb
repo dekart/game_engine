@@ -1,8 +1,6 @@
 <div id="equippables">
-  <h2><%= t(".header") %></h2>
-
   <% if inventories_grouped_by_item_group.any? %>
-
+  
     <div id="equippables-tabs">
       <ul>
         <% inventories_grouped_by_item_group.each do |item_group, inventories| %>
@@ -17,7 +15,14 @@
               <% content_tag_for(:li, inventory, :equipment, 
                   :'data-placements' => inventory.placements.join(','),
                   :'data-equip' => equip_inventory_path(inventory)) do %>
-                <%= inventory_item_image(inventory, :small, :tooltip => true, :count => inventory.amount_available_for_equipment) %>
+                <%= inventory_item_image(inventory, :small, :count => inventory.amount_available_for_equipment, 
+                      :tooltip => {
+                        :position => {
+                          :my => 'top center',
+                          :at => 'bottom center'
+                        }
+                      }
+                    ) %>
               <% end %>
             <% end %>
           </ul>
@@ -25,7 +30,13 @@
       <% end %>
     </div>
     
+    <div class="note">
+      <%= t(".note") %>
+    </div>
+    
   <% else %>
+  
     <%= empty_set %>
+    
   <% end %>
 </div>

@@ -56,9 +56,9 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1.1em; }
-.ui-widget .ui-widget { font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif; font-size: 1em; }
+.ui-widget { }
+.ui-widget .ui-widget {  }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { }
 .ui-widget-content { color: #333333; }
 .ui-widget-content a { color: #333333; }
 .ui-widget-header { color: #ffffff; font-weight: bold; }

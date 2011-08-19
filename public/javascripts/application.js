@@ -369,21 +369,12 @@ var Equipment = {
     });
     
     
-    $("#equippables .inventory").draggable({
+    $("#equippables .inventory, #placements .inventory").draggable({
       appendTo: $("#equipment"),
       helper: function() {
         var clone = $(this).clone();
         clone.find("span").remove();
-        return clone;
-      },
-      revert: "invalid",
-      cursor: "move"
-    });
-    
-    $("#placements .inventory").draggable({
-      appendTo: $("#equipment"),
-      helper: function() {
-        var clone = $(this).clone();
+        clone.css('opacity', 0.7);
         return clone;
       },
       revert: "invalid",
@@ -457,6 +448,16 @@ var Equipment = {
         });
       }
     }));
+  },
+  
+  getActiveTabId: function() {
+    return $('#equippables-tabs .ui-tabs-selected a').attr('href');
+  },
+  
+  setActiveTab: function(tabId) {
+    if (typeof tabId !== 'undefined') {
+      $("#equippables-tabs").tabs('select', tabId);
+    }
   }
 };
 

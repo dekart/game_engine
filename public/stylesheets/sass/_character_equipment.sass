@@ -5,7 +5,6 @@
     position: top left
     repeat: no-repeat
   padding-top = !placements_height
-  margin-left: 300px
   width: 100%
 
   .inventory
@@ -60,10 +59,21 @@
   .additional
     position: absolute
     top: 0px
-    left: -300px
+    left: 420px
     
-    .items
+    .header
+      margin: 0 0 7px 0
+      
+      h2
+        display: inline
+    
+    .container
       width: 210px
+      border = !thin_border
+      
+      .note
+        border: none
+        border-top = !thin_border
     
     .help
       margin-bottom: 15px
@@ -76,7 +86,6 @@
 
     .note
       clear: both
-      width: 250px
 
       .zero
         font-size: 16px
@@ -97,8 +106,12 @@
   .placement, .additional .items, #equippables-tabs .item_group
     &.state-active
       background-color: #C4CDDF
+      border = !equipment_active_item_border
+      margin-top: -1px
+      margin-left: -1px
     &.state-hover
       background-color: #6094c5
+      border = !equipment_hover_item_border
 
 #equippables
   padding-right: 10px

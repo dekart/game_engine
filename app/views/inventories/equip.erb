@@ -1,9 +1,13 @@
 <% dom_ready do %>
+  var activeTab = Equipment.getActiveTabId();
+
   $('#equipment_inventories').html('<%= escape_javascript(render("equippables")) %>');
   $('#equipment_placements').html('<%= escape_javascript(render("placements", :character => current_character)) %>');
   $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
   Equipment.setup();
+  
+  Equipment.setActiveTab(activeTab);
   
   <%= ga_track_event('Items', 
         controller.action_name == 'equip' ? 'Equiped' : 'Unequipped', 

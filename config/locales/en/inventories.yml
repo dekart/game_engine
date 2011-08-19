@@ -61,6 +61,7 @@ en:
       header: "Available Items"
       item_header: "%{name} x %{amount}"
       equip_to: "Equip to %{placement}"
+      note: "Drag items down to equip your character"
       buttons:
         equip: "Equip"
       empty_set: "No items available"
@@ -79,6 +80,7 @@ en:
           one: "You have %{count_label} additional slot left."
           other: "You have %{count_label} additional slots left."
         relations: "Grow your %{relations} to get more slots. Every %{amount} alliance members bring an extra slot!"
+      header: "Your Character"
     give:
       title: "Give Items to %{character}"
       you_have: "You have:"
