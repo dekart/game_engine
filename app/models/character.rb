@@ -405,7 +405,7 @@ class Character < ActiveRecord::Base
   end
   
   def update_current_contest_points
-    if contest = Contest.current.first and contest.active? and try(contest.points_type + "_changed?")
+    if contest = Contest.current and contest.active? and try(contest.points_type + "_changed?")
       old, now = send(contest.points_type + '_change')
       contest.inc_points!(self, now - old)
     end

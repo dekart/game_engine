@@ -148,13 +148,5 @@ describe ContestGroup do
       
       @contest_group3.start_level.should == 11
     end
-    
-    it 'should display title' do
-      @contest_group1.title.should == "1-5"
-      
-      @contest_group2.title.should == "6-10"
-      
-      @contest_group3.title.should == "11+"
-    end
   end
 end

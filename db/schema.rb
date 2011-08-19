@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110811053836) do
+ActiveRecord::Schema.define(:version => 20110818081808) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -749,6 +749,8 @@ ActiveRecord::Schema.define(:version => 20110811053836) do
     t.datetime "updated_at"
     t.integer  "publisher_id"
   end
+
+  add_index "story_visits", ["character_id", "publisher_id", "reference_id"], :name => "index_on_character_publisher_reference"
 
   create_table "tips", :force => true do |t|
     t.text     "text"

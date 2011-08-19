@@ -11,7 +11,7 @@ describe Contest do
     end
     
     it 'should not return current contest if contest not published' do
-      Contest.current.should be_empty
+      Contest.current.should be_nil
     end
     
     it 'should return current not started contests' do
@@ -20,7 +20,7 @@ describe Contest do
       
       @contest.publish!
       
-      Contest.current.should == [@contest]
+      Contest.current.should == @contest
     end
     
     it 'should return current started contests' do
@@ -29,7 +29,7 @@ describe Contest do
       
       @contest.publish!
       
-      Contest.current.should == [@contest]
+      Contest.current.should == @contest
     end
     
     it 'should return contests finished less than 5 days ago' do
@@ -42,7 +42,7 @@ describe Contest do
         @contest.finish!
       end
       
-      Contest.current.should == [@contest]
+      Contest.finished_recently.should == [@contest]
     end
     
     it 'should not return contests finished more than 5 days ago' do
@@ -55,7 +55,7 @@ describe Contest do
         @contest.finish!
       end
       
-      Contest.current.should be_empty
+      Contest.finished_recently.should be_empty
     end
   end
   

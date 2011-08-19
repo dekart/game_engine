@@ -43,8 +43,8 @@ class Contest < ActiveRecord::Base
     end
   end
 
-  named_scope :current, {
-    :conditions => ["state = 'visible' OR (state = 'finished' AND finished_at > ?)", 
+  named_scope :finished_recently, {
+    :conditions => ["state = 'finished' AND finished_at > ?", 
       Setting.i(:contests_show_after_finished_time).days.ago] 
   }
     
@@ -60,7 +60,7 @@ class Contest < ActiveRecord::Base
   def context
     CONTEXTS[points_type.to_sym]
   end
-
+  
   def started?
     visible? && started_at <= Time.now
   end
@@ -158,6 +158,16 @@ class Contest < ActiveRecord::Base
   def send_notifications_to_winners(winners)
     winners.each do |winner|
       winner.notifications.schedule(:contest_winner, :contest_id => id)
+    end
+  end
+  
+  class << self
+    def current
+      with_state(:visible).first
+    end
+    
+    def points_type_to_dropdown
+      Contest::CONTEXTS.keys.map{|k| k.to_s}
     end
   end
   
