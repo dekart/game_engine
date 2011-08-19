@@ -291,6 +291,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :app_requests, :member => {:ignore => :put}
   
   map.resources :contests, :only => :show
+  
+  map.resource :chat
 
   # Add your custom routes below this mark
   
