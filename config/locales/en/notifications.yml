@@ -51,7 +51,7 @@ en:
       success: "Your notification settings were updated!"
       
     contest_winner:
-      title: "You are the winner!"
-      text: "You won %{position} place in the %{name}. You got the following reward:"
+      title: "You're The Winner!"
+      text: "You've reached the #%{position} position in the %{name}. You've got the prize:"
       buttons:
         publish: "Brag About It"
