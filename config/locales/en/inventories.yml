@@ -61,7 +61,7 @@ en:
       header: "Available Items"
       item_header: "%{name} x %{amount}"
       equip_to: "Equip to %{placement}"
-      note: "Drag items down to equip your character"
+      drag_tip: "Drag down items to equip your character"
       buttons:
         equip: "Equip"
       empty_set: "No items available"
