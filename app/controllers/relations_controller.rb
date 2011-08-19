@@ -56,7 +56,7 @@ class RelationsController < ApplicationController
   end
   
   def friend_with?(character)
-    current_user.friend_ids.include?(character.facebook_id) || 
+    current_user.friends_with?(character) || 
     current_facebook_user.friends(:id).collect{|f| f.id }.include?(character.facebook_id)
   end
 end
