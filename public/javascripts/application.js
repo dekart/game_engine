@@ -593,7 +593,7 @@ function debug(s) {
       var $chat = $(this);
       
       Spinner.disable(function(){
-        $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $(this).chat('lastMessageId')}, function(messages) {
+        $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $chat.chat('lastMessageId')}, function(messages) {
           $chat.chat('appendMessages', messages);
         
           $(document).trigger('remote_content.received');
