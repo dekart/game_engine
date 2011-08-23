@@ -1,47 +1,53 @@
 <% result_for :inventory_use do |builder| %>
-  <% builder.success do %>
-    <% if @inventory.use_message.present? %>
-      <%= @inventory.use_message.html_safe %>
-    <% else %>
-      <%= t(".messages.success", :item => @inventory.name).html_safe %>
+  <% if @result %>
+    <% builder.success do %>
+      <% if @inventory.use_message.present? %>
+        <%= @inventory.use_message.html_safe %>
+      <% else %>
+        <%= t(".messages.success", :item => @inventory.name).html_safe %>
+      <% end %>
     <% end %>
-  <% end %>
   
-  <% builder.buttons do %>
-    <%= link_to_remote(inventory_use_again_button(@inventory),
-          :url    => use_inventory_path(@inventory),
-          :update => :result,
-          :html   => {
-            :"data-click-once" => true,
-            :class => "use button"
-          }
-        ) if @inventory.usable? %>
-  <% end %>
+    <% builder.buttons do %>
+      <%= link_to_remote(inventory_use_again_button(@inventory),
+            :url    => use_inventory_path(@inventory),
+            :update => :result,
+            :html   => {
+              :"data-click-once" => true,
+              :class => "use button"
+            }
+          ) if @inventory.usable? %>
+    <% end %>
 
-  <table class="payouts" cellspacing="0" cellpadding="0">
-    <tr>
-      <td class="received">
-        <h3><%= t(".you_received") %></h3>
+    <table class="payouts" cellspacing="0" cellpadding="0">
+      <tr>
+        <td class="received">
+          <h3><%= t(".you_received") %></h3>
 
-        <%= payout_list(@inventory, @result) %>
-      </td>
-      <td class="spent">
-        <h3><%= t(".you_spent") %></h3>
+          <%= payout_list(@inventory, @result) %>
+        </td>
+        <td class="spent">
+          <h3><%= t(".you_spent") %></h3>
 
-        <%= payout_list(@inventory, @result, :action => :remove) %>
+          <%= payout_list(@inventory, @result, :action => :remove) %>
 
-        <%= payout(:item, item_image(@inventory, :icon), :label => @inventory.name) %>
-      </td>
-    </tr>
-  </table>
+          <%= payout(:item, item_image(@inventory, :icon), :label => @inventory.name) %>
+        </td>
+      </tr>
+    </table>
 
-  <% builder.on_ready do %>
-    $('#inventory_list').html('<%=
-      escape_javascript(
-        render("list", :inventories => current_character.inventories)
-      )
-    %>');
+    <% builder.on_ready do %>
+      $('#inventory_list').html('<%=
+        escape_javascript(
+          render("list", :inventories => current_character.inventories)
+        )
+      %>');
     
-    <%= ga_track_event('Items', 'Used', "#{@inventory.name} (#{@inventory.item.availability})", current_character.level) %>
+      <%= ga_track_event('Items', 'Used', "#{@inventory.name} (#{@inventory.item.availability})", current_character.level) %>
+    <% end %>
+  <% else %>
+    <% builder.fail do %>
+      <%= t(".messages.not_found") %>
+    <% end %>
   <% end %>
 <% end %>

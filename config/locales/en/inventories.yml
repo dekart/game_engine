@@ -52,6 +52,7 @@ en:
       you_spent: "You spent:"
       messages:
         success: "You've successfully used %{item}!"
+        not_found: "You don't have any items of this kind. It seems that you already used all of them."
     equipment:
       title: "Your Equipment"
       buttons:

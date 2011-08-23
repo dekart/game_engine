@@ -39,9 +39,9 @@ class InventoriesController < ApplicationController
   end
 
   def use
-    @inventory = current_character.inventories.find(params[:id])
-
-    @result = @inventory.use!
+    if @inventory = current_character.inventories.find_by_id(params[:id])
+      @result = @inventory.use!
+    end
 
     render :action => :use, :layout => "ajax"
   end
