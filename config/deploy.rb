@@ -114,6 +114,7 @@ namespace :deploy do
       run %{
         mysqldump \
           -u #{ database_config[:username] } --password='#{ database_config[:password] }' \
+          --default-character-set=#{ database_config[:encoding] } --set-charset \
           --ignore-table=#{ database_config[:database] }.logged_events \
           #{ database_config[:database] } > #{ dump_path }
       }

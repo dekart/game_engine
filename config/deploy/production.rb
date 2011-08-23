@@ -24,6 +24,7 @@ set :facebooker_config, {
 set :database_config, {
   :adapter  => "mysql",
   :host     => "localhost",
+  :encoding => "utf8",
   :database => "your_db_name",
   :username => "your_db_user",
   :password => "your_db_password"
