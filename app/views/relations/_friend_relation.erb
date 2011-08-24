@@ -6,14 +6,13 @@
     <span class="value"><%= relation.level %></span>
   </td>
   <td class="controls">
-    <%= link_to_remote(button(:break),
+    <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.break')),
           :url      => relation_path(relation.character),
           :method   => :delete,
           :update   => :ajax,
           :confirm  => t(".break.confirmation"),
           :html     => {
-            :"data-click-once" => true,
-            :class => "delete button"
+            :class => "delete"
           }
         ) %>
   </td>
