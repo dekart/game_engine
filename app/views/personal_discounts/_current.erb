@@ -37,7 +37,10 @@
                     :url    => personal_discount_path(discount),
                     :method => :put,
                     :update => :result,
-                    :html   => {:class => "buy button"}
+                    :html   => {
+                      :'data-click-once' => true,
+                      :class => "buy button"
+                    }
                   ) %>
           </div>
         </div>
