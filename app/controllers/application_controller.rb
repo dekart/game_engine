@@ -80,8 +80,8 @@ class ApplicationController < ActionController::Base
       elsif app_request = app_requests.last
         user.reference  = app_request.type_name
         user.referrer   = app_request.sender.try(:user)
-      elsif params[:reference]
-        user.reference = params[:reference]
+      else
+        user.reference = params[:reference] || params[:fb_source] || params[:ref]
       end
     end
 
