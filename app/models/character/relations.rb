@@ -4,7 +4,7 @@ class Character
       base.class_eval do
         has_many :relations,
           :foreign_key  => "owner_id",
-          :order        => "type",
+          :order        => "type, relations.created_at DESC",
           :extend       => RelationsAssociationExtension
         has_many :friend_relations,
           :foreign_key  => "owner_id",
