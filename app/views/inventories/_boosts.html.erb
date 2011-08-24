@@ -28,7 +28,7 @@
         <%= asset_image_tag(:icons_next, :alt => t(".next")) %>
       </div>
       
-      <% javascript_tag do %>
+      <% dom_ready do %>
         $.setupBoost('<%= type %>', '<%= destination %>', 3);
       <% end %>
       
