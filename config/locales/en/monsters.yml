@@ -56,7 +56,7 @@ en:
       buttons:
         publish: "Brag About It"
     fighters:
-      title: "Top hitters"
+      title: "Top Hitters"
     preview:
       available:
         fight_time: "%{amount} Hours"
