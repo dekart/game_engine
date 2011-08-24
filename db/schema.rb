@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110818081808) do
+ActiveRecord::Schema.define(:version => 20110824195502) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -644,6 +644,8 @@ ActiveRecord::Schema.define(:version => 20110818081808) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "personal_discounts", ["character_id", "available_till"], :name => "index_personal_discounts_on_character_id_and_available_till"
 
   create_table "promotion_receipts", :force => true do |t|
     t.integer  "promotion_id", :null => false

@@ -12,7 +12,7 @@ class Character
       end
       
       def generate_if_possible!
-        if Setting.b(:personal_discount_enabled) and count(:conditions => ["available_till > ?", Setting.i(:personal_discount_period).hours.ago.utc]) == 0
+        if Setting.b(:personal_discount_enabled) and created_recently.count == 0
           generate!
         end
       end
