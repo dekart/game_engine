@@ -12,19 +12,29 @@
     $form.find(':radio:checked').parents('.credit_package').addClass('selected');
     
     $form.find('.purchase.button').click(function(){
-      FB.ui({
-        method: 'pay',
-        purchase_type: 'item',
-        order_info: parseInt($form.find('input:checked').val())
-      });
+      FB.ui(
+        {
+          method: 'pay',
+          purchase_type: 'item',
+          order_info: parseInt($form.find('input:checked').val())
+        },
+        function(response){
+          return true;
+        }
+      );
     });
     
     $form.find('.earn_credits.button').click(function(){
-      FB.ui({
-        method: 'pay', 
-        credits_purchase: true,
-        dev_purchase_params: {"shortcut":"offer"}
-      });
+      FB.ui(
+        {
+          method: 'pay', 
+          credits_purchase: true,
+          dev_purchase_params: {"shortcut":"offer"}
+        },
+        function(response){
+          return true;
+        }
+      );
     });
   };
 })(jQuery);
