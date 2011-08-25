@@ -86,7 +86,7 @@ describe ContestGroup do
     end
     
     it 'should apply payouts to winners' do
-      @contest.inc_points!(@character)
+      @contest.increment_points!(@character)
       
       lambda {
         @contest_group.apply_payouts!
@@ -98,9 +98,9 @@ describe ContestGroup do
       @third_winner = Factory(:character)
       @loser = Factory(:character)
       
-      @contest.inc_points!(@character, 3)
-      @contest.inc_points!(@second_winner, 2)
-      @contest.inc_points!(@third_winner)
+      @contest.increment_points!(@character, 3)
+      @contest.increment_points!(@second_winner, 2)
+      @contest.increment_points!(@third_winner)
       
       @contest.apply_payouts!.should == [@character, @second_winner, @third_winner]
     end
@@ -110,9 +110,9 @@ describe ContestGroup do
       @third_winner = Factory(:character)
       @loser = Factory(:character)
       
-      @contest.inc_points!(@character, 3)
-      @contest.inc_points!(@second_winner, 2)
-      @contest.inc_points!(@third_winner)
+      @contest.increment_points!(@character, 3)
+      @contest.increment_points!(@second_winner, 2)
+      @contest.increment_points!(@third_winner)
       
       @contest.apply_payouts!
       

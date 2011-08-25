@@ -91,7 +91,7 @@ describe Contest do
       
       @contest.publish!
       
-      @contest.inc_points!(@character)
+      @contest.increment_points!(@character)
       @contest.result_for(@character).points.should == 1
     end
     
@@ -104,7 +104,7 @@ describe Contest do
       @contest.finished_at = 1.minute.ago
       @contest.save!
       
-      @contest.inc_points!(@character)
+      @contest.increment_points!(@character)
       @contest.result_for(@character).should be_nil
     end
   end
@@ -201,10 +201,10 @@ describe Contest do
       @character3 = Factory(:character)
       @character4 = Factory(:character)
       
-      @contest.inc_points!(@character, 5)
-      @contest.inc_points!(@character2, 4)
-      @contest.inc_points!(@character3, 3)
-      @contest.inc_points!(@character4, 2)
+      @contest.increment_points!(@character, 5)
+      @contest.increment_points!(@character2, 4)
+      @contest.increment_points!(@character3, 3)
+      @contest.increment_points!(@character4, 2)
       
       @contest.finish!
       
@@ -220,9 +220,9 @@ describe Contest do
       @character2 = Factory(:character)
       @character3 = Factory(:character)
       
-      @contest.inc_points!(@character)
-      @contest.inc_points!(@character2)
-      @contest.inc_points!(@character3)
+      @contest.increment_points!(@character)
+      @contest.increment_points!(@character2)
+      @contest.increment_points!(@character3)
       
       @contest.finish!
       
@@ -333,8 +333,8 @@ describe Contest do
     end
     
     it 'should select appropriate group for character if they paricipate in contest' do
-      @contest.inc_points!(@character)
-      @contest.inc_points!(@high_level_character)
+      @contest.increment_points!(@character)
+      @contest.increment_points!(@high_level_character)
       
       @contest.group_for(@character).should == @contest_group2
       
@@ -342,7 +342,7 @@ describe Contest do
     end
     
     it 'characters should stay in groups where they started contest after level-ups' do
-      @contest.inc_points!(@character)
+      @contest.increment_points!(@character)
       
       @character.update_attribute(:level, 6)
       

@@ -116,8 +116,8 @@ class Contest < ActiveRecord::Base
   def payouts_for(character)
     group_for(character).payouts_for(character)
   end
-  
-  def inc_points!(character, points = 1)
+
+  def increment_points!(character, points = 1)
     if active?
       contest_group = group_for(character)
       
