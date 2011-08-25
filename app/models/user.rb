@@ -116,7 +116,7 @@ class User < ActiveRecord::Base
   end
   
   def generate_personal_discount
-    character.personal_discounts.generate_if_possible! if character
+    character.personal_discounts.generate_if_possible! if character.respond_to?(:personal_discounts)
   end
   
   def set_first_tutorial_step
