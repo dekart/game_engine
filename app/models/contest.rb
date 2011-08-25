@@ -55,6 +55,16 @@ class Contest < ActiveRecord::Base
     
   after_create :create_initial_group!
   
+  class << self
+    def current
+      with_state(:visible).first
+    end
+    
+    def points_type_to_dropdown
+      Contest::CONTEXTS.keys.map{|k| k.to_s}
+    end
+  end
+  
   def context
     CONTEXTS[points_type.to_sym]
   end
@@ -156,16 +166,6 @@ class Contest < ActiveRecord::Base
   def send_notifications_to_winners(winners)
     winners.each do |winner|
       winner.notifications.schedule(:contest_winner, :contest_id => id)
-    end
-  end
-  
-  class << self
-    def current
-      with_state(:visible).first
-    end
-    
-    def points_type_to_dropdown
-      Contest::CONTEXTS.keys.map{|k| k.to_s}
     end
   end
   
