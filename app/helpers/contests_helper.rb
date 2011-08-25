@@ -44,10 +44,10 @@ module ContestsHelper
   def contest_group_table(contest_group, options = {}, &block)
     contest = contest_group.contest
     
-    options.reverse_merge!({
+    options.reverse_merge!(
       :include_current => true,
       :current => current_character
-    })
+    )
     
     result = ""
     
@@ -56,7 +56,7 @@ module ContestsHelper
     contest_group.leaders_with_points_for_rating.each_with_index do |character_result, index|
       character = character_result.character
       
-      current_in_leaders = true if character == options[:current]
+      current_in_leaders = (character == options[:current])
       
       result << capture(character, character_result.points, index + 1, (character == options[:current]), &block)
     end
@@ -69,7 +69,9 @@ module ContestsHelper
       result << capture(options[:current], points, position, true, &block)
     end
     
-    block_given? ? concat(result.html_safe) : result.html_safe
+    result = result.html_safe
+    
+    block_given? ? concat(result) : result
   end
   
   def contest_points_type_button(contest)

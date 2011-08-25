@@ -8,7 +8,7 @@
   
   <div class="results">
     
-    <% if @contest.groups.length > 1 %>
+    <% if @contest.groups.size > 1 %>
     
       <div class="tabs">
         <ul>
@@ -20,13 +20,13 @@
         </ul>
         
         <% @contest.groups_in_natural_order.each do |group| %>
-          <%= render 'group', :group => group %>
+          <%= render('group', :group => group) %>
         <% end %>
       </div>
       
     <% else %>
     
-      <%= render 'group', :group => @contest.groups.first %>
+      <%= render('group', :group => @contest.groups.first) %>
       
     <% end %>
     

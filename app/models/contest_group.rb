@@ -27,12 +27,12 @@ class ContestGroup < ActiveRecord::Base
   validates_presence_of :contest_id
   
   def leaders_with_points(options = {})
-    options.reverse_merge!({
+    options.reverse_merge!(
       :include => :character,
       :order => 'points DESC'
-    })
+    )
     
-    character_contest_groups.scoped(options)
+    character_contest_groups.scoped(:conditions => ["character_id NOT IN (?)", Character.banned_ids]).scoped(options)
   end
   
   def leaders_with_points_for_rating
@@ -48,14 +48,11 @@ class ContestGroup < ActiveRecord::Base
   end
   
   def position(character)
-    character_contest_group = character_contest_groups.first(
-      :select => 'points', 
-      :conditions => {:character_id => character.id}
-    )
+    character_contest_group = contest.group_for(character)
     
-    @conditions = ['points > ?', character_contest_group.points] if character_contest_group
+    @conditions = ['points > ?', character_contest_group.points] if character_contest_group.points > 0
     
-    character_contest_groups.count(:conditions => @conditions) + 1
+    leaders_with_points.count(:conditions => @conditions) + 1
   end
   
   def apply_payouts

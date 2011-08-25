@@ -25,9 +25,7 @@ class Contest < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
     
-    before_transition :on => :publish do |contest|
-      contest.finished_at = contest.started_at + contest.duration_time.days
-    end
+    before_transition :on => :publish, :do => :set_finish_time
     
     before_transition :on => :finish do |contest|
       contest.finished_at = Time.now if Time.now < contest.finished_at 
@@ -179,6 +177,10 @@ class Contest < ActiveRecord::Base
     
     def create_initial_group!
       groups.create!
+    end
+    
+    def set_finish_time
+      self.finished_at = duration_time.days.since(started_at)
     end
   
 end
