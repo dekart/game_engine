@@ -48,9 +48,12 @@ class ContestGroup < ActiveRecord::Base
   end
   
   def position(character)
-    character_contest_group = contest.group_for(character)
+    character_contest_group = character_contest_groups.first(
+      :select => 'character_contest_groups.points', 
+      :conditions => {:character_id => character.id}
+    )
     
-    @conditions = ['points > ?', character_contest_group.points] if character_contest_group.points > 0
+    @conditions = ['character_contest_groups.points > ?', character_contest_group.points] if character_contest_group
     
     leaders_with_points.count(:conditions => @conditions) + 1
   end
