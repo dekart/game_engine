@@ -15,7 +15,7 @@ namespace :app do
 
         characters = Character.scoped(
           :joins => :user, 
-          :conditions => ["users.#{ field } = ?", user[field]], 
+          :conditions => ["users.#{ field } = ? AND banned IS NOT TRUE", user[field]], 
           :order => "level DESC, characters.created_at"
         )
 
