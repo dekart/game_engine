@@ -1,27 +1,26 @@
 module ContestsHelper
   def current_contest
-    @current_contest ||= begin
-      Contest.current || Contest.finished_recently.first
-    end
+    @current_contest ||= (Contest.current || Contest.finished_recently.first)
   end
   
   def contest_timer(contest)
     if contest.visible?
       if contest.starting_soon?
         time_left = contest.time_left_to_start
-        t_name = "start_time"
+        timer_name = "start_time"
       else contest.finished?
         time_left = contest.time_left_to_finish
-        t_name = "finish_time"
+        timer_name = "finish_time"
       end
       
       dom_ready("Timer.start('##{dom_id(contest)}', #{time_left});")
       
       content_tag(:div,
-        t(".#{t_name}", 
+        t(".#{timer_name}", 
           :value => content_tag(:span, "", :id => dom_id(contest), :class => :value)
         ).html_safe,
-        :class => 'timer')
+        :class => 'timer'
+      )
     end
   end
   
