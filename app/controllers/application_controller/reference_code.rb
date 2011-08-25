@@ -1,7 +1,7 @@
 class ApplicationController
   module ReferenceCode
     def self.included(base)
-      base.helper_method(:encryptor, :reference_code)
+      base.helper_method(:encryptor, :reference_code, :reference_key)
     end
 
     protected
@@ -28,6 +28,10 @@ class ApplicationController
       Rails.logger.error "Failed to decrypt reference code: #{code}"
 
       nil
+    end
+
+    def reference_key
+      (params[:reference] || params[:fb_source] || params[:ref]).to_s
     end
   end
 end

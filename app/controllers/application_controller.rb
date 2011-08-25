@@ -81,7 +81,7 @@ class ApplicationController < ActionController::Base
         user.reference  = app_request.type_name
         user.referrer   = app_request.sender.try(:user)
       else
-        user.reference = (params[:reference] || params[:fb_source] || params[:ref]).to_s
+        user.reference = reference_key
       end
     end
 
