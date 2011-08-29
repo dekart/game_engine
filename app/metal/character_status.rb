@@ -20,8 +20,6 @@ class CharacterStatus
         user_id = fb_decode_signed_request(request.env['HTTP_SIGNED_REQUEST'])[:user_id]
       end
       
-      Rails.logger.debug(user_id)
-
       if user_id and character = User.find_by_facebook_id(user_id).try(:character)
         [200, {"Content-Type" => "application/json"}, character.to_json_for_overview]
       else
