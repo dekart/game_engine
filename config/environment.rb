@@ -19,7 +19,7 @@ Rails::Initializer.run do |config|
   
   require Rails.root.join('lib', 'rails', 'config').to_s
 
-  config.cache_store = :mem_cache_store, Rails::Config.cache.server, {:namespace => Rails.env}
+  config.cache_store = :mem_cache_store, Rails::Config.cache.server, {:namespace => Rails::Config.cache[:namespace] || Rails.env}
 
   # Skip frameworks you're not going to use. To use Rails without a database
   # you must remove the Active Record framework.
