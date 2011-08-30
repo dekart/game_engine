@@ -20,7 +20,6 @@ namespace :deploy do
     update
     db.setup
     app.setup
-    app.cache_fb_connect_js
   end
   
   desc "Restart service"
@@ -160,13 +159,6 @@ namespace :deploy do
     task :setup, :roles => :app do
       run "cd #{release_path}; rake app:setup --trace"
     end
-    
-    desc "Cache Facebook Connect javascript code"
-    task :cache_fb_connect_js, :roles => :app do
-      folder_path = "#{release_path}/public/javascripts/cache"
-      
-      run "mkdir -p #{folder_path} && wget http://connect.facebook.net/en_US/all.js -O #{folder_path}/facebook_connect.js"
-    end
   end
   
   namespace :maintenance do
@@ -207,7 +199,6 @@ after "deploy:migrations", "deploy:db:package_backups"
 
 on :before, :only => ["deploy", "deploy:migrations"] do
   before "deploy:symlink", "deploy:app:setup"
-  before "deploy:symlink", "deploy:app:cache_fb_connect_js"
 end
 
 
