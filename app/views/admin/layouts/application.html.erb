@@ -3,8 +3,7 @@
 <head>
   <%= stylesheet_link_tag('jqplot', "admin") %>
 
-  <%= include_jquery_from_google %>
-  <%= javascript_include_tag "jrails", "jquery/dialog", 'jquery/jqplot', 'jquery/jqplot/dateAxisRenderer', 'jquery/jqplot/highlighter', 'jquery/jqplot/canvasAxisTickRenderer', 'jquery/jqplot/canvasTextRenderer', "admin", :cache => 'cache/admin' %>
+  <%= javascript_include_tag "jquery", "jrails", "jquery/dialog", 'jquery/jqplot', 'jquery/jqplot/dateAxisRenderer', 'jquery/jqplot/highlighter', 'jquery/jqplot/canvasAxisTickRenderer', 'jquery/jqplot/canvasTextRenderer', "admin", :cache => 'cache/admin' %>
 
   <title><%= @admin_title %></title>
 </head>
