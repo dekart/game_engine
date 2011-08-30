@@ -84,7 +84,7 @@
           <% end %>
         </td>
         <td class="payouts">
-          <% if item.usable %>
+          <% if item.usable? %>
             <%= admin_payouts_preview(item.payouts) %>
           <% else %>
             <%= t(".not_usable") %>

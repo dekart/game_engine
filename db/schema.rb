@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110824195502) do
+ActiveRecord::Schema.define(:version => 20110830055417) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -379,7 +379,6 @@ ActiveRecord::Schema.define(:version => 20110824195502) do
     t.string   "image_file_name",                        :default => "",     :null => false
     t.string   "image_content_type",      :limit => 100, :default => "",     :null => false
     t.integer  "image_file_size"
-    t.boolean  "usable"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false

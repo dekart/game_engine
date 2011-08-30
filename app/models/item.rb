@@ -245,4 +245,7 @@ class Item < ActiveRecord::Base
     !boost_type.blank?
   end
   
+  def usable?
+    !payouts.empty?
+  end
 end
