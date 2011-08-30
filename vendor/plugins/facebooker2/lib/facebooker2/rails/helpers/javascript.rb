@@ -82,8 +82,8 @@ module Facebooker2
             if options[:cache_url]
               js << <<-CODE
                 <script type="text/javascript">
-                  if(typeof FB == 'undefined'){
-                    document.write(unescape(\"%3Cscript src='#{options[:cache_url]}' type='text/javascript'%3E%3C/script%3E\"))
+                  if(typeof FB === 'undefined'){
+                    document.write(unescape(\"%3Cscript src='#{options[:cache_url]}' type='text/javascript'%3E%3C/script%3E\"));
                   }
                 </script>
               CODE

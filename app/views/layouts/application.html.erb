@@ -14,7 +14,7 @@
   <% fb_connect_js(:channel_url => facebook_callback_url + '/channel.html', :cache_url => javascript_path('cache/facebook_connect.js'), :weak_cache => Setting.b(:app_weak_fb_js_cache)) do %>
     $(function(){
       $(document).trigger('facebook.ready');
-    })
+    });
   <% end %>
 
   <% admin_only do %>
