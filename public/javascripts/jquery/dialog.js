@@ -54,7 +54,7 @@
     },
 
     reveal: function(data, options) {
-      if(typeof options == "undefined"){ var options = {}; }
+      if(typeof options === "undefined"){ var options = {}; }
       
       $(document).trigger('beforeReveal.dialog');
       if(options.beforeReveal) options.beforeReveal.call(this);
