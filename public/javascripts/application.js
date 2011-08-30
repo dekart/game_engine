@@ -541,7 +541,7 @@ function debug(s) {
       var startIndex = 0;
       
       if ($items.index($current) != -1) {
-        startIndex = Math.floor($items.index($current) / show_limit) * show_limit;
+        var startIndex = Math.floor($items.index($current) / show_limit) * show_limit;
       }
 
       $boosts.find('.container').jCarouselLite({
