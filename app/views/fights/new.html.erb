@@ -4,7 +4,7 @@
 
 <%= render('layouts/promo_block', :context => :fights) %>
 
-<%= render "boosts" %>
+<%= render("boosts") if Setting.b(:boosts_enabled) %>
 
 <% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
   <% render_to_result do %>

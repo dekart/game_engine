@@ -527,23 +527,39 @@ function debug(s) {
     });
   };
   
-  $.setupBoost = function(type, destination, show_limit) {
-    var $boosts = $('.boosts.' + type + '.' + destination);
-    var $items = $boosts.find('li');
-    var $current = $boosts.find('.active');
-    
-    var startIndex = 0;
-    if ($items.index($current) != -1) {
-      startIndex = Math.floor($items.index($current) / show_limit) * show_limit;
+  $.fn.setupBoost = function(show_limit) {
+    var prepare_boosts = function(selector){
+      var $boosts = $(selector);
+      var $items = $boosts.find('li');
+      
+      if($items.length == 0){
+        return false;
+      }
+      
+      var $current = $boosts.find('.active');
+
+      var startIndex = 0;
+      
+      if ($items.index($current) != -1) {
+        startIndex = Math.floor($items.index($current) / show_limit) * show_limit;
+      }
+
+      $boosts.find('.container').jCarouselLite({
+        btnNext:  $boosts.find('.next'),
+        btnPrev:  $boosts.find('.previous'),
+        visible:  show_limit,
+        start:    startIndex,
+        circular: false
+      });
     }
     
-    $boosts.find('.container').jCarouselLite({
-      btnNext:  $boosts.find('.next'),
-      btnPrev:  $boosts.find('.previous'),
-      visible:  show_limit,
-      start:    startIndex,
-      circular: false
-    });
+    var $selector = $(this).selector;
+
+    prepare_boosts($selector);
+    
+    $(document).bind('fights.create', function(){
+      prepare_boosts($selector);
+    })
   };
   
   $.fn.giftForm = function(options){

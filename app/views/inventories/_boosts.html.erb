@@ -27,11 +27,6 @@
       <div class="next">
         <%= asset_image_tag(:icons_next, :alt => t(".next")) %>
       </div>
-      
-      <% dom_ready do %>
-        $.setupBoost('<%= type %>', '<%= destination %>', 3);
-      <% end %>
-      
     <% else %>
       <div class="buy"><%= t(".buy_boosts") %></div>
         
@@ -41,3 +36,7 @@
     <% end %>
   </div>
 </div>
+
+<% dom_ready do %>
+  $('.boosts.<%= type %>.<%= destination %>').setupBoost('<%= type %>', '<%= destination %>', 3);
+<% end %>
