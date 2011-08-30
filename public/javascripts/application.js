@@ -557,9 +557,9 @@ function debug(s) {
 
     prepare_boosts($selector);
     
-    $(document).bind('fights.create', function(){
-      prepare_boosts($selector);
-    })
+    $(document).bind('fights.create', {selector : $selector}, function(event){
+      prepare_boosts(event.data.selector);
+    });
   };
   
   $.fn.giftForm = function(options){
