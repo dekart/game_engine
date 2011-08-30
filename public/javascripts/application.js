@@ -557,7 +557,7 @@ function debug(s) {
 
     prepare_boosts($selector);
     
-    $(document).bind('fights.create', {selector : $selector}, function(event){
+    $(document).bind('boosts.update', {selector : $selector}, function(event){
       prepare_boosts(event.data.selector);
     });
   };

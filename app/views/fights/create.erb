@@ -40,6 +40,7 @@
     <% end %>
   
     $("#fight_boosts").replaceWith('<%= escape_javascript(render('boosts')) %>');
+    $(document).trigger('boosts.update');
   
     $(document).trigger('fights.create');
   <% end %>
