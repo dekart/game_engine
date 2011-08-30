@@ -27,8 +27,7 @@ module CharactersHelper
     fb_profile_pic(character.user, 
       {
         :linked => false, 
-        :size   => :square, 
-        :alt    => character_nickname(character)
+        :size   => :square
       }.merge(options)
     )
   end

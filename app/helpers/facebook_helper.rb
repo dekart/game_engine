@@ -34,15 +34,6 @@ module FacebookHelper
     content_tag("fb:req-choice", fb_fa(:label, label), :url => url)
   end
   
-  def fb_profile_pic(user, options = {})
-    options[:title] ||= options[:alt]
-    
-    image_tag('https://graph.facebook.com/%s/picture?type=%s' % [Facebooker2.cast_to_facebook_id(user), options[:size]], 
-      :alt    => options[:alt] || '',
-      :title  => options[:title] || ''
-    )
-  end
-
   def fb_profile_url(user)
     "#{request.protocol}www.facebook.com/profile.php?id=#{user.facebook_id}"
   end

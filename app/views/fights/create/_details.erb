@@ -3,7 +3,7 @@
     <td class="attacker">
       <div class="character">
         <%= character_name_link(fight.attacker, {:class => :name}) %>
-        <%= character_picture_link(fight.attacker, {:class => :picture}, {:size => :large}) %>
+        <%= character_picture_link(fight.attacker, {:class => :picture}, {:size => :small}) %>
 
         <div class="level">
           <span class="label"><%= Character.human_attribute_name("level") %></span>
@@ -38,7 +38,7 @@
     <td class="victim">
       <div class="character">
         <%= character_name_link(fight.victim, {:class => :name}) %>
-        <%= character_picture_link(fight.victim, {:class => :picture}, {:size => :large}) %>
+        <%= character_picture_link(fight.victim, {:class => :picture}, {:size => :small}) %>
 
         <div class="level">
           <span class="label"><%= Character.human_attribute_name("level") %></span>
