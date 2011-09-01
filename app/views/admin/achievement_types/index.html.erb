@@ -1,0 +1,44 @@
+<%= admin_title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_achievement_type_path) %>
+</div>
+
+<% collection @achievement_types do %>
+  <table id="achievement_type_list" class="data">
+    <tr>
+      <th></th>
+      <th><%= AchievementType.human_attribute_name("name") %></th>
+      <th><%= AchievementType.human_attribute_name("key") %></th>
+      <th><%= AchievementType.human_attribute_name("value") %></th>
+      <th><%= AchievementType.human_attribute_name("payouts") %></th>
+      <th><%= AchievementType.human_attribute_name("state") %></th>
+      <th></th>
+    </tr>
+
+    <% @achievement_types.each do |achievement_type| %>
+      <tr>
+        <td class="image"><%= image_tag(achievement_type.image.url(:icon)) if achievement_type.image? %></td>
+        <td class="name"><%= link_to(achievement_type.name, edit_admin_achievement_type_path(achievement_type)) %></td>
+        <td class="level"><%= achievement_type.key %></div>
+        <td class="level"><%= achievement_type.value %></div>
+        <td class="payouts"><%= admin_payouts_preview(achievement_type.payouts) %></td>
+        <td class="state"><%= admin_state(achievement_type) %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.edit"), edit_admin_achievement_type_path(achievement_type)) %>
+          <%= link_to(t(".controls.publish"), publish_admin_achievement_type_path(achievement_type),
+                :method => :put,
+                :confirm => t(".controls.publish_confirm")
+              ) if achievement_type.can_publish? %>
+          <%= link_to(t(".controls.hide"), hide_admin_achievement_type_path(achievement_type),
+                :method => :put
+              ) if achievement_type.can_hide? %>
+          <%= link_to(t(".controls.delete"), admin_achievement_type_path(achievement_type),
+                :method   => :delete,
+                :confirm  => t(".controls.delete_confirm")
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
