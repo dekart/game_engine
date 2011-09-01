@@ -1,0 +1,24 @@
+en:
+  admin:
+    achievement_types:
+      index:
+        title: "Achievements"
+        empty_set: "No achievements"
+        controls:
+          new: "Add Achievement"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to make this achievement visible to players?"
+          hide: "Hide"
+      new:
+        title: "New Achievement"
+        submit: "Create"
+      create:
+        success: "Achievement has been created successfully!"
+      edit:
+        title: "Edit Achievement"
+        submit: "Update"
+      update:
+        success: "Achievement has been updated successfully!"

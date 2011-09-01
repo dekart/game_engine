@@ -158,6 +158,13 @@ ActionController::Routing::Routes.draw do |map|
       } do |contest|
       contest.resources :contest_groups
     end
+    
+    admin.resources :achievement_types,
+      :member => {
+        :publish  => :put,
+        :hide     => :put
+      }
+    
     # Add your custom admin routes below this mark
     
   end
