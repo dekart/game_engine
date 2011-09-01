@@ -2,16 +2,16 @@ module RatingsHelper
   def rating_table(characters, field, current = current_character, include_current = true, &block)
     result = ""
 
+    current_displayed = false
+    
     characters.each_with_index do |character, index|
-      position = field ? characters.index{|c| c.send(field) == character.send(field) } : index
-
-      result << capture(character, position + 1, (character == current), &block)
+      current_displayed ||= (character == current)
+      
+      result << capture(character, characters.position(character), (character == current), &block)
     end
 
-    if include_current && current && !characters.include?(current)
-      position = characters.rating_position(current, field)
-
-      result << capture(current, position, true, &block)
+    if include_current && current && !current_displayed
+      result << capture(current, characters.position(character), true, &block)
     end
 
     block_given? ? concat(result.html_safe) : result.html_safe

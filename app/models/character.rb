@@ -103,10 +103,6 @@ class Character < ActiveRecord::Base
   attr_accessor :level_up_applied
 
   class << self
-    def rating_position(character, field)
-      count(:conditions => ["#{field} > ?", character.send(field)]) + 1
-    end
-    
     def banned_ids
       Rails.cache.fetch('character_banned_ids', :expires_in => 5.minutes) do
         [0] + Character.all(:select => "characters.id", :joins => :user, :conditions => 'banned IS TRUE').map{|c| c.id }
