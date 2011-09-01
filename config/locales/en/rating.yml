@@ -4,6 +4,7 @@ en:
       title:
         global: "Hall of Fame: Global"
         relations: "Hall of Fame: Alliance"
+      note: "This rating is getting updated every 15 minutes"
         
     buttons:
       buttons:

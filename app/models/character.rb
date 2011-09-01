@@ -20,6 +20,7 @@ class Character < ActiveRecord::Base
   include Character::SecretKeys
   include Character::Contests
   include Character::PersonalDiscounts
+  include Character::Ratings
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
@@ -66,15 +67,6 @@ class Character < ActiveRecord::Base
   
   has_many :wall_posts,
     :dependent => :destroy
-
-  named_scope :rated_by, Proc.new{|unit|
-    {
-      :joins      => :user,
-      :conditions => ['characters.id NOT IN (?)', Character.banned_ids],
-      :order      => "characters.#{unit} DESC",
-      :limit      => Setting.i(:rating_show_limit)
-    }
-  }
 
   serialize :placements
   serialize :active_boosts
