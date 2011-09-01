@@ -14,10 +14,6 @@ class ShortLink
       [404, {"Content-Type" => "text/html"}, "Not Found"]
     end
   rescue Exception => e
-    #TODO Possibly this rescue is not necessary. Remove it if there will be no errors.
-    Rails.logger.error "Failed to parse short link: '#{env["PATH_INFO"]}'"
-    Rails.logger.error e
-
     [200, {"Content-Type" => "text/html"}, iframe_redirect_code(Facebooker2.canvas_page_url)]
   end
 
