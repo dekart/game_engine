@@ -1,0 +1,10 @@
+<%= form.text_field :name, :size => 40, :required => true %>
+<%= form.text_area  :description, :cols => 80, :rows => 5 %>
+<%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>
+
+<%= form.text_field :key, :required => true %>
+<%= form.text_field :value, :required => true %>
+
+<h2><%= AchievementType.human_attribute_name("payouts") %></h2>
+
+<%= form.fields "admin/payouts/collection" %>

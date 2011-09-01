@@ -29,6 +29,8 @@ en:
         credit_packages: "Facebook Credits"
         messages: "Messages"
         contests: "Contests" 
+        achievement_types: "Achievements"
+        
         # Add your custom menu items below this mark
         
       application:
