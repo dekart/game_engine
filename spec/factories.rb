@@ -89,7 +89,6 @@ Factory.define :item do |t|
   
   t.can_be_sold_on_market true
 
-  t.usable  true
   t.payouts Payouts::Collection.new(
     Payouts::BasicMoney.new(:value => 100, :apply_on => :use)
   )
