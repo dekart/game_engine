@@ -5,3 +5,5 @@ en:
       say_something: "Say:"
       buttons:
         send: "Send"
+    global:
+      tooltip: "Chat"
