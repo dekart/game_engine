@@ -24,12 +24,17 @@ module CharactersHelper
   def character_picture(character_or_user, options = {})
     character = character_for(character_or_user)
 
-    fb_profile_pic(character.user, 
-      {
-        :linked => false, 
-        :size   => :square
-      }.merge(options)
-    )
+    options[:size] ||= :square
+    
+    image_tag("http://graph.facebook.com/#{character.user.facebook_id}/picture?type=#{options[:size]}&return_ssl_resources=#{request.ssl? ? 1 : 0}",
+      :title => character.name,
+      :alt => character.name)
+#    fb_profile_pic(character.user, 
+#      {
+#        :linked => false, 
+#        :size   => :square
+#      }.merge(options)
+#    )
   end
 
   def character_name_link(character_or_user, link_options = {}, name_options = {})
