@@ -4,7 +4,7 @@
       <% group_header(post.author) do %>
         <div class="author">
           <div class="name"><%= character_name_link(post.author) %></div>
-          <div class="image"><%= character_picture_link(post.author, {}, {:size => :small}) %></div>
+          <div class="image"><%= character_picture_link(post.author, {}, {:size => :normal}) %></div>
           <div class="info">
             <span class="character_type"><%= post.author.character_type.name %></span>,
             <span class="level"><%= Character.human_attribute_name('level') %> <%= post.author.level %></span>
