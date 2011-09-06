@@ -1,13 +1,13 @@
 class AssignmentsController < ApplicationController
   def new
-    @assignment = parents.last.assignments.build(:role => params[:role])
+    @assignment = current_character.assignments.build(:role => params[:role])
     @relations = Setting.b(:assignment_mercenaries) ? current_character.relations : current_character.friend_relations
 
     render :new, :layout => "ajax"
   end
 
   def create
-    @assignment = parents.last.assignments.build(params[:assignment])
+    @assignment = current_character.assignments.build(params[:assignment])
 
     @assignment.save
 
@@ -22,13 +22,11 @@ class AssignmentsController < ApplicationController
     if params[:id] == 'all'
       current_character.assignments.clear
     else
-      @assignment = Assignment.find(params[:id])
+      @assignment = current_character.assignments.find(params[:id])
 
-      if @assignment.context == current_character or @assignment.context.character == current_character
-        @assignment.destroy
+      @assignment.destroy
 
-        EventLoggingService.log_event(:assignment_destroyed, @assignment)
-      end
+      EventLoggingService.log_event(:assignment_destroyed, @assignment)
     end
 
     render :layout => 'ajax'
