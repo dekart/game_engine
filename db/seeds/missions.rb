@@ -14,7 +14,7 @@ tutorial.missions.create!(
     :win_amount => 3,
     :chance     => 100,
     :energy     => 2,
-    :experience => 3,
+    :experience => 4,
     :money_min  => 15,
     :money_max  => 20,
     :payouts    => Payouts::Collection.new(
@@ -243,14 +243,3 @@ recruit.missions.create!(
     )
   )
 end
-
-puts "Seeding boss..."
-
-adventurer.bosses.create!(
-  :name       => "Orc Leader",
-  :health     => 150,
-  :attack     => 15,
-  :defence    => 12,
-  :ep_cost    => 20,
-  :experience => 50
-)

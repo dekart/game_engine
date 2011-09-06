@@ -25,13 +25,11 @@ module FacebookHelper
   end
   
   def fb_request_dialog(type, options = {})
-    before_callback = options.delete(:before)
     after_callback  = options.delete(:callback)
     request_params  = options.delete(:params) || {}
         
     if_fb_connect_initialized(
       "
-        %s;
         FB.ui(%s, function(response){ 
           if(!$.isEmptyObject(response)){ 
             $('#ajax').load('%s', {ids: response.request_ids}, function(){ 
@@ -42,7 +40,6 @@ module FacebookHelper
         
         $(document).trigger('facebook.dialog');
       " % [
-        before_callback,
         options.deep_merge(:method => 'apprequests', :data => {:type => type}).to_json,
         app_requests_path(request_params.merge(:type => type)),
         after_callback

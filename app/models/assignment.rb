@@ -6,6 +6,8 @@ class Assignment < ActiveRecord::Base
 
   validates_presence_of :context_id, :context_type, :relation_id
   validates_uniqueness_of :role, :scope => [:context_id, :context_type]
+  
+  validate_on_create :validate_relation_ownership
 
   before_create :destroy_current_assignments
 
@@ -57,6 +59,10 @@ class Assignment < ActiveRecord::Base
       chance <= 0 ? 1 : chance.ceil
     end
   end
+  
+  def character
+    context.is_a?(Character) ? context : context.character
+  end
 
   def effect_value
     self.class.effect_value(context, relation, role)
@@ -72,6 +78,10 @@ class Assignment < ActiveRecord::Base
   end
 
   protected
+  
+  def validate_relation_ownership
+    errors.add(:relation, :incorrect_owner) if relation && relation.owner != character
+  end
 
   def destroy_current_assignments
     self.class.find_all_by_relation_id(relation_id).each do |assignment|
