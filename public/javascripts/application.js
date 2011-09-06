@@ -767,4 +767,14 @@ $(function(){
       delay: 0
     }
   });
+  
+  $('#global_chat_icon').qtip({
+    position: {
+      my: 'top right',
+      at: 'bottom left'
+    },
+    show: {
+      delay: 0
+    }
+  });
 });
