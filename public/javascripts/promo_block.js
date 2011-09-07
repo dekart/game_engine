@@ -30,11 +30,11 @@
         
         block.rotate();
 
-        setInterval(function(){
+        Visibility.every(block.options.delay * 1000, function(){
           if(!block.paused){
             block.rotate();
           }
-        }, block.options.delay * 1000);
+        });
 
         block.element.data({promoBlock: block});
       },
