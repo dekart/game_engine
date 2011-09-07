@@ -16,7 +16,6 @@
 
 .jcarousel-clip-horizontal
   width: 100%
-  height: 85px
 
 .jcarousel-clip-vertical
   width: 75px
@@ -134,3 +133,29 @@
   &:hover, &:focus, &:active
     cursor: default
     background-position: 0 -96px
+    
+
+.classic-carousel
+  .jcarousel-container-horizontal
+    padding: 
+      top: 0
+      bottom: 0
+      
+  .jcarousel-item-horizontal
+    margin: 0
+  
+  .jcarousel-prev-horizontal, .jcarousel-next-horizontal
+    top: 11px
+    background-position: 0 0
+    width: 16px
+    height: 16px
+    
+  .jcarousel-prev-horizontal
+    background-image = !asset_icons_previous
+    
+  .jcarousel-next-horizontal
+    background-image = !asset_icons_next
+    
+  .jcarousel-next-disabled-horizontal, .jcarousel-prev-disabled-horizontal
+    +opacity(0.5)
+    

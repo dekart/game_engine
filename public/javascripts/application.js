@@ -1,3 +1,9 @@
+function debug(s) {
+  if(!$.isEmptyObject(console)) {
+    console.log(s);
+  }
+}
+
 var Timer = {
   timers: {},
 
@@ -496,27 +502,18 @@ var Contest = {
   }
 };
 
-function debug(s) {
-  if(!$.isEmptyObject(console)) {
-    console.log(s);
-  }
-}
-
-
 (function($){
   $.fn.missionGroups = function(current_group, show_limit){
     var $container = $(this);
     var $items = $container.find('li');
     var $current = $(current_group);
-
-    $container.find('.container').jCarouselLite({
-      btnNext:  $container.find('.next'),
-      btnPrev:  $container.find('.previous'),
-      visible:  show_limit,
-      start:    Math.floor($items.index($current) / show_limit) * show_limit,
-      circular: false
+    
+    $container.find('.container ul').jcarousel({
+      visible: show_limit,
+      itemFallbackDimension: show_limit,
+      start: $items.index($current)
     });
-
+     
     $current.addClass('current');
 
     $items.click(function(e){
@@ -537,19 +534,11 @@ function debug(s) {
       }
       
       var $current = $boosts.find('.active');
-
-      var startIndex = 0;
       
-      if ($items.index($current) != -1) {
-        var startIndex = Math.floor($items.index($current) / show_limit) * show_limit;
-      }
-
-      $boosts.find('.container').jCarouselLite({
-        btnNext:  $boosts.find('.next'),
-        btnPrev:  $boosts.find('.previous'),
-        visible:  show_limit,
-        start:    startIndex,
-        circular: false
+      $boosts.find('.container ul').jcarousel({
+        visible: show_limit,
+        itemFallbackDimension: show_limit,
+        start: $items.index($current)
       });
     }
     

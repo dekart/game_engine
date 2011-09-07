@@ -1,4 +1,4 @@
-<div class="boosts <%= type %> <%= destination %>">
+<div class="boosts <%= "#{type} #{destination}" %>">
   <h3 class="description">
     <%= t(".types.#{type}.#{destination}") %>
     <%= help_link("boosts_#{type}_#{destination}") %>
@@ -6,26 +6,20 @@
   
   <div class="boost_content">
     <% if boosts = current_character.boosts.for(type, destination) and boosts.any? %>
-      <div class="previous">
-        <%= asset_image_tag(:icons_previous, :alt => t(".previous")) %>
-      </div>
-      
-      <div class="container">
+      <div class="container classic-carousel">
         <ul>
           <% boosts_list(boosts, type, destination) do |boost, active| %>
-            <li class="boost <%= 'active' if active %>" id="<%= boost_dom_id(boost, destination) %>">
-              <%= link_to_remote(inventory_item_image(boost, :small, :tooltip => true, :count => true),
-                    :url => toggle_boost_inventory_path(boost),
-                    :with => "'destination=#{destination}'",
-                    :update => :ajax
-                  ) %>
+            <li>
+              <div class="boost <%= 'active' if active %>" id="<%= boost_dom_id(boost, destination) %>">
+                <%= link_to_remote(inventory_item_image(boost, :small, :tooltip => true, :count => true),
+                      :url => toggle_boost_inventory_path(boost),
+                      :with => "'destination=#{destination}'",
+                      :update => :ajax
+                    ) %>
+              </div>
             </li>
           <% end %>
         </ul>
-      </div>
-      
-      <div class="next">
-        <%= asset_image_tag(:icons_next, :alt => t(".next")) %>
       </div>
     <% else %>
       <div class="buy"><%= t(".buy_boosts") %></div>

@@ -8,14 +8,6 @@ module MissionGroupsHelper
       @template = template
     end
 
-    def previous_tab(&block)
-      @previous_group = block
-    end
-
-    def next_tab(&block)
-      @next_group = block
-    end
-
     def group_tab(&block)
       @group = block
     end
@@ -33,9 +25,6 @@ module MissionGroupsHelper
 
       current_group   = current_character.mission_groups.current
 
-      previous_group  = capture(&@previous_group)
-      next_group      = capture(&@next_group)
-
       result = ""
 
       groups.each do |group|
@@ -49,9 +38,7 @@ module MissionGroupsHelper
 
       result = content_tag(:div,
         [
-          content_tag(:div, previous_group, :class => :previous),
-          content_tag(:div, next_group, :class => :next),
-          content_tag(:div, content_tag(:ul, result.html_safe, :class => :clearfix), :class => :container)
+          content_tag(:div, content_tag(:ul, result.html_safe, :class => :clearfix), :class => 'container classic-carousel')
         ].join(" ").html_safe,
         :id     => :mission_group_list,
         :class  => :clearfix
