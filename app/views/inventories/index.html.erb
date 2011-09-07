@@ -1,10 +1,10 @@
 <%= title(t(".title")) %>
 
-<%= render "inventories/buttons", :current => :inventory %>
+<%= render("inventories/buttons", :current => :inventory) %>
 
 <% if @inventories.size > 0 %>
   <div id="inventory_fight_attributes">
-    <%= render "characters/fight_attributes" %>
+    <%= render("characters/fight_attributes") %>
   </div>
 <% end %>
 
@@ -20,5 +20,5 @@
 <% end %>
 
 <div id="inventory_list" class="inventory_list">
-  <%= render "list", :inventories => @inventories %>
+  <%= render("list", :inventories => @inventories) %>
 </div>

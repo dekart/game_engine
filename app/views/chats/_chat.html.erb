@@ -1,7 +1,8 @@
-<%= render 'chats/message' %>
+<%= render('chats/message') %>
 
 <div class="chat" id="<%= chat_dom_id(chat_id) %>" data-chat-id="<%= chat_id %>" data-template="chat_template">
   <h2><%= t(".title") %></h2>
+  
   <div class="container">
     <div class="messages">
     </div>
@@ -9,10 +10,12 @@
   
   <% form_tag("/chats/#{chat_id}", :onsubmit => "$(this).chat('onSubmit'); return false", :class => 'send_message') do |form| %>
     <%= hidden_field_tag :chat_character_id, current_character.id %>
+    
     <div class="text_container">
       <%= label_tag :chat_text, t(".say_something") %>
       <%= text_field_tag :chat_text, nil, :class => 'text', :maxlength => Setting.i(:chat_max_length) %>
     </div>
+    
     <%= link_to_function(button(:send), "$(this).parents('form').submit()", :class => 'send button')%>
   <% end %>
 </div>

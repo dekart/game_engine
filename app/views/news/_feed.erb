@@ -10,7 +10,7 @@
       <% content_tag(:div, :class => [post.type_name, :news, :clearfix].join(' '), :id => dom_id(post)) do %>
         <div class="time"><%= l(post.created_at, :format => :short) %>:</div>
 
-        <%= render "news/#{post.type_name}", :news => post %>
+        <%= render("news/#{post.type_name}", :news => post) %>
       <% end %>
     <% end %>
   <% end %>

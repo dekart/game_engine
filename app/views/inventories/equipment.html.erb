@@ -1,18 +1,18 @@
 <%= title(t(".title")) %>
 
-<%= render "inventories/buttons", :current => :equipment %>
+<%= render("inventories/buttons", :current => :equipment) %>
 
 <div id="inventory_fight_attributes">
-  <%= render "characters/fight_attributes" %>
+  <%= render("characters/fight_attributes") %>
 </div>
 
 <div id="equipment">
   <div id="equipment_inventories">
-    <%= render "equippables" %>
+    <%= render("equippables") %>
   </div>
   
   <div id="equipment_placements">
-    <%= render "placements", :character => current_character %>
+    <%= render("placements", :character => current_character) %>
   </div>
 
   <div id="equipment_buttons" class="buttons clearfix">
@@ -21,6 +21,7 @@
           :update => :result,
           :html => {:class => "button auto_equip"}
         ) %>
+        
     <%= link_to_remote(button(:unequip),
           :url => unequip_inventories_path,
           :update => :result,

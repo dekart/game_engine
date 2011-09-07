@@ -8,7 +8,7 @@
         <div class="name"><%= item.name %></div>
         <div class="picture"><%= item_image(item, :small) %></div>
         <div class="payouts">
-          <%= render "items/effects", :item => item %>
+          <%= render("items/effects", :item => item) %>
         </div>
 
         <div class="requirements">
@@ -19,11 +19,11 @@
         </div>
 
         <% if item.left or item.available_till %>
-          <%= render "items/limit", :item => item %>
+          <%= render("items/limit", :item => item) %>
         <% end %>
 
         <div class="controls">
-          <% form_tag "", :class => :clearfix do %>
+          <% form_tag("", :class => :clearfix) do %>
             <%= amount_select_tag %>
 
             <%= link_to_remote(button(:buy),

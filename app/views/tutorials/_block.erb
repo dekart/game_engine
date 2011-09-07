@@ -1,15 +1,15 @@
+<div id="tutorial">
+  
+  <div id="tutorial_overlay"></div>
+  
+  <%= render('tutorials/steps') %>
+
+  <%= render('tutorials/progress') %>
+  
+</div>
+
 <% dom_ready do %>
   $(document).unbind('tutorial.next_step').bind('tutorial.next_step', function() {
     <%= javascript_for_next_step_trigger %>
   });
 <% end %>
-
-<div id="tutorial">
-  
-  <div id="tutorial_overlay"></div>
-  
-  <%= render 'tutorials/steps' %>
-
-  <%= render 'tutorials/progress' %>
-  
-</div>

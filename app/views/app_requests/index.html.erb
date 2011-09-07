@@ -1,6 +1,6 @@
 <%= title(t('.title')) %>
 
-<%= render "relations/buttons", :current => :accept_requests %>
+<%= render("relations/buttons", :current => :accept_requests) %>
 
 <% collection(@app_requests) do %>
   <table id="app_request_list">
@@ -10,7 +10,7 @@
           <%= character_picture_link(app_request.sender, {}, {:size => :normal}) %>
         </td>
 
-        <%= render "app_requests/details/#{ app_request.type_name }", :app_request => app_request %>
+        <%= render("app_requests/details/#{ app_request.type_name }", :app_request => app_request) %>
           
         <% if app_request.acceptable? %>
           <td class="controls">

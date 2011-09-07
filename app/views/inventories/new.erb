@@ -7,7 +7,7 @@
         <td class="picture"><%= item_image(@item, :medium) %></td>
 
         <td class="payouts">
-          <%= render "items/effects", :item => @item %>
+          <%= render("items/effects", :item => @item) %>
         </td>
 
         <% if @item.price? %>
@@ -26,10 +26,10 @@
     <% end %>
 
     <% if @item.left or @item.available_till %>
-      <%= render "items/limit", :item => @item %>
+      <%= render("items/limit", :item => @item) %>
     <% end %>
 
-    <% form_tag "", :class => :clearfix do %>
+    <% form_tag("", :class => :clearfix) do %>
       <div class="amount">
         <strong><%= t(".amount") %></strong> <%= amount_select_tag(@amount, :selected => @amount) %>
       </div>

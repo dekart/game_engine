@@ -28,7 +28,7 @@
               </div>
             </td>
             <td class="payouts">
-              <%= render "items/effects", :item => inventory %>
+              <%= render("items/effects", :item => inventory) %>
             </td>
             <td class="controls">
               <%= link_to_remote(inventory_use_button(inventory),
@@ -41,7 +41,7 @@
                   ) if inventory.usable? %>
 
               <% if inventory.can_be_sold? %>
-                <% form_tag "", :class => :clearfix do %>
+                <% form_tag("", :class => :clearfix) do %>
                   <%= amount_select_tag %>
 
                   <%= link_to_remote(button(:sell, :price => number_to_currency(inventory.sell_price)),

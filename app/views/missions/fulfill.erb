@@ -14,9 +14,15 @@
             :missions => @missions
           ) %>
     <% elsif @result.success? %>
-      <%= builder.render "missions/fulfill/success", :mission => @mission, :result => @result %>
+      <%= builder.render("missions/fulfill/success", 
+            :mission  => @mission, 
+            :result   => @result
+          ) %>
     <% else %>
-      <%= builder.render "missions/fulfill/failure", :mission => @mission, :result => @result %>
+      <%= builder.render("missions/fulfill/failure", 
+            :mission  => @mission, 
+            :result   => @result
+          ) %>
     <% end %>
 
     <% builder.on_ready do %>

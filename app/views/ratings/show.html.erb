@@ -3,11 +3,11 @@
 <% if action_name == "global" %>
   <%= title(t(".title.global")) %>
 
-  <%= render "buttons", :current => :global %>
+  <%= render("buttons", :current => :global) %>
 <% else %>
   <%= title(t(".title.relations")) %>
 
-  <%= render "buttons", :current => :relations %>
+  <%= render("buttons", :current => :relations) %>
 <% end %>
 
 <table id="rating_list" cellspacing="0" cellpadding="0">

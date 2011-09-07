@@ -4,7 +4,7 @@
           :fight => @fight
         ) %>
 
-    <%= builder.render "fights/create/details", :fight => @fight %>
+    <%= builder.render("fights/create/details", :fight => @fight) %>
 
   <% elsif !@fight.enough_stamina? %>
     <div class="unsatisfied_requirements">

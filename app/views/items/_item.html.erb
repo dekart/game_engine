@@ -5,11 +5,12 @@
     <div class="description"><%= item.description %></div>
 
     <% if item.left or item.available_till %>
-      <%= render "items/limit", :item => item %>
+      <%= render("items/limit", :item => item) %>
     <% end %>
   </td>
+  
   <td class="payouts">
-    <%= render "items/effects", :item => item %>
+    <%= render("items/effects", :item => item) %>
   </td>
 
   <td class="requirements">
@@ -23,7 +24,7 @@
     <% end %>
   </td>
   <td class="controls">
-    <% form_tag "", :class => :clearfix do %>
+    <% form_tag("", :class => :clearfix) do %>
       <%= amount_select_tag %>
 
       <%= link_to_remote(button(:buy),

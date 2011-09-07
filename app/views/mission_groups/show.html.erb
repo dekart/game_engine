@@ -11,11 +11,11 @@
 <% if @mission_group %>
   <% if @mission_group.requirements.satisfies?(current_character) %>
     <div id="mission_list">
-      <%= render "missions/list", :missions => @missions %>
+      <%= render("missions/list", :missions => @missions) %>
     </div>
 
     <div id="boss_list">
-      <%= render "bosses/list", :bosses => @bosses %>
+      <%= render("bosses/list", :bosses => @bosses) %>
     </div>
   <% else %>
     <div class="empty_set">

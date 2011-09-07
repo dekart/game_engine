@@ -3,7 +3,7 @@
 <div id="character_search">
   <h2><%= t(".search.title") %></h2>
 
-  <% form_tag search_admin_characters_path do %>
+  <% form_tag(search_admin_characters_path) do %>
     <%= label_tag :profile_ids, t(".search.profile_ids") %>
     <%= text_field_tag :profile_ids, params[:profile_ids], :size => 30 %>
 
@@ -20,7 +20,7 @@
       <%= will_paginate @characters %>
 
       <% collection(@characters) do %>
-        <% form_tag "", :id => :character_form do %>
+        <% form_tag("", :id => :character_form) do %>
           <table id="character_list" class="data">
             <tr>
               <th><%= check_box_tag("all_ids") %></th>
