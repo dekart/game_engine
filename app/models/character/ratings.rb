@@ -17,11 +17,7 @@ class Character
             if ids = Rails.cache.read(cache_key)
               Character.find(ids).sort_by{|c| ids.index(c.id) }
             else
-              scope.scoped(
-                :conditions => ['characters.id NOT IN (?)', Character.banned_ids],
-                :order      => "characters.%s DESC" % @attribute,
-                :limit      => Setting.i(:rating_show_limit)
-              ).tap do |characters|
+              scope.scoped(:limit => Setting.i(:rating_show_limit)).tap do |characters|
                 Rails.cache.write(cache_key, characters.map(&:id), :expires_in => 15.minutes)
               end
             end
@@ -31,7 +27,7 @@ class Character
         def position(character)
           (
             characters.index{|c| c.send(@attribute) == character.send(@attribute) } || 
-            count(:conditions => ["#{ @attribute } > ?", character.send(@attribute)])
+            scope.count(:conditions => ["#{ @attribute } > ?", character.send(@attribute)])
           ) + 1
         end
         
@@ -40,6 +36,9 @@ class Character
         def scope
           @scope ||= (
             @character ? @character.self_and_relations.scoped(:joins => :user) : Character.scoped(:joins => :user)
+          ).scoped(
+            :conditions => ['characters.id NOT IN (?)', Character.banned_ids],
+            :order      => "characters.%s DESC" % @attribute
           )
         end
 
