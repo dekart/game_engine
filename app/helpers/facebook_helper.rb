@@ -50,7 +50,7 @@ module FacebookHelper
   end
   
   def fb_graph_user_image_tag(facebook_id, size, options = {})
-    image_tag("http://graph.facebook.com/#{facebook_id}/picture?type=#{size}&return_ssl_resources=#{request.ssl? ? 1 : 0}", 
+    image_tag("#{request.protocol}graph.facebook.com/#{facebook_id}/picture?type=#{size}&return_ssl_resources=#{request.ssl? ? 1 : 0}", 
       options)
   end
 end
