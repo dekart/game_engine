@@ -11,7 +11,7 @@ module RatingsHelper
     end
 
     if include_current && current && !current_displayed
-      result << capture(current, characters.position(character), true, &block)
+      result << capture(current, characters.position(current_character), true, &block)
     end
 
     block_given? ? concat(result.html_safe) : result.html_safe
