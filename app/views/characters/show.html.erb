@@ -6,16 +6,14 @@
 <% else %>
   <%= title(
         t(".title",
-          :user => character_name(@character,
-            :possessive => true,
-            :capitalize => true
-          )
+          :user   => character_name(@character),
+          :level  => @character.level
         )
       ) %>
 <% end %>
 
 <div id="character">
-  <div class="controls">
+  <div class="controls clearfix">
     <% if @character == current_character %>
       <%= link_to_remote(button(:upgrade),
             :url    => upgrade_character_path(@character),
