@@ -26,15 +26,7 @@ module CharactersHelper
 
     options[:size] ||= :square
     
-    image_tag("http://graph.facebook.com/#{character.user.facebook_id}/picture?type=#{options[:size]}&return_ssl_resources=#{request.ssl? ? 1 : 0}",
-      :title => character.name,
-      :alt => character.name)
-#    fb_profile_pic(character.user, 
-#      {
-#        :linked => false, 
-#        :size   => :square
-#      }.merge(options)
-#    )
+    fb_graph_user_image_tag(character.user.facebook_id, options[:size], {:title => character.name, :alt => character.name})
   end
 
   def character_name_link(character_or_user, link_options = {}, name_options = {})

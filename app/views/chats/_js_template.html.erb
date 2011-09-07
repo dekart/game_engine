@@ -2,7 +2,7 @@
   <div class="message clearfix" data-message-id="${id}">
     <div class="picture">
       <a href="/characters/${character_key}">
-        <fb:profile-pic uid="${facebook_id}" linked="false" size="square"></fb:profile-pic>
+        <%= fb_graph_user_image_tag("${facebook_id}", "square") %>
       </a>
     </div>
     <div class="info">
