@@ -25,7 +25,6 @@ module FacebookHelper
   end
   
   def fb_request_dialog(type, options = {})
-    before_callback = options.delete(:before)
     after_callback  = options.delete(:callback)
     request_params  = options.delete(:params) || {}
         
@@ -42,7 +41,7 @@ module FacebookHelper
         
         $(document).trigger('facebook.dialog');
       " % [
-        before_callback,
+        ga_track_event('Requests', "#{type.to_s.titleize} - Dialog"),
         options.deep_merge(:method => 'apprequests', :data => {:type => type}).to_json,
         app_requests_path(request_params.merge(:type => type)),
         after_callback

@@ -17,7 +17,8 @@ module GiftsHelper
     )
     
     link_to_function(button(:send), fb_request_dialog(:gift, options), 
-      :class => "send button"
+      :class => "send button",
+      :'data-click-once' => true
     )
   end
   

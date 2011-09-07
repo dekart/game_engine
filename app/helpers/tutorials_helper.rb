@@ -135,7 +135,7 @@ module TutorialsHelper
   end
   
   def tutorial_visible?
-    current_user.show_tutorial? && flash[:show_tutorial] 
+    current_user.show_tutorial? && flash[:show_tutorial]
   end
   
 end
