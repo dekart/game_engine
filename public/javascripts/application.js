@@ -535,7 +535,7 @@ var Contest = {
   $.fn.setupBoost = function(show_limit) {
     var prepare_boosts = function(selector){
       var $boosts = $(selector);
-      var $items = $boosts.find('li');
+      var $items = $boosts.find('.boost');
       
       if($items.length == 0){
         return false;
