@@ -5,7 +5,6 @@
     position: top left
     repeat: no-repeat
   padding-top = !placements_height
-  margin-left: 300px
   width: 100%
 
   .inventory
@@ -87,21 +86,26 @@
 
     .note
       clear: both
-      width: 250px
 
       .zero
         font-size: 16px
         color = !placements_additional_zero_color
     
-    .jcarousel-container-vertical
+    .jcarousel-container-vertical, .jcarousel-item
       width: 170px
-      
+    
+    .jcarousel-container-vertical
+    
       .jcarousel-prev-vertical, .jcarousel-next-vertical
         left: 90px
     
       .jcarousel-clip-vertical
         width: 170px
         height: 250px
+      
+      .jcarousel-item
+        height: 82px
+        margin: 0
     
     
 #equipment

@@ -4,11 +4,7 @@
   <% (Character::Equipment::MAIN_PLACEMENTS).each do |placement| %>
     <% content_tag(:div, :class => "placement #{placement}", :'data-placement' => placement) do %>
       <% character.equipment.inventories_by_placement(placement).each do |inventory| %>
-        <% content_tag :div, :class => :inventory, 
-            :"data-placements" => inventory.placements.join(","),
-            :"data-equip" => equip_inventory_path(inventory),
-            :"data-unequip" => unequip_inventory_path(inventory, :placement => placement),
-            :"data-move" => move_inventory_path(inventory, :from_placement => placement) do %>
+        <% inventory_placement_tag(inventory, placement) do %>
           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
                 :url    => unequip_inventory_path(inventory, :placement => placement),
                 :update => :result,
@@ -31,30 +27,28 @@
       
       <%= help_link(:equipment_additional) %>
     </div>
-
-    <div class="container">
-      <% content_tag :div, :class => 'items', :'data-placement' => 'additional', 
-                      :'data-free-slots' => inventory_available_additonal_slots_count do %>
-        <ul class="carousel-container">
-          <% inventories_equipment_additional.each_pair do |inventory, count| %>
-            <% content_tag :li, :class => :inventory, 
-                :'data-placements' => inventory.placements.join(','),
-                :"data-equip" => equip_inventory_path(inventory),
-                :"data-unequip" => unequip_inventory_path(inventory, :placement => 'additional'),
-                :"data-move" => move_inventory_path(inventory, :from_placement => 'additional') do %>
     
-              <%= inventory_item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true, :count => count) -%>
-              
-              <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
-                    :url    => unequip_inventory_path(inventory, :placement => :additional),
-                    :update => :result,
-                    :html   => {
-                      :"data-click-once" => true,
-                      :class => :remove, 
-                      :title => t(".remove")
-                    }
-                  ) if character == current_character %>
-            <% end %>
+    <div class="container">
+      <% inventory_additional_placements_tag do %>
+        <ul class="carousel-container">
+          <% accumulate(inventories_equipment_additional, 2) do |accumulator| %>
+            <li>
+              <% accumulator.each do |inventory, count| %>
+                <% inventory_additional_placement_tag(inventory) do %>
+                  <%= inventory_item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true, :count => count) -%>
+                  
+                  <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
+                        :url    => unequip_inventory_path(inventory, :placement => :additional),
+                        :update => :result,
+                        :html   => {
+                          :"data-click-once" => true,
+                          :class => :remove, 
+                          :title => t(".remove")
+                        }
+                      ) if character == current_character %>
+                <% end %>
+              <% end %>
+            </li>
           <% end %>
         </ul>
       <% end %>
