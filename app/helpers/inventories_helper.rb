@@ -71,4 +71,31 @@ module InventoriesHelper
     end
   end
   
+  def inventory_placement_tag(inventory, placement, &block)
+    content_tag(:div, :class => :inventory, 
+      :"data-placements" => inventory.placements.join(","),
+      :"data-equip" => equip_inventory_path(inventory),
+      :"data-unequip" => unequip_inventory_path(inventory, :placement => placement),
+      :"data-move" => move_inventory_path(inventory, :from_placement => placement),
+      &block
+    )
+  end
+  
+  def inventory_additional_placements_tag(&block)
+    content_tag(:div, :class => 'items', :'data-placement' => 'additional', 
+      :'data-free-slots' => inventory_available_additonal_slots_count,
+      &block
+    )
+  end
+  
+  def inventory_additional_placement_tag(inventory, &block)
+    content_tag(:div, :class => :inventory, 
+      :"data-placements" => inventory.placements.join(','),
+      :"data-equip" => equip_inventory_path(inventory),
+      :"data-unequip" => unequip_inventory_path(inventory, :placement => 'additional'),
+      :"data-move" => move_inventory_path(inventory, :from_placement => 'additional'),
+      &block
+    )
+  end
+  
 end

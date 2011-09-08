@@ -99,4 +99,19 @@ module ApplicationHelper
       yield(settings) if settings[:start] > Time.now
     end
   end
+  
+  # accumulate collection to accumulator_size and then write
+  def accumulate(collection, accumulator_size, &block)
+    accumulator = []
+    
+    collection.each_with_index do |element, i|
+      accumulator << element
+      
+      if accumulator.size == accumulator_size || i == collection.size - 1
+        concat(capture(accumulator, &block))
+        
+        accumulator.clear
+      end
+    end
+  end
 end
