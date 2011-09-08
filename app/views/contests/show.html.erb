@@ -14,7 +14,7 @@
         <ul>
           <% @contest.groups_in_natural_order.each do |group| %>
             <% content_tag_for(:li, group, :tab) do %>
-              <%= link_to group.title, "##{dom_id(group)}" %>
+              <%= link_to(group.title, "##{dom_id(group)}") %>
             <% end %>
           <% end %>
         </ul>

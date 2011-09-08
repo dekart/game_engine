@@ -1,4 +1,11 @@
 <div id="fight_boosts" class="clearfix boosts_container">
-  <%= render "inventories/boosts", :type => 'fight', :destination => 'attack' %>
-  <%= render "inventories/boosts", :type => 'fight', :destination => 'defence' %>
+  <%= render("inventories/boosts", 
+        :type => 'fight', 
+        :destination => 'attack'
+      ) %>
+      
+  <%= render("inventories/boosts", 
+        :type => 'fight', 
+        :destination => 'defence'
+      ) %>
 </div>

@@ -17,7 +17,7 @@ namespace :app do
 
       total = Character.count
       
-      puts "Scheduling notifications for #{total} characters..."
+      puts "Scheduling friend invitation notifications for #{total} characters..."
       
       i = 0
       
@@ -42,7 +42,7 @@ namespace :app do
 
       total = Character.count
       
-      puts "Scheduling notifications for #{total} characters..."
+      puts "Scheduling gifting notifications for #{total} characters..."
       
       i = 0
       

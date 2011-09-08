@@ -1,11 +1,11 @@
 <%= admin_title(t(".title.#{operation_type}")) %>
 
-<%= render "controls" %>
+<%= render("controls") %>
 
 <div class="data_filter clearfix">
   <h2><%= t(".filter.title") %></h2>
 
-  <% form_tag admin_vip_money_operations_path(:type => operation_type), :method => :get do %>
+  <% form_tag(admin_vip_money_operations_path(:type => operation_type), :method => :get) do %>
     <%= hidden_field_tag :type, operation_type %>
   
     <%= label_tag :reference_type, t(".filter.reference_type") %>

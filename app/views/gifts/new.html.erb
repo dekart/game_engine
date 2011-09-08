@@ -1,6 +1,6 @@
 <%= title(t(".title")) %>
 
-<%= render "relations/buttons", :current => :send_gifts %>
+<%= render("relations/buttons", :current => :send_gifts) %>
 
 <div class="note"><%= t(".note", :hours => Setting.i(:gifting_repeat_accept_delay)) %></div>
 
@@ -13,7 +13,7 @@
         <div class="name"><%= item.name %></div>
 
         <div class="payouts">
-          <%= render "items/effects", :item => item %>
+          <%= render("items/effects", :item => item) %>
         </div>
 
         <div class="controls">

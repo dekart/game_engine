@@ -1,8 +1,8 @@
 <script id='chat_template' type = 'text/x-jquery-tmpl'>
   <div class="message clearfix" data-message-id="${id}">
     <div class="picture">
-      <a href="/characters/${character_key}">
-        <%= fb_graph_user_image_tag("${facebook_id}", "square") %>
+      <a href="/characters/${character_key}" title="${name}">
+        <%= fb_graph_user_image_tag("${facebook_id}", "square", :alt => '${name}') %>
       </a>
     </div>
     <div class="info">

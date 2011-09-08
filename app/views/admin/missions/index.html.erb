@@ -1,6 +1,6 @@
 <%= admin_title(t(".title")) %>
 
-<%= render "controls" %>
+<%= render("controls") %>
 
 <% collection @missions do %>
   <table id="mission_list" class="data">
@@ -60,7 +60,7 @@
 
       <tr>
         <td colspan="5">
-          <%= render "levels", :mission => mission %>
+          <%= render("levels", :mission => mission) %>
         </td>
       </tr>
     <% end %>

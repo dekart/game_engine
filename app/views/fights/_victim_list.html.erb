@@ -4,7 +4,8 @@
     <th><%= Character.human_attribute_name("level") %></th>
     <th><%= Character.human_attribute_name("relations_count") %></th>
   </tr>
-  <%= render 'victims', :victims => victims %>
+  
+  <%= render('victims', :victims => victims) %>
 </table>
 
 <% dom_ready do %>

@@ -1,6 +1,6 @@
 <%= title(t(".title")) %>
 
-<%= render "fights/buttons", :current => :fight %>
+<%= render("fights/buttons", :current => :fight) %>
 
 <%= render('layouts/promo_block', :context => :fights) %>
 
@@ -17,7 +17,7 @@
 <% end %>
 
 <% collection(@victims) do %>
-  <%= render "victim_list", :victims => @victims %>
+  <%= render("victim_list", :victims => @victims) %>
 <% end %>
 
 <div id="more_fight_opponents">

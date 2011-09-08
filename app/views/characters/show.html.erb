@@ -6,16 +6,14 @@
 <% else %>
   <%= title(
         t(".title",
-          :user => character_name(@character,
-            :possessive => true,
-            :capitalize => true
-          )
+          :user   => character_name(@character),
+          :level  => @character.level
         )
       ) %>
 <% end %>
 
 <div id="character">
-  <div class="controls">
+  <div class="controls clearfix">
     <% if @character == current_character %>
       <%= link_to_remote(button(:upgrade),
             :url    => upgrade_character_path(@character),
@@ -42,8 +40,12 @@
   <table class="info" cellspacing="0" cellpadding="0">
     <tr>
       <td class="picture"><%= character_picture(@character, :size => :large) %></td>
-      <td><%= render "characters/attributes", :character => @character %></td>
-      <td><%= render "characters/statistics", :character => @character %></td>
+      <td>
+        <%= render("characters/attributes", :character => @character) %>
+      </td>
+      <td>
+        <%= render("characters/statistics", :character => @character) %>
+      </td>
       <td class="rank_list">
         <% if titles = @character.titles.with_state(:visible) and titles.any? %>
           <% titles.each do |title| %>

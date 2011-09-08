@@ -18,10 +18,13 @@
   </div>
 <% end %>
 
-<%= builder.render "missions/fulfill/payouts", :mission => mission, :result => result %>
+<%= builder.render("missions/fulfill/payouts", 
+      :mission  => mission, 
+      :result   => result
+    ) %>
 
 <% if result.group_rank.try(:just_created?) %>
-  <%= builder.render "mission_groups/complete", :result => @result %>
+  <%= builder.render("mission_groups/complete", :result => @result) %>
 <% end %>
 
 <% if Setting.b(:mission_completion_dialog) %>

@@ -1,6 +1,6 @@
 <% result_for :boss_fight do |builder| %>
   <% if !@fight.new_record? %>
-    <%= builder.render "boss_fights/create/#{@fight.state}", :fight => @fight %>
+    <%= builder.render("boss_fights/create/#{@fight.state}", :fight => @fight) %>
 
     <%= builder.render("boss_fights/create/payouts", :fight => @fight) if @fight.lost_something? || @fight.received_something? %>
 

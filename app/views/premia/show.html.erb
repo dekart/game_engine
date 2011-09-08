@@ -1,10 +1,13 @@
 <%= title(t("items.index.title")) %>
 
-<%= render "inventories/buttons", :current => :shop %>
+<%= render("inventories/buttons", :current => :shop) %>
 
 <%= render('layouts/promo_block', :context => :premium) %>
 
-<%= render 'items/tabs', :groups => ItemGroup.with_state(:visible).visible_in_shop, :current => :premium %>
+<%= render('items/tabs', 
+      :groups   => ItemGroup.with_state(:visible).visible_in_shop, 
+      :current  => :premium
+    ) %>
 
 <div id="tab_services" class="hash_tab">
   <div class="current_vip_money">

@@ -9,7 +9,7 @@ module ChatsHelper
   
   def global_chat
     if Setting[:global_chat_enabled]
-      link_to '', chat_path, :id => 'global_chat_icon', :title => t("chats.global.tooltip") 
+      link_to('', chat_path, :id => 'global_chat_icon', :title => t("chats.global.tooltip"))
     end
   end
 end

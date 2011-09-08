@@ -24,7 +24,7 @@
   <% end %>
   
   <% if tutorial_visible? %>
-    <%= render "tutorials/block" %>
+    <%= render("tutorials/block") %>
   <% end %>
 
   <% maintenance_warning do |settings| %>
@@ -43,14 +43,14 @@
       
       <%= link_to("", root_path, :id => :logo) %>
 
-      <%= render "layouts/main_menu" %>
-      <%= render "layouts/character_overview" %>
-      <%= render "layouts/tip" if current_user.show_tips? %>
+      <%= render("layouts/main_menu") %>
+      <%= render("layouts/character_overview") %>
+      <%= render("layouts/tip") if current_user.show_tips? %>
     </div>
 
     <%= flash_block %>
 
-    <%= render "layouts/spinner" %>
+    <%= render("layouts/spinner") %>
 
     <% if result = yield(:result) and !result.blank? %>
       <%= content_tag(:div, result, :id => :result) %>
@@ -60,12 +60,12 @@
 
 
     <% if (current_boss_fights = current_character.boss_fights.with_state(:progress)).any? %>
-      <%= render "boss_fights/block", :fights => current_boss_fights %>
+      <%= render("boss_fights/block", :fights => current_boss_fights) %>
     <% end %>
     
     <%= yield %>
     
-    <%= render "layouts/footer" %>
+    <%= render("layouts/footer") %>
   </div>
 
   <div id="ajax" style="display:none;"></div>

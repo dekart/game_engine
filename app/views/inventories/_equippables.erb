@@ -13,9 +13,11 @@
           <ul class="carousel-container">
             <% inventories.each do |inventory| %>
               <% content_tag_for(:li, inventory, :equipment, 
-                  :'data-placements' => inventory.placements.join(','),
-                  :'data-equip' => equip_inventory_path(inventory)) do %>
-                <%= inventory_item_image(inventory, :small, :count => inventory.amount_available_for_equipment, 
+                  :'data-placements'  => inventory.placements.join(','),
+                  :'data-equip'       => equip_inventory_path(inventory)
+                ) do %>
+                <%= inventory_item_image(inventory, :small, 
+                      :count => inventory.amount_available_for_equipment, 
                       :tooltip => {
                         :position => {
                           :my => 'top center',

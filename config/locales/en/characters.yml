@@ -8,7 +8,7 @@ en:
         title: "Profile Overview"
     show:
       banned: "This character banned!"
-      title: "%{user} Profile"
+      title: "%{user}, Level %{level}"
       title_my: "My Profile: %{user}"
       buttons:
         upgrade: "Upgrade"

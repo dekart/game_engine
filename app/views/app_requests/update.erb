@@ -1,5 +1,5 @@
 <% if @app_request.accepted? %>
-  <%= render "app_requests/update/#{@app_request.type_name}", :app_request => @app_request %>
+  <%= render("app_requests/update/#{@app_request.type_name}", :app_request => @app_request) %>
   
   <% dom_ready do %>
     $('#<%= dom_id(@app_request) %> .ignore').empty();

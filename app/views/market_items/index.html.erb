@@ -1,6 +1,6 @@
 <%= title(t(".title")) %>
 
-<%= render "inventories/buttons", :current => :market %>
+<%= render("inventories/buttons", :current => :market) %>
 
 <% collection(@items) do %>
   <table id="market_item_list">
@@ -12,7 +12,7 @@
           <div class="description"><%= item.description %></div>
         </td>
         <td class="payouts">
-          <%= render "items/effects", :item => item %>
+          <%= render("items/effects", :item => item) %>
         </td>
         <td class="requirements">
           <h3><%= MarketItem.human_attribute_name("price") %></h3>

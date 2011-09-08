@@ -1,8 +1,8 @@
 <%= title(t(".title")) %>
 
-<%= render "relations/buttons", :current => :invite %>
+<%= render("relations/buttons", :current => :invite) %>
 
-<%= render "relations/note" %>
+<%= render("relations/note") %>
 
 <% if Setting.b(:friends_invite_enabled) %>
   <div id="users_to_invite" class="invitation_method">
