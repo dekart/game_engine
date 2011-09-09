@@ -60,7 +60,8 @@ class Character
       def available_in_future
         MonsterType.with_state(:visible).scoped(
           :conditions => ["level > ?", proxy_owner.level], 
-          :order => :level)
+          :order => :level
+        )
       end
       
       
