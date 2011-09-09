@@ -215,6 +215,8 @@ ActiveRecord::Schema.define(:version => 20110901111509) do
     t.integer  "killed_monsters_count",                          :default => 0
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
+    t.integer  "daily_bonus_step",                               :default => 1,                     :null => false
+    t.datetime "daily_bonus_obtained_at"
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
