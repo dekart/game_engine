@@ -6,22 +6,27 @@
 
 <% collection @achievement_types do %>
   <table id="achievement_type_list" class="data">
-    <tr>
-      <th></th>
-      <th><%= AchievementType.human_attribute_name("name") %></th>
-      <th><%= AchievementType.human_attribute_name("key") %></th>
-      <th><%= AchievementType.human_attribute_name("value") %></th>
-      <th><%= AchievementType.human_attribute_name("payouts") %></th>
-      <th><%= AchievementType.human_attribute_name("state") %></th>
-      <th></th>
-    </tr>
-
     <% @achievement_types.each do |achievement_type| %>
+      <% group_header(achievement_type.key) do |key| %>
+        <tr>
+          <th colspan="6" class="subheader">
+            <%= key %>
+          </th>
+        </tr>
+        <tr>
+          <th><%= AchievementType.human_attribute_name("value") %></th>
+          <th><%= AchievementType.human_attribute_name("image") %></th>
+          <th><%= AchievementType.human_attribute_name("name") %></th>
+          <th><%= AchievementType.human_attribute_name("payouts") %></th>
+          <th><%= AchievementType.human_attribute_name("state") %></th>
+          <th></th>
+        </tr>
+      <% end %>
+
       <tr>
+        <td class="value"><%= achievement_type.value %></div>
         <td class="image"><%= image_tag(achievement_type.image.url(:icon)) if achievement_type.image? %></td>
         <td class="name"><%= link_to(achievement_type.name, edit_admin_achievement_type_path(achievement_type)) %></td>
-        <td class="level"><%= achievement_type.key %></div>
-        <td class="level"><%= achievement_type.value %></div>
         <td class="payouts"><%= admin_payouts_preview(achievement_type.payouts) %></td>
         <td class="state"><%= admin_state(achievement_type) %></td>
         <td class="controls">

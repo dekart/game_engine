@@ -3,6 +3,8 @@ en:
     index:
       title: "My Achievements"
       
+      permissions: "We can make your achievements visible to your friends, but we'll need an additional permission from you to publish your in-game activities. You can revoce the permission any time from your Privacy Settings page."
+      
       status:
         achieved: 'Achieved!'
         locked: 'Locked'
@@ -11,6 +13,7 @@ en:
       buttons:
         collect: 'Collect Reward'
         publish: 'Brag About It'
+        permissions: 'Allow Publishing'
         
     update:
       message: "You've successfully collected your reward!"

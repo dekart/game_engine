@@ -5,7 +5,7 @@
 
 <% form.field_set do %>
   <%= form.text_field :name, :size => 40, :required => true %>
-  <%= form.text_area  :description, :cols => 80, :rows => 5 %>
+  <%= form.text_area  :description, :cols => 80, :rows => 5, :required => true %>
   <%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>
 <% end %>
 
