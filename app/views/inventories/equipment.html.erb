@@ -31,5 +31,8 @@
 </div>
 
 <% dom_ready do %>
-  Equipment.setup();
+  Equipment.setup({
+    additionalPlacementsSize: 6,
+    wrapAdditionalEquipment: 2
+  });
 <% end %>

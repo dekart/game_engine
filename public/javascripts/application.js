@@ -366,7 +366,35 @@ var AssignmentForm = {
 
 
 var Equipment = {
-  setup: function() {
+  options: {},
+  
+  wrapAdditionalEquipment: function($container, wrapFactor) {
+    var result = "";
+    var wrapped = [];
+    
+    var items = $container.find('li').toArray();
+    
+    for (var i = 0; i < items.length; i++) {
+      var $item = $(items[i]);
+      
+      wrapped.push($item.html());
+      
+      if (wrapped.length == wrapFactor || i == items.length - 1) {
+        result += '<li>' + wrapped.join("\n") + '</li>';
+        wrapped = []
+      }
+    }
+    
+    $container.html(result);
+  },
+  
+  setup: function(_options) {
+    if (_options) {
+      this.options = _options;
+      
+      if (this.options.wrapAdditionalEquipment)
+        this.options.additionalPlacementsSize /= this.options.wrapAdditionalEquipment;
+    }
     
     $("#equippables-tabs").tabs({
       show: function(event, ui) {
@@ -378,12 +406,17 @@ var Equipment = {
     });
     
     var $additionalPlacementsContainer = $("#placements .additional .carousel-container");
+    
+    if (this.options.wrapAdditionalEquipment) {
+      this.wrapAdditionalEquipment($additionalPlacementsContainer, this.options.wrapAdditionalEquipment);
+    }
+    
     $additionalPlacementsContainer.jcarousel({
       vertical: true,
-      visible: 3,
+      visible: this.options.additionalPlacementsSize,
       // TODO: hack. without it control button is active
       size: $additionalPlacementsContainer.find("li").length,
-      itemFallbackDimension: 3
+      itemFallbackDimension: this.options.additionalPlacementsSize
     });
     
     

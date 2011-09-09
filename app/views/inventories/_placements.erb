@@ -31,24 +31,26 @@
     <div class="container">
       <% inventory_additional_placements_tag do %>
         <ul class="carousel-container">
-          <% accumulate(inventories_equipment_additional, 2) do |accumulator| %>
+          <% inventories_equipment_additional.each_pair do |inventory, count| %>
             <li>
-              <% accumulator.each do |inventory, count| %>
-                <% inventory_additional_placement_tag(inventory) do %>
-                  <%= inventory_item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true, :count => count) -%>
-                  
-                  <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
-                        :url    => unequip_inventory_path(inventory, :placement => :additional),
-                        :update => :result,
-                        :html   => {
-                          :"data-click-once" => true,
-                          :class => :remove, 
-                          :title => t(".remove")
-                        }
-                      ) if character == current_character %>
-                <% end %>
+              <% inventory_additional_placement_tag(inventory) do %>
+                <%= inventory_item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true, :count => count) -%>
+                
+                <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
+                      :url    => unequip_inventory_path(inventory, :placement => :additional),
+                      :update => :result,
+                      :html   => {
+                        :"data-click-once" => true,
+                        :class => :remove, 
+                        :title => t(".remove")
+                      }
+                    ) if character == current_character %>
               <% end %>
             </li>
+          <% end %>
+          
+          <% inventory_available_additonal_slots_count.times do %>
+            <li><div class="additional-placeholder"></div></li>
           <% end %>
         </ul>
       <% end %>
