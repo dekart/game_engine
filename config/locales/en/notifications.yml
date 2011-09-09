@@ -55,3 +55,10 @@ en:
       text: "You've reached the #%{position} position in the %{name}. You've got the prize:"
       buttons:
         publish: "Brag About It"
+        
+    new_achievement:
+      title: 'New Achievement!'
+      text: "You've got the new achievement:"
+      buttons:
+        collect: 'Collect Reward'
+        publish: 'Brag About It'

@@ -21,6 +21,8 @@
             :update => :ajax,
             :html   => {:class => "upgrade button"}
           ) if current_character.points > 0 %>
+      
+      <%= link_to(button(:achievements), achievements_path, :class => 'achievements button') if Setting.b(:achievements_enabled) %>
     <% elsif @secured %>
       <%= link_to_remote(button(:attack),
             :url    => fights_path(:victim_id => @character),
