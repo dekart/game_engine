@@ -52,3 +52,25 @@
       
 #achievement_result
   background-image = !asset_icons_achievement
+  
+#new_achievement_notification
+  .achievement
+    .image
+      float: left
+      width: 110px
+      
+    .name
+      margin: 0 0 10px 120px
+      font-weight: bold
+      font-size: 16px
+
+    .description
+      margin-left: 120px
+  
+  .controls
+    .collect
+      +button(!asset_icons_basic_money)
+
+    .publish
+      +button(!asset_icons_publish)
+  

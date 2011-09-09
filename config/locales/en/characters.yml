@@ -12,6 +12,7 @@ en:
       title_my: "My Profile: %{user}"
       buttons:
         upgrade: "Upgrade"
+        achievements: 'Achievements'
         attack: "Attack!"
         hitlist: "Add to Hitlist"
       titles:

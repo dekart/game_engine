@@ -2,7 +2,9 @@ class Achievement < ActiveRecord::Base
   belongs_to :character
   belongs_to :achievement_type
   
-  after_create :clear_achievement_cache
+  after_create :clear_achievement_cache, :schedule_notification
+  
+  delegate :name, :description, :image, :image?, :to => :achievement_type
   
   def collect!
     if collected?
@@ -27,5 +29,9 @@ class Achievement < ActiveRecord::Base
   
   def clear_achievement_cache
     Rails.cache.delete(character.achievements.cache_key)
+  end
+  
+  def schedule_notification
+    character.notifications.schedule(:new_achievement, :achievement_id => id)
   end
 end
