@@ -21,10 +21,23 @@
       
       setup: function(){
         var max_height = block.pages().map(function(){
+          $(this).find('img').load(function(event) {
+            var new_height = $(this).parents('.page').outerHeight();
+            
+            if (new_height > max_height) {
+              max_height = new_height;
+              $(document).trigger('promo_block.resize');
+            }
+          });
+          
           return $(this).outerHeight();
         }).toArray().sort(function(i,j){ return i > j ? -1 : 1; })[0];
-
-        block.element.height(block.element.outerHeight() + max_height);
+        
+        $(document).bind('promo_block.resize', function(){
+          block.element.height(max_height);
+        });
+        
+        $(document).trigger('promo_block.resize');
         
         block.element.hover(block.pauseRotation, block.resumeRotation)
         
