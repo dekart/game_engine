@@ -7,6 +7,7 @@ en:
       title: "Title"
       item: "Item"
       notification/level_up: "Level Up"
+      achievement_type: 'Achievement'
     attributes:     
       character:
         level: "Level"
@@ -167,3 +168,9 @@ en:
               recently_attacked: 'You already attacked this monster recently'
             character:
               requirements_not_satisfied: "Some monster requirements are not satisfied"
+              
+        achievement:
+          attributes:
+            base:
+              already_collected: 'You already collected reward for this achievement'
+        

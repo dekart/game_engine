@@ -67,3 +67,8 @@ en:
       title: "I won the %{name}"
       description: "I've reached the #%{position} place in the %{name}"
       action_link: ""
+    achievement:
+      title: "I've just reached the \"%{name}\" achievement in %{app}!"
+      description: ""
+      action_link: ""
+      

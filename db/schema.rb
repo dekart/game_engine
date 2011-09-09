@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(:version => 20110901111509) do
   create_table "achievements", :force => true do |t|
     t.integer  "character_id"
     t.integer  "achievement_type_id"
+    t.boolean  "collected"
+    t.datetime "collected_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

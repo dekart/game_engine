@@ -57,6 +57,8 @@ class StoriesController < ApplicationController
         ),
         :canvas => true
       )
+    when 'achievement'
+      achievements_url(:canvas => true)
     else
       root_url(:canvas => true)
     end

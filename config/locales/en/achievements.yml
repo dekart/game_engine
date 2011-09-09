@@ -1,0 +1,20 @@
+en:
+  achievements:
+    index:
+      title: "My Achievements"
+      
+      status:
+        achieved: 'Achieved!'
+        locked: 'Locked'
+        in_progress: 'In Progress: %{current} of %{goal}'
+        
+      buttons:
+        collect: 'Collect Reward'
+        publish: 'Brag About It'
+        
+    update:
+      message: "You've successfully collected your reward!"
+      you_received: 'You received:'
+      
+      buttons:
+        publish: 'Brag About It'
