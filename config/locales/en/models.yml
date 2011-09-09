@@ -165,3 +165,5 @@ en:
           attributes:
             base:
               recently_attacked: 'You already attacked this monster recently'
+            character:
+              requirements_not_satisfied: "Some monster requirements are not satisfied"
