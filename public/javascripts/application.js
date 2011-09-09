@@ -377,8 +377,12 @@ var Equipment = {
       }
     });
     
-    $("#placements .additional .carousel-container").jcarousel({
+    var $additionalPlacementsContainer = $("#placements .additional .carousel-container");
+    $additionalPlacementsContainer.jcarousel({
       vertical: true,
+      visible: 3,
+      // TODO: hack. without it control button is active
+      size: $additionalPlacementsContainer.find("li").length,
       itemFallbackDimension: 3
     });
     
