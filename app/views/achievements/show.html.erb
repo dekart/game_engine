@@ -1,0 +1,19 @@
+<% content_for :html_header do %>
+  <%
+    {
+      'og:type'         => 'game.achievement',
+      
+      'og:url'          => @achievement_type.url,
+      
+      'og:title'        => @achievement_type.name,
+      'og:description'  => @achievement_type.description,
+      'og:image'        => @achievement_type.image? ? image_path(@achievement_type.image.url(:stream)) : asset_image_path(:achievement),
+      
+      'og:points'       => 1
+    }.each do |key, value|
+  %>
+    <%= tag(:meta, :property => key, :content => value) %>
+  <% end %>
+<% end %>
+
+Hey

@@ -1,5 +1,13 @@
 <%= title(t(".title")) %>
 
+<div class="note" id="achievement_permissions">
+  <p><%= t('.permissions') %></p>
+  
+  <%= link_to_function(button(:permissions), "AchievementList.requestPermissions()",
+        :class => 'permissions button'
+      ) %>
+</div>
+
 <div id="achievement_list">
   <% achievement_list(@achievement_types) do |type, achievement| %>
     <% div_for(type, :class => :clearfix) do %>
@@ -43,3 +51,7 @@
     <% end %>
   <% end %>
 </div>
+
+<% dom_ready do %>
+  AchievementList.setup();
+<% end %>

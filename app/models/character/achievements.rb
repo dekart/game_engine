@@ -39,7 +39,7 @@ class Character
       
       def achieve!(types)
         Array.wrap(types).each do |type|
-          create!(:achievement_type => type)
+          create!(:character => proxy_owner, :achievement_type => type)
         end
       end
     end

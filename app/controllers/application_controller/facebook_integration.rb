@@ -18,7 +18,7 @@ class ApplicationController
     end
 
     def ensure_canvas_connected_to_facebook
-      ensure_canvas_connected(:email)
+      ensure_canvas_connected(:email, :publish_actions)
     end
 
     def rescue_facebooker_oauth_exception(exception)

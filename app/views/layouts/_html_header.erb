@@ -18,3 +18,7 @@
     ) %>
 
 <title><%= t('app_name') %></title>
+
+<%= tag(:meta, :property => 'fb:app_id', :content => Facebooker2.app_id) %>
+
+<%= yield(:html_header) %>

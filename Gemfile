@@ -26,6 +26,7 @@ gem "crack",      "0.1.8"
 gem "hashie",     "0.4.0"
 gem "httparty",   "0.6.1"
 gem "ruby-hmac",  "0.4.0"
+gem "koala",      "1.2.0beta2"
 
 group :development do
   gem "capistrano",     "2.5.20"

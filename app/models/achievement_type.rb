@@ -21,6 +21,8 @@ class AchievementType < ActiveRecord::Base
     event :mark_deleted do
       transition(any - [:deleted] => :deleted)
     end
+    
+    after_transition :on => :publish, :do => :schedule_registration
   end
 
   has_attached_file :image,
@@ -34,7 +36,7 @@ class AchievementType < ActiveRecord::Base
 
   has_payouts :achieve, :visible => true
 
-  validates_presence_of     :name, :key, :value
+  validates_presence_of     :key, :value, :name, :description
   validates_numericality_of :value, :allow_blank => true
   
   class << self
@@ -52,5 +54,24 @@ class AchievementType < ActiveRecord::Base
   
   def key
     self[:key].try(:to_sym)
+  end
+  
+  def url
+    "#{ Facebooker2.callback_url('https://') }/achievements/#{ id }"
+  end
+  
+  def register_in_facebook!
+    client = Koala::Facebook::API.new(
+      Koala::Facebook::OAuth.new(Facebooker2.app_id, Facebooker2.secret).get_app_access_token
+    )
+    
+    client.put_connections(Facebooker2.app_id, :achievements, 
+      :achievement    => url, 
+      :display_order  => id
+    )
+  end
+  
+  def schedule_registration
+    Delayed::Job.enqueue Jobs::AchievementTypeRegistration.new(id)
   end
 end
