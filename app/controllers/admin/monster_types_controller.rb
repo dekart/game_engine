@@ -1,6 +1,6 @@
 class Admin::MonsterTypesController < Admin::BaseController
   def index
-    @types = MonsterType.without_state(:deleted)
+    @types = MonsterType.without_state(:deleted).scoped(:order => :level)
   end
 
   def new
