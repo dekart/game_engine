@@ -33,14 +33,16 @@ server {
     passenger_enabled on;
   }
 
-  location ~* /(stylesheets|javascripts|system) {
+  location ~* /(images|stylesheets|javascripts|fonts|system) {
     expires 1y;
+    add_header Cache-Control public;
 
     try_files $uri =404;
   }
 
   location ~* ^.+\.(jpg|jpeg|gif|png|css|bmp|ico|swf)$ {
     expires 1y;
+    add_header Cache-Control public;
 
     try_files $uri =404;
   }
