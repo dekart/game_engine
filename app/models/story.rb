@@ -65,7 +65,8 @@ class Story < ActiveRecord::Base
     'hit_listing_new'           => :hit_listing_id,
     'hit_listing_completed'     => :hit_listing_id,
     'collection_completed'      => :collection_id,
-    'collection_missing_items'  => :collection_id
+    'collection_missing_items'  => :collection_id,
+    'achievement'               => :achievement_type_id
   }
   
   def track_visit!(character, story_data = {})

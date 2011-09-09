@@ -1,0 +1,45 @@
+<%= title(t(".title")) %>
+
+<div id="achievement_list">
+  <% achievement_list(@achievement_types) do |type, achievement| %>
+    <% div_for(type, :class => :clearfix) do %>
+      <div class="image"><%= image_tag(type.image.url(:small)) if type.image? %></div>
+      
+      <div class="status">
+        <% if current_character.achievements.achieved?(type) %>
+          <div class="achieved"><%= t('.status.achieved') %></div>
+          
+          <div class="buttons">
+            <%= link_to_remote(button(:collect),
+                  :url => achievement_path(achievement),
+                  :method => :put,
+                  :update => :result,
+                  :html => {
+                    :'data-click-once' => true,
+                    :class => 'collect button'
+                  }
+                ) unless achievement.collected? %>
+
+            <%= link_to_function(button(:publish), stream_dialog(:achievement, type),
+                  :class => "publish button"
+                ) if Setting.b(:stream_dialog_enabled) %>
+          </div>
+        <% elsif current_character.achievements.in_progress?(type) %>
+          <div class="in_progress">
+            <%= percentage_bar(current_character.achievements.progress(type),
+                  :label => t('.status.in_progress', 
+                    :current  => current_character.achievements.value(type), 
+                    :goal     => type.value
+                  )
+                ) %>
+          </div>
+        <% else %>
+          <div class="locked"><%= t('.status.locked') %></div>
+        <% end %>
+      </div>
+      
+      <div class="name"><%= type.name %></div>
+      <div class="description"><%= type.description %></div>
+    <% end %>
+  <% end %>
+</div>

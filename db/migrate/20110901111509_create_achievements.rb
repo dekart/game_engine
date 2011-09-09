@@ -23,6 +23,9 @@ class CreateAchievements < ActiveRecord::Migration
       t.integer :character_id
       t.integer :achievement_type_id
       
+      t.boolean   :collected
+      t.datetime  :collected_at
+      
       t.timestamps
     end
   end

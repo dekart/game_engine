@@ -300,6 +300,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contests, :only => :show
   
   map.resource :chat
+  
+  map.resources :achievements, :only => [:index, :update]
 
   # Add your custom routes below this mark
   
