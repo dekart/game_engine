@@ -98,6 +98,14 @@ class Character
       def rank_for(mission)
         proxy_owner.mission_ranks.find_or_initialize_by_mission_id(mission.id)
       end
+      
+      def first_levels_completed?(group)
+        mission_ids = group.missions.with_state(:visible).all(:select => :id).map(&:id)    
+            
+        proxy_owner.mission_level_ranks.scoped(
+          :conditions => {:completed => true, :mission_id => mission_ids}
+        ).count('DISTINCT mission_level_ranks.mission_id') == mission_ids.size
+      end
     end
 
     module MissionGroupAssociationExtension

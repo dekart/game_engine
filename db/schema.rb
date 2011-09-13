@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
-  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -427,9 +426,9 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
+    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
-    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -797,7 +796,7 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",                         :default => ""
+    t.string   "tutorial_step",          :limit => 50,  :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end
