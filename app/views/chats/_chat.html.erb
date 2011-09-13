@@ -1,10 +1,17 @@
 <%= render('chats/message') %>
+<%= render('chats/online_characters') %>
 
 <div class="chat" id="<%= chat_dom_id(chat_id) %>" data-chat-id="<%= chat_id %>" data-template="chat_template">
   <h2><%= t(".title") %></h2>
   
   <div class="container">
-    <div class="messages">
+    <div class="messages-container">
+      <div class="messages">
+      </div>
+    </div>
+    <div class="online">
+      <h3><%= t(".online")%></h3>
+      <div class="content"></div>
     </div>
   </div>
   

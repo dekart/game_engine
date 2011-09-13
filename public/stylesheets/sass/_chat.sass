@@ -6,10 +6,16 @@
   .container
     padding: 4px
     height: 300px
-    overflow-y: scroll
     border = !chat_container_border
     
-    .messages
+    .messages-container
+      height: 300px
+      width: 590px
+      float: left
+      overflow-y: scroll
+      
+      .messages
+          
       .message
         padding: 2px
         border-bottom = !chat_message_border
@@ -32,6 +38,22 @@
           padding: 2px
           width: 300px
           float: left
+
+    .online
+      float: right
+      width: 140px
+      
+      .content
+        overflow-y: scroll
+        height: 275px
+        text-align: center
+        
+        .character
+          width: 120px
+          padding-bottom: 10px
+          
+        &.friend
+          background-color = !chat_friend_bg_color
         
   .send_message
     padding: 5px

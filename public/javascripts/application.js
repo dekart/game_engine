@@ -639,16 +639,36 @@ var Contest = {
       return lastMessageId;
     },
     
+    getCharacterId: function() {
+      return $("#chat_character_id").val();
+    },
+    
     loadMessages: function() {
       var $chat = $(this);
       
       Spinner.disable(function(){
-        $.getJSON('/chats/' + $chat.data('chat-id'), {last_message_id: $chat.chat('lastMessageId')}, function(messages) {
-          $chat.chat('appendMessages', messages);
-        
-          $(document).trigger('remote_content.received');
+        $.getJSON('/chats/' + $chat.data('chat-id'), {
+            chat_character_id: $("#chat_character_id").val(),
+            last_message_id: $chat.chat('lastMessageId')
+          }, 
+          function(data) {
+            $chat.chat('processData', data);
         });
       });
+    },
+    
+    refreshOnlineList: function(charactersOnline) {
+      var $chat = $(this);
+      var content = $("<div>");
+      
+      var template = $("#online-characters-template");
+      
+      for (var i = 0; i < charactersOnline.length; i++) {
+        var character = charactersOnline[i];
+        content.append(template.tmpl(character));
+      }
+      
+      $(this).find(".online .content").html(content.html());
     },
     
     appendMessages: function(messages) {
@@ -667,7 +687,7 @@ var Contest = {
             $messages.append(messageContent);
           }
         
-          $(this).find('.container').scrollTop($messages.outerHeight());
+          $(this).find('.messages-container').scrollTop($messages.outerHeight());
         }
       }
     },
@@ -690,8 +710,8 @@ var Contest = {
         $.post(
           $(this).attr('action'), 
           $.param(data), 
-          function(request) {
-            $chat.chat('appendMessages', request)
+          function(data) {
+            $chat.chat('processData', data);
           }, 
           'json'
         );
@@ -700,6 +720,15 @@ var Contest = {
         $chatText.val("");
         $chatText.trigger('change'); 
       }
+    },
+    
+    processData: function(data) {
+      var $chat = $(this);
+      
+      $chat.chat('appendMessages', data.messages);
+      $chat.chat('refreshOnlineList', data.characters_online);
+      
+      $(document).trigger('remote_content.received');
     }
   };
   

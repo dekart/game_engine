@@ -148,6 +148,7 @@ Setting[:notifications_send_gift_displayed_at] ||= Time.now + 24.hours
 
 Setting[:chat_max_messages] ||= 50
 Setting[:chat_update_time] ||= 10.seconds.to_i
+Setting[:chat_online_users_expiration_time] ||= 1.minute.to_i
 Setting[:chat_max_length] ||= 500
 Setting[:chat_enabled] ||= true
 Setting[:global_chat_enabled] ||= true

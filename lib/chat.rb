@@ -35,8 +35,57 @@ class Chat
       message
     end
     
+    def online_characters_for(chat_id, current_character_id)
+      current_character = Character.find(current_character_id)
+      
+      online_characters = []
+      
+      get_and_expire_online(chat_id).each do |character_id|
+        if character_id != current_character_id
+          character = Character.find(character_id)
+          
+          online_characters << {
+            :character_key  => character.key,
+            :name => (character.name.present? ? character.name : character.user.first_name),
+            :facebook_id    => character.facebook_id,
+            :level => character.level,
+            :friend => character.friend_relations.established?(current_character)
+          }
+        end
+      end
+      
+      online_characters
+    end
+    
+    def online_count(chat_id)
+      get_and_expire_online(chat_id).size
+    end
+    
     def key(chat_id)
       "chat_#{chat_id}"
     end
+    
+    def update_online_status(chat_id, character_id)
+      $redis.zadd(online_characters_key(chat_id), Time.now.to_i, character_id)
+    end
+    
+    protected
+      
+      def online_characters_key(chat_id)
+        "online_characters_chat_#{chat_id}"
+      end
+      
+      def get_and_expire_online(chat_id)
+        expire_online(chat_id)
+        
+        $redis.zrange(online_characters_key(chat_id), 0, -1)
+      end
+      
+      def expire_online(chat_id)
+        key = online_characters_key(chat_id)
+        expired_time = (Time.now - Setting.i(:chat_online_users_expiration_time)).to_i
+        
+        $redis.zremrangebyscore(key, 0, expired_time)
+      end
   end
 end
