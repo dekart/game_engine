@@ -68,6 +68,22 @@
       </td>
     </tr>
   </table>
+  
+  <% if Setting.b(:achievements_enabled) %>
+    <% collection(@character.achievements, :empty_set => false) do |achievements| %>
+      <div class="achievements clearfix">
+        <h2><%= t('.achievements') %></h2>
+        
+        <% achievements.each do |achievement| %>
+          <div class="achievement">
+            <div class="name"><%= achievement.name %></div>
+            
+            <div class="image"><%= image_tag(achievement.image.url(:small)) if achievement.image? %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 
   <% ItemGroup.find_each do |group| %>
     <% collection(@character.inventories.by_item_group(group), :empty_set => false) do |items| %>

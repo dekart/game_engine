@@ -18,6 +18,7 @@ en:
       titles:
         empty_set: "%{user} doesn't have any titles yet"
         empty_set_my: "You don't have any titles yet"
+      achievements: "Achievements"
       items:
         amount: "%{name} X&nbsp;%{amount}"
       properties:
