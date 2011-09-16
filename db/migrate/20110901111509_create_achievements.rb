@@ -28,10 +28,18 @@ class CreateAchievements < ActiveRecord::Migration
       
       t.timestamps
     end
+    
+    change_table :characters do |t|
+      t.integer :achievement_points, :default => 0
+    end
   end
 
   def self.down
     drop_table :achievement_types
     drop_table :achievements
+    
+    change_table :characters do |t|
+      t.remove :achievement_points
+    end
   end
 end
