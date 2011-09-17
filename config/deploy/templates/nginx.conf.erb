@@ -37,6 +37,10 @@ server {
   }
 
   location @passenger {
+    if ( $scheme = "https" ) {
+      passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
+    }
+
     passenger_enabled on;
   }
 
