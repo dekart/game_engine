@@ -5,6 +5,8 @@ set :branch,  "master"
 
 server "your_server", :web, :app, :db, :primary => true
 
+set :public_ip, "your_public_ip"
+
 set :user, "your_user_name"
 
 set :deploy_to, "/home/#{user}/#{application}"
