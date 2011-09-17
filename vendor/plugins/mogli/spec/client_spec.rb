@@ -12,28 +12,55 @@ describe Mogli::Client do
       client.access_token.should == "myaccesstoken"
     end
 
-    it "allows creating with a session_key" do
-      Time.stub!(:now).and_return(1270000000)
-      authenticator = Mogli::Authenticator.new('123456', 'secret', nil)
-      authenticator.should_receive(:get_access_token_for_session_key).
-                    with('mysessionkey').
-                    and_return({'access_token' => 'myaccesstoken',
-                                'expires' => 5000})
-      Mogli::Authenticator.should_receive(:new).and_return(authenticator)
-      client = Mogli::Client.create_from_session_key(
-                 'mysessionkey', '123456', 'secret')
-      client.access_token.should == 'myaccesstoken'
-      client.expiration.should == Time.at(1270005000)
-    end
-    
-    it "allows creating and authenticating as an application" do
-      authenticator = Mogli::Authenticator.new('123456', 'secret', nil)
-      authenticator.should_receive(:get_access_token_for_application).
-                    and_return("123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo")
-      Mogli::Authenticator.should_receive(:new).and_return(authenticator)
-      client = Mogli::Client.create_and_authenticate_as_application(
-                 'mysessionkey', '123456')
-      client.access_token.should == '123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo'
+    context "when exchanging a session key" do
+      it "allows creating" do
+        Time.stub!(:now).and_return(1270000000)
+        authenticator = Mogli::Authenticator.new('123456', 'secret', nil)
+        authenticator.should_receive(:get_access_token_for_session_key).
+                      with('mysessionkey').
+                      and_return({'access_token' => 'myaccesstoken',
+                                  'expires' => 5000})
+        Mogli::Authenticator.should_receive(:new).and_return(authenticator)
+        client = Mogli::Client.create_from_session_key(
+                   'mysessionkey', '123456', 'secret')
+        client.access_token.should == 'myaccesstoken'
+        client.expiration.should == Time.at(1270005000)
+      end
+
+      it "allows creating and authenticating as an application" do
+        authenticator = Mogli::Authenticator.new('123456', 'secret', nil)
+        authenticator.should_receive(:get_access_token_for_application).
+                      and_return("123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo")
+        Mogli::Authenticator.should_receive(:new).and_return(authenticator)
+        client = Mogli::Client.create_and_authenticate_as_application(
+                   'mysessionkey', '123456')
+        client.access_token.should == '123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo'
+      end
+
+      it "doesn't bail when the session key is stale" do
+        Time.stub!(:now).and_return(1270000000)
+        authenticator = Mogli::Authenticator.new('123456', 'secret', nil)
+        authenticator.should_receive(:get_access_token_for_session_key).
+                      with('mysessionkey').
+                      and_return(nil)
+        Mogli::Authenticator.should_receive(:new).and_return(authenticator)
+        lambda {
+          client = Mogli::Client.create_from_session_key(
+                     'mysessionkey', '123456', 'secret')
+        }.should_not raise_exception(NoMethodError, /nil/)
+      end
+
+      it "treats missing expiries as nonexpiring access tokens" do
+        Time.stub!(:now).and_return(1270000000)
+        authenticator = Mogli::Authenticator.new('123456', 'secret', nil)
+        authenticator.should_receive(:get_access_token_for_session_key).
+                      with('mysessionkey').
+                      and_return({'access_token' => 'myaccesstoken'})
+        Mogli::Authenticator.should_receive(:new).and_return(authenticator)
+        client = Mogli::Client.create_from_session_key(
+                   'mysessionkey', '123456', 'secret')
+        client.expiration.should == Time.at(Time.now + 10*365*24*60*60)
+      end
     end
 
     it "sets the access_token into the default params" do
@@ -70,6 +97,7 @@ describe Mogli::Client do
       client = Mogli::Client.create_from_code_and_authenticator("code",mock("auth",:access_token_url=>"url"))
       client.access_token.should == "114355055262088|2.6_s8VD_HRneAq3_tUEHJhA__.3600.1272920400-12451752|udZzWly7ptI7IMgX7KTdzaoDrhU."
       client.expiration.should_not be_nil
+      (client.expiration > Time.now).should be_true
     end
 
     it "create set the expiration into the future if there is on param" do
@@ -108,12 +136,29 @@ describe Mogli::Client do
         result = client.post("1/feed","Post",:message=>"message")
       end.should raise_error(Mogli::Client::OAuthAccessTokenException, "An access token is required to request this resource.")
     end
+    
+    it "parses http response errors" do
+      Mogli::Client.should_receive(:post).and_return(mock("httpresponse",:code=>500))
+      client = Mogli::Client.new("1234")
+      lambda do
+        result = client.post("1/feed","Post",:message=>"message")
+      end.should raise_error(Mogli::Client::HTTPException)
+      
+    end
 
     it "creates objects of the returned type" do
       Mogli::Client.should_receive(:post).and_return({:id=>123434})
       client = Mogli::Client.new("1234")
       result = client.post("1/feed","Post",:message=>"message")
       result.should == Mogli::Post.new(:id=>123434)
+    end
+    
+    it "creates object in a way that ignore invalid properties" do
+      Mogli::Client.stub!(:post).and_return({:id=>123434,:completely_invalid_property=>1})
+      client = Mogli::Client.new("1234")
+      lambda do
+        result = client.post("1/feed","Post",:message=>"message")
+      end.should_not raise_error
     end
 
     it "raises specific exception if Facebook-imposed posting limit exceeded for feed" do
@@ -166,6 +211,29 @@ describe Mogli::Client do
     end
   end
 
+  describe "fql multiqueries" do 
+    it "defaults to json" do
+      fql = {"query1"=>"select uid from user"}
+      Mogli::Client.should_receive(:post).with("https://api.facebook.com/method/fql.multiquery",:body=>{:format=>"json",:queries=>fql.to_json,:access_token=>"1234"})
+      client = Mogli::Client.new("1234")
+      client.fql_multiquery(fql)
+    end
+    
+    it "returns hash with query names and values matching desired classes" do
+      Mogli::Client.should_receive(:post).and_return([
+        {"name"=>"users", "fql_result_set"=>[{"uid"=>12451752, "first_name"=>"Mike", "last_name"=>"Mangino"}]},
+        {"name"=>"comment_user","fql_result_set"=>[{"fromid"=>12451752}]}
+      ])
+      
+      f = Mogli::FqlMultiquery.new(Mogli::Client.new("1234"))
+      f.add_named_query_for_class("comment_user", "SELECT fromid FROM comment WHERE post_id = 123343434", Mogli::Comment)
+      f.add_named_query_for_class("users", "SELECT uid, first_name, last_name FROM user WHERE uid IN (SELECT fromid FROM #comment_user)", Mogli::User)
+      results = f.results
+      results["users"].first.class.should == Mogli::User
+      results["comment_user"].first.class.should == Mogli::Comment
+    end
+  end
+  
   describe "result mapping" do
 
     let :user_data do
@@ -175,6 +243,14 @@ describe Mogli::Client do
     it "returns the raw value with no class specified" do
       client.map_data(user_data).should be_an_instance_of(Hash)
     end
+    
+    it "returns nil if we get a false response" do
+      client.map_data(false,Mogli::User).should be_false
+    end
+    it "returns false if we get a false response" do
+      client.map_to_class(false,Mogli::User).should be_false
+    end
+    
 
     it "returns the array if no class is specified and there is only a data parameter" do
       client.map_data({"data"=>[user_data,user_data]}).should be_kind_of(Array)

@@ -36,6 +36,7 @@ module Facebooker2
             :cookie   => true,
             :status   => true,
             :xfbml    => true,
+            :oauth    => true,
             :locale   => "en_US"
           )
 
@@ -47,6 +48,7 @@ module Facebooker2
               status : #{options[:status]}, // check login status
               cookie : #{options[:cookie]}, // enable cookies to allow the server to access the session
               xfbml  : #{options[:xfbml]},  // parse XFBML
+              oauth  : #{options[:oauth]},
               channelUrl : '#{ options[:channel_url] || 'null' }'
             });
           JAVASCRIPT
@@ -82,8 +84,8 @@ module Facebooker2
             if options[:cache_url]
               js << <<-CODE
                 <script type="text/javascript">
-                  if(typeof FB === 'undefined'){
-                    document.write(unescape(\"%3Cscript src='#{options[:cache_url]}' type='text/javascript'%3E%3C/script%3E\"));
+                  if(typeof FB == 'undefined'){
+                    document.write(unescape(\"%3Cscript src='#{options[:cache_url]}' type='text/javascript'%3E%3C/script%3E\"))
                   }
                 </script>
               CODE

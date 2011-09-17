@@ -134,6 +134,11 @@ module Mogli
       raise ArgumentError.new("You cannot fetch models without a populated id attribute") if id.nil?
       other = self.class.find(id,client)
       merge!(other) if other
+      self
+    end
+    
+    def ==(other)
+      other.is_a?(Model) and self.id == other.id
     end
     
     def merge!(other)
@@ -145,7 +150,7 @@ module Mogli
     end
 
     def self.find(id,client=nil, *fields)
-      body_args = fields.empty? ? {} : {:fields => fields}
+      body_args = fields.empty? ? {} : {:fields => fields.join(',')}
       (id, body_args[:ids] = "", id.join(',')) if id.is_a?(Array)
       (client||Mogli::Client.new).get_and_map(id,self, body_args)
     end

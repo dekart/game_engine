@@ -1,5 +1,4 @@
 module Mogli
-
 end
 
 require "httparty"
@@ -37,5 +36,7 @@ require "mogli/television"
 require "mogli/video"
 require "mogli/work"
 require "mogli/user"
+require "mogli/test_user"
 require "mogli/client"
 require "mogli/app_client"
+require "mogli/fql_multiquery"

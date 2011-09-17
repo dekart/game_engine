@@ -2,18 +2,21 @@
 require "mogli"
 
 module Facebooker2
+
+  @oauth2 = true
+  @cookie_prefix = 'fbsr_'
+
   class NotConfigured < Exception; end
 
 
   class << self
-    attr_accessor :api_key, :secret, :app_id, :canvas_page_name, :callback_url, :callback_domain
+    attr_accessor :api_key, :secret, :app_id, :canvas_page_name, :callback_domain, :cookie_prefix, :oauth2
   end
 
 
   def self.secret
     @secret || raise_unconfigured_exception
   end
-
 
   def self.app_id
     @app_id || raise_unconfigured_exception
@@ -27,19 +30,18 @@ module Facebooker2
     @callback_domain ? "#{ protocol || 'http://' }#{@callback_domain}" : @callback_url
   end
 
-
   def self.raise_unconfigured_exception
     raise NotConfigured.new("No configuration provided for Facebooker2. Either set the app_id and secret or call Facebooker2.load_facebooker_yaml in an initializer")
   end
-
 
   def self.configuration=(hash)
     self.api_key = hash[:api_key]
     self.secret = hash[:secret]
     self.app_id = hash[:app_id]
     self.canvas_page_name = hash[:canvas_page_name]
-    self.callback_url = hash[:callback_url]
     self.callback_domain = hash[:callback_domain]
+    self.cookie_prefix = 'fbsr_' unless hash[:oauth2].blank?
+    self.oauth2 = hash[:oauth2].blank? ? false : true
   end
 
 
