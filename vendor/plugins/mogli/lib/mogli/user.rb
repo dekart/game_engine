@@ -2,19 +2,25 @@ module Mogli
   class User < Profile
     set_search_type
 
-    define_properties :first_name, :last_name, :link, :about, :birthday, :gender,
-          :email, :website, :timezone, :updated_time, :verified, :political, 
-          :relationship_status, :locale, :religion, :quotes, :third_party_id
+    define_properties :username, :first_name, :last_name, :link, :about, :birthday, :gender,
+          :email, :website, :timezone, :updated_time, :verified, :political, :bio,
+          :relationship_status, :locale, :religion, :quotes, :third_party_id,
+          :inspirational_people, :sports, :with, :middle_name
 
     def self.recognize?(hash)
       !hash.has_key?("category")
     end
+
+    hash_populating_accessor :favorite_athletes, "Page"
+    hash_populating_accessor :favorite_teams, "Page"
 
     hash_populating_accessor :work, "Work"
     hash_populating_accessor :education, "Education"
 
     hash_populating_accessor :location, "Page"
     hash_populating_accessor :hometown, "Page"
+    hash_populating_accessor :languages, "Page"
+    hash_populating_accessor :significant_other, "User"
 
     has_association :activities, "Activity"
     has_association :friends, "User"
@@ -41,7 +47,6 @@ module Mogli
       :publish_stream,
       :create_event,
       :rsvp_event,
-      :sms,
       :offline_access,
       :publish_checkins,
 

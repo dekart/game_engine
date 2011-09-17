@@ -748,7 +748,7 @@ var Contest = {
 
 
 $(function(){
-  if(document.cookie.indexOf('access_token') == -1){
+  if(document.cookie.indexOf('fbsr_') == -1){
     $('a').live('click', function(){
       var href = $(this).attr('href') || '';
       

@@ -34,6 +34,12 @@ describe Mogli::Model do
     model.respond_to?(:id).should be_true
     model.respond_to?(:other_property).should be_true
   end
+  
+  it "warns when you try to set invalid properties" do
+    lambda do
+      TestModel.new(:invalid_property=>1,:id=>2)
+    end.should_not raise_error
+  end
 
   it "has a comments attribute which fetches when called" do
     mock_client.should_receive(:get_and_map).with("1/comments","Comment", {}).and_return("comments")
@@ -101,7 +107,7 @@ describe Mogli::Model do
 
   describe "Posting" do
     it "knows which properties are posted" do
-      TestModel.new(:id=>1,:other_property=>2).post_params.keys.should == TestModel.creation_keys
+      TestModel.new(:id=>1,:other_property=>2).post_params.keys.map(&:to_s).sort.should == TestModel.creation_keys.map(&:to_s).sort
     end
 
     it "includes regular hash properties for posting" do
@@ -118,6 +124,8 @@ describe Mogli::Model do
       actions_data = {:name => 'Action Name', :link => 'http://example.com'}
       actions_data_array = [actions_data]
       actions_data_array.stub!(:respond_to?).with(:to_json).and_return(false)
+      actions_data_array.stub!(:respond_to?).with(:code).and_return(false)
+      actions_data_array.stub!(:respond_to?).with(:parsed_response).and_return(false)
 
       new_model = TestModel.new(:id=>1,:other_property=>2,:actions => actions_data_array)
       new_model.post_params[:actions].should == "[{\"name\":\"Action Name\",\"link\":\"http://example.com\"}]"
@@ -135,6 +143,10 @@ describe Mogli::Model do
       Mogli::Client.should_receive(:get).with("https://graph.facebook.com/1", :query=>{}).and_return({:id=>1,:other_property=>2})
       model.fetch
       model.other_property.should == 2
+    end
+    it "fetches data and returns itself" do
+      Mogli::Client.stub!(:get).and_return({:id=>1,:other_property=>2})
+      model.fetch.should == model
     end
 
     it "raises an exception when there is no id" do

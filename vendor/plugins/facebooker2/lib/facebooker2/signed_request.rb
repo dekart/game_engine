@@ -13,7 +13,7 @@ module Facebooker2
       base64 = Base64.encode64(
         HMAC::SHA256.digest(Facebooker2.secret, encoded)
       )
-
+      
       #now make the url changes that facebook makes
       url_escaped_base64 = base64.gsub(/=*\n?$/, "").tr("+/", "-_")
 
