@@ -400,8 +400,8 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
-    t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
     t.integer  "original_vip_price"
+    t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
     t.integer  "hp_restore_rate",                        :default => 0
     t.integer  "sp_restore_rate",                        :default => 0
     t.integer  "ep_restore_rate",                        :default => 0
@@ -426,9 +426,9 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
-    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
+    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -796,7 +796,7 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",          :limit => 50,  :default => ""
+    t.string   "tutorial_step",                         :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end
