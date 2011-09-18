@@ -104,19 +104,6 @@ ActiveRecord::Schema.define(:version => 20110715093022) do
 
   add_index "bosses", ["mission_group_id"], :name => "index_bosses_on_mission_group_id"
 
-  create_table "character_contests", :force => true do |t|
-    t.integer  "character_id",                :null => false
-    t.integer  "contest_id",                  :null => false
-    t.integer  "points",       :default => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "character_contests", ["character_id", "contest_id"], :name => "index_character_contests_on_character_id_and_contest_id"
-  add_index "character_contests", ["character_id"], :name => "index_character_contests_on_character_id"
-  add_index "character_contests", ["contest_id"], :name => "index_character_contests_on_contest_id"
-  add_index "character_contests", ["points"], :name => "index_character_contests_on_points"
-
   create_table "character_titles", :force => true do |t|
     t.integer  "character_id", :null => false
     t.integer  "title_id",     :null => false
@@ -197,20 +184,6 @@ ActiveRecord::Schema.define(:version => 20110715093022) do
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
   add_index "characters", ["total_monsters_damage"], :name => "index_characters_on_total_monsters_damage"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
-
-  create_table "contests", :force => true do |t|
-    t.string   "name",               :limit => 100, :default => "", :null => false
-    t.text     "description",                                       :null => false
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.integer  "duration_time",                     :default => 7
-    t.string   "state",              :limit => 50,  :default => "", :null => false
-    t.string   "image_file_name",                   :default => "", :null => false
-    t.string   "image_content_type", :limit => 100, :default => "", :null => false
-    t.integer  "image_file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "credit_orders", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,  :null => false
