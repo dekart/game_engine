@@ -38,47 +38,55 @@ var Timer = {
     var element = $(id);
 
     if(element.length === 0){
-      this.timers[id].running = false;
+      this.stop(id);
 
       return;
     }
 
-    if(this.timers[id].value > 0){
-      element.text(Timer.format(this.timers[id].value));
-
-      this.timers[id].value = this.timers[id].value - 1;
-
-      this.rerun(id);
+    if(this.timers[id].fire_at > this.currentTime()){
+      element.text(Timer.format(this.timers[id].fire_at - this.currentTime()));
     } else {
       element.text('');
 
-      this.timers[id].running = false;
+      this.stop(id);
 
       if(this.timers[id].callback){
         this.timers[id].callback(element);
       }
     }
   },
-
-  rerun: function(id){
-    setTimeout(function() { Timer.update(id); }, 1000);
-    
-    this.timers[id].running = true;
+  
+  runCycle: function(id){
+    if(this.timers[id].cycle === null){
+      this.timers[id].cycle = Visibility.every(1000, function(){
+        Timer.update(id);
+      });
+    }
+  },
+  
+  stop: function(id){
+    if(this.timers[id].cycle !== null){
+      Visibility.stop(this.timers[id].cycle);
+      
+      this.timers[id].cycle = null;
+    }
+  },
+  
+  currentTime: function(){
+    return Math.round(new Date().getTime() / 1000);
   },
 
   start: function(id, value, callback){
     if(value === 0){ return; }
 
-    if(this.timers[id]){
-      this.timers[id].value = value;
-      this.timers[id].callback = callback;
-    } else {
-      this.timers[id] = {value: value, running: false, callback: callback};
+    if(typeof this.timers[id] === 'undefined'){
+      this.timers[id] = {cycle : null}
     }
-
-    if(!this.timers[id].running){
-      this.rerun(id);
-    }
+    
+    this.timers[id].fire_at = this.currentTime() + value;
+    this.timers[id].callback = callback;
+    
+    this.runCycle(id);
   }
 };
 
@@ -453,7 +461,7 @@ $(function(){
   });
 
   $(document).bind('facebook.ready', function(){
-    window.setInterval(updateCanvasSize, 100);
+    Visibility.every(100, updateCanvasSize);
   });
 
   $(document).bind('result.received', function(){
