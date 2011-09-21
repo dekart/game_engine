@@ -86,6 +86,8 @@ class Inventory < ActiveRecord::Base
   end
   
   def item_limit
+    return unless charge_money && purchase_amount > 0
+    
     errors.add(:item, :limit_exceeded) if item.left && (amount > item.left)
   end
 
