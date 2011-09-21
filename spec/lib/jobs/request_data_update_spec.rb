@@ -11,7 +11,7 @@ describe Jobs::RequestDataUpdate do
     end
     
     it 'should fetch request by passed ID' do
-      AppRequest::Base.should_receive(:find).with(123).and_return(@request)
+      AppRequest::Base.should_receive(:find_by_id).with(123).and_return(@request)
       
       @job.perform
     end
