@@ -101,12 +101,6 @@ class InventoriesController < ApplicationController
         redirect_from_iframe root_url(:canvas => true)
       elsif request.get?
         @inventories = current_character.inventories.find_all_by_item_id(data[:items])
-
-        if @inventories.empty?
-          flash[:error] = t('inventories.give.messages.no_items')
-
-          redirect_from_iframe root_url(:canvas => true)
-        end
       else
         @inventories = current_character.inventories.all(
           :conditions => {
