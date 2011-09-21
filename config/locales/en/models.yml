@@ -107,6 +107,8 @@ en:
             character:
               not_enough_basic_money: "You don't have enough gold to buy a %{name}."
               not_enough_vip_money: "You don't have enough Gems to buy a %{name}."
+            item:
+              limit_exceeded: "You're trying to purchase more items that are available in the stock!"
         property:
           attributes:
             character:
