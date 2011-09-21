@@ -7,7 +7,7 @@ server {
 
   rails_env <%= rails_env %>;
 
-  <% if File.file?(File.expand_path("../../certificates/#{ rails_env }.crt", __FILE__)) %>
+  <% if File.file?(File.expand_path("../config/deploy/certificates/#{ rails_env }.csr", __FILE__)) %>
     # SSL setup
     listen <%= public_ip %>:443 ssl;
 
