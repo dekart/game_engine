@@ -21,6 +21,8 @@ class Character
 
           self << klass.new(:data => data)
         end
+        
+        true
       end
     end
   end

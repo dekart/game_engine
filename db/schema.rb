@@ -9,7 +9,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110830055417) do
+ActiveRecord::Schema.define(:version => 20110901111509) do
+
+  create_table "achievement_types", :force => true do |t|
+    t.string   "name",               :limit => 250,  :default => "", :null => false
+    t.string   "description",        :limit => 1024, :default => "", :null => false
+    t.string   "image_file_name",                    :default => "", :null => false
+    t.string   "image_content_type", :limit => 100,  :default => "", :null => false
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "key"
+    t.integer  "value"
+    t.text     "payouts"
+    t.string   "state",              :limit => 50,   :default => "", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "achievements", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "achievement_type_id"
+    t.boolean  "collected"
+    t.datetime "collected_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -192,6 +216,8 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.integer  "killed_monsters_count",                          :default => 0
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
+    t.integer  "daily_bonus_step",                               :default => 1,                     :null => false
+    t.datetime "daily_bonus_obtained_at"
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"

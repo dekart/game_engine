@@ -21,6 +21,8 @@
             :update => :ajax,
             :html   => {:class => "upgrade button"}
           ) if current_character.points > 0 %>
+      
+      <%= link_to(button(:achievements), achievements_path, :class => 'achievements button') if Setting.b(:achievements_enabled) %>
     <% elsif @secured %>
       <%= link_to_remote(button(:attack),
             :url    => fights_path(:victim_id => @character),
@@ -66,6 +68,22 @@
       </td>
     </tr>
   </table>
+  
+  <% if Setting.b(:achievements_enabled) %>
+    <% collection(@character.achievements, :empty_set => false) do |achievements| %>
+      <div class="achievements clearfix">
+        <h2><%= t('.achievements') %></h2>
+        
+        <% achievements.each do |achievement| %>
+          <div class="achievement">
+            <div class="name"><%= achievement.name %></div>
+            
+            <div class="image"><%= image_tag(achievement.image.url(:small)) if achievement.image? %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 
   <% ItemGroup.find_each do |group| %>
     <% collection(@character.inventories.by_item_group(group), :empty_set => false) do |items| %>

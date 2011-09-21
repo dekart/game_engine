@@ -111,6 +111,14 @@ class User < ActiveRecord::Base
     !(access_token.blank? || access_token_expire_at.nil? || access_token_expire_at < Time.now)
   end
   
+  def permissions
+    if access_token_valid?
+      Koala::Facebook::API.new(access_token).get_connections(:me, :permissions).first.keys.map{|k| k.to_sym }
+    else
+      []
+    end
+  end
+  
   def schedule_social_data_update
     Delayed::Job.enqueue Jobs::UserDataUpdate.new([id]) if access_token_valid?
   end

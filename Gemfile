@@ -28,6 +28,8 @@ gem "httparty",   "0.6.1"
 gem "ruby-hmac",  "0.4.0"
 gem "multi_json", "1.0.3"
 
+gem "koala",      "1.2.0beta3"
+
 group :development do
   gem "capistrano",     "2.5.20"
   gem "capistrano-ext", '1.2.1'

@@ -190,6 +190,17 @@ module StreamHelper
   end
   
   
+  def achievement_story_options(type)
+    [
+      type.attributes,
+      {
+        :achievement_type_id => type.id
+      },
+      (type.image.url(:stream) if type.image?)
+    ]
+  end
+  
+  
   def prepare_story(story_alias, interpolation_options = {}, story_data = {}, image = nil)
     interpolation_options.reverse_merge!(
       :player_name => current_character.user.first_name,
