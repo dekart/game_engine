@@ -11,6 +11,10 @@
         <div class="name"><%= item.name %></div>
         
         <div class="image"><%= item_image(item, :medium, :tooltip => true) %></div>
+        
+        <div class="payouts">
+          <%= render "items/effects", :item => item %>
+        </div>
 
         <%= gift_send_button(item) %>
       </div>
