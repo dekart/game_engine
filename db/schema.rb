@@ -217,8 +217,7 @@ ActiveRecord::Schema.define(:version => 20110914044226) do
     t.integer  "killed_monsters_count",                          :default => 0
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
-    t.integer  "daily_bonus_step",                               :default => 1,                     :null => false
-    t.datetime "daily_bonus_obtained_at"
+    t.integer  "achievement_points",                             :default => 0
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
@@ -451,8 +450,8 @@ ActiveRecord::Schema.define(:version => 20110914044226) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
-    t.integer  "original_vip_price"
     t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
+    t.integer  "original_vip_price"
     t.integer  "hp_restore_rate",                        :default => 0
     t.integer  "sp_restore_rate",                        :default => 0
     t.integer  "ep_restore_rate",                        :default => 0
