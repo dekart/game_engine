@@ -66,5 +66,14 @@ namespace :app do
         puts 'Done!'
       end
     end
+    
+    desc "Generate SSL certificates for a specified environment"
+    task :certificate, :environment do |taks, options|
+      env = options.environment || "production"
+      
+      certificate_path = File.expand_path("../../../config/deploy/certificates/#{ env }", __FILE__)
+      
+      system("openssl req -new -newkey rsa:2048 -nodes -keyout #{ certificate_path }.key -out #{ certificate_path }.csr")
+    end
   end
 end

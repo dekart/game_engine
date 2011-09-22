@@ -36,6 +36,7 @@ class Inventory < ActiveRecord::Base
   attr_accessor :charge_money, :deposit_money, :basic_money, :vip_money
 
   validate :enough_character_money?
+  validate :item_limit
   validates_numericality_of :amount, :greater_than => 0
 
   before_save   :charge_or_deposit_character
@@ -87,6 +88,12 @@ class Inventory < ActiveRecord::Base
 
     errors.add(:character, :not_enough_basic_money, :name => name) if character.basic_money < basic_price * purchase_amount
     errors.add(:character, :not_enough_vip_money, :name => name) if character.vip_money < vip_price * purchase_amount
+  end
+  
+  def item_limit
+    return unless charge_money && purchase_amount > 0
+    
+    errors.add(:item, :limit_exceeded) if item.left && (amount > item.left)
   end
 
   def charge_or_deposit_character

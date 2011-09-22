@@ -1,6 +1,5 @@
 server {
   listen <%= public_ip %>:80;
-  listen <%= public_ip %>:443 ssl;
 
   server_name <%= facebooker_config[:callback_domain] %>;
 
@@ -8,12 +7,16 @@ server {
 
   rails_env <%= rails_env %>;
 
-  # SSL setup
-  ssl_protocols SSLv3 TLSv1;
-  ssl_certificate <%= current_path %>/config/deploy/certificates/<%= rails_env %>.csr;
-  ssl_certificate_key <%= current_path %>/config/deploy/certificates/<%= rails_env %>.key;
-  ssl_session_cache    shared:SSL:10m;
-  ssl_session_timeout  20m;
+  <% if File.file?(File.expand_path("../config/deploy/certificates/#{ rails_env }.csr", __FILE__)) %>
+    # SSL setup
+    listen <%= public_ip %>:443 ssl;
+
+    ssl_protocols SSLv3 TLSv1;
+    ssl_certificate <%= current_path %>/config/deploy/certificates/<%= rails_env %>.csr;
+    ssl_certificate_key <%= current_path %>/config/deploy/certificates/<%= rails_env %>.key;
+    ssl_session_cache    shared:SSL:10m;
+    ssl_session_timeout  20m;
+  <% end %>
 
   access_log off;
 
