@@ -547,6 +547,34 @@ var Contest = {
   }
 };
 
+var Exchange = {
+  setup: function() {
+    $("#exchangeables_tabs").tabs({
+      show: function(event, ui) {
+        $(ui.panel).find(".carousel-container").jcarousel({
+          visible: 8,
+          itemFallbackDimension: 8
+        }); 
+      }
+    });
+    
+    $("#exchangeables_tabs .inventory").click(function() {
+      $("#exchangeables_tabs .inventory.active").removeClass('active');
+      
+      $(this).addClass('active');
+      $(".exchangeables .button.add").removeClass("disabled");
+    });
+    
+    $("#new_exchange_offer").submit(function() {
+      $("#exchange_offer_item_id").val($("#exchangeables_tabs .inventory.active").data('id'));
+    });
+    
+    if ($("#exchangeables_tabs .inventory.active").length == 0) {
+      $(".exchangeables .button.add").addClass("disabled");
+    }
+  }
+};
+
 (function($){
   $.fn.missionGroups = function(current_group, show_limit){
     var $container = $(this);

@@ -7,6 +7,7 @@ en:
         collections: "Collections"
         shop: "Shop"
         market: "Market"
+        exchange: "Exchange"
     new:
       amount: "Amount To Purchase:"
       cannot_purchase: "You cannot purchase this item right now."
@@ -35,6 +36,10 @@ en:
           other: "You have some unequipped items and %{count_label} equipment slots available for use!"
         link: "Equip your character »"
     list:
+      empty_set:
+        text: "Your inventory is empty. You can buy new items in the %{shop}"
+        shop: "Shop"
+    list_inventory:
       owned: "Owned: %{amount}"
       equipped: "Equipped: %{amount}"
       listed_on_market: "Listed on Market"
@@ -44,9 +49,8 @@ en:
         sell_on_market: "Sell on Market"
         use: "Use"
         use_again: "%{use} Again"
-      empty_set:
-        text: "Your inventory is empty. You can buy new items in the %{shop}"
-        shop: "Shop"
+        exchange: "Exchange"
+        view_exchange: "View Exchange"
     use:
       you_received: "You received:"
       you_spent: "You spent:"

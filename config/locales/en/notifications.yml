@@ -55,3 +55,17 @@ en:
       text: "You've reached the #%{position} position in the %{name}. You've got the prize:"
       buttons:
         publish: "Brag About It"
+    
+    exchange_offer_created:
+      title: "New Offer"
+      text: "New exchange offer was created. You may accept this or view detailed information about exchange."
+      offer: "Offer item"
+      user: "User"
+      buttons:
+        view: "View"
+        
+    exchange_offer_accepted:
+      title: "Offer Accepted"
+      text: "Your exchange offer was accepted."
+      you_received: "You received"
+      you_lost: "You take"

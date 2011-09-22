@@ -167,3 +167,15 @@ en:
               recently_attacked: 'You already attacked this monster recently'
             character:
               requirements_not_satisfied: "Some monster requirements are not satisfied"
+              
+        exchange:
+          attributes:
+            amount:
+              not_enough: "Must be less or equal then your inventory amount"
+              
+        exchange_offer:
+          attributes:
+            amount:
+              not_enough: "Must be less or equal then your inventory amount"
+          
+          

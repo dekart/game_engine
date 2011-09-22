@@ -189,6 +189,20 @@ module StreamHelper
     ]
   end
   
+  def exchange_story_options(exchange)
+    [
+      {
+        :item_name => exchange.item.name, 
+        :amount => exchange.amount,
+        :text => exchange.text 
+      },
+      {
+        :exchange_id => exchange.id
+      },
+      asset_image_path(:stream_exchange)
+    ]
+  end
+  
   
   def prepare_story(story_alias, interpolation_options = {}, story_data = {}, image = nil)
     interpolation_options.reverse_merge!(

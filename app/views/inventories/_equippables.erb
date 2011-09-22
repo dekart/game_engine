@@ -1,14 +1,14 @@
 <div id="equippables">
-  <% if inventories_grouped_by_item_group.any? %>
+  <% if inventories_equippable_grouped_by_item_group.any? %>
   
     <div id="equippables-tabs">
       <ul>
-        <% inventories_grouped_by_item_group.each do |item_group, inventories| %>
+        <% inventories_equippable_grouped_by_item_group.each do |item_group, inventories| %>
           <li><%= link_to(item_group.name, "##{dom_id(item_group, :inventories)}") %></li>
         <% end %>
       </ul>
       
-      <% inventories_grouped_by_item_group.each do |item_group, inventories| %>
+      <% inventories_equippable_grouped_by_item_group.each do |item_group, inventories| %>
         <% div_for(item_group, :inventories) do %>
           <ul class="carousel-container">
             <% inventories.each do |inventory| %>

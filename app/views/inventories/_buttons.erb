@@ -28,4 +28,10 @@
           :class => "market button"
         ) %>
   <% end %>
+  
+  <% if current != :exchanges and Setting.b(:inventory_exchange_enabled) %>
+    <%= link_to(button(:exchange), exchanges_path,
+          :class => "exchange button"
+        ) %>
+  <% end %>
 </div>

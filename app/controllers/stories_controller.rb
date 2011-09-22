@@ -57,6 +57,10 @@ class StoriesController < ApplicationController
         ),
         :canvas => true
       )
+    when 'exchange'
+      exchange = Exchange.find(story_data[:exchange_id])
+      
+      exchange_url(exchange.key, :canvas => true)
     else
       root_url(:canvas => true)
     end

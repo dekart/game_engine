@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110830055417) do
+ActiveRecord::Schema.define(:version => 20110914044226) do
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
+  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -256,6 +257,30 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.datetime "updated_at"
   end
 
+  create_table "exchange_offers", :force => true do |t|
+    t.integer  "exchange_id",                 :null => false
+    t.integer  "item_id",                     :null => false
+    t.integer  "character_id",                :null => false
+    t.string   "state",                       :null => false
+    t.integer  "amount",       :default => 1, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "exchange_offers", ["exchange_id"], :name => "index_exchange_offers_on_exchange_id"
+
+  create_table "exchanges", :force => true do |t|
+    t.integer  "item_id",                     :null => false
+    t.integer  "character_id",                :null => false
+    t.string   "state",                       :null => false
+    t.integer  "amount",       :default => 1, :null => false
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "exchanges", ["character_id"], :name => "index_exchanges_on_character_id"
+
   create_table "facebook_templates", :force => true do |t|
     t.string "template_name", :null => false
     t.string "content_hash",  :null => false
@@ -405,6 +430,7 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.integer  "hp_restore_rate",                        :default => 0
     t.integer  "sp_restore_rate",                        :default => 0
     t.integer  "ep_restore_rate",                        :default => 0
+    t.boolean  "exchangeable",                           :default => true
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
@@ -426,9 +452,9 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
-    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
+    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -796,7 +822,7 @@ ActiveRecord::Schema.define(:version => 20110830055417) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",          :limit => 50,  :default => ""
+    t.string   "tutorial_step",                         :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end

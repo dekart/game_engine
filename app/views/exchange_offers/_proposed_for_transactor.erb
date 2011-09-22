@@ -1,0 +1,34 @@
+<div class="proposed_for_transactor">
+  <h2><%= t(".title") %></h2>
+  
+  <% collection(exchange.exchange_offers) do %>
+    <table class="offers" cellpadding="0" cellspacing="0">
+      <tr>
+        <th></th>
+        <th><%= t(".name") %></th>
+        <th><%= t(".item") %></th>
+        <th><%= t(".amount") %></th>
+        <th></th>
+      </tr>
+      
+      <% exchange.exchange_offers.each do |offer| %>
+        <% content_tag_for(:tr, offer) do %>
+          <td class="picture"><%= character_picture_link(offer.character) %></td>
+          <td class="name"><%= character_name_link(offer.character) %></td>
+          <td class="image"><%= item_image(offer.item, :small, :tooltip => true) %></td>
+          <td class="amount"><%= offer.amount %></td>
+          <td class="buttons">
+            <%= link_to_remote(button(:accept), 
+                  :url => accept_exchange_offer_path(offer),
+                  :update => :ajax,
+                  :confirm => t(".buttons.accept_confirm"),
+                  :html => {
+                    :class => 'button accept'
+                  }
+                ) %>
+          </td>
+        <% end %>
+      <% end %>
+    </table>
+  <% end %>
+</div>

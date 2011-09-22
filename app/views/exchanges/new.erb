@@ -1,0 +1,26 @@
+<% dialog :id => :exchange_inventories do %>
+  <h2><%= t(".title") %></h2>
+  
+  <% remote_form_for(@exchange, :update => :ajax) do |f| %>
+    <div class="item field">
+      <div class="label"><label><%= t(".item") %></label></div>
+      
+      <div>
+        <div class="item_image">
+          <%= item_image(@exchange.item, :small) %>
+        </div>
+        
+        <div class="name"><%= @exchange.item.name %></div>
+      </div>
+    </div>
+    
+    <%= f.hidden_field :item_id %>
+    
+    <%= f.text_field :amount %>
+    <%= f.text_area :text, :label => t(".labels.text") %>
+    
+    <%= link_to_function(button(:publish), "$(this).parents('form').submit()", 
+          :class => 'publish button', :'data-click-once' => true
+        ) %>
+  <% end %>
+<% end %>

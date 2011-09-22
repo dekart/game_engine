@@ -1,0 +1,31 @@
+<% if exchange.exchange_offers.created_by(current_character).any? %>
+  <div class="proposed_by_participant">
+    <h2><%= t(".title") %></h2>
+        
+      <table class="offers" cellpadding="0" cellspacing="0">
+        <tr>
+          <th><%= t(".item") %></th>
+          <th><%= t(".amount") %></th>
+          <th></th>
+        </tr>
+        
+        <% exchange.exchange_offers.created_by(current_character).each do |offer| %>
+          <% content_tag_for(:tr, offer) do %>
+            <td class="image"><%= item_image(offer.item, :small, :tooltip => true) %></td>
+            <td class="amount"><%= offer.amount %></td>
+            <td class="buttons">
+              <%= link_to_remote(button(:remove), 
+                    :url => exchange_offer_path(offer),
+                    :method => :delete,
+                    :update => :ajax,
+                    :confirm => t(".buttons.remove_confirm"),
+                    :html => {
+                      :class => 'button remove'
+                    }
+                  ) %>
+            </td>
+          <% end %>
+        <% end %>
+      </table>
+  </div>
+<% end %>

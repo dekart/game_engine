@@ -1,0 +1,21 @@
+<% dialog :id => :exchange_offer_accepted do |d| %>
+  <h2><%= t(".title") %></h2>
+
+  <p class="text">
+    <%= t(".text") %>
+  </p>
+  
+  <div class="payouts received">
+    <h3><%= t(".you_received") %></h3>
+    
+    <%= render('payouts/preview/item', :payout => notification.exchange.payout) %>
+  </div>
+  
+  <div class="payouts lost">
+    <h3><%= t(".you_lost") %></h3>
+
+    <%= render('payouts/preview/item', :payout => notification.exchange_offer.payout) %>
+  </div>
+  
+  <%= render("notifications/disable", :notification => notification) %>
+<% end %>

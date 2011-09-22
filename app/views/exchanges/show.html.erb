@@ -1,0 +1,46 @@
+<%= title(t(".title")) %>
+
+<%= render("inventories/buttons", :current => :exchange) %>
+
+<% if @exchange.transacted? %>
+  <%= render("transacted") %>
+<% elsif @exchange.invalid? %>
+  <p><%= t(".invalid") %></p>
+<% else %>
+
+  <div id="show_exchange">
+    <h2><%= t(".offer_title") %></h2>
+    <table class="exchange_info" cellpadding="0" cellspacing="0">
+      <tr>
+        <th><%= t(".item") %></th>
+        <th><%= t(".amount") %></th>
+        <th><%= t(".text") %></th>
+      </tr>
+      <tr>
+        <td class="image"><%= item_image(@exchange.item, :small, :tooltip => true) %></td>
+        <td class="amount"><%= @exchange.amount %></td>
+        <td class="text"><%= @exchange.text %></td>
+        
+        <% if current_character == @exchange.character %>
+          <td class="buttons">
+            <%= link_to_function(button(:publish), stream_dialog(:exchange, @exchange), :class => 'button publish') %>
+            
+            <%= link_to(button(:remove), exchange_path(@exchange, :stored_signed_request => facebook_signed_request), 
+                  :method => :delete,
+                  :confirm => t(".buttons.remove_confirm"),
+                  :class => 'button delete'
+                ) %>
+          </td>
+        <% end %>
+      </tr>
+    </table>
+    
+    <% if current_character == @exchange.character %>
+      <%= render('exchange_offers/proposed_for_transactor', :exchange => @exchange) %>
+    <% else %>
+      <%= render('exchange_offers/proposed_by_participant', :exchange => @exchange) %>
+      
+      <%= render('exchange_offers/exchangeables', :exchange => @exchange) %>
+    <% end %>
+  </div>
+<% end %>

@@ -2,7 +2,7 @@ class Inventory < ActiveRecord::Base
   belongs_to  :character
   belongs_to  :item
   has_one     :market_item, :dependent => :destroy
-
+  
   named_scope :by_item_group, Proc.new{|group|
     {
       :conditions => ["items.item_group_id = ?", group.id],
@@ -14,6 +14,10 @@ class Inventory < ActiveRecord::Base
   named_scope :equippable,
     :include => :item,
     :conditions => "items.equippable = 1 AND (inventories.equipped < inventories.amount)"
+  
+  named_scope :exchangeable,
+    :include => :item,
+    :conditions => "items.exchangeable = 1"
 
   delegate(
     *(
@@ -35,8 +39,8 @@ class Inventory < ActiveRecord::Base
   validates_numericality_of :amount, :greater_than => 0
 
   before_save   :charge_or_deposit_character
-  after_update  :check_market_items
-  after_destroy :deposit_character
+  after_update  :check_market_items, :check_exchanges!
+  after_destroy :deposit_character, :check_exchanges!
 
   def sell_price
     Setting.p(:inventory_sell_price, item.basic_price).ceil
@@ -114,5 +118,10 @@ class Inventory < ActiveRecord::Base
     if market_item and market_item.amount > amount
       market_item.destroy unless market_item.destroyed?
     end
+  end
+  
+  def check_exchanges!
+    Exchange.invalidate_created_by_inventory!(self)
+    ExchangeOffer.destroy_created_by_inventory(self)
   end
 end

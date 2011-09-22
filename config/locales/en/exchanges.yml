@@ -1,0 +1,79 @@
+en:
+  exchanges:
+    show:
+      title: "Exchange"
+      offer_title: "Offer"
+      item: "Item"
+      amount: "Amount"
+      text: "Text of the offer"
+      invalid: "Sorry, but this exchange was expired"
+      buttons:
+        publish: "Publish"
+        remove: "Remove"
+        remove_confirm: "Are you shure to remove this exchange?"
+    new:
+      title: "Exchange"
+      item: "Item"
+      text: "What do you want to get back?"
+      labels:
+        text: "What you want to get for it"
+      buttons:
+        publish: "Publish"
+      
+    create:
+      title: "Exchange was created"
+      text: "You put an item on the exchange. You will be notified when someone ask you to exchange. Tell your friends about it"
+      buttons:
+        publish: "Publish"
+        view: "View"
+        
+    index:
+      title: "Exchanges"
+      my_exchanges: "My Exchanges"
+      participant_exchanges: "My Exchange Offers"
+      item: "Item"
+      amount: "Amount"
+      text: "Text"
+      buttons:                        
+        view: "View"
+        delete: "Delete"
+        delete_confirm: "Are you shure to delete this exchange?"
+        
+    transacted:
+      text: "This exchange was transacted"
+        
+  exchange_offers:
+    accept:
+      title: "Offer Accepted"
+      text: "Exchange offer was accepted."
+      you_received: "You received:"
+      you_lost: "You take:"
+      errors:
+        exchange_creator: "You don't have enough item amount to make exchange. Increase exchange item amount and try again"
+        exchange_offer_creator: "Person, which you want to make exchange don't have enough item amount. Choose another person"
+      
+    proposed_for_transactor:
+      title: "Exchange Offers"
+      item: "Item"
+      amount: "Amount"
+      name: "Character"
+      buttons:
+        accept: "Accept"
+        accept_confirm: "Are you shure to accept this offer?"
+        
+    proposed_by_participant:
+      title: "My Offers"
+      item: "Item"
+      amount: "Amount"
+      buttons:
+        remove: "Remove"
+        remove_confirm: "Are you shure to remove this offer?"
+        
+    exchangeables:
+      owned: "Owned: %{amount}"
+      equipped: "Equipped: %{amount}"
+      make_offer: "Make Offer"
+      exchangeables_help: "Choose item, which you want to exchange:"
+      empty_inventory: "You can't offer something to this user, because your inventory is empty."
+      buttons:
+        add: "Add"

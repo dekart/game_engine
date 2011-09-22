@@ -292,6 +292,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :contests, :only => :show
   
+  map.resources :exchanges
+  
+  map.resources :exchange_offers, 
+    :member => {
+      :accept => :post
+    }
+  
   map.resource :chat
 
   # Add your custom routes below this mark

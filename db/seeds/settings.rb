@@ -70,6 +70,7 @@ Setting[:fight_victim_hp_decrease_if_character_was_online] ||= 1
 Setting[:rating_show_limit] ||= 20
 
 Setting[:inventory_sell_price] ||= 50
+Setting[:inventory_exchange_enabled] ||= false
 
 Setting[:item_show_basic] ||= 10
 Setting[:item_show_special] ||= 3

@@ -67,3 +67,7 @@ en:
       title: "I won the %{name}"
       description: "I've reached the #%{position} place in the %{name}"
       action_link: ""
+    exchange:
+      title: "I want to exchange item with you"
+      description: "I want to exchange %{amount} '%{item_name}' on %{text}"
+      action_link: "Exchange »"

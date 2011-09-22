@@ -21,14 +21,14 @@ module InventoriesHelper
 
   def inventory_use_button(inventory)
     button(
-      inventory.use_button_label.blank? ? t('inventories.list.buttons.use') : inventory.use_button_label
+      inventory.use_button_label.blank? ? t('inventories.list_inventory.buttons.use') : inventory.use_button_label
     )
   end
 
   def inventory_use_again_button(inventory)
     button(
-      t('inventories.list.buttons.use_again',
-        :use => inventory.use_button_label.blank? ? t('inventories.list.buttons.use') : inventory.use_button_label
+      t('inventories.list_inventory.buttons.use_again',
+        :use => inventory.use_button_label.blank? ? t('inventories.list_inventory.buttons.use') : inventory.use_button_label
       )
     )
   end
@@ -59,9 +59,19 @@ module InventoriesHelper
     content_tag(:div, result << item_image(inventory, format, options), :class => 'inventory_image')
   end
   
-  def inventories_grouped_by_item_group
-    @inventories_grouped_by_item_group ||= begin
-      current_character.inventories.equippable.all.group_by{|i| i.item_group }.sort{|a, b| a.first.position <=> b.first.position }
+  def inventories_grouped_by_item_group(inventories)
+    inventories.group_by{|i| i.item_group}.sort{|a, b| a.first.position <=> b.first.position }
+  end
+  
+  def inventories_exchangeable_grouped_by_item_group
+    @inventories_exchangeable_grouped_by_item_group ||= begin
+      inventories_grouped_by_item_group(current_character.inventories.exchangeable.all)
+    end
+  end
+  
+  def inventories_equippable_grouped_by_item_group
+    @inventories_equippable_grouped_by_item_group ||= begin
+      inventories_grouped_by_item_group(current_character.inventories.equippable.all)
     end
   end
   

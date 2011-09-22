@@ -1,0 +1,3 @@
+<% dom_ready do %>
+  $("#show_exchange .proposed_by_participant").replaceWith("<%= escape_javascript(render('proposed_by_participant', :exchange => @exchange_offer.exchange)) %>");
+<% end %>
