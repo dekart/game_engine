@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(:version => 20110914044226) do
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
-  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -450,8 +449,8 @@ ActiveRecord::Schema.define(:version => 20110914044226) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
-    t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
     t.integer  "original_vip_price"
+    t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
     t.integer  "hp_restore_rate",                        :default => 0
     t.integer  "sp_restore_rate",                        :default => 0
     t.integer  "ep_restore_rate",                        :default => 0

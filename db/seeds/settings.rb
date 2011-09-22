@@ -169,4 +169,8 @@ Setting[:stream_dialog_enabled] ||= true
 
 Setting[:achievements_enabled] ||= true
 
+Setting[:app_toolbar] ||= ''
+Setting[:app_toolbar_applifier_id] ||= ''
+Setting[:app_toolbar_minimum_level] ||= 1
+
 # Put your custom settings below this line

@@ -1,0 +1,28 @@
+<!-- Applifier cross-promo code begin -->
+<div id="applifier_bar"></div>
+
+<script type="text/javascript">
+(function() {
+  window.applifierAsyncInit = function() {
+    var bar = new Applifier.Bar({
+      applicationId: <%= Setting.i(:app_toolbar_applifier_id) %>,
+      thirdPartyId: "<%= escape_javascript(current_user.anonymous_id.to_s) %>",
+      barType: "bar",
+      barContainer: "#applifier_bar"
+    });
+  };
+
+  var d = document, w = window;
+  function l() {
+    var a = d.createElement('script'); a.type = 'text/javascript'; a.async = true;
+    a.src = (('https:' == d.location.protocol) ? 'https://secure' : 'http://cdn') + '.applifier.com/applifier.min.js';
+    var s = d.getElementsByTagName('script')[0]; s.parentNode.insertBefore(a, s);
+  }
+  if (w.attachEvent) {
+    w.attachEvent('onload', l);
+  } else {
+    w.addEventListener('load', l, false);
+  }
+})();
+</script>
+<!-- Applifier cross-promo code end -->
