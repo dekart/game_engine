@@ -575,6 +575,44 @@ var Exchange = {
   }
 };
 
+var AchievementList = {
+  setup: function(){
+    FB.getLoginStatus(function(response) {
+      if (response.authResponse) {
+        // logged in and connected user, someone you know
+        FB.api('/me/permissions', function(r){
+          if(r.data[0].publish_actions != 1){
+            AchievementList.showPermissionNote();
+          }
+        });
+      } else {
+        // no user session available, someone you dont know
+      }
+    });
+  },
+  
+  requestPermissions: function(){
+    FB.login(
+      function(response){
+        if(response.status == 'connected'){
+          AchievementList.hidePermissionNote();
+        }
+      }, 
+      {
+        scope: 'publish_actions'
+      }
+    );
+  },
+  
+  showPermissionNote: function(){
+    $('#achievement_permissions').show();
+  },
+  
+  hidePermissionNote: function(){
+    $('#achievement_permissions').hide();
+  }
+};
+
 (function($){
   $.fn.missionGroups = function(current_group, show_limit){
     var $container = $(this);
@@ -776,7 +814,7 @@ var Exchange = {
 
 
 $(function(){
-  if(document.cookie.indexOf('access_token') == -1){
+  if(document.cookie.indexOf('fbsr_') == -1){
     $('a').live('click', function(){
       var href = $(this).attr('href') || '';
       

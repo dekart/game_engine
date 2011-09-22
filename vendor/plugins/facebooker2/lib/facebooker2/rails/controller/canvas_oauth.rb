@@ -34,7 +34,7 @@ module Facebooker2
               return_code = facebook_url_encryptor.encrypt(
                 url_for(params_without_facebook_data.merge(:canvas => false, :only_path => true))
               )
-
+              
               url = 'https://graph.facebook.com/oauth/authorize?client_id=%s&redirect_uri=%s&scope=%s' % [
                 Facebooker2.app_id,
                 facebook_oauth_connect_url(:fb_return_to => CGI.escape(return_code)),

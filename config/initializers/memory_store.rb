@@ -1,0 +1,1 @@
+$memory_store = ActiveSupport::Cache::MemoryStoreWithExpire.new

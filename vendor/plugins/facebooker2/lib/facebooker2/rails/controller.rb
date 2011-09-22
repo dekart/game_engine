@@ -21,14 +21,16 @@ module Facebooker2
 
 
       def current_facebook_user
-        fetch_client_and_user
+        fetch_client_and_user_from_signed_request
+        oauth2_fetch_client_and_user
 
         @_current_facebook_user
       end
 
 
       def current_facebook_client
-        fetch_client_and_user
+        fetch_client_and_user_from_signed_request
+        oauth2_fetch_client_and_user
 
         @_current_facebook_client
       end
@@ -100,7 +102,7 @@ module Facebooker2
       end
       
       def fb_cookie_name
-        "fbs_#{Facebooker2.app_id}"
+        "fbsr_#{ Facebooker2.app_id.to_s }"
       end
       
       # check if the expected signature matches the one from facebook
@@ -144,7 +146,15 @@ module Facebooker2
 
 
       def fb_load_facebook_params
-        fb_decode_signed_request(facebook_signed_request)
+        signed_request = facebook_signed_request
+
+        return {} if signed_request.blank?
+
+        sig, encoded_json = signed_request.split(".")
+
+        return {} unless fb_signed_request_sig_valid?(sig, encoded_json)
+
+        ActiveSupport::JSON.decode(fb_signed_request_json(encoded_json)).with_indifferent_access
       end
 
 
@@ -269,6 +279,33 @@ module Facebooker2
           </head></html>
         HTML
       end
+
+
+      ### Oauth2
+      def oauth2_fetch_client_and_user
+        return if @_fb_user_fetched
+        oauth2_fetch_client_and_user_from_cookie if @_current_facebook_client.nil?
+        @_fb_user_fetched = true
+      end
+
+      def oauth2_fetch_client_and_user_from_cookie
+        return unless fb_cookie?
+        sig,payload = fb_cookie.split('.')
+        return unless fb_signed_request_sig_valid?(sig, payload)
+        data = JSON.parse(base64_url_decode(payload))
+        authenticator = Mogli::Authenticator.new(Facebooker2.app_id, Facebooker2.secret, nil)
+        client = Mogli::Client.create_from_code_and_authenticator(data["code"], authenticator)
+        user = Mogli::User.new(:id=>data["user_id"])
+        fb_sign_in_user_and_client(user, client)
+      end
+
+
+      def base64_url_decode(encoded)
+        chars_to_add = 4-(encoded.size % 4)
+        encoded += ("=" * chars_to_add)
+        Base64.decode64(encoded.tr("-_", "+/"))
+      end
+
     end
   end
 end

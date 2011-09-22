@@ -61,6 +61,8 @@ class StoriesController < ApplicationController
       exchange = Exchange.find(story_data[:exchange_id])
       
       exchange_url(exchange.key, :canvas => true)
+    when 'achievement'
+      achievements_url(:canvas => true)
     else
       root_url(:canvas => true)
     end

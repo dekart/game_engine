@@ -36,6 +36,7 @@ module Facebooker2
             :cookie   => true,
             :status   => true,
             :xfbml    => true,
+            :oauth    => true,
             :locale   => "en_US"
           )
 
@@ -47,9 +48,11 @@ module Facebooker2
               status : #{options[:status]}, // check login status
               cookie : #{options[:cookie]}, // enable cookies to allow the server to access the session
               xfbml  : #{options[:xfbml]},  // parse XFBML
+              oauth  : #{options[:oauth]},
               channelUrl : '#{ options[:channel_url] || 'null' }'
             });
           JAVASCRIPT
+          init_js = "FB._https = true; #{ init_js }" if request.ssl?
           
           js_url = "connect.facebook.net/#{options[:locale]}/all.js"
           js_url << "?#{Time.now.change(:min => 0, :sec => 0, :usec => 0).to_i}" if options[:weak_cache]

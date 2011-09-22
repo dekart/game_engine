@@ -7,6 +7,7 @@ en:
       title: "Title"
       item: "Item"
       notification/level_up: "Level Up"
+      achievement_type: 'Achievement'
     attributes:     
       character:
         level: "Level"
@@ -178,4 +179,7 @@ en:
             amount:
               not_enough: "Must be less or equal then your inventory amount"
           
-          
+        achievement:
+          attributes:
+            base:
+              already_collected: 'You already collected reward for this achievement'

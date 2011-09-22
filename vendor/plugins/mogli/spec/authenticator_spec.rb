@@ -1,6 +1,5 @@
 require "spec_helper"
 describe Mogli::Authenticator do
-
   let :authenticator do
     Mogli::Authenticator.new("123456","secret","http://example.com/url")
   end
@@ -31,13 +30,16 @@ describe Mogli::Authenticator do
   end
 
   it "can trade session_keys for access_tokens" do
+    response = [{"access_token" => "myaccesstoken",   "expires" => 5000},
+                {"access_token" => "youraccesstoken", "expires" => 5000}]
+    response.stub!(:code).and_return(200)
+
     Mogli::Client.should_receive(:post).
       with("https://graph.facebook.com/oauth/exchange_sessions",
            :body => {:type => "client_cred", :client_id => "123456",
                      :client_secret => "secret",
                      :sessions => "mysessionkey,yoursessionkey"}).
-      and_return([{"access_token" => "myaccesstoken",   "expires" => 5000},
-                  {"access_token" => "youraccesstoken", "expires" => 5000}])
+      and_return(response)
 
     authenticator.
       get_access_token_for_session_key(["mysessionkey","yoursessionkey"]).
@@ -46,11 +48,13 @@ describe Mogli::Authenticator do
   end
 
   it "can trade one session_key for an access_tokens" do
+    response = {"access_token" => "myaccesstoken", "expires" => 5000}
+    response.stub!(:code).and_return(200)
     Mogli::Client.should_receive(:post).
       with("https://graph.facebook.com/oauth/exchange_sessions",
            :body => {:type => "client_cred", :client_id => "123456",
                      :client_secret => "secret", :sessions => "mysessionkey"}).
-      and_return({"access_token" => "myaccesstoken", "expires" => 5000})
+      and_return(response)
 
     authenticator.
       get_access_token_for_session_key("mysessionkey").
@@ -58,6 +62,8 @@ describe Mogli::Authenticator do
   end
   
   it "can ask for an application token" do
+    response = "access_token=123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo"
+    response.stub!(:code).and_return(200)
     Mogli::Client.should_receive(:post).
       with("https://graph.facebook.com/oauth/access_token",
            :body=> {
@@ -65,11 +71,30 @@ describe Mogli::Authenticator do
              :client_id => "123456",
              :client_secret => "secret"
            }).
-      and_return(mock("response", :parsed_response=> "access_token=123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo",:is_a? => true))
+      and_return(response)
       
       
       token = authenticator.get_access_token_for_application
       token.should =="123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo"
+  end
+  
+  it "raises an error if not a 200" do
+    response = "access_token=123456|3SDdfgdfgv0bbEvYjBH5tJtl-dcBdsfgo"
+    response.stub!(:code).and_return(500)
+    Mogli::Client.should_receive(:post).and_return(response)
+    lambda do
+      token = authenticator.get_access_token_for_application
+    end.should raise_error(Mogli::Client::HTTPException)
+    
+  end
+
+  context "Oauth2" do
+    let :oauth2_authenticator do
+      Mogli::Authenticator.new("123456","secret",nil)
+    end
+    it "creates the access_token_url without a redirect URL" do
+      oauth2_authenticator.access_token_url("mycode").should == "https://graph.facebook.com/oauth/access_token?client_id=123456&redirect_uri=&client_secret=secret&code=mycode"
+    end
   end
 
 end

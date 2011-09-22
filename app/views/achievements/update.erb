@@ -1,0 +1,27 @@
+<% result_for :achievement do |builder| %>
+  <% if @result %>
+    <% builder.success do %>
+      <%= t('.message') %>
+    <% end %>
+    
+    <% builder.buttons do %>
+      <%= link_to_function(button(:publish), stream_dialog(:achievement, @achievement.achievement_type),
+            :class => "publish button"
+          ) if Setting.b(:stream_dialog_enabled) %>
+    <% end %>
+    
+    <div class="payouts">
+      <h3><%= t('.you_received') %></h3>
+      
+      <%= payout_list(@achievement, @result) %>
+    </div>
+    
+    <% builder.on_ready do %>
+      $('#<%= dom_id(@achievement.achievement_type) %> .collect.button').remove();
+    <% end %>
+  <% else %>
+    <% builder.fail do %>
+      <%= @achievement.errors.full_messages %>
+    <% end %>
+  <% end %>
+<% end %>

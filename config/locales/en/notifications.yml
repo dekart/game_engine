@@ -69,3 +69,10 @@ en:
       text: "Your exchange offer was accepted."
       you_received: "You received"
       you_lost: "You take"
+        
+    new_achievement:
+      title: 'New Achievement!'
+      text: "You've got the new achievement:"
+      buttons:
+        collect: 'Collect Reward'
+        publish: 'Brag About It'

@@ -167,4 +167,6 @@ Setting[:personal_discount_period] ||= 24
 Setting[:friends_invite_enabled] ||= true
 Setting[:stream_dialog_enabled] ||= true
 
+Setting[:achievements_enabled] ||= true
+
 # Put your custom settings below this line
