@@ -34,7 +34,7 @@ class Character
       end
       
       def in_progress?(type)
-        !achieved?(type) && AchievementType.index[type.key].detect{|goal, id| goal > value(type) }.last == type.id
+        !achieved?(type) && AchievementType.index[type.key].detect{|goal, id| goal > value(type) }.try(:last) == type.id
       end
       
       def achieve!(types)
