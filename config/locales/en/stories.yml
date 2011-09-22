@@ -68,9 +68,9 @@ en:
       description: "I've reached the #%{position} place in the %{name}"
       action_link: ""
     exchange:
-      title: "I want to exchange item with you"
-      description: "I want to exchange %{amount} '%{item_name}' on %{text}"
-      action_link: "Exchange »"
+      title: "I offer an item for exchange!"
+      description: "I want to swap %{amount} of %{item_name} for %{text}"
+      action_link: "Respond »"
     achievement:
       title: "I've just reached the \"%{name}\" achievement in %{app}!"
       description: ""

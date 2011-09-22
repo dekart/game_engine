@@ -1,5 +1,4 @@
 <% if @transacted %>
-
   <% render_to_result do %>
     <% result_for :accept_exchange_offer do |builder| %>
       <p>
@@ -25,11 +24,10 @@
   <% end %>
   
   <% dom_ready do %>
-    $("#show_exchange").replaceWith("<%= escape_javascript(render('exchanges/transacted')) %>");
+    $("#show_exchange").replaceWith("<%= escape_javascript(content_tag(:div, t('.text'), :class => :note)) %>");
   <% end %>
 
 <% else %>
-
   <% render_to_result do %>
     <% result_for :accept_exchange_offer_error do |builder| %>
       <% builder.fail do %>

@@ -2,11 +2,11 @@ en:
   chats:
     chat:
       title: "Chat"
-      online: "Online users:"
+      online: "Now Online:"
       say_something: "Say:"
       buttons:
         send: "Send"
     global:
       tooltip: "Chat (%{online_count} users online)"
     online_characters:
-      level: "%{value} level"
+      level: "Level %{value}"

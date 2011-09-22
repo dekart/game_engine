@@ -57,18 +57,20 @@ en:
         publish: "Brag About It"
     
     exchange_offer_created:
-      title: "New Offer"
-      text: "New exchange offer was created. You may accept this or view detailed information about exchange."
-      offer: "Offer item"
-      user: "User"
+      title: "New Offer Response"
+      text: "%{character} responded to your offer!"
+      offer:
+        male: 'He offers:'
+        female: 'She offers:'
+        unknown: 'They offer:'
       buttons:
-        view: "View"
+        view: "View Offer"
         
     exchange_offer_accepted:
       title: "Offer Accepted"
-      text: "Your exchange offer was accepted."
-      you_received: "You received"
-      you_lost: "You take"
+      text: "%{character} accepted your offer!"
+      you_received: "You received:"
+      you_lost: "You spent:"
         
     new_achievement:
       title: 'New Achievement!'

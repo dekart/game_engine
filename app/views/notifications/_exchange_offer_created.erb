@@ -1,19 +1,18 @@
 <% dialog :id => :exchange_offer_created do |d| %>
   <h2><%= t(".title") %></h2>
 
-  <p class="text">
-    <%= t(".text") %>
-  </p>
-  
   <div class="character">
-    <h3><%= t(".user") %></h3>
-    <div class="name"><%= character_name_link(notification.exchange_offer.character) %></div>
     <div class="picture"><%= character_picture_link(notification.exchange_offer.character) %></div>
+    <div class="text">
+      <%= t('.text', 
+            :character => character_name_link(notification.exchange_offer.character)
+          ).html_safe %>
+    </div>
   </div>
   
+  <h3><%= t(".offer.#{ notification.exchange_offer.character.user.gender }") %></h3>
+  
   <div class="payouts clearfix">
-    <h3><%= t(".offer") %></h3>
-    
     <%= render('payouts/preview/item', :payout => notification.exchange_offer.payout) %>
   </div>
   
@@ -22,6 +21,4 @@
           :class => "view button"
         ) %>
   </div>
-
-  <%= render("notifications/disable", :notification => notification) %>
 <% end %>

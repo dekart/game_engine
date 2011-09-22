@@ -174,12 +174,12 @@ en:
         exchange:
           attributes:
             amount:
-              not_enough: "Must be less or equal then your inventory amount"
+              not_enough: "You cannot offer more items than you have"
               
         exchange_offer:
           attributes:
             amount:
-              not_enough: "Must be less or equal then your inventory amount"
+              not_enough: "You cannot offer more items than you have"
           
         achievement:
           attributes:

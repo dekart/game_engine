@@ -7,27 +7,32 @@
 <% elsif @exchange.invalid? %>
   <p><%= t(".invalid") %></p>
 <% else %>
-
   <div id="show_exchange">
-    <h2><%= t(".offer_title") %></h2>
     <table class="exchange_info" cellpadding="0" cellspacing="0">
       <tr>
-        <th><%= t(".item") %></th>
-        <th><%= t(".amount") %></th>
-        <th><%= t(".text") %></th>
-      </tr>
-      <tr>
-        <td class="image"><%= item_image(@exchange.item, :small, :tooltip => true) %></td>
-        <td class="amount"><%= @exchange.amount %></td>
-        <td class="text"><%= @exchange.text %></td>
+        <td class="item">
+          <h2>
+            <%= t('.item_name', 
+                  :item => @exchange.item.name, 
+                  :amount => @exchange.amount
+                ) %>
+          </h2>
+          
+          <%= item_image(@exchange.item, :medium, :tooltip => true) %>
+        </td>
+        <td class="text">
+          <h3><%= t('.text') %></h3>
+          
+          <%= @exchange.text %>
+        </td>
         
         <% if current_character == @exchange.character %>
           <td class="buttons">
             <%= link_to_function(button(:publish), stream_dialog(:exchange, @exchange), :class => 'button publish') %>
             
-            <%= link_to(button(:remove), exchange_path(@exchange, :stored_signed_request => facebook_signed_request), 
+            <%= link_to(button(:delete), exchange_path(@exchange, :stored_signed_request => facebook_signed_request), 
                   :method => :delete,
-                  :confirm => t(".buttons.remove_confirm"),
+                  :confirm => t(".buttons.delete_confirm"),
                   :class => 'button delete'
                 ) %>
           </td>
