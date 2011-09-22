@@ -215,11 +215,11 @@ describe User do
     it 'should update gender to received value' do
       lambda{
         @user.update_social_data!
-      }.should change(@user, :gender).from(nil).to(:male)
+      }.should change(@user, :gender).from(:unknown).to(:male)
     end
     
     it 'should not try to update gender is there is no gender in received data' do
-      @mogli_user.should_receive(:gender).and_return(nil)
+      @mogli_user.should_receive(:gender).and_return(:unknown)
       
       lambda{
         @user.update_social_data!

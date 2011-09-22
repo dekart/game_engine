@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
   end
   
   def gender
-    GENDERS.index(self[:gender])
+    GENDERS.index(self[:gender]) || :unknown
   end
   
   def full_name
