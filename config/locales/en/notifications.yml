@@ -44,6 +44,9 @@ en:
         level_up: "Level Up messages"
         market_item_sold: "Market item sold"
         send_gift: "Recommendations to send gifts to your friends"
+        exchange_offer_accepted: "Exchange offer accepted"
+        exchange_offer_created: "Exchange offer created"
+        new_achievement: "New achievement"
       buttons: 
         save: "Save"
       
