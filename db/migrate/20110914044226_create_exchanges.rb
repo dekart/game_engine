@@ -1,6 +1,6 @@
 class CreateExchanges < ActiveRecord::Migration
   def self.up
-    add_column :items, :exchangeable, :boolean, :default => true
+    add_column :items, :exchangeable, :boolean, :default => false
     
     create_table :exchanges do |t|
       t.integer :item_id, :null => false
