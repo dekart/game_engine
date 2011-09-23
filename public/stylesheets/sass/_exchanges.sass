@@ -29,6 +29,12 @@
     .buttons
       .button
         margin: 5px
+        
+      .publish
+        +button(!asset_icons_publish)
+        
+      .delete
+        +button(!asset_icons_delete)
   
   .proposed_by_participant, .proposed_for_transactor, .exchangeables
     margin-top: 20px
@@ -41,6 +47,14 @@
         
     .image
       width: 100px
+    
+  .proposed_for_transactor  
+    .accept
+      +button(!asset_icons_accept)
+      
+  .proposed_by_participant
+    .delete
+      +button(!asset_icons_delete)
       
   .exchangeables
     .jcarousel-item
@@ -60,7 +74,11 @@
     
     #exchange_offer_amount
       width: 70px
-      
+   
+    #new_exchange_offer
+      .add
+        +button(!asset_icons_add)
+
         
 #exchange_inventories
   .item
@@ -79,11 +97,6 @@
   #exchange_text
     width: 80%
     height: 70px
-
-
-#exchange_offer_created
-  .character
-    padding-top: 5px
     
-  .payouts
-    padding-top: 10px
+  .publish
+    +button(!asset_icons_publish)
