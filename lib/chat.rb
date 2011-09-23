@@ -10,15 +10,13 @@ class Chat
       messages
     end
     
-    def save_message(chat_id, character_id, text)
+    def save_message(chat_id, character, text)
       return if chat_id.blank? || text.blank?
-      
-      character = Character.find(character_id, :joins => :user)
       
       message = {
         :id             => Digest::MD5.hexdigest("%s-%s" % [Time.now, character.id]),
         
-        :facebook_id    => character.facebook_id,
+        :facebook_id    => character.user.facebook_id,
         :name           => (character.name.present? ? character.name : character.user.first_name),
         :character_key  => character.key,
         
@@ -35,13 +33,15 @@ class Chat
       message
     end
     
-    def online_characters_for(chat_id, current_character_id)
-      current_character = Character.find(current_character_id)
-      
+    def online_characters_for(chat_id, current_character)
       online_characters = []
       
-      get_and_expire_online(chat_id).each do |character_id|
-        if character_id != current_character_id
+      expire_online(chat_id)
+      
+      character_ids = $redis.zrange(online_characters_key(chat_id), 0, -1).map {|c| c.to_i}
+      
+      character_ids.each do |character_id|
+        if character_id != current_character.id
           character = Character.find(character_id)
           
           online_characters << {
@@ -58,27 +58,23 @@ class Chat
     end
     
     def online_count(chat_id)
-      get_and_expire_online(chat_id).size
+      expire_online(chat_id)
+      
+      $redis.zcard(online_characters_key(chat_id))
     end
     
     def key(chat_id)
       "chat_#{chat_id}"
     end
     
-    def update_online_status(chat_id, character_id)
-      $redis.zadd(online_characters_key(chat_id), Time.now.to_i, character_id)
+    def update_online_status(chat_id, character)
+      $redis.zadd(online_characters_key(chat_id), Time.now.to_i, character.id)
     end
     
     protected
       
       def online_characters_key(chat_id)
         "online_characters_chat_#{chat_id}"
-      end
-      
-      def get_and_expire_online(chat_id)
-        expire_online(chat_id)
-        
-        $redis.zrange(online_characters_key(chat_id), 0, -1)
       end
       
       def expire_online(chat_id)
