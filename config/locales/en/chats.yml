@@ -7,6 +7,7 @@ en:
       buttons:
         send: "Send"
     global:
-      tooltip: "Chat (%{online_count} users online)"
-    online_characters:
+      tooltip: "Chat"
+      tooltip_with_count: "Chat (%{online_count} users online)"
+    online_character:
       level: "Level %{value}"

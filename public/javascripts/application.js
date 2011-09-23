@@ -705,16 +705,11 @@ var AchievementList = {
       return lastMessageId;
     },
     
-    getCharacterId: function() {
-      return $("#chat_character_id").val();
-    },
-    
     loadMessages: function() {
       var $chat = $(this);
       
       Spinner.disable(function(){
         $.getJSON('/chats/' + $chat.data('chat-id'), {
-            chat_character_id: $("#chat_character_id").val(),
             last_message_id: $chat.chat('lastMessageId')
           }, 
           function(data) {
@@ -725,16 +720,28 @@ var AchievementList = {
     
     refreshOnlineList: function(charactersOnline) {
       var $chat = $(this);
-      var content = $("<div>");
+      var $content = $(this).find(".online .content");
       
-      var template = $("#online-characters-template");
+      var $template = $("#online-characters-template");
       
-      for (var i = 0; i < charactersOnline.length; i++) {
-        var character = charactersOnline[i];
-        content.append(template.tmpl(character));
-      }
+      var wasOnline = $content.find('.character').map(function() {
+        return parseInt($(this).data('id'));
+      }).toArray();
       
-      $(this).find(".online .content").html(content.html());
+      // add new users
+      $.each(charactersOnline, function(index, character) {
+        if ($.inArray(character.facebook_id, wasOnline) == -1) {
+          $content.append($template.tmpl(this));
+        }
+      });
+      
+      // remove disconnected users 
+      var onlineFacebookIds = $.map(charactersOnline, function(e){ return e.facebook_id });
+      $.each(wasOnline, function(index, facebookId) {
+        if ($.inArray(facebookId, onlineFacebookIds) == -1) {
+          $content.find(".character[data-id='" + this + "']").remove();
+        }
+      });
     },
     
     appendMessages: function(messages) {

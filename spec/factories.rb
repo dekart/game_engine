@@ -41,12 +41,6 @@ Factory.define :character do |t|
   t.association :character_type
 end
 
-Factory.define :character_with_inventory, :parent => :character do |t|
-  t.after_create do |c|
-    Factory(:inventory, :character => c, :amount => 1)
-  end
-end
-
 Factory.define :property_type do |t|
   t.name        "Property Type"
   t.plural_name "Property Types"
@@ -345,8 +339,14 @@ Factory.define :character_contest_group do |t|
   t.association :character
 end
 
+Factory.define :character_with_exchangeable_inventory, :parent => :character do |t|
+  t.after_create do |c|
+    Factory(:inventory, :character => c, :amount => 1, :item => Factory(:item, :exchangeable => true))
+  end
+end
+
 Factory.define :exchange do |t|
-  t.association :character, :factory => :character_with_inventory
+  t.association :character, :factory => :character_with_exchangeable_inventory
   t.item {|e| e.character.items.first }
   
   t.text 'What I want to get'
@@ -354,6 +354,6 @@ end
 
 Factory.define :exchange_offer do |t|
   t.association :exchange
-  t.association :character, :factory => :character_with_inventory
+  t.association :character, :factory => :character_with_exchangeable_inventory
   t.item {|e| e.character.items.first }
 end

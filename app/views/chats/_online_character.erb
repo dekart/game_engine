@@ -1,5 +1,5 @@
 <script id='online-characters-template' type = 'text/x-jquery-tmpl'>
-  <div class="character clearfix {{if friend}}friend{{/if}}">
+  <div class="character clearfix {{if friend}}friend{{/if}}" data-id="${facebook_id}">
     <div class="picture">
       <a href="/characters/${character_key}" title="${name}">
         <%= fb_graph_user_image_tag("${facebook_id}", "square", :alt => '${name}') %>

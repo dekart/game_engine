@@ -37,6 +37,17 @@ describe ExchangeOffer do
       @exchange_offer.should_not be_valid
       @exchange_offer.errors.on(:amount).should be_present
     end
+    
+    it 'should validate that item exchangeable' do
+      character = Factory(:character)
+      item = Factory(:item)
+      character.inventories.give!(item)
+      
+      @exchange_offer = Factory.build(:exchange_offer, :item => item, :character => character)
+      
+      @exchange_offer.should_not be_valid
+      @exchange_offer.errors.on(:item).should be_present
+    end
   end
   
   describe 'when saving' do

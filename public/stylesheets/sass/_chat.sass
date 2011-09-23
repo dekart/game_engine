@@ -1,15 +1,16 @@
 .chat
   padding: 5px
-  height: 420px
+  height: 600px
   margin-top: 10px
+  
+  .messages-container, .container
+    height: 480px
   
   .container
     padding: 4px
-    height: 300px
     border = !chat_container_border
     
     .messages-container
-      height: 300px
       width: 590px
       float: left
       overflow-y: scroll
@@ -45,8 +46,8 @@
       
       .content
         overflow-y: scroll
-        height: 275px
         text-align: center
+        height: 455px
         
         .character
           width: 120px

@@ -37,6 +37,17 @@ describe Exchange do
       @exchange.should_not be_valid
       @exchange.errors.on(:amount).should be_present
     end
+    
+    it 'should validate that item exchangeable' do
+      character = Factory(:character)
+      item = Factory(:item)
+      character.inventories.give!(item)
+      
+      @exchange = Factory.build(:exchange, :item => item, :character => character)
+      
+      @exchange.should_not be_valid
+      @exchange.errors.on(:item).should be_present
+    end
   end
   
   describe 'when saving' do

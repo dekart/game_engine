@@ -173,11 +173,15 @@ en:
               
         exchange:
           attributes:
+            item:
+              not_exchangeable: "This item is not exchangeable"
             amount:
               not_enough: "You cannot offer more items than you have"
               
         exchange_offer:
           attributes:
+            item:
+              not_exchangeable: "This item is not exchangeable"
             amount:
               not_enough: "You cannot offer more items than you have"
           

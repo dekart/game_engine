@@ -1,4 +1,6 @@
 module FacebookSignedRequest
+  include Facebooker2::SignedRequest
+  
   def generate_signed_request(user)
     access_data = generate_access_data(user)
 
@@ -24,5 +26,18 @@ module FacebookSignedRequest
           "locale" => user.locale
         }
     }
+  end
+  
+  def extract_user_id(request)
+    signed_request = request.cookies["fbsr_#{Facebooker2.app_id}"]
+    signed_request ||= request.env['HTTP_SIGNED_REQUEST']
+    
+    fb_decode_signed_request(signed_request)[:user_id] if signed_request
+  end
+  
+  def extract_character(request)
+    user_id = extract_user_id(request)
+    
+    User.find_by_facebook_id(user_id).try(:character) if user_id
   end
 end
