@@ -6,7 +6,8 @@ class ExchangeOffer < ActiveRecord::Base
   validates_presence_of :exchange_id, :item_id, :character_id, :amount
   validates_numericality_of :amount, :greater_than => 0
   
-  validate_on_create :validate_amount_less_or_equals_then_in_inventories
+  validate_on_create :validate_amount_less_or_equals_then_in_inventories,
+    :validate_item_exchangeable
   
   after_create :send_created_notification_to_exchanger
   
@@ -48,6 +49,10 @@ class ExchangeOffer < ActiveRecord::Base
       if amount && (!inventory || amount > inventory.amount)
         errors.add(:amount, :not_enough) 
       end
+    end
+    
+    def validate_item_exchangeable
+      errors.add(:item, :not_exchangeable) if item && !item.exchangeable
     end
     
     def send_created_notification_to_exchanger

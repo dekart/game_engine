@@ -63,7 +63,7 @@
       <% end %>
     <% end %>
     
-    <% if Setting.b(:inventory_exchange_enabled) %>
+    <% if Setting.b(:inventory_exchange_enabled) && inventory.item.exchangeable %>
       <% if current_character.exchanges.in_exchange?(inventory.item) %>
         <%= link_to(button(:view_exchange),
               exchange_path(current_character.exchanges.exchange_by(inventory.item).key),
