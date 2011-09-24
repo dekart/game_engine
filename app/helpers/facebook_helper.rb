@@ -4,7 +4,7 @@ module FacebookHelper
   end
 
   def fb_fan_box(options = {})
-    content_tag("fb:fan", "", {:profile_id => Facebooker2.app_id}.merge(options))
+    content_tag("fb:fan", "", {:profile_id => facepalm.app_id}.merge(options))
   end
 
   def fb_header(text, options = {})
@@ -37,10 +37,14 @@ module FacebookHelper
   def fb_profile_pic(user, options = {})
     options[:title] ||= options[:alt]
     
-    image_tag('https://graph.facebook.com/%s/picture?type=%s' % [Facebooker2.cast_to_facebook_id(user), options[:size]], 
+    image_tag('https://graph.facebook.com/%s/picture?type=%s' % [user.respond_to?(:facebook_id) ? user.facebook_id : user, options[:size]], 
       :alt    => options[:alt] || '',
       :title  => options[:title] || ''
     )
+  end
+  
+  def fb_name(user, options = {})
+    content_tag('fb:name', '', options.merge(:uid => user.respond_to?(:facebook_id) ? user.facebook_id : user))
   end
 
   def fb_profile_url(user)
@@ -48,11 +52,11 @@ module FacebookHelper
   end
 
   def fb_app_page_url
-    "#{request.protocol}www.facebook.com/apps/application.php?id=#{Facebooker2.app_id}"
+    "#{request.protocol}www.facebook.com/apps/application.php?id=#{facepalm.app_id}"
   end
 
   def fb_app_requests_url
-    "#{request.protocol}www.facebook.com/reqs.php#confirm_#{Facebooker2.app_id}_0"
+    "#{request.protocol}www.facebook.com/reqs.php#confirm_#{facepalm.app_id}_0"
   end
 
   def fb_i(*args, &block)

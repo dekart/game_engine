@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   
   def subscribe
     if request.get?
-      if params['hub.verify_token'] == Digest::MD5.hexdigest(Facebooker2.secret)
+      if params['hub.verify_token'] == Digest::MD5.hexdigest(facepalm.secret)
         render :text => params['hub.challenge']
       else
         render :nothing

@@ -20,6 +20,11 @@ gem "redis",            "2.1.1"
 
 gem 'cubus-settingslogic', '2.2.0'
 
+# Facepalm
+gem 'multi_json'
+gem 'faraday'
+gem 'koala', '1.2.0beta3'
+gem 'ie_iframe_cookies'
 
 group :development do
   gem "capistrano",     "2.5.20"
