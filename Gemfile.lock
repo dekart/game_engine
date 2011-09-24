@@ -45,7 +45,7 @@ GEM
     ie_iframe_cookies (0.1.0)
     jrails (0.6.0)
     json_pure (1.4.6)
-    koala (1.2.0beta3)
+    koala (1.2.0beta4)
       faraday (~> 0.7.0)
       multi_json (~> 1.0)
     linecache (0.43)
@@ -109,7 +109,7 @@ DEPENDENCIES
   ie_iframe_cookies
   jrails (= 0.6.0)
   json_pure (= 1.4.6)
-  koala (= 1.2.0beta3)
+  koala (= 1.2.0beta4)
   memcache-client (= 1.7.6)
   multi_json
   mysql (= 2.8.1)

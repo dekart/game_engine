@@ -23,7 +23,7 @@ gem 'cubus-settingslogic', '2.2.0'
 # Facepalm
 gem 'multi_json'
 gem 'faraday'
-gem 'koala', '1.2.0beta3'
+gem 'koala', '1.2.0beta4'
 gem 'ie_iframe_cookies'
 
 group :development do

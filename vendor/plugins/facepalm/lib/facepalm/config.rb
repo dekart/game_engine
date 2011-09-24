@@ -36,6 +36,18 @@ module Facepalm
       @oauth_client ||= Koala::Facebook::OAuth.new(app_id, secret)
     end
     
+    def api_client
+      @api_client ||= Koala::Facebook::API.new(app_access_token)
+    end
+    
+    def app_access_token
+      @app_access_token ||= oauth_client.get_app_access_token
+    end
+    
+    def subscription_token
+      Digest::MD5.hexdigest(secret)
+    end
+    
     def canvas_page_url(protocol)
       "#{ protocol }apps.facebook.com/#{ canvas_page_name }"
     end

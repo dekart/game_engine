@@ -62,20 +62,20 @@ class User < ActiveRecord::Base
     self[:friend_ids].blank? ? [] : self[:friend_ids].split(',').collect{|i| i.to_i }
   end
   
+  def facebook_client
+    Koala::Facebook::API.new(access_token)
+  end
+  
   def update_social_data!
     return false unless access_token_valid?
     
-    client = Mogli::Client.new(access_token)
-    
-    facebook_user = Mogli::User.find(facebook_id, client, :first_name, :last_name, :timezone, :locale, :gender, :third_party_id, :email)
-    
-    %w{first_name last_name timezone locale third_party_id email}.each do |attribute|
-      self.send("#{attribute}=", facebook_user.send(attribute))
+    me, friends = facebook_client.batch do |api|
+      api.get_object('me', :fields => [:first_name, :last_name, :timezone, :locale, :gender, :third_party_id, :email])
+      api.get_connections('me', 'friends', :fields => [:id])
     end
     
-    self.gender = facebook_user.gender if facebook_user.gender
-    
-    self.friend_ids = facebook_user.friends(:id).collect{|f| f.id }
+    self.attributes = me
+    self.friend_ids = friends.collect{|f| f["id"] }
     
     save!
   end
