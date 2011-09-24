@@ -1,7 +1,7 @@
 server {
   listen <%= public_ip %>:80;
 
-  server_name <%= facebooker_config[:callback_domain] %>;
+  server_name <%= facebook_config[:callback_domain] %>;
 
   root <%= current_path %>/public;
 

@@ -16,7 +16,7 @@ test
 
 # Auto-generated files
 
-config/facepalm.yml
+config/facebook.yml
 config/tunnelr.yml
 config/database.yml
 config/settings.yml

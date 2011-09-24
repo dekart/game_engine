@@ -10,11 +10,11 @@ class ApplicationController
         
         facepalm_authentication(:email) unless ENV['OFFLINE']
         
-        # rescue_from Facebooker2::OAuthException, :with => :rescue_facebooker_oauth_exception
+        rescue_from Facepalm::OAuthException, :with => :rescue_facebook_oauth_exception
       end
     end
 
-    def rescue_facebooker_oauth_exception(exception)
+    def rescue_facebook_oauth_exception(exception)
       if params[:error_reason] == 'user_denied' and HelpPage.visible?(:permissions)
         redirect_from_iframe help_page_url(:permissions, :canvas => true)
       else

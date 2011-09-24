@@ -8,8 +8,7 @@ class ApplicationController
           [ActionController::RoutingError,      :rescue_routing_error],
           [ActionController::UnknownAction,     :rescue_unknown_action],
           [ActiveRecord::StaleObjectError,      :rescue_locking_error],
-          [ActiveSupport::MessageEncryptor::InvalidMessage, :rescue_decryption_error],
-          #[Facebooker2::OAuthException,         :rescue_facebooker_oauth_exception]
+          [ActiveSupport::MessageEncryptor::InvalidMessage, :rescue_decryption_error]
         ].each do |exception, method|
           base.rescue_from(exception, :with => method)
         end

@@ -10,11 +10,11 @@ module Facepalm
       def load_config_from_file
         config_data = YAML.load(
           ERB.new(
-            File.read(::Rails.root.join("config", "facepalm.yml"))
+            File.read(::Rails.root.join("config", "facebook.yml"))
           ).result
         )[::Rails.env]
 
-        raise NotConfigured.new("Unable to load configuration for #{ ::Rails.env } from config/facepalm.yml. Is it set up?") if config_data.nil?
+        raise NotConfigured.new("Unable to load configuration for #{ ::Rails.env } from config/facebook.yml. Is it set up?") if config_data.nil?
 
         config_data
       end
