@@ -9,7 +9,7 @@ module Facepalm
         end
         
         class AccessFilter
-          def initialize(permissions)
+          def initialize(*permissions)
             @permissions = permissions
           end
           
