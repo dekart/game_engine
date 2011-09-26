@@ -24,8 +24,6 @@ module Facepalm
 
         raise 'SignedRequest: Invalid signature' if (signature != hmac)
 
-        ::Rails.logger.debug(envelope.inspect)
-
         envelope
       end
 
