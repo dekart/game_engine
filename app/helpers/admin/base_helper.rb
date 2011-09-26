@@ -38,7 +38,7 @@ module Admin::BaseHelper
           link_to_remote(state.name.to_s.titleize, 
             :url    => polymorphic_url([:change_state, :admin, object], :state => state.name),
             :method => :put,
-            :confirm => t('admin.change_state.confirm', :object => object.class.human_name, :state => state.name.to_s.titleize)
+            :confirm => t('admin.change_state.confirm', :object_name => object.class.human_name, :state => state.name.to_s.titleize)
           ) 
         }
       )
