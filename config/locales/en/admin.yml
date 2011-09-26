@@ -1,7 +1,7 @@
 en:
   admin:
     change_state:
-      confirm: 'Are you sure you want to change state of this %{object} to %{state}?'
+      confirm: 'Are you sure you want to change state of this %{object_name} to %{state}?'
     change_position:
       move_higher: "Move Up"
       move_lower: "Move Down"
