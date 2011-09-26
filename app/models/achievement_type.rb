@@ -57,15 +57,11 @@ class AchievementType < ActiveRecord::Base
   end
   
   def url
-    "#{ Facebooker2.callback_url('https://') }/achievements/#{ id }"
+    "#{ Facepalm::Config.default.callback_url('https://') }/achievements/#{ id }"
   end
   
   def register_in_facebook!
-    client = Koala::Facebook::API.new(
-      Koala::Facebook::OAuth.new(Facebooker2.app_id, Facebooker2.secret).get_app_access_token
-    )
-    
-    client.put_connections(Facebooker2.app_id, :achievements, 
+    Facepalm::Config.default.api_client.put_connections(Facepalm::Config.default.app_id, :achievements, 
       :achievement    => url, 
       :display_order  => id
     )

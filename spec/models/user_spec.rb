@@ -359,9 +359,9 @@ describe User do
       @user.gender.should == :female
     end
     
-    it 'should return nil if there is no stored value' do
+    it 'should return :unknown if there is no stored value' do
       @user[:gender] = nil
-      @user.gender.should be_nil
+      @user.gender.should == :unknown
     end
   end
 end

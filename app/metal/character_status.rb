@@ -4,7 +4,7 @@ class CharacterStatus
       if env["PATH_INFO"] =~ /^\/character_status/
         request = Rack::Request.new(env)
       
-        facebook_user = Facepalm::User.from_signed_request(Facepalm::Config.default, request.env['HTTP_SIGNED_REQUEST']) 
+        facebook_user = Facepalm::User.from_signed_request(Facepalm::Config.default, request.env['HTTP_SIGNED_REQUEST'])
         
         if facebook_user and character = User.find_by_facebook_id(facebook_user.uid).try(:character)
           [200, {"Content-Type" => "application/json"}, character.to_json_for_overview]

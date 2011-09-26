@@ -27,12 +27,8 @@ class Achievement < ActiveRecord::Base
   
   def register_in_facebook!
     if character.user.permissions.include?(:publish_actions)
-      client = Koala::Facebook::API.new(
-        Koala::Facebook::OAuth.new(Facebooker2.app_id, Facebooker2.secret).get_app_access_token
-      )
-    
       begin
-        client.put_connections(character.facebook_id, :achievements, :achievement => achievement_type.url)
+        Facepalm::Config.default.api_client.put_connections(character.facebook_id, :achievements, :achievement => achievement_type.url)
       rescue Koala::Facebook::APIError => e
         logger.fatal e.inspect
       end
