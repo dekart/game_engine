@@ -88,49 +88,23 @@ describe AppRequest::Base do
   end
   
   
-  describe '.mogli_client' do
-    before do
-      @client = mock('mogli client')
-      
-      Mogli::AppClient.stub!(:create_and_authenticate_as_application).and_return(@client)
-    end
-    
-    it 'should instantiate new client' do
-      Mogli::AppClient.should_receive(:create_and_authenticate_as_application).with(123456789, '21ba0987654321dcba0987654321dcba').and_return(@client)
-      
-      AppRequest::Base.mogli_client
-    end
-    
-    it 'should return client' do
-      AppRequest::Base.mogli_client.should == @client
-    end
-  end
-  
-  
   describe '.check_user_requests' do
     before do
-      @user = mock_model(User, :facebook_id => 123456789)
-      
-      @facebook_user = mock('remote_user', 
-        :apprequests => [
-          mock('request 1', :id => 123), 
-          mock('request 2', :id => 456)
-        ]
-      )
-      
-      Mogli::User.stub!(:find).and_return(@facebook_user)
+      @facebook_requests = [
+        {'id' => 123},
+        {'id' => 456}
+      ]
+      @koala = mock('koala', :get_connections => @facebook_requests)
+      @user = mock_model(User, :facebook_id => 123456789, :facebook_client => @koala)
       
       @request1 = mock_model(AppRequest::Base, :update_from_facebook_request => true, :pending? => true)
       @request2 = mock_model(AppRequest::Base, :update_from_facebook_request => true, :pending? => false)
       
       AppRequest::Base.stub!(:find_or_initialize_by_facebook_id).and_return(@request1, @request2)
-
-      @client = mock('mogli client')
-      AppRequest::Base.stub!(:mogli_client).and_return(@client)
     end
     
     it 'should fetch app request data from facebook' do
-      Mogli::User.should_receive(:find).with(123456789, @client, :apprequests).and_return(@facebook_user)
+      @koala.should_receive(:get_connections).with('me', 'apprequests').and_return(@facebook_requests)
       
       AppRequest::Base.check_user_requests(@user)
     end
@@ -243,11 +217,11 @@ describe AppRequest::Base do
       
       @request = Factory(:app_request_base, :state => 'pending')
       
-      @remote_request = mock('request on facebook',
-        :from => mock('sender', :id => 123),
-        :to => mock('receiver', :id => 456),
-        :data => '{"type":"invite"}'
-      )
+      @remote_request = {
+        'from' => { 'id' => 123 },
+        'to'   => { 'id' => 456 },
+        'data' => '{"type":"invite"}'
+      }
     end
     
     it 'should assign sender' do
@@ -269,7 +243,7 @@ describe AppRequest::Base do
     end
     
     it 'should not try to parse empty request data' do
-      @remote_request.should_receive(:data).and_return(nil)
+      @remote_request['data'] = nil
       
       lambda{
         @request.update_from_facebook_request(@remote_request)
@@ -289,7 +263,7 @@ describe AppRequest::Base do
     end
     
     it 'should ignore request if remote request sender is not defined' do
-      @remote_request.stub!(:from).and_return(nil)
+      @remote_request['from'] = nil
       
       lambda{
         @request.update_from_facebook_request(@remote_request)
@@ -298,7 +272,7 @@ describe AppRequest::Base do
     
     describe 'when request type is set' do
       it 'should change request class to gift if request is a gift request' do
-        @remote_request.stub!(:data).and_return('{"type":"gift"}')
+        @remote_request['data'] = '{"type":"gift"}'
 
         @request.update_from_facebook_request(@remote_request)
 
@@ -306,7 +280,7 @@ describe AppRequest::Base do
       end
 
       it 'should change request class to invitation if request is a invitation request' do
-        @remote_request.stub!(:data).and_return('{"type":"invitation"}')
+        @remote_request['data'] = '{"type":"invitation"}'
 
         @request.update_from_facebook_request(@remote_request)
 
@@ -314,7 +288,7 @@ describe AppRequest::Base do
       end
 
       it 'should change request class to monster invite if request is a monster invite request' do
-        @remote_request.stub!(:data).and_return('{"type":"monster_invite"}')
+        @remote_request['data'] = '{"type":"monster_invite"}'
 
         @request.update_from_facebook_request(@remote_request)
 
@@ -322,7 +296,7 @@ describe AppRequest::Base do
       end
       
       it 'should not fail if request type is set incorrectly' do
-        @remote_request.stub!(:data).and_return('{"type":"monster"}')
+        @remote_request['data'] = '{"type":"monster"}'
 
         lambda {
           @request.update_from_facebook_request(@remote_request)
@@ -343,7 +317,7 @@ describe AppRequest::Base do
     describe 'when type is not set' do
 
       it 'should change request class to invitation if data is not set' do
-        @remote_request.stub!(:data).and_return(nil)
+        @remote_request['data'] = nil
 
         @request.update_from_facebook_request(@remote_request)
 
@@ -351,7 +325,7 @@ describe AppRequest::Base do
       end
 
       it 'should change request class to invitation if data is set but without type' do
-        @remote_request.stub!(:data).and_return('{"something":"else"}')
+        @remote_request['data'] = '{"something":"else"}'
 
         @request.update_from_facebook_request(@remote_request)
 
@@ -367,14 +341,17 @@ describe AppRequest::Base do
       @request = Factory(:app_request_base, :state => 'pending')
       @request.stub!(:update_from_facebook_request).and_return(true)
 
-      @client = mock('mogli client')
-      AppRequest::Base.stub!(:mogli_client).and_return(@client)
-      
-      Mogli::AppRequest.stub!(:find).and_return(@remote_request)
+      @koala = mock('koala', :get_object => @remote_request)
+
+      Facepalm::Config.default.stub(:api_client).and_return(@koala)
+    end
+    
+    after do
+      Facepalm::Config.send(:remove_class_variable, :@@default)
     end
 
     it 'should fetch data from API using application token' do
-      Mogli::AppRequest.should_receive(:find).with(123456789, @client).and_return(@remote_request)
+      @koala.should_receive(:get_object).with(123456789).and_return(@remote_request)
       
       @request.update_data!
     end
@@ -386,7 +363,7 @@ describe AppRequest::Base do
     end
     
     it 'should mark request as broken if failed to fetch request data' do
-      Mogli::AppRequest.should_receive(:find).with(123456789, @client).and_raise(Mogli::Client::ClientException.new)
+      @koala.should_receive(:get_object).with(123456789).and_raise(Koala::Facebook::APIError)
       
       lambda{
         @request.update_data!
@@ -396,7 +373,7 @@ describe AppRequest::Base do
     it 'should not try to mark request as broken if it\'s not possible' do
       @request.ignore!
       
-      Mogli::AppRequest.should_receive(:find).and_raise(Mogli::Client::ClientException.new)
+      @koala.should_receive(:get_object).with(123456789).and_raise(Koala::Facebook::APIError)
       
       lambda{
         @request.update_data!
@@ -442,19 +419,16 @@ describe AppRequest::Base do
     before do
       @request = Factory(:app_request_base)
       
-      @client = mock('mogli client')
-      
-      Mogli::AppClient.stub!(:create_and_authenticate_as_application).and_return(@client)
-      
-      @remote_request = mock('request on facebook', :destroy => true)
-      
-      Mogli::AppRequest.stub!(:new).and_return(@remote_request)
+      @koala = mock('koala', :delete_object => true)
+      Facepalm::Config.default.stub!(:api_client).and_return(@koala)
+    end
+    
+    after do
+      Facepalm::Config.send(:remove_class_variable, :@@default)
     end
     
     it 'should delete request from facebook using application access token' do
-      Mogli::AppRequest.should_receive(:new).with({:id => 123456789}, @client).and_return(@remote_request)
-      
-      @remote_request.should_receive(:destroy)
+      @koala.should_receive(:delete_object).with(123456789)
       
       @request.delete_from_facebook!
     end

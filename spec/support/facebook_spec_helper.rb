@@ -1,11 +1,11 @@
 module FacebookSpecHelper
   def fake_fb_user
     mock("facebook user", 
-      :id => 123456789,
-      :client => mock("mogli client", 
-        :access_token => "fake token",
-        :expiration   => 1.day.from_now
-      )
+      :uid            => 123456789,
+      :authenticated? => true,
+      
+      :access_token   => 'faketoken',
+      :access_token_expires_at => 1.hour.from_now
     )
   end
 end

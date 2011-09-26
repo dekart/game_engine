@@ -203,8 +203,7 @@ describe ApplicationController do
         do_request
       end
     
-      it 'should not visit requests if user is not authenticated' do
-        controller.stub!(:current_facebook_user).and_return(nil)
+      it 'should not visit requests if user didn\'t create character yet' do
         controller.stub!(:current_character).and_return(nil)
 
         @request1.should_not_receive(:visit)

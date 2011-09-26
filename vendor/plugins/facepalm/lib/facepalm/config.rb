@@ -4,7 +4,7 @@ module Facepalm
     
     class << self
       def default
-        @@default_config ||= self.new(load_config_from_file)
+        @@default ||= self.new(load_config_from_file)
       end
 
       def load_config_from_file

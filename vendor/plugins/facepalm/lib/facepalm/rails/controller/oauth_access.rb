@@ -22,14 +22,11 @@ module Facepalm
           def facepalm_authentication(*permissions)
             options = permissions.extract_options!
             
-            @@facepalm_filter = AccessFilter.new(*permissions)
+            cattr_accessor :facepalm_authentication_filter
+            self.facepalm_authentication_filter = AccessFilter.new(*permissions)
             
-            before_filter(@@facepalm_filter, options)
-            skip_before_filter(@@facepalm_filter, :only => :facepalm_oauth_endpoint)
-          end
-          
-          def facepalm_authentication_filter
-            @@facepalm_filter
+            before_filter(facepalm_authentication_filter, options)
+            skip_before_filter(facepalm_authentication_filter, :only => :facepalm_oauth_endpoint)
           end
         end
         
