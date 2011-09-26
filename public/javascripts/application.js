@@ -731,7 +731,7 @@ var AchievementList = {
       // add new users
       $.each(charactersOnline, function(index, character) {
         if ($.inArray(character.facebook_id, wasOnline) == -1) {
-          $content.append($template.tmpl(this));
+          $content.append($template.tmpl(character));
         }
       });
       
@@ -739,7 +739,7 @@ var AchievementList = {
       var onlineFacebookIds = $.map(charactersOnline, function(e){ return e.facebook_id });
       $.each(wasOnline, function(index, facebookId) {
         if ($.inArray(facebookId, onlineFacebookIds) == -1) {
-          $content.find(".character[data-id='" + this + "']").remove();
+          $content.find(".character[data-id='" + facebookId + "']").remove();
         }
       });
     },
