@@ -16,4 +16,20 @@
   <% end %>
 <% end %>
 
-Hey
+<%= title(t('.title')) %>
+
+<table id="achievement">
+  <tr>
+    <td class="image"><%= image_tag(@achievement_type.image.url(:medium)) if @achievement_type.image? %></td>
+    <td>
+      <h2><%= @achievement_type.name %></h2>
+      
+      <div class="description"><%= @achievement_type.description %></div>
+
+      <%= link_to(button(t('.play_now', :app => t('app_name'))), root_url(:canvas => true), 
+            :class => 'play_now button'
+          ) %>
+    </td>
+  </tr>
+</table>
+

@@ -21,3 +21,7 @@ en:
       
       buttons:
         publish: 'Brag About It'
+        
+    show:
+      title: 'Achievement'
+      play_now: 'Play %{app} Now!'
