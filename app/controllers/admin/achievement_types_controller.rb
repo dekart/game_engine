@@ -39,27 +39,7 @@ class Admin::AchievementTypesController < Admin::BaseController
     end
   end
 
-  def publish
-    @achievement_type = AchievementType.find(params[:id])
-
-    @achievement_type.publish if @achievement_type.can_publish?
-
-    redirect_to admin_achievement_types_path
-  end
-
-  def hide
-    @achievement_type = AchievementType.find(params[:id])
-
-    @achievement_type.hide if @achievement_type.can_hide?
-
-    redirect_to admin_achievement_types_path
-  end
-
-  def destroy
-    @achievement_type = AchievementType.find(params[:id])
-
-    @achievement_type.mark_deleted
-
-    redirect_to admin_achievement_types_path
+  def change_state
+    publish_hide_delete_states(AchievementType.find(params[:id]))
   end
 end

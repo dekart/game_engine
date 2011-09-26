@@ -16,6 +16,10 @@ class Contest < ActiveRecord::Base
     event :publish do
       transition :hidden => :visible, :if => :started_at_set? 
     end
+
+    event :hide do
+      transition :visible => :hidden
+    end
     
     event :finish do
       transition :visible => :finished

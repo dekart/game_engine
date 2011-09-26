@@ -39,27 +39,20 @@ class Admin::ContestsController < Admin::BaseController
     end
   end
 
-  def publish
+  def change_state
     @contest = Contest.find(params[:id])
-
-    @contest.publish if @contest.can_publish?
-
-    redirect_to admin_contests_path
-  end
-
-  def finish
-    @contest = Contest.find(params[:id])
-
-    @contest.finish if @contest.can_finish?
-
-    redirect_to admin_contests_path
-  end
-
-  def destroy
-    @contest = Contest.find(params[:id])
-
-    @contest.mark_deleted if @contest.can_mark_deleted?
-
-    redirect_to admin_contests_path
+    
+    state_change_action(@contest) do |state|
+      case state
+      when :visible
+        @contest.publish if @contest.can_publish?
+      when :hidden
+        @contest.hide if @contest.can_hide?
+      when :finished
+        @contest.finish if @contest.can_finish?
+      when :deleted
+        @contest.mark_deleted if @contest.can_mark_deleted?
+      end
+    end
   end
 end

@@ -7,12 +7,6 @@ en:
         controls:
           new: "Add Contest"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure? Monster fight results will be also removed from all users!"
-          publish: "Publish"
-          publish_confirm: "Are you sure to publish contest and make it visible in start date to players?"
-          finish: "Finish"
-          finish_confirm: "Are you sure to finish contest?"
       new:
         title: "New Contest"
         submit: "Create"
