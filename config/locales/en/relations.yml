@@ -14,6 +14,10 @@ en:
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to the 'What's on your mind?' form and publish it. Or just send this message to your friends:"
         invitation: "Join my %{app} Alliance! %{link}"
         
+    short_link:
+      title: 'Join my Alliance in %{app}!'
+      description: 'Join my Alliance in %{app}, a magic game played on Facebook. Start out as a petty apprentice and work your way up to be the Overlord of the world of wizards and witches!'
+        
     create:
       message: "Invitation accepted! The player became part of your alliance!"
       

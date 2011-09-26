@@ -31,7 +31,7 @@ module Facepalm
           )
         end
         
-        def iframe_redirect_code(target_url)
+        def iframe_redirect_code(target_url, custom_code = nil)
           %{
             <html><head>
               <script type="text/javascript">
@@ -41,6 +41,7 @@ module Facepalm
                 <meta http-equiv="refresh" content="0;url=#{ target_url }" />
                 <meta http-equiv="window-target" content="_top" />
               </noscript>
+              #{ custom_code }
             </head></html>
           }
         end
