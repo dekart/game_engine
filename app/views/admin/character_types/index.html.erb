@@ -16,7 +16,7 @@
       <th></th>
     </tr>
     <% @character_types.each do |type| %>
-      <tr>
+      <% content_tag_for(:tr, type) do %>
         <td class="image"><%= image_tag(type.image.url(:icon)) if type.image? %></td>
         <td class="name"><%= link_to(type.name, edit_admin_character_type_path(type)) %></td>
         <td class="attributes">
@@ -39,23 +39,12 @@
             <% end %>
           </table>
         </td>
-        <td class="state"><%= type.characters.count %></td>
+        <td class="character_count"><%= type.characters.count %></td>
         <td class="state"><%= admin_state(type) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_character_type_path(type)) %>
-          <%= link_to(t(".controls.publish"), publish_admin_character_type_path(type),
-                :method => :put,
-                :confirm => t(".controls.publish_confirm")
-              ) if type.can_publish? %>
-          <%= link_to(t(".controls.hide"), hide_admin_character_type_path(type),
-                :method => :put
-              ) if type.can_hide? %>
-          <%= link_to(t(".controls.delete"), admin_character_type_path(type),
-                :method   => :delete,
-                :confirm  => t(".controls.delete_confirm")
-              ) if type.can_mark_deleted? %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 <% end %>

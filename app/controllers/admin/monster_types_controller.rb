@@ -39,27 +39,7 @@ class Admin::MonsterTypesController < Admin::BaseController
     end
   end
 
-  def publish
-    @monster_type = MonsterType.find(params[:id])
-
-    @monster_type.publish if @monster_type.can_publish?
-
-    redirect_to admin_monster_types_path
-  end
-
-  def hide
-    @monster_type = MonsterType.find(params[:id])
-
-    @monster_type.hide if @monster_type.can_hide?
-
-    redirect_to admin_monster_types_path
-  end
-
-  def destroy
-    @monster_type = MonsterType.find(params[:id])
-
-    @monster_type.mark_deleted if @monster_type.can_mark_deleted?
-
-    redirect_to admin_monster_types_path
+  def change_state
+    publish_hide_delete_states(MonsterType.find(params[:id]))
   end
 end

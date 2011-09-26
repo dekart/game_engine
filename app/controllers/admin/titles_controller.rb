@@ -39,27 +39,7 @@ class Admin::TitlesController < Admin::BaseController
     end
   end
 
-  def publish
-    @title = Title.find(params[:id])
-
-    @title.publish if @title.can_publish?
-
-    redirect_to admin_titles_path
-  end
-
-  def hide
-    @title = Title.find(params[:id])
-
-    @title.hide if @title.can_hide?
-
-    redirect_to admin_titles_path
-  end
-
-  def destroy
-    @title = Title.find(params[:id])
-
-    @title.mark_deleted
-
-    redirect_to admin_titles_path
+  def change_state
+    publish_hide_delete_states(Title.find(params[:id]))
   end
 end

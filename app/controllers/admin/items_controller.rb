@@ -63,28 +63,8 @@ class Admin::ItemsController < Admin::BaseController
     end
   end
 
-  def publish
-    @item = Item.find(params[:id])
-
-    @item.publish if @item.can_publish?
-
-    redirect_to admin_items_path
-  end
-
-  def hide
-    @item = Item.find(params[:id])
-
-    @item.hide if @item.can_hide?
-
-    redirect_to admin_items_path
-  end
-
-  def destroy
-    @item = Item.find(params[:id])
-
-    @item.mark_deleted if @item.can_mark_deleted?
-
-    redirect_to admin_items_path
+  def change_state
+    publish_hide_delete_states(Item.find(params[:id]))
   end
 
   def balance

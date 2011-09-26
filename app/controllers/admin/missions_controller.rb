@@ -69,40 +69,11 @@ class Admin::MissionsController < Admin::BaseController
     end
   end
 
-  def publish
-    @mission = Mission.find(params[:id])
-
-    @mission.publish if @mission.can_publish?
-
-    redirect_to admin_missions_path
+  def change_state
+    publish_hide_delete_states(Mission.find(params[:id]))
   end
 
-  def hide
-    @mission = Mission.find(params[:id])
-
-    @mission.hide if @mission.can_hide?
-
-    redirect_to admin_missions_path
-  end
-
-  def destroy
-    @mission = Mission.find(params[:id])
-
-    @mission.mark_deleted if @mission.can_mark_deleted?
-
-    redirect_to admin_missions_path
-  end
-
-  def move
-    @group = Mission.find(params[:id])
-
-    case params[:direction]
-    when "up"
-      @group.move_higher
-    when "down"
-      @group.move_lower
-    end
-
-    redirect_to admin_missions_path
+  def change_position
+    change_position_action(Mission.find(params[:id]))
   end
 end

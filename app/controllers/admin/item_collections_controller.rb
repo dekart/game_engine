@@ -43,27 +43,7 @@ class Admin::ItemCollectionsController < Admin::BaseController
     end
   end
 
-  def publish
-    @item_collection = ItemCollection.find(params[:id])
-
-    @item_collection.publish if @item_collection.can_publish?
-
-    redirect_to admin_item_collections_path
-  end
-
-  def hide
-    @item_collection = ItemCollection.find(params[:id])
-
-    @item_collection.hide if @item_collection.can_hide?
-
-    redirect_to admin_item_collections_path
-  end
-
-  def destroy
-    @item_collection = ItemCollection.find(params[:id])
-
-    @item_collection.mark_deleted
-
-    redirect_to admin_item_collections_path
+  def change_state
+    publish_hide_delete_states(ItemCollection.find(params[:id]))
   end
 end

@@ -39,40 +39,11 @@ class Admin::ItemGroupsController < Admin::BaseController
     end
   end
 
-  def publish
-    @group = ItemGroup.find(params[:id])
-
-    @group.publish if @group.can_publish?
-
-    redirect_to admin_item_groups_path
+  def change_state
+    publish_hide_delete_states(ItemGroup.find(params[:id]))
   end
 
-  def hide
-    @group = ItemGroup.find(params[:id])
-
-    @group.hide if @group.can_hide?
-
-    redirect_to admin_item_groups_path
-  end
-
-  def destroy
-    @group = ItemGroup.find(params[:id])
-
-    @group.mark_deleted if @group.can_mark_deleted?
-
-    redirect_to admin_item_groups_path
-  end
-
-  def move
-    @group = ItemGroup.find(params[:id])
-
-    case params[:direction]
-    when "up"
-      @group.move_higher
-    when "down"
-      @group.move_lower
-    end
-
-    redirect_to admin_item_groups_path
+  def change_position
+    change_position_action(ItemGroup.find(params[:id]))
   end
 end

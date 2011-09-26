@@ -15,26 +15,15 @@
     </tr>
     
     <% @packages.each do |package| %>
-      <tr>
+      <% content_tag_for(:tr, package) do %>
         <td class="default"><%= CreditPackage.human_attribute_name("default") if package.default? %></td>
         <td class="vip_money"><%= package.vip_money %></td>
         <td class="price"><%= package.price %></td>
         <td class="state"><%= admin_state(package) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_credit_package_path(package)) %>
-          <%= link_to(t(".controls.publish"), publish_admin_credit_package_path(package),
-                :method => :put,
-                :confirm => t(".controls.publish_confirm")
-              ) if package.can_publish? %>
-          <%= link_to(t(".controls.hide"), hide_admin_credit_package_path(package),
-                :method => :put
-              ) if package.can_hide? %>
-          <%= link_to(t(".controls.delete"), admin_credit_package_path(package),
-                :method   => :delete,
-                :confirm  => t(".controls.delete_confirm")
-              ) %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 <% end %>

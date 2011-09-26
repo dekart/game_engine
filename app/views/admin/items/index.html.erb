@@ -69,7 +69,8 @@
           <th></th>
         </tr>
       <% end %>
-      <tr>
+      
+      <% content_tag_for(:tr, item) do %>
         <td class="image"><%= item_image(item, :icon) if item.image? %></td>
         <td class="name"><%= link_to(item.name, edit_admin_item_path(item)) %></td>
         <td class="availability"><%= item.availability %></td>
@@ -94,19 +95,8 @@
         <td class="state"><%= admin_state(item) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_item_path(item)) %>
-          <%= link_to(t(".controls.publish"), publish_admin_item_path(item),
-                :method => :put,
-                :confirm => t(".controls.publish_confirm")
-              ) if item.can_publish? %>
-          <%= link_to(t(".controls.hide"), hide_admin_item_path(item),
-                :method => :put
-              ) if item.can_hide? %>
-          <%= link_to(t(".controls.delete"), admin_item_path(item),
-                :method   => :delete,
-                :confirm  => t(".controls.delete_confirm")
-              ) if item.can_mark_deleted? %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 

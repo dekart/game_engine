@@ -51,27 +51,7 @@ class Admin::CharacterTypesController < Admin::BaseController
     end
   end
 
-  def publish
-    @character_type = CharacterType.find(params[:id])
-
-    @character_type.publish if @character_type.can_publish?
-
-    redirect_to admin_character_types_path
-  end
-
-  def hide
-    @character_type = CharacterType.find(params[:id])
-
-    @character_type.hide if @character_type.can_hide?
-
-    redirect_to admin_character_types_path
-  end
-
-  def destroy
-    @character_type = CharacterType.find(params[:id])
-
-    @character_type.mark_deleted if @character_type.can_mark_deleted?
-
-    redirect_to admin_character_types_path
+  def change_state
+    publish_hide_delete_states(CharacterType.find(params[:id]))
   end
 end

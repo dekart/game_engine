@@ -18,27 +18,27 @@
     </tr>
 
     <% @messages.each do |message| %>
-      <tr>
+      <% content_tag_for(:tr, message) do %>
         <td class="content"><%= message.content %></td>
         <td class="level"><%= message.min_level %></td>
         <td class="level"><%= message.notify_new_users %></td>
         <td class="level"><%= message.amount_sent %></td>
         <td class="created_at"><%= message.created_at.strftime("%d:%m:%Y %H:%M") %></td>
-        <td class="state"><%= admin_state(message) %></td>
+        <td class="state"><%= admin_state(message, :controls => false) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_message_path(message)) %>
-
-          <%= link_to(t(".controls.publish"), publish_admin_message_path(message),
-                :method => :put,
-                :confirm => t(".controls.publish_confirm")
+          <%= link_to_remote(t(".controls.publish"), 
+                :url      => change_state_admin_message_path(message, :state => :sending),
+                :method   => :put,
+                :confirm  => t(".controls.publish_confirm")
               )  if message.can_start_sending? %>
-
-          <%= link_to(t(".controls.delete"), admin_message_path(message),
-                :method   => :delete,
+          <%= link_to_remote(t(".controls.delete"), 
+                :url      => change_state_admin_message_path(message, :state => :deleted),
+                :method   => :put,
                 :confirm  => t(".controls.delete_confirm")
               ) if message.can_mark_deleted? %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 
