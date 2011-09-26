@@ -39,27 +39,7 @@ class Admin::HelpPagesController < Admin::BaseController
     end
   end
 
-  def publish
-    @page = HelpPage.find(params[:id])
-
-    @page.publish if @page.can_publish?
-
-    redirect_to admin_help_pages_path
-  end
-
-  def hide
-    @page = HelpPage.find(params[:id])
-
-    @page.hide if @page.can_hide?
-
-    redirect_to admin_help_pages_path
-  end
-
-  def destroy
-    @page = HelpPage.find(params[:id])
-
-    @page.mark_deleted if @page.can_mark_deleted?
-
-    redirect_to admin_help_pages_path
+  def change_state
+    publish_hide_delete_states(HelpPage.find(params[:id]))
   end
 end

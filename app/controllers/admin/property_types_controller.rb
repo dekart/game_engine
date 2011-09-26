@@ -51,27 +51,7 @@ class Admin::PropertyTypesController < Admin::BaseController
     end
   end
 
-  def publish
-    @type = PropertyType.find(params[:id])
-
-    @type.publish if @type.can_publish?
-
-    redirect_to admin_property_types_path
-  end
-
-  def hide
-    @type = PropertyType.find(params[:id])
-
-    @type.hide if @type.can_hide?
-
-    redirect_to admin_property_types_path
-  end
-
-  def destroy
-    @type = PropertyType.find(params[:id])
-
-    @type.mark_deleted if @type.can_mark_deleted?
-
-    redirect_to admin_property_types_path
+  def change_state
+    publish_hide_delete_states(PropertyType.find(params[:id]))
   end
 end

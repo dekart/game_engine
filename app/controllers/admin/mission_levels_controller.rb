@@ -35,16 +35,7 @@ class Admin::MissionLevelsController < Admin::BaseController
     end
   end
 
-  def move
-    @level = MissionLevel.find(params[:id])
-
-    case params[:direction]
-    when "up"
-      @level.move_higher
-    when "down"
-      @level.move_lower
-    end
-
-    redirect_to admin_missions_path
+  def change_position
+    change_position_action(MissionLevel.find(params[:id]))
   end
 end

@@ -39,27 +39,7 @@ class Admin::CreditPackagesController < Admin::BaseController
     end
   end
 
-  def publish
-    @package = CreditPackage.find(params[:id])
-
-    @package.publish if @package.can_publish?
-
-    redirect_to admin_credit_packages_path
-  end
-
-  def hide
-    @package = CreditPackage.find(params[:id])
-
-    @package.hide if @package.can_hide?
-
-    redirect_to admin_credit_packages_path
-  end
-
-  def destroy
-    @package = CreditPackage.find(params[:id])
-
-    @package.mark_deleted
-
-    redirect_to admin_credit_packages_path
+  def change_state
+    publish_hide_delete_states(CreditPackage.find(params[:id]))
   end
 end

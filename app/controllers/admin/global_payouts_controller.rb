@@ -39,27 +39,7 @@ class Admin::GlobalPayoutsController < Admin::BaseController
     end
   end
 
-  def publish
-    @global_payout = GlobalPayout.find(params[:id])
-
-    @global_payout.publish if @global_payout.can_publish?
-
-    redirect_to admin_global_payouts_path
-  end
-
-  def hide
-    @global_payout = GlobalPayout.find(params[:id])
-
-    @global_payout.hide if @global_payout.can_hide?
-
-    redirect_to admin_global_payouts_path
-  end
-
-  def destroy
-    @global_payout = GlobalPayout.find(params[:id])
-
-    @global_payout.mark_deleted
-
-    redirect_to admin_global_payouts_path
+  def change_state
+    publish_hide_delete_states(GlobalPayout.find(params[:id]))
   end
 end

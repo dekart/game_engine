@@ -53,27 +53,7 @@ class Admin::BossesController < Admin::BaseController
     end
   end
 
-  def publish
-    @boss = Boss.find(params[:id])
-
-    @boss.publish if @boss.can_publish?
-
-    redirect_to admin_bosses_path
-  end
-
-  def hide
-    @boss = Boss.find(params[:id])
-
-    @boss.hide if @boss.can_hide?
-
-    redirect_to admin_bosses_path
-  end
-
-  def destroy
-    @boss = Boss.find(params[:id])
-
-    @boss.mark_deleted if @boss.can_mark_deleted?
-
-    redirect_to admin_bosses_path
+  def change_state
+    publish_hide_delete_states(Boss.find(params[:id]))
   end
 end

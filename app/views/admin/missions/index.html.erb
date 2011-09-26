@@ -7,7 +7,7 @@
     <% @missions.each do |mission| %>
       <% group_header mission.mission_group do |group| %>
         <tr>
-          <th colspan="10" class="subheader">
+          <th colspan="7" class="subheader">
             <%= group.name %>
           </th>
         </tr>
@@ -18,51 +18,36 @@
           <th><%= Mission.human_attribute_name("payouts") %></th>
           <th><%= Mission.human_attribute_name("state") %></th>
           <th></th>
+          <th></td>
         </tr>
       <% end %>
-      <tr>
-        <td class="image" rowspan="2"><%= image_tag(mission.image.url(:icon)) if mission.image? %></td>
-        <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
-        <td class="requirements">
-          <%= admin_requirements_preview(mission.requirements) %>
-        </td>
-        <td class="payouts">
-          <%= admin_payouts_preview(mission.payouts) %>
-        </td>
-        <td class="state"><%= admin_state(mission) %></td>
-        <td class="controls">
-          <%= link_to(t(".controls.edit"), edit_admin_mission_path(mission)) %>
+      
+      <% content_tag_for(:tbody, mission) do %>
+        <tr>
+          <td class="image"><%= image_tag(mission.image.url(:icon)) if mission.image? %></td>
+          <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
+          <td class="requirements">
+            <%= admin_requirements_preview(mission.requirements) %>
+          </td>
+          <td class="payouts">
+            <%= admin_payouts_preview(mission.payouts) %>
+          </td>
+          <td class="state"><%= admin_state(mission, :exclude => [(:visible if mission.levels.empty?)]) %></td>
+          <td class="controls">
+            <%= link_to(t(".controls.edit"), edit_admin_mission_path(mission)) %>
+          </td>
+          <td class="position_controls">
+            <%= admin_position_controls(mission) %>
+          </td>
+        </tr>
 
-          <% if mission.levels.any? && mission.can_publish? %>
-            <%= link_to(t(".controls.publish"), publish_admin_mission_path(mission),
-                  :method => :put,
-                  :confirm => t(".controls.publish_confirm")
-                ) %>
-          <% end %>
-
-          <%= link_to(t(".controls.hide"), hide_admin_mission_path(mission),
-                :method => :put
-              ) if mission.can_hide? %>
-
-          <%= link_to(t(".controls.move_up"), move_admin_mission_path(mission, :direction => :up),
-                :method => :put
-              ) unless mission.first? %>
-          <%= link_to(t(".controls.move_down"), move_admin_mission_path(mission, :direction => :down),
-                :method => :put
-              ) unless mission.last? %>
-
-          <%= link_to(t(".controls.delete"), admin_mission_path(mission),
-                :method   => :delete,
-                :confirm  => t(".controls.delete_confirm")
-              ) if mission.can_mark_deleted? %>
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="5">
-          <%= render("levels", :mission => mission) %>
-        </td>
-      </tr>
+        <tr class="levels">
+          <td class="indent">&nbsp;</td>
+          <td colspan="6">
+            <%= render "levels", :mission => mission %>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
 <% end %>

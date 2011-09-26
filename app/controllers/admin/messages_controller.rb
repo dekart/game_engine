@@ -55,22 +55,16 @@ class Admin::MessagesController < Admin::BaseController
     end
   end
 
-  def publish
+  def change_state
     @message = Message.find(params[:id])
 
-    if @message.can_start_sending?
-      @message.start_sending
+    state_change_action(@message, :controls => false) do |state|
+      case state
+      when :sending
+        @message.start_sending if @message.can_start_sending?
+      when :deleted
+        @message.mark_deleted if @message.can_mark_deleted?
+      end
     end
-
-    redirect_to admin_messages_path
   end
-
-  def destroy
-    @message = Message.find(params[:id])
-
-    @message.mark_deleted if @message.can_mark_deleted?
-
-    redirect_to admin_messages_path
-  end
-  
 end

@@ -2,9 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :admin do |admin|
     admin.resources :item_groups,
       :member => {
-        :move     => :put,
-        :publish  => :put,
-        :hide     => :put
+        :change_position  => :put,
+        :change_state     => :put
       } do |group|
         group.resources :items, :only => :index,
           :collection => { :balance => :any }
@@ -15,44 +14,41 @@ ActionController::Routing::Routes.draw do |map|
         :balance => :any
       },
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
     admin.resources :mission_groups,
       :member => {
-        :move     => :put,
-        :publish  => :put,
-        :hide     => :put
+        :change_position  => :put,
+        :change_state     => :put
       }
       
     admin.resources(:missions,
       :collection => {:balance => :any},
       :member => {
-        :publish  => :put,
-        :hide     => :put,
-        :move     => :put
+        :change_position  => :put,
+        :change_state     => :put
       }
     ) do |mission|
-      mission.resources :mission_levels,
-        :member => {
-          :move => :put
-        }
+      mission.resources :mission_levels
     end
+    
+    admin.resources :mission_levels, :only => [],
+      :member => {
+        :change_position => :put
+      }
     
     admin.resources :messages,
       :member => {
-        :publish => :put
+        :change_state => :put
       }
 
     admin.resources :bosses,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
     admin.resources :property_types,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
       
     admin.resources :payouts,       :only => [:new]
@@ -70,22 +66,19 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :tips,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
     admin.resources :translations
     admin.resources :assets
 
     admin.resources :character_types,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
 
     admin.resources :help_pages,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
 
     admin.resources :settings
@@ -107,8 +100,7 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :titles,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
 
     admin.resources :item_collections,
@@ -116,14 +108,12 @@ ActionController::Routing::Routes.draw do |map|
         :add_item => :any
       },
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
 
     admin.resources :monster_types,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
 
     admin.resources :item_sets,
@@ -131,20 +121,17 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :stories,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
 
     admin.resources :global_payouts,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
       
     admin.resources :credit_packages,
       :member => {
-        :publish  => :put,
-        :hide     => :put
+        :change_state => :put
       }
 
     admin.resources :contests,

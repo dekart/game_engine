@@ -39,27 +39,7 @@ class Admin::TipsController < Admin::BaseController
     end
   end
 
-  def publish
-    @tip = Tip.find(params[:id])
-
-    @tip.publish if @tip.can_publish?
-
-    redirect_to admin_tips_path
-  end
-
-  def hide
-    @tip = Tip.find(params[:id])
-
-    @tip.hide if @tip.can_hide?
-
-    redirect_to admin_tips_path
-  end
-
-  def destroy
-    @tip = Tip.find(params[:id])
-
-    @tip.mark_deleted
-
-    redirect_to admin_tips_path
+  def change_state
+    publish_hide_delete_states(Tip.find(params[:id]))
   end
 end

@@ -1,0 +1,9 @@
+var element = $('#<%= dom_id(@object) %>');
+var sibling = $('#<%= dom_id(@sibling) %>');
+
+element.fadeOut(function(){
+  $(this).detach().<%= @direction == :up ? 'insertBefore' : 'insertAfter' %>(sibling).fadeIn();
+
+  element.find('#<%= dom_id(@object, :position_controls) %>').html('<%= escape_javascript(admin_position_controls(@object)) %>');
+  sibling.find('#<%= dom_id(@sibling, :position_controls) %>').html('<%= escape_javascript(admin_position_controls(@sibling)) %>');
+});

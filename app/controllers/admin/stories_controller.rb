@@ -39,27 +39,7 @@ class Admin::StoriesController < Admin::BaseController
     end
   end
 
-  def publish
-    @story = Story.find(params[:id])
-
-    @story.publish if @story.can_publish?
-
-    redirect_to admin_stories_path
-  end
-
-  def hide
-    @story = Story.find(params[:id])
-
-    @story.hide if @story.can_hide?
-
-    redirect_to admin_stories_path
-  end
-
-  def destroy
-    @story = Story.find(params[:id])
-
-    @story.mark_deleted
-
-    redirect_to admin_stories_path
+  def change_state
+    publish_hide_delete_states(Story.find(params[:id]))
   end
 end

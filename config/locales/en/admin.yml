@@ -1,5 +1,10 @@
 en:
   admin:
+    change_state:
+      confirm: 'Are you sure you want to change state of this %{object} to %{state}?'
+    change_position:
+      move_higher: "Move Up"
+      move_lower: "Move Down"
     documentation: "What's this?"
     layouts:
       main_menu:
@@ -40,6 +45,7 @@ en:
         footer:
           text: "This game is powered by %{engine} version %{version}"
           engine: "Railorz RPG Engine"
+          
     item_groups:
       index:
         title: "Item Groups"
@@ -47,13 +53,6 @@ en:
         controls:
           new: "Add Group"
           edit: "Edit"
-          move_up: "Move Up"
-          move_down: "Move Down"
-          delete: "Delete"
-          delete_confirm: "Are you sure? All items linked to this group will be also deleted!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this group visible to players?"
-          hide: "Hide"
       new:
         title: "New Item Group"
         submit: "Create"
@@ -81,11 +80,6 @@ en:
         not_usable: "Not usable"
         controls:
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure? This item will be also removed from all users!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this item visible to players?"
-          hide: "Hide"
       new:
         title: "New Item"
         submit: "Create"
@@ -112,14 +106,7 @@ en:
         empty_set: "No mission groups"
         controls:
           new: "Add Group"
-          move_up: "Move Up"
-          move_down: "Move Down"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure? All missions linked to this group will be unlinked and hidden from a list of available missions!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this group visible to players?"
-          hide: "Hide"
       new:
         title: "New Mission Group"
         submit: "Create"
@@ -140,19 +127,10 @@ en:
         empty_set: "No missions"
         controls:
           edit: "Edit"
-          move_up: "Move Up"
-          move_down: "Move Down"
-          delete: "Delete"
-          delete_confirm: "Are you sure? Mission results will be also removed from all users!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this mission visible to players?"
-          hide: "Hide"
       levels:
         controls:
           new: "Add Mastery Level"
           edit: "Edit"
-          move_up: "Move Up"
-          move_down: "Move Down"
         empty_set: "No mastery levels for this mission. You should add at least 1 level before publishing this mission."
       new:
         title: "New Mission"
@@ -186,11 +164,6 @@ en:
         controls:
           new: "Add Boss"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure? Boss fight results will be also removed from all users!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this boss visible to players?"
-          hide: "Hide"
       new:
         title: "New Boss"
         submit: "Create"
@@ -211,11 +184,6 @@ en:
         controls:
           new: "Add Tip"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure?"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this tip visible to players?"
-          hide: "Hide"
       new:
         title: "New Tip"
         submit: "Create"
@@ -278,11 +246,6 @@ en:
         controls:
           new: "Add Property Type"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure? Estates of this type will be also removed from all users!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this property type visible to players?"
-          hide: "Hide"
       new:
         title: "New Property Type"
         submit: "Create"
@@ -334,11 +297,7 @@ en:
         controls:
           new: "Add Type"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure? This character type will become unavailable for users!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this type visible to players?"
-          hide: "Hide"
+          change_state_confirm: "Are you sure you want to change state of this character type?"
       new:
         title: "New Character Type"
         submit: "Create"
@@ -364,11 +323,6 @@ en:
           preview:
             dialog: "Dialog"
             page: "Page"
-          delete: "Delete"
-          delete_confirm: "Are you sure? This help page will become unavailable for users!"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this page visible to players?"
-          hide: "Hide"
       new:
         title: "New Help Page"
         submit: "Create"
@@ -482,11 +436,6 @@ en:
         controls:
           new: "Add Title"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure?"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this title visible to players?"
-          hide: "Hide"
       new:
         title: "New Title"
         submit: "Create"
@@ -505,11 +454,6 @@ en:
         controls:
           new: "Add Collection"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure?"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this collection visible to players?"
-          hide: "Hide"
       new:
         title: "New Collection"
         submit: "Create"
@@ -533,11 +477,6 @@ en:
         controls:
           new: "Add Story"
           edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "Are you sure?"
-          publish: "Publish"
-          publish_confirm: "Are you sure you want to make this story visible to players?"
-          hide: "Hide"
       form_fields:
         story: "Story Content"
       new:
@@ -557,8 +496,8 @@ en:
         controls:
           edit: "Edit"
           publish: "Publish"
-          delete: "Delete"
           publish_confirm: "Are you sure you want to send this message to players?"
+          delete: "Delete"
           delete_confirm: "Are you sure you want to delete this message?"
       new:
         title: "New Message"

@@ -1,0 +1,9 @@
+$('#<%= dom_id(@object) %>').fadeOut();
+
+<% unless @object.deleted? %>
+  $('#<%= dom_id(@object) %>').queue(function(next){ 
+    $(this).find('.state').html('<%= escape_javascript(admin_state(@object, @options)) %>'); 
+    
+    next();
+  }).fadeIn();
+<% end %>
