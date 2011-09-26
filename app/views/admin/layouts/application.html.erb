@@ -1,9 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
-  <%= stylesheet_link_tag('jqplot', "admin") %>
+  <script type="text/javascript">
+    var signed_request = '<%= escape_javascript(fb_signed_request) %>';
+  </script>
 
-  <%= javascript_include_tag "jquery", "jrails", "visibility", "jquery/dialog", 'jquery/jqplot', 'jquery/jqplot/dateAxisRenderer', 'jquery/jqplot/highlighter', 'jquery/jqplot/canvasAxisTickRenderer', 'jquery/jqplot/canvasTextRenderer', "admin", :cache => 'cache/admin' %>
+  <%= stylesheet_link_tag(%w{jqplot admin}) %>
+
+  <%= javascript_include_tag "jquery", "jrails", "visibility", "jquery/dialog", 'jquery/jqplot', 'jquery/jqplot/dateAxisRenderer', 'jquery/jqplot/highlighter', 'jquery/jqplot/canvasAxisTickRenderer', 'jquery/jqplot/canvasTextRenderer', "signed_request", "admin", :cache => 'cache/admin' %>
 
   <title><%= @admin_title %></title>
 </head>

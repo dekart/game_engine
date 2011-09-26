@@ -141,29 +141,29 @@ describe User do
   
   describe 'when updating social data' do
     before do
+      @facebook_user = {
+        'first_name'  => 'Fake Name',
+        'last_name'   => 'Fake Surname',
+        'timezone'    => 5,
+        'locale'      => 'ab_CD',
+        'gender'      => 'male',
+        'email'       => 'user@test.com',
+        
+        'third_party_id' => 'abcd1234'
+      }
+      
+      @facebook_friends = [
+        {'id' => 123},
+        {'id' => 456},
+        {'id' => 789}
+      ]
+      
+      @koala = mock('koala', :get_object => @facebook_user, :get_connections => @facebook_friends)
+      @koala_batch = mock('koala batch')
+      @koala_batch.stub!(:batch).and_yield(@koala).and_return([@facebook_user, @facebook_friends])
+      
       @user = Factory(:user)
-      
-      @mogli_user = mock('Mogli::User',
-        :client= => true,
-        :fetch => true,
-        
-        :first_name => 'Fake Name',
-        :last_name => 'Fake Surname',
-        :timezone => 5,
-        :locale => 'ab_CD',
-        :gender => 'male',
-        :email => 'user@test.com',
-        
-        :third_party_id => 'abcd1234',
-        
-        :friends => [
-          mock('user 1', :id => 123),
-          mock('user 2', :id => 456),
-          mock('user 3', :id => 789)
-        ]
-      )
-      
-      Mogli::User.stub!(:find).and_return(@mogli_user)
+      @user.stub!(:facebook_client).and_return(@koala_batch)
     end
     
     it 'should successfully update data' do
@@ -183,7 +183,9 @@ describe User do
     end
     
     it 'should fetch user data using Facebook API' do
-      Mogli::User.should_receive(:find).and_return(@mogli_user)
+      @koala.should_receive(:get_object).
+        with('me', :fields=>[:first_name, :last_name, :timezone, :locale, :gender, :third_party_id, :email]).
+        and_return(@facebook_user)
       
       @user.update_social_data!
     end
@@ -219,7 +221,7 @@ describe User do
     end
     
     it 'should not try to update gender is there is no gender in received data' do
-      @mogli_user.should_receive(:gender).and_return(:unknown)
+      @facebook_user['gender'] = nil
       
       lambda{
         @user.update_social_data!
@@ -232,6 +234,12 @@ describe User do
       }.should change(@user, :third_party_id).from('').to('abcd1234')
     end
     
+    it 'should fetch user friend IDs using Facebook API' do
+      @koala.should_receive(:get_connections).with('me', 'friends', :fields => [:id]).and_return(@facebook_friends)
+      
+      @user.update_social_data!
+    end
+
     it 'should update friend_ids field to a list of friend UIDs' do
       lambda{
         @user.update_social_data!

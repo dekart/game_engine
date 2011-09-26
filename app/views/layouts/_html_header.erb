@@ -1,17 +1,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <script type="text/javascript">
-  var signed_request = '<%= escape_javascript(facebook_signed_request) %>';
+  var signed_request = '<%= escape_javascript(fb_signed_request) %>';
 </script>
 
 <%= stylesheet_link_tag(%w{qtip application ui-custom}) %>
 
 <%= javascript_include_tag(
       %w{
-        jquery jrails visibility
+        jquery jrails visibility 
         jquery/labelify jquery/dialog jquery/scroll_to jquery/qtip2 jquery/history jquery/tmpl jquery/jcarousel
         jquery/ui/core jquery/ui/widget jquery/ui/mouse jquery/ui/draggable jquery/ui/droppable jquery/ui/tabs
-        facebook_credits promo_block 
+        signed_request facebook_credits promo_block 
         application
       }, 
       :cache => "cache/all"

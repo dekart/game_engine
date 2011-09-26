@@ -112,10 +112,6 @@ class AppRequest::Base < ActiveRecord::Base
       "user_#{ target.is_a?(User) ? target.facebook_id : target.to_i }_app_request_counter"
     end
     
-    def mogli_client
-      Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
-    end
-
     def schedule_deletion(*ids_or_requests)
       ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.id : value}.uniq
       
@@ -127,10 +123,8 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     def check_user_requests(user)
-      facebook_user = Mogli::User.find(user.facebook_id, mogli_client, :apprequests)
-      
-      facebook_user.apprequests.each do |facebook_request|
-        request = AppRequest::Base.find_or_initialize_by_facebook_id(facebook_request.id)
+      user.facebook_client.get_connections('me', 'apprequests').each do |facebook_request|
+        request = AppRequest::Base.find_or_initialize_by_facebook_id(facebook_request['id'])
         
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
@@ -142,17 +136,17 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def update_from_facebook_request(facebook_request)
-    if facebook_request.from.nil?
+    if facebook_request['from'].nil?
       ignore!
     else
-      self.data = JSON.parse(facebook_request.data) if facebook_request.data
+      self.data = JSON.parse(facebook_request['data']) if facebook_request['data']
   
       becomes(request_class_from_data).tap do |request|
         # Ensure that the new type will be saved correctly
         request.type = request.class.sti_name
       
-        request.sender = User.find_by_facebook_id(facebook_request.from.id).character
-        request.receiver_id = facebook_request.to.id
+        request.sender = User.find_by_facebook_id(facebook_request['from']['id']).character
+        request.receiver_id = facebook_request['to']['id']
         
         request.transaction do
           request.save!
@@ -170,15 +164,17 @@ class AppRequest::Base < ActiveRecord::Base
   end
 
   def update_data!
-    begin
-      update_from_facebook_request(Mogli::AppRequest.find(facebook_id, self.class.mogli_client))
-    rescue Mogli::Client::ClientException => e
-      mark_broken! if can_mark_broken?
-    end
+    update_from_facebook_request(
+      Facepalm::Config.default.api_client.get_object(facebook_id)
+    )
+  rescue Koala::Facebook::APIError => e
+    logger.error "AppRequest data update error: #{ e }"
+
+    mark_broken! if can_mark_broken?
   end
   
   def delete_from_facebook!
-    Mogli::AppRequest.new({:id => facebook_id}, self.class.mogli_client).destroy
+    Facepalm::Config.default.api_client.delete_object(facebook_id)
   end
 
   def type_name

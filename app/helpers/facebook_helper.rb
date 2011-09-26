@@ -1,10 +1,28 @@
 module FacebookHelper
   def fb_fan_box(options = {})
-    content_tag("fb:fan", "", {:profile_id => Facebooker2.app_id}.merge(options))
+    content_tag("fb:fan", "", {:profile_id => facepalm.app_id}.merge(options))
   end
 
   def fb_comments(xid, options = {})
     content_tag('fb:comments', '', options.merge(:xid => xid))
+  end
+
+  def fb_profile_pic(user, options = {})
+    options[:title] ||= options[:alt]
+    
+    image_tag(
+      'https://graph.facebook.com/%s/picture?type=%s&return_ssl_resources=%d' % [
+        user.respond_to?(:facebook_id) ? user.facebook_id : user, 
+        options[:size],
+        request.ssl? ? 1 : 0
+      ], 
+      :alt    => options[:alt] || '',
+      :title  => options[:title] || ''
+    )
+  end
+  
+  def fb_name(user, options = {})
+    content_tag('fb:name', '', options.merge(:uid => user.respond_to?(:facebook_id) ? user.facebook_id : user))
   end
 
   def fb_profile_url(user)
@@ -12,7 +30,7 @@ module FacebookHelper
   end
 
   def fb_app_page_url
-    "#{request.protocol}www.facebook.com/apps/application.php?id=#{Facebooker2.app_id}"
+    "#{request.protocol}www.facebook.com/apps/application.php?id=#{facepalm.app_id}"
   end
 
   def if_fb_connect_initialized(command = nil, &block)
@@ -47,10 +65,5 @@ module FacebookHelper
         after_callback
       ]
     ).gsub(/\n\s+/, ' ')
-  end
-  
-  def fb_graph_user_image_tag(facebook_id, size, options = {})
-    image_tag("#{request.protocol}graph.facebook.com/#{facebook_id}/picture?type=#{size}&return_ssl_resources=#{request.ssl? ? 1 : 0}", 
-      options)
   end
 end

@@ -1,8 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.facebook_oauth_connect '/facebook_oauth',
-    :controller => :application,
-    :action     => :facebook_oauth_connect
-
   map.namespace :admin do |admin|
     admin.resources :item_groups,
       :member => {

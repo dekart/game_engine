@@ -32,11 +32,7 @@ class UsersController < ApplicationController
   
   def subscribe
     if request.get?
-      if params['hub.verify_token'] == Digest::MD5.hexdigest(Facebooker2.secret)
-        render :text => params['hub.challenge']
-      else
-        render :nothing
-      end
+      render :text => Koala::Facebook::RealtimeUpdates.meet_challenge(params, facepalm.subscription_token)
     elsif request.post?
       facebook_ids = params[:entry].collect{|e| e['id'] }
       

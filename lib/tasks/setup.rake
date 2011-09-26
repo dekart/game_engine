@@ -32,20 +32,20 @@ namespace :app do
     task :subscriptions => :environment do
       puts 'Setting up real-time update subscriptions...'
       
-      begin
-        client = Mogli::AppClient.create_and_authenticate_as_application(Facebooker2.app_id, Facebooker2.secret)
-        client.application_id = Facebooker2.app_id
-      
-        client.subscribe_to_model(Mogli::User, 
-          :fields => [:first_name, :last_name, :email, :gender, :timezone, :third_party_id, :locale],
-          :callback_url => Facebooker2.callback_url + '/users/subscribe',
-          :verify_token => Digest::MD5.hexdigest(Facebooker2.secret)
-        )
-      
-        puts 'Done!'
-      rescue
-        puts 'Failed to update subscriptions! Please run update manually: rake app:setup:subscriptions --trace'
-      end
+      config = Facepalm::Config.default
+      updates = Koala::Facebook::RealtimeUpdates.new(
+        :app_id => config.app_id, 
+        :secret => config.secret
+      )
+
+      updates.subscribe(
+        'user', 
+        'first_name, last_name, email, timezone, locale',
+        config.callback_url('http://') + '/users/subscribe',
+        config.subscription_token
+      )
+    
+      puts 'Done!'
     end
     
     desc "Generate experience table for levels"

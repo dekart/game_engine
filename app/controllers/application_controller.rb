@@ -7,10 +7,8 @@ class ApplicationController < ActionController::Base
   include ReferenceCode
   include AppRequests
 
-  before_filter :check_character_existance, :except => [:facebook_oauth_connect]
+  before_filter :check_character_existance, :except => [:facepalm_oauth_endpoint]
   before_filter :check_user_ban
-  
-  facebook_integration_filters unless ENV['OFFLINE']
   
   layout :get_layout
 
@@ -28,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
   
   def self.skip_authentication_filters(options = {})
-    skip_before_filter(:check_character_existance, :ensure_canvas_connected_to_facebook, :check_user_ban, options)
+    skip_before_filter(:check_character_existance, :check_user_ban, facepalm_authentication_filter, options)
   end
   
   def check_character_existance
@@ -58,7 +56,9 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if current_facebook_user
+    return unless current_facebook_user
+    
+    if current_facebook_user.authenticated?
       @current_user ||= find_or_create_current_user
     elsif ENV['OFFLINE']
       @current_user ||= find_or_create_offline_user
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_or_create_current_user
-    facebook_id = current_facebook_user.id
+    facebook_id = current_facebook_user.uid
 
     unless user = User.find_by_facebook_id(facebook_id)
       user = User.new
@@ -85,10 +85,11 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # Updating user access information
-    user.access_token = current_facebook_user.client.access_token
-    user.access_token_expire_at = current_facebook_user.client.expiration
+    # Updating API access credentials
+    user.access_token = current_facebook_user.access_token
+    user.access_token_expire_at = current_facebook_user.access_token_expires_at
     
+    # Updating visit info
     user.last_visit_at = Time.now if user.last_visit_at.nil? || user.last_visit_at < 30.minutes.ago
     user.last_visit_ip = request.remote_ip
     

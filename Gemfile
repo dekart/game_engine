@@ -20,15 +20,11 @@ gem "redis",            "2.1.1"
 
 gem 'cubus-settingslogic', '2.2.0'
 
-
-# facebooker2 dependencies
-gem "crack",      "0.1.8"
-gem "hashie",     "0.4.0"
-gem "httparty",   "0.6.1"
-gem "ruby-hmac",  "0.4.0"
-gem "multi_json", "1.0.3"
-
-gem "koala",      "1.2.0beta3"
+# Facepalm
+gem 'multi_json'
+gem 'faraday'
+gem 'koala', '1.2.0beta4'
+gem 'ie_iframe_cookies'
 
 group :development do
   gem "capistrano",     "2.5.20"

@@ -7,7 +7,7 @@ class ApplicationController
     protected
 
     def encryptor
-      @reference_encoder ||= ActiveSupport::MessageEncryptor.new(Facebooker2.secret)
+      @reference_encoder ||= ActiveSupport::MessageEncryptor.new(facepalm.secret)
     end
 
     def reference_code(*args)

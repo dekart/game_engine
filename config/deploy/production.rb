@@ -15,9 +15,8 @@ set :rails_env, "production"
 
 default_environment["RAILS_ENV"] = "production"
 
-set :facebooker_config, {
+set :facebook_config, {
   :app_id           => "your_fb_app_id",
-  :api_key          => "your_fb_api_key",
   :secret           => "your_fb_api_secret",
   :canvas_page_name => "your_fb_canvas_page",
   :callback_domain  => "your_domain"

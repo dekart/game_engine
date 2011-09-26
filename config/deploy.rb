@@ -55,11 +55,11 @@ namespace :deploy do
       put(config, "#{shared_path}/nginx.conf")
     end
 
-    desc "Generate Facebooker config file"
-    task :facebooker do
-      config = YAML.dump(rails_env => facebooker_config.deep_stringify_keys)
+    desc "Generate Facebook config file"
+    task :facebook do
+      config = YAML.dump(rails_env => facebook_config.deep_stringify_keys)
 
-      put(config, "#{release_path}/config/facebooker.yml")
+      put(config, "#{release_path}/config/facebook.yml")
     end
     
     desc "Generate DB config file"
@@ -182,7 +182,7 @@ after "deploy:setup", "deploy:dependencies:system_gems"
 
 # All deploys
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
-after "deploy:update_code", "deploy:configure:facebooker"
+after "deploy:update_code", "deploy:configure:facebook"
 after "deploy:update_code", "deploy:configure:database"
 after "deploy:update_code", "deploy:configure:settings"
 

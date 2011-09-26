@@ -17,7 +17,8 @@ test
 
 # Auto-generated files
 
-config/facebooker.yml
+config/facebook.yml
+config/tunnelr.yml
 config/database.yml
 config/settings.yml
 
