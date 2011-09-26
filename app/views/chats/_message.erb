@@ -2,7 +2,7 @@
   <div class="message clearfix" data-message-id="${id}">
     <div class="picture">
       <a href="/characters/${character_key}" title="${name}">
-        <%= fb_profile_pic("${facebook_id}", "square", :alt => '${name}') %>
+        <%= fb_profile_pic("${facebook_id}", :size => :square, :alt => '${name}') %>
       </a>
     </div>
     <div class="info">

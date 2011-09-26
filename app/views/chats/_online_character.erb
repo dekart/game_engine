@@ -2,7 +2,7 @@
   <div class="character clearfix {{if friend}}friend{{/if}}" data-id="${facebook_id}">
     <div class="picture">
       <a href="/characters/${character_key}" title="${name}">
-        <%= fb_profile_pic("${facebook_id}", "square", :alt => '${name}') %>
+        <%= fb_profile_pic("${facebook_id}", :size => :square, :alt => '${name}') %>
       </a>
     </div>
     <div class="info">

@@ -26,7 +26,7 @@ module CharactersHelper
 
     options[:size] ||= :square
     
-    fb_profile_pic(character.user.facebook_id, options[:size], {:title => character.name, :alt => character.name})
+    fb_profile_pic(character.user.facebook_id, :size => options[:size], :alt => character.name)
   end
 
   def character_name_link(character_or_user, link_options = {}, name_options = {})
