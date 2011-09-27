@@ -30,7 +30,7 @@
           <td class="buttons">
             <%= link_to_function(button(:publish), stream_dialog(:exchange, @exchange), :class => 'button publish') %>
             
-            <%= link_to(button(:delete), exchange_path(@exchange, :stored_signed_request => facebook_signed_request), 
+            <%= link_to(button(:delete), exchange_path(@exchange, :stored_signed_request => fb_signed_request), 
                   :method => :delete,
                   :confirm => t(".buttons.delete_confirm"),
                   :class => 'button delete'
