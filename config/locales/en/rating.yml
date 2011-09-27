@@ -16,40 +16,20 @@ en:
         relations: "Alliance Rating"
         global: "Global Rating"
         contest: "Contest Results"
+      publish: "Brag about it"
 
     level: 
       title: "Highest Level"
-      buttons:
-        # ***
-        publish: "Brag about it"
     total_money:
       title: "Wealthiest"
-      buttons:
-        # ***
-        publish: "Brag about it"
     fights:
       title: "Most Wins"
-      buttons:
-        # ***
-        publish: "Brag about it"
     missions:
       title: "Missions Succeeded"
-      buttons:
-        # ***
-        publish: "Brag about it"
     relations:
       title: "Strongest Alliance"
-      buttons:
-        # ***
-        publish: "Brag about it"
     monsters:
       title: "Monsters Killed"
-      buttons:
-        # ***
-        publish: "Brag about it"
     total_score:
       # ***
       title: "Total Score"
-      buttons:
-        # ***
-        publish: "Brag about it"

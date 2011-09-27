@@ -18,7 +18,7 @@ module RatingsHelper
   end
   
   def rating_publish_button(position, rating_name)
-    link_to_function(button(:publish), stream_dialog(:position_in_rating, position, rating_name),
+    link_to_function(button(t("ratings.buttons.publish")), stream_dialog(:position_in_rating, position, rating_name),
       :class => 'button publish')
   end
 end
