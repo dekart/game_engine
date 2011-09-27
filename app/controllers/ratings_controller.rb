@@ -12,6 +12,7 @@ class RatingsController < ApplicationController
   protected
   
   def fetch_ratings(context = nil)
+    @total_score = Character.rated_by(:total_score, context)
     @level       = Character.rated_by(:level, context)
     @total_money = Character.rated_by(:total_money, context)
     @fights      = Character.rated_by(:fights_won, context)

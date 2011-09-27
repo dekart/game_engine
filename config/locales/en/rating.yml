@@ -5,6 +5,11 @@ en:
         global: "Hall of Fame: Global"
         relations: "Hall of Fame: Alliance"
       note: "This rating is getting updated every 15 minutes"
+      # ***
+      permissions: "We can make your total score visible to your friends, but we'll need an additional permission from you to publish your in-game activities. You can revoce the permission any time from your Privacy Settings page."
+      buttons:
+        # ***
+        permissions: "Allow publishing"
         
     buttons:
       buttons:
@@ -14,13 +19,37 @@ en:
 
     level: 
       title: "Highest Level"
+      buttons:
+        # ***
+        publish: "Brag about it"
     total_money:
       title: "Wealthiest"
+      buttons:
+        # ***
+        publish: "Brag about it"
     fights:
       title: "Most Wins"
+      buttons:
+        # ***
+        publish: "Brag about it"
     missions:
       title: "Missions Succeeded"
+      buttons:
+        # ***
+        publish: "Brag about it"
     relations:
       title: "Strongest Alliance"
+      buttons:
+        # ***
+        publish: "Brag about it"
     monsters:
       title: "Monsters Killed"
+      buttons:
+        # ***
+        publish: "Brag about it"
+    total_score:
+      # ***
+      title: "Total Score"
+      buttons:
+        # ***
+        publish: "Brag about it"

@@ -4,19 +4,19 @@
   <tr>
     <th>#</th>
     <th colspan="2"><%= Character.human_name %></th>
-    <th><%= Character.human_attribute_name("relations_count") %></th>
+    <th><%= Character.human_attribute_name("total_score") %></th>
   </tr>
 
-  <% rating_table(collection, :relations_count, current) do |character, position, current| %>
+  <% rating_table(collection, :total_score, current) do |character, position, current| %>
     <% content_tag(:tr, :class => (:current if current)) do %>
       <td class="position"><%= position %></td>
       <td class="picture"><%= character_picture_link(character) %></td>
       <td class="name">
         <%= character_name_link(character, {}, {:capitalize => true}) %>
         
-        <%= rating_publish_button(position, :relations) if current %>
+        <%= rating_publish_button(position, :total_score) if current %>
       </td>
-      <td class="relations_count last"><%= character.relations.effective_size %></td>
+      <td class="total_score last"><%= character.total_score %></td>
     <% end %>
   <% end %>
 </table>

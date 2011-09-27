@@ -10,19 +10,37 @@
   <%= render("buttons", :current => :relations) %>
 <% end %>
 
+<% if Setting.b(:total_score_publishing_enabled) %>
+  <div class="note" id="rating_score_permissions">
+    <p><%= t('.permissions') %></p>
+    
+    <%= link_to_function(button(:permissions), "Rating.requestPermissions()",
+          :class => 'permissions button'
+        ) %>
+  </div>
+<% end %>
+
 <table id="rating_list" cellspacing="0" cellpadding="0">
   <tr>
+    <td><%= render("total_score", :collection => @total_score, :current => current_character) %></td>
     <td><%= render("level", :collection => @level, :current => current_character) %></td>
+  </tr>
+  <tr>
     <td><%= render("total_money", :collection => @total_money, :current => current_character) %></td>
-  </tr>
-  <tr>
     <td><%= render("fights", :collection => @fights, :current => current_character) %></td>
-    <td><%= render("missions", :collection => @missions, :current => current_character) %></td>
   </tr>
   <tr>
+    <td><%= render("missions", :collection => @missions, :current => current_character) %></td>
     <td><%= render("relations", :collection => @relations, :current => current_character) %></td>
+  </tr>
+  <tr>
     <td><%= render("monsters", :collection => @monsters, :current => current_character) %></td>
+    <td></td>
   </tr>
 </table>
 
 <div class="note"><%= t(".note") %></div>
+
+<% dom_ready do %>
+  Rating.setup();
+<% end %>

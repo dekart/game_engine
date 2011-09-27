@@ -16,5 +16,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 */5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:maintenance:expire_monsters --trace >> <%= shared_path %>/log/expire_monsters.log 2>&1
 */5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:maintenance:finish_contests --trace >> <%= shared_path %>/log/finish_contests.log 2>&1
 
+*/15 * * * *  cd <%= current_path %> && flock ./tmp/pids/rake rake app:maintenance:publish_total_score_in_facebook --trace >> <%= shared_path %>/log/publish_total_score_in_facebook.log 2>&1
+
 2 * * * *     cd <%= current_path %> && flock ./tmp/pids/rake rake app:notifications --trace >> <%= shared_path %>/log/notifications.log 2>&1
 0 5 * * *     cd <%= current_path %> && flock ./tmp/pids/rake rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1

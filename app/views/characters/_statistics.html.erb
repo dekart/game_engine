@@ -1,4 +1,10 @@
 <table class="character_statistics" cellspacing="0" cellpadding="0">
+  <tr class="total_score">
+    <th><%= Character.human_attribute_name("total_score") %></th>
+    <td class="value">
+      <%= character.total_score %>
+    </td>
+  </tr>
   <tr class="fights_won">
     <th><%= Character.human_attribute_name("fights_won") %></th>
     <td class="value">

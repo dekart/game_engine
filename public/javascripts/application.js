@@ -564,13 +564,62 @@ var Exchange = {
 };
 
 var AchievementList = {
-  setup: function(){
+  setup: function() {
+    $(document).bind('facebook.permissions.missing facebook.permissions.not_granted', function() {
+      $("#achievement_permissions").show();
+    }).bind('facebook.permissions.present facebook.permissions.granted', function(){
+      $("#achievement_permissions").hide();
+    });
+    
+    FacebookPermissions.test('publish_actions');
+  },
+  
+  requestPermissions: function(){
+    FacebookPermissions.request('publish_actions');
+  }
+};
+
+var Rating = {
+  setup: function() {
+    $(document).bind('facebook.permissions.missing facebook.permissions.not_granted', function() {
+      $("#rating_score_permissions").show();
+    }).bind('facebook.permissions.present facebook.permissions.granted', function(){
+      $("#rating_score_permissions").hide();
+    });
+    
+    FacebookPermissions.test('publish_actions');
+  },
+  
+  requestPermissions: function() {
+    FacebookPermissions.request('publish_actions');
+  }
+};
+
+var FacebookPermissions = {
+  test: function(permissions) {
+    permissions = permissions.split(",");
+    
     FB.getLoginStatus(function(response) {
       if (response.authResponse) {
         // logged in and connected user, someone you know
-        FB.api('/me/permissions', function(r){
-          if(r.data[0].publish_actions != 1){
-            AchievementList.showPermissionNote();
+        FB.api('/me/permissions', function(r) {
+          var data = r.data[0];
+          
+          var missingPermissions = [];
+          
+          for (var i = 0; i < permissions.length; i++) {
+            var permission = permissions[i];
+            debug(data[permission]);
+            
+            if (data[permission] != 1) {
+              missingPermissions.push(permission);
+            }
+          }
+          
+          if (missingPermissions.length > 0) {
+            $(document).trigger('facebook.permissions.missing', missingPermissions);
+          } else {
+            $(document).trigger('facebook.permissions.present'); 
           }
         });
       } else {
@@ -579,25 +628,19 @@ var AchievementList = {
     });
   },
   
-  requestPermissions: function(){
+  request: function(permissions) {
     FB.login(
       function(response){
-        if(response.status == 'connected'){
-          AchievementList.hidePermissionNote();
+        if (response.status == 'connected'){
+          $(document).trigger('facebook.permissions.granted');
+        } else {
+          $(document).trigger('facebook.permissions.not_granted');
         }
       }, 
       {
-        scope: 'publish_actions'
+        scope: permissions
       }
     );
-  },
-  
-  showPermissionNote: function(){
-    $('#achievement_permissions').show();
-  },
-  
-  hidePermissionNote: function(){
-    $('#achievement_permissions').hide();
   }
 };
 

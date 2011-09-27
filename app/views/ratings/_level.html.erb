@@ -11,7 +11,11 @@
     <% content_tag(:tr, :class => (:current if current)) do %>
       <td class="position"><%= position %></td>
       <td class="picture"><%= character_picture_link(character) %></td>
-      <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
+      <td class="name">
+        <%= character_name_link(character, {}, {:capitalize => true}) %>
+        
+        <%= rating_publish_button(position, :level) if current %>
+      </td>
       <td class="level last"><%= character.level %></td>
     <% end %>
   <% end %>

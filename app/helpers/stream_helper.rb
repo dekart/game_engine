@@ -214,6 +214,17 @@ module StreamHelper
     ]
   end
   
+  def position_in_rating_story_options(position, rating_name)
+    [
+      {
+        :position => position,
+        :rating_name => t("ratings.#{rating_name}.title")
+      },
+      {},
+      asset_image_path(:stream_rating)
+    ]
+  end
+  
   
   def prepare_story(story_alias, interpolation_options = {}, story_data = {}, image = nil)
     interpolation_options.reverse_merge!(

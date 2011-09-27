@@ -63,6 +63,8 @@ class StoriesController < ApplicationController
       exchange_url(exchange.key, :canvas => true)
     when 'achievement'
       achievements_url(:canvas => true)
+    when 'position_in_rating'
+      global_rating_url(:canvas => true)
     else
       root_url(:canvas => true)
     end
