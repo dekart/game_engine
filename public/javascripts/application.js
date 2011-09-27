@@ -564,40 +564,18 @@ var Exchange = {
 };
 
 var AchievementList = {
-  setup: function(){
-    FB.getLoginStatus(function(response) {
-      if (response.authResponse) {
-        // logged in and connected user, someone you know
-        FB.api('/me/permissions', function(r){
-          if(r.data[0].publish_actions != 1){
-            AchievementList.showPermissionNote();
-          }
-        });
-      } else {
-        // no user session available, someone you dont know
-      }
+  setup: function() {
+    $(document).bind('facebook.permissions.missing facebook.permissions.not_granted', function() {
+      $("#achievement_permissions").show();
+    }).bind('facebook.permissions.present facebook.permissions.granted', function(){
+      $("#achievement_permissions").hide();
     });
+    
+    FacebookPermissions.test('publish_actions');
   },
   
   requestPermissions: function(){
-    FB.login(
-      function(response){
-        if(response.status == 'connected'){
-          AchievementList.hidePermissionNote();
-        }
-      }, 
-      {
-        scope: 'publish_actions'
-      }
-    );
-  },
-  
-  showPermissionNote: function(){
-    $('#achievement_permissions').show();
-  },
-  
-  hidePermissionNote: function(){
-    $('#achievement_permissions').hide();
+    FacebookPermissions.request('publish_actions');
   }
 };
 
@@ -870,39 +848,6 @@ var FacebookPermissions = {
   if(!$.isEmptyObject($.fn.qtip)) {
     $.fn.qtip.zindex = 400;
   }
-  
-  $.fn.requestPermissions = function(permissions, options) {
-    options = options || {};
-    
-    var $permissionContainer = options.container || $permissionRequestor;
-    var $permissionRequestor = $(this);
-    
-    
-    
-    FB.getLoginStatus(function(response) {
-      if (response.authResponse) {
-        // logged in and connected user, someone you know
-        FB.api('/me/permissions', function(r){
-          if (r.data[0].publish_actions != 1){
-            $permissionRequestor.show();
-          }
-        });
-      } else {
-        // no user session available, someone you dont know
-      }
-    });
-    
-    FB.login(
-      function(response){
-        if (response.status == 'connected'){
-          $permissionRequestor.hide();
-        }
-      }, 
-      {
-        scope: permissions
-      }
-    );
-  };
 })(jQuery);
 
 
