@@ -173,4 +173,15 @@ Setting[:app_toolbar] ||= ''
 Setting[:app_toolbar_applifier_id] ||= ''
 Setting[:app_toolbar_minimum_level] ||= 1
 
+# total score
+Setting[:total_score_fights_won_factor] ||= 1
+Setting[:total_score_killed_monsters_count_factor] ||= 1
+Setting[:total_score_total_monsters_damage_factor] ||= 1
+Setting[:total_score_total_money_factor] ||= 1
+Setting[:total_score_missions_succeeded_factor] ||= 1
+Setting[:total_score_level_factor] ||= 1
+
+Setting[:total_score_expiration_time] ||= 15.minute.to_i
+Setting[:total_score_publishing_enabled] ||= true
+
 # Put your custom settings below this line

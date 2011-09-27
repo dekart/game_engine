@@ -5,6 +5,9 @@ en:
         global: "Hall of Fame: Global"
         relations: "Hall of Fame: Alliance"
       note: "This rating is getting updated every 15 minutes"
+      permissions: "***We can make your total score visible to your friends, but we'll need an additional permission from you to publish your in-game activities. You can revoce the permission any time from your Privacy Settings page."
+      buttons:
+        permissions: "***Allow publishing"
         
     buttons:
       buttons:
@@ -24,3 +27,5 @@ en:
       title: "Strongest Alliance"
     monsters:
       title: "Monsters Killed"
+    total_score:
+      title: "***Total Score"

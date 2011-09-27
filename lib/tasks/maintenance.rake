@@ -896,5 +896,25 @@ namespace :app do
         puts "Hacked gift from sender #{gift_request.sender_id} to receiver #{gift_request.receiver_id} was deleted"
       end
     end
+    
+    task :recalculate_characters_total_score => :environment do
+      Character.transaction do
+        Character.find_each(:batch_size => 100) do |character|
+          character.update_total_score!
+        end
+      end
+    end
+    
+    task :publish_total_score_in_facebook => :environment do
+      expired_time = Setting.i(:total_score_expiration_time).seconds.ago
+      
+      puts "Publishing total score of recently updated users"
+      
+      Character.find_each(:conditions => ["updated_at >= ?", expired_time], :batch_size => 100) do |character|
+        puts "id: #{character.id}, total_score: #{character.total_score}"
+        
+        character.publish_total_score_in_facebook
+      end
+    end
   end
 end
