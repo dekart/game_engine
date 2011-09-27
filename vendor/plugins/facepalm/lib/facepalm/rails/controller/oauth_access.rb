@@ -31,7 +31,7 @@ module Facepalm
         end
         
         def facepalm_require_authentication(*permissions)
-          if current_facebook_user.authenticated?
+          if current_facebook_user.try(:authenticated?)
             true
           else
             return_code = facepalm_url_encryptor.encrypt(
