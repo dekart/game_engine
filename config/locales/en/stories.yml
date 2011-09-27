@@ -75,3 +75,7 @@ en:
       title: "I've just reached the \"%{name}\" achievement in %{app}!"
       description: ""
       action_link: ""
+    position_in_rating:
+      title: "I'm %{position} in %{rating_name} rating"
+      description: ""
+      action_link: "View Rating »"
