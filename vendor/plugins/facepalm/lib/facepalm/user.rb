@@ -57,6 +57,10 @@ module Facepalm
       Time.at(@options['expires'])
     end
     
+    def api_client
+      @api_client ||= Koala::Facebook::API.new(access_token)
+    end
+    
     def authenticated?
       access_token && !access_token.empty?
     end
