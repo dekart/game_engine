@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Contest do
-  
   describe 'scopes' do
     before do
       @character1 = Factory(:character)
@@ -109,9 +108,25 @@ describe Contest do
     end
   end
   
+  describe 'associations' do
+    it 'should have many contest groups' do
+      should have_many :groups
+    end
+  end
+  
   describe 'when creating' do
     before do
       @contest = Factory(:contest)
+    end
+    
+    %w{name points_type}.each do |attribute|
+      it "should validate presence of #{attribute}" do
+        @contest.should validate_presence_of(attribute)
+      end
+    end
+    
+    it "should validate numericality of duration_time" do
+      @contest.should validate_numericality_of(:duration_time)
     end
     
     it 'should be hidden' do
@@ -129,6 +144,10 @@ describe Contest do
     it 'should create default contest group' do
       @contest.groups.length == 1
     end
+    
+    it 'should return description_before_started in description' do
+      @contest.description.should == @contest.description_before_started
+    end
   end
   
   describe 'when publish' do
@@ -136,8 +155,61 @@ describe Contest do
       @contest = Factory(:contest)
     end
     
+    %w{description_before_started description_when_started description_when_finished}.each do |attribute|
+      it "should not change transition if #{attribute} is not presence" do
+        @contest.started_at = 1.hour.ago
+        @contest.send("#{attribute}=", nil)
+        
+        lambda {
+          @contest.publish!
+        }.should raise_exception(StateMachine::InvalidTransition)
+      end
+    end
+    
+    %w{description_before_started description_when_started description_when_finished}.each do |attribute|
+      it "should validate presence of #{attribute}" do
+        @contest.started_at = 1.hour.ago
+        @contest.publish!
+        
+        @contest.send("#{attribute}=", nil)
+        
+        @contest.should_not be_valid
+        @contest.errors.on(attribute).should be_present
+      end
+    end
+    
     it 'should not be published without start time' do
       @contest.can_publish?.should be_false
+    end
+    
+    it "should not be started if started at time wasn't happen" do
+      @contest.started_at = 1.hour.since
+      @contest.publish!
+      
+      @contest.started?.should be_false
+    end
+    
+    it 'should be started if started at time was happen' do
+      @contest.started_at = 1.hour.ago
+      @contest.publish!
+      
+      @contest.started?.should be_true
+    end
+    
+    it 'should return description description_before_started' do
+      @contest.started_at = 1.hour.since
+      
+      lambda {
+        @contest.publish!
+      }.should_not change(@contest, :description)
+    end
+    
+    it 'should return description description_when_started' do
+      @contest.started_at = 1.hour.ago
+      
+      lambda {
+        @contest.publish!
+      }.should change(@contest, :description).from(@contest.description_before_started).to(@contest.description_when_started)
     end
     
     it 'should be published after setting start time' do
@@ -229,6 +301,12 @@ describe Contest do
       @character.notifications.first.class.should == Notification::ContestWinner
       @character2.notifications.first.class.should == Notification::ContestWinner
       @character3.notifications.first.class.should == Notification::ContestWinner
+    end
+    
+    it 'should return description_when_finished' do
+      lambda {
+        @contest.finish!
+      }.should change(@contest, :description).from(@contest.description_when_started).to(@contest.description_when_finished)
     end
   end
   

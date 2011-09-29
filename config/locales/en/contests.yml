@@ -4,7 +4,6 @@ en:
       start_time: "Contest will start in %{value}"
       finish_time: "Time Left: %{value}"
       current_position: "You are #%{value}"
-      finished: "Contest Finished"
       buttons:
         fights: "Fight!"
         rating: "View Rating"

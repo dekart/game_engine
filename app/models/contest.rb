@@ -9,9 +9,33 @@ class Contest < ActiveRecord::Base
     :dependent => :destroy
   
   state_machine :initial => :hidden do
-    state :hidden
-    state :visible
-    state :finished
+    state :hidden do
+      def description
+        description_before_started
+      end
+    end
+    
+    state :visible do
+      validates_presence_of :description_before_started, :description_when_started, :description_when_finished
+      
+      def description
+        started? ? description_when_started : description_before_started 
+      end
+    end
+    
+    state :finished do
+      validates_presence_of :description_when_finished
+      
+      def description
+        description_when_finished
+      end
+    end
+    
+    state :deleted do
+      def description
+        description_when_finished || description_when_started || description_before_started 
+      end
+    end
     
     event :publish do
       transition :hidden => :visible, :if => :started_at_set? 
@@ -47,12 +71,13 @@ class Contest < ActiveRecord::Base
 
   named_scope :finished_recently, {
     :conditions => ["state = 'finished' AND finished_at > ?", 
-      Setting.i(:contests_show_after_finished_time).days.ago] 
+      Setting.i(:contests_show_after_finished_time).days.ago],
+    :order => 'finished_at DESC'
   }
     
   has_attached_file :image
     
-  validates_presence_of :name, :description, :points_type
+  validates_presence_of :name, :points_type
   
   validates_numericality_of :duration_time, 
     :greater_than => 0

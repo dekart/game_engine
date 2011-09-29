@@ -328,7 +328,11 @@ end
 
 Factory.define :contest do |t|
   t.name 'Fake contest'
-  t.description 'Fake contest'
+  
+  t.description_before_started 'Before started'
+  t.description_when_started 'When started'
+  t.description_when_finished 'When finished'
+  
   t.points_type 'fights_won'
   
   t.duration_time 7

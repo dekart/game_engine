@@ -1,6 +1,9 @@
 <%= form.text_field :name, :required => true, :size => 50 %>
 <%= form.select :points_type, Contest.points_type_to_dropdown, :required => true %>
-<%= form.text_area :description, :cols => 80, :rows => 5 %>
+
+<%= form.text_area :description_before_started, :cols => 80, :rows => 5 %>
+<%= form.text_area :description_when_started, :cols => 80, :rows => 5 %>
+<%= form.text_area :description_when_finished, :cols => 80, :rows => 5 %>
 
 <%= form.datetime_select :started_at, :required => true %>
 <%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>

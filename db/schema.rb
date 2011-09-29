@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926041821) do
+ActiveRecord::Schema.define(:version => 20110929060816) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -235,18 +235,20 @@ ActiveRecord::Schema.define(:version => 20110926041821) do
   end
 
   create_table "contests", :force => true do |t|
-    t.string   "name",               :limit => 100, :default => "", :null => false
-    t.text     "description",                                       :null => false
+    t.string   "name",                       :limit => 100, :default => "", :null => false
+    t.text     "description_when_finished",                                 :null => false
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.integer  "duration_time",                     :default => 7
-    t.string   "state",              :limit => 50,  :default => "", :null => false
-    t.string   "image_file_name",                   :default => "", :null => false
-    t.string   "image_content_type", :limit => 100, :default => "", :null => false
+    t.integer  "duration_time",                             :default => 7
+    t.string   "state",                      :limit => 50,  :default => "", :null => false
+    t.string   "image_file_name",                           :default => "", :null => false
+    t.string   "image_content_type",         :limit => 100, :default => "", :null => false
     t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "points_type",                       :default => ""
+    t.string   "points_type",                               :default => ""
+    t.text     "description_when_started"
+    t.text     "description_before_started"
   end
 
   create_table "credit_orders", :force => true do |t|
