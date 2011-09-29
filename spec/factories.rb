@@ -293,6 +293,10 @@ Factory.define :app_request_monster_invite, :class => 'AppRequest::MonsterInvite
       'type' => 'monster_invite' } 
   }
   t.state 'processed'
+  
+  t.after_create do |a|
+    Factory(:monster_fight, :monster => a.target, :character => a.sender)
+  end
 end
 
 Factory.define :app_request_invitation, :class => 'AppRequest::Invitation' do |t|

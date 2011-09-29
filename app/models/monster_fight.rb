@@ -11,9 +11,11 @@ class MonsterFight < ActiveRecord::Base
       ]
     }
   }
+  
   named_scope :own, 
     :joins      => :monster,
     :conditions => 'monsters.character_id = monster_fights.character_id'
+    
   named_scope :by_type, Proc.new{|type|
     {
       :joins => :monster,
@@ -21,6 +23,11 @@ class MonsterFight < ActiveRecord::Base
     }
   }
   
+  named_scope :by_monster, Proc.new{|monster|
+    {
+      :conditions => {:monster_id => monster}
+    }
+  }
   
   cattr_reader :damage_system
   @@damage_system = FightingSystem::PlayerVsMonster::Simple
