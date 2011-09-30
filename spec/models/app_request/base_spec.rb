@@ -356,6 +356,14 @@ describe AppRequest::Base do
       @request.update_data!
     end
     
+    it 'should fetch data from API using composite ID when receiver is already known' do
+      @request.receiver_id = 111111
+      
+      @koala.should_receive(:get_object).with('123456789_111111').and_return(@remote_request)
+      
+      @request.update_data!
+    end
+    
     it 'should update request from remote request' do
       @request.should_receive(:update_from_facebook_request).and_return(true)
       
@@ -429,6 +437,14 @@ describe AppRequest::Base do
     
     it 'should delete request from facebook using application access token' do
       @koala.should_receive(:delete_object).with(123456789)
+      
+      @request.delete_from_facebook!
+    end
+
+    it 'should delete request from facebook using composite ID if receiver is already known' do
+      @request.receiver_id = 111111
+      
+      @koala.should_receive(:delete_object).with('123456789_111111')
       
       @request.delete_from_facebook!
     end

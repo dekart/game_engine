@@ -12,10 +12,10 @@ class AppRequestsController < ApplicationController
       @target = params[:target_type].constantize.find(params[:target_id])
     end
     
-    @requests = Array.wrap(params[:ids])
+    @recipients = Array.wrap(params[:to])
 
-    @requests.each do |request_id|
-      AppRequest::Base.create(:facebook_id => request_id)
+    @recipients.each do |recipient_id|
+      AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id)
     end
 
     render :layout => 'ajax'

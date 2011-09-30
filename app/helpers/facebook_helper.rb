@@ -47,21 +47,22 @@ module FacebookHelper
     request_params  = options.delete(:params) || {}
         
     if_fb_connect_initialized(
-      "
+      %(
         %s;
-        FB.ui(%s, function(response){ 
-          if(!$.isEmptyObject(response)){ 
-            $('#ajax').load('%s', {ids: response.request_ids}, function(){ 
+        FB.ui(%s, function(response){
+          if(response !== null){
+            $('#ajax').load('%s', $.extend({request_id: response.request, to: response.to}, %s), function(){ 
               %s; 
             });
-          } 
+          }
         }); 
         
         $(document).trigger('facebook.dialog');
-      " % [
+      ) % [
         ga_track_event('Requests', "#{type.to_s.titleize} - Dialog"),
         options.deep_merge(:method => 'apprequests', :data => {:type => type}).to_json,
-        app_requests_path(request_params.merge(:type => type)),
+        app_requests_path,
+        request_params.merge(:type => type).to_json,
         after_callback
       ]
     ).gsub(/\n\s+/, ' ')

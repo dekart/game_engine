@@ -15,7 +15,7 @@ class ApplicationController
     end
     
     def app_requests
-      @app_requests_from_params ||= visit_from_app_request? ? AppRequest::Base.find_all_by_facebook_id(app_request_ids) : []
+      @app_requests_from_params ||= visit_from_app_request? ? AppRequest::Base.with_state(:processed).find_all_by_facebook_id(app_request_ids) : []
     end
     
     def redirect_by_app_request

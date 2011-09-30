@@ -146,7 +146,7 @@ class AppRequest::Base < ActiveRecord::Base
         request.type = request.class.sti_name
       
         request.sender = User.find_by_facebook_id(facebook_request['from']['id']).character
-        request.receiver_id = facebook_request['to']['id']
+        request.receiver_id = facebook_request['to']['id'] if facebook_request['to']
         
         request.transaction do
           request.save!
@@ -162,10 +162,14 @@ class AppRequest::Base < ActiveRecord::Base
       end
     end
   end
+  
+  def graph_api_id
+    receiver_id ? "#{ facebook_id }_#{ receiver_id }" : facebook_id
+  end
 
   def update_data!
     update_from_facebook_request(
-      Facepalm::Config.default.api_client.get_object(facebook_id)
+      Facepalm::Config.default.api_client.get_object(graph_api_id)
     )
   rescue Koala::Facebook::APIError => e
     logger.error "AppRequest data update error: #{ e }"
@@ -174,7 +178,7 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def delete_from_facebook!
-    Facepalm::Config.default.api_client.delete_object(facebook_id)
+    Facepalm::Config.default.api_client.delete_object(graph_api_id)
   end
 
   def type_name
