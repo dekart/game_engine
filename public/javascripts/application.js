@@ -150,6 +150,28 @@ var Spinner = {
   }
 };
 
+var jCarouselHelper = {
+  wrap: function($container, wrapFactor) {
+    var result = "";
+    var wrapped = [];
+    
+    var items = $container.find('li').toArray();
+    
+    for (var i = 0; i < items.length; i++) {
+      var $item = $(items[i]);
+      
+      wrapped.push($item.html());
+      
+      if (wrapped.length == wrapFactor || i == items.length - 1) {
+        result += '<li>' + wrapped.join("\n") + '</li>';
+        wrapped = []
+      }
+    }
+    
+    $container.html(result);
+  }
+};
+
 
 function if_fb_initialized(callback){
   if(typeof FB !== 'undefined'){ 
@@ -356,26 +378,6 @@ var AssignmentForm = {
 var Equipment = {
   options: {},
   
-  wrapAdditionalEquipment: function($container, wrapFactor) {
-    var result = "";
-    var wrapped = [];
-    
-    var items = $container.find('li').toArray();
-    
-    for (var i = 0; i < items.length; i++) {
-      var $item = $(items[i]);
-      
-      wrapped.push($item.html());
-      
-      if (wrapped.length == wrapFactor || i == items.length - 1) {
-        result += '<li>' + wrapped.join("\n") + '</li>';
-        wrapped = []
-      }
-    }
-    
-    $container.html(result);
-  },
-  
   setup: function(_options) {
     if (_options) {
       this.options = _options;
@@ -396,7 +398,7 @@ var Equipment = {
     var $additionalPlacementsContainer = $("#placements .additional .carousel-container");
     
     if (this.options.wrapAdditionalEquipment) {
-      this.wrapAdditionalEquipment($additionalPlacementsContainer, this.options.wrapAdditionalEquipment);
+      jCarouselHelper.wrap($additionalPlacementsContainer, this.options.wrapAdditionalEquipment);
     }
     
     $additionalPlacementsContainer.jcarousel({
