@@ -1,6 +1,6 @@
 <% content_tag(:div, :id => :current_contest, :class => 'contest clearfix', :style => contest_logo_background(current_contest)) do %>
   <div id="contest_info">
-    <div class="description"><%= current_contest.description.html_safe %></div>
+    <div class="description"><%= current_contest.description.html_safe if current_contest.description %></div>
     
     <% if current_contest.available? %>
       <div class="current_position">
@@ -12,9 +12,7 @@
       </div>
     <% end %>
     
-    <% if current_contest.finished? %>
-      <div class="finished"><%= t(".finished") %></div>
-    <% else %>
+    <% unless current_contest.finished? %>
       <%= contest_timer(current_contest) %>
     <% end %>
     

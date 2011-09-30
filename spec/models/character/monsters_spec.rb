@@ -42,5 +42,29 @@ describe Character do
       
       @character.monster_types.payout_triggers(@monster_type).should == [:repeat_victory]
     end
+    
+    it 'should include :invite trigger if user invites friends' do
+      monster_fight = Factory(:monster_fight, :character => @character, :monster => Factory(:monster, :monster_type => @monster_type))
+      monster_fight.update_attribute(:accepted_invites_count, 1)
+      
+      @character.monster_types.payout_triggers(@monster_type).should include(:invite)
+    end
+  end
+  
+  describe "scopes" do
+    describe 'monster_fights' do
+      before do
+        @monster_fight = Factory(:monster_fight)
+        @character = @monster_fight.character
+      end
+      
+      it 'should return by monster' do
+        @character.monster_fights.by_monster(@monster_fight.monster).should include(@monster_fight)
+      end
+      
+      it 'should return by monster type' do
+        @character.monster_fights.by_type(@monster_fight.monster.monster_type).should include(@monster_fight)
+      end
+    end
   end
 end

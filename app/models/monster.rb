@@ -4,11 +4,13 @@ class Monster < ActiveRecord::Base
   
   belongs_to :killer, :class_name => "Character"
   
-  has_many    :monster_fights
+  has_many    :monster_fights,
+    :dependent => :delete_all
   
   has_many    :app_requests, 
     :as => :target, 
-    :class_name => 'AppRequest::Base'
+    :class_name => 'AppRequest::Base',
+    :dependent => :delete_all
 
   state_machine :initial => :progress do
     state :progress

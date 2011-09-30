@@ -13,7 +13,6 @@ class Character
       end
     end
 
-
     module MonsterTypeAssociationExtension
       class CollectedMonsterTypes
         def initialize(character)
@@ -70,11 +69,13 @@ class Character
       end
       
       def payout_triggers(type)
-        if collected.ids.include?(type.id)
-          [:repeat_victory]
-        else
-          [:victory]
+        result = collected.ids.include?(type.id) ? [:repeat_victory] : [:victory]
+        
+        if monster_fight = proxy_owner.monster_fights.by_type(type).current.first 
+          result << :invite if monster_fight.accepted_invites_count > 0
         end
+        
+        result
       end
     end
   end

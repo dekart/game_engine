@@ -293,6 +293,10 @@ Factory.define :app_request_monster_invite, :class => 'AppRequest::MonsterInvite
       'type' => 'monster_invite' } 
   }
   t.state 'processed'
+  
+  t.after_create do |a|
+    Factory(:monster_fight, :monster => a.target, :character => a.sender)
+  end
 end
 
 Factory.define :app_request_invitation, :class => 'AppRequest::Invitation' do |t|
@@ -328,7 +332,11 @@ end
 
 Factory.define :contest do |t|
   t.name 'Fake contest'
-  t.description 'Fake contest'
+  
+  t.description_before_started 'Before started'
+  t.description_when_started 'When started'
+  t.description_when_finished 'When finished'
+  
   t.points_type 'fights_won'
   
   t.duration_time 7

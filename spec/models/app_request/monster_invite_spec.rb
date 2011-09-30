@@ -30,5 +30,13 @@ describe AppRequest::MonsterInvite do
       
       @receiver.character.monster_fights.first.monster.should == @request.monster
     end
+    
+    it 'should increment accepted invites count to sender' do
+      monster_fight = @request.sender.monster_fights.by_monster(@request.monster).first
+      
+      lambda{
+        @request.accept!
+      }.should change{monster_fight.reload.accepted_invites_count}.by(1)
+    end
   end
 end
