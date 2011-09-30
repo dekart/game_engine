@@ -12,6 +12,7 @@ module Facepalm
             :status   => true,
             :xfbml    => true,
             :oauth    => true,
+            :frictionless_requests => :true,
             :locale   => "en_US"
           )
 
@@ -24,6 +25,7 @@ module Facepalm
               cookie : #{ options[:cookie] }, // enable cookies to allow the server to access the session
               xfbml  : #{ options[:xfbml] },  // parse XFBML
               oauth  : #{ options[:oauth] },
+              frictionlessRequests : #{ options[:frictionless_requests] },
               channelUrl : '#{ options[:channel_url] || 'null' }'
             });
           JAVASCRIPT
