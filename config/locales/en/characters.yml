@@ -46,9 +46,6 @@ en:
       title: "Welcome to %{app}!"
       submit: "Start Playing!"
       note: "After clicking '%{submit}' you'll be asked to install %{application}. Click 'Allow' in the appeared window to start playing."
-      already_registered:
-        text: "Already registered earlier? Simply %{skip_form}"
-        skip_form: "skip this form »"
     edit:
       title: "Update Your Character"
       submit: "Save"

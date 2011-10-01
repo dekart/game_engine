@@ -1,13 +1,12 @@
-function signedUrl(url){
-  var url_parts = url.split('#', 2);
-  
-  var new_url = url_parts[0] + (url_parts[0].indexOf('?') == -1 ? '?' : '&') + 'signed_request=' + signed_request;
-  
-  if(url_parts.length == 2) {
-    new_url = new_url + '#' + url_parts[1];
-  }
-
-  return new_url;
+function redirectWithSignedRequest(url, target){
+  $('<form method="POST"></form>').
+    attr({action: url, target: target}).
+    css({display: 'none'}).
+    append(
+      $('<input type="hidden" name="signed_request"/>').val(signed_request)
+    ).
+    appendTo($('body')).
+    submit();
 }
 
 (function($){
@@ -15,16 +14,16 @@ function signedUrl(url){
     return;
   }
   
-  $('a').live('click', function(){
-    var href = $(this).attr('href') || '';
-  
-    if(href !== ''){
-      $(this).attr('href', signedUrl(href));
-    }
+  $('a[href]:not([href^="#"])').live('click', function(){
+    redirectWithSignedRequest($(this).attr('href'), $(this).attr('target'));
+    
+    return false;
   });
 
   $('form').live('submit', function(){
-    $(this).append('<input type="hidden" name="signed_request" value="' + signed_request + '">');
+    $(this).append(
+      $('<input type="hidden" name="signed_request" />').val(signed_request)
+    );
   });
 
   $.ajaxSetup({
