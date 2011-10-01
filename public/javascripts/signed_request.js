@@ -27,7 +27,7 @@ function redirectWithSignedRequest(url, target){
       $('<input type="hidden" name="signed_request" />').val(signed_request)
     );
     
-    if(form.find('input[name="method"]').length == 0){
+    if(form.find('input[name="_method"]').length == 0){
       form.append(
         $('<input type="hidden" name="_method"/>').val(form.attr('method'))
       );
