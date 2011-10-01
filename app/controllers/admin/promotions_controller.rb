@@ -45,6 +45,6 @@ class Admin::PromotionsController < Admin::BaseController
 
     @promotion.destroy
 
-    redirect_to admin_promotions_path
+    render :layout => false
   end
 end
