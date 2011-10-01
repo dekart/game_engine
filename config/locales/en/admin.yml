@@ -409,6 +409,7 @@ en:
           perform: "Restart"
           confirm: "Are you sure you want to restart the application?"
       delete_users:
+        success: 'All application users were deleted'
         user_limit_reached: "This task cannot be performed because your application already reached %{limit} user limit."
       restart:
         success: "The application was successfully restarted!"
