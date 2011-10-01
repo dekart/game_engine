@@ -1,5 +1,5 @@
 function redirectWithSignedRequest(url, target){
-  $('<form method="POST"></form>').
+  $('<form method="POST" id="redirect-with-signed-request"></form>').
     attr({action: url, target: target}).
     css({display: 'none'}).
     append(
@@ -14,16 +14,24 @@ function redirectWithSignedRequest(url, target){
     return;
   }
   
-  $('a[href]:not([href^="#"])').live('click', function(){
+  $('a[href]:not([href^="#"], [onclick])').live('click', function(){
     redirectWithSignedRequest($(this).attr('href'), $(this).attr('target'));
     
     return false;
   });
 
-  $('form').live('submit', function(){
-    $(this).append(
+  $('form:not(#redirect-with-signed-request)').live('submit', function(){
+    var form = $(this);
+    
+    form.append(
       $('<input type="hidden" name="signed_request" />').val(signed_request)
     );
+    
+    if(form.find('input[name="method"]').length == 0){
+      form.append(
+        $('<input type="hidden" name="_method"/>').val(form.attr('method'))
+      );
+    }
   });
 
   $.ajaxSetup({

@@ -62,7 +62,7 @@ class Admin::AssetsController < Admin::BaseController
 
     update_stylesheets
 
-    redirect_to admin_assets_path
+    render :layout => false
   end
 
   protected
