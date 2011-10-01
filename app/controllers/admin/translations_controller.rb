@@ -54,8 +54,8 @@ class Admin::TranslationsController < Admin::BaseController
     @translation = Translation.find(params[:id])
 
     @translation.destroy
-
-    redirect_to :action => :index
+    
+    render :layout => false
   end
 
   protected

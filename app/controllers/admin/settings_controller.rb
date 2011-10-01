@@ -58,6 +58,6 @@ class Admin::SettingsController < Admin::BaseController
 
     @setting.destroy
 
-    redirect_to admin_settings_path
+    destroy_action(@setting)
   end
 end

@@ -60,7 +60,7 @@ class Admin::SkinsController < Admin::BaseController
 
     update_stylesheets
 
-    redirect_to admin_skins_path
+    destroy_action(@skin)
   end
 
   def show

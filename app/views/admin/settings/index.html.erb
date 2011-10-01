@@ -19,7 +19,7 @@
         </tr>
       <% end %>
 
-      <tr>
+      <% content_tag_for(:tr, setting) do %>
         <td><%= setting.alias %></td>
         <td>
           <% if setting.value.present? %>
@@ -30,12 +30,13 @@
         </td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_setting_path(setting)) %>
-          <%= link_to(t(".controls.delete"), admin_setting_path(setting),
+          <%= link_to_remote(t(".controls.delete"), 
+                :url      => admin_setting_path(setting),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")
               ) %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 <% end %>

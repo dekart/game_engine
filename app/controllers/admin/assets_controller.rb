@@ -62,7 +62,7 @@ class Admin::AssetsController < Admin::BaseController
 
     update_stylesheets
 
-    render :layout => false
+    destroy_action(@asset)
   end
 
   protected

@@ -45,6 +45,6 @@ class Admin::PromotionsController < Admin::BaseController
 
     @promotion.destroy
 
-    render :layout => false
+    destroy_action(@promotion)
   end
 end

@@ -72,4 +72,10 @@ class Admin::BaseController < ApplicationController
 
     render :template => 'admin/common/change_state', :layout => false
   end
+  
+  def destroy_action(object)
+    @object = object
+    
+    render :template => 'admin/common/destroy', :layout => false
+  end
 end

@@ -16,6 +16,7 @@
       <th><%= Promotion.human_attribute_name("receipts") %></th>
       <th></th>
     </tr>
+    
     <% @promotions.each do |promotion| %>
       <% content_tag_for(:tr, promotion) do %>
         <td class="created_at"><%= l(promotion.created_at, :format => :short) %></td>

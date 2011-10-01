@@ -9,7 +9,7 @@
       </tr>
     <% end %>
 
-    <% content_tag :tr, :class => (:customized if customization) do %>
+    <% content_tag(:tr, :class => (:customized if customization)) do %>
       <td class="key"><%= key.split('.')[1..-1].join(' ') %></td>
       <% content_tag(:td, :id => translation_id(key), :class => :value) do %>
         <%= link_to_remote(value.present? ? value : content_tag(:span, t(".no_value"), :class => :empty),
@@ -19,7 +19,8 @@
             ) %>
       <% end %>
       <td class="controls">
-        <%= link_to(t(".controls.delete"), admin_translation_path(customization),
+        <%= link_to_remote(t(".controls.delete"), 
+              :url      => admin_translation_path(customization),
               :method   => :delete,
               :confirm  => t(".controls.delete_confirm")
             ) if customization %>
