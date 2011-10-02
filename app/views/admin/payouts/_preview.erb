@@ -1,6 +1,6 @@
 <% content_tag :div, :class => payout.name do %>
   <% if payout.respond_to?(:state) and payout.state != 'visible' %>
-    <span class="state"><%= admin_state(payout) %></span>
+    <span class="state"><%= admin_state(payout, :controls => false) %></span>
   <% end %>
   
   <%= payout %>
