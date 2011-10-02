@@ -1,13 +1,19 @@
-;(function($) {
+(function($) {
   $.dialog = function(data, options) {
-    $.dialog.loading()
+    $.dialog.loading();
 
-    if (data.ajax) filldialogFromAjax(data.ajax, options)
-    else if (data.image) filldialogFromImage(data.image, options)
-    else if (data.div) filldialogFromHref(data.div, options)
-    else if ($.isFunction(data)) data.call($)
-    else $.dialog.reveal(data, options)
-  }
+    if (data.ajax) {
+      filldialogFromAjax(data.ajax, options);
+    } else if (data.image) {
+      filldialogFromImage(data.image, options);
+    } else if (data.div) {
+      filldialogFromHref(data.div, options);
+    } else if ($.isFunction(data)) {
+      data.call($);
+    } else {
+      $.dialog.reveal(data, options);
+    }
+  };
 
   /*
    * Public, $.dialog methods
@@ -18,7 +24,7 @@
       container    : '#content',
       overlay      : true,
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
-      dialogHtml  : '\
+      dialogHtml  : ' \
     <div id="dialog" style="display:none;"> \
       <div class="popup"> \
         <div class="body"> \
@@ -33,71 +39,90 @@
     },
 
     loading: function() {
-      init()
-      if ($('#dialog .loading').length == 1) return true
-      showOverlay()
+      init();
+      if ($('#dialog .loading').length == 1) {
+        return true;
+      }
+      showOverlay();
 
-      $('#dialog .content').empty()
-      $('#dialog .body').children().hide().end().
-        append('<div class="loading"></div>')
+      $('#dialog .content').empty();
+      
+      $('#dialog .body').children().hide().end()
+        .append('<div class="loading"></div>');
 
       $('#dialog').css({
         top:	getPageScroll()[1] + (getPageHeight() / 10),
         left:	$(window).width() / 2 - 205 
-      })//.show()
+      });
 
       $(document).bind('keydown.dialog', function(e) {
-        if (e.keyCode == 27) $.dialog.close()
-        return true
-      })
-      $(document).trigger('loading.dialog')
+        if (e.keyCode == 27) {
+          $.dialog.close();
+        }
+        
+        return true;
+      });
+      
+      $(document).trigger('loading.dialog');
     },
 
     reveal: function(data, options) {
       if(typeof options === "undefined"){ var options = {}; }
       
       $(document).trigger('beforeReveal.dialog');
-      if(options.beforeReveal) options.beforeReveal.call(this);
+      
+      if(options.beforeReveal) {
+        options.beforeReveal.call(this);
+      }
 
-      if (options.klass) $('#dialog .content').addClass(options.klass);
-      $('#dialog .content').append(data)
+      if (options.klass) {
+        $('#dialog .content').addClass(options.klass);
+      }
+      $('#dialog .content').append(data);
       $('#dialog .loading').remove();
       $('#dialog').show();
-      $('#dialog .body').children().fadeIn('normal')
+      $('#dialog .body').children().fadeIn('normal');
       $('#dialog').css('left', $(window).width() / 2 - ($('#dialog .body').width() / 2));
 
       $(document).trigger('reveal.dialog');
-      if (options.reveal) options.reveal.call(this);
+      if (options.reveal) {
+        options.reveal.call(this);
+      }
       
       $(document).trigger('afterReveal.dialog');
-      if (options.afterReveal) options.afterReveal.call(this);
+      
+      if (options.afterReveal) {
+        options.afterReveal.call(this);
+      }
     },
 
     close: function() {
-      $(document).trigger('close.dialog')
-      return false
+      $(document).trigger('close.dialog');
+      
+      return false;
     }
-  })
+  });
 
   /*
    * Public, $.fn methods
    */
 
   $.fn.dialog = function(settings) {
-    init(settings)
+    init(settings);
 
     function clickHandler() {
-      $.dialog.loading(true)
+      $.dialog.loading(true);
 
-      var options = {}
-      options.klass = this.rel.match(/dialog\[?\.(\w+)\]?/)
+      var options = {};
+      options.klass = this.rel.match(/dialog\[?\.(\w+)\]?/);
 
-      filldialogFromHref(this.href, options)
-      return false
+      filldialogFromHref(this.href, options);
+      
+      return false;
     }
 
-    return this.bind('click.dialog', clickHandler)
-  }
+    return this.bind('click.dialog', clickHandler);
+  };
 
   /*
    * Private methods
@@ -105,16 +130,22 @@
 
   // called one time to setup dialog on this page
   function init(settings) {
-    if ($.dialog.settings.inited) return true
-    else $.dialog.settings.inited = true
+    if ($.dialog.settings.inited) {
+      return true;
+    } else {
+      $.dialog.settings.inited = true;
+    }
 
-    $(document).trigger('init.dialog')
+    $(document).trigger('init.dialog');
 
-    var imageTypes = $.dialog.settings.imageTypes.join('|')
-    $.dialog.settings.imageTypesRegexp = new RegExp('\.(' + imageTypes + ')$', 'i')
+    var imageTypes = $.dialog.settings.imageTypes.join('|');
+    
+    $.dialog.settings.imageTypesRegexp = new RegExp('\.(' + imageTypes + ')$', 'i');
 
-    if (settings) $.extend($.dialog.settings, settings)
-    $($.dialog.settings.container).append($.dialog.settings.dialogHtml)
+    if (settings) {
+      $.extend($.dialog.settings, settings);
+    }
+    $($.dialog.settings.container).append($.dialog.settings.dialogHtml);
 
     $('#dialog .close').click($.dialog.close);
   }
@@ -122,6 +153,7 @@
   // getPageScroll() by quirksmode.com
   function getPageScroll() {
     var xScroll, yScroll;
+    
     if (self.pageYOffset) {
       yScroll = self.pageYOffset;
       xScroll = self.pageXOffset;
@@ -132,12 +164,14 @@
       yScroll = document.body.scrollTop;
       xScroll = document.body.scrollLeft;	
     }
-    return new Array(xScroll,yScroll) 
+    
+    return [xScroll, yScroll];
   }
 
   // Adapted from getPageSize() by quirksmode.com
   function getPageHeight() {
-    var windowHeight
+    var windowHeight;
+    
     if (self.innerHeight) {	// all except Explorer
       windowHeight = self.innerHeight;
     } else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
@@ -145,7 +179,8 @@
     } else if (document.body) { // other Explorers
       windowHeight = document.body.clientHeight;
     }	
-    return windowHeight
+    
+    return windowHeight;
   }
 
 
@@ -157,49 +192,57 @@
   function filldialogFromHref(href, options) {
     // div
     if (href.match(/#/)) {
-      var url    = window.location.href.split('#')[0]
-      var target = href.replace(url,'')
-      $.dialog.reveal($(target).show().replaceWith("<div id='dialog_moved'></div>"), options)
+      var url    = window.location.href.split('#')[0];
+      var target = href.replace(url,'');
+      $.dialog.reveal($(target).show().replaceWith("<div id='dialog_moved'></div>"), options);
 
     // image
     } else if (href.match($.dialog.settings.imageTypesRegexp)) {
-      filldialogFromImage(href, options)
+      filldialogFromImage(href, options);
     // ajax
     } else {
-      filldialogFromAjax(href, options)
+      filldialogFromAjax(href, options);
     }
   }
 
   function filldialogFromImage(href, options) {
-    var image = new Image()
+    var image = new Image();
+    
     image.onload = function() {
-      $.dialog.reveal('<div class="image"><img src="' + image.src + '" /></div>', options)
-    }
-    image.src = href
+      $.dialog.reveal('<div class="image"><img src="' + image.src + '" /></div>', options);
+    };
+    
+    image.src = href;
   }
 
   function filldialogFromAjax(href, options) {
-    $.get(href, function(data) { $.dialog.reveal(data, options) })
+    $.get(href, function(data) { $.dialog.reveal(data, options); });
   }
 
   function skipOverlay() {
-    return $.dialog.settings.overlay == false
+    return $.dialog.settings.overlay == false;
   }
 
   function showOverlay() {
-    if (skipOverlay()) return
+    if (skipOverlay()) {
+      return;
+    }
 
-    if ($('#dialog_overlay').length == 0)
-      $("body").append('<div id="dialog_overlay" class="dialog_hide"></div>')
+    if ($('#dialog_overlay').length == 0){
+      $("body").append('<div id="dialog_overlay" class="dialog_hide"></div>');
+    }
 
     $('#dialog_overlay').hide().addClass("dialog_overlayBG")
-      .click(function() { $(document).trigger('close.dialog') })
-      .fadeTo(400, 0.5)
-    return false
+      .click(function() { $(document).trigger('close.dialog'); })
+      .fadeTo(400, 0.5);
+      
+    return false;
   }
 
   function hideOverlay(callback){
-    if (skipOverlay()) return false;
+    if (skipOverlay()){
+      return false;
+    }
 
     $('#dialog_overlay').fadeOut(400, function(){
       $("#dialog_overlay").removeClass("dialog_overlayBG");
@@ -220,14 +263,18 @@
     $(document).unbind('keydown.dialog');
 
     $('#dialog').fadeOut(function() {
-      if ($('#dialog_moved').length == 0) $('#dialog .content').removeClass().addClass('content clearfix')
-      else $('#dialog_moved').replaceWith($('#dialog .content').children().hide())
+      if ($('#dialog_moved').length == 0) {
+        $('#dialog .content').removeClass().addClass('content clearfix');
+      } else {
+        $('#dialog_moved').replaceWith($('#dialog .content').children().hide());
+      }
+      
       hideOverlay(function(){
         $('#dialog .loading').remove();
 
         $(document).trigger('dialog.close_complete');
-      })
+      });
     });
-  })
+  });
 
 })(jQuery);
