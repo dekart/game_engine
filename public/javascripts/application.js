@@ -846,7 +846,7 @@ var FacebookPermissions = {
 
   
   if(!$.isEmptyObject($.fn.qtip)) {
-    $.fn.qtip.zindex = 400;
+    $.fn.qtip.zindex = 20000;
   }
 })(jQuery);
 
