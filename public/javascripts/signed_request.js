@@ -9,28 +9,42 @@ function redirectWithSignedRequest(url, target){
     submit();
 }
 
+function localUrl(url){
+  if(url.match(/^http[s]?:\/\//) && url.indexOf(document.location.protocol + '//' + document.location.host) != 0){
+    return false;
+  } else {
+    return true;
+  }
+}
+
 (function($){
   if(typeof signed_request === 'undefined'){
     return;
   }
   
   $('a[href]:not([href^="#"], [onclick])').live('click', function(){
-    redirectWithSignedRequest($(this).attr('href'), $(this).attr('target'));
+    var link = $(this);
     
-    return false;
+    if(localUrl(link.attr('href'))){
+      redirectWithSignedRequest(link.attr('href'), link.attr('target'));
+    
+      return false;
+    }
   });
 
   $('form:not(#redirect-with-signed-request)').live('submit', function(){
     var form = $(this);
     
-    form.append(
-      $('<input type="hidden" name="signed_request" />').val(signed_request)
-    );
-    
-    if(form.find('input[name="_method"]').length == 0){
+    if(localUrl(form.attr('action'))){
       form.append(
-        $('<input type="hidden" name="_method"/>').val(form.attr('method'))
+        $('<input type="hidden" name="signed_request" />').val(signed_request)
       );
+    
+      if(form.find('input[name="_method"]').length == 0){
+        form.append(
+          $('<input type="hidden" name="_method"/>').val(form.attr('method'))
+        );
+      }
     }
   });
 
