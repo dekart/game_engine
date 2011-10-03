@@ -15,7 +15,7 @@
     </tr>
 
     <% @assets.each do |asset| %>
-      <tr>
+      <% content_tag_for(:tr, asset) do %>
         <td class="alias"><%= link_to(asset.alias, edit_admin_asset_path(asset)) %></td>
         <td class="preview"><%= image_tag(asset.image.url(:small)) %></td>
         <td class="controls">
@@ -23,13 +23,14 @@
           <%= link_to(t(".controls.edit"), edit_admin_asset_path(asset),
                 :class => :edit
               ) %>
-          <%= link_to(t(".controls.delete"), admin_asset_path(asset),
+          <%= link_to_remote(t(".controls.delete"), 
+                :url      => admin_asset_path(asset),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm"),
                 :class    => :edit
               ) %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 

@@ -8,7 +8,8 @@
   <p><%= t(".delete_users.note", :limit => delete_user_limit) %></p>
 
   <p>
-    <%= link_to(t(".delete_users.perform"), delete_users_admin_global_task_path,
+    <%= link_to_remote(t(".delete_users.perform"), 
+          :url      => delete_users_admin_global_task_path,
           :method   => :delete,
           :confirm  => t(".delete_users.confirm")
         ) %>
@@ -21,8 +22,8 @@
   <p><%= t(".restart.note") %></p>
 
   <p>
-    <%= link_to(t(".restart.perform"), restart_admin_global_task_path,
-          :method   => :post,
+    <%= link_to_remote(t(".restart.perform"), 
+          :url      => restart_admin_global_task_path,
           :confirm  => t(".restart.confirm")
         ) %>
   </p>

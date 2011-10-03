@@ -11,8 +11,6 @@ module ActionController
         env['REQUEST_METHOD'] = 'GET'
       end
       
-      env['HTTP_SIGNED_REQUEST'] ||= request.params['stored_signed_request']
-      
       @app.call(env)
     end
   end

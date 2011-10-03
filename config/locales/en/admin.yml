@@ -385,6 +385,7 @@ en:
           note: "This function allows you to rebuild CSS stylesheet files for the application. Use it to apply changes when you edit SASS files directly on your server. Please note that all changes done in CSS files instead of SASS files will be lost."
           perform: "Update Styles"
       delete_users:
+        success: 'All application users were deleted'
         user_limit_reached: "This task cannot be performed because your application already reached %{limit} user limit."
       restart:
         success: "The application was successfully restarted!"

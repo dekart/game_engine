@@ -16,8 +16,9 @@
       <th><%= Promotion.human_attribute_name("receipts") %></th>
       <th></th>
     </tr>
+    
     <% @promotions.each do |promotion| %>
-      <tr>
+      <% content_tag_for(:tr, promotion) do %>
         <td class="created_at"><%= l(promotion.created_at, :format => :short) %></td>
         <td class="valid_till"><%= content_tag(:span, l(promotion.valid_till, :format => :short), :class => (Time.now < promotion.valid_till ? :valid : :invalid)) %></td>
         <td class="text"><%= promotion.text.html_safe %></td>
@@ -28,12 +29,13 @@
         <td class="link"><%= link_to(t(".link"), promotion_url(promotion, :canvas => true), :target => :_blank) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_promotion_path(promotion)) %>
-          <%= link_to(t(".controls.delete"), admin_promotion_path(promotion),
+          <%= link_to_remote(t(".controls.delete"), 
+                :url      => admin_promotion_path(promotion),
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")
               ) %>
         </td>
-      </tr>
+      <% end %>
     <% end %>
   </table>
 

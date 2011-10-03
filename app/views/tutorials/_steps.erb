@@ -247,7 +247,7 @@
   <%= tutorial_dialog(
         :buttons => [
           link_to_next_step_button(t_step("goto_missions_button_value"), 
-            :onclick => "redirectTo('#{mission_groups_url}')"),
+            :onclick => "redirectWithSignedRequest('#{mission_groups_url}')"),
           link_to_next_step_button
         ]
       ) %>

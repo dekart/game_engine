@@ -21,7 +21,7 @@
             <tr class="item">
               <td>
                 <% unless item.visible? %>
-                  <span class="state"><%= admin_state(item) %></span>
+                  <span class="state"><%= admin_state(item, :controls => false) %></span>
                 <% end %>
                 <%= item.name %>
               </td>

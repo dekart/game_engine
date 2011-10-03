@@ -1,4 +1,6 @@
 class Tip < ActiveRecord::Base
+  validates_presence_of :text
+  
   state_machine :initial => :hidden do
     state :hidden
     state :visible

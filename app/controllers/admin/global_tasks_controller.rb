@@ -4,19 +4,19 @@ class Admin::GlobalTasksController < Admin::BaseController
   def delete_users
     if User.count < delete_user_limit
       User.destroy_all
+      
+      @result = :success
     else
-      flash[:error] = t(".user_limit_reached", :limit => delete_user_limit)
+      @result = :failure
     end
 
-    redirect_to admin_global_task_path
+    render :layout => false
   end
 
   def restart
     Rails.restart!
 
-    flash[:success] = t(".success")
-
-    redirect_to admin_global_task_path
+    render :layout => false
   end
   
   def update_styles

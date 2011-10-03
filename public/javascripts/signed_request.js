@@ -1,13 +1,20 @@
-function signedUrl(url){
-  var url_parts = url.split('#', 2);
-  
-  var new_url = url_parts[0] + (url_parts[0].indexOf('?') == -1 ? '?' : '&') + 'stored_signed_request=' + signed_request;
-  
-  if(url_parts.length == 2) {
-    new_url = new_url + '#' + url_parts[1];
-  }
+function redirectWithSignedRequest(url, target){
+  $('<form method="POST" id="redirect-with-signed-request"></form>').
+    attr({action: url, target: target}).
+    css({display: 'none'}).
+    append(
+      $('<input type="hidden" name="signed_request"/>').val(signed_request)
+    ).
+    appendTo($('body')).
+    submit();
+}
 
-  return new_url;
+function localUrl(url){
+  if(url.match(/^http[s]?:\/\//) && url.indexOf(document.location.protocol + '//' + document.location.host) != 0){
+    return false;
+  } else {
+    return true;
+  }
 }
 
 (function($){
@@ -15,16 +22,30 @@ function signedUrl(url){
     return;
   }
   
-  $('a').live('click', function(){
-    var href = $(this).attr('href') || '';
-  
-    if(href !== ''){
-      $(this).attr('href', signedUrl(href));
+  $('a[href]:not([href^="#"], [onclick])').live('click', function(){
+    var link = $(this);
+    
+    if(localUrl(link.attr('href'))){
+      redirectWithSignedRequest(link.attr('href'), link.attr('target'));
+    
+      return false;
     }
   });
 
-  $('form').live('submit', function(){
-    $(this).append('<input type="hidden" name="stored_signed_request" value="' + signed_request + '">');
+  $('form:not(#redirect-with-signed-request)').live('submit', function(){
+    var form = $(this);
+    
+    if(localUrl(form.attr('action'))){
+      form.append(
+        $('<input type="hidden" name="signed_request" />').val(signed_request)
+      );
+    
+      if(form.find('input[name="_method"]').length == 0){
+        form.append(
+          $('<input type="hidden" name="_method"/>').val(form.attr('method'))
+        );
+      }
+    }
   });
 
   $.ajaxSetup({
