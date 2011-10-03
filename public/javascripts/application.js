@@ -754,17 +754,29 @@ var FacebookPermissions = {
     refreshOnlineList: function(charactersOnline) {
       var $chat = $(this);
       var $content = $(this).find(".online .content");
-      
       var $template = $("#online-characters-template");
       
-      var wasOnline = $content.find('.character').map(function() {
-        return parseInt($(this).data('id'));
+      // currentCharacter always first
+      var currentCharacter = charactersOnline.shift();
+      
+      var $characters = $content.find('.character');
+      
+      // first load
+      if ($characters.length == 0) {
+        $content.append($template.tmpl(currentCharacter));
+      } 
+      
+      var wasOnline = $characters.map(function() {
+        var id = parseInt($(this).data('id'));
+        
+        if (currentCharacter.facebook_id != id)
+          return id;
       }).toArray();
       
       // add new users
       $.each(charactersOnline, function(index, character) {
         if ($.inArray(character.facebook_id, wasOnline) == -1) {
-          $content.append($template.tmpl(character));
+          $content.prepend($template.tmpl(character));
         }
       });
       

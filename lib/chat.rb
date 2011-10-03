@@ -40,17 +40,14 @@ class Chat
       
       character_ids = $redis.zrange(online_characters_key(chat_id), 0, -1).map {|c| c.to_i}
       
+      # current character always first
+      online_characters << online_character_data(current_character)
+      
       character_ids.each do |character_id|
         if character_id != current_character.id
           character = Character.find(character_id)
           
-          online_characters << {
-            :character_key  => character.key,
-            :name => (character.name.present? ? character.name : character.user.first_name),
-            :facebook_id    => character.facebook_id,
-            :level => character.level,
-            :friend => character.friend_relations.established?(current_character)
-          }
+          online_characters << online_character_data(character, current_character)
         end
       end
       
@@ -75,6 +72,16 @@ class Chat
       
       def online_characters_key(chat_id)
         "online_characters_chat_#{chat_id}"
+      end
+      
+      def online_character_data(character, current_character = nil)
+        {
+          :character_key  => character.key,
+          :name => (character.name.present? ? character.name : character.user.first_name),
+          :facebook_id    => character.facebook_id,
+          :level => character.level,
+          :friend => current_character && character.friend_relations.established?(current_character)
+        }
       end
       
       def expire_online(chat_id)
