@@ -1,5 +1,8 @@
 module Facepalm
   class User
+    class UnsupportedAlgorithm < StandardError; end
+    class InvalidSignature < StandardError; end
+    
     class << self
       def from_signed_request(config, input)
         return if input.blank?
@@ -15,16 +18,15 @@ module Facepalm
       def parse_signed_request(config, input)
         encoded_sig, encoded_envelope = input.split('.', 2)
         signature = base64_url_decode(encoded_sig).unpack("H*").first
-        envelope = MultiJson.decode(base64_url_decode(encoded_envelope))
+        
+        MultiJson.decode(base64_url_decode(encoded_envelope)).tap do |envelope|
+          raise UnsupportedAlgorithm.new("Unsupported encryption algorithm: #{ envelope['algorithm'] }") unless envelope['algorithm'] == 'HMAC-SHA256'
 
-        raise "SignedRequest: Unsupported algorithm #{ envelope['algorithm'] }" unless envelope['algorithm'] == 'HMAC-SHA256'
+          # now see if the signature is valid (digest, key, data)
+          hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, config.secret, encoded_envelope)
 
-        # now see if the signature is valid (digest, key, data)
-        hmac = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::SHA256.new, config.secret, encoded_envelope)
-
-        raise 'SignedRequest: Invalid signature' if (signature != hmac)
-
-        envelope
+          raise InvalidSignature.new('Invalid request signature') if (signature != hmac)
+        end
       end
 
       def base64_url_decode(str)
