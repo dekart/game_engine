@@ -826,6 +826,10 @@ var FacebookPermissions = {
     },
     
     processData: function(data) {
+      if(!data){
+        return;
+      }
+      
       var $chat = $(this);
       
       $chat.chat('appendMessages', data.messages);
