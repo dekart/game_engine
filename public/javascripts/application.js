@@ -921,3 +921,5 @@ $(function(){
     }
   });
 });
+
+window.jsLoadedProperly = true;
