@@ -82,7 +82,9 @@
       $('#dialog .loading').remove();
       $('#dialog').show();
       $('#dialog .body').children().fadeIn('normal');
-      $('#dialog').css('left', $(window).width() / 2 - ($('#dialog .body').width() / 2));
+      $('#dialog').css('left', 
+        ($('body').width() - $('#dialog .body').outerWidth()) / 2
+      );
 
       $(document).trigger('reveal.dialog');
       if (options.reveal) {
