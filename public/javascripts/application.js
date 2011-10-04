@@ -591,13 +591,12 @@ var FacebookPermissions = {
       if (response.authResponse) {
         // logged in and connected user, someone you know
         FB.api('/me/permissions', function(r) {
-          var data = r.data[0];
+          var data = r.data[0]; // TODO: We should handle a case when r.data is undefined (it happens sometimes)
           
           var missingPermissions = [];
           
           for (var i = 0; i < permissions.length; i++) {
             var permission = permissions[i];
-            debug(data[permission]);
             
             if (data[permission] != 1) {
               missingPermissions.push(permission);
