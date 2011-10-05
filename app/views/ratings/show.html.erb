@@ -22,7 +22,7 @@
 
 <table id="rating_list" cellspacing="0" cellpadding="0">
   <tr>
-    <td><%= render("total_score", :collection => @total_score, :current => current_character) %></td>
+    <td><%= render("total_score", :collection => @total_score, :current => current_character) if Setting.b(:total_score_enabled) %></td>
     <td><%= render("level", :collection => @level, :current => current_character) %></td>
   </tr>
   <tr>
