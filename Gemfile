@@ -1,7 +1,7 @@
 source :gemcutter
 
 gem "rails", "2.3.11", :require => nil
-gem 'rake', '0.9.2'
+gem 'rake', '0.8.7'
 
 gem "mysql",            "2.8.1"
 gem "system_timer",     "1.0"
