@@ -8,6 +8,14 @@ en:
       permissions: "We can make your total score visible to your friends, but we'll need an additional permission from you to publish your in-game activities. You can revoke the permission any time at your Privacy Settings page."
       buttons:
         permissions: "Allow Publishing"
+      tabs:
+        level: "Level" #***
+        total_money: "Total Money" #***
+        fights: "Fights" #***
+        missions: "Missions" #***
+        relations: "Relations" #***
+        monsters: "Monsters" #***
+        total_score: "Total Score" #***
         
     buttons:
       buttons:

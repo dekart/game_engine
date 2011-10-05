@@ -10,7 +10,7 @@
   <%= render("buttons", :current => :relations) %>
 <% end %>
 
-<% if Setting.b(:total_score_publishing_enabled) %>
+<% if Setting.b(:total_score_publishing_in_facebook_enabled) %>
   <div class="note" id="rating_score_permissions">
     <p><%= t('.permissions') %></p>
     
@@ -20,24 +20,37 @@
   </div>
 <% end %>
 
-<table id="rating_list" cellspacing="0" cellpadding="0">
-  <tr>
-    <td><%= render("total_score", :collection => @total_score, :current => current_character) if Setting.b(:total_score_enabled) %></td>
-    <td><%= render("level", :collection => @level, :current => current_character) %></td>
-  </tr>
-  <tr>
-    <td><%= render("total_money", :collection => @total_money, :current => current_character) %></td>
-    <td><%= render("fights", :collection => @fights, :current => current_character) %></td>
-  </tr>
-  <tr>
-    <td><%= render("missions", :collection => @missions, :current => current_character) %></td>
-    <td><%= render("relations", :collection => @relations, :current => current_character) %></td>
-  </tr>
-  <tr>
-    <td><%= render("monsters", :collection => @monsters, :current => current_character) %></td>
-    <td></td>
-  </tr>
-</table>
+<% tabs :id => 'rating_list' do |t| %>
+  <% if Setting.b(:total_score_enabled) %>
+    <% t.tab "total_score" do %>
+      <%= render("total_score", :collection => @total_score, :current => current_character) %>
+    <% end %>
+  <% end %>
+  
+  <% t.tab "level" do %>
+    <%= render("level", :collection => @level, :current => current_character) %>
+  <% end %>
+  
+  <% t.tab "total_money" do %>
+    <%= render("total_money", :collection => @total_money, :current => current_character) %>
+  <% end %>
+  
+  <% t.tab "fights" do %>
+    <%= render("fights", :collection => @fights, :current => current_character) %>
+  <% end %>
+  
+  <% t.tab "missions" do %>
+    <%= render("missions", :collection => @missions, :current => current_character) %>
+  <% end %>
+  
+  <% t.tab "relations" do %>
+    <%= render("relations", :collection => @relations, :current => current_character) %>
+  <% end %>
+  
+  <% t.tab "monsters" do %>
+    <%= render("monsters", :collection => @monsters, :current => current_character) %>
+  <% end %>
+<% end %>
 
 <div class="note"><%= t(".note") %></div>
 

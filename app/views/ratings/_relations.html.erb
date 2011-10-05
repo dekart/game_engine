@@ -5,18 +5,16 @@
     <th>#</th>
     <th colspan="2"><%= Character.human_name %></th>
     <th><%= Character.human_attribute_name("relations_count") %></th>
+    <th></th>
   </tr>
 
   <% rating_table(collection, :relations_count, current) do |character, position, current| %>
     <% content_tag(:tr, :class => (:current if current)) do %>
       <td class="position"><%= position %></td>
       <td class="picture"><%= character_picture_link(character) %></td>
-      <td class="name">
-        <%= character_name_link(character, {}, {:capitalize => true}) %>
-        
-        <%= rating_publish_button(position, :relations) if current %>
-      </td>
-      <td class="relations_count last"><%= character.relations.effective_size %></td>
+      <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
+      <td class="relations_count"><%= character.relations.effective_size %></td>
+      <td class="publish last"><%= rating_publish_button(position, :relations) if current %></td>
     <% end %>
   <% end %>
 </table>

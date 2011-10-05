@@ -12,44 +12,47 @@
   .permissions
     +button(!asset_icons_accept, 160px)
 
-#rating_list .rating
+#rating_list
+  .ui-tabs-panel
+    padding: 20px
+ 
+  .rating
+    width: 100%
   
-  .publish
-    +button(!asset_icons_publish)
-    margin-top: 5px
-    width: 82px
-
-  margin-bottom: 30px
-
-  td
-    padding: 5px 10px
-    vertical-align: middle
-
-  th
-    padding: 5px 10px
-    vertical-align: middle
-    text-align: center
-    border-bottom = !splitter_border
-
-  .current
-    font-weight: bold
-    background-color = !rating_current_bg_color
-
+    .button.publish
+      +button(!asset_icons_publish)
+      margin-top: 5px
+      width: 85px
+  
     td
-      border:
-        top = !rating_current_border
-        bottom = !rating_current_border
-
+      padding: 5px 10px
+      vertical-align: middle
+  
+    th
+      padding: 5px 10px
+      vertical-align: middle
+      text-align: left
+      border-bottom = !splitter_border
+  
+    .current
+      font-weight: bold
+      background-color = !rating_current_bg_color
+  
+      td
+        border:
+          top = !rating_current_border
+          bottom = !rating_current_border
+  
+      .position
+        border-left = !rating_current_border
+        font-size: 16px
+        color = !rating_current_color
+  
+      .last
+        border-right = !rating_current_border
+  
     .position
-      border-left = !rating_current_border
-      font-size: 16px
-      color = !rating_current_color
-
-    .last
-      border-right = !rating_current_border
-
-  .position
-    font-size: 14px
-    font-weight: bold
+      font-size: 14px
+      font-weight: bold
 
 
