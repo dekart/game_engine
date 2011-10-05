@@ -14,7 +14,7 @@ en:
         relations: "Alliance Rating"
         global: "Global Rating"
         contest: "Contest Results"
-      publish: "Brag about it"
+      publish: "Publish"
 
     level: 
       title: "Highest Level"

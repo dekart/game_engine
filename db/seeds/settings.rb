@@ -174,6 +174,8 @@ Setting[:app_toolbar_applifier_id] ||= ''
 Setting[:app_toolbar_minimum_level] ||= 1
 
 # total score
+Setting[:total_score_enabled] ||= false
+
 Setting[:total_score_fights_won_factor] ||= 1
 Setting[:total_score_killed_monsters_count_factor] ||= 1
 Setting[:total_score_total_monsters_damage_factor] ||= 1
