@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     unless current_character
       store_return_to
 
-      url_params = params.to_hash.symbolize_keys
+      url_params = params_without_facebook_data.to_hash.symbolize_keys
       url_params.merge!(
         :controller => "/characters",
         :action     => :new,
