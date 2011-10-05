@@ -916,14 +916,18 @@ namespace :app do
     end
     
     task :publish_total_score_in_facebook => :environment do
-      expired_time = Setting.i(:total_score_expiration_time).seconds.ago
-      
-      puts "Publishing total score of recently updated users"
-      
-      Character.find_each(:conditions => ["updated_at >= ?", expired_time], :batch_size => 100) do |character|
-        puts "id: #{character.id}, total_score: #{character.total_score}"
+      if Setting.b(:total_score_enabled) && Setting.b(:total_score_publishing_in_facebook_enabled)
+        expired_time = Setting.i(:total_score_expiration_time).seconds.ago
         
-        character.publish_total_score_in_facebook
+        puts "Publishing total score of recently updated users"
+        
+        Character.find_each(:conditions => ["updated_at >= ?", expired_time], :batch_size => 100) do |character|
+          puts "id: #{character.id}, total_score: #{character.total_score}"
+          
+          character.publish_total_score_in_facebook
+        end
+      else
+        puts "Total score is disabled"
       end
     end
   end
