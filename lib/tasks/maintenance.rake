@@ -897,11 +897,21 @@ namespace :app do
       end
     end
     
-    task :recalculate_characters_total_score => :environment do
-      Character.transaction do
+    task :calculate_characters_total_score => :environment do
+      if Setting.b(:total_score_enabled)
+        total = Character.count
+        i = 1
+        
         Character.find_each(:batch_size => 100) do |character|
-          character.update_total_score!
+          puts "Processing character #{i}/#{total}"
+          
+          character.update_total_score
+          character.save
+          
+          i += 1
         end
+      else
+        puts "Total score is disabled"
       end
     end
     
