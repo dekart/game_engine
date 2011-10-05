@@ -28,7 +28,7 @@ class Character
       end
       
       def publish_total_score_in_facebook
-        if Setting.b(:total_score_publishing_enabled) && user.permissions.include?(:publish_actions)
+        if Setting.b(:total_score_publishing_in_facebook_enabled) && user.permissions.include?(:publish_actions)
           begin
             Facepalm::Config.default.api_client.put_connections(facebook_id, :scores,
               :score => total_score
