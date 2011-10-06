@@ -1,8 +1,12 @@
 <% content_tag_for(:tr, mission) do %>
   <td class="info">
-    <% if mission.image? %>
-      <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
-    <% end %>
+    <div class="image">
+      <% if mission.image? %>
+        <%= image_tag(mission.image.url(:small)) %>
+      <% else %>
+        <%= asset_image_tag(:mission_placeholder) %>
+      <% end %>
+    </div>
 
     <div class="name"><%= mission.name %></div>
     <div class="description"><%= mission.description.to_s.html_safe %></div>
