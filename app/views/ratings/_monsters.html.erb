@@ -4,8 +4,7 @@
   <tr>
     <th>#</th>
     <th colspan="2"><%= Character.human_name %></th>
-    <th><%= Character.human_attribute_name("killed_monsters_count") %></th>
-    <th></th>
+    <th colspan="2"><%= Character.human_attribute_name("killed_monsters_count") %></th>
   </tr>
 
   <% rating_table(collection, :monsters, current) do |character, position, current| %>
