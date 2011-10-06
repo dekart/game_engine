@@ -757,8 +757,9 @@ var FacebookPermissions = {
       var wasOnline = $characters.map(function() {
         var id = parseInt($(this).data('id'));
         
-        if (currentCharacter.facebook_id != id)
+        if (!currentCharacter || currentCharacter.facebook_id != id){
           return id;
+        }
       }).toArray();
       
       // add new users
