@@ -76,6 +76,6 @@ en:
       description: ""
       action_link: ""
     position_in_rating:
-      title: "I'm %{position} in %{rating_name} rating"
+      title: "I'm #%{position} in %{rating_name} rating in %{app}!"
       description: ""
       action_link: "View Rating »"
