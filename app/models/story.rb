@@ -40,7 +40,7 @@ class Story < ActiveRecord::Base
     else
       raise ArgumentError.new("#{attribute} is not available for interpolation") unless [:title, :description, :action_link, :payout_message].include?(attribute.to_sym)
 
-      if attribute_value = send(attribute) and !attribute_value.blank?
+      if attribute_value = send(attribute).dup and !attribute_value.blank?
         options.each do |key, value|
           attribute_value.gsub!(/%\{#{key}\}/, value.to_s)
         end
