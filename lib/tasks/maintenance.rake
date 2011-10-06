@@ -902,13 +902,17 @@ namespace :app do
         total = Character.count
         i = 1
         
-        Character.find_each(:batch_size => 100) do |character|
-          puts "Processing character #{i}/#{total}"
-          
-          character.update_total_score
-          character.save
-          
-          i += 1
+        Character.find_in_batches(:batch_size => 300) do |characters|
+          Character.transaction do
+            characters.each do |character|
+              puts "Processing character #{i}/#{total}"
+              
+              character.count_total_score
+              character.save
+              
+              i += 1
+            end
+          end
         end
       else
         puts "Total score is disabled"
