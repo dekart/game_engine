@@ -35,7 +35,7 @@ class MonsterType < ActiveRecord::Base
 
   has_requirements
 
-  has_payouts :victory, :repeat_victory, :fight_start, :invite,
+  has_payouts :victory, :repeat_victory, :fight_start, :success, :repeat_success, :invite,
     :apply_on => [:victory, :repeat_victory]
 
   validates_presence_of :name, :level, :health, :attack, :defence, :experience, :money, :fight_time,
@@ -51,5 +51,13 @@ class MonsterType < ActiveRecord::Base
   
   def average_response
     (minimum_response + maximum_response) / 2
+  end
+  
+  def applicable_payouts
+    if global_payout = GlobalPayout.by_alias('monsters')
+      payouts + global_payout.payouts
+    else
+      payouts
+    end
   end
 end

@@ -54,9 +54,7 @@ class MonsterFight < ActiveRecord::Base
 
       @stamina = 1
       
-      if global_payout = GlobalPayout.by_alias(:monsters)
-        @payouts = global_payout.payouts.apply(character, power_attack ? :repeat_success : :success)
-      end
+      @payouts = monster_type.applicable_payouts.apply(character, power_attack ? :repeat_success : :success)
 
       power_attack_effect if power_attack
       
@@ -106,7 +104,7 @@ class MonsterFight < ActiveRecord::Base
     return false unless reward_collectable?
 
     transaction do
-      @payouts = monster_type.payouts.apply(character, character.monster_types.payout_triggers(monster_type), monster_type)
+      @payouts = monster_type.applicable_payouts.apply(character, character.monster_types.payout_triggers(monster_type), monster_type)
 
       character.save!
 

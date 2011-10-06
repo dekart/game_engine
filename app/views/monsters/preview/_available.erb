@@ -18,7 +18,7 @@
     </div>
   </div>
   
-  <% payout_list(type, type.payouts, :format => :preview, :triggers => current_character.monster_types.payout_triggers(type)) do |p| %>
+  <% payout_list(type, type.applicable_payouts, :format => :preview, :triggers => current_character.monster_types.payout_triggers(type)) do |p| %>
     <div class="payouts info">
       <h3><%= Monster.human_attribute_name("payouts") %></h3>
 
