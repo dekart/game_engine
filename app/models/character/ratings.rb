@@ -19,7 +19,7 @@ class Character
       end
       
       def update_total_score
-        self.total_score = count_total_score if Setting.b(:total_score_enabled)
+        self.total_score = count_total_score
       end
       
       def update_total_score!
