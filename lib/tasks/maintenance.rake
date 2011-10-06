@@ -897,7 +897,7 @@ namespace :app do
       end
     end
     
-    task :calculate_characters_total_score => :environment do
+    task :count_characters_total_score => :environment do
       if Setting.b(:total_score_enabled)
         total = Character.count
         i = 1
