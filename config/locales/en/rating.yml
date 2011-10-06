@@ -9,13 +9,13 @@ en:
       buttons:
         permissions: "Allow Publishing"
       tabs:
-        level: "Level" #***
-        total_money: "Total Money" #***
-        fights: "Fights" #***
-        missions: "Missions" #***
-        relations: "Relations" #***
-        monsters: "Monsters" #***
-        total_score: "Total Score" #***
+        level: "Level"
+        total_money: "Money"
+        fights: "Fights"
+        missions: "Missions"
+        relations: "Relations"
+        monsters: "Monsters"
+        total_score: "Total Score"
         
     buttons:
       buttons:
