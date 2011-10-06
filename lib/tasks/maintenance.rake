@@ -907,7 +907,7 @@ namespace :app do
             characters.each do |character|
               puts "Processing character #{i}/#{total}"
               
-              character.count_total_score
+              character.update_total_score
               character.save
               
               i += 1
