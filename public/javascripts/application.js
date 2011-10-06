@@ -742,6 +742,13 @@ var FacebookPermissions = {
     refreshOnlineList: function(charactersOnline) {
       var $chat = $(this);
       var $content = $(this).find(".online .content");
+
+      if(charactersOnline.length == 0){
+        $content.empty();
+        
+        return;
+      }
+      
       var $template = $("#online-characters-template");
       
       // currentCharacter always first
@@ -757,7 +764,7 @@ var FacebookPermissions = {
       var wasOnline = $characters.map(function() {
         var id = parseInt($(this).data('id'));
         
-        if (!currentCharacter || currentCharacter.facebook_id != id){
+        if (currentCharacter.facebook_id != id){
           return id;
         }
       }).toArray();
