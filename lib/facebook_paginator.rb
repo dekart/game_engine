@@ -8,8 +8,8 @@ module FacebookPaginator
       unless @params
         @params = HashWithIndifferentAccess.new
 
-        @template.params.each_pair do |key, value|
-          @params[key] = value unless key.to_s.starts_with?("fb_sig")
+        @template.params_without_facebook_data.each_pair do |key, value|
+          @params[key] = value
         end
       end
 

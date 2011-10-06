@@ -9,7 +9,7 @@ module Facepalm
           
           before_filter :normal_cookies_for_ie_in_iframes!
           
-          helper_method(:facepalm, :fb_signed_request, :current_facebook_user)
+          helper_method(:facepalm, :fb_signed_request, :current_facebook_user, :params_without_facebook_data)
         end
       end
       
