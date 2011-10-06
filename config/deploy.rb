@@ -121,7 +121,7 @@ namespace :deploy do
     
     desc "Setup database"
     task :setup, :roles => :db, :only => {:primary => true} do
-      run "cd #{current_path}; bundle exec rake db:setup --trace"
+      run "cd #{current_path}; rake db:setup --trace"
     end
     
     desc "Package all non-packaged backups"
@@ -157,7 +157,7 @@ namespace :deploy do
   namespace :app do
     desc "Setup application"
     task :setup, :roles => :app do
-      run "cd #{release_path}; bundle exec rake app:setup --trace"
+      run "cd #{release_path}; rake app:setup --trace"
     end
   end
   
