@@ -22,7 +22,7 @@ function localUrl(url){
     return;
   }
   
-  $('a[href]:not([href^="#"], [onclick])').live('click', function(){
+  $('a[href]:not([href^="#"], [onclick], [data-remote])').live('click', function(){
     var link = $(this);
     
     if(localUrl(link.attr('href'))){
