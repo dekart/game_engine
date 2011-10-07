@@ -5,9 +5,6 @@
     <th class="inventory"><%= t(".inventory") %></th>
     <th></th>
     <th></th>
-    <th><%= t(".relations") %></th>
-    <th class="best"><%= t(".offence") %></th>
-    <th class="best"><%= t(".defence") %></th>
   </tr>
   <tr>
     <td class="values">
@@ -32,18 +29,23 @@
         <div class="defence value"><%= current_character.defence + current_character.equipment.effect(:defence) %></div>
       </div>
     </td>
-    <td class="values">
-      <div class="relations value"><%= current_character.relations.effective_size %></div>
-    </td>
-    <% %w(best_offence best_defence).each do |group| %>
-      <td class="inventories">
-        <% current_character.equipment.send(group).each do |inventory| %>
-          <%= item_image(inventory, :icon,
-                :class    => :inventory,
-                :tooltip  => true
-              ) %>
-        <% end %>
-      </td>
-    <% end %>
   </tr>
 </table>
+
+<div id="best_inventories" class="clearfix">
+  <% %w(offence defence).each do |group| %>
+    <% if current_character.equipment.send("best_#{group}").any? %>
+      <div class="inventories">
+        <div class="text"><%= t(".#{group}") %></div>
+        <div class="items">
+          <% current_character.equipment.send("best_#{group}").each do |inventory| %>
+            <%= item_image(inventory, :icon,
+                  :class    => :inventory,
+                  :tooltip  => true
+                ) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

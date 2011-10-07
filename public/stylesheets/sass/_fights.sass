@@ -12,11 +12,13 @@
   .hitlist
     +button(!fight_buttons_hitlist_icon)
 
+#inventory_fight_attributes
+  overflow: hidden
 
 #fight_attributes
-  margin: 10px 0
-  width: 100%
-  border-bottom = !fight_attributes_border
+  margin-bottom: 10px
+  width: 30%
+  float: left
 
   th
     font-size: 12px
@@ -31,9 +33,14 @@
       text-align: right
       width = !fight_attributes_best_width
       
+      .text
+        float: right
+        padding: 5px
+        border = !fight_attributes_best_border
+      
   td
     padding: 5px 0
-
+    
   .values
     .value, .sign
       line-height: 22px
@@ -51,7 +58,7 @@
     .result
       border = !fight_attributes_result_effects_border
       margin-right: 4px
-      padding: 0 2px
+      padding: 0 10px
 
     .attack
       background-image = !fight_attributes_attack_icon
@@ -63,7 +70,33 @@
       background-image = !fight_attributes_relations_icon
       padding-left: 25px
   
-
+#best_inventories
+  overflow: hidden
+  float: right
+  
+  .inventories
+    float: left
+    margin-right: 10px
+    
+    .text
+      border = !fight_attributes_best_border
+      position: relative
+      float: right
+      padding: 5px 7px
+      font-size: 14px
+      font-weight: bold
+      z-index: 2
+      background-color = !fight_attributes_best_bg_color
+      +border-radius(20px)
+      
+    .items
+      padding: 15px 5px 5px 5px
+      border = !fight_attributes_best_border
+      position: relative
+      margin-top: 15px
+      background-color = !fight_attributes_best_bg_color
+      +border-radius(10px)
+      
 #victim_list
   width: 100%
 
