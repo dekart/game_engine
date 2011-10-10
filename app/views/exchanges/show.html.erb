@@ -2,10 +2,8 @@
 
 <%= render("inventories/buttons", :current => :exchange) %>
 
-<% if @exchange.transacted? %>
-  <%= render("transacted") %>
-<% elsif @exchange.invalid? %>
-  <p><%= t(".invalid") %></p>
+<% if @exchange.transacted? || @exchange.invalid? %>
+  <div class="note"><%= t(".invalid") %></div>
 <% else %>
   <div id="show_exchange">
     <table class="exchange_info" cellpadding="0" cellspacing="0">
