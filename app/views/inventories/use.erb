@@ -31,7 +31,7 @@
 
           <%= payout_list(@inventory, @result, :action => :remove) %>
 
-          <%= payout(:item, item_image(@inventory, :icon), :label => @inventory.name) %>
+          <%= payout(:item, item_image(@inventory, :icon, :tooltip => true), :label => @inventory.name) %>
         </td>
       </tr>
     </table>
