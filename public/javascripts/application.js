@@ -104,7 +104,7 @@ var Spinner = {
   
   setup: function(){
     $('#spinner').ajaxStart(Spinner.show).ajaxStop(Spinner.hide);
-    $('form').live('submit', Spinner.show);
+    $('form:not([target])').live('submit', Spinner.show);
       
     $('body').mousemove(Spinner.alignToMouse);
   },
