@@ -69,13 +69,7 @@ class Character
       end
       
       def payout_triggers(type)
-        result = collected.ids.include?(type.id) ? [:repeat_victory] : [:victory]
-        
-        if monster_fight = proxy_owner.monster_fights.by_type(type).current.first 
-          result << :invite if monster_fight.accepted_invites_count > 0
-        end
-        
-        result
+        collected.ids.include?(type.id) ? [:repeat_victory] : [:victory]
       end
     end
   end
