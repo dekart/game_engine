@@ -45,6 +45,12 @@ set :settings_config, {
     :port => 6379,
     :db   => 0,
   },
+  # Amazon S3 configuration for images
+  # :s3 => {
+  #   :access_key => 'my_key',
+  #   :secret     => 'my_secret',
+  #   :bucket     => 'my_bucket'
+  # },
   :event_logging => {
     :enabled => true
   }
