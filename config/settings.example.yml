@@ -10,7 +10,7 @@ development:
     port: 6379
     db: 0
   event_logging:
-    enabled: true
+    enabled: false
 
 test:
   cache:
@@ -24,4 +24,4 @@ test:
     port: 6379
     db: 1
   event_logging:
-    enabled: true
+    enabled: false
