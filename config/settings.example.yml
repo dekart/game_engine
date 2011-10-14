@@ -9,8 +9,13 @@ development:
     host: 127.0.0.1
     port: 6379
     db: 0
+  # Amazon S3 configuration for image serving
+  # s3:
+  #   access_key: 'my_key'
+  #   secret: 'my_secret'
+  #   bucket: 'my_bucket'
   event_logging:
-    enabled: true
+    enabled: false
 
 test:
   cache:
@@ -24,4 +29,4 @@ test:
     port: 6379
     db: 1
   event_logging:
-    enabled: true
+    enabled: false

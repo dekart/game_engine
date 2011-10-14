@@ -55,18 +55,6 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-  
-  config.after_initialize do
-    Paperclip::Attachment.default_options.merge!(
-      :url  => "/system/:class/:id_partition/:style/:basename.:extension",
-      :path => ":rails_root/public/system/:class/:id_partition/:style/:basename.:extension",
-      
-      :convert_options => { :all => "-quality 100" }
-    )
-
-    WillPaginate::ViewHelpers.pagination_options.merge!(:renderer => FacebookPaginator::LinkRenderer)
-    
-  end
 end
 
 require "core_ext/rails"
