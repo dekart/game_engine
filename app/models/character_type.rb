@@ -33,4 +33,8 @@ class CharacterType < ActiveRecord::Base
   validates_presence_of [:name] + APPLICABLE_ATTRIBUTES + BONUSES
   validates_numericality_of APPLICABLE_ATTRIBUTES + BONUSES,
     :allow_nil => true
+
+  def self.to_dropdown(*args)
+    without_state(:deleted).all.to_dropdown(*(args.any? ? args : :name))
+  end
 end

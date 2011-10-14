@@ -2,6 +2,9 @@ en:
   requirements:
     attribute:
       text: "%{amount} %{name}"
+    character_type:
+      name: "Character Type"
+      text: "%{name} Class"
     item:
       name: "Item"
       text: "%{name} X %{amount}"
@@ -84,6 +87,9 @@ en:
         buttons:
           refill: "Refill Health"
           get_points: "Get Points"
+
+      character_type:
+        message: "You should be %{name} to do this"
 
       item:
         message: "%{name} X %{amount}"
