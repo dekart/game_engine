@@ -74,7 +74,7 @@ namespace :app do
           data.each do |row|
             next if row.compact.empty?
 
-            group_name, 
+            group_name,
             name, description, level, availability, basic_price, vip_price, 
             attack, defence, energy, stamina, can_be_sold, market, max_vip_price, exchangeable, placements = row
           
@@ -86,6 +86,14 @@ namespace :app do
               current_group.save!
               current_group.publish!
             elsif name.present?
+              if placements
+                placements = placements.split(/[\s,]+/).map{|p| p.downcase.underscore.to_sym }
+                
+                if wrong_placements = placements - Character::Equipment::PLACEMENTS and !wrong_placements.empty?
+                  raise "Wrong placements: %s" % wrong_placements.join(',') 
+                end
+              end
+              
               item = current_group.items.build(
                 :name         => name, 
                 :description  => description.to_s,
@@ -101,7 +109,7 @@ namespace :app do
                 :can_be_sold_on_market    => (market && market.downcase == 'yes'),
                 :max_vip_price_in_market  => max_vip_price,
                 :exchangeable => (exchangeable && exchangeable.downcase == 'yes'),
-                :placements   => placements ? placements.split(/[\s,]+/).map{|p| p.downcase.underscore.to_sym } : nil
+                :placements   => placements
               )
             
               item.save!
