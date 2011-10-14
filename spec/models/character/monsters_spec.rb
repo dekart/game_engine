@@ -47,7 +47,7 @@ describe Character do
       monster_fight = Factory(:monster_fight, :character => @character, :monster => Factory(:monster, :monster_type => @monster_type))
       monster_fight.update_attribute(:accepted_invites_count, 1)
       
-      @character.monster_types.payout_triggers(@monster_type).should include(:invite)
+      monster_fight.payout_triggers.should include(:invite)
     end
   end
   

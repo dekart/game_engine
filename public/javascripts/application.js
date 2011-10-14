@@ -743,7 +743,7 @@ var FacebookPermissions = {
       var $chat = $(this);
       var $content = $(this).find(".online .content");
 
-      if(charactersOnline.length == 0){
+      if(!charactersOnline || charactersOnline.length == 0){
         $content.empty();
         
         return;
@@ -786,7 +786,7 @@ var FacebookPermissions = {
     },
     
     appendMessages: function(messages) {
-      if (messages.length > 0) {
+      if (messages && messages.length > 0) {
         var lastReceivedMessageId = $.parseJSON(messages[messages.length - 1]).id;
         var lastMessageId = $(this).chat('lastMessageId');
         

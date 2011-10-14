@@ -104,7 +104,7 @@ class MonsterFight < ActiveRecord::Base
     return false unless reward_collectable?
 
     transaction do
-      @payouts = monster_type.applicable_payouts.apply(character, character.monster_types.payout_triggers(monster_type), monster_type)
+      @payouts = monster_type.applicable_payouts.apply(character, payout_triggers, monster_type)
 
       character.save!
 
@@ -133,7 +133,13 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def payout_triggers
-    reward_collected? ? [] : character.monster_types.payout_triggers(monster_type)
+    if reward_collected? 
+      []
+    else 
+      character.monster_types.payout_triggers(monster_type).tap do |triggers|
+        triggers << :invite if accepted_invites_count > 0
+      end 
+    end
   end
   
   def significant_damage?
