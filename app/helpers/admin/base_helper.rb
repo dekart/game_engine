@@ -23,7 +23,8 @@ module Admin::BaseHelper
   def admin_state(object, options = {})
     options = options.reverse_merge(
       :controls => true,
-      :exclude  => []
+      :exclude  => [],
+      :confirm  => [:deleted]
     )
     
     result = [
@@ -31,17 +32,23 @@ module Admin::BaseHelper
     ]
     
     if options[:controls]
-      result.push(
-        *object.class.state_machine(:state).states.
-        reject{|s| (s.name == object.state.to_sym) || options[:exclude].include?(s.name) }.
-        map{|state| 
-          link_to_remote(state.name.to_s.titleize, 
-            :url    => polymorphic_url([:change_state, :admin, object], :state => state.name),
-            :method => :put,
-            :confirm => t('admin.change_state.confirm', :object_name => object.class.human_name, :state => state.name.to_s.titleize)
-          ) 
+      object.class.state_machine(:state).states.each do |state|
+        next if (state.name == object.state.to_sym) || options[:exclude].include?(state.name)
+        
+        link_options = {
+          :url    => polymorphic_url([:change_state, :admin, object], :state => state.name),
+          :method => :put
         }
-      )
+        
+        if options[:confirm].include?(state.name)
+          link_options[:confirm] = t('admin.change_state.confirm', 
+            :object_name  => object.class.human_name, 
+            :state        => state.name.to_s.titleize
+          )
+        end
+          
+        result.push link_to_remote(state.name.to_s.titleize, link_options) 
+      end
     end
     
     result.join(' ').html_safe
