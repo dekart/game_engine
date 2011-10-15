@@ -50,7 +50,7 @@ module FacebookHelper
       %(
         %s;
         FB.ui(%s, function(response){
-          if(response !== null){
+          if(typeof response !== 'undefined'){
             $('#ajax').load('%s', $.extend({request_id: response.request, to: response.to}, %s), function(){ 
               %s; 
             });
