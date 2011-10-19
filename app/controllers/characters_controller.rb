@@ -44,6 +44,8 @@ class CharactersController < ApplicationController
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
       @character.character_type ||= @character_types.first
+      
+      render :layout => 'unauthorized'
     end
   end
 
@@ -61,7 +63,7 @@ class CharactersController < ApplicationController
         # Always redirect newcomers to missions to make tutorial work as expected
         redirect_from_iframe(mission_groups_url(:canvas => true))
       else
-        render :action => :new
+        render :action => :new, :layout => 'unauthorized'
       end
     end
   end
