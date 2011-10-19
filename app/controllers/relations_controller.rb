@@ -57,6 +57,6 @@ class RelationsController < ApplicationController
   
   def friend_with?(character)
     current_user.friends_with?(character) ||
-    current_facebook_user.api_client.get_connections('me', 'friends', :fields => [:id]).collect{|f| f['id'].to_i }.include?(character.facebook_id)
+    current_facebook_user.api_client.get_connections('me', 'friends', :fields => 'id').collect{|f| f['id'].to_i }.include?(character.facebook_id)
   end
 end

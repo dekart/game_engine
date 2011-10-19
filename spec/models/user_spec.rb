@@ -184,7 +184,7 @@ describe User do
     
     it 'should fetch user data using Facebook API' do
       @koala.should_receive(:get_object).
-        with('me', :fields=>[:first_name, :last_name, :timezone, :locale, :gender, :third_party_id, :email]).
+        with('me', :fields => 'first_name,last_name,timezone,locale,gender,third_party_id,email').
         and_return(@facebook_user)
       
       @user.update_social_data!
@@ -235,7 +235,7 @@ describe User do
     end
     
     it 'should fetch user friend IDs using Facebook API' do
-      @koala.should_receive(:get_connections).with('me', 'friends', :fields => [:id]).and_return(@facebook_friends)
+      @koala.should_receive(:get_connections).with('me', 'friends', :fields => 'id').and_return(@facebook_friends)
       
       @user.update_social_data!
     end
