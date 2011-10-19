@@ -38,7 +38,7 @@ class CharactersController < ApplicationController
   end
 
   def new
-    if current_character
+    if current_character && params[:_force_form].blank?
       redirect_from_iframe root_url(:canvas => true)
     else
       @character = Character.new
