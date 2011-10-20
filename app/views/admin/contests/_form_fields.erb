@@ -1,11 +1,13 @@
-<%= form.text_field :name, :required => true, :size => 50 %>
-<%= form.select :points_type, Contest.points_type_to_dropdown, :required => true %>
+<div class="note"><%= t('forms.all_fields_required') %></div>
+
+<%= form.text_field :name, :size => 50 %>
+<%= form.select :points_type, Contest.points_type_to_dropdown %>
 
 <%= form.text_area :description_before_started, :cols => 80, :rows => 5 %>
 <%= form.text_area :description_when_started, :cols => 80, :rows => 5 %>
 <%= form.text_area :description_when_finished, :cols => 80, :rows => 5 %>
 
-<%= form.datetime_select :started_at, :required => true %>
+<%= form.datetime_select :started_at %>
 <%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
 
-<%= form.text_field :duration_time, :required => true, :size => 6, :autocomplete => :off %>
+<%= form.text_field :duration_time, :size => 6, :autocomplete => :off %>

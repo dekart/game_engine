@@ -12,6 +12,7 @@ en:
         precision: 0
   forms:
     select_multiple: "Hold 'Ctrl' to select multiple items"
+    all_fields_required: "All fields are required. Make sure to enter them."
   form_builder:
     submit_and_continue: "Save & Continue Editing"
     remove_attachment: "Remove Image"

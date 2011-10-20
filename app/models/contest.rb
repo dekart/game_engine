@@ -16,16 +16,12 @@ class Contest < ActiveRecord::Base
     end
     
     state :visible do
-      validates_presence_of :description_before_started, :description_when_started, :description_when_finished
-      
       def description
         started? ? description_when_started : description_before_started 
       end
     end
     
     state :finished do
-      validates_presence_of :description_when_finished
-      
       def description
         description_when_finished
       end
@@ -77,7 +73,7 @@ class Contest < ActiveRecord::Base
     
   has_attached_file :image
     
-  validates_presence_of :name, :points_type
+  validates_presence_of :name, :points_type, :description_before_started, :description_when_started, :description_when_finished
   
   validates_numericality_of :duration_time, 
     :greater_than => 0
