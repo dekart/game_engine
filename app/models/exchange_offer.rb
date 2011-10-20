@@ -45,6 +45,7 @@ class ExchangeOffer < ActiveRecord::Base
   
   protected
     
+    # Split item selection and item amount checks to two different validations
     def validate_amount_less_or_equals_then_in_inventories
       if amount && (!inventory || amount > inventory.amount)
         errors.add(:amount, :not_enough) 
