@@ -272,7 +272,8 @@ class Character::Equipment
   end
   
   def placement_capacity(placement)
-    if placement == :additional
+    case placement
+    when :additional
       result = @character.character_type.try(:equipment_slots) || Setting.i(:character_equipment_slots)
 
       result += @character.relations.effective_size / Setting.i(:character_relations_per_equipment_slot)
