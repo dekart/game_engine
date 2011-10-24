@@ -7,7 +7,7 @@
     <tr class="points">
       <td class="name"><%= Character.human_attribute_name("points") %></td>
       <td class="value" id="upgrade_points"><%= current_character.points %></td>
-      <td class="buy_more" colspan="2">
+      <td class="buy_more" colspan="3">
         <%= link_to(t(".buy_more"), premium_path(:anchor => :services)) %>
       </td>
     </tr>
@@ -23,9 +23,17 @@
               ) %>
         </td>
         <td class="points"><%= t(".points", :count => Setting.i("character_#{attribute}_upgrade_points")) %></td>
+        <td class="slider">	
+          <div id="<%= Character.human_attribute_name(attribute.to_s) %>-slider" style="width: 100px;"></div>
+          <span></span>	
+        </td>
       <% end %>
     <% end %>
   </table>
+  
+  <div id="master" style="width:260px; margin:15px;"></div>
+  <div id="rec"></div>
+
 
   <div id="upgrade_finished" style="display:none;" class="note">
     <%= t(".finished.note") %>
@@ -41,5 +49,11 @@
     $('#<%= current_character.points > 0 ? :upgrade_list : :upgrade_finished %>').show();
 
     $(document).trigger('character.upgrade_dialog');
+    
+    $.sliders(<%= current_character.points %>);
+    
+    $(".upgrade").click(function(){
+      $.sliders($("#upgrade_points").text());
+    });
   <% end %>
 <% end %>
