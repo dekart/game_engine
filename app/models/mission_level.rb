@@ -1,4 +1,5 @@
 class MissionLevel < ActiveRecord::Base
+  extend HasRequirements
   extend HasPayouts
 
   default_scope :order => "mission_levels.position"
@@ -11,6 +12,8 @@ class MissionLevel < ActiveRecord::Base
 
 
   acts_as_list :scope => :mission_id
+
+  has_requirements
 
   has_payouts :success, :failure, :repeat_success, :repeat_failure, :level_complete,
     :apply_on => :level_complete
@@ -28,6 +31,10 @@ class MissionLevel < ActiveRecord::Base
     Requirements::EnergyPoint.new(:value => energy)
   end
   
+  def applicable_requirements
+    requirements + mission.applicable_requirements
+  end
+
   def applicable_payouts
     payouts + mission.applicable_payouts
   end
