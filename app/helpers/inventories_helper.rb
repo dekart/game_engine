@@ -1,12 +1,6 @@
 module InventoriesHelper
-  def inventory_available_additonal_slots_count
-    @inventory_available_additonal_slots_count ||= current_character.equipment.available_capacity(:additional)
-  end
-  
   def inventory_additonal_slots_note
-    free_slots = inventory_available_additonal_slots_count
-
-    yield(free_slots)
+    yield(current_character.equipment.available_capacity(:additional))
   end
 
   def inventory_free_slots_note
@@ -75,37 +69,38 @@ module InventoriesHelper
     end
   end
   
-  def inventories_equipment_additional(character = current_character)
-    @inventories_equipment_additional ||= begin
-      character.equipment.inventories_by_placement(:additional).inject(Hash.new(0)) {|h, v| h[v] += 1; h}
-    end
-  end
-  
-  def inventory_placement_tag(inventory, placement, &block)
-    content_tag(:div, :class => :inventory, 
+  def inventory_placement_tag(inventory, placement, content = nil, &block)
+    content = capture(&block) if block_given?
+    
+    result = content_tag(:div, content,
+      :class => :inventory, 
       :"data-placements" => inventory.placements.join(","),
       :"data-equip" => equip_inventory_path(inventory),
       :"data-unequip" => unequip_inventory_path(inventory, :placement => placement),
-      :"data-move" => move_inventory_path(inventory, :from_placement => placement),
-      &block
+      :"data-move" => move_inventory_path(inventory, :from_placement => placement)
     )
+    
+    block_given? ? concat(result) : result
   end
   
-  def inventory_additional_placements_tag(&block)
-    content_tag(:div, :class => 'items', :'data-placement' => 'additional', 
-      :'data-free-slots' => inventory_available_additonal_slots_count,
-      &block
+  def inventory_group_placement(placement, &block)
+    result = ""
+    
+    inventories = current_character.equipment.inventories_by_placement(placement).inject(Hash.new(0)) {|h, v| h[v] += 1; h}
+    
+    inventories.each_pair do |inventory, count|
+      result << content_tag(:li, 
+        inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
+      )
+    end
+    
+    result = content_tag(:div, 
+      content_tag(:ul, result.html_safe, :class => "carousel-container"),
+      :class => 'group_placement', 
+      :'data-placement' => placement, 
+      :'data-free-slots' => current_character.equipment.available_capacity(placement)
     )
+    
+    concat(result)
   end
-  
-  def inventory_additional_placement_tag(inventory, &block)
-    content_tag(:div, :class => :inventory, 
-      :"data-placements" => inventory.placements.join(','),
-      :"data-equip" => equip_inventory_path(inventory),
-      :"data-unequip" => unequip_inventory_path(inventory, :placement => 'additional'),
-      :"data-move" => move_inventory_path(inventory, :from_placement => 'additional'),
-      &block
-    )
-  end
-  
 end

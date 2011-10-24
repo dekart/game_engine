@@ -369,8 +369,8 @@ var Equipment = {
     if (_options) {
       this.options = _options;
       
-      if (this.options.wrapAdditionalEquipment)
-        this.options.additionalPlacementsSize /= this.options.wrapAdditionalEquipment;
+      if (this.options.wrapGroupEquipment)
+        this.options.groupedPlacementSize /= this.options.wrapGroupEquipment;
     }
     
     $("#equippables-tabs").tabs({
@@ -382,20 +382,31 @@ var Equipment = {
       }
     });
     
-    var $additionalPlacementsContainer = $("#placements .additional .carousel-container");
-    
-    if (this.options.wrapAdditionalEquipment) {
-      jCarouselHelper.wrap($additionalPlacementsContainer, this.options.wrapAdditionalEquipment);
-    }
-    
-    $additionalPlacementsContainer.jcarousel({
-      vertical: true,
-      visible: this.options.additionalPlacementsSize,
-      // TODO: hack. without it control button is active
-      size: $additionalPlacementsContainer.find("li").length,
-      itemFallbackDimension: this.options.additionalPlacementsSize
+    $('#placements .group_placement').each(function(){
+      var $placement = $(this);
+      var $carousel = $placement.find('.carousel-container');
+      
+      // Appending free placeholders
+      var free_slots = parseInt($placement.data('free-slots'));
+      
+      if(free_slots > 0) {
+        for(var i = 0; i < free_slots; i ++){
+          $carousel.append('<li><div class="additional-placeholder"></div></li>');
+        }
+      }
+      
+      if (Equipment.options.wrapGroupEquipment) {
+        jCarouselHelper.wrap($carousel, Equipment.options.wrapGroupEquipment);
+      }
+      
+      $carousel.jcarousel({
+        vertical: true,
+        visible: Equipment.options.groupedPlacementSize,
+        // TODO: hack. without it control button is active
+        size: $carousel.find("li").length,
+        itemFallbackDimension: Equipment.options.groupedPlacementSize
+      });
     });
-    
     
     $("#equippables .inventory, #placements .inventory").draggable({
       appendTo: $("#equipment"),
@@ -433,7 +444,7 @@ var Equipment = {
       }
     };
     
-    $("#placements .placement, #placements .additional .items").droppable($.extend(droppableDefaults, {
+    $("#placements .placement, #placements .group_placement").droppable($.extend(droppableDefaults, {
       accept: function(el) {
         if ($(this).attr('data-free-slots') == 0) {
           return false;
