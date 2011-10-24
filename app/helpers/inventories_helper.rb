@@ -73,14 +73,18 @@ module InventoriesHelper
     
   end
   
-  def inventory_placement_tag(inventory, placement, &block)
-    content_tag(:div, :class => :inventory, 
+  def inventory_placement_tag(inventory, placement, content = nil, &block)
+    content = capture(&block) if block_given?
+    
+    result = content_tag(:div, content,
+      :class => :inventory, 
       :"data-placements" => inventory.placements.join(","),
       :"data-equip" => equip_inventory_path(inventory),
       :"data-unequip" => unequip_inventory_path(inventory, :placement => placement),
-      :"data-move" => move_inventory_path(inventory, :from_placement => placement),
-      &block
+      :"data-move" => move_inventory_path(inventory, :from_placement => placement)
     )
+    
+    block_given? ? concat(result) : result
   end
   
   def inventory_group_placement(placement, &block)
@@ -90,29 +94,17 @@ module InventoriesHelper
     
     inventories.each_pair do |inventory, count|
       result << content_tag(:li, 
-        inventory_additional_placement_tag(inventory, capture(inventory, count, &block))
+        inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
       )
     end
     
     result = content_tag(:div, 
       content_tag(:ul, result.html_safe, :class => "carousel-container"),
-      :class => 'items group_placement', 
+      :class => 'group_placement', 
       :'data-placement' => placement, 
       :'data-free-slots' => current_character.equipment.available_capacity(placement)
     )
     
     concat(result)
   end
-  
-  def inventory_additional_placement_tag(inventory, content)
-    content_tag(:div, 
-      content,
-      :class => :inventory, 
-      :"data-placements" => inventory.placements.join(','),
-      :"data-equip" => equip_inventory_path(inventory),
-      :"data-unequip" => unequip_inventory_path(inventory, :placement => 'additional'),
-      :"data-move" => move_inventory_path(inventory, :from_placement => 'additional')
-    )
-  end
-  
 end

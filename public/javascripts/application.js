@@ -444,7 +444,7 @@ var Equipment = {
       }
     };
     
-    $("#placements .placement, #placements .additional .items").droppable($.extend(droppableDefaults, {
+    $("#placements .placement, #placements .group_placement").droppable($.extend(droppableDefaults, {
       accept: function(el) {
         if ($(this).attr('data-free-slots') == 0) {
           return false;
