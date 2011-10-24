@@ -5,7 +5,7 @@ module Requirements
     end
     
     def to_s
-      I18n.t('requirements.basic_money.text', :required_value => @value)
+      I18n.t('requirements.basic_money.text', :amount => @value)
     end
   end
 end

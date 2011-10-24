@@ -3,6 +3,8 @@ class MissionResult
     :energy, :money, :experience, :boost,
     :level_rank, :mission_rank, :group_rank,
     :payouts
+    
+  delegate :applicable_requirements, :to => :level
 
   def self.create(*args)
     new(*args).tap do |r|
@@ -108,7 +110,7 @@ class MissionResult
 
   def requirements_satisfied?
     if @requirements_satisfied.nil?
-      @requirements_satisfied = @mission.applicable_requirements.satisfies?(@character)
+      @requirements_satisfied = applicable_requirements.satisfies?(@character)
     end
 
     @requirements_satisfied
