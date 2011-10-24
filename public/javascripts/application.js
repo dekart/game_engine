@@ -369,8 +369,8 @@ var Equipment = {
     if (_options) {
       this.options = _options;
       
-      if (this.options.wrapAdditionalEquipment)
-        this.options.additionalPlacementsSize /= this.options.wrapAdditionalEquipment;
+      if (this.options.wrapGroupEquipment)
+        this.options.groupedPlacementSize /= this.options.wrapGroupEquipment;
     }
     
     $("#equippables-tabs").tabs({
@@ -395,16 +395,16 @@ var Equipment = {
         }
       }
       
-      if (Equipment.options.wrapAdditionalEquipment) {
-        jCarouselHelper.wrap($carousel, Equipment.options.wrapAdditionalEquipment);
+      if (Equipment.options.wrapGroupEquipment) {
+        jCarouselHelper.wrap($carousel, Equipment.options.wrapGroupEquipment);
       }
       
       $carousel.jcarousel({
         vertical: true,
-        visible: Equipment.options.additionalPlacementsSize,
+        visible: Equipment.options.groupedPlacementSize,
         // TODO: hack. without it control button is active
         size: $carousel.find("li").length,
-        itemFallbackDimension: Equipment.options.additionalPlacementsSize
+        itemFallbackDimension: Equipment.options.groupedPlacementSize
       });
     });
     
