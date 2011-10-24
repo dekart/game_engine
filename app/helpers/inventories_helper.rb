@@ -69,10 +69,6 @@ module InventoriesHelper
     end
   end
   
-  def inventories_equipment_with_count(placement)
-    
-  end
-  
   def inventory_placement_tag(inventory, placement, content = nil, &block)
     content = capture(&block) if block_given?
     
