@@ -26,7 +26,7 @@
     </div>
   <% end %>
 
-  <% requirement_list(type.requirements) do |requirements| %>
+  <% requirement_list(type.requirements, :visible => true) do |requirements| %>
     <div class="requirements info">
       <h3><%= Monster.human_attribute_name("requirements") %></h3>
 

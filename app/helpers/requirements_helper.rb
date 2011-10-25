@@ -1,9 +1,9 @@
 module RequirementsHelper
-  def requirement_list(requirements, filter = nil)
+  def requirement_list(requirements, options = {})
     result = ""
 
     requirements.each do |requirement|
-      next if filter == :unsatisfied and requirement.satisfies?(current_character)
+      next if options[:visible] && !requirement.visible
 
       result << render("requirements/#{requirement.name}",
         :requirement  => requirement,

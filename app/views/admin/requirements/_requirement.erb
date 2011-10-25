@@ -10,7 +10,15 @@
   <% fields_for "#{container}[requirements][requirement_#{requirement.object_id}]", requirement do |form| %>
     <%= form.hidden_field :type, :value => requirement.name %>
 
-    <%= form.fields "admin/requirements/form_fields/#{requirement.name}" %>
-    <%= form.fields "admin/requirements/form_fields/common" %>
+    <table>
+      <tr>
+        <td width="50%">
+          <%= form.fields "admin/requirements/form_fields/#{requirement.name}" %>
+        </td>
+        <td>
+          <%= form.check_box :visible %>
+        </td>
+      </tr>
+    </table>
   <% end %>
 </div>
