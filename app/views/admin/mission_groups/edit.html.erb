@@ -3,5 +3,27 @@
 <% form_for([:admin, @group], :html => {:multipart => true}) do |form| %>
   <%= form.fields %>
 
+  <% dom_ready do %>
+	$('form.edit_mission_group').submit(function(){
+		if ($('#requirement_list').children().size() == 0) {
+	      $('<input type="hidden" />').
+		    attr({
+		      name: "mission_group[requirements]",
+		      value: ""
+		    }).
+		    appendTo($('#requirement_list'));
+		}
+		if ($('#payout_list').children().size() == 0) {
+	      $('<input type="hidden" />').
+		    attr({
+		      name: "mission_group[payouts]",
+		      value: ""
+		    }).
+		    appendTo($('#payout_list'));
+		}
+		return true;
+	});
+  <% end %>
+
   <%= form.submit_and_continue %>
 <% end %>

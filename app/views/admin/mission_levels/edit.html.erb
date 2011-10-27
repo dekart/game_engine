@@ -3,5 +3,19 @@
 <% form_for([:admin, @level.mission, @level]) do |form| %>
   <%= form.fields %>
 
+  <% dom_ready do %>
+	$('form.edit_mission_level').submit(function(){
+		if ($('#payout_list').children().size() == 0) {
+	      $('<input type="hidden" />').
+		    attr({
+		      name: "mission_level[payouts]",
+		      value: ""
+		    }).
+		    appendTo($('#payout_list'));
+		}
+		return true;
+	});
+  <% end %>
+
   <%= form.submit_and_continue %>
 <% end %>
