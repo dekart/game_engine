@@ -51,7 +51,7 @@ class Admin::ItemsController < Admin::BaseController
 
   def update
     @item = Item.find(params[:id])
-    #FIX_ME
+    #FIX ME
     if @item.update_attributes(params[:item].reverse_merge(:placements => nil))
       flash[:success] = t(".success")
 
