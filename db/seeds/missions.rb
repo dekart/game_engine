@@ -11,7 +11,7 @@ tutorial.missions.create!(
   :repeatable     => true
 ).tap do |m|
   m.levels.create(
-    :win_amount => 3,
+    :win_amount => 4,
     :chance     => 100,
     :energy     => 2,
     :experience => 4,

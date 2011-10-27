@@ -60,6 +60,7 @@ en:
         text: "Each attack inflicts some damage to monster. The more powerful weapons you have the better you fight."
       monster_reward:
         title: "Fight With Monster"
+        text: "You won! Don't forget to claim your reward!"
       goto_estate:
         title: "Property"
         text: "Now you have enough money to purchase your first estate. Click this link to proceed."

@@ -47,6 +47,8 @@
       <% end %>
 
       <% builder.on_ready do %>
+        $(document).trigger('monster.won');
+        
         <%= ga_track_event('Monsters', 'Won', @fight.monster.name) %>
       <% end %>
     <% end %>

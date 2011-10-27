@@ -12,11 +12,11 @@
           :class => "publish button"
         ) if Setting.b(:stream_dialog_enabled) %>
         
-    <%= link_to_function(button(:upgrade), 
-          remote_function(:url => upgrade_character_url(current_character),
-            :method => :get,
-            :update => :ajax),
-         :class => "upgrade button"
+    <%= link_to_remote(button(:upgrade), 
+          :url    => upgrade_character_url(current_character),
+          :method => :get,
+          :update => :ajax,
+          :html   => {:class => "upgrade button"}
         ) %>
   </div>
 
