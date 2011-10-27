@@ -168,38 +168,6 @@
   
 <% end %>
   
-<% step :goto_fight do %>
-
-  <%= goto_main_menu_item("fights") %>
-  
-<% end %>
-
-<% step :attack_other_player, :change_event => 'result.received' do %>
-
-  <%= tip_on("#victim_list .character:first a.attack",
-        :position => {
-          :at => 'top center',
-          :my => 'bottom right'
-        }
-     ) %>
-  <%= make_visible("#victim_list .character") %>
-  <%= click_trigger("#victim_list .character a.attack") %>
-  
-<% end %>
-
-<% step :fight_result, :change_event => 'close.dialog' do %>
-
-  <%= make_visible("#result") %>
-  <%= tip_on("#result",
-        :position => {
-          :at => 'topMiddle',
-          :my => 'bottomMiddle'
-        },
-        :buttons => next_step_button
-     ) %>
-     
-<% end %>
-
 <% step :goto_estate do %>
 
   <%= goto_main_menu_item("properties") %>
@@ -230,23 +198,36 @@
        ) %>
      
 <% end %>
-  
-<% step :goto_gem_market do %>
 
-  <%= goto_main_menu_item("premium", :position => {:my => 'top right'}) %>
+<% step :goto_fight do %>
+
+  <%= goto_main_menu_item("fights") %>
   
 <% end %>
 
-<% step :spend_gems, :change_event => 'close.dialog' do %>
+<% step :attack_other_player, :change_event => 'result.received' do %>
 
-  <%= tip_on("#current_vip_money", 
+  <%= tip_on("#victim_list .character:first a.attack",
+        :position => {
+          :at => 'top center',
+          :my => 'bottom right'
+        }
+     ) %>
+  <%= make_visible("#victim_list .character") %>
+  <%= click_trigger("#victim_list .character a.attack") %>
+  
+<% end %>
+
+<% step :fight_result, :change_event => 'close.dialog' do %>
+
+  <%= make_visible("#result") %>
+  <%= tip_on("#result",
         :position => {
           :at => 'topMiddle',
           :my => 'bottomMiddle'
         },
         :buttons => next_step_button
-      ) %>
-  <%= make_visible("#current_vip_money") %>
+     ) %>
      
 <% end %>
 

@@ -140,6 +140,8 @@ var Tutorial = (function(){
       $(".tutorialVisible").removeClass("tutorialVisible");
       
       $(".qtip").qtip("destroy");
+      
+      $.extend($.dialog.settings, {overlay: true});
     },
     
     /**
@@ -276,9 +278,6 @@ var Tutorial = (function(){
         $.dialog.settings = oldSettings;
       });
     }
-    
-    
-    
   });
   
   return tutorial;

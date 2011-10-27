@@ -6,22 +6,15 @@
             :before => "Tutorial.hide()"
           ) %>
     </div>
+    
     <h3><%= t("tutorial.progress") %></h3>
-    <div>
-      <%= step_index %> / <%= (Tutorial::STEPS.size - 1) %>
-    </div>
-    <%= percentage_bar(step_index.to_f / (Tutorial::STEPS.size - 1).to_f * 100) %>
     
-    <div id="current_step">
-      <%= t("tutorial.steps.current") %>
-      <%= step_title %>
-    </div>
-    
-    <% unless final_step? %>
-      <div>
-        <%= t("tutorial.steps.next") %>
-        <%= step_title(next_step) %>
-      </div>
-    <% end %>
+    <%= percentage_bar(step_index.to_f / (Tutorial::STEPS.size - 1).to_f * 100, 
+          :label => t("tutorial.steps.current", 
+            :name     => step_title, 
+            :current  => step_index, 
+            :total    => Tutorial::STEPS.size - 1
+          )
+        ) %>
   </div>
 <% end %>
