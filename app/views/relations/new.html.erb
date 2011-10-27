@@ -20,7 +20,6 @@
                     :to       => facebook_id,
                     :title    => t('.title'),
                     :message  => t('.invitation_message', :app_name => t('app_name')),
-                    :params   => {:no_dialog => true},
                     :callback => "$('#user_#{facebook_id}').html('#{content_tag(:div, t('.invitation_sent'), :class => :name)}').fadeOut(1200)"
                   ),
                   :class => 'invite button'

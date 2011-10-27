@@ -29,14 +29,4 @@ en:
         accepted: 'Invitation accepted!'
         buttons:
           alliance: 'View Alliance'
-    create:
-      gift:
-        title: "Send Gifts to Your Alliance"
-        message: "Your gifts have been sent to your friends! They'll be notified immediately."
-      invitation:
-        title: "Recruit Friends To Your Alliance"
-        message: "Your invitations have been sent to your friends! They'll be notified immediately."
-      monster_invite:
-        title: "Call to Arms"
-        message: "Your call to arms have been sent to your friends! They'll be notified immediately."
     
