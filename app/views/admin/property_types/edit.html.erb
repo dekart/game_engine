@@ -3,19 +3,5 @@
 <% form_for([:admin, @type], :html => {:multipart => true}) do |form| %>
   <%= form.fields %>
 
-  <% dom_ready do %>
-	$('form.edit_property_type').submit(function(){
-		if ($('#payout_list').children().size() == 0) {
-	      $('<input type="hidden" />').
-		    attr({
-		      name: "property_type[payouts]",
-		      value: ""
-		    }).
-		    appendTo($('#payout_list'));
-		}
-		return true;
-	});
-  <% end %>
-
   <%= form.submit_and_continue %>
 <% end %>

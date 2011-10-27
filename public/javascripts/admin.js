@@ -9,6 +9,14 @@ var SerializableList = {
           }).
           prependTo(this);
       })
+	  if ($(selector).children().size() == 0) {
+        $('<input type="hidden" />').
+	      attr({
+	        name:  object_name,
+	        value: ""
+	      }).
+	      appendTo($(selector));
+	  }
     });
 
     SerializableList.updateBorderClasses(selector);
