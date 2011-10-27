@@ -52,7 +52,7 @@ class Admin::ItemsController < Admin::BaseController
   def update
     @item = Item.find(params[:id])
 
-    if @item.update_attributes(params[:item].reverse_merge(:payouts => nil, :placements => nil))
+    if @item.update_attributes(params[:item].reverse_merge(:placements => nil))
       flash[:success] = t(".success")
 
       unless_continue_editing do

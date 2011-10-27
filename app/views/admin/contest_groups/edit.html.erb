@@ -3,5 +3,19 @@
 <% form_for([:admin, @contest_group.contest, @contest_group]) do |form| %>
   <%= form.fields %>
 
+  <% dom_ready do %>
+	$('form.edit_contest_group').submit(function(){
+		if ($('#payout_list').children().size() == 0) {
+	      $('<input type="hidden" />').
+		    attr({
+		      name: "contest_group[payouts]",
+		      value: ""
+		    }).
+		    appendTo($('#payout_list'));
+		}
+		return true;
+	});
+  <% end %>
+
   <%= form.submit_and_continue %>
 <% end %>

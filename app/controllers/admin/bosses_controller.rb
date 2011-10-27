@@ -42,7 +42,7 @@ class Admin::BossesController < Admin::BaseController
   def update
     @boss = Boss.find(params[:id])
 
-    if @boss.update_attributes(params[:boss].reverse_merge(:requirements => nil, :payouts => nil))
+    if @boss.update_attributes(params[:boss])
       flash[:success] = t(".success")
 
       unless_continue_editing do

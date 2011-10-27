@@ -3,5 +3,19 @@
 <% form_for([:admin, @item_collection]) do |form| %>
   <%= form.fields %>
 
+  <% dom_ready do %>
+	$('form.edit_item_collection').submit(function(){
+		if ($('#payout_list').children().size() == 0) {
+	      $('<input type="hidden" />').
+		    attr({
+		      name: "item_collection[payouts]",
+		      value: ""
+		    }).
+		    appendTo($('#payout_list'));
+		}
+		return true;
+	});
+  <% end %>
+
   <%= form.submit_and_continue %>
 <% end %>

@@ -5,7 +5,7 @@ module Requirements
     delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :to => :items
 
     def self.parse(collection)
-      return if collection.nil?
+      return if collection.blank?
 
       if collection.is_a?(Requirements::Collection)
         collection

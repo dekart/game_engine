@@ -24,7 +24,7 @@ class Admin::ContestGroupsController < Admin::BaseController
   def update
     @contest_group = ContestGroup.find(params[:id])
 
-    if @contest_group.update_attributes(params[:contest_group].reverse_merge!(:payouts => nil))
+    if @contest_group.update_attributes(params[:contest_group])
       flash[:success] = t(".success")
 
       unless_continue_editing do

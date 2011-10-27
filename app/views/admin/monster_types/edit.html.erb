@@ -3,5 +3,27 @@
 <% form_for([:admin, @monster_type], :html => {:multipart => true}) do |form| %>
   <%= form.fields %>
 
+  <% dom_ready do %>
+	$('form.edit_monster_type').submit(function(){
+		if ($('#requirement_list').children().size() == 0) {
+	      $('<input type="hidden" />').
+		    attr({
+		      name: "monster_type[requirements]",
+		      value: ""
+		    }).
+		    appendTo($('#requirement_list'));
+		}
+		if ($('#payout_list').children().size() == 0) {
+	      $('<input type="hidden" />').
+		    attr({
+		      name: "monster_type[payouts]",
+		      value: ""
+		    }).
+		    appendTo($('#payout_list'));
+		}
+		return true;
+	});
+  <% end %>
+
   <%= form.submit_and_continue %>
 <% end %>
