@@ -3,27 +3,5 @@
 <% form_for([:admin, @boss], :html => {:multipart => true}) do |form| %>
   <%= form.fields %>
 
-  <% dom_ready do %>
-	$('form.edit_boss').submit(function(){
-		if ($('#requirement_list').children().size() == 0) {
-	      $('<input type="hidden" />').
-		    attr({
-		      name: "boss[requirements]",
-		      value: ""
-		    }).
-		    appendTo($('#requirement_list'));
-		}
-		if ($('#payout_list').children().size() == 0) {
-	      $('<input type="hidden" />').
-		    attr({
-		      name: "boss[payouts]",
-		      value: ""
-		    }).
-		    appendTo($('#payout_list'));
-		}
-		return true;
-	});
-  <% end %>
-
   <%= form.submit_and_continue %>
 <% end %>

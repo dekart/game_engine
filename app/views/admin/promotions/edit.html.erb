@@ -3,19 +3,5 @@
 <% form_for([:admin, @promotion]) do |form| %>
   <%= form.fields %>
 
-  <% dom_ready do %>
-	$('form.edit_promotion').submit(function(){
-		if ($('#payout_list').children().size() == 0) {
-	      $('<input type="hidden" />').
-		    attr({
-		      name: "promotion[payouts]",
-		      value: ""
-		    }).
-		    appendTo($('#payout_list'));
-		}
-		return true;
-	});
-  <% end %>
-
   <%= form.submit_and_continue %>
 <% end %>
