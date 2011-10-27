@@ -24,7 +24,7 @@ class Admin::MissionLevelsController < Admin::BaseController
   def update
     @level = MissionLevel.find(params[:id])
 
-    if @level.update_attributes(params[:mission_level].reverse_merge(:payouts => nil))
+    if @level.update_attributes(params[:mission_level])
       flash[:success] = t(".success")
 
       unless_continue_editing do

@@ -28,7 +28,7 @@ class Admin::MonsterTypesController < Admin::BaseController
   def update
     @monster_type = MonsterType.find(params[:id])
 
-    if @monster_type.update_attributes(params[:monster_type].reverse_merge(:requirements => nil, :payouts => nil))
+    if @monster_type.update_attributes(params[:monster_type])
       flash[:success] = t(".success")
 
       unless_continue_editing do

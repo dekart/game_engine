@@ -31,7 +31,7 @@ class Admin::ItemSetsController < Admin::BaseController
 
   def update
     @item_set = ItemSet.find(params[:id])
-
+    #FIX ME
     if @item_set.update_attributes(params[:item_set].reverse_merge(:items => nil))
       flash[:success] = t(".success")
 
