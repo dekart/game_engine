@@ -56,7 +56,7 @@ class Admin::MissionsController < Admin::BaseController
   def update
     @mission = Mission.find(params[:id])
 
-    if @mission.update_attributes(params[:mission].reverse_merge(:requirements => nil, :payouts => nil))
+    if @mission.update_attributes(params[:mission])
       flash[:success] = t(".success")
 
       unless_continue_editing do

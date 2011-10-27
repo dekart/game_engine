@@ -40,7 +40,7 @@ class Admin::PropertyTypesController < Admin::BaseController
   def update
     @type = PropertyType.find(params[:id])
 
-    if @type.update_attributes(params[:property_type].reverse_merge(:payouts => nil))
+    if @type.update_attributes(params[:property_type])
       flash[:success] = t(".success")
 
       unless_continue_editing do
