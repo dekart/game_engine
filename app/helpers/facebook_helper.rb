@@ -41,30 +41,15 @@ module FacebookHelper
     
     block_given? ? concat(result) : result
   end
-  
-  def fb_request_dialog(type, options = {})
-    after_callback  = options.delete(:callback)
-    request_params  = options.delete(:params) || {}
-        
-    if_fb_connect_initialized(
-      %(
-        %s;
-        FB.ui(%s, function(response){
-          if(typeof response !== 'undefined'){
-            $('#ajax').load('%s', $.extend({request_id: response.request, to: response.to}, %s), function(){ 
-              %s; 
-            });
-          }
-        }); 
-        
-        $(document).trigger('facebook.dialog');
-      ) % [
-        ga_track_event('Requests', "#{type.to_s.titleize} - Dialog"),
-        options.deep_merge(:method => 'apprequests', :data => {:type => type}).to_json,
-        app_requests_path,
-        request_params.merge(:type => type).to_json,
-        after_callback
-      ]
-    ).gsub(/\n\s+/, ' ')
+
+  def invite_dialog(type, options = {})
+    callback = options.delete(:callback)
+    
+    "".tap do |result|
+      result << ga_track_event('Requests', "#{ type.to_s.titleize } - Dialog").to_s
+      result << "InviteDialog.show('#{type}', #{ options.to_json }, function(){ #{ callback } })"
+      
+      result.gsub!(/\n\s+/, ' ')
+    end
   end
 end

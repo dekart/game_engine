@@ -18,15 +18,17 @@
     <%= link_to(button(:invite_other), new_relation_path, :class => 'invite_other button')%>
 
     <%= link_to_function(button(:invite), 
-          fb_request_dialog(:invitation,
-            :title    => t('.title'),
-            :message  => t('relations.new.invitation_message', :app_name => t('app_name')),
-            :filters => [
-              {
-                :name     => t('.suggested_users'),
-                :user_ids => notification.data[:friend_ids]
-              }
-            ]
+          invite_dialog(:invitation,
+            :dialog => {
+              :title    => t('.title'),
+              :message  => t('relations.new.invitation_message', :app_name => t('app_name')),
+              :filters => [
+                {
+                  :name     => t('.suggested_users'),
+                  :user_ids => notification.data[:friend_ids]
+                }
+              ]
+            }
           ), 
           :class => 'invite button'
         ) %>

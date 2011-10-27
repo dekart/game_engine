@@ -41,14 +41,16 @@
         
         <% if Setting.b(:friends_invite_enabled) && monster.monster_type.available_for_friends_invite %>
           <%= link_to_function(button(:invite_request),
-                fb_request_dialog(:monster_invite,
-                  :title    => t('.invitation.title'),
-                  :message  => t('.invitation.message', :name => monster.name, :app => t('app_name')),
-                  :data     => {
-                    :target_id => monster.id,
-                    :target_type => Monster.name
+                invite_dialog(:monster_invite,
+                  :dialog => {
+                    :title    => t('.invitation.title'),
+                    :message  => t('.invitation.message', :name => monster.name, :app => t('app_name')),
+                    :data     => {
+                      :target_id => monster.id,
+                      :target_type => Monster.name
+                    }
                   },
-                  :params => {
+                  :request => {
                     :target_id => monster.id,
                     :target_type => Monster.name
                   }

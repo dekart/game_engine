@@ -16,10 +16,12 @@
             <div class="image"><%= fb_profile_pic(facebook_id, :size => :normal) %></div>
         
             <%= link_to_function(button(:invite), 
-                  fb_request_dialog(:invitation,
-                    :to       => facebook_id,
-                    :title    => t('.title'),
-                    :message  => t('.invitation_message', :app_name => t('app_name')),
+                  invite_dialog(:invitation,
+                    :dialog => {
+                      :to       => facebook_id,
+                      :title    => t('.title'),
+                      :message  => t('.invitation_message', :app_name => t('app_name'))
+                    },
                     :callback => "$('#user_#{facebook_id}').html('#{content_tag(:div, t('.invitation_sent'), :class => :name)}').fadeOut(1200)"
                   ),
                   :class => 'invite button'
@@ -31,13 +33,15 @@
     
     <div class="controls">
       <%= link_to_function(button(:invite_all), 
-            fb_request_dialog(:invitation,
-              :title    => t('.title'),
-              :message  => t('.invitation_message', :app_name => t('app_name')),
-              :data     => {
-                :reference => :invite_page
-              },
-              :exclude_ids => AppRequest::Invitation.ids_to_exclude_for(current_character)
+            invite_dialog(:invitation,
+              :dialog => {
+                :title    => t('.title'),
+                :message  => t('.invitation_message', :app_name => t('app_name')),
+                :data     => {
+                  :reference => :invite_page
+                },
+                :exclude_ids => AppRequest::Invitation.ids_to_exclude_for(current_character)
+              }
             ),
             :class => 'invite button'
           ) %>
