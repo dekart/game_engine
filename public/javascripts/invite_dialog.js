@@ -1,14 +1,14 @@
 var InviteDialog = {
-  show: function(type, invite_options, callback){
+  show: function(invite_type, invite_options, callback){
     var options = $.extend(true, {}, invite_options, {
       dialog : {
         method: 'apprequests',
         data: {
-          'type' : type
+          type : invite_type
         }
       },
       request : {
-        'type' : type
+        type : invite_type
       }
     });
 
