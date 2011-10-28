@@ -1,9 +1,5 @@
 <table cellspacing="0" cellpadding="0">
   <tr>
-    <td class="image">
-      <%= monster_image(monster, :large) %>
-    </td>
-
     <td class="info">
       <div class="timer">
         <%= t(".timer") %>
@@ -73,6 +69,10 @@
       <% end %>
 
       <%= render('fighters', :monster => monster) %>
+    </td>
+
+    <td class="image">
+      <%= monster_image(monster, :large) %>
     </td>
   </tr>
 </table>
