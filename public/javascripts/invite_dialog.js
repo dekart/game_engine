@@ -14,7 +14,7 @@ var InviteDialog = {
 
     if_fb_initialized(function(){
       FB.ui(options.dialog, function(response){
-        if(typeof response !== 'undefined'){
+        if(response){
           $('#ajax').load('/app_requests', $.extend({request_id: response.request, to: response.to}, options.request), function(){ 
             callback(); 
           });
