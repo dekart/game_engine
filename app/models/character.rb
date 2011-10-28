@@ -30,6 +30,14 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
 
+  module Eq
+    def asd
+      puts 'hey'
+    end
+  end
+
+  belongs_to :equipment, :extend => Eq
+
   has_many :attacks,
     :class_name   => "Fight",
     :foreign_key  => :attacker_id,
@@ -70,7 +78,6 @@ class Character < ActiveRecord::Base
   has_many :wall_posts,
     :dependent => :destroy
 
-  serialize :placements
   serialize :active_boosts
 
   attr_accessible :name
@@ -101,6 +108,7 @@ class Character < ActiveRecord::Base
 
   delegate(*(CharacterType::BONUSES + [:to => :character_type]))
   delegate(:facebook_id, :to => :user)
+  delegate(:placements, :to => :equipment)
 
   attr_accessor :level_up_applied
 
@@ -268,18 +276,14 @@ class Character < ActiveRecord::Base
     save!
   end
 
-  def equipment
-    @equipment ||= Character::Equipment.new(self)
-  end
+  #def equipment
+  #  @equipment ||= Character::Equipment.new(self)
+  #end
 
   def boosts
     @boosts ||= Character::Boosts.new(self)
   end
 
-  def placements
-    self[:placements] ||= {}
-  end
-  
   def active_boosts
     self[:active_boosts] ||= {}
   end

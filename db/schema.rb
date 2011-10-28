@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111024175449) do
+ActiveRecord::Schema.define(:version => 20111028064456) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -140,6 +140,12 @@ ActiveRecord::Schema.define(:version => 20111024175449) do
   add_index "character_contest_groups", ["character_id"], :name => "index_character_contests_on_character_id_and_contest_id"
   add_index "character_contest_groups", ["points"], :name => "index_character_contests_on_points"
 
+  create_table "character_equipment", :force => true do |t|
+    t.text     "placements"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "character_titles", :force => true do |t|
     t.integer  "character_id", :null => false
     t.integer  "title_id",     :null => false
@@ -176,48 +182,49 @@ ActiveRecord::Schema.define(:version => 20111024175449) do
   end
 
   create_table "characters", :force => true do |t|
-    t.integer  "user_id",                                                                           :null => false
-    t.string   "name",                     :limit => 100,        :default => ""
+    t.integer  "user_id",                                                                    :null => false
+    t.string   "name",                     :limit => 100, :default => ""
     t.integer  "basic_money"
     t.integer  "vip_money"
-    t.integer  "level",                                          :default => 1
-    t.integer  "experience",                                     :default => 0
+    t.integer  "level",                                   :default => 1
+    t.integer  "experience",                              :default => 0
     t.integer  "points"
     t.integer  "attack"
     t.integer  "defence"
-    t.integer  "hp",                                             :default => 100
+    t.integer  "hp",                                      :default => 100
     t.integer  "health"
-    t.integer  "ep",                                             :default => 10
+    t.integer  "ep",                                      :default => 10
     t.integer  "energy"
     t.text     "inventory_effects"
     t.datetime "hp_updated_at"
     t.datetime "ep_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "fights_won",                                     :default => 0
-    t.integer  "fights_lost",                                    :default => 0
-    t.integer  "missions_succeeded",                             :default => 0
-    t.integer  "missions_completed",                             :default => 0
-    t.integer  "relations_count",                                :default => 0
-    t.integer  "bank",                     :limit => 8,          :default => 0
+    t.integer  "fights_won",                              :default => 0
+    t.integer  "fights_lost",                             :default => 0
+    t.integer  "missions_succeeded",                      :default => 0
+    t.integer  "missions_completed",                      :default => 0
+    t.integer  "relations_count",                         :default => 0
+    t.integer  "bank",                     :limit => 8,   :default => 0
     t.datetime "basic_money_updated_at"
     t.text     "relation_effects"
     t.integer  "current_mission_group_id"
     t.integer  "character_type_id"
     t.integer  "stamina"
-    t.integer  "sp",                                             :default => 10
+    t.integer  "sp",                                      :default => 10
     t.datetime "sp_updated_at"
-    t.text     "placements",               :limit => 2147483647
-    t.integer  "total_money",              :limit => 8,          :default => 0
-    t.datetime "hospital_used_at",                               :default => '1970-01-01 05:00:00'
-    t.integer  "missions_mastered",                              :default => 0
-    t.integer  "lock_version",                                   :default => 0
-    t.datetime "fighting_available_at",                          :default => '1970-01-01 05:00:00'
-    t.integer  "killed_monsters_count",                          :default => 0
-    t.integer  "total_monsters_damage",                          :default => 0
+    t.text     "placements_old"
+    t.integer  "total_money",              :limit => 8,   :default => 0
+    t.datetime "hospital_used_at",                        :default => '1970-01-01 05:00:00'
+    t.integer  "missions_mastered",                       :default => 0
+    t.integer  "lock_version",                            :default => 0
+    t.datetime "fighting_available_at",                   :default => '1970-01-01 05:00:00'
+    t.integer  "killed_monsters_count",                   :default => 0
+    t.integer  "total_monsters_damage",                   :default => 0
     t.text     "active_boosts"
-    t.integer  "achievement_points",                             :default => 0
-    t.integer  "total_score",                                    :default => 0,                     :null => false
+    t.integer  "achievement_points",                      :default => 0
+    t.integer  "total_score",                             :default => 0,                     :null => false
+    t.integer  "equipment_id"
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
@@ -453,8 +460,8 @@ ActiveRecord::Schema.define(:version => 20111024175449) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
-    t.integer  "original_vip_price"
     t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
+    t.integer  "original_vip_price"
     t.integer  "hp_restore_rate",                        :default => 0
     t.integer  "sp_restore_rate",                        :default => 0
     t.integer  "ep_restore_rate",                        :default => 0
@@ -480,9 +487,9 @@ ActiveRecord::Schema.define(:version => 20111024175449) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
+    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
-    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -852,7 +859,7 @@ ActiveRecord::Schema.define(:version => 20111024175449) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",                         :default => ""
+    t.string   "tutorial_step",          :limit => 50,  :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end

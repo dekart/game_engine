@@ -1,4 +1,9 @@
-class Character::Equipment
+class Character::Equipment < ActiveRecord::Base
+
+  has_one :character, :dependent => :destroy
+
+  serialize :placements
+
   MAIN_PLACEMENTS = [:left_hand, :right_hand, :head, :body, :legs]
   PLACEMENTS = MAIN_PLACEMENTS + [:additional]
 
@@ -21,11 +26,14 @@ class Character::Equipment
   end
 
 
-  def initialize(character)
-    @character = character
-    @cache = Rails.cache
-  end
+  #def initialize(character)
+  #  @character = character
+  #  @cache = Rails.cache
+  #end
   
+  def placements
+    self[:placements] ||= {}
+  end
   
   def effect(name)
     @effects ||= @cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
@@ -42,7 +50,7 @@ class Character::Equipment
 
   def inventories
     unless @inventories
-      ids = @character.placements.values.flatten
+      ids = placements.values.flatten
 
       if ids.any?
         inventories = Inventory.find_all_by_id(ids.uniq.sort, :include => :item)
@@ -61,7 +69,7 @@ class Character::Equipment
   
 
   def inventories_by_placement(placement)
-    Array.wrap(@character.placements[placement.to_sym]).collect do |id|
+    Array.wrap(placements[placement.to_sym]).collect do |id|
       inventories.detect{|i| i.id == id}
     end
   end
@@ -75,12 +83,12 @@ class Character::Equipment
     previous = nil
     
     if available_capacity(placement) > 0
-      @character.placements[placement] ||= []
-      @character.placements[placement] << inventory.id
+      placements[placement] ||= []
+      placements[placement] << inventory.id
 
       inventory.equipped = equipped_amount(inventory)
     elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
-      previous = @character.inventories.find(@character.placements[placement].last)
+      previous = character.inventories.find(placements[placement].last)
       
       unless previous == inventory # Do not re-equip the same inventory
         unequip(previous, placement)
@@ -97,8 +105,8 @@ class Character::Equipment
   def unequip(inventory, placement)
     placement = placement.to_sym
 
-    if @character.placements[placement] and index = @character.placements[placement].index(inventory.id)
-      @character.placements[placement].delete_at(index)
+    if placements[placement] and index = placements[placement].index(inventory.id)
+      placements[placement].delete_at(index)
 
       inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
     end
@@ -114,7 +122,7 @@ class Character::Equipment
       previous.try(:save)
       
       inventory.save
-      @character.save!
+      character.save!
       
       clear_effect_cache!
     end
@@ -126,7 +134,7 @@ class Character::Equipment
       unequip(inventory, placement)
 
       inventory.save
-      @character.save!
+      character.save!
       
       clear_effect_cache!
     end
@@ -152,7 +160,7 @@ class Character::Equipment
 
       inventory.save
 
-      @character.save!
+      character.save!
       
       clear_effect_cache!
     end
@@ -180,7 +188,7 @@ class Character::Equipment
 
       inventory.save unless inventory.destroyed?
 
-      @character.save!
+      character.save!
       
       clear_effect_cache!
     end
@@ -190,7 +198,7 @@ class Character::Equipment
   def equip_best!(force_unequip = false)
     unequip_all! if force_unequip
 
-    equippables = @character.inventories.equippable.all
+    equippables = character.inventories.equippable.all
 
     Character.transaction do
       while free_slots > 0
@@ -211,7 +219,7 @@ class Character::Equipment
         inventory.save if inventory.changed?
       end
 
-      @character.save!
+      character.save!
       
       clear_effect_cache!
     end
@@ -220,10 +228,10 @@ class Character::Equipment
 
   def unequip_all!
     Character.transaction do
-      @character.inventories.equipped.update_all(:equipped => 0)
+      character.inventories.equipped.update_all(:equipped => 0)
 
-      @character.placements = {}
-      @character.save!
+      self.placements = {}
+      character.save!
       
       clear_effect_cache!
     end
@@ -252,7 +260,7 @@ class Character::Equipment
   protected
   
   def effect_cache_key
-    "character_#{ @character.id }_equipment_effects"
+    "character_#{ character.id }_equipment_effects"
   end
 
   def clear_effect_cache!
@@ -264,7 +272,7 @@ class Character::Equipment
   end
   
   def equipped_amount(inventory)
-    @character.placements.values.flatten.count(inventory.id)
+    placements.values.flatten.count(inventory.id)
   end
   
   def placements_with_free_slots
@@ -274,19 +282,19 @@ class Character::Equipment
   def placement_capacity(placement)
     case placement
     when :additional
-      result = @character.character_type.try(:equipment_slots) || Setting.i(:character_equipment_slots)
+      result = character.character_type.try(:equipment_slots) || Setting.i(:character_equipment_slots)
 
-      result += @character.relations.effective_size / Setting.i(:character_relations_per_equipment_slot)
+      result += character.relations.effective_size / Setting.i(:character_relations_per_equipment_slot)
     else
       1
     end
   end
   
   def equipped_slots(inventory)
-    PLACEMENTS.select{|placement| @character.placements[placement].try(:include?, inventory.id) }
+    PLACEMENTS.select{|placement| placements[placement].try(:include?, inventory.id) }
   end
   
   def used_capacity(placement)
-    @character.placements[placement].try(:size).to_i
+    placements[placement].try(:size).to_i
   end
 end
