@@ -1,25 +1,35 @@
 module StreamHelper
   include FacebookHelper
   
-  def stream_dialog(story_alias, *args)
+  def stream_dialog(type, *args)
     options = args.extract_options!
+    options = prepare_story(type, *(send("#{ type }_story_options", *args))).deep_merge(options)
     
-    options = prepare_story(story_alias, *(send("#{story_alias}_story_options", *args))).deep_merge(options)
+    post_options = {
+      :attachment   => options[:attachment],
+      :action_links => options[:action_links]
+    }
     
-    if_fb_connect_initialized(
-      "FB.ui(%s, %s); $(document).trigger('facebook.dialog');" % [
-        {
-          :method       => 'stream.publish',
-          :attachment   => options[:attachment],
-          :action_links => options[:action_links]
-        }.to_json,
-        "function(post_id, exception, data){ if(post_id != 'null'){%s;}else{%s;}; %s }" % [
-          options[:success],
-          options[:failure],
-          options[:callback]
-        ]
+    success_event_track = ga_track_event('Stream Dialog', "#{ type.to_s.titleize } - Published")
+    
+    ''.tap do |result|
+      result << ga_track_event('Stream Dialog', "#{ type.to_s.titleize } - Dialog").to_s
+      result << options[:before].to_s
+      result << %[
+        StreamDialog.show('#{ type }', #{ post_options.to_json }, function(post_id, exception, data){ 
+          if(post_id != 'null'){
+            #{ success_event_track };
+            #{ options[:success] };
+          } else {
+            #{ options[:failure] };
+          }
+          
+          #{ options[:callback] };
+        });
       ]
-    )
+      
+      result.gsub!(/\n\s+/, ' ')
+    end
   end
 
   protected

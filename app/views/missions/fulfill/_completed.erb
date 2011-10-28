@@ -43,7 +43,7 @@
 
     <div class="buttons">
       <%= link_to_function(button(:publish),
-            stream_dialog(:mission_completed, mission) + "$.dialog.close()",
+            stream_dialog(:mission_completed, mission, :before => '$.dialog.close();'),
             :class => "continue button"
           ) if Setting.b(:stream_dialog_enabled) %>
     </div>

@@ -18,7 +18,10 @@ module RatingsHelper
   end
   
   def rating_publish_button(position, rating_name)
+    return unless Setting.b(:stream_dialog_enabled) && params[:action] == 'global'
+    
     link_to_function(button(t("ratings.buttons.publish")), stream_dialog(:position_in_rating, position, rating_name),
-      :class => 'button publish') if Setting.b(:stream_dialog_enabled) && params[:action] == 'global'
+      :class => 'button publish'
+    )
   end
 end

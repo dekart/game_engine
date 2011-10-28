@@ -10,10 +10,9 @@
   </div>
 
   <div class="controls">
-    <%= link_to_function(button(:publish), 
-          stream_dialog(:won_contest, notification),
-          :class => "publish button") if Setting.b(:stream_dialog_enabled) 
-        %>
+    <%= link_to_function(button(:publish), stream_dialog(:won_contest, notification),
+          :class => "publish button"
+        ) if Setting.b(:stream_dialog_enabled) %>
   </div>
 
   <%= render("notifications/disable", :notification => notification) %>
