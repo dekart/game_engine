@@ -1,101 +1,70 @@
 (function(){
   $.sliders = function(points) {
-  	 var average = points / 5;
-  	
-    $("#Attack-slider").slider({	
+  	$("#Attack-slider, #Defence-slider, #Health-slider, #Energy-slider, #Stamina-slider").slider({	
       orientation: "horizontal",
 	  range: "min",
-	  value: average,
 	  min: 0,
 	  step: 1,
 	  max: points,
-	  animate: true,
-	  slide: function(event,ui){
-	  	var points_sum = ui.value + $("#Defence-slider").slider("value") + $("#Health-slider").slider("value") + $("#Energy-slider").slider("value") + $("#Stamina-slider").slider("value");
-	  	var recalc = points_sum - points;
-	  	$("#rec").html(recalc);
-	 
-	  	
-	  	
-	  	$("#Defence-slider").slider("value",$("#Defence-slider").slider("value") - recalculation);
-	  	$("#Health-slider").slider("value",$("#Health-slider").slider("value") - recalculation);
-	  	$("#Energy-slider").slider("value",$("#Energy-slider").slider("value") - recalculation);
-	  	$("#Stamina-slider").slider("value",$("#Stamina-slider").slider("value") - recalculation);
-	  	$(this).next("span").html(ui.value);
-	  	$("#Defence-slider").next("span").html($("#Defence-slider").slider("value"));
-	  	$("#Health-slider").next("span").html($("#Health-slider").slider("value"));
-	  	$("#Energy-slider").next("span").html($("#Energy-slider").slider("value"));
-	  	$("#Stamina-slider").next("span").html($("#Stamina-slider").slider("value"));
-	  }
+	  animate: true
+    });
+  	
+    $("#Attack-slider").bind("slide", function(event, ui){
+      var max_points = points - ui.value - $("#Defence-slider").slider("value") - $("#Health-slider").slider("value") - $("#Energy-slider").slider("value") - $("#Stamina-slider").slider("value");
+    	
+      $(this).next("span").html("value: " + ui.value + " max: " + $(this).slider("option", "max"));
+    	 
+      $("#Defence-slider").slider("option", "max", max_points + $("#Defence-slider").slider("value"));
+      $("#Health-slider").slider("option", "max", max_points + $("#Health-slider").slider("value"));
+      $("#Energy-slider").slider("option", "max", max_points + $("#Energy-slider").slider("value"));
+      $("#Stamina-slider").slider("option", "max", max_points + $("#Stamina-slider").slider("value"));
     });
     
-     $("#Defence-slider").slider({	
-      orientation: "horizontal",
-	  range: "min",
-	  value: average,
-	  min: 0,
-	  max: points,
-	  animate: true,
-	  slide: function(event,ui){
-	  	var recalculation = (points - ui.value) / 4;
-	  	
-	  	$("#Attack-slider").slider("value",recalculation);
-	  	$("#Health-slider").slider("value",recalculation);
-	  	$("#Energy-slider").slider("value",recalculation);
-	  	$("#Stamina-slider").slider("value",recalculation);
-	  }
+    $("#Defence-slider").bind("slide", function(event, ui){
+      var max_points = points - ui.value - $("#Attack-slider").slider("value") - $("#Health-slider").slider("value") - $("#Energy-slider").slider("value") - $("#Stamina-slider").slider("value");
+    	
+      $(this).next("span").html("value: " + ui.value + " max: " + $(this).slider("option", "max"));
+    	
+      $("#Attack-slider").slider("option", "max", max_points + $("#Attack-slider").slider("value"));
+      $("#Health-slider").slider("option", "max", max_points + $("#Health-slider").slider("value"));
+      $("#Energy-slider").slider("option", "max", max_points + $("#Energy-slider").slider("value"));
+      $("#Stamina-slider").slider("option", "max", max_points + $("#Stamina-slider").slider("value"));
     });
     
-     $("#Health-slider").slider({	
-      orientation: "horizontal",
-	  range: "min",
-	  value: average,
-	  min: 0,
-	  max: points,
-	  animate: true,
-	  slide: function(event,ui){
-	  	var recalculation = (points - ui.value) / 4;
-	  	
-	  	$("#Defence-slider").slider("value",recalculation);
-	  	$("#Attack-slider").slider("value",recalculation);
-	  	$("#Energy-slider").slider("value",recalculation);
-	  	$("#Stamina-slider").slider("value",recalculation);
-	  }
+    $("#Health-slider").bind("slidechange", function(event, ui){
+      var max_points = points - ui.value - $("#Defence-slider").slider("value") - $("#Attack-slider").slider("value") - $("#Energy-slider").slider("value") - $("#Stamina-slider").slider("value");
+      
+      $(this).next("span").html("value: " + ui.value + " max: " + $(this).slider("option", "max"));
+      
+      $("#Defence-slider").slider("option", "max", max_points + $("#Defence-slider").slider("value"));
+      $("#Attack-slider").slider("option", "max", max_points + $("#Attack-slider").slider("value"));
+      $("#Energy-slider").slider("option", "max", max_points + $("#Energy-slider").slider("value"));
+      $("#Stamina-slider").slider("option", "max", max_points + $("#Stamina-slider").slider("value"));
     });
     
-     $("#Energy-slider").slider({	
-      orientation: "horizontal",
-	  range: "min",
-	  value: average,
-	  min: 0,
-	  max: points,
-	  animate: true,
-	  slide: function(event,ui){
-	  	var recalculation = (points - ui.value) / 4;
-	  	
-	  	$("#Defence-slider").slider("value",recalculation);
-	  	$("#Health-slider").slider("value",recalculation);
-	  	$("#Attack-slider").slider("value",recalculation);
-	  	$("#Stamina-slider").slider("value",recalculation);
-	  }
+    $("#Energy-slider").bind("slidechange", function(event, ui){
+      var max_points = points - ui.value - $("#Defence-slider").slider("value") - $("#Health-slider").slider("value") - $("#Attack-slider").slider("value") - $("#Stamina-slider").slider("value");
+    	
+      $(this).next("span").html("value: " + ui.value + " max: " + $(this).slider("option", "max"));
+    	 
+      $("#Defence-slider").slider("option", "max", max_points + $("#Defence-slider").slider("value"));
+      $("#Health-slider").slider("option", "max", max_points + $("#Health-slider").slider("value"));
+      $("#Attack-slider").slider("option", "max", max_points + $("#Attack-slider").slider("value"));
+      $("#Stamina-slider").slider("option", "max", max_points + $("#Stamina-slider").slider("value"));
+    	
     });
     
-     $("#Stamina-slider").slider({	
-      orientation: "horizontal",
-	  range: "min",
-	  value: average,
-	  min: 0,
-	  max: points,
-	  animate: true,
-	  slide: function(event,ui){
-	  	var recalculation = (points - ui.value) / 4;
-	  	
-	  	$("#Defence-slider").slider("value",recalculation);
-	  	$("#Health-slider").slider("value",recalculation);
-	  	$("#Energy-slider").slider("value",recalculation);
-	  	$("#Attack-slider").slider("value",recalculation);
-	  }
-    });	  
+    $("#Stamina-slider").bind("slidechange", function(event, ui){
+      var max_points = points - ui.value - $("#Defence-slider").slider("value") - $("#Health-slider").slider("value") - $("#Energy-slider").slider("value") - $("#Attack-slider").slider("value");
+    	
+      $(this).next("span").html("value: " + ui.value + " max: " + $(this).slider("option", "max"));
+    	 
+      $("#Defence-slider").slider("option", "max", max_points + $("#Defence-slider").slider("value"));
+      $("#Health-slider").slider("option", "max", max_points + $("#Health-slider").slider("value"));
+      $("#Energy-slider").slider("option", "max", max_points + $("#Energy-slider").slider("value"));
+      $("#Attack-slider").slider("option", "max", max_points + $("#Attack-slider").slider("value"));
+    });
+    	  
   };
 })(jQuery);
 	
