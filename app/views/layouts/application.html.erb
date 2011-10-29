@@ -71,6 +71,35 @@
   </div>
 
   <div id="ajax" style="display:none;"></div>
+  
+  <script id="invite_dialog_template" type="text/x-jquery-tmpl">
+    <div id="invite_dialog">
+      <h3>Send Gift to Your Friends</h3>
+      <div class="note">Choose friends to send to</div>
+      
+      <div class="friend_list">
+        <div class="filters">
+          <span class="filter" data-filter="all">All</span>
+          <span class="filter" data-filter="app_users">Game Friends</span>
+        </div>
+        
+        <div class="previous">&laquo;</div>
+        <div class="next">&raquo;</div>
+          
+        <div class="users">
+          {{each(i, user) friends}}
+            <div class="user {{if user.is_app_user}}app_user{{/if}}" style="display: none;">
+              <input type="checkbox" value="${user.uid}" checked="yes">
+              <img data-image="${user.pic_square}" src="<%= asset_image_path('1px') %>" alt="${user.first_name}" width="50" height="50"/>
+              ${user.first_name}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+      
+      <span class="button send">Send</span>
+    </div>
+  </script>
 
   <%= display_notifications %>
 
