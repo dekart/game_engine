@@ -74,7 +74,7 @@
   
   <script id="invite_dialog_template" type="text/x-jquery-tmpl">
     <div id="invite_dialog">
-      <h3>Send Gift to Your Friends</h3>
+      <h3>${options.dialog.title}</h3>
       <div class="note">Choose friends to send to</div>
       
       <div class="friend_list">
@@ -100,6 +100,11 @@
       <span class="button send">Send</span>
     </div>
   </script>
+  
+  <% dom_ready do %>
+    InviteDialog.excludeIds('invitation', <%= AppRequest::Invitation.ids_to_exclude_for(current_character).to_json %>);
+    InviteDialog.excludeIds('gift', <%= AppRequest::Gift.ids_to_exclude_for(current_character).to_json %>);
+  <% end %>
 
   <%= display_notifications %>
 

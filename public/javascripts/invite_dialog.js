@@ -1,65 +1,84 @@
 var InviteDialog = (function(){
+  var users_per_page = 10;
+  
   var invite_dialog = {};
 
   var fnMethods = {
-    initialize: function(){
-      var list = $(this);
+    initialize: function(send_button_callback){
+      var dialog = $(this);
     
-      list.data({
-        'per-page' : 10
-      });
+      dialog.data({ 'per-page' : users_per_page });
 
-      list.find('.previous, .next').click(function(){
+      dialog.find('.previous, .next').click(function(){
         var link = $(this);
       
         if( !link.hasClass('disabled') ){
-          fnMethods.goToPage.call(list, link.data('page'));
+          fnMethods.goToPage.call(dialog, link.data('page'));
         }
       });
       
-      list.find('.filter').click(function(){
+      dialog.find('.filter').click(function(){
         var link = $(this);
         
         if( !link.hasClass('selected')){
-          fnMethods.applyFilter.call(list, link.data('filter'));
+          fnMethods.applyFilter.call(dialog, link.data('filter'));
         }
       });
     
+      dialog.find('.send.button').click(function(){
+        var button = $(this);
+        
+        if( button.hasClass('disabled') ){
+          return;
+        }
+        
+        var ids = fnMethods.getSelectedIds.call(dialog);
+        
+        send_button_callback(ids);
+        
+        fnMethods.markAsSent.call(dialog, ids);
+        
+        if( fnMethods.countSelected.call(dialog) == 0 ){
+          button.addClass('disabled');
+        }
+      });
+
       fnMethods.goToPage.call(this, 0);
     },
     
     applyFilter: function(filter){
-      var list = $(this);
+      var dialog = $(this);
       
-      list.data('filter', filter);
-      list.data('max-page', Math.floor(fnMethods.usersByCurrentFilter.call(this).length / list.data('per-page')))
+      fnMethods.hidePage.call(this, dialog.data('page'));
       
-      list.find('.filter').removeClass('selected').filter('[data-filter=' + filter +']').addClass('selected');
-      list.find('.user').hide();
+      dialog.data('filter', filter);
+      dialog.data('max-page', Math.floor(fnMethods.usersByCurrentFilter.call(this).length / dialog.data('per-page')));
+      
+      dialog.find('.filter').removeClass('selected').filter('[data-filter=' + filter +']').addClass('selected');
       
       fnMethods.goToPage.call(this, 0);
     },
     
     usersByCurrentFilter: function(){
-      var list = $(this);
+      var dialog = $(this);
       
-      if( list.data('filter') == 'app_users'){
-        return list.find('.user.app_user');
+      if( dialog.data('filter') == 'app_users' ){
+        return dialog.find('.user.app_user');
       } else {
-        return list.find('.user');
+        return dialog.find('.user');
       }
     },
   
     goToPage: function(page){
-      var list = $(this);
-      var max_page = list.data('max-page');
+      var dialog = $(this);
+      var max_page = dialog.data('max-page');
     
       if(page < 0 || page > max_page){
         return;
       }
     
-      var previous = list.find('.previous');
-      var next = list.find('.next');
+      var previous = dialog.find('.previous');
+      var next = dialog.find('.next');
       
       previous.data('page', page - 1);
       next.data('page', page + 1);
@@ -76,54 +95,72 @@ var InviteDialog = (function(){
         next.removeClass('disabled');
       }
     
-      if(typeof list.data('page') != 'undefined'){
-        fnMethods.hidePage.call(this, list.data('page'));
-      }
-    
+      console.log('goto', page)
+
+      fnMethods.hidePage.call(this, dialog.data('page'));
+
+      dialog.data('page', page);
+
       fnMethods.showPage.call(this, page);
-    
-      list.data('page', page);
     },
   
     goToFirstSelected: function(){
-      var list = $(this);
+      var dialog = $(this);
     
-      list.find(':checked').first().parent().index('.user')
+      fnMethods.goToPage.call(this, Math.floor(dialog.find(':checked').first().parent().index('.user') / users_per_page));
     },
   
     usersFromPage: function(page){
-      var list = $(this);
-      var per_page = list.data('per-page');
+      var dialog = $(this);
+      var per_page = dialog.data('per-page');
     
       return fnMethods.usersByCurrentFilter.call(this).slice(page * per_page, (page + 1) * per_page);
     },
   
     showPage: function(page){
-      var list = $(this);
+      var dialog = $(this);
     
       var users = fnMethods.usersFromPage.call(this, page);
     
-      users.show().find('img[data-image]').each(function(){
-        var img = $(this);
+      if( users.length > 0 ){
+        users.find('img[data-image]').each(function(){
+          var img = $(this);
       
-        img.attr( 'src', img.data('image') ).removeAttr( 'data-image' );
-      });
+          img.attr( 'src', img.data('image') ).removeAttr( 'data-image' );
+        });
+      
+        dialog.queue(function(next){
+          users.fadeIn(next);
+        });
+      }
     },
   
     hidePage: function(page){
-      fnMethods.usersFromPage.call(this, page).hide();
+      var dialog = $(this);
+      
+      var users = fnMethods.usersFromPage.call(this, page || 0);
+      
+      if( users.length > 0 ){
+        dialog.queue(function(next){
+          users.fadeOut(next);
+        });
+      }
     },
   
-    getSelectedIds: function(size){
-      return fnMethods.usersByCurrentFilter.call(this).find(':checked').slice(0, size).map(function(){
+    getSelectedIds: function(){
+      return fnMethods.usersByCurrentFilter.call(this).find(':checked').slice(0, users_per_page).map(function(){
         return parseInt(this.getAttribute('value'));
       }).get();
     },
+    
+    countSelected: function(){
+      return fnMethods.usersByCurrentFilter.call(this).find(':checked').length;
+    },
   
     markAsSent: function(ids){
-      var list = $(this);
+      var dialog = $(this);
     
-      list.find('.user').each(function(){
+      dialog.find('.user').each(function(){
         var user = $(this);
         var checkbox = user.find('input');
       
@@ -137,13 +174,13 @@ var InviteDialog = (function(){
     }
   }
 
-  $.fn.inviteFriendSelector = function(method) {
+  $.fn.inviteDialog = function(method) {
     // Method calling logic
-    if ( !fnMethods[method] ) {
-      var method = 'initialize'
+    if ( fnMethods[method] ){
+      return fnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    } else {
+      return fnMethods[ 'initialize' ].apply(this, arguments);
     }
-  
-    return fnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
   };
 
 
@@ -184,18 +221,18 @@ var InviteDialog = (function(){
         if(options.dialog.to){
           invite_dialog.sendRequest(options, callback)
         } else {
-          invite_dialog.selectRecipients(invite_type, function(ids){
+          invite_dialog.selectRecipients(invite_type, options, function(ids){
             var options_with_receivers = $.extend(true, 
               {
                 dialog : {
-                  to : ids
+                  to : ids.join(',')
                 }
               }, 
               options
             );
 
-            //invite_dialog.sendRequest(options_with_receivers, callback);
-          })
+            invite_dialog.sendRequest(options_with_receivers, callback);
+          });
         }
 
         $(document).trigger('facebook.dialog');
@@ -212,7 +249,7 @@ var InviteDialog = (function(){
       });
     },
 
-    selectRecipients: function(invite_type, callback){
+    selectRecipients: function(invite_type, options, callback){
       var dialog_template = $('#invite_dialog_template');
 
       Spinner.show();
@@ -230,25 +267,18 @@ var InviteDialog = (function(){
               
               $.dialog(
                 dialog_template.tmpl({
+                  options : options,
                   friends : $.map(response.data, function(user){
                     return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
                   })
                 })
               );
 
-              var friend_list = $('#invite_dialog .friend_list');
-
-              friend_list.inviteFriendSelector();
-
-              $('#invite_dialog .send.button').click(function(){
-                var ids = friend_list.inviteFriendSelector('getSelectedIds', 20);
-
+              $('#invite_dialog').inviteDialog(function(ids){
                 callback(ids);
-
-                friend_list.inviteFriendSelector('markAsSent', ids);
                 
                 invite_dialog.excludeIds(invite_type, ids);
-              })
+              });
             }
           );
         }
