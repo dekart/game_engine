@@ -30,13 +30,7 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
 
-  module Eq
-    def asd
-      puts 'hey'
-    end
-  end
-
-  belongs_to :equipment, :extend => Eq
+  belongs_to :equipment, :extend => Character::Equipment::EquipmentExtension
 
   has_many :attacks,
     :class_name   => "Fight",

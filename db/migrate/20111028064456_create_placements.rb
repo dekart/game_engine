@@ -5,7 +5,10 @@ class CreatePlacements < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_column :characters, :equipment_id, :integer
+    change_table :characters do |t|
+      t.integer :equipment_id
+      t.rename :placements, :placements_old
+    end
 
     puts "Updating equipment placements for #{Character.count} requests..."
     i = 0
@@ -13,15 +16,12 @@ class CreatePlacements < ActiveRecord::Migration
     Character.find_in_batches(:batch_size => 100) do |characters|
       Character.transaction do
         characters.each do |character|
-          character.create_equipment(:placements => character[:placements])
+          character.create_equipment(:placements => character[:placements_old])
+          character.save!
           i += 1
           puts "Processed #{i}..." if i % 100 == 0
         end
       end
-    end
-
-    change_table :characters do |t|
-      t.rename :placements, :placements_old
     end
 
   end

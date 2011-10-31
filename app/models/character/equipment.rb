@@ -18,35 +18,55 @@ class Character::Equipment < ActiveRecord::Base
     :legs       => :medium,
     :additional => :small
   }
-  
+
+  module EquipmentExtension
+    def asd
+      puts 'hey'
+    end
+
+    def cache
+      @cache = Rails.cache if @cache.nil?
+    end
+
+    def effects
+      @effects ||= cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
+        {}.tap do |effects|
+          Item::EFFECTS.each do |effect|
+            effects[effect] = inventories.sum{|i| i.send(effect) }
+          end
+        end
+      end
+      @effects
+    end
+
+    def effect(name)
+      effects[name.to_sym]
+    end
+
+    def effect_cache_key
+      "character_#{ character.id }_equipment_effects"
+    end
+
+    def clear_effect_cache!
+      cache.delete(effect_cache_key)
+
+      @effects = nil
+
+      true
+    end
+  end
+
+  include EquipmentExtension
+
   class << self
     def placement_name(name)
       I18n.t("inventories.placements.names.#{name}", :default => name.to_s.humanize)
     end
   end
-
-
-  #def initialize(character)
-  #  @character = character
-  #  @cache = Rails.cache
-  #end
   
   def placements
     self[:placements] ||= {}
   end
-  
-  def effect(name)
-    @effects ||= @cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
-      {}.tap do |effects|
-        Item::EFFECTS.each do |effect|
-          effects[effect] = inventories.sum{|i| i.send(effect) }
-        end
-      end
-    end
-
-    @effects[name.to_sym]
-  end
-  
 
   def inventories
     unless @inventories
@@ -120,14 +140,14 @@ class Character::Equipment < ActiveRecord::Base
       previous = equip(inventory, placement)
 
       previous.try(:save)
-      
+
       inventory.save
       character.save!
-      
+
       clear_effect_cache!
     end
   end
-  
+
 
   def unequip!(inventory, placement)
     Character.transaction do
@@ -258,18 +278,6 @@ class Character::Equipment < ActiveRecord::Base
   end
   
   protected
-  
-  def effect_cache_key
-    "character_#{ character.id }_equipment_effects"
-  end
-
-  def clear_effect_cache!
-    @cache.delete(effect_cache_key)
-    
-    @effects = nil
-    
-    true
-  end
   
   def equipped_amount(inventory)
     placements.values.flatten.count(inventory.id)
