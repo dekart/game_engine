@@ -30,7 +30,7 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
 
-  belongs_to :equipment, :extend => Character::Equipment::EquipmentExtension
+  belongs_to :equipment, :extend => Character::EquipmentExtension
 
   has_many :attacks,
     :class_name   => "Fight",

@@ -1,5 +1,7 @@
 class Character::Equipment < ActiveRecord::Base
 
+  include Character::EquipmentExtension
+
   has_one :character, :dependent => :destroy
 
   serialize :placements
@@ -18,45 +20,6 @@ class Character::Equipment < ActiveRecord::Base
     :legs       => :medium,
     :additional => :small
   }
-
-  module EquipmentExtension
-    def asd
-      puts 'hey'
-    end
-
-    def cache
-      @cache = Rails.cache if @cache.nil?
-    end
-
-    def effects
-      @effects ||= cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
-        {}.tap do |effects|
-          Item::EFFECTS.each do |effect|
-            effects[effect] = inventories.sum{|i| i.send(effect) }
-          end
-        end
-      end
-      @effects
-    end
-
-    def effect(name)
-      effects[name.to_sym]
-    end
-
-    def effect_cache_key
-      "character_#{ character.id }_equipment_effects"
-    end
-
-    def clear_effect_cache!
-      cache.delete(effect_cache_key)
-
-      @effects = nil
-
-      true
-    end
-  end
-
-  include EquipmentExtension
 
   class << self
     def placement_name(name)
