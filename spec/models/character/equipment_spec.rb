@@ -161,7 +161,7 @@ describe Character::Equipment do
     end
     
     it 'should equip inventory' do
-      @character.equipment.should_receive(:equip).with(@inventory, :left_hand).and_return(nil)
+      @character.equipment.proxy_target.should_receive(:equip).with(@inventory, :left_hand).and_return(nil)
       
       @character.equipment.equip!(@inventory, :left_hand)
     end
@@ -169,7 +169,7 @@ describe Character::Equipment do
     it 'should save previous inventory if equipping to non-free placement' do
       @other = mock_model(Inventory, :save => true)
       
-      @character.equipment.stub!(:equip).and_return(@other)
+      @character.equipment.proxy_target.stub!(:equip).and_return(@other)
       @other.should_receive(:save)
       
       @character.equipment.equip!(@inventory, :left_hand)
@@ -240,7 +240,7 @@ describe Character::Equipment do
     end
 
     it 'should unequip inventory' do
-      @character.equipment.should_receive(:unequip).with(@inventory, :additional)
+      @character.equipment.proxy_target.should_receive(:unequip).with(@inventory, :additional)
       
       @character.equipment.unequip!(@inventory, :additional)
     end
