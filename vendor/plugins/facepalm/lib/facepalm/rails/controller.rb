@@ -30,7 +30,7 @@ module Facepalm
       end
       
       def fb_signed_request
-        request.env['HTTP_SIGNED_REQUEST']
+        request.env['HTTP_SIGNED_REQUEST'] || flash[:signed_request]
       end
       
       def params_without_facebook_data

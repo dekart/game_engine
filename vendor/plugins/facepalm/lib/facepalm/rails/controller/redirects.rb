@@ -2,6 +2,12 @@ module Facepalm
   module Rails
     module Controller
       module Redirects
+        def redirect_to(*args)
+          flash[:signed_request] = fb_signed_request
+          
+          super(*args)
+        end
+        
         def redirect_from_iframe(url_options)
           redirect_url = url_options.is_a?(String) ? url_options : url_for(url_options)
 
