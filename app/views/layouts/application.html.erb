@@ -90,7 +90,7 @@
           {{each(i, user) friends}}
             <div class="user {{if user.is_app_user}}app_user{{/if}}" style="display: none;">
               <input type="checkbox" value="${user.uid}" checked="yes">
-              <img data-image="${user.pic_square}" src="<%= asset_image_path('1px') %>" alt="${user.first_name}" width="50" height="50"/>
+              <img data-image="https://graph.facebook.com/${user.uid}/picture?type=square" src="<%= asset_image_path('1px') %>" alt="${user.first_name}" width="50" height="50"/>
               ${user.first_name}
             </div>
           {{/each}}

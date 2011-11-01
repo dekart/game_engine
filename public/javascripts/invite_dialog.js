@@ -50,6 +50,7 @@ var InviteDialog = (function(){
       var dialog = $(this);
       
       fnMethods.hidePage.call(this, dialog.data('page'));
+      dialog.removeData('page');
       
       dialog.data('filter', filter);
       dialog.data('max-page', Math.floor(fnMethods.usersByCurrentFilter.call(this).length / dialog.data('per-page')));
@@ -136,6 +137,10 @@ var InviteDialog = (function(){
     },
   
     hidePage: function(page){
+      if(typeof page == 'undefined'){
+        return;
+      }
+      
       var dialog = $(this);
       
       var users = fnMethods.usersFromPage.call(this, page || 0);
@@ -258,7 +263,7 @@ var InviteDialog = (function(){
         if (response.authResponse) {
           FB.api('/fql', 
             {
-              q : 'SELECT uid, first_name, pic_square, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY first_name'
+              q : 'SELECT uid, first_name, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY first_name'
             }, 
             function(response){
               Spinner.hide();
