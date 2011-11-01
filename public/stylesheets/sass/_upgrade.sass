@@ -3,6 +3,9 @@
     padding: 5px
     vertical-align: middle
 
+  .points
+    min-width: 40px
+   
   .points td
     border-bottom = !upgrade_list_points_border
     padding: 10px 5px
@@ -29,10 +32,19 @@
 
   .stamina .value
     background-image = !upgrade_list_stamina_icon
-
-  .controls .upgrade
-    +button(!upgrade_list_upgrade_icon)
-    margin-top: 0
+    
+  .controls
+    span.ui-icon-circle-minus
+      float: left
+      margin-right: 8px
+      
+    span.ui-icon-circle-plus
+      float: left
+      margin-left: 10px  
+      
+    div.attribute_slider
+      float: left 
+      width: 100px
 
 #upgrade_result
   background:
