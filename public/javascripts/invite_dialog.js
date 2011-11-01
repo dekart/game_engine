@@ -1,5 +1,5 @@
 var InviteDialog = (function(){
-  var users_per_page = 10;
+  var users_per_page = 24;
   
   var invite_dialog = {};
 
@@ -37,11 +37,10 @@ var InviteDialog = (function(){
         send_button_callback(ids);
         
         fnMethods.markAsSent.call(dialog, ids);
-        
-        if( fnMethods.countSelected.call(dialog) == 0 ){
-          button.addClass('disabled');
-        }
       });
+      
+      dialog.bind('user_list_updated.invite_dialog', fnMethods.checkButtonAvailability);
+      dialog.bind('user_list_updated.invite_dialog', fnMethods.updateProgressBar);
 
       fnMethods.goToPage.call(this, 0);
     },
@@ -56,6 +55,8 @@ var InviteDialog = (function(){
       dialog.data('max-page', Math.floor(fnMethods.usersByCurrentFilter.call(this).length / dialog.data('per-page')));
       
       dialog.find('.filter').removeClass('selected').filter('[data-filter=' + filter +']').addClass('selected');
+      
+      dialog.trigger('user_list_updated.invite_dialog');
       
       fnMethods.goToPage.call(this, 0);
     },
@@ -174,8 +175,31 @@ var InviteDialog = (function(){
           checkbox.remove();
         }
       });
-    
+      
+      dialog.trigger('user_list_updated.invite_dialog');
+      
       fnMethods.goToFirstSelected.call(this);
+    },
+    
+    updateProgressBar: function(){
+      var dialog = $(this);
+      
+      var all_users = fnMethods.usersByCurrentFilter.call(this);
+      var sent_users = all_users.filter('.sent');
+      
+      console.log('progress', all_users.length, sent_users.length)
+      
+      dialog.find('.progress_bar .percentage').animate({width : 100 * sent_users.length / all_users.length + '%'}, 1000);
+    },
+    
+    checkButtonAvailability: function(){
+      var button = $(this).find('.send.button');
+
+      if( fnMethods.countSelected.call(this) == 0 ){
+        button.addClass('disabled');
+      } else {
+        button.removeClass('disabled');
+      }
     }
   }
 
