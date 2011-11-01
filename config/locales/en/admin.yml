@@ -389,6 +389,8 @@ en:
         user_limit_reached: "This task cannot be performed because your application already reached %{limit} user limit."
       restart:
         success: "The application was successfully restarted!"
+      update_styles:
+        success: "Game stylesheets were successfully updated! Please reload your game page to check out the updated version."
     characters:
       index:
         title: "Characters"

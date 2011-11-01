@@ -24,7 +24,7 @@ class Admin::GlobalTasksController < Admin::BaseController
 
     Sass::Plugin.update_stylesheets
     
-    redirect_to admin_global_task_path
+    render :layout => false
   end
 
   protected
