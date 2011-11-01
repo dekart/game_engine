@@ -17,7 +17,7 @@ class Character
     end
 
     def effect_cache_key
-      "character_#{ character.id }_equipment_effects"
+      "character_#{ proxy_owner.id }_equipment_effects"
     end
 
     def clear_effect_cache!

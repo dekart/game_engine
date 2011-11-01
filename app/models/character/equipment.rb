@@ -1,9 +1,7 @@
 class Character
   class Equipment < ActiveRecord::Base
 
-    include Character::EquipmentExtension
-
-    has_one :character, :dependent => :destroy
+    belongs_to :character
 
     serialize :placements
 
@@ -151,7 +149,6 @@ class Character
       end
     end
 
-
     def auto_unequip(inventory)
       amount_to_unequip = inventory.destroyed? ? inventory.amount : (inventory.equipped - inventory.amount)
 
@@ -269,6 +266,10 @@ class Character
 
     def used_capacity(placement)
       placements[placement].try(:size).to_i
+    end
+
+    def clear_effect_cache!
+      character.equipment.clear_effect_cache!
     end
   end
 end

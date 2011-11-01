@@ -1,12 +1,12 @@
 class CreatePlacements < ActiveRecord::Migration
   def self.up
     create_table :character_equipment do |t|
+      t.integer :character_id
       t.text :placements, :limit => 65535
       t.timestamps
     end
 
     change_table :characters do |t|
-      t.integer :equipment_id
       t.rename :placements, :placements_old
     end
 
@@ -16,8 +16,8 @@ class CreatePlacements < ActiveRecord::Migration
     Character.find_in_batches(:batch_size => 100) do |characters|
       Character.transaction do
         characters.each do |character|
-          character.create_equipment(:placements => character[:placements_old])
-          character.save!
+          equipment = Character::Equipment.new(:character => character, :placements => character[:placements_old])
+          equipment.save!
           i += 1
           puts "Processed #{i}..." if i % 100 == 0
         end
@@ -28,7 +28,6 @@ class CreatePlacements < ActiveRecord::Migration
 
   def self.down
     change_table :characters do |t|
-      t.remove :equipment_id
       t.rename :placements_old, :placements
     end
 

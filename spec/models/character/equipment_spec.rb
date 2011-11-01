@@ -76,7 +76,7 @@ describe Character::Equipment do
       @inventory2 = Factory(:inventory, :character => @character)
 
       
-      @character.placements = {
+      @character.equipment.placements = {
         :additional => [@inventory1.id, @inventory2.id], 
         :left_hand  => [@inventory1.id],
         :right_hand => [@inventory2.id]
@@ -95,7 +95,7 @@ describe Character::Equipment do
     end
     
     it 'should return empty array if character doesn\'t have equipped inventories' do
-      @character.placements = {}
+      @character.equipment.placements = {}
       
       @character.equipment.inventories.should == []
     end
@@ -116,7 +116,7 @@ describe Character::Equipment do
       @inventory2 = Factory(:inventory, :character => @character)
 
       
-      @character.placements = {
+      @character.equipment.placements = {
         :additional => [@inventory1.id, @inventory2.id], 
         :left_hand  => [@inventory1.id],
         :right_hand => [@inventory2.id]
@@ -278,7 +278,7 @@ describe Character::Equipment do
       @inventory3 = Factory(:inventory, :character => @character, :item => @item3)
       @inventory4 = Factory(:inventory, :character => @character, :item => @item4)
       
-      @character.placements = {
+      @character.equipment.placements = {
         :additional => [@inventory3.id, @inventory4.id], 
         :left_hand  => [@inventory1.id],
         :right_hand => [@inventory2.id]

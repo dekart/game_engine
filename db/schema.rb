@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20111028064456) do
   add_index "character_contest_groups", ["points"], :name => "index_character_contests_on_points"
 
   create_table "character_equipment", :force => true do |t|
+    t.integer  "character_id"
     t.text     "placements"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -224,7 +225,6 @@ ActiveRecord::Schema.define(:version => 20111028064456) do
     t.text     "active_boosts"
     t.integer  "achievement_points",                      :default => 0
     t.integer  "total_score",                             :default => 0,                     :null => false
-    t.integer  "equipment_id"
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"

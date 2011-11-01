@@ -30,7 +30,7 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
 
-  belongs_to :equipment, :extend => Character::EquipmentExtension
+  has_one :equipment, :dependent => :destroy, :extend => Character::EquipmentExtension, :inverse_of => :character
 
   has_many :attacks,
     :class_name   => "Fight",
@@ -91,7 +91,7 @@ class Character < ActiveRecord::Base
     :restore_period => :stamina_restore_period,
     :restore_bonus  => :stamina_restore_bonus
 
-  after_validation_on_create :apply_character_type_defaults
+  after_validation_on_create :build_equipment, :apply_character_type_defaults
   before_save :update_level_and_points, :unless => :level_up_applied
   before_save :update_total_money
   before_save :update_fight_availability_time, :if => :hp_changed?
