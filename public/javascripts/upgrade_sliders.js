@@ -1,20 +1,24 @@
 (function(){
-  $.sliders = function(points) {
+  $.upgradeSliders = function(points) {
   	
   	$("#upgrade_list .hidden_value").val(0);
  
   	$("#upgrade_list .attribute_slider").slider({	
       orientation: "horizontal",
-	  range: "min",
-	  value: 0,
-	  min: 0,
-	  step: 1,
-	  max: points,
-	  animate: true
+  	  range: "min",
+  	  value: 0,
+  	  min: 0,
+  	  step: 1,
+  	  max: points,
+  	  animate: true
     });
     
     $("#upgrade_list .attribute_slider").each(function(){
-      $(this).slider("option", "step", parseInt($(this).attr("data-count-points")));
+      $(this).slider(
+        "option", 
+        "step", 
+        parseInt($(this).attr("data-count-points"), 10)
+      );
     });
    
     $("#upgrade_list .attribute_slider").slider("option","max",points);
@@ -53,17 +57,25 @@
     $("#upgrade_list .minus_value_attribute").click(function(e){
       slider = $(this).siblings(".attribute_slider");
     	
-      slider.slider("option","value", slider.slider("value") - parseInt(slider.attr("data-count-points")));
+      slider.slider(
+        "option",
+        "value", 
+        slider.slider("value") - parseInt(slider.attr("data-count-points"), 10)
+      );
      
-      slideChange.call(slider,e,{value: slider.slider("value")});
+      slideChange.call(slider, e, { value: slider.slider("value") });
     });
     
     $("#upgrade_list .plus_value_attribute").click(function(e){
     	slider = $(this).siblings(".attribute_slider");
     	
-    	slider.slider("option","value", slider.slider("value") + parseInt(slider.attr("data-count-points")));
+    	slider.slider(
+    	  "option",
+    	  "value", 
+    	  slider.slider("value") + parseInt(slider.attr("data-count-points"), 10)
+    	);
      
-    	slideChange.call(slider,e,{value: slider.slider("value")});
+    	slideChange.call(slider, e, { value: slider.slider("value") });
     });
     
   };
