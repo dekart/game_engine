@@ -1,10 +1,6 @@
 class Character
   class Equipment < ActiveRecord::Base
 
-    belongs_to :character
-
-    serialize :placements
-
     MAIN_PLACEMENTS = [:left_hand, :right_hand, :head, :body, :legs]
     PLACEMENTS = MAIN_PLACEMENTS + [:additional]
 
@@ -19,6 +15,10 @@ class Character
       :legs       => :medium,
       :additional => :small
     }
+
+    belongs_to :character
+
+    serialize :placements
 
     class << self
       def placement_name(name)

@@ -2,7 +2,7 @@ class CreatePlacements < ActiveRecord::Migration
   def self.up
     create_table :character_equipment do |t|
       t.integer :character_id
-      t.text :placements, :limit => 65535
+      t.text :placements
       t.timestamps
     end
 

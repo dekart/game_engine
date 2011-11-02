@@ -23,14 +23,13 @@ class Character < ActiveRecord::Base
   include Character::Ratings
   include Character::Exchanges
   include Character::Achievements
+  include Character::EquipmentExtension
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
   belongs_to :user
   belongs_to :character_type,
     :counter_cache => true
-
-  has_one :equipment, :dependent => :destroy, :extend => Character::EquipmentExtension, :inverse_of => :character
 
   has_many :attacks,
     :class_name   => "Fight",
@@ -91,7 +90,7 @@ class Character < ActiveRecord::Base
     :restore_period => :stamina_restore_period,
     :restore_bonus  => :stamina_restore_bonus
 
-  after_validation_on_create :build_equipment, :apply_character_type_defaults
+  after_validation_on_create :apply_character_type_defaults
   before_save :update_level_and_points, :unless => :level_up_applied
   before_save :update_total_money
   before_save :update_fight_availability_time, :if => :hp_changed?
@@ -102,7 +101,6 @@ class Character < ActiveRecord::Base
 
   delegate(*(CharacterType::BONUSES + [:to => :character_type]))
   delegate(:facebook_id, :to => :user)
-  delegate(:placements, :to => :equipment)
 
   attr_accessor :level_up_applied
 
@@ -269,10 +267,6 @@ class Character < ActiveRecord::Base
 
     save!
   end
-
-  #def equipment
-  #  @equipment ||= Character::Equipment.new(self)
-  #end
 
   def boosts
     @boosts ||= Character::Boosts.new(self)
