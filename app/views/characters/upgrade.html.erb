@@ -3,44 +3,39 @@
 
   <div id="upgrade_result"></div>
 
-  <table id="upgrade_list" cellspacing="0" cellpadding="0" style="display:none">
-    <tr class="points">
-      <td class="name"><%= Character.human_attribute_name("points") %></td>
-      <td class="value" id="upgrade_points"><%= current_character.points %></td>
-      <td class="buy_more" colspan="2">
-        <%= link_to(t(".buy_more"), premium_path(:anchor => :services)) %>
-      </td>
-    </tr>
-    <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
-      <% content_tag :tr, :class => attribute do %>
-        <td class="name"><%= Character.human_attribute_name(attribute.to_s) %></td>
-        <td class="value"><%= current_character.send(attribute) %></td>
-        <td class="points"><span class="<%= attribute %>_points"></span></td>
-        <td class="controls">	
-          <span class="ui-icon ui-icon-circle-minus <%= attribute.to_s %>-minus"></span>	
-          <div id="<%= Character.human_attribute_name(attribute.to_s) %>-slider" data-count-points="<%= Setting.i("character_#{attribute}_upgrade_points") %>" data-character-upgrade="<%= Setting.i("character_#{attribute}_upgrade") %>" class="attribute_slider"></div>
-          <span class="ui-icon ui-icon-circle-plus <%= attribute.to_s %>-plus"></span>
+  <% form_tag do %>
+    <table id="upgrade_list" cellspacing="0" cellpadding="0" style="display:none">
+      <tr class="points">
+        <td class="name"><%= Character.human_attribute_name("points") %></td>
+        <td class="value" id="upgrade_points"><%= current_character.points %></td>
+        <td class="buy_more" colspan="2">
+          <%= link_to(t(".buy_more"), premium_path(:anchor => :services)) %>
         </td>
+      </tr>
+      <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
+        <tr class="<%= attribute %> attribute_item">
+          <td class="name"><%= Character.human_attribute_name(attribute.to_s) %></td>
+          <td class="value"><%= current_character.send(attribute) %></td>
+          <td class="points"></td>
+          <td class="controls">	
+          	<%= hidden_field_tag(attribute, 0, :class => :hidden_value) %>
+            <span class="ui-icon ui-icon-circle-minus minus_value_attribute" data-action="minus"></span>	
+            <div id="<%= Character.human_attribute_name(attribute.to_s) %>-slider" data-count-points="<%= Setting.i("character_#{attribute}_upgrade_points") %>" data-character-upgrade="<%= Setting.i("character_#{attribute}_upgrade") %>" class="attribute_slider"></div>
+            <span class="ui-icon ui-icon-circle-plus plus_value_attribute" data-action="plus"></span>
+          </td>
+        </tr>
       <% end %>
-    <% end %>
-  </table>
+    </table>
 
-  <div>
-    <% form_tag do %>	 
-      <%= hidden_field_tag(:attack, 0) %>
-      <%= hidden_field_tag(:defence, 0) %>
-      <%= hidden_field_tag(:health, 0) %>
-      <%= hidden_field_tag(:energy, 0) %>
-      <%= hidden_field_tag(:stamina, 0) %>
+    <div>
   	  <%= link_to_remote(button("Upgrade", :disable_asset => true),
             :url    => upgrade_character_path(current_character),
             :update => :ajax,
-            :with => "$(this).parent('form').serialize()",
+            :with => "$(this).parents('form').serialize()",
             :html   => {:class => "button upgrade"}
           ) %>
-    <% end %>     
-  </div> 	
-  
+    </div> 	
+  <% end %>
 
   <div id="upgrade_finished" style="display:none;" class="note">
     <%= t(".finished.note") %>

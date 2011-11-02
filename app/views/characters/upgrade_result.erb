@@ -22,7 +22,7 @@
 
   <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
     $('#upgrade_list .<%= attribute.to_s %> .value').text('<%= current_character.attributes[attribute.to_s] %>');
-    $('#upgrade_list .<%= attribute.to_s %> .points .<%= attribute.to_s %>_points').text('+ 0');
+    $('#upgrade_list .attribute_item .points').text('');
   <% end %>
   
   <% if current_character.points == 0 %>
