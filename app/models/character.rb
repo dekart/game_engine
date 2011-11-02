@@ -23,6 +23,7 @@ class Character < ActiveRecord::Base
   include Character::Ratings
   include Character::Exchanges
   include Character::Achievements
+  include Character::EquipmentExtension
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
@@ -70,7 +71,6 @@ class Character < ActiveRecord::Base
   has_many :wall_posts,
     :dependent => :destroy
 
-  serialize :placements
   serialize :active_boosts
 
   attr_accessible :name
@@ -268,18 +268,10 @@ class Character < ActiveRecord::Base
     save!
   end
 
-  def equipment
-    @equipment ||= Character::Equipment.new(self)
-  end
-
   def boosts
     @boosts ||= Character::Boosts.new(self)
   end
 
-  def placements
-    self[:placements] ||= {}
-  end
-  
   def active_boosts
     self[:active_boosts] ||= {}
   end

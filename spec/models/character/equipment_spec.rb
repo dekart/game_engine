@@ -76,7 +76,7 @@ describe Character::Equipment do
       @inventory2 = Factory(:inventory, :character => @character)
 
       
-      @character.placements = {
+      @character.equipment.placements = {
         :additional => [@inventory1.id, @inventory2.id], 
         :left_hand  => [@inventory1.id],
         :right_hand => [@inventory2.id]
@@ -95,7 +95,7 @@ describe Character::Equipment do
     end
     
     it 'should return empty array if character doesn\'t have equipped inventories' do
-      @character.placements = {}
+      @character.equipment.placements = {}
       
       @character.equipment.inventories.should == []
     end
@@ -116,7 +116,7 @@ describe Character::Equipment do
       @inventory2 = Factory(:inventory, :character => @character)
 
       
-      @character.placements = {
+      @character.equipment.placements = {
         :additional => [@inventory1.id, @inventory2.id], 
         :left_hand  => [@inventory1.id],
         :right_hand => [@inventory2.id]
@@ -161,7 +161,7 @@ describe Character::Equipment do
     end
     
     it 'should equip inventory' do
-      @character.equipment.should_receive(:equip).with(@inventory, :left_hand).and_return(nil)
+      @character.equipment.proxy_target.should_receive(:equip).with(@inventory, :left_hand).and_return(nil)
       
       @character.equipment.equip!(@inventory, :left_hand)
     end
@@ -169,7 +169,7 @@ describe Character::Equipment do
     it 'should save previous inventory if equipping to non-free placement' do
       @other = mock_model(Inventory, :save => true)
       
-      @character.equipment.stub!(:equip).and_return(@other)
+      @character.equipment.proxy_target.stub!(:equip).and_return(@other)
       @other.should_receive(:save)
       
       @character.equipment.equip!(@inventory, :left_hand)
@@ -240,7 +240,7 @@ describe Character::Equipment do
     end
 
     it 'should unequip inventory' do
-      @character.equipment.should_receive(:unequip).with(@inventory, :additional)
+      @character.equipment.proxy_target.should_receive(:unequip).with(@inventory, :additional)
       
       @character.equipment.unequip!(@inventory, :additional)
     end
@@ -278,7 +278,7 @@ describe Character::Equipment do
       @inventory3 = Factory(:inventory, :character => @character, :item => @item3)
       @inventory4 = Factory(:inventory, :character => @character, :item => @item4)
       
-      @character.placements = {
+      @character.equipment.placements = {
         :additional => [@inventory3.id, @inventory4.id], 
         :left_hand  => [@inventory1.id],
         :right_hand => [@inventory2.id]
