@@ -6,7 +6,7 @@
     
     <div class="friend_selector">
       <div class="search">
-        <input type="text" title="Search"></input>
+        <input type="text" title="<%= t('.search') %>"></input>
       </div>
       
       <ul class="filters">
@@ -31,10 +31,10 @@
         </div>
         
         <div class="stats">
-          <span class="control deselect_all">Deselect All</span> 
-          <span class="control select_all">Select All</span> 
+          <span class="control deselect_all"><%= t('.stats.deselect_all') %></span> 
+          <span class="control select_all"><%= t('.stats.select_all') %></span> 
 
-          <%= t('.stats', :value => '<span class="value"></span>', :total => '<span class="total"></span>').html_safe %>
+          <%= t('.stats.text', :value => '<span class="value"></span>', :total => '<span class="total"></span>').html_safe %>
         </div>
       </div>
     </div>

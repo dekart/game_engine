@@ -4,10 +4,14 @@ en:
       text: "You have %{count} requests from your friends"
     invite_dialog:
       note: 'Select the friends you would like to help'
-      stats: '%{value} of %{total} friends selected'
+      search: 'Search'
       filters:
         all: 'All Friends'
         app_users: '%{app_name} Friends'
+      stats: 
+        text: '%{value} of %{total} friends selected'
+        select_all: 'Select All'
+        deselect_all: 'Deselect All'
       buttons:
         send: 'Send'
     index:
