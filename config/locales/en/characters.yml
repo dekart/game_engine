@@ -32,9 +32,7 @@ en:
       finished:
         note: "You spent all your attribute points."
         get_more: "Get more Points »"
-      points:
-        one: "1 attribute point"
-        other: "%{count} attribute points"
+
     upgrade_result:
       messages:
         success: "You've successfully upgraded %{attribute} to %{number}"
