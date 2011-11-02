@@ -156,32 +156,6 @@ class Character < ActiveRecord::Base
     end  
   end
 
-  def upgrade_attribute!(name)
-    name = name.to_sym
-
-    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && points >= Setting.i("character_#{name}_upgrade_points")
-
-    transaction do
-      case name
-      when :health
-        self.health += Setting.i(:character_health_upgrade)
-        self.hp     += Setting.i(:character_health_upgrade)
-      when :energy
-        self.energy += Setting.i(:character_energy_upgrade)
-        self.ep     += Setting.i(:character_energy_upgrade)
-      when :stamina
-        self.stamina  += Setting.i(:character_stamina_upgrade)
-        self.sp       += Setting.i(:character_stamina_upgrade)
-      else
-        increment(name, Setting.i("character_#{name}_upgrade"))
-      end
-
-      self.points -= Setting.i("character_#{name}_upgrade_points")
-
-      save
-    end
-  end
-
   def attack_points
     attack + 
       equipment.effect(:attack) +
