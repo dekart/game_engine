@@ -1,3 +1,5 @@
+/*global $, if_fb_initialized, FB, Spinner */
+
 var InviteDialog = (function(){
   var users_per_page = 24;
   
