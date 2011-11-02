@@ -4,10 +4,10 @@ var InviteDialog = (function(){
   var invite_dialog = {};
 
   var fnMethods = {
-    initialize: function(send_button_callback){
+    initialize: function(users, send_button_callback){
       var dialog = $(this);
     
-      dialog.data({ 'per-page' : users_per_page });
+      dialog.data({ 'per-page' : users_per_page, 'users' : users });
 
       dialog.find('.previous, .next').click(function(){
         var link = $(this);
@@ -17,14 +17,23 @@ var InviteDialog = (function(){
         }
       });
       
-      dialog.find('.filter').click(function(){
+      // Styling filters using jQuery UI tab classes
+      dialog.find('.friend_selector').addClass('ui-tabs ui-widget ui-widget-content ui-corner-all');
+      dialog.find('.friend_selector .filters').addClass('ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all');
+      dialog.find('.friend_selector .user_list').addClass('ui-tabs-panel ui-widget-content ui-corner-bottom');
+      dialog.find('.filters .filter').addClass('ui-state-default ui-corner-top')
+        .first().addClass('ui-tabs-selected ui-state-active');
+      
+      // User filtering event
+      dialog.find('.filters .filter').click(function(){
         var link = $(this);
-        
-        if( !link.hasClass('selected')){
+
+        if( !link.hasClass('ui-tabs-selected')){
           fnMethods.applyFilter.call(dialog, link.data('filter'));
         }
       });
-    
+      
+      // User invite delivery event
       dialog.find('.send.button').click(function(){
         var button = $(this);
         
@@ -41,8 +50,38 @@ var InviteDialog = (function(){
       
       dialog.bind('user_list_updated.invite_dialog', fnMethods.checkButtonAvailability);
       dialog.bind('user_list_updated.invite_dialog', fnMethods.updateProgressBar);
+      dialog.bind('user_list_updated.invite_dialog', fnMethods.updateStatsBar);
+      
+      dialog.find(':checkbox').live('change', function(){
+        var checkbox = $(this);
+        
+        checkbox.parent('.user').toggleClass('selected', checkbox.attr('checked'))
+        
+        fnMethods.updateStatsBar.call(dialog);
+      })
+      
+      dialog.find('.search input').labelify().keyup(function(){
+        var input = $(this);
+        var value = input.val();
 
-      fnMethods.goToPage.call(this, 0);
+        if(value != input.data('previous_value')){
+          input.data('previous_value', value);
+          
+          fnMethods.applyFilter.call(dialog, $(this).val());
+        }
+      });
+      
+      dialog.find('.select_all').click(function(){
+        fnMethods.selectAll.call(dialog);
+        fnMethods.updateStatsBar.call(dialog);
+      })
+      
+      dialog.find('.deselect_all').click(function(){
+        fnMethods.deselectAll.call(dialog);
+        fnMethods.updateStatsBar.call(dialog);
+      })
+      
+      fnMethods.applyFilter.call(this, 'all');
     },
     
     applyFilter: function(filter){
@@ -51,10 +90,12 @@ var InviteDialog = (function(){
       fnMethods.hidePage.call(this, dialog.data('page'));
       dialog.removeData('page');
       
+      dialog.find('.user').removeClass('filtered');
+
       dialog.data('filter', filter);
       dialog.data('max-page', Math.floor(fnMethods.usersByCurrentFilter.call(this).length / dialog.data('per-page')));
       
-      dialog.find('.filter').removeClass('selected').filter('[data-filter=' + filter +']').addClass('selected');
+      dialog.find('.filter').removeClass('ui-tabs-selected ui-state-active').filter('[data-filter="' + filter +'"]').addClass('ui-tabs-selected ui-state-active');
       
       dialog.trigger('user_list_updated.invite_dialog');
       
@@ -63,12 +104,31 @@ var InviteDialog = (function(){
     
     usersByCurrentFilter: function(){
       var dialog = $(this);
+      var filter = dialog.data('filter') || 'all';
       
-      if( dialog.data('filter') == 'app_users' ){
-        return dialog.find('.user.app_user');
-      } else {
-        return dialog.find('.user');
+      var users = dialog.find('.user.filtered');
+      
+      if( users.length == 0) {
+        if( filter == 'app_users' ){
+          var users = dialog.find('.user.app_user');
+        } else if (filter == 'all') {
+          var users = dialog.find('.user');
+        } else {
+          var filter_exp = new RegExp(filter, 'igm');
+        
+          var ids = $.map(dialog.data('users'), function(user){
+            return user.first_name.search(filter_exp) > -1 ? user.uid : null;
+          })
+        
+          var users = dialog.find('.user').filter(function(){
+            return $.inArray(parseInt($(this).data('uid')), ids) > -1 ? true : false;
+          })
+        }
+        
+        users.addClass('filtered');
       }
+      
+      return users;
     },
   
     goToPage: function(page){
@@ -85,20 +145,10 @@ var InviteDialog = (function(){
       previous.data('page', page - 1);
       next.data('page', page + 1);
       
-      if( page == 0 ){
-        previous.addClass('disabled');
-      } else {
-        previous.removeClass('disabled');
-      }
+      previous.toggleClass('disabled', page == 0);
       
-      if( page == max_page ){
-        next.addClass('disabled');
-      } else {
-        next.removeClass('disabled');
-      }
+      next.toggleClass('disabled', page == max_page);
     
-      console.log('goto', page)
-
       fnMethods.hidePage.call(this, dialog.data('page'));
 
       dialog.data('page', page);
@@ -109,14 +159,16 @@ var InviteDialog = (function(){
     goToFirstSelected: function(){
       var dialog = $(this);
     
-      fnMethods.goToPage.call(this, Math.floor(dialog.find(':checked').first().parent().index('.user') / users_per_page));
+      fnMethods.goToPage.call(this, Math.floor(dialog.find('.user.selected').first().index('.user') / users_per_page));
     },
   
     usersFromPage: function(page){
       var dialog = $(this);
       var per_page = dialog.data('per-page');
     
-      return fnMethods.usersByCurrentFilter.call(this).slice(page * per_page, (page + 1) * per_page);
+      var users = fnMethods.usersByCurrentFilter.call(this).slice(page * per_page, (page + 1) * per_page);
+
+      return users;
     },
   
     showPage: function(page){
@@ -128,12 +180,10 @@ var InviteDialog = (function(){
         users.find('img[data-image]').each(function(){
           var img = $(this);
       
-          img.attr( 'src', img.data('image') ).removeAttr( 'data-image' );
+          img.attr({ src: img.data('image') }).removeAttr( 'data-image' );
         });
       
-        dialog.queue(function(next){
-          users.fadeIn(next);
-        });
+        users.removeClass('hidden');
       }
     },
   
@@ -147,20 +197,28 @@ var InviteDialog = (function(){
       var users = fnMethods.usersFromPage.call(this, page || 0);
       
       if( users.length > 0 ){
-        dialog.queue(function(next){
-          users.fadeOut(next);
-        });
+        users.addClass('hidden');
       }
     },
   
     getSelectedIds: function(){
-      return fnMethods.usersByCurrentFilter.call(this).find(':checked').slice(0, users_per_page).map(function(){
-        return parseInt(this.getAttribute('value'));
+      var ids = fnMethods.getSelectedUsers.call(this).slice(0, users_per_page).map(function(){
+        return parseInt($(this).data('uid'));
       }).get();
+      
+      return ids;
+    },
+    
+    getSelectedUsers: function(){
+      var users = fnMethods.usersByCurrentFilter.call(this).filter('.selected');
+      
+      return users;
     },
     
     countSelected: function(){
-      return fnMethods.usersByCurrentFilter.call(this).find(':checked').length;
+      var count = fnMethods.getSelectedUsers.call(this).length;
+      
+      return count;
     },
   
     markAsSent: function(ids){
@@ -168,11 +226,9 @@ var InviteDialog = (function(){
     
       dialog.find('.user').each(function(){
         var user = $(this);
-        var checkbox = user.find('input');
       
-        if($.inArray(parseInt(checkbox.val()), ids) > -1){
-          user.addClass('sent');
-          checkbox.remove();
+        if($.inArray(parseInt(user.data('uid')), ids) > -1){
+          user.removeClass('selected').addClass('sent').find('input').remove();
         }
       });
       
@@ -187,29 +243,51 @@ var InviteDialog = (function(){
       var all_users = fnMethods.usersByCurrentFilter.call(this);
       var sent_users = all_users.filter('.sent');
       
-      console.log('progress', all_users.length, sent_users.length)
-      
-      dialog.find('.progress_bar .percentage').animate({width : 100 * sent_users.length / all_users.length + '%'}, 1000);
+      dialog.find('.progress_bar .percentage').animate({width : Math.floor(100 * sent_users.length / all_users.length) + '%'}, 500);
     },
     
+    updateStatsBar: function(){
+      var stats = $(this).find('.stats');
+      
+      var all_users = fnMethods.usersByCurrentFilter.call(this).length;
+      var selected_users = fnMethods.countSelected.call(this);
+      
+      stats.find('.value').html(selected_users);
+      stats.find('.total').html(all_users);
+      
+      stats.find('.deselect_all').toggle(selected_users != 0);
+      stats.find('.select_all').toggle(selected_users != all_users);
+    },
+
     checkButtonAvailability: function(){
       var button = $(this).find('.send.button');
 
-      if( fnMethods.countSelected.call(this) == 0 ){
-        button.addClass('disabled');
-      } else {
-        button.removeClass('disabled');
-      }
+      button.toggleClass('disabled', fnMethods.countSelected.call(this) == 0);
+    },
+    
+    selectAll: function(){
+      var dialog = $(this);
+      
+      fnMethods.usersByCurrentFilter.call(this).addClass('selected').find(':checkbox').attr('checked', true);
+    },
+    
+    deselectAll: function(){
+      var dialog = $(this);
+      
+      fnMethods.getSelectedUsers.call(this).removeClass('selected').find(':checkbox').attr('checked', false);
     }
+    
   }
 
   $.fn.inviteDialog = function(method) {
     // Method calling logic
     if ( fnMethods[method] ){
-      return fnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+      var result = fnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
     } else {
-      return fnMethods[ 'initialize' ].apply(this, arguments);
+      var result = fnMethods[ 'initialize' ].apply(this, arguments);
     }
+    
+    return result;
   };
 
 
@@ -293,17 +371,18 @@ var InviteDialog = (function(){
               Spinner.hide();
             
               var exclude_ids = invite_dialog.getExcludedIds(invite_type);
+              var users = $.map(response.data, function(user){
+                return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
+              });
               
               $.dialog(
                 dialog_template.tmpl({
                   options : options,
-                  friends : $.map(response.data, function(user){
-                    return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
-                  })
+                  users : users
                 })
               );
 
-              $('#invite_dialog').inviteDialog(function(ids){
+              $('#invite_dialog').inviteDialog(users, function(ids){
                 callback(ids);
                 
                 invite_dialog.excludeIds(invite_type, ids);

@@ -18,3 +18,101 @@
 
     .use
       +button(!app_requests_use_icon)
+
+#invite_dialog
+  .search
+    float: right
+    
+  .friend_selector
+    margin-bottom: 10px
+
+  .previous, .next
+    height: 240px
+    width: 32px
+    margin-top: 5px
+    cursor: pointer
+    
+    &.disabled
+      background-position: -96px center
+  
+  .previous
+    float: left
+    background: transparent url(/images/jcarousel/prev-horizontal.png) no-repeat 0 center
+    
+  .next
+    float: right
+    background: transparent url(/images/jcarousel/next-horizontal.png) no-repeat 0 center
+
+  .users
+    margin-bottom: 10px
+    overflow: hidden
+    padding: 5px
+    height: 240px
+    
+    .user
+      width: 140px
+      height: 30px
+      float: left
+      line-height: 30px
+      
+      input
+        display: block
+        height: 30px
+        width: 20px
+        float: left
+        margin: 0
+      
+      img
+        vertical-align: middle
+        
+      .icon
+        display: none
+        
+      &.hidden
+        display: none
+        
+      &.selected
+        background-color = !current_item_bg_color
+        
+      &.sent
+        .icon
+          display: block
+          float: left
+          width: 20px
+          height: 30px
+          background:
+            image = !asset_icons_accept
+            position: left
+            repeat: no-repeat
+      
+  .progress_bar
+    float: right
+    width: 300px
+    margin-top: 10px
+  
+  .stats
+    padding: 5px
+    line-height: 20px
+    background-color = !current_item_bg_color
+    
+    .control
+      color = !link_color
+      text-decoration: underline
+      margin-left: 10px
+      display: block
+      float: right
+      cursor: pointer
+      height: 20px
+      padding-left: 18px
+      background:
+        position: left
+        repeat: no-repeat
+        
+    .select_all
+      background-image = !asset_icons_accept
+
+    .deselect_all
+      background-image = !asset_icons_delete
+  
+  .send
+    +button(!asset_icons_accept)

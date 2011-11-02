@@ -2,6 +2,14 @@ en:
   app_requests:
     counter:
       text: "You have %{count} requests from your friends"
+    invite_dialog:
+      note: 'Select the friends you would like to help'
+      stats: '%{value} of %{total} friends selected'
+      filters:
+        all: 'All Friends'
+        app_users: '%{app_name} Friends'
+      buttons:
+        send: 'Send'
     index:
       title: 'Friend Requests'
       note: "Here you can accept requests from your friends. You can only accept one gift per person every %{hours} hours."
