@@ -5,19 +5,22 @@ class AppRequest::Base < ActiveRecord::Base
   
   belongs_to :target, :polymorphic => true
   
-  named_scope :for, Proc.new {|character|
+  named_scope :for_character, Proc.new {|character|
     {
       :conditions => {:receiver_id => character.facebook_id}
     }
   }
-  named_scope :from, Proc.new{|character|
+  named_scope :from_character, Proc.new{|character|
     {
       :conditions => {:sender_id => character.id}
     }
   }
   named_scope :between, Proc.new{|sender, receiver|
     {
-      :conditions => {:sender_id => sender.id, :receiver_id => receiver.facebook_id}
+      :conditions => {
+        :sender_id    => sender.id, 
+        :receiver_id  => receiver.facebook_id
+      }
     }
   }
   named_scope :sent_recently, Proc.new{|period|
@@ -72,7 +75,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     after_transition :on => :process do |request|
-      request.mark_incorrect unless request.correct?
+      request.send(:after_process)
     end
 
     before_transition :on => :visit do |request|
@@ -215,6 +218,10 @@ class AppRequest::Base < ActiveRecord::Base
   
   def after_expire
     self.class.schedule_deletion(self)
+  end
+  
+  def after_process
+    mark_incorrect unless correct?
   end
   
   def schedule_data_update

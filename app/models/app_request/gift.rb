@@ -9,7 +9,7 @@ class AppRequest::Gift < AppRequest::Base
   
   class << self
     def ids_to_exclude_for(character)
-      from(character).sent_recently(Setting.i(:gifting_repeat_accept_delay).hours).receiver_ids
+      from_character(character).sent_recently(Setting.i(:gifting_repeat_accept_delay).hours).receiver_ids
     end
     
     def receiver_cache_key(receiver)
@@ -19,7 +19,7 @@ class AppRequest::Gift < AppRequest::Base
     def accepted_recently?(sender, receiver)
       ids = Rails.cache.fetch(receiver_cache_key(receiver), :expires_in => 15.minutes) do
         with_state(:accepted).
-        for(receiver).
+        for_character(receiver).
         scoped(:conditions => ["accepted_at >= ?", Setting.i(:gifting_repeat_accept_delay).hours.ago]).
         all(:select => "sender_id").map{|r| r.sender_id }
       end
@@ -65,6 +65,19 @@ class AppRequest::Gift < AppRequest::Base
     @inventory = receiver.inventories.give!(item)
     
     Rails.cache.delete(self.class.receiver_cache_key(receiver))
+  end
+  
+  def after_process
+    super
+    
+    # Removing other gifts from the same sender
+    if Setting.b(:gifting_ignore_previous_from_same_sender)
+      transaction do
+        self.class.between(sender, receiver).scoped(:conditions => ["state IN (?) AND id != ?", %w{processed visited}, self.id]).each do |gift|
+          gift.ignore!
+        end
+      end
+    end
   end
   
   def repeat_accept_check
