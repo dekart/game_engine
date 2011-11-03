@@ -25,7 +25,7 @@
   </td>
   <td class="controls">
     <% form_tag("", :class => :clearfix) do %>
-      <%= amount_select_tag %>
+      <%= amount_select_tag(:id => item.id, :vip_price => item.vip_price, :basic_price => item.basic_price) %>
 
       <%= link_to_remote(button(:buy),
             :url    => inventories_path(:item_id => item.id),

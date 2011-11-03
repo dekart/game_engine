@@ -59,7 +59,11 @@ module ApplicationHelper
     values.uniq!
     values.sort!
 
-    select_tag(:amount, options_for_select(values, options[:selected]), options.except(:selected))
+    select_tag(:amount, options_for_select(values, options[:selected]), 
+      :selected => options.except(:selected), 
+      :class => 'amount',
+      :"data-options" => options.to_json
+    )
   end
 
   def dom_ready(content = nil, options = {}, &block)
