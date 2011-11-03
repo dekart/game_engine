@@ -1,31 +1,40 @@
 <% result = capture do %>
   <% if @success %>
-    <p>
-      <%= t(".messages.success",
-            :attribute  => Character.human_attribute_name(params[:attribute]),
-            :number     => content_tag(:span, current_character.attributes[params[:attribute]], :class => :value)
-          ).html_safe %>
-    </p>
+    <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
+      <p>
+        <%= t(".messages.success",
+              :attribute  => Character.human_attribute_name(attribute),
+              :number     => content_tag(:span, current_character.attributes[attribute.to_s], :class => :value)
+            ).html_safe %>
+      </p>
+    <% end %>
   <% else %>
     <p>
-      <%= t(".messages.not_enough_points", :attribute => Character.human_attribute_name(params[:attribute])) %>
+      <%= t(".messages.not_enough_points") %>
     </p>
   <% end %>
 <% end %>
+
 
 <% dom_ready do %>
   $('#upgrade_result').html(<%= result.to_json.html_safe %>);
   $('#upgrade_result').show();
 
-  $('#upgrade_list .<%= params[:attribute] %> .value').text('<%= current_character.attributes[params[:attribute]] %>');
-
+  <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
+    $('#upgrade_list .<%= attribute.to_s %> .value').text('<%= current_character.attributes[attribute.to_s] %>');
+    $('#upgrade_list .attribute_item .points').text('');
+  <% end %>
+  
   <% if current_character.points == 0 %>
     $(document).trigger('character.upgrade_complete');
+    $(".upgrade").hide();
   <% else %>
     $('#upgrade_points').text('<%= current_character.points %>');
   <% end %>
 
   $(document).trigger('remote_content.received');
   
-  <%= ga_track_event('Character', 'Attribute Upgrade', params[:attribute].titleize, current_character.level) %>
+  <%= ga_track_event('Character', 'Upgrade') %>
+  
+  $.upgradeSliders(<%= current_character.points %>);
 <% end %>

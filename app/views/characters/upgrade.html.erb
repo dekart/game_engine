@@ -3,29 +3,46 @@
 
   <div id="upgrade_result"></div>
 
-  <table id="upgrade_list" cellspacing="0" cellpadding="0" style="display:none">
-    <tr class="points">
-      <td class="name"><%= Character.human_attribute_name("points") %></td>
-      <td class="value" id="upgrade_points"><%= current_character.points %></td>
-      <td class="buy_more" colspan="2">
-        <%= link_to(t(".buy_more"), premium_path(:anchor => :services)) %>
-      </td>
-    </tr>
-    <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
-      <% content_tag :tr, :class => attribute do %>
-        <td class="name"><%= Character.human_attribute_name(attribute.to_s) %></td>
-        <td class="value"><%= current_character.send(attribute) %></td>
-        <td class="controls">
-          <%= link_to_remote(button(Setting.i("character_#{attribute}_upgrade"), :disable_asset => true),
-                :url    => upgrade_character_path(current_character, :attribute => attribute),
-                :update => :ajax,
-                :html   => {:class => "button upgrade"}
-              ) %>
+  <% form_tag do %>
+    <table id="upgrade_list" cellspacing="0" cellpadding="0" style="display:none">
+      <tr class="points">
+        <td class="name"><%= Character.human_attribute_name("points") %></td>
+        <td class="value" id="upgrade_points"><%= current_character.points %></td>
+        <td class="buy_more" colspan="2">
+          <%= link_to(t(".buy_more"), premium_path(:anchor => :services)) %>
         </td>
-        <td class="points"><%= t(".points", :count => Setting.i("character_#{attribute}_upgrade_points")) %></td>
+      </tr>
+      <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
+        <tr class="<%= attribute %> attribute_item">
+          <td class="name"><%= Character.human_attribute_name(attribute.to_s) %></td>
+          <td class="value"><%= current_character.send(attribute) %></td>
+          <td class="points"></td>
+          <td class="controls">	
+          	<%= hidden_field_tag(attribute, 0, :class => :hidden_value) %>
+          	
+            <span class="ui-icon ui-icon-circle-minus minus_value_attribute"></span>
+            
+            <%= content_tag(:div, "", 
+                  :class => :attribute_slider,
+                  :"data-count-points"      => Setting.i("character_#{attribute}_upgrade_points"),
+                  :"data-character-upgrade" => Setting.i("character_#{attribute}_upgrade")
+                ) %>	
+            
+            <span class="ui-icon ui-icon-circle-plus plus_value_attribute"></span>
+          </td>
+        </tr>
       <% end %>
-    <% end %>
-  </table>
+    </table>
+
+    <div>
+  	  <%= link_to_remote(button("Upgrade", :disable_asset => true),
+            :url    => upgrade_character_path(current_character),
+            :update => :ajax,
+            :with   => "$(this).parents('form').serialize()",
+            :html   => {:class => "button upgrade"}
+          ) %>
+    </div> 	
+  <% end %>
 
   <div id="upgrade_finished" style="display:none;" class="note">
     <%= t(".finished.note") %>
@@ -41,5 +58,7 @@
     $('#<%= current_character.points > 0 ? :upgrade_list : :upgrade_finished %>').show();
 
     $(document).trigger('character.upgrade_dialog');
+    
+    $.upgradeSliders(<%= current_character.points %>);
   <% end %>
 <% end %>
