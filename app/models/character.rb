@@ -23,6 +23,7 @@ class Character < ActiveRecord::Base
   include Character::Ratings
   include Character::Exchanges
   include Character::Achievements
+  include Character::EquipmentExtension
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
@@ -70,7 +71,6 @@ class Character < ActiveRecord::Base
   has_many :wall_posts,
     :dependent => :destroy
 
-  serialize :placements
   serialize :active_boosts
 
   attr_accessible :name
@@ -123,31 +123,37 @@ class Character < ActiveRecord::Base
   def self_and_relations
     self.class.scoped(:conditions => {:id => [id] + friend_relations.character_ids})
   end
-
-  def upgrade_attribute!(name)
-    name = name.to_sym
-
-    return false unless UPGRADABLE_ATTRIBUTES.include?(name) && points >= Setting.i("character_#{name}_upgrade_points")
-
-    transaction do
-      case name
-      when :health
-        self.health += Setting.i(:character_health_upgrade)
-        self.hp     += Setting.i(:character_health_upgrade)
-      when :energy
-        self.energy += Setting.i(:character_energy_upgrade)
-        self.ep     += Setting.i(:character_energy_upgrade)
-      when :stamina
-        self.stamina  += Setting.i(:character_stamina_upgrade)
-        self.sp       += Setting.i(:character_stamina_upgrade)
-      else
-        increment(name, Setting.i("character_#{name}_upgrade"))
-      end
-
-      self.points -= Setting.i("character_#{name}_upgrade_points")
-
-      save
+  
+  def upgrade_attributes!(params)
+    sum_points = 0
+    
+    UPGRADABLE_ATTRIBUTES.each do |attribute|
+      sum_points += Setting.i("character_#{attribute}_upgrade_points") * params[attribute].to_i
     end
+    
+    return false if points < sum_points
+    
+    transaction do
+      UPGRADABLE_ATTRIBUTES.each do |attribute|
+        case attribute
+        when :health
+          self.health += Setting.i(:character_health_upgrade) * params[:health].to_i
+          self.hp     += Setting.i(:character_health_upgrade) * params[:health].to_i
+        when :energy
+          self.energy += Setting.i(:character_energy_upgrade) * params[:energy].to_i
+          self.ep     += Setting.i(:character_energy_upgrade) * params[:energy].to_i
+        when :stamina
+          self.stamina  += Setting.i(:character_stamina_upgrade) * params[:stamina].to_i
+          self.sp       += Setting.i(:character_stamina_upgrade) * params[:stamina].to_i
+        else
+          increment(attribute, Setting.i("character_#{attribute}_upgrade") * params[attribute].to_i)
+        end  
+        
+        self.points -= Setting.i("character_#{attribute}_upgrade_points") * params[attribute].to_i
+      end
+      
+      save
+    end  
   end
 
   def attack_points
@@ -268,18 +274,10 @@ class Character < ActiveRecord::Base
     save!
   end
 
-  def equipment
-    @equipment ||= Character::Equipment.new(self)
-  end
-
   def boosts
     @boosts ||= Character::Boosts.new(self)
   end
 
-  def placements
-    self[:placements] ||= {}
-  end
-  
   def active_boosts
     self[:active_boosts] ||= {}
   end

@@ -81,7 +81,8 @@ module TutorialsHelper
   end
   
   def click_trigger(target, options = {})
-    options[:redirector_url] = update_step_tutorials_path unless @evented_step
+    options[:step_update_url] = update_step_tutorials_path unless @evented_step
+    
     "$('#{target}').tutorial('clickTarget', #{options.to_json});".html_safe
   end
   

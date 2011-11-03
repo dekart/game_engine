@@ -28,7 +28,7 @@ module Facepalm
               canvas = false
             end
 
-            url = url_for_without_facepalm(options)
+            url = url_for_without_facepalm(options.except(:signed_request))
 
             canvas ? facebook_canvas_page_url + url : url
           else

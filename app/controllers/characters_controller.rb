@@ -13,11 +13,7 @@ class CharactersController < ApplicationController
 
   def upgrade
     if request.post?
-      @success = current_character.upgrade_attribute!(params[:attribute])
-
-      if @success
-        EventLoggingService.log_event(:character_upgraded, current_character, params[:attribute])
-      end
+      @success = current_character.upgrade_attributes!(params)
 
       render :action => :upgrade_result, :layout => "ajax"
     else

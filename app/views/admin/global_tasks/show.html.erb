@@ -35,8 +35,8 @@
   <p><%= t(".update_styles.note") %></p>
 
   <p>
-    <%= link_to(t(".update_styles.perform"), update_styles_admin_global_task_path,
-          :method   => :post
+    <%= link_to_remote(t(".update_styles.perform"), 
+          :url => update_styles_admin_global_task_path
         ) %>
   </p>
 </div>

@@ -17,7 +17,7 @@ namespace :app do
             next if row.compact.empty?
             
             group_name, group_level,
-            mission_name, mission_description,
+            mission_name, mission_description, image_name,
             win_amount, money_min, money_max, energy, experience = row
           
             if group_name.present? # Mission Group

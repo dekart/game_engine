@@ -1,9 +1,10 @@
 class MissionResult
   attr_reader :character, :mission, :level, :mission_group,
     :energy, :money, :experience, :boost,
-    :level_rank, :mission_rank, :group_rank,
+    :mission_rank, :group_rank,
     :payouts
     
+  delegate :level, :to => :level_rank
   delegate :applicable_requirements, :to => :level
 
   def self.create(*args)
@@ -16,27 +17,28 @@ class MissionResult
     @character      = character
     @mission        = mission
     @mission_group  = mission.mission_group
-
-    @level_rank   = character.mission_levels.rank_for(@mission)
-    @level        = @level_rank.level
+  end
+  
+  def level_rank
+    @level_rank ||= character.mission_levels.rank_for(@mission)
   end
 
   def save!
     if valid?
       MissionLevelRank.transaction do
         # Checking if energy assignment encountered free fulfillment
-        @energy = (free_fulfillment? ? 0 : @level.energy)
+        @energy = (free_fulfillment? ? 0 : level.energy)
 
         @character.ep -= @energy
 
         payout_triggers = []
 
         if success?
-          @experience = @level.experience
-          @money      = (@level.money * (1 + @character.assignments.mission_income_effect * 0.01)).ceil
+          @experience = level.experience
+          @money      = (level.money * (1 + @character.assignments.mission_income_effect * 0.01)).ceil
 
-          @level_rank.progress += 1
-          @level_rank.save!
+          level_rank.progress += 1
+          level_rank.save!
 
           @character.experience += @experience
 
@@ -44,9 +46,9 @@ class MissionResult
 
           @character.missions_succeeded += 1
 
-          if @level_rank.just_completed?
+          if level_rank.just_completed?
             @character.missions_completed += 1
-            @character.missions_mastered  += 1 if @level.last?
+            @character.missions_mastered  += 1 if level.last?
 
             @character.points += 1
 
@@ -55,7 +57,7 @@ class MissionResult
 
             @character.news.add(:mission_complete,
               :mission_id     => @mission.id,
-              :level_rank_id  => @level_rank.id
+              :level_rank_id  => level_rank.id
             )
 
             payout_triggers << :level_complete
@@ -65,13 +67,13 @@ class MissionResult
               payout_triggers << :mission_group_complete
             end
           else
-            payout_triggers << (@level_rank.completed? ? :repeat_success : :success)
+            payout_triggers << (level_rank.completed? ? :repeat_success : :success)
           end
         else
-          payout_triggers << (@level_rank.completed? ? :repeat_failure : :failure)
+          payout_triggers << (level_rank.completed? ? :repeat_failure : :failure)
         end
 
-        @payouts = @level.applicable_payouts.apply(@character, payout_triggers, @mission)
+        @payouts = level.applicable_payouts.apply(@character, payout_triggers, @mission)
 
         @character.save!
       end
@@ -86,7 +88,7 @@ class MissionResult
 
   def success?
     if @success.nil?
-      @success = Dice.chance(@level.chance, 100)
+      @success = Dice.chance(level.chance, 100)
     end
 
     @success
@@ -97,7 +99,7 @@ class MissionResult
   end
 
   def enough_energy?
-    @character.ep >= @level.energy
+    @character.ep >= level.energy
   end
 
   def free_fulfillment?
@@ -133,7 +135,7 @@ class MissionResult
   protected
 
   def valid?
-    (mission.repeatable? || !@level_rank.completed?) and
+    (mission.repeatable? || !level_rank.completed?) and
     enough_energy? and
     requirements_satisfied?
   end

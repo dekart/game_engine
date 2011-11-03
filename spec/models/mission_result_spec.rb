@@ -100,14 +100,18 @@ describe MissionResult do
   end
 
   describe 'when checking if requirements are satisfied' do
+    before do
+      @result.stub!(:level).and_return(@mission_level)
+    end
+    
     it 'should return true if there are no requirements' do
-      @mission.requirements = nil
+      @mission_level.requirements = nil
 
       @result.requirements_satisfied?.should be_true
     end
 
     it 'should return true when requirements are satisfied' do
-      @mission.requirements = Requirements::Collection.new(
+      @mission_level.requirements = Requirements::Collection.new(
         DummyRequirement.new(:should_satisfy => true)
       )
 
@@ -115,7 +119,7 @@ describe MissionResult do
     end
     
     it 'should return false when requirements are not satisfied' do
-      @mission.requirements = Requirements::Collection.new(
+      @mission_level.requirements = Requirements::Collection.new(
         DummyRequirement.new(:should_satisfy => false)
       )
 
@@ -124,7 +128,7 @@ describe MissionResult do
 
     it 'should check requirements only once' do
       @requirement = DummyRequirement.new(:should_satisfy => false)
-      @mission.requirements = Requirements::Collection.new(@requirement)
+      @mission_level.requirements = Requirements::Collection.new(@requirement)
 
       @requirement.should_receive(:satisfies?).once.and_return(false)
 
@@ -154,7 +158,9 @@ describe MissionResult do
     end
 
     it 'should not be saved if mission requirements are not satisfied' do
-      @mission.requirements = Requirements::Collection.new(
+      @result.stub!(:level).and_return(@mission_level)
+      
+      @mission_level.requirements = Requirements::Collection.new(
         DummyRequirement.new(:should_satisfy => false)
       )
 

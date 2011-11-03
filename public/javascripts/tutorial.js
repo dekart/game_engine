@@ -52,23 +52,27 @@ var Tutorial = (function(){
      * to change current tutorial step if user click on object
      */
     clickTarget: function(options) {
+      var target = $(this);
       
-      $(this).tutorial('responsible');
-      $(this).addClass('tutorialScrollTarget');
+      target.tutorial('responsible');
+      target.addClass('tutorialScrollTarget');
       
-      if (options['redirector_url']) {
-        
-        // change href param in <a> tag
-        var originalHref = encodeURIComponent($(this).attr('href'));
-        // TODO: this is very simple link generation and don't consider link params
-        var changedHref = options['redirector_url'] + '?redirect_to=' +  originalHref;
-        $(this).attr('href', changedHref);
-        
-        $(this).bind('click', function(){
-          // prevent double click
-          $(this).removeClass('tutorialVisible');
+      if (options['step_update_url']) {
+        target.one('click', function(e){
+          var link = $(this);
+
+          link.removeClass('tutorialVisible'); // hiding link to avoid double click
+          
+          e.stopPropagation();
+          e.preventDefault();
+          
+          $.ajax(options['step_update_url'], { 
+            data: { no_render : true },
+            complete: function(){
+              redirectWithSignedRequest(link.attr('href'));
+            }
+          });
         });
-        
       }
     },
     
