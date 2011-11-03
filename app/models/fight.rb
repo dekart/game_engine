@@ -14,7 +14,7 @@ class Fight < ActiveRecord::Base
   }
 
   before_create :calculate_fight
-  after_create  :save_payout, :post_to_newsfeed, :log_event
+  after_create  :save_payout, :calculate_victories, :post_to_newsfeed, :log_event
 
   attr_reader :attacker_boost, :victim_boost, :payouts
   
@@ -206,6 +206,10 @@ class Fight < ActiveRecord::Base
     victim.save!
   end
 
+  def calculate_victories
+    $redis.zadd("vic_#{attacker.id}", Time.new.to_i, victim.id) if attacker_won?
+  end
+
   def post_to_newsfeed
     attacker.news.add(:fight_result, :fight_id => id)
     victim.news.add(:fight_result, :fight_id => id)
@@ -217,10 +221,8 @@ class Fight < ActiveRecord::Base
   end
   
   def latest_opponent_ids
-    attacker.attacks.all(
-      :select     => "DISTINCT victim_id",
-      :conditions => ["winner_id = ? AND created_at > ?", attacker.id, Setting.i(:fight_attack_repeat_delay).minutes.ago]
-    ).collect{|a| a.victim_id }
+    $redis.zremrangebyscore("vic_#{attacker.id}", 0, Setting.i(:fight_attack_repeat_delay).minutes.ago.to_i)
+    opponents = $redis.zrange("vic_#{attacker.id}", 0, Character.maximum('id')).collect {|id| id.to_i }
   end
   
   def decrease_victim_health?
