@@ -4,7 +4,7 @@ class Character
     def self.included(base)
       base.class_eval do
 
-        has_one :equipment
+        has_one :equipment,
           :dependent  => :destroy,
           :extend     => EquipmentAssociationExtension,
           :inverse_of => :character
