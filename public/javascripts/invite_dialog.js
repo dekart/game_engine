@@ -53,9 +53,9 @@ var InviteDialog = (function(){
       });
       
       // Binding interface element updates to user list change event
-      dialog.bind('user_list_updated.invite_dialog', fnMethods.checkButtonAvailability);
       dialog.bind('user_list_updated.invite_dialog', fnMethods.updateProgressBar);
-      dialog.bind('user_list_updated.invite_dialog', fnMethods.updateStatsBar);
+      dialog.bind('user_selection_changed.invite_dialog', fnMethods.checkButtonAvailability);
+      dialog.bind('user_selection_changed.invite_dialog', fnMethods.updateStatsBar);
       
       // Track checkbox state change
       dialog.find(':checkbox').live('change', function(){
@@ -63,8 +63,7 @@ var InviteDialog = (function(){
         
         checkbox.parent('.user').toggleClass('selected', checkbox.attr('checked'));
         
-        fnMethods.checkButtonAvailability.call(dialog);
-        fnMethods.updateStatsBar.call(dialog);
+        dialog.trigger('user_selection_changed.invite_dialog');
       });
       
       // Setup search box
@@ -82,12 +81,10 @@ var InviteDialog = (function(){
       // Setup stats bar controls
       dialog.find('.select_all').click(function(){
         fnMethods.selectAll.call(dialog);
-        fnMethods.updateStatsBar.call(dialog);
       });
       
       dialog.find('.deselect_all').click(function(){
         fnMethods.deselectAll.call(dialog);
-        fnMethods.updateStatsBar.call(dialog);
       });
       
       // Display all users by default
@@ -111,6 +108,7 @@ var InviteDialog = (function(){
         .addClass('ui-tabs-selected ui-state-active');
       
       dialog.trigger('user_list_updated.invite_dialog');
+      dialog.trigger('user_selection_changed.invite_dialog');
       
       fnMethods.goToPage.call(this, 0);
     },
@@ -233,6 +231,7 @@ var InviteDialog = (function(){
       });
       
       dialog.trigger('user_list_updated.invite_dialog');
+      dialog.trigger('user_selection_changed.invite_dialog');
       
       fnMethods.goToFirstSelected.call(this);
     },
@@ -267,10 +266,14 @@ var InviteDialog = (function(){
     
     selectAll: function(){
       fnMethods.usersByCurrentFilter.call(this).addClass('selected').find(':checkbox').attr('checked', true);
+
+      $(this).trigger('user_selection_changed.invite_dialog');
     },
     
     deselectAll: function(){
       fnMethods.getSelectedUsers.call(this).removeClass('selected').find(':checkbox').attr('checked', false);
+
+      $(this).trigger('user_selection_changed.invite_dialog');
     }
     
   };
