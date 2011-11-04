@@ -91,8 +91,8 @@ describe AppRequest::Base do
   describe '.check_user_requests' do
     before do
       @facebook_requests = [
-        {'id' => 123},
-        {'id' => 456}
+        {'id' => '123_111'},
+        {'id' => '456_222'}
       ]
       @koala = mock('koala', :get_connections => @facebook_requests)
       @user = mock_model(User, :facebook_id => 123456789, :facebook_client => @koala)
@@ -100,7 +100,7 @@ describe AppRequest::Base do
       @request1 = mock_model(AppRequest::Base, :update_from_facebook_request => true, :pending? => true)
       @request2 = mock_model(AppRequest::Base, :update_from_facebook_request => true, :pending? => false)
       
-      AppRequest::Base.stub!(:find_or_initialize_by_facebook_id).and_return(@request1, @request2)
+      AppRequest::Base.stub!(:find_or_initialize_by_facebook_id_and_receiver_id).and_return(@request1, @request2)
     end
     
     it 'should fetch app request data from facebook' do
@@ -110,7 +110,7 @@ describe AppRequest::Base do
     end
     
     it 'should find or initialize new request for each facebook request' do
-      AppRequest::Base.should_receive(:find_or_initialize_by_facebook_id).twice.and_return(@request1, @request2)
+      AppRequest::Base.should_receive(:find_or_initialize_by_facebook_id_and_receiver_id).twice.and_return(@request1, @request2)
       
       AppRequest::Base.check_user_requests(@user)
     end
@@ -213,7 +213,8 @@ describe AppRequest::Base do
   
   describe '#update_from_facebook_request' do
     before do
-      @sender = Factory(:user_with_character, :facebook_id => 123)
+      @sender   = Factory(:user_with_character, :facebook_id => 123)
+      @receiver = Factory(:user_with_character, :facebook_id => 456)
       
       @request = Factory(:app_request_base, :state => 'pending')
       
