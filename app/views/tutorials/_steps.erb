@@ -44,7 +44,7 @@
 <% step :first_upgrade_character, :control_upgrade_dialog => false, :change_event => 'character.upgrade_complete' do %>
 
   $('#dialog').find('.close, .buy_more').hide();
-  $('#dialog #upgrade_list tr:not(.energy) a.upgrade').hide();
+  $('#dialog #upgrade_list tr:not(.energy) .controls').empty();
   Tutorial.prepareDialog();
   
   <%= tip_on("#dialog #upgrade_list",
