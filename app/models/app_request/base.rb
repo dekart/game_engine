@@ -127,7 +127,7 @@ class AppRequest::Base < ActiveRecord::Base
     
     def check_user_requests(user)
       user.facebook_client.get_connections('me', 'apprequests').each do |facebook_request|
-        request = AppRequest::Base.find_or_initialize_by_facebook_id(facebook_request['id'])
+        request = AppRequest::Base.find_or_initialize_by_facebook_id_and_receiver_id(*facebook_request['id'].split('_'))
         
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
