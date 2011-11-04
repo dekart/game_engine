@@ -19,7 +19,7 @@ class AppRequest::Base < ActiveRecord::Base
     {
       :conditions => {
         :sender_id    => sender.id, 
-        :receiver_id  => receiver.facebook_id
+        :receiver_id  => receiver
       }
     }
   }
@@ -43,19 +43,12 @@ class AppRequest::Base < ActiveRecord::Base
   }
   named_scope :sent_after, Proc.new{|time|
     {
-      :conditions => ["sent_at > ?", time.utc]
-    }
-  }
-  
-  named_scope :sent_recently, Proc.new{|period|
-    {
-      :conditions => ["app_requests.created_at > ?", period.ago]
+      :conditions => ["sent_at > :time OR (sent_at IS NULL AND app_requests.created_at > :time)", {:time => time.utc}]
     }
   }
   
   named_scope :visible, :conditions => {:state => ['processed', 'visited']}
   named_scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
-  
   
   state_machine :initial => :pending do
     state :processed
@@ -133,10 +126,15 @@ class AppRequest::Base < ActiveRecord::Base
   
   after_create  :schedule_data_update
   after_save    :clear_counter_cache, :if => :receiver_id?
+  after_save    :clear_exclude_ids_cache
   
   class << self
     def cache_key(target)
       "user_#{ target.is_a?(User) ? target.facebook_id : target.to_i }_app_request_counter"
+    end
+    
+    def exclude_ids_cache_key(character)
+      "#{ sti_name.underscore }_exclude_ids_#{ character.id }"
     end
     
     def schedule_deletion(*ids_or_requests)
@@ -258,11 +256,11 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def previous_similar_requests
-    self.class.between(sender, receiver).without(self).sent_before(sent_at)
+    self.class.between(sender, receiver_id).without(self).sent_before(sent_at)
   end
   
   def later_similar_requests
-    self.class.between(sender, receiver).without(self).sent_after(sent_at)
+    self.class.between(sender, receiver_id).without(self).sent_after(sent_at)
   end
 
   def schedule_data_update
@@ -273,5 +271,9 @@ class AppRequest::Base < ActiveRecord::Base
   
   def clear_counter_cache
     Rails.cache.delete(self.class.cache_key(receiver_id))
+  end
+  
+  def clear_exclude_ids_cache
+    Rails.cache.delete(self.class.exclude_ids_cache_key(sender))
   end
 end
