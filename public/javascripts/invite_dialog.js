@@ -63,6 +63,7 @@ var InviteDialog = (function(){
         
         checkbox.parent('.user').toggleClass('selected', checkbox.attr('checked'));
         
+        fnMethods.checkButtonAvailability.call(dialog);
         fnMethods.updateStatsBar.call(dialog);
       });
       
