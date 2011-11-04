@@ -67,19 +67,6 @@ class AppRequest::Gift < AppRequest::Base
     Rails.cache.delete(self.class.receiver_cache_key(receiver))
   end
   
-  def after_process
-    super
-    
-    # Removing other gifts from the same sender
-    if Setting.b(:gifting_ignore_previous_from_same_sender)
-      transaction do
-        self.class.between(sender, receiver).scoped(:conditions => ["state IN (?) AND id != ?", %w{processed visited}, self.id]).each do |gift|
-          gift.ignore!
-        end
-      end
-    end
-  end
-  
   def repeat_accept_check
     if state_changed? and self.class.accepted_recently?(sender, receiver)
       errors.add(:base, :accepted_recently, :hours => Setting.i(:gifting_repeat_accept_delay))

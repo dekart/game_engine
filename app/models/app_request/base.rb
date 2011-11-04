@@ -23,6 +23,30 @@ class AppRequest::Base < ActiveRecord::Base
       }
     }
   }
+  named_scope :with_target, Proc.new{|target|
+    {
+      :conditions => {
+        :target_id    => target,
+        :target_type  => target.class.sti_name
+      }
+    }
+  }
+  named_scope :without, Proc.new{|request|
+    {
+      :conditions => ["app_requests.id != ?", request.id]
+    }
+  }
+  named_scope :sent_before, Proc.new{|time|
+    {
+      :conditions => ["sent_at < :time OR (sent_at IS NULL AND created_at < :time)", {:time => time.utc}]
+    }
+  }
+  named_scope :sent_after, Proc.new{|time|
+    {
+      :conditions => ["sent_at > ?", time.utc]
+    }
+  }
+  
   named_scope :sent_recently, Proc.new{|period|
     {
       :conditions => ["app_requests.created_at > ?", period.ago]
@@ -150,6 +174,8 @@ class AppRequest::Base < ActiveRecord::Base
       
         request.sender = User.find_by_facebook_id(facebook_request['from']['id']).character
         request.receiver_id = facebook_request['to']['id'] if facebook_request['to']
+
+        request.sent_at = Time.parse(facebook_request["created_time"]).utc
         
         request.transaction do
           request.save!
@@ -157,7 +183,6 @@ class AppRequest::Base < ActiveRecord::Base
           # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
           if data && data['target_id'] && data['target_type']
             request.target = data['target_type'].constantize.find(data['target_id'])
-            request.save!
           end
           
           request.process
@@ -195,7 +220,7 @@ class AppRequest::Base < ActiveRecord::Base
   def correct?
     true
   end
-
+  
   protected
   
   def request_class_from_data
@@ -221,11 +246,29 @@ class AppRequest::Base < ActiveRecord::Base
   end
   
   def after_process
-    mark_incorrect unless correct?
+    if later_similar_requests.count > 0
+      ignore
+    elsif !correct?
+      mark_incorrect
+    end
+    
+    previous_similar_requests.with_state(:processed, :visited).each do |request|
+      request.ignore
+    end
   end
   
+  def previous_similar_requests
+    self.class.between(sender, receiver).without(self).sent_before(sent_at)
+  end
+  
+  def later_similar_requests
+    self.class.between(sender, receiver).without(self).sent_after(sent_at)
+  end
+
   def schedule_data_update
-    Delayed::Job.enqueue Jobs::RequestDataUpdate.new(id)
+    if self.class == AppRequest::Base
+      Delayed::Job.enqueue Jobs::RequestDataUpdate.new(id)
+    end
   end
   
   def clear_counter_cache
