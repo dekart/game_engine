@@ -57,6 +57,16 @@ var InviteDialog = (function(){
       dialog.bind('user_selection_changed.invite_dialog', fnMethods.checkButtonAvailability);
       dialog.bind('user_selection_changed.invite_dialog', fnMethods.updateStatsBar);
       
+      dialog.delegate('.user', 'click', function(e){
+        if(e.target.nodeName == 'INPUT') {
+          return;
+        }
+        
+        var checkbox = $(this).find(':checkbox');
+        
+        checkbox.attr('checked', !checkbox.attr('checked')).trigger('change');
+      })
+      
       // Track checkbox state change
       dialog.find(':checkbox').live('change', function(){
         var checkbox = $(this);
