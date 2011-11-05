@@ -46,6 +46,11 @@ class AppRequest::Base < ActiveRecord::Base
       :conditions => ["sent_at > :time OR (sent_at IS NULL AND app_requests.created_at > :time)", {:time => time.utc}]
     }
   }
+  named_scope :accepted_after, Proc.new{|time|
+    {
+      :conditions => ["accepted_at >= ?", time]
+    }
+  }
   
   named_scope :visible, :conditions => {:state => ['processed', 'visited']}
   named_scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
@@ -100,7 +105,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     before_transition :on => :accept do |request|
-      request.accepted_at = Time.now
+      request.send(:before_accept)
     end
 
     after_transition :on => :accept do |request|
@@ -112,7 +117,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     before_transition :on => :expire do |request|
-      request.expired_at = Time.now
+      request.send(:before_expire)
     end
     
     after_transition :on => :expire do |request|
@@ -231,12 +236,20 @@ class AppRequest::Base < ActiveRecord::Base
     end.constantize
   end
   
+  def before_accept
+    self.accepted_at = Time.now
+  end
+  
   def after_accept
     self.class.schedule_deletion(self)
   end
   
   def after_ignore
     self.class.schedule_deletion(self)
+  end
+  
+  def before_expire
+    self.expired_at = Time.now
   end
   
   def after_expire

@@ -22,7 +22,7 @@ class AppRequest::Gift < AppRequest::Base
       ids = Rails.cache.fetch(receiver_cache_key(receiver), :expires_in => 15.minutes) do
         with_state(:accepted).
         for_character(receiver).
-        scoped(:conditions => ["accepted_at >= ?", Setting.i(:gifting_repeat_accept_delay).hours.ago]).
+        accepted_after(Setting.i(:gifting_repeat_accept_delay).hours.ago).
         all(:select => "sender_id").map{|r| r.sender_id }
       end
       
