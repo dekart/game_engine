@@ -13,7 +13,7 @@
     </span>
 
     <% dom_ready do %>
-      Timer.start('#<%= dom_id(item, :timer) %>', <%= item.time_left %>);
+      $('#<%= dom_id(item, :timer) %>').timer(<%= item.time_left %>);
     <% end %>
   <% end %>
 </div>

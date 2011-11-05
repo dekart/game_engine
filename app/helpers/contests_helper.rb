@@ -13,7 +13,7 @@ module ContestsHelper
         timer_name = "finish_time"
       end
       
-      dom_ready("Timer.start('##{dom_id(contest)}', #{time_left});")
+      dom_ready("$('##{dom_id(contest)}').timer(#{time_left});")
       
       content_tag(:div,
         t(".#{timer_name}", 

@@ -78,5 +78,5 @@
 </table>
 
 <% dom_ready do %>
-  Timer.start('#monster .timer .value', <%= monster.time_remaining %>);
+  $('#monster .timer .value').timer(<%= monster.time_remaining %>);
 <% end %>

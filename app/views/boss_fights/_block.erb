@@ -29,7 +29,7 @@
         </div>
 
         <% dom_ready do %>
-          Timer.start('#<%= dom_id(fight, :timer) %>', <%= fight.time_left %>, function(){
+          $('#<%= dom_id(fight, :timer) %>').timer(<%= fight.time_left %>, function(){
             <%= remote_function(
                   :url    => boss_fight_path(fight),
                   :method => :put,

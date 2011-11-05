@@ -4,98 +4,6 @@ function debug(s) {
   }
 }
 
-var Timer = {
-  timers: {},
-
-  format: function(value){
-    var days    = Math.floor(value / 86400);
-    var hours   = Math.floor((value - days * 86400) / 3600);
-    var minutes = Math.floor((value - days * 86400 - hours * 3600) / 60);
-    var seconds = value - days * 86400 - hours * 3600 - minutes * 60;
-
-    var result = '';
-
-    if(days > 1){
-      result = result + days + ' days, ';
-    } else if(days > 0) {
-      result = result + days + ' day, ';
-    }
-
-    if(hours > 0){
-      result = result + hours + ":";
-    }
-
-    if(minutes < 10){
-      result = result + "0" + minutes;
-    }else{
-      result = result + minutes;
-    }
-
-    if(seconds < 10){
-      result = result + ":0" + seconds;
-    }else{
-      result = result + ":" + seconds;
-    }
-
-    return(result);
-  },
-
-  update: function(id){
-    var element = $(id);
-
-    if(element.length === 0){
-      this.stop(id);
-
-      return;
-    }
-
-    if(this.timers[id].fire_at > this.currentTime()){
-      element.text(Timer.format(this.timers[id].fire_at - this.currentTime()));
-    } else {
-      element.text('');
-
-      this.stop(id);
-
-      if(this.timers[id].callback){
-        this.timers[id].callback(element);
-      }
-    }
-  },
-  
-  runCycle: function(id){
-    if(this.timers[id].cycle === null){
-      this.timers[id].cycle = Visibility.every(1000, function(){
-        Timer.update(id);
-      });
-    }
-  },
-  
-  stop: function(id){
-    if(this.timers[id].cycle !== null){
-      Visibility.stop(this.timers[id].cycle);
-      
-      this.timers[id].cycle = null;
-    }
-  },
-  
-  currentTime: function(){
-    return Math.round(new Date().getTime() / 1000);
-  },
-
-  start: function(id, value, callback){
-    if(value === 0){ return; }
-
-    if(typeof this.timers[id] === 'undefined'){
-      this.timers[id] = {cycle : null}
-    }
-    
-    this.timers[id].fire_at = this.currentTime() + value;
-    this.timers[id].callback = callback;
-    
-    this.runCycle(id);
-  }
-};
-
 
 var Spinner = {
   x: -1,
@@ -261,9 +169,9 @@ var Character = {
     $("#co .energy .value").text(c.ep + "/" + c.energy_points);
     $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
 
-    Timer.start('#co .health .timer', c.time_to_hp_restore, this.update_from_remote);
-    Timer.start('#co .energy .timer', c.time_to_ep_restore, this.update_from_remote);
-    Timer.start('#co .stamina .timer', c.time_to_sp_restore, this.update_from_remote);
+    $('#co .health .timer').timer(c.time_to_hp_restore, this.update_from_remote);
+    $('#co .energy .timer').timer(c.time_to_ep_restore, this.update_from_remote);
+    $('#co .stamina .timer').timer(c.time_to_sp_restore, this.update_from_remote);
 
     $('#co .timer').one('click', Character.update_from_remote);
 
