@@ -4,7 +4,7 @@ module GiftsHelper
   def gift_send_button(item, options = {})
     options.reverse_merge!(
       :dialog => {
-        :title    => t("gifts.new.title"),
+        :title    => t("gifts.new.request.title", :item => item.name),
         :message  => t("gifts.new.request.message", :item => item.name, :app => t('app_name')),
         :data     => {
           :target_id => item.id,
