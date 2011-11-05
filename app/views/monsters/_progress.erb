@@ -42,13 +42,13 @@
                     :title    => t('.invitation.title'),
                     :message  => t('.invitation.message', :name => monster.name, :app => t('app_name')),
                     :data     => {
-                      :target_id => monster.id,
-                      :target_type => Monster.name
+                      :target_id    => monster.id,
+                      :target_type  => Monster.name
                     }
                   },
                   :request => {
-                    :target_id => monster.id,
-                    :target_type => Monster.name
+                    :target_id    => monster.id,
+                    :target_type  => Monster.name
                   }
                 ),
                 :class => "invite button"
