@@ -16,8 +16,8 @@ module StreamHelper
       result << ga_track_event('Stream Dialog', "#{ type.to_s.titleize } - Dialog").to_s
       result << options[:before].to_s
       result << %[
-        StreamDialog.show('#{ type }', #{ post_options.to_json }, function(post_id, exception, data){ 
-          if(post_id != 'null'){
+        StreamDialog.show(#{ post_options.to_json }, function(response){ 
+          if(response){
             #{ success_event_track };
             #{ options[:success] };
           } else {
