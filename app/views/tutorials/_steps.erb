@@ -103,7 +103,7 @@
         :buttons => next_step_button,
         :position => {
           :at => 'top center',
-          :my => 'bottom center'
+          :my => 'bottom left'
         }
       ) %>
   <%= make_responsible("#placements > .placement > .inventory img") %>
@@ -132,7 +132,12 @@
 <% step :attack_monster_first_time, :change_event => 'result.received' do %>
   
   <%= spot_on("#monster a.attack") %>
-  <%= tip_on("#monster a.attack") %>
+  <%= tip_on("#monster a.attack",
+        :position => {
+          :at => 'bottom center',
+          :my => 'top left'
+        }
+      ) %>
   <%= click_trigger("#monster a.attack") %>
   
 <% end %>
@@ -141,7 +146,12 @@
 
   <%= make_visible("#monster") %>
   <%= click_trigger("#monster a.attack") %>
-  <%= tip_on("#monster a.attack") %>
+  <%= tip_on("#monster a.attack",
+        :position => {
+          :at => 'bottom center',
+          :my => 'top left'
+        }
+      ) %>
   
 <% end %>
 
@@ -162,7 +172,7 @@
   <%= tip_on("#dialog a.reward",
         :position => {
           :at => 'bottom center',
-          :my => 'top center'
+          :my => 'top left'
         }
      ) %>
   
