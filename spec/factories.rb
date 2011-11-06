@@ -258,6 +258,7 @@ end
 
 Factory.define :app_request_base, :class => 'AppRequest::Base' do |t|
   t.facebook_id 123456789
+  t.receiver_id 123456789
   t.state 'processed'
 end
 

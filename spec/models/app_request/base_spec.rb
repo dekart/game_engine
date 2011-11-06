@@ -221,7 +221,8 @@ describe AppRequest::Base do
       @remote_request = {
         'from' => { 'id' => 123 },
         'to'   => { 'id' => 456 },
-        'data' => '{"type":"invite"}'
+        'data' => '{"type":"invite"}',
+        'created_time' => '2011-11-05T08:31:08+0000'
       }
     end
     
@@ -289,7 +290,9 @@ describe AppRequest::Base do
       end
 
       it 'should change request class to monster invite if request is a monster invite request' do
-        @remote_request['data'] = '{"type":"monster_invite"}'
+        @monster = Factory(:monster)
+        
+        @remote_request['data'] = '{"type":"monster_invite","monster_id":%d}' % @monster.id
 
         @request.update_from_facebook_request(@remote_request)
 
@@ -352,15 +355,7 @@ describe AppRequest::Base do
     end
 
     it 'should fetch data from API using application token' do
-      @koala.should_receive(:get_object).with(123456789).and_return(@remote_request)
-      
-      @request.update_data!
-    end
-    
-    it 'should fetch data from API using composite ID when receiver is already known' do
-      @request.receiver_id = 111111
-      
-      @koala.should_receive(:get_object).with('123456789_111111').and_return(@remote_request)
+      @koala.should_receive(:get_object).with("123456789_123456789").and_return(@remote_request)
       
       @request.update_data!
     end
@@ -372,7 +367,7 @@ describe AppRequest::Base do
     end
     
     it 'should mark request as broken if failed to fetch request data' do
-      @koala.should_receive(:get_object).with(123456789).and_raise(Koala::Facebook::APIError)
+      @koala.should_receive(:get_object).with("123456789_123456789").and_raise(Koala::Facebook::APIError)
       
       lambda{
         @request.update_data!
@@ -382,7 +377,7 @@ describe AppRequest::Base do
     it 'should not try to mark request as broken if it\'s not possible' do
       @request.ignore!
       
-      @koala.should_receive(:get_object).with(123456789).and_raise(Koala::Facebook::APIError)
+      @koala.should_receive(:get_object).with("123456789_123456789").and_raise(Koala::Facebook::APIError)
       
       lambda{
         @request.update_data!
@@ -437,15 +432,7 @@ describe AppRequest::Base do
     end
     
     it 'should delete request from facebook using application access token' do
-      @koala.should_receive(:delete_object).with(123456789)
-      
-      @request.delete_from_facebook!
-    end
-
-    it 'should delete request from facebook using composite ID if receiver is already known' do
-      @request.receiver_id = 111111
-      
-      @koala.should_receive(:delete_object).with('123456789_111111')
+      @koala.should_receive(:delete_object).with("123456789_123456789")
       
       @request.delete_from_facebook!
     end
@@ -454,7 +441,8 @@ describe AppRequest::Base do
 
   describe '#process' do
     before do
-      @request = Factory(:app_request_base, :state => 'pending')
+      @sender = Factory(:character)
+      @request = Factory(:app_request_base, :state => 'pending', :sender => @sender, :sent_at => Time.now)
     end
     
     it 'should store processing time' do

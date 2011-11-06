@@ -130,8 +130,8 @@ class AppRequest::Base < ActiveRecord::Base
   validates_presence_of :facebook_id
   
   after_create  :schedule_data_update
-  after_save    :clear_counter_cache, :if => :receiver_id?
-  after_save    :clear_exclude_ids_cache
+  after_save    :clear_exclude_ids_cache, :if => :sender
+  after_save    :clear_counter_cache,     :if => :receiver_id?
   
   class << self
     def cache_key(target)
