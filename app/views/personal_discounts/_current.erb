@@ -28,7 +28,7 @@
             </span>
 
             <% dom_ready do %>
-              Timer.start('#<%= dom_id(discount, :timer) %>', <%= discount.time_left %>);
+              $('#<%= dom_id(discount, :timer) %>').timer(<%= discount.time_left %>);
             <% end %>
           </div>
 

@@ -5,6 +5,7 @@ describe StreamHelper do
     @character = Factory(:character)
     
     helper.stub!(:asset_image_path).and_return("/path/to/image.jpg")
+    helper.stub!(:ga_track_event).and_return("Event code")
     helper.stub!(:current_character).and_return(@character)
     helper.stub!(:reference_code).and_return("The code")
     

@@ -82,8 +82,8 @@ describe AppRequest::Base do
     end
     
     it 'should return gifts sent to passed character' do
-      AppRequest::Base.for(@receiver).should include(@request1, @request2)
-      AppRequest::Base.for(@receiver).should_not include(@request3)
+      AppRequest::Base.for_character(@receiver).should include(@request1, @request2)
+      AppRequest::Base.for_character(@receiver).should_not include(@request3)
     end
   end
   
@@ -91,8 +91,8 @@ describe AppRequest::Base do
   describe '.check_user_requests' do
     before do
       @facebook_requests = [
-        {'id' => 123},
-        {'id' => 456}
+        {'id' => '123_111'},
+        {'id' => '456_222'}
       ]
       @koala = mock('koala', :get_connections => @facebook_requests)
       @user = mock_model(User, :facebook_id => 123456789, :facebook_client => @koala)
@@ -100,7 +100,7 @@ describe AppRequest::Base do
       @request1 = mock_model(AppRequest::Base, :update_from_facebook_request => true, :pending? => true)
       @request2 = mock_model(AppRequest::Base, :update_from_facebook_request => true, :pending? => false)
       
-      AppRequest::Base.stub!(:find_or_initialize_by_facebook_id).and_return(@request1, @request2)
+      AppRequest::Base.stub!(:find_or_initialize_by_facebook_id_and_receiver_id).and_return(@request1, @request2)
     end
     
     it 'should fetch app request data from facebook' do
@@ -110,7 +110,7 @@ describe AppRequest::Base do
     end
     
     it 'should find or initialize new request for each facebook request' do
-      AppRequest::Base.should_receive(:find_or_initialize_by_facebook_id).twice.and_return(@request1, @request2)
+      AppRequest::Base.should_receive(:find_or_initialize_by_facebook_id_and_receiver_id).twice.and_return(@request1, @request2)
       
       AppRequest::Base.check_user_requests(@user)
     end
@@ -213,14 +213,16 @@ describe AppRequest::Base do
   
   describe '#update_from_facebook_request' do
     before do
-      @sender = Factory(:user_with_character, :facebook_id => 123)
+      @sender   = Factory(:user_with_character, :facebook_id => 123)
+      @receiver = Factory(:user_with_character, :facebook_id => 456)
       
       @request = Factory(:app_request_base, :state => 'pending')
       
       @remote_request = {
         'from' => { 'id' => 123 },
         'to'   => { 'id' => 456 },
-        'data' => '{"type":"invite"}'
+        'data' => '{"type":"invite"}',
+        'created_time' => '2011-11-05T08:31:08+0000'
       }
     end
     
@@ -288,7 +290,9 @@ describe AppRequest::Base do
       end
 
       it 'should change request class to monster invite if request is a monster invite request' do
-        @remote_request['data'] = '{"type":"monster_invite"}'
+        @monster = Factory(:monster)
+        
+        @remote_request['data'] = '{"type":"monster_invite","monster_id":%d}' % @monster.id
 
         @request.update_from_facebook_request(@remote_request)
 
@@ -351,15 +355,7 @@ describe AppRequest::Base do
     end
 
     it 'should fetch data from API using application token' do
-      @koala.should_receive(:get_object).with(123456789).and_return(@remote_request)
-      
-      @request.update_data!
-    end
-    
-    it 'should fetch data from API using composite ID when receiver is already known' do
-      @request.receiver_id = 111111
-      
-      @koala.should_receive(:get_object).with('123456789_111111').and_return(@remote_request)
+      @koala.should_receive(:get_object).with("123456789_123456789").and_return(@remote_request)
       
       @request.update_data!
     end
@@ -371,7 +367,7 @@ describe AppRequest::Base do
     end
     
     it 'should mark request as broken if failed to fetch request data' do
-      @koala.should_receive(:get_object).with(123456789).and_raise(Koala::Facebook::APIError)
+      @koala.should_receive(:get_object).with("123456789_123456789").and_raise(Koala::Facebook::APIError)
       
       lambda{
         @request.update_data!
@@ -381,7 +377,7 @@ describe AppRequest::Base do
     it 'should not try to mark request as broken if it\'s not possible' do
       @request.ignore!
       
-      @koala.should_receive(:get_object).with(123456789).and_raise(Koala::Facebook::APIError)
+      @koala.should_receive(:get_object).with("123456789_123456789").and_raise(Koala::Facebook::APIError)
       
       lambda{
         @request.update_data!
@@ -436,15 +432,7 @@ describe AppRequest::Base do
     end
     
     it 'should delete request from facebook using application access token' do
-      @koala.should_receive(:delete_object).with(123456789)
-      
-      @request.delete_from_facebook!
-    end
-
-    it 'should delete request from facebook using composite ID if receiver is already known' do
-      @request.receiver_id = 111111
-      
-      @koala.should_receive(:delete_object).with('123456789_111111')
+      @koala.should_receive(:delete_object).with("123456789_123456789")
       
       @request.delete_from_facebook!
     end
@@ -453,7 +441,8 @@ describe AppRequest::Base do
 
   describe '#process' do
     before do
-      @request = Factory(:app_request_base, :state => 'pending')
+      @sender = Factory(:character)
+      @request = Factory(:app_request_base, :state => 'pending', :sender => @sender, :sent_at => Time.now)
     end
     
     it 'should store processing time' do

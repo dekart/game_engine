@@ -21,7 +21,7 @@ class Character
     end
     
     def invited_recently
-      @invited_recently ||= AppRequest::Invitation.from(@character).receiver_ids
+      @invited_recently ||= AppRequest::Invitation.from_character(@character).receiver_ids
     end
     
     def for_invitation(limit = 10)
