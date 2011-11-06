@@ -1,7 +1,7 @@
 class Character
   class Equipment < ActiveRecord::Base
 
-    MAIN_PLACEMENTS = [:left_hand, :right_hand, :head, :body, :legs]
+    MAIN_PLACEMENTS = [:right_hand, :left_hand, :head, :body, :legs]
     PLACEMENTS = MAIN_PLACEMENTS + [:additional]
 
     # A set of placements to be enabled by default
