@@ -10,7 +10,8 @@ class CreatePlacements < ActiveRecord::Migration
       t.rename :placements, :placements_old
     end
 
-    puts "Updating equipment placements for #{Character.count} requests..."
+    puts "Updating equipment placements for #{Character.count} characters..."
+    
     i = 0
 
     Character.find_in_batches(:batch_size => 100) do |characters|
@@ -24,6 +25,7 @@ class CreatePlacements < ActiveRecord::Migration
       end
     end
 
+    puts "Done!"
   end
 
   def self.down

@@ -23,25 +23,23 @@
 #friends_to_invite_notification
   .users
     .user
-      display: inline-block
-      height: 140px
+      display: block
+      float: left
       width: 160px
-      text-align: center
-      
-      .name
-        font-weight: bold
-        margin-bottom: 5px
+      height: 60px
       
       .picture
-        height: 105px
-        overflow: hidden
+        float: left
+
+      .name
+        font-weight: bold
+        margin-left: 60px
+        line-height: 50px
         
   .invite
-    margin-right: 20px
-    +button(!friends_to_invite_invite_icon)
-        
-  .invite_other
-    +button(!friends_to_invite_invite_other_icon)
+    float: none
+    margin: 10px auto
+    +button(!friends_to_invite_icon, 130px)
     
 #send_gift_notification
   .text

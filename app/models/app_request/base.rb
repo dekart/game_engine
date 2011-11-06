@@ -5,30 +5,55 @@ class AppRequest::Base < ActiveRecord::Base
   
   belongs_to :target, :polymorphic => true
   
-  named_scope :for, Proc.new {|character|
+  named_scope :for_character, Proc.new {|character|
     {
       :conditions => {:receiver_id => character.facebook_id}
     }
   }
-  named_scope :from, Proc.new{|character|
+  named_scope :from_character, Proc.new{|character|
     {
       :conditions => {:sender_id => character.id}
     }
   }
   named_scope :between, Proc.new{|sender, receiver|
     {
-      :conditions => {:sender_id => sender.id, :receiver_id => receiver.facebook_id}
+      :conditions => {
+        :sender_id    => sender.id, 
+        :receiver_id  => receiver
+      }
     }
   }
-  named_scope :sent_recently, Proc.new{|period|
+  named_scope :with_target, Proc.new{|target|
     {
-      :conditions => ["app_requests.created_at > ?", period.ago]
+      :conditions => {
+        :target_id    => target,
+        :target_type  => target.class.sti_name
+      }
+    }
+  }
+  named_scope :without, Proc.new{|request|
+    {
+      :conditions => ["app_requests.id != ?", request.id]
+    }
+  }
+  named_scope :sent_before, Proc.new{|time|
+    {
+      :conditions => ["sent_at < :time OR (sent_at IS NULL AND created_at < :time)", {:time => time.utc}]
+    }
+  }
+  named_scope :sent_after, Proc.new{|time|
+    {
+      :conditions => ["sent_at > :time OR (sent_at IS NULL AND app_requests.created_at > :time)", {:time => time.utc}]
+    }
+  }
+  named_scope :accepted_after, Proc.new{|time|
+    {
+      :conditions => ["accepted_at >= ?", time.utc]
     }
   }
   
   named_scope :visible, :conditions => {:state => ['processed', 'visited']}
   named_scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
-  
   
   state_machine :initial => :pending do
     state :processed
@@ -72,7 +97,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     after_transition :on => :process do |request|
-      request.mark_incorrect unless request.correct?
+      request.send(:after_process)
     end
 
     before_transition :on => :visit do |request|
@@ -80,7 +105,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     before_transition :on => :accept do |request|
-      request.accepted_at = Time.now
+      request.send(:before_accept)
     end
 
     after_transition :on => :accept do |request|
@@ -92,7 +117,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     before_transition :on => :expire do |request|
-      request.expired_at = Time.now
+      request.send(:before_expire)
     end
     
     after_transition :on => :expire do |request|
@@ -105,11 +130,16 @@ class AppRequest::Base < ActiveRecord::Base
   validates_presence_of :facebook_id
   
   after_create  :schedule_data_update
-  after_save    :clear_counter_cache, :if => :receiver_id?
+  after_save    :clear_exclude_ids_cache, :if => :sender
+  after_save    :clear_counter_cache,     :if => :receiver_id?
   
   class << self
     def cache_key(target)
       "user_#{ target.is_a?(User) ? target.facebook_id : target.to_i }_app_request_counter"
+    end
+    
+    def exclude_ids_cache_key(character)
+      "#{ sti_name.underscore }_exclude_ids_#{ character.id }"
     end
     
     def schedule_deletion(*ids_or_requests)
@@ -124,7 +154,7 @@ class AppRequest::Base < ActiveRecord::Base
     
     def check_user_requests(user)
       user.facebook_client.get_connections('me', 'apprequests').each do |facebook_request|
-        request = AppRequest::Base.find_or_initialize_by_facebook_id(facebook_request['id'])
+        request = AppRequest::Base.find_or_initialize_by_facebook_id_and_receiver_id(*facebook_request['id'].split('_'))
         
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
@@ -147,6 +177,8 @@ class AppRequest::Base < ActiveRecord::Base
       
         request.sender = User.find_by_facebook_id(facebook_request['from']['id']).character
         request.receiver_id = facebook_request['to']['id'] if facebook_request['to']
+
+        request.sent_at = Time.parse(facebook_request["created_time"]).utc
         
         request.transaction do
           request.save!
@@ -154,7 +186,6 @@ class AppRequest::Base < ActiveRecord::Base
           # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
           if data && data['target_id'] && data['target_type']
             request.target = data['target_type'].constantize.find(data['target_id'])
-            request.save!
           end
           
           request.process
@@ -192,7 +223,7 @@ class AppRequest::Base < ActiveRecord::Base
   def correct?
     true
   end
-
+  
   protected
   
   def request_class_from_data
@@ -205,6 +236,10 @@ class AppRequest::Base < ActiveRecord::Base
     end.constantize
   end
   
+  def before_accept
+    self.accepted_at = Time.now
+  end
+  
   def after_accept
     self.class.schedule_deletion(self)
   end
@@ -213,15 +248,45 @@ class AppRequest::Base < ActiveRecord::Base
     self.class.schedule_deletion(self)
   end
   
+  def before_expire
+    self.expired_at = Time.now
+  end
+  
   def after_expire
     self.class.schedule_deletion(self)
   end
   
+  def after_process
+    if later_similar_requests.count > 0
+      ignore
+    elsif !correct?
+      mark_incorrect
+    end
+    
+    previous_similar_requests.with_state(:processed, :visited).each do |request|
+      request.ignore
+    end
+  end
+  
+  def previous_similar_requests
+    self.class.between(sender, receiver_id).without(self).sent_before(sent_at)
+  end
+  
+  def later_similar_requests
+    self.class.between(sender, receiver_id).without(self).sent_after(sent_at)
+  end
+
   def schedule_data_update
-    Delayed::Job.enqueue Jobs::RequestDataUpdate.new(id)
+    if self.class == AppRequest::Base
+      Delayed::Job.enqueue Jobs::RequestDataUpdate.new(id)
+    end
   end
   
   def clear_counter_cache
     Rails.cache.delete(self.class.cache_key(receiver_id))
+  end
+  
+  def clear_exclude_ids_cache
+    Rails.cache.delete(self.class.exclude_ids_cache_key(sender))
   end
 end
