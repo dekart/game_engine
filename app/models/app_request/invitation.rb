@@ -1,7 +1,7 @@
 class AppRequest::Invitation < AppRequest::Base
   class << self
     def ids_to_exclude_for(character)
-      Rails.cache.fetch(exclude_ids_cache_key(character), :expires_in => 1.hour) do
+      Rails.cache.fetch(exclude_ids_cache_key(character), :expires_in => 15.minutes) do
         from_character(character).sent_after(7.days.ago).receiver_ids + character.friend_relations.facebook_ids
       end
     end

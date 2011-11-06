@@ -9,7 +9,7 @@ class AppRequest::Gift < AppRequest::Base
   
   class << self
     def ids_to_exclude_for(character)
-      Rails.cache.fetch(exclude_ids_cache_key(character), :expires_in => 1.hour) do
+      Rails.cache.fetch(exclude_ids_cache_key(character), :expires_in => 15.minutes) do
         from_character(character).sent_after(Setting.i(:gifting_repeat_accept_delay).hours.ago).receiver_ids
       end
     end
