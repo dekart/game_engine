@@ -47,7 +47,7 @@ module FacebookHelper
     
     "".tap do |result|
       result << ga_track_event('Requests', "#{ type.to_s.titleize } - Dialog").to_s
-      result << "InviteDialog.show('#{ type }', #{ options.to_json }, function(){ #{ callback } })"
+      result << "InviteDialog.show('#{ type }', #{ options.to_json }, function(){ #{ callback } });"
       
       result.gsub!(/\n\s+/, ' ')
     end
