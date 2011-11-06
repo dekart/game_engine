@@ -48,7 +48,7 @@ class AppRequest::Base < ActiveRecord::Base
   }
   named_scope :accepted_after, Proc.new{|time|
     {
-      :conditions => ["accepted_at >= ?", time]
+      :conditions => ["accepted_at >= ?", time.utc]
     }
   }
   
