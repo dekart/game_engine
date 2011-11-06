@@ -23,7 +23,7 @@
             <div class="user hidden selected {{if user.is_app_user}}app_user{{/if}}" data-uid="${user.uid}">
               <input type="checkbox" checked="yes">
               <div class="icon"></div>
-              <img data-image="https://graph.facebook.com/${user.uid}/picture?type=square" src="<%= asset_image_path('1px') %>" alt="${user.first_name}" width="25" height="25"/>
+              <img data-image="https://graph.facebook.com/${user.uid}/picture?type=square&return_ssl_resources=1" src="<%= asset_image_path('1px') %>" alt="${user.first_name}" width="25" height="25"/>
               
               ${user.first_name}
             </div>
