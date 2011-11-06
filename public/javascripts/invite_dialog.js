@@ -65,7 +65,7 @@ var InviteDialog = (function(){
         var checkbox = $(this).find(':checkbox');
         
         checkbox.attr('checked', !checkbox.attr('checked')).trigger('change');
-      })
+      });
       
       // Track checkbox state change
       dialog.find(':checkbox').live('change', function(){

@@ -1,3 +1,5 @@
+/*global jQuery, if_fb_initialized, FB, Spinner */
+
 (function($){
   var fnMethods = {
     initialize: function(time, callback){
@@ -36,7 +38,10 @@
     runTimer: function(){
       var timer = $(this);
       
-      $(this).delay(1000).queue(function(next){ fnMethods.tick.call(timer); next(); })
+      $(this).delay(1000).queue(function(next){ 
+        fnMethods.tick.call(timer); 
+        next(); 
+      });
     },
     
     currentTime: function(){
@@ -75,7 +80,7 @@
 
       return(result);
     }
-  }
+  };
   
   $.fn.timer = function(method){
     var result;
@@ -88,5 +93,5 @@
     }
 
     return result;
-  }
+  };
 })(jQuery);

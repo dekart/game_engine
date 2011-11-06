@@ -1,7 +1,9 @@
+/*global $, if_fb_initialized, FB, Spinner */
+
 var StreamDialog = {
   show: function(post_type, post_options, callback){
     var options = $.extend(true, {}, post_options, {
-      method: 'stream.publish',
+      method: 'stream.publish'
     });
 
     if_fb_initialized(function(){
@@ -14,4 +16,4 @@ var StreamDialog = {
       $(document).trigger('facebook.dialog');
     });
   }
-}
+};
