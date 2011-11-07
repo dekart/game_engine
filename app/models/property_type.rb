@@ -6,6 +6,8 @@ class PropertyType < ActiveRecord::Base
   AVAILABILITIES = [:shop, :mission, :loot]
 
   has_many :properties, :dependent => :destroy
+  
+  has_requirements
 
   has_payouts :collect
 
@@ -93,7 +95,7 @@ class PropertyType < ActiveRecord::Base
     upgrade_cost_increase ? basic_price + upgrade_cost_increase * level : basic_price
   end
   
-  def requirements
+  def custom_requirements
     @requirements ||= Requirements::Collection.new(
       Requirements::BasicMoney.new(:value => basic_price),
       Requirements::VipMoney.new(:value => vip_price),
