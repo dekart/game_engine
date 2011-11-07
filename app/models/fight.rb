@@ -208,6 +208,7 @@ class Fight < ActiveRecord::Base
 
   def calculate_victories
     $redis.zadd("vic_#{attacker.id}", Time.new.to_i, victim.id) if attacker_won?
+    true
   end
 
   def post_to_newsfeed
