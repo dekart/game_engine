@@ -86,9 +86,7 @@
           </div>
 
           <% dom_ready do %>
-            $(document).one('application.ready', function(){
-              $('#<%= dom_id(property, :timer) %>').timer(<%= property.time_to_next_collection %>, PropertyList.enableCollection);
-            });
+            $('#<%= dom_id(property, :timer) %>').timer(<%= property.time_to_next_collection %>, PropertyList.enableCollection);
           <% end %>
         <% end %>
       <% end %>

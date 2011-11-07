@@ -84,14 +84,17 @@
   
   $.fn.timer = function(method){
     var result;
-
+    
     // Method calling logic
     if ( fnMethods[ method ] ){
-      result = fnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+      return fnMethods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
     } else {
-      result = fnMethods.initialize.apply(this, arguments);
+      var selector = this.selector;
+      var original_arguments = arguments
+      
+      $(document).one('application.ready', function(){
+        fnMethods.initialize.apply($(selector), original_arguments);
+      });
     }
-
-    return result;
   };
 })(jQuery);
