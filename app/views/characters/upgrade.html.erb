@@ -20,7 +20,7 @@
           <td class="controls">	
           	<%= hidden_field_tag(attribute, 0, :class => :hidden_value) %>
           	
-            <span class="ui-icon ui-icon-circle-minus minus_value_attribute"></span>
+            <div class="minus_value_attribute"></div>
             
             <%= content_tag(:div, "", 
                   :class => :attribute_slider,
@@ -28,7 +28,7 @@
                   :"data-character-upgrade" => Setting.i("character_#{attribute}_upgrade")
                 ) %>	
             
-            <span class="ui-icon ui-icon-circle-plus plus_value_attribute"></span>
+            <div class="plus_value_attribute"></div>
           </td>
         </tr>
       <% end %>
