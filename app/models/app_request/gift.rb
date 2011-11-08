@@ -59,6 +59,10 @@ class AppRequest::Gift < AppRequest::Base
     target || (Item.find(data['item_id']) if data && data['item_id'])
   end
   
+  def can_send_back?
+    !AppRequest::Gift.ids_to_exclude_for(receiver).include?(sender.facebook_id)
+  end
+  
   protected
   
   def after_accept
