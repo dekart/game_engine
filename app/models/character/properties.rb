@@ -18,10 +18,10 @@ class Character
         unless property = find_by_property_type_id(type.id)
           property = build(:property_type => type)
 
-          property.buy!
+          result = property.buy!
         end
 
-        property
+        [property, result]
       end
 
       def collect_money!

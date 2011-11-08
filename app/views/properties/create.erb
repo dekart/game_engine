@@ -19,6 +19,14 @@
       <%= payout(:basic_money, number_to_currency(@property.basic_price)) if @property.basic_price > 0 %>
       <%= payout(:vip_money, number_to_currency(@property.vip_price)) if @property.vip_price > 0 %>
     </div>
+    
+    <% unless @result.empty? %>
+      <h3><%= t(".you_received.title") %></h3>
+  
+      <div class="payouts">
+        <%= payout_list(@property, @result) %>
+      </div>
+    <% end %>
 
     <% builder.on_ready do %>
       $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
