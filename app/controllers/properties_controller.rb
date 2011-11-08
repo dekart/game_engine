@@ -7,7 +7,7 @@ class PropertiesController < ApplicationController
     @property_type = PropertyType.available_in(:shop, :special).available_for(current_character).
       find(params[:property_type_id])
 
-    @property = current_character.properties.buy!(@property_type)
+    @property, @result = current_character.properties.buy!(@property_type)
 
     if @property.errors.empty?
       EventLoggingService.log_event(:property_bought, @property)
@@ -21,7 +21,7 @@ class PropertiesController < ApplicationController
   def upgrade
     @property = current_character.properties.find(params[:id])
 
-    @property.upgrade!
+    @result = @property.upgrade!
 
     if @property.errors.empty?
       EventLoggingService.log_event(:property_upgraded, @property)

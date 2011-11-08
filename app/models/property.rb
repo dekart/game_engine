@@ -40,10 +40,12 @@ class Property < ActiveRecord::Base
   def buy!
     if valid?
       transaction do
+        result = payouts.apply(character, :build, property_type)
+        
         if save! && character.charge!(basic_price, vip_price, property_type)
           character.news.add(:property_purchase, :property_id => id)
 
-          true
+          result
         else
           false
         end
@@ -60,9 +62,13 @@ class Property < ActiveRecord::Base
       transaction do
         increment(:level)
 
+        result = payouts.apply(character, :upgrade, property_type)
+     
         save(false) && character.charge!(property_type.upgrade_price(level - 1), vip_price, property_type)
 
         character.news.add(:property_upgrade, :property_id => id, :level => level)
+        
+        result
       end
     else
       false
