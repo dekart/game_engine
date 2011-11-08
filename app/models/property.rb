@@ -99,7 +99,7 @@ class Property < ActiveRecord::Base
   end
   
   def applicable_requirements
-    property_type.requirements + property_type.custom_requirements
+    property_type.requirements + property_type.default_requirements
   end
 
   protected

@@ -4,6 +4,25 @@ function debug(s) {
   }
 }
 
+var Shop = {
+  setup : function(){
+    
+    $(".amount").change(function(){
+      var amount = $(this).val();
+      var data = $.parseJSON($(this).attr('data-options'));
+      
+      if(data['basic_price'] > 0){
+        $("#item_" + data['id'] + " .requirements .basic_money .value").html(data['basic_price'] * amount);
+      }
+        
+      if(data['vip_price'] > 0){
+        $("#item_" + data['id'] + " .requirements .vip_money .value").html(data['vip_price'] * amount);
+      }   
+    });
+    
+  }
+};
+
 var Timer = {
   timers: {},
 

@@ -68,7 +68,7 @@
 
         <% if property.nil? or property.upgradeable? %>
           <div class="requirements">
-            <h3><%= Mission.human_attribute_name("requirements") %></h3>
+            <h3><%= PropertyType.human_attribute_name("requirements") %></h3>
 
             <%= attribute_requirement(:basic_money,
                   number_to_currency(property ? property.upgrade_price : type.basic_price)

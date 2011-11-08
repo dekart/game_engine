@@ -95,7 +95,7 @@ class PropertyType < ActiveRecord::Base
     upgrade_cost_increase ? basic_price + upgrade_cost_increase * level : basic_price
   end
   
-  def custom_requirements
+  def default_requirements
     @requirements ||= Requirements::Collection.new(
       Requirements::BasicMoney.new(:value => basic_price),
       Requirements::VipMoney.new(:value => vip_price),

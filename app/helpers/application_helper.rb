@@ -60,7 +60,6 @@ module ApplicationHelper
     values.sort!
 
     select_tag(:amount, options_for_select(values, options[:selected]), 
-      :selected => options.except(:selected), 
       :class => 'amount',
       :"data-options" => options.to_json
     )
