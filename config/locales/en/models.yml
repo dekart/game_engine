@@ -42,8 +42,8 @@ en:
         
       property_type:
         income: "Income"
-        price: "Price"
-        upgrade_price: "Upgrade Price"
+        build_requirements: "Build Requirements"
+        upgrade_requirements: "Upgrade Requirements"
         upgrade_cost_increase: "Upgrade cost increase per level"
         collect_period: "Income collection period, hours"
       user:
