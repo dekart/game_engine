@@ -24,3 +24,9 @@
 <% end %>
 
 <%= will_paginate @items %>
+
+<% dom_ready do %>
+
+  Shop.setup();
+  
+<% end %>

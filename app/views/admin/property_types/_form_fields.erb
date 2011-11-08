@@ -18,6 +18,10 @@
 
 <%= form.fields 'admin/visibilities/form_fields' %>
 
+<% form.field_set Mission.human_attribute_name("requirements") do %>
+  <%= form.fields "admin/requirements/collection" %>
+<% end %>
+
 <h2><%= PropertyType.human_attribute_name("payouts") %></h2>
 
 <%= form.fields "admin/payouts/collection" %>
