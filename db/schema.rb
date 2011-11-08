@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111028064456) do
+ActiveRecord::Schema.define(:version => 20111108093817) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20111028064456) do
     t.datetime "expired_at"
     t.integer  "target_id"
     t.string   "target_type",  :limit => 50
+    t.datetime "sent_at"
   end
 
   add_index "app_requests", ["facebook_id"], :name => "index_app_requests_on_facebook_id"

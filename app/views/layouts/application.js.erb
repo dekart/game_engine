@@ -1,3 +1,5 @@
 <%= yield %>
 
 <%= @dom_ready.join("\n").html_safe %>
+
+$(document).trigger('application.ready');

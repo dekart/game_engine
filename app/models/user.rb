@@ -104,7 +104,7 @@ class User < ActiveRecord::Base
   end
   
   def anonymous_id
-    third_party_id.present? ? third_party_id : id
+    third_party_id.present? ? third_party_id : "user_#{ id }"
   end
   
   def access_token_valid?

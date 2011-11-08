@@ -87,7 +87,8 @@ Setting[:invitation_direct_link] ||= false
 Setting[:relation_show_limit]         ||= 10
 Setting[:relation_max_alliance_size]  ||= 500
 Setting[:relation_friends_only]       ||= false
-Setting[:relation_for_invitation_limit] ||= 12
+Setting[:relation_for_invitation_limit] ||= 4
+Setting[:relation_repeat_invite_delay] ||= 7 # days
 
 Setting[:mission_group_show_limit] ||= 4
 Setting[:mission_completion_dialog] ||= true
