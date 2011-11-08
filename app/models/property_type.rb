@@ -9,7 +9,7 @@ class PropertyType < ActiveRecord::Base
   
   has_requirements
 
-  has_payouts :collect
+  has_payouts :build, :upgrade, :collect
 
   has_attached_file :image,
     :styles => {
