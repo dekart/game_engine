@@ -1,7 +1,7 @@
 <h2><%= t(".header") %></h2>
 
 <div id="placements">
-  <% (Character::Equipment::MAIN_PLACEMENTS).each do |placement| %>
+  <% character.equipment.main_placements.each do |placement| %>
     <% content_tag(:div, :class => "placement #{placement}", :'data-placement' => placement) do %>
       <% character.equipment.inventories_by_placement(placement).each do |inventory| %>
         <% inventory_placement_tag(inventory, placement) do %>
