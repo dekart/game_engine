@@ -1,12 +1,14 @@
 <% result = capture do %>
   <% if @success %>
     <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
-      <p>
-        <%= t(".messages.success",
-              :attribute  => Character.human_attribute_name(attribute),
-              :number     => content_tag(:span, current_character.attributes[attribute.to_s], :class => :value)
-            ).html_safe %>
-      </p>
+      <% if params[attribute.to_s].to_i > 0 %>
+        <p>
+          <%= t(".messages.success",
+                :attribute  => Character.human_attribute_name(attribute),
+                :number     => content_tag(:span, current_character.attributes[attribute.to_s], :class => :value)
+              ).html_safe %>
+        </p>
+      <% end %>
     <% end %>
   <% else %>
     <p>

@@ -8,7 +8,7 @@ class Property < ActiveRecord::Base
 
   attr_accessor :charge_money
 
-  validate :enough_character_money?
+  validate :requirements_satisfied?
   validate_on_update :check_upgrade_possibility
 
   after_create :assign_collected_at
@@ -38,8 +38,6 @@ class Property < ActiveRecord::Base
   end
 
   def buy!
-    @validate_money = true
-
     if valid?
       transaction do
         if save! && character.charge!(basic_price, vip_price, property_type)
@@ -57,8 +55,6 @@ class Property < ActiveRecord::Base
 
   def upgrade!
     return false if new_record?
-
-    @validate_money = true
 
     if valid?
       transaction do
@@ -102,10 +98,8 @@ class Property < ActiveRecord::Base
     }
   end
   
-  def upgrade_requirements
-    @requirements ||= Requirements::Collection.new(
-      Requirements::BasicMoney.new(:value => upgrade_price)
-    )
+  def applicable_requirements
+    property_type.requirements + property_type.default_requirements
   end
 
   protected
@@ -115,22 +109,14 @@ class Property < ActiveRecord::Base
         errors.add(:character, :too_much_properties, :plural_name => plural_name)
       end
     end
+    
+    def requirements_satisfied?
+      if @requirements_satisfied.nil?
+        @requirements_satisfied = applicable_requirements.satisfies?(character)
+      end
   
-    def enough_character_money?
-      if @validate_money
-        if character.basic_money < (new_record? ? basic_price : upgrade_price)
-          errors.add(:character, new_record? ? :not_enough_basic_money : :not_enough_basic_money_for_upgrade,
-            :name         => name,
-            :basic_money  => Character.human_attribute_name("basic_money")
-          )
-        end
-  
-        if character.vip_money < vip_price
-          errors.add(:character, new_record? ? :not_enough_vip_money : :not_enough_vip_money_for_upgrade,
-            :name       => name,
-            :vip_money  => Character.human_attribute_name("vip_money")
-          )
-        end
+      unless @requirements_satisfied
+        errors.add(:character, :requirements_no_satisfied)
       end
     end
   
