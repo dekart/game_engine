@@ -109,14 +109,11 @@ namespace :deploy do
     desc "Backup database"
     task :backup, :roles => :db, :only => {:primary => true} do
       dump_path = 'dump.%s.%d.sql' % [database_config[:database], Time.now.to_i]
-
-      run %{
-        mysqldump \
-          -u #{ database_config[:username] } --password='#{ database_config[:password] }' \
-          --default-character-set=#{ database_config[:encoding] } --set-charset \
-          --ignore-table=#{ database_config[:database] }.logged_events \
-          #{ database_config[:database] } > #{ dump_path }
-      }
+      
+      common_options = "--user='#{ database_config[:username] }' --password='#{ database_config[:password] }' --default-character-set='#{ database_config[:encoding] }' --set-charset"
+      
+      run "mysqldump #{common_options} --no-data #{ database_config[:database] } >> #{ dump_path }" # Dumping structure
+      run "mysqldump #{common_options} --no-create-info --ignore-table='#{ database_config[:database] }.logged_events' #{ database_config[:database] } >> #{ dump_path }"
     end
     
     desc "Setup database"
