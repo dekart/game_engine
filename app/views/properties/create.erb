@@ -18,6 +18,8 @@
     <div class="payouts">
       <%= payout(:basic_money, number_to_currency(@property.basic_price)) if @property.basic_price > 0 %>
       <%= payout(:vip_money, number_to_currency(@property.vip_price)) if @property.vip_price > 0 %>
+      
+      <%= payout_list(@property, @result, :action => :remove) %>
     </div>
     
     <% unless @result.empty? %>
