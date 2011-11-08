@@ -26,6 +26,14 @@ class Character
       end
     end
 
+    def main_placements
+      MAIN_PLACEMENTS
+    end
+  
+    def all_placements
+      PLACEMENTS
+    end
+
     def placements
       self[:placements] ||= {}
     end
@@ -69,7 +77,7 @@ class Character
         placements[placement] << inventory.id
 
         inventory.equipped = equipped_amount(inventory)
-      elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
+      elsif main_placements.include?(placement) # Main placements can be replaced
         previous = character.inventories.find(placements[placement].last)
 
         unless previous == inventory # Do not re-equip the same inventory
