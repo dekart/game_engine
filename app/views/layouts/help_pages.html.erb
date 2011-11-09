@@ -2,8 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
   <%= render('layouts/html_header') %>
-
-  <%= google_analytics %>
 </head>
 <body>
   <% fb_connect_js(:channel_url => facebook_callback_url + '/channel.html', :weak_cache => Setting.b(:app_weak_fb_js_cache)) do %>

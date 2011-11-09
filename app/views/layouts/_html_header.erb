@@ -29,3 +29,12 @@
 <%= tag(:meta, :property => 'fb:app_id', :content => facepalm.app_id) %>
 
 <%= yield(:html_header) %>
+
+<% google_analytics do %>
+  <% if current_character %>
+    <%= ga_set_variable(1, 'Level', character_level_group(current_character), :visitor) %>
+    <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.titleize, :visitor) %>
+  <% end %>
+  
+  <%= ga_set_variable(3, 'SSL', request.ssl? ? 'Yes' : 'No', :visitor) %>
+<% end %>
