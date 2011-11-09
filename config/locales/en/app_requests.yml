@@ -31,6 +31,8 @@ en:
     update:
       gift:
         accepted: 'Gift accepted!'
+        sending: 'Sending...'
+        sent: 'Sent!'
         buttons:
           send: "Send Back"
       monster_invite:
