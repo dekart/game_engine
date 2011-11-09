@@ -21,11 +21,12 @@
         <div class="users">
           {{each(i, user) users}}
             <div class="user hidden selected {{if user.is_app_user}}app_user{{/if}}" data-uid="${user.uid}">
+              <img data-image="https://graph.facebook.com/${user.uid}/picture?type=square&return_ssl_resources=1" src="<%= asset_image_path('1px') %>" alt="" width="50" height="50"/>
+
               <input type="checkbox" checked="yes">
               <div class="icon"></div>
-              <img data-image="https://graph.facebook.com/${user.uid}/picture?type=square&return_ssl_resources=1" src="<%= asset_image_path('1px') %>" alt="${user.first_name}" width="25" height="25"/>
               
-              ${user.first_name}
+              <div class="name">${user.name}</div>
             </div>
           {{/each}}
         </div>

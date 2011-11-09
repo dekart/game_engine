@@ -138,7 +138,7 @@ var InviteDialog = (function(){
           var filter_exp = new RegExp(filter, 'igm');
         
           var ids = $.map(dialog.data('users'), function(user){
-            return user.first_name.search(filter_exp) > -1 ? user.uid : null;
+            return user.name.search(filter_exp) > -1 ? user.uid : null;
           });
         
           users = dialog.find('.user').filter(function(){
@@ -376,7 +376,7 @@ var InviteDialog = (function(){
         if (response.authResponse) {
           FB.api('/fql', 
             {
-              q : 'SELECT uid, first_name, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY first_name'
+              q : 'SELECT uid, name, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name'
             }, 
             function(response){
               Spinner.hide();

@@ -1,12 +1,20 @@
+!user_height = 53px
+
 #invite_dialog
   .search
     float: right
+    margin: 5px 5px 0 0
+    
+    input
+      border = !main_border
+      background-color = !content_bg_color
+      color = !content_text_color
     
   .friend_selector
     margin-bottom: 10px
 
   .previous, .next
-    height: 240px
+    height = !user_height * 8 + 5px
     width: 30px
     margin-top: 5px
     cursor: pointer
@@ -26,26 +34,37 @@
     margin-bottom: 10px
     overflow: hidden
     padding: 5px
-    height: 240px
+    height = !user_height * 8 + 5px
     
     .user
       width: 135px
-      height: 30px
+      height = !user_height
       float: left
-      line-height: 30px
       cursor: pointer
+      position: relative
       
-      input
+      input, .icon
         display: block
-        height: 30px
-        width: 20px
-        float: left
+        width: 16px
+        height: 16px
+        position: absolute
+        top: 35px
+        left: 35px
         margin: 0
         padding: 0
         cursor: pointer
       
       img
-        vertical-align: middle
+        position: absolute
+        top: 0
+        left: 0
+        
+      .name
+        position: absolute
+        top: 0px
+        left: 53px
+        width: 80px
+        font-size: 12px
         
       .icon
         display: none
@@ -61,9 +80,6 @@
         
         .icon
           display: block
-          float: left
-          width: 20px
-          height: 30px
           background:
             image = !asset_icons_accept
             position: left
@@ -82,7 +98,7 @@
     .control
       color = !link_color
       text-decoration: underline
-      margin-left: 10px
+      margin-left: 15px
       display: block
       float: right
       cursor: pointer
