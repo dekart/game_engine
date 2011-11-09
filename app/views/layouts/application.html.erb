@@ -8,6 +8,7 @@
   <% google_analytics do %>
     <%= ga_set_variable(1, 'Level', character_level_group(current_character), :visitor) %>
     <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.titleize, :visitor) %>
+    <%= ga_set_variable(3, 'SSL', request.ssl?, :visitor) %>
   <% end %>
 </head>
 <body>
