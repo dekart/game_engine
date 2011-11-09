@@ -102,47 +102,54 @@
   });
 <% end %>
 
-<div class="section">
-  <h2><%= t(".references") %> <%= admin_documentation_link(:references) %></h2>
+<table>
+  <tr>
+    <td>
+      <div class="section">
+        <h2><%= t(".references") %> <%= admin_documentation_link(:references) %></h2>
 
-  <table class="data">
-    <% admin_statistics_references(@all.references, @day.references) do |reference, total, day| %>
-      <tr>
-        <td><%= reference.present? ? reference : content_tag(:span, t(".no_reference"), :class => :empty) %></td>
-        <td><%= total %></td>
-        <td><%= "+%d" % day if day %></td>
-      </tr>
-    <% end %>
-  </table>
-</div>
-
-<div class="section">
-  <h2><%= t(".latest_users") %></h2>
-
-  <table class="data" id="latest_users">
-    <tr>
-      <th><%= User.human_attribute_name("created_at") %></th>
-      <th><%= User.human_attribute_name("facebook_id") %></th>
-      <th><%= Character.human_name %></th>
-      <th><%= User.human_attribute_name("reference") %></th>
-      <th><%= User.human_attribute_name("referrer") %></th>
-    </tr>
-    <% User.latest.each do |user| %>
-      <tr>
-        <td><%= l(user.created_at, :format => :short) %></td>
-        <td><%= link_to(user.facebook_id, fb_profile_url(user), :target => :_blank) %></td>
-        <td><%= user.character ? link_to(user.character.character_type.name, character_url(user.character.key, :canvas => true)) : content_tag(:span, t(".no_character"), :class => :empty) %></td>
-        <td><%= user.reference %></td>
-        <td>
-          <% if user.referrer.try(:character) %>
-            <%= link_to(character_name(user.referrer.character), character_url(user.referrer.character.key, :canvas => true)) %>
-            <%= link_to(t(".profile"), fb_profile_url(user.referrer),
-                  :class  => :profile,
-                  :target => :_blank
-                ) %>
+        <table class="data">
+          <% admin_statistics_references(@all.references, @day.references) do |reference, total, day| %>
+            <tr>
+              <td><%= reference.present? ? reference : content_tag(:span, t(".no_reference"), :class => :empty) %></td>
+              <td><%= total %></td>
+              <td><%= "+%d" % day if day %></td>
+            </tr>
           <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-</div>
+        </table>
+      </div>
+    </td>
+    <td>
+      <div class="section">
+        <h2><%= t(".latest_users") %></h2>
+
+        <table class="data" id="latest_users">
+          <tr>
+            <th><%= User.human_attribute_name("created_at") %></th>
+            <th><%= User.human_attribute_name("facebook_id") %></th>
+            <th><%= Character.human_name %></th>
+            <th><%= User.human_attribute_name("reference") %></th>
+            <th><%= User.human_attribute_name("referrer") %></th>
+          </tr>
+          <% User.latest.each do |user| %>
+            <tr>
+              <td><%= l(user.created_at, :format => :short) %></td>
+              <td><%= link_to(user.facebook_id, fb_profile_url(user), :target => :_blank) %></td>
+              <td><%= user.character ? link_to(user.character.character_type.name, character_url(user.character.key, :canvas => true)) : content_tag(:span, t(".no_character"), :class => :empty) %></td>
+              <td><%= user.reference %></td>
+              <td>
+                <% if user.referrer.try(:character) %>
+                  <%= link_to(character_name(user.referrer.character), character_url(user.referrer.character.key, :canvas => true)) %>
+                  <%= link_to(t(".profile"), fb_profile_url(user.referrer),
+                        :class  => :profile,
+                        :target => :_blank
+                      ) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </td>
+  </tr>
+</table>
