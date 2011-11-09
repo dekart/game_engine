@@ -16,7 +16,7 @@ en:
         items: "Items"
         missions: "Missions"
         monster_types: "Monsters"
-        bosses: "Bosses (Legacy)"
+        bosses: "Bosses (Deprecated)"
         property_types: "Property Types"
         global_payouts: "Global Payouts"
         statistics: "Statistics"
@@ -161,6 +161,7 @@ en:
       index:
         title: "Bosses"
         empty_set: "No bosses"
+        note: 'Bosses are deprecated now and will be completely removed in the next version of the engine. You cannot create them anymore. We strongly recommend you to replace bosses with monsters.'
         controls:
           new: "Add Boss"
           edit: "Edit"
