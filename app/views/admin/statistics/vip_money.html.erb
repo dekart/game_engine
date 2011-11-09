@@ -33,7 +33,7 @@
         
           <% admin_statistics_references(@all.deposit_reference_types, @day.deposit_reference_types) do |reference, total, period| %>
             <tr>
-              <td><%= reference.humanize %></td>
+              <td><%= link_to(reference.humanize, admin_vip_money_operations_path(:type => :deposit, :reference_type => reference)) %></td>
               <td><%= total %></td>
               <td><%= "+%d" % period if period %></td>
             </tr>
@@ -90,7 +90,7 @@
         
           <% admin_statistics_references(@all.withdrawal_reference_types, @day.withdrawal_reference_types) do |reference, total, period| %>
             <tr>
-              <td><%= reference.humanize %></td>
+              <td><%= link_to(reference.humanize, admin_vip_money_operations_path(:type => :withdrawal, :reference_type => reference)) %></td>
               <td><%= total %></td>
               <td><%= "+%d" % period if period %></td>
             </tr>
