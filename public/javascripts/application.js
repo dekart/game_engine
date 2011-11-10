@@ -191,7 +191,7 @@ var Character = {
     $('#co .energy .timer').timer(c.time_to_ep_restore, this.update_from_remote);
     $('#co .stamina .timer').timer(c.time_to_sp_restore, this.update_from_remote);
 
-    $('#co .timer').one('click', Character.update_from_remote);
+    $('#co .timer').unbind('click', Character.update_from_remote).bind('click', Character.update_from_remote);
 
     if (c.points > 0) {
       $("#co .level .upgrade").show();
