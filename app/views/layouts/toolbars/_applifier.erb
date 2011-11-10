@@ -1,7 +1,7 @@
 <!-- Applifier cross-promo code begin -->
 <div id="applifier_bar"></div>
 
-<script type="text/javascript">
+<% javascript_tag do %>
   $(function(){
     window.applifierAsyncInit = function() {
       var bar = new Applifier.Bar({
@@ -16,5 +16,5 @@
     a.src = (('https:' == document.location.protocol) ? 'https://secure' : 'http://cdn') + '.applifier.com/applifier.min.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(a, s);
   });
-</script>
+<% end %>
 <!-- Applifier cross-promo code end -->
