@@ -70,6 +70,13 @@ class Character < ActiveRecord::Base
   
   has_many :wall_posts,
     :dependent => :destroy
+    
+  named_scope :by_profile_ids, Proc.new{|ids|
+    {
+      :joins => :user,
+      :conditions => ["characters.id IN (:ids) OR users.facebook_id IN (:ids)", {:ids => ids}]
+    }
+  }
 
   serialize :active_boosts
 

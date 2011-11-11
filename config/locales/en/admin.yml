@@ -397,8 +397,7 @@ en:
         title: "Characters"
         search:
           title: "Search Characters"
-          facebook_ids: "Facebook IDs"
-          profile_ids: "Profile IDs"
+          profile_ids: "Facebook/Profile IDs"
           submit: "Search"
         profile: "FB Profile"
         controls:
