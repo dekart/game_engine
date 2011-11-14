@@ -1,0 +1,72 @@
+LICENSE
+
+IT Vektor Ltd. referred to as "IT Vektor" throughout this agreement grants you a non-exclusive license to use the Railorz Game Engine on one installation to be accessible by one URL (web address) subject to the provisions in all sections of this Agreement.
+
+TERM
+
+Railorz Game Engine software offered under yearly and lifetime licensing. Both license terms feature technical support and service plus access to upgrades to the software as they are available. In the event a one year license expires without being renewed, the software will remain completely functional but will be unsupported and no access to upgrades will be made available.
+
+SCOPE OF GRANT
+
+You may:
+
+* Customize the Software's design and operation to suit the internal needs of your web site except to the extent not permitted in this Agreement.
+
+* Create applications which interface with the operation of the Software provided said application is an original work.
+
+You may not:
+
+* Permit other individuals to use the Software except under the terms listed above.
+
+* Reverse engineer, disassemble, or create derivative works based on the Software for distribution or usage outside your web site.
+
+* Use the Software in such as way as to condone or encourage terrorism, promote or provide pirated software, or any other form of illegal or damaging activity.
+
+* Modify and/or remove any copyright notices or labels on the Software on each page (unless copyright output removal is approved) and in the header of each script source file.
+
+* Distribute the Software.
+
+* Distribute individual copies of files, libraries, or other programming material in the Software package.
+
+* Distribute or modify proprietary graphics, HTML, or CSS packaged with the software for use in software applications other than Railorz Game Engine or web sites without written permission from IT Vektor.
+
+* Modify the software to function in more than instance or location (URL, domain, subdomain, etc.) from a single set of source program files unless each location is separately licensed.
+
+* Remove the 'Powered by Railorz Game Engine' link from the footer of the admin control panel's files under any circumstances.
+
+DISCLAIMER OF WARRANTY
+
+The Software is provided on an "AS IS" basis, without warranty of any kind, including without limitation the warranties of merchantability, fitness for a particular purpose, and non-infringement. The entire risk as to the quality and performance of the Software is borne by you. Should the Software prove defective, you and not IT Vektor assume the entire cost of any service and repair. In addition, the security mechanisms implemented by Railorz Game Engine have inherent limitations, and you must determine that the Software sufficiently meets your requirements. This disclaimer of warranty constitutes an essential part of the Agreement.
+
+TITLE
+
+Title, ownership rights, and intellectual property rights in the Software shall remain with IT Vektor. The Software is protected by copyright laws and treaties. Title and related rights in the content generated through the Software is the property of the applicable content owner and may be protected by applicable law. This License gives IT Vektor no rights to such content.
+
+TERMINATION
+
+This Agreement will terminate automatically upon failure to comply with the limitations described herein or on written notice from an authorized representative of IT Vektor. On termination, you must destroy all copies of the Software within 48 hours. Termination of the license due to noncompliance will not result in any refunds of license fees.
+
+MISCELLANEOUS
+
+IT Vektor reserves the right to publish a selected list of users of the Software. IT Vektor reserves the right to change the terms of this Agreement at any time. Changes to the Agreement will be announced via email using the IT Vektor email notification list. Failure to receive notification of a change does not make those changes invalid. A current copy of this Agreement will be available on the www.railorz.com web site.
+
+Technical support will not be provided for third-party modifications to the Software including modifications to code to any license holder. If the Software is modified using a third-party modification instruction or otherwise, technical support may be refused to any license holder.
+
+30 Days Money Back Guarantee option is applicable only if the Railorz Game Engine fails to run on your web server due to some technical reason. This option is not applicable if the customer decides not to use the software later on. Refund orders are processed at the sole discretion of our company. IT Vektor shall, in its sole discretion, determine whether all requirements for the refund request have been satisfied and may terminate or modify the 30 days money back guarantee program on a prospective basis at any time. The act of submitting a refund request does not ensure that a refund will be issued.
+
+HOSTED LICENSE
+
+I If you buy a hosted license of the Railorz Game Engine then you agree with the following terms and conditions.
+
+1. Hosted License does not come with access to source code of script files.
+
+2. You may request for a logo change on your hosted license.
+
+3. Hosted License will be setup on our server and the URL to access your hosted website would be something like http://title.railorz.com/ where “title” can be of your choice provided that it has not be taken by someone else, or it can alternatively be pointed to an independent domain name of your choosing with additional fee's.
+
+4. You have access to take SQL backup of your website data in your hosted license. So, it is your duty to take regular backups of your knowledgebase data. We do not provide any type of responsibility or guarantee of data loss in the case of hard drive crash.
+
+PROPRIETARY LABELS
+
+Authorization to remove or modify output of copyright notices can be obtained from IT Vektor for a fee. This fee authorizes you to remove the output of copyright notices: it does not give you authorization to remove any copyright notices in the program source files or any other rights.
+

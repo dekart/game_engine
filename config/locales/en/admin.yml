@@ -43,8 +43,8 @@ en:
           alt: "Please wait..."
           text: "Please wait for a few seconds..."
         footer:
-          text: "This game is powered by %{engine} version %{version}"
-          engine: "Railorz RPG Engine"
+          text: "Powered by %{engine} version %{version}"
+          engine: "Railorz Game Engine"
           
     item_groups:
       index:
