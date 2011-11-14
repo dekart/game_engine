@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108093817) do
+ActiveRecord::Schema.define(:version => 20111114074049) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -225,7 +225,7 @@ ActiveRecord::Schema.define(:version => 20111108093817) do
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
-    t.integer  "total_score",                                    :default => 0,                     :null => false
+    t.integer  "total_score",              :limit => 8,          :default => 0,                     :null => false
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
@@ -461,8 +461,8 @@ ActiveRecord::Schema.define(:version => 20111108093817) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
-    t.integer  "original_vip_price"
     t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
+    t.integer  "original_vip_price"
     t.integer  "hp_restore_rate",                        :default => 0
     t.integer  "sp_restore_rate",                        :default => 0
     t.integer  "ep_restore_rate",                        :default => 0
@@ -488,9 +488,9 @@ ActiveRecord::Schema.define(:version => 20111108093817) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
+    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
-    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -860,7 +860,7 @@ ActiveRecord::Schema.define(:version => 20111108093817) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",                         :default => ""
+    t.string   "tutorial_step",          :limit => 50,  :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end
