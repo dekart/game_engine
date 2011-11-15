@@ -31,11 +31,11 @@
 
 <% dom_ready do %>
   <% if @result.applied? %>
+    $('#<%= dom_id(@collection) %>').replaceWith('<%= escape_javascript(render('item_collection', :collection => @collection)) %>');
+ 
     CollectionList.blurItems(
       $('<%= @collection.missing_items(current_character).collect{|i| ".#{dom_id(i)}" }.join(",") %>')
     );
-
-    $('#<%= dom_id(@collection) %>').replaceWith('<%= escape_javascript(render('item_collection', :collection => @collection)) %>');
   <% end %>
 
   $(document).trigger('result.received');

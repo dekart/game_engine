@@ -14,6 +14,7 @@ en:
       buttons:
         buy: "Buy"
     create:
+      amount: " x %{amount}"
       buttons:
         publish: "Brag About It!"
         inventory: "Go To Inventory"
