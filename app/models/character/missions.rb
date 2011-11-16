@@ -69,6 +69,14 @@ class Character
     end
 
     module MissionAssociationExtension
+      def by_group(group)
+        group.missions.with_state(:visible).visible_for(proxy_owner)
+      end
+      
+      def by_current_group
+        by_group(proxy_owner.mission_groups.current)
+      end
+      
       def fulfill!(mission)
         MissionResult.create(proxy_owner, mission)
       end

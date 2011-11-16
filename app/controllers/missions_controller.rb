@@ -1,6 +1,6 @@
 class MissionsController < ApplicationController
   def fulfill
-    @mission ||= Mission.available_for(current_character).find(params[:id])
+    @mission ||= current_character.missions.by_current_group.find(params[:id])
 
     @result = current_character.missions.fulfill!(@mission)
         
