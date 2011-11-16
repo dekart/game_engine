@@ -1,0 +1,4 @@
+en:
+  events:
+    unlock_mission:
+      name: "Unlock Mission"

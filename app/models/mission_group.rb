@@ -1,6 +1,7 @@
 class MissionGroup < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasEvents
 
   has_many :missions,
     :order      => "missions.position",
@@ -41,6 +42,8 @@ class MissionGroup < ActiveRecord::Base
   has_payouts(Mission.payout_events + [:mission_group_complete],
     :apply_on => :mission_group_complete
   )
+  has_events :mission_group_complete,
+    :bind_to => :mission_group_complete
 
   validates_presence_of :name
 

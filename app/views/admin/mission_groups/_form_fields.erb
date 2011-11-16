@@ -10,3 +10,7 @@
 <% form.field_set MissionGroup.human_attribute_name("payouts") do %>
   <%= form.fields "admin/payouts/collection" %>
 <% end %>
+
+<% form.field_set MissionGroup.human_attribute_name("events") do %>
+  <%= form.fields "admin/events/collection" %>
+<% end %>

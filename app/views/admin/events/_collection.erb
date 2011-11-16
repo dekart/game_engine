@@ -1,0 +1,23 @@
+<div class="serializable events">
+  <div id="event_list" class="list">
+    <% form.object.events.each do |event| %>
+      <%= render("admin/events/event", :event => event, :container => form.object.class) %>
+    <% end %>
+  </div>
+
+  <div class="controls">
+    <b><%= t(".add_event") %></b><br>
+
+    <% Event::Base.types.map{|type| [t("events.#{type.event_name}.name"), type] }.sort.each do |name, type| %>
+      <%= link_to_remote(name,
+            :url    => new_admin_event_path(:type => type.event_name, :container => form.object_name),
+            :method => :get,
+            :update => :result
+          ) %>
+    <% end %>
+  </div>
+</div>
+
+<% dom_ready do %>
+  SerializableList.init('#event_list', '<%= form.object_name %>[events]');
+<% end %>

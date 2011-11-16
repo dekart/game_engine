@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111118062703) do
+ActiveRecord::Schema.define(:version => 20111116073221) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -456,8 +456,11 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
-    t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
     t.integer  "original_vip_price"
+    t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
+    t.integer  "hp_restore_rate",                        :default => 0
+    t.integer  "sp_restore_rate",                        :default => 0
+    t.integer  "ep_restore_rate",                        :default => 0
     t.boolean  "exchangeable",                           :default => false
     t.text     "effects"
   end
@@ -481,9 +484,9 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
-    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
+    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -533,6 +536,7 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
     t.boolean  "hide_unsatisfied"
     t.integer  "position"
     t.datetime "image_updated_at"
+    t.text     "events"
   end
 
   create_table "mission_help_results", :force => true do |t|
@@ -575,6 +579,7 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "requirements"
+    t.text     "events"
   end
 
   add_index "mission_levels", ["mission_id"], :name => "index_mission_levels_on_mission_id"
@@ -610,6 +615,7 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
     t.integer  "levels_count",                      :default => 0
     t.integer  "position"
     t.datetime "image_updated_at"
+    t.text     "events"
   end
 
   add_index "missions", ["mission_group_id"], :name => "index_missions_on_mission_group_id"
@@ -652,6 +658,7 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
     t.boolean  "available_for_friends_invite",                :default => true
     t.integer  "maximum_reward_collectors"
     t.boolean  "power_attack_enabled",                        :default => true
+    t.text     "events"
   end
 
   create_table "monsters", :force => true do |t|
@@ -853,7 +860,7 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",          :limit => 50,  :default => ""
+    t.string   "tutorial_step",                         :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end

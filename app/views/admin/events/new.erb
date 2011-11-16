@@ -1,0 +1,9 @@
+<% dom_ready do %>
+  $('#event_list').append('<%=
+    escape_javascript(
+      render("admin/events/event", :event => @event, :container => @container)
+    )
+  %>');
+
+  SerializableList.updateBorderClasses('#event_list');
+<% end %>

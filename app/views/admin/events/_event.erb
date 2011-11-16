@@ -1,0 +1,30 @@
+<div class="event serializable_item <%= event.name %>" id="event_<%= event.object_id %>">
+  <div class="controls">
+    <%= link_to_function(t(".move_up"), "SerializableList.moveUp('#event_#{event.id}')", :class => :move_up) %>
+    <%= link_to_function(t(".move_down"), "SerializableList.moveDown('#event_#{event.id}')", :class => :move_down) %>
+    <%= link_to_function(t(".remove"), "SerializableList.remove('#event_#{event.id}')", :class => :remove) %>
+  </div>
+
+  <h4><%= t("events.#{event.name}.name") %></h4>
+
+  <% fields_for "#{container.to_s.underscore}[events][event_#{event.object_id}]", event do |form| %>
+    <%= form.hidden_field :type, :value => event.name %>
+
+    <table>
+      <tr>
+        <td>
+          <%= render("admin/events/form_fields/#{event.name}",
+                :form       => form,
+                :container  => container
+              ) %>
+        </td>
+        <td width="30%">
+          <%= form.check_box_list :bind_to, container.event_triggers_for_select %>
+        </td>
+        <td width="30%">
+          <%= form.text_field :chance, :size => 6, :autocomplete => :off %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>

@@ -54,6 +54,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :payouts,       :only => [:new]
     admin.resources :requirements,  :only => [:new]
     admin.resources :effects,       :only => [:new]
+    admin.resources :events ,       :only => [:new]
 
     admin.resources :promotions
     admin.resources :statistics, 
