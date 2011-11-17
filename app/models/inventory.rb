@@ -14,6 +14,10 @@ class Inventory < ActiveRecord::Base
   named_scope :equippable,
     :include => :item,
     :conditions => "items.equippable = 1 AND (inventories.equipped < inventories.amount)"
+    
+  named_scope :usable,
+    :include => :item,
+    :conditions => "items.payouts != '' AND amount > 0"  
   
   named_scope :exchangeable,
     :include => :item,

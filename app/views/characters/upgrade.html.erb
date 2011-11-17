@@ -8,8 +8,8 @@
       <tr class="points">
         <td class="name"><%= Character.human_attribute_name("points") %></td>
         <td class="value" id="upgrade_points"><%= current_character.points %></td>
-        <td class="buy_more" colspan="2">
-          <%= link_to(t(".buy_more"), premium_path(:anchor => :services)) %>
+        <td class="sliders" colspan="2">
+          <%= t(".sliders") %>
         </td>
       </tr>
       <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
@@ -46,7 +46,6 @@
 
   <div id="upgrade_finished" style="display:none;" class="note">
     <%= t(".finished.note") %>
-    <%= link_to(t(".finished.get_more"), premium_path(:anchor => :services)) %>
   </div>
 
   <% d.on_ready do %>
