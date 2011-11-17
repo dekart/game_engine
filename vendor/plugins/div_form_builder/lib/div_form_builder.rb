@@ -83,8 +83,10 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
     field(:submit, @template.submit_tag(text, options.except(*CUSTOM_OPTIONS)), options.merge(:label => false))
   end
 
-  def fields(partial = nil)
-    @template.render :partial => partial || "form_fields", :locals => {:form => self}
+  def fields(*args)
+    locals = args.extract_options!
+    
+    @template.render(args.first || "form_fields", locals.merge(:form => self))
   end
 
   def field_set(legend = nil, options = {}, &block)

@@ -1,1 +1,13 @@
-<%= form.text_field :tag_list, :size => 100 %>
+<% special_tag_controls = capture do %>
+  <% if local_variables.include?("special") %>
+    <div class="special_tags">
+      <strong><%= t('.special_tags') %></strong>
+    
+      <% special.each do |tag| %>
+        <span class="tag"><%= tag %></span>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= form.text_field :tag_list, :size => 100, :field_type => :tag_list, :after_field => special_tag_controls %>

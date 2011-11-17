@@ -8,7 +8,7 @@ en:
       item: "Item"
       notification/level_up: "Level Up"
       achievement_type: 'Achievement'
-    attributes:     
+    attributes:
       character:
         level: "Level"
         attack: "Attack"

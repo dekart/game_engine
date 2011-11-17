@@ -70,7 +70,19 @@ $(function(){
     $('<input type="hidden" name="' + $this.attr('data-field') + '" value="1" />').insertBefore($this);
 
     $(this).hide().parent().css({opacity: 0.4});
-  })
+  });
+  
+  // Working with special tags
+  $('form .tag_list .special_tags .tag').live('click', function(){
+    var tag = $(this);
+    var input = tag.parents('.field.tag_list').find('input');
+    
+    if(input.val().match(/^\s*$/)){
+      input.val(tag.text());
+    } else {
+      input.val(input.val() + ', ' + tag.text());
+    }
+  });
 
   $('#flash').click(function(){$(this).remove()}).delay(3000).fadeOut(3000);
 

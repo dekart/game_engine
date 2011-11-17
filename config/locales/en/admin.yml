@@ -5,6 +5,10 @@ en:
     change_position:
       move_higher: "Move Up"
       move_lower: "Move Down"
+    common:
+      forms:
+        tag_field:
+          special_tags: "Special Tags:"
     documentation: "What's this?"
     layouts:
       main_menu:

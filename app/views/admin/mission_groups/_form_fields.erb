@@ -2,7 +2,7 @@
 
 <%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>
 
-<%= form.fields 'admin/common/forms/tag_field' %>
+<%= form.fields 'admin/common/forms/tag_field', :special => ["Locked"] %>
 
 <% form.field_set MissionGroup.human_attribute_name("requirements") do %>
   <%= form.fields "admin/requirements/collection" %>
