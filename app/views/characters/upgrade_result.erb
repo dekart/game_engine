@@ -29,7 +29,6 @@
   
   <% if current_character.points == 0 %>
     $(document).trigger('character.upgrade_complete');
-    $(".upgrade").hide();
   <% else %>
     $('#upgrade_points').text('<%= current_character.points %>');
   <% end %>

@@ -8,7 +8,7 @@ en:
       invitation_sent: "Invitation was sent"
       buttons:
         invite: "Invite"
-        invite_all: "Invite More Friends"
+        invite_all: "Choose Friends to Invite"
       copy_paste:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to the 'What's on your mind?' form and publish it. Or just send this message to your friends:"

@@ -1,4 +1,4 @@
-<%= render('layouts/promo_block', :context => :home) %>
+<%= render('layouts/promo_block', :context => :home) if current_character.show_item_specials? %>
 
 <table id="dashboard" cellspacing="0" cellpadding="0">
   <tr>

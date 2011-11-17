@@ -43,7 +43,10 @@
 
     <div class="buttons">
       <%= link_to_function(button(:publish),
-            stream_dialog(:mission_completed, mission, :before => '$.dialog.close();'),
+            stream_dialog(:mission_completed, mission,
+              :before => '$.dialog.close();',
+              :success => '$("#mission_result .buttons .publish").fadeOut("fast")'
+            ),
             :class => "continue button"
           ) if Setting.b(:stream_dialog_enabled) %>
     </div>

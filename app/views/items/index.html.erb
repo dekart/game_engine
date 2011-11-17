@@ -2,7 +2,7 @@
 
 <%= render("inventories/buttons", :current => :shop) %>
 
-<%= render('layouts/promo_block', :context => :shop) %>
+<%= render('layouts/promo_block', :context => :shop) if current_character.show_item_specials? %>
 
 <%= render('items/tabs', :groups => @item_groups, :current => @current_group) %>
 
