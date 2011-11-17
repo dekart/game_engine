@@ -18,7 +18,7 @@ en:
     buttons:
       buttons:
         missions: "Missions"
-        monsters: "Monsters"
+        monsters: "Monsters"    
     fulfill:
       completed:
         message: "You've just completed this mission!"
@@ -63,6 +63,7 @@ en:
       buttons:
         start: "Start Mission"
         fulfill: "Continue Mission"
+        button_label: "%{label}"
     help:
       success: "You've successfully helped %{user} to complete the %{mission} mission!"
       you_received: "You received:"

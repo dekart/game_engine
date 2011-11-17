@@ -18,6 +18,7 @@ en:
       buttons:
         publish: "Brag About It!"
         inventory: "Go To Inventory"
+        equipment: "Equip"
       messages:
         success: "You successfully bought %{amount} of %{item_name}"
       you_received:

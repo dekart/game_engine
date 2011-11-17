@@ -250,6 +250,10 @@ class Character < ActiveRecord::Base
       ]
     )
   end
+  
+  def show_item_specials?
+    level >= Setting.i(:item_show_special)
+  end
 
   def can_hitlist?(victim)
     friendly_attack = Setting.b(:fight_alliance_attack) ? false : friend_relations.established?(victim)
