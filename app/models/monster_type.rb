@@ -4,6 +4,8 @@ class MonsterType < ActiveRecord::Base
   include HasVisibility
 
   has_many :monsters
+  
+  acts_as_taggable
 
   state_machine :initial => :hidden do
     state :hidden

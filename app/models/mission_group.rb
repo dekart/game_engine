@@ -10,6 +10,7 @@ class MissionGroup < ActiveRecord::Base
   has_many :ranks, :class_name => "MissionGroupRank", :dependent => :delete_all
 
   acts_as_list
+  acts_as_taggable
 
   default_scope :order => "mission_groups.position"
 

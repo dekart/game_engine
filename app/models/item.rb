@@ -72,6 +72,8 @@ class Item < ActiveRecord::Base
   named_scope :vip, {:conditions => "items.vip_price > 0"}
   named_scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
   
+  acts_as_taggable
+  
   state_machine :initial => :hidden do
     state :hidden
     state :visible

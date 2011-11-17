@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111116073221) do
+ActiveRecord::Schema.define(:version => 20111117140831) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -403,13 +403,14 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
   add_index "item_collection_ranks", ["character_id", "collection_id"], :name => "index_collection_ranks_on_character_id_and_collection_id"
 
   create_table "item_collections", :force => true do |t|
-    t.string   "name",       :limit => 100, :default => "", :null => false
-    t.string   "item_ids",                  :default => "", :null => false
+    t.string   "name",            :limit => 100, :default => "", :null => false
+    t.string   "item_ids",                       :default => "", :null => false
     t.text     "payouts"
-    t.string   "state",      :limit => 50,  :default => "", :null => false
+    t.string   "state",           :limit => 50,  :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "level",                     :default => 1
+    t.integer  "level",                          :default => 1
+    t.string   "cached_tag_list"
   end
 
   create_table "item_groups", :force => true do |t|
@@ -419,6 +420,7 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
     t.datetime "updated_at"
     t.boolean  "display_in_shop",                :default => true
     t.string   "state",           :limit => 50,  :default => "",   :null => false
+    t.string   "cached_tag_list"
   end
 
   create_table "item_sets", :force => true do |t|
@@ -463,6 +465,7 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
     t.integer  "ep_restore_rate",                        :default => 0
     t.boolean  "exchangeable",                           :default => false
     t.text     "effects"
+    t.string   "cached_tag_list"
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
@@ -537,6 +540,7 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
     t.integer  "position"
     t.datetime "image_updated_at"
     t.text     "events"
+    t.string   "cached_tag_list"
   end
 
   create_table "mission_help_results", :force => true do |t|
@@ -616,6 +620,7 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
     t.integer  "position"
     t.datetime "image_updated_at"
     t.text     "events"
+    t.string   "cached_tag_list"
   end
 
   add_index "missions", ["mission_group_id"], :name => "index_missions_on_mission_group_id"
@@ -659,6 +664,7 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
     t.integer  "maximum_reward_collectors"
     t.boolean  "power_attack_enabled",                        :default => true
     t.text     "events"
+    t.string   "cached_tag_list"
   end
 
   create_table "monsters", :force => true do |t|
@@ -761,6 +767,7 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
     t.text     "payouts"
     t.datetime "image_updated_at"
     t.integer  "income_by_level",                      :default => 0
+    t.string   "cached_tag_list"
   end
 
   create_table "relations", :force => true do |t|
@@ -816,11 +823,26 @@ ActiveRecord::Schema.define(:version => 20111116073221) do
 
   add_index "story_visits", ["character_id", "publisher_id", "reference_id"], :name => "index_on_character_publisher_reference"
 
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type"
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
+  end
+
   create_table "tips", :force => true do |t|
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state",      :limit => 50
+    t.string   "state",           :limit => 50
+    t.string   "cached_tag_list"
   end
 
   create_table "titles", :force => true do |t|

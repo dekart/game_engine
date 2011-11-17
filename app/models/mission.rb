@@ -11,6 +11,7 @@ class Mission < ActiveRecord::Base
   has_many    :child_missions, :class_name => "Mission", :foreign_key => "parent_mission_id", :dependent => :destroy
 
   acts_as_list :scope => 'mission_group_id = #{mission_group_id} AND missions.state != \'deleted\''
+  acts_as_taggable
 
   state_machine :initial => :hidden do
     state :hidden

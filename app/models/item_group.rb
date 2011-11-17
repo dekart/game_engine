@@ -2,6 +2,7 @@ class ItemGroup < ActiveRecord::Base
   has_many :items, :dependent => :destroy
 
   acts_as_list
+  acts_as_taggable
 
   named_scope :visible_in_shop,
     :conditions => {

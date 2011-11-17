@@ -1,5 +1,7 @@
 class ItemCollection < ActiveRecord::Base
   extend HasPayouts
+  
+  acts_as_taggable
 
   has_payouts :collected, :repeat_collected,
     :apply_on => [:collected, :repeat_collected],

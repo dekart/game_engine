@@ -5,6 +5,8 @@
 
 <%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
 
+<%= form.fields 'admin/common/forms/tag_field' %>
+
 <%= form.select :availability, PropertyType::AVAILABILITIES, :required => true %>
 
 <%= form.text_field :level, :required => true, :size => 6, :autocomplete => :off %>

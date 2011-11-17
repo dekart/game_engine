@@ -7,6 +7,8 @@ class PropertyType < ActiveRecord::Base
 
   has_many :properties, :dependent => :destroy
   
+  acts_as_taggable
+  
   has_requirements
 
   has_payouts :build, :upgrade, :collect

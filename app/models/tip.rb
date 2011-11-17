@@ -1,5 +1,5 @@
 class Tip < ActiveRecord::Base
-  validates_presence_of :text
+  acts_as_taggable
   
   state_machine :initial => :hidden do
     state :hidden
@@ -19,6 +19,8 @@ class Tip < ActiveRecord::Base
     end
   end
 
+  validates_presence_of :text
+  
   def self.random
     first(:offset => rand(Tip.count))
   end
