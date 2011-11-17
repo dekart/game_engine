@@ -44,7 +44,7 @@ module Event
       self.class.event_name
     end
 
-    def trigger!(character, reference = nil)
+    def trigger!(character)
       raise "Not implemented"
     end
 

@@ -2,7 +2,7 @@ module Event
   class Collection
     attr_reader :items
 
-    delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :detect, :include?, :to => :items
+    delegate :<<, :push, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :detect, :include?, :to => :items
 
     def self.parse(collection)
       return if collection.blank?
@@ -24,7 +24,7 @@ module Event
     def trigger!(character, trigger)
       by_trigger(trigger).tap do |events|
         events.each do |event| 
-          event.trigger!(character, reference)
+          event.trigger!(character)
         end
       end
     end
@@ -33,7 +33,7 @@ module Event
       Event::Collection.new.tap do |result|
         items.each do |event|
           if event.bound_to?(*trigger)
-            result << payout
+            result << event
           end
         end
       end

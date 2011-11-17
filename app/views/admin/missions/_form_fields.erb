@@ -23,3 +23,6 @@
   <%= form.fields "admin/payouts/collection" %>
 <% end %>
 
+<% form.field_set Mission.human_attribute_name("events") do %>
+  <%= form.fields "admin/events/collection" %>
+<% end %>

@@ -39,11 +39,14 @@ class MissionGroup < ActiveRecord::Base
     :removable => true
 
   has_requirements
+  
   has_payouts(Mission.payout_events + [:mission_group_complete],
     :apply_on => :mission_group_complete
   )
-  has_events :mission_group_complete,
+  
+  has_events(Mission.event_triggers + [:mission_group_complete],
     :bind_to => :mission_group_complete
+  )
 
   validates_presence_of :name
 
@@ -62,5 +65,9 @@ class MissionGroup < ActiveRecord::Base
     else
       payouts
     end
+  end
+  
+  def applicable_events
+    events
   end
 end

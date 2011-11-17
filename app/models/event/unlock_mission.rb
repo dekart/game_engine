@@ -1,16 +1,18 @@
 module Event
   class UnlockMission < Base
-    delegate :state, :to => :item
+    attr_accessor :mission_id
     
-    def mission=(value)
-      @mission = value.is_a?(::Mission) ? value.id : value.to_i
+    delegate :state, :to => :mission
+    
+    def mission_id=(value)
+      @mission_id = value.to_i
     end
 
     def mission
-      @mission ||= ::Mission.find_by_id(value)
+      @mission ||= ::Mission.find_by_id(mission_id)
     end
 
-    def trigger!(character, reference = nil)
+    def trigger!(character)
       Rails.logger.debug "Mission #{mission.name} unlocked"
     end
     

@@ -31,7 +31,7 @@ class MissionResult
 
         @character.ep -= @energy
 
-        payout_triggers = []
+        triggers = []
 
         if success?
           @experience = level.experience
@@ -60,20 +60,22 @@ class MissionResult
               :level_rank_id  => level_rank.id
             )
 
-            payout_triggers << :level_complete
-            payout_triggers << :mission_complete if @mission_rank.completed?
+            triggers << :level_complete
+            triggers << :mission_complete if @mission_rank.completed?
             
             if @character.missions.first_levels_completed?(@mission.mission_group)
-              payout_triggers << :mission_group_complete
+              triggers << :mission_group_complete
             end
           else
-            payout_triggers << (level_rank.completed? ? :repeat_success : :success)
+            triggers << (level_rank.completed? ? :repeat_success : :success)
           end
         else
-          payout_triggers << (level_rank.completed? ? :repeat_failure : :failure)
+          triggers << (level_rank.completed? ? :repeat_failure : :failure)
         end
 
-        @payouts = level.applicable_payouts.apply(@character, payout_triggers, @mission)
+        @payouts = level.applicable_payouts.apply(@character, triggers, @mission)
+        
+        level.applicable_events.trigger!(@character, triggers)
 
         @character.save!
       end

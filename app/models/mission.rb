@@ -1,6 +1,7 @@
 class Mission < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasEvents
   include HasVisibility
 
   has_many    :levels, :class_name => "MissionLevel", :dependent => :destroy
@@ -42,6 +43,10 @@ class Mission < ActiveRecord::Base
   has_payouts(MissionLevel.payout_events + [:mission_complete],
     :apply_on => :mission_complete
   )
+  
+  has_events(MissionLevel.event_triggers + [:mission_complete],
+    :bind_to => :mission_complete
+  )
 
   validates_presence_of :mission_group, :name
   
@@ -67,6 +72,10 @@ class Mission < ActiveRecord::Base
   
   def applicable_requirements
     requirements + mission_group.requirements
+  end
+  
+  def applicable_events
+    events + mission_group.applicable_events
   end
   
   protected
