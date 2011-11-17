@@ -8,7 +8,6 @@ class Property < ActiveRecord::Base
 
   attr_accessor :charge_money
 
-  validate :requirements_satisfied?
   validate_on_update :check_upgrade_possibility
 
   after_create :assign_collected_at
@@ -38,7 +37,7 @@ class Property < ActiveRecord::Base
   end
 
   def buy!
-    if valid?
+    if valid? && purchase_requirements_satisfied?
       transaction do
         result = payouts.apply(character, :build, property_type)
         
@@ -58,7 +57,7 @@ class Property < ActiveRecord::Base
   def upgrade!
     return false if new_record?
 
-    if valid?
+    if valid? && upgrade_requirements_satisfied?
       transaction do
         increment(:level)
 
@@ -104,16 +103,47 @@ class Property < ActiveRecord::Base
     }
   end
   
-  def applicable_requirements
+  def upgrade_requirements
+    @requirements ||= Requirements::Collection.new(
+      Requirements::BasicMoney.new(:value => upgrade_price),
+      Requirements::VipMoney.new(:value => vip_price)
+    )
+  end
+  
+  def purchase_requirements
     property_type.requirements + property_type.default_requirements
   end
-
+ 
   protected
 
     def check_upgrade_possibility
       unless upgradeable?
         errors.add(:character, :too_much_properties, :plural_name => plural_name)
       end
+    end
+    
+    def upgrade_requirements_satisfied?
+      if @requirements_satisfied.nil?
+        @requirements_satisfied = upgrade_requirements.satisfies?(character)
+      end
+     
+      unless @requirements_satisfied
+        errors.add(:character, :requirements_no_satisfied)
+      end
+      
+      @requirements_satisfied
+    end
+    
+    def purchase_requirements_satisfied?
+      if @requirements_satisfied.nil?
+        @requirements_satisfied = purchase_requirements.satisfies?(character)
+      end
+  
+      unless @requirements_satisfied
+        errors.add(:character, :requirements_no_satisfied)
+      end
+      
+      @requirements_satisfied
     end
     
     def requirements_satisfied?

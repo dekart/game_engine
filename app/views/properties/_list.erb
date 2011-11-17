@@ -76,7 +76,7 @@
 
             <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
             
-            <%= requirement_list(type.requirements) %>
+            <%= requirement_list(type.requirements) unless property %>
           </div>
         <% end %>
 

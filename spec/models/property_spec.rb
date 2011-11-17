@@ -138,7 +138,7 @@ describe Property do
       yield
 
       @property.errors.on(:character).should include(
-        I18n.t("activerecord.errors.models.property.attributes.character.not_enough_#{currency}" + (suffix ? "_#{suffix}" : ""),
+        I18n.t("activerecord.errors.models.property.attributes.character.requirements_no_satisfied",
           :name     => "Property Type",
           currency  => Character.human_attribute_name(currency)
         )
