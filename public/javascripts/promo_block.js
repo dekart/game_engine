@@ -35,8 +35,8 @@
         
         $(document).bind('promo_block.resize', function(){
           block.element.height(max_height);
-          $(".next").height(max_height);
-          $(".previous").height(max_height);
+          block.element.find(".previous").height(max_height);
+          block.element.find(".next").height(max_height);
         });
         
         $(document).trigger('promo_block.resize');
@@ -51,11 +51,11 @@
           }
         });
 
-        $('.previous').click(function(){
+        block.element.find(".previous").click(function(){
           block.rotateBack();
         });
 
-        $('.next').click(function(){
+        block.element.find(".next").click(function(){
           block.rotate();
         });
 
