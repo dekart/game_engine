@@ -9,7 +9,9 @@
     
     <div id="inventories_list" class="clearfix">
       <div class="item">
-        <div class="buttons">
+        <div class="name"><%= t(".restorable.title") %></div>
+        <div class="image"><%= asset_image_tag("refill_health") %></div>
+        <div class="controls">
            <%= link_to_remote(button(:refill), 
                  :url    => refill_dialog_premium_path(
                    :type => :refill_health, 
@@ -19,35 +21,12 @@
                  :html   => {:class => "premium button"}
                ) %>
         </div>
-     </div>
-    <% current_character.inventories.usable.each do |inventory| %>
-        <% if inventory.payouts.payout_include?(:health_point) %>
-             <div class="item">
-               <div class="name"><%= inventory.name %></div>
-               <div class="image"><%= inventory_item_image(inventory, :small) %></div>
-               <div class="controls">
-               <center>  
-               <%= link_to_remote(inventory_use_button(inventory),
-                     :url    => use_inventory_path(inventory),
-                     :update => :result,
-                     :html   => {
-                       :"data-click-once" => true,
-                       :class => "use button"
-                     }
-                   ) %>   
-               </center>
-               </div>
-             </div>
-        <% end %>
-    <% end %>
+      </div>
+      
+      <%= render("requirements/not_satisfied/inventories_list", :payout_name => :health_point) %>
     </div>
-    <p>
-      <%= t(".restorable.get_more",
-            :premium_page => link_to(t("layouts.main_menu.items"), premium_path(:anchor => :services))
-          ).html_safe %>
-    </p>
+  
   <% else %>
-  2222
     <p>
       <%= t(".low_base_level.message",
             :premium_page => link_to(t("layouts.main_menu.items"), premium_path(:anchor => :services))
