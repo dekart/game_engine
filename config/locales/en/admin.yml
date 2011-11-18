@@ -239,7 +239,8 @@ en:
         add_effect: "Add Effect:"
       effect:
         remove: "Remove"
-        
+        move_up: "Move Up"
+        move_down: "Move Down"
     property_types:
       index:
         title: "Property Types"

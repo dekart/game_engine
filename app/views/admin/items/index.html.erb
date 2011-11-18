@@ -62,7 +62,7 @@
           <th><%= Item.human_attribute_name("level") %></th>
           <th><%= Item.human_attribute_name("basic_price") %></th>
           <th><%= Item.human_attribute_name("vip_price") %></th>
-          <th><%= Item.human_attribute_name("attributes") %></th>
+          <th><%= Item.human_attribute_name("effects") %></th>
           <th><%= Item.human_attribute_name("usage_effects") %></th>
           <th><%= Item.human_attribute_name("owned") %></th>
           <th><%= Item.human_attribute_name("state") %></th>
@@ -77,12 +77,8 @@
         <td class="level"><%= item.level %></td>
         <td class="basic_price"><%= number_to_currency(item.basic_price) %></td>
         <td class="vip_price"><%= number_to_currency(item.vip_price) %></td>
-        <td class="attributes">
-          <% item.effects.each do |effect, value| %>
-            <%= content_tag(:div, "%s: %d" % [Item.human_attribute_name(effect), value],
-                  :class => effect
-                ) %>
-          <% end %>
+        <td class="effects">
+          <%= admin_effects_preview(item.effects) %>
         </td>
         <td class="payouts">
           <% if item.usable? %>

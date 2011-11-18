@@ -1,0 +1,10 @@
+<% content_tag :div, :class => effect.name do %>
+  <% if effect.respond_to?(:state) and effect.state != 'visible' %>
+    <span class="state"><%= admin_state(effect, :controls => false) %></span>
+  <% end %>
+  
+  <%= content_tag(:div, 
+      "%s: %d" % [Item.human_attribute_name(effect.name), effect.value],
+      :class => effect.name
+  ) %>
+<% end %>

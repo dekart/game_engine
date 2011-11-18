@@ -2,9 +2,20 @@ require 'spec_helper'
 
 describe Character::Boosts do
   before do
-    @fight_attack_item_boost = Factory(:item, :boost_type => 'fight', :attack => 1, :defence => 0)
-    @fight_defence_item_boost = Factory(:item, :boost_type => 'fight', :attack => 0, :defence => 1)
-    @monster_attack_item_boost = Factory(:item, :boost_type => 'monster', :health => 1, :attack => 0, :defence => 0)
+    @fight_attack_item_boost = Factory(:item, 
+      :boost_type => 'fight',
+      :effects => {1 => {:type => :attack, :value => 1}, 2 => {:type => :defence, :value => 0}}
+    )
+
+    @fight_defence_item_boost = Factory(:item, 
+      :boost_type => 'fight', 
+      :effects => {1 => {:type => :attack, :value => 0}, 2 => {:type => :defence, :value => 1}}
+    )
+    
+    @monster_attack_item_boost = Factory(:item, 
+      :boost_type => 'monster', 
+      :effects => {1 => {:type => :health, :value => 1}, 2 => {:type => :attack, :value => 0}, 3 => {:type => :defence, :value => 0}}
+    )
     
     @character = Factory(:character)
   end
@@ -47,6 +58,8 @@ describe Character::Boosts do
     
     it 'should select boosts from inventories for fight defence' do
       @character.inventories.give!(@fight_defence_item_boost)
+      
+      @fight_defence_item_boost.effect(:defence).should == 1
       
       @character.boosts.for(:fight, :defence).first.item.should == @fight_defence_item_boost
       @character.boosts.for(:fight, :attack).should be_empty
@@ -109,7 +122,10 @@ describe Character::Boosts do
     end
     
     it 'should not have more than one active same type boosts' do
-      another_attack_item_boost = Factory(:item, :boost_type => 'fight', :attack => 1, :defence => 0)
+      another_attack_item_boost = Factory(:item, 
+        :boost_type => 'fight',
+        :effects => {1 => {:type => :attack, :value => 1}, 2 => {:type => :defence, :value => 0}}
+      )
       another_attack_boost = @character.inventories.give!(another_attack_item_boost)
       
       @character.activate_boost!(@fight_attack_boost, 'attack')
