@@ -10,19 +10,17 @@ describe Fight do
     end
     
     it 'should return false if defeated this opponent less than 1 hour ago' do
-      Fight.create!(:attacker => @attacker, :victim => @victim)
+      fight = Fight.new(:attacker => @attacker, :victim => @victim)
       
-      Fight.last.update_attribute(:winner_id, @victim.id)      
-            
-      @fight.can_attack?.should be_true
+      fight.stub!(:attacker_won?).and_return(true)
       
-      Fight.last.update_attribute(:winner_id, @attacker.id)
+      fight.save!
       
       @fight.can_attack?.should be_false
 
-      Fight.last.update_attribute(:created_at, 61.minute.ago)
-
-      @fight.can_attack?.should be_true
+      Timecop.freeze(61.minutes.from_now) do
+        @fight.can_attack?.should be_true
+      end
     end
     
     it 'should return false when attacking alliance member (if configured that way)' do
