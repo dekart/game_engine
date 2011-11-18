@@ -1,10 +1,10 @@
 <% if item.effects? %>
   <h3><%= Item.human_attribute_name("effects") %></h3>
 
-  <% item.effects.each do |effect, value| %>
+  <% item.effects.each do |effect| %>
     <%= payout(
-          item.boost? ? "#{item.boost_type}_boost_#{effect}" : effect, 
-          value > 0 ? "+%d" % value : value
+          effect.name, 
+          effect.value > 0 ? "+%d" % effect.value : effect.value
         ) %>
   <% end %>
 <% end %>

@@ -167,14 +167,14 @@ class Character < ActiveRecord::Base
     attack + 
       equipment.effect(:attack) +
       assignments.attack_effect +
-      boosts.active_for(:fight, :attack).try(:attack).to_i
+      boosts.active_for(:fight, :attack).try(:effect, :attack).to_i
   end
 
   def defence_points
     defence +
       equipment.effect(:defence) +
       assignments.defence_effect +
-      boosts.active_for(:fight, :defence).try(:defence).to_i
+      boosts.active_for(:fight, :defence).try(:effect, :defence).to_i
   end
 
   def health_points
