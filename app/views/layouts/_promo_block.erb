@@ -1,8 +1,6 @@
 <% promo_block(context) do |promo| %>
   <% if discount = current_character.personal_discounts.current %>
     <% promo.page :personal_discount, :context => [:home, :shop, :premium] do %>
-      <div class="previous"></div>
-      <div class="next"></div>
       <%= render("personal_discounts/current", :discount => discount) %>
       
       <% dom_ready do %>
@@ -15,27 +13,14 @@
 
   <% if current_contest %>
     <% promo.page :contest, :context => [:home, current_contest.context] do %>
-      <div class="previous"></div>
-      <div class="next"></div>
       <%= render("contests/current") %>
     <% end %>
   <% end %>
   
   <% unless special_items.empty? %>
     <% promo.page :special_items, :context => [:home, :shop, :premium] do %>
-      <div class="previous"></div>
-      <div class="next"></div>
       <%= render("items/specials", :items => special_items) %>
     <% end %>
   <% end %>
 <% end %>
 
-<% dom_ready do %>
-  $(".previous").click(function(){
-  	$('#promo_block').promoBlock().rotateBack();
-  });
-
-  $(".next").click(function(){
-  	$('#promo_block').promoBlock().rotate();
-  });
-<% end %>

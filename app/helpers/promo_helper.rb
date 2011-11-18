@@ -31,7 +31,9 @@ module PromoHelper
     
     def html_for_pages
       result = ""
-      
+      result << content_tag(:div, "", :class => 'previous')
+      result << content_tag(:div, "", :class => 'next')
+
       @pages.each do |id, block, options|
         if (!options.has_key?(:context) || options.has_key?(:context) && Array.wrap(options[:context]).include?(context))
           result << content_tag(:div, capture(&block), :id => "promo_block_page_#{id}", :class => 'page clearfix')

@@ -51,6 +51,14 @@
           }
         });
 
+        $('.previous').click(function(){
+          block.rotateBack();
+        });
+
+        $('.next').click(function(){
+          block.rotate();
+        });
+
         block.element.data({promoBlock: block});
       },
       
