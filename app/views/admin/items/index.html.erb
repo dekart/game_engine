@@ -78,11 +78,7 @@
         <td class="basic_price"><%= number_to_currency(item.basic_price) %></td>
         <td class="vip_price"><%= number_to_currency(item.vip_price) %></td>
         <td class="effects">
-          <% item.effects.each do |effect| %>
-            <%= content_tag(:div, "%s: %d" % [Item.human_attribute_name(effect.name), effect.value],
-                  :class => effect.name
-                ) %>
-          <% end %>
+          <%= admin_effects_preview(item.effects) %>
         </td>
         <td class="payouts">
           <% if item.usable? %>
