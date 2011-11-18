@@ -4,7 +4,9 @@ describe Character::Equipment do
   describe '#effect' do
     before do
       @character  = Factory(:character)
-      @item       = Factory(:item, :attack => 1, :defence => 2)
+      @item       = Factory(:item, 
+        :effects => {1 => {:type => :attack, :value => 1}, 2 => {:type => :defence, :value => 2}}
+      )
       @inventory  = Factory(:inventory, :item => @item, :character => @character)
       
       @character.equipment.auto_equip!(@inventory)
@@ -13,7 +15,7 @@ describe Character::Equipment do
     end
     
     it 'should read cached values from Rails cache' do
-      Rails.cache.write("character_#{@character.id}_equipment_effects", {:attack => 123})
+      Rails.cache.write("character_#{@character.id}_equipment_effects", [{:attack => 123}, []])
       
       @character.equipment.effect(:attack).should == 123
     end
@@ -24,15 +26,17 @@ describe Character::Equipment do
       end
       
       it 'should collect all effects from equipped inventories' do
-        %w{attack defence health energy stamina}.each do |attribute|
-          @inventory.should_receive(attribute).and_return(1)
+        Effects::Base::BASIC_TYPES.each do |attribute|
+          @inventory.should_receive(:effect).with(attribute).and_return(1)
         end
         
         @character.equipment.effect(:attack)
       end
       
       it 'should not re-collect effects' do
-        @inventory.should_receive(:attack).once
+        Effects::Base::BASIC_TYPES.each do |effect|
+          @inventory.should_receive(:effect).with(effect).once
+        end
         
         @character.equipment.effect(:attack)
         @character.equipment.effect(:attack)
@@ -46,21 +50,21 @@ describe Character::Equipment do
     describe 'restore rate' do
       it 'should increase hp restore rate' do
         lambda {
-          @item.update_attributes!(:hp_restore_rate => 10)
+          @item.update_attributes!(:effects => {1 => {:type => :hp_restore_rate, :value => 10}})
           @character.equipment.auto_equip!(@inventory)
         }.should change(@character, :health_restore_period).from(60).to(54)
       end
       
       it 'should increase ep restore rate' do
         lambda {
-          @item.update_attributes!(:ep_restore_rate => 10)
+          @item.update_attributes!(:effects => {1 => {:type => :ep_restore_rate, :value => 10}})
           @character.equipment.auto_equip!(@inventory)
         }.should change(@character, :energy_restore_period).from(120).to(108)
       end
       
       it 'should increase sp restore rate' do
         lambda {
-          @item.update_attributes!(:sp_restore_rate => 10)
+          @item.update_attributes!(:effects => {1 => {:type => :sp_restore_rate, :value => 10}})
           @character.equipment.auto_equip!(@inventory)
         }.should change(@character, :stamina_restore_period).from(180).to(162)
       end
@@ -268,10 +272,30 @@ describe Character::Equipment do
     before do
       @character  = Factory(:character)
       
-      @item1 = Factory(:item, :attack => 10, :defence => 1)
-      @item2 = Factory(:item, :attack => 1, :defence => 10)
-      @item3 = Factory(:item, :attack => 5, :defence => 5)
-      @item4 = Factory(:item, :attack => 2, :defence => 2)
+      @item1 = Factory(:item,
+        :effects => {
+          1 => {:type => :attack, :value => 10}, 
+          2 => {:type => :defence, :value => 1}
+        }
+      )
+      @item2 = Factory(:item,
+        :effects => {
+          1 => {:type => :attack, :value => 1}, 
+          2 => {:type => :defence, :value => 10}
+        }
+      )
+      @item3 = Factory(:item,
+        :effects => {
+          1 => {:type => :attack, :value => 5},
+          2 => {:type => :defence, :value => 5}
+        }
+      )
+      @item4 = Factory(:item,
+        :effects => {
+          1 => {:type => :attack, :value => 2}, 
+          2 => {:type => :defence, :value => 2}
+        }
+      )
       
       @inventory1 = Factory(:inventory, :character => @character, :item => @item1)
       @inventory2 = Factory(:inventory, :character => @character, :item => @item2)

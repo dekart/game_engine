@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111114074049) do
+ActiveRecord::Schema.define(:version => 20111118062703) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -443,8 +443,6 @@ ActiveRecord::Schema.define(:version => 20111114074049) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
-    t.integer  "attack",                                 :default => 0
-    t.integer  "defence",                                :default => 0
     t.integer  "owned",                                  :default => 0
     t.integer  "limit"
     t.datetime "available_till"
@@ -454,19 +452,14 @@ ActiveRecord::Schema.define(:version => 20111114074049) do
     t.text     "payouts"
     t.string   "use_button_label",        :limit => 50,  :default => "",     :null => false
     t.string   "use_message",                            :default => "",     :null => false
-    t.integer  "health"
-    t.integer  "energy"
-    t.integer  "stamina"
     t.boolean  "can_be_sold_on_market"
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
     t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
     t.integer  "original_vip_price"
-    t.integer  "hp_restore_rate",                        :default => 0
-    t.integer  "sp_restore_rate",                        :default => 0
-    t.integer  "ep_restore_rate",                        :default => 0
     t.boolean  "exchangeable",                           :default => false
+    t.text     "effects"
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"

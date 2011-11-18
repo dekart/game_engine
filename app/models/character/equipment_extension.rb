@@ -17,20 +17,30 @@ class Character
     end
 
     module EquipmentAssociationExtension
-
       def effects
         @effects ||= Rails.cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
-          {}.tap do |effects|
-            Item::EFFECTS.each do |effect|
-              effects[effect] = inventories.sum{|i| i.send(effect) }
+          [
+            {}.tap do |result|
+              Effects::Base::BASIC_TYPES.each do |effect|
+                result[effect] = inventories.sum{|i| i.effect(effect) }
+              end
+            end,
+            
+            [].tap do |result|
+              inventories.each do |inventory|
+                inventory.effects.each do |effect|
+                  unless Effects::Base::BASIC_TYPES.include?(effect.name.to_sym)
+                    result << effect #.to_hash
+                  end
+                end
+              end
             end
-          end
+          ]
         end
-        @effects
       end
-
+      
       def effect(name)
-        effects[name.to_sym]
+        effects[0][name.to_sym]
       end
 
       def effect_cache_key

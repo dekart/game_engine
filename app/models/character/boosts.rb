@@ -13,15 +13,21 @@ class Character
     end
     
     def for_fight_attack
-      by_type('fight').scoped(:conditions => ['items.attack > 0 OR items.health > 0'])
+      by_type('fight').select do |i| 
+        i.effect(:attack) > 0 || i.effect(:health) > 0
+      end
     end
     
     def for_fight_defence
-      by_type('fight').scoped(:conditions => ['items.defence > 0'])
+      by_type('fight').select do |i| 
+        i.effect(:defence) > 0
+      end
     end
     
     def for_monster_attack
-      by_type('monster')
+      by_type('monster').select do |i|
+        i.effect(:attack) > 0 || i.effect(:health) > 0
+      end
     end
     
     def by_type(boost_type)

@@ -277,8 +277,20 @@ describe Fight do
       @victim = Factory(:character)
       @fight = Fight.new(:attacker => @attacker, :victim => @victim)
       
-      fight_attack_item_boost = Factory(:item, :boost_type => 'fight', :attack => 1, :defence => 0)
-      fight_defence_item_boost = Factory(:item, :boost_type => 'fight', :attack => 0, :defence => 1)
+      fight_attack_item_boost = Factory(:item, 
+        :boost_type => 'fight',
+        :effects => {
+          1 => {:type => :attack, :value => 1}, 
+          2 => {:type => :defence, :value => 0}
+        }
+      )
+      fight_defence_item_boost = Factory(:item, 
+        :boost_type => 'fight',
+        :effects => {
+          1 => {:type => :attack, :value => 0}, 
+          2 => {:type => :defence, :value => 1}
+        }
+      )
       
       @fight_attack_boost = @attacker.inventories.give!(fight_attack_item_boost)
       @fight_defence_boost = @victim.inventories.give!(fight_defence_item_boost)

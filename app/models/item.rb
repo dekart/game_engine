@@ -1,12 +1,11 @@
 class Item < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasEffects
   include HasVisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
-  EFFECTS = [:attack, :defence, :health, :energy, :stamina, 
-              :hp_restore_rate, :sp_restore_rate, :ep_restore_rate]
-  
+
   BOOST_TYPES = {
     :fight => [:attack, :defence], 
     :monster => [:attack]
@@ -103,6 +102,8 @@ class Item < ActiveRecord::Base
 
   has_payouts :use,
     :visible => true
+    
+  has_effects
 
   validates_presence_of :name, :item_group, :availability, :level
   validates_numericality_of :level, :basic_price, :vip_price, :max_vip_price_in_market, :allow_blank => true
@@ -158,7 +159,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  (Item::EFFECTS + %w{basic_price vip_price}).each do |attribute|
+  (%w{basic_price vip_price}).each do |attribute|
     class_eval %{
       def #{attribute}
         self[:#{attribute}] || 0
@@ -168,24 +169,6 @@ class Item < ActiveRecord::Base
 
   def price?
     basic_price > 0 or vip_price > 0
-  end
-
-  def effects?
-    effects.any?
-  end
-
-  def effects
-    unless @effects
-      @effects = ActiveSupport::OrderedHash.new
-
-      Item::EFFECTS.each do |effect|
-        value = send(effect)
-
-        @effects[effect] = value if value != 0
-      end
-    end
-
-    @effects
   end
 
   def availability
