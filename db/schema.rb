@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117140831) do
+ActiveRecord::Schema.define(:version => 20111118080711) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -621,6 +621,7 @@ ActiveRecord::Schema.define(:version => 20111117140831) do
     t.datetime "image_updated_at"
     t.text     "events"
     t.string   "cached_tag_list"
+    t.string   "level_ids_cache",                   :default => "", :null => false
   end
 
   add_index "missions", ["mission_group_id"], :name => "index_missions_on_mission_group_id"

@@ -231,7 +231,7 @@ describe MissionResult do
         it 'should increase level progress' do
           @result.save!
 
-          @character.mission_levels.rank_for(@mission).progress.should == 1
+          @character.mission_levels.ranks_for(@mission).first.progress.should == 1
         end
 
         it 'should increase succeeded mission counter' do

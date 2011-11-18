@@ -17,7 +17,7 @@ class MissionRank < ActiveRecord::Base
   end
 
   def levels_completed?
-    mission.levels.size == character.mission_levels.completed_ids(mission).size
+    mission.level_ids.size == character.mission_levels.completed_ids(mission).size
   end
 
   def cache_completion

@@ -11,7 +11,7 @@ class MissionsController < ApplicationController
     if @result.level_rank.just_completed?
       EventLoggingService.log_event(:mission_completed, @result)
       
-      @missions = current_character.mission_groups.current.missions.available_for(current_character)
+      @missions = current_character.missions.by_current_group
     end
 
     render :fulfill, :layout => "ajax"

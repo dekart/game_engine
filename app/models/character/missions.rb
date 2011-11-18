@@ -39,32 +39,46 @@ class Character
     end
 
     module MissionLevelsExtension
-      def rank_for(mission)
-        if incomplete = proxy_owner.mission_level_ranks.incomplete_for(mission)
-          incomplete
-        elsif proxy_owner.missions.completed?(mission)
-          proxy_owner.mission_level_ranks.find_by_level_id(mission.levels.last.id)
-        else
-          exclude_ids = completed_ids(mission)
-
-          if exclude_ids.any?
-            level = mission.levels.scoped(:conditions => ["id NOT IN(?)", exclude_ids]).first
-          else
-            level = mission.levels.first
-          end
-
-          proxy_owner.mission_level_ranks.build(:level => level, :mission => mission)
+      def ranks_for(*missions)
+        missions = missions.flatten
+        
+        level_ids = missions.map do |mission| 
+          (mission.level_ids - completed_ids(mission)).first || mission.level_ids.last
+        end
+        
+        ranks = proxy_owner.mission_level_ranks.find_all_by_level_id(level_ids)
+        
+        missions.map do |mission|
+          ranks.detect{|r| r.mission_id == mission.id } || build_rank_for_mission(mission)
         end
       end
+      
+      def build_rank_for_mission(mission)
+        level = mission.levels.find(
+          (mission.level_ids - completed_ids(mission)).first
+        )
 
-      def completed_ids(mission)
-        proxy_owner.mission_level_ranks.all(
-          :select     => "level_id",
-          :conditions => {
-            :completed  => true,
-            :mission_id => mission.id
-          }
-        ).collect{|m| m.level_id }
+        proxy_owner.mission_level_ranks.build(:level => level, :mission => mission)
+      end
+
+      def completed_ids(mission = nil)
+        unless @completed_ids
+          @completed_ids = {}
+          
+          proxy_owner.mission_level_ranks.all(
+            :select     => "mission_id, level_id",
+            :conditions => { :completed  => true }
+          ).each do |rank|
+            @completed_ids[rank.mission_id] ||= []
+            @completed_ids[rank.mission_id] << rank.level_id
+          end
+        end
+        
+        mission ? (@completed_ids[mission.id] || []) : @completed_ids.values.flatten
+      end
+      
+      def clear_completed_ids_cache!
+        @completed_ids = nil
       end
     end
 
@@ -82,37 +96,49 @@ class Character
       end
 
       def check_completion!(mission)
-        rank = rank_for(mission)
-
-        rank.save! if rank.completed?
-
-        rank
+        rank_for(mission).tap do |rank|
+          if rank.completed?
+            rank.save!
+          
+            clear_completed_ids_cache!
+          end
+        end
       end
 
       def completed?(mission)
         completed_ids(mission.mission_group).include?(mission.id)
       end
 
-      def completed_ids(group)
-        proxy_owner.mission_ranks.all(
-          :select     => "mission_id",
-          :conditions => {
-            :completed        => true,
-            :mission_group_id => group.id
-          }
-        ).collect{|m| m.mission_id }
+      def completed_ids(group = nil)
+        unless @completed_ids
+          @completed_ids = {}
+          
+          proxy_owner.mission_ranks.all(
+            :select     => "mission_group_id, mission_id",
+            :conditions => {
+              :completed        => true,
+            }
+          ).each do |rank|
+            @completed_ids[rank.mission_group_id] ||= []
+            @completed_ids[rank.mission_group_id] << rank.mission_id
+          end
+        end
+        
+        group ? (@completed_ids[group.id] || []) : @completed_ids.values.flatten
       end
-
+      
+      def clear_completed_ids_cache!
+        @completed_ids = nil
+      end
+      
       def rank_for(mission)
         proxy_owner.mission_ranks.find_or_initialize_by_mission_id(mission.id)
       end
       
       def first_levels_completed?(group)
-        mission_ids = group.missions.with_state(:visible).all(:select => :id).map(&:id)    
-            
-        proxy_owner.mission_level_ranks.scoped(
-          :conditions => {:completed => true, :mission_id => mission_ids}
-        ).count('DISTINCT mission_level_ranks.mission_id') == mission_ids.size
+        missions = group.missions.with_state(:visible).all(:select => "id, level_ids_cache")
+        
+        (missions.map{|m| m.level_ids.first } & proxy_owner.mission_levels.completed_ids).size == missions.size
       end
     end
 

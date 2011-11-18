@@ -79,6 +79,21 @@ class Mission < ActiveRecord::Base
     events + mission_group.applicable_events
   end
   
+  # Overriding method provided by association to allow ID caching
+  def level_ids_with_cache
+    if @level_ids_cache || self[:level_ids_cache].present?
+      @level_ids_cache ||= self[:level_ids_cache].split(',').map{|v| v.to_i }
+    else
+      level_ids_without_cache
+    end
+  end
+  
+  alias_method_chain :level_ids, :cache
+  
+  def cache_level_ids!
+    update_attribute(:level_ids_cache, level_ids_without_cache.join(','))
+  end
+  
   protected
   
   def update_group_in_ranks

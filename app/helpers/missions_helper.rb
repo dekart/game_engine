@@ -1,9 +1,11 @@
 module MissionsHelper
   def mission_list(missions)
+    ranks = current_character.mission_levels.ranks_for(missions)
+    
     missions.each do |mission|
       if mission.visible_for?(current_character)
-        rank = current_character.mission_levels.rank_for(mission)
-        level = rank ? rank.level : mission.levels.first
+        rank = ranks.detect{|r| r.mission_id == mission.id }
+        level = rank.level
 
         yield(mission, level, rank)
       end

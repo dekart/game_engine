@@ -17,7 +17,7 @@ describe Character do
         :progress => 1
       )
       
-      @character.mission_levels.rank_for(@mission).should == @rank
+      @character.mission_levels.ranks_for(@mission).should == [@rank]
     end
 
     it 'should return rank for latest level when mission is completed' do
@@ -32,7 +32,7 @@ describe Character do
 
       @character.missions.check_completion!(@mission)
 
-      @character.mission_levels.rank_for(@mission).should == @rank2
+      @character.mission_levels.ranks_for(@mission).should == [@rank2]
     end
 
     it 'should instantiate rank for the first incomplete mission level' do
@@ -41,7 +41,7 @@ describe Character do
         :progress => 5
       )
       
-      @new_rank = @character.mission_levels.rank_for(@mission)
+      @new_rank = @character.mission_levels.ranks_for(@mission).first
 
       @new_rank.should be_new_record
       @new_rank.level.should == @level2

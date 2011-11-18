@@ -19,7 +19,7 @@ class MissionHelpResult < ActiveRecord::Base
   end
 
   def give_payout
-    level = requester.mission_levels.rank_for(mission).level
+    level = requester.mission_levels.ranks_for(mission).first.level
 
     self.basic_money  = Setting.p(:mission_help_money, level.money).ceil
     self.experience   = Setting.p(:mission_help_experience, level.experience).ceil

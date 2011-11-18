@@ -20,7 +20,7 @@ class MissionResult
   end
   
   def level_rank
-    @level_rank ||= character.mission_levels.rank_for(@mission)
+    @level_rank ||= character.mission_levels.ranks_for(@mission).first
   end
 
   def save!
@@ -39,7 +39,7 @@ class MissionResult
 
           level_rank.progress += 1
           level_rank.save!
-
+          
           @character.experience += @experience
 
           @character.charge(- @money, 0, @mission)
@@ -47,6 +47,9 @@ class MissionResult
           @character.missions_succeeded += 1
 
           if level_rank.just_completed?
+            @character.mission_levels.clear_completed_ids_cache!
+            
+            
             @character.missions_completed += 1
             @character.missions_mastered  += 1 if level.last?
 
