@@ -26,7 +26,7 @@ class Character
     
     def for_monster_attack
       by_type('monster').select do |i|
-        i.effect(:attack) > 0 || i.effect(:health) > 0
+        i.effect(:health) > 0
       end
     end
     

@@ -6,16 +6,16 @@ module Effects
 
     def self.parse(collection)
       return if collection.blank?
-
+      
       if collection.is_a?(Effects::Collection)
         collection
       else
         items = collection.values.sort_by{|v| v["position"].to_i }.collect do |effect|
           effect.symbolize_keys!
-
+            
           Effects::Base.by_name(effect[:type]).new(effect.except(:type, :position))
         end
-
+        
         new(*items)
       end
     end
@@ -50,7 +50,7 @@ module Effects
     end
     
     def metric
-      items.sum(&:value)
+      items.sum{|i| i.value }
     end
   end
 end

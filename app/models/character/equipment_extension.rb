@@ -29,8 +29,8 @@ class Character
             [].tap do |result|
               inventories.each do |inventory|
                 inventory.effects.each do |effect|
-                  unless Effects::Base::BASIC_TYPES.include?(effect.name.to_sym)
-                    result << effect #.to_hash
+                  if Effects::Base::COMPLEX_TYPES.include?(effect.name.to_sym)
+                    result << effect
                   end
                 end
               end

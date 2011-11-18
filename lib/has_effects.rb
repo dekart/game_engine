@@ -19,21 +19,7 @@ module HasEffects
     end
 
     def effects=(collection)
-      if collection && collection.empty?
-        super(nil)
-      else
-        if collection and !collection.is_a?(Effects::Collection)
-          items = collection.values.collect do |effect|
-            effect.symbolize_keys!
-            
-            Effects::Base.by_name(effect[:type]).new(:value => effect[:value])
-          end
-        
-          collection = Effects::Collection.new(*items)
-        end
-  
-        super(collection)
-      end
+      super(Effects::Collection.parse(collection))
     end
     
     def effects?
