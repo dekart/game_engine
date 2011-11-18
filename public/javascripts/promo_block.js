@@ -35,6 +35,8 @@
         
         $(document).bind('promo_block.resize', function(){
           block.element.height(max_height);
+          $(".next").height(max_height);
+          $(".previous").height(max_height);
         });
         
         $(document).trigger('promo_block.resize');
@@ -93,11 +95,32 @@
         }
         
         page.remove();
+      },
+
+      rotateBack: function(){
+        var pages = block.pages();
+
+        var visible_page = pages.filter('.current');
+        var previous_page = visible_page.prev('.page');
+
+        if(previous_page.length == 0){
+          var previous_page = pages.last();
+        }
+
+        if(previous_page[0] != visible_page[0]){
+          if(visible_page.length == 0){
+            previous_page.addClass('current').show();
+          } else {
+            visible_page.removeClass('current').fadeOut(function(){
+              previous_page.addClass('current').fadeIn();
+            });
+          }
+        }
       }
     };
-    
+
     block.setup();
-    
+
     return block;
   };
 })(jQuery);
