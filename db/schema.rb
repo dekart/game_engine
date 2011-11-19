@@ -460,12 +460,9 @@ ActiveRecord::Schema.define(:version => 20111118080711) do
     t.integer  "max_vip_price_in_market"
     t.integer  "original_vip_price"
     t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
-    t.integer  "hp_restore_rate",                        :default => 0
-    t.integer  "sp_restore_rate",                        :default => 0
-    t.integer  "ep_restore_rate",                        :default => 0
     t.boolean  "exchangeable",                           :default => false
-    t.text     "effects"
     t.string   "cached_tag_list"
+    t.text     "effects"
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"

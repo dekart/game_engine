@@ -9,6 +9,10 @@ describe Fight do
       @fight = Fight.new(:attacker => @attacker, :victim => @victim)
     end
     
+    after do
+      $redis.flushall
+    end
+    
     it 'should return false if defeated this opponent less than 1 hour ago' do
       fight = Fight.new(:attacker => @attacker, :victim => @victim)
       
