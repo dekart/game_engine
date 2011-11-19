@@ -84,4 +84,4 @@ en:
         title: "Well Done!"
         dialog_text: "Thank you for finishing tutorial! Now you're familiar with all main parts of the game. We would like to recommend to start with missions and then proceed to other game parts."
         goto_missions_button_value: "Go To Missions"
-        close_button_value: "Stay Here"
+        close_button_value: "Keep Fighting"
