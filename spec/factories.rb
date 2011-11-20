@@ -98,7 +98,7 @@ end
 
 Factory.define :inventory do |t|
   t.association :character
-  t.association :item, :effects => {1 => {:type => :attack, :value => 1}}
+  t.association :item, :effects => [{:type => :attack, :value => 1}]
   
   t.amount 5
 end

@@ -4,17 +4,27 @@ describe Character::Boosts do
   before do
     @fight_attack_item_boost = Factory(:item, 
       :boost_type => 'fight',
-      :effects => {1 => {:type => :attack, :value => 1}, 2 => {:type => :defence, :value => 0}}
+      :effects => [
+        {:type => :attack, :value => 1}, 
+        {:type => :defence, :value => 0}
+      ]
     )
 
     @fight_defence_item_boost = Factory(:item, 
       :boost_type => 'fight', 
-      :effects => {1 => {:type => :attack, :value => 0}, 2 => {:type => :defence, :value => 1}}
+      :effects => [
+        {:type => :attack, :value => 0}, 
+        {:type => :defence, :value => 1}
+      ]
     )
     
     @monster_attack_item_boost = Factory(:item, 
       :boost_type => 'monster', 
-      :effects => {1 => {:type => :health, :value => 1}, 2 => {:type => :attack, :value => 0}, 3 => {:type => :defence, :value => 0}}
+      :effects => [
+        {:type => :health, :value => 1}, 
+        {:type => :attack, :value => 0}, 
+        {:type => :defence, :value => 0}
+      ]
     )
     
     @character = Factory(:character)
@@ -124,7 +134,10 @@ describe Character::Boosts do
     it 'should not have more than one active same type boosts' do
       another_attack_item_boost = Factory(:item, 
         :boost_type => 'fight',
-        :effects => {1 => {:type => :attack, :value => 1}, 2 => {:type => :defence, :value => 0}}
+        :effects => [
+          {:type => :attack, :value => 1}, 
+          {:type => :defence, :value => 0}
+        ]
       )
       another_attack_boost = @character.inventories.give!(another_attack_item_boost)
       

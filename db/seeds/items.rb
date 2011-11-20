@@ -6,7 +6,9 @@ weapons.items.create!(
   :name         => "Knife",
   :level        => 1,
   :basic_price  => 40,
-  :attack       => 1,
+  :effects      => [
+    {:type => :attack, :value => 1}
+  ],
   :placements   => [:left_hand, :right_hand, :additional],
   :can_be_sold_on_market => true,
   :image        => File.open(Rails.root.join("db", "pictures", "knife.jpg"))
@@ -17,7 +19,9 @@ weapons.items.create!(
   :availability => "gift",
   :level        => 1,
   :basic_price  => 40,
-  :attack       => 1,
+  :effects      => [
+    {:type => :attack, :value => 1}
+  ],
   :placements   => [:left_hand, :right_hand, :additional],
   :can_be_sold  => false,
   :image        => File.open(Rails.root.join("db", "pictures", "dagger.jpg"))
@@ -29,7 +33,9 @@ armors.items.create!(
   :name         => "Wooden Shield",
   :level        => 1,
   :basic_price  => 70,
-  :defence      => 1,
+  :effects      => [
+    {:type => :defence, :value => 1}
+  ],
   :placements   => [:left_hand, :right_hand, :additional],
   :image        => File.open(Rails.root.join("db", "pictures", "shield.jpg"))
 )

@@ -5,7 +5,10 @@ describe Character::Equipment do
     before do
       @character  = Factory(:character)
       @item       = Factory(:item, 
-        :effects => {1 => {:type => :attack, :value => 1}, 2 => {:type => :defence, :value => 2}}
+        :effects => [
+          {:type => :attack, :value => 1}, 
+          {:type => :defence, :value => 2}
+        ]
       )
       @inventory  = Factory(:inventory, :item => @item, :character => @character)
       
@@ -50,21 +53,21 @@ describe Character::Equipment do
     describe 'restore rate' do
       it 'should increase hp restore rate' do
         lambda {
-          @item.update_attributes!(:effects => {1 => {:type => :hp_restore_rate, :value => 10}})
+          @item.update_attributes!(:effects => [{:type => :hp_restore_rate, :value => 10}])
           @character.equipment.auto_equip!(@inventory)
         }.should change(@character, :health_restore_period).from(60).to(54)
       end
       
       it 'should increase ep restore rate' do
         lambda {
-          @item.update_attributes!(:effects => {1 => {:type => :ep_restore_rate, :value => 10}})
+          @item.update_attributes!(:effects => [{:type => :ep_restore_rate, :value => 10}])
           @character.equipment.auto_equip!(@inventory)
         }.should change(@character, :energy_restore_period).from(120).to(108)
       end
       
       it 'should increase sp restore rate' do
         lambda {
-          @item.update_attributes!(:effects => {1 => {:type => :sp_restore_rate, :value => 10}})
+          @item.update_attributes!(:effects => [{:type => :sp_restore_rate, :value => 10}])
           @character.equipment.auto_equip!(@inventory)
         }.should change(@character, :stamina_restore_period).from(180).to(162)
       end
@@ -273,28 +276,28 @@ describe Character::Equipment do
       @character  = Factory(:character)
       
       @item1 = Factory(:item,
-        :effects => {
-          1 => {:type => :attack, :value => 10}, 
-          2 => {:type => :defence, :value => 1}
-        }
+        :effects => [
+          {:type => :attack, :value => 10}, 
+          {:type => :defence, :value => 1}
+        ]
       )
       @item2 = Factory(:item,
-        :effects => {
-          1 => {:type => :attack, :value => 1}, 
-          2 => {:type => :defence, :value => 10}
-        }
+        :effects => [
+          {:type => :attack, :value => 1}, 
+          {:type => :defence, :value => 10}
+        ]
       )
       @item3 = Factory(:item,
-        :effects => {
-          1 => {:type => :attack, :value => 5},
-          2 => {:type => :defence, :value => 5}
-        }
+        :effects => [
+          {:type => :attack, :value => 5},
+          {:type => :defence, :value => 5}
+        ]
       )
       @item4 = Factory(:item,
-        :effects => {
-          1 => {:type => :attack, :value => 2}, 
-          2 => {:type => :defence, :value => 2}
-        }
+        :effects => [
+          {:type => :attack, :value => 2}, 
+          {:type => :defence, :value => 2}
+        ]
       )
       
       @inventory1 = Factory(:inventory, :character => @character, :item => @item1)
