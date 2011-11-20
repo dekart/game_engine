@@ -3,14 +3,12 @@ class Property < ActiveRecord::Base
   belongs_to :property_type
 
   delegate :name, :plural_name, :description, :image, :image?, :basic_price, :vip_price, 
-    :income, :collect_period, :payouts, :income_by_level,
+    :income, :collect_period, :payouts, :income_by_level, :worker_names,
     :to => :property_type
 
   attr_accessor :charge_money
 
-  validate_on_update :check_upgrade_possibility
-
-  after_create :assign_collected_at
+  after_save :assign_collected_at, :if => :active?
 
   def maximum_level
     property_type.upgrade_limit || Setting.i(:property_upgrade_limit)
@@ -21,11 +19,11 @@ class Property < ActiveRecord::Base
   end
 
   def upgradeable?
-    level < maximum_level
+    active? and level < maximum_level
   end
 
   def collectable?
-    collected_at < Time.now - collect_period.hours
+    active? and collected_at < Time.now - collect_period.hours
   end
 
   def total_income
@@ -34,6 +32,44 @@ class Property < ActiveRecord::Base
 
   def time_to_next_collection
     collectable? ? 0 : (collected_at + collect_period.hours).to_i - Time.now.to_i
+  end
+  
+  def active?
+    missing_workers == 0
+  end
+  
+  def missing_workers
+    property_type.workers.to_i - self.workers
+  end
+  
+  def worker_friends
+    ids = self[:worker_friend_ids].split(',').map{|id| id.to_i }
+    
+    Character.find(ids).sort_by{|c| ids.index(c.id) }
+  end
+  
+  def hire_worker!(hire_all = nil)
+    return if missing_workers == 0
+    
+    workers_to_hire = hire_all.present? ? missing_workers : 1
+    
+    total_price = workers_to_hire * Setting.i(:property_worker_price)
+    
+    if character.vip_money < total_price
+      errors.add(:character, :not_enough_vip_money)
+      
+      false
+    else
+      transaction do
+        self.workers += workers_to_hire
+        
+        save!
+        
+        character.charge!(0, total_price, property_type)
+      end
+      
+      workers_to_hire
+    end
   end
 
   def buy!
@@ -56,8 +92,14 @@ class Property < ActiveRecord::Base
 
   def upgrade!
     return false if new_record?
+    
+    unless upgradeable?
+      errors.add(:character, :too_much_properties, :plural_name => plural_name)
+      
+      return false
+    end
 
-    if valid? && upgrade_requirements_satisfied?
+    if upgrade_requirements_satisfied?
       transaction do
         increment(:level)
 
@@ -104,10 +146,10 @@ class Property < ActiveRecord::Base
   end
   
   def upgrade_requirements
-    @requirements ||= Requirements::Collection.new(
-      Requirements::BasicMoney.new(:value => upgrade_price),
-      Requirements::VipMoney.new(:value => vip_price)
-    )
+    @requirements ||= Requirements::Collection.new.tap do |r|
+      r << Requirements::BasicMoney.new(:value => upgrade_price) if upgrade_price > 0
+      r << Requirements::VipMoney.new(:value => vip_price) if vip_price > 0
+    end
   end
   
   def purchase_requirements
@@ -116,12 +158,6 @@ class Property < ActiveRecord::Base
  
   protected
 
-    def check_upgrade_possibility
-      unless upgradeable?
-        errors.add(:character, :too_much_properties, :plural_name => plural_name)
-      end
-    end
-    
     def upgrade_requirements_satisfied?
       if @requirements_satisfied.nil?
         @requirements_satisfied = upgrade_requirements.satisfies?(character)
@@ -157,6 +193,8 @@ class Property < ActiveRecord::Base
     end
   
     def assign_collected_at
+      return true if collected_at
+      
       # if it is first property, set short collect time
       if character.properties.count == 1 && Setting.i(:property_first_collect_time) != 0
         update_attribute(:collected_at, (collect_period.hours - Setting.i(:property_first_collect_time).seconds).ago)

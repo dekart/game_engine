@@ -16,11 +16,22 @@ en:
       name_with_level: "%{name} (Level %{level})"
       collect_all: "You have %{amount} estates ready for collection"
       collect_in: "Collect in: %{value}"
+      not_active: "You need to hire workers for this estate"
       buttons:
         buy: "Buy"
         upgrade: "Upgrade"
         collect: "Collect"
         collect_all: "Collect All"
+        hire: "Hire Workers"
+    hire:
+      note: '%{property} requires %{amount} workers to activate. You can hire workers for Gems or you can invite your friends.'
+      worker: 'Worker'
+      hired: 'Hired!'
+      messages:
+        success: "You've successfully hired %{amount} workers!"
+      buttons:
+        hire: 'Hire for %{price}'
+        hire_all: 'Hire All for %{price}'
     upgrade:
       messages:
         success: "You successfully upgraded %{property_name} to level %{level}"

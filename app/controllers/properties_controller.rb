@@ -17,6 +17,16 @@ class PropertiesController < ApplicationController
 
     render :create, :layout => "ajax"
   end
+  
+  def hire
+    @property = current_character.properties.find(params[:id])
+    
+    if request.put?
+      @result = @property.hire_worker!(params[:hire_all])
+    end
+    
+    render :layout => "ajax"
+  end
 
   def upgrade
     @property = current_character.properties.find(params[:id])

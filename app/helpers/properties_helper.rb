@@ -6,6 +6,8 @@ module PropertiesHelper
       property = properties.detect{|p| p.property_type == type }
 
       next if property.nil? and (type.availability != :shop or !type.visible?)
+      
+      property ||= current_character.properties.build(:property_type => type)
 
       result << capture(type, property, &block)
     end
