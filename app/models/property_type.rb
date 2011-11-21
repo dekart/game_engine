@@ -63,7 +63,7 @@ class PropertyType < ActiveRecord::Base
 
   class << self
     def to_dropdown(*args)
-      without_state(:deleted).all(:order => :basic_price).to_dropdown(*args)
+      without_state(:deleted).all(:order => :name).to_dropdown(*args)
     end
 
     def available_for(character)

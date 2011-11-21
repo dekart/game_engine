@@ -6,6 +6,7 @@ en:
         hire: "Hire Workers"
       messages:
         success: "You've successfully built the %{property_name}!"
+        requirements_not_satisfied: "You cannot build this estate because some of its requirements are not satisfied."
       you_spent:
         title: "You spent:"
       you_received:
@@ -20,7 +21,7 @@ en:
       collect_in: "Collect in: %{value}"
       missing_workers: "Missing workers!"
       buttons:
-        buy: "Buy"
+        buy: "Build"
         upgrade: "Upgrade"
         collect: "Collect"
         collect_all: "Collect All"
