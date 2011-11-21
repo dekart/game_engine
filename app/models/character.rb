@@ -252,7 +252,7 @@ class Character < ActiveRecord::Base
   end
   
   def show_promo_block?
-    level >= Setting.i(:item_show_special)
+    level >= Setting.i(:promo_block_minimum_level)
   end
 
   def can_hitlist?(victim)
