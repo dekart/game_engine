@@ -3,12 +3,14 @@ en:
     create:
       buttons:
         publish: "Brag About It!"
+        hire: "Hire Workers"
       messages:
-        success: "You successfully bought %{amount} of %{property_name}"
+        success: "You've successfully built the %{property_name}!"
       you_spent:
         title: "You spent:"
       you_received:
         title: "You received:"  
+      need_workers: "This building requires %{amount} workers to function. You need to hire them to activate your new building."
     index:
       title: "My Estates"
       note: "Estates bring you an extra income, it's a great way to make additional money. Some estates generate revenue more often than the others, so check back as often as possible to collect and maximize your income."
@@ -16,7 +18,7 @@ en:
       name_with_level: "%{name} (Level %{level})"
       collect_all: "You have %{amount} estates ready for collection"
       collect_in: "Collect in: %{value}"
-      not_active: "You need to hire workers for this estate"
+      missing_workers: "Missing workers!"
       buttons:
         buy: "Buy"
         upgrade: "Upgrade"
@@ -27,8 +29,6 @@ en:
       note: '%{property} requires %{amount} workers to activate. You can hire workers for Gems or you can invite your friends.'
       worker: 'Worker'
       hired: 'Hired!'
-      messages:
-        success: "You've successfully hired %{amount} workers!"
       buttons:
         hire: 'Hire for %{price}'
         hire_all: 'Hire All for %{price}'

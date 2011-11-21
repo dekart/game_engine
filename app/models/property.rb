@@ -35,11 +35,15 @@ class Property < ActiveRecord::Base
   end
   
   def active?
-    missing_workers == 0
+    !missing_workers?
   end
   
   def missing_workers
     property_type.workers.to_i - self.workers
+  end
+  
+  def missing_workers?
+    missing_workers > 0
   end
   
   def worker_friends
@@ -56,9 +60,9 @@ class Property < ActiveRecord::Base
     total_price = workers_to_hire * Setting.i(:property_worker_price)
     
     if character.vip_money < total_price
-      errors.add(:character, :not_enough_vip_money)
-      
-      false
+      Requirements::Collection.new(
+        Requirements::VipMoney.new(:value => total_price)
+      )
     else
       transaction do
         self.workers += workers_to_hire

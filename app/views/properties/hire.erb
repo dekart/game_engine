@@ -1,52 +1,71 @@
-<% dialog :id => :hire_property_dialog do |d| %>
-  <% if @result %>
-    <%= t('.messages.success', :amount => @result) %>
-  <% else %>
-    <%= t('.note', :property => @property.name, :amount => @property.property_type.workers) %>
-  <% end %>
+<% if !@result.is_a?(Requirements::Collection) %>
+  <% if @property.missing_workers? %>
+    <% dialog :id => :hire_property_dialog do |d| %>
+      <%= t('.note', :property => @property.name, :amount => @property.property_type.workers) %>
   
-  <div class="workers">
-    <% @property.property_type.workers.times do |index| %>
-      <div class="worker">
-        <h3><%= @property.worker_names[index] || t('.worker') %></h3>
+      <div class="workers">
+        <% @property.property_type.workers.times do |index| %>
+          <div class="worker">
+            <h3><%= @property.worker_names[index] || t('.worker') %></h3>
 
-        <% if index <= @property.workers - 1 %>
-          <% if friend = @property.worker_friends[index] %>
-            <div class="image"><%= character_picture(friend) %></div>
+            <% if index <= @property.workers - 1 %>
+              <% if friend = @property.worker_friends[index] %>
+                <div class="image"><%= character_picture(friend) %></div>
         
-            <div class="name"><%= character_name(friend) %></div>
-          <% else %>
-            <div class="image"><%= asset_image_tag(:worker) %></div>
+                <div class="name"><%= character_name(friend) %></div>
+              <% else %>
+                <div class="image"><%= asset_image_tag(:worker) %></div>
       
-            <div class="name"><%= t('.hired') %></div>
-          <% end %>
-        <% else %>
-          <div class="image"><%= asset_image_tag(:worker_missing) %></div>
+                <div class="name"><%= t('.hired') %></div>
+              <% end %>
+            <% else %>
+              <div class="image"><%= asset_image_tag(:worker_missing) %></div>
           
-          <%= link_to_remote(button(:hire, :price => '<strong class="price">%s</strong>' % Setting.i(:property_worker_price)), 
-                :url => hire_property_path(@property),
+              <%= link_to_remote(button(:hire, :price => '<strong class="price">%s</strong>' % Setting.i(:property_worker_price)), 
+                    :url => hire_property_path(@property),
+                    :method => :put,
+                    :update => :ajax,
+                    :html => {
+                      :class => "hire button"
+                    }
+                  ) %>
+            <% end %>
+          </div>
+        <% end %>
+    
+        <div class="controls">
+          <%= link_to_remote(
+                button(:hire_all, 
+                  :price => '<strong class="price">%s</strong>' % (@property.missing_workers * Setting.i(:property_worker_price))
+                ), 
+                :url => hire_property_path(@property, :hire_all => true),
                 :method => :put,
                 :update => :ajax,
                 :html => {
                   :class => "hire button"
                 }
               ) %>
-        <% end %>
+        </div>
       </div>
     <% end %>
-    
-    <div class="controls">
-      <%= link_to_remote(
-            button(:hire_all, 
-              :price => '<strong class="price">%s</strong>' % (@property.missing_workers * Setting.i(:property_worker_price))
-            ), 
-            :url => hire_property_path(@property, :hire_all => true),
-            :method => :put,
-            :update => :ajax,
-            :html => {
-              :class => "hire button"
-            }
-          ) %>
-    </div>
-  </div>
+  <% else %>
+    <% dom_ready do %>
+      $('#property_list').html('<%= escape_javascript(render("list", :properties => current_character.properties)) %>');
+      
+      $.dialog.close();
+    <% end %>
+  <% end %>
+<% else %>
+  <% render_to_result do %>
+    <% result_for :hire_workers do %>
+      <div class="unsatisfied_requirements">
+        <%= unsatisfied_requirement_list(@result) %>
+      </div>
+    <% end %>
+  <% end %>
+  
+  <% dom_ready do %>
+    $.dialog.close();
+    $(document).trigger('result.received');
+  <% end %>
 <% end %>

@@ -104,17 +104,17 @@
               </div>
             <% end %>
           <% else %>
-            <div class="not_active"><%= t('.not_active') %></div>
-            
             <div class="controls">
               <%= link_to_remote(button(:hire),
-                    :url    => hire_property_path(property.id),
+                    :url    => hire_property_path(property),
                     :update => :ajax,
                     :html   => {
                       :class => "hire button"
                     }
                   ) %>
             </div>
+
+            <div class="missing_workers"><%= t('.missing_workers') %></div>
           <% end %>
         <% end %>
       <% end %>
