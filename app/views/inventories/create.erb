@@ -4,10 +4,18 @@
       <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @inventory.item),
             :class => "publish button"
           ) if Setting.b(:stream_dialog_enabled) %>
-
-      <%= link_to(button(:inventory), inventories_url,
-            :class => "inventory button"
-          ) %>
+      
+      <% if @inventory.item.equippable? %> 
+        <%= link_to(button(:equipment), equipment_inventories_path,
+          :class => "equipment button"
+        ) %>
+        
+      <% else %>
+        <%= link_to(button(:inventory), inventories_url,
+              :class => "inventory button"
+            ) %>
+       
+      <% end %>      
 
       <%= link_to_remote(inventory_use_button(@inventory),
             :url    => use_inventory_path(@inventory),

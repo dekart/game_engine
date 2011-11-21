@@ -104,6 +104,12 @@ class Character
           character.inventories.give!(item.is_a?(Inventory) ? item.item : item, amount)
         end
       end
+      
+      def usable_with_payout(name)
+        self.usable.find_all do |inventory|
+          inventory.payouts.payout_include?(name)
+        end
+      end
 
       protected
 
