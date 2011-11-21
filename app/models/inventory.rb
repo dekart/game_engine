@@ -17,7 +17,7 @@ class Inventory < ActiveRecord::Base
     
   named_scope :usable,
     :include => :item,
-    :conditions => "items.payouts != '' AND amount > 0"  
+    :conditions => "items.payouts != ''"  
   
   named_scope :exchangeable,
     :include => :item,
