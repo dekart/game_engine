@@ -1,4 +1,4 @@
-<% current_character.inventories.usable_payout(payout_name).each do |inventory| %>
+<% current_character.inventories.usable_with_payout(payout_name).each do |inventory| %>
   <div class="item">
     <div class="name"><%= inventory.name %></div>
     <div class="image"><%= inventory_item_image(inventory, :small) %></div>

@@ -105,7 +105,7 @@ class Character
         end
       end
       
-      def usable_payout(name)
+      def usable_with_payout(name)
         self.usable.find_all do |inventory|
           inventory.payouts.payout_include?(name)
         end

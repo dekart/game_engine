@@ -251,7 +251,7 @@ class Character < ActiveRecord::Base
     )
   end
   
-  def show_item_specials?
+  def show_promo_block?
     level >= Setting.i(:item_show_special)
   end
 

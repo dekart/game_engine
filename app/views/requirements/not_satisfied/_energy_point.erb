@@ -10,7 +10,7 @@
     <div id="inventories_list" class="clearfix">
       <div class="item">
         <div class="name"><%= t(".restorable.title") %></div>
-        <div class="image"><%= asset_image_tag("refill_energy") %></div>
+        <div class="image"><%= asset_image_tag(:refill_energy) %></div>
         <div class="controls">
           <%= link_to_remote(button(:refill), 
                 :url    => refill_dialog_premium_path(

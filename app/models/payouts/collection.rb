@@ -45,7 +45,7 @@ module Payouts
     end
     
     def payout_include?(name)
-      self.each { |p| p }.select{ |p| p.class == Payouts::Base.by_name(name) }.size > 0
+      !self.detect{ |p| p.class == Payouts::Base.by_name(name) }.nil?
     end
 
     def visible?

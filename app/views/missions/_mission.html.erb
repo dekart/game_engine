@@ -15,23 +15,14 @@
 
     <div class="controls">
       <% if mission.repeatable? || rank.nil? || !rank.completed? %>
-        <%= link_to_remote(button(rank.nil? || rank.progress == 0 ? :start : :fulfill),
+        <%= link_to_remote(mission_button(mission, rank),
               :url    => fulfill_mission_path(mission),
               :update => :result,
               :html   => {
                 :"data-click-once" => true,
                 :class => "fulfill button"
               }
-            ) if mission.button_label.blank? %>
-            
-         <%= link_to_remote(button(:button_label, :label => mission.button_label),
-              :url    => fulfill_mission_path(mission),
-              :update => :result,
-              :html   => {
-                :"data-click-once" => true,
-                :class => "fulfill button"
-              }
-            ) unless mission.button_label.blank? %>
+            ) %>
                 
       <% else %>
         <div class="completed"><%= t('.completed') %></div>
