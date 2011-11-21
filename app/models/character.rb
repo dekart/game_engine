@@ -250,6 +250,10 @@ class Character < ActiveRecord::Base
       ]
     )
   end
+  
+  def show_promo_block?
+    level >= Setting.i(:promo_block_minimum_level)
+  end
 
   def can_hitlist?(victim)
     friendly_attack = Setting.b(:fight_alliance_attack) ? false : friend_relations.established?(victim)
