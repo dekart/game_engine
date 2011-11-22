@@ -35,8 +35,7 @@
         
         $(document).bind('promo_block.resize', function(){
           block.element.height(max_height);
-          block.element.find(".previous").height(max_height);
-          block.element.find(".next").height(max_height);
+          block.element.find(".previous, .next").height(max_height);
         });
         
         $(document).trigger('promo_block.resize');
