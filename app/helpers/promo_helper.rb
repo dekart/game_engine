@@ -31,12 +31,18 @@ module PromoHelper
     
     def html_for_pages
       result = ""
-      pages_to_show = @pages.select { |id, block, options| (!options.has_key?(:context) || options.has_key?(:context) && Array.wrap(options[:context]).include?(context)) }
+
+      pages_to_show = @pages.select { |id, block, options|
+          (!options.has_key?(:context) ||
+          options.has_key?(:context) &&
+          Array.wrap(options[:context]).include?(context))
+      }
 
       if pages_to_show.size > 1
         result << content_tag(:div, "", :class => 'previous')
         result << content_tag(:div, "", :class => 'next')
       end
+
       pages_to_show.each do |id, block, options|
         result << content_tag(:div, capture(&block), :id => "promo_block_page_#{id}", :class => 'page clearfix')
       end
