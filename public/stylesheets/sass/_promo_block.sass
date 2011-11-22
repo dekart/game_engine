@@ -1,8 +1,24 @@
 #promo_block
   border = !promo_block_border
   margin-bottom: 10px
-  padding: 10px
-  
+  padding: 10px 2px
+
+  .previous, .next
+    width: 30px
+    margin-top: 5px
+    cursor: pointer
+
+    &.disabled
+      background-position: -96px center
+
+  .previous
+    float: left
+    background: transparent url(/images/jcarousel/prev-horizontal.png) no-repeat 0 center
+
+  .next
+    float: right
+    background: transparent url(/images/jcarousel/next-horizontal.png) no-repeat 0 center
+
   .page
     display: none
     
