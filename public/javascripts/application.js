@@ -445,6 +445,14 @@ var Fighting = {
     $.get('/fights', function(response){
       $('#victim_list').append(response);
     });
+  },
+  
+  loadOpponents : function(){
+    $.get('/fights', function(response){
+      $('#victim_list').append(response);
+      
+      $("#loading_opponents").remove();
+    });
   }
 };
 
