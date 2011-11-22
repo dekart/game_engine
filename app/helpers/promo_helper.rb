@@ -33,9 +33,9 @@ module PromoHelper
       result = ""
 
       pages_to_show = @pages.select { |id, block, options|
-          (!options.has_key?(:context) ||
-          options.has_key?(:context) &&
-          Array.wrap(options[:context]).include?(context))
+        !options.has_key?(:context) ||
+        options.has_key?(:context) &&
+        Array.wrap(options[:context]).include?(context)
       }
 
       if pages_to_show.size > 1
