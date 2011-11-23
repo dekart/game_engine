@@ -3,3 +3,5 @@
 <%= Array.wrap(@dom_ready).join("\n").html_safe %>
 
 $(document).trigger('application.ready');
+
+<%= ga_track_pageview %>
