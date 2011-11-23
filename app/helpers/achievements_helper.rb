@@ -6,15 +6,17 @@ module AchievementsHelper
       achievements.each do |a|
         unless a.collected?
           types.reject! do |type|
-            result << type if a.achievement_type_id == type.id
+            if a.achievement_type_id == type.id
+              result << type 
+            end
           end
         end
       end
     end
 
-    types_all = types_uncollected + types
+    types.unshift(*types_uncollected)
    
-    types_all.each do |type|
+    types.each do |type|
       yield(type, achievements.detect{|a| a.achievement_type_id == type.id })
     end
   end

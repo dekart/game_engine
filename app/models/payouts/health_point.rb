@@ -3,12 +3,12 @@ module Payouts
     include RecoveryMode
     
     def apply(character, reference = nil)
-      @value = (recovery_mode == :absolute) ? @value : ((character.health / 100.0) * @value).ceil
+      @recalc_value = recalc_recovery(character.health)
       
       if action == :remove
-        character.hp -= @value
+        character.hp -= @recalc_value
       else
-        character.hp += @value
+        character.hp += @recalc_value
       end
     end
     

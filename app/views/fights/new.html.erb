@@ -16,7 +16,7 @@
   <% end %>
 <% end %>
 
-<%= flash[:show_tutorial] == true ? render("victim_list", :victims => @victims) : render("victim_list") %>
+<%= @victims ? render("victim_list", :victims => @victims) : render("victim_list", :victims => nil ) %>
 
 <div id="more_fight_opponents">
   <%= link_to_function(button(:more_opponents), "Fighting.loadMoreOpponents()",
@@ -25,7 +25,7 @@
 </div>
 
 <% dom_ready do %>
-  <% if flash[:show_tutorial] != true %>
+  <% if @victims.nil? %>
     Fighting.loadOpponents();
   <% end %>  
 <% end %>

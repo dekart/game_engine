@@ -450,10 +450,12 @@ var Fighting = {
   },
   
   loadOpponents : function(){
+    $("#loading_opponents").show();
+    
     $.get('/fights', function(response){
       $('#victim_list').append(response);
       
-      $("#loading_opponents").remove();
+      $("#loading_opponents").hide();
     });
   }
 };
