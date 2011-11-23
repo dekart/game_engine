@@ -29,7 +29,7 @@ module StreamHelper
       ]
       
       result.gsub!(/\n\s+/, ' ')
-    end.html_safe!
+    end.html_safe
   end
 
   protected

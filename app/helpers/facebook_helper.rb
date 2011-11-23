@@ -52,6 +52,6 @@ module FacebookHelper
       result << "InviteDialog.show('#{ type }', #{ options.to_json }, function(){ #{ callback } });"
       
       result.gsub!(/\n\s+/, ' ')
-    end.html_safe!
+    end.html_safe
   end
 end
