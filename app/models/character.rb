@@ -5,6 +5,7 @@ class Character < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   
   include Character::Levels
+  include Character::Fights
   include Character::AppRequests
   include Character::Relations
   include Character::Inventories
@@ -30,18 +31,6 @@ class Character < ActiveRecord::Base
   belongs_to :user
   belongs_to :character_type,
     :counter_cache => true
-
-  has_many :attacks,
-    :class_name   => "Fight",
-    :foreign_key  => :attacker_id,
-    :dependent    => :delete_all
-  has_many :defences,
-    :class_name   => "Fight",
-    :foreign_key  => :victim_id,
-    :dependent    => :delete_all
-  has_many :won_fights,
-    :class_name   => "Fight",
-    :foreign_key  => :winner_id
 
   has_many :assignments,
     :as         => :context,
@@ -100,7 +89,6 @@ class Character < ActiveRecord::Base
   after_validation_on_create :apply_character_type_defaults
   before_save :update_level_and_points, :unless => :level_up_applied
   before_save :update_total_money
-  before_save :update_fight_availability_time, :if => :hp_changed?
   after_save :update_current_contest_points
   after_create :schedule_notifications
 
@@ -209,13 +197,6 @@ class Character < ActiveRecord::Base
     end
   end
   
-  def fight_requirements
-    @requirements ||= Requirements::Collection.new(
-      weakness_requirement,
-      Requirements::StaminaPoint.new(:value => Setting.i(:fight_stamina_required))
-    )
-  end
-
   def formatted_basic_money
     number_to_currency(basic_money)
   end
@@ -392,11 +373,7 @@ class Character < ActiveRecord::Base
   def update_total_money
     self.total_money = basic_money + bank
   end
-  
-  def update_fight_availability_time
-    self.fighting_available_at = hp_restore_time(weakness_minimum).seconds.from_now
-  end
-  
+    
   def schedule_notifications
     message = Message.last(:conditions => {:notify_new_users => true, :state => ["sending", "sent"]})
     

@@ -1,0 +1,78 @@
+class Fight
+  module OpponentBuckets
+    BUCKET_SIZE = 200
+
+    class << self
+      def rebuild!
+        clear!
+      
+        Fight::OPPONENT_LEVEL_RANGES.each do |range|
+          rebuild_by_range(range)
+        end
+      end
+    
+      def rebuild_by_range(range)
+        ids = Character.connection.select_values("SELECT id FROM characters WHERE level BETWEEN #{ range.begin } AND #{ range.end }").map{|i| i.to_i }
+        ids -= Character.banned_ids
+      
+        # Calculating number of opponents per bucket
+        if (ids.size.to_f / BUCKET_SIZE).round > 1 # There are more than bucket_size*1.5 opponents
+          opponents_per_bucket = (ids.size.to_f / (ids.size.to_f / BUCKET_SIZE).ceil).ceil
+        else
+          opponents_per_bucket = ids.size
+        end
+      
+        buckets = (ids.size.to_f / opponents_per_bucket).ceil # calculating number of buckets for current range
+      
+        ids.shuffle!
+      
+        # Storing ids to redis splitting by buckets
+        buckets.times do |bucket|
+          ids.slice!(0, opponents_per_bucket).each do |id|
+            $redis.sadd("opponent_bucket_#{ range.begin }_#{ bucket }", id)
+          end
+        end
+      
+        # Storing number of buckets for current range
+        $redis.hset("opponent_buckets", range.begin, buckets)
+      end
+      
+      def opponent_ids(range, bucket)
+        $redis.smembers("opponent_bucket_#{ range.begin }_#{ bucket }").map{|i| i.to_i }
+      end
+      
+      def buckets
+        $memory_store.fetch('opponent_buckets', :expires_in => 30.seconds) do
+          $redis.hgetall("opponent_buckets").inject({}){|memo, (key, value)| memo[key.to_i] = value.to_i; memo }
+        end
+      end
+      
+      def random_opponents(range, exclude_ids, amount)
+        total_buckets = buckets[range.begin]
+        bucket = rand(total_buckets)
+        
+        result = []
+        buckets_processed = 0
+        
+        while result.size < amount && buckets_processed < total_buckets
+          buckets_processed += 1
+          
+          result.push(*(opponent_ids(range, bucket) - exclude_ids))
+          
+          bucket += 1
+          bucket = 0 if bucket >= total_buckets
+        end
+        
+        result.shuffle!
+        
+        result[0, amount]
+      end
+      
+      def clear!
+        $redis.keys('opponent_bucket*').each do |key|
+          $redis.del(key)
+        end
+      end
+    end
+  end
+end
