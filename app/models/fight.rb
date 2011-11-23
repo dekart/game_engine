@@ -41,10 +41,14 @@ class Fight < ActiveRecord::Base
     def can_attack?(attacker, victim)
       new(:attacker => attacker, :victim => victim).can_attack?
     end
+    
+    def level_range(character)
+      OPPONENT_LEVEL_RANGES.detect{|r| r.include?(character.level) }
+    end
   end
   
   def attacker_level_range
-    OPPONENT_LEVEL_RANGES.detect{|r| r.include?(attacker.level) }
+    self.class.level_range(attacker)
   end
 
   def can_attack?

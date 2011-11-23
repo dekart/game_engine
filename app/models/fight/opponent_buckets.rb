@@ -29,7 +29,7 @@ class Fight
         # Storing ids to redis splitting by buckets
         buckets.times do |bucket|
           ids.slice!(0, opponents_per_bucket).each do |id|
-            $redis.sadd("opponent_bucket_#{ range.begin }_#{ bucket }", id)
+            $redis.sadd(bucket_key(range.begin, bucket), id)
           end
         end
       
@@ -38,7 +38,7 @@ class Fight
       end
       
       def opponent_ids(range, bucket)
-        $redis.smembers("opponent_bucket_#{ range.begin }_#{ bucket }").map{|i| i.to_i }
+        $redis.smembers(bucket_key(range.begin, bucket)).map{|i| i.to_i }
       end
       
       def random_opponents(range, exclude_ids, amount)
@@ -62,6 +62,10 @@ class Fight
         result[0, amount]
       end
       
+      def bucket_key(level, bucket)
+        "opponent_bucket_#{ level }_#{ bucket }"
+      end
+      
       def buckets
         $memory_store.fetch('opponent_buckets', :expires_in => 30.seconds) do
           $redis.hgetall("opponent_buckets").inject({}){|memo, (key, value)| memo[key.to_i] = value.to_i; memo }
@@ -72,18 +76,32 @@ class Fight
         [].tap do |result|
           buckets.map do |level, amount|
             amount.times do |bucket|
-              result << "opponent_bucket_#{ level }_#{ bucket }"
+              result << bucket_key(level, bucket)
             end
           end
         end
       end
       
-      def delete_id(id)
+      def delete(character)
+        id = character.id
+        
         bucket_keys.each do |key|
           return true if $redis.srem(key, id)
         end
         
         false
+      end
+      
+      def update(character)
+        delete(character)
+        
+        range = Fight.level_range(character)
+        
+        if max_bucket = buckets[range.begin] # Only try to add to bucket if we have any buckets for desired level range
+          key = bucket_key(range.begin, max_bucket > 1 ? rand(max_bucket) : 0)
+
+          $redis.sadd(key, character.id)
+        end
       end
       
       def clear!

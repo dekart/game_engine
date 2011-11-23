@@ -347,9 +347,13 @@ class Character < ActiveRecord::Base
       notifications.schedule(:level_up)
       
       self.level_up_applied = true
+      
+      Fight::OpponentBucket.update(character) # Update character position in opponent buckets
 
       EventLoggingService.log_event(:character_levelup, self)
     end
+    
+    true
   end
   
   def level_up_amount
