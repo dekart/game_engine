@@ -41,14 +41,8 @@ class Fight
         $redis.smembers("opponent_bucket_#{ range.begin }_#{ bucket }").map{|i| i.to_i }
       end
       
-      def buckets
-        $memory_store.fetch('opponent_buckets', :expires_in => 30.seconds) do
-          $redis.hgetall("opponent_buckets").inject({}){|memo, (key, value)| memo[key.to_i] = value.to_i; memo }
-        end
-      end
-      
       def random_opponents(range, exclude_ids, amount)
-        total_buckets = buckets[range.begin]
+        total_buckets = buckets[range.begin] || 0
         bucket = rand(total_buckets)
         
         result = []
@@ -66,6 +60,30 @@ class Fight
         result.shuffle!
         
         result[0, amount]
+      end
+      
+      def buckets
+        $memory_store.fetch('opponent_buckets', :expires_in => 30.seconds) do
+          $redis.hgetall("opponent_buckets").inject({}){|memo, (key, value)| memo[key.to_i] = value.to_i; memo }
+        end
+      end
+      
+      def bucket_keys
+        [].tap do |result|
+          buckets.map do |level, amount|
+            amount.times do |bucket|
+              result << "opponent_bucket_#{ level }_#{ bucket }"
+            end
+          end
+        end
+      end
+      
+      def delete_id(id)
+        bucket_keys.each do |key|
+          return true if $redis.srem(key, id)
+        end
+        
+        false
       end
       
       def clear!
