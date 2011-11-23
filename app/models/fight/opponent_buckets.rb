@@ -6,14 +6,28 @@ class Fight
       def rebuild!
         clear!
       
-        Fight::OPPONENT_LEVEL_RANGES.each do |range|
+        Fight::OPPONENT_LEVEL_RANGES.reverse.each do |range| # Process in reversed order to rebuild small top-level buckets first
           rebuild_by_range(range)
         end
+        
+        buckets
       end
     
       def rebuild_by_range(range)
-        ids = Character.connection.select_values("SELECT id FROM characters WHERE level BETWEEN #{ range.begin } AND #{ range.end }").map{|i| i.to_i }
+        ids = Character.connection.select_values(
+          Character.send(:sanitize_sql_array,
+            [
+              "SELECT id FROM characters WHERE level BETWEEN ? AND ? AND fighting_available_at < ?",
+              range.begin,
+              range.end,
+              Time.now.utc
+            ]
+          )
+        )
+        ids.map!{|i| i.to_i }
+        
         ids -= Character.banned_ids
+        ids.shuffle!
       
         # Calculating number of opponents per bucket
         if (ids.size.to_f / BUCKET_SIZE).round > 1 # There are more than bucket_size*1.5 opponents
@@ -24,9 +38,7 @@ class Fight
       
         buckets = (ids.size.to_f / opponents_per_bucket).ceil # calculating number of buckets for current range
       
-        ids.shuffle!
-      
-        # Storing ids to redis splitting by buckets
+        # Storing ids in redis splitted by buckets
         buckets.times do |bucket|
           ids.slice!(0, opponents_per_bucket).each do |id|
             $redis.sadd(bucket_key(range.begin, bucket), id)
