@@ -11,7 +11,7 @@ class AddEffectsToItems < ActiveRecord::Migration
         [:attack, :defence, :health, :energy, :stamina, :hp_restore_rate, :sp_restore_rate, :ep_restore_rate].each do |effect|
           value = item.send(effect)
           
-          effects[effect] = {:type => effect, :value => value } if value != 0
+          effects[effect] = {:type => effect, :value => value } if value.to_i != 0
         end
         
         item.effects = effects
