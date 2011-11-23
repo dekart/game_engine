@@ -10,12 +10,12 @@ module Payouts
       @recovery_mode = value.to_sym
     end
     
-    def recalc_value
-      @recalc_value
+    def calculated_value
+      @calculated_value
     end
    
-    def recalc_recovery(param_total)
-      (recovery_mode == :absolute) ? @value : ((param_total / 100.0) * @value).ceil
+    def calculate_value(total)
+      (recovery_mode == :absolute) ? @value : ((total / 100.0) * @value).ceil
     end
   end
 end
