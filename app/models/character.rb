@@ -348,7 +348,7 @@ class Character < ActiveRecord::Base
       
       self.level_up_applied = true
       
-      Fight::OpponentBucket.update(character) # Update character position in opponent buckets
+      Fight::OpponentBuckets.update(self) # Update character position in opponent buckets
 
       EventLoggingService.log_event(:character_levelup, self)
     end

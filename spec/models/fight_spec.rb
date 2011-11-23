@@ -1,6 +1,31 @@
 require 'spec_helper'
 
 describe Fight do
+  describe '#attacker_level_range' do
+    before do
+      @attacker = Factory(:character)
+
+      @fight = Fight.new(:attacker => @attacker)
+    end
+
+    [1, 2, 3, 4, 5, 7, 11, 20, 30, 75, 120].each do |level|
+      describe "on level #{level}" do
+        before do
+          @attacker.level = level
+        end
+        
+        it "should return level range for level #{level}" do
+          @fight.attacker_level_range.should be_kind_of(Range)
+        end
+      
+        it 'should return range that includes attacker level' do
+          @fight.attacker_level_range.should include(level)
+        end
+      end
+    end
+  end
+  
+  
   describe '#can_attack?' do
     before do
       @attacker = Factory(:character)
