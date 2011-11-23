@@ -1,6 +1,10 @@
 module Payouts
   class EnergyPoint < Base
+    include RecoveryMode
+    
     def apply(character, reference = nil)
+      @value = (recovery_mode == :absolute) ? @value : ((character.energy / 100.0) * @value).ceil
+      
       if action == :remove
         character.ep -= @value
       else

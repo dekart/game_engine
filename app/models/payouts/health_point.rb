@@ -1,6 +1,10 @@
 module Payouts
   class HealthPoint < Base
+    include RecoveryMode
+    
     def apply(character, reference = nil)
+      @value = (recovery_mode == :absolute) ? @value : ((character.health / 100.0) * @value).ceil
+      
       if action == :remove
         character.hp -= @value
       else
