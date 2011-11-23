@@ -21,7 +21,9 @@ class Assignment < ActiveRecord::Base
     end
     
     def by_role(role)
-      all.detect{|a| a.role == role.to_s }
+      role = role.to_s
+      
+      all(:include => {:relation => :character}).detect{|a| a.role == role }
     end
 
     def effect_value(context, relation, role)
