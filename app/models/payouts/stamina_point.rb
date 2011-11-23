@@ -1,10 +1,14 @@
 module Payouts
   class StaminaPoint < Base
+    include RecoveryMode
+    
     def apply(character, reference = nil)
+      @calculated_value = calculate_value(character.stamina)
+      
       if action == :remove
-        character.sp -= @value
+        character.sp -= @calculated_value
       else
-        character.sp += @value
+        character.sp += @calculated_value
       end
     end
     
