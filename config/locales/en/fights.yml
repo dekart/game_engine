@@ -44,3 +44,5 @@ en:
     victims:
       buttons:
         attack: "Attack!"
+    victim_list:
+      loading: "Loading opponent list…"    

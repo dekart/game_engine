@@ -220,8 +220,10 @@ var Character = {
   },
 
   update_from_remote: function(){
-    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
-      Character.update(data);
+    Spinner.disable(function(){
+      $.getJSON('/character_status/?rand=' + Math.random(), function(data){
+        Character.update(data);
+      });
     });
   }
 };
@@ -444,6 +446,16 @@ var Fighting = {
   loadMoreOpponents : function(){
     $.get('/fights', function(response){
       $('#victim_list').append(response);
+    });
+  },
+  
+  loadOpponents : function(){
+    $("#loading_opponents").show();
+    
+    $.get('/fights', function(response){
+      $('#victim_list').append(response);
+      
+      $("#loading_opponents").hide();
     });
   }
 };

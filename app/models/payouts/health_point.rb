@@ -1,10 +1,14 @@
 module Payouts
   class HealthPoint < Base
+    include RecoveryMode
+    
     def apply(character, reference = nil)
+      @calculated_value = calculate_value(character.health)
+      
       if action == :remove
-        character.hp -= @value
+        character.hp -= @calculated_value
       else
-        character.hp += @value
+        character.hp += @calculated_value
       end
     end
     

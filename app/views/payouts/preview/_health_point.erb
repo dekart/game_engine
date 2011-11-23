@@ -1,1 +1,1 @@
-<%= payout(:hp, payout.value) %>
+<%= payout(:hp, (payout.recovery_mode == :absolute ? payout.value : "+#{payout.value}%")) %>
