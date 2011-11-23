@@ -223,6 +223,8 @@ var Character = {
     Spinner.disable(function(){
       $.getJSON('/character_status/?rand=' + Math.random(), function(data){
         Character.update(data);
+        
+        $(document).trigger('application.ready'); // Triggering event to start timers
       });
     });
   }
