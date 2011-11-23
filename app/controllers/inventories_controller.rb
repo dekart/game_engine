@@ -36,6 +36,11 @@ class InventoriesController < ApplicationController
 
   def index
     @inventories = current_character.inventories
+    
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def use
