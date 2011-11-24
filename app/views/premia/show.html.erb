@@ -189,13 +189,13 @@
   </div>
   
   <div id="earn_credits">
-   <span class="earn_credits text"><%= t('.earn_credits.note')%></span>
-    
-    <div class="buttons">
-      <% if Setting.b(:premium_offer_wall_enabled) %>
+    <p class="earn_credits text"><%= t('.earn_credits.note')%></p>
+   
+    <% if Setting.b(:premium_offer_wall_enabled) %> 
+      <div class="buttons">
         <span class="earn_credits button"><%= button(:earn_credits) %></span>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>
 

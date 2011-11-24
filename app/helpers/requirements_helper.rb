@@ -76,24 +76,33 @@ module RequirementsHelper
     requirement(:vip_money, "#{ requirement_text } #{additional_text}", current_character.vip_money >= value)
   end
   
-  def refill_button_options(type, price)
-    if current_character.vip_money >= price
-      {
+  def refill_button(type)
+    price = case type
+      when :refill_energy  : Setting.i(:premium_energy_price)
+      when :refill_health  : Setting.i(:premium_health_price)
+      when :refill_stamina : Setting.i(:premium_stamina_price)
+    end
+    
+    if current_character.vip_money >= price  
+      link_to_remote(
+        button( :refill, :price => content_tag(:span, price, :class => :amount)), 
         :url    => premium_path(:type => type),
         :method => :put,
         :update => :result,
         :html   => {:class => "premium button"}
-      }
+      )
       
     else
-      {
+      link_to_remote(
+        button( :refill, :price => content_tag(:span, price, :class => :amount)), 
         :url    => refill_dialog_premium_path(
           :type => type, 
           :vip_money => price
         ),
         :update => :ajax,
         :html   => {:class => "premium button"}
-      }
-    end
+      )
+    end  
   end
+  
 end
