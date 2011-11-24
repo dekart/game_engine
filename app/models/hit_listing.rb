@@ -8,7 +8,7 @@ class HitListing < ActiveRecord::Base
     :include    => [:victim, :client]
   named_scope :completed_recently, Proc.new {
     {
-      :conditions => ["completed = 1 AND updated_at > ?", Setting.i(:hit_list_repeat_listing_delay).hours]
+      :conditions => ["completed = 1 AND updated_at > ?", Setting.i(:hit_list_repeat_listing_delay).hours.ago]
     }
   }
   named_scope :available_for, Proc.new{|character|
