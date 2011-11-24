@@ -13,7 +13,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 */5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:logged_events:store --trace >> <%= shared_path %>/log/logged_events.log 2>&1
 <% end %>
 
-*/5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:maintenance:expire_monsters app:maintenance:finish_contests --trace >> <%= shared_path %>/log/monsters_contests.log 2>&1
+*/5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:fighting:rebuild_buckets app:maintenance:expire_monsters app:maintenance:finish_contests --trace >> <%= shared_path %>/log/monsters_contests.log 2>&1
 
 */15 * * * *  cd <%= current_path %> && flock ./tmp/pids/rake rake app:maintenance:publish_total_score_in_facebook --trace >> <%= shared_path %>/log/publish_total_score_in_facebook.log 2>&1
 

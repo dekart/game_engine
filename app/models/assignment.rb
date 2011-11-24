@@ -12,20 +12,6 @@ class Assignment < ActiveRecord::Base
   before_create :destroy_current_assignments
 
   class << self
-    ROLES.each do |role|
-      class_eval %[
-        def #{role}_effect
-          by_role('#{role}').try(:effect_value) || 0
-        end
-      ]
-    end
-    
-    def by_role(role)
-      role = role.to_s
-      
-      all(:include => {:relation => :character}).detect{|a| a.role == role }
-    end
-
     def effect_value(context, relation, role)
       case role.to_sym
       when :attack
