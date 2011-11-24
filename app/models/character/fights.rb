@@ -14,7 +14,8 @@ class Character
           :class_name   => "Fight",
           :foreign_key  => :winner_id
 
-        before_save :update_fight_availability_time, :if => :hp_changed?
+        after_create  :update_opponent_bucket
+        before_save   :update_fight_availability_time, :if => :hp_changed?
       end
     end
     
@@ -33,6 +34,11 @@ class Character
         
         self.fighting_available_at = hp_restore_time(weakness_minimum).seconds.from_now
       end
+    end
+    
+    def update_opponent_bucket
+      Fight::OpponentBuckets.update(self)
+      true
     end
   end
 end

@@ -8,6 +8,7 @@ class Character < ActiveRecord::Base
   include Character::Fights
   include Character::AppRequests
   include Character::Relations
+  include Character::Assignments
   include Character::Inventories
   include Character::Properties
   include Character::Notifications
@@ -31,10 +32,6 @@ class Character < ActiveRecord::Base
   belongs_to :user
   belongs_to :character_type,
     :counter_cache => true
-
-  has_many :assignments,
-    :as         => :context,
-    :dependent  => :delete_all
 
   has_many :boss_fights,
     :extend => Character::BossFights
@@ -348,7 +345,7 @@ class Character < ActiveRecord::Base
       
       self.level_up_applied = true
       
-      Fight::OpponentBuckets.update(self) # Update character position in opponent buckets
+      update_opponent_bucket # Update character position in opponent buckets
 
       EventLoggingService.log_event(:character_levelup, self)
     end
