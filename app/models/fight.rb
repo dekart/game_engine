@@ -55,7 +55,7 @@ class Fight < ActiveRecord::Base
     return false unless attacker_level_range.include?(victim.level)   # Checking level range match
     return false if !Setting.b(:fight_weak_opponents) && victim.weak? # Checking if opponent is too weak
     return false if latest_opponent_ids.include?(victim.id)           # Checking if opponent was attacked recently
-    return false if !Setting.b(:fight_alliance_attack) && attacker.friend_relations.character_ids.include?(victim.id)
+    return false if !Setting.b(:fight_alliance_attack) && attacker.friend_relations.character_ids.include?(victim.id) # Checking if opponent is in alliance
 
     true
   end
