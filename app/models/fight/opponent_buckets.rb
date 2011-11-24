@@ -60,7 +60,7 @@ class Fight
         result = []
         buckets_processed = 0
         
-        while result.size < amount && buckets_processed < total_buckets
+        while buckets_processed < total_buckets && result.size < amount
           buckets_processed += 1
           
           result.push(*(opponent_ids(range, bucket) - exclude_ids))
