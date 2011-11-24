@@ -69,7 +69,9 @@ class Fight < ActiveRecord::Base
     
     opponent_ids = Fight::OpponentBuckets.random_opponents(attacker_level_range, exclude_ids, Setting.i(:fight_victim_show_limit))
 
-    Character.all(:include => :user, :conditions => {:id => opponent_ids})
+    Character.all(:include => :user, :conditions => {:id => opponent_ids}).tap do |r|
+      r.shuffle!
+    end
   end
     
   def attacker_won?
