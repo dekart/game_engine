@@ -8,11 +8,9 @@
 
 <%= will_paginate @items %>
 
-<table id="item_list" cellspacing="0" cellpadding="0">
-  <% @items.each do |item| %>
-    <%= render(item) %>
-  <% end %>
-</table>
+<div id="item_list" class="item_list">
+  <%= render("list", :items => @items) %>
+</div>
 
 <% if @next_item %>
   <div id="next_item">
@@ -28,5 +26,11 @@
 <% dom_ready do %>
 
   Shop.setup();
-  
+
+  $(document).bind('item.purchase', function(){
+    <%= remote_function(
+          :url => item_group_items_path(@current_group.id),
+          :method => :get
+        ) %>
+  });
 <% end %>
