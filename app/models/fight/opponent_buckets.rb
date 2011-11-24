@@ -33,7 +33,7 @@ class Fight
         if (ids.size.to_f / BUCKET_SIZE).round > 1 # There are more than bucket_size*1.5 opponents
           opponents_per_bucket = (ids.size.to_f / (ids.size.to_f / BUCKET_SIZE).ceil).ceil
         else
-          opponents_per_bucket = ids.size
+          opponents_per_bucket = ids.size + 1 # Bucket size cannot be zero
         end
       
         buckets = (ids.size.to_f / opponents_per_bucket).ceil # calculating number of buckets for current range
