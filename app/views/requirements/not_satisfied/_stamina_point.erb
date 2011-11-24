@@ -12,14 +12,10 @@
         <div class="name"><%= t(".restorable.title") %></div>
         <div class="image"><%= asset_image_tag(:refill_stamina) %></div>
         <div class="controls">
-          <%= link_to_remote(button(:refill), 
-                :url    => refill_dialog_premium_path(
-                  :type => :refill_stamina, 
-                  :vip_money => Setting.i(:premium_stamina_price)
-                ),
-                :update => :ajax,
-                :html   => {:class => "premium button"}
-              ) %> 
+          <%= link_to_remote(
+                button( :refill, :price => Setting.i(:premium_stamina_price), :icon => asset_image_tag(:icons_vip_money)), 
+                refill_button_options(:refill_stamina, Setting.i(:premium_stamina_price))
+              ) %>
         </div>
       </div>
       

@@ -75,4 +75,25 @@ module RequirementsHelper
     
     requirement(:vip_money, "#{ requirement_text } #{additional_text}", current_character.vip_money >= value)
   end
+  
+  def refill_button_options(type, price)
+    if current_character.vip_money >= price
+      {
+        :url    => premium_path(:type => type),
+        :method => :put,
+        :update => :result,
+        :html   => {:class => "premium button"}
+      }
+      
+    else
+      {
+        :url    => refill_dialog_premium_path(
+          :type => type, 
+          :vip_money => price
+        ),
+        :update => :ajax,
+        :html   => {:class => "premium button"}
+      }
+    end
+  end
 end
