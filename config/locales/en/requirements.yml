@@ -100,8 +100,8 @@ en:
           
       basic_money:
         message: "You don't have enough Money! You need %{required_value} Money"
-        get_more: "You can also visit the %{premium_page} to get more Money."
-        visit_to_mission: "You can also visit the %{mission_page} to get more Money." # ***
+        get_more: "You can also visit the %{premium_page} to get Money in exchange to Gems."
+        visit_to_mission: "You can do some %{mission_page} to earn money." # ***
         buttons:
           get_more_money: "Get More Money"
           
