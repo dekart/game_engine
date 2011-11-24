@@ -184,10 +184,18 @@
         ).html_safe %>
   </div>
 
-  <div class="note"><%= t('.buy.note', :vip_money => Character.human_attribute_name('vip_money'))%></div>
-
   <div id="get_more_vip">
     <%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>
+  </div>
+  
+  <div id="earn_credits">
+   <span class="earn_credits text"><%= t('.earn_credits.note')%></span>
+    
+    <div class="buttons">
+      <% if Setting.b(:premium_offer_wall_enabled) %>
+        <span class="earn_credits button"><%= button(:earn_credits) %></span>
+      <% end %>
+    </div>
   </div>
 </div>
 

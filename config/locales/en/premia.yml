@@ -4,6 +4,7 @@ en:
     show:
       buttons:
         buy: "Buy Gems"
+        earn_credits: "Earn Credits"
       current: "You have %{amount} Gems."
       get_more: "Get More »"
       need_more: "Need more Gems? You can buy them using a major Credit Card or Paypal!"
@@ -36,8 +37,8 @@ en:
       buy_points:
         text: "Add %{amount} attribute points to your character"
         button: "Add Points"
-      buy:
-        note: 'At this page you can purchase or earn %{vip_money}. You can use any of the available payment methods to make the purchase or you can complete some offers provided by our partners.'
+      earn_credits:
+        note: 'Need more Facebook Credits? You can earn them by completing special offers provided by Facebook partners! It’s easy and secure.'
     change_name:
       title: "Change Your Nickname"
       note: "Please enter your new nickname below. Please note that each name change will charge Gems from your character so try to avoid typos. If you want to use your real Facebook name - keep the field blank and click 'Apply'."
