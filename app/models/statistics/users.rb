@@ -8,6 +8,10 @@ class Statistics
       scope.count
     end
     
+    def recent_visitors(time = 7.days)
+      scope.scoped(:conditions => ["last_visit_at > ?", time.ago])
+    end
+    
     def users_by_day
       [].tap do |result|
         numeric_time_range.step(1.day) do |seconds|
