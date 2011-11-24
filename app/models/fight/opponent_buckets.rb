@@ -55,18 +55,18 @@ class Fight
       
       def random_opponents(range, exclude_ids, amount)
         total_buckets = buckets[range.begin] || 0
-        bucket = rand(total_buckets)
+        current_bucket = rand(total_buckets)
         
         result = []
         buckets_processed = 0
         
         while buckets_processed < total_buckets && result.size < amount
+          result.push(*(opponent_ids(range, current_bucket) - exclude_ids))
+          
+          current_bucket += 1
+          current_bucket = 0 if current_bucket >= total_buckets
+
           buckets_processed += 1
-          
-          result.push(*(opponent_ids(range, bucket) - exclude_ids))
-          
-          bucket += 1
-          bucket = 0 if bucket >= total_buckets
         end
         
         result.shuffle!
