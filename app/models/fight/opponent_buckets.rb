@@ -41,7 +41,7 @@ class Fight
         # Storing ids in redis splitted by buckets
         buckets.times do |bucket|
           ids.slice!(0, opponents_per_bucket).each do |id|
-            $redis.sadd(bucket_key(range.begin, bucket), id)
+            $redis.sadd(bucket_key(range.begin, bucket), id) # TODO: Use batch add after migration to new redis gem
           end
         end
       
