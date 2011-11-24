@@ -77,16 +77,10 @@ module RequirementsHelper
   end
   
   def refill_button(type)
-    price = case type
-      when :refill_energy  : Setting.i(:premium_energy_price)
-      when :refill_health  : Setting.i(:premium_health_price)
-      when :refill_stamina : Setting.i(:premium_stamina_price)
-    end
-    
-    if current_character.vip_money >= price  
+    if current_character.vip_money >= Setting.i(:"premium_#{type}_price")  
       link_to_remote(
-        button( :refill, :price => content_tag(:span, price, :class => :amount)), 
-        :url    => premium_path(:type => type),
+        button( :refill, :price => content_tag(:span, Setting.i(:"premium_#{type}_price"), :class => :amount)), 
+        :url    => premium_path(:type => :"refill_#{type}"),
         :method => :put,
         :update => :result,
         :html   => {:class => "premium button"}
@@ -94,10 +88,10 @@ module RequirementsHelper
       
     else
       link_to_remote(
-        button( :refill, :price => content_tag(:span, price, :class => :amount)), 
+        button( :refill, :price => content_tag(:span, Setting.i(:"premium_#{type}_price"), :class => :amount)), 
         :url    => refill_dialog_premium_path(
-          :type => type, 
-          :vip_money => price
+          :type => :"refill_#{type}", 
+          :vip_money => Setting.i(:"premium_#{type}_price")
         ),
         :update => :ajax,
         :html   => {:class => "premium button"}
