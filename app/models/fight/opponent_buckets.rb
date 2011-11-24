@@ -80,7 +80,11 @@ class Fight
       
       def buckets
         $memory_store.fetch('opponent_buckets', :expires_in => 30.seconds) do
-          $redis.hgetall("opponent_buckets").inject({}){|memo, (key, value)| memo[key.to_i] = value.to_i; memo }
+          {}.tap do |result|
+            $redis.hgetall("opponent_buckets").each do |key, value| 
+              result[key.to_i] = value.to_i
+            end
+          end
         end
       end
       
