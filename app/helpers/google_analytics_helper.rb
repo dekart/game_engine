@@ -35,6 +35,8 @@ module GoogleAnalyticsHelper
   end
   
   def ga_track_pageview(url = nil)
+    return unless ga_enabled?
+    
     ga_command('_trackPageview', url || request.path)
   end
   
