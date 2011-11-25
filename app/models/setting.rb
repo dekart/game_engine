@@ -1,13 +1,6 @@
 class Setting < ActiveRecord::Base
-  extend HasPayouts
-  has_payouts
-
   validates_presence_of   :alias
   validates_uniqueness_of :alias
-
-  before_save :serialize_payouts
-
-  cattr_accessor :cache
 
   class << self
     def cache
@@ -78,30 +71,6 @@ class Setting < ActiveRecord::Base
 
     def [](key)
       find_by_alias(key.to_s).try(:value)
-    end
-  end
-
-  def payout?
-    self.alias.match(/_payout$/) ? true : false
-  end
-
-  def payouts
-    @payouts ||= deserialize_payouts
-  end
-
-  protected
-
-  def serialize_payouts
-    if payout?
-      self.value = YAML.dump(payouts)
-    end
-  end
-
-  def deserialize_payouts
-    if self.value
-      YAML.load(value)
-    else
-      Payouts::Collection.new
     end
   end
 end
