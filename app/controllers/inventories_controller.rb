@@ -38,8 +38,8 @@ class InventoriesController < ApplicationController
     @inventories = current_character.inventories
     
     respond_to do |format|
-      format.js
       format.html
+      format.js
     end
   end
 
