@@ -15,7 +15,7 @@ module RatingsHelper
     end
 
     unless current_displayed # Adding current character to the end of the table if it wasn't in the leader list
-      result << capture(current, rating.position(current_character), true, &block)
+      result << capture(current_character, rating.position(current_character), true, &block)
     end
 
     block_given? ? concat(result.html_safe) : result.html_safe

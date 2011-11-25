@@ -39,7 +39,7 @@ class Rating
   end
   
   def leaders(limit)
-    ranks = $redis.zrevrange(key, 0, limit, :with_scores => true).map{|value| value.to_i }.in_groups_of(2)
+    ranks = $redis.zrevrange(key, 0, limit - 1, :with_scores => true).map{|value| value.to_i }.in_groups_of(2)
     ids = ranks.map{|r| r[0] }
 
     Character.scoped(:include => :user).find_all_by_id(ids).tap do |characters|
@@ -51,6 +51,8 @@ class Rating
   end
   
   def position(character)
-    $redis.zrank(key, character.id) || $redis.zcard(key)
+    position = $redis.zrank(key, character.id) || -1
+
+    $redis.zcard(key) - position
   end
 end
