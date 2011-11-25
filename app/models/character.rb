@@ -365,10 +365,6 @@ class Character < ActiveRecord::Base
     CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute|
       send("#{attribute}=", character_type.send(attribute)) if send(attribute).nil?
     end
-
-    self.hp = health_points
-    self.ep = energy_points
-    self.sp = stamina_points
   end
 
   def update_total_money

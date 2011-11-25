@@ -7,7 +7,7 @@ module RestorableAttribute
     end
 
     def updated_at
-      @container["#{@name}_updated_at"] || Time.now
+      @container["#{@name}_updated_at"] || Time.at(0)
     end
 
     def restore_rate
