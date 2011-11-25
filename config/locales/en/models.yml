@@ -38,6 +38,7 @@ en:
         fight_boost_attack: "Attack in Fight"
         fight_boost_defence: "Defence in Fight"
         total_score: "Total Score"
+        total_monsters_damage: "Total Damage to Monsters"
         
       property_type:
         income: "Income"
