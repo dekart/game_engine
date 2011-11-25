@@ -7,73 +7,53 @@ class Setting < ActiveRecord::Base
 
   before_save :serialize_payouts
 
-  after_save :update_cache!
-
   cattr_accessor :cache
 
   class << self
-    def update_cache!(force = false)
-      if force || cache.nil? || (cache[:updated_at] < 5.seconds.ago && cache[:key] < Setting.maximum(:updated_at))
-        self.cache = {
-          :key => Setting.maximum(:updated_at),
-          :values => Hash[all.map{|s| [s.alias.to_sym, s.value]}],
-          :updated_at => Time.now
-        }
-      else
-        cache[:updated_at] = Time.now if cache[:updated_at] < 5.seconds.ago
+    def cache
+      $memory_store.fetch('settings', :expires_in => 1.minute) do
+        {}.tap do |result|
+          all.each do |setting|
+            result[setting.alias.to_sym] = setting.value
+          end
+        end
       end
-
-      cache
     end
-
+    
     # Returns value casted to integer
     def i(key)
-      update_cache!
-
-      cache[:values][key.to_sym].to_i
+      cache[key.to_sym].to_i
     end
 
     # Returns value casted to string
     def s(key)
-      update_cache!
-
-      cache[:values][key.to_sym].to_s
+      cache[key.to_sym].to_s
     end
 
     # Returns value casted to float
     def f(key)
-      update_cache!
-
-      cache[:values][key.to_sym].to_f
+      cache[key.to_sym].to_f
     end
 
     # Returns value casted to boolean
     def b(key)
-      update_cache!
-
-      value = cache[:values][key.to_sym].to_s.downcase
+      value = cache[key.to_sym].to_s.downcase
 
       %w{true yes 1}.include?(value) ? true : false
     end
 
     # Returns value casted to string array (splits string value by comma)
     def a(key)
-      update_cache!
-
-      cache[:values][key.to_sym].to_s.split(/\s*,\s*/)
+      cache[key.to_sym].to_s.split(/\s*,\s*/)
     end
 
     # Returns percentage value casted to float
     def p(key, value_to_cast)
-      update_cache!
-
-      value_to_cast * cache[:values][key.to_sym].to_i * 0.01
+      value_to_cast * cache[key.to_sym].to_i * 0.01
     end
 
     def time(key)
-      update_cache!
-
-      if value = cache[:values][key.to_sym]
+      if value = cache[key.to_sym]
         ActiveSupport::TimeZone["UTC"].parse(value)
       else
         ActiveSupport::TimeZone["UTC"].at(0)
@@ -93,7 +73,7 @@ class Setting < ActiveRecord::Base
         create(:alias => key.to_s, :value => value)
       end
 
-      update_cache!(true)
+      $memory_store.delete('settings')
     end
 
     def [](key)
@@ -123,9 +103,5 @@ class Setting < ActiveRecord::Base
     else
       Payouts::Collection.new
     end
-  end
-
-  def update_cache!
-    self.class.update_cache!(true)
   end
 end
