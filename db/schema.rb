@@ -9,7 +9,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111118062703) do
+ActiveRecord::Schema.define(:version => 20111125123707) do
+
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
     t.string   "description",        :limit => 1024, :default => "", :null => false
@@ -228,8 +229,6 @@ ActiveRecord::Schema.define(:version => 20111118062703) do
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
-  add_index "characters", ["total_monsters_damage"], :name => "index_characters_on_total_monsters_damage"
-  add_index "characters", ["total_score"], :name => "index_characters_on_total_score"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "contest_groups", :force => true do |t|

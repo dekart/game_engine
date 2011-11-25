@@ -916,7 +916,7 @@ namespace :app do
     end
     
     task :publish_total_score_in_facebook => :environment do
-      if Setting.b(:total_score_enabled) && Setting.b(:total_score_publishing_in_facebook_enabled)
+      if Setting.b(:total_score_publishing_in_facebook_enabled)
         expired_time = Setting.i(:total_score_expiration_time).seconds.ago
         
         puts "Publishing total score of recently updated users"
