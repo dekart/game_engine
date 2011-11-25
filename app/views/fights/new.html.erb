@@ -19,13 +19,11 @@
 <%= @victims ? render("victim_list", :victims => @victims) : render("victim_list", :victims => nil ) %>
 
 <div id="more_fight_opponents">
-  <%= link_to_function(button(:more_opponents), "Fighting.loadMoreOpponents()",
+  <%= link_to_function(button(:more_opponents), "Fighting.loadOpponents()",
         :class => "button more_opponents"
       ) %>
 </div>
 
 <% dom_ready do %>
-  <% if @victims.nil? %>
-    Fighting.loadOpponents();
-  <% end %>  
+  Fighting.setup();
 <% end %>
