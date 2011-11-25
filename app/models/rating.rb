@@ -28,6 +28,7 @@ class Rating
     end
   end
   
+  
   attr_reader :field
   
   def initialize(field)
