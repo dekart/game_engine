@@ -76,6 +76,15 @@ en:
       description: ""
       action_link: ""
     position_in_rating:
-      title: "I'm #%{position} in %{rating_name} rating in %{app}!"
+      title: "I'm #%{position} in the %{rating_name} rating in %{app}!"
       description: ""
       action_link: "View Rating »"
+      ratings:
+        level: "Highest Level"
+        total_money: "Wealthiest"
+        fights_won: "Most Victories"
+        missions_succeeded: "Missions Succeeded"
+        relations: "Strongest Alliance"
+        killed_monsters_count: "Monsters Killed"
+        total_monsters_damage: "Monster Damage"
+        total_score: "Total"        

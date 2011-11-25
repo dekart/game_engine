@@ -7,7 +7,7 @@
     <th colspan="2"><%= Character.human_attribute_name("total_score") %></th>
   </tr>
 
-  <% rating_table(collection, :total_score, current) do |character, position, current| %>
+  <% rating_table(collection, :total_score) do |character, position, current| %>
     <% content_tag(:tr, :class => (:current if current)) do %>
       <td class="position"><%= position %></td>
       <td class="picture"><%= character_picture_link(character) %></td>

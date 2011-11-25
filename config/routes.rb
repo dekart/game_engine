@@ -248,7 +248,7 @@ ActionController::Routing::Routes.draw do |map|
       :refill_dialog => :post
     }
 
-  map.resource :rating, :member => {:global => :any}
+  map.resource :rating
 
   map.resources :gifts, :only => :new
 

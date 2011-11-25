@@ -1,13 +1,9 @@
 <div class="buttons clearfix" id="rating_buttons">
-  <% unless current == :relations %>
-    <%= link_to(button(:relations), rating_path, :class => :button) %>
-  <% end %>
-
-  <% unless current == :global %>
-    <%= link_to(button(:global), global_rating_path, :class => :button) %>
+  <% unless current == :rating %>
+    <%= link_to(button(:rating), rating_path, :class => :button) %>
   <% end %>
   
-  <% if current_contest && current_contest.available? %>
+  <% if current != :contest && current_contest && current_contest.available? %>
     <%= link_to(button(current_contest.name), contest_path(current_contest), :class => :button)%>
   <% end %>
 </div>

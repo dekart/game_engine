@@ -1,26 +1,30 @@
 module RatingsHelper
-  def rating_table(characters, field, current = current_character, include_current = true, &block)
+  def rating_table(field, &block)
+    rating = Rating.new(field)
+    
     result = ""
 
     current_displayed = false
     
-    characters.each_with_index do |character, index|
-      current_displayed ||= (character == current)
+    characters = rating.leaders(Setting.i(:rating_show_limit))
+    
+    characters.each do |character|
+      current_displayed ||= (character == current_character)
       
-      result << capture(character, characters.position(character), (character == current), &block)
+      result << capture(character, characters.index(character) + 1, (character == current_character), &block)
     end
 
-    if include_current && current && !current_displayed
-      result << capture(current, characters.position(current_character), true, &block)
+    unless current_displayed # Adding current character to the end of the table if it wasn't in the leader list
+      result << capture(current, rating.position(current_character), true, &block)
     end
 
     block_given? ? concat(result.html_safe) : result.html_safe
   end
   
   def rating_publish_button(position, rating_name)
-    return unless Setting.b(:stream_dialog_enabled) && params[:action] == 'global'
+    return unless Setting.b(:stream_dialog_enabled)
     
-    link_to_function(button(t("ratings.buttons.publish")), stream_dialog(:position_in_rating, position, rating_name),
+    link_to_function(button(t("ratings.show.buttons.publish")), stream_dialog(:position_in_rating, position, rating_name),
       :class => 'button publish'
     )
   end

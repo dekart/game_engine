@@ -1,12 +1,8 @@
 class RatingsController < ApplicationController
   def show
-    fetch_ratings(current_character)
-  end
-
-  def global
     fetch_ratings
     
-    render :action => :show
+    @total_score = Rating.new(:total_score)
   end
   
   protected
