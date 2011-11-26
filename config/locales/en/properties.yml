@@ -27,6 +27,7 @@ en:
         collect_all: "Collect All"
         hire: "Hire Workers"
     hire:
+      title: "Hire Workers"
       note: '%{property} requires %{amount} workers to activate. You can hire workers for Gems or you can invite your friends.'
       worker: 'Worker'
       hired: 'Hired!'

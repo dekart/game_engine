@@ -1,9 +1,13 @@
 <% if !@result.is_a?(Requirements::Collection) %>
   <% if @property.missing_workers? %>
     <% dialog :id => :hire_property_dialog do |d| %>
-      <%= t('.note', :property => @property.name, :amount => @property.property_type.workers) %>
+      <h2><%= t('.title') %></h2>
+        
+      <div class="note">
+        <%= t('.note', :property => @property.name, :amount => @property.property_type.workers) %>
+      </div>
   
-      <div class="workers">
+      <div class="workers clearfix">
         <% @property.property_type.workers.times do |index| %>
           <div class="worker">
             <h3><%= @property.worker_names[index] || t('.worker') %></h3>
@@ -32,39 +36,43 @@
             <% end %>
           </div>
         <% end %>
+      </div>
     
-        <div class="controls">
-          <%= link_to_function(button(:invite),
-                invite_dialog(:property_worker,
-                  :dialog => {
-                    :title    => t('.invitation.title'),
-                    :message  => t('.invitation.message', :name => @property.name, :app => t('app_name')),
-                    :data     => {
-                      :target_id    => @property.id,
-                      :target_type  => Property.name
-                    }
-                  },
-                  :request => {
+      <div class="controls">
+        <%= link_to_function(button(:invite),
+              invite_dialog(:property_worker,
+                :dialog => {
+                  :title    => t('.invitation.title'),
+                  :message  => t('.invitation.message', :name => @property.name, :app => t('app_name')),
+                  :data     => {
                     :target_id    => @property.id,
                     :target_type  => Property.name
                   }
-                ),
-                :class => "invite button"
-              ) %>
-
-          <%= link_to_remote(
-                button(:hire_all, 
-                  :price => '<strong class="price">%s</strong>' % (@property.missing_workers * Setting.i(:property_worker_price))
-                ), 
-                :url => hire_property_path(@property, :hire_all => true),
-                :method => :put,
-                :update => :ajax,
-                :html => {
-                  :class => "hire button"
+                },
+                :request => {
+                  :target_id    => @property.id,
+                  :target_type  => Property.name
                 }
-              ) %>
-        </div>
+              ),
+              :class => "invite button"
+            ) %>
+
+        <%= link_to_remote(
+              button(:hire_all, 
+                :price => '<strong class="price">%s</strong>' % (@property.missing_workers * Setting.i(:property_worker_price))
+              ), 
+              :url => hire_property_path(@property, :hire_all => true),
+              :method => :put,
+              :update => :ajax,
+              :html => {
+                :class => "hire button"
+              }
+            ) %>
       </div>
+      
+      <% d.on_ready do %>
+        $(document).trigger('remote_content.received'); 
+      <% end %>
     <% end %>
   <% else %>
     <% dom_ready do %>
