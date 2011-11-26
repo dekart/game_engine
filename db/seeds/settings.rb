@@ -80,6 +80,7 @@ Setting[:property_sell_price] ||= 50
 Setting[:property_upgrade_limit] ||= 2000
 Setting[:property_first_collect_time] ||= 5.minutes.to_i
 Setting[:property_worker_price] ||= 2
+Setting[:property_worker_hire_delay] ||= 24
 
 Setting[:user_tutorial_enabled] ||= true
 Setting[:user_admins] ||= "682180971, 573513043"
