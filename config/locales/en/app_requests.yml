@@ -28,6 +28,8 @@ en:
         text: "%{user} invites you to join fight against %{monster}"
       invitation:
         text: "%{user} invites you to join their Alliance"
+      property_worker:
+        text: "%{user} asks you to help them finish the %{property}"
     update:
       gift:
         accepted: 'Gift accepted!'
@@ -43,4 +45,6 @@ en:
         accepted: 'Invitation accepted!'
         buttons:
           alliance: 'View Alliance'
+      property_worker:
+        accepted: 'Thank you for your help!'
     

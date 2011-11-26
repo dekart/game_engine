@@ -47,9 +47,26 @@ class Property < ActiveRecord::Base
   end
   
   def worker_friends
-    ids = self[:worker_friend_ids].split(',').map{|id| id.to_i }
+    ids = worker_friend_ids
     
     Character.find(ids).sort_by{|c| ids.index(c.id) }
+  end
+  
+  def worker_friend_ids
+    self[:worker_friend_ids].split(',').map{|id| id.to_i }
+  end
+  
+  def worker_friend_ids=(value)
+    self[:worker_friend_ids] = Array.wrap(value).join(',')
+  end
+  
+  def add_worker!(character)
+    return if missing_workers == 0 || worker_friend_ids.include?(character.id)
+    
+    self.worker_friend_ids += [character.id]
+    self.workers += 1
+    
+    save!
   end
   
   def hire_worker!(hire_all = nil)

@@ -114,7 +114,7 @@
                   ) %>
             </div>
 
-            <div class="missing_workers"><%= t('.missing_workers') %></div>
+            <div class="missing_workers"><%= t('.missing_workers', :amount => property.missing_workers) %></div>
           <% end %>
         <% end %>
       <% end %>

@@ -34,6 +34,24 @@
         <% end %>
     
         <div class="controls">
+          <%= link_to_function(button(:invite),
+                invite_dialog(:property_worker,
+                  :dialog => {
+                    :title    => t('.invitation.title'),
+                    :message  => t('.invitation.message', :name => @property.name, :app => t('app_name')),
+                    :data     => {
+                      :target_id    => @property.id,
+                      :target_type  => Property.name
+                    }
+                  },
+                  :request => {
+                    :target_id    => @property.id,
+                    :target_type  => Property.name
+                  }
+                ),
+                :class => "invite button"
+              ) %>
+
           <%= link_to_remote(
                 button(:hire_all, 
                   :price => '<strong class="price">%s</strong>' % (@property.missing_workers * Setting.i(:property_worker_price))
