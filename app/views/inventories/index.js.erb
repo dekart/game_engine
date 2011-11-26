@@ -1,0 +1,5 @@
+$('#inventory_list').html('<%=
+  escape_javascript(
+    render("list", :inventories => current_character.inventories)
+  )
+%>');

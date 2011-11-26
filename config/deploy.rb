@@ -123,7 +123,7 @@ namespace :deploy do
     
     desc "Package all non-packaged backups"
     task :package_backups, :roles => :db, :only => {:primary => true} do
-      run "gzip *.sql"
+      run "nohup gzip *.sql"
     end
   end
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111120134546) do
+ActiveRecord::Schema.define(:version => 20111125134910) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -225,12 +225,9 @@ ActiveRecord::Schema.define(:version => 20111120134546) do
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
-    t.integer  "total_score",              :limit => 8,          :default => 0,                     :null => false
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
-  add_index "characters", ["total_monsters_damage"], :name => "index_characters_on_total_monsters_damage"
-  add_index "characters", ["total_score"], :name => "index_characters_on_total_score"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "contest_groups", :force => true do |t|
@@ -610,6 +607,7 @@ ActiveRecord::Schema.define(:version => 20111120134546) do
     t.integer  "levels_count",                      :default => 0
     t.integer  "position"
     t.datetime "image_updated_at"
+    t.string   "button_label",                      :default => "", :null => false
   end
 
   add_index "missions", ["mission_group_id"], :name => "index_missions_on_mission_group_id"

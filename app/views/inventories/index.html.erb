@@ -22,3 +22,12 @@
 <div id="inventory_list" class="inventory_list">
   <%= render("list", :inventories => @inventories) %>
 </div>
+
+<% dom_ready do %>
+  $(document).bind('items.used', function(){
+    <%= remote_function(
+          :url => inventories_path,
+          :method => :get
+        ) %>
+  });
+<% end %>

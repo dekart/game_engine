@@ -20,6 +20,7 @@ en:
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
+        recent_visitors: "Recent Visitors (7 days)"
         new_users: 'New Users'
         new_users_chart:
           title: 'New Users By Day'

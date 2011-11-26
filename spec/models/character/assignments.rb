@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Assignment do
+describe Character::Assignments do
   %w{attack defence fight_damage fight_income mission_energy mission_income}.each do |role|
     describe "when receiving #{role} effect for collection" do
       before do
@@ -16,15 +16,16 @@ describe Assignment do
       end
 
       it "should return assignment effect value if assignment for #{role} exists" do
-        Assignment.stub!(:all).and_return([@assignment])
+        #Assignment.stub!(:all).and_return([@assignment])
         
-        Assignment.send("#{role}_effect").should == 1
+        @character1.assignments.send("#{role}_effect").should == 1
       end
       
       it "should return 0 if there is no assignment for #{role}" do
-        Assignment.stub!(:all).and_return([])
+        #Assignment.stub!(:all).and_return([])
+        @assignment.destroy
 
-        Assignment.send("#{role}_effect").should == 0
+        @character1.assignments.send("#{role}_effect").should == 0
       end
     end
   end

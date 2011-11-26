@@ -34,6 +34,12 @@ module GoogleAnalyticsHelper
     ga_command('_trackEvent', category, action, label, value > 0 ? value : nil)
   end
   
+  def ga_track_pageview(url = nil)
+    return unless ga_enabled?
+    
+    ga_command('_trackPageview', url || request.path)
+  end
+  
   VARIABLE_SCOPES = {
     :visitor  => 3,
     :session  => 2,

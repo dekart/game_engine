@@ -18,7 +18,7 @@ en:
     buttons:
       buttons:
         missions: "Missions"
-        monsters: "Monsters"
+        monsters: "Monsters"    
     fulfill:
       completed:
         message: "You've just completed this mission!"

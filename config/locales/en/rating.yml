@@ -1,40 +1,22 @@
 en:
   ratings:
     show:
-      title:
-        global: "Hall of Fame: Global"
-        relations: "Hall of Fame: Alliance"
-      note: "This rating is getting updated every 15 minutes"
+      title: "Hall of Fame"
       permissions: "We can make your total score visible to your friends, but we'll need an additional permission from you to publish your in-game activities. You can revoke the permission any time at your Privacy Settings page."
       buttons:
         permissions: "Allow Publishing"
+        publish: "Publish"
       tabs:
         level: "Level"
         total_money: "Money"
-        fights: "Fights"
-        missions: "Missions"
+        fights_won: "Fights"
+        missions_succeeded: "Missions"
         relations: "Relations"
-        monsters: "Monsters"
+        total_monsters_damage: "Monster Damage"
+        killed_monsters_count: "Monsters Killed"
         total_score: "Total Score"
         
     buttons:
       buttons:
-        relations: "Alliance Rating"
-        global: "Global Rating"
+        rating: "Rating"
         contest: "Contest Results"
-      publish: "Publish"
-
-    level: 
-      title: "Highest Level"
-    total_money:
-      title: "Wealthiest"
-    fights:
-      title: "Most Wins"
-    missions:
-      title: "Missions Succeeded"
-    relations:
-      title: "Strongest Alliance"
-    monsters:
-      title: "Monsters Killed"
-    total_score:
-      title: "Total Score"

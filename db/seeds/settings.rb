@@ -74,6 +74,7 @@ Setting[:inventory_exchange_enabled] ||= true
 
 Setting[:item_show_basic] ||= 10
 Setting[:item_show_special] ||= 3
+Setting[:promo_block_minimum_level] ||= 3
 
 Setting[:property_sell_price] ||= 50
 Setting[:property_upgrade_limit] ||= 2000
@@ -176,8 +177,6 @@ Setting[:app_toolbar_applifier_id] ||= ''
 Setting[:app_toolbar_minimum_level] ||= 1
 
 # total score
-Setting[:total_score_enabled] ||= true
-
 Setting[:total_score_fights_won_factor] ||= 1
 Setting[:total_score_killed_monsters_count_factor] ||= 1
 Setting[:total_score_total_monsters_damage_factor] ||= 1

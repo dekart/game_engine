@@ -220,8 +220,12 @@ var Character = {
   },
 
   update_from_remote: function(){
-    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
-      Character.update(data);
+    Spinner.disable(function(){
+      $.getJSON('/character_status/?rand=' + Math.random(), function(data){
+        Character.update(data);
+        
+        $(document).trigger('application.ready'); // Triggering event to start timers
+      });
     });
   }
 };
@@ -441,10 +445,32 @@ var Mission = {
 };
 
 var Fighting = {
-  loadMoreOpponents : function(){
-    $.get('/fights', function(response){
-      $('#victim_list').append(response);
+  setup: function(){
+    $(document).bind({
+      'fights.create': Fighting.checkOpponentPresence,
+
+      'character.new_level': function() {
+        $('#victim_list .character').remove();
+
+        Fighting.loadOpponents();
+      }
     });
+    
+    Fighting.checkOpponentPresence();
+  },
+  
+  checkOpponentPresence: function(){
+    if($('#victim_list .character:visible').length == 0){
+      Fighting.loadOpponents();
+    }
+  },
+  
+  loadOpponents : function(){
+    $("#loading_opponents").show();
+    
+    $.get('/fights', function(response){
+      $("#loading_opponents").hide();
+    }, 'script');
   }
 };
 

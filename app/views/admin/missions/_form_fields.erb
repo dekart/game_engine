@@ -3,6 +3,7 @@
 <%= form.grouped_select :parent_mission_id, Mission.to_grouped_dropdown, :include_blank => true %>
 
 <%= form.text_field :name, :required => true, :size => 50 %>
+<%= form.text_field :button_label, :size => 50 %>
 <%= form.text_area :description, :cols => 80, :rows => 5 %>
 
 <%= form.text_area :success_text, :cols => 80, :rows => 3 %>

@@ -29,7 +29,7 @@ module StreamHelper
       ]
       
       result.gsub!(/\n\s+/, ' ')
-    end.html_safe!
+    end.html_safe
   end
 
   protected
@@ -228,7 +228,7 @@ module StreamHelper
     [
       {
         :position => position,
-        :rating_name => t("ratings.#{rating_name}.title")
+        :rating_name => t("stories.position_in_rating.ratings.#{ rating_name }")
       },
       {},
       asset_image_path(:stream_rating)

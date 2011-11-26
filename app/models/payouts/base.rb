@@ -6,7 +6,7 @@ module Payouts
     end
 
     ACTIONS = [:add, :remove]
-
+    
     cattr_accessor :types
 
     attr_accessor :value, :visible

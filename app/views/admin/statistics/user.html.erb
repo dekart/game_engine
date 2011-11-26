@@ -3,13 +3,27 @@
 <%= render("controls") %>
 
 <div class="section">
-  <h2><%= t(".total_users") %></h2>
+  <table width="100%">
+    <tr>
+      <td>
+        <h2><%= t(".total_users") %></h2>
 
-  <p id="total_users">
-    <strong><%= @all.total_users %></strong>
+        <p id="total_users">
+          <strong><%= @all.total_users %></strong>
 
-    <%= admin_statistics_amount_change(@day.total_users) %>
-  </p>
+          <%= admin_statistics_amount_change(@day.total_users) %>
+        </p>
+      </td>
+      
+      <td>
+        <h2><%= t('.recent_visitors') %></h2>
+        
+        <p id="recent_visitors">
+          <strong><%= @all.recent_visitors.count %></strong>
+        </p>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <div class="section">

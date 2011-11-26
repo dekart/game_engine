@@ -28,11 +28,9 @@ en:
         title: "%{user} Wall"
     upgrade:
       title: "Upgrade"
-      buy_more: "Get more Points »"
+      sliders: "Drag sliders to add points to your attributes"
       finished:
         note: "You spent all your attribute points."
-        get_more: "Get more Points »"
-
     upgrade_result:
       messages:
         success: "You've successfully upgraded %{attribute} to %{number}"

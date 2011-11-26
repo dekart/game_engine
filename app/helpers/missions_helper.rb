@@ -43,4 +43,12 @@ module MissionsHelper
   def mission_money(level)
     "%s - %s" % [number_to_currency(level.money_min), number_to_currency(level.money_max)]
   end
+  
+  def mission_button(mission, rank)
+    if mission.button_label.blank?
+      button(rank.nil? || rank.progress == 0 ? :start : :fulfill)
+    else
+      button(mission.button_label)
+    end
+  end
 end

@@ -64,7 +64,7 @@ class StoriesController < ApplicationController
     when 'achievement'
       achievements_url(:canvas => true)
     when 'position_in_rating'
-      global_rating_url(:canvas => true)
+      rating_url(:canvas => true)
     else
       root_url(:canvas => true)
     end

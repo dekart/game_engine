@@ -1,0 +1,16 @@
+<% current_character.inventories.usable_with_payout(payout_name)[0, 2].each do |inventory| %>
+  <div class="item">
+    <div class="name"><%= inventory.name %></div>
+    <div class="image"><%= inventory_item_image(inventory, :small) %></div>
+    <div class="controls">
+      <%= link_to_remote(inventory_use_button(inventory),
+            :url    => use_inventory_path(inventory),
+            :update => :result,
+            :html   => {
+              :"data-click-once" => true,
+              :class => "use button"
+            }
+          ) %>   
+    </div>
+  </div>
+<% end %> 

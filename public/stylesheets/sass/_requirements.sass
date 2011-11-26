@@ -142,3 +142,35 @@
       
     .basic_money
       background-image = !asset_icons_basic_money
+      
+#refill_options_list
+  .item
+    float: left
+    padding-right: 20px
+    text-align: center 
+    
+    .name
+      font-weight: bold
+      margin-bottom: 5px
+      color = !subheader_color
+      
+    .controls      
+      .use
+        float: none
+        +button(!inventory_item_use_icon)
+
+      .premium
+        +button(!asset_icons_add)
+        
+        .amount
+          background: none
+          background-image = !asset_icons_vip_money
+          background-repeat: no-repeat
+          background-position: left top
+          display: inline
+          border: 0
+          padding: 0 0 0 17px
+          margin: 0
+        img
+          margin-bottom: -4px
+        
