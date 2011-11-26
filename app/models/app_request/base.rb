@@ -149,7 +149,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     def receiver_ids
-      all(:select => :receiver_id).collect{|r| r.receiver_id }
+      all(:select => "DISTINCT receiver_id").collect{|r| r.receiver_id }
     end
     
     def check_user_requests(user)
