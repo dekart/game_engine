@@ -1,5 +1,6 @@
 class Admin::BaseController < ApplicationController
   skip_before_filter :check_character_existance
+  skip_before_filter :tracking_requests
 
   before_filter :admin_required
 
