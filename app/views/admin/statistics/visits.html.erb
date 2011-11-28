@@ -6,7 +6,11 @@
   <h2><%= t(".total_visits") %></h2>
   
   <p id="total_visits">
-    <strong><%= @requests.inject(0){|result, elem| result + elem} %></strong>
+    <% total = @requests.inject(0){|result, elem| result + elem} %>
+    
+    <strong><%= total %></strong>
+    
+    <%= admin_requests_average_amount(total, @day) %>
   </p>
 </div>
 
@@ -46,7 +50,7 @@
         <tr>
           <th><%= t(".dates") %></th>
         </tr>
-        <% (0...15).to_a.each do |n|%>
+        <% (0...15).to_a.each do |n| %>
           <tr>
             <td>
               <% if @day == Date.today.-(n).to_s %>

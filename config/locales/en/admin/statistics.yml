@@ -2,6 +2,7 @@ en:
   admin:
     statistics:
       amount_change: "(+%{amount} in last 24 hours)"
+      average_amount: "(%{amount} average per hour)"
       controls:
         dashboard: "Dashboard"
         vip_money: "VIP Money"
