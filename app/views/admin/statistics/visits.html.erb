@@ -1,0 +1,64 @@
+<%= admin_title(t('.title'))%>
+
+<%= render("controls") %>
+
+<div class="total_visits">
+  <h2><%= t(".total_visits") %></h2>
+  
+  <p id="total_visits">
+    <strong><%= @requests.inject(0){|result, elem| result + elem} %></strong>
+  </p>
+</div>
+
+<table id="visits_data">
+  <tr>
+    <td>
+      <table id="character_list" class="data">
+        <tr>
+          <th><%= Character.human_attribute_name("id") %></th>
+          <th><%= Character.human_attribute_name("name") %></th>
+          <th><%= Character.human_attribute_name("level") %></th>
+          <th><%= Character.human_attribute_name("created_at") %></th>
+          <th><%= t(".count_requests") %></th>
+          <th><%= t(".average_amount") %></th>
+        </tr>
+        <% @characters.each_with_index do |character, index| %>
+          <tr>
+            <td><%= link_to(character.id, character_url(character.key, :canvas => true)) %></td>
+            <td>
+              <%= link_to(character_name(character), edit_admin_character_path(character)) %>
+              <%= link_to(t(".profile"), fb_profile_url(character.user),
+                    :class  => :profile,
+                    :target => :_blank
+                  ) %>
+            </td>
+            <td><%= character.level %></td>
+            <td><%= l(character.created_at, :format => :short) %></td>
+            <td><%= @requests[index] %></td>
+            <td><%= Statistics::Visits.average_amount(@requests[index], @day) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+    
+    <td class="dates">
+      <table class="data">
+        <tr>
+          <th><%= t(".dates") %></th>
+        </tr>
+        <% (0...15).to_a.each do |n|%>
+          <tr>
+            <td>
+              <% if @day == Date.today.-(n).to_s %>
+                <%= Date.today.-(n).to_s %>
+              <% else %>
+                <%= link_to(Date.today.-(n).to_s, :date => Date.today.-(n).to_s) %>
+              <% end %>   
+            </td>  
+          </tr>
+        <% end %>
+      </table>
+      
+    </td>
+  </tr>
+</table>

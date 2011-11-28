@@ -61,7 +61,8 @@ ActionController::Routing::Routes.draw do |map|
       :collection => {
         :user       => :any,
         :vip_money  => :any,
-        :level      => :any
+        :level      => :any,
+        :visits     => :any
       }
 
     admin.resources :tips,

@@ -7,6 +7,7 @@ en:
         vip_money: "VIP Money"
         users: "Users"
         level: "Levels"
+        visits: "Visits"
       index:
         title: "Statistics"
         parameter: "Parameter"
@@ -69,4 +70,11 @@ en:
           mercenaries: 'Mercenaries'
           friends: 'Friends'
           fights: 'Fights'
+      visits:
+        title: "Statistics: Visits"  
+        profile: "FB Profile"
+        count_requests: "Requests"  
+        average_amount: "Average Per Hour"
+        dates: "Dates"
+        total_visits: "Total Visits"
           

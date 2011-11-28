@@ -6,9 +6,11 @@ class ApplicationController < ActionController::Base
   include FacebookIntegration
   include ReferenceCode
   include AppRequests
+  include TrackingRequests
 
   before_filter :check_character_existance, :except => [:facepalm_oauth_endpoint]
   before_filter :check_user_ban
+  before_filter :tracking_requests 
   
   layout :get_layout
 
