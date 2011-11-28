@@ -6,7 +6,7 @@ class Statistics
     end
     
     def self.average_amount(requests, date)
-      "%.2f" % (requests.to_f / (date == Date.today.to_s ? Time.now.hour : 24))
+      "%.2f" % (requests.to_f / (date == Date.today ? Time.now.hour : 24))
     end
   end
 end
