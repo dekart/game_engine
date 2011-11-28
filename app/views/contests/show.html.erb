@@ -1,11 +1,8 @@
 <div id="contest" class="contest">
   <%= title(@contest.name) %>
   
-  <div class="buttons clearfix">
-    <%= link_to(button(:relations), rating_path, :class => :button) %>
-    <%= link_to(button(:global), global_rating_path, :class => :button) %>
-  </div>
-  
+  <%= render("ratings/buttons", :current => :contest) %>
+
   <div class="results">
     
     <% if @contest.groups.size > 1 %>
