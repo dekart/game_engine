@@ -21,6 +21,8 @@ gem "redis",            "2.1.1"
 
 gem 'cubus-settingslogic', '2.2.0'
 
+gem 'rufus-scheduler',  '2.0.13'
+
 # Facepalm
 gem 'multi_json'
 gem 'faraday'

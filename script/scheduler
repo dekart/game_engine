@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require "rufus/scheduler"
+require "config/environment"
+
+scheduler = Rufus::Scheduler.start_new
+
+scheduler.every 1.minute do
+  puts Rating.process_scheduled_updates!
+end
+
+scheduler.join
