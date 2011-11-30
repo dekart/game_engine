@@ -42,6 +42,3 @@ en:
     title:
       name: "Title"
       missing: "Deleted or hidden"
-    result:
-      item:
-        amount: " x %{amount}"  
