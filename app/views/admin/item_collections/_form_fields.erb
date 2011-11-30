@@ -8,7 +8,7 @@
   <%= form.error_message_on :items %>
 
   <% form.object.items.each do |item| %>
-    <%= render("item_fields", :item => item) %>
+    <%= render("item_fields", :item => item, :amount => form.object.amount_of_item(item)) %>
   <% end %>
 </div>
 
