@@ -37,11 +37,11 @@ class ItemCollection < ActiveRecord::Base
   end
   
   def amount_of_item(item)
-    amount_items[item_ids.index("#{item.id}")].to_i
+    amount_items[item_ids.index(item.id)] || 1
   end
 
   def item_ids
-    self[:item_ids].to_s.split(",")
+    self[:item_ids].to_s.split(",").collect{|id| id.to_i}
   end
 
   def item_ids=(value)
@@ -49,13 +49,11 @@ class ItemCollection < ActiveRecord::Base
   end
   
   def amount_items
-    self[:amount_items].to_s.split(",")
+    self[:amount_items].to_s.split(",").collect{|i| i.to_i}
   end
   
   def amount_items=(value)
-    value.collect!{|a| a.blank? ? "1" : a}
-    
-    self[:amount_items] = value.is_a?(Array) ? value.join(",") : value
+    self[:amount_items] = Array.wrap(value).collect{|a| a.blank? ? "1" : a}.join(",")
   end
 
   def items
@@ -79,12 +77,12 @@ class ItemCollection < ActiveRecord::Base
   def missing_items(character)
     result = items - character.items
     
-    items.each do |item|
-      character.inventories.detect do |inventory|
+    character.inventories.each do |inventory|
+      items.detect do |item|
         if inventory.item_id == item.id && !result.include?(item) && inventory.amount < amount_of_item(item)
           result << item
         end
-      end
+      end  
     end
       
     result
@@ -95,6 +93,10 @@ class ItemCollection < ActiveRecord::Base
       :reference_id => self.id,
       :reference_type => "Collection"
     }
+  end
+  
+  def enough_of?(inventory)
+    inventory.amount >= amount_of_item(inventory.item)
   end
 
   protected
