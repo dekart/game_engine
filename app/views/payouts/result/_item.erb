@@ -1,1 +1,3 @@
-<%= payout(:item, item_image(payout.item, :icon, :tooltip => true), :label => payout.item.name) %>
+<%= payout(:item, item_image(payout.item, :icon, :tooltip => true), 
+      :label => (payout.amount ? payout.item.name + t(".amount", :amount => payout.amount) : payout.item.name)
+    ) %>
