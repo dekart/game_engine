@@ -32,7 +32,7 @@ class ItemCollectionRank < ActiveRecord::Base
   protected
 
   def check_items
-    unless character.items.count(:conditions => {:id => collection.item_ids}) == collection.item_ids.size
+    unless collection.missing_items(character).empty?
       errors.add(:character, :not_enough_items)
     end
   end

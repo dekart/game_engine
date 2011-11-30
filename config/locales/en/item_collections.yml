@@ -6,6 +6,7 @@ en:
       buttons:
         request: "Ask from Alliance"
         collect: "Collect"
+      required_amount: "%{amount} of %{required}"  
     update:
       buttons:
         publish: "Brag About It!"

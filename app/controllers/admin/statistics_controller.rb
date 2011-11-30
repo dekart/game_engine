@@ -20,4 +20,17 @@ class Admin::StatisticsController < Admin::BaseController
     @all = Statistics::VipMoney.new
     @day = Statistics::VipMoney.new(24.hours.ago)
   end
+  
+  def visits
+    @day = params[:date] ? Date.parse(params[:date]) : Date.today
+    
+    result = Statistics::Visits.visited_by_characters(@day)
+    
+    ids = result.collect{|a| a[0]}
+    @requests = result.collect{|a| a[1]}
+    
+    @total = @requests.inject(0){|result, elem| result + elem}
+    
+    @characters = Character.find(ids).sort_by{|c| ids.index{|i| i == c.id } }
+  end
 end
