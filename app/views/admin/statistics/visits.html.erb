@@ -28,15 +28,16 @@
           <tr>
             <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
             <td>
-              <% if user && user.character %>
+              <% if user.try(:character) %>
                 <%= link_to(character_name(user.character), edit_admin_character_path(user.character)) %>
-                <%= link_to(t(".profile"), fb_profile_url(user),
-                      :class  => :profile,
-                      :target => :_blank
-                    ) %>
               <% else %>
                 <%= content_tag(:span, user ? t(".no_character") : t(".no_user"), :class => :empty) %>
-              <% end %>      
+              <% end %>
+              
+              <%= link_to(t(".profile"), fb_profile_url(user),
+                      :class  => :profile,
+                      :target => :_blank
+                    ) if user %>      
             </td>
             <td><%= user.character.level if user.try(:character) %></td>
             <td><%= l(user.character ? user.character.created_at : user.created_at, :format => :short) if user %></td>
