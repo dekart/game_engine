@@ -31,8 +31,8 @@ class Admin::StatisticsController < Admin::BaseController
     
     @total = @requests.inject(0){|result, elem| result + elem}
    
-    @users = User.all(:conditions => ["facebook_id in (?)", ids]).sort_by{ |c| ids.index{|i| i == c.facebook_id } }
+    @users = User.all(:conditions => ["id in (?)", ids]).sort_by{ |u| ids.index(u.id) }
     
-    @users.insert(ids.index(0), nil) if ids.index(0) #if no user
+    @users.insert(ids.index(0), nil) if ids.index(0) #Insert 'no user' value if present
   end
 end

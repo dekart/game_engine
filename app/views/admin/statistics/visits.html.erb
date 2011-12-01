@@ -26,7 +26,7 @@
         </tr>
         <% @users.each_with_index do |user, index| %>
           <tr>
-            <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user && user.character %></td>
+            <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
             <td>
               <% if user && user.character %>
                 <%= link_to(character_name(user.character), edit_admin_character_path(user.character)) %>
@@ -38,7 +38,7 @@
                 <%= content_tag(:span, user ? t(".no_character") : t(".no_user"), :class => :empty) %>
               <% end %>      
             </td>
-            <td><%= user.character.level if user && user.character %></td>
+            <td><%= user.character.level if user.try(:character) %></td>
             <td><%= l(user.character ? user.character.created_at : user.created_at, :format => :short) if user %></td>
             <td><%= @requests[index] %></td>
             <td><%= Statistics::Visits.average_amount(@requests[index], @day) %></td>
