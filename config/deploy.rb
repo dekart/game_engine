@@ -125,6 +125,18 @@ namespace :deploy do
     task :package_backups, :roles => :db, :only => {:primary => true} do
       run "nohup gzip *.sql"
     end
+    
+    desc "Generates SQL for access granting for each app server"
+    task :generate_access_sql do
+      top.find_servers(:roles => :app).each do |server|
+        puts "GRANT ALL PRIVILEGES ON `%s`.* TO '%s'@'%s' IDENTIFIED BY '%s' WITH GRANT OPTION;" % [
+          database_config[:database],
+          database_config[:username],
+          server.options[:private_ip] || 'localhost',
+          database_config[:password]
+        ]
+      end
+    end    
   end
 
   namespace :dependencies do
