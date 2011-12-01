@@ -29,7 +29,7 @@ class Admin::StatisticsController < Admin::BaseController
     ids = result.collect{|a| a[0]}
     @requests = result.collect{|a| a[1]}
     
-    @total = @requests.inject(0){|result, elem| result + elem}
+    @total = @requests.sum
    
     @users = User.all(:conditions => ["id in (?)", ids]).sort_by{ |u| ids.index(u.id) }
     
