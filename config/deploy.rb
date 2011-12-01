@@ -45,7 +45,7 @@ namespace :deploy do
     end
 
     desc "Updates nginx virtual host config"
-    task :nginx do
+    task :nginx, :roles => :web do
       template = ERB.new(
         File.read(File.expand_path("../deploy/templates/nginx.conf.erb", __FILE__))
       )
