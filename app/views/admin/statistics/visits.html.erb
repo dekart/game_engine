@@ -24,18 +24,22 @@
           <th><%= t(".count_requests") %></th>
           <th><%= t(".average_amount") %></th>
         </tr>
-        <% @characters.each_with_index do |character, index| %>
+        <% @users.each_with_index do |user, index| %>
           <tr>
-            <td><%= link_to(character.id, character_url(character.key, :canvas => true)) %></td>
+            <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user && user.character %></td>
             <td>
-              <%= link_to(character_name(character), edit_admin_character_path(character)) %>
-              <%= link_to(t(".profile"), fb_profile_url(character.user),
-                    :class  => :profile,
-                    :target => :_blank
-                  ) %>
+              <% if user && user.character %>
+                <%= link_to(character_name(user.character), edit_admin_character_path(user.character)) %>
+                <%= link_to(t(".profile"), fb_profile_url(user),
+                      :class  => :profile,
+                      :target => :_blank
+                    ) %>
+              <% else %>
+                <%= content_tag(:span, user ? t(".no_character") : t(".no_user"), :class => :empty) %>
+              <% end %>      
             </td>
-            <td><%= character.level %></td>
-            <td><%= l(character.created_at, :format => :short) %></td>
+            <td><%= user.character.level if user && user.character %></td>
+            <td><%= l(user.character ? user.character.created_at : user.created_at, :format => :short) if user %></td>
             <td><%= @requests[index] %></td>
             <td><%= Statistics::Visits.average_amount(@requests[index], @day) %></td>
           </tr>

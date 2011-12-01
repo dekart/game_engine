@@ -1,7 +1,7 @@
 class Statistics
   class Visits < self
     
-    def self.visited_by_characters(date)
+    def self.visited_by_users(date)
       $redis.zrevrange("tracking_requests_#{date}", 0, -1, :with_scores => true).collect{|v| v.to_i}.in_groups_of(2)
     end
     
