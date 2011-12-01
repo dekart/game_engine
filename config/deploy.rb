@@ -129,7 +129,7 @@ namespace :deploy do
 
   namespace :dependencies do
     desc "Install environment gems"
-    task :system_gems, :roles => :app do
+    task :system_gems do
       config = YAML.dump(
         :verbose        => true,
         "gem"           => "--no-ri --no-rdoc --user-install",
@@ -146,7 +146,7 @@ namespace :deploy do
     end
 
     desc "Install required gems"
-    task :bundled_gems, :roles => :app do
+    task :bundled_gems do
       run "rm -rf ~/.gems/ruby/1.8/cache; cd #{release_path}; bundle install --deployment --without development test"
     end
   end
