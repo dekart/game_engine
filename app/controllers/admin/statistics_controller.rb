@@ -24,13 +24,15 @@ class Admin::StatisticsController < Admin::BaseController
   def visits
     @day = params[:date] ? Date.parse(params[:date]) : Date.today
     
-    result = Statistics::Visits.visited_by_characters(@day)
+    result = Statistics::Visits.visited_by_users(@day)
     
     ids = result.collect{|a| a[0]}
     @requests = result.collect{|a| a[1]}
     
-    @total = @requests.inject(0){|result, elem| result + elem}
+    @total = @requests.sum
+   
+    @users = User.all(:conditions => ["id in (?)", ids]).sort_by{ |u| ids.index(u.id) }
     
-    @characters = Character.find(ids).sort_by{|c| ids.index{|i| i == c.id } }
+    @users.insert(ids.index(0), nil) if ids.index(0) #Insert 'no user' value if present
   end
 end
