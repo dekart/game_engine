@@ -77,7 +77,7 @@ namespace :deploy do
     end
 
     desc "Install cron jobs"
-    task :cron, :roles => :app do
+    task :cron, :roles => :background do
       template = ERB.new(
         File.read(File.expand_path("../deploy/templates/crontab.erb", __FILE__))
       )
@@ -169,6 +169,11 @@ namespace :deploy do
       config = YAML.dump(settings)
 
       put(config, "#{current_path}/public/system/maintenance.yml")
+    end
+
+    desc "Stop cron"
+    task :stop_cron, :roles => :background do
+      run "crontab -r"
     end
   end
 end
