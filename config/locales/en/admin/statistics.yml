@@ -78,4 +78,6 @@ en:
         average_amount: "Average Per Hour"
         dates: "Dates"
         total_visits: "Total Visits"
+        no_character: "(No character)"
+        no_user: "(No User)"
           
