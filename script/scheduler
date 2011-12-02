@@ -84,17 +84,17 @@ end
 
 # Setting up monitoring task that should restart scheduler if restart.txt file was modified
 
-restart_timestamp = last_restart_at
+start_time = last_restart_at
 
 scheduler.every 5.seconds, :blocking => true do
-  if last_restart_at != restart_timestamp
-    puts "Restarting scheduler..."
+  if last_restart_at != start_time
+    puts "Restarting scheduler (%s)..." % Time.now.to_s(:db)
     
     scheduler.stop
   end
 end
 
 
-puts "Launching scheduler..."
+puts "Launching scheduler (%s)..." % Time.now.to_s(:db)
 
 scheduler.join
