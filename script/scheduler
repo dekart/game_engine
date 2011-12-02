@@ -2,30 +2,63 @@
 
 require "config/environment"
 
+def task
+  start_time = Time.now
+
+  puts
+  puts "-" * 40
+  
+  puts "Started at %s" % start_time.to_s(:db)
+
+  puts "-" * 40
+  
+  yield
+  
+  puts "-" * 40
+
+  puts "Done in %.2f seconds" % (Time.now - start_time)
+  
+  puts "-" * 40
+  puts
+end
+
 scheduler = Rufus::Scheduler.start_new
 
+
 scheduler.every 1.minute, :blocking => true do
-  Jobs::Characters::UpdateRating.new.perform
+  task do
+    Jobs::Characters::UpdateRating.new.perform
+  end
 end
 
 scheduler.every 30.minutes, :blocking => true do
-  Jobs::Market::RemoveExpiredListings.new.perform
+  task do
+    Jobs::Market::RemoveExpiredListings.new.perform
+  end
+end
+
+scheduler.every 5.seconds, :blocking => true do
+  task do
+    Jobs::Fighting::RebuildBuckets.new.perform
+  end
 end
 
 scheduler.every 5.minutes, :blocking => true do
-  Jobs::Fighting::RebuildBuckets.new.perform
-end
-
-scheduler.every 5.minutes, :blocking => true do
-  Jobs::Monsters::Expire.new.perform
+  task do
+    Jobs::Monsters::Expire.new.perform
+  end
 end
 
 scheduler.every 1.minute, :blocking => true do
-  Jobs::Contests::Finish.new.perform
+  task do
+    Jobs::Contests::Finish.new.perform
+  end
 end
 
 scheduler.every 10.minutes, :blocking => true do
-  Jobs::Characters::PublishScoreInFacebook.new.perform
+  task do
+    Jobs::Characters::PublishScoreInFacebook.new.perform
+  end
 end
 
 puts "Launching scheduler..."
