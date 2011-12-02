@@ -49,11 +49,11 @@ class ItemCollection < ActiveRecord::Base
   end
   
   def amount_items
-    self[:amount_items].to_s.split(",").collect{|i| i.to_i}
+    self[:amount_items].to_s.split(",").collect{|i| i.to_i }
   end
   
   def amount_items=(value)
-    self[:amount_items] = Array.wrap(value).collect{|a| a.blank? ? "1" : a}.join(",")
+    self[:amount_items] = Array.wrap(value).collect{|a| a.blank? ? "1" : a }.join(",")
   end
 
   def items

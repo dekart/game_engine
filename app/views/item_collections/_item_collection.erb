@@ -9,10 +9,14 @@
 
           <div class="image"><%= item_image(item, :small) %></div>
           <div class="amount">
-            <%= t(".required_amount", 
-                  :required => collection.amount_of_item(item), 
-                  :amount => inventory.try(:amount).to_i
-                 ) %>
+            <% if collection.amount_of_item(item) > 1 %>
+              <%= t(".required_amount", 
+                    :required => collection.amount_of_item(item), 
+                    :amount => inventory.try(:amount).to_i
+                   ) %>
+            <% else %>
+              <%= inventory.try(:amount).to_i %>
+            <% end %>
           </div>
         <% end %>
       <% end %>
