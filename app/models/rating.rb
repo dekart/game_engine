@@ -29,6 +29,8 @@ class Rating
       updates.each do |id, values|
         update(id, values)
       end
+      
+      updates.map{|id, v| id }
     end
     
     def update(id, values)

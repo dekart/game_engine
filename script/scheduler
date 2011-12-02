@@ -1,12 +1,33 @@
 #!/usr/bin/env ruby
 
-require "rufus/scheduler"
 require "config/environment"
 
 scheduler = Rufus::Scheduler.start_new
 
-scheduler.every 1.minute do
-  puts Rating.process_scheduled_updates!
+scheduler.every 1.minute, :blocking => true do
+  Jobs::Characters::UpdateRating.new.perform
 end
+
+scheduler.every 30.minutes, :blocking => true do
+  Jobs::Market::RemoveExpiredListings.new.perform
+end
+
+scheduler.every 5.minutes, :blocking => true do
+  Jobs::Fighting::RebuildBuckets.new.perform
+end
+
+scheduler.every 5.minutes, :blocking => true do
+  Jobs::Monsters::Expire.new.perform
+end
+
+scheduler.every 1.minute, :blocking => true do
+  Jobs::Contests::Finish.new.perform
+end
+
+scheduler.every 10.minutes, :blocking => true do
+  Jobs::Characters::PublishScoreInFacebook.new.perform
+end
+
+puts "Launching scheduler..."
 
 scheduler.join
