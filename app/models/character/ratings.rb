@@ -17,7 +17,13 @@ class Character
     end
     
     def update_rating_values
-      Rating.update(self)
+      Rating.schedule_update(self)
+    end
+    
+    def rating_values
+      Rating::FIELDS.map{|field| 
+        send(field) 
+      }
     end
     
     def publish_total_score_in_facebook

@@ -24,12 +24,12 @@
           <th colspan="2"><%= Character.human_attribute_name(field) %></th>
         </tr>
 
-        <% rating_table(field) do |character, position, current| %>
+        <% rating_table(field) do |character, position, rank, current| %>
           <tr class="<%= :current if current %>">
             <td class="position"><%= position %></td>
             <td class="picture"><%= character_picture_link(character) %></td>
             <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
-            <td class="value"><%= character.send(field) %></td>
+            <td class="value"><%= rank %></td>
             <td class="publish last"><%= rating_publish_button(position, field) if current %></td>
           </tr>
         <% end %>

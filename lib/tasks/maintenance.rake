@@ -870,22 +870,6 @@ namespace :app do
       end
     end
   
-    desc "Expire attacked monsters"
-    task :expire_monsters => :environment do
-      Monster.find_each(:conditions => ['state = ? and expire_at <= ?', 'progress', Time.now]) do |monster|
-        puts "Processing monster #{monster.id}"
-        monster.expire!
-      end
-    end
-    
-    desc "Finish current contests"
-    task :finish_contests => :environment do
-      Contest.with_state(:visible).all(:conditions => ['finished_at <= ?', Time.now]).each do |contest|
-        contest.finish!
-        puts "Contest #{contest.name} finished"
-      end
-    end
-    
     task :remove_hacked_gifts => :environment do
       AppRequest::Gift.find_each(
         :joins => 'INNER JOIN items ON app_requests.target_id = items.id', 
@@ -912,22 +896,6 @@ namespace :app do
             i += 1
           end
         end
-      end
-    end
-    
-    task :publish_total_score_in_facebook => :environment do
-      if Setting.b(:total_score_publishing_in_facebook_enabled)
-        expired_time = Setting.i(:total_score_expiration_time).seconds.ago
-        
-        puts "Publishing total score of recently updated users"
-        
-        Character.find_each(:conditions => ["updated_at >= ?", expired_time], :batch_size => 100) do |character|
-          puts "id: #{character.id}, total_score: #{character.total_score}"
-          
-          character.publish_total_score_in_facebook
-        end
-      else
-        puts "Total score is disabled"
       end
     end
   end
