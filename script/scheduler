@@ -22,6 +22,11 @@ def task
   puts
 end
 
+def last_restart_at
+  File.mtime(File.expand_path('../../tmp/restart.txt', __FILE__))
+end
+
+
 scheduler = Rufus::Scheduler.start_new
 
 
@@ -76,6 +81,19 @@ scheduler.every 1.minute, :blocking => true do
     end
   end
 end
+
+# Setting up monitoring task that should restart scheduler if restart.txt file was modified
+
+restart_timestamp = last_restart_at
+
+scheduler.every 5.seconds, :blocking => true do
+  if last_restart_at != restart_timestamp
+    puts "Restarting scheduler..."
+    
+    scheduler.stop
+  end
+end
+
 
 puts "Launching scheduler..."
 
