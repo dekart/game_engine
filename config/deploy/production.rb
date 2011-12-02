@@ -3,7 +3,7 @@ set :application, "your_app_alias"
 set :repository,  "git@git.railorz.com:facebook/#{application}.git"
 set :branch,  "master"
 
-server "your_server", :web, :app, :db, :primary => true
+server "your_server", :web, :app, :db, :background, :primary => true
 
 set :public_ip, "your_public_ip"
 
