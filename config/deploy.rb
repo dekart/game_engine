@@ -191,8 +191,10 @@ end
 
 
 # Ordinary deploys
-before "deploy:migrations", "deploy:db:backup"
-after "deploy:migrations", "deploy:db:package_backups"
+unless ENV['NO_BACKUP']
+  before "deploy:migrations", "deploy:db:backup" 
+  after "deploy:migrations", "deploy:db:package_backups"
+end
 
 on :before, :only => ["deploy", "deploy:migrations"] do
   before "deploy:symlink", "deploy:app:setup"
