@@ -3,17 +3,17 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Delayed Job Processor
 
-* * * * *     cd <%= current_path %> && flock -n ./tmp/pids/delayed_job <%= current_path %>/script/delayed_job >> <%= shared_path %>/log/delayed_job.log 2>&1
+* * * * *     cd <%= current_path %> && flock -n ./tmp/pids/delayed_job.lock <%= current_path %>/script/delayed_job >> <%= shared_path %>/log/delayed_job.log 2>&1
 
 # Scheduler
 
-* * * * *     cd <%= current_path %> && flock -n ./tmp/pids/scheduler <%= current_path %>/script/scheduler >> <%= shared_path %>/log/scheduler.log 2>&1
+* * * * *     cd <%= current_path %> && flock -n ./tmp/pids/scheduler.lock <%= current_path %>/script/scheduler >> <%= shared_path %>/log/scheduler.log 2>&1
 
 
 # Rake Tasks
 
 <% if settings_config[:event_logging][:enabled] %>
-*/5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:logged_events:store --trace >> <%= shared_path %>/log/logged_events.log 2>&1
+*/5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake.lock app:logged_events:store --trace >> <%= shared_path %>/log/logged_events.log 2>&1
 <% end %>
 
-0 5 * * *     cd <%= current_path %> && flock ./tmp/pids/rake rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1
+0 5 * * *     cd <%= current_path %> && flock ./tmp/pids/rake.lock rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1
