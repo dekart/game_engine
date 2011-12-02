@@ -31,7 +31,7 @@ class Admin::StatisticsController < Admin::BaseController
     
     @total = @requests.sum
    
-    @users = User.all(:conditions => ["id in (?)", ids]).sort_by{ |u| ids.index(u.id) }
+    @users = User.all(:conditions => {:id => ids}).sort_by{ |u| ids.index(u.id) }
     
     @users.insert(ids.index(0), nil) if ids.index(0) #Insert 'no user' value if present
   end
