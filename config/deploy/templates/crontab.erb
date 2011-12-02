@@ -16,5 +16,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 */5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake app:logged_events:store --trace >> <%= shared_path %>/log/logged_events.log 2>&1
 <% end %>
 
-2 * * * *     cd <%= current_path %> && flock ./tmp/pids/rake rake app:notifications --trace >> <%= shared_path %>/log/notifications.log 2>&1
 0 5 * * *     cd <%= current_path %> && flock ./tmp/pids/rake rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1
