@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_authentication_filters :only => :subscribe
+  skip_before_filter :tracking_requests, :only => :subscribe
   
   def toggle_block
     @user = current_user

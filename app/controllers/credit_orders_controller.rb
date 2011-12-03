@@ -3,6 +3,7 @@ class CreditOrdersController < ApplicationController
   include AssetsHelper
 
   skip_authentication_filters
+  skip_before_filter :tracking_requests
   
   def index
     case params[:method]
