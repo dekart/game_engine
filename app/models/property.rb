@@ -167,7 +167,7 @@ class Property < ActiveRecord::Base
   end
   
   def upgrade_requirements
-    @requirements ||= Requirements::Collection.new.tap do |r|
+    @upgrade_requirements ||= Requirements::Collection.new.tap do |r|
       r << Requirements::BasicMoney.new(:value => upgrade_price) if upgrade_price > 0
       r << Requirements::VipMoney.new(:value => vip_price) if vip_price > 0
     end
