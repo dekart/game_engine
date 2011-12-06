@@ -39,7 +39,7 @@ class Property < ActiveRecord::Base
   end
   
   def missing_workers
-    property_type.workers.to_i - self.workers
+    property_type.workers.to_i > 0 ? property_type.workers.to_i - workers : 0
   end
   
   def missing_workers?
