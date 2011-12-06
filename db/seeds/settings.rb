@@ -185,7 +185,6 @@ Setting[:total_score_total_money_factor] ||= 1
 Setting[:total_score_missions_succeeded_factor] ||= 1
 Setting[:total_score_level_factor] ||= 1
 
-Setting[:total_score_expiration_time] ||= 15.minute.to_i
 Setting[:total_score_publishing_in_facebook_enabled] ||= true
 
 # Put your custom settings below this line

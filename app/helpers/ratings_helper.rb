@@ -8,14 +8,14 @@ module RatingsHelper
     
     characters = rating.leaders(Setting.i(:rating_show_limit))
     
-    characters.each do |character|
+    characters.each do |rank, character|
       current_displayed ||= (character == current_character)
       
-      result << capture(character, characters.index(character) + 1, (character == current_character), &block)
+      result << capture(character, characters.index{|r, c| c == character} + 1, rank, (character == current_character), &block)
     end
 
     unless current_displayed # Adding current character to the end of the table if it wasn't in the leader list
-      result << capture(current_character, rating.position(current_character), true, &block)
+      result << capture(current_character, rating.position(current_character), current_character.send(field), true, &block)
     end
 
     block_given? ? concat(result.html_safe) : result.html_safe

@@ -30,3 +30,6 @@ en:
       label: "Tip:"
     footer:
       notification_settings: "Notifications Settings"
+      privacy_policy: "Privacy Policy"
+    footer_unauthorised:
+      privacy_policy: "Privacy Policy"  

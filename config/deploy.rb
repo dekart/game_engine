@@ -45,7 +45,7 @@ namespace :deploy do
     end
 
     desc "Updates nginx virtual host config"
-    task :nginx do
+    task :nginx, :roles => :web do
       template = ERB.new(
         File.read(File.expand_path("../deploy/templates/nginx.conf.erb", __FILE__))
       )
@@ -77,7 +77,7 @@ namespace :deploy do
     end
 
     desc "Install cron jobs"
-    task :cron, :roles => :app do
+    task :cron, :roles => :background do
       template = ERB.new(
         File.read(File.expand_path("../deploy/templates/crontab.erb", __FILE__))
       )
@@ -125,11 +125,23 @@ namespace :deploy do
     task :package_backups, :roles => :db, :only => {:primary => true} do
       run "nohup gzip *.sql"
     end
+    
+    desc "Generates SQL for access granting for each app server"
+    task :generate_access_sql do
+      top.find_servers(:roles => :app).each do |server|
+        puts "GRANT ALL PRIVILEGES ON `%s`.* TO '%s'@'%s' IDENTIFIED BY '%s' WITH GRANT OPTION;" % [
+          database_config[:database],
+          database_config[:username],
+          server.options[:private_ip] || 'localhost',
+          database_config[:password]
+        ]
+      end
+    end    
   end
 
   namespace :dependencies do
     desc "Install environment gems"
-    task :system_gems, :roles => :app do
+    task :system_gems do
       config = YAML.dump(
         :verbose        => true,
         "gem"           => "--no-ri --no-rdoc --user-install",
@@ -146,7 +158,7 @@ namespace :deploy do
     end
 
     desc "Install required gems"
-    task :bundled_gems, :roles => :app do
+    task :bundled_gems do
       run "rm -rf ~/.gems/ruby/1.8/cache; cd #{release_path}; bundle install --deployment --without development test"
     end
   end
@@ -170,6 +182,11 @@ namespace :deploy do
 
       put(config, "#{current_path}/public/system/maintenance.yml")
     end
+
+    desc "Stop cron"
+    task :stop_cron, :roles => :background do
+      run "crontab -r"
+    end
   end
 end
 
@@ -191,8 +208,10 @@ end
 
 
 # Ordinary deploys
-before "deploy:migrations", "deploy:db:backup"
-after "deploy:migrations", "deploy:db:package_backups"
+unless ENV['NO_BACKUP']
+  before "deploy:migrations", "deploy:db:backup" 
+  after "deploy:migrations", "deploy:db:package_backups"
+end
 
 on :before, :only => ["deploy", "deploy:migrations"] do
   before "deploy:symlink", "deploy:app:setup"

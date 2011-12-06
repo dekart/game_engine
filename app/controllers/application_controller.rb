@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   include ExceptionLogging
   include FacebookIntegration
+  include TrackingRequests
   include ReferenceCode
   include AppRequests
 
