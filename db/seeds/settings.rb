@@ -35,6 +35,8 @@ Setting[:character_income_calculation_period] ||= 60
 Setting[:character_weakness_minimum] ||= 5
 Setting[:character_weakness_minimum_formula] ||= 'absolute'
 
+Setting[:clan_create_for_vip_money] ||= 25
+
 Setting[:dashboard_news_count] ||= 30
 
 Setting[:premium_money_price] ||= 5

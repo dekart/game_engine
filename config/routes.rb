@@ -291,6 +291,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :chat
   
   map.resources :achievements, :only => [:index, :show, :update]
+  
+  map.resources :clans
 
   # Add your custom routes below this mark
   

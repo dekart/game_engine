@@ -26,6 +26,7 @@ class Character < ActiveRecord::Base
   include Character::Exchanges
   include Character::Achievements
   include Character::EquipmentExtension
+  include Character::Clans
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
