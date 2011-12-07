@@ -8,7 +8,11 @@ en:
     documentation: "What's this?"
     layouts:
       main_menu:
-        users: 'Users'
+        statistics: "Statistics"
+        dashboard: "Dashboard"
+        users: "Users"
+        vip_money: "VIP Money"
+        visits: "Visits"
         content: 'Game Content'
         support: 'Support'
         configuration: 'Configuration'
@@ -19,7 +23,6 @@ en:
         bosses: "Bosses (Deprecated)"
         property_types: "Property Types"
         global_payouts: "Global Payouts"
-        statistics: "Statistics"
         characters: "Characters"
         promotions: "Promotions"
         titles: "Titles"

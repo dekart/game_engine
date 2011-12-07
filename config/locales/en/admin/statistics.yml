@@ -10,7 +10,7 @@ en:
         level: "Levels"
         visits: "Visits"
       index:
-        title: "Statistics"
+        title: "Dashboard"
         parameter: "Parameter"
         value: "Value"
         change: "Last 24 hours"
