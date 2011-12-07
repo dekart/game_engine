@@ -261,9 +261,11 @@ class Character < ActiveRecord::Base
   end
 
   def charge!(*args)
-    charge(*args)
+    transaction do
+      charge(*args)
     
-    save!
+      save!
+    end
   end
 
   def boosts
