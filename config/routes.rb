@@ -293,6 +293,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :achievements, :only => [:index, :show, :update]
   
   map.resources :clans
+  
+  map.resources :clan_members, :only => :destroy
 
   # Add your custom routes below this mark
   

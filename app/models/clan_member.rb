@@ -6,6 +6,10 @@ class ClanMember < ActiveRecord::Base
   
   before_create :role_assignment
   
+  def creator?
+    role == ROLE[:creator]
+  end
+  
   protected
   
   def role_assignment

@@ -1,8 +1,16 @@
 class Clan < ActiveRecord::Base
   has_many :characters, :through => :clan_members
-  has_many :clan_members 
+  has_many :clan_members, :dependent => :destroy
   
   validates_presence_of :name
+  
+  attr_accessible :name, :image
+
+  has_attached_file :image, :styles => { :small => "200x200" }
+  
+  def is_member?(character)
+    clan_members.detect{|m| m.character_id == character.id}
+  end
   
   def create_by!(character)
     if valid? && enough_vip_money?(character)

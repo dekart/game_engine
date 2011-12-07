@@ -1,0 +1,12 @@
+en:
+  clans:
+    show: 
+      management_link: "Management"
+      quit_confirm: "Are you sure you want to leave a clan?"
+      join_clan:
+        title: "To Join The Clan"
+        text:  "Description of the process" #***
+      buttons:
+        quit: "Out Of The Clan"
+    participants: 
+      title: "Participants"

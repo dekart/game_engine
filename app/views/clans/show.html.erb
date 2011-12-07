@@ -1,2 +1,59 @@
-<h1>Clans#show</h1>
-<p>Find me in app/views/clans/show.html.erb</p>
+<div id="clan">
+  <table cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td class="clan">
+        <h2><%= @clan.name %></h2>
+    
+        <table cellpadding="0" cellpadding="0">
+          <tr>
+            <td>
+              <%= image_tag(@clan.image_file_name.blank? ? asset_image_path(:clan_avatar) : @clan.image.url(:small), :alt => @clan.name) %>
+            </td>
+            <td>
+              <%= @clan.description %>
+            </td>
+          </tr>
+        </table>
+      </td>
+      
+      <td class="members">
+        <div class="block_members">
+          <% if @clan.is_member?(current_character) && current_character.clan_member.creator? %>
+            <p><%= link_to( t(".management_link"), edit_clan_path(@clan) ) %></p>
+          <% end %>
+          
+          <%= render("participants", :members => @clan_members ) %>
+        </div>  
+        
+      </td>
+    </tr>
+  </table>
+  
+  <% if @clan.is_member?(current_character) %>
+    <div id="global_chat">
+      <%= chat("clan_#{@clan.id}") %>
+    </div>
+    
+    <% unless current_character.clan_member.creator? %>
+      <div class="buttons">
+        <%= link_to_remote(button(:quit),
+              :url    => clan_member_path(current_character),
+              :method => :delete,
+              :update => :clan,
+              :confirm  => t(".quit_confirm"),
+              :html   => {
+                :"data-click-once" => true,
+                :class => "quit button"
+              }
+            ) %>
+      </div>    
+    <% end %>
+  
+  <% else %>
+    <div class="join_clan">
+      <h2><%= t(".join_clan.title")%></h2>
+      <p class="title"><%= t(".join_clan.text")%></p>
+    </div>
+  <% end %>
+  
+</div>

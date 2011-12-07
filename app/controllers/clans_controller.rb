@@ -1,5 +1,7 @@
 class ClansController < ApplicationController
   def show
+    @clan = Clan.find(params[:id])
+    @clan_members = @clan.characters
   end
 
   def new
@@ -23,6 +25,11 @@ class ClansController < ApplicationController
   end
 
   def edit
+    
+  end
+  
+  def update
+    
   end
 
 end

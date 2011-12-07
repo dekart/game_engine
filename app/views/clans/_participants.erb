@@ -1,0 +1,11 @@
+<p><strong><%= t(".title") %></strong></p>
+          
+<table class="participants" cellspacing="0" cellpadding="0">
+  <% members.each do |member| %>
+    <tr valign="middle" class="<%= "creator" if member.clan_member.creator? %>">
+      <td class="picture"><%= character_picture_link(member) %></td>
+      <td class="name"><%= character_name_link(member) %></td>
+      <td class="role"><strong><%= member.clan_member.role %></strong></td>
+    </tr>
+  <% end %>
+</table>
