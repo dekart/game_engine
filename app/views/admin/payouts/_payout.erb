@@ -1,8 +1,8 @@
 <div class="payout serializable_item <%= payout.name %>" id="payout_<%= payout.object_id %>">
   <div class="controls">
-    <%= link_to_function(t(".move_up"), "SerializableList.moveUp('#payout_#{payout.id}')", :class => :move_up) %>
-    <%= link_to_function(t(".move_down"), "SerializableList.moveDown('#payout_#{payout.id}')", :class => :move_down) %>
-    <%= link_to_function(t(".remove"), "SerializableList.remove('#payout_#{payout.id}')", :class => :remove) %>
+    <%= link_to_function(t(".move_up"), "SerializableList.moveUp('#payout_#{payout.object_id}')", :class => :move_up) %>
+    <%= link_to_function(t(".move_down"), "SerializableList.moveDown('#payout_#{payout.object_id}')", :class => :move_down) %>
+    <%= link_to_function(t(".remove"), "SerializableList.remove('#payout_#{payout.object_id}')", :class => :remove) %>
   </div>
 
   <h4><%= t("payouts.#{payout.name}.name") %></h4>
