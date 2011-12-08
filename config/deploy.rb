@@ -185,7 +185,7 @@ namespace :deploy do
 
     desc "Stop cron"
     task :stop_cron, :roles => :background do
-      run "crontab -r"
+      run "crontab -r || true"
     end
   end
 end
