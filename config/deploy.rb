@@ -210,7 +210,7 @@ end
 
 
 # Ordinary deploys
-unless ENV['NO_BACKUP']
+unless ENV['BACKUP'] == 'false'
   before "deploy:migrations", "deploy:db:backup" 
   after "deploy:migrations", "deploy:db:package_backups"
 end
