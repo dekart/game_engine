@@ -232,6 +232,7 @@ ActionController::Routing::Routes.draw do |map|
     }
   map.resources :properties, :only => [:index, :create],
     :member => {
+      :hire           => :any,
       :upgrade        => :put,
       :collect_money  => :put
     },

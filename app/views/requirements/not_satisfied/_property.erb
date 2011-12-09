@@ -1,0 +1,18 @@
+<% requirement(requirement.name, false) do %>
+  <p>
+    <span class="image">
+      <%= item_image(requirement.property_type, :icon) %>
+    </span>
+
+    <span class="label">
+      <% if requirement.display_level? %>
+        <%= t(".message",
+              :name   => content_tag(:span, requirement.property_type.name, :class => :value),
+              :level  => requirement.level
+            ).html_safe %>
+      <% else %>
+        <span class="value"><%= requirement.property_type.name %></span>
+      <% end %>
+    </span>
+  </p>
+<% end %>

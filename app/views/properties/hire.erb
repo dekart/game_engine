@@ -1,0 +1,97 @@
+<% if !@result.is_a?(Requirements::Collection) %>
+  <% if @property.missing_workers? %>
+    <% dialog :id => :hire_property_dialog do |d| %>
+      <h2><%= t('.title') %></h2>
+        
+      <div class="note">
+        <%= t('.note', :property => @property.name, :amount => @property.property_type.workers) %>
+      </div>
+  
+      <div class="workers clearfix">
+        <% @property.property_type.workers.times do |index| %>
+          <div class="worker">
+            <h3><%= @property.worker_names[index] || t('.worker') %></h3>
+
+            <% if index <= @property.workers - 1 %>
+              <% if friend = @property.worker_friends[index] %>
+                <div class="image"><%= character_picture(friend) %></div>
+        
+                <div class="name"><%= character_name(friend) %></div>
+              <% else %>
+                <div class="image"><%= asset_image_tag(:worker) %></div>
+      
+                <div class="name"><%= t('.hired') %></div>
+              <% end %>
+            <% else %>
+              <div class="image"><%= asset_image_tag(:worker_missing) %></div>
+          
+              <%= link_to_remote(button(:hire, :price => '<strong class="price">%s</strong>' % Setting.i(:property_worker_price)), 
+                    :url => hire_property_path(@property),
+                    :method => :put,
+                    :update => :ajax,
+                    :html => {
+                      :class => "hire button"
+                    }
+                  ) %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    
+      <div class="controls">
+        <%= link_to_function(button(:invite),
+              invite_dialog(:property_worker,
+                :dialog => {
+                  :title    => t('.invitation.title'),
+                  :message  => t('.invitation.message', :name => @property.name, :app => t('app_name')),
+                  :data     => {
+                    :target_id    => @property.id,
+                    :target_type  => Property.name
+                  }
+                },
+                :request => {
+                  :target_id    => @property.id,
+                  :target_type  => Property.name
+                }
+              ),
+              :class => "invite button"
+            ) %>
+
+        <%= link_to_remote(
+              button(:hire_all, 
+                :price => '<strong class="price">%s</strong>' % (@property.missing_workers * Setting.i(:property_worker_price))
+              ), 
+              :url => hire_property_path(@property, :hire_all => true),
+              :method => :put,
+              :update => :ajax,
+              :html => {
+                :class => "hire button"
+              }
+            ) %>
+      </div>
+      
+      <% d.on_ready do %>
+        $(document).trigger('remote_content.received'); 
+      <% end %>
+    <% end %>
+  <% else %>
+    <% dom_ready do %>
+      $('#property_list').html('<%= escape_javascript(render("list", :properties => current_character.properties)) %>');
+      
+      $.dialog.close();
+    <% end %>
+  <% end %>
+<% else %>
+  <% render_to_result do %>
+    <% result_for :hire_workers do %>
+      <div class="unsatisfied_requirements">
+        <%= unsatisfied_requirement_list(@result) %>
+      </div>
+    <% end %>
+  <% end %>
+  
+  <% dom_ready do %>
+    $.dialog.close();
+    $(document).trigger('result.received');
+  <% end %>
+<% end %>

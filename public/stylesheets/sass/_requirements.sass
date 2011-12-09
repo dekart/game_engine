@@ -57,7 +57,7 @@
       line-height: 0
 
     .label
-      line-height: 40px
+      line-height: 50px
 
     .price
       .basic_money, .vip_money
@@ -66,6 +66,20 @@
         background-position: left center
         background-repeat: no-repeat
         font-weight: bold
+        
+  .property
+    padding-left: 0
+  
+    .image
+      display: block
+      float: left
+      margin-right: 5px
+      margin-bottom: 10px
+      line-height: 0
+
+    .label
+      line-height: 50px
+    
 
   .not_satisfied
     color: #ff5353
@@ -88,12 +102,20 @@
     line-height: inherit
     background-position: top left
     clear: both
+    
+    .button
+      float: none
 
-  .requirements
-    .item
-      float: left
-      width: 100%
-      margin: 0 10px 10px 0px
+    &.property, &.item
+      .image
+        display: block
+        float: left
+        margin-right: 5px
+        margin-bottom: 10px
+        line-height: 0
+
+      .label
+        line-height: 50px
 
 
 .unsatisfied_requirements

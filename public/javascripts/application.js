@@ -857,6 +857,10 @@ $(function(){
 
   $(document).bind('remote_content.received', function(){
     $(document).trigger('tooltips.setup');
+    
+    if_fb_initialized(function(){
+      FB.XFBML.parse();
+    });
   });
 
   $(document).bind('loading.dialog', function(){

@@ -22,16 +22,14 @@ describe Character::Ratings do
     
     it 'should be 0' do
       with_reset_total_score_settings do
-        @character.count_total_score.should == 0
+        @character.total_score.should == 0
       end
     end
     
     it 'should updates after changing score, which touches total score with factor 1' do
       with_reset_total_score_settings(:total_score_level_factor => 1) do
-        @character.level += 1
-        
         lambda{
-          @character.save!
+          @character.level += 1
         }.should change(@character, :total_score).by(1)
       end
     end
@@ -40,10 +38,8 @@ describe Character::Ratings do
       with_reset_total_score_settings(:total_score_level_factor => 3.5) do
         @character = Factory(:character)
         
-        @character.level += 1
-        
         lambda{
-          @character.save!
+          @character.level += 1
         }.should change(@character, :total_score).by(3)
       end
     end
@@ -52,21 +48,17 @@ describe Character::Ratings do
       with_reset_total_score_settings(:total_score_level_factor => 10, :total_score_fights_won_factor => 3) do
         @character = Factory(:character)
         
-        @character.level += 1
-        @character.fights_won += 1
-        
         lambda{
-          @character.save!
+          @character.level += 1
+          @character.fights_won += 1
         }.should change(@character, :total_score).by(13)
       end
     end
     
     it "should not updates after changing score, which doen't touches total score" do
       with_reset_total_score_settings(:total_score_level_factor => 1) do
-        @character.fights_won += 1
-        
         lambda{
-          @character.save!
+          @character.fights_won += 1
         }.should_not change(@character, :total_score)
       end
     end

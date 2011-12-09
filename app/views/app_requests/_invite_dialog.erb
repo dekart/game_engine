@@ -51,4 +51,5 @@
 <% dom_ready do %>
   InviteDialog.excludeIds('invitation', <%= AppRequest::Invitation.ids_to_exclude_for(current_character).to_json %>);
   InviteDialog.excludeIds('gift', <%= AppRequest::Gift.ids_to_exclude_for(current_character).to_json %>);
+  InviteDialog.excludeIds('property_worker', <%= AppRequest::PropertyWorker.ids_to_exclude_for(current_character).to_json %>);
 <% end %>

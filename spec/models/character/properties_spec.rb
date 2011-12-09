@@ -57,8 +57,11 @@ describe Character do
       end
     end
 
-    it "should return an instance of Property class" do
-      @character.properties.buy!(@property_type).should be_instance_of(Property)
+    it "should return an array with instance of Property class and applied payouts" do
+      result = @character.properties.buy!(@property_type)
+      
+      result[0].should be_instance_of(Property)
+      result[1].should be_instance_of(Payouts::Collection)
     end
   end
 

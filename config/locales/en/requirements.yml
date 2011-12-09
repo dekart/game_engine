@@ -43,6 +43,9 @@ en:
     vip_money:
       name: "Gems"
       text: "%{amount} Gems"
+    property:
+      name: 'Property'
+      text: '%{name} (Level %{level})'
 
     not_satisfied:
       title:
@@ -110,3 +113,6 @@ en:
         message_without_value: "You don't have enough Gems!"
         buttons:
           get_more_vip: "Get More Gems"
+          
+      property:
+        message: "%{name} (Level %{level})"

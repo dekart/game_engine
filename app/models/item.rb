@@ -213,7 +213,7 @@ class Item < ActiveRecord::Base
   end
   
   def update_max_vip_price_in_market
-    self.max_vip_price_in_market = vip_price
+    self.max_vip_price_in_market ||= vip_price
   end
 
   def requirements(amount = 1)

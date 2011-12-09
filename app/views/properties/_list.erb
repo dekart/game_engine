@@ -20,35 +20,14 @@
   <tr>
     <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
       <% content_tag_for(:td, type) do %>
-        <h2><%= property && type.upgradeable? ? t(".name_with_level", :name => type.name, :level => property.level) : type.name %></h2>
+        <% if property.new_record? %>
+          <h2><%= type.name %></h2>
+        
+          <div class="picture"><%= property_image(type, :medium) %></div>
 
-        <div class="picture"><%= property_image(type, :medium) %></div>
+          <div class="description"><%= type.description %></div>
 
-        <div class="description"><%= type.description.to_s.html_safe %></div>
-
-        <div class="controls">
-          <% if property %>
-            <%= link_to_remote(button(:collect),
-                  :url    => collect_money_property_path(property),
-                  :method => :put,
-                  :update => :result,
-                  :html   => {
-                    :"data-click-once" => true,
-                    :class => "collect button",
-                    :style => ("display: none" unless property.collectable?)
-                  }
-                ) %>
-
-            <%= link_to_remote(button(:upgrade),
-                  :url    => upgrade_property_path(property),
-                  :method => :put,
-                  :update => :result,
-                  :html   => {
-                    :"data-click-once" => true,
-                    :class => "upgrade button"
-                  }
-                ) if property.upgradeable? %>
-          <% else %>
+          <div class="controls">
             <%= link_to_remote(button(:buy),
                   :url    => properties_path(:property_type_id => type.id),
                   :update => :result,
@@ -57,38 +36,85 @@
                     :class => "buy button"
                   }
                 ) %>
-          <% end %>
-        </div>
+          </div>
 
-        <div class="payouts">
-          <h3><%= PropertyType.human_attribute_name("income") %></h3>
+          <div class="payouts">
+            <h3><%= PropertyType.human_attribute_name("income") %></h3>
 
-          <%= payout(:basic_money, "+%s" % number_to_currency(property ? property.total_income : type.income)) %>
-        </div>
+            <%= payout(:basic_money, "+%s" % number_to_currency(type.income)) %>
+          </div>
 
-        <% if property.nil? or property.upgradeable? %>
           <div class="requirements">
-            <h3><%= PropertyType.human_attribute_name(property ? "upgrade_requirements" : "build_requirements") %></h3>
+            <h3><%= PropertyType.human_attribute_name("build_requirements") %></h3>
 
-            <%= attribute_requirement(:basic_money,
-                  number_to_currency(property ? property.upgrade_price : type.basic_price)
-                ) if type.basic_price > 0 %>
-
-            <%= vip_money_requirement(type.vip_price) if type.vip_price > 0 %>
-            
-            <%= requirement_list(type.requirements) unless property %>
+            <%= requirement_list(property.purchase_requirements, :visible => true) %>
           </div>
-        <% end %>
+        <% else %>
+          <h2><%= type.upgradeable? ? t(".name_with_level", :name => property.name, :level => property.level) : property.name %></h2>
+          
+          <div class="picture"><%= property_image(type, :medium) %></div>
 
-        <% if property %>
-          <div class="timer" style="<%= "display:none" if property.collectable? %>">
-            <%= t(".collect_in",
-                  :value => content_tag(:span, "", :id => dom_id(property, :timer), :class => :value)
-                ).html_safe %>
-          </div>
+          <div class="description"><%= property.description %></div>
 
-          <% dom_ready do %>
-            $('#<%= dom_id(property, :timer) %>').timer(<%= property.time_to_next_collection %>, PropertyList.enableCollection);
+          <% if property.active? %>
+            <div class="controls">
+              <%= link_to_remote(button(:collect),
+                    :url    => collect_money_property_path(property),
+                    :method => :put,
+                    :update => :result,
+                    :html   => {
+                      :"data-click-once" => true,
+                      :class => "collect button",
+                      :style => ("display: none" unless property.collectable?)
+                    }
+                  ) %>
+
+              <%= link_to_remote(button(:upgrade),
+                    :url    => upgrade_property_path(property),
+                    :method => :put,
+                    :update => :result,
+                    :html   => {
+                      :"data-click-once" => true,
+                      :class => "upgrade button"
+                    }
+                  ) if property.upgradeable? %>
+            </div>
+          
+            <div class="payouts">
+              <h3><%= PropertyType.human_attribute_name("income") %></h3>
+
+              <%= payout(:basic_money, "+%s" % number_to_currency(property.total_income)) %>
+            </div>
+
+            <div class="timer" style="<%= "display:none" if property.collectable? %>">
+              <%= t(".collect_in",
+                    :value => content_tag(:span, "", :id => dom_id(property, :timer), :class => :value)
+                  ).html_safe %>
+            </div>
+
+            <% dom_ready do %>
+              $('#<%= dom_id(property, :timer) %>').timer(<%= property.time_to_next_collection %>, PropertyList.enableCollection);
+            <% end %>
+
+            <% if property.upgradeable? %>
+              <div class="requirements">
+                <h3><%= PropertyType.human_attribute_name("upgrade_requirements") %></h3>
+
+                <%= requirement_list(property.upgrade_requirements) %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="controls">
+              <%= link_to_remote(button(:hire),
+                    :url    => hire_property_path(property),
+                    :update => :ajax,
+                    :html   => {
+                      :class => "hire button"
+                    }
+                  ) %>
+            </div>
+
+            <div class="missing_workers"><%= t('.missing_workers', :amount => property.missing_workers) %></div>
           <% end %>
         <% end %>
       <% end %>

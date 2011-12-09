@@ -12,14 +12,13 @@
   td
     width: 33%
     padding: 10px
-    text-align: center
     border = !property_list_item_border
 
+  h2, .picture, .timer
+    text-align: center
+    
   .picture
     margin: 10px 0
-
-  .requirements, .payouts
-    text-align: left
 
   .payout, .requirement
     clear: left
@@ -42,7 +41,47 @@
 
     .collect
       +button(!property_list_collect_icon, !property_list_button_width)
+    
+    .hire
+      +button(!asset_icons_alliance)
 
 
 #property_result
   background-image = !property_result_icon
+
+  .hire
+    +button(!asset_icons_alliance)
+
+#hire_property_dialog
+  .workers
+    margin: 10px 0
+    
+    .worker
+      float: left
+      width: 150px
+      height: 120px
+      text-align: center
+  
+      .hire
+        text-align: left
+        margin: 0 auto
+        width: 120px
+        
+        .price
+          padding-left: 20px
+          background:
+            image = !asset_icons_vip_money
+            repeat: no-repeat
+            position: left
+            
+  .controls
+    .hire
+      .price
+        padding-left: 20px
+        background:
+          image = !asset_icons_vip_money
+          repeat: no-repeat
+          position: left
+          
+    .invite
+      +button(!asset_icons_alliance)

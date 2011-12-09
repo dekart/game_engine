@@ -33,11 +33,27 @@
         <% end %>
       </tr>
     </table>
+    
+    <% if @property.missing_workers? %>
+      <p><%= t('.need_workers', :amount => @property.missing_workers) %></p>
+      
+      <%= link_to_remote(button(:hire),
+            :url    => hire_property_path(@property),
+            :update => :ajax,
+            :html   => {
+              :class => "hire button"
+            }
+          ) %>
+    <% end %>
 
     <% builder.on_ready do %>
       $('#property_list').html('<%= escape_javascript(render("list", :properties => @properties)) %>');
     <% end %>
   <% else %>
+    <% builder.fail do %>
+      <%= t(".messages.requirements_not_satisfied") %>
+    <% end %>
+
     <div class="unsatisfied_requirements">
       <%= unsatisfied_requirement_list(@property.purchase_requirements) %>
     </div>
