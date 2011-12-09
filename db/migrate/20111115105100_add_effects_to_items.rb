@@ -2,6 +2,8 @@ class AddEffectsToItems < ActiveRecord::Migration
   def self.up
     add_column :items, :effects, :text
     
+    Item.reset_column_information
+    
     puts "Setting item effects..."
     
     Item.transaction do
