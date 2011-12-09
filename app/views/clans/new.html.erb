@@ -1,18 +1,9 @@
 <div id="clan_form">
-  <h1>New Clan</h1>
+  <h1><%= t(".title") %></h1>
   
   <% if !current_character.clan %>
-    <% form_for @clan do |f| %>
-      <%= f.error_messages %>
-      
-      <%= f.text_field :name, :required => true, :size => 40 %>
-      
-      <%= f.text_area :description, :cols => 60, :rows => 7  %>
-      
-      <%= f.submit "Save" %>
-    <% end %>
-  
+    <%= render("form", :clan => @clan) %>
   <% else %>
-    You already are a member of one clan
+    <%= t(".member_clan") %>
   <% end %>  
 </div>

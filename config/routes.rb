@@ -292,7 +292,11 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :achievements, :only => [:index, :show, :update]
   
-  map.resources :clans
+  map.resources :clans,
+    :member => {
+      :change_image => :put,
+      :delete_member => :delete
+    }
   
   map.resources :clan_members, :only => :destroy
 

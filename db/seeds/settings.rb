@@ -36,6 +36,7 @@ Setting[:character_weakness_minimum] ||= 5
 Setting[:character_weakness_minimum_formula] ||= 'absolute'
 
 Setting[:clan_create_for_vip_money] ||= 25
+Setting[:clan_change_image_vip_money] ||= 10
 
 Setting[:dashboard_news_count] ||= 30
 

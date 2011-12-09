@@ -103,6 +103,11 @@ en:
           attributes:
             amount:
               not_enough: "You don't have enough money in your balance"
+        clan: 
+          attributes:
+            character:
+              not_enough_vip_money: "You don't have enough vip money in your balance"
+              not_loaded_image: "Image not loaded"      
         fight:
           attributes:
             character:
@@ -191,3 +196,4 @@ en:
           attributes:
             base:
               already_collected: 'You already collected reward for this achievement'
+       

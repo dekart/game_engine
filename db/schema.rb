@@ -240,10 +240,11 @@ ActiveRecord::Schema.define(:version => 20111205115210) do
 
   create_table "clans", :force => true do |t|
     t.string   "name",               :limit => 100
-    t.string   "description"
+    t.text     "description"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_file_content", :limit => 100
     t.integer  "image_file_size"
+    t.integer  "members_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

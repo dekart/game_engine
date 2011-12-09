@@ -1,0 +1,25 @@
+<table id="participants" cellspacing="0" cellpadding="0">
+  <% members.each do |member| %>
+    <% unless member.creator? %>
+      <tr>
+        <td class="picture"><%= character_picture_link(member.character) %></td>
+        <td class="name"><%= character_name_link(member.character) %></td>
+        <td class="level">
+          <span class="label"><%= Character.human_attribute_name("level") %></span>
+          <span class="value"><%= member.character.level %></span>
+        </td>
+        <td class="controls">
+          <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
+                :url      => { :action => "delete_member", :id => member.id},
+                :method   => :delete,
+                :update   => :ajax,
+                :confirm  => t(".delete.confirmation"),
+                :html     => {
+                  :class => "delete"
+                }
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

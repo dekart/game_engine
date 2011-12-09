@@ -17,6 +17,7 @@ en:
       rating: "Rating"
       properties: "Estates"
       monsters: "Monsters"
+      clans: "Clans"
     spinner:
       alt: "Please wait..."
       text: "Please wait for a few seconds..."

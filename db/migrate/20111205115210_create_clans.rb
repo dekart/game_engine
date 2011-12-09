@@ -1,12 +1,14 @@
 class CreateClans < ActiveRecord::Migration
   def self.up
     create_table :clans do |t|
-      t.string  :name,                        :limit => 100
-      t.string  :description
+      t.string  :name,                        :limit => 100, :unique => true
+      t.text    :description
       
       t.string  :image_file_name,             :default => "", :null => false
       t.string  :image_file_content,          :limit => 100
       t.integer :image_file_size
+      
+      t.integer :members_count
 
       t.timestamps
     end

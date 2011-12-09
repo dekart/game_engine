@@ -1,7 +1,7 @@
 class ClanMember < ActiveRecord::Base
   ROLE = {:creator => "creator"}
   
-  belongs_to :clan
+  belongs_to :clan, :counter_cache => :members_count
   belongs_to :character
   
   before_create :role_assignment

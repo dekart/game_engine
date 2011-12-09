@@ -7,7 +7,7 @@
         <table cellpadding="0" cellpadding="0">
           <tr>
             <td>
-              <%= image_tag(@clan.image_file_name.blank? ? asset_image_path(:clan_avatar) : @clan.image.url(:small), :alt => @clan.name) %>
+              <%= clan_avatar(@clan) %>
             </td>
             <td>
               <%= @clan.description %>

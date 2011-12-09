@@ -1,2 +1,23 @@
-<h1>Clans#edit</h1>
-<p>Find me in app/views/clans/edit.html.erb</p>
+<div id="clan_form">
+  <h2><%= t(".title") %></h2>
+  
+  <% if @clan.is_member?(current_character) && current_character.clan_member.creator? %>
+    <table cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td class="attributes"><%= render("form", :clan => @clan) %></td>
+        <td class="image"><%= render("edit_image", :clan => @clan) %></td>
+      </tr>
+    </table>
+    
+    <h2><%= t(".members_clan") %></h2>
+    
+    <div id="requests">
+      
+    </div>
+    
+    <div id="members"><%= render("edit_participants", :members => @clan_members ) %></div>
+   
+  <% else %>
+    <%= t(".no_access") %>
+  <% end %>  
+</div>  

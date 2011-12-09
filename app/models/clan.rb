@@ -4,16 +4,36 @@ class Clan < ActiveRecord::Base
   
   validates_presence_of :name
   
-  attr_accessible :name, :image
+  validates_uniqueness_of :name
+  
+  attr_accessible :name, :image, :description
 
   has_attached_file :image, :styles => { :small => "200x200" }
+  
+  def creator
+    clan_members.detect{|m| m.role == ClanMember::ROLE[:creator]}.character
+  end
   
   def is_member?(character)
     clan_members.detect{|m| m.character_id == character.id}
   end
   
+  def change_image!(params)
+    if image_is_loaded?(params) && enough_vip_money?(creator,Setting.i(:clan_change_image_vip_money))
+      transaction do
+        if update_attributes(params) && creator.charge!(0, Setting.i(:clan_change_image_vip_money))
+          true
+        else
+          false
+        end
+      end
+    else
+      false  
+    end
+  end
+  
   def create_by!(character)
-    if valid? && enough_vip_money?(character)
+    if valid? && enough_vip_money?(character,Setting.i(:clan_create_for_vip_money))
       transaction do
         if save! && character.charge!(0, Setting.i(:clan_create_for_vip_money))
           clan_members.create(:character => character, :role => :creator)
@@ -29,8 +49,18 @@ class Clan < ActiveRecord::Base
     end
   end
   
-  def enough_vip_money?(character)
-    if character.vip_money >= Setting.i(:clan_create_for_vip_money)
+  def image_is_loaded?(params)
+    if params
+      true
+    else
+      errors.add(:character, :not_loaded_image)
+      
+      false
+    end
+  end
+  
+  def enough_vip_money?(character, price)
+    if character.vip_money >= price
       true
     else  
       errors.add(:character, :not_enough_vip_money)
