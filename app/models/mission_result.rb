@@ -63,7 +63,7 @@ class MissionResult
             payout_triggers << :level_complete
             payout_triggers << :mission_complete if @mission_rank.completed?
             
-            if @character.missions.first_levels_completed?(@mission.mission_group)
+            if @group_rank.just_completed? && @character.missions.first_levels_completed?(@mission.mission_group)
               payout_triggers << :mission_group_complete
             end
           else
