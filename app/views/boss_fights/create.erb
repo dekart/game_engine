@@ -4,7 +4,7 @@
 
     <%= builder.render("boss_fights/create/payouts", :fight => @fight) if @fight.lost_something? || @fight.received_something? %>
 
-    <%= builder.render("mission_groups/complete", :result => @fight) if @fight.group_rank.try(:just_created?) %>
+    <%= builder.render("mission_groups/complete", :result => @fight) if @fight.group_rank.try(:just_completed?) %>
   <% elsif !@fight.requirements_satisfied? %>
     <% builder.fail do %>
       <%= t(".requirements_not_satisfied.message").html_safe %>
