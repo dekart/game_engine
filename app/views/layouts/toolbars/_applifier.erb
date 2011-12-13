@@ -1,20 +1,20 @@
 <!-- Applifier cross-promo code begin -->
 <div id="applifier_bar"></div>
 
-<script type="text/javascript">
-(function() {
-  window.applifierAsyncInit = function() {
-    var bar = new Applifier.Bar({
-      applicationId: <%= Setting.i(:app_toolbar_applifier_id) %>, 
-      thirdPartyId: "<%= escape_javascript(current_user.anonymous_id.to_s) %>", 
-      barType: "bar", 
-      barContainer: "#applifier_bar"
-    });
-  };
+<% javascript_tag do %>
+  $(function(){
+    window.applifierAsyncInit = function() {
+      var bar = new Applifier.Bar({
+        applicationId: <%= Setting.i(:app_toolbar_applifier_id) %>, 
+        thirdPartyId: "<%= escape_javascript(current_user.anonymous_id.to_s) %>", 
+        barType: "bar", 
+        barContainer: "#applifier_bar"
+      });
+    };
 
-  var a = document.createElement('script'); a.type = 'text/javascript'; a.async = true;
-  a.src = (('https:' == document.location.protocol) ? 'https://secure' : 'http://cdn') + '.applifier.com/applifier.min.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(a, s);
-})();
-</script>
+    var a = document.createElement('script'); a.type = 'text/javascript'; a.async = true;
+    a.src = (('https:' == document.location.protocol) ? 'https://secure' : 'http://cdn') + '.applifier.com/applifier.min.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(a, s);
+  });
+<% end %>
 <!-- Applifier cross-promo code end -->

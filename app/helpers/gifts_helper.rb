@@ -2,7 +2,7 @@ module GiftsHelper
   
   # Render button, which shows facebook dialog for sending gift to another players
   def gift_send_button(item, options = {})
-    options.reverse_merge!(
+    options = options.deep_merge(
       :dialog => {
         :title    => t("gifts.new.request.title", :item => item.name),
         :message  => t("gifts.new.request.message", :item => item.name, :app => t('app_name')),

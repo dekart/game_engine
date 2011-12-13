@@ -16,8 +16,15 @@
 <%= form.text_field :upgrade_cost_increase, :size => 6, :autocomplete => :off %>
 <%= form.text_field :upgrade_limit, :size => 6, :autocomplete => :off %>
 
+<%= form.text_field :workers, :size => 6 %>
+<%= form.text_area :worker_names, :rows => 5 %>
+
 <%= form.fields 'admin/visibilities/form_fields' %>
 
-<h2><%= PropertyType.human_attribute_name("payouts") %></h2>
+<% form.field_set PropertyType.human_attribute_name("requirements") do %>
+  <%= form.fields "admin/requirements/collection" %>
+<% end %>
 
-<%= form.fields "admin/payouts/collection" %>
+<% form.field_set PropertyType.human_attribute_name("payouts") do %>
+  <%= form.fields "admin/payouts/collection" %>
+<% end %>

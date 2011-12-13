@@ -4,6 +4,24 @@ function debug(s) {
   }
 }
 
+var Shop = {
+  setup : function(){
+    
+    $(".amount").change(function(){
+      var amount = $(this).val();
+      var data = $.parseJSON($(this).attr('data-options'));
+      
+      if(data['basic_price'] > 0){
+        $("#item_" + data['id'] + " .requirements .basic_money .value").html(data['basic_price'] * amount);
+      }
+        
+      if(data['vip_price'] > 0){
+        $("#item_" + data['id'] + " .requirements .vip_money .value").html(data['vip_price'] * amount);
+      }   
+    });
+    
+  }
+};
 
 var Spinner = {
   x: -1,
@@ -173,7 +191,7 @@ var Character = {
     $('#co .energy .timer').timer(c.time_to_ep_restore, this.update_from_remote);
     $('#co .stamina .timer').timer(c.time_to_sp_restore, this.update_from_remote);
 
-    $('#co .timer').one('click', Character.update_from_remote);
+    $('#co .timer').unbind('click', Character.update_from_remote).bind('click', Character.update_from_remote);
 
     if (c.points > 0) {
       $("#co .level .upgrade").show();
@@ -202,8 +220,12 @@ var Character = {
   },
 
   update_from_remote: function(){
-    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
-      Character.update(data);
+    Spinner.disable(function(){
+      $.getJSON('/character_status/?rand=' + Math.random(), function(data){
+        Character.update(data);
+        
+        $(document).trigger('application.ready'); // Triggering event to start timers
+      });
     });
   }
 };
@@ -423,10 +445,32 @@ var Mission = {
 };
 
 var Fighting = {
-  loadMoreOpponents : function(){
-    $.get('/fights', function(response){
-      $('#victim_list').append(response);
+  setup: function(){
+    $(document).bind({
+      'fights.create': Fighting.checkOpponentPresence,
+
+      'character.new_level': function() {
+        $('#victim_list .character').remove();
+
+        Fighting.loadOpponents();
+      }
     });
+    
+    Fighting.checkOpponentPresence();
+  },
+  
+  checkOpponentPresence: function(){
+    if($('#victim_list .character:visible').length == 0){
+      Fighting.loadOpponents();
+    }
+  },
+  
+  loadOpponents : function(){
+    $("#loading_opponents").show();
+    
+    $.get('/fights', function(response){
+      $("#loading_opponents").hide();
+    }, 'script');
   }
 };
 
@@ -813,6 +857,10 @@ $(function(){
 
   $(document).bind('remote_content.received', function(){
     $(document).trigger('tooltips.setup');
+    
+    if_fb_initialized(function(){
+      FB.XFBML.parse();
+    });
   });
 
   $(document).bind('loading.dialog', function(){

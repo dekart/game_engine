@@ -455,7 +455,12 @@ describe MonsterFight do
       @character = @monster_fight.character
       @monster = @monster_fight.monster
       
-      monster_attack_item_boost = Factory(:item, :boost_type => 'monster', :health => 1)
+      monster_attack_item_boost = Factory(:item, 
+        :boost_type => 'monster',
+        :effects => [
+          {:type => :health, :value => 1}
+        ]
+      )
       @monster_attack_boost = @character.inventories.give!(monster_attack_item_boost)
     end
     

@@ -28,9 +28,11 @@ describe Character do
       Timecop.freeze(Time.now) do
         @character.hp = 0
 
-        lambda{
-          @character.save!
-        }.should change(@character, :fighting_available_at).to(5.minutes.from_now)
+        with_setting(:fight_weak_opponents => false) do
+          lambda{
+            @character.save!
+          }.should change(@character, :fighting_available_at).to(5.minutes.from_now)
+        end
       end
     end
     

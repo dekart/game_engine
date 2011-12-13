@@ -10,6 +10,8 @@
 
 <% dom_ready do %>
   $(document).trigger('application.ready');
+  
+  <%= ga_track_pageview %>
 <% end %>
 
 <%= dom_ready %>

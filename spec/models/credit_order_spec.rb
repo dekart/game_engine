@@ -90,15 +90,15 @@ describe CreditOrder do
   end
   
   
-  describe '#settle' do
+  describe '#place' do
     before do
       @character = Factory(:character, :vip_money => 50)
-      @order = Factory(:credit_order, :character => @character, :state => 'placed')
+      @order = Factory(:credit_order, :character => @character, :state => 'previewed')
     end
     
-    it 'should add vip money to character if the order was placed previously' do
+    it 'should add vip money to character if the order was previewed previously' do
       lambda{
-        @order.settle
+        @order.place
       }.should change(@character, :vip_money).by(10)
       
       @character.vip_money_deposits.should_not be_empty
@@ -109,7 +109,7 @@ describe CreditOrder do
       @order.update_attribute(:state, 'disputed')
       
       lambda{
-        @order.settle
+        @order.place
       }.should_not change(@character, :vip_money)
     end
   end

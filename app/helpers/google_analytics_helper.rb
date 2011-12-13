@@ -4,8 +4,8 @@ module GoogleAnalyticsHelper
     
     additional_code = block_given? ? capture(&block) : ''
     
-    code = %{
-      <script type="text/javascript">
+    code = javascript_tag(
+      %{
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '#{ Setting.s(:app_google_analytics_id) }']);
         #{additional_code}
@@ -16,8 +16,8 @@ module GoogleAnalyticsHelper
           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
-      </script>
-    }.html_safe
+      }
+    ).html_safe
     
     block_given? ? concat(code) : code
   end
@@ -32,6 +32,12 @@ module GoogleAnalyticsHelper
     value = value.to_i
     
     ga_command('_trackEvent', category, action, label, value > 0 ? value : nil)
+  end
+  
+  def ga_track_pageview(url = nil)
+    return unless ga_enabled?
+    
+    ga_command('_trackPageview', url || request.path)
   end
   
   VARIABLE_SCOPES = {

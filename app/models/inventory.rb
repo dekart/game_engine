@@ -14,6 +14,10 @@ class Inventory < ActiveRecord::Base
   named_scope :equippable,
     :include => :item,
     :conditions => "items.equippable = 1 AND (inventories.equipped < inventories.amount)"
+    
+  named_scope :usable,
+    :include => :item,
+    :conditions => "items.payouts != ''"  
   
   named_scope :exchangeable,
     :include => :item,
@@ -21,12 +25,11 @@ class Inventory < ActiveRecord::Base
 
   delegate(
     *(
-      Item::EFFECTS +
       %w{
         item_group  name plural_name description image image?
-        basic_price vip_price can_be_sold? can_be_sold_on_market?
+        basic_price vip_price can_be_sold? can_be_sold_on_market? exchangeable?
         placements placement_options_for_select
-        payouts payouts? use_button_label use_message effects effects? boost?
+        payouts payouts? use_button_label use_message effects effects? effect boost?
         boost_type
       } +
       [{:to => :item}]
@@ -122,13 +125,15 @@ class Inventory < ActiveRecord::Base
   end
   
   def check_market_items
-    if market_item and market_item.amount > amount
+    if can_be_sold_on_market? and market_item and market_item.amount > amount
       market_item.destroy unless market_item.destroyed?
     end
   end
   
   def check_exchanges!
-    Exchange.invalidate_created_by_inventory!(self)
-    ExchangeOffer.destroy_created_by_inventory(self)
+    if exchangeable?
+      Exchange.invalidate_created_by_inventory!(self)
+      ExchangeOffer.destroy_created_by_inventory(self)
+    end
   end
 end

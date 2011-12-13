@@ -18,7 +18,7 @@
     <% @stories.each do |story| %>
       <% content_tag_for(:tr, story) do %>
         <td class="alias"><%= link_to(story.alias, edit_admin_story_path(story)) %></td>
-        <td class="image"><%= image_tag(story.image.url(:original)) %></td>
+        <td class="image"><%= image_tag(story.image.url(:original)) if story.image? %></td>
         <td class="story">
           <p><%= story.title %></p>
           <p><%= story.description %></p>

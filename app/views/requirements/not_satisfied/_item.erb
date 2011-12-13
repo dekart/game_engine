@@ -1,20 +1,5 @@
 <% requirement(requirement.name, false) do %>
   <% if [:shop, :special].include?(requirement.item.availability) %>
-    <div class="buttons">
-      <%= link_to_remote(button(:buy),
-            :url => inventories_path(
-              :item_id  => requirement.item,
-              :amount   => requirement.missing_amount(current_character)
-            ),
-            :update => :result,
-            :before => "$(document).bind('item.purchase', Mission.onItemPurchase);",
-            :html   => {
-              :"data-click-once" => true,
-              :class => "buy button"
-            }
-          ) %>
-    </div>
-
     <% link = capture do %>
       <span class="image">
         <%= item_image(requirement.item, :icon,
@@ -55,6 +40,21 @@
             )
           ).html_safe %>
     </p>
+
+    <div class="buttons">
+      <%= link_to_remote(button(:buy),
+            :url => inventories_path(
+              :item_id  => requirement.item,
+              :amount   => requirement.missing_amount(current_character)
+            ),
+            :update => :result,
+            :before => "$(document).bind('item.purchase', Mission.onItemPurchase);",
+            :html   => {
+              :"data-click-once" => true,
+              :class => "buy button"
+            }
+          ) %>
+    </div>
   <% else %>
     <p>
       <span class="image">

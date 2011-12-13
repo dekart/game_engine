@@ -52,7 +52,7 @@ class PersonalDiscount < ActiveRecord::Base
   
   def enough_money
     errors.add(:character, :not_enough_basic_money, :name => item.name) if character.basic_money < item.basic_price
-    errors.add(:character, :not_enough_vip_money, :name => item.name)   if character.vip_money < item.vip_price
+    errors.add(:character, :not_enough_vip_money, :name => item.name)   if character.vip_money < price
   end
   
   def charge_money

@@ -144,7 +144,7 @@ class MonsterFight < ActiveRecord::Base
   
   def significant_damage?
     # user caused significant damage and was in top damage players
-    damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.maximum(:damage)) &&
+    damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.top_damage[0].damage) &&
       monster.monster_fights.top_damage.index(self) < monster_type.number_of_maximum_reward_collectors
   end
   
@@ -171,7 +171,7 @@ class MonsterFight < ActiveRecord::Base
 
       character.hp  -= @character_damage
       
-      @monster_damage += @boost.health if @boost
+      @monster_damage += @boost.effect(:health) if @boost
       monster.hp    -= @monster_damage
 
       self.damage   += @monster_damage

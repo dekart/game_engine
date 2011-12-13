@@ -1,5 +1,5 @@
 server {
-  listen <%= public_ip %>:80;
+  listen <%= respond_to?(:public_ip) ? "#{ public_ip }:80" : "80" %>;
 
   server_name <%= facebook_config[:callback_domain] %>;
 
@@ -9,7 +9,7 @@ server {
 
   <% if File.file?(File.expand_path("../config/deploy/certificates/#{ rails_env }.csr", __FILE__)) %>
     # SSL setup
-    listen <%= public_ip %>:443 ssl;
+    listen <%= respond_to?(:public_ip) ? "#{ public_ip }:443" : "443" %> ssl;
 
     ssl_protocols SSLv3 TLSv1;
     ssl_certificate <%= current_path %>/config/deploy/certificates/<%= rails_env %>.csr;

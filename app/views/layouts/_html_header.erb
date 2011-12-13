@@ -1,8 +1,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<script type="text/javascript">
+<% javascript_tag do %>
   var signed_request = '<%= escape_javascript(fb_signed_request) %>';
-</script>
+<% end %>
 
 <%= stylesheet_link_tag(%w{qtip application ui-custom}) %>
 
@@ -17,15 +17,26 @@
       :cache => "cache/all"
     ) %>
 
-<script type="text/javascript">
-  if(!window.jsLoadedProperly && confirm('The page wasn\'t loaded properly because of some connection problem. Would you like to reload it?')){
-    // TODO: Send notification to exception tracking if this code was triggered
-    window.location.reload();
+<% javascript_tag do %>
+  if(typeof window.jsLoadedProperly === 'undefined'){
+    if( confirm('The page wasn\'t loaded properly because of some connection problem. Would you like to reload it?') ) {
+      // TODO: Send notification to exception tracking if this code was triggered
+      window.location.reload();
+    }
   }
-</script>
+<% end %>
 
 <title><%= t('app_name') %></title>
 
 <%= tag(:meta, :property => 'fb:app_id', :content => facepalm.app_id) %>
 
 <%= yield(:html_header) %>
+
+<% google_analytics do %>
+  <% if current_character %>
+    <%= ga_set_variable(1, 'Level', character_level_group(current_character), :visitor) %>
+    <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.titleize, :visitor) %>
+  <% end %>
+  
+  <%= ga_set_variable(3, 'SSL', request.ssl? ? 'Yes' : 'No', :visitor) %>
+<% end %>

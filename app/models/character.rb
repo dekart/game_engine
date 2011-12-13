@@ -5,8 +5,10 @@ class Character < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   
   include Character::Levels
+  include Character::Fights
   include Character::AppRequests
   include Character::Relations
+  include Character::Assignments
   include Character::Inventories
   include Character::Properties
   include Character::Notifications
@@ -31,22 +33,6 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
 
-  has_many :attacks,
-    :class_name   => "Fight",
-    :foreign_key  => :attacker_id,
-    :dependent    => :delete_all
-  has_many :defences,
-    :class_name   => "Fight",
-    :foreign_key  => :victim_id,
-    :dependent    => :delete_all
-  has_many :won_fights,
-    :class_name   => "Fight",
-    :foreign_key  => :winner_id
-
-  has_many :assignments,
-    :as         => :context,
-    :dependent  => :delete_all
-
   has_many :boss_fights,
     :extend => Character::BossFights
 
@@ -61,7 +47,7 @@ class Character < ActiveRecord::Base
     :class_name => "BankWithdraw", 
     :dependent  => :delete_all
 
-  has_many :vip_money_deposits, 
+  has_many :vip_money_deposits,
     :dependent => :destroy
   has_many :vip_money_withdrawals, 
     :dependent => :destroy
@@ -70,6 +56,13 @@ class Character < ActiveRecord::Base
   
   has_many :wall_posts,
     :dependent => :destroy
+    
+  named_scope :by_profile_ids, Proc.new{|ids|
+    {
+      :joins => :user,
+      :conditions => ["characters.id IN (:ids) OR users.facebook_id IN (:ids)", {:ids => ids}]
+    }
+  }
 
   serialize :active_boosts
 
@@ -93,7 +86,6 @@ class Character < ActiveRecord::Base
   after_validation_on_create :apply_character_type_defaults
   before_save :update_level_and_points, :unless => :level_up_applied
   before_save :update_total_money
-  before_save :update_fight_availability_time, :if => :hp_changed?
   after_save :update_current_contest_points
   after_create :schedule_notifications
 
@@ -160,14 +152,14 @@ class Character < ActiveRecord::Base
     attack + 
       equipment.effect(:attack) +
       assignments.attack_effect +
-      boosts.active_for(:fight, :attack).try(:attack).to_i
+      boosts.active_for(:fight, :attack).try(:effect, :attack).to_i
   end
 
   def defence_points
     defence +
       equipment.effect(:defence) +
       assignments.defence_effect +
-      boosts.active_for(:fight, :defence).try(:defence).to_i
+      boosts.active_for(:fight, :defence).try(:effect, :defence).to_i
   end
 
   def health_points
@@ -202,13 +194,6 @@ class Character < ActiveRecord::Base
     end
   end
   
-  def fight_requirements
-    @requirements ||= Requirements::Collection.new(
-      weakness_requirement,
-      Requirements::StaminaPoint.new(:value => Setting.i(:fight_stamina_required))
-    )
-  end
-
   def formatted_basic_money
     number_to_currency(basic_money)
   end
@@ -243,6 +228,10 @@ class Character < ActiveRecord::Base
       ]
     )
   end
+  
+  def show_promo_block?
+    level >= Setting.i(:promo_block_minimum_level)
+  end
 
   def can_hitlist?(victim)
     friendly_attack = Setting.b(:fight_alliance_attack) ? false : friend_relations.established?(victim)
@@ -256,22 +245,27 @@ class Character < ActiveRecord::Base
   end
 
   def charge(basic_amount, vip_amount, reference = nil)
-    self.basic_money  -= basic_amount if basic_amount != 0
+    self.basic_money  -= basic_amount.to_i
 
     if vip_amount.to_i != 0
-      deposit = (vip_amount > 0 ? vip_money_withdrawals : vip_money_deposits).build(
+      target = (vip_amount.to_i > 0 ? vip_money_withdrawals : vip_money_deposits)
+      
+      target.build(
         :amount     => vip_amount.abs,
         :reference  => reference
-      )
-      deposit.character = self
-      deposit
+      ).tap do |o|
+        o.character = self
+        o.save!
+      end
     end
   end
 
   def charge!(*args)
-    charge(*args)
-
-    save!
+    transaction do
+      charge(*args)
+    
+      save!
+    end
   end
 
   def boosts
@@ -337,16 +331,18 @@ class Character < ActiveRecord::Base
       :level => self.level
     }
   end
-  
+    
   protected
 
   def update_level_and_points
     self.level = [level, level_for_current_experience].max
     
     if level_changed?
+      self.level_up_applied = true
+      
       self.points += level_up_amount * Setting.i(:character_points_per_upgrade)
 
-      charge(0, - vip_money_per_upgrade, :level_up)
+      charge!(0, - vip_money_per_upgrade, :level_up)
 
       self.ep = energy_points
       self.hp = health_points
@@ -354,10 +350,12 @@ class Character < ActiveRecord::Base
 
       notifications.schedule(:level_up)
       
-      self.level_up_applied = true
+      update_opponent_bucket # Update character position in opponent buckets
 
       EventLoggingService.log_event(:character_levelup, self)
     end
+    
+    true
   end
   
   def level_up_amount
@@ -372,20 +370,12 @@ class Character < ActiveRecord::Base
     CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute|
       send("#{attribute}=", character_type.send(attribute)) if send(attribute).nil?
     end
-
-    self.hp = health_points
-    self.ep = energy_points
-    self.sp = stamina_points
   end
 
   def update_total_money
     self.total_money = basic_money + bank
   end
-  
-  def update_fight_availability_time
-    self.fighting_available_at = hp_restore_time(weakness_minimum).seconds.from_now
-  end
-  
+    
   def schedule_notifications
     message = Message.last(:conditions => {:notify_new_users => true, :state => ["sending", "sent"]})
     

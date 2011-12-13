@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem "rails", "2.3.11", :require => nil
+gem "rails", "2.3.14", :require => nil
 gem 'rake', '0.8.7'
 
 gem "mysql",            "2.8.1"
@@ -21,11 +21,13 @@ gem "redis",            "2.1.1"
 
 gem 'cubus-settingslogic', '2.2.0'
 
+gem 'rufus-scheduler',  '2.0.13'
+
 # Facepalm
 gem 'multi_json'
 gem 'faraday'
 gem 'koala', '1.2.0beta4'
-gem 'ie_iframe_cookies'
+gem 'ie_iframe_cookies', '0.1.0'
 
 group :development do
   gem "capistrano",     "2.5.20"

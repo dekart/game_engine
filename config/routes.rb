@@ -61,7 +61,8 @@ ActionController::Routing::Routes.draw do |map|
       :collection => {
         :user       => :any,
         :vip_money  => :any,
-        :level      => :any
+        :level      => :any,
+        :visits     => :any
       }
 
     admin.resources :tips,
@@ -231,6 +232,7 @@ ActionController::Routing::Routes.draw do |map|
     }
   map.resources :properties, :only => [:index, :create],
     :member => {
+      :hire           => :any,
       :upgrade        => :put,
       :collect_money  => :put
     },
@@ -248,7 +250,7 @@ ActionController::Routing::Routes.draw do |map|
       :refill_dialog => :post
     }
 
-  map.resource :rating, :member => {:global => :any}
+  map.resource :rating
 
   map.resources :gifts, :only => :new
 

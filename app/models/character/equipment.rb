@@ -26,6 +26,14 @@ class Character
       end
     end
 
+    def main_placements
+      MAIN_PLACEMENTS
+    end
+  
+    def all_placements
+      PLACEMENTS
+    end
+
     def placements
       self[:placements] ||= {}
     end
@@ -69,7 +77,7 @@ class Character
         placements[placement] << inventory.id
 
         inventory.equipped = equipped_amount(inventory)
-      elsif MAIN_PLACEMENTS.include?(placement) # Main placements can be replaced
+      elsif main_placements.include?(placement) # Main placements can be replaced
         previous = character.inventories.find(placements[placement].last)
 
         unless previous == inventory # Do not re-equip the same inventory
@@ -186,10 +194,10 @@ class Character
         while free_slots > 0
           equipped = nil
 
-          Item::EFFECTS.each do |effect|
-            candidates = equippables.select{|i| i.equippable? and i.send(effect) != 0}
+          Effects::Base::BASIC_TYPES.each do |effect|
+            candidates = equippables.select{|i| i.equippable? and i.effect(effect) != 0}
 
-            if inventory = candidates.max_by{|i| [i.send(effect), i.effects.values.sum]} and auto_equip(inventory, 1)
+            if inventory = candidates.max_by{|i| [i.effect(effect), i.effects.metric]} and auto_equip(inventory, 1)
               equipped = inventory
             end
           end
@@ -231,12 +239,12 @@ class Character
 
 
     def best_offence
-      inventories.select{|i| i.attack > 0 }.sort{|a, b| b.attack <=> a.attack }[0..2]
+      inventories.select{|i| i.effect(:attack) > 0 }.sort{|a, b| b.effect(:attack) <=> a.effect(:attack) }[0..2]
     end
 
 
     def best_defence
-      inventories.select{|i| i.defence > 0 }.sort{|a, b| b.defence <=> a.defence }[0..2]
+      inventories.select{|i| i.effect(:defence) > 0 }.sort{|a, b| b.effect(:defence) <=> a.effect(:defence) }[0..2]
     end
 
     protected

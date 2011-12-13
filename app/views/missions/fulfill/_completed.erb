@@ -23,7 +23,7 @@
       :result   => result
     ) %>
 
-<% if result.group_rank.try(:just_created?) %>
+<% if result.group_rank.try(:just_completed?) %>
   <%= builder.render("mission_groups/complete", :result => @result) %>
 <% end %>
 
@@ -43,7 +43,10 @@
 
     <div class="buttons">
       <%= link_to_function(button(:publish),
-            stream_dialog(:mission_completed, mission, :before => '$.dialog.close();'),
+            stream_dialog(:mission_completed, mission,
+              :before => '$.dialog.close();',
+              :success => '$("#mission_result .buttons .publish").hide()'
+            ),
             :class => "continue button"
           ) if Setting.b(:stream_dialog_enabled) %>
     </div>

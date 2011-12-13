@@ -17,6 +17,9 @@
     padding-left: 21px
     background-position: center left
     background-repeat: no-repeat
+    
+  .sliders
+    font-weight: bold  
 
   .attack .value
     background-image = !upgrade_list_attack_icon
@@ -34,17 +37,26 @@
     background-image = !upgrade_list_stamina_icon
     
   .controls
-    span.ui-icon-circle-minus
+    .minus_value_attribute, .plus_value_attribute
       float: left
-      margin-right: 8px
+      cursor: pointer
+      width: 16px
+      height: 16px
+      background:
+        repeat: no-repeat
+        position: center
       
-    span.ui-icon-circle-plus
-      float: left
+    .minus_value_attribute
+      margin-right: 10px
+      background-image = !asset_icons_delete
+      
+    .plus_value_attribute
       margin-left: 10px  
+      background-image = !asset_icons_add
       
     div.attribute_slider
       float: left 
-      width: 100px
+      width: 160px
 
 #upgrade_result
   background:

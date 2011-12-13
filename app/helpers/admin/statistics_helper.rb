@@ -30,4 +30,10 @@ module Admin::StatisticsHelper
 
     result.html_safe
   end
+  
+  def admin_requests_average_amount(value, day)
+    t("admin.statistics.average_amount",
+      :amount => content_tag(:strong, Statistics::Visits.average_amount(value, day))
+    ).html_safe
+  end
 end

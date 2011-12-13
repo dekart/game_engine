@@ -149,7 +149,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
     
     def receiver_ids
-      all(:select => :receiver_id).collect{|r| r.receiver_id }
+      all(:select => "DISTINCT receiver_id").collect{|r| r.receiver_id }
     end
     
     def check_user_requests(user)
@@ -227,9 +227,7 @@ class AppRequest::Base < ActiveRecord::Base
   protected
   
   def request_class_from_data
-    if data.nil?
-      'AppRequest::Invitation'
-    elsif data['type'] && %w{gift invitation monster_invite}.include?(data['type'])
+    if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker}.include?(data['type'])
       "AppRequest::#{ data['type'].classify }"
     else
       'AppRequest::Invitation'

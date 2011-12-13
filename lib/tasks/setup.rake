@@ -37,15 +37,20 @@ namespace :app do
         :app_id => config.app_id, 
         :secret => config.secret
       )
-
-      updates.subscribe(
-        'user', 
-        'first_name, last_name, email, timezone, locale',
-        config.callback_url('http://') + '/users/subscribe',
-        config.subscription_token
-      )
+      
+      begin
+        updates.subscribe(
+          'user', 
+          'first_name, last_name, email, timezone, locale',
+          config.callback_url('http://') + '/users/subscribe',
+          config.subscription_token
+        )
     
-      puts 'Done!'
+        puts 'Done!'
+      rescue Exception => e
+        puts "Error while doing real-time update subscription:"
+        puts e
+      end
     end
     
     desc "Generate experience table for levels"

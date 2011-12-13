@@ -1,0 +1,21 @@
+<div class="effect serializable_item <%= effect.name %>" id="effect_<%= effect.object_id %>">
+  <div class="controls">
+    <%= link_to_function(t(".move_up"), "SerializableList.moveUp('#effect_#{effect.object_id}')", :class => :move_up) %>
+    <%= link_to_function(t(".move_down"), "SerializableList.moveDown('#effect_#{effect.object_id}')", :class => :move_down) %>
+    <%= link_to_function(t(".remove"), "SerializableList.remove('#effect_#{effect.object_id}')", :class => :remove) %>
+  </div>
+
+  <h4><%= t("effects.#{effect.name}.name") %></h4>
+
+  <% fields_for "#{container}[effects][effect_#{effect.object_id}]", effect do |form| %>
+    <%= form.hidden_field :type, :value => effect.name %>
+
+    <table>
+      <tr>
+        <td width="50%">
+          <%= form.fields "admin/effects/form_fields/#{effect.name}" %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>

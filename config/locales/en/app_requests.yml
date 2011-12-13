@@ -3,7 +3,7 @@ en:
     counter:
       text: "You have %{count} requests from your friends"
     invite_dialog:
-      note: 'Select the friends you would like to help'
+      note: 'Select the friends you would like to help. Requests will be sent in batches of 24.'
       search: 'Search'
       filters:
         all: 'All Friends'
@@ -28,9 +28,13 @@ en:
         text: "%{user} invites you to join fight against %{monster}"
       invitation:
         text: "%{user} invites you to join their Alliance"
+      property_worker:
+        text: "%{user} asks you to help them finish the %{property}"
     update:
       gift:
         accepted: 'Gift accepted!'
+        sending: 'Sending...'
+        sent: 'Sent!'
         buttons:
           send: "Send Back"
       monster_invite:
@@ -41,4 +45,6 @@ en:
         accepted: 'Invitation accepted!'
         buttons:
           alliance: 'View Alliance'
+      property_worker:
+        accepted: 'Thank you for your help!'
     

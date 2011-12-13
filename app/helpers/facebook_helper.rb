@@ -44,12 +44,14 @@ module FacebookHelper
 
   def invite_dialog(type, options = {})
     callback = options.delete(:callback)
+    before = options.delete(:before)
     
     "".tap do |result|
       result << ga_track_event('Requests', "#{ type.to_s.titleize } - Dialog").to_s
+      result << before.to_s
       result << "InviteDialog.show('#{ type }', #{ options.to_json }, function(){ #{ callback } });"
       
       result.gsub!(/\n\s+/, ' ')
-    end
+    end.html_safe
   end
 end

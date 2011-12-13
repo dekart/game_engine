@@ -1,5 +1,6 @@
 class AppRequestsController < ApplicationController
   skip_authentication_filters :only => :create
+  skip_before_filter :tracking_requests, :only => :create
   
   def index
     @app_requests = current_character.app_requests.visible.all(:order => "sender_id, type, created_at DESC")

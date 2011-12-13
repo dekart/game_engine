@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104182151) do
+ActiveRecord::Schema.define(:version => 20111128121905) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -225,12 +225,9 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
-    t.integer  "total_score",                                    :default => 0,                     :null => false
   end
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
-  add_index "characters", ["total_monsters_damage"], :name => "index_characters_on_total_monsters_damage"
-  add_index "characters", ["total_score"], :name => "index_characters_on_total_score"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "contest_groups", :force => true do |t|
@@ -403,13 +400,14 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
   add_index "item_collection_ranks", ["character_id", "collection_id"], :name => "index_collection_ranks_on_character_id_and_collection_id"
 
   create_table "item_collections", :force => true do |t|
-    t.string   "name",       :limit => 100, :default => "", :null => false
-    t.string   "item_ids",                  :default => "", :null => false
+    t.string   "name",         :limit => 100, :default => "", :null => false
+    t.string   "item_ids",                    :default => "", :null => false
     t.text     "payouts"
-    t.string   "state",      :limit => 50,  :default => "", :null => false
+    t.string   "state",        :limit => 50,  :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "level",                     :default => 1
+    t.integer  "level",                       :default => 1
+    t.string   "amount_items",                :default => "", :null => false
   end
 
   create_table "item_groups", :force => true do |t|
@@ -443,8 +441,6 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
-    t.integer  "attack",                                 :default => 0
-    t.integer  "defence",                                :default => 0
     t.integer  "owned",                                  :default => 0
     t.integer  "limit"
     t.datetime "available_till"
@@ -454,19 +450,14 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
     t.text     "payouts"
     t.string   "use_button_label",        :limit => 50,  :default => "",     :null => false
     t.string   "use_message",                            :default => "",     :null => false
-    t.integer  "health"
-    t.integer  "energy"
-    t.integer  "stamina"
     t.boolean  "can_be_sold_on_market"
     t.datetime "image_updated_at"
     t.integer  "package_size"
     t.integer  "max_vip_price_in_market"
-    t.integer  "original_vip_price"
     t.string   "boost_type",              :limit => 50,  :default => "",     :null => false
-    t.integer  "hp_restore_rate",                        :default => 0
-    t.integer  "sp_restore_rate",                        :default => 0
-    t.integer  "ep_restore_rate",                        :default => 0
+    t.integer  "original_vip_price"
     t.boolean  "exchangeable",                           :default => false
+    t.text     "effects"
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
@@ -488,9 +479,9 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
+    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
-    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -617,6 +608,7 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
     t.integer  "levels_count",                      :default => 0
     t.integer  "position"
     t.datetime "image_updated_at"
+    t.string   "button_label",                      :default => "", :null => false
   end
 
   add_index "missions", ["mission_group_id"], :name => "index_missions_on_mission_group_id"
@@ -729,12 +721,14 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
   end
 
   create_table "properties", :force => true do |t|
-    t.integer  "property_type_id",                :null => false
-    t.integer  "character_id",                    :null => false
+    t.integer  "property_type_id",                  :null => false
+    t.integer  "character_id",                      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "level",            :default => 1
+    t.integer  "level",             :default => 1
     t.datetime "collected_at"
+    t.integer  "workers",           :default => 0
+    t.string   "worker_friend_ids", :default => "", :null => false
   end
 
   add_index "properties", ["character_id"], :name => "index_properties_on_character_id"
@@ -761,6 +755,8 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
     t.text     "payouts"
     t.datetime "image_updated_at"
     t.integer  "income_by_level",                      :default => 0
+    t.integer  "workers"
+    t.string   "worker_names",                         :default => "",     :null => false
   end
 
   create_table "relations", :force => true do |t|
@@ -860,7 +856,7 @@ ActiveRecord::Schema.define(:version => 20111104182151) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",                         :default => ""
+    t.string   "tutorial_step",          :limit => 50,  :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end

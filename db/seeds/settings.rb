@@ -74,10 +74,13 @@ Setting[:inventory_exchange_enabled] ||= true
 
 Setting[:item_show_basic] ||= 10
 Setting[:item_show_special] ||= 3
+Setting[:promo_block_minimum_level] ||= 3
 
 Setting[:property_sell_price] ||= 50
 Setting[:property_upgrade_limit] ||= 2000
 Setting[:property_first_collect_time] ||= 5.minutes.to_i
+Setting[:property_worker_price] ||= 2
+Setting[:property_worker_hire_delay] ||= 24
 
 Setting[:user_tutorial_enabled] ||= true
 Setting[:user_admins] ||= "682180971, 573513043"
@@ -175,8 +178,6 @@ Setting[:app_toolbar_applifier_id] ||= ''
 Setting[:app_toolbar_minimum_level] ||= 1
 
 # total score
-Setting[:total_score_enabled] ||= true
-
 Setting[:total_score_fights_won_factor] ||= 1
 Setting[:total_score_killed_monsters_count_factor] ||= 1
 Setting[:total_score_total_monsters_damage_factor] ||= 1
@@ -184,7 +185,6 @@ Setting[:total_score_total_money_factor] ||= 1
 Setting[:total_score_missions_succeeded_factor] ||= 1
 Setting[:total_score_level_factor] ||= 1
 
-Setting[:total_score_expiration_time] ||= 15.minute.to_i
 Setting[:total_score_publishing_in_facebook_enabled] ||= true
 
 # Put your custom settings below this line

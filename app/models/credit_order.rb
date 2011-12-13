@@ -30,7 +30,7 @@ class CreditOrder < ActiveRecord::Base
       transition [:settled, :disputed] => :refunded
     end
     
-    after_transition :placed => :settled, :do => :deposit_vip_money
+    after_transition :previewed => :placed, :do => :deposit_vip_money
   end
   
   validates_presence_of   :facebook_id, :character, :package

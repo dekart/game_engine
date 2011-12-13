@@ -4,4 +4,9 @@
   </div>
 
   <%= select_tag("item_collection[item_ids][]", grouped_options_for_select(Item.to_grouped_dropdown, item.try(:id)).html_safe) %>
+  
+  <div class="field amount_items">
+    <div class="label"><%= label_tag(:amount) %></div>
+    <div class="input"><%= text_field_tag("item_collection[amount_items][]", amount, :size => 5 ) %></div>
+  </div>  
 </div>

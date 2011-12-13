@@ -37,13 +37,9 @@
     </table>
 
     <% builder.on_ready do %>
-      $('#inventory_list').html('<%=
-        escape_javascript(
-          render("list", :inventories => current_character.inventories)
-        )
-      %>');
+      $(document).trigger('items.used');
     
-      <%= ga_track_event('Items', 'Used', "#{@inventory.name} (#{@inventory.item.availability})", current_character.level) %>
+      <%= ga_track_event('Items', 'Used', "#{ @inventory.name } (#{ @inventory.item.availability })", current_character.level) %>
     <% end %>
   <% else %>
     <% builder.fail do %>

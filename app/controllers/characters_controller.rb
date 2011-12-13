@@ -1,4 +1,5 @@
 class CharactersController < ApplicationController
+  skip_before_filter facepalm_authentication_filter,        :only => :new
   skip_before_filter :check_character_existance,            :only => [:new, :create]
   skip_before_filter :check_user_ban,                       :only => [:new, :create]
 

@@ -8,10 +8,6 @@ en:
         fights: "Fight!"
         rating: "View Rating"
         monsters: "Monsters"
-    show:
-      buttons:
-        relations: "Alliance Rating"
-        global: "Global Rating"
     group:
       points_types:
         fights_won: "Fights Won"
