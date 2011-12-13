@@ -9,6 +9,10 @@ module NotificationsHelper
 
       notifications.collect do |notification|
         render("notifications/#{notification.class_to_type}", :notification => notification)
+        
+        dom_ready do
+          ga_track_event("Notifications", "Show", notification.title)
+        end
       end.join.html_safe
     end
   end
