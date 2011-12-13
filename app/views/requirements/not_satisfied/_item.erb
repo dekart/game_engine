@@ -24,7 +24,7 @@
             ),
             :method => :get,
             :update => :ajax,
-            :before => "$(document).bind('item.purchase', Mission.onItemPurchase);",
+            :before => "$(document).one('item.purchase', function(){ $(document).trigger('requirement.satisfy') });",
             :html   => {
               :title => t(".shop_link_title", :item => requirement.item.plural_name)
             }
