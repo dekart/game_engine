@@ -55,5 +55,9 @@ module Notification
     def class_to_type
       self.class.name.split("::").last.underscore.to_sym
     end
+    
+    def title
+      self.class.name.split("::").last.titleize
+    end
   end
 end
