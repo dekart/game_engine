@@ -3,14 +3,14 @@ class MissionGroupRank < ActiveRecord::Base
   belongs_to :mission_group
 
   before_save   :cache_completion
-  after_create  :assign_just_created
+  after_create  :assign_just_completed
 
   def completed?
     self[:completed] || (missions_completed? && bosses_completed?)
   end
 
-  def just_created?
-    @just_created
+  def just_completed?
+    @just_completed
   end
 
   protected
@@ -29,7 +29,7 @@ class MissionGroupRank < ActiveRecord::Base
     true
   end
 
-  def assign_just_created
-    @just_created = true
+  def assign_just_completed
+    @just_completed = true
   end
 end
