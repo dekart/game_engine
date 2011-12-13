@@ -300,6 +300,12 @@ ActionController::Routing::Routes.draw do |map|
     }
   
   map.resources :clan_members, :only => :destroy
+  
+  map.resources :clan_membership_applications,
+    :member => {
+      :approve => :put,
+      :reject => :delete
+    }
 
   # Add your custom routes below this mark
   

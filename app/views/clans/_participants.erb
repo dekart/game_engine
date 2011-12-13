@@ -1,11 +1,13 @@
 <p><strong><%= t(".title") %></strong></p>
           
-<table id="participants" cellspacing="0" cellpadding="0">
+<table class="participants" cellspacing="0" cellpadding="0">
   <% members.each do |member| %>
     <tr class="<%= :creator if member.creator? %>">
       <td class="picture"><%= character_picture_link(member.character) %></td>
-      <td class="name"><%= character_name_link(member.character) %></td>
-      <td class="role"><strong><%= member.role %></strong></td>
+      <td class="data">
+        <div class="name"><%= character_name_link(member.character) %></div>
+        <div class="role"><%= member.role %></div>
+      </td>
     </tr>
   <% end %>
 </table>

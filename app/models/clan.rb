@@ -1,6 +1,7 @@
 class Clan < ActiveRecord::Base
   has_many :characters, :through => :clan_members
   has_many :clan_members, :dependent => :destroy
+  has_many :clan_membership_applications, :dependent => :destroy
   
   validates_presence_of :name
   
@@ -10,18 +11,18 @@ class Clan < ActiveRecord::Base
 
   has_attached_file :image, :styles => { :small => "200x200" }
   
-  def creator
-    clan_members.detect{|m| m.role == ClanMember::ROLE[:creator]}.character
+  def members_facebook_ids
+    clan_members.collect{|m| m.character.facebook_id}
   end
   
-  def is_member?(character)
-    clan_members.detect{|m| m.character_id == character.id}
+  def creator
+    clan_members.detect{|m| m.role == ClanMember::ROLE[:creator]}.character
   end
   
   def change_image!(params)
     if image_is_loaded?(params) && enough_vip_money?(creator,Setting.i(:clan_change_image_vip_money))
       transaction do
-        if update_attributes(params) && creator.charge!(0, Setting.i(:clan_change_image_vip_money))
+        if update_attributes(params) && creator.charge!(0, Setting.i(:clan_change_image_vip_money), :clan_image)
           true
         else
           false
@@ -35,7 +36,7 @@ class Clan < ActiveRecord::Base
   def create_by!(character)
     if valid? && enough_vip_money?(character,Setting.i(:clan_create_for_vip_money))
       transaction do
-        if save! && character.charge!(0, Setting.i(:clan_create_for_vip_money))
+        if save! && character.charge!(0, Setting.i(:clan_create_for_vip_money), :create_clan)
           clan_members.create(:character => character, :role => :creator)
           
           true

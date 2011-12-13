@@ -5,14 +5,21 @@ en:
       buttons:
         create_clan: "Create Clan For %{price}"
         my_clan: "My Clan"
-    show: 
-      management_link: "Management"
+    show:
       quit_confirm: "Are you sure you want to leave a clan?"
+      apply_confirm: "Are you sure you want to join a clan?"
+      member_clan_confirm: "You are a member of another clan. If your application accepted, you will be automatically deleted from your clan" #***
       join_clan:
         title: "To Join The Clan"
         text:  "Description of the process" #***
+      join_error: "You can not join this clan, as you are the creator of another clan" #***  
       buttons:
         quit: "Out Of The Clan"
+        invite_all: "Choose Friends to Invite"
+        apply: "Apply"
+        management: "Management"
+      title_invite: "Recruit To Your Alliance"  #***
+      sent_application: "Your application was sent to"
     participants: 
       title: "Participants"
     new:
@@ -22,13 +29,34 @@ en:
       title: "Edit Clan"  
       no_access: "You don't may edit this page!"
       members_clan: "Members Clan"
+      
     edit_image:  
       buttons:
         change_image: "Change image for %{price}"
       save: "Save" 
       notice: "After saving you will be charged with %{price} gems"  
     edit_participants:
+      title: "Participants"
+    edit_participants_list:
       buttons:
         delete: "Delete Member"
       delete: 
-        confirmation: "Are you sure you want to delete clan member?"   
+        confirmation: "Are you sure you want to delete clan member?"    
+    applications: 
+      title: "Applications"  
+      buttons:
+        accept: "Accept"
+        delete: "Reject application"
+      delete:
+        confirmation: "You sure you want to reject the request?"  
+  clan_membership_applications:
+    new:
+      sent_application: "Your application was sent to"   
+    approve: 
+      accept: "Application accept"  
+  create:
+    success: "The clan has been successfully created"    
+  update:
+    success: "The clan has been successfully updated" 
+  update_image:
+    success: "The image has been successfully updated"       

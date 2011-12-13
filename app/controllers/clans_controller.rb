@@ -18,12 +18,10 @@ class ClansController < ApplicationController
     @result = @clan.create_by!(current_character)
     
     if @result
-      flash[:notice] = "Success"
+      flash[:success] = t("create.success")
       
       redirect_to clan_path(@clan)
-    else
-      flash[:error] = "Error"  
-      
+    else      
       render :action => "new"
     end
   end
@@ -35,30 +33,28 @@ class ClansController < ApplicationController
   
   def update
     @clan = Clan.find(params[:id])
-    
+    @clan_members = @clan.clan_members
+     
     if @clan.update_attributes(params[:clan])
-      flash[:success] = "Success"
+      flash[:success] = t("update.success")
       
       redirect_to clan_path(@clan)
     else
-      flash[:error] = "Error"
-      
       render :action => "edit"
     end
   end
   
   def change_image
     @clan = Clan.find(params[:id])
+    @clan_members = @clan.clan_members
     
     @result = @clan.change_image!(params[:clan])
     
     if @result
-      flash[:success] = "Success"
+      flash[:success] = t("update_image.success")
       
       redirect_to clan_path(@clan)
     else
-      flash[:error] = "Error"
-      
       render :action => "edit"
     end
   end

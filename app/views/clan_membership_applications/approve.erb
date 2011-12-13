@@ -1,0 +1,5 @@
+<% dom_ready do %>
+  $("#members .participants").prepend(<%= render("clans/edit_participants_list", :member => @clan_member).to_json.html_safe %>);
+  
+  $("#application<%= @application.id %> .controls").html(<%= t(".accept").to_json.html_safe %>);
+<% end %>

@@ -21,6 +21,7 @@ en:
       buttons:
         accept: 'Accept'
         ignore: 'Ignore this request'
+        see_clan: "See clan"
     details:
       gift:
         text: "%{user} sends you %{item}"
@@ -28,6 +29,8 @@ en:
         text: "%{user} invites you to join fight against %{monster}"
       invitation:
         text: "%{user} invites you to join their Alliance"
+      clan_invite:
+        text: "%{user} invites you to join its Clan"   
       property_worker:
         text: "%{user} asks you to help them finish the %{property}"
     update:
@@ -45,6 +48,8 @@ en:
         accepted: 'Invitation accepted!'
         buttons:
           alliance: 'View Alliance'
+      clan_invite:
+        accepted: 'Invitation accepted!'    
       property_worker:
         accepted: 'Thank you for your help!'
     

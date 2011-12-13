@@ -1,10 +1,12 @@
 #clan
+  .clan
+    .description
+      padding: 0 10px 10px 10px
   .members
-    width: 250px
+    width: 200px
     .block_members
-      border-left: 1px solid #d0d0d0
-      border-bottom: 1px solid #d0d0d0
       padding: 10px
+      background-color: #EDEFF4
       
   .buttons        
     .quit 
@@ -13,6 +15,9 @@
           image = !clan_member_delete
           repeat: no-repeat
           position: 5px center
+    .invite
+      width: 170px
+      +button(!alliance_buttons_relations_icon)      
   .controls
     .button
       .vip_money
@@ -25,30 +30,40 @@
         padding: 0 0 0 17px
         margin: 0           
           
-  .clan_list
-    width: 100%   
-    .my_clan
-      background-color: #d0d0d0
-    td
-      padding: 5px 10px
-      vertical-align: middle  
-    th
-      padding: 5px 10px
-      vertical-align: middle
-      text-align: left
-      border-bottom = !splitter_border  
-    .image
-      width: 110px   
-    .name
-      font-size: 15px  
+    
       
-#participants
+  .join_clan
+    .description
+      border = !main_border
+      padding: 10px
+  .join_error
+    color: red    
+  .sent
+    color: #338833
+    font-size: 14px  
+             
+      
+.participants
   .creator
-    background-color: #d0d0d0
+    background-color = !rating_current_bg_color
+    td
+      border:
+        top = !rating_current_border
+        bottom = !rating_current_border
+    .picture
+      border-left = !rating_current_border
+    .data
+      border-right = !rating_current_border
+      font-weight: bold
   td
     padding: 7px
     vertical-align: middle
     border-bottom = !splitter_border
+    color: black
+  .data
+    .role
+#applications, #members
+  margin: 15px 0    
                 
 #clan_form
   .image
@@ -78,5 +93,53 @@
           text-align: center
         .cancel
           font-size: 15px   
-            
+  .members_clan
+    margin-top: 20px   
+  
+  .controls
+    color: #338833
+    .accept
+      +button(!clan_membership_application_accept)  
+    .approve 
+      float: left
+      margin-right: 10px
+    .reject
+      float: left       
+      margin-top: 10px  
+      
+#clan_list      
+  background-color: #EDEFF4
+  padding: 10px
+  .clan_list
+    width: 100%   
+    font-size: 14px
+    .my_clan
+      background-color = !rating_current_bg_color
+      
+      td
+        border:
+          top = !rating_current_border
+          bottom = !rating_current_border
+        font-weight: bold  
+      .position
+        border-left = !rating_current_border
+      .count
+        border-right = !rating_current_border
+    td
+      padding: 5px 10px
+      vertical-align: middle  
+    th
+      padding: 5px 10px
+      vertical-align: middle
+      text-align: left
+      border-bottom = !splitter_border  
+    .image
+      width: 110px   
+    .name
+      font-size: 15px      
+        
+#clan_chat
+  .chat
+    .messages-container
+      width: 400px            
             
