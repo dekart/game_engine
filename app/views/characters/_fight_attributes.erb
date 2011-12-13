@@ -36,7 +36,6 @@
   <% %w(offence defence).each do |group| %>
     <% if current_character.equipment.send("best_#{group}").any? %>
       <div class="inventories">
-        <div class="text"><%= t(".#{group}") %></div>
         <div class="items">
           <% current_character.equipment.send("best_#{group}").each do |inventory| %>
             <%= item_image(inventory, :icon,
@@ -45,6 +44,7 @@
                 ) %>
           <% end %>
         </div>
+        <div class="text"><%= t(".#{group}") %></div>
       </div>
     <% end %>
   <% end %>
