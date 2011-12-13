@@ -104,6 +104,8 @@ class Inventory < ActiveRecord::Base
 
     if purchase_amount > 0 # Buying items, should charge
       if charge_money
+        self.charge_money = false
+
         self.basic_money = basic_price * purchase_amount
         self.vip_money = vip_price * purchase_amount
 
@@ -118,6 +120,8 @@ class Inventory < ActiveRecord::Base
     amount ||= self.amount
 
     if deposit_money
+      self.deposit_money = false
+
       self.basic_money = sell_price * amount
 
       character.charge(- basic_money, 0, item)
