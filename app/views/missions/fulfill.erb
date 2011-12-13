@@ -46,14 +46,12 @@
     </div>
 
     <% builder.on_ready do %>
-      Mission.requirementCallback = function(){
+      $(document).unbind('requirement.satisfy').one('requirement.satisfy', function() {
         <%= remote_function(
               :url    => fulfill_mission_path(@mission),
               :update => :result
             ) %>
-      };
-
-      $(document).bind('requirement.satisfy', Mission.onRequirementSatisfy);
+      });
 
       <%= ga_track_event('Missions', 'Requirements Unsatisfied') %>
     <% end %>
