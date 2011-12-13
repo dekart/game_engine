@@ -3,10 +3,15 @@ en:
     create:
       buttons:
         publish: "Brag About It!"
+        hire: "Hire Workers"
       messages:
-        success: "You successfully bought %{amount} of %{property_name}"
+        success: "You've successfully built the %{property_name}!"
+        requirements_not_satisfied: "You cannot build this estate because some of its requirements are not satisfied."
       you_spent:
         title: "You spent:"
+      you_received:
+        title: "You received:"  
+      need_workers: "This building requires %{amount} workers to function. You need to hire them to activate your new building."
     index:
       title: "My Estates"
       note: "Estates bring you an extra income, it's a great way to make additional money. Some estates generate revenue more often than the others, so check back as often as possible to collect and maximize your income."
@@ -14,16 +19,32 @@ en:
       name_with_level: "%{name} (Level %{level})"
       collect_all: "You have %{amount} estates ready for collection"
       collect_in: "Collect in: %{value}"
+      missing_workers: "Missing %{amount} workers!"
       buttons:
-        buy: "Buy"
+        buy: "Build"
         upgrade: "Upgrade"
         collect: "Collect"
         collect_all: "Collect All"
+        hire: "Hire Workers"
+    hire:
+      title: "Hire Workers"
+      note: '%{property} requires %{amount} workers to activate. You can hire workers for Gems or you can invite your friends.'
+      worker: 'Worker'
+      hired: 'Hired!'
+      invitation:
+        title: "Ask Friends to Help"
+        message: "I'm building the %{name} in %{app} and I need your help to finish it. Could you help me?"
+      buttons:
+        hire: 'Hire for %{price}'
+        hire_all: 'Hire All for %{price}'
+        invite: "Invite Friends"
     upgrade:
       messages:
         success: "You successfully upgraded %{property_name} to level %{level}"
       you_spent:
         title: "You spent:"
+      you_received:
+        title: "You received:"  
     collect_money:
       messages:
         success_single: "You successfully collected %{basic_money} from your %{property_name}"

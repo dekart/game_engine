@@ -98,7 +98,7 @@ end
 
 Factory.define :inventory do |t|
   t.association :character
-  t.association :item
+  t.association :item, :effects => [{:type => :attack, :value => 1}]
   
   t.amount 5
 end
@@ -258,6 +258,7 @@ end
 
 Factory.define :app_request_base, :class => 'AppRequest::Base' do |t|
   t.facebook_id 123456789
+  t.receiver_id 123456789
   t.state 'processed'
 end
 

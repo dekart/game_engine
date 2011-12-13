@@ -1,3 +1,4 @@
+<tbody>
 <% victims.each do |victim| %>
   <tr class="character" id="<%= dom_id(victim) %>">
     <td class="picture"><%= character_picture_link(victim) %></td>
@@ -22,3 +23,4 @@
     </td>
   </tr>
 <% end %>
+</tbody>

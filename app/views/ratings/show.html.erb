@@ -1,14 +1,8 @@
 <%= render("contests/current") if current_contest %>
 
-<% if action_name == "global" %>
-  <%= title(t(".title.global")) %>
+<%= title(t(".title")) %>
 
-  <%= render("buttons", :current => :global) %>
-<% else %>
-  <%= title(t(".title.relations")) %>
-
-  <%= render("buttons", :current => :relations) %>
-<% end %>
+<%= render("buttons", :current => :rating) %>
 
 <% if Setting.b(:total_score_publishing_in_facebook_enabled) %>
   <div class="note" id="rating_score_permissions">
@@ -20,39 +14,29 @@
   </div>
 <% end %>
 
-<% tabs :id => 'rating_list' do |t| %>
-  <% if Setting.b(:total_score_enabled) %>
-    <% t.tab "total_score" do %>
-      <%= render("total_score", :collection => @total_score, :current => current_character) %>
+<% tabs(:id => 'rating_list') do |t| %>
+  <% Rating::FIELDS.each do |field| %>
+    <% t.tab(field) do %>
+      <table class="rating" cellspacing="0" cellpadding="0">
+        <tr>
+          <th>#</th>
+          <th colspan="2"><%= Character.human_name %></th>
+          <th colspan="2"><%= Character.human_attribute_name(field) %></th>
+        </tr>
+
+        <% rating_table(field) do |character, position, rank, current| %>
+          <tr class="<%= :current if current %>">
+            <td class="position"><%= position %></td>
+            <td class="picture"><%= character_picture_link(character) %></td>
+            <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
+            <td class="value"><%= rank %></td>
+            <td class="publish last"><%= rating_publish_button(position, field) if current %></td>
+          </tr>
+        <% end %>
+      </table>
     <% end %>
   <% end %>
-  
-  <% t.tab "level" do %>
-    <%= render("level", :collection => @level, :current => current_character) %>
-  <% end %>
-  
-  <% t.tab "total_money" do %>
-    <%= render("total_money", :collection => @total_money, :current => current_character) %>
-  <% end %>
-  
-  <% t.tab "fights" do %>
-    <%= render("fights", :collection => @fights, :current => current_character) %>
-  <% end %>
-  
-  <% t.tab "missions" do %>
-    <%= render("missions", :collection => @missions, :current => current_character) %>
-  <% end %>
-  
-  <% t.tab "relations" do %>
-    <%= render("relations", :collection => @relations, :current => current_character) %>
-  <% end %>
-  
-  <% t.tab "monsters" do %>
-    <%= render("monsters", :collection => @monsters, :current => current_character) %>
-  <% end %>
 <% end %>
-
-<div class="note"><%= t(".note") %></div>
 
 <% dom_ready do %>
   Rating.setup();

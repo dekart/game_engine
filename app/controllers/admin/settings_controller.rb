@@ -5,8 +5,6 @@ class Admin::SettingsController < Admin::BaseController
 
   def new
     @setting = Setting.new
-
-    render :new_payout if params["type"] == "payout"
   end
 
   def create
@@ -19,20 +17,12 @@ class Admin::SettingsController < Admin::BaseController
         redirect_to admin_settings_path
       end
     else
-      unless @setting.payout?
-        render :action => :new
-      else
-        render :action => :new_payout
-      end
+      render :action => :new
     end
   end
 
   def edit
     @setting = Setting.find(params[:id])
-
-    if @setting.payout?
-      render :edit_payout
-    end
   end
 
   def update
@@ -45,11 +35,7 @@ class Admin::SettingsController < Admin::BaseController
         redirect_to admin_settings_path
       end
     else
-      unless @setting.payout?
-        render :action => :edit
-      else
-        render :action => :edit_payout
-      end
+      render :action => :edit
     end
   end
 

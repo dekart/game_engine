@@ -1,0 +1,71 @@
+<%= admin_title(t('.title'))%>
+
+<%= render("controls") %>
+
+<div class="total_visits">
+  <h2><%= t(".total_visits") %></h2>
+  
+  <p id="total_visits">
+    <strong><%= @total %></strong>
+    
+    <%= admin_requests_average_amount(@total, @day) %>
+  </p>
+</div>
+
+<table id="visits_data">
+  <tr>
+    <td>
+      <table id="character_list" class="data">
+        <tr>
+          <th><%= Character.human_attribute_name("id") %></th>
+          <th><%= Character.human_attribute_name("name") %></th>
+          <th><%= Character.human_attribute_name("level") %></th>
+          <th><%= Character.human_attribute_name("created_at") %></th>
+          <th><%= t(".count_requests") %></th>
+          <th><%= t(".average_amount") %></th>
+        </tr>
+        <% @users.each_with_index do |user, index| %>
+          <tr>
+            <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
+            <td>
+              <% if user.try(:character) %>
+                <%= link_to(character_name(user.character), edit_admin_character_path(user.character)) %>
+              <% else %>
+                <%= content_tag(:span, user ? t(".no_character") : t(".no_user"), :class => :empty) %>
+              <% end %>
+              
+              <%= link_to(t(".profile"), fb_profile_url(user),
+                      :class  => :profile,
+                      :target => :_blank
+                    ) if user %>      
+            </td>
+            <td><%= user.character.level if user.try(:character) %></td>
+            <td><%= l(user.character ? user.character.created_at : user.created_at, :format => :short) if user %></td>
+            <td><%= @requests[index] %></td>
+            <td><%= Statistics::Visits.average_amount(@requests[index], @day) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+    
+    <td class="dates">
+      <table class="data">
+        <tr>
+          <th><%= t(".dates") %></th>
+        </tr>
+        <% (14).times do |day| %>
+          <tr>
+            <td>
+              <% if @day == Date.today - day %>
+                <%= Date.today - day %>
+              <% else %>
+                <%= link_to(Date.today - day, :date => Date.today - day) %>
+              <% end %>   
+            </td>  
+          </tr>
+        <% end %>
+      </table>
+      
+    </td>
+  </tr>
+</table>

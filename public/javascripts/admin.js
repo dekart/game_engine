@@ -1,14 +1,23 @@
 var SerializableList = {
   init: function(selector, object_name){
     $(selector).parents('form').submit(function(){
-      $(selector).find('.serializable_item').each(function(index){
+      if ($(selector).find('.serializable_item').size() > 0) {
+        $(selector).find('.serializable_item').each(function(index){
+          $('<input type="hidden" />').
+            attr({
+              name:   object_name + '[' + this.id + '][position]',
+              value:  index
+            }).
+            prependTo(this);
+        })
+      } else {
         $('<input type="hidden" />').
           attr({
-            name:   object_name + '[' + this.id + '][position]',
-            value:  index
+            name:  object_name,
+            value: ""
           }).
-          prependTo(this);
-      })
+          appendTo($(selector));
+      }
     });
 
     SerializableList.updateBorderClasses(selector);

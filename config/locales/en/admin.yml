@@ -8,7 +8,11 @@ en:
     documentation: "What's this?"
     layouts:
       main_menu:
-        users: 'Users'
+        statistics: "Statistics"
+        dashboard: "Dashboard"
+        users: "Users"
+        vip_money: "VIP Money"
+        visits: "Visits"
         content: 'Game Content'
         support: 'Support'
         configuration: 'Configuration'
@@ -16,10 +20,9 @@ en:
         items: "Items"
         missions: "Missions"
         monster_types: "Monsters"
-        bosses: "Bosses (Legacy)"
+        bosses: "Bosses (Deprecated)"
         property_types: "Property Types"
         global_payouts: "Global Payouts"
-        statistics: "Statistics"
         characters: "Characters"
         promotions: "Promotions"
         titles: "Titles"
@@ -43,8 +46,8 @@ en:
           alt: "Please wait..."
           text: "Please wait for a few seconds..."
         footer:
-          text: "This game is powered by %{engine} version %{version}"
-          engine: "Railorz RPG Engine"
+          text: "Powered by %{engine} version %{version}"
+          engine: "Railorz Game Engine"
           
     item_groups:
       index:
@@ -161,6 +164,7 @@ en:
       index:
         title: "Bosses"
         empty_set: "No bosses"
+        note: 'Bosses are deprecated now and will be completely removed in the next version of the engine. You cannot create them anymore. We strongly recommend you to replace bosses with monsters.'
         controls:
           new: "Add Boss"
           edit: "Edit"
@@ -238,7 +242,8 @@ en:
         add_effect: "Add Effect:"
       effect:
         remove: "Remove"
-        
+        move_up: "Move Up"
+        move_down: "Move Down"
     property_types:
       index:
         title: "Property Types"
@@ -389,13 +394,14 @@ en:
         user_limit_reached: "This task cannot be performed because your application already reached %{limit} user limit."
       restart:
         success: "The application was successfully restarted!"
+      update_styles:
+        success: "Game stylesheets were successfully updated! Please reload your game page to check out the updated version."
     characters:
       index:
         title: "Characters"
         search:
           title: "Search Characters"
-          facebook_ids: "Facebook IDs"
-          profile_ids: "Profile IDs"
+          profile_ids: "Facebook/Profile IDs"
           submit: "Search"
         profile: "FB Profile"
         controls:

@@ -138,7 +138,7 @@ describe Property do
       yield
 
       @property.errors.on(:character).should include(
-        I18n.t("activerecord.errors.models.property.attributes.character.not_enough_#{currency}" + (suffix ? "_#{suffix}" : ""),
+        I18n.t("activerecord.errors.models.property.attributes.character.requirements_no_satisfied",
           :name     => "Property Type",
           currency  => Character.human_attribute_name(currency)
         )
@@ -190,9 +190,7 @@ describe Property do
     it "should charge character for vip_money" do
       lambda{
         @property.buy!
-        
-        @character.reload
-      }.should change(@character, :vip_money).from(1).to(0)
+      }.should change(@character, :vip_money).by(-1)
     end
 
     it "should correctly buy a property if upgrade limit is set to 1" do

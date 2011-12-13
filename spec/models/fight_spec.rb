@@ -1,6 +1,31 @@
 require 'spec_helper'
 
 describe Fight do
+  describe '#attacker_level_range' do
+    before do
+      @attacker = Factory(:character)
+
+      @fight = Fight.new(:attacker => @attacker)
+    end
+
+    [1, 2, 3, 4, 5, 7, 11, 20, 30, 75, 120].each do |level|
+      describe "on level #{level}" do
+        before do
+          @attacker.level = level
+        end
+        
+        it "should return level range for level #{level}" do
+          @fight.attacker_level_range.should be_kind_of(Range)
+        end
+      
+        it 'should return range that includes attacker level' do
+          @fight.attacker_level_range.should include(level)
+        end
+      end
+    end
+  end
+  
+  
   describe '#can_attack?' do
     before do
       @attacker = Factory(:character)
@@ -10,19 +35,23 @@ describe Fight do
     end
     
     it 'should return false if defeated this opponent less than 1 hour ago' do
-      Fight.create!(:attacker => @attacker, :victim => @victim)
+      Fight.new(:attacker => @attacker, :victim => @victim).tap do |f|
+        f.stub!(:attacker_won?).and_return(false)
+        f.save!
+      end
       
-      Fight.last.update_attribute(:winner_id, @victim.id)      
-            
       @fight.can_attack?.should be_true
       
-      Fight.last.update_attribute(:winner_id, @attacker.id)
+      Fight.new(:attacker => @attacker, :victim => @victim).tap do |f|
+        f.stub!(:attacker_won?).and_return(true)
+        f.save!
+      end
       
       @fight.can_attack?.should be_false
 
-      Fight.last.update_attribute(:created_at, 61.minute.ago)
-
-      @fight.can_attack?.should be_true
+      Timecop.freeze(61.minutes.from_now) do
+        @fight.can_attack?.should be_true
+      end
     end
     
     it 'should return false when attacking alliance member (if configured that way)' do
@@ -57,28 +86,38 @@ describe Fight do
       @attacker = Factory(:character)
       @victim   = Factory(:character)
       
+      prepare_fighting!
+      
       @fight = Fight.new(:attacker => @attacker)
+    end
+    
+    def prepare_fighting!
+      Fight::OpponentBuckets.rebuild!
     end
         
     it 'should not include victims defeated less than 1 hour ago' do
-      Fight.create!(:attacker => @attacker, :victim => @victim)
+      Fight.new(:attacker => @attacker, :victim => @victim).tap do |f|
+        f.stub!(:attacker_won?).and_return(false)
+        f.save!
+      end
       
-      Fight.last.update_attribute(:winner_id, @victim.id)      
-            
       @fight.opponents.should include(@victim)
       
-      Fight.last.update_attribute(:winner_id, @attacker.id)
+      Fight.new(:attacker => @attacker, :victim => @victim).tap do |f|
+        f.stub!(:attacker_won?).and_return(true)
+        f.save!
+      end
       
       @fight.opponents.should_not include(@victim)
       
-      Fight.last.update_attribute(:created_at, 61.minute.ago)
-      
-      @fight.opponents.should include(@victim)
+      Timecop.freeze(61.minute.from_now) do
+        @fight.opponents.should include(@victim)
+      end
     end
     
     it 'should not include alliance members to the list (if configured that way)' do
       @attacker.friend_relations.establish!(@victim)
-
+      
       @fight.opponents.should include(@victim)
 
       with_setting(:fight_alliance_attack => false) do
@@ -93,12 +132,15 @@ describe Fight do
     it 'should not include weak opponents if configured that way' do
       @fight.opponents.should include(@victim)
       
-      @victim.hp = 0
+      @victim.hp = 1
       @victim.save!
             
       @fight.opponents.should include(@victim)
       
       with_setting(:fight_weak_opponents => false) do
+        @victim.hp = 0
+        @victim.save!
+        
         @fight.opponents.should_not include(@victim)
       end
     end
@@ -108,6 +150,8 @@ describe Fight do
         Factory(:character)
       end
       
+      prepare_fighting!
+      
       @fight.opponents.size.should == 10
     end
     
@@ -115,6 +159,8 @@ describe Fight do
       10.times do
         Factory(:character)
       end
+      
+      prepare_fighting!
       
       @fight.opponents.should_not == @fight.opponents
     end
@@ -277,8 +323,20 @@ describe Fight do
       @victim = Factory(:character)
       @fight = Fight.new(:attacker => @attacker, :victim => @victim)
       
-      fight_attack_item_boost = Factory(:item, :boost_type => 'fight', :attack => 1, :defence => 0)
-      fight_defence_item_boost = Factory(:item, :boost_type => 'fight', :attack => 0, :defence => 1)
+      fight_attack_item_boost = Factory(:item, 
+        :boost_type => 'fight',
+        :effects => [
+          {:type => :attack, :value => 1}, 
+          {:type => :defence, :value => 0}
+        ]
+      )
+      fight_defence_item_boost = Factory(:item, 
+        :boost_type => 'fight',
+        :effects => [
+          {:type => :attack, :value => 0}, 
+          {:type => :defence, :value => 1}
+        ]
+      )
       
       @fight_attack_boost = @attacker.inventories.give!(fight_attack_item_boost)
       @fight_defence_boost = @victim.inventories.give!(fight_defence_item_boost)

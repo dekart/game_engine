@@ -25,15 +25,15 @@ class CreditPackage < ActiveRecord::Base
   validates_numericality_of :vip_money, :price, :allow_blank => true, :greater_than => 0
   
   after_save :reset_default
-  
+
   def discount
     first = self.class.with_state(:visible).first
-    
+
     vip_proportion = vip_money.to_f / first.vip_money
-    credit_proportion = price.to_f / first.price
-    
-    if vip_proportion > credit_proportion
-      ((vip_proportion - credit_proportion) / credit_proportion * 100).round
+    full_price = vip_proportion * first.price
+
+    if full_price > price
+      ((full_price - price) / full_price * 100).round
     end
   end
   

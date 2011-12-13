@@ -114,11 +114,17 @@ class Character
 
         group = groups.find_by_id(group_id) if group_id
         group ||= groups.find_by_id(proxy_owner.current_mission_group_id) if proxy_owner.current_mission_group_id
-        group ||= groups.first
+        group ||= first_accessible_group
 
         proxy_owner.update_attribute(:current_mission_group_id, group.id) if group.id != proxy_owner.current_mission_group_id
 
         group
+      end
+      
+      def first_accessible_group
+        MissionGroup.with_state(:visible).all.detect{|group| 
+          group.requirements.satisfies?(proxy_owner)
+        }
       end
 
       def check_completion!(group)

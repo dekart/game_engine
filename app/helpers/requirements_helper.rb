@@ -1,9 +1,9 @@
 module RequirementsHelper
-  def requirement_list(requirements, filter = nil)
+  def requirement_list(requirements, options = {})
     result = ""
 
     requirements.each do |requirement|
-      next if filter == :unsatisfied and requirement.satisfies?(current_character)
+      next if options[:visible] && !requirement.visible
 
       result << render("requirements/#{requirement.name}",
         :requirement  => requirement,
@@ -75,4 +75,28 @@ module RequirementsHelper
     
     requirement(:vip_money, "#{ requirement_text } #{additional_text}", current_character.vip_money >= value)
   end
+  
+  def refill_button(type)
+    if current_character.vip_money >= Setting.i(:"premium_#{type}_price")  
+      link_to_remote(
+        button( :refill, :price => content_tag(:span, Setting.i(:"premium_#{type}_price"), :class => :amount)), 
+        :url    => premium_path(:type => :"refill_#{type}"),
+        :method => :put,
+        :update => :result,
+        :html   => {:class => "premium button"}
+      )
+      
+    else
+      link_to_remote(
+        button( :refill, :price => content_tag(:span, Setting.i(:"premium_#{type}_price"), :class => :amount)), 
+        :url    => refill_dialog_premium_path(
+          :type => :"refill_#{type}", 
+          :vip_money => Setting.i(:"premium_#{type}_price")
+        ),
+        :update => :ajax,
+        :html   => {:class => "premium button"}
+      )
+    end  
+  end
+  
 end

@@ -5,7 +5,7 @@ module Payouts
     delegate :<<, :shift, :unshift, :each, :empty?, :any?, :size, :first, :last, :[], :detect, :include?, :to => :items
 
     def self.parse(collection)
-      return if collection.nil?
+      return if collection.blank?
 
       if collection.is_a?(Payouts::Collection)
         collection
@@ -42,6 +42,10 @@ module Payouts
 
     def by_action(action)
       items.select{|p| p.action == action }
+    end
+    
+    def payout_include?(name)
+      !self.detect{ |p| p.class == Payouts::Base.by_name(name) }.nil?
     end
 
     def visible?

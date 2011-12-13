@@ -6,8 +6,10 @@ class PropertyType < ActiveRecord::Base
   AVAILABILITIES = [:shop, :mission, :loot]
 
   has_many :properties, :dependent => :destroy
+  
+  has_requirements
 
-  has_payouts :collect
+  has_payouts :build, :upgrade, :collect
 
   has_attached_file :image,
     :styles => {
@@ -61,7 +63,7 @@ class PropertyType < ActiveRecord::Base
 
   class << self
     def to_dropdown(*args)
-      without_state(:deleted).all(:order => :basic_price).to_dropdown(*args)
+      without_state(:deleted).all(:order => :name).to_dropdown(*args)
     end
 
     def available_for(character)
@@ -88,17 +90,25 @@ class PropertyType < ActiveRecord::Base
   def plural_name
     self[:plural_name].blank? ? name.pluralize : self[:plural_name]
   end
+  
+  def description
+    self[:description].to_s.html_safe!
+  end
+  
+  def worker_names
+    self[:worker_names].split(/[\n,]/).map{|n| n.strip }
+  end
 
   def upgrade_price(level)
     upgrade_cost_increase ? basic_price + upgrade_cost_increase * level : basic_price
   end
   
-  def requirements
-    @requirements ||= Requirements::Collection.new(
-      Requirements::BasicMoney.new(:value => basic_price),
-      Requirements::VipMoney.new(:value => vip_price),
-      Requirements::Level.new(:value => level)
-    )
+  def default_requirements
+    @requirements ||= Requirements::Collection.new.tap do |r|
+      r << Requirements::BasicMoney.new(:value => basic_price) if basic_price > 0
+      r << Requirements::VipMoney.new(:value => vip_price) if vip_price > 0
+      r << Requirements::Level.new(:value => level, :visible => false)
+    end
   end
   
 end

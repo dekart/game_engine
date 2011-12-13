@@ -2,6 +2,18 @@ en:
   app_requests:
     counter:
       text: "You have %{count} requests from your friends"
+    invite_dialog:
+      note: 'Select the friends you would like to help. Requests will be sent in batches of 24.'
+      search: 'Search'
+      filters:
+        all: 'All Friends'
+        app_users: '%{app_name} Friends'
+      stats: 
+        text: '%{value} of %{total} friends selected'
+        select_all: 'Select All'
+        deselect_all: 'Deselect All'
+      buttons:
+        send: 'Send'
     index:
       title: 'Friend Requests'
       note: "Here you can accept requests from your friends. You can only accept one gift per person every %{hours} hours."
@@ -16,9 +28,13 @@ en:
         text: "%{user} invites you to join fight against %{monster}"
       invitation:
         text: "%{user} invites you to join their Alliance"
+      property_worker:
+        text: "%{user} asks you to help them finish the %{property}"
     update:
       gift:
         accepted: 'Gift accepted!'
+        sending: 'Sending...'
+        sent: 'Sent!'
         buttons:
           send: "Send Back"
       monster_invite:
@@ -29,14 +45,6 @@ en:
         accepted: 'Invitation accepted!'
         buttons:
           alliance: 'View Alliance'
-    create:
-      gift:
-        title: "Send Gifts to Your Alliance"
-        message: "Your gifts have been sent to your friends! They'll be notified immediately."
-      invitation:
-        title: "Recruit Friends To Your Alliance"
-        message: "Your invitations have been sent to your friends! They'll be notified immediately."
-      monster_invite:
-        title: "Call to Arms"
-        message: "Your call to arms have been sent to your friends! They'll be notified immediately."
+      property_worker:
+        accepted: 'Thank you for your help!'
     

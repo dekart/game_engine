@@ -4,11 +4,20 @@
 
     <div class="items clearfix">
       <% collection_items(collection) do |item, inventory| %>
-        <% content_tag :div, :class => [:item, dom_id(item), ('present' if inventory)].join(" ") do %>
+        <% content_tag :div, :class => [:item, dom_id(item), ('present' if inventory && collection.enough_of?(inventory))].join(" ") do %>
           <div class="name"><%= item.name %></div>
 
           <div class="image"><%= item_image(item, :small) %></div>
-          <div class="amount"><%= inventory.try(:amount).to_i %></div>
+          <div class="amount">
+            <% if collection.amount_of_item(item) > 1 %>
+              <%= t(".required_amount", 
+                    :required => collection.amount_of_item(item), 
+                    :amount => inventory.try(:amount).to_i
+                   ) %>
+            <% else %>
+              <%= inventory.try(:amount).to_i %>
+            <% end %>
+          </div>
         <% end %>
       <% end %>
     </div>

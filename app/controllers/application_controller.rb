@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   include ExceptionLogging
   include FacebookIntegration
+  include TrackingRequests
   include ReferenceCode
   include AppRequests
 
@@ -93,7 +94,7 @@ class ApplicationController < ActionController::Base
     user.last_visit_at = Time.now if user.last_visit_at.nil? || user.last_visit_at < 30.minutes.ago
     user.last_visit_ip = request.remote_ip
     
-    user.save!
+    user.save! if user.changed?
     
     user
   end

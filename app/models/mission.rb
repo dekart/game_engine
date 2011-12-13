@@ -3,7 +3,7 @@ class Mission < ActiveRecord::Base
   extend HasRequirements
   include HasVisibility
 
-  has_many    :levels, :class_name => "MissionLevel"
+  has_many    :levels, :class_name => "MissionLevel", :dependent => :destroy
   has_many    :ranks, :class_name => "MissionRank", :dependent => :delete_all
   belongs_to  :mission_group
   belongs_to  :parent_mission, :class_name => "Mission"

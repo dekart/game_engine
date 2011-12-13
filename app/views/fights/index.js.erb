@@ -1,0 +1,3 @@
+$('#victim_list').append('<%= escape_javascript(render("victims", :victims => @victims)) %>');
+
+$(document).trigger('remote_content.received');

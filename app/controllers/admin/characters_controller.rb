@@ -7,14 +7,7 @@ class Admin::CharactersController < Admin::BaseController
     if params[:profile_ids].present?
       @ids = params[:profile_ids].split(/[^\d]+/)
 
-      @characters = Character.scoped(:conditions => {:id => @ids})
-    elsif params[:facebook_ids].present?
-      @ids = params[:facebook_ids].split(/[^\d]+/)
-
-      @characters = Character.scoped(
-        :include    => :user,
-        :conditions => {:users => {:facebook_id => @ids}}
-      )
+      @characters = Character.by_profile_ids(@ids)
     else
       @characters = Character
     end

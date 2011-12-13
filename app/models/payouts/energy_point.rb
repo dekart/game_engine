@@ -1,10 +1,14 @@
 module Payouts
   class EnergyPoint < Base
+    include RecoveryMode
+    
     def apply(character, reference = nil)
+      @calculated_value = calculate_value(character.energy)
+      
       if action == :remove
-        character.ep -= @value
+        character.ep -= @calculated_value
       else
-        character.ep += @value
+        character.ep += @calculated_value
       end
     end
     

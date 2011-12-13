@@ -4,98 +4,24 @@ function debug(s) {
   }
 }
 
-var Timer = {
-  timers: {},
-
-  format: function(value){
-    var days    = Math.floor(value / 86400);
-    var hours   = Math.floor((value - days * 86400) / 3600);
-    var minutes = Math.floor((value - days * 86400 - hours * 3600) / 60);
-    var seconds = value - days * 86400 - hours * 3600 - minutes * 60;
-
-    var result = '';
-
-    if(days > 1){
-      result = result + days + ' days, ';
-    } else if(days > 0) {
-      result = result + days + ' day, ';
-    }
-
-    if(hours > 0){
-      result = result + hours + ":";
-    }
-
-    if(minutes < 10){
-      result = result + "0" + minutes;
-    }else{
-      result = result + minutes;
-    }
-
-    if(seconds < 10){
-      result = result + ":0" + seconds;
-    }else{
-      result = result + ":" + seconds;
-    }
-
-    return(result);
-  },
-
-  update: function(id){
-    var element = $(id);
-
-    if(element.length === 0){
-      this.stop(id);
-
-      return;
-    }
-
-    if(this.timers[id].fire_at > this.currentTime()){
-      element.text(Timer.format(this.timers[id].fire_at - this.currentTime()));
-    } else {
-      element.text('');
-
-      this.stop(id);
-
-      if(this.timers[id].callback){
-        this.timers[id].callback(element);
-      }
-    }
-  },
-  
-  runCycle: function(id){
-    if(this.timers[id].cycle === null){
-      this.timers[id].cycle = Visibility.every(1000, function(){
-        Timer.update(id);
-      });
-    }
-  },
-  
-  stop: function(id){
-    if(this.timers[id].cycle !== null){
-      Visibility.stop(this.timers[id].cycle);
+var Shop = {
+  setup : function(){
+    
+    $(".amount").change(function(){
+      var amount = $(this).val();
+      var data = $.parseJSON($(this).attr('data-options'));
       
-      this.timers[id].cycle = null;
-    }
-  },
-  
-  currentTime: function(){
-    return Math.round(new Date().getTime() / 1000);
-  },
-
-  start: function(id, value, callback){
-    if(value === 0){ return; }
-
-    if(typeof this.timers[id] === 'undefined'){
-      this.timers[id] = {cycle : null}
-    }
+      if(data['basic_price'] > 0){
+        $("#item_" + data['id'] + " .requirements .basic_money .value").html(data['basic_price'] * amount);
+      }
+        
+      if(data['vip_price'] > 0){
+        $("#item_" + data['id'] + " .requirements .vip_money .value").html(data['vip_price'] * amount);
+      }   
+    });
     
-    this.timers[id].fire_at = this.currentTime() + value;
-    this.timers[id].callback = callback;
-    
-    this.runCycle(id);
   }
 };
-
 
 var Spinner = {
   x: -1,
@@ -261,11 +187,11 @@ var Character = {
     $("#co .energy .value").text(c.ep + "/" + c.energy_points);
     $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
 
-    Timer.start('#co .health .timer', c.time_to_hp_restore, this.update_from_remote);
-    Timer.start('#co .energy .timer', c.time_to_ep_restore, this.update_from_remote);
-    Timer.start('#co .stamina .timer', c.time_to_sp_restore, this.update_from_remote);
+    $('#co .health .timer').timer(c.time_to_hp_restore, this.update_from_remote);
+    $('#co .energy .timer').timer(c.time_to_ep_restore, this.update_from_remote);
+    $('#co .stamina .timer').timer(c.time_to_sp_restore, this.update_from_remote);
 
-    $('#co .timer').unbind('click').click(Character.update_from_remote);
+    $('#co .timer').unbind('click', Character.update_from_remote).bind('click', Character.update_from_remote);
 
     if (c.points > 0) {
       $("#co .level .upgrade").show();
@@ -294,8 +220,12 @@ var Character = {
   },
 
   update_from_remote: function(){
-    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
-      Character.update(data);
+    Spinner.disable(function(){
+      $.getJSON('/character_status/?rand=' + Math.random(), function(data){
+        Character.update(data);
+        
+        $(document).trigger('application.ready'); // Triggering event to start timers
+      });
     });
   }
 };
@@ -369,8 +299,8 @@ var Equipment = {
     if (_options) {
       this.options = _options;
       
-      if (this.options.wrapAdditionalEquipment)
-        this.options.additionalPlacementsSize /= this.options.wrapAdditionalEquipment;
+      if (this.options.wrapGroupEquipment)
+        this.options.groupedPlacementSize /= this.options.wrapGroupEquipment;
     }
     
     $("#equippables-tabs").tabs({
@@ -382,20 +312,31 @@ var Equipment = {
       }
     });
     
-    var $additionalPlacementsContainer = $("#placements .additional .carousel-container");
-    
-    if (this.options.wrapAdditionalEquipment) {
-      jCarouselHelper.wrap($additionalPlacementsContainer, this.options.wrapAdditionalEquipment);
-    }
-    
-    $additionalPlacementsContainer.jcarousel({
-      vertical: true,
-      visible: this.options.additionalPlacementsSize,
-      // TODO: hack. without it control button is active
-      size: $additionalPlacementsContainer.find("li").length,
-      itemFallbackDimension: this.options.additionalPlacementsSize
+    $('#placements .group_placement').each(function(){
+      var $placement = $(this);
+      var $carousel = $placement.find('.carousel-container');
+      
+      // Appending free placeholders
+      var free_slots = parseInt($placement.data('free-slots'));
+      
+      if(free_slots > 0) {
+        for(var i = 0; i < free_slots; i ++){
+          $carousel.append('<li><div class="additional-placeholder"></div></li>');
+        }
+      }
+      
+      if (Equipment.options.wrapGroupEquipment) {
+        jCarouselHelper.wrap($carousel, Equipment.options.wrapGroupEquipment);
+      }
+      
+      $carousel.jcarousel({
+        vertical: true,
+        visible: Equipment.options.groupedPlacementSize,
+        // TODO: hack. without it control button is active
+        size: $carousel.find("li").length,
+        itemFallbackDimension: Equipment.options.groupedPlacementSize
+      });
     });
-    
     
     $("#equippables .inventory, #placements .inventory").draggable({
       appendTo: $("#equipment"),
@@ -433,7 +374,7 @@ var Equipment = {
       }
     };
     
-    $("#placements .placement, #placements .additional .items").droppable($.extend(droppableDefaults, {
+    $("#placements .placement, #placements .group_placement").droppable($.extend(droppableDefaults, {
       accept: function(el) {
         if ($(this).attr('data-free-slots') == 0) {
           return false;
@@ -491,10 +432,32 @@ var Equipment = {
 
 
 var Fighting = {
-  loadMoreOpponents : function(){
-    $.get('/fights', function(response){
-      $('#victim_list').append(response);
+  setup: function(){
+    $(document).bind({
+      'fights.create': Fighting.checkOpponentPresence,
+
+      'character.new_level': function() {
+        $('#victim_list .character').remove();
+
+        Fighting.loadOpponents();
+      }
     });
+    
+    Fighting.checkOpponentPresence();
+  },
+  
+  checkOpponentPresence: function(){
+    if($('#victim_list .character:visible').length == 0){
+      Fighting.loadOpponents();
+    }
+  },
+  
+  loadOpponents : function(){
+    $("#loading_opponents").show();
+    
+    $.get('/fights', function(response){
+      $("#loading_opponents").hide();
+    }, 'script');
   }
 };
 
@@ -881,6 +844,10 @@ $(function(){
 
   $(document).bind('remote_content.received', function(){
     $(document).trigger('tooltips.setup');
+    
+    if_fb_initialized(function(){
+      FB.XFBML.parse();
+    });
   });
 
   $(document).bind('loading.dialog', function(){

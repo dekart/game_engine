@@ -22,7 +22,7 @@
     background-color = !item_group_current_bg_color
 
 
-#item_list
+#item_list table
   width: 100%
   height: auto
 
@@ -62,8 +62,9 @@
 
 
 #special_items
-  .items
-    width: 100%
+
+  h2
+    text-align: center
 
   .item
     padding-right: 5px
@@ -121,6 +122,11 @@
 
   .use
     +button(!shop_result_use_icon)
+    
+  .equipment
+    +button(!inventory_buttons_equipment_icon)  
+    
+    
 
 #shop_dialog
   .item

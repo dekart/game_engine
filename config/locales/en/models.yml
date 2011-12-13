@@ -31,7 +31,6 @@ en:
         relations_count: "Alliance Size"
         mercenaries: "Mercenaries"
         points: "Attribute Points"
-        rating: "Rating"
         name: "Character Name"
         bank: "Bank"
         total_money: "Total Money"
@@ -39,11 +38,12 @@ en:
         fight_boost_attack: "Attack in Fight"
         fight_boost_defence: "Defence in Fight"
         total_score: "Total Score"
+        total_monsters_damage: "Total Damage to Monsters"
         
       property_type:
         income: "Income"
-        price: "Price"
-        upgrade_price: "Upgrade Price"
+        build_requirements: "Build Requirements"
+        upgrade_requirements: "Upgrade Requirements"
         upgrade_cost_increase: "Upgrade cost increase per level"
         collect_period: "Income collection period, hours"
       user:
@@ -128,6 +128,7 @@ en:
               not_enough_vip_money: "You don't have enough %{vip_money} to buy a %{name}."
               not_enough_vip_money_for_upgrade: "You don't have enough %{vip_money} to upgrade your %{name}."
               too_much_properties: "You cannot buy any more %{plural_name} because you already have too many! Try to purchase other types of estates."
+              requirements_no_satisfied: "Requirements not satisfied" #***
         boss_fight:
           attributes:
             character:

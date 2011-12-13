@@ -1,16 +1,12 @@
 <table cellspacing="0" cellpadding="0">
   <tr>
-    <td class="image">
-      <%= image_tag(monster.image.url(:large)) %>
-    </td>
-
     <td class="info">
       <div class="health">
         <%= monster_health_bar(monster) %>
       </div>
 
       <% if fight.reward_collectable? %>
-        <div class="controls">
+        <div class="controls clearfix">
           <%= link_to_remote(button(:reward),
                 :url    => reward_monster_path(monster),
                 :update => :result,
@@ -37,6 +33,10 @@
       <% end %>
 
       <%= render('fighters', :monster => monster) %>
+    </td>
+
+    <td class="image">
+      <%= image_tag(monster.image.url(:large)) %>
     </td>
   </tr>
 </table>

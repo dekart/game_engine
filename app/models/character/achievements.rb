@@ -13,6 +13,12 @@ class Character
         "character_#{ proxy_owner.id }_achievements"
       end
       
+      def clear_achievements_cache!
+        Rails.cache.delete(cache_key)
+
+        true
+      end
+
       def achieved_ids
         @achieved_ids ||= Rails.cache.fetch(cache_key, :expires_in => 15.minutes) do
           find_by_sql(
@@ -41,6 +47,8 @@ class Character
         Array.wrap(types).each do |type|
           create!(:character => proxy_owner, :achievement_type => type)
         end
+
+        clear_achievements_cache!
       end
     end
     

@@ -2,5 +2,7 @@
   <%= link_to_remote(t(".notification_settings"), 
         :url => settings_notifications_path,
         :update => :result
-      ) %>
+      ) %>   
+      
+  <%= help_link(:privacy, t(".privacy_policy")) %>
 </div>

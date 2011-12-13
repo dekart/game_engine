@@ -9,7 +9,7 @@
     position: fixed 
     top: 0 
     left: 0 
-    z-index: 200
+    z-index: 4000
     
     .visibleBlock
       position: absolute
@@ -30,7 +30,7 @@
     width: 300px
     text-align: center
     position: relative
-    z-index: 300
+    z-index: 4500
     margin:
       left: 220px
       bottom: 20px
@@ -42,6 +42,9 @@
       
       .hide
         float: none
+        
+    .progress_bar
+      margin: 10px
 
 #dialog .tutorial
   .content
@@ -51,7 +54,6 @@
     .button
       float: left
       padding-right: 5px
-    
       
 .qtip
   .buttons
@@ -59,7 +61,7 @@
 
 .tutorialVisible
   position: relative
-  z-index: 300
+  z-index: 4500
 
 #dialog.tutorialVisible
-  z-index: 300
+  z-index: 10000

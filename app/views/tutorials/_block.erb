@@ -9,7 +9,7 @@
 </div>
 
 <% dom_ready do %>
-  $(document).unbind('tutorial.next_step').bind('tutorial.next_step', function() {
+  $(document).one('tutorial.next_step', function() {
     <%= javascript_for_next_step_trigger %>
   });
 <% end %>

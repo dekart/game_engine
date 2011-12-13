@@ -15,7 +15,7 @@
 
     <div class="controls">
       <% if mission.repeatable? || rank.nil? || !rank.completed? %>
-        <%= link_to_remote(button(rank.nil? || rank.progress == 0 ? :start : :fulfill),
+        <%= link_to_remote(mission_button(mission, rank),
               :url    => fulfill_mission_path(mission),
               :update => :result,
               :html   => {
@@ -23,6 +23,7 @@
                 :class => "fulfill button"
               }
             ) %>
+                
       <% else %>
         <div class="completed"><%= t('.completed') %></div>
       <% end %>
@@ -46,7 +47,7 @@
 
       <%= attribute_requirement(:energy, level.energy, current_character.ep >= level.energy) %>
 
-      <%= requirement_list(mission.requirements) %>
+      <%= requirement_list(level.applicable_requirements, :visible => true) %>
     </div>
   </td>
 <% end %>

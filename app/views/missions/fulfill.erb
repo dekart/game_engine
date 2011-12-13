@@ -41,8 +41,8 @@
       <%= t(".requirements_not_satisfied.message") %>
     <% end %>
 
-    <div class="requirements clearfix">
-      <%= unsatisfied_requirement_list(@mission.applicable_requirements) %>
+    <div class="unsatisfied_requirements clearfix">
+      <%= unsatisfied_requirement_list(@result.applicable_requirements) %>
     </div>
 
     <% builder.on_ready do %>

@@ -69,10 +69,10 @@ module Facepalm
 
             js << <<-CODE
               <script type="text/javascript">
-                if(typeof FB != 'undefined'){
+                if(typeof FB !== 'undefined'){
                   #{init_js}
                   #{extra_js}
-                };
+                }
               </script>
             CODE
           end

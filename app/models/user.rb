@@ -79,7 +79,11 @@ class User < ActiveRecord::Base
       api.get_connections('me', 'friends', :fields => 'id')
     end
     
-    self.attributes = me
+    # Assign all values one by one to bypass mass assignment protection
+    me.to_options.except(:id).each do |key, value|
+      self.send("#{ key }=", value)
+    end
+    
     self.friend_ids = friends.collect{|f| f["id"] }
     
     save!
@@ -104,7 +108,7 @@ class User < ActiveRecord::Base
   end
   
   def anonymous_id
-    third_party_id.present? ? third_party_id : id
+    third_party_id.present? ? third_party_id : "user_#{ id }"
   end
   
   def access_token_valid?

@@ -17,7 +17,7 @@ namespace :app do
             next if row.compact.empty?
             
             group_name, group_level,
-            mission_name, mission_description,
+            mission_name, mission_description, image_name,
             win_amount, money_min, money_max, energy, experience = row
           
             if group_name.present? # Mission Group
@@ -60,11 +60,13 @@ namespace :app do
     end
   
     desc "Import items and item groups"
-    task :items, :file_path, :needs => :environment do |t, options|
+    task :items, :folder_path, :needs => :environment do |t, options|
       require 'csv'
       
-      if File.file?(options.file_path)
-        data = CSV.parse(File.read(options.file_path))
+      file_path = File.join(options.folder_path, "items.csv")
+      
+      if File.file?(file_path)
+        data = CSV.parse(File.read(file_path))
         
         data.shift(2) # Skipping header rows
         
@@ -75,8 +77,8 @@ namespace :app do
             next if row.compact.empty?
 
             group_name,
-            name, description, level, availability, basic_price, vip_price, 
-            attack, defence, energy, stamina, can_be_sold, market, max_vip_price, exchangeable, placements = row
+            name, description, image_name, level, availability, basic_price, vip_price, 
+            attack, defence, health, energy, stamina, can_be_sold, market, max_vip_price, exchangeable, placements = row
           
             if group_name.present?
               current_group = ItemGroup.new(
@@ -103,6 +105,7 @@ namespace :app do
                 :vip_price    => vip_price,
                 :attack       => attack,
                 :defence      => defence,
+                :health       => health,
                 :energy       => energy,
                 :stamina      => stamina,
                 :can_be_sold  => (can_be_sold && can_be_sold.downcase == 'yes'),
@@ -111,6 +114,10 @@ namespace :app do
                 :exchangeable => (exchangeable && exchangeable.downcase == 'yes'),
                 :placements   => placements
               )
+              
+              if image_name.present? and File.file?(File.join(options.folder_path, "items", image_name))
+                item.image = File.open(File.join(options.folder_path, "items", image_name), 'r')
+              end
             
               item.save!
               item.publish!

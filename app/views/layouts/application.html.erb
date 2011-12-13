@@ -4,11 +4,6 @@
   <%= render('layouts/html_header') %>
   
   <%= javascript_include_tag "tutorial" if tutorial_visible? %>
-
-  <% google_analytics do %>
-    <%= ga_set_variable(1, 'Level', character_level_group(current_character), :visitor) %>
-    <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.titleize, :visitor) %>
-  <% end %>
 </head>
 <body>
   <% fb_connect_js(:channel_url => facebook_callback_url + '/channel.html', :weak_cache => Setting.b(:app_weak_fb_js_cache)) do %>
@@ -60,7 +55,6 @@
       <%= content_tag(:div, "", :id => :result, :style => "display:none;") %>
     <% end %>
 
-
     <% if (current_boss_fights = current_character.boss_fights.with_state(:progress)).any? %>
       <%= render("boss_fights/block", :fights => current_boss_fights) %>
     <% end %>
@@ -71,7 +65,9 @@
   </div>
 
   <div id="ajax" style="display:none;"></div>
-
+  
+  <%= render 'app_requests/invite_dialog' %>
+  
   <%= display_notifications %>
 
   <% dom_ready do %>

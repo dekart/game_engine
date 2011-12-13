@@ -10,5 +10,10 @@ class ItemsController < ApplicationController
     )
 
     @next_item = @current_group.items.next_for(current_character).first
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 end

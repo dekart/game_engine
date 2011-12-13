@@ -29,7 +29,7 @@ class Admin::PromotionsController < Admin::BaseController
   def update
     @promotion = Promotion.find(params[:id])
 
-    if @promotion.update_attributes(params[:promotion].reverse_merge(:payouts => nil))
+    if @promotion.update_attributes(params[:promotion])
       flash[:success] = t(".success")
 
       unless_continue_editing do

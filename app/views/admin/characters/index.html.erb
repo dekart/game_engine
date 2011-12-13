@@ -5,10 +5,7 @@
 
   <% form_tag(search_admin_characters_path) do %>
     <%= label_tag :profile_ids, t(".search.profile_ids") %>
-    <%= text_field_tag :profile_ids, params[:profile_ids], :size => 30 %>
-
-    <%= label_tag :facebook_ids, t(".search.facebook_ids") %>
-    <%= text_field_tag :facebook_ids, params[:facebook_ids], :size => 30 %>
+    <%= text_field_tag :profile_ids, params[:profile_ids], :size => 70 %>
 
     <%= submit_tag t(".search.submit") %>
   <% end %>

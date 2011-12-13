@@ -29,12 +29,7 @@ module Tutorial
     :attack_other_player,
     :fight_result,
     
-    # :goto_alliance,
-    
-    :goto_gem_market,
-    :spend_gems,
     :finish
-    
   ]
   
   class << self

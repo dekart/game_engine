@@ -1,0 +1,102 @@
+#!/usr/bin/env ruby
+
+require "config/environment"
+
+def task
+  start_time = Time.now
+
+  puts
+  puts "-" * 40
+  
+  puts "Started at %s" % start_time.to_s(:db)
+
+  puts "-" * 40
+  
+  yield
+  
+  puts "-" * 40
+
+  puts "Done in %.2f seconds" % (Time.now - start_time)
+  
+  puts "-" * 40
+  puts
+end
+
+def last_restart_at
+  path = File.expand_path('../../tmp/restart.txt', __FILE__)
+  
+  File.file?(path) ? File.mtime(path) : Time.at(0)
+end
+
+
+scheduler = Rufus::Scheduler.start_new
+
+
+scheduler.every 1.minute, :blocking => true do
+  task do
+    Jobs::Characters::UpdateRating.new.perform
+  end
+end
+
+scheduler.every 30.minutes, :blocking => true do
+  task do
+    Jobs::Market::RemoveExpiredListings.new.perform
+  end
+end
+
+scheduler.every 5.minutes, :blocking => true do
+  task do
+    Jobs::Fighting::RebuildBuckets.new.perform
+  end
+end
+
+scheduler.every 5.minutes, :blocking => true do
+  task do
+    Jobs::Monsters::Expire.new.perform
+  end
+end
+
+scheduler.every 1.minute, :blocking => true do
+  task do
+    Jobs::Contests::Finish.new.perform
+  end
+end
+
+scheduler.every 10.minutes, :blocking => true do
+  task do
+    Jobs::Characters::PublishScoreInFacebook.new.perform
+  end
+end
+
+scheduler.every 1.minute, :blocking => true do
+  if Setting.time(:notifications_friends_to_invite_displayed_at) + Setting.i(:notifications_friends_to_invite_delay).hours < Time.now
+    task do
+      Jobs::Notifications::DeliverFriendsToInvite.new.perform
+    end
+  end
+end
+
+scheduler.every 1.minute, :blocking => true do
+  if Setting.time(:notifications_send_gift_displayed_at) + Setting.i(:notifications_send_gift_delay).hours < Time.now
+    task do
+      Jobs::Notifications::DeliverSendGift.new.perform
+    end
+  end
+end
+
+# Setting up monitoring task that should restart scheduler if restart.txt file was modified
+
+start_time = last_restart_at
+
+scheduler.every 5.seconds, :blocking => true do
+  if last_restart_at != start_time
+    puts "Restarting scheduler (%s)..." % Time.now.to_s(:db)
+    
+    scheduler.stop
+  end
+end
+
+
+puts "Launching scheduler (%s)..." % Time.now.to_s(:db)
+
+scheduler.join

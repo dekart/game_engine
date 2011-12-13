@@ -1,8 +1,8 @@
 AchievementType.create!(
   :key => 'total_money',
-  :value => 100,
+  :value => 500,
   :name => 'Beggar',
-  :description => 'Earn 100 coins',
+  :description => 'Earn 500 coins',
   :image => File.open(Rails.root.join("db", "pictures", "achievement.jpg")),
   :payouts => Payouts::Collection.new(
     Payouts::VipMoney.new(:value => 1, :apply_on => :achieve, :visible => true)
@@ -11,9 +11,9 @@ AchievementType.create!(
 
 AchievementType.create!(
   :key => 'total_money',
-  :value => 1000,
+  :value => 2000,
   :name => 'Merchant',
-  :description => 'Earn 1.000 coins',
+  :description => 'Earn 2.000 coins',
   :image => File.open(Rails.root.join("db", "pictures", "achievement.jpg")),
   :payouts => Payouts::Collection.new(
     Payouts::VipMoney.new(:value => 2, :apply_on => :achieve, :visible => true)

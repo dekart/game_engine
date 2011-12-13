@@ -6,14 +6,12 @@ module SettingSpecHelper
       old_values[key] = Setting[key]
     
       Setting[key] = value
-      Setting.update_cache!(true)
     end
     
     block.call
     
     values.each_key do |key|
       Setting[key] = old_values[key]
-      Setting.update_cache!(true)
     end
   end
 end

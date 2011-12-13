@@ -1,4 +1,19 @@
 class Fight < ActiveRecord::Base
+  OPPONENT_LEVEL_RANGES = [
+    1 .. 1, 
+    2 .. 2, 
+    3 .. 3, 
+    4 .. 4, 
+    5 .. 5, 
+    6 .. 10, 
+    11 .. 15, 
+    16 .. 25, 
+    26 .. 50, 
+    51 .. 100, 
+    101 .. 150,
+    151 .. Character::Levels::EXPERIENCE.size
+  ]
+
   belongs_to :attacker, :class_name => "Character", :extend => Fight::UsedItems
   belongs_to :victim, :class_name => "Character", :extend => Fight::UsedItems
   belongs_to :winner, :class_name => "Character"
@@ -15,53 +30,47 @@ class Fight < ActiveRecord::Base
 
   before_create :calculate_fight
   after_create  :save_payout, :post_to_newsfeed, :log_event
+  after_create :calculate_victories, :if => :attacker_won?
 
   attr_reader :attacker_boost, :victim_boost, :payouts
   
   include Fight::DamageCalculator::Proportion
-  include Fight::OpponentSelector::Simple
   include Fight::ResultCalculator::Proportion
   
   class << self
     def can_attack?(attacker, victim)
       new(:attacker => attacker, :victim => victim).can_attack?
     end
+    
+    def level_range(character)
+      OPPONENT_LEVEL_RANGES.detect{|r| r.include?(character.level) }
+    end
   end
   
-  def can_attack?
-    attacked_recently = latest_opponent_ids.include?(victim.id)
-    friendly_attack   = Setting.b(:fight_alliance_attack) ? false : attacker.friend_relations.character_ids.include?(victim.id)
-    weak_opponent     = Setting.b(:fight_weak_opponents) ? false : victim.weak?
+  def attacker_level_range
+    self.class.level_range(attacker)
+  end
 
-    super && !attacked_recently && !friendly_attack && !weak_opponent
+  def can_attack?
+    return false unless attacker_level_range.include?(victim.level)   # Checking level range match
+    return false if !Setting.b(:fight_weak_opponents) && victim.weak? # Checking if opponent is too weak
+    return false if latest_opponent_ids.include?(victim.id)           # Checking if opponent was attacked recently
+    return false if !Setting.b(:fight_alliance_attack) && attacker.friend_relations.character_ids.include?(victim.id) # Checking if opponent is in alliance
+
+    true
   end
   
   def opponents
-    scope = super
-    
     # Exclude recent opponents, friends, and self
     exclude_ids = latest_opponent_ids
-    exclude_ids.push(*Character.banned_ids)
     exclude_ids.push(*attacker.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
     exclude_ids.push(attacker.id)
     exclude_ids.uniq!
-
-    scope = scope.scoped(
-      :include    => :user,
-      :conditions => ["characters.id NOT IN (?)", exclude_ids],
-      :limit      => Setting.i(:fight_victim_show_limit)
-    )
-
-    unless Setting.b(:fight_weak_opponents)
-      scope = scope.scoped(
-        :conditions => ["fighting_available_at < ?", Time.now.utc]
-      )
-    end
     
-    scope.all(
-      :order => "ABS(level - #{ attacker.level }) ASC, RAND()"
-    ).tap do |result|
-      result.shuffle!
+    opponent_ids = Fight::OpponentBuckets.random_opponents(attacker_level_range, exclude_ids, Setting.i(:fight_victim_show_limit))
+
+    Character.all(:include => :user, :conditions => {:id => opponent_ids}).tap do |r|
+      r.shuffle!
     end
   end
     
@@ -206,6 +215,12 @@ class Fight < ActiveRecord::Base
     victim.save!
   end
 
+  def calculate_victories
+    $redis.zadd("fight_victories_#{attacker.id}", Time.now.to_i, victim.id)
+
+    true
+  end
+
   def post_to_newsfeed
     attacker.news.add(:fight_result, :fight_id => id)
     victim.news.add(:fight_result, :fight_id => id)
@@ -217,10 +232,9 @@ class Fight < ActiveRecord::Base
   end
   
   def latest_opponent_ids
-    attacker.attacks.all(
-      :select     => "DISTINCT victim_id",
-      :conditions => ["winner_id = ? AND created_at > ?", attacker.id, Setting.i(:fight_attack_repeat_delay).minutes.ago]
-    ).collect{|a| a.victim_id }
+    $redis.zremrangebyscore("fight_victories_#{attacker.id}", 0, Setting.i(:fight_attack_repeat_delay).minutes.ago.to_i)
+
+    $redis.zrange("fight_victories_#{attacker.id}", 0, -1).collect {|id| id.to_i }
   end
   
   def decrease_victim_health?

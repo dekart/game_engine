@@ -52,23 +52,27 @@ var Tutorial = (function(){
      * to change current tutorial step if user click on object
      */
     clickTarget: function(options) {
+      var target = $(this);
       
-      $(this).tutorial('responsible');
-      $(this).addClass('tutorialScrollTarget');
+      target.tutorial('responsible');
+      target.addClass('tutorialScrollTarget');
       
-      if (options['redirector_url']) {
-        
-        // change href param in <a> tag
-        var originalHref = encodeURIComponent($(this).attr('href'));
-        // TODO: this is very simple link generation and don't consider link params
-        var changedHref = options['redirector_url'] + '?redirect_to=' +  originalHref;
-        $(this).attr('href', changedHref);
-        
-        $(this).bind('click', function(){
-          // prevent double click
-          $(this).removeClass('tutorialVisible');
+      if (options['step_update_url']) {
+        target.one('click', function(e){
+          var link = $(this);
+
+          link.removeClass('tutorialVisible'); // hiding link to avoid double click
+          
+          e.stopPropagation();
+          e.preventDefault();
+          
+          $.ajax(options['step_update_url'], { 
+            data: { no_render : true },
+            complete: function(){
+              redirectWithSignedRequest(link.attr('href'));
+            }
+          });
         });
-        
       }
     },
     
@@ -156,14 +160,16 @@ var Tutorial = (function(){
      */
     prepareDialog: function() {
       // move dialog box after tutorial box
-      var baseElement;
-      if ($('#tutorial_progress').length > 0) {
-        baseElement = $('#tutorial_progress');
+      var tutorial_progress = $('#tutorial_progress');
+      var newDialogTop;
+
+      if (tutorial_progress.length > 0) {
+        newDialogTop = tutorial_progress.offset().top + tutorial_progress.outerHeight();
       } else {
-        baseElement = $('#main_menu');
+        newDialogTop = $('#content').top;
       }
-      var newDialogTop = baseElement.offset().top + baseElement.outerHeight() + 75;
-      $('#dialog').offset({ top: newDialogTop });
+
+      $('#dialog').offset({ top: newDialogTop + 50 });
       $('#dialog').tutorial('responsible');
     },
     
@@ -255,14 +261,8 @@ var Tutorial = (function(){
      */
     showDialog: function(options) {
       $(document).queue('dialog', function() {
-        
-        // hack on dialog settings. we save old settings and restore it after show dialog
-        // it needs for change settings only for tutorial dialog
-        var oldSettings = $.dialog.settings;
-        
-        $.extend($.dialog.settings, {overlay: false});
-        
         var title = "";
+        
         if (options['content']['title']) {
           title = "<h2>" + options['content']['title'] + "</h2>";
         }
@@ -272,13 +272,8 @@ var Tutorial = (function(){
         $.dialog(content);
         
         Tutorial.prepareDialog();
-        
-        $.dialog.settings = oldSettings;
       });
     }
-    
-    
-    
   });
   
   return tutorial;

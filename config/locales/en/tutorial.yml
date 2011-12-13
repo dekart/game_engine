@@ -3,8 +3,7 @@ en:
     skip: "Skip Tutorial"
     progress: "Tutorial Progress"
     steps:
-      current: "Current step:"
-      next: "Next step:"
+      current: "Current step: %{name} (%{current} of %{total})"
       hello_new_user: 
         title: "Welcome to %{app}!"
         dialog_title: "Welcome to %{app}!"
@@ -35,7 +34,7 @@ en:
         text: "Please purchase your first weapon. You'll need it later to fight with monsters and other players."
       goto_inventory:
         title: "Inventory"
-        text: "Your newly purchase item is in your Inventory now. Let's see how does it look like. Please click the button to proceed."
+        text: "Your newly purchased item is in your Inventory now. Let's see how it looks like. Please click the button to proceed."
       goto_equip:
         title: "Equipment"
         text: "Your inventory displays the list of all your items (both equipped and not). Proceed to see how does the Equipment page look like."
@@ -60,6 +59,7 @@ en:
         text: "Each attack inflicts some damage to monster. The more powerful weapons you have the better you fight."
       monster_reward:
         title: "Fight With Monster"
+        text: "You won! Don't forget to claim your reward!"
       goto_estate:
         title: "Property"
         text: "Now you have enough money to purchase your first estate. Click this link to proceed."
@@ -80,15 +80,8 @@ en:
         title: "Fight With Players"
         text: "Fight result and details are displayed here"
         close_button_value: "Ok, Let's Proceed"
-      goto_gem_market:
-        title: "Service Shop"
-        text: "The last important part of the game is the Service Shop. Go to it to check what we have there."
-      spend_gems:
-        title: "Service Shop"
-        text: "You already have some gems that you can spend to purchase special services or refill your attributes"
-        close_button_value: "Ok"
       finish:
         title: "Well Done!"
         dialog_text: "Thank you for finishing tutorial! Now you're familiar with all main parts of the game. We would like to recommend to start with missions and then proceed to other game parts."
         goto_missions_button_value: "Go To Missions"
-        close_button_value: "Stay Here"
+        close_button_value: "Keep Fighting"

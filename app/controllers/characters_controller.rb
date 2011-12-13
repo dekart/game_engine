@@ -1,4 +1,5 @@
 class CharactersController < ApplicationController
+  skip_before_filter facepalm_authentication_filter,        :only => :new
   skip_before_filter :check_character_existance,            :only => [:new, :create]
   skip_before_filter :check_user_ban,                       :only => [:new, :create]
 
@@ -13,11 +14,7 @@ class CharactersController < ApplicationController
 
   def upgrade
     if request.post?
-      @success = current_character.upgrade_attribute!(params[:attribute])
-
-      if @success
-        EventLoggingService.log_event(:character_upgraded, current_character, params[:attribute])
-      end
+      @success = current_character.upgrade_attributes!(params)
 
       render :action => :upgrade_result, :layout => "ajax"
     else

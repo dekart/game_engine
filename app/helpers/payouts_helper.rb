@@ -60,4 +60,15 @@ module PayoutsHelper
 
     block_given? ? concat(result) : result
   end
+  
+  def payout_item_label(payout)
+    if payout.amount > 1
+       t("payouts.item.label",
+        :name   => content_tag(:span, payout.item.name, :class => :name),
+        :amount => payout.amount
+      ).html_safe
+    else
+      content_tag(:span, payout.item.name, :class => :name)
+    end
+  end
 end
