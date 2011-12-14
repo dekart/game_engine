@@ -5,11 +5,16 @@ class Statistics
         $redis.hincrby("tracking_requests_#{ Date.today }", user ? user.id : 0, 1)
       end
     
-      def visited_by_users(date)
+      def visited_by_users(date = Date.today)
         $redis.hgetall("tracking_requests_#{ date }").to_a.tap do |result|
           result.map!{|id, value| [id.to_i, value.to_i] }
           result.sort!{|a, b| b[1] <=> a[1] }
         end
+      end
+      
+      def visited_by_user(user, date = Date.today)
+        visits = $redis.hget("tracking_requests_#{ date }", user ? user.id : 0)
+        visits ? visits.to_i : 0
       end
     
       def average_amount(requests, date)

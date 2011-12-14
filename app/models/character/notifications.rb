@@ -24,6 +24,14 @@ class Character
         
         true
       end
+      
+      def schedule_friends_to_invite
+        friend_ids = proxy_owner.friend_filter.for_invitation(15)
+        
+        unless friend_ids.empty? || ENV['NEW_ONLY'] && proxy_owner.notifications.by_type(:friends_to_invite).any?
+          proxy_owner.notifications.schedule(:friends_to_invite, :friend_ids => friend_ids)
+        end
+      end
     end
   end
 end
