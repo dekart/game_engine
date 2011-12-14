@@ -20,14 +20,13 @@ class ClanMembershipApplicationsController < ApplicationController
     @clan_member = @application.clan.clan_members.build(:character => @application.character, :role => :participant)
     
     if @clan_member.save
-       @application.character.notifications.schedule(:accepted_application,
-          :clan_id      => @application.clan.id
-       )
+      @application.establish_notification(:accepted)
       render :layout => "ajax"
     end
   end
   
   def reject
+    @application.establish_notification(:rejected)
     render :layout => "ajax"
   end
   

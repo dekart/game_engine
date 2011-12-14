@@ -1,18 +1,19 @@
-<% dialog :id => :accepted_application_notification do |d| %>
-  <h2><%= t(".title") %></h2>
+<% dialog :id => :status_application_notification do |d| %>
+  <h2><%= t(".title_#{notification.status}") %></h2>
   
   <table width="100%">
     <tr>
       <td>
         <div class="text">
-          <%= t(".text",
+          <%= t(".text_#{notification.status}",
                 :clan => content_tag(:strong, notification.clan.name)
               ).html_safe %>
         </div>
-        
-        <div class="buttons">
-          <%= link_to(button(:watch_clan), clan_path(notification.clan), :class => "watch button") %>
-        </div>  
+        <% if notification.status == "accepted" %>
+          <div class="buttons">
+            <%= link_to(button(:watch_clan), clan_path(notification.clan), :class => "watch button") %>
+          </div>  
+        <% end %>  
       </td>
       <td class="avatar">
         <%= clan_avatar(notification.clan, :width => 100) %>
