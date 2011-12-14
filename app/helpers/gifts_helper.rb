@@ -18,8 +18,7 @@ module GiftsHelper
     )
     
     link_to_function(button(:send), invite_dialog(:gift, options), 
-      :class => "send button",
-      :'data-click-once' => true
+      :class => "send button"
     )
   end
   

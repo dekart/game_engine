@@ -23,7 +23,9 @@ def task
 end
 
 def last_restart_at
-  File.mtime(File.expand_path('../../tmp/restart.txt', __FILE__))
+  path = File.expand_path('../../tmp/restart.txt', __FILE__)
+  
+  File.file?(path) ? File.mtime(path) : Time.at(0)
 end
 
 
