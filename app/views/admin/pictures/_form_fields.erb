@@ -1,5 +1,5 @@
 <div id="pictures">
-  <% form.object.pictures.sort_by_style.each_with_index do |picture, ind| %>
+  <% form.object.pictures.sort_by_style.each do |picture| %>
     <%= render('admin/pictures/picture', 
       :container => form.object_name,
       :picture => picture

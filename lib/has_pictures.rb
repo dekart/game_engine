@@ -65,7 +65,7 @@ module HasPictures
         
         missing_styles.each do |style|
           picture = pictures.build(:style => style)
-          picture.image = open(original.image.path)
+          picture.image = original.image.to_file
           
           picture.save
         end
