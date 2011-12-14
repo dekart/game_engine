@@ -8,6 +8,10 @@ class Character
       end
     end
     
+    def delete_all_applications
+      ClanMembershipApplication.destroy_all(:character_id => id)
+    end
+    
     def member_of?(clan)
       self.clan == clan
     end

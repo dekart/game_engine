@@ -1,6 +1,5 @@
 class ClanMembershipApplicationsController < ApplicationController
   before_filter :find_application, :only => [:approve, :reject]
-  after_filter  :delete_clan_membership_application, :only => [:approve, :reject]
   
   def new
     @clan = Clan.find(params[:clan_id])
@@ -20,13 +19,19 @@ class ClanMembershipApplicationsController < ApplicationController
     @clan_member = @application.clan.clan_members.build(:character => @application.character, :role => :participant)
     
     if @clan_member.save
+      @application.character.delete_all_applications
+      
       @application.establish_notification(:accepted)
+      
       render :layout => "ajax"
     end
   end
   
   def reject
+    @application.destroy
+    
     @application.establish_notification(:rejected)
+    
     render :layout => "ajax"
   end
   
@@ -34,9 +39,5 @@ class ClanMembershipApplicationsController < ApplicationController
   
   def find_application
     @application = ClanMembershipApplication.find(params[:id])
-  end
-  
-  def delete_clan_membership_application
-    @application.destroy
   end
 end
