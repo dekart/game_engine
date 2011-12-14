@@ -13,8 +13,7 @@ class Statistics
       end
       
       def visited_by_user(user, date = Date.today)
-        visits = $redis.hget("tracking_requests_#{ date }", user ? user.id : 0)
-        visits ? visits.to_i : 0
+        $redis.hget("tracking_requests_#{ date }", user).to_i
       end
     
       def average_amount(requests, date)
