@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include TrackingRequests
   include ReferenceCode
   include AppRequests
+  include Notifications
 
   before_filter :check_character_existance, :except => [:facepalm_oauth_endpoint]
   before_filter :check_user_ban
