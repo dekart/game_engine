@@ -8,4 +8,16 @@ class ClanMembershipApplication < ActiveRecord::Base
       :status  => status.to_s
     )
   end
+  
+  def create_clan_member!
+    member = clan.clan_members.build(:character => character, :role => :participant)
+    
+    if clan.members_count >= Setting.i(:clan_max_size)
+      false
+    else
+      member.save
+      
+      member 
+    end 
+  end
 end

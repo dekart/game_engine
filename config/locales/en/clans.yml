@@ -28,7 +28,7 @@ en:
     edit: 
       title: "Edit Clan"  
       no_access: "You don't may edit this page!"
-      members_clan: "Members Clan"
+      members_clan: "Clan Members (%{count} of %{limit_count})"
       
     edit_image:  
       buttons:
@@ -54,6 +54,7 @@ en:
       sent_application: "Your application was sent to"   
     approve: 
       accept: "Application accept"  
+      limit_exceeded: "Denied receiving the participants in the clan, as you have reached the limit of participants" #***
   create:
     success: "The clan has been successfully created"    
   update:

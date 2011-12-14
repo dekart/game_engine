@@ -7,7 +7,7 @@
   </td>
   <td class="controls">
     <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
-          :url      => { :action => "delete_member", :id => member.id},
+          :url      => delete_member_clan_path(:id => member.id),
           :method   => :delete,
           :update   => :ajax,
           :confirm  => t(".delete.confirmation"),

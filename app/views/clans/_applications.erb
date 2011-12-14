@@ -14,9 +14,9 @@
           <%= link_to_remote(button(:accept),
                 :url => approve_clan_membership_application_path(application),
                 :update => :ajax,
-                :method => :put,
+                :method => :put, 
                 :html => {
-                  :'data-click-once' => true,
+                  :'data-click-once' => false,
                   :class => 'accept button'
                 }
               ) %>

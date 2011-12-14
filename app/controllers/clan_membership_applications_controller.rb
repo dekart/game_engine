@@ -16,15 +16,15 @@ class ClanMembershipApplicationsController < ApplicationController
       @application.character.clan_member.destroy    
     end
     
-    @clan_member = @application.clan.clan_members.build(:character => @application.character, :role => :participant)
+    @clan_member = @application.create_clan_member!
     
-    if @clan_member.save
+    if @clan_member
       @application.character.delete_all_applications
       
       @application.establish_notification(:accepted)
-      
-      render :layout => "ajax"
     end
+    
+    render :layout => "ajax"
   end
   
   def reject
