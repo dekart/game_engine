@@ -72,7 +72,9 @@
 
           <%= payout(:sp, @fight.stamina) %>
           
-          <%= builder.render("payouts/result/item", :payout => @fight.boost) if @fight.boost %>
+          <%= builder.render("payouts/result/item", 
+                :payout => Payouts::Item.new(:value => @fight.boost.item)
+              ) if @fight.boost %> 
         </td>
 
         <td class="monster_spent">
