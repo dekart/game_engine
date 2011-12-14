@@ -23,7 +23,7 @@
       :result   => result
     ) %>
 
-<% if result.group_rank.try(:just_created?) %>
+<% if result.group_rank.try(:just_completed?) %>
   <%= builder.render("mission_groups/complete", :result => @result) %>
 <% end %>
 

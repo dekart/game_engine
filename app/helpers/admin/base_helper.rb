@@ -97,5 +97,18 @@ module Admin::BaseHelper
   def admin_documentation_url(topic)
     "http://railorz.com/help/#{topic}"
   end
+  
+  def admin_menu_link(*args)
+    name, link, controllers, actions = args
+    
+    controllers = Array.wrap(controllers)
+    actions = Array.wrap(actions)
+    current = (controller_name == name.to_s || (controllers.include?(controller_name))) &&
+      (actions.empty? || actions.include?(action_name))
+    
+    link_to(t(".#{ name }"), link,
+      :class => "item %s" % (:current if current)
+    )
+  end
 
 end

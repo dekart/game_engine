@@ -47,7 +47,7 @@ class Character < ActiveRecord::Base
     :class_name => "BankWithdraw", 
     :dependent  => :delete_all
 
-  has_many :vip_money_deposits, 
+  has_many :vip_money_deposits,
     :dependent => :destroy
   has_many :vip_money_withdrawals, 
     :dependent => :destroy
@@ -245,22 +245,27 @@ class Character < ActiveRecord::Base
   end
 
   def charge(basic_amount, vip_amount, reference = nil)
-    self.basic_money  -= basic_amount if basic_amount != 0
+    self.basic_money  -= basic_amount.to_i
 
     if vip_amount.to_i != 0
-      deposit = (vip_amount > 0 ? vip_money_withdrawals : vip_money_deposits).build(
+      target = (vip_amount.to_i > 0 ? vip_money_withdrawals : vip_money_deposits)
+      
+      target.build(
         :amount     => vip_amount.abs,
         :reference  => reference
-      )
-      deposit.character = self
-      deposit
+      ).tap do |o|
+        o.character = self
+        o.save!
+      end
     end
   end
 
   def charge!(*args)
-    charge(*args)
-
-    save!
+    transaction do
+      charge(*args)
+    
+      save!
+    end
   end
 
   def boosts
@@ -326,24 +331,24 @@ class Character < ActiveRecord::Base
       :level => self.level
     }
   end
-  
+    
   protected
 
   def update_level_and_points
     self.level = [level, level_for_current_experience].max
     
     if level_changed?
+      self.level_up_applied = true
+      
       self.points += level_up_amount * Setting.i(:character_points_per_upgrade)
 
-      charge(0, - vip_money_per_upgrade, :level_up)
+      charge!(0, - vip_money_per_upgrade, :level_up)
 
       self.ep = energy_points
       self.hp = health_points
       self.sp = stamina_points
 
       notifications.schedule(:level_up)
-      
-      self.level_up_applied = true
       
       update_opponent_bucket # Update character position in opponent buckets
 

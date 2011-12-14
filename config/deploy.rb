@@ -185,7 +185,7 @@ namespace :deploy do
 
     desc "Stop cron"
     task :stop_cron, :roles => :background do
-      run "crontab -r"
+      run "crontab -r || true"
     end
   end
 end
@@ -195,6 +195,8 @@ after "deploy:setup", "deploy:dependencies:system_gems"
 
 
 # All deploys
+before "deploy:update_code", "deploy:maintenance:stop_cron"
+
 after "deploy:update_code", "deploy:dependencies:bundled_gems"
 after "deploy:update_code", "deploy:configure:facebook"
 after "deploy:update_code", "deploy:configure:database"
@@ -208,7 +210,7 @@ end
 
 
 # Ordinary deploys
-unless ENV['NO_BACKUP']
+unless ENV['BACKUP'] == 'false'
   before "deploy:migrations", "deploy:db:backup" 
   after "deploy:migrations", "deploy:db:package_backups"
 end

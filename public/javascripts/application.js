@@ -431,19 +431,6 @@ var Equipment = {
 };
 
 
-var Mission = {
-  requirementCallback: function(){},
-  onRequirementSatisfy: function(){
-    $(document).unbind('requirement.satisfy', Mission.onRequirementSatisfy);
-
-    Mission.requirementCallback();
-  },
-  onItemPurchase: function(){
-    $(document).unbind('item.purchase', Mission.onItemPurchase);
-    $(document).trigger('requirement.satisfy');
-  }
-};
-
 var Fighting = {
   setup: function(){
     $(document).bind({

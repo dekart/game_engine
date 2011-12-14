@@ -3,15 +3,17 @@
     <% builder.success do %>
       <%= flash[:success] %>
     <% end %>
+
+    <% builder.on_ready do %>
+      $('#current_vip_money .value').html(<%= current_character.vip_money %>);
+      
+      <%= ga_track_event('Premium', params[:type].titleize) %>
+    <% end %>
   <% else %>
     <div class="unsatisfied_requirements">
       <%= render("requirements/not_satisfied/vip_money",
             :requirement  => Requirements::VipMoney.new()
           ) %>
     </div>
-  <% end %>
-
-  <% builder.on_ready do %>
-    $('#current_vip_money .value').html(<%= current_character.vip_money %>);
   <% end %>
 <% end %>

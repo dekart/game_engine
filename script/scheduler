@@ -23,7 +23,9 @@ def task
 end
 
 def last_restart_at
-  File.mtime(File.expand_path('../../tmp/restart.txt', __FILE__))
+  path = File.expand_path('../../tmp/restart.txt', __FILE__)
+  
+  File.file?(path) ? File.mtime(path) : Time.at(0)
 end
 
 
@@ -63,22 +65,6 @@ end
 scheduler.every 10.minutes, :blocking => true do
   task do
     Jobs::Characters::PublishScoreInFacebook.new.perform
-  end
-end
-
-scheduler.every 1.minute, :blocking => true do
-  if Setting.time(:notifications_friends_to_invite_displayed_at) + Setting.i(:notifications_friends_to_invite_delay).hours < Time.now
-    task do
-      Jobs::Notifications::DeliverFriendsToInvite.new.perform
-    end
-  end
-end
-
-scheduler.every 1.minute, :blocking => true do
-  if Setting.time(:notifications_send_gift_displayed_at) + Setting.i(:notifications_send_gift_delay).hours < Time.now
-    task do
-      Jobs::Notifications::DeliverSendGift.new.perform
-    end
   end
 end
 
