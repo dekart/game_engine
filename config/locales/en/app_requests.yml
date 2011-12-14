@@ -49,7 +49,9 @@ en:
         buttons:
           alliance: 'View Alliance'
       clan_invite:
-        accepted: 'Invitation accepted!'    
+        accepted: 'Invitation accepted!' 
+        buttons:
+          watch_clan: "Watch clan"   
       property_worker:
         accepted: 'Thank you for your help!'
     
