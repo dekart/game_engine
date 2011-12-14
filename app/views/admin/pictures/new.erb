@@ -1,0 +1,7 @@
+<% dom_ready do %>
+  $('#pictures').append('<%=
+    escape_javascript(
+      render("admin/pictures/picture", :picture => @picture, :container => @container, :number => 5)
+    )
+  %>');
+<% end %>

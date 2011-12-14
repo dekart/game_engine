@@ -52,7 +52,7 @@ module StreamHelper
       {
         :item_id => item.id
       },
-      (item.image.url(:stream) if item.image?)
+      (item.pictures.url(:stream) if item.image?)
     ]
   end
   
@@ -63,7 +63,7 @@ module StreamHelper
       {
         :mission_id => mission.id
       },
-      (mission.image.url(:stream) if mission.image?)
+      (mission.pictures.url(:stream) if mission.image?)
     ]
   end
 
@@ -74,7 +74,7 @@ module StreamHelper
       {
         :mission_id => mission.id
       },
-      (mission.image.url(:stream) if mission.image?)
+      (mission.pictures.url(:stream) if mission.image?)
     ]
   end
 
@@ -85,7 +85,7 @@ module StreamHelper
       {
         :boss_id => boss.id
       },
-      (boss.image.url(:stream) if boss.image?)
+      (boss.pictures.url(:stream) if boss.image?)
     ]
   end
 
@@ -96,7 +96,7 @@ module StreamHelper
       {
         :monster_id => monster.id
       },
-      (monster.image.url(:stream) if monster.image?)
+      (monster.pictures.url(:stream) if monster.image?)
     ]
   end
 
@@ -107,7 +107,7 @@ module StreamHelper
       {
         :monster_id => monster.id
       },
-      (monster.image.url(:stream) if monster.image?)
+      (monster.pictures.url(:stream) if monster.image?)
     ]
   end
 
@@ -118,7 +118,7 @@ module StreamHelper
       {
         :property_id => property.id
       },
-      (property.image.url(:stream) if property.image?)
+      (property.pictures.url(:stream) if property.image?)
     ]
   end
 
@@ -220,7 +220,7 @@ module StreamHelper
       {
         :achievement_type_id => type.id
       },
-      (type.image.url(:stream) if type.image?)
+      (type.pictures.url(:stream) if type.image?)
     ]
   end
   

@@ -10,6 +10,8 @@ describe Item do
       @character = Factory(:character)
     end
 
+    it_should_behave_like 'should have pictures'
+
     describe '.available_for' do
       it 'should select items, available for character for given level' do
         Item.available_for(@character).all.should == [@item_1, @item_2]

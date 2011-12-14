@@ -20,7 +20,7 @@
     </tr>
     <% @bosses.each do |boss| %>
       <% content_tag_for(:tr, boss) do %>
-        <td class="image"><%= image_tag(boss.image.url(:icon)) if boss.image? %></td>
+        <td class="image"><%= image_tag(boss.pictures.url(:icon)) if boss.image? %></td>
         <td class="name"><%= link_to(boss.name, edit_admin_boss_path(boss)) %></td>
         <td class="mission_group"><%= boss.mission_group.name %></td>
         <td class="health"><%= boss.health %></td>

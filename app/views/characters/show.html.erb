@@ -78,7 +78,7 @@
           <div class="achievement">
             <div class="name"><%= achievement.name %></div>
             
-            <div class="image"><%= image_tag(achievement.image.url(:small)) if achievement.image? %></div>
+            <div class="image"><%= image_tag(achievement.pictures.url(:small)) if achievement.image? %></div>
           </div>
         <% end %>
       </div>

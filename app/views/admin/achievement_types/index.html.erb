@@ -25,7 +25,7 @@
 
       <% content_tag_for(:tr, achievement_type) do %>
         <td class="value"><%= achievement_type.value %></div>
-        <td class="image"><%= image_tag(achievement_type.image.url(:icon)) if achievement_type.image? %></td>
+        <td class="image"><%= image_tag(achievement_type.pictures.url(:icon)) if achievement_type.image? %></td>
         <td class="name"><%= link_to(achievement_type.name, edit_admin_achievement_type_path(achievement_type)) %></td>
         <td class="payouts"><%= admin_payouts_preview(achievement_type.payouts) %></td>
         <td class="state"><%= admin_state(achievement_type) %></td>

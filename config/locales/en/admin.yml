@@ -513,4 +513,10 @@ en:
         success: "Message has been updated successfully!"
       controls:
         new: "Add Message"
+    pictures:
+      form_fields:
+        new: "Add Picture"
+      picture:
+        remove: "Remove"
+    
     # Add your custom translation strings below this mark

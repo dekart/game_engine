@@ -2,7 +2,7 @@
   <td class="info">
     <div class="image">
       <% if mission.image? %>
-        <%= image_tag(mission.image.url(:small)) %>
+        <%= image_tag(mission.pictures.url(:small)) %>
       <% else %>
         <%= asset_image_tag(:mission_placeholder) %>
       <% end %>

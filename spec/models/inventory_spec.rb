@@ -30,7 +30,7 @@ describe Inventory do
         @market_item = Factory(:market_item, :inventory => @inventory, :amount => 4)
       end
       
-      [:name, :plural_name, :description, :image, :image?, :effects, :effects?, :payouts, :placements].each do |method|
+      [:name, :plural_name, :description, :pictures, :image?, :effects, :effects?, :payouts, :placements].each do |method|
         it "should delegate :#{method} method to inventory" do
           @market_item.send(method).should === @market_item.inventory.send(method)
         end

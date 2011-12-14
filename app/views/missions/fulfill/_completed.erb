@@ -33,7 +33,7 @@
 
     <div class="clearfix">
       <% if mission.image? %>
-        <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
+        <div class="image"><%= image_tag(mission.pictures.url(:small)) %></div>
       <% end %>
 
       <p><%= mission.complete_text.to_s.html_safe %></p>

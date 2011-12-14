@@ -1,6 +1,7 @@
 class Boss < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasPictures
   include HasVisibility
 
   belongs_to  :mission_group

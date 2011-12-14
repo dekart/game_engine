@@ -24,7 +24,7 @@
       
       <% content_tag_for(:tbody, mission) do %>
         <tr>
-          <td class="image"><%= image_tag(mission.image.url(:icon)) if mission.image? %></td>
+          <td class="image"><%= image_tag(mission.pictures.url(:icon)) if mission.image? %></td>
           <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>
           <td class="requirements">
             <%= admin_requirements_preview(mission.requirements) %>

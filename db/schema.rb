@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111128121905) do
+ActiveRecord::Schema.define(:version => 20111206114004) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -700,6 +700,18 @@ ActiveRecord::Schema.define(:version => 20111128121905) do
   end
 
   add_index "personal_discounts", ["character_id", "available_till"], :name => "index_personal_discounts_on_character_id_and_available_till"
+
+  create_table "pictures", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "style"
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_content_type", :limit => 100, :default => "", :null => false
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "promotion_receipts", :force => true do |t|
     t.integer  "promotion_id", :null => false

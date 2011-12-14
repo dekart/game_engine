@@ -25,7 +25,7 @@ module ItemsHelper
       :title => item.name
     )
       
-    image_tag(item.image.url(format), options)
+    image_tag(item.pictures.url(format), options)
   end
   
   def item_tooltip_content(item)

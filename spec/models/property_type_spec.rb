@@ -5,6 +5,8 @@ describe PropertyType do
     @property_type = Factory(:property_type)
   end
 
+  it_should_behave_like 'should have pictures'
+
   it "should have 1 hour collection period by default" do
     @property_type.collect_period.should == 1 # hour
   end

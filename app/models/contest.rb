@@ -4,6 +4,8 @@ class Contest < ActiveRecord::Base
     :total_monsters_damage  => :monsters
   }
   
+  extend HasPictures
+  
   has_many :groups, 
     :class_name => "ContestGroup",
     :dependent => :destroy
@@ -70,8 +72,8 @@ class Contest < ActiveRecord::Base
       Setting.i(:contests_show_after_finished_time).days.ago],
     :order => 'finished_at DESC'
   }
-    
-  has_attached_file :image
+  
+  has_pictures :styles => []
     
   validates_presence_of :name, :points_type, :description_before_started, :description_when_started, :description_when_finished
   
