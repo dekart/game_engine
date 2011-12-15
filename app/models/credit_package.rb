@@ -21,7 +21,7 @@ class CreditPackage < ActiveRecord::Base
     end
   end
   
-  has_pictures :styles => []
+  has_pictures
 
   validates_presence_of :vip_money, :price
   validates_numericality_of :vip_money, :price, :allow_blank => true, :greater_than => 0

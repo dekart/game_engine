@@ -13,7 +13,7 @@
             ) %>
       </div>
 
-      <div class="image"><%= image_tag(fight.boss.pictures.url(:small)) if fight.boss.image? %></div>
+      <div class="image"><%= image_tag(fight.boss.pictures.url(:small)) if fight.boss.pictures? %></div>
 
       <div class="text">
         <%= t(".text",

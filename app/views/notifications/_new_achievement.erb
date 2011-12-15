@@ -6,7 +6,7 @@
   </p>
   
   <div class="achievement clearfix">
-    <div class="image"><%= image_tag(notification.achievement.pictures.url(:small)) if notification.achievement.image? %></div>
+    <div class="image"><%= image_tag(notification.achievement.pictures.url(:small)) if notification.achievement.pictures? %></div>
     <div class="name"><%= notification.achievement.name %></div>
     <div class="description"><%= notification.achievement.description %></div>
   </div>

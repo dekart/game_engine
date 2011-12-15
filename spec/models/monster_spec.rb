@@ -29,7 +29,7 @@ describe Monster do
 
     it "should delegate pictures to monster type" do
       @monster.pictures.should == @monster_type.pictures
-      @monster.image?.should == @monster_type.image?
+      @monster.pictures?.should == @monster_type.pictures?
     end
 
     it "should delegate requirements to monster type" do

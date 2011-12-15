@@ -2,7 +2,7 @@ class Property < ActiveRecord::Base
   belongs_to :character
   belongs_to :property_type
 
-  delegate :name, :plural_name, :description, :pictures, :image?, :basic_price, :vip_price, 
+  delegate :name, :plural_name, :description, :pictures, :pictures?, :basic_price, :vip_price, 
     :income, :collect_period, :payouts, :income_by_level, :worker_names,
     :to => :property_type
 

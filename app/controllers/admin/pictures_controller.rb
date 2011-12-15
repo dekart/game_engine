@@ -1,13 +1,12 @@
 class Admin::PicturesController < Admin::BaseController
   def new
     @container = params[:container]
+    klass = @container.classify.constantize
     
-    if klass = @container.classify.constantize
-      container = params[:id] ? klass.find(params[:id]) : klass.new
-      
-      @picture = container.pictures.build
+    container = params[:id] ? klass.find(params[:id]) : klass.new
     
-      render :layout => :ajax_layout
-    end
+    @picture = container.pictures.build
+    
+    render :layout => :ajax_layout
   end
 end

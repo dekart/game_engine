@@ -25,14 +25,12 @@ class Boss < ActiveRecord::Base
     end
   end
 
-  has_attached_file :image,
-    :styles => {
-      :icon   => "40x40#",
-      :small  => "100x100>",
-      :normal => "200x200>",
-      :stream => "90x90#"
-    },
-    :removable => true
+  has_pictures :styles => [
+    [:normal => "200x200>"],
+    [:small  => "100x100>"],
+    [:stream => "90x90#"],
+    [:icon   => "40x40#"]
+  ]
 
   has_requirements
 

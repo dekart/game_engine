@@ -73,7 +73,7 @@ class Contest < ActiveRecord::Base
     :order => 'finished_at DESC'
   }
   
-  has_pictures :styles => []
+  has_pictures
     
   validates_presence_of :name, :points_type, :description_before_started, :description_when_started, :description_when_finished
   

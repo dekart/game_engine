@@ -16,7 +16,7 @@ module PropertiesHelper
   end
 
   def property_image(property, format)
-    if property.image?
+    if property.pictures?
       image_tag(property.pictures.url(format), :alt => property.name, :title => property.name)
     else
       property.name

@@ -1,6 +1,6 @@
 module HasPictures
   def has_pictures(*args)
-    options = args.extract_options!
+    options = args.empty? ? {:styles => []} : args.extract_options!
     
     cattr_accessor :picture_options
     self.picture_options = options
@@ -38,7 +38,7 @@ module HasPictures
         end
         
         if picture
-          if remove && remove.to_i > 0
+          if !remove.blank?
             picture.destroy unless picture.new_record?
           else
             picture.attributes = attributes
@@ -52,8 +52,8 @@ module HasPictures
       pictures.clear_url_cache!
     end
     
-    def image?
-      pictures.any? && pictures.first.image?
+    def pictures?
+      !pictures.empty? && pictures.first.image?
     end
     
     def create_missing_picture_styles

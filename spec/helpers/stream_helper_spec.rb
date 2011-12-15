@@ -24,7 +24,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -50,7 +50,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -76,7 +76,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -102,7 +102,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -128,7 +128,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -156,7 +156,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -184,7 +184,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -212,7 +212,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -238,7 +238,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -264,7 +264,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -290,7 +290,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
 
@@ -316,7 +316,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       
@@ -342,7 +342,7 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
+        :pictures?    => true,
         :image        => mock("image", :url => "/path/to/image.jpg")
       )
       

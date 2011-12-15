@@ -1,7 +1,7 @@
 <table class="boss" cellspacing="0" cellpadding="0">
   <tr>
     <td class="image">
-      <%= image_tag(boss.pictures.url(:normal)) if boss.image? %>
+      <%= image_tag(boss.pictures.url(:normal)) if boss.pictures? %>
     </td>
     <td class="info">
       <h2><%= boss.name %></h2>

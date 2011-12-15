@@ -35,7 +35,7 @@ class MissionGroup < ActiveRecord::Base
     end
   end
     
-  has_pictures :styles => []
+  has_pictures
 
   has_requirements
   has_payouts(Mission.payout_events + [:mission_group_complete],

@@ -2,7 +2,7 @@ class CreatePictures < ActiveRecord::Migration
   def self.up
     create_table :pictures do |t|
       t.integer  :owner_id
-      t.string   :owner_type
+      t.string   :owner_type,         :limit => 100, :default => ""
       t.string   :style
       
       t.string   :image_file_name,    :default => "",                :null => false

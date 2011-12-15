@@ -2,7 +2,7 @@
   <%= character_picture_link(news.character) %>
 </div>
 
-<% if news.monster.image? %>
+<% if news.monster.pictures? %>
   <div class="subject">
     <%= image_tag(news.monster.pictures.url(:icon)) %>
   </div>

@@ -10,7 +10,7 @@ class MarketItem < ActiveRecord::Base
     }
   }
 
-  delegate(*(%w{name plural_name description pictures image? effects effects? effect boost? payouts placements} + [{:to => :inventory}]))
+  delegate(*(%w{name plural_name description pictures pictures? effects effects? effect boost? payouts placements} + [{:to => :inventory}]))
 
   attr_accessible :amount, :basic_price, :vip_price
 

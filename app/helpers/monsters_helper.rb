@@ -1,6 +1,6 @@
 module MonstersHelper
   def monster_image(monster, format, options = {})
-    if monster.image?
+    if monster.pictures?
       image_tag(monster.pictures.url(format), options.reverse_merge(:alt => monster.name, :title => monster.name))
     else
       monster.name

@@ -10,7 +10,7 @@ describe Property do
     @property.character = @character
   end
 
-  [:name, :plural_name, :description, :pictures, :image?, :basic_price, :vip_price, :income, :collect_period, :income_by_level].each do |method|
+  [:name, :plural_name, :description, :pictures, :pictures?, :basic_price, :vip_price, :income, :collect_period, :income_by_level].each do |method|
     it "should delegate :#{method} method to property type" do
       @property.send(method).should === @property_type.send(method)
     end

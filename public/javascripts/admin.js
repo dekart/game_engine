@@ -58,7 +58,7 @@ var SerializableList = {
 var PictureForm = {
   markForRemove: function(el){
     $(el).hide();
-    form = $(el).parents('.picture');
+    var form = $(el).parents('.picture');
     
     form.find('input.remove').val(1);
     form.find('input[type=file], select').attr('disabled', 'disabled');

@@ -1,6 +1,4 @@
 class Picture < ActiveRecord::Base
-  extend HasPictures
-  
   belongs_to :owner, :polymorphic => true
   
   has_attached_file :image, 

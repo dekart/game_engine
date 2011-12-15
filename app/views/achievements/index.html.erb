@@ -11,7 +11,7 @@
 <div id="achievement_list">
   <% achievement_list(@achievement_types) do |type, achievement| %>
     <% div_for(type, :class => :clearfix) do %>
-      <div class="image"><%= image_tag(type.pictures.url(:small)) if type.image? %></div>
+      <div class="image"><%= image_tag(type.pictures.url(:small)) if type.pictures? %></div>
       
       <div class="status">
         <% if current_character.achievements.achieved?(type) %>
