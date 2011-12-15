@@ -48,7 +48,7 @@
               :amount   => requirement.missing_amount(current_character)
             ),
             :update => :result,
-            :before => "$(document).bind('item.purchase', Mission.onItemPurchase);",
+            :before => "$(document).one('item.purchase', function(){ $(document).trigger('requirement.satisfy') });",
             :html   => {
               :"data-click-once" => true,
               :class => "buy button"

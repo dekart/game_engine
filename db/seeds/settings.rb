@@ -150,11 +150,8 @@ Setting[:monsters_maximum_reward_collectors] ||= 5
 
 Setting[:monster_fight_power_attack_factor] ||= 5
 
-Setting[:notifications_friends_to_invite_delay] ||= 48
-Setting[:notifications_friends_to_invite_displayed_at] ||= Time.now
-
-Setting[:notifications_send_gift_delay] ||= 48
-Setting[:notifications_send_gift_displayed_at] ||= Time.now + 24.hours
+Setting[:notifications_friends_to_invite_show_requests_count] ||= 40
+Setting[:notifications_send_gift_show_requests_count] ||= 100
 
 Setting[:chat_max_messages] ||= 50
 Setting[:chat_update_time] ||= 10.seconds.to_i
