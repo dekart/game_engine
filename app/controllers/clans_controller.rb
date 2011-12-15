@@ -63,6 +63,7 @@ class ClansController < ApplicationController
     @target = ClanMember.find(params[:id])
     @clan   = @target.clan
     
+    @target.establish_notification(:excluded)
     @target.destroy
     
     @clan_members = @clan.clan_members

@@ -47,6 +47,7 @@ en:
         exchange_offer_created: "Exchange offer created"
         new_achievement: "New achievement"
         status_application: "Status of the application to join the clan"
+        status_clan: "Status of the clan"
       buttons: 
         save: "Save"
       
@@ -89,3 +90,7 @@ en:
       text_rejected: "Your application to join the clan %{clan} was rejected" 
       buttons:
         watch_clan: "Watch Clan"     
+        
+    status_clan:
+      title_excluded: "You were excluded"
+      text_excluded: "You were excluded from the clan"     

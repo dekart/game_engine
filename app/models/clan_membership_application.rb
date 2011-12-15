@@ -3,8 +3,8 @@ class ClanMembershipApplication < ActiveRecord::Base
   belongs_to :character
   
   def establish_notification(status)
-    self.character.notifications.schedule(:status_application,
-      :clan_id => self.clan.id,
+    character.notifications.schedule(:status_application,
+      :clan_id => clan.id,
       :status  => status.to_s
     )
   end
