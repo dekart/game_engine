@@ -13,8 +13,6 @@ class AppRequest::ClanInvite < AppRequest::Base
     super
 
     if sender.clan_member.try(:creator?)
-      receiver.clan_member.destroy if receiver.clan_member
-      
       sender.clan.clan_members.create(:character => receiver, :role => :participant)
     else
       sender.clan.clan_membership_applications.create(:character => receiver)   

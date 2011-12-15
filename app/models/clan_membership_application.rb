@@ -9,8 +9,6 @@ class ClanMembershipApplication < ActiveRecord::Base
       false
     else
       transaction do
-        character.clan_member.try(:destroy)    
-        
         if member.save
           character.clan_membership_applications.destroy_all
       

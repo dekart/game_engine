@@ -15,7 +15,7 @@
           </tr>
         </table>
         
-        <% if current_character.member_of?(@clan) %>
+        <% if current_character.clan == @clan %>
           <div class="buttons">
             <% if current_character.clan_member.creator? %>
               <p><%= link_to( button(:management), edit_clan_path(@clan), :class => "management button" ) %></p>
@@ -51,7 +51,7 @@
     </tr>
   </table>
   
-  <% if current_character.member_of?(@clan) %>
+  <% if current_character.clan == @clan %>
     
     <% unless current_character.clan_member.creator? %>
       <div class="buttons">

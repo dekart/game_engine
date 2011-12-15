@@ -107,7 +107,8 @@ en:
           attributes:
             character:
               not_enough_vip_money: "You don't have enough vip money in your balance"
-              not_loaded_image: "Image not loaded"      
+            image:
+              not_loaded_image: "not loaded"     
         fight:
           attributes:
             character:

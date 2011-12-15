@@ -8,8 +8,6 @@
   <% form_for(clan, :url => { :action => :change_image }, :html => { :multipart => true }) do |f| %>
     <%= f.file_field :image, :size => 10 %>
     
-    <div class="notice"><%= t(".notice", :price =>Setting.i(:clan_change_image_vip_money))%></div>
-    
     <table cellpadding="0" cellspacing="0" class="submit_cancel">
       <tr>
         <td class="submit"><%= f.submit(t(".save")) %></td>
@@ -17,6 +15,8 @@
       </tr>
     </table>
   <% end %>
+  
+  <div class="notice"><%= t(".notice", :price =>Setting.i(:clan_change_image_vip_money))%></div>
 </div>
 
 <% dom_ready do %>

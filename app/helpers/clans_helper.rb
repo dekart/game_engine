@@ -8,6 +8,6 @@ module ClansHelper
   end
   
   def clan_avatar(clan, options ={})
-    image_tag(clan.image_file_name.blank? ? asset_image_path(:clan_avatar) : clan.image.url(:small), options.merge(:alt => clan.name))
+    image_tag(clan.image? ? clan.image.url(:small) : asset_image_path(:clan_avatar), options.merge(:alt => clan.name))
   end
 end

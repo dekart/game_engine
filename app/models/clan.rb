@@ -20,43 +20,26 @@ class Clan < ActiveRecord::Base
   end
   
   def change_image!(params)
-    if image_is_loaded?(params) && enough_vip_money?(creator,Setting.i(:clan_change_image_vip_money))
-      transaction do
-        if update_attributes(params) && creator.charge!(0, Setting.i(:clan_change_image_vip_money), :clan_image)
-          true
-        else
-          false
+    if params
+      if enough_vip_money?(creator,Setting.i(:clan_change_image_vip_money))
+        transaction do
+          update_attributes(params) && creator.charge!(0, Setting.i(:clan_change_image_vip_money), :clan_image)
         end
       end
     else
+      errors.add(:image, :not_loaded_image)
+      
       false  
-    end
+    end  
   end
   
   def create_by!(character)
-    if valid? && enough_vip_money?(character,Setting.i(:clan_create_for_vip_money))
+    if valid? && enough_vip_money?(character, Setting.i(:clan_create_for_vip_money))
       transaction do
         if save! && character.charge!(0, Setting.i(:clan_create_for_vip_money), :create_clan)
           clan_members.create(:character => character, :role => :creator)
-          
-          true
-        else
-          false
         end
       end
-      
-    else
-      false
-    end
-  end
-  
-  def image_is_loaded?(params)
-    if params
-      true
-    else
-      errors.add(:character, :not_loaded_image)
-      
-      false
     end
   end
   

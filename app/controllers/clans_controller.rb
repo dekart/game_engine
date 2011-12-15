@@ -1,6 +1,6 @@
 class ClansController < ApplicationController
   def index
-    @clans = Clan.all(:order => "members_count DESC").paginate(:per_page => 50, :page => params[:page], :order => "members_count DESC")
+    @clans = Clan.scoped(:order => "members_count DESC").paginate(:per_page => 50, :page => params[:page])
   end
   
   def show
@@ -15,12 +15,10 @@ class ClansController < ApplicationController
   def create
     @clan = Clan.new(params[:clan])
     
-    @result = @clan.create_by!(current_character)
-    
-    if @result
+    if @result = @clan.create_by!(current_character)
       flash[:success] = t("create.success")
       
-      redirect_to clan_path(@clan)
+      redirect_from_iframe(clan_path(@clan, :canvas => true))
     else      
       render :action => "new"
     end
@@ -38,7 +36,7 @@ class ClansController < ApplicationController
     if @clan.update_attributes(params[:clan])
       flash[:success] = t("update.success")
       
-      redirect_to clan_path(@clan)
+      redirect_from_iframe(clan_path(@clan, :canvas => true))
     else
       render :action => "edit"
     end
@@ -53,22 +51,9 @@ class ClansController < ApplicationController
     if @result
       flash[:success] = t("update_image.success")
       
-      redirect_to clan_path(@clan)
+      redirect_from_iframe(clan_path(@clan, :canvas => true))
     else
       render :action => "edit"
     end
   end
-  
-  def delete_member
-    @target = ClanMember.find(params[:id])
-    @clan   = @target.clan
-    
-    @target.establish_notification(:excluded)
-    @target.destroy
-    
-    @clan_members = @clan.clan_members
-    
-    render :layout => "ajax"
-  end
-
 end

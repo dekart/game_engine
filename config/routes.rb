@@ -299,7 +299,10 @@ ActionController::Routing::Routes.draw do |map|
       :delete_member => :delete
     }
   
-  map.resources :clan_members, :only => :destroy
+  map.resources :clan_members,
+    :member => {
+      :delete_member => :delete
+    }
   
   map.resources :clan_membership_applications,
     :member => {

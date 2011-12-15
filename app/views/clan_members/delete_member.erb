@@ -1,0 +1,3 @@
+<% dom_ready do %>
+  $("#members").html(<%= render("clans/edit_participants", :members => @clan_members ).to_json.html_safe %>);
+<% end %>
