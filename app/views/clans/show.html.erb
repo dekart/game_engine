@@ -56,7 +56,7 @@
     <% unless current_character.clan_member.creator? %>
       <div class="buttons">
         <%= link_to_remote(button(:quit),
-              :url    => clan_member_path(current_character),
+              :url    => clan_member_path,
               :method => :delete,
               :update => :result,
               :confirm  => t(".quit_confirm"),
@@ -68,36 +68,31 @@
       </div>    
     <% end %>
   
-  <% else %>
+  <% elsif !current_character.clan_member.try(:creator?) %>
     <div class="join_clan">
       <h2><%= t(".join_clan.title")%></h2>
-      <% unless current_character.sent_application_join_to?(@clan)%>
+      <% unless current_character.clan_membership_applications.declared_to_join?(@clan) %>
         <p class="description"><%= t(".join_clan.text")%></p>
       <% end %>  
     </div>
    
-    
-    <% if !current_character.clan_member.try(:creator?) %>
-      <div class="buttons sent" id="apply">
-        <% if current_character.sent_application_join_to?(@clan)%>
-          <%= t(".sent_application") %>
-                
-        <% else %>
-          <%= link_to_remote(button(:apply),
-                :url    => new_clan_membership_application_path(:clan_id => @clan.id),
-                :method => :get,
-                :update => :ajax,
-                :confirm  => t(current_character.clan ? ".member_clan_confirm" : ".apply_confirm"),
-                :html   => {
-                  :"data-click-once" => true,
-                  :class => "apply button"
-                }
-              ) %>
-        <% end %>    
-      </div>
-    <% else %>
-      <div class="join_error"><%= t(".join_error") %></div>
-    <% end %>  
+    <div class="buttons sent" id="apply">
+      <% if current_character.clan_membership_applications.declared_to_join?(@clan) %>
+        <%= t(".sent_application") %>
+              
+      <% else %>
+        <%= link_to_remote(button(:apply),
+              :url    => create_clan_membership_application_path(:clan_id => @clan.id),
+              :method => :get,
+              :update => :ajax,
+              :confirm  => t(current_character.clan ? ".member_clan_confirm" : ".apply_confirm"),
+              :html   => {
+                :"data-click-once" => true,
+                :class => "apply button"
+              }
+            ) %>
+      <% end %>    
+    </div>
     
   <% end %>
   

@@ -12,7 +12,6 @@ en:
       join_clan:
         title: "To Join The Clan"
         text:  "Description of the process" #***
-      join_error: "You can not join this clan, as you are the creator of another clan" #***  
       buttons:
         quit: "Out Of The Clan"
         invite_all: "Choose Friends to Invite"
@@ -50,7 +49,7 @@ en:
       delete:
         confirmation: "You sure you want to reject the request?"  
   clan_membership_applications:
-    new:
+    create:
       sent_application: "Your application was sent to"   
     approve: 
       accept: "Application accept"  

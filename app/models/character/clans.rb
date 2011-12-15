@@ -3,21 +3,21 @@ class Character
     def self.included(base)
       base.class_eval do
         has_one :clan,:through => :clan_member
+        
         has_one :clan_member
-        has_one :clan_membership_application
+        
+        has_many :clan_membership_applications, :extend => ClanMembershipApplicationExtension
       end
-    end
-    
-    def delete_all_applications
-      ClanMembershipApplication.destroy_all(:character_id => id)
     end
     
     def member_of?(clan)
       self.clan == clan
     end
     
-    def sent_application_join_to?(clan)
-      self.clan_membership_application.try(:clan) == clan
+    module ClanMembershipApplicationExtension
+      def declared_to_join?(clan)
+        detect{|a| a.clan == clan}
+      end
     end
   end
 end
