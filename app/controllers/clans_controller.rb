@@ -5,7 +5,6 @@ class ClansController < ApplicationController
   
   def show
     @clan = Clan.find(params[:id])
-    @clan_members = @clan.clan_members
   end
 
   def new
@@ -26,12 +25,10 @@ class ClansController < ApplicationController
 
   def edit
     @clan = Clan.find(params[:id])
-    @clan_members = @clan.clan_members
   end
   
   def update
     @clan = Clan.find(params[:id])
-    @clan_members = @clan.clan_members
      
     if @clan.update_attributes(params[:clan])
       flash[:success] = t("update.success")
@@ -44,7 +41,6 @@ class ClansController < ApplicationController
   
   def change_image
     @clan = Clan.find(params[:id])
-    @clan_members = @clan.clan_members
     
     @result = @clan.change_image!(params[:clan])
     

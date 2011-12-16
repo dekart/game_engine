@@ -7,20 +7,10 @@
         <td>
           <%= render("form", :clan => @clan) %>
           
-          <h2 class="members_clan">
-            <%= t(".members_clan", 
-                  :count => @clan.members_count, 
-                  :limit_count => Setting.i(:clan_max_size) 
-                 ) %>
-          </h2>
-    
-          <% unless @clan.clan_membership_applications.empty? %>
-            <div id="applications"><%= render("applications", :applications => @clan.clan_membership_applications) %></div>
-          <% end %>  
+          <div id="clan_members">
+            <%= render("clan_members", :clan => @clan) %>
+          </div>
           
-          <% if @clan_members.size > 1 || !@clan.clan_membership_applications.empty? %>
-            <div id="members"><%= render("edit_participants", :members => @clan_members ) %></div>
-          <% end %>
         </td>
         <td class="image"><%= render("edit_image", :clan => @clan) %></td>
       </tr>

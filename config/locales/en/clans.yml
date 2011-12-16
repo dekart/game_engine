@@ -27,12 +27,14 @@ en:
     edit: 
       title: "Edit Clan"  
       no_access: "You don't may edit this page!"
-      members_clan: "Clan Members (%{count} of %{limit_count})"
+    clan_members:
+      title: "Clan Members (%{count} of %{limit_count})"
       
     edit_image:  
       buttons:
         change_image: "Change image for %{price}"
       save: "Save" 
+      cancel: "Cancel"
       notice: "After saving you will be charged with %{price} gems"  
     edit_participants:
       title: "Participants"

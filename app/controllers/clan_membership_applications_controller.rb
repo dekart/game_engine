@@ -10,7 +10,9 @@ class ClanMembershipApplicationsController < ApplicationController
   end
   
   def approve
-    @clan_member = @application.create_clan_member!
+    @result = @application.create_clan_member!
+    
+    @clan = Clan.find(@application.clan.id)
     
     render :layout => "ajax"
   end

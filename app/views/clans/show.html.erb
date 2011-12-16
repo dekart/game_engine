@@ -44,7 +44,7 @@
       
       <td class="members">
         <div class="block_members">
-          <%= render("participants", :members => @clan_members ) %>
+          <%= render("participants", :members => @clan.clan_members ) %>
         </div>  
         
       </td>
@@ -76,7 +76,7 @@
       <% end %>  
     </div>
    
-    <div class="buttons sent" id="apply">
+    <div class="buttons sent" id="join_clan">
       <% if current_character.clan_membership_applications.declared_to_join?(@clan) %>
         <%= t(".sent_application") %>
               
