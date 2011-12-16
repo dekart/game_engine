@@ -1,6 +1,18 @@
 module ItemsHelper
   def item_image(item, format, options = {})
-    decorate_item_image(item, format, options)
+    if tooltip = options.delete(:tooltip)
+      options['data-tooltip'] = item_image_tooltip_options(item, tooltip).to_json
+    end
+    
+    if tooltip_on_click = options.delete(:tooltip_on_click)
+      options['data-tooltip-on-click'] = item_image_tooltip_on_click_options(item, tooltip_on_click).to_json
+      
+      if options['class']
+        options['class'] += ' clickable'
+      else 
+        options['class'] = 'clickable'
+      end
+    end
     
     options.reverse_merge!(
       :alt => item.name, 
@@ -57,75 +69,56 @@ module ItemsHelper
   
   protected
   
-    def decorate_item_image(item, format, options)
-      decorate_item_image_with_tooltip(item, format, options)
-      decorate_item_image_with_on_click_tooltip(item, format, options)
-    end
-  
-    def decorate_item_image_with_tooltip(item, format, options)
-      if tooltip = options.delete(:tooltip)
-        tooltip = {} unless tooltip.is_a?(Hash)
-  
-        tooltip = {
-          :content => {:text => item_tooltip_content(item)},
-          :position => {
-            :my => 'bottom center',
-            :at => 'top center',
-            :viewport => true,
-            :adjust => {
-              :x => 0,
-              :y => 0,
-              :method => 'shift'
-            }
+    def item_image_tooltip_options(item, tooltip)
+      tooltip = {} unless tooltip.is_a?(Hash)
+
+      {
+        :content => {:text => item_tooltip_content(item)},
+        :position => {
+          :my => 'bottom center',
+          :at => 'top center',
+          :viewport => true,
+          :adjust => {
+            :x => 0,
+            :y => 0,
+            :method => 'shift'
           }
-        }.deep_merge(tooltip)
-        
-        options['data-tooltip'] = tooltip.to_json
-      end
+        }
+      }.deep_merge(tooltip)
     end
     
-    def decorate_item_image_with_on_click_tooltip(item, format, options)
-      if tooltip_on_click = options.delete(:tooltip_on_click)
-        tooltip_on_click = {} unless tooltip_on_click.is_a?(Hash)
-        
-        tooltip_on_click = {
-          :content => {
-            :title => {
-              :text => item.name,
-              :button => 'Close'
-            },
-            :text => content_tag(:div, asset_image_tag(:spinner), :class => 'show_item spinner'), # show spinner while tooltip loading
-            :ajax => {
-              :url => item_path(item)
-            }
+    def item_image_tooltip_on_click_options(item, tooltip)
+      tooltip = {} unless tooltip.is_a?(Hash)
+      
+      tooltip = {
+        :content => {
+          :title => {
+            :text => item.name,
+            :button => 'Close'
           },
-          :position => {
-            :my => 'bottom center',
-            :at => 'top center',
-            :viewport => true,
-            :adjust => {
-              :x => 0,
-              :y => 0,
-              :method => 'shift'
-            },
-          },
-          :show => {
-            :event => 'click',
-            :solo => true
-          },
-          :hide => 'unfocus',
-          :style => {
-            :classes => 'show_item'
+          :text => content_tag(:div, asset_image_tag(:spinner), :class => 'spinner'), # show spinner while tooltip loading
+          :ajax => {
+            :url => item_path(item)
           }
-        }.deep_merge(tooltip_on_click)
-        
-        options['data-tooltip-on-click'] = tooltip_on_click.to_json
-        
-        if options['class']
-          options['class'] += ' clickable'
-        else 
-          options['class'] = 'clickable'
-        end
-      end
+        },
+        :position => {
+          :my => 'bottom center',
+          :at => 'top center',
+          :viewport => true,
+          :adjust => {
+            :x => 0,
+            :y => 0,
+            :method => 'shift'
+          },
+        },
+        :show => {
+          :event => 'click',
+          :solo => true
+        },
+        :hide => 'unfocus',
+        :style => {
+          :classes => 'show_item'
+        }
+      }.deep_merge(tooltip)
     end
 end

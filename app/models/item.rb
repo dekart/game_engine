@@ -232,7 +232,7 @@ class Item < ActiveRecord::Base
     !payouts.empty?
   end
   
-  def available_by_level_for?(character)
-    level <= character.level
+  def available_for?(character)
+    !self.class.available_for(character).scoped(:conditions => {:id => id}).empty?
   end
 end
