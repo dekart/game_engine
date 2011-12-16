@@ -1,8 +1,8 @@
 <td class="message">
   <%= t(".text", 
-  :user => character_name_link(app_request.sender),
-  :clan => link_to( app_request.sender.clan.name, clan_path(app_request.sender.clan) )
-  ).html_safe %>
+        :user => character_name_link(app_request.sender),
+        :clan => link_to( app_request.sender.clan.name, clan_path(app_request.sender.clan) )
+       ).html_safe %>
 </td>
 <td class="image">
   <%= link_to( clan_avatar(app_request.sender.clan, :format => :small), clan_path(app_request.sender.clan) ) %>
