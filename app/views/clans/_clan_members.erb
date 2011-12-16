@@ -1,0 +1,12 @@
+<h2>
+  <%= t(".title", 
+        :count => clan.members_count, 
+        :limit_count => Setting.i(:clan_max_size) 
+       ) %>
+</h2>
+
+<% unless clan.clan_membership_applications.empty? %>
+  <div id="clan_applications"><%= render("clans/applications", :applications => clan.clan_membership_applications) %></div>
+<% end %>  
+
+<div id="clan_participants"><%= render("clans/edit_participants", :members => clan.clan_members ) %></div>

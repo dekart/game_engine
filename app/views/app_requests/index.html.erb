@@ -11,7 +11,7 @@
         </td>
 
         <%= render("app_requests/details/#{ app_request.type_name }", :app_request => app_request) %>
-          
+        
         <% if app_request.acceptable? %>
           <td class="controls">
             <%= link_to_remote(button(:accept),
@@ -41,6 +41,7 @@
                 }
               ) %>
         </td>
+        
       <% end %>
     <% end %>
   </table>

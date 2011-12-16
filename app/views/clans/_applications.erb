@@ -1,0 +1,39 @@
+<h3><strong><%= t(".title") %></strong></h3>
+      
+<table class="participants" cellpadding="0" cellspacing="0">
+  <% applications.each do |application| %>
+    <% content_tag_for(:tr, application) do %>
+      <td class="picture"><%= character_picture_link(application.character) %></td>
+      <td class="name"><%= character_name_link(application.character) %></td>
+      <td class="level">
+        <span class="label"><%= Character.human_attribute_name("level") %></span>
+        <span class="value"><%= application.character.level %></span>
+      </td>
+      <td class="controls">
+        <div class="approve">
+          <%= link_to_remote(button(:accept),
+                :url => approve_clan_membership_application_path(application),
+                :update => :ajax,
+                :method => :put, 
+                :html => {
+                  :'data-click-once' => false,
+                  :class => 'accept button'
+                }
+              ) %>
+        </div>    
+   
+        <div class="reject">
+          <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
+                :url      => reject_clan_membership_application_path(application),
+                :method   => :delete,
+                :update   => :ajax,
+                :confirm  => t(".delete.confirmation"),
+                :html     => {
+                  :class => "delete"
+                }
+              ) %>
+        </div>     
+      </td>
+    <% end %>
+  <% end %>    
+</table>

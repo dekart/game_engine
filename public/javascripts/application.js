@@ -4,6 +4,20 @@ function debug(s) {
   }
 }
 
+var ClanEditForm = {
+  setup : function(){
+    $(".change").click(function(){
+      $(".file").show();
+      $(this).hide()
+    });
+    
+    $(".cancel a").click(function(){
+      $(".file").hide();
+      $(".change").show();
+    });
+  }
+};
+
 var Shop = {
   setup : function(){
     

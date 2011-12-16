@@ -235,7 +235,7 @@ class AppRequest::Base < ActiveRecord::Base
   protected
   
   def request_class_from_data
-    if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker}.include?(data['type'])
+    if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
       "AppRequest::#{ data['type'].classify }"
     else
       'AppRequest::Invitation'
