@@ -26,8 +26,8 @@
 	top: -28000px;
 	display: none;
 
-	max-width: 280px;
-	min-width: 280px;
+	max-width: 440px;
+	min-width: 180px;
 	
 	font-size: 16px;
 	line-height: 22px;
@@ -521,3 +521,8 @@
 			background-color: #FBFBFB;
 			color: #555;
 		}
+
+
+.ui-tooltip .spinner {
+  text-align: center;
+}

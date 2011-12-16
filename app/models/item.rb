@@ -231,4 +231,8 @@ class Item < ActiveRecord::Base
   def usable?
     !payouts.empty?
   end
+  
+  def available_for?(character)
+    !self.class.available_for(character).scoped(:conditions => {:id => id}).empty?
+  end
 end
