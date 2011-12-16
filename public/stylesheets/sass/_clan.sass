@@ -2,21 +2,27 @@
   .clan
     .description
       padding: 0 10px 10px 10px
+      
   .members
     width: 200px
     .block_members
       padding: 10px
       
-  .buttons        
+  .buttons   
+    .manage 
+      margin-bottom: 5px    
+       
     .quit 
       span
         background:
           image = !clan_member_delete
           repeat: no-repeat
           position: 5px center
+          
     .invite
       width: 170px
-      +button(!alliance_buttons_relations_icon)      
+      +button(!alliance_buttons_relations_icon)     
+       
   .controls
     .button
       .vip_money
@@ -28,39 +34,37 @@
         border: 0
         padding: 0 0 0 17px
         margin: 0           
-          
-    
+      
       
   .join_clan
     .description
       border = !main_border
-      padding: 10px
-  .join_error
-    color: red    
-  .sent
-    color: #338833
-    font-size: 14px  
+      padding: 10px    
              
       
 .participants
-  .creator
-    background-color = !rating_current_bg_color
-    td
-      border:
-        top = !rating_current_border
-        bottom = !rating_current_border
-    .picture
-      border-left = !rating_current_border
-    .data
-      border-right = !rating_current_border
-      font-weight: bold
   td
     padding: 7px
     vertical-align: middle
     border-bottom = !splitter_border
     color: black
-  .data
-    .role
+    
+  .creator
+    background-color = !rating_current_bg_color
+    
+    td
+      border:
+        top = !rating_current_border
+        bottom = !rating_current_border
+        
+    .picture
+      border-left = !rating_current_border
+      
+    .data
+      border-right = !rating_current_border
+      font-weight: bold
+  
+    
 #clan_applications, #clan_participants
   margin: 15px 0    
                 
@@ -68,9 +72,11 @@
   .image
     text-align: center
     width: 250px
+    
     .change
       width: 170px
       margin: 5px auto 10px auto
+      
       .vip_money
         background: none
         background-image = !asset_icons_vip_money
@@ -80,23 +86,25 @@
         border: 0
         padding: 0 0 0 17px
         margin: 0
+        
     .file
       display: none
+      
       .label
         display: none
       .notice
         text-align: left  
       .submit_cancel
         width: 100%
+        
         td
           text-align: center
         .cancel
           font-size: 15px   
+          
   .members_clan
-    margin-top: 20px   
-  
-  .controls
-    color: #338833
+    margin-top: 20px 
+    
     .accept
       +button(!clan_membership_application_accept)  
     .approve 
@@ -107,11 +115,12 @@
       margin-top: 10px  
       
 #clan_list      
-  background-color: #EDEFF4
   padding: 10px
+  
   .clan_list
     width: 100%   
     font-size: 14px
+    
     .my_clan
       background-color = !rating_current_bg_color
       

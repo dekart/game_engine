@@ -16,7 +16,7 @@ class ClanMember < ActiveRecord::Base
     role == :creator
   end
   
-  def delete!
+  def delete_by_creator!
     transaction do
       destroy
       

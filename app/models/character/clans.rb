@@ -10,7 +10,7 @@ class Character
     
     module ClanMembershipApplicationExtension
       def declared_to_join?(clan)
-        detect{|a| a.clan == clan}
+        detect{|a| a.clan_id == clan.id}
       end
     end
   end

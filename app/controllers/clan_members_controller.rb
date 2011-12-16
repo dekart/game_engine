@@ -8,11 +8,9 @@ class ClanMembersController < ApplicationController
   def delete_member
     member = ClanMember.find(params[:id])
     
-    clan_id = member.clan.id
-    
-    member.delete!
+    member.delete_by_creator!
      
-    @clan = Clan.find(clan_id)
+    @clan = Clan.find(member.clan_id)
 
     render :layout => "ajax"
   end

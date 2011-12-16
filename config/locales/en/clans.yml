@@ -1,5 +1,11 @@
 en:
   clans:
+    create:
+      success: "The clan has been successfully created"    
+    update:
+      success: "The clan has been successfully updated" 
+    update_image:
+      success: "The image has been successfully updated"   
     index:
       title: "Clans"
       buttons:
@@ -46,15 +52,11 @@ en:
         delete: "Reject application"
       delete:
         confirmation: "You sure you want to reject the request?"  
+    form:
+      save: "Save"     
   clan_membership_applications:
     create:
       sent_application: "Your application was sent to"   
     approve: 
       accept: "Application accept"  
-      limit_exceeded: "Denied receiving the participants in the clan, as you have reached the limit of participants" #***
-  create:
-    success: "The clan has been successfully created"    
-  update:
-    success: "The clan has been successfully updated" 
-  update_image:
-    success: "The image has been successfully updated"       
+      limit_exceeded: "Denied receiving the participants in the clan, as you have reached the limit of participants" #***    

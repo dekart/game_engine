@@ -17,8 +17,8 @@ class ClansController < ApplicationController
   def create
     @clan = Clan.new(params[:clan])
     
-    if @result = @clan.create_by!(current_character)
-      flash[:success] = t("create.success")
+    if @clan.create_by!(current_character)
+      flash[:success] = t("clans.create.success")
       
       redirect_from_iframe(clan_path(@clan, :canvas => true))
     else      
@@ -34,7 +34,7 @@ class ClansController < ApplicationController
     @clan = Clan.find(params[:id])
      
     if @clan.update_attributes(params[:clan])
-      flash[:success] = t("update.success")
+      flash[:success] = t("clans.update.success")
       
       redirect_from_iframe(clan_path(@clan, :canvas => true))
     else
@@ -45,10 +45,8 @@ class ClansController < ApplicationController
   def change_image
     @clan = Clan.find(params[:id])
     
-    @result = @clan.change_image!(params[:clan])
-    
-    if @result
-      flash[:success] = t("update_image.success")
+    if @clan.change_image!(params[:clan])
+      flash[:success] = t("clans.update_image.success")
       
       redirect_from_iframe(clan_path(@clan, :canvas => true))
     else

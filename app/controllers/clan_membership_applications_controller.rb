@@ -12,13 +12,13 @@ class ClanMembershipApplicationsController < ApplicationController
   def approve
     @result = @application.create_clan_member!
     
-    @clan = Clan.find(@application.clan.id)
+    @clan = Clan.find(@application.clan_id)
     
     render :layout => "ajax"
   end
   
   def reject
-    @application.delete!
+    @application.reject_by_creator!
     
     render :layout => "ajax"
   end

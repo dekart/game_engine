@@ -9,7 +9,7 @@ class Clan < ActiveRecord::Base
   
   attr_accessible :name, :image, :description
 
-  has_attached_file :image, :styles => { :medium => "200x200", :small => "85x85" }
+  has_attached_file :image, :styles => { :medium => "200x200#", :small => "85x85#" }
   
   def members_facebook_ids
     clan_members.collect{|m| m.character.facebook_id}
@@ -33,6 +33,8 @@ class Clan < ActiveRecord::Base
     if valid? && enough_vip_money?(character, Setting.i(:clan_create_for_vip_money))
       transaction do
         if save! && character.charge!(0, Setting.i(:clan_create_for_vip_money), :create_clan)
+          character.clan_membership_applications.destroy_all
+          
           clan_members.create(:character => character, :role => :creator)
         end
       end

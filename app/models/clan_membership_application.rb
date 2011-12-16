@@ -3,11 +3,11 @@ class ClanMembershipApplication < ActiveRecord::Base
   belongs_to :character
   
   def create_clan_member!
-    member = clan.clan_members.build(:character => character, :role => :participant)
-    
     if clan.members_count >= Setting.i(:clan_max_size)
       false
     else
+      member = clan.clan_members.build(:character => character, :role => :participant)
+    
       transaction do
         if member.save
           character.clan_membership_applications.destroy_all
@@ -20,7 +20,7 @@ class ClanMembershipApplication < ActiveRecord::Base
     end 
   end
   
-  def delete!
+  def reject_by_creator!
     transaction do
       destroy
       

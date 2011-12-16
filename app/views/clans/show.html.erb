@@ -18,7 +18,7 @@
         <% if current_character.clan == @clan %>
           <div class="buttons">
             <% if current_character.clan_member.creator? %>
-              <p><%= link_to( button(:manage), edit_clan_path(@clan), :class => "manage button" ) %></p>
+              <%= link_to( button(:manage), edit_clan_path(@clan), :class => "manage button" ) %>
             <% end %>
             
             <%= link_to_function(button(:invite), 
@@ -71,6 +71,7 @@
   <% elsif !current_character.clan_member.try(:creator?) %>
     <div class="join_clan">
       <h2><%= t(".join_clan.title")%></h2>
+      
       <% unless current_character.clan_membership_applications.declared_to_join?(@clan) %>
         <p class="description"><%= t(".join_clan.text")%></p>
       <% end %>  

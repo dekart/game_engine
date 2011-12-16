@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216084244) do
+ActiveRecord::Schema.define(:version => 20111212074628) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -251,10 +251,10 @@ ActiveRecord::Schema.define(:version => 20111216084244) do
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_file_content", :limit => 100
     t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.integer  "members_count"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "image_updated_at"
   end
 
   create_table "contest_groups", :force => true do |t|
