@@ -214,6 +214,10 @@ class AppRequest::Base < ActiveRecord::Base
   
   def delete_from_facebook!
     Facepalm::Config.default.api_client.delete_object(graph_api_id)
+  rescue Koala::Facebook::APIError => e
+    logger.error "AppRequest data update error: #{ e }"
+
+    mark_broken! if can_mark_broken?
   end
 
   def type_name
