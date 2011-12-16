@@ -8,6 +8,9 @@
 <%= form.text_area :description_when_finished, :cols => 80, :rows => 5 %>
 
 <%= form.datetime_select :started_at %>
-<%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
+
+<% form.field_set form.object.class.human_attribute_name('pictures') do %>
+  <%= form.fields 'admin/pictures/form_fields' %>
+<% end %>
 
 <%= form.text_field :duration_time, :size => 6, :autocomplete => :off %>

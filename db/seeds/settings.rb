@@ -35,6 +35,11 @@ Setting[:character_income_calculation_period] ||= 60
 Setting[:character_weakness_minimum] ||= 5
 Setting[:character_weakness_minimum_formula] ||= 'absolute'
 
+Setting[:clan_create_for_vip_money] ||= 25
+Setting[:clan_change_image_vip_money] ||= 10
+Setting[:clan_repeat_invite_delay] ||= 7 # days
+Setting[:clan_max_size] ||= 50
+
 Setting[:dashboard_news_count] ||= 30
 
 Setting[:premium_money_price] ||= 5

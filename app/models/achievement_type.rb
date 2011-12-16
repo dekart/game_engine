@@ -1,5 +1,6 @@
 class AchievementType < ActiveRecord::Base
   extend HasPayouts
+  extend HasPictures
   
   KEYS = [:level, :fights_won, :total_money, :killed_monsters_count, :total_monsters_damage]
   
@@ -25,14 +26,13 @@ class AchievementType < ActiveRecord::Base
     after_transition :on => :publish, :do => :schedule_registration
   end
 
-  has_attached_file :image,
-    :styles => {
-      :icon   => "50x50>",
-      :small  => "100x100#",
-      :medium => "150x150#",
-      :stream => "90x90#"
-    },
-    :removable => true
+  has_pictures :styles => [
+    [:medium, "150x150#"],
+    [:small,  "100x100#"],
+    [:stream, "90x90#"],
+    [:icon,   "50x50>"]
+  ]
+  
 
   has_payouts :achieve, :visible => true
 

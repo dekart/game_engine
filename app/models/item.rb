@@ -2,6 +2,7 @@ class Item < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
   extend HasEffects
+  extend HasPictures
   include HasVisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
@@ -90,15 +91,13 @@ class Item < ActiveRecord::Base
     end
   end
 
-  has_attached_file :image,
-    :styles => {
-      :icon   => "50x50>",
-      :small  => "72x72#",
-      :medium => "120x120#",
-      :large  => "200x200#",
-      :stream => "90x90#"
-    },
-    :removable => true
+  has_pictures :styles => [
+    [:large,  "200x200#"],
+    [:medium, "120x120#"],
+    [:stream, "90x90#"],
+    [:small,  "72x72#"],
+    [:icon,   "50x50>"]
+  ]
 
   has_payouts :use,
     :visible => true
@@ -230,5 +229,9 @@ class Item < ActiveRecord::Base
   
   def usable?
     !payouts.empty?
+  end
+  
+  def available_for?(character)
+    !self.class.available_for(character).scoped(:conditions => {:id => id}).empty?
   end
 end

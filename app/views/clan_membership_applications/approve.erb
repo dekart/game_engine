@@ -1,0 +1,10 @@
+<% dom_ready do %>
+
+  <% if @result %>
+    $("#clan_members").html(<%= render("clans/clan_members", :clan => @clan).to_json.html_safe %>);
+    
+  <% elsif @application.clan.members_count >= Setting.i(:clan_max_size) %>
+    alert(<%= t(".limit_exceeded").to_json.html_safe %>);
+  <% end %>
+  
+<% end %>

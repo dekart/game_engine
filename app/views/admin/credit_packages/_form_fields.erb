@@ -5,4 +5,6 @@
 
 <%= form.check_box :default %>
 
-<%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>
+<% form.field_set form.object.class.human_attribute_name('pictures') do %>
+  <%= form.fields 'admin/pictures/form_fields' %>
+<% end %>

@@ -8,7 +8,9 @@
   <%= form.text_area :payout_message, :cols => 80, :rows => 5 %>  
 <% end %>
 
-<%= form.file_field :image, :after_field => form.attachment_preview(:image, :original) %>
+<% form.field_set form.object.class.human_attribute_name('pictures') do %>
+  <%= form.fields 'admin/pictures/form_fields' %>
+<% end %>
 
 <% form.field_set Story.human_attribute_name('payouts') do %>
   <%= form.fields "admin/payouts/collection" %>

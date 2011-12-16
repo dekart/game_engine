@@ -13,6 +13,8 @@ describe MissionGroup do
       @global_payout.publish!
     end
     
+    it_should_behave_like 'should have pictures'
+    
     it 'should return payout collection' do
       @group.applicable_payouts.should be_kind_of(Payouts::Collection)
     end

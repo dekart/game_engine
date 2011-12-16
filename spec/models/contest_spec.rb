@@ -112,6 +112,8 @@ describe Contest do
     it 'should have many contest groups' do
       should have_many :groups
     end
+    
+    it_should_behave_like 'should have pictures'
   end
   
   describe 'when creating' do

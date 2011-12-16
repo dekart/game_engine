@@ -1,6 +1,7 @@
 class PropertyType < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasPictures
   include HasVisibility
 
   AVAILABILITIES = [:shop, :mission, :loot]
@@ -10,15 +11,13 @@ class PropertyType < ActiveRecord::Base
   has_requirements
 
   has_payouts :build, :upgrade, :collect
-
-  has_attached_file :image,
-    :styles => {
-      :icon   => "50x50>",
-      :small  => "120x120>",
-      :medium => "180x180>",
-      :stream => "90x90#"
-    },
-    :removable => true
+    
+  has_pictures :styles => [
+    [:medium, "180x180>"],
+    [:small,  "120x120>"],
+    [:stream, "90x90#"],
+    [:icon,   "50x50>"]
+  ]
 
   named_scope :available_in, Proc.new{|*keys|
     valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys

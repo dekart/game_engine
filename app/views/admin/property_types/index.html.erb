@@ -25,7 +25,7 @@
     
     <% @types.each do |type| %>
       <% content_tag_for(:tr, type) do %>
-        <td class="image"><%= image_tag(type.image.url(:icon)) if type.image? %></td>
+        <td class="image"><%= image_tag(type.pictures.url(:icon)) if type.pictures? %></td>
         <td class="name"><%= link_to(type.name, edit_admin_property_type_path(type)) %></td>
         <td class="availability"><%= type.availability %></td>
         <td class="level"><%= type.level %></td>

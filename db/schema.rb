@@ -9,7 +9,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111128121905) do
+
+ActiveRecord::Schema.define(:version => 20111212074628) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -229,6 +230,33 @@ ActiveRecord::Schema.define(:version => 20111128121905) do
 
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
+
+  create_table "clan_members", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "clan_id"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clan_membership_applications", :force => true do |t|
+    t.integer  "clan_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clans", :force => true do |t|
+    t.string   "name",               :limit => 100
+    t.text     "description"
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_file_content", :limit => 100
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "members_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contest_groups", :force => true do |t|
     t.integer  "contest_id"
@@ -700,6 +728,18 @@ ActiveRecord::Schema.define(:version => 20111128121905) do
   end
 
   add_index "personal_discounts", ["character_id", "available_till"], :name => "index_personal_discounts_on_character_id_and_available_till"
+
+  create_table "pictures", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "style"
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_content_type", :limit => 100, :default => "", :null => false
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "promotion_receipts", :force => true do |t|
     t.integer  "promotion_id", :null => false
