@@ -32,8 +32,8 @@
     <h2><%= t(".dialog.title") %></h2>
 
     <div class="clearfix">
-      <% if mission.image? %>
-        <div class="image"><%= image_tag(mission.image.url(:small)) %></div>
+      <% if mission.pictures? %>
+        <div class="image"><%= image_tag(mission.pictures.url(:small)) %></div>
       <% end %>
 
       <p><%= mission.complete_text.to_s.html_safe %></p>

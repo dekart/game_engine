@@ -1,0 +1,17 @@
+<div class="picture entry" id="picture_<%= picture.object_id %>">
+  <div class="controls">
+    <%= link_to_function(t(".remove"), "PictureForm.markForRemove(this)", :class => :remove) %>
+  </div>
+  
+  <% fields_for "#{container}[picture_attributes][#{picture.object_id}]", picture do |f| %>
+    <%= f.hidden_field :id %>
+    
+    <% if styles = picture.owner_class.picture_styles_for_select and styles.any? %>
+      <%= f.select :style, styles, :required => true %>
+    <% end %>
+    
+    <%= f.file_field :image, :after_field => f.attachment_preview(:image, :original) %>
+    
+    <%= f.hidden_field :_destroy, :value => false, :class => :remove %>
+  <% end %>
+</div>

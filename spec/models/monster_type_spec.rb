@@ -5,6 +5,8 @@ describe MonsterType do
     it 'should have many monsters' do
       should have_many :monsters
     end
+    
+    it_should_behave_like 'should have pictures'
   end
 
   describe 'default values' do

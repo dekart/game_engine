@@ -4,7 +4,7 @@ class Achievement < ActiveRecord::Base
   
   after_create :clear_achievement_cache, :schedule_notification, :schedule_registration
   
-  delegate :name, :description, :image, :image?, :to => :achievement_type
+  delegate :name, :description, :pictures, :pictures?, :to => :achievement_type
   
   def collect!
     if collected?

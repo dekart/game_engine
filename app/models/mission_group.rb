@@ -1,6 +1,7 @@
 class MissionGroup < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasPictures
 
   has_many :missions,
     :order      => "missions.position",
@@ -33,9 +34,8 @@ class MissionGroup < ActiveRecord::Base
       group.delete_children!
     end
   end
-
-  has_attached_file :image,
-    :removable => true
+    
+  has_pictures
 
   has_requirements
   has_payouts(Mission.payout_events + [:mission_group_complete],

@@ -5,11 +5,9 @@ describe Story do
     it 'should be hidden by default' do
       Story.new.should be_hidden
     end
-    
-    it 'should have attachment' do
-      Story.new.should have_attached_file(:image)
-    end
   end
+  
+  it_should_behave_like 'should have pictures'
   
   describe 'scopes' do
     describe 'when finding by alias' do
