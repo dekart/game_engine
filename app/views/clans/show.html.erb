@@ -7,7 +7,7 @@
         <table cellpadding="0" cellpadding="0">
           <tr>
             <td class="avatar">
-              <%= clan_avatar(@clan) %>
+              <%= clan_avatar(@clan, :format => :medium) %>
             </td>
             <td class="description">
               <%= @clan.description %>
@@ -36,7 +36,7 @@
           </div>
           
           <div id="clan_chat">
-            <%= chat("clan_#{@clan.id}") %>
+            <%= chat("#{@clan.key_for_chat}") %>
           </div>
         <% end %>    
         

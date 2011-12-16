@@ -16,9 +16,9 @@
         <th colspan="2"><%= Clan.human_attribute_name("paticiants") %></th>
       </tr>
       <% @clans.each_with_index do |clan, index| %>
-        <tr valign="middle" class="<%= :my_clan if current_character.clan == clan %>">
+        <tr class="<%= :my_clan if current_character.clan == clan %>">
           <td class="position"><%= index + 1 %></td>
-          <td class="image"><%= clan_avatar(clan, :width => 100) %></td>
+          <td class="image"><%= clan_avatar(clan, :format => :small) %></td>
           <td class="name"><%= link_to(clan.name, clan_path(clan)) %></td>
           <td class="count"><%= clan.members_count %></td>
         </tr>

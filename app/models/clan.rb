@@ -9,14 +9,10 @@ class Clan < ActiveRecord::Base
   
   attr_accessible :name, :image, :description
 
-  has_attached_file :image, :styles => { :small => "200x200" }
+  has_attached_file :image, :styles => { :medium => "200x200", :small => "85x85" }
   
   def members_facebook_ids
     clan_members.collect{|m| m.character.facebook_id}
-  end
-  
-  def creator
-    clan_members.detect{|m| m.creator? }.character
   end
   
   def change_image!(params)
@@ -41,6 +37,18 @@ class Clan < ActiveRecord::Base
         end
       end
     end
+  end
+  
+  def key_for_chat
+    digest = Digest::MD5.hexdigest("%s-%s" % [id, created_at])
+
+    "%s-%s" % [id, digest[0, 10]]
+  end
+  
+  protected
+  
+  def creator
+    clan_members.detect{|m| m.creator? }.character
   end
   
   def enough_vip_money?(character, price)

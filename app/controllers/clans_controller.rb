@@ -1,4 +1,7 @@
 class ClansController < ApplicationController
+  before_filter :check_for_presence_of_clan, :only => [:new]
+  before_filter :check_creator_for_clan, :only => [:edit]
+  
   def index
     @clans = Clan.scoped(:order => "members_count DESC").paginate(:per_page => 50, :page => params[:page])
   end
@@ -50,6 +53,20 @@ class ClansController < ApplicationController
       redirect_from_iframe(clan_path(@clan, :canvas => true))
     else
       render :action => "edit"
+    end
+  end
+  
+  private
+  
+  def check_for_presence_of_clan
+    if current_character.clan
+      redirect_from_iframe(clans_path(:canvas => true))
+    end
+  end
+  
+  def check_creator_for_clan
+    unless current_character.clan_member.try(:creator?)
+      redirect_from_iframe(clans_path(:canvas => true))
     end
   end
 end

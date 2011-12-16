@@ -1,9 +1,5 @@
 <div id="clan_form">
   <h1><%= t(".title") %></h1>
   
-  <% if !current_character.clan %>
-    <%= render("form", :clan => @clan) %>
-  <% else %>
-    <%= t(".member_clan") %>
-  <% end %>  
+  <%= render("form", :clan => @clan) %>
 </div>

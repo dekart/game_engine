@@ -1,4 +1,4 @@
-<div><%= clan_avatar(clan) %></div>
+<div><%= clan_avatar(clan, :format => :medium) %></div>
 
 <div class="clearfix">
   <%= link_to(button(:change_image, :price => content_tag(:span, Setting.i(:clan_change_image_vip_money), :class => :vip_money)),"#", :class => "button change") %>
@@ -20,13 +20,5 @@
 </div>
 
 <% dom_ready do %>
-  $(".change").click(function(){
-    $(".file").show();
-    $(this).hide()
-  });
-  
-  $(".cancel a").click(function(){
-    $(".file").hide();
-    $(".change").show();
-  });
+  ClanEditForm.setup();
 <% end %>
