@@ -78,7 +78,7 @@
           <div class="achievement">
             <div class="name"><%= achievement.name %></div>
             
-            <div class="image"><%= image_tag(achievement.image.url(:small)) if achievement.image? %></div>
+            <div class="image"><%= image_tag(achievement.pictures.url(:small)) if achievement.pictures? %></div>
           </div>
         <% end %>
       </div>
@@ -93,7 +93,7 @@
         <div class="items clearfix">
           <% items.each do |inventory| %>
             <div class="item">
-              <%= item_image(inventory, :small, :tooltip => true) %>
+              <%= item_image(inventory.item, :small, :tooltip => true, :tooltip_on_click => true) %>
 
               <% if @character == current_character %>
                 <div class="amount">

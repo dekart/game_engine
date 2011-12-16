@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Mission do
+  it_should_behave_like 'should have pictures'
+  
   describe 'when updating' do
     before do
       @character = Factory(:character)

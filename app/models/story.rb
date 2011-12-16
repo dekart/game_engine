@@ -1,5 +1,6 @@
 class Story < ActiveRecord::Base
   extend HasPayouts
+  extend HasPictures
   
   named_scope :by_alias, Proc.new{|value|
     {
@@ -26,15 +27,15 @@ class Story < ActiveRecord::Base
     end
   end
   
-  has_attached_file :image,
-    :styles     => {:original => "90x90#"},
-    :removable  => true
+  has_pictures :styles => [
+    [:original,   "90x90#"]
+  ]
     
   has_payouts :visit
 
   validates_presence_of :alias, :title, :description, :action_link
   
-  def interpolate(attribute, options = {})    
+  def interpolate(attribute, options = {})
     if attribute.is_a?(Array)
       attribute.collect{|a| interpolate(a, options) }
     else

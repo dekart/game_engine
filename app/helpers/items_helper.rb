@@ -1,23 +1,17 @@
 module ItemsHelper
   def item_image(item, format, options = {})
     if tooltip = options.delete(:tooltip)
-      tooltip = {} unless tooltip.is_a?(Hash)
-
-      tooltip = {
-        :content => {:text => item_tooltip_content(item)},
-        :position => {
-          :my => 'bottom center',
-          :at => 'top center',
-          :viewport => true,
-          :adjust => {
-           :x => 0,
-           :y => 0,
-           :method => 'shift'
-          }
-        }
-      }.deep_merge(tooltip)
-
-      options['data-tooltip'] = tooltip.to_json
+      options['data-tooltip'] = item_image_tooltip_options(item, tooltip).to_json
+    end
+    
+    if tooltip_on_click = options.delete(:tooltip_on_click)
+      options['data-tooltip-on-click'] = item_image_tooltip_on_click_options(item, tooltip_on_click).to_json
+      
+      if options['class']
+        options['class'] += ' clickable'
+      else 
+        options['class'] = 'clickable'
+      end
     end
     
     options.reverse_merge!(
@@ -25,14 +19,13 @@ module ItemsHelper
       :title => item.name
     )
       
-    image_tag(item.image.url(format), options)
+    image_tag(item.pictures.url(format), options)
   end
   
   def item_tooltip_content(item)
     %{
       <div class="tooltip_content">
         <h2>#{item.name}</h2>
-        <div class="description">#{ item.description }</div>
         <div class="payouts">#{ render("items/effects", :item => item) }</div>
       </div>
     }.gsub!(/[\n\s]+/, ' ').html_safe
@@ -73,4 +66,59 @@ module ItemsHelper
       )
     end
   end
+  
+  protected
+  
+    def item_image_tooltip_options(item, tooltip)
+      tooltip = {} unless tooltip.is_a?(Hash)
+
+      {
+        :content => {:text => item_tooltip_content(item)},
+        :position => {
+          :my => 'bottom center',
+          :at => 'top center',
+          :viewport => true,
+          :adjust => {
+            :x => 0,
+            :y => 0,
+            :method => 'shift'
+          }
+        }
+      }.deep_merge(tooltip)
+    end
+    
+    def item_image_tooltip_on_click_options(item, tooltip)
+      tooltip = {} unless tooltip.is_a?(Hash)
+      
+      tooltip = {
+        :content => {
+          :title => {
+            :text => item.name,
+            :button => 'Close'
+          },
+          :text => content_tag(:div, asset_image_tag(:spinner), :class => 'spinner'), # show spinner while tooltip loading
+          :ajax => {
+            :url => item_path(item)
+          }
+        },
+        :position => {
+          :my => 'bottom center',
+          :at => 'top center',
+          :viewport => true,
+          :adjust => {
+            :x => 0,
+            :y => 0,
+            :method => 'shift'
+          },
+        },
+        :show => {
+          :event => 'click',
+          :solo => true
+        },
+        :hide => 'unfocus',
+        :style => {
+          :classes => 'show_item'
+        }
+      }.deep_merge(tooltip)
+    end
 end

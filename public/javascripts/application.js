@@ -837,6 +837,45 @@ $(function(){
       
       $element.qtip($element.data('tooltip'));
     });
+    
+     // Display tooltip on click
+    $('#content [data-tooltip-on-click]').each(function(){
+      var $element = $(this);
+      
+      var existingTooltip = $element.qtip('api');
+      var tooltipOptions = $element.data('tooltip-on-click');
+      
+      if (tooltipOptions.content.ajax) {
+        // hide global spinner here
+        $element.click(function() {
+          Spinner.enabled = false;
+        });
+        
+        $.extend(tooltipOptions.content.ajax, {
+          complete: function() {
+            Spinner.enabled = true;
+          }
+        });
+      }
+      
+      if (existingTooltip) {
+        tooltipOptions.events = tooltipOptions.events || {};
+        
+        $.extend(tooltipOptions.events, {
+          show: function() {
+            existingTooltip.disable();
+          },
+          hide: function() {
+            existingTooltip.enable();
+          }
+        });
+      }
+      
+      // for multiple tooltips per elemet. See more http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
+      $element.removeData('qtip');
+      
+      $element.qtip(tooltipOptions);
+    });
   })
   
   $(document).trigger('tooltips.setup');

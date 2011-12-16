@@ -7,7 +7,7 @@
       
       'og:title'        => @achievement_type.name,
       'og:description'  => @achievement_type.description,
-      'og:image'        => @achievement_type.image? ? image_path(@achievement_type.image.url(:stream)) : asset_image_path(:achievement),
+      'og:image'        => @achievement_type.pictures? ? image_path(@achievement_type.pictures.url(:stream)) : asset_image_path(:achievement),
       
       'og:points'       => 1
     }.each do |key, value|
@@ -20,7 +20,7 @@
 
 <table id="achievement">
   <tr>
-    <td class="image"><%= image_tag(@achievement_type.image.url(:medium)) if @achievement_type.image? %></td>
+    <td class="image"><%= image_tag(@achievement_type.pictures.url(:medium)) if @achievement_type.pictures? %></td>
     <td>
       <h2><%= @achievement_type.name %></h2>
       

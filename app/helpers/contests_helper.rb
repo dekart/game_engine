@@ -35,8 +35,8 @@ module ContestsHelper
   end
   
   def contest_logo_background(contest)
-    if contest.image?
-      "background-image: url('#{contest.image.url}'); background-repeat: no-repeat;"
+    if contest.pictures?
+      "background-image: url('#{contest.pictures.url}'); background-repeat: no-repeat;"
     end
   end
   
