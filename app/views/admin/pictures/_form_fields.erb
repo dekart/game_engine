@@ -1,0 +1,23 @@
+<div id="pictures">
+  <% form.object.pictures.sort_by_style.each do |picture| %>
+    <%= render('admin/pictures/picture', 
+          :container => form.object_name,
+          :picture => picture
+    ) %>
+  <% end %>
+  
+  <% if form.object.pictures.empty? %>
+    <%= render('admin/pictures/picture', 
+          :container => form.object_name,
+          :picture => form.object.pictures.build
+    ) %>
+  <% end %>
+</div>
+
+<div class="controls">
+  <%= link_to_remote(t(".new"),
+        :url    => new_admin_picture_path(:container => form.object_name, :id => form.object.id),
+        :method => :get,
+        :update => :result
+  ) %>
+</div>

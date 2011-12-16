@@ -27,9 +27,9 @@ describe Monster do
       end
     end
 
-    it "should delegate image to monster type" do
-      @monster.image.instance.should == @monster_type
-      @monster.image?.should == @monster_type.image?
+    it "should delegate pictures to monster type" do
+      @monster.pictures.should == @monster_type.pictures
+      @monster.pictures?.should == @monster_type.pictures?
     end
 
     it "should delegate requirements to monster type" do

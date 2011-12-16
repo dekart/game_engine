@@ -38,7 +38,7 @@ class CreditOrdersController < ApplicationController
             :amount => @package.vip_money, 
             :app    => t('app_name')
           ),
-          :image_url    => @package.image? ? image_path(@package.image.url) : asset_image_path(:credit_package),
+          :image_url    => @package.pictures? ? image_path(@package.pictures.url) : asset_image_path(:credit_package),
           :product_url  => premium_url(:canvas => true),
           :price        => @package.price
         }

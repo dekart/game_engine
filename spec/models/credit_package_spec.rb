@@ -1,12 +1,7 @@
 require 'spec_helper'
 
 describe CreditPackage do
-  it 'should have an image' do
-    @package = CreditPackage.new
-    
-    @package.should respond_to(:image?)
-    @package.image.should be_kind_of(Paperclip::Attachment)
-  end
+  it_should_behave_like 'should have pictures'
 
   it 'should order by amount of vip money by default' do
     @package1 = Factory(:credit_package, :vip_money => 10)

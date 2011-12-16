@@ -1,4 +1,6 @@
 class CreditPackage < ActiveRecord::Base
+  extend HasPictures
+  
   default_scope :order => "vip_money"
 
   state_machine :initial => :hidden do
@@ -19,7 +21,7 @@ class CreditPackage < ActiveRecord::Base
     end
   end
   
-  has_attached_file :image
+  has_pictures
 
   validates_presence_of :vip_money, :price
   validates_numericality_of :vip_money, :price, :allow_blank => true, :greater_than => 0
