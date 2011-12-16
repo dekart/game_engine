@@ -1,0 +1,28 @@
+<% dialog :id => :clan_application_state_notification do |d| %>
+  <h2><%= t(".#{notification.status}.title") %></h2>
+  
+  <table width="100%">
+    <tr>
+      <td>
+        <div class="text">
+          <%= t(".#{notification.status}.text",
+                :clan => content_tag(:strong, notification.clan.name)
+              ).html_safe %>
+        </div>
+        
+        <% if notification.status == "accepted" %>
+          <div class="buttons">
+            <%= link_to(button(:view_clan), clan_path(notification.clan), :class => "view button") %>
+          </div>  
+        <% end %>  
+      </td>
+      
+      <td class="avatar">
+        <%= clan_avatar(notification.clan, :format => :small) %>
+      </td>
+    </tr>  
+  </table>
+
+  <%= render("notifications/disable", :notification => notification) %>
+
+<% end %>

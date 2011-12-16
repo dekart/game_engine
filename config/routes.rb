@@ -294,6 +294,24 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :chat
   
   map.resources :achievements, :only => [:index, :show, :update]
+  
+  map.resources :clans,
+    :member => {
+      :change_image => :put,
+      :delete_member => :delete
+    }
+  
+  map.resources :clan_members,
+    :member => {
+      :delete_member => :delete
+    }
+  
+  map.resources :clan_membership_applications,
+    :member => {
+      :create => :get,
+      :approve => :put,
+      :reject => :delete
+    }
 
   # Add your custom routes below this mark
   
