@@ -14,7 +14,7 @@
         
         <% if app_request.type_name == "clan_invite" && !app_request.sender.clan_member.creator? %>
           <td class="controls" colspan="2">
-              <%= link_to(button(:see_clan), clan_path(app_request.sender.clan), :class => "see_clan button") %>
+              <%= link_to(button(:view_clan), clan_path(app_request.sender.clan), :class => "see_clan button") %>
           </td>
           
         <% else %>

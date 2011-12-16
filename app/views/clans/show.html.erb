@@ -18,10 +18,10 @@
         <% if current_character.clan == @clan %>
           <div class="buttons">
             <% if current_character.clan_member.creator? %>
-              <p><%= link_to( button(:management), edit_clan_path(@clan), :class => "management button" ) %></p>
+              <p><%= link_to( button(:manage), edit_clan_path(@clan), :class => "manage button" ) %></p>
             <% end %>
             
-            <%= link_to_function(button(:invite_all), 
+            <%= link_to_function(button(:invite), 
                   invite_dialog(:clan_invite,
                     :dialog => {
                       :title    => t('.title_invite'),
@@ -85,7 +85,7 @@
               :url    => create_clan_membership_application_path(:clan_id => @clan.id),
               :method => :get,
               :update => :ajax,
-              :confirm  => t(current_character.clan ? ".member_clan_confirm" : ".apply_confirm"),
+              :confirm  => t(current_character.clan ? ".clan_member_confirm" : ".apply_confirm"),
               :html   => {
                 :"data-click-once" => true,
                 :class => "apply button"

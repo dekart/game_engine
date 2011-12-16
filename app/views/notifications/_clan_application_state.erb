@@ -12,7 +12,7 @@
         
         <% if notification.status == "accepted" %>
           <div class="buttons">
-            <%= link_to(button(:watch_clan), clan_path(notification.clan), :class => "watch button") %>
+            <%= link_to(button(:view_clan), clan_path(notification.clan), :class => "view button") %>
           </div>  
         <% end %>  
       </td>

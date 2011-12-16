@@ -3,20 +3,20 @@ en:
     index:
       title: "Clans"
       buttons:
-        create_clan: "Create Clan For %{price}"
+        create: "Create Clan For %{price}"
         my_clan: "My Clan"
     show:
       quit_confirm: "Are you sure you want to leave a clan?"
       apply_confirm: "Are you sure you want to join a clan?"
-      member_clan_confirm: "You are a member of another clan. If your application accepted, you will be automatically deleted from your clan" #***
+      clan_member_confirm: "You are a member of another clan. If your application accepted, you will be automatically deleted from your clan" #***
       join_clan:
         title: "To Join The Clan"
         text:  "Description of the process" #***
       buttons:
         quit: "Out Of The Clan"
-        invite_all: "Choose Friends to Invite"
+        invite: "Choose Friends to Invite"
         apply: "Apply"
-        management: "Management"
+        manage: "Manage"
       title_invite: "Recruit To Your Alliance"  #***
       sent_application: "Your application was sent to"
     participants: 

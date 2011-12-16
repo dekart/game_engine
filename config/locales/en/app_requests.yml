@@ -21,7 +21,7 @@ en:
       buttons:
         accept: 'Accept'
         ignore: 'Ignore this request'
-        see_clan: "See clan"
+        view_clan: "View_clan"
     details:
       gift:
         text: "%{user} sends you %{item}"
@@ -51,7 +51,7 @@ en:
       clan_invite:
         accepted: 'Invitation accepted!' 
         buttons:
-          watch_clan: "Watch clan"   
+          view_clan: "View clan"   
       property_worker:
         accepted: 'Thank you for your help!'
     

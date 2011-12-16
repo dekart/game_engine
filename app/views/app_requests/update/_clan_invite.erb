@@ -3,7 +3,7 @@
 <% end %>
 
 <% controls = capture do %>
-  <%= link_to(button(:watch_clan), clan_path(app_request.sender.clan), :class => "watch button" ) %>
+  <%= link_to(button(:view_clan), clan_path(app_request.sender.clan), :class => "view button" ) %>
 <% end %>
 
 <% dom_ready do %>
