@@ -199,9 +199,13 @@ class AppRequest::Base < ActiveRecord::Base
   end
 
   def update_data!
-    update_from_facebook_request(
-      Facepalm::Config.default.api_client.get_object(graph_api_id)
-    )
+    if graph_data = Facepalm::Config.default.api_client.get_object(graph_api_id)
+      update_from_facebook_request(graph_data)
+    else
+      logger.error "Request cannot be fetched using Graph API: #{ graph_api_id }"
+
+      mark_broken! if can_mark_broken?
+    end
   rescue Koala::Facebook::APIError => e
     logger.error "AppRequest data update error: #{ e }"
 
