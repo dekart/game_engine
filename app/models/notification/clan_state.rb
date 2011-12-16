@@ -1,5 +1,5 @@
 module Notification
-  class StatusApplication < Base
+  class ClanState < Base
     def clan
       @clan ||= Clan.find(data[:clan_id])
     end

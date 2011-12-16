@@ -83,14 +83,17 @@ en:
         collect: 'Collect Reward'
         publish: 'Brag About It'
         
-    status_application:
-      title_accepted: "You were accepted"
-      title_rejected: "You were rejected"
-      text_accepted: "You were accepted into the clan %{clan}"  
-      text_rejected: "Your application to join the clan %{clan} was rejected" 
+    clan_application_state:
+      accepted: 
+        title: "You were accepted"
+        text: "You were accepted into the clan %{clan}"
+      rejected:
+        title: "You were rejected"
+        text: Your application to join the clan %{clan} was rejected" 
       buttons:
         watch_clan: "Watch Clan"     
         
-    status_clan:
-      title_excluded: "You were excluded"
-      text_excluded: "You were excluded from the clan"     
+    clan_state:
+      excluded: 
+        title: "You were excluded"
+        text: "You were excluded from the clan"     

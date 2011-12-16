@@ -1,11 +1,11 @@
-<% dialog :id => :status_application_notification do |d| %>
-  <h2><%= t(".title_#{notification.status}") %></h2>
+<% dialog :id => :clan_application_state_notification do |d| %>
+  <h2><%= t(".#{notification.status}.title") %></h2>
   
   <table width="100%">
     <tr>
       <td>
         <div class="text">
-          <%= t(".text_#{notification.status}",
+          <%= t(".#{notification.status}.text",
                 :clan => content_tag(:strong, notification.clan.name)
               ).html_safe %>
         </div>

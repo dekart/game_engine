@@ -16,12 +16,12 @@ class Clan < ActiveRecord::Base
   end
   
   def creator
-    clan_members.detect{|m| m.role == ClanMember::ROLE[:creator]}.character
+    clan_members.detect{|m| m.creator? }.character
   end
   
   def change_image!(params)
     if params
-      if enough_vip_money?(creator,Setting.i(:clan_change_image_vip_money))
+      if enough_vip_money?(creator, Setting.i(:clan_change_image_vip_money))
         transaction do
           update_attributes(params) && creator.charge!(0, Setting.i(:clan_change_image_vip_money), :clan_image)
         end

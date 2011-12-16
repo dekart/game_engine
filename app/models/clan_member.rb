@@ -1,13 +1,19 @@
 class ClanMember < ActiveRecord::Base
-  ROLE = {:creator => "creator", :participant => "participant"}
-  
   belongs_to :clan, :counter_cache => :members_count
   belongs_to :character
   
-  before_create :role_assignment, :removed_from_other_clan
+  before_create :removed_from_other_clan
+  
+  def role=(value)
+    self[:role] = value.to_s
+  end
+  
+  def role
+    self[:role].to_sym
+  end
   
   def creator?
-    role == ROLE[:creator]
+    role == :creator
   end
   
   def delete!
@@ -21,14 +27,10 @@ class ClanMember < ActiveRecord::Base
   protected
   
   def schedule_notification(status)
-    character.notifications.schedule(:status_clan,
+    character.notifications.schedule(:clan_state,
       :clan_id => clan_id,
       :status  => status.to_s
     )
-  end
-  
-  def role_assignment
-    self.role = ROLE[role]
   end
   
   def removed_from_other_clan

@@ -31,7 +31,7 @@ class ClanMembershipApplication < ActiveRecord::Base
   protected
   
   def schedule_notification(status)
-    character.notifications.schedule(:status_application,
+    character.notifications.schedule(:clan_application_state,
       :clan_id => clan.id,
       :status  => status.to_s
     )
