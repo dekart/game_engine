@@ -231,4 +231,8 @@ class Item < ActiveRecord::Base
   def usable?
     !payouts.empty?
   end
+  
+  def available_by_level_for?(character)
+    level <= character.level
+  end
 end

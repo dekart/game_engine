@@ -20,7 +20,7 @@
         <div class="best_items">
           <strong><%= t(".best_attacking_boost") %></strong>
           
-          <%= item_image(fight.attacker_boost, :icon, :tooltip => true) %>
+          <%= item_image(fight.attacker_boost.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
         </div>
       <% end %>
 
@@ -29,7 +29,7 @@
           <strong><%= t(".best_offence") %></strong>
 
           <% offence.each do |inventory| %>
-            <%= item_image(inventory, :icon, :tooltip => true) %>
+            <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
           <% end %>
         </div>
       <% end %>
@@ -55,7 +55,7 @@
         <div class="best_items">
           <strong><%= t(".best_defending_boost") %></strong>
 
-          <%= item_image(fight.victim_boost, :icon, :tooltip => true) %>
+          <%= item_image(fight.victim_boost.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
         </div>
       <% end %>
 
@@ -64,7 +64,7 @@
           <strong><%= t(".best_defence") %></strong>
 
           <% defence.each do |inventory| %>
-            <%= item_image(inventory, :icon, :tooltip => true) %>
+            <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
           <% end %>
         </div>
       <% end %>
