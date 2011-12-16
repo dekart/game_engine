@@ -30,7 +30,7 @@ en:
       invitation:
         text: "%{user} invites you to join their Alliance"
       clan_invite:
-        text: "%{user} invites you to join their Clan"   
+        text: "%{user} invites you to join their Clan %{clan}"   
       property_worker:
         text: "%{user} asks you to help them finish the %{property}"
     update:

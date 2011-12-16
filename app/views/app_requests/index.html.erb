@@ -12,42 +12,36 @@
 
         <%= render("app_requests/details/#{ app_request.type_name }", :app_request => app_request) %>
         
-        <% if app_request.type_name == "clan_invite" && !app_request.sender.clan_member.creator? %>
-          <td class="controls" colspan="2">
-              <%= link_to(button(:view_clan), clan_path(app_request.sender.clan), :class => "see_clan button") %>
-          </td>
-          
-        <% else %>
-          <% if app_request.acceptable? %>
-            <td class="controls">
-              <%= link_to_remote(button(:accept),
-                    :url => app_request_path(app_request),
-                    :update => :ajax,
-                    :method => :put,
-                    :html => {
-                      :'data-click-once' => true,
-                      :class => 'accept button'
-                    }
-                  ) %>
-            </td>
-          <% else %>
-            <td class="controls">
-              <%= app_request.acceptance_error %>
-            </td>
-          <% end %>
-          
-          <td class="ignore">
-            <%= link_to_remote(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore')),
-                  :url => ignore_app_request_path(app_request),
+        <% if app_request.acceptable? %>
+          <td class="controls">
+            <%= link_to_remote(button(:accept),
+                  :url => app_request_path(app_request),
                   :update => :ajax,
                   :method => :put,
                   :html => {
                     :'data-click-once' => true,
-                    :class => :ignore
+                    :class => 'accept button'
                   }
                 ) %>
           </td>
-        <% end %>  
+        <% else %>
+          <td class="controls">
+            <%= app_request.acceptance_error %>
+          </td>
+        <% end %>
+        
+        <td class="ignore">
+          <%= link_to_remote(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore')),
+                :url => ignore_app_request_path(app_request),
+                :update => :ajax,
+                :method => :put,
+                :html => {
+                  :'data-click-once' => true,
+                  :class => :ignore
+                }
+              ) %>
+        </td>
+        
       <% end %>
     <% end %>
   </table>
