@@ -70,7 +70,7 @@ module RequirementsHelper
     requirement_text = attribute_requirement_text(:vip_money, number_to_currency(value))
     
     if current_character.vip_money < value
-      requirement_text = "%s (%s)" % [requirement_text, link_to(t("premia.get_vip"), premium_path(:anchor => :buy))]
+      requirement_text = "%s (%s)" % [requirement_text, link_to(t("premia.get_vip"), items_path(:anchor => :buy_vip_money))]
     end
     
     requirement(:vip_money, "#{ requirement_text } #{additional_text}", current_character.vip_money >= value)

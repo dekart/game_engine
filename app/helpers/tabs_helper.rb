@@ -11,8 +11,10 @@ module TabsHelper
       @tab_contents = []
     end
     
-    def tab(id, name = nil, &block)
-      @tab_names << [id, name || t(".tabs.#{id}")]
+    def tab(id, *args, &block)
+      name, url = args
+
+      @tab_names << [id, name || t(".tabs.#{id}"), url]
       @tab_contents << [id, block]
     end
     
@@ -21,12 +23,20 @@ module TabsHelper
       
       yield(self)
       
-      headers = @tab_names.map{|t| content_tag(:li, link_to(t.last, "#" << t.first))}.join("\n")
-      result << content_tag(:ul, headers.html_safe) 
-      
-      result << @tab_contents.map{|t| content_tag(:div, capture(&t.last), :id => t.first)}.join("\n")
-      
-      result = content_tag(:div, result.html_safe, options)
+      headers = @tab_names.map{|id, name, url| 
+        content_tag(:li, link_to(name, url ? url : "##{id}"))
+      }
+
+      tabs = @tab_contents.map{|id, block|
+        unless @tab_names.assoc(id).last
+          content_tag(:div, capture(&block), :id => id)
+        end
+      }
+
+      result = content_tag(:div, 
+        content_tag(:ul, headers.join("\n").html_safe) + tabs.join("\n").html_safe, 
+        options
+      )
       
       block_given? ? concat(result) : result
     end

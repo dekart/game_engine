@@ -1,5 +1,10 @@
 class PremiaController < ApplicationController
-  def show
+  def service
+    render :layout => 'ajax'
+  end
+
+  def buy_vip
+    render :layout => 'ajax'
   end
 
   def update

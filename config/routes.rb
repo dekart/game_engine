@@ -249,7 +249,9 @@ ActionController::Routing::Routes.draw do |map|
       :change_name => :get
     },
     :collection => {
-      :refill_dialog => :post
+      :service        => :any,
+      :buy_vip        => :any,
+      :refill_dialog  => :post
     }
 
   map.resource :rating
