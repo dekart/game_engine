@@ -1,14 +1,5 @@
 <% dom_ready do %>
-  var $selector = $('#<%= boost_dom_id(@boost, @destination) %>');
-
-  if ($selector.hasClass("not_owned")) {
-    $selector.replaceWith('<%= escape_javascript(render("inventories/boost", :boost => @boost, :destination => @destination))%>');
-    
-    $(document).trigger('remote_content.received');
-  }
-  
-  $selector.toggleClass('active');
-  $('.<%= @boost.boost_type %>.<%= @destination %> .active[id!="<%= boost_dom_id(@boost, @destination) %>"]').removeClass('active');
+  Boost.toggle('<%= boost_dom_id(@boost, @destination) %>', '<%= @boost.boost_type %>', '<%= @destination %>', '<%= escape_javascript(render("inventories/boost", :boost => @boost, :destination => @destination))%>');
   
   <%= ga_track_event("Boosts", "Activate", @boost.name) %>
 <% end %>

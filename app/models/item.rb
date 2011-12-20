@@ -240,7 +240,7 @@ class Item < ActiveRecord::Base
   end
   
   def boost_for_fight_attack?
-    effect(:attack) > 0 || effect(:health) > 0
+    effect(:attack) > 0
   end
   
   def boost_for_fight_defence?
