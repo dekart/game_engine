@@ -16,7 +16,7 @@ class Character
     
     def by_type(boost_type)
       @character.inventories.scoped(:joins => :item, :conditions => {
-        'items.boost_type' => boost_type
+        'items.boost_type' => boost_type.to_s
       })
     end
     
