@@ -22,14 +22,15 @@
     background-color = !item_group_current_bg_color
 
 
-#item_list table
-  width: 100%
-  height: auto
+.item_list
+  padding: 10px
 
-  td
-    padding: 10px 0
-    border-bottom = !shop_item_border
-    height: auto
+  .item
+    padding: 10px
+    margin: 0 10px 10px 0
+    width: 200px
+    border = !shop_item_border
+    float: left
 
   .picture
     width: 80px

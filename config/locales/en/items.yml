@@ -8,8 +8,13 @@ en:
       tabs:
         services: "Services"
         buy_vip_money: "Buy Gems"
+    list:
+      empty_set: "No items available for now"
+      locked: "Locked Items"
     item:
       package_size: "(Pack of %{amount}) %{help_link}"
+    item_locked:
+      badge: "Locked"
     specials:
       header: "Limited Time Offers"
       buttons:

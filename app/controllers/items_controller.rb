@@ -6,10 +6,14 @@ class ItemsController < ApplicationController
 
     @items = @current_group.items.in_shop_for(current_character)
 
-    @next_item = @current_group.items.next_for(current_character).first
+    @next_items = @current_group.items.next_for(current_character).all(:limit => 3)
 
     if request.xhr?
-      render :partial => "list", :items => @items, :layout => 'ajax'
+      render(
+        :partial => "list", 
+        :locals => {:items => @items, :next_items => @next_items}, 
+        :layout => 'ajax'
+      )
     end
   end
   

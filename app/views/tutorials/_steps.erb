@@ -69,10 +69,10 @@
    
 <% step :shop_buy_item, :change_event => 'result.received' do %>
 
-  <%= make_visible("#item_list .item:first") %>
-  <%= make_responsible("#item_list .item:first") %>
-  <%= click_trigger("#item_list .item:first a.buy") %>
-  <%= tip_on("#item_list .item:first a.buy", 
+  <%= make_visible(".item_list .item:first") %>
+  <%= make_responsible(".item_list .item:first") %>
+  <%= click_trigger(".item_list .item:first a.buy") %>
+  <%= tip_on(".item_list .item:first a.buy", 
         :position => {
           :at => 'leftBottom',
           :my => 'rightTop'

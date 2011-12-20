@@ -1,22 +1,24 @@
-<% content_tag_for :tr, item, :class => item.availability do %>
-  <td class="picture"><%= item_image(item, :small) %></td>
-  <td class="info">
+<% div_for(item) do %>
+  <div class="picture"><%= item_image(item, :small) %></div>
+
+  <div class="info">
     <div class="name"><%= item.name %></div>
     <div class="description"><%= item.description %></div>
 
     <% if item.left or item.available_till %>
       <%= render("items/limit", :item => item) %>
     <% end %>
-  </td>
+  </div>
   
-  <td class="payouts">
+  <div class="payouts">
     <%= render("items/effects", :item => item) %>
-  </td>
+  </div>
 
-  <td class="requirements">
+  <div class="requirements">
     <%= render("items/requirements", :item => item) %>
-  </td>
-  <td class="controls">
+  </div>
+
+  <div class="controls">
     <%= render("items/buy_button", :item => item) %>
-  </td>
+  </div>
 <% end %>
