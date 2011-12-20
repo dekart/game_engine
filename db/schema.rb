@@ -9,7 +9,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
 ActiveRecord::Schema.define(:version => 20111212074628) do
 
   create_table "achievement_types", :force => true do |t|
@@ -731,7 +730,7 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id"
-    t.string   "owner_type"
+    t.string   "owner_type",         :limit => 100, :default => ""
     t.string   "style"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false

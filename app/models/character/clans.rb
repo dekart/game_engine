@@ -12,6 +12,19 @@ class Character
       def declared_to_join?(clan)
         detect{|a| a.clan_id == clan.id}
       end
+      
+      def apply_to_join!(clan)
+        transaction do
+          if application = create(:clan => clan)
+            clan.creator.notifications.schedule(:clan_application_state,
+              :clan_id => clan.id,
+              :applicant_id  => application.character_id,
+              :status  => "declared"
+            )
+          end    
+        end  
+      end
+      
     end
   end
 end

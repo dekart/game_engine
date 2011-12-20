@@ -4,7 +4,9 @@ class ClanMembershipApplicationsController < ApplicationController
   def create
     @clan = Clan.find(params[:clan_id])
 
-    @application = @clan.clan_membership_applications.create(:character => current_character)
+    #@application = @clan.apply_to_join!(current_character)
+    
+    @application = current_character.clan_membership_applications.apply_to_join!(@clan)
     
     render :layout => "ajax"
   end

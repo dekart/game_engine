@@ -47,11 +47,11 @@ class Clan < ActiveRecord::Base
     "%s-%s" % [id, digest[0, 10]]
   end
   
-  protected
-  
   def creator
     clan_members.detect{|m| m.creator? }.character
   end
+  
+  protected
   
   def enough_vip_money?(character, price)
     if character.vip_money >= price

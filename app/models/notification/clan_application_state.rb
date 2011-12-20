@@ -7,5 +7,9 @@ module Notification
     def status
       @status ||= data[:status]
     end
+    
+    def applicant
+      @applicant ||= Character.find(data[:applicant_id])
+    end
   end
 end
