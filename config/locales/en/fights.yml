@@ -24,11 +24,13 @@ en:
         victim_lost: "%{user_name} lost:"
       details:
         vs: "VS."
-        best_offence: "Your Best Offence:"
-        best_defence: "Their Best Defence:"
         show_items: "Show all items used"
         best_attacking_boost: "Your attacking power-up:"
         best_defending_boost: "Their defending power-up:"
+      best_items:
+        best_offence: "Best Offence:"
+        best_defence: "Best Defence:"
+        
     used_items:
       attacker: "Your items:"
       victim: "Their items:"
