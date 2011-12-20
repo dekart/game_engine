@@ -26,8 +26,12 @@ class AppRequestsController < ApplicationController
     @app_request = current_character.app_requests.find(params[:id])
 
     @app_request.accept
-      
-    render :layout => 'ajax'
+    
+    if @next_page = page_for_redirect
+      redirect_from_iframe(@next_page)
+    else  
+      render :layout => 'ajax'
+    end  
   end
   
   def ignore
@@ -36,5 +40,21 @@ class AppRequestsController < ApplicationController
     @app_request.ignore
     
     render :layout => 'ajax'
+  end
+  
+  protected
+  
+  def page_for_redirect
+    case @app_request.type_name
+    when 'monster_invite'
+      url = monster_url(@app_request.monster, 
+        :key => encryptor.encrypt(@app_request.monster.id), 
+        :canvas => true
+      )
+    when 'clan_invite'
+      clan_path(@app_request.sender.clan, :canvas => true)
+    else
+      false
+    end
   end
 end

@@ -4,6 +4,10 @@ class ClanMember < ActiveRecord::Base
   
   before_create :removed_from_other_clan
   
+  def self.all_clan_creators_facebook_ids
+    all(:conditions => "role = 'creator'").collect{|m| m.character.facebook_id}
+  end
+  
   def role=(value)
     self[:role] = value.to_s
   end

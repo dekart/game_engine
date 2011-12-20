@@ -1,9 +1,28 @@
 <td class="message">
   <%= t(".text", 
         :user => character_name_link(app_request.sender),
-        :clan => link_to( app_request.sender.clan.name, clan_path(app_request.sender.clan) )
+        :clan => content_tag(:strong, app_request.sender.clan.name)
        ).html_safe %>
 </td>
 <td class="image">
-  <%= link_to( clan_avatar(app_request.sender.clan, :format => :small), clan_path(app_request.sender.clan) ) %>
+  <%= clan_avatar(app_request.sender.clan, :format => :small) %>
 </td>
+
+<% if app_request.acceptable? %>
+  <td class="controls">
+    <%= link_to_remote(button(:view),
+          :url => app_request_path(app_request),
+          :update => "ajax",
+          :method => :put,
+          :html => {
+            :'data-click-once' => true,
+            :class => 'accept button'
+          }
+        ) %>
+  </td>
+  
+<% else %>
+  <td class="controls">
+    <%= app_request.acceptance_error %>
+  </td>
+<% end %>
