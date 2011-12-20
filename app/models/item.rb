@@ -234,4 +234,20 @@ class Item < ActiveRecord::Base
   def available_for?(character)
     !self.class.available_for(character).scoped(:conditions => {:id => id}).empty?
   end
+  
+  def boost_for?(type, destination)
+    send("boost_for_#{type}_#{destination}?")
+  end
+  
+  def boost_for_fight_attack?
+    effect(:attack) > 0
+  end
+  
+  def boost_for_fight_defence?
+    effect(:defence) > 0
+  end
+  
+  def boost_for_monster_attack?
+    effect(:health) > 0
+  end
 end

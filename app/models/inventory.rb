@@ -84,6 +84,10 @@ class Inventory < ActiveRecord::Base
     changes["amount"] ? (changes["amount"].last - changes["amount"].first) / item.package_size : 0
   end
 
+  def active_boost?(destination)
+    character.active_boosts[boost_type] && character.active_boosts[boost_type][destination] == id
+  end
+
   protected
 
   def enough_character_money?
