@@ -24,15 +24,7 @@
         </div>
       <% end %>
 
-      <% if offence = fight.attacker.equipment.best_offence and offence.any? %>
-        <div class="best_items">
-          <strong><%= t(".best_offence") %></strong>
-
-          <% offence.each do |inventory| %>
-            <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render "fights/create/best_items", :character => fight.attacker %>
     </td>
     <td class="vs"><%= t(".vs") %></td>
     <td class="victim">
@@ -58,16 +50,8 @@
           <%= item_image(fight.victim_boost.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
         </div>
       <% end %>
-
-      <% if defence = fight.victim.equipment.best_defence and defence.any? %>
-        <div class="best_items">
-          <strong><%= t(".best_defence") %></strong>
-
-          <% defence.each do |inventory| %>
-            <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
-          <% end %>
-        </div>
-      <% end %>
+      
+      <%= render "fights/create/best_items", :character => fight.victim %>
     </td>
   </tr>
 </table>
