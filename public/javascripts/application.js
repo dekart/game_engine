@@ -830,8 +830,6 @@ var FacebookPermissions = {
       
       $chat.chat('appendMessages', data.messages);
       $chat.chat('refreshOnlineList', data.characters_online);
-      
-      $(document).trigger('remote_content.received');
     }
   };
   

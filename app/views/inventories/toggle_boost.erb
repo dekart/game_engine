@@ -9,4 +9,6 @@
   
   $selector.toggleClass('active');
   $('.<%= @boost.boost_type %>.<%= @destination %> .active[id!="<%= boost_dom_id(@boost, @destination) %>"]').removeClass('active');
+  
+  <%= ga_track_event("Boosts", "Activate", @boost.name) %>
 <% end %>
