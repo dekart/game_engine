@@ -2,7 +2,6 @@ puts 'Seeding monsters...'
 
 MonsterType.create!(
   :name => "Barbarian",
-  :image => File.open(Rails.root.join("db", "pictures", "barbarian.jpg")),
   :level => 1,
   :health => 100,
   :attack => 1,
@@ -20,5 +19,9 @@ MonsterType.create!(
   :payouts => Payouts::Collection.new(
     Payouts::VipMoney.new(:value => 1, :apply_on => :victory),
     Payouts::BasicMoney.new(:value => 200, :apply_on => [:victory, :repeat_victory])
-  )
+  ),
+
+  :picture_attributes     => [{
+    :image => File.open(Rails.root.join("db", "pictures", "barbarian.jpg"))
+  }]
 )
