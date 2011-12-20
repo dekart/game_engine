@@ -550,6 +550,54 @@ var Rating = {
   }
 };
 
+var Boost = {
+  inited: {},
+  
+  prepareBoosts: function(selector, show_limit){
+    var $boosts = $(selector);
+    var $items = $boosts.find('.boost');
+    
+    if($items.length == 0){
+      return false;
+    }
+    
+    var $current = $boosts.find('.active');
+    
+    $boosts.find('.container ul').jcarousel({
+      visible: show_limit,
+      itemFallbackDimension: show_limit,
+      start: $items.index($current)
+    });
+  },
+  
+  setup: function(type, destination, show_limit) {
+    var key = type + "_" + destination;
+    
+    if (!Boost.inited[key]) {
+      Boost.inited[key] = 1;
+      
+      var $selector = ".boosts." + type + "." + destination;
+  
+      Boost.prepareBoosts($selector, show_limit);
+      
+      $(document).bind('boosts.update', {selector: $selector}, function(event){
+        Boost.prepareBoosts(event.data.selector, show_limit);
+      }).bind('item.purchase', {selector : $selector, type: type, destination: destination}, function(event, options) {
+        // update boost view
+        var $selector = $(event.data.selector);
+        
+        var $boost = $selector.find(".boost.not_owned[data-item-id='" + options.item_id + "']");
+        
+        if ($boost.length > 0) {
+          $.post("/inventories/" + options.inventory_id + "/toggle_boost", {destination: event.data.destination}, function(request) {
+            $("#ajax").html(request);
+          });
+        }
+      });
+    }
+  }
+};
+
 var FacebookPermissions = {
   test: function(permissions) {
     permissions = permissions.split(",");
@@ -617,33 +665,6 @@ var FacebookPermissions = {
       e.stopPropagation();
 
       redirectWithSignedRequest($(this).find('a').attr('href'));
-    });
-  };
-  
-  $.fn.setupBoost = function(show_limit) {
-    var prepare_boosts = function(selector){
-      var $boosts = $(selector);
-      var $items = $boosts.find('.boost');
-      
-      if($items.length == 0){
-        return false;
-      }
-      
-      var $current = $boosts.find('.active');
-      
-      $boosts.find('.container ul').jcarousel({
-        visible: show_limit,
-        itemFallbackDimension: show_limit,
-        start: $items.index($current)
-      });
-    }
-    
-    var $selector = $(this).selector;
-
-    prepare_boosts($selector);
-    
-    $(document).bind('boosts.update', {selector : $selector}, function(event){
-      prepare_boosts(event.data.selector);
     });
   };
   

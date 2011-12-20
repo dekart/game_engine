@@ -27,18 +27,17 @@ module InventoriesHelper
     )
   end
   
-  def boosts_list(boosts, type, destination, &block)
-    active_boost_id = current_character.active_boosts[type][destination] if current_character.active_boosts[type]
-    
-    boosts.each do |boost|
-      concat(
-        capture(boost, active_boost_id == boost.id, &block)
-      )
-    end
+  def boosts_for(type, destination)
+    render("inventories/boosts", 
+      :type => type, 
+      :destination => destination
+    )
   end
   
   def boost_dom_id(boost, destination)
-    dom_id(boost, "boost_#{boost.boost_type}_#{destination}")
+    item = boost.respond_to?(:item) ? boost.item : boost
+    
+    dom_id(item, "boost_#{item.boost_type}_#{destination}")
   end
   
   def inventory_item_image(inventory, format, options = {})

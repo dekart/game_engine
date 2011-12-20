@@ -5,32 +5,26 @@
   </h3>
   
   <div class="boost_content">
-    <% if boosts = current_character.boosts.for(type, destination) and boosts.any? %>
-      <div class="container classic-carousel">
-        <ul>
-          <% boosts_list(boosts, type, destination) do |boost, active| %>
-            <li>
-              <div class="boost <%= 'active' if active %>" id="<%= boost_dom_id(boost, destination) %>">
-                <%= link_to_remote(inventory_item_image(boost, :small, :tooltip => true, :count => true),
-                      :url => toggle_boost_inventory_path(boost),
-                      :with => "'destination=#{destination}'",
-                      :update => :ajax
-                    ) %>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    <% else %>
-      <div class="buy"><%= t(".buy_boosts") %></div>
+    <div class="container classic-carousel">
+      <ul>
+        <% current_character.boosts.for(type, destination).each do |boost| %>
+          <li>
+            <%= render("inventories/boost", :boost => boost, :destination => destination) %>
+          </li>
+        <% end %>
         
-      <div class="buttons">
-        <%= link_to(button(:buy_boosts), items_path, :class => 'button shop') %>
-      </div>
-    <% end %>
+        <% current_character.boosts.not_owned(type, destination).each do |item| %>
+          <li>
+            <div class="boost not_owned" data-item-id="<%= item.id %>" id="<%= boost_dom_id(item, destination) %>">
+              <%= item_image(item, :small, :tooltip => true, :tooltip_on_click => true) %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </div>
 
 <% dom_ready do %>
-  $('.boosts.<%= type %>.<%= destination %>').setupBoost(3);
+  Boost.setup('<%= type %>', '<%= destination %>', 3);
 <% end %>
