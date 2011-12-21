@@ -236,7 +236,7 @@ class AppRequest::Base < ActiveRecord::Base
   
   def request_class_from_data
     if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
-      "AppRequest::#{ data['type'].classify }"
+      "AppRequest::#{ data['type'].camelize }"
     else
       'AppRequest::Invitation'
     end.constantize

@@ -9,7 +9,7 @@ module HasEffects
   
   def preload_effects!
     Dir[File.join(RAILS_ROOT, "app", "models", "effects", "*.rb")].each do |file|
-      file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").classify.constantize
+      file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").camelize.constantize
     end
   end
 

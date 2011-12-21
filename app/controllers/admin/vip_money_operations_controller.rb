@@ -16,6 +16,6 @@ class Admin::VipMoneyOperationsController < Admin::BaseController
   end
 
   def operation_class
-    "VipMoney#{operation_type.classify}".constantize
+    "VipMoney#{operation_type.camelize}".constantize
   end
 end
