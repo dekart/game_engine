@@ -44,7 +44,7 @@ class ClanMember < ActiveRecord::Base
   end
   
   def removed_invitation_to_join_clan
-    character.clan_membership_relations.delete_invitation_to_join!(character.clan)
+    character.clan_membership_invitations.delete_invitation_to_join!(character.clan)
   end
   
   def removed_all_applications_to_join_clan

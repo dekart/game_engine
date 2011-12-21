@@ -56,6 +56,12 @@ en:
         delete: "Reject application"
       delete:
         confirmation: "You sure you want to reject the request?"  
+    invitations:
+      title: "Invitations"
+      buttons:
+        delete: "Delete invitation"
+      delete:
+        confirmation: "You sure want to delete the invitation"      
     form:
       save: "Save"     
   clan_membership_applications:

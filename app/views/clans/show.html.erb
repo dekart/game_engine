@@ -78,7 +78,7 @@
     </div>
    
     <div class="buttons sent" id="join_clan">
-      <% if current_character.clan_membership_relations.invited_to_join?(@clan) %>
+      <% if current_character.clan_membership_invitations.invited_to_join?(@clan) %>
         <%= link_to_remote(button(:join),
               :url    => create_member_at_invitation_clan_member_path(:clan_id => @clan.id),
               :method => :get,

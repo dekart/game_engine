@@ -2,7 +2,7 @@ class Clan < ActiveRecord::Base
   has_many :characters, :through => :clan_members
   has_many :clan_members, :dependent => :destroy
   has_many :clan_membership_applications, :dependent => :destroy
-  has_many :clan_membership_relations, :dependent => :destroy
+  has_many :clan_membership_invitations, :dependent => :destroy
   
   validates_presence_of :name
   
@@ -53,7 +53,6 @@ class Clan < ActiveRecord::Base
       end
     end  
   end
-  
   
   def key_for_chat
     digest = Digest::MD5.hexdigest("%s-%s" % [id, created_at])

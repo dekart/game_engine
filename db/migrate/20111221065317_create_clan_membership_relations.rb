@@ -1,6 +1,6 @@
 class CreateClanMembershipRelations < ActiveRecord::Migration
   def self.up
-    create_table :clan_membership_relations do |t|
+    create_table :clan_membership_invitations do |t|
       t.integer :clan_id
       t.integer :character_id
 
@@ -9,6 +9,6 @@ class CreateClanMembershipRelations < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :clan_membership_relations
+    drop_table :clan_membership_invitations
   end
 end

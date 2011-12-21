@@ -245,7 +245,7 @@ ActiveRecord::Schema.define(:version => 20111221065317) do
     t.datetime "updated_at"
   end
 
-  create_table "clan_membership_relations", :force => true do |t|
+  create_table "clan_membership_invitations", :force => true do |t|
     t.integer  "clan_id"
     t.integer  "character_id"
     t.datetime "created_at"
