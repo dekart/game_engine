@@ -1,9 +1,8 @@
 <% div_for(item, :class => :locked) do %>
-  <div class="badge"><%= t('.badge') %></div>
-
-  <div class="picture"><%= item_image(item, :small) %></div>
+  <div class="picture"><%= item_image(item, :medium) %></div>
 
   <div class="info">
     <div class="name"><%= item.name %></div>
+    <div class="badge"><%= t('.badge') %></div>
   </div>
 <% end %>
