@@ -620,33 +620,6 @@ var FacebookPermissions = {
     });
   };
   
-  $.fn.setupBoost = function(show_limit) {
-    var prepare_boosts = function(selector){
-      var $boosts = $(selector);
-      var $items = $boosts.find('.boost');
-      
-      if($items.length == 0){
-        return false;
-      }
-      
-      var $current = $boosts.find('.active');
-      
-      $boosts.find('.container ul').jcarousel({
-        visible: show_limit,
-        itemFallbackDimension: show_limit,
-        start: $items.index($current)
-      });
-    }
-    
-    var $selector = $(this).selector;
-
-    prepare_boosts($selector);
-    
-    $(document).bind('boosts.update', {selector : $selector}, function(event){
-      prepare_boosts(event.data.selector);
-    });
-  };
-  
   $.fn.giftForm = function(options){
     var $gifts = $(this).find('.gifts .gift');
 
@@ -809,8 +782,6 @@ var FacebookPermissions = {
       
       $chat.chat('appendMessages', data.messages);
       $chat.chat('refreshOnlineList', data.characters_online);
-      
-      $(document).trigger('remote_content.received');
     }
   };
   

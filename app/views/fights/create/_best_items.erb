@@ -1,0 +1,19 @@
+<% if offence = character.equipment.best_offence and !offence.empty? %>
+  <div class="best_items">
+    <strong><%= t(".best_offence") %></strong>
+  
+    <% offence.each do |inventory| %>
+      <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if defence = character.equipment.best_defence and !defence.empty? %>
+  <div class="best_items">
+    <strong><%= t(".best_defence") %></strong>
+
+    <% defence.each do |inventory| %>
+      <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+    <% end %>
+  </div>
+<% end %>

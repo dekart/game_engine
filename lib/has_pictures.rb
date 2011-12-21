@@ -26,7 +26,7 @@ module HasPictures
       
       collection.each do |attributes|
         attributes.symbolize_keys!
-        
+
         picture_id = attributes.delete(:id)
         remove     = attributes.delete(:_destroy)
         image      = attributes.delete(:image)
@@ -41,6 +41,8 @@ module HasPictures
           if !remove.blank?
             picture.destroy unless picture.new_record?
           else
+            attributes[:style] ||= pictures.default_style
+
             picture.attributes = attributes
             picture.image      = image unless image.blank?
             

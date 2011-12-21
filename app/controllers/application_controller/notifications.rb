@@ -11,7 +11,7 @@ class ApplicationController
     protected
     
     def show_notifications
-      if current_user && !tutorial_visible?
+      if current_character && !tutorial_visible?
         visits = Statistics::Visits.visited_by_user(current_user)
         
         if visits == Setting.i(:notifications_friends_to_invite_show_requests_count)
