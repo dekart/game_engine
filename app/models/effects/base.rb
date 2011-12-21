@@ -25,7 +25,7 @@ module Effects
       end
 
       def by_name(name)
-        "Effects::#{name.to_s.classify}".constantize
+        "Effects::#{name.to_s.camelize}".constantize
       end
 
       def human_attribute_name(field)
