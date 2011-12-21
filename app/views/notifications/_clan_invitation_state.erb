@@ -1,0 +1,24 @@
+<% dialog :id => :clan_invitation_state_notification do |d| %>
+  <h2><%= t(".#{notification.status}.title") %></h2>
+  
+  <table width="100%">
+    <tr>
+      <td class="image"><%= character_picture_link(notification.character) %></td>
+      <td>
+        <div class="text">
+          <%= t(".#{notification.status}.text",
+                :clan => content_tag(:strong, notification.clan.name),
+                :character => character_name_link(notification.character)
+              ).html_safe %>
+        </div>
+      </td>
+      
+      <td class="avatar">
+        <%= clan_avatar(notification.clan, :format => :small) %>
+      </td>
+    </tr>  
+  </table>
+
+  <%= render("notifications/disable", :notification => notification) %>
+
+<% end %>

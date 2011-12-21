@@ -5,6 +5,7 @@ class Character
         has_one :clan, :through => :clan_member
         has_one :clan_member
         has_many :clan_membership_applications, :extend => ClanMembershipApplicationExtension
+        has_many :clan_membership_relations, :extend => ClanMembershipRelationExtension
       end
     end
     
@@ -24,7 +25,16 @@ class Character
           end    
         end  
       end
+    end
+    
+    module ClanMembershipRelationExtension
+      def invited_to_join?(clan)
+        detect{|r| r.clan_id == clan.id}
+      end
       
+      def delete_invitation_to_join!(clan)
+        detect{|r| r.clan_id == clan.id}.try(:destroy)
+      end
     end
   end
 end

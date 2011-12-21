@@ -14,4 +14,12 @@ class ClanMembersController < ApplicationController
 
     render :layout => "ajax"
   end
+  
+  def create_member_at_invitation
+    @clan = Clan.find(params[:clan_id])
+    
+    @clan.create_member_at_invitation!(current_character)
+    
+    redirect_from_iframe(clan_path(@clan, :canvas => true))
+  end
 end

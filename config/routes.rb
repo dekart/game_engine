@@ -303,7 +303,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :clan_members,
     :member => {
-      :delete_member => :delete
+      :delete_member => :delete,
+      :create_member_at_invitation => :get
     }
   
   map.resources :clan_membership_applications,

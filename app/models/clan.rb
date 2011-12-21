@@ -2,6 +2,7 @@ class Clan < ActiveRecord::Base
   has_many :characters, :through => :clan_members
   has_many :clan_members, :dependent => :destroy
   has_many :clan_membership_applications, :dependent => :destroy
+  has_many :clan_membership_relations, :dependent => :destroy
   
   validates_presence_of :name
   
@@ -40,6 +41,19 @@ class Clan < ActiveRecord::Base
       end
     end
   end
+  
+   def create_member_at_invitation!(character)
+    transaction do
+      if clan_members.create(:character => character, :role => :participant)
+        creator.notifications.schedule(:clan_invitation_state,
+          :clan_id => id,
+          :character_id => character.id,
+          :status  => :used
+        )
+      end
+    end  
+  end
+  
   
   def key_for_chat
     digest = Digest::MD5.hexdigest("%s-%s" % [id, created_at])

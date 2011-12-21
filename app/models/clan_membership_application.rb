@@ -10,8 +10,6 @@ class ClanMembershipApplication < ActiveRecord::Base
     
       transaction do
         if member.save
-          character.clan_membership_applications.destroy_all
-      
           schedule_notification(:accepted)
         end
         

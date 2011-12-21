@@ -9,4 +9,28 @@ class AppRequest::ClanInvite < AppRequest::Base
       ids += ClanMember.all_clan_creators_facebook_ids
     end
   end
+  
+  protected
+  
+  def after_process
+    super
+    
+    if receiver.clan != sender.clan && sender.clan_member.creator? && !receiver.clan_membership_relations.invited_to_join?(sender.clan)
+      sender.clan.clan_membership_relations.create(:character => receiver)
+    end
+  end
+  
+  def after_accept
+    super
+    
+    if receiver.clan_membership_applications.declared_to_join?(sender.clan)
+      sender.clan.create_member_at_invitation!(receiver)
+    end
+  end
+  
+  def after_ignore
+    super
+    
+    receiver.clan_membership_relations.delete_invitation_to_join!(sender.clan)
+  end
 end

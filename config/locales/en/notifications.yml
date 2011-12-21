@@ -46,8 +46,9 @@ en:
         exchange_offer_accepted: "Exchange offer accepted"
         exchange_offer_created: "Exchange offer created"
         new_achievement: "New achievement"
-        status_application: "Status of the application to join the clan"
-        status_clan: "Status of the clan"
+        clan_application_state: "Status of the application to join the clan"
+        clan_state: "Status of the clan"
+        clan_invitation_state: "Status of the invitation to join the clan"
       buttons: 
         save: "Save"
       
@@ -99,4 +100,9 @@ en:
     clan_state:
       excluded: 
         title: "You were excluded"
-        text: "You were excluded from the clan"     
+        text: "You were excluded from the clan"    
+        
+    clan_invitation_state:
+      used:
+        title: "The use of invitation"
+        text: "%{character} has used your invitation to join the clan %{clan}"    
