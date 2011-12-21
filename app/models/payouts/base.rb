@@ -22,7 +22,7 @@ module Payouts
       end
 
       def by_name(name)
-        "Payouts::#{name.to_s.classify}".constantize
+        "Payouts::#{name.to_s.camelize}".constantize
       end
 
       def human_attribute_name(field)
