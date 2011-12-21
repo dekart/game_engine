@@ -1,24 +1,27 @@
 <% div_for(item) do %>
-  <div class="picture"><%= item_image(item, :small) %></div>
+  <div class="picture"><%= item_image(item, :medium) %></div>
 
   <div class="info">
     <div class="name"><%= item.name %></div>
-    <div class="description"><%= item.description %></div>
 
-    <% if item.left or item.available_till %>
-      <%= render("items/limit", :item => item) %>
+    <% unless item.description.blank? %>
+      <div class="description"><%= item.description %></div>
     <% end %>
-  </div>
-  
-  <div class="payouts">
-    <%= render("items/effects", :item => item) %>
+
+    <div class="payouts">
+      <%= render("items/effects", :item => item) %>
+    </div>
   </div>
 
-  <div class="requirements">
-    <%= render("items/requirements", :item => item) %>
-  </div>
+  <div class="purchase_options clearfix">
+    <div class="controls">
+      <%= render("items/buy_button", :item => item) %>
+    </div>
 
-  <div class="controls">
-    <%= render("items/buy_button", :item => item) %>
+    <div class="requirements">
+      <%= render("items/requirements", :item => item) %>
+    </div>
+
+    <%= render("items/limit", :item => item) if item.limited? %>
   </div>
 <% end %>

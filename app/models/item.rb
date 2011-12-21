@@ -174,6 +174,10 @@ class Item < ActiveRecord::Base
     self[:availability].to_sym
   end
 
+  def limited?
+    left || available_till
+  end
+
   def left
     limit.to_i > 0 ? limit - owned : nil
   end

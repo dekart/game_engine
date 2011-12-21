@@ -28,38 +28,45 @@
   .item
     padding: 10px
     margin: 0 10px 10px 0
-    width: 200px
+    width: 330px
     border = !shop_item_border
     float: left
 
-  .picture
-    width: 80px
+    .picture
+      width: 130px
+      height: 130px
+      float: left
 
-  .info
-    padding-right: 10px
+    .info
+      margin-left: 130px
 
-    .name
-      font-size: 16px
-      font-weight: bold
+      .name
+        font-size: 16px
+        font-weight: bold
+        margin-bottom: 10px
 
-    .name, .description
-      margin-bottom: 10px
+      .payout
+        clear: none
 
-    .limit
-      color = !shop_item_limit_color
+    .purchase_options
+      clear: left
 
-  .info, .payouts, .requirements
-    padding-right: 10px
+      .requirement
+        clear: none
 
-  .controls
-    text-align: right
-    width: 130px
+      .controls
+        width: 130px
+        float: right
 
-    select
-      margin: 5px
+        select
+          margin: 5px
 
-    .buy
-      +button(!shop_item_buy_icon)
+        .buy
+          +button(!shop_item_buy_icon)
+      
+      .limit
+        color = !shop_item_limit_color
+
 
 
 #special_items

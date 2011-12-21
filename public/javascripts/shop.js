@@ -5,12 +5,19 @@ var Shop = (function(){
     setup: function(){
       this.setupTabs();
       this.setupAmountSelector();
+
+      $('#shop_tabs').find('.item_list').each(function(){
+        shop.setupItemList(this);
+      });
     },
 
     setupTabs: function(){
       var shop_tabs = $("#shop_tabs");
 
-      shop_tabs.tabs({cache: true});
+      shop_tabs.tabs({
+        cache: true,
+        load: this.onTabLoad
+      });
 
       $.History.bind(function(state){
         switch(state){
@@ -26,7 +33,7 @@ var Shop = (function(){
     },
 
     setupAmountSelector: function(){
-      $(".amount").change(function(){
+      $(".amount").live('change', function(){
         var amount = $(this).val();
         var data = $.parseJSON($(this).attr('data-options'), 10);
         
@@ -38,6 +45,23 @@ var Shop = (function(){
           $("#item_" + data.id + " .requirements .vip_money .value").html(data.vip_price * amount);
         }   
       });
+    },
+
+    setupItemList: function(list){
+      var list = $(list);
+      var items = list.find('.item');
+
+      var max_height = items.map(function(){
+        return $(this).outerHeight();
+      }).toArray().sort(function(i,j){ return i > j ? -1 : 1; })[0];
+
+      items.height(max_height);
+    },
+
+    // Events
+
+    onTabLoad: function(event, ui){
+      shop.setupItemList($(ui.panel).find('.item_list'));
     }
   });
 
