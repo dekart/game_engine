@@ -37,21 +37,11 @@ class Clan < ActiveRecord::Base
           character.clan_membership_applications.destroy_all
           
           clan_members.create(:character => character, :role => :creator)
+          
+          character.clan_membership_invitations.destroy_all
         end
       end
     end
-  end
-  
-   def create_member_at_invitation!(character)
-    transaction do
-      if clan_members.create(:character => character, :role => :participant)
-        creator.notifications.schedule(:clan_invitation_state,
-          :clan_id => id,
-          :character_id => character.id,
-          :status  => :used
-        )
-      end
-    end  
   end
   
   def key_for_chat

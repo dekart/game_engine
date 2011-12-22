@@ -8,6 +8,7 @@ class ClansController < ApplicationController
   
   def show
     @clan = Clan.find(params[:id])
+    @invitation = current_character.clan_membership_invitations.detect{|i| i.clan_id == @clan.id}
   end
 
   def new

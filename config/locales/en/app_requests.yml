@@ -36,7 +36,7 @@ en:
       clan_invite:
         text: "%{user} invites you to join their Clan %{clan}"   
         buttons:
-          view: 'Wiew Clan'
+          view: 'View Clan'
       property_worker:
         text: "%{user} asks you to help them finish the %{property}"
         buttons:

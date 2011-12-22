@@ -2,7 +2,7 @@ class ClanMembershipApplication < ActiveRecord::Base
   belongs_to :clan
   belongs_to :character
   
-  def create_clan_member!
+  def approve!
     if clan.members_count >= Setting.i(:clan_max_size)
       false
     else

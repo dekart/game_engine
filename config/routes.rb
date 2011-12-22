@@ -303,8 +303,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :clan_members,
     :member => {
-      :delete_member => :delete,
-      :create_member_at_invitation => :get
+      :delete => :delete
     }
   
   map.resources :clan_membership_applications,
@@ -314,7 +313,7 @@ ActionController::Routing::Routes.draw do |map|
       :reject => :delete
     }
    
-  map.resources :clan_membership_invitations, :only => [:destroy]   
+  map.resources :clan_membership_invitations, :only => [:update, :destroy]   
 
   # Add your custom routes below this mark
   

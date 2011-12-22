@@ -8,21 +8,6 @@
   <%= property_image(app_request.target, :small) %>
 </td>
 
-<% if app_request.acceptable? %>
-  <td class="controls">
-    <%= link_to_remote(button(:accept),
-          :url => app_request_path(app_request),
-          :update => :ajax,
-          :method => :put,
-          :html => {
-            :'data-click-once' => true,
-            :class => 'accept button'
-          }
-        ) %>
-  </td>
-  
-<% else %>
-  <td class="controls">
-    <%= app_request.acceptance_error %>
-  </td>
-<% end %>
+<td class="controls">
+  <%= accept_request_button(app_request, :accept) %>
+</td>

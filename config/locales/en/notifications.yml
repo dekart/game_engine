@@ -91,7 +91,7 @@ en:
       rejected:
         title: "You were rejected"
         text: Your application to join the clan %{clan} was rejected" 
-      declared:
+      asked:
         title: "A new application for membership in the clan"  
         text: "%{applicant} has applied to join the clan %{clan}"
       buttons:
@@ -103,6 +103,6 @@ en:
         text: "You were excluded from the clan"    
         
     clan_invitation_state:
-      used:
+      accepted:
         title: "The use of invitation"
         text: "%{character} has used your invitation to join the clan %{clan}"    

@@ -10,17 +10,17 @@ class Character
     end
     
     module ClanMembershipApplicationExtension
-      def declared_to_join?(clan)
+      def asked_to_join?(clan)
         detect{|a| a.clan_id == clan.id}
       end
       
-      def apply_to_join!(clan)
+      def create_application!(clan)
         transaction do
           if application = create(:clan => clan)
             clan.creator.notifications.schedule(:clan_application_state,
               :clan_id => clan.id,
               :applicant_id  => application.character_id,
-              :status  => "declared"
+              :status  => "asked"
             )
           end    
         end  
@@ -28,12 +28,8 @@ class Character
     end
     
     module ClanMembershipInvitatioExtension
-      def invited_to_join?(clan)
-        detect{|r| r.clan_id == clan.id}
-      end
-      
-      def delete_invitation_to_join!(clan)
-        detect{|r| r.clan_id == clan.id}.try(:destroy)
+      def invitation_to_join(clan)
+        detect{|i| i.clan_id == clan.id}
       end
     end
   end

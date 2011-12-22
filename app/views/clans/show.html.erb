@@ -72,16 +72,16 @@
     <div class="join_clan">
       <h2><%= t(".join_clan.title")%></h2>
       
-      <% unless current_character.clan_membership_applications.declared_to_join?(@clan) %>
+      <% unless current_character.clan_membership_applications.asked_to_join?(@clan) %>
         <p class="description"><%= t(".join_clan.text")%></p>
       <% end %>  
     </div>
    
     <div class="buttons sent" id="join_clan">
-      <% if current_character.clan_membership_invitations.invited_to_join?(@clan) %>
+      <% if @invitation %>
         <%= link_to_remote(button(:join),
-              :url    => create_member_at_invitation_clan_member_path(:clan_id => @clan.id),
-              :method => :get,
+              :url    => clan_membership_invitation_path(@invitation),
+              :method => :put,
               :update => :ajax,
               :confirm  => t(current_character.clan ? ".clan_member.join_confirm" : ".join_confirm"),
               :html   => {
@@ -90,7 +90,7 @@
               }
             ) %>
       
-      <% elsif current_character.clan_membership_applications.declared_to_join?(@clan) %>
+      <% elsif current_character.clan_membership_applications.asked_to_join?(@clan) %>
         <%= t(".sent_application") %>
               
       <% else %>

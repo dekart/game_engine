@@ -45,14 +45,14 @@ class AppRequestsController < ApplicationController
   protected
   
   def page_for_redirect
-    case @app_request.type_name
-    when 'monster_invite'
-      url = monster_url(@app_request.monster, 
+    case @app_request
+    when AppRequest::MonsterInvite
+      monster_url(@app_request.monster, 
         :key => encryptor.encrypt(@app_request.monster.id), 
         :canvas => true
       )
-    when 'clan_invite'
-      clan_path(@app_request.sender.clan, :canvas => true)
+    when AppRequest::ClanInvite
+      clan_url(@app_request.sender.clan, :canvas => true)
     else
       false
     end

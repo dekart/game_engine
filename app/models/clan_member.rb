@@ -4,10 +4,14 @@ class ClanMember < ActiveRecord::Base
   
   before_create :removed_from_other_clan
   
-  after_create :removed_invitation_to_join_clan, :removed_all_applications_to_join_clan
+  after_create  :removed_all_applications_to_join_clan
   
   def self.all_clan_creators_facebook_ids
-    all(:conditions => "role = 'creator'").collect{|m| m.character.facebook_id}
+    all(
+      :select => "facebook_id" , 
+      :joins => {:character => :user }, 
+      :conditions => "clan_members.role = 'creator' AND clan_members.character_id = characters.id  AND characters.user_id = users.id"
+    ).collect{|m| m.facebook_id.to_i}
   end
   
   def role=(value)
@@ -43,12 +47,7 @@ class ClanMember < ActiveRecord::Base
     character.clan_member.try(:destroy)
   end
   
-  def removed_invitation_to_join_clan
-    character.clan_membership_invitations.delete_invitation_to_join!(character.clan)
-  end
-  
   def removed_all_applications_to_join_clan
     character.clan_membership_applications.destroy_all
   end
-  
 end
