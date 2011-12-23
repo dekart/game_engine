@@ -9,4 +9,7 @@
   <div id="clan_applications"><%= render("clans/applications", :applications => clan.clan_membership_applications) %></div>
 <% end %>  
 
+<% unless clan.clan_membership_invitations.empty? %>
+  <div id="clan_invitations"><%= render("clans/invitations", :invitations => clan.clan_membership_invitations ) %></div>
+<% end %>
 <div id="clan_participants"><%= render("clans/edit_participants", :members => clan.clan_members ) %></div>

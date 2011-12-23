@@ -13,13 +13,4 @@ class AppRequest::MonsterInvite < AppRequest::Base
   def later_similar_requests
     super.with_target(monster)
   end
-  
-  def after_accept
-    super
-    
-    sender_monster_fight = sender.monster_fights.by_monster(monster)
-    MonsterFight.increment_counter(:accepted_invites_count, sender_monster_fight)
-    
-    MonsterFight.create(:character => receiver, :monster => monster)
-  end
 end

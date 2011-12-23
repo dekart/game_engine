@@ -249,6 +249,13 @@ ActiveRecord::Schema.define(:version => 20111223124037) do
     t.datetime "updated_at"
   end
 
+  create_table "clan_membership_invitations", :force => true do |t|
+    t.integer  "clan_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "clans", :force => true do |t|
     t.string   "name",               :limit => 100
     t.text     "description"

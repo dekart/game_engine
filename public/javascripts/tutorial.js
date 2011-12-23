@@ -102,7 +102,7 @@ var Tutorial = (function(){
          },
        show: {
          event: false, 
-         ready: true,
+         ready: true
         },
         hide: false,
         style: {

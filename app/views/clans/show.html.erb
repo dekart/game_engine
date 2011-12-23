@@ -72,13 +72,25 @@
     <div class="join_clan">
       <h2><%= t(".join_clan.title")%></h2>
       
-      <% unless current_character.clan_membership_applications.declared_to_join?(@clan) %>
+      <% unless current_character.clan_membership_applications.asked_to_join?(@clan) %>
         <p class="description"><%= t(".join_clan.text")%></p>
       <% end %>  
     </div>
    
     <div class="buttons sent" id="join_clan">
-      <% if current_character.clan_membership_applications.declared_to_join?(@clan) %>
+      <% if @invitation %>
+        <%= link_to_remote(button(:join),
+              :url    => clan_membership_invitation_path(@invitation),
+              :method => :put,
+              :update => :ajax,
+              :confirm  => t(current_character.clan ? ".clan_member.join_confirm" : ".join_confirm"),
+              :html   => {
+                :"data-click-once" => true,
+                :class => "join button"
+              }
+            ) %>
+      
+      <% elsif current_character.clan_membership_applications.asked_to_join?(@clan) %>
         <%= t(".sent_application") %>
               
       <% else %>
@@ -86,7 +98,7 @@
               :url    => create_clan_membership_application_path(:clan_id => @clan.id),
               :method => :get,
               :update => :ajax,
-              :confirm  => t(current_character.clan ? ".clan_member_confirm" : ".apply_confirm"),
+              :confirm  => t(current_character.clan ? ".clan_member.apply_confirm" : ".apply_confirm"),
               :html   => {
                 :"data-click-once" => true,
                 :class => "apply button"
