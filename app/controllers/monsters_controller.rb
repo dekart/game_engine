@@ -34,6 +34,9 @@ class MonstersController < ApplicationController
     else
       EventLoggingService.log_event(:monster_engaged, @monster)
 
+      # TODO: tutorial fix
+      flash.keep(:show_tutorial) if flash[:show_tutorial]
+
       redirect_from_iframe monster_url(@monster, :canvas => true)
     end
   end
