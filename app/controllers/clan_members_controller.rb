@@ -5,7 +5,7 @@ class ClanMembersController < ApplicationController
     redirect_from_iframe(clans_url(:canvas => true))
   end
   
-  def delete_member
+  def delete
     member = ClanMember.find(params[:id])
     
     member.delete_by_creator!

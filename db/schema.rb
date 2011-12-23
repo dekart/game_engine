@@ -9,8 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-ActiveRecord::Schema.define(:version => 20111212074628) do
+ActiveRecord::Schema.define(:version => 20111221065317) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -240,6 +239,13 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
   end
 
   create_table "clan_membership_applications", :force => true do |t|
+    t.integer  "clan_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clan_membership_invitations", :force => true do |t|
     t.integer  "clan_id"
     t.integer  "character_id"
     t.datetime "created_at"
@@ -731,7 +737,7 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id"
-    t.string   "owner_type"
+    t.string   "owner_type",         :limit => 100, :default => ""
     t.string   "style"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false

@@ -13,8 +13,11 @@ en:
         my_clan: "My Clan"
     show:
       quit_confirm: "Are you sure you want to leave a clan?"
-      apply_confirm: "Are you sure you want to join a clan?"
-      clan_member_confirm: "You are a member of another clan. If your application accepted, you will be automatically deleted from your clan" #***
+      apply_confirm: "Are you sure you want to apply to join the clan?"
+      join_confirm: "Are you sure you want to join the clan?"
+      clan_member:
+        apply_confirm: "You are a member of another clan. If your application accepted, you will be automatically deleted from your clan" #***
+        join_confirm: "You are a member of another clan.  if you agree to join, you will be automatically deleted from your clan"
       join_clan:
         title: "To Join The Clan"
         text:  "Description of the process" #***
@@ -22,6 +25,7 @@ en:
         quit: "Out Of The Clan"
         invite: "Choose Friends to Invite"
         apply: "Apply"
+        join: "Join"
         manage: "Manage"
       title_invite: "Recruit To Your Alliance"  #***
       sent_application: "Your application was sent to"
@@ -52,6 +56,12 @@ en:
         delete: "Reject application"
       delete:
         confirmation: "You sure you want to reject the request?"  
+    invitations:
+      title: "Invitations"
+      buttons:
+        delete: "Delete invitation"
+      delete:
+        confirmation: "You sure want to delete the invitation"      
     form:
       save: "Save"     
   clan_membership_applications:
