@@ -57,7 +57,7 @@ class ItemCollection < ActiveRecord::Base
   end
 
   def items
-    Item.find_all_by_id(item_ids)
+    @items ||= Item.find_all_by_id(item_ids)
   end
 
   def spendings
