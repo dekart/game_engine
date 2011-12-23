@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212074628) do
+ActiveRecord::Schema.define(:version => 20111223124037) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "achievements", ["character_id"], :name => "index_achievements_on_character_id"
 
   create_table "app_requests", :force => true do |t|
     t.integer  "facebook_id",  :limit => 8,                  :null => false
@@ -148,6 +150,8 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
     t.datetime "updated_at"
   end
 
+  add_index "character_equipment", ["character_id"], :name => "index_character_equipment_on_character_id"
+
   create_table "character_titles", :force => true do |t|
     t.integer  "character_id", :null => false
     t.integer  "title_id",     :null => false
@@ -245,6 +249,13 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
     t.datetime "updated_at"
   end
 
+  create_table "clan_membership_invitations", :force => true do |t|
+    t.integer  "clan_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "clans", :force => true do |t|
     t.string   "name",               :limit => 100
     t.text     "description"
@@ -264,6 +275,8 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "contest_groups", ["contest_id"], :name => "index_contest_groups_on_contest_id"
 
   create_table "contests", :force => true do |t|
     t.string   "name",                       :limit => 100, :default => "", :null => false
@@ -290,6 +303,8 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "credit_orders", ["facebook_id"], :name => "index_credit_orders_on_facebook_id"
 
   create_table "credit_packages", :force => true do |t|
     t.integer  "vip_money"
@@ -730,7 +745,7 @@ ActiveRecord::Schema.define(:version => 20111212074628) do
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id"
-    t.string   "owner_type",         :limit => 100, :default => ""
+    t.string   "owner_type"
     t.string   "style"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false

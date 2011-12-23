@@ -2,6 +2,7 @@ class Clan < ActiveRecord::Base
   has_many :characters, :through => :clan_members
   has_many :clan_members, :dependent => :destroy
   has_many :clan_membership_applications, :dependent => :destroy
+  has_many :clan_membership_invitations, :dependent => :destroy
   
   validates_presence_of :name
   
@@ -36,6 +37,8 @@ class Clan < ActiveRecord::Base
           character.clan_membership_applications.destroy_all
           
           clan_members.create(:character => character, :role => :creator)
+          
+          character.clan_membership_invitations.destroy_all
         end
       end
     end
@@ -47,11 +50,11 @@ class Clan < ActiveRecord::Base
     "%s-%s" % [id, digest[0, 10]]
   end
   
-  protected
-  
   def creator
-    clan_members.detect{|m| m.creator? }.character
+    clan_members.find_by_role('creator').character
   end
+  
+  protected
   
   def enough_vip_money?(character, price)
     if character.vip_money >= price

@@ -4,10 +4,12 @@ class Setting < ActiveRecord::Base
 
   class << self
     def cache
-      $memory_store.fetch('settings', :expires_in => 1.minute) do
-        {}.tap do |result|
-          all.each do |setting|
-            result[setting.alias.to_sym] = setting.value
+      logger.silence do
+        $memory_store.fetch('settings', :expires_in => 1.minute) do
+          {}.tap do |result|
+            all.each do |setting|
+              result[setting.alias.to_sym] = setting.value
+            end
           end
         end
       end

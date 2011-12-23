@@ -1,5 +1,5 @@
 module Notification
-  class ClanApplicationState < Base
+  class ClanInvitationState < Base
     def clan
       @clan ||= Clan.find(data[:clan_id])
     end
@@ -8,9 +8,8 @@ module Notification
       @status ||= data[:status]
     end
     
-    # A person who asked to join to the clan
-    def applicant
-      @applicant ||= Character.find(data[:applicant_id])
+    def character
+      @character ||= Character.find(data[:character_id])
     end
   end
 end

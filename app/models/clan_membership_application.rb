@@ -2,7 +2,9 @@ class ClanMembershipApplication < ActiveRecord::Base
   belongs_to :clan
   belongs_to :character
   
-  def create_clan_member!
+  after_create :shedule_notification_for_creator
+  
+  def approve!
     if clan.members_count >= Setting.i(:clan_max_size)
       false
     else
@@ -10,9 +12,9 @@ class ClanMembershipApplication < ActiveRecord::Base
     
       transaction do
         if member.save
-          character.clan_membership_applications.destroy_all
-      
           schedule_notification(:accepted)
+          
+          character.clan_membership_invitations.invitation_to_join(clan).try(:destroy)
         end
         
         member
@@ -34,6 +36,14 @@ class ClanMembershipApplication < ActiveRecord::Base
     character.notifications.schedule(:clan_application_state,
       :clan_id => clan.id,
       :status  => status.to_s
+    )
+  end
+  
+  def shedule_notification_for_creator
+    clan.creator.notifications.schedule(:clan_application_state,
+      :clan_id => clan_id,
+      :applicant_id  => character_id,
+      :status  => "asked"
     )
   end
 end

@@ -1,7 +1,7 @@
 module HasRequirements
   def has_requirements
     Dir[File.join(RAILS_ROOT, "app", "models", "requirements", "*.rb")].each do |file|
-      file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").classify.constantize
+      file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").camelize.constantize
     end
 
     serialize :requirements, Requirements::Collection

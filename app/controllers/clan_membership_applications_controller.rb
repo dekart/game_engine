@@ -3,14 +3,14 @@ class ClanMembershipApplicationsController < ApplicationController
   
   def create
     @clan = Clan.find(params[:clan_id])
-
-    @application = @clan.clan_membership_applications.create(:character => current_character)
+    
+    @application = current_character.clan_membership_applications.create(:clan => @clan)
     
     render :layout => "ajax"
   end
   
   def approve
-    @result = @application.create_clan_member!
+    @result = @application.approve!
     
     @clan = Clan.find(@application.clan_id)
     
