@@ -13,6 +13,8 @@ class ClanMembershipApplication < ActiveRecord::Base
       transaction do
         if member.save
           schedule_notification(:accepted)
+          
+          character.clan_membership_invitations.invitation_to_join(clan).try(:destroy)
         end
         
         member
