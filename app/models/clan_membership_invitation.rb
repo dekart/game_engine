@@ -2,7 +2,7 @@ class ClanMembershipInvitation < ActiveRecord::Base
   belongs_to :clan
   belongs_to :character
   
-  validate_on_create :validate_for_uniqueness_invitation
+  validates_uniqueness_of :character_id, :scope => :clan_id
   
   def accept!
     transaction do
@@ -16,11 +16,5 @@ class ClanMembershipInvitation < ActiveRecord::Base
         )
       end
     end
-  end
-  
-  protected
-  
-  def validate_for_uniqueness_invitation
-    errors_add(:invitation, :not_unique) if character.clan_membership_invitations.invitation_to_join(clan)
   end
 end

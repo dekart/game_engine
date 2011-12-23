@@ -10,7 +10,7 @@
         <div class="text">
           <%= t(".#{notification.status}.text",
                 :clan => content_tag(:strong, notification.clan.name),
-                :applicant => notification.status == "asked" ? character_name_link(notification.applicant) : nil
+                :applicant => (notification.status == "asked" ? character_name_link(notification.applicant) : nil)
               ).html_safe %>
         </div>
         

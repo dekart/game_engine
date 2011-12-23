@@ -51,7 +51,7 @@ class Clan < ActiveRecord::Base
   end
   
   def creator
-    clan_members.detect{|m| m.creator? }.character
+    clan_members.find_by_role('creator').character
   end
   
   protected

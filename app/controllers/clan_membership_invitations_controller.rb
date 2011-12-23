@@ -7,7 +7,7 @@ class ClanMembershipInvitationsController < ApplicationController
   end
   
   def update
-    @invitation = ClanMembershipInvitation.find(params[:id])
+    @invitation = current_character.clan_membership_invitations.find(params[:id])
     
     @invitation.accept!
     
