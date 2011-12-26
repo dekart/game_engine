@@ -44,11 +44,15 @@ class Character
       end
       
       def achieve!(types)
-        Array.wrap(types).each do |type|
-          create!(:character => proxy_owner, :achievement_type => type)
-        end
+        types = Array.wrap(types)
 
-        clear_achievements_cache!
+        unless types.empty?
+          types.each do |type|
+            create!(:character => proxy_owner, :achievement_type => type)
+          end
+
+          clear_achievements_cache!
+        end
       end
     end
     
@@ -67,6 +71,8 @@ class Character
       achievement_ids -= achievements.achieved_ids
       
       achievements.achieve!(AchievementType.find(achievement_ids))
+
+      true
     end
   end
 end

@@ -18,6 +18,8 @@ class Character
     
     def update_rating_values
       Rating.schedule_update(self)
+
+      true
     end
     
     def rating_values
