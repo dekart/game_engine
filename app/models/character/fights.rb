@@ -34,10 +34,13 @@ class Character
         
         self.fighting_available_at = hp_restore_time(weakness_minimum).seconds.from_now
       end
+
+      true
     end
     
     def update_opponent_bucket
       Fight::OpponentBuckets.update(self)
+      
       true
     end
   end
