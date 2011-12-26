@@ -75,15 +75,13 @@ class ItemCollection < ActiveRecord::Base
   end
   
   def missing_items(character)
-    result = items
-    
-    character.inventories.each do |inventory|
-      if items.include?(inventory.item) && inventory.amount >= amount_of_item(inventory.item)
-        result.delete(inventory.item)
+    items.dup.tap do |result|
+      character.inventories.each do |inventory|
+        if items.include?(inventory.item) && inventory.amount >= amount_of_item(inventory.item)
+          result.delete(inventory.item)
+        end
       end
     end
-      
-    result
   end 
 
   def event_data
