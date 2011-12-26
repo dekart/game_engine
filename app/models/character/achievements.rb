@@ -2,8 +2,10 @@ class Character
   module Achievements
     def self.included(base)
       base.class_eval do
-        has_many :achievements, :extend => AchievementsExtension
-        
+        has_many :achievements,
+          :include => :achievement_type,
+          :extend => AchievementsExtension
+
         after_update :check_achievement_reach
       end
     end
