@@ -1,1 +1,0 @@
-This folder is necessary to correctly include routes in Rails 2.3. Without this folder they don't load routes.

@@ -26,8 +26,10 @@ gem 'rufus-scheduler',  '2.0.13'
 # Facepalm
 gem 'multi_json'
 gem 'faraday'
-gem 'koala', '1.2.0beta4'
-gem 'ie_iframe_cookies', '0.1.0'
+
+gem 'koala', '~> 1.2.0'
+
+gem 'facepalm'
 
 group :development do
   gem "capistrano",     "2.5.20"
