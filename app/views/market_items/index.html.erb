@@ -12,7 +12,7 @@
           <div class="description"><%= item.description %></div>
         </td>
         <td class="payouts">
-          <%= item_effects(item) %>
+          <%= item_effects(item.inventory.item) %>
         </td>
         <td class="requirements">
           <h3><%= MarketItem.human_attribute_name("price") %></h3>
