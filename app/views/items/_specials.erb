@@ -8,7 +8,7 @@
         <div class="name"><%= item.name %></div>
         <div class="picture"><%= item_image(item, :small) %></div>
         <div class="payouts">
-          <%= render("items/effects", :item => item) %>
+          <%= item_effects(item) %>
         </div>
 
         <div class="requirements">

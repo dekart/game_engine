@@ -12,7 +12,7 @@
           <div class="description"><%= item.description %></div>
         </td>
         <td class="payouts">
-          <%= render("items/effects", :item => item) %>
+          <%= item_effects(item) %>
         </td>
         <td class="requirements">
           <h3><%= MarketItem.human_attribute_name("price") %></h3>

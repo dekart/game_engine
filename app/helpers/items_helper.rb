@@ -1,4 +1,12 @@
 module ItemsHelper
+  def item_effects(item)
+    raise "Wrong object class: #{item.class}" unless item.is_a?(Item)
+
+    $memory_store.fetch(item.cache_key, :expires_in => 1.minute) do
+      render('items/effects', :item => item)
+    end
+  end
+
   def item_image(item, format, options = {})
     if tooltip = options.delete(:tooltip)
       tooltip = {} unless tooltip.is_a?(Hash)
@@ -29,11 +37,13 @@ module ItemsHelper
   end
   
   def item_tooltip_content(item)
+    item = item.item if item.is_a?(Inventory)
+
     %{
       <div class="tooltip_content">
         <h2>#{item.name}</h2>
         <div class="description">#{ item.description }</div>
-        <div class="payouts">#{ render("items/effects", :item => item) }</div>
+        <div class="payouts">#{ item_effects(item) }</div>
       </div>
     }.gsub!(/[\n\s]+/, ' ').html_safe
   end
