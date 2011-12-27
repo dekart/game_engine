@@ -2,7 +2,7 @@ module ItemsHelper
   def item_effects(item)
     raise "Wrong object class: #{item.class}" unless item.is_a?(Item)
 
-    Rails.cache.fetch(item.cache_key, :expires_in => 1.minute) do
+    Rails.cache.fetch(item.cache_key) do
       render('items/effects', :item => item)
     end
   end
