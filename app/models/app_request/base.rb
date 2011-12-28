@@ -130,8 +130,8 @@ class AppRequest::Base < ActiveRecord::Base
   validates_presence_of :facebook_id
   
   after_create  :schedule_data_update
-  after_save    :clear_exclude_ids_cache, :if => :sender
   after_save    :clear_counter_cache,     :if => :receiver_id?
+  after_save    :clear_exclude_ids_cache, :if => :sender
   
   class << self
     def cache_key(target)
@@ -232,7 +232,7 @@ class AppRequest::Base < ActiveRecord::Base
     true
   end
   
-  protected
+  #protected
   
   def request_class_from_data
     if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
