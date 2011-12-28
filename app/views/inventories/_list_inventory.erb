@@ -20,7 +20,7 @@
     </div>
   </td>
   <td class="payouts">
-    <%= render("items/effects", :item => inventory) %>
+    <%= item_effects(inventory.item) %>
   </td>
   <td class="controls">
     <%= link_to_remote(inventory_use_button(inventory),

@@ -1,4 +1,12 @@
 module ItemsHelper
+  def item_effects(item)
+    raise "Wrong object class: #{item.class}" unless item.is_a?(Item)
+
+    Rails.cache.fetch(item.cache_key) do
+      render('items/effects', :item => item)
+    end
+  end
+
   def item_image(item, format, options = {})
     if tooltip = options.delete(:tooltip)
       options['data-tooltip'] = item_image_tooltip_options(item, tooltip).to_json
@@ -23,10 +31,12 @@ module ItemsHelper
   end
   
   def item_tooltip_content(item)
+    item = item.item if item.is_a?(Inventory)
+
     %{
       <div class="tooltip_content">
         <h2>#{item.name}</h2>
-        <div class="payouts">#{ render("items/effects", :item => item) }</div>
+        <div class="payouts">#{ item_effects(item) }</div>
       </div>
     }.gsub!(/[\n\s]+/, ' ').html_safe
   end

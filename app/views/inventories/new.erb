@@ -7,7 +7,7 @@
         <td class="picture"><%= item_image(@item, :medium) %></td>
 
         <td class="payouts">
-          <%= render("items/effects", :item => @item) %>
+          <%= item_effects(@item) %>
         </td>
 
         <% if @item.price? %>
