@@ -290,9 +290,13 @@ class AppRequest::Base < ActiveRecord::Base
   
   def clear_counter_cache
     Rails.cache.delete(self.class.cache_key(receiver_id))
+    
+    true
   end
   
   def clear_exclude_ids_cache
     Rails.cache.delete(self.class.exclude_ids_cache_key(sender))
+    
+    true
   end
 end
