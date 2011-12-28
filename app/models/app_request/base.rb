@@ -232,7 +232,7 @@ class AppRequest::Base < ActiveRecord::Base
     true
   end
   
-  #protected
+  protected
   
   def request_class_from_data
     if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
