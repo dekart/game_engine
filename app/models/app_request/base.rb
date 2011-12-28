@@ -130,8 +130,8 @@ class AppRequest::Base < ActiveRecord::Base
   validates_presence_of :facebook_id
   
   after_create  :schedule_data_update
-  after_save    :clear_exclude_ids_cache, :if => :sender
   after_save    :clear_counter_cache,     :if => :receiver_id?
+  after_save    :clear_exclude_ids_cache, :if => :sender
   
   class << self
     def cache_key(target)
@@ -290,9 +290,13 @@ class AppRequest::Base < ActiveRecord::Base
   
   def clear_counter_cache
     Rails.cache.delete(self.class.cache_key(receiver_id))
+    
+    true
   end
   
   def clear_exclude_ids_cache
     Rails.cache.delete(self.class.exclude_ids_cache_key(sender))
+    
+    true
   end
 end

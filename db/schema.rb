@@ -745,7 +745,7 @@ ActiveRecord::Schema.define(:version => 20111223124037) do
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id"
-    t.string   "owner_type"
+    t.string   "owner_type",         :limit => 100, :default => ""
     t.string   "style"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false
