@@ -125,7 +125,22 @@ namespace :deploy do
     task :package_backups, :roles => :db, :only => {:primary => true} do
       run "nohup gzip *.sql"
     end
-    
+
+    desc "Cleanup old backups"
+    task :cleanup_backups, :roles => :db, :only => {:primary => true} do
+      backups = capture("ls -xt | grep dump.%s || true" % database_config[:database]).split.reverse
+
+      if backups.length <= 5
+        logger.important "no old backups to clean up"
+      else
+        logger.info "keeping 5 of #{backups.length} backups"
+   
+        (backups - backups.last(5)).each { |backup|
+          run "rm -rf #{backup}"
+        }
+      end
+    end
+
     desc "Generates SQL for access granting for each app server"
     task :generate_access_sql do
       top.find_servers(:roles => :app).each do |server|
@@ -213,6 +228,7 @@ end
 unless ENV['BACKUP'] == 'false'
   before "deploy:migrations", "deploy:db:backup" 
   after "deploy:migrations", "deploy:db:package_backups"
+  after "deploy:migrations", "deploy:db:cleanup_backups"
 end
 
 on :before, :only => ["deploy", "deploy:migrations"] do
