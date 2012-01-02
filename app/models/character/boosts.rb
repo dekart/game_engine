@@ -28,13 +28,13 @@ class Character
       
       @character.inventories.find_by_id(boost_id) if boost_id
     end
-    
-    def not_owned(type, destination)
-      owned_boosts_ids = @character.boosts.for(type, destination).collect{ |i| i.item.id }
-    
-      boosts = Item.available_for(@character).boosts(type)
+
+    def available_for_purchase(type, destination)
+      owned_boosts_ids = @character.boosts.for(type, destination).collect{ |i| i.item_id }
+
+      boosts = Item.purchaseable_for(@character).boosts(type)
       boosts = boosts.scoped(:conditions => ['items.id NOT IN(?)', owned_boosts_ids]) unless owned_boosts_ids.empty?
-      
+
       boosts.select do |i|
         i.boost_for?(type, destination)
       end
