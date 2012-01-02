@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
   include HasVisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
+  PURCHASEABLE = [:shop, :special]
 
   BOOST_TYPES = {
     :fight => [:attack, :defence], 
@@ -146,7 +147,7 @@ class Item < ActiveRecord::Base
     end
     
     def purchaseable_for(character)
-      available_in(:shop, :special).available_for(character)
+      available_in(*PURCHASEABLE).available_for(character)
     end
     
     def gifts_for(character)

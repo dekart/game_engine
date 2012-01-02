@@ -12,7 +12,7 @@
         <tr>
           <td class="payouts"><%= render("items/effects", :item => @item) %></td>
           
-          <% if @item.availability == :shop && @item.available_for?(current_character) %>
+          <% if Item::PURCHASEABLE.include?(@item.availability) && @item.available_for?(current_character) %>
             <td>
               <div class="requirements">
                 <%= render("items/requirements", :item => @item) %>

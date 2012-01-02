@@ -1,5 +1,5 @@
 <% requirement(requirement.name, false) do %>
-  <% if [:shop, :special].include?(requirement.item.availability) %>
+  <% if Item::PURCHASEABLE.include?(requirement.item.availability) %>
     <% link = capture do %>
       <span class="image">
         <%= item_image(requirement.item, :icon,
