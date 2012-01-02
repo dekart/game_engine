@@ -88,7 +88,8 @@ ActionController::Routing::Routes.draw do |map|
       :member => {
         :delete_users   => :delete,
         :restart        => :post,
-        :update_styles  => :post
+        :update_styles  => :post,
+        :clear_memcache => :post
       }
     admin.resources :characters, :only => [:index, :edit, :update],
       :collection => {

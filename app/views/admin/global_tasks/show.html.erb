@@ -40,3 +40,15 @@
         ) %>
   </p>
 </div>
+
+<div class="feature">
+  <h2><%= t(".clear_memcache.title") %></h2>
+
+  <p><%= t(".clear_memcache.note") %></p>
+
+  <p>
+    <%= link_to_remote(t(".clear_memcache.perform"), 
+          :url => clear_memcache_admin_global_task_path
+        ) %>
+  </p>
+</div>
