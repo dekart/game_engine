@@ -20,6 +20,7 @@ namespace :app do
             obj.save
 
             print "."
+            $stdout.flush
           end
         end
 
