@@ -130,14 +130,14 @@ namespace :deploy do
     task :cleanup_backups, :roles => :db, :only => {:primary => true} do
       backups = capture("ls -xt | grep dump.%s || true" % database_config[:database]).split.reverse
 
-      if backups.length <= 5
-        logger.important "no old backups to clean up"
+      backups_to_remove = backups[0 ... -5]
+
+      if backups_to_remove.empty?
+        logger.important "No old backups to clean up"
       else
-        logger.info "keeping 5 of #{backups.length} backups"
-   
-        (backups - backups.last(5)).each { |backup|
-          run "rm -rf #{backup}"
-        }
+        logger.info "Removing old DB backups (#{backups_to_remove.size} of 5)..."
+
+        run "rm -rf %s" % backups_to_remove.join(' ')
       end
     end
 
