@@ -345,6 +345,8 @@ describe AppRequest::Base do
       @request = Factory(:app_request_base, :state => 'pending')
       @request.stub!(:update_from_facebook_request).and_return(true)
 
+      @remote_request = mock('remote_request')
+
       @koala = mock('koala', :get_object => @remote_request)
 
       Facepalm::Config.default.stub(:api_client).and_return(@koala)
@@ -361,7 +363,7 @@ describe AppRequest::Base do
     end
     
     it 'should update request from remote request' do
-      @request.should_receive(:update_from_facebook_request).and_return(true)
+      @request.should_receive(:update_from_facebook_request).with(@remote_request).and_return(true)
       
       @request.update_data!
     end
