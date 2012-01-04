@@ -24,7 +24,7 @@
           <% if setting.value.present? %>
             <%= setting.value %>
           <% else %>
-            <%= content_tag(:span, t(".empty_value"), :class => :empty) %>
+            <span class="empty"><%= t(".empty_value") %></span>
           <% end %>
         </td>
         <td class="controls">

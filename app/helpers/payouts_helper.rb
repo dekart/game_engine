@@ -51,24 +51,23 @@ module PayoutsHelper
   end
 
   def payout(type, value, options = {}, &block)
-    result = content_tag(:div,
-      content_tag(:span, value, :class => :value) +
-      (block_given? ? capture(&block) : "") +
-      content_tag(:span, options.delete(:label) || Character.human_attribute_name(type.to_s), :class => :label),
-      :class => "#{type} payout"
-    )
+    result = (
+      '<div class="%s payout"><span class="value">%s</span>%s<span class="label">%s</span></div>' % [
+        type,
+        value,
+        block_given? ? capture(&block) : "",
+        options[:label] || Character.human_attribute_name(type.to_s)
+      ]
+    ).html_safe
 
     block_given? ? concat(result) : result
   end
-  
+
   def payout_item_label(payout)
-    if payout.amount > 1
-       t("payouts.item.label",
-        :name   => content_tag(:span, payout.item.name, :class => :name),
-        :amount => payout.amount
-      ).html_safe
-    else
-      content_tag(:span, payout.item.name, :class => :name)
-    end
+    name = '<span class="name">%s</span>' % payout.item.name
+
+    (
+      payout.amount > 1 ? t("payouts.item.label", :name => name, :amount => payout.amount) : name
+    ).html_safe
   end
 end

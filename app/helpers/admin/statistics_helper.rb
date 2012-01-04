@@ -1,10 +1,10 @@
 module Admin::StatisticsHelper
   def admin_statistics_amount_change(value)
     t("admin.statistics.amount_change",
-      :amount => content_tag(:strong, value)
+      :amount => '<strong>%s</strong>' % value
     ).html_safe
   end
-  
+
   def admin_statistics_references(totals, day)
     table = totals.map{|reference, count| 
       [reference, count, day.assoc(reference).try(:last)] 
@@ -33,7 +33,7 @@ module Admin::StatisticsHelper
   
   def admin_requests_average_amount(value, day)
     t("admin.statistics.average_amount",
-      :amount => content_tag(:strong, Statistics::Visits.average_amount(value, day))
+      :amount => '<strong>%s</strong>' % Statistics::Visits.average_amount(value, day)
     ).html_safe
   end
 end

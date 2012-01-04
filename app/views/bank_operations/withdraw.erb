@@ -3,7 +3,7 @@
 
   <div id="bank_balance">
     <%= t(".balance",
-          :amount => content_tag(:span, number_to_currency(current_character.bank), :class => :value)
+          :amount => '<span class="value">%s</span>' % number_to_currency(current_character.bank)
         ).html_safe %>
   </div>
 <% end %>

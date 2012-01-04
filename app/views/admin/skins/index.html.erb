@@ -11,11 +11,12 @@
     <th><%= Skin.human_attribute_name("updated_at") %></th>
     <th></th>
   </tr>
-  <% content_tag(:tr, :class => (:current if Skin.with_state(:active).empty?)) do %>
+
+  <tr class="<%= :current if Skin.with_state(:active).empty? %>">
     <td class="name" colspan="4">
       <%= link_to(t(".default_skin"), admin_skin_path(:default)) %>
     </td>
-  <% end %>
+  </tr>
 
   <% @skins.each do |skin| %>
     <% content_tag_for(:tr, skin, :class => (:current if skin.active?)) do %>

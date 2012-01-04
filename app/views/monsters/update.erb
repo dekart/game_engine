@@ -22,7 +22,7 @@
         <%= ga_track_event('Monsters', 'Attack', @fight.monster.name, @fight.monster_damage) %>
       <% end %>
     <% elsif @fight.monster.won? %>
-      <% dialog :id => :monster_dialog do %>
+      <% dialog :monster_dialog do %>
         <h2><%= t('.dialog.title', :monster => @fight.monster.name) %></h2>
 
         <div class="image"><%= monster_image(@fight.monster, :small) %></div>

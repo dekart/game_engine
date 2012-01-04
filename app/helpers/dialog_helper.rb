@@ -1,8 +1,8 @@
 module DialogHelper
   class Builder
-    def initialize(template, options = {})
+    def initialize(template, dialog_id = nil)
       @template = template
-      @options = options
+      @dialog_id = dialog_id
     end
 
     def on_ready(&block)
@@ -10,21 +10,26 @@ module DialogHelper
     end
 
     def html(&block)
-      content = @template.capture(self, &block)
+      content = ''
 
-      content << @template.content_tag(:script, @on_ready, :type => "text/javascript") if @on_ready
+      content << @template.capture(self, &block)
 
-      if @options.any?
-        content = @template.content_tag(:div, content, @options)
+      content << ('<script type="text/javascript">%s</script>' % @on_ready) if @on_ready
+
+      if @dialog_id
+        content = '<div id="%s">%s</div>' % [
+          @dialog_id,
+          content
+        ]
       end
 
       content.html_safe
     end
   end
 
-  def dialog(options = {}, &block)
-    content = Builder.new(self, options).html(&block)
+  def dialog(dialog_id = nil, &block)
+    content = Builder.new(self, dialog_id).html(&block)
 
-    dom_ready("$(document).queue('dialog', function(){ $.dialog('#{escape_javascript(content)}') });")
+    dom_ready("$(document).queue('dialog', function(){ $.dialog('#{escape_javascript(content).html_safe}') });")
   end
 end

@@ -11,7 +11,9 @@ module ResultHelper
     end
 
     def title(content = nil, &block)
-      result = content_tag(:h2, content ? content.html_safe : capture(&block))
+      result = (
+        '<h2>%s</h2>' % (content || capture(&block))
+      ).html_safe
 
       block_given? ? concat(result) : result
     end
@@ -34,7 +36,7 @@ module ResultHelper
     def fail(content = nil, &block)
       message(:fail, content, &block)
     end
-    
+
     def render(path, options = {})
       @template.render(path, options.merge(:builder => self))
     end
@@ -49,7 +51,7 @@ module ResultHelper
       @on_ready << (content || capture(&block))
       @on_ready << ";"
     end
-    
+
     def help_link(*args)
       @help_link = args
     end
@@ -60,24 +62,41 @@ module ResultHelper
       dom_ready(@on_ready)
       dom_ready("$(document).trigger('result.#{options[:inline] ? :available : :received}');")
 
-      content_tag(:div, [message_html, help_link_html, buttons_html, content].join.html_safe,
-        :id     => "#{type}_result",
-        :class  => "result_content clearfix"
-      )
+      (
+        '<div id="%s_result" class="result_content clearfix">%s</div>' % [
+          type,
+          [message_html, help_link_html, buttons_html, content].join
+        ]
+      ).html_safe
     end
 
     protected
 
     def buttons_html
-      content_tag(:div, @buttons.html_safe, :class => 'buttons clearfix') unless @buttons.blank?
+      unless @buttons.blank?
+        (
+          '<div class="buttons clearfix">%s</div>' % @buttons
+        ).html_safe
+      end
     end
 
     def message_html
-      content_tag(:div, @message[:content], :class => "#{ @message[:type] } message") unless @message.blank?
+      unless @message.blank?
+        (
+          '<div class="%s message">%s</div>' % [
+            @message[:type],
+            @message[:content]
+          ]
+        ).html_safe
+      end
     end
-    
+
     def help_link_html
-      content_tag(:div, @template.help_link(*@help_link), :class => :help) unless @help_link.blank?
+      unless @help_link.blank?
+        (
+          '<div class="help">%s</div>' % @template.help_link(*@help_link)
+        ).html_safe
+      end
     end
   end
 

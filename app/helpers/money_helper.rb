@@ -1,9 +1,13 @@
 module MoneyHelper
-  def basic_money_tag(basic_money)
-    content_tag(:span, basic_money, :class => :basic_money)
+  def basic_money_tag(value)
+    (
+      '<span class="basic_money">%s</span>' % value
+    ).html_safe
   end
-  
-  def vip_money_tag(vip_money)
-    content_tag(:span, vip_money, :class => :vip_money)
+
+  def vip_money_tag(value)
+    (
+      '<span class="vip_money">%s</span>' % value
+    ).html_safe
   end
 end

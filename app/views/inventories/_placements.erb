@@ -2,7 +2,7 @@
 
 <div id="placements">
   <% character.equipment.main_placements.each do |placement| %>
-    <% content_tag(:div, :class => "placement #{placement}", :'data-placement' => placement) do %>
+    <div class="placement <%= placement %>" data-placement="<%= placement %>">
       <% character.equipment.inventories_by_placement(placement).each do |inventory| %>
         <% inventory_placement_tag(inventory, placement) do %>
           <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
@@ -18,7 +18,7 @@
           <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement], :tooltip => true) -%>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
   <% end %>
 
   <div class="additional clearfix">
@@ -42,17 +42,20 @@
               }
             ) if character == current_character %>
       <% end %>
-        
+
       <% inventory_additonal_slots_note do |free_slots| %>
         <div class="note">
           <%= t(".additional.free_slots",
                 :count        => free_slots,
-                :count_label  => content_tag(:span, free_slots, :class => (free_slots == 0 ? "value zero" : "value"))
+                :count_label  => '<span class="%s"></span>' % [
+                  free_slots == 0 ? "value zero" : "value",
+                  free_slots
+                ]
               ).html_safe %>
-  
+
           <%= t(".additional.relations",
                 :relations  => link_to(Character.human_attribute_name("relations"), relations_path),
-                :amount     => content_tag(:span, Setting.i(:character_relations_per_equipment_slot), :class => :value)
+                :amount     => '<span class="value">%s</span>' % Setting.i(:character_relations_per_equipment_slot)
               ).html_safe %>
         </div>
         

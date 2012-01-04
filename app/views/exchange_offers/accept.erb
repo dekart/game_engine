@@ -22,9 +22,9 @@
       </table>
     <% end %>
   <% end %>
-  
+
   <% dom_ready do %>
-    $("#show_exchange").replaceWith("<%= escape_javascript(content_tag(:div, t('.text'), :class => :note)) %>");
+    $("#show_exchange").replaceWith("<%= escape_javascript('<div class="note">%s</div>' % t('.text')) %>");
   <% end %>
 
 <% else %>

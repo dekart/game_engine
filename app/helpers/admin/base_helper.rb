@@ -11,8 +11,11 @@ module Admin::BaseHelper
 
         flash.discard(key)
 
-        result << content_tag(:div, value,
-          options.reverse_merge(:id => :flash, :class => key)
+        result << (
+          '<div %s>%s</div>' % [
+            tag_options(options.reverse_merge(:id => :flash, :class => key)),
+            value
+          ]
         )
       end
     end
@@ -28,7 +31,10 @@ module Admin::BaseHelper
     )
     
     result = [
-      content_tag(:span, object.state.to_s.titleize, :class => object.state)
+      '<span class="%s"></span>' % [
+        object.state,
+        object.state.to_s.titleize
+      ]
     ]
     
     if options[:controls]
@@ -72,19 +78,26 @@ module Admin::BaseHelper
         :html   => {:class => 'move_lower'}
       )
     end
-    
-    content_tag(:div, controls.join(' ').html_safe, :id => dom_id(object, :position_controls))
+
+    (
+      '<div id="%s">%s</div>' % [
+        dom_id(object, :position_controls),
+        controls.join(' ')
+      ]
+    ).html_safe
   end
-  
+
   def admin_title(value, doc_topic = nil)
     @admin_title = value
 
     label = [
       value,
       (admin_documentation_link(doc_topic) unless doc_topic.blank?)
-    ].compact.join(" ").html_safe
+    ].compact.join(" ")
 
-    content_tag(:h1, label, :class => :title)
+    (
+      '<h1 class="title">%s</h1>' % label
+    ).html_safe
   end
 
   def admin_documentation_link(topic)

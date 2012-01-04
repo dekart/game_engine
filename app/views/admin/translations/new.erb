@@ -3,7 +3,7 @@
 
   <%= form.text_field :value,
         :required     => true,
-        :after_field  => content_tag(:strong, t(".current_value")) + @current_value %>
+        :after_field  => '<strong>%s</strong> %s' % [t(".current_value"), @current_value] %>
 
   <%= form.submit %>
 <% end %>

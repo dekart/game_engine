@@ -35,8 +35,8 @@
         <% elsif current_character.achievements.in_progress?(type) %>
           <div class="in_progress">
             <%= percentage_bar(current_character.achievements.progress(type),
-                  :label => t('.status.in_progress', 
-                    :current  => current_character.achievements.value(type), 
+                  t('.status.in_progress',
+                    :current  => current_character.achievements.value(type),
                     :goal     => type.value
                   )
                 ) %>

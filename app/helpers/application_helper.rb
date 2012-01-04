@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   MAINTENANCE_SETTINGS_PATH = Rails.root.join("public", "system", "maintenance.yml").to_s
-  
+
   def admin_only(&block)
     if current_user && current_user.admin? || ENV['OFFLINE']
       concat(capture(&block))
@@ -49,7 +49,10 @@ module ApplicationHelper
     options = args.extract_options!
     label = args.first
 
-    content_tag(:div, label || t(".empty_set", :default => t("common.empty_set")), options.reverse_merge(:class => :empty_set))
+    (
+      '<div class="empty_set">%s</div>' %
+        label || t(".empty_set", :default => t("common.empty_set"))
+    ).html_safe
   end
 
   def amount_select_tag(*args)
@@ -84,7 +87,7 @@ module ApplicationHelper
 
     display_keys.each do |key|
       unless flash[key].blank?
-        result << (block_given? ? capture(key, flash[key], &block) : content_tag(:p, flash[key], :class => key))
+        result << (block_given? ? capture(key, flash[key], &block) : ('<p class="key">%s</p>' % flash[key]))
       end
     end
 

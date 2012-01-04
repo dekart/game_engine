@@ -30,7 +30,7 @@
     <% builder.success do %>
       <%=  t(".messages.success",
             :amount     => @amount,
-            :item_name  => content_tag(:b, @amount > 1 ? @item.plural_name : @item.name)
+            :item_name  => '<strong>%s</strong>' % (@amount > 1 ? @item.plural_name : @item.name)
           ).html_safe %>
     <% end %>
 
@@ -40,7 +40,9 @@
           <td class="received">
             <h3><%= t(".you_received.title") %></h3>
 
-            <%= payout(:item, item_image(@inventory, :medium), :label => (@amount ? @inventory.name + t(".amount", :amount => @amount) : @inventory.name)) %>
+            <%= payout(:item, item_image(@inventory, :medium), 
+                  :label => (@amount ? @inventory.name + t(".amount", :amount => @amount) : @inventory.name)
+                ) %>
           </td>
           <td class="spent">
             <h3><%= t(".you_spent.title") %></h3>

@@ -125,7 +125,13 @@
         <table class="data">
           <% admin_statistics_references(@all.references, @day.references) do |reference, total, day| %>
             <tr>
-              <td><%= reference.present? ? reference : content_tag(:span, t(".no_reference"), :class => :empty) %></td>
+              <td>
+                <% if reference.present? %>
+                  <%= reference %>
+                <% else %>
+                  <span class="empty"><%= t(".no_reference") %></span>
+                <% end %>
+              </td>
               <td><%= total %></td>
               <td><%= "+%d" % day if day %></td>
             </tr>
@@ -149,7 +155,13 @@
             <tr>
               <td><%= l(user.created_at, :format => :short) %></td>
               <td><%= link_to(user.facebook_id, fb_profile_url(user), :target => :_blank) %></td>
-              <td><%= user.character ? link_to(user.character.character_type.name, character_url(user.character.key, :canvas => true)) : content_tag(:span, t(".no_character"), :class => :empty) %></td>
+              <td>
+                <% if user.character %>
+                  <%= link_to(user.character.character_type.name, character_url(user.character.key, :canvas => true)) %>
+                <% else %>
+                  <span class="empty"><%= t(".no_character") %></span>
+                <% end %>
+              </td>
               <td><%= user.reference %></td>
               <td>
                 <% if user.referrer.try(:character) %>

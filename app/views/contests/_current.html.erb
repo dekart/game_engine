@@ -1,21 +1,19 @@
-<% content_tag(:div, :id => :current_contest, :class => 'contest clearfix', :style => contest_logo_background(current_contest)) do %>
+<div id="current_contest" class="contest clearfix" style="<%= contest_logo_background(current_contest) %>">
   <div id="contest_info">
     <div class="description"><%= current_contest.description.html_safe if current_contest.description %></div>
-    
+
     <% if current_contest.available? %>
       <div class="current_position">
-        <%= t('.current_position', 
-              :value => content_tag(:span, 
-                current_contest.position(current_character),
-                :class => 'value') 
-              ).html_safe %>
+        <%= t('.current_position',
+              :value => '<span class="value">%s</span>' % current_contest.position(current_character)
+            ).html_safe %>
       </div>
     <% end %>
-    
+
     <% unless current_contest.finished? %>
       <%= contest_timer(current_contest) %>
     <% end %>
-    
+
     <% if current_contest.available? %>
       <div class="buttons clearfix">
         <%= contest_points_type_button(current_contest) %>
@@ -23,4 +21,4 @@
       </div>
     <% end %>
   </div>
-<% end %>
+</div>

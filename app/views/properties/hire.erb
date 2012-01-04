@@ -1,6 +1,6 @@
 <% if !@result.is_a?(Requirements::Collection) %>
   <% if @property.missing_workers? %>
-    <% dialog :id => :hire_property_dialog do |d| %>
+    <% dialog :hire_property_dialog do |d| %>
       <h2><%= t('.title') %></h2>
         
       <div class="note">

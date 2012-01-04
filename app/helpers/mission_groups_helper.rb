@@ -30,19 +30,32 @@ module MissionGroupsHelper
       groups.each do |group|
         locked  = !group.requirements.satisfies?(current_character)
 
-        result << content_tag(:li, capture(group, locked, &@group),
-          :id     => dom_id(group),
-          :class  => [dom_class(group), (:locked if locked)].compact.join(" ")
-        )
+        result << '<li id="%s" class="%s %s">%s</li>' % [
+          dom_id(group),
+          dom_class(group),
+          locked ? 'locked' : '',
+          capture(group, locked, &@group)
+        ]
       end
 
-      result = content_tag(:div,
-        [
-          content_tag(:div, content_tag(:ul, result.html_safe, :class => :clearfix), :class => 'container classic-carousel')
-        ].join(" ").html_safe,
-        :id     => :mission_group_list,
-        :class  => :clearfix
-      ) + javascript_tag("$(function(){ $('#mission_group_list').missionGroups('##{dom_id(current_group)}', #{Setting.i(:mission_group_show_limit)}) });")
+      result = (
+        %{
+          <div id="mission_group_list" class="clearfix">
+            <div class="container classic-carousel">
+              <ul class="clearfix">%s</ul>
+            </div>
+          </div>
+          <script type="text/javascript">
+            $(function(){
+              $('#mission_group_list').missionGroups('#%s', %s);
+            });
+          </script>
+        } % [
+          result,
+          dom_id(current_group),
+          Setting.i(:mission_group_show_limit)
+        ]
+      ).html_safe
 
       block_given? ? concat(result) : result
     end

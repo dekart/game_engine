@@ -1,28 +1,45 @@
 module FacebookHelper
   def fb_fan_box(options = {})
-    content_tag("fb:fan", "", {:profile_id => facepalm.app_id}.merge(options))
+    options = {:profile_id => facepalm.app_id}.merge(options)
+
+    (
+      '<fb:fan profile_id="%s" %s></fb:fan>' % [
+        options.delete(:profile_id),
+        tag_options(options)
+      ]
+    ).html_safe
   end
 
   def fb_comments(xid, options = {})
-    content_tag('fb:comments', '', options.merge(:xid => xid))
+    (
+      '<fb:comments xid="%s" %s></fb:comments>' % [
+        xid,
+        tag_options(options)
+      ]
+    ).html_safe
   end
 
   def fb_profile_pic(user, options = {})
     options[:title] ||= options[:alt]
-    
+
     image_tag(
       'https://graph.facebook.com/%s/picture?type=%s&return_ssl_resources=%d' % [
-        user.respond_to?(:facebook_id) ? user.facebook_id : user, 
+        user.respond_to?(:facebook_id) ? user.facebook_id : user,
         options[:size],
         request.ssl? ? 1 : 0
-      ], 
+      ],
       :alt    => options[:alt] || '',
       :title  => options[:title] || ''
     )
   end
-  
+
   def fb_name(user, options = {})
-    content_tag('fb:name', '', options.merge(:uid => user.respond_to?(:facebook_id) ? user.facebook_id : user))
+    (
+      '<fb:name uid="%d" %s></fb:name>' % [
+        user.respond_to?(:facebook_id) ? user.facebook_id : user,
+        tag_options(options)
+      ]
+    ).html_safe
   end
 
   def fb_profile_url(user)
