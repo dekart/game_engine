@@ -5,7 +5,7 @@
 
   <table cellspacing="0" cellpadding="0">
     <% CreditPackage.with_state(:visible).each do |package| %>
-      <% content_tag_for(:tr, package) do %>
+      <tr class="credit_package" id="<%= dom_id(package) %>">
         <td class="selector">
           <%= radio_button_tag(:credit_package_id, package.id, package.default?) %>
         </td>
@@ -17,7 +17,7 @@
           <span class="value"><%= package.price %></span>
           <%= t('.credits') %>
         </td>
-        
+
         <td class="discount">
           <% if discount = package.discount %>
             <%= t(".discount", :discount => discount) %>
@@ -25,11 +25,10 @@
             &nbsp;
           <% end %>
         </td>
-        
-      <% end %>
+      </tr>
     <% end %>
   </table>
-    
+
   <div class="buttons">
     <span class="purchase button"><%= button(:purchase) %></span>
   </div>

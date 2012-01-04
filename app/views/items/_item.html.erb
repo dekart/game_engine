@@ -1,4 +1,4 @@
-<% content_tag_for :tr, item, :class => item.availability do %>
+<tr class="item" id="<%= dom_id(item) %>">
   <td class="picture"><%= item_image(item, :small) %></td>
   <td class="info">
     <div class="name"><%= item.name %></div>
@@ -8,7 +8,7 @@
       <%= render("items/limit", :item => item) %>
     <% end %>
   </td>
-  
+
   <td class="payouts">
     <%= item_effects(item) %>
   </td>
@@ -19,4 +19,4 @@
   <td class="controls">
     <%= render("items/buy_button", :item => item) %>
   </td>
-<% end %>
+</tr>

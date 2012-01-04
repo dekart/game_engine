@@ -22,8 +22,9 @@
                 <th colspan="3"><%= t(".columns.user") %></th>
                 <th><%= t("assignments.roles.#{@assignment.role}.description") %></th>
               </tr>
+
               <% relations.each do |relation| %>
-                <% content_tag_for(:tr, relation.becomes(Relation), :"data-value" => relation.id) do %>
+                <tr class="relation" data-value="<%= relation.id %>">
                   <% if relation.is_a?(FriendRelation) %>
                     <td class="picture"><%= character_picture(relation.character) %></td>
                     <td class="name"><%= character_name(relation.character) %></td>
@@ -37,7 +38,7 @@
                     <%= relation.level %>
                   </td>
                   <td class="effect"><%= assignment_effect(@assignment, relation, :format => :short) %></td>
-                <% end %>
+                </tr>
               <% end %>
             </table>
           <% else %>

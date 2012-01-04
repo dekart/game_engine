@@ -19,10 +19,10 @@
 <table cellspacing="3" cellpadding="0">
   <tr>
     <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
-      <% content_tag_for(:td, type) do %>
+      <td class="property_type" id="<%= dom_id(type) %>">
         <% if property.new_record? %>
           <h2><%= type.name %></h2>
-        
+
           <div class="picture"><%= property_image(type, :medium) %></div>
 
           <div class="description"><%= type.description %></div>
@@ -51,7 +51,7 @@
           </div>
         <% else %>
           <h2><%= type.upgradeable? ? t(".name_with_level", :name => property.name, :level => property.level) : property.name %></h2>
-          
+
           <div class="picture"><%= property_image(type, :medium) %></div>
 
           <div class="description"><%= property.description %></div>
@@ -79,7 +79,7 @@
                     }
                   ) if property.upgradeable? %>
             </div>
-          
+
             <div class="payouts">
               <h3><%= PropertyType.human_attribute_name("income") %></h3>
 
@@ -117,7 +117,7 @@
             <div class="missing_workers"><%= t('.missing_workers', :amount => property.missing_workers) %></div>
           <% end %>
         <% end %>
-      <% end %>
+      </td>
 
       <%= cycle("", "</tr><tr>").html_safe %>
     <% end %>

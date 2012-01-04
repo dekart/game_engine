@@ -1,4 +1,4 @@
-<% content_tag_for(:tr, inventory) do %>
+<tr class="inventory" id="<%= dom_id(inventory) %>">
   <td class="picture"><%= item_image(inventory, :small) %></td>
   <td class="info">
     <div class="name"><%= inventory.name %></div>
@@ -62,7 +62,7 @@
         <div class="market_listing"><%= t(".listed_on_market") %></div>
       <% end %>
     <% end %>
-    
+
     <% if Setting.b(:inventory_exchange_enabled) && inventory.item.exchangeable %>
       <% if current_character.exchanges.in_exchange?(inventory.item) %>
         <%= link_to(button(:view_exchange), exchange_path(current_character.exchanges.exchange_by(inventory.item).key),
@@ -78,4 +78,4 @@
       <% end %>
     <% end %>
   </td>
-<% end %>
+</tr>
