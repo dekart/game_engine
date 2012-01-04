@@ -2,7 +2,7 @@ module ResultHelper
   class Builder
     attr_reader :template, :options, :type
 
-    delegate :capture, :concat, :content_tag, :dom_ready, :to => :template
+    delegate :capture, :concat, :dom_ready, :to => :template
 
     def initialize(template, type, options = {})
       @template = template

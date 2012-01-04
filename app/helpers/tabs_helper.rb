@@ -2,7 +2,7 @@ module TabsHelper
   class TabsBuilder
     attr_reader :template
 
-    delegate :dom_id, :dom_class, :content_tag, :capture, :concat, :javascript_tag, :current_character, :link_to, :t, :to => :template
+    delegate :dom_id, :dom_class, :capture, :concat, :javascript_tag, :current_character, :link_to, :t, :to => :template
 
     def initialize(template)
       @template = template

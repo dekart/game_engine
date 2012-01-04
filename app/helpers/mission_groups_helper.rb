@@ -2,7 +2,7 @@ module MissionGroupsHelper
   class GroupTabBuilder
     attr_reader :template
 
-    delegate :dom_id, :dom_class, :content_tag, :capture, :concat, :javascript_tag, :current_character, :to => :template
+    delegate :dom_id, :dom_class, :capture, :concat, :javascript_tag, :current_character, :to => :template
 
     def initialize(template)
       @template = template
