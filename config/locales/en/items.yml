@@ -6,7 +6,7 @@ en:
       buttons:
         inventory: "Go to Inventory"
     item:
-      package_size: "(Pack of %{amount}) %{help_link}"
+      package_size: "(per %{amount} %{help_link})"
     specials:
       header: "Limited Time Offers"
       buttons:

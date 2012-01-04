@@ -67,18 +67,18 @@ module ItemsHelper
 
   def item_package(item, &block)
     if item.package_size > 1
-      content_tag(:span, 
-        t('items.item.package_size', 
-          :amount     => item.package_size, 
-          :help_link  => help_link(:items_package)
-        ).html_safe, 
-        :class => :package_size
-      )
+      (
+        '<span class="package_size">%s</span>' %
+          t('items.item.package_size',
+            :amount     => item.package_size,
+            :help_link  => help_link(:items_package)
+          )
+      ).html_safe
     end
   end
-  
+
   protected
-  
+
     def item_image_tooltip_options(item, tooltip)
       tooltip = {} unless tooltip.is_a?(Hash)
 

@@ -12,7 +12,10 @@
         </div>
 
         <div class="requirements">
-          <h3><%= Item.human_attribute_name("price") %></h3>
+          <h3>
+            <%= Item.human_attribute_name("price") %>
+            <%= item_package(item) %>
+          </h3>
 
           <%= attribute_requirement(:basic_money, number_to_currency(item.basic_price)) if item.basic_price > 0 %>
           <%= vip_money_requirement(item.vip_price) if item.vip_price > 0 %>

@@ -9,12 +9,15 @@
         </div>
       </td>
       <td>
-        <div class="name"><%= discount.item.name %> <%= item_package(discount.item) %></div>
+        <div class="name"><%= discount.item.name %></div>
                     
         <div class="description"><%= discount.item.description %></div>
 
         <div class="requirements">
-          <h3><%= PersonalDiscount.human_attribute_name("price") %></h3>
+          <h3>
+            <%= PersonalDiscount.human_attribute_name("price") %>
+            <%= item_package(discount.item) %>
+          </h3>
 
           <%= attribute_requirement(:basic_money, number_to_currency(discount.item.basic_price)) if discount.item.basic_price > 0 %>
           <%= vip_money_requirement(discount.price, 
