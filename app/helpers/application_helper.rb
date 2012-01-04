@@ -17,10 +17,10 @@ module ApplicationHelper
       block_given? ? yield(text) : text
     end
   end
-  
+
   def yield_once(group)
     @yield_once ||= {}
-    
+
     if !@yield_once[group] and @yield_once[group] = yield
       @yield_once[group]
     end
@@ -62,7 +62,7 @@ module ApplicationHelper
     values.uniq!
     values.sort!
 
-    select_tag(:amount, options_for_select(values, options[:selected]), 
+    select_tag(:amount, options_for_select(values, options[:selected]),
       :class => 'amount',
       :"data-options" => options.to_json
     )
@@ -72,7 +72,7 @@ module ApplicationHelper
     @dom_ready ||= []
 
     if content || block_given?
-      content = capture(&block) unless content 
+      content = capture(&block) unless content
       options[:prepend] ? @dom_ready.insert(0, content) : @dom_ready << content
       nil
     else
