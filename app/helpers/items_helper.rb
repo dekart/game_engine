@@ -45,16 +45,18 @@ module ItemsHelper
     if item.price?
       result = [].tap do |prices|
         if item.basic_price > 0
-          prices << basic_money_tag(
+          prices << span_tag(
             attribute_requirement_text(:basic_money,
               number_to_currency(item.basic_price * amount)
-            )
+            ),
+            :basic_money
           )
         end
 
         if item.vip_price > 0
-          prices << vip_money_tag(
-            attribute_requirement_text(:vip_money, item.vip_price * amount)
+          prices << span_tag(
+            attribute_requirement_text(:vip_money, item.vip_price * amount),
+            :vip_money
           )
         end
       end
@@ -67,12 +69,12 @@ module ItemsHelper
 
   def item_package(item, &block)
     if item.package_size > 1
-      (
-        '<span class="package_size">%s</span>' %
-          t('items.item.package_size',
-            :amount     => item.package_size,
-            :help_link  => help_link(:items_package)
-          )
+      span_tag(
+        t('items.item.package_size',
+          :amount     => item.package_size,
+          :help_link  => help_link(:items_package)
+        ),
+        :package_size
       ).html_safe
     end
   end

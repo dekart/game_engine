@@ -32,4 +32,12 @@ module DesignHelper
 
     result.html_safe
   end
+
+  def strong_tag(content)
+    '<strong>%s</strong>' % content
+  end
+
+  def span_tag(content, klass = nil)
+    '<span class="%s">%s</span>' % [klass, content]
+  end
 end

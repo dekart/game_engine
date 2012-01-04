@@ -2,7 +2,7 @@
   <% if @property.errors.empty? %>
     <% builder.success do %>
       <%= t(".messages.success",
-            :property_name  => content_tag(:b, @property.name),
+            :property_name  => strong_tag(@property.name),
             :level          => @property.level
           ).html_safe %>
     <% end %>

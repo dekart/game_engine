@@ -21,9 +21,9 @@
       <strong><%= t(".price") %></strong>
 
       <% if current_character.hospital_may_heal? %>
-        <%= basic_money_tag(number_to_currency(current_character.hospital_price)) %>
+        <%= span_tag(number_to_currency(current_character.hospital_price), :basic_money).html_safe %>
       <% else %>
-        <%= vip_money_tag(Setting.i(:premium_health_price)) %>
+        <%= span_tag(Setting.i(:premium_health_price), :vip_money).html_safe %>
       <% end %>
     </p>
 

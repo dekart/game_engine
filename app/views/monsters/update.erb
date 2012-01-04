@@ -15,9 +15,11 @@
       <% end %>
 
       <% builder.success do %>
-        <%= t(".message.progress", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
+        <%= t(".message.progress",
+              :monster => strong_tag(@fight.monster.name)
+            ).html_safe %>
       <% end %>
-      
+
       <% builder.on_ready do %>
         <%= ga_track_event('Monsters', 'Attack', @fight.monster.name, @fight.monster_damage) %>
       <% end %>
@@ -27,7 +29,11 @@
 
         <div class="image"><%= monster_image(@fight.monster, :small) %></div>
 
-        <p><%= t('.dialog.message', :monster => content_tag(:strong, @fight.monster.name)).html_safe %></p>
+        <p>
+          <%= t('.dialog.message',
+                :monster => strong_tag(@fight.monster.name)
+              ).html_safe %>
+        </p>
 
         <div class="buttons">
           <%= link_to_remote(button(:reward),
@@ -43,12 +49,14 @@
       <% end %>
 
       <% builder.success do %>
-        <%= t(".message.won", :monster => content_tag(:strong, @fight.monster.name)).html_safe %>
+        <%= t(".message.won",
+              :monster => strong_tag(@fight.monster.name)
+            ).html_safe %>
       <% end %>
 
       <% builder.on_ready do %>
         $(document).trigger('monster.won');
-        
+
         <%= ga_track_event('Monsters', 'Won', @fight.monster.name) %>
       <% end %>
     <% end %>

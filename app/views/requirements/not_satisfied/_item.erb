@@ -10,7 +10,7 @@
 
       <span class="label">
         <%= t(".message",
-              :name   => content_tag(:span, requirement.item.name, :class => :value),
+              :name   => span_tag(requirement.item.name, :value),
               :amount => requirement.amount
             ).html_safe %>
       </span>
@@ -34,10 +34,7 @@
     <p>
       <%= t(".buy_missing",
             :amount => requirement.missing_amount(current_character),
-            :price  => content_tag(:span,
-              item_price_inline(requirement.item, requirement.missing_amount(current_character)),
-              :class => :price
-            )
+            :price  => span_tag(item_price_inline(requirement.item, requirement.missing_amount(current_character)), :price)
           ).html_safe %>
     </p>
 
@@ -63,7 +60,7 @@
 
       <span class="label">
         <%= t(".message",
-              :name   => content_tag(:span, requirement.item.name, :class => :value),
+              :name   => span_tag(requirement.item.name, :value),
               :amount => requirement.amount
             ).html_safe %>
       </span>

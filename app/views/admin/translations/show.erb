@@ -1,4 +1,4 @@
-<%= link_to_remote(@translation.value.present? ? @translation.value : ('<span class="empty>%s</span>' % t(".no_value")).html_safe,
+<%= link_to_remote(@translation.value.present? ? @translation.value : span_tag(t(".no_value"), :empty).html_safe,
       :url    => edit_admin_translation_path(@translation),
       :method => :get,
       :update => translation_id(@translation.key)

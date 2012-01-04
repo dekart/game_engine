@@ -20,7 +20,9 @@
     <% end %>
 
     <% builder.success do %>
-      <%= t(".messages.success", :item_name  => content_tag(:b, @discount.item.name)).html_safe %>
+      <%= t(".messages.success",
+            :item_name  => strong_tag(@discount.item.name)
+          ).html_safe %>
     <% end %>
 
     <table class="payouts">

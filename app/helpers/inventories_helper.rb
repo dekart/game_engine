@@ -44,10 +44,7 @@ module InventoriesHelper
     result = ""
 
     if count = options.delete(:count)
-      result << '<span class="count %s">%s</span>' % [
-        format,
-        count.is_a?(TrueClass) ? inventory.amount : count
-      ]
+      result << span_tag(count.is_a?(TrueClass) ? inventory.amount : count, "count #{format}")
     end
 
     result << item_image(inventory, format, options)

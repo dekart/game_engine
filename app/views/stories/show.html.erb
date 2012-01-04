@@ -2,11 +2,11 @@
   <% result_for :story, :inline => true do |builder| %>
     <% builder.success do %>
       <%= (
-            @story.interpolate(:payout_message, :app => content_tag(:strong, t('app_name'))) ||
-            t('stories.default.payout_message', :app => content_tag(:strong, t('app_name')))
+            @story.interpolate(:payout_message, :app => strong_tag(t('app_name'))) ||
+            t('stories.default.payout_message', :app => strong_tag(t('app_name')))
           ).html_safe %>
     <% end %>
-    
+
     <% builder.buttons do %>
       <%= link_to(button(:continue), @next_page, :target => :_top, :class => 'continue button') %>
     <% end %>

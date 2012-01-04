@@ -5,7 +5,7 @@
     <% if current_contest.available? %>
       <div class="current_position">
         <%= t('.current_position',
-              :value => '<span class="value">%s</span>' % current_contest.position(current_character)
+              :value => span_tag(current_contest.position(current_character), :value)
             ).html_safe %>
       </div>
     <% end %>

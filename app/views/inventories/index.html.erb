@@ -12,7 +12,7 @@
   <div class="note">
     <%= t(".free_slots.text",
           :count => free_slots,
-          :count_label => '<span class="value">%s</span>' % free_slots
+          :count_label => span_tag(free_slots, :value)
         ).html_safe %>
 
     <%= link_to(t(".free_slots.link").html_safe, equipment_inventories_path) %>

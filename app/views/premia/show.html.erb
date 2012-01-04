@@ -12,7 +12,7 @@
 <div id="tab_services" class="hash_tab">
   <div class="current_vip_money">
     <%= t(".current",
-          :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
+          :amount => span_tag(number_to_currency(current_character.vip_money), :value)
         ).html_safe %>
 
     <%= link_to(t('.get_more'), {:anchor => :buy}, {:class => :get_more})%>
@@ -79,7 +79,7 @@
     <tr>
       <td class="name">
         <%= t(".buy_points.text",
-              :amount => content_tag(:span, Setting.i(:premium_points_amount), :class => :points)
+              :amount => span_tag(Setting.i(:premium_points_amount), :points)
             ).html_safe %>
       </td>
       <td class="requirements">
@@ -118,7 +118,7 @@
     <tr>
       <td class="name">
         <%= t(".exchange_money.text",
-              :amount => content_tag(:span, number_to_currency(Setting.i(:premium_money_amount)), :class => :basic_money)
+              :amount => span_tag(number_to_currency(Setting.i(:premium_money_amount)), :basic_money)
             ).html_safe %>
       </td>
       <td class="requirements">
@@ -180,7 +180,7 @@
 <div id="tab_buy" class="hash_tab">
   <div class="current_vip_money">
     <%= t(".current",
-          :amount => content_tag(:span, number_to_currency(current_character.vip_money), :class => :value)
+          :amount => span_tag(number_to_currency(current_character.vip_money), :value)
         ).html_safe %>
   </div>
 

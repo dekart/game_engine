@@ -1,7 +1,7 @@
 module Admin::StatisticsHelper
   def admin_statistics_amount_change(value)
     t("admin.statistics.amount_change",
-      :amount => '<strong>%s</strong>' % value
+      :amount => strong_tag(value)
     ).html_safe
   end
 
@@ -33,7 +33,7 @@ module Admin::StatisticsHelper
   
   def admin_requests_average_amount(value, day)
     t("admin.statistics.average_amount",
-      :amount => '<strong>%s</strong>' % Statistics::Visits.average_amount(value, day)
+      :amount => strong_tag(Statistics::Visits.average_amount(value, day))
     ).html_safe
   end
 end

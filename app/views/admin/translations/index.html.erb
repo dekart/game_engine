@@ -13,7 +13,7 @@
       <td class="key"><%= key.split('.')[1..-1].join(' ') %></td>
 
       <td id="<%= translation_id(key) %>" class="value">
-        <%= link_to_remote(value.present? ? value : ('<span class="empty">%s</span>' % t(".no_value")).html_safe,
+        <%= link_to_remote(value.present? ? value : span_tag(t(".no_value"), :empty).html_safe,
               :url    => customization ? edit_admin_translation_path(customization) : new_admin_translation_path(:key => key),
               :method => :get,
               :update => translation_id(key)

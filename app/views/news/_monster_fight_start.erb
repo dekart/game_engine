@@ -11,7 +11,7 @@
 <div class="description">
   <%= t(news.monster_fight.summoner? ? '.text.summoned' : '.text.joined',
         :actor    => character_name_link(news.character, {}, {:useyou => true, :capitalize => true}),
-        :monster => content_tag(:strong, news.monster.name)
+        :monster  => strong_tag(news.monster.name)
       ).html_safe %>
 </div>
 

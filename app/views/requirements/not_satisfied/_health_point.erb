@@ -2,11 +2,11 @@
   <% if current_character.health_points >= requirement.value %>
     <p>
       <%= t(".restorable.message",
-            :required_value => content_tag(:strong, requirement.value),
-            :restore_time   => content_tag(:strong, (current_character.hp_restore_time(requirement.value) / 1.minute).ceil)
+            :required_value => strong_tag(requirement.value),
+            :restore_time   => strong_tag((current_character.hp_restore_time(requirement.value) / 1.minute).ceil)
           ).html_safe %>
     </p>
-    
+
     <div id="refill_options_list" class="clearfix">
       <div class="item">
         <div class="name"><%= t(".restorable.title") %></div>

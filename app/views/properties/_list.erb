@@ -12,7 +12,7 @@
   </div>
 
   <%= t(".collect_all",
-        :amount => content_tag(:strong, properties.collectable.size, :class => :value)
+        :amount => span_tag(properties.collectable.size, :value)
       ).html_safe %>
 </div>
 
@@ -88,7 +88,7 @@
 
             <div class="timer" style="<%= "display:none" if property.collectable? %>">
               <%= t(".collect_in",
-                    :value => content_tag(:span, "", :id => dom_id(property, :timer), :class => :value)
+                    :value => '<span class="value" id="%s"></span>' % dom_id(property, :timer)
                   ).html_safe %>
             </div>
 

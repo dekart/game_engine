@@ -7,7 +7,7 @@
       <td>
         <div class="text">
           <%= t(".#{notification.status}.text",
-                :clan => content_tag(:strong, notification.clan.name),
+                :clan => strong_tag(notification.clan.name),
                 :character => character_name_link(notification.character)
               ).html_safe %>
         </div>

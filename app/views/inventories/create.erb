@@ -30,7 +30,7 @@
     <% builder.success do %>
       <%=  t(".messages.success",
             :amount     => @amount,
-            :item_name  => '<strong>%s</strong>' % (@amount > 1 ? @item.plural_name : @item.name)
+            :item_name  => strong_tag(@amount > 1 ? @item.plural_name : @item.name)
           ).html_safe %>
     <% end %>
 

@@ -2,7 +2,7 @@
   <% if item.left %>
     <span class="amount_limit">
       <%= t(".amount_limit",
-            :amount => '<strong>%s</strong>' % item.left
+            :amount => strong_tag(item.left)
           ).html_safe %>
     </span>
   <% end %>

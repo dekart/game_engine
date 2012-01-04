@@ -24,14 +24,14 @@
   <div class="additional clearfix">
     <div class="header">
       <h2><%= Character::Equipment.placement_name(:additional) %></h2>
-      
+
       <%= help_link(:equipment_additional) %>
     </div>
-    
+
     <div class="container">
       <% inventory_group_placement(:additional) do |inventory, count| %>
         <%= inventory_item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true, :count => count) -%>
-        
+
         <%= link_to_remote(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
               :url    => unequip_inventory_path(inventory, :placement => :additional),
               :update => :result,
@@ -47,18 +47,15 @@
         <div class="note">
           <%= t(".additional.free_slots",
                 :count        => free_slots,
-                :count_label  => '<span class="%s"></span>' % [
-                  free_slots == 0 ? "value zero" : "value",
-                  free_slots
-                ]
+                :count_label  => span_tag(free_slots, free_slots == 0 ? "value zero" : "value")
               ).html_safe %>
 
           <%= t(".additional.relations",
                 :relations  => link_to(Character.human_attribute_name("relations"), relations_path),
-                :amount     => '<span class="value">%s</span>' % Setting.i(:character_relations_per_equipment_slot)
+                :amount     => span_tag(Setting.i(:character_relations_per_equipment_slot), :value)
               ).html_safe %>
         </div>
-        
+
       <% end %>
     </div>
 

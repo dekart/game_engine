@@ -3,7 +3,7 @@
 
   <p class="text">
     <%= t(".text",
-          :item => content_tag(:strong, notification.item.plural_name)
+          :item => strong_tag(notification.item.plural_name)
         ).html_safe %>
   </p>
 

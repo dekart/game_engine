@@ -64,7 +64,7 @@ module PayoutsHelper
   end
 
   def payout_item_label(payout)
-    name = '<span class="name">%s</span>' % payout.item.name
+    name = span_tag(payout.item.name, :name)
 
     (
       payout.amount > 1 ? t("payouts.item.label", :name => name, :amount => payout.amount) : name

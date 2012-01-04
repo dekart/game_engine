@@ -5,7 +5,7 @@
         <p>
           <%= t(".messages.success",
                 :attribute  => Character.human_attribute_name(attribute),
-                :number     => '<span class="value">%s</span>' % current_character.attributes[attribute.to_s]
+                :number     => span_tag(current_character.attributes[attribute.to_s], :value)
               ).html_safe %>
         </p>
       <% end %>

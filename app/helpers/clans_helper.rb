@@ -5,7 +5,7 @@ module ClansHelper
     else
       link_to(
         button(:create,
-          :price => '<span class="vip_money">%s</span>' % Setting.i(:clan_create_for_vip_money)
+          :price => span_tag(Setting.i(:clan_create_for_vip_money), :vip_money)
         ),
         new_clan_path,
         :class => "button"

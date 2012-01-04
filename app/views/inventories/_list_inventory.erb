@@ -6,14 +6,14 @@
     <div class="stats">
       <div class="owned">
         <%= t(".owned",
-              :amount => '<span class="value">%s</span>' % inventory.amount
+              :amount => span_tag(inventory.amount, :value)
             ).html_safe %>
       </div>
 
       <% if inventory.equipped > 0 %>
         <div class="used">
           <%= t(".equipped",
-                :amount => '<span class="value">%s</span>' % inventory.equipped
+                :amount => span_tag(inventory.equipped, :value)
               ).html_safe %>
         </div>
       <% end %>

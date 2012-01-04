@@ -1,7 +1,11 @@
 <div class="image"><%= clan_avatar(clan, :format => :medium) %></div>
 
 <div class="clearfix">
-  <%= link_to(button(:change_image, :price => vip_money_tag(Setting.i(:clan_change_image_vip_money)), "#",
+  <%= link_to_function(
+        button(:change_image,
+          :price => span_tag(Setting.i(:clan_change_image_vip_money), :vip_money)
+        ),
+        "",
         :class => "button change"
       ) %>
 </div>

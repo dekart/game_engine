@@ -63,7 +63,7 @@ module RequirementsHelper
 
   def attribute_requirement_text(attribute, value)
     t("requirements.attribute.text",
-      :amount => '<span class="value">%s</span>' % value,
+      :amount => span_tag(value, :value),
       :name   => Character.human_attribute_name(attribute.to_s)
     ).html_safe
   end
@@ -87,7 +87,7 @@ module RequirementsHelper
 
     if current_character.vip_money >= price
       link_to_remote(
-        button( :refill, :price => '<span class="amount">%s</span>' % price),
+        button( :refill, :price => span_tag(price, :amount)),
         :url    => premium_path(:type => :"refill_#{type}"),
         :method => :put,
         :update => :result,
@@ -96,7 +96,7 @@ module RequirementsHelper
 
     else
       link_to_remote(
-        button( :refill, :price => '<span class="amount">%s</span>' % price),
+        button( :refill, :price => span_tag(price, :amount)),
         :url    => refill_dialog_premium_path(
           :type => :"refill_#{type}",
           :vip_money => price
