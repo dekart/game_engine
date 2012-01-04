@@ -9,9 +9,9 @@
 
   <% if item.available_till %>
     <span class="time_limit">
-      <%= t(".time_limit",
-            :amount => '<strong id="%s"></strong>' % dom_id(item, :timer)
-          ).html_safe %>
+      <%= t(".time_limit") %>
+
+      <strong id="<%= dom_id(item, :timer) %>"></strong>
     </span>
 
     <% dom_ready do %>

@@ -18,7 +18,7 @@ module MissionsHelper
     result = ""
 
     if options[:level] and rank.mission.levels.size > 1
-      result << '<div class="level">%s</div>' % t("missions.mission.level", :level => rank.level.position)
+      result << %{<div class="level">#{ t("missions.mission.level", :level => rank.level.position) }</div>}
     end
 
     if rank.nil?
@@ -41,9 +41,12 @@ module MissionsHelper
   end
 
   def mission_money(level)
-    "%s - %s" % [number_to_currency(level.money_min), number_to_currency(level.money_max)]
+    "%s - %s" % [
+      number_to_currency(level.money_min),
+      number_to_currency(level.money_max)
+    ]
   end
-  
+
   def mission_button(mission, rank)
     if mission.button_label.blank?
       button(rank.nil? || rank.progress == 0 ? :start : :fulfill)

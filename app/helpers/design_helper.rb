@@ -10,7 +10,7 @@ module DesignHelper
 
   def title(text)
     (
-      '<h1 class="title">%s</h1>' % text
+      %{<h1 class="title">#{ text }</h1>}
     ).html_safe
   end
 
@@ -18,26 +18,27 @@ module DesignHelper
     label = key.is_a?(Symbol) ? t(".buttons.#{ key }", options) : key
 
     (
-      '<span>%s</span>' % label
+      %{<span>#{ label }</span>}
     ).html_safe
   end
 
   def percentage_bar(percentage, label = nil)
-    result = label ? ('<div class="text">%s</div>' % label) : ''
+    result = label ? %{<div class="text">#{ label }</div>} : ''
 
-    result << '<div class="progress_bar"><div class="percentage %s" style="width: %.4f%%"></div></div>' % [
-      percentage >= 100 ? 'complete': '',
-      percentage
-    ]
+    result << %{
+      <div class="progress_bar">
+        <div class="percentage #{ :complete if percentage >= 100 }" style="width: %.4f%%"></div>
+      </div>
+    } % percentage
 
     result.html_safe
   end
 
   def strong_tag(content)
-    '<strong>%s</strong>' % content
+    %{<strong>#{ content }</strong>}
   end
 
   def span_tag(content, klass = nil)
-    '<span class="%s">%s</span>' % [klass, content]
+    %{<span class="#{ klass }">#{ content }</span>}
   end
 end

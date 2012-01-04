@@ -12,10 +12,7 @@ module Admin::BaseHelper
         flash.discard(key)
 
         result << (
-          '<div %s>%s</div>' % [
-            tag_options(options.reverse_merge(:id => :flash, :class => key)),
-            value
-          ]
+          %{<div #{ tag_options(options.reverse_merge(:id => :flash, :class => key)) }>#{ value }</div>}
         )
       end
     end
@@ -59,7 +56,7 @@ module Admin::BaseHelper
 
   def admin_position_controls(object)
     controls = []
-    
+
     unless object.first?
       controls << link_to_remote(t('admin.change_position.move_higher'),
         :url    => polymorphic_url([:change_position, :admin, object], :direction => :up),
@@ -77,10 +74,7 @@ module Admin::BaseHelper
     end
 
     (
-      '<div id="%s">%s</div>' % [
-        dom_id(object, :position_controls),
-        controls.join(' ')
-      ]
+      %{<div id="#{ dom_id(object, :position_controls) }">#{ controls.join(' ') }</div>}
     ).html_safe
   end
 
@@ -93,7 +87,7 @@ module Admin::BaseHelper
     ].compact.join(" ")
 
     (
-      '<h1 class="title">%s</h1>' % label
+      %{<h1 class="title">#{ label }</h1>}
     ).html_safe
   end
 
@@ -107,17 +101,17 @@ module Admin::BaseHelper
   def admin_documentation_url(topic)
     "http://railorz.com/help/#{topic}"
   end
-  
+
   def admin_menu_link(*args)
     name, link, controllers, actions = args
-    
+
     controllers = Array.wrap(controllers)
     actions = Array.wrap(actions)
     current = (controller_name == name.to_s || (controllers.include?(controller_name))) &&
       (actions.empty? || actions.include?(action_name))
-    
+
     link_to(t(".#{ name }"), link,
-      :class => "item %s" % (:current if current)
+      :class => "item #{ :current if current }"
     )
   end
 

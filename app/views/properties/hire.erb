@@ -24,8 +24,11 @@
               <% end %>
             <% else %>
               <div class="image"><%= asset_image_tag(:worker_missing) %></div>
-          
-              <%= link_to_remote(button(:hire, :price => '<strong class="price">%s</strong>' % Setting.i(:property_worker_price)), 
+
+              <%= link_to_remote(
+                    button(:hire,
+                      :price => span_tag(Setting.i(:property_worker_price), :price)
+                    ),
                     :url => hire_property_path(@property),
                     :method => :put,
                     :update => :ajax,
@@ -37,7 +40,7 @@
           </div>
         <% end %>
       </div>
-    
+
       <div class="controls">
         <%= link_to_function(button(:invite),
               invite_dialog(:property_worker,
@@ -58,9 +61,9 @@
             ) %>
 
         <%= link_to_remote(
-              button(:hire_all, 
-                :price => '<strong class="price">%s</strong>' % (@property.missing_workers * Setting.i(:property_worker_price))
-              ), 
+              button(:hire_all,
+                :price => span_tag(@property.missing_workers * Setting.i(:property_worker_price), :price)
+              ),
               :url => hire_property_path(@property, :hire_all => true),
               :method => :put,
               :update => :ajax,
@@ -69,9 +72,9 @@
               }
             ) %>
       </div>
-      
+
       <% d.on_ready do %>
-        $(document).trigger('remote_content.received'); 
+        $(document).trigger('remote_content.received');
       <% end %>
     <% end %>
   <% else %>

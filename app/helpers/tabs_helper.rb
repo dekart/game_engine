@@ -23,17 +23,14 @@ module TabsHelper
 
       result << '<ul>'
 
-      result << @tab_names.map{|t| '<li>%s</li>' % link_to(t.last, "#" << t.first) }
+      result << @tab_names.map{|t| %{<li><a href="##{ t.first }">#{ t.last }</a></li>} }
 
       result << '</ul>'
 
-      result << @tab_contents.map{|t| '<div id="%s"></div>' % [t.first, capture(&t.last)] }
+      result << @tab_contents.map{|t| %{<div id="#{ t.first }">#{ capture(&t.last) }</div>} }
 
       result = (
-        '<div %s>%s</div>' % [
-          tag_options(options),
-          result
-        ]
+        %{<div #{ tag_options(options) }>#{ result }</div>}
       ).html_safe
 
       block_given? ? concat(result) : result

@@ -23,38 +23,36 @@ module MissionGroupsHelper
 
       yield(self)
 
-      current_group   = current_character.mission_groups.current
+      current_group = current_character.mission_groups.current
 
       result = ""
 
       groups.each do |group|
-        locked  = !group.requirements.satisfies?(current_character)
+        locked = !group.requirements.satisfies?(current_character)
 
-        result << '<li id="%s" class="%s %s">%s</li>' % [
-          dom_id(group),
-          dom_class(group),
-          locked ? 'locked' : '',
-          capture(group, locked, &@group)
-        ]
+        result << %{
+          <li
+            id="#{ dom_id(group) }"
+            class="#{ dom_class(group) } #{ :locked if locked }"
+          >
+            #{ capture(group, locked, &@group) }
+          </li>
+        }
       end
 
       result = (
         %{
           <div id="mission_group_list" class="clearfix">
             <div class="container classic-carousel">
-              <ul class="clearfix">%s</ul>
+              <ul class="clearfix">#{ result }</ul>
             </div>
           </div>
           <script type="text/javascript">
             $(function(){
-              $('#mission_group_list').missionGroups('#%s', %s);
+              $('#mission_group_list').missionGroups('##{ dom_id(current_group) }', #{ Setting.i(:mission_group_show_limit) });
             });
           </script>
-        } % [
-          result,
-          dom_id(current_group),
-          Setting.i(:mission_group_show_limit)
-        ]
+        }
       ).html_safe
 
       block_given? ? concat(result) : result

@@ -8,7 +8,9 @@
     <div id="exchangeables_tabs">
       <ul>
         <% inventories_exchangeable_grouped_by_item_group.each do |item_group, inventories| %>
-          <li><%= link_to(item_group.name, '#%s' % dom_id(item_group, :inventories)) %></li>
+          <li>
+            <a href="#<%= dom_id(item_group, :inventories) %>"><%= item_group.name %></a>
+          </li>
         <% end %>
       </ul>
 
@@ -17,7 +19,11 @@
           <ul class="carousel-container">
             <% inventories.each do |inventory| %>
               <li>
-                <div class="<%= :active if @exchange_offer.inventory == inventory %>" id="<%= dom_id(inventory, :equipment) %>" data-id="<%= inventory.item_id %>">
+                <div
+                  class="<%= :active if @exchange_offer.inventory == inventory %>"
+                  id="<%= dom_id(inventory, :equipment) %>"
+                  data-id="<%= inventory.item_id %>"
+                >
                   <%= inventory_item_image(inventory, :small,
                         :count => true,
                         :tooltip => {

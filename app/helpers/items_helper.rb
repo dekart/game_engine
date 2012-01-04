@@ -108,7 +108,7 @@ module ItemsHelper
             :text => item.name,
             :button => 'Close'
           },
-          :text => '<div class="spinner">%s</div>' % asset_image_tag(:spinner), # show spinner while tooltip loading
+          :text => %{<div class="spinner">#{ asset_image_tag(:spinner) }</div>}, # show spinner while tooltip loading
           :ajax => {
             :url => item_path(item)
           }

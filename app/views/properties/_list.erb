@@ -87,9 +87,9 @@
             </div>
 
             <div class="timer" style="<%= "display:none" if property.collectable? %>">
-              <%= t(".collect_in",
-                    :value => '<span class="value" id="%s"></span>' % dom_id(property, :timer)
-                  ).html_safe %>
+              <%= t(".collect_in") %>
+
+              <span class="value" id="<%= dom_id(property, :timer) %>"></span>
             </div>
 
             <% dom_ready do %>

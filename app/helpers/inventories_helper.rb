@@ -50,20 +50,20 @@ module InventoriesHelper
     result << item_image(inventory, format, options)
 
     (
-      '<div class="inventory_image">%s</div>' % result
+      %{<div class="inventory_image">#{ result }</div>}
     ).html_safe
   end
 
   def inventories_grouped_by_item_group(inventories)
     inventories.group_by{|i| i.item_group}.sort{|a, b| a.first.position <=> b.first.position }
   end
-  
+
   def inventories_exchangeable_grouped_by_item_group
     @inventories_exchangeable_grouped_by_item_group ||= begin
       inventories_grouped_by_item_group(current_character.inventories.exchangeable.all)
     end
   end
-  
+
   def inventories_equippable_grouped_by_item_group
     @inventories_equippable_grouped_by_item_group ||= begin
       inventories_grouped_by_item_group(current_character.inventories.equippable.all)
@@ -74,13 +74,15 @@ module InventoriesHelper
     content = capture(&block) if block_given?
 
     result = (
-      '<div class="inventory" data-placements="%s" data-equip="%s" data-unequip="%s" data-move="%s">%s</div>' % [
-        inventory.placements.join(","),
-        equip_inventory_path(inventory),
-        unequip_inventory_path(inventory, :placement => placement),
-        move_inventory_path(inventory, :from_placement => placement),
-        content
-      ]
+      %{
+        <div
+          class="inventory"
+          data-placements="#{ inventory.placements.join(",") }"
+          data-equip="#{ equip_inventory_path(inventory) }"
+          data-unequip="#{ unequip_inventory_path(inventory, :placement => placement) }"
+          data-move="#{ move_inventory_path(inventory, :from_placement => placement) }"
+        >#{ content }</div>
+      }
     ).html_safe
 
     block_given? ? concat(result) : result
@@ -92,15 +94,21 @@ module InventoriesHelper
     inventories = current_character.equipment.inventories_by_placement(placement).inject(Hash.new(0)) {|h, v| h[v] += 1; h}
 
     inventories.each_pair do |inventory, count|
-      result << '<li>%s</li>' % inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
+      result << '<li>'
+      result << inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
+      result << '</li>'
     end
 
     result = (
-      '<div class="group_placement" data-placement="%s" data-free-slots="%s"><ul class="carousel-container">%s</ul></div>' % [
-        placement,
-        current_character.equipment.available_capacity(placement),
-        result
-      ]
+      %{
+        <div
+          class="group_placement"
+          data-placement="#{ placement }"
+          data-free-slots="#{ current_character.equipment.available_capacity(placement) }"
+        >
+          <ul class="carousel-container">#{ result }</ul>
+        </div>
+      }
     ).html_safe
 
     concat(result)

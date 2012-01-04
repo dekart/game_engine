@@ -1,21 +1,15 @@
 module FacebookHelper
   def fb_fan_box(options = {})
-    options = {:profile_id => facepalm.app_id}.merge(options)
+    profile_id = options.delete(:profile_id) || facepalm.app_id
 
     (
-      '<fb:fan profile_id="%s" %s></fb:fan>' % [
-        options.delete(:profile_id),
-        tag_options(options)
-      ]
+      %{<fb:fan profile_id="#{ profile_id }" #{ tag_options(options) }></fb:fan>}
     ).html_safe
   end
 
   def fb_comments(xid, options = {})
     (
-      '<fb:comments xid="%s" %s></fb:comments>' % [
-        xid,
-        tag_options(options)
-      ]
+      %{<fb:comments xid="#{ xid }" #{ tag_options(options) }></fb:comments>}
     ).html_safe
   end
 
@@ -34,11 +28,10 @@ module FacebookHelper
   end
 
   def fb_name(user, options = {})
+    uid = user.respond_to?(:facebook_id) ? user.facebook_id : user
+
     (
-      '<fb:name uid="%d" %s></fb:name>' % [
-        user.respond_to?(:facebook_id) ? user.facebook_id : user,
-        tag_options(options)
-      ]
+      %{<fb:name uid="#{ uid }" #{ tag_options(options) }></fb:name>}
     ).html_safe
   end
 

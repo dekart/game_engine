@@ -11,8 +11,10 @@ module ResultHelper
     end
 
     def title(content = nil, &block)
+      content ||= capture(&block)
+
       result = (
-        '<h2>%s</h2>' % (content || capture(&block))
+        %{<h2>#{ content }</h2>}
       ).html_safe
 
       block_given? ? concat(result) : result
@@ -63,10 +65,14 @@ module ResultHelper
       dom_ready("$(document).trigger('result.#{options[:inline] ? :available : :received}');")
 
       (
-        '<div id="%s_result" class="result_content clearfix">%s</div>' % [
-          type,
-          [message_html, help_link_html, buttons_html, content].join
-        ]
+        %{
+          <div id="#{ type }_result" class="result_content clearfix">
+            #{ message_html }
+            #{ help_link_html }
+            #{ buttons_html }
+            #{ content }
+          </div>
+        }
       ).html_safe
     end
 
@@ -75,7 +81,7 @@ module ResultHelper
     def buttons_html
       unless @buttons.blank?
         (
-          '<div class="buttons clearfix">%s</div>' % @buttons
+          %{<div class="buttons clearfix">#{ @buttons }</div>}
         ).html_safe
       end
     end
@@ -83,10 +89,7 @@ module ResultHelper
     def message_html
       unless @message.blank?
         (
-          '<div class="%s message">%s</div>' % [
-            @message[:type],
-            @message[:content]
-          ]
+          %{<div class="#{ @message[:type] } message">#{ @message[:content] }</div>}
         ).html_safe
       end
     end
@@ -94,7 +97,7 @@ module ResultHelper
     def help_link_html
       unless @help_link.blank?
         (
-          '<div class="help">%s</div>' % @template.help_link(*@help_link)
+          %{<div class="help">#{ @template.help_link(*@help_link) }</div>}
         ).html_safe
       end
     end
@@ -108,8 +111,8 @@ module ResultHelper
 
     block_given? ? concat(content) : content
   end
-  
+
   def render_to_result(&block)
-    dom_ready("$('#result').html('#{escape_javascript(capture(&block))}');")
+    dom_ready("$('#result').html('#{ escape_javascript(capture(&block)) }');")
   end
 end

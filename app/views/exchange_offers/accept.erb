@@ -24,7 +24,7 @@
   <% end %>
 
   <% dom_ready do %>
-    $("#show_exchange").replaceWith("<%= escape_javascript('<div class="note">%s</div>' % t('.text')) %>");
+    $("#show_exchange").replaceWith("<%= escape_javascript(%{<div class="note">#{ t('.text') }</div>}) %>");
   <% end %>
 
 <% else %>

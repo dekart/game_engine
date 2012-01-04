@@ -16,32 +16,31 @@ module ContestsHelper
       dom_ready("$('##{dom_id(contest)}').timer(#{time_left});")
 
       (
-        '<div class="timer">%s</div>' %
-          t(".#{ timer_name }",
-            :value => '<span class="value" id="%s"></span>' % dom_id(contest)
-          )
+        %{
+          <div class="timer">
+            #{ t(".#{ timer_name }") }
+            <span class="value" id="#{ dom_id(contest) }"></span>
+          </div>
+        }
       ).html_safe
     end
   end
 
   def contest_current_tag(contest, &block)
-    result = '<div class="clearfix" id="current_contest" style="%s">%s</div>' % [
-      contest_logo_background(contest),
-      capture(&block)
-    ]
+    result = %{<div class="clearfix" id="current_contest" style="#{ contest_logo_background(contest) }">#{ capture(&block) }</div>}
 
     concat(result.html_safe)
   end
 
   def contest_logo_background(contest)
     if contest.pictures?
-      "background-image: url('#{contest.pictures.url}'); background-repeat: no-repeat;"
+      "background-image: url('#{ contest.pictures.url }'); background-repeat: no-repeat;"
     end
   end
-  
+
   def contest_group_table(contest_group, options = {}, &block)
     contest = contest_group.contest
-    
+
     options.reverse_merge!(
       :include_current => true,
       :current => current_character

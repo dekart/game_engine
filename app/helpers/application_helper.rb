@@ -47,10 +47,10 @@ module ApplicationHelper
 
   def empty_set(*args)
     options = args.extract_options!
-    label = args.first
+    label = args.first || t(".empty_set", :default => t("common.empty_set"))
 
     (
-      '<div class="empty_set">%s</div>' % (label || t(".empty_set", :default => t("common.empty_set")))
+      %{<div class="empty_set">#{ label }</div>}
     ).html_safe
   end
 
@@ -86,7 +86,11 @@ module ApplicationHelper
 
     display_keys.each do |key|
       unless flash[key].blank?
-        result << (block_given? ? capture(key, flash[key], &block) : ('<p class="key">%s</p>' % flash[key]))
+        if block_given?
+          result << capture(key, flash[key], &block)
+        else
+          result << %{<p class="key">#{ flash[key] }</p>}
+        end
       end
     end
 

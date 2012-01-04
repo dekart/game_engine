@@ -14,13 +14,10 @@ module DialogHelper
 
       content << @template.capture(self, &block)
 
-      content << ('<script type="text/javascript">%s</script>' % @on_ready) if @on_ready
+      content << %{<script type="text/javascript">#{ @on_ready }</script>} if @on_ready
 
       if @dialog_id
-        content = '<div id="%s">%s</div>' % [
-          @dialog_id,
-          content
-        ]
+        content = %{<div id="#{ @dialog_id }">#{ content }</div>}
       end
 
       content.html_safe
@@ -30,6 +27,6 @@ module DialogHelper
   def dialog(dialog_id = nil, &block)
     content = Builder.new(self, dialog_id).html(&block)
 
-    dom_ready("$(document).queue('dialog', function(){ $.dialog('#{escape_javascript(content).html_safe}') });")
+    dom_ready("$(document).queue('dialog', function(){ $.dialog('#{ escape_javascript(content).html_safe }') });")
   end
 end

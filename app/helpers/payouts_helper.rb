@@ -51,13 +51,16 @@ module PayoutsHelper
   end
 
   def payout(type, value, options = {}, &block)
+    label = options[:label] || Character.human_attribute_name(type.to_s)
+
     result = (
-      '<div class="%s payout"><span class="value">%s</span>%s<span class="label">%s</span></div>' % [
-        type,
-        value,
-        block_given? ? capture(&block) : "",
-        options[:label] || Character.human_attribute_name(type.to_s)
-      ]
+      %{
+        <div class="#{ type } payout">
+          <span class="value">#{ value }</span>
+          #{ capture(&block) if block_given? }
+          <span class="label">#{ label }</span>
+        </div>
+      }
     ).html_safe
 
     block_given? ? concat(result) : result

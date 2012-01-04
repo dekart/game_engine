@@ -23,7 +23,7 @@ module PromoHelper
         dom_ready('$("#promo_block").promoBlock();')
 
         (
-          '<div id="promo_block">%s</div>' % content
+          %{<div id="promo_block">#{ content }</div>}
         ).html_safe
       end
     end
@@ -45,10 +45,7 @@ module PromoHelper
       end
 
       pages_to_show.each do |id, block, options|
-        result << '<div id="promo_block_page_%s" class="page clearfix">%s</div>' % [
-          id,
-          capture(&block)
-        ]
+        result << %{<div id="promo_block_page_#{ id }" class="page clearfix">#{ capture(&block) }</div>}
       end
 
       result.html_safe

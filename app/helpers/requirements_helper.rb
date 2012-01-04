@@ -22,11 +22,7 @@ module RequirementsHelper
     satisfied = args.first
 
     result = (
-      '<div class="requirement %s %s">%s</div>' % [
-        type,
-        satisfied ? '' : 'not_satisfied',
-        value
-      ]
+      %{<div class="requirement #{ type } #{ :not_satisfied unless satisfied }">#{ value }</div>}
     ).html_safe
 
     block_given? ? concat(result) : result
@@ -45,10 +41,10 @@ module RequirementsHelper
 
     result.html_safe
   end
-  
+
   def unsatisfied_requirement_first(requirements)
     result = ""
-    
+
     requirements.each do |requirement|
       unless requirement.satisfies?(current_character)
         result = render("requirements/not_satisfied/#{requirement.name}",
@@ -57,7 +53,7 @@ module RequirementsHelper
         break
       end
     end
-    
+
     result.html_safe
   end
 
