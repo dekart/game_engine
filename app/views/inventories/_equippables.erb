@@ -1,21 +1,18 @@
 <div id="equippables">
   <% if inventories_equippable_grouped_by_item_group.any? %>
-  
+
     <div id="equippables-tabs">
       <ul>
         <% inventories_equippable_grouped_by_item_group.each do |item_group, inventories| %>
           <li><%= link_to(item_group.name, "##{dom_id(item_group, :inventories)}") %></li>
         <% end %>
       </ul>
-      
+
       <% inventories_equippable_grouped_by_item_group.each do |item_group, inventories| %>
-        <% div_for(item_group, :inventories) do %>
+        <div class="item_group" id="<%= dom_id(item_group, :inventories) %>">
           <ul class="carousel-container">
             <% inventories.each do |inventory| %>
-              <% content_tag_for(:li, inventory, :equipment, 
-                  :'data-placements'  => inventory.placements.join(','),
-                  :'data-equip'       => equip_inventory_path(inventory)
-                ) do %>
+              <li class="inventory" id="<%= dom_id(inventory, :equipment) %>" data-placements="<%= inventory.placements.join(',') %>" data-equip="<%= equip_inventory_path(inventory) %>">
                 <%= inventory_item_image(inventory, :small, 
                       :count => inventory.amount_available_for_equipment, 
                       :tooltip => {
@@ -25,20 +22,20 @@
                         }
                       }
                     ) %>
-              <% end %>
+              </li>
             <% end %>
           </ul>
-        <% end %>
+        </div>
       <% end %>
     </div>
-    
+
     <div class="drag_tip">
       <%= t(".drag_tip") %>
     </div>
-    
+
   <% else %>
-  
+
     <%= empty_set %>
-    
+
   <% end %>
 </div>

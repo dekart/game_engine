@@ -2,7 +2,7 @@
 
 <div class="note" id="achievement_permissions">
   <p><%= t('.permissions') %></p>
-  
+
   <%= link_to_function(button(:permissions), "AchievementList.requestPermissions()",
         :class => 'permissions button'
       ) %>
@@ -10,13 +10,13 @@
 
 <div id="achievement_list">
   <% achievement_list(@achievement_types) do |type, achievement| %>
-    <% div_for(type, :class => :clearfix) do %>
+    <div class="achievement_type clearfix" id="<%= dom_id(type) %>">
       <div class="image"><%= image_tag(type.pictures.url(:small)) if type.pictures? %></div>
-      
+
       <div class="status">
         <% if current_character.achievements.achieved?(type) %>
           <div class="achieved"><%= t('.status.achieved') %></div>
-          
+
           <div class="buttons">
             <%= link_to_remote(button(:collect),
                   :url => achievement_path(achievement),
@@ -45,10 +45,10 @@
           <div class="locked"><%= t('.status.locked') %></div>
         <% end %>
       </div>
-      
+
       <div class="name"><%= type.name %></div>
       <div class="description"><%= type.description %></div>
-    <% end %>
+    </div>
   <% end %>
 </div>
 

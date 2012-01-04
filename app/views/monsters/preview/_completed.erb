@@ -1,11 +1,11 @@
-<% div_for(monster, :class => :clearfix) do %>
+<div class="monster clearfix" id="<%= dom_id(monster) %>">
   <div class="image"><%= link_to(monster_image(monster, :normal), monster) %></div>
-  
+
   <div class="info">
     <div class="name"><%= monster.name %></div>
     <div class="description"><%= monster.description %></div>
   </div>
-  
+
   <div class="status info">
     <% if monster.won? %>
       <%= t('.won') %>
@@ -21,4 +21,4 @@
       <%= link_to(button(:view), monster, :class => "view button") %>
     <% end %>
   </div>
-<% end %>
+</div>

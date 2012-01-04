@@ -1,4 +1,4 @@
-<% div_for(collection, :class => :clearfix) do %>
+<div class="item_collection clearfix" id="<%= dom_id(collection) %>">
   <div class="info">
     <h2><%= collection.name %></h2>
 
@@ -10,8 +10,8 @@
           <div class="image"><%= item_image(item, :small) %></div>
           <div class="amount">
             <% if collection.amount_of_item(item) > 1 %>
-              <%= t(".required_amount", 
-                    :required => collection.amount_of_item(item), 
+              <%= t(".required_amount",
+                    :required => collection.amount_of_item(item),
                     :amount => inventory.try(:amount).to_i
                    ) %>
             <% else %>
@@ -49,4 +49,4 @@
           ) %>
     </div>
   </div>
-<% end %>
+</div>

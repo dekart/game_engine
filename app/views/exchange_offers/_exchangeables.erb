@@ -1,27 +1,25 @@
 <div class="exchangeables">
   <h2><%= t(".make_offer") %></h2>
-  
+
   <% if inventories_exchangeable_grouped_by_item_group.any? %>
-  
+
     <p><%= t(".exchangeables_help") %></p>
-  
+
     <div id="exchangeables_tabs">
       <ul>
         <% inventories_exchangeable_grouped_by_item_group.each do |item_group, inventories| %>
-          <li><%= link_to(item_group.name, "##{dom_id(item_group, :inventories)}") %></li>
+          <li><%= link_to(item_group.name, '#%s' % dom_id(item_group, :inventories)) %></li>
         <% end %>
       </ul>
-      
+
       <% inventories_exchangeable_grouped_by_item_group.each do |item_group, inventories| %>
-        <% div_for(item_group, :inventories) do %>
+        <div class="item_group" id="<%= dom_id(item_group, :inventories) %>">
           <ul class="carousel-container">
             <% inventories.each do |inventory| %>
-            <li>
-                <% div_for(inventory, :equipment, 
-                      :'data-id' => inventory.item.id, 
-                      :class => ('active' if @exchange_offer.inventory == inventory)) do %>
-                  <%= inventory_item_image(inventory, :small, 
-                        :count => true, 
+              <li>
+                <div class="<%= :active if @exchange_offer.inventory == inventory %>" id="<%= dom_id(inventory, :equipment) %>" data-id="<%= inventory.item_id %>">
+                  <%= inventory_item_image(inventory, :small,
+                        :count => true,
                         :tooltip => {
                           :position => {
                             :my => 'bottom center',
@@ -29,29 +27,29 @@
                           }
                         }
                       ) %>
-                <% end %>
-              <% end %>
-            </li>
+                </div>
+              </li>
+            <% end %>
           </ul>
-        <% end %>
+        </div>
       <% end %>
     </div>
-    
+
     <% form_for(@exchange_offer) do |f| %>
       <%= f.hidden_field :exchange_id %>
       <%= f.hidden_field :item_id %>
       <%= f.text_field :amount %>
-    
-      <%= link_to_function(button(:add), "$(this).parent('form').submit()", 
-            :class => 'button add', 
+
+      <%= link_to_function(button(:add), "$(this).parent('form').submit()",
+            :class => 'button add',
             :"data-click-once" => true
           ) %>
     <% end %>
-  
+
   <% else %>
-  
+
     <p><%= t(".empty_inventory") %></p>
-    
+
   <% end %>
 </div>
 

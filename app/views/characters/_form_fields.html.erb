@@ -5,10 +5,10 @@
     <% types = capture do %>
       <div id="character_types" class="clearfix">
         <% @character_types.each do |type| %>
-          <% div_for(type, :'data-value' => type.id) do %>
+          <div class="character_type" id="<%= dom_id(type) %>" data-value="<%= type.id %>">
             <span class="name"><%= type.name %></span>
             <%= image_tag(type.pictures.url(:small)) if type.pictures? %>
-          <% end %>
+          </div>
         <% end %>
       </div>
     <% end %>
