@@ -28,7 +28,7 @@ gem 'faraday'
 
 gem 'koala', '~> 1.2.0'
 
-gem 'facepalm'
+gem 'facepalm', '~> 0.2'
 
 group :development do
   gem "capistrano",     "2.5.20"
