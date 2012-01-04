@@ -16,10 +16,11 @@
     <% type_descriptions = capture do %>
       <div id="character_type_descriptions" style="display:none;">
         <% @character_types.each do |type| %>
-          <% content_tag :div, :class => :description, :id => dom_id(type, :description) do %>
+          <div class="description" id="<%= dom_id(type, :description) %>">
             <h3><%= type.name %></h3>
+
             <p><%= type.description %></p>
-          <% end %>
+          </div>
         <% end %>
       </div>
     <% end %>
