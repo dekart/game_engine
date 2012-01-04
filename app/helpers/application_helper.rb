@@ -50,8 +50,7 @@ module ApplicationHelper
     label = args.first
 
     (
-      '<div class="empty_set">%s</div>' %
-        label || t(".empty_set", :default => t("common.empty_set"))
+      '<div class="empty_set">%s</div>' % (label || t(".empty_set", :default => t("common.empty_set")))
     ).html_safe
   end
 
