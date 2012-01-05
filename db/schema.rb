@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223124037) do
+ActiveRecord::Schema.define(:version => 20120105143955) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -355,14 +355,6 @@ ActiveRecord::Schema.define(:version => 20111223124037) do
   end
 
   add_index "exchanges", ["character_id"], :name => "index_exchanges_on_character_id"
-
-  create_table "facebook_templates", :force => true do |t|
-    t.string "template_name", :null => false
-    t.string "content_hash",  :null => false
-    t.string "bundle_id"
-  end
-
-  add_index "facebook_templates", ["template_name"], :name => "index_facebook_templates_on_template_name", :unique => true
 
   create_table "fights", :force => true do |t|
     t.integer  "attacker_id",                                    :null => false
