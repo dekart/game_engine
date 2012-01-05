@@ -1,8 +1,8 @@
 module DialogHelper
   class Builder
-    def initialize(template, dialog_id = nil)
+    def initialize(template, dom_id = nil)
       @template = template
-      @dialog_id = dialog_id
+      @dom_id = dom_id
     end
 
     def on_ready(&block)
@@ -16,16 +16,16 @@ module DialogHelper
 
       content << %{<script type="text/javascript">#{ @on_ready }</script>} if @on_ready
 
-      if @dialog_id
-        content = %{<div id="#{ @dialog_id }">#{ content }</div>}
+      if @dom_id
+        content = %{<div id="#{ @dom_id }">#{ content }</div>}
       end
 
       content.html_safe
     end
   end
 
-  def dialog(dialog_id = nil, &block)
-    content = Builder.new(self, dialog_id).html(&block)
+  def dialog(dom_id = nil, &block)
+    content = Builder.new(self, dom_id).html(&block)
 
     dom_ready("$(document).queue('dialog', function(){ $.dialog('#{ escape_javascript(content).html_safe }') });")
   end
