@@ -270,20 +270,20 @@ describe Character::Equipment do
       @character.equipment.unequip!(@inventory, :additional)
     end
   end
-  
+
   describe 'best inventory' do
     before do
       @character  = Factory(:character)
-      
+
       @item1 = Factory(:item,
         :effects => [
-          {:type => :attack, :value => 10}, 
+          {:type => :attack, :value => 10},
           {:type => :defence, :value => 1}
         ]
       )
       @item2 = Factory(:item,
         :effects => [
-          {:type => :attack, :value => 1}, 
+          {:type => :attack, :value => 1},
           {:type => :defence, :value => 10}
         ]
       )
@@ -295,29 +295,28 @@ describe Character::Equipment do
       )
       @item4 = Factory(:item,
         :effects => [
-          {:type => :attack, :value => 2}, 
+          {:type => :attack, :value => 2},
           {:type => :defence, :value => 2}
         ]
       )
-      
+
       @inventory1 = Factory(:inventory, :character => @character, :item => @item1)
       @inventory2 = Factory(:inventory, :character => @character, :item => @item2)
       @inventory3 = Factory(:inventory, :character => @character, :item => @item3)
       @inventory4 = Factory(:inventory, :character => @character, :item => @item4)
-      
-      @character.equipment.placements = {
-        :additional => [@inventory3.id, @inventory4.id], 
-        :left_hand  => [@inventory1.id],
-        :right_hand => [@inventory2.id]
-      }
+
+      @character.equipment.equip!(@inventory1, :left_hand)
+      @character.equipment.equip!(@inventory2, :additional)
+      @character.equipment.equip!(@inventory3, :additional)
+      @character.equipment.equip!(@inventory4, :additional)
     end
-    
+
     it 'should return best offence items' do
       @character.equipment.best_offence.should == [@inventory1, @inventory3, @inventory4]
     end
-    
+
     it 'should return best defence items' do
-      @character.equipment.best_defence.should == [@inventory2, @inventory3, @inventory4]
+      @character.equipment.best_defence.map(&:id).should == [@inventory2.id, @inventory3.id, @inventory4.id]
     end
   end
 end
