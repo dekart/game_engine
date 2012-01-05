@@ -166,7 +166,7 @@ class Item < ActiveRecord::Base
 
     def with_effect(name)
       scoped(
-        :conditions => ["items.id IN (?)", with_effect_ids(name)]
+        :conditions => ["items.id IN (?)", [0] + with_effect_ids(name)]
       )
     end
   end
