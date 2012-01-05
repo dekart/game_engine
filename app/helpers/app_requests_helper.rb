@@ -1,6 +1,6 @@
 module AppRequestsHelper
   def app_requests_counter
-    amount = Rails.cache.fetch(AppRequest::Base.cache_key(current_user), :expires_in => 10.minutes) do
+    amount = Rails.cache.fetch(AppRequest::Base.cache_key(current_user)) do
       current_character.app_requests.visible.count
     end
 
