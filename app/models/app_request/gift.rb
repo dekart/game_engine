@@ -10,7 +10,7 @@ class AppRequest::Gift < AppRequest::Base
   class << self
     def ids_to_exclude_for(character)
       Rails.cache.fetch(exclude_ids_cache_key(character), :expires_in => 15.minutes) do
-        from_character(character).sent_after(Setting.i(:gifting_repeat_accept_delay).hours.ago).receiver_ids
+        from_character(character).sent_after(repeat_accept_timeframe).receiver_ids
       end
     end
 
@@ -18,15 +18,22 @@ class AppRequest::Gift < AppRequest::Base
       "character_#{ receiver.id }_accepted_gift_senders"
     end
 
+    def repeat_accept_timeframe
+      Setting.i(:gifting_repeat_accept_delay).hours.ago
+    end
+
     def accepted_recently?(sender, receiver)
       if time = $redis.zscore(receiver_cache_key(receiver), sender.id)
-        Setting.i(:gifting_repeat_accept_delay).hours.ago.to_i < time.to_i
+        repeat_accept_timeframe.to_i < time.to_i
       else
         false
       end
     end
 
     def store_accept_time(sender, receiver)
+      # Remove already expired records
+      $redis.zremrangebyscore(receiver_cache_key(receiver), 0, repeat_accept_timeframe.to_i)
+
       $redis.zadd(receiver_cache_key(receiver), Time.now.to_i, sender.id)
     end
   end
