@@ -9,7 +9,7 @@
         <%= t(".text",
               :name   => span_tag(requirement.property_type.name, :value),
               :level  => requirement.level
-            ).html_safe! %>
+            ).html_safe %>
       <% else %>
         <span class="value"><%= requirement.property_type.name %></span>
       <% end %>

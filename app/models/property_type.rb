@@ -89,11 +89,11 @@ class PropertyType < ActiveRecord::Base
   def plural_name
     self[:plural_name].blank? ? name.pluralize : self[:plural_name]
   end
-  
+
   def description
-    self[:description].to_s.html_safe!
+    self[:description].to_s.html_safe
   end
-  
+
   def worker_names
     self[:worker_names].split(/[\n,]/).map{|n| n.strip }
   end
@@ -101,7 +101,7 @@ class PropertyType < ActiveRecord::Base
   def upgrade_price(level)
     upgrade_cost_increase ? basic_price + upgrade_cost_increase * level : basic_price
   end
-  
+
   def default_requirements
     @requirements ||= Requirements::Collection.new.tap do |r|
       r << Requirements::BasicMoney.new(:value => basic_price) if basic_price > 0
@@ -109,5 +109,5 @@ class PropertyType < ActiveRecord::Base
       r << Requirements::Level.new(:value => level, :visible => false)
     end
   end
-  
+
 end
