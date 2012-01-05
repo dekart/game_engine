@@ -3,7 +3,7 @@
     <span class="state"><%= admin_state(effect, :controls => false) %></span>
   <% end %>
 
-  <div class="<%= effect_name %>">
+  <div class="value">
     <%= "%s: %d" % [Item.human_attribute_name(effect.name), effect.value] %>
   </div>
 </div>

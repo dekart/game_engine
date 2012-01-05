@@ -2,7 +2,7 @@ module TabsHelper
   class TabsBuilder
     attr_reader :template
 
-    delegate :dom_id, :dom_class, :capture, :concat, :javascript_tag, :current_character, :link_to, :t, :to => :template
+    delegate :dom_id, :dom_class, :capture, :concat, :javascript_tag, :current_character, :link_to, :t, :tag_options, :to => :template
 
     def initialize(template)
       @template = template
@@ -23,11 +23,11 @@ module TabsHelper
 
       result << '<ul>'
 
-      result << @tab_names.map{|t| %{<li><a href="##{ t.first }">#{ t.last }</a></li>} }
+      result << @tab_names.map{|t| %{<li><a href="##{ t.first }">#{ t.last }</a></li>} }.join
 
       result << '</ul>'
 
-      result << @tab_contents.map{|t| %{<div id="#{ t.first }">#{ capture(&t.last) }</div>} }
+      result << @tab_contents.map{|t| %{<div id="#{ t.first }">#{ capture(&t.last) }</div>} }.join
 
       result = (
         %{<div #{ tag_options(options) }>#{ result }</div>}
