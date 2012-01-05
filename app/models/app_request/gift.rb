@@ -48,29 +48,29 @@ class AppRequest::Gift < AppRequest::Base
   def item_gift?
     item && item.availability == :gift
   end
-  
+
   #prevent hacking
   def gift_for_yourself?
-    sender == receiver 
+    sender == receiver
   end
-  
+
   def correct?
     item_gift? && !gift_for_yourself?
   end
-  
+
   def acceptance_error
     I18n.t('activerecord.errors.models.app_request/gift.accepted_recently', :hours => Setting.i(:gifting_repeat_accept_delay))
   end
-  
+
   # FIXME remove temporary support of old data keys
   def item
     target || (Item.find(data['item_id']) if data && data['item_id'])
   end
-  
+
   def can_send_back?
     !AppRequest::Gift.ids_to_exclude_for(receiver).include?(sender.facebook_id)
   end
-  
+
   protected
 
   def after_accept
