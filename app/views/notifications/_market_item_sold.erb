@@ -1,9 +1,9 @@
-<% dialog :id => :market_item_notification do |d| %>
+<% dialog :market_item_notification do |d| %>
   <h2><%= t(".title") %></h2>
 
   <p class="text">
     <%= t(".text",
-          :item => content_tag(:strong, notification.item.plural_name)
+          :item => strong_tag(notification.item.plural_name)
         ).html_safe %>
   </p>
 

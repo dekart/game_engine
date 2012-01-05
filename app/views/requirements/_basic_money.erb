@@ -1,4 +1,4 @@
 <%= requirement(requirement.name,
-      t(".text", :amount => content_tag(:span, requirement.value, :class => :value)),
+      t(".text", :amount => span_tag(requirement.value, :value)),
       satisfied
     ) %>

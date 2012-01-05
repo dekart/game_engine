@@ -9,7 +9,7 @@
     <% builder.success do %>
       <%= t(".messages.success",
             :amount         => @amount,
-            :property_name  => content_tag(:b, @property.name)
+            :property_name  => strong_tag(@property.name)
           ).html_safe %>
     <% end %>
     

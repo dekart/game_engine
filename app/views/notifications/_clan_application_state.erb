@@ -1,4 +1,4 @@
-<% dialog :id => :clan_application_state_notification do |d| %>
+<% dialog :clan_application_state_notification do |d| %>
   <h2><%= t(".#{notification.status}.title") %></h2>
   
   <table width="100%">
@@ -9,11 +9,11 @@
       <td>
         <div class="text">
           <%= t(".#{notification.status}.text",
-                :clan => content_tag(:strong, notification.clan.name),
+                :clan => strong_tag(notification.clan.name),
                 :applicant => (notification.status == "asked" ? character_name_link(notification.applicant) : nil)
               ).html_safe %>
         </div>
-        
+
         <% if notification.status == "accepted" %>
           <div class="buttons">
             <%= link_to(button(:view_clan), clan_path(notification.clan), :class => "view button") %>

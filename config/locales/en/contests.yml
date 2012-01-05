@@ -1,8 +1,8 @@
 en:
   contests:
     current:
-      start_time: "Contest will start in %{value}"
-      finish_time: "Time Left: %{value}"
+      start_time: "Contest will start in"
+      finish_time: "Time Left:"
       current_position: "You are #%{value}"
       buttons:
         fights: "Fight!"

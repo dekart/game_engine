@@ -9,9 +9,13 @@
           }
         ) %>
   </div>
-  
-  <p><%= t('.message', :amount => content_tag(:strong, help_results.count)).html_safe %></p>
-  
+
+  <p>
+    <%= t('.message',
+          :amount => strong_tag(help_results.count)
+        ).html_safe %>
+  </p>
+
   <table>
     <tr>
       <td class="payouts">

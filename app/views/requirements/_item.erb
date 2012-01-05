@@ -12,7 +12,7 @@
 
       <span class="label">
         <%= t(".text",
-              :name   => content_tag(:span, requirement.item.name, :class => :value),
+              :name   => span_tag(requirement.item.name, :value),
               :amount => requirement.amount
             ).html_safe %>
       </span>
@@ -25,7 +25,7 @@
 
       <span class="label">
         <%= t(".text",
-              :name   => content_tag(:span, requirement.item.name, :class => :value),
+              :name   => span_tag(requirement.item.name, :value),
               :amount => requirement.amount
             ).html_safe %>
       </span>

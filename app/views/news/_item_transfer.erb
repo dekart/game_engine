@@ -10,7 +10,9 @@
   <%= t(".text",
         :actor  => character_name_link(news.character),
         :items  => news.items.collect{|item, amount| 
-          content_tag(:strong, t('.item', :name => item.name, :amount => amount))
+          strong_tag(
+            t('.item', :name => item.name, :amount => amount)
+          )
         }.join(', ').html_safe
       ).html_safe %>
 </div>

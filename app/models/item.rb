@@ -157,6 +157,18 @@ class Item < ActiveRecord::Base
     def boost_types_to_dropdown
       BOOST_TYPES.keys.map {|b| b.to_s}
     end
+
+    def with_effect_ids(name)
+      Rails.cache.fetch("items_with_#{ name }_effect", :expires_in => 15.minutes) do
+        Item.all(:select => "items.id, items.effects").select { |i| i.effect(name) != 0 }.collect { |i| i.id }
+      end
+    end
+
+    def with_effect(name)
+      scoped(
+        :conditions => ["items.id IN (?)", with_effect_ids(name)]
+      )
+    end
   end
 
   (%w{basic_price vip_price}).each do |attribute|

@@ -1,7 +1,7 @@
-<% content_tag :div, :class => requirement.name do %>
+<div class="<%= requirement.name %>">
   <% if requirement.respond_to?(:state) and requirement.state != 'visible' %>
     <span class="state"><%= admin_state(requirement, :controls => false) %></span>
   <% end %>
-  
+
   <%= requirement %>
-<% end %>
+</div>

@@ -1,11 +1,11 @@
-<% div_for(monster, :class => :clearfix) do %>
+<div class="monster clearfix" id="<%= dom_id(monster) %>">
   <div class="image"><%= link_to(monster_image(monster, :normal), monster) %></div>
-  
+
   <div class="info">
     <div class="name"><%= monster.name %></div>
     <div class="description"><%= monster.description %></div>
   </div>
-  
+
   <% payout_list(monster.monster_type, monster.monster_type.applicable_payouts, :format => :preview, :triggers => fight.payout_triggers) do |p| %>
     <div class="payouts info">
       <h3><%= Monster.human_attribute_name("payouts") %></h3>
@@ -13,13 +13,13 @@
       <%= p.payout_list %>
     </div>
   <% end %>
-  
+
   <div class="info">
     <div class="fight_time">
       <span class="label"><%= t('.time_remaining') %></span>
       <span class="value"></span>
     </div>
-    
+
     <div class="health">
       <%= monster_health_bar(monster) %>
     </div>
@@ -34,7 +34,7 @@
       <%= link_to(button(:reward), monster, :class => "reward button") %>
     <% end %>
   </div>
-<% end %>
+</div>
 
 <% dom_ready do %>
   $('#<%= dom_id(monster) %> .fight_time .value').timer(<%= monster.time_remaining %>);

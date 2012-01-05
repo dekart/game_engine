@@ -10,7 +10,7 @@ en:
       you_spent:
         title: "You spent:"
       you_received:
-        title: "You received:"  
+        title: "You received:"
       need_workers: "This building requires %{amount} workers to function. You need to hire them to activate your new building."
     index:
       title: "My Estates"
@@ -18,7 +18,7 @@ en:
     list:
       name_with_level: "%{name} (Level %{level})"
       collect_all: "You have %{amount} estates ready for collection"
-      collect_in: "Collect in: %{value}"
+      collect_in: "Collect in:"
       missing_workers: "Missing %{amount} workers!"
       buttons:
         buy: "Build"

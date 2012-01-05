@@ -45,16 +45,18 @@ module ItemsHelper
     if item.price?
       result = [].tap do |prices|
         if item.basic_price > 0
-          prices << content_tag(:span,
-            attribute_requirement_text(:basic_money, number_to_currency(item.basic_price * amount)),
-            :class => :basic_money
+          prices << span_tag(
+            attribute_requirement_text(:basic_money,
+              number_to_currency(item.basic_price * amount)
+            ),
+            :basic_money
           )
         end
 
         if item.vip_price > 0
-          prices << content_tag(:span,
+          prices << span_tag(
             attribute_requirement_text(:vip_money, item.vip_price * amount),
-            :class => :vip_money
+            :vip_money
           )
         end
       end
@@ -67,12 +69,12 @@ module ItemsHelper
 
   def item_package(item, &block)
     if item.package_size > 1
-      (
-        '<span class="package_size">%s</span>' %
-          t('items.item.package_size',
-            :amount     => item.package_size,
-            :help_link  => help_link(:items_package)
-          )
+      span_tag(
+        t('items.item.package_size',
+          :amount     => item.package_size,
+          :help_link  => help_link(:items_package)
+        ),
+        :package_size
       ).html_safe
     end
   end
@@ -96,17 +98,17 @@ module ItemsHelper
         }
       }.deep_merge(tooltip)
     end
-    
+
     def item_image_tooltip_on_click_options(item, tooltip)
       tooltip = {} unless tooltip.is_a?(Hash)
-      
+
       tooltip = {
         :content => {
           :title => {
             :text => item.name,
             :button => 'Close'
           },
-          :text => content_tag(:div, asset_image_tag(:spinner), :class => 'spinner'), # show spinner while tooltip loading
+          :text => %{<div class="spinner">#{ asset_image_tag(:spinner) }</div>}, # show spinner while tooltip loading
           :ajax => {
             :url => item_path(item)
           }

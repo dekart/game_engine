@@ -1,9 +1,10 @@
 <td class="message">
-  <%= t('.text', 
-        :user => character_name_link(app_request.sender), 
-        :property => content_tag(:strong, app_request.target.name)
+  <%= t('.text',
+        :user => character_name_link(app_request.sender),
+        :property => strong_tag(app_request.target.name)
       ).html_safe %>
 </td>
+
 <td class="image">
   <%= property_image(app_request.target, :small) %>
 </td>

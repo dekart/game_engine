@@ -57,7 +57,7 @@ module CharactersHelper
     percentage = character.hp.to_f / character.health_points * 100
 
     percentage_bar(percentage,
-      :label => "%s: %d/%d" % [
+      "%s: %d/%d" % [
         Character.human_attribute_name("health"),
         character.hp,
         character.health_points

@@ -51,7 +51,7 @@
       <td class="rank_list">
         <% if titles = @character.titles.with_state(:visible) and titles.any? %>
           <% titles.each do |title| %>
-            <%= content_tag(:div, title.name, :class => :rank) %>
+            <div class="rank"><%= title.name %></div>
           <% end %>
         <% else %>
           <% if @character == current_character %>

@@ -6,13 +6,12 @@
     ) %>
 
 <%= form.text_area(:content,
-      :before_field => content_tag(:comment,
-        t(".comments.content.text",
+      :before_field => (
+        '<div class="comment">%s</div>' % t(".comments.content.text",
           :documentation => link_to(t(".comments.content.documentation"), "http://railorz.com/help/help_pages/#formatting",
             :target => :_blank
           )
-        ).html_safe,
-        :class => :comment
-      ),
+        )
+      ).html_safe,
       :cols => 120
     ) %>

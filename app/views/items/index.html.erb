@@ -15,8 +15,8 @@
 <% if @next_item %>
   <div id="next_item">
     <%= t(".next_item",
-          :level => content_tag(:span, @next_item.level, :class => :level),
-          :group => content_tag(:span, @next_item.item_group.name.mb_chars.downcase, :class => :weapon)
+          :level => span_tag(@next_item.level, :level),
+          :group => span_tag(@next_item.item_group.name.mb_chars.downcase, :weapon)
         ).html_safe %>
   </div>
 <% end %>

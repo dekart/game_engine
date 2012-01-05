@@ -1,15 +1,15 @@
 <div id="exchanges">
   <%= title(t(".title")) %>
-  
+
   <%= render("inventories/buttons", :current => :exchanges) %>
-  
+
   <div class="exchanges">
     <h2><%= t(".my_exchanges") %></h2>
-    
+
     <% collection(@my_exchanges) do %>
       <table cellpadding="0" cellspacing="0">
         <% @my_exchanges.each do |exchange| %>
-          <% content_tag_for(:tr, exchange) do %>
+          <tr class="exchange" id="<%= dom_id(exchange) %>">
             <td class="image">
               <%= link_to(item_image(exchange.item, :small, :tooltip => true), exchange_path(exchange.key)) %>
             </td>
@@ -18,31 +18,31 @@
             </td>
             <td class="text">
               <h3><%= t('.text') %></h3>
-              
+
               <%= exchange.text %>
             </td>
             <td class="buttons">
-              <%= link_to_function(button(:publish), stream_dialog(:exchange, exchange), 
+              <%= link_to_function(button(:publish), stream_dialog(:exchange, exchange),
                     :class => 'button publish'
                   ) %>
-                  
-              <%= link_to(button(:view), exchange_path(exchange.key), 
+
+              <%= link_to(button(:view), exchange_path(exchange.key),
                     :class => 'button view'
                   ) %>
             </td>
-          <% end %>
+          </tr>
         <% end %>
       </table>
     <% end %>
   </div>
-  
+
   <div class="exchange_offers">
     <h2><%= t(".participant_exchanges") %></h2>
-    
+
     <% collection(@participant_exchanges) do %>
       <table cellpadding="0" cellspacing="0">
         <% @participant_exchanges.each do |exchange| %>
-          <% content_tag_for(:tr, exchange) do %>
+          <tr class="exchange" id="<%= dom_id(exchange) %>">
             <td class="image">
               <%= link_to(item_image(exchange.item, :small, :tooltip => true), exchange_path(exchange.key)) %>
             </td>
@@ -51,16 +51,16 @@
             </td>
             <td class="text">
               <h3><%= t('.text') %></h3>
-            
+
               <%= exchange.text %>
             </td>
-            
+
             <td class="buttons">
-               <%= link_to(button(:view), exchange_path(exchange.key), 
+               <%= link_to(button(:view), exchange_path(exchange.key),
                     :class => 'button view'
                   ) %>
             </td>
-          <% end %>
+          </tr>
         <% end %>
       </table>
     <% end %>

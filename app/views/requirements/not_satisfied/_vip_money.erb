@@ -1,12 +1,13 @@
 <% requirement(requirement.name, false) do %>
   <p>
     <% if requirement.value %>
-      <%= t(".message", :required_value => vip_money_tag(requirement.value)).html_safe %>
+      <%= t(".message",
+            :required_value => span_tag(requirement.value, :vip_money)
+          ).html_safe %>
     <% else %>
       <%= t(".message_without_value").html_safe %>
     <% end %>
   </p>
-  
 <% end %>
 
 <%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>

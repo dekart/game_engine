@@ -2,7 +2,7 @@
   <p><%= t(".text") %></p>
   <p>
     <%= t(".placements",
-          :amount => content_tag(:span, Setting.i(:character_relations_per_equipment_slot), :class => :value)
+          :amount => span_tag(Setting.i(:character_relations_per_equipment_slot), :value)
         ).html_safe %>
   </p>
 </div>

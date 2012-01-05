@@ -3,7 +3,7 @@ module BossFightsHelper
     percentage = fight.health.to_f / fight.boss.health * 100
 
     percentage_bar(percentage,
-      :label => "%s: %d/%d" % [
+      "%s: %d/%d" % [
         Boss.human_attribute_name("health"),
         fight.health,
         fight.boss.health

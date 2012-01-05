@@ -40,19 +40,19 @@ module TutorialsHelper
     
     button_to_function(value, options)
   end
-  
+
   def append_buttons(options = {})
     if (buttons = options[:buttons])
-      
+
       if buttons.respond_to?(:join)
         buttons = buttons.join
       end
-      
+
       options[:content][:text] ||= ""
-      options[:content][:text] << content_tag(:div, buttons.html_safe, :class => 'buttons')
+      options[:content][:text] << '<div class="buttons"></div>' % buttons
     end
   end
-  
+
   def tutorial_dialog(options = {})
     options[:content] ||= {}
     

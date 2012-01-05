@@ -21,7 +21,7 @@
 
           <%= attribute_requirement(:basic_money, number_to_currency(discount.item.basic_price)) if discount.item.basic_price > 0 %>
           <%= vip_money_requirement(discount.price, 
-                content_tag(:span, t('.discount', :amount => discount.percentage), :class => :discount)
+                span_tag(t('.discount', :amount => discount.percentage), :discount)
               ) %>
 
           <div class="limit">

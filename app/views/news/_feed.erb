@@ -7,11 +7,11 @@
 
   <% collection(news) do %>
     <% news.each do |post| %>
-      <% content_tag(:div, :class => [post.type_name, :news, :clearfix].join(' '), :id => dom_id(post)) do %>
+      <div id="<%= dom_id(post) %>" class="<%= [post.type_name, :news, :clearfix].join(' ') %>">
         <div class="time"><%= l(post.created_at, :format => :short) %>:</div>
 
         <%= render("news/#{post.type_name}", :news => post) %>
-      <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>

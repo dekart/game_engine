@@ -18,22 +18,22 @@ module MissionsHelper
     result = ""
 
     if options[:level] and rank.mission.levels.size > 1
-      result << content_tag(:div, t("missions.mission.level", :level => rank.level.position), :class => :level)
+      result << %{<div class="level">#{ t("missions.mission.level", :level => rank.level.position) }</div>}
     end
 
     if rank.nil?
       result << percentage_bar(0,
-        :label => "%s: %d%" % [Mission.human_attribute_name("progress"), 0]
+        "%s: %d%" % [Mission.human_attribute_name("progress"), 0]
       )
     elsif rank.completed?
-      result << percentage_bar(100, 
-        :label => "%s: %d%" % [Mission.human_attribute_name("progress"), 100]
+      result << percentage_bar(100,
+        "%s: %d%" % [Mission.human_attribute_name("progress"), 100]
       )
     else
       percentage = rank.progress_percentage
 
       result << percentage_bar(percentage,
-        :label => "%s: %d%" % [Mission.human_attribute_name("progress"), percentage]
+        "%s: %d%" % [Mission.human_attribute_name("progress"), percentage]
       )
     end
 
@@ -41,9 +41,12 @@ module MissionsHelper
   end
 
   def mission_money(level)
-    "%s - %s" % [number_to_currency(level.money_min), number_to_currency(level.money_max)]
+    "%s - %s" % [
+      number_to_currency(level.money_min),
+      number_to_currency(level.money_max)
+    ]
   end
-  
+
   def mission_button(mission, rank)
     if mission.button_label.blank?
       button(rank.nil? || rank.progress == 0 ? :start : :fulfill)

@@ -2,7 +2,7 @@ module MissionGroupsHelper
   class GroupTabBuilder
     attr_reader :template
 
-    delegate :dom_id, :dom_class, :content_tag, :capture, :concat, :javascript_tag, :current_character, :to => :template
+    delegate :dom_id, :dom_class, :capture, :concat, :javascript_tag, :current_character, :to => :template
 
     def initialize(template)
       @template = template
@@ -23,26 +23,37 @@ module MissionGroupsHelper
 
       yield(self)
 
-      current_group   = current_character.mission_groups.current
+      current_group = current_character.mission_groups.current
 
       result = ""
 
       groups.each do |group|
-        locked  = !group.requirements.satisfies?(current_character)
+        locked = !group.requirements.satisfies?(current_character)
 
-        result << content_tag(:li, capture(group, locked, &@group),
-          :id     => dom_id(group),
-          :class  => [dom_class(group), (:locked if locked)].compact.join(" ")
-        )
+        result << %{
+          <li
+            id="#{ dom_id(group) }"
+            class="#{ dom_class(group) } #{ :locked if locked }"
+          >
+            #{ capture(group, locked, &@group) }
+          </li>
+        }
       end
 
-      result = content_tag(:div,
-        [
-          content_tag(:div, content_tag(:ul, result.html_safe, :class => :clearfix), :class => 'container classic-carousel')
-        ].join(" ").html_safe,
-        :id     => :mission_group_list,
-        :class  => :clearfix
-      ) + javascript_tag("$(function(){ $('#mission_group_list').missionGroups('##{dom_id(current_group)}', #{Setting.i(:mission_group_show_limit)}) });")
+      result = (
+        %{
+          <div id="mission_group_list" class="clearfix">
+            <div class="container classic-carousel">
+              <ul class="clearfix">#{ result }</ul>
+            </div>
+          </div>
+          <script type="text/javascript">
+            $(function(){
+              $('#mission_group_list').missionGroups('##{ dom_id(current_group) }', #{ Setting.i(:mission_group_show_limit) });
+            });
+          </script>
+        }
+      ).html_safe
 
       block_given? ? concat(result) : result
     end

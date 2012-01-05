@@ -10,6 +10,12 @@ class Inventory < ActiveRecord::Base
       :order      => "items.level ASC, items.basic_price ASC"
     }
   }
+  named_scope :by_item_id, Proc.new{|ids|
+    {
+      :conditions => ["inventories.item_id IN (?)", [0] + ids], # 0 is required to correctly return empty set when ids is empty
+      :include    => :item
+    }
+  }
   named_scope :equipped, :conditions => "equipped > 0"
   named_scope :equippable,
     :include => :item,
