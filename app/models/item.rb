@@ -26,9 +26,6 @@ class Item < ActiveRecord::Base
           (
             items.available_till IS NULL OR
             items.available_till > ?
-          ) AND (
-            items.limit IS NULL OR
-            items.limit > items.owned
           )
         },
         Time.now
@@ -187,10 +184,6 @@ class Item < ActiveRecord::Base
     self[:availability].to_sym
   end
 
-  def left
-    limit.to_i > 0 ? limit - owned : nil
-  end
-
   def time_left
     (available_till - Time.now).to_i
   end
@@ -262,5 +255,13 @@ class Item < ActiveRecord::Base
   
   def boost_for_monster_attack?
     effect(:health) > 0
+  end
+
+  def increment_owned(value)
+    $redis.hincrby("items_owned", id, value)
+  end
+
+  def owned
+    $redis.hget("items_owned", id)
   end
 end

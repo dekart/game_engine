@@ -1,12 +1,4 @@
 <div class="limit">
-  <% if item.left %>
-    <span class="amount_limit">
-      <%= t(".amount_limit",
-            :amount => strong_tag(item.left)
-          ).html_safe %>
-    </span>
-  <% end %>
-
   <% if item.available_till %>
     <span class="time_limit">
       <%= t(".time_limit") %>

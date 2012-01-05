@@ -21,7 +21,7 @@
           <%= vip_money_requirement(item.vip_price) if item.vip_price > 0 %>
         </div>
 
-        <% if item.left or item.available_till %>
+        <% if item.available_till %>
           <%= render("items/limit", :item => item) %>
         <% end %>
 

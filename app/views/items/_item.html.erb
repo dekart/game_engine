@@ -4,7 +4,7 @@
     <div class="name"><%= item.name %></div>
     <div class="description"><%= item.description %></div>
 
-    <% if item.left or item.available_till %>
+    <% if item.available_till %>
       <%= render("items/limit", :item => item) %>
     <% end %>
   </td>
