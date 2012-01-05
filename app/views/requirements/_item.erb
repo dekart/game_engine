@@ -1,5 +1,5 @@
 <% requirement(requirement.name, satisfied) do %>
-  <% if [:shop, :special].include?(requirement.item.availability) && !satisfied %>
+  <% if Item::PURCHASEABLE.include?(requirement.item.availability) && !satisfied %>
     <p>
       <span class="image">
         <%= item_image(requirement.item, :icon,
@@ -12,7 +12,7 @@
 
       <span class="label">
         <%= t(".text",
-              :name   => content_tag(:span, requirement.item.name, :class => :value),
+              :name   => span_tag(requirement.item.name, :value),
               :amount => requirement.amount
             ).html_safe %>
       </span>
@@ -25,7 +25,7 @@
 
       <span class="label">
         <%= t(".text",
-              :name   => content_tag(:span, requirement.item.name, :class => :value),
+              :name   => span_tag(requirement.item.name, :value),
               :amount => requirement.amount
             ).html_safe %>
       </span>

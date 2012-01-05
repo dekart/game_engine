@@ -27,6 +27,12 @@ class Admin::GlobalTasksController < Admin::BaseController
     render :layout => false
   end
 
+  def clear_memcache
+    Rails.cache.clear
+
+    render :layout => false
+  end
+
   protected
 
   def delete_user_limit

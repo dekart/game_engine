@@ -3,7 +3,7 @@
     <%= t(".types.#{type}.#{destination}") %>
     <%= help_link("boosts_#{type}_#{destination}") %>
   </h3>
-  
+
   <div class="boost_content">
     <div class="container classic-carousel">
       <ul>
@@ -12,8 +12,8 @@
             <%= render("inventories/boost", :boost => boost, :destination => destination) %>
           </li>
         <% end %>
-        
-        <% current_character.boosts.not_owned(type, destination).each do |item| %>
+
+        <% current_character.boosts.available_for_purchase(type, destination).each do |item| %>
           <li>
             <div class="boost not_owned" data-item-id="<%= item.id %>" id="<%= boost_dom_id(item, destination) %>">
               <%= item_image(item, :small, :tooltip => true, :tooltip_on_click => true) %>

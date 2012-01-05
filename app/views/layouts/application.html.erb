@@ -50,9 +50,11 @@
     <%= render("layouts/spinner") %>
 
     <% if result = yield(:result) and !result.blank? %>
-      <%= content_tag(:div, result, :id => :result) %>
+      <div id="result">
+        <%= result %>
+      </div>
     <% else %>
-      <%= content_tag(:div, "", :id => :result, :style => "display:none;") %>
+      <div id="result" style="display:none;"></div>
     <% end %>
 
     <% if (current_boss_fights = current_character.boss_fights.with_state(:progress)).any? %>

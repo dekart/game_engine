@@ -1,6 +1,6 @@
 <div id="wall_post_list">
   <% wall_posts.each do |post| %>
-    <% div_for(post, :class => "clearfix #{:author_post if post.author_post?}") do %>
+    <div class="wall_post clearfix <%= :author_post if post.author_post? %>" id="<%= dom_id(post) %>">
       <% group_header(post.author) do %>
         <div class="author">
           <div class="name"><%= character_name_link(post.author) %></div>
@@ -28,7 +28,7 @@
               ) %>
         </div>
       <% end %>
-    <% end %>
+    </div>
   <% end %>
 
   <%= will_paginate(wall_posts, :renderer => 'WallPostsHelper::PaginationRenderer') %>

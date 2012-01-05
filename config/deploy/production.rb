@@ -18,7 +18,7 @@ default_environment["RAILS_ENV"] = "production"
 set :facebook_config, {
   :app_id           => "your_fb_app_id",
   :secret           => "your_fb_api_secret",
-  :canvas_page_name => "your_fb_canvas_page",
+  :namespace        => "your_fb_namespace",
   :callback_domain  => "your_domain"
 }
 

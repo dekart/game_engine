@@ -9,6 +9,6 @@
 <div class="description">
   <%= t(".text",
         :actor    => character_name_link(news.character, {}, {:useyou => true, :capitalize => true}),
-        :property => content_tag(:strong, news.property.name)
+        :property => strong_tag(news.property.name)
       ).html_safe %>
 </div>

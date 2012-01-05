@@ -56,9 +56,9 @@
   </tr>
 </table>
 
-<% content_tag(:div, :class => :item_details, :id => dom_id(fight, :items)) do %>
+<div class="item_details" id="<%= dom_id(fight, :items) %>">
   <%= link_to_remote(t(".show_items"),
         :url    => used_items_fight_path(fight),
         :update => dom_id(fight, :items)
       ) %>
-<% end %>
+</div>

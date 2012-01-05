@@ -13,7 +13,7 @@
     <% builder.success do %>
       <%= t(".messages.success",
             :amount     => @item.amount,
-            :item_name  => content_tag(:b, @item.amount > 1 ? @item.plural_name : @item.name)
+            :item_name  => strong_tag(@item.amount > 1 ? @item.plural_name : @item.name)
           ).html_safe %>
     <% end %>
 

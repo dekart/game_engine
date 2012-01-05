@@ -2,7 +2,7 @@
   <% builder.success do %>
     <%= t(".messages.success",
           :amount     => @amount,
-          :item_name  => content_tag(:b, @amount > 1 ? @inventory.plural_name : @inventory.name)
+          :item_name  => strong_tag(@amount > 1 ? @inventory.plural_name : @inventory.name)
         ).html_safe %>
   <% end %>
 

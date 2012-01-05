@@ -1,7 +1,7 @@
 <% requirement(requirement.name, false) do %>
   <p>
     <%= t(".message",
-          :required_value => content_tag(:strong, requirement.value),
+          :required_value => strong_tag(requirement.value),
 
           :invite   => link_to(t(".invite"), new_relation_path),
           :premium  => link_to(t(".premium"), premium_path)

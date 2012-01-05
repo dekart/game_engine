@@ -1,11 +1,11 @@
 development:
   app_id: 118981661496259
   secret: 595d71a95f7036acb91e022bd2d6bb46
-  canvas_page_name: railorz-dev-two
+  namespace: railorz-dev-two
   callback_domain: fbdev2.railorz.com
 
 test:
   app_id: 123456789
   secret: 21ba0987654321dcba0987654321dcba
-  canvas_page_name: test
+  namespace: test
   callback_domain: callback.url

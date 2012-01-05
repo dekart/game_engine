@@ -12,17 +12,17 @@
   </div>
 
   <%= t(".collect_all",
-        :amount => content_tag(:strong, properties.collectable.size, :class => :value)
+        :amount => span_tag(properties.collectable.size, :value)
       ).html_safe %>
 </div>
 
 <table cellspacing="3" cellpadding="0">
   <tr>
     <% property_type_list(PropertyType.available_for(current_character), properties) do |type, property| %>
-      <% content_tag_for(:td, type) do %>
+      <td class="property_type" id="<%= dom_id(type) %>">
         <% if property.new_record? %>
           <h2><%= type.name %></h2>
-        
+
           <div class="picture"><%= property_image(type, :medium) %></div>
 
           <div class="description"><%= type.description %></div>
@@ -51,7 +51,7 @@
           </div>
         <% else %>
           <h2><%= type.upgradeable? ? t(".name_with_level", :name => property.name, :level => property.level) : property.name %></h2>
-          
+
           <div class="picture"><%= property_image(type, :medium) %></div>
 
           <div class="description"><%= property.description %></div>
@@ -79,7 +79,7 @@
                     }
                   ) if property.upgradeable? %>
             </div>
-          
+
             <div class="payouts">
               <h3><%= PropertyType.human_attribute_name("income") %></h3>
 
@@ -87,9 +87,9 @@
             </div>
 
             <div class="timer" style="<%= "display:none" if property.collectable? %>">
-              <%= t(".collect_in",
-                    :value => content_tag(:span, "", :id => dom_id(property, :timer), :class => :value)
-                  ).html_safe %>
+              <%= t(".collect_in") %>
+
+              <span class="value" id="<%= dom_id(property, :timer) %>"></span>
             </div>
 
             <% dom_ready do %>
@@ -117,7 +117,7 @@
             <div class="missing_workers"><%= t('.missing_workers', :amount => property.missing_workers) %></div>
           <% end %>
         <% end %>
-      <% end %>
+      </td>
 
       <%= cycle("", "</tr><tr>").html_safe %>
     <% end %>

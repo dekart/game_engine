@@ -35,7 +35,7 @@ class ItemCollection < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
-  
+
   def amount_of_item(item)
     amount_items[item_ids.index(item.id)] || 1
   end
@@ -47,11 +47,11 @@ class ItemCollection < ActiveRecord::Base
   def item_ids=(value)
     self[:item_ids] = value.is_a?(Array) ? value.join(",") : value
   end
-  
+
   def amount_items
     self[:amount_items].to_s.split(",").collect{|i| i.to_i }
   end
-  
+
   def amount_items=(value)
     self[:amount_items] = Array.wrap(value).collect{|a| a.blank? ? "1" : a }.join(",")
   end
@@ -73,18 +73,16 @@ class ItemCollection < ActiveRecord::Base
       }
     )
   end
-  
+
   def missing_items(character)
-    result = items
-    
-    character.inventories.each do |inventory|
-      if items.include?(inventory.item) && inventory.amount >= amount_of_item(inventory.item)
-        result.delete(inventory.item)
+    items.dup.tap do |result|
+      character.inventories.each do |inventory|
+        if items.include?(inventory.item) && inventory.amount >= amount_of_item(inventory.item)
+          result.delete(inventory.item)
+        end
       end
     end
-      
-    result
-  end 
+  end
 
   def event_data
     data = {
@@ -92,7 +90,7 @@ class ItemCollection < ActiveRecord::Base
       :reference_type => "Collection"
     }
   end
-  
+
   def enough_of?(inventory)
     inventory.amount >= amount_of_item(inventory.item)
   end

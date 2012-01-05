@@ -1,4 +1,4 @@
-<% content_tag_for(:tr, inventory) do %>
+<tr class="inventory" id="<%= dom_id(inventory) %>">
   <td class="picture"><%= item_image(inventory, :small) %></td>
   <td class="info">
     <div class="name"><%= inventory.name %></div>
@@ -6,21 +6,21 @@
     <div class="stats">
       <div class="owned">
         <%= t(".owned",
-              :amount => content_tag(:span, inventory.amount, :class => :value)
+              :amount => span_tag(inventory.amount, :value)
             ).html_safe %>
       </div>
 
       <% if inventory.equipped > 0 %>
         <div class="used">
           <%= t(".equipped",
-                :amount => content_tag(:span, inventory.equipped, :class => :value)
+                :amount => span_tag(inventory.equipped, :value)
               ).html_safe %>
         </div>
       <% end %>
     </div>
   </td>
   <td class="payouts">
-    <%= render("items/effects", :item => inventory) %>
+    <%= item_effects(inventory.item) %>
   </td>
   <td class="controls">
     <%= link_to_remote(inventory_use_button(inventory),
@@ -62,7 +62,7 @@
         <div class="market_listing"><%= t(".listed_on_market") %></div>
       <% end %>
     <% end %>
-    
+
     <% if Setting.b(:inventory_exchange_enabled) && inventory.item.exchangeable %>
       <% if current_character.exchanges.in_exchange?(inventory.item) %>
         <%= link_to(button(:view_exchange), exchange_path(current_character.exchanges.exchange_by(inventory.item).key),
@@ -78,4 +78,4 @@
       <% end %>
     <% end %>
   </td>
-<% end %>
+</tr>

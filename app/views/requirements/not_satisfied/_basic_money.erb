@@ -1,15 +1,23 @@
 <% requirement(requirement.name, false) do %>
   <p>
-    <%= t(".message", :required_value => basic_money_tag(requirement.value)).html_safe %>
+    <%= t(".message",
+          :required_value => span_tag(requirement.value, :basic_money)
+        ).html_safe %>
   </p>
+
   <p>
-    <%= t(".visit_to_mission", :mission_page => link_to(t("layouts.main_menu.missions"), mission_groups_path)).html_safe %>
+    <%= t(".visit_to_mission",
+          :mission_page => link_to(t("layouts.main_menu.missions"), mission_groups_path)
+        ).html_safe %>
   </p>
+
   <p>
-    <%= t(".get_more", :premium_page => link_to(t("layouts.main_menu.items"), items_path(:anchor => :services))).html_safe %>
+    <%= t(".get_more",
+          :premium_page => link_to(t("layouts.main_menu.items"), items_path(:anchor => :services))
+        ).html_safe %>
   </p>
-  
-  <%= link_to(button(:get_more_money), items_path(:anchor => :services), 
+
+  <%= link_to(button(:get_more_money), items_path(:anchor => :services),
         :class => 'get_more_money button'
       ) %>
 <% end %>

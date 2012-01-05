@@ -15,7 +15,7 @@
   <% if app_request.can_send_back? %>
     <%= gift_send_button(app_request.item, 
           :dialog => {:to => app_request.sender.facebook_id}, 
-          :before => "$('##{ dom_id(app_request) }').find('.send.button').replaceWith('<span class=\"sending\">#{ t('.sending') }</span>');",
+          :before => "$('##{ dom_id(app_request) }').find('.send.button').replaceWith('#{ escape_javascript(span_tag(t('.sending'), :sending)).html_safe }');",
           :callback => "$('##{ dom_id(app_request) }').find('.controls .sending').text('#{ t('.sent') }').removeClass('sending').addClass('sent');"
         ) %>
   <% end %>

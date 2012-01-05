@@ -5,7 +5,7 @@ en:
       success_message: "You've successfully sent %{amount} invitations to your friends!"
       invitation_message: "Join my Alliance in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
       recommended: "We recommend you to invite these friends:"
-      invitation_sent: "Invitation was sent"
+      invitation_sent: "Invitation sent!"
       buttons:
         invite: "Invite"
         invite_all: "Choose Friends to Invite"

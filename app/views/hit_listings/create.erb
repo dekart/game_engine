@@ -3,7 +3,7 @@
 
   <p class="message">
     <%= t(".message",
-          :reward => content_tag(:span, number_to_currency(@hit_listing.reward), :class => "attribute basic_money"),
+          :reward => span_tag(number_to_currency(@hit_listing.reward), 'attribute basic_money'),
           :victim => character_name_link(@hit_listing.victim)
         ).html_safe %>
   </p>

@@ -1,9 +1,5 @@
 class Character
   module Levels
-    def self.included(base)
-      base.extend(ClassMethods)
-    end
-    
     DATA_FILE = Rails.root.join('db', 'data', 'experience.txt').to_s
         
     EXPERIENCE = File.file?(DATA_FILE) ? File.read(DATA_FILE).split(/\s+/im).map{|v| v.strip.to_i } : []

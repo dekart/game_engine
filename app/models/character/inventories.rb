@@ -10,7 +10,7 @@ class Character
         has_many :items, :through => :inventories
       end
     end
-    
+
     module AssociationExtension
       def give(item, amount = 1)
         amount = amount.to_i
@@ -30,7 +30,7 @@ class Character
 
         transaction do
           if inventory.save
-            Item.update_counters(inventory.item_id, :owned => amount)
+            inventory.item.increment_owned(amount)
 
             equip!(inventory)
           end
@@ -48,7 +48,7 @@ class Character
 
         transaction do
           if inventory.save and proxy_owner.save
-            Item.update_counters(inventory.item_id, :owned => effective_amount)
+            inventory.item.increment_owned(effective_amount)
 
             equip!(inventory)
 
@@ -62,7 +62,7 @@ class Character
       def sell!(item, amount = 1)
         if inventory = find_by_item(item)
           inventory.deposit_money = true
-          
+
           take!(inventory, amount)
         else
           false
@@ -74,16 +74,16 @@ class Character
           transaction do
             if inventory.amount > amount
               inventory.amount -= amount
-              
+
               inventory.save
             else
               amount = inventory.amount
-              
+
               inventory.destroy
             end
 
-            Item.update_counters(inventory.item_id, :owned => - amount)
-            
+            inventory.item.increment_owned(-amount)
+
             proxy_owner.save
 
             unequip!(inventory)

@@ -28,7 +28,7 @@ en:
       monster_invite:
         text: "%{user} invites you to join fight against %{monster}"
         buttons:
-          view: 'View Monster'
+          view: 'View'
       invitation:
         text: "%{user} invites you to join their Alliance"
         buttons:
@@ -36,7 +36,7 @@ en:
       clan_invite:
         text: "%{user} invites you to join their Clan %{clan}"   
         buttons:
-          view: 'View Clan'
+          view: 'View'
       property_worker:
         text: "%{user} asks you to help them finish the %{property}"
         buttons:

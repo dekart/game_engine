@@ -6,6 +6,7 @@ class Item < ActiveRecord::Base
   include HasVisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
+  PURCHASEABLE = [:shop, :special]
 
   BOOST_TYPES = {
     :fight => [:attack, :defence], 
@@ -25,9 +26,6 @@ class Item < ActiveRecord::Base
           (
             items.available_till IS NULL OR
             items.available_till > ?
-          ) AND (
-            items.limit IS NULL OR
-            items.limit > items.owned
           )
         },
         Time.now
@@ -146,7 +144,7 @@ class Item < ActiveRecord::Base
     end
     
     def purchaseable_for(character)
-      available_in(:shop, :special).available_for(character)
+      available_in(*PURCHASEABLE).available_for(character)
     end
     
     def gifts_for(character)
@@ -155,6 +153,18 @@ class Item < ActiveRecord::Base
     
     def boost_types_to_dropdown
       BOOST_TYPES.keys.map {|b| b.to_s}
+    end
+
+    def with_effect_ids(name)
+      Rails.cache.fetch("items_with_#{ name }_effect", :expires_in => 15.minutes) do
+        Item.all(:select => "items.id, items.effects").select { |i| i.effect(name) != 0 }.collect { |i| i.id }
+      end
+    end
+
+    def with_effect(name)
+      scoped(
+        :conditions => ["items.id IN (?)", [0] + with_effect_ids(name)]
+      )
     end
   end
 
@@ -175,11 +185,7 @@ class Item < ActiveRecord::Base
   end
 
   def limited?
-    left || available_till
-  end
-
-  def left
-    limit.to_i > 0 ? limit - owned : nil
+    available_till
   end
 
   def time_left
@@ -253,5 +259,13 @@ class Item < ActiveRecord::Base
   
   def boost_for_monster_attack?
     effect(:health) > 0
+  end
+
+  def increment_owned(value)
+    $redis.hincrby("items_owned", id, value)
+  end
+
+  def owned
+    $redis.hget("items_owned", id)
   end
 end

@@ -13,7 +13,7 @@
         <div class="name"><%= item.name %></div>
 
         <div class="payouts">
-          <%= render("items/effects", :item => item) %>
+          <%= item_effects(item) %>
         </div>
 
         <div class="controls">

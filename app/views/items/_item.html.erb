@@ -1,4 +1,4 @@
-<% div_for(item) do %>
+<div class="item" id="<%= dom_id(item) %>">
   <div class="picture"><%= item_image(item, :medium) %></div>
 
   <div class="info">
@@ -9,7 +9,7 @@
     <% end %>
 
     <div class="payouts">
-      <%= render("items/effects", :item => item) %>
+      <%= item_effects(item) %>
     </div>
   </div>
 
@@ -24,4 +24,4 @@
 
     <%= render("items/limit", :item => item) if item.limited? %>
   </div>
-<% end %>
+</div>

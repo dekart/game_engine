@@ -35,7 +35,10 @@
           <span class="control deselect_all"><%= t('.stats.deselect_all') %></span> 
           <span class="control select_all"><%= t('.stats.select_all') %></span> 
 
-          <%= t('.stats.text', :value => '<span class="value"></span>', :total => '<span class="total"></span>').html_safe %>
+          <%= t('.stats.text',
+                :value => '<span class="value"></span>',
+                :total => '<span class="total"></span>'
+              ).html_safe %>
         </div>
       </div>
     </div>

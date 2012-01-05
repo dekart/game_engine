@@ -1,7 +1,7 @@
 <td class="message">
-  <%= t(".text", 
+  <%= t(".text",
         :user => character_name_link(app_request.sender),
-        :clan => content_tag(:strong, app_request.sender.clan.name)
+        :clan => strong_tag(app_request.sender.clan.name)
        ).html_safe %>
 </td>
 <td class="image">
