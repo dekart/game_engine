@@ -316,7 +316,7 @@ describe Character::Equipment do
     end
 
     it 'should return best defence items' do
-      @character.equipment.best_defence.map(&:id).should == [@inventory2.id, @inventory3.id, @inventory4.id]
+      @character.equipment.best_defence.should == [@inventory2, @inventory3, @inventory4]
     end
   end
 end
