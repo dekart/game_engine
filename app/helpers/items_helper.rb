@@ -127,10 +127,7 @@ module ItemsHelper
           :event => 'click',
           :solo => true
         },
-        :hide => 'unfocus',
-        :style => {
-          :classes => 'show_item'
-        }
+        :hide => 'unfocus'
       }.deep_merge(tooltip)
     end
 end
