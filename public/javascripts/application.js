@@ -807,6 +807,8 @@ $(function(){
       var $element = $(this);
       
       $element.qtip($element.data('tooltip'));
+      
+      $element.removeAttr('data-tooltip');
     });
     
      // Display tooltip on click
@@ -846,6 +848,8 @@ $(function(){
       $element.removeData('qtip');
       
       $element.qtip(tooltipOptions);
+      
+      $element.removeAttr('data-tooltip-on-click');
     });
   })
   
