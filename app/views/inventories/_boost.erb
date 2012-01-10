@@ -1,4 +1,5 @@
-<div class="boost <%= 'active' if boost.active_boost?(destination) %>" id="<%= boost_dom_id(boost, destination) %>">
+<div class="boost <%= "#{destination} #{boost.boost_type} #{'active' if boost.active_boost?(destination)}" %>" 
+  id="<%= boost_dom_id(boost, destination) %>">
   <%= link_to_remote(inventory_item_image(boost, :small, :tooltip => true, :count => true),
         :url => toggle_boost_inventory_path(boost, :destination => destination),
         :update => :ajax
