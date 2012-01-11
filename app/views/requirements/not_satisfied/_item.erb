@@ -1,10 +1,12 @@
 <% requirement(requirement.name, false) do %>
   <% if Item::PURCHASEABLE.include?(requirement.item.availability) %>
-    <% link = capture do %>
+    <p>
       <span class="image">
         <%= item_image(requirement.item, :icon,
               :alt    => t(".shop_link_title", :item => requirement.item.plural_name),
-              :title  => t(".shop_link_title", :item => requirement.item.plural_name)
+              :title  => t(".shop_link_title", :item => requirement.item.plural_name),
+              :tooltip => true,
+              :tooltip_on_click => true
             ) %>
       </span>
 
@@ -14,21 +16,6 @@
               :amount => requirement.amount
             ).html_safe %>
       </span>
-    <% end %>
-
-    <p>
-      <%= link_to_remote(link,
-            :url    => new_inventory_path(
-              :item_id  => requirement.item,
-              :amount   => requirement.missing_amount(current_character)
-            ),
-            :method => :get,
-            :update => :ajax,
-            :before => "$(document).one('item.purchase', function(){ $(document).trigger('requirement.satisfy') });",
-            :html   => {
-              :title => t(".shop_link_title", :item => requirement.item.plural_name)
-            }
-          ) %>
     </p>
 
     <p>
