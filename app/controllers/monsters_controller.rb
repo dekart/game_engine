@@ -32,8 +32,6 @@ class MonstersController < ApplicationController
       
       index
     else
-      EventLoggingService.log_event(:monster_engaged, @monster)
-
       redirect_from_iframe monster_url(@monster, :canvas => true)
     end
   end
@@ -45,14 +43,6 @@ class MonstersController < ApplicationController
     @power_attack = (!params[:power_attack].nil? && @monster.monster_type.power_attack_enabled?)
     @attack_result = @fight.attack!(@power_attack)
 
-    if @attack_result
-      if @fight.monster.progress?
-        EventLoggingService.log_event(:monster_attacked, @fight)
-      elsif @fight.monster.won?
-        EventLoggingService.log_event(:monster_killed, @fight)
-      end
-    end
-
     render :layout => 'ajax'
   end
 
@@ -60,10 +50,6 @@ class MonstersController < ApplicationController
     @fight = current_character.monster_fights.find_by_monster_id(params[:id])
 
     @reward_collected = @fight.collect_reward!
-
-    if @reward_collected
-      EventLoggingService.log_event(:reward_collected, @fight)
-    end
 
     render :layout => 'ajax'
   end

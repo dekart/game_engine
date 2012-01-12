@@ -8,10 +8,6 @@ class ItemCollectionsController < ApplicationController
 
     @result = current_character.collections.apply!(@collection)
 
-    if @result.applied?
-      EventLoggingService.log_event(:collection_applied, current_character, @result)
-    end
-    
     render :layout => "ajax"
   end
 

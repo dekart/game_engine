@@ -11,10 +11,6 @@ class AssignmentsController < ApplicationController
 
     @assignment.save
 
-    if @assignment.errors.empty?
-      EventLoggingService.log_event(:assignment_created, @assignment)
-    end
-
     render :layout => 'ajax'
   end
 
@@ -25,8 +21,6 @@ class AssignmentsController < ApplicationController
       @assignment = current_character.assignments.find(params[:id])
 
       @assignment.destroy
-
-      EventLoggingService.log_event(:assignment_destroyed, @assignment)
     end
 
     render :layout => 'ajax'

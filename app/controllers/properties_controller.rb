@@ -9,10 +9,6 @@ class PropertiesController < ApplicationController
 
     @property, @result = current_character.properties.buy!(@property_type)
 
-    if @property.errors.empty?
-      EventLoggingService.log_event(:property_bought, @property)
-    end
-
     @properties = current_character.properties(true)
 
     render :create, :layout => "ajax"
@@ -33,10 +29,6 @@ class PropertiesController < ApplicationController
 
     @result = @property.upgrade!
 
-    if @property.errors.empty?
-      EventLoggingService.log_event(:property_upgraded, @property)
-    end
-
     @properties = current_character.properties(true)
 
     render :upgrade, :layout => "ajax"
@@ -51,14 +43,6 @@ class PropertiesController < ApplicationController
       @result = @property.collect_money!
     else
       @result = @properties.collect_money!
-    end
-
-    if @result
-      if !@property.nil?
-        EventLoggingService.log_event(:property_income_collected, @property, @result)
-      else
-        EventLoggingService.log_event(:properties_income_collected, @properties, @result)
-      end
     end
 
     render :collect_money, :layout => "ajax"

@@ -349,8 +349,6 @@ class Character < ActiveRecord::Base
       notifications.schedule(:level_up)
       
       update_opponent_bucket # Update character position in opponent buckets
-
-      EventLoggingService.log_event(:character_levelup, self)
     end
     
     true

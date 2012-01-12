@@ -98,8 +98,6 @@ describe BankOperationsController do
 
       @deposit.stub!(:character).and_return(@character)
       controller.stub!(:current_character).and_return(@character)
-
-      EventLoggingService.stub!(:log_event).and_return(nil)
     end
 
     def do_request
@@ -125,12 +123,6 @@ describe BankOperationsController do
     end
 
     describe "if deposit was saved successfully" do
-      it "should log the event" do
-        EventLoggingService.should_receive(:log_event).and_return(nil)
-
-        do_request
-      end
-
       it "should reload current character" do
         @character.should_receive(:reload).and_return(true)
 
@@ -172,8 +164,6 @@ describe BankOperationsController do
 
       @withdrawal.stub!(:character).and_return(@character)
       controller.stub!(:current_character).and_return(@character)
-
-      EventLoggingService.stub!(:log_event).and_return(nil)
     end
 
     def do_request
@@ -199,12 +189,6 @@ describe BankOperationsController do
     end
 
     describe "if withdrawal was saved successfully" do
-      it "should log the event" do
-        EventLoggingService.should_receive(:log_event).and_return(nil)
-
-        do_request
-      end
-
       it "should reload current character" do
         @character.should_receive(:reload).and_return(true)
 

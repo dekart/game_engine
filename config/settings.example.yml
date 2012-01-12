@@ -14,8 +14,6 @@ development:
   #   access_key: 'my_key'
   #   secret: 'my_secret'
   #   bucket: 'my_bucket'
-  event_logging:
-    enabled: false
 
 test:
   cache:
@@ -28,5 +26,3 @@ test:
     host: 127.0.0.1
     port: 6379
     db: 1
-  event_logging:
-    enabled: false

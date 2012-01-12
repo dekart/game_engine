@@ -8,8 +8,6 @@ class InventoriesController < ApplicationController
 
     @amount = params[:amount].to_i * @item.package_size
 
-    EventLoggingService.log_event(:item_bought, current_character, @item, @amount)
-
     render :action => :create, :layout => "ajax"
   end
 
@@ -19,10 +17,6 @@ class InventoriesController < ApplicationController
     @item = Item.find(params[:id])
 
     @inventory = current_character.inventories.sell!(@item, @amount)
-
-    if @inventory 
-      EventLoggingService.log_event(:item_sold, current_character, @inventory, @amount)
-    end
 
     render :action => :destroy, :layout => "ajax"
   end
@@ -54,17 +48,9 @@ class InventoriesController < ApplicationController
       equipped = @inventory.equipped
 
       current_character.equipment.equip!(@inventory, params[:placement])
-
-      if @inventory.equipped == equipped + 1
-        EventLoggingService.log_event(:item_equipped, @inventory, params[:placement])
-      end
     else
       placements = current_character.placements.clone
       current_character.equipment.equip_best!
-
-      if placements != current_character.placements
-        EventLoggingService.log_event(:all_equipped, current_character)
-      end
     end
 
     render :layout => "ajax"
@@ -75,15 +61,9 @@ class InventoriesController < ApplicationController
       @inventory = current_character.inventories.find(params[:id])
 
       current_character.equipment.unequip!(@inventory, params[:placement])
-
-      EventLoggingService.log_event(:item_unequipped, @inventory, params[:placement])
     else
       placements = current_character.placements.clone
       current_character.equipment.unequip_all!
-
-      if placements != current_character.placements
-        EventLoggingService.log_event(:all_unequipped, current_character)
-      end
     end
 
     render :action => "equip", :layout => "ajax"
@@ -129,10 +109,6 @@ class InventoriesController < ApplicationController
           end
           
           @character.news.add(:item_transfer, :sender_id => current_character.id, :items => given) unless given.empty?
-        end
-
-        @inventories.each do |inventory|
-          EventLoggingService.log_event(:item_given, current_character, @character, inventory.item)
         end
 
         flash[:success] = t('inventories.give.messages.success')

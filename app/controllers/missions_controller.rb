@@ -4,13 +4,7 @@ class MissionsController < ApplicationController
 
     @result = current_character.missions.fulfill!(@mission)
         
-    if @result.success?
-      EventLoggingService.log_event(:mission_fulfilled, @result)
-    end
-    
     if @result.level_rank.just_completed?
-      EventLoggingService.log_event(:mission_completed, @result)
-      
       @missions = current_character.mission_groups.current.missions.available_for(current_character)
     end
 

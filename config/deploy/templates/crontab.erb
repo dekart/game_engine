@@ -12,8 +12,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Rake Tasks
 
-<% if settings_config[:event_logging][:enabled] %>
-*/5 * * * *   cd <%= current_path %> && flock ./tmp/pids/rake rake.lock app:logged_events:store --trace >> <%= shared_path %>/log/logged_events.log 2>&1
-<% end %>
-
 0 5 * * *     cd <%= current_path %> && flock ./tmp/pids/rake.lock rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1
