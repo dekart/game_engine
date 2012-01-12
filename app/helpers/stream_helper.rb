@@ -79,16 +79,6 @@ module StreamHelper
   end
 
 
-  def boss_defeated_story_options(boss)
-    [
-      boss.attributes,
-      {
-        :boss_id => boss.id
-      },
-      (boss.pictures.url(:stream) if boss.pictures?)
-    ]
-  end
-
 
   def monster_invite_story_options(monster)
     [

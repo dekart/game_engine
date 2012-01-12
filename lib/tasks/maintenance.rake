@@ -34,7 +34,6 @@ namespace :app do
         'stories.help_request.mission.description'    => 'stories.mission_help.description',
         'stories.inventory.title'                     => ['stories.item_purchased.title', {:item => :name}],
         'stories.mission.title'                       => ['stories.mission_completed.title', {:mission => :name}],
-        'stories.boss.title'                          => ['stories.boss_defeated.title', {:boss => :name}],
         'stories.monster_invite.title'                => {:monster => :name},
         'stories.monster_invite.description'          => {:monster => :name},
         'stories.monster_defeated.title'              => {:monster => :name},
@@ -74,7 +73,7 @@ namespace :app do
 
     desc "Update image thumbnails"
     task :update_thumbnails => :environment do
-      [Boss, MonsterType, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
+      [MonsterType, CharacterType, Item, Mission, MissionGroup, PropertyType].each do |klass|
         scope = klass.without_state(:deleted)
 
         puts "Updating thumbails for #{scope.count} of #{klass}..."
@@ -217,7 +216,7 @@ namespace :app do
       i = 0
 
       ActiveRecord::Base.transaction do
-        [Boss, Item, ItemCollection, Mission, MissionGroup, MissionLevel, Promotion, PropertyType, MonsterType].each do |klass|
+        [Item, ItemCollection, Mission, MissionGroup, MissionLevel, Promotion, PropertyType, MonsterType].each do |klass|
           klass.find_each do |record|
             record.payouts.each do |payout|
               if payout.is_a?(Payouts::RandomItem) and item_ids = payout.instance_variable_get(:@item_ids) and !item_ids.empty?
@@ -283,7 +282,7 @@ namespace :app do
 
       puts 'Converting payouts...'
 
-      [Boss, Item, ItemCollection, Mission, MissionGroup, MissionLevel, Promotion, PropertyType].each do |klass|
+      [Item, ItemCollection, Mission, MissionGroup, MissionLevel, Promotion, PropertyType].each do |klass|
         klass.find_each do |record|
           if record.payouts.any? and record.payouts.detect{|p| p.class == 'Payouts::Boost'}
             new_collection = Payouts::Collection.new
@@ -656,7 +655,7 @@ namespace :app do
 
     desc "Reprocess ass images"
     task :reprocess_images => :environment do
-      [Boss, Mission, PropertyType, MissionGroup, CharacterType, Item].each do |klass|
+      [Mission, PropertyType, MissionGroup, CharacterType, Item].each do |klass|
         puts "Reprocessing #{klass.to_s} images (#{klass.count})..."
 
         klass.all.each do |instance|
@@ -697,7 +696,7 @@ namespace :app do
 
     desc "Set default states to objects"
     task :set_default_states => :environment do
-      %w{bosses item_groups items mission_groups missions property_types}.each do |t|
+      %w{item_groups items mission_groups missions property_types}.each do |t|
         t.classify.constantize.update_all "state = 'visible'"
       end
     end

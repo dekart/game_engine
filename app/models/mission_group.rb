@@ -6,7 +6,6 @@ class MissionGroup < ActiveRecord::Base
   has_many :missions,
     :order      => "missions.position",
     :dependent  => :destroy
-  has_many :bosses, :dependent => :destroy
   has_many :ranks, :class_name => "MissionGroupRank", :dependent => :delete_all
 
   acts_as_list
@@ -50,7 +49,6 @@ class MissionGroup < ActiveRecord::Base
 
   def delete_children!
     missions.without_state(:deleted).all.map{|m| m.mark_deleted }
-    bosses.without_state(:deleted).all.map{|b| b.mark_deleted }
   end
   
   def applicable_payouts

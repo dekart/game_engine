@@ -34,9 +34,6 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
 
-  has_many :boss_fights,
-    :extend => Character::BossFights
-
   has_many :ordered_hit_listings, 
     :foreign_key  => :client_id, 
     :class_name   => "HitListing", 

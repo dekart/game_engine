@@ -29,7 +29,7 @@ class StoriesController < ApplicationController
         ),
         :canvas => true
       )
-    when 'mission_completed', 'boss_defeated'
+    when 'mission_completed'
       mission_groups_url(:canvas => true)
     when 'monster_invite'
       monster_url(story_data[:monster_id], 

@@ -114,32 +114,6 @@ describe StreamHelper do
     end
   end
 
-  describe "when generating stream dialog for boss defeat" do
-    before :each do
-      @boss = Factory(:boss)
-    end
-
-    it "should not fail with default story" do
-      lambda{
-        helper.stream_dialog(:boss_defeated, @boss)
-      }.should_not raise_exception
-    end
-
-    it 'should not fail with custom story' do
-      @story = mock_model(Story, 
-        :interpolate  => 'text',
-        :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
-      )
-      
-      Story.should_receive(:by_alias).with(:boss_defeated).and_return([@story])
-
-      lambda{
-        helper.stream_dialog(:boss_defeated, @boss)
-      }.should_not raise_exception
-    end
-  end
-
   describe 'when generating stream dialog for monster fight invitation' do
     before do
       @monster = Factory(:monster, 

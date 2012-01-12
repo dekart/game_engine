@@ -2,7 +2,6 @@
 
 <div class="controls">
   <%= link_to(t(".controls.new"), new_admin_monster_type_path) %>
-  <%= link_to(t("admin.layouts.main_menu.bosses"), admin_bosses_path) if Boss.without_state(:deleted).count > 0 %>
 </div>
 
 <% collection @types do %>

@@ -113,9 +113,6 @@ Setting[:gifting_accept_all] ||= false
 Setting[:wall_enabled] ||= true
 Setting[:wall_posts_show_limit] ||= 10
 
-Setting[:boss_max_loser_damage] ||= 10
-Setting[:boss_max_winner_damage] ||= 10
-
 Setting[:character_default_name] ||= ""
 Setting[:character_equipment_slots] ||= 5
 Setting[:character_auto_equipment] ||= false

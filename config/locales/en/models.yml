@@ -71,8 +71,6 @@ en:
         victim: "Target"
         client: "Paid By"
         reward: "Bounty Amount"
-      boss:
-        health: "Health"
       monster:
         health: "Health"
       market_item:
@@ -135,12 +133,6 @@ en:
               not_enough_vip_money_for_upgrade: "You don't have enough %{vip_money} to upgrade your %{name}."
               too_much_properties: "You cannot buy any more %{plural_name} because you already have too many! Try to purchase other types of estates."
               requirements_no_satisfied: "Requirements not satisfied" #***
-        boss_fight:
-          attributes:
-            character:
-              already_won: "You already defeated this boss!"
-              not_enough_energy: "You don't have enough energy to fight. Take a rest!"
-              too_weak: "You are too weak to fight! Take a rest!"
         hit_listing:
           attributes:
             reward:

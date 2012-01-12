@@ -58,7 +58,6 @@ class Story < ActiveRecord::Base
     'item_purchased'            => :item_id,
     'mission_help'              => :mission_id,
     'mission_completed'         => :mission_id,
-    'boss_defeated'             => :boss_id,
     'monster_invite'            => :monster_id,
     'monster_defeated'          => :monster_id,
     'property'                  => :property_id,

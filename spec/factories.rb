@@ -215,19 +215,6 @@ Factory.define :item_set do |t|
   end
 end
 
-Factory.define :boss do |t|
-  t.association :mission_group
-
-  t.name 'Fake Boss'
-  t.health 100
-  t.attack 1
-  t.defence 1
-  t.ep_cost 5
-  t.experience 10
-  
-  t.state 'visible'
-end
-
 Factory.define :wall_post do |t|
   t.association :character
   t.association :author, :factory => :character

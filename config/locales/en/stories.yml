@@ -27,10 +27,6 @@ en:
       title: "I've just completed the \"%{name}\" mission in %{app}!"
       description: ""
       action_link: ""
-    boss_defeated:
-      title: "I've just defeated %{name} in %{app}!"
-      description: ""
-      action_link: ""
     monster_invite:
       title: "I need your assistance to defeat %{name} in %{app}!"
       description: "Join our fight against %{name} in %{app}! Together we can slay this monster and get reward!"

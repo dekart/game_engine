@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120105180554) do
+ActiveRecord::Schema.define(:version => 20120112071210) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20120105180554) do
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
+  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
 
   create_table "assets", :force => true do |t|
     t.string   "alias",              :limit => 200, :default => "", :null => false
@@ -93,43 +94,6 @@ ActiveRecord::Schema.define(:version => 20120105180554) do
   end
 
   add_index "bank_operations", ["character_id"], :name => "index_bank_operations_on_character_id"
-
-  create_table "boss_fights", :force => true do |t|
-    t.integer  "boss_id"
-    t.integer  "character_id"
-    t.integer  "health"
-    t.datetime "expire_at"
-    t.string   "state",        :limit => 50, :default => "", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "lock_version",               :default => 0
-  end
-
-  add_index "boss_fights", ["character_id", "boss_id"], :name => "index_boss_fights_on_character_id_and_boss_id"
-
-  create_table "bosses", :force => true do |t|
-    t.integer  "mission_group_id"
-    t.string   "name",               :limit => 100, :default => "", :null => false
-    t.text     "description"
-    t.integer  "health"
-    t.integer  "attack"
-    t.integer  "defence"
-    t.integer  "ep_cost"
-    t.integer  "experience"
-    t.text     "requirements"
-    t.text     "payouts"
-    t.string   "image_file_name",                   :default => "", :null => false
-    t.string   "image_content_type", :limit => 100, :default => "", :null => false
-    t.integer  "image_file_size"
-    t.integer  "time_limit",                        :default => 60
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "repeatable"
-    t.string   "state",              :limit => 50,  :default => "", :null => false
-    t.datetime "image_updated_at"
-  end
-
-  add_index "bosses", ["mission_group_id"], :name => "index_bosses_on_mission_group_id"
 
   create_table "character_contest_groups", :force => true do |t|
     t.integer  "character_id",                    :null => false
@@ -475,7 +439,6 @@ ActiveRecord::Schema.define(:version => 20120105180554) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
-    t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
     t.string   "state",                   :limit => 50,  :default => "",     :null => false
@@ -512,9 +475,9 @@ ActiveRecord::Schema.define(:version => 20120105180554) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "health"
-    t.integer  "reference_damage"
     t.integer  "energy"
     t.integer  "stamina"
+    t.integer  "reference_damage"
     t.boolean  "export",                        :default => false
   end
 
@@ -901,7 +864,7 @@ ActiveRecord::Schema.define(:version => 20120105180554) do
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
     t.text     "friend_ids"
     t.string   "email",                                 :default => "",      :null => false
-    t.string   "tutorial_step",          :limit => 50,  :default => ""
+    t.string   "tutorial_step",                         :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
   end

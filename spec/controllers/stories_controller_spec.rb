@@ -126,15 +126,6 @@ describe StoriesController do
         response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups')
       end
       
-      it 'should target to current mission group page from boss story' do
-        do_request(
-          :id => 'boss_defeated',
-          :story_data => 'NCipKIRIkYNlRxDfS7o6QWdydL+Un0/q0e1Q8m9Szkk=--z/LNV+JvdEEClxpkPapxIw==' # {:boss_id => 1, :character_id => 1}
-        )
-
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups')
-      end
-      
       it 'should target to monster page from monster invitation story' do
         controller.send(:encryptor).should_receive(:encrypt).with(1).and_return('securemonsterkey')
         

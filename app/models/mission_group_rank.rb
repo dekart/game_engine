@@ -6,7 +6,7 @@ class MissionGroupRank < ActiveRecord::Base
   after_create  :assign_just_completed
 
   def completed?
-    self[:completed] || (missions_completed? && bosses_completed?)
+    self[:completed] || missions_completed?
   end
 
   def just_completed?
@@ -19,12 +19,8 @@ class MissionGroupRank < ActiveRecord::Base
     mission_group.missions.with_state(:visible).size <= character.missions.completed_ids(mission_group).size # Less or equal because mission can be hidden after completion
   end
 
-  def bosses_completed?
-    mission_group.bosses.with_state(:visible).size <= character.boss_fights.won_boss_ids(mission_group).size # Less or equal because boss can be hidden after completion
-  end
-
   def cache_completion
-    self.completed = missions_completed? && bosses_completed?
+    self.completed = missions_completed?
 
     true
   end

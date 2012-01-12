@@ -42,10 +42,6 @@ ActionController::Routing::Routes.draw do |map|
         :change_state => :put
       }
 
-    admin.resources :bosses,
-      :member => {
-        :change_state => :put
-      }
     admin.resources :property_types,
       :member => {
         :change_state => :put
@@ -199,8 +195,6 @@ ActionController::Routing::Routes.draw do |map|
       :fulfill  => :post,
       :help     => :any
     }
-  map.resources :boss_fights,
-    :only => [:create, :update]
   
   map.resources :items
 

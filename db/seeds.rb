@@ -7,7 +7,7 @@ end
 puts "Publishing seeded data..."
 
 ActiveRecord::Base.transaction do
-  [MissionGroup, Mission, MonsterType, ItemGroup, Item, Boss, PropertyType, CharacterType, Tip, AchievementType, CreditPackage].each do |model|
+  [MissionGroup, Mission, MonsterType, ItemGroup, Item, PropertyType, CharacterType, Tip, AchievementType, CreditPackage].each do |model|
     model.all.each do |record|
       record.publish
     end
