@@ -96,11 +96,6 @@ ActionController::Routing::Routes.draw do |map|
 
     admin.resources :vip_money_operations, :only => :index
 
-    admin.resources :titles,
-      :member => {
-        :change_state => :put
-      }
-
     admin.resources :item_collections,
       :new => {
         :add_item => :any

@@ -48,24 +48,6 @@
       <td>
         <%= render("characters/statistics", :character => @character) %>
       </td>
-      <td class="rank_list">
-        <% if titles = @character.titles.with_state(:visible) and titles.any? %>
-          <% titles.each do |title| %>
-            <div class="rank"><%= title.name %></div>
-          <% end %>
-        <% else %>
-          <% if @character == current_character %>
-            <%= t(".titles.empty_set_my") %>
-          <% else %>
-            <%= t(".titles.empty_set",
-                  :user => character_name(@character,
-                    :firstnameonly  => true,
-                    :capitalize     => true
-                  )
-                ).html_safe %>
-          <% end %>
-        <% end %>
-      </td>
     </tr>
   </table>
   

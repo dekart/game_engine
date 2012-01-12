@@ -12,7 +12,6 @@ class Character < ActiveRecord::Base
   include Character::Inventories
   include Character::Properties
   include Character::Notifications
-  include Character::Titles
   include Character::Missions
   include Character::Collections
   include Character::Newsfeed

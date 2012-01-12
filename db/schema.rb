@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120112090055) do
+ActiveRecord::Schema.define(:version => 20120112092903) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -115,15 +115,6 @@ ActiveRecord::Schema.define(:version => 20120112090055) do
   end
 
   add_index "character_equipment", ["character_id"], :name => "index_character_equipment_on_character_id"
-
-  create_table "character_titles", :force => true do |t|
-    t.integer  "character_id", :null => false
-    t.integer  "title_id",     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "character_titles", ["character_id", "title_id"], :name => "index_character_titles_on_character_id_and_title_id", :unique => true
 
   create_table "character_types", :force => true do |t|
     t.string   "name",                  :limit => 100, :default => "",  :null => false
@@ -800,13 +791,6 @@ ActiveRecord::Schema.define(:version => 20120112090055) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state",      :limit => 50
-  end
-
-  create_table "titles", :force => true do |t|
-    t.string   "name",       :limit => 100, :default => "", :null => false
-    t.string   "state",      :limit => 50,  :default => "", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "translations", :force => true do |t|

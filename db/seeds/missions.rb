@@ -18,8 +18,7 @@ tutorial.missions.create!(
     :money_min  => 15,
     :money_max  => 20,
     :payouts    => Payouts::Collection.new(
-      Payouts::VipMoney.new(:value => 5),
-      Payouts::Title.new(:value => Title.create(:name => "Police Helper"))
+      Payouts::VipMoney.new(:value => 5)
     )
   )
 end
@@ -49,8 +48,7 @@ adventurer.missions.create!(
     :money_min  => 8,
     :money_max  => 15,
     :payouts    => Payouts::Collection.new(
-      Payouts::Item.new(:value => Item.find_by_name("Potion of Healing").id),
-      Payouts::Title.new(:value => Title.create(:name => "Rat Trapper"))
+      Payouts::Item.new(:value => Item.find_by_name("Potion of Healing").id)
     )
   )
 end
@@ -68,10 +66,7 @@ adventurer.missions.create!(
     :energy     => 4,
     :experience => 3,
     :money_min  => 20,
-    :money_max  => 55,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Debt Recoverer"))
-    )
+    :money_max  => 55
   )
 end
 
@@ -88,10 +83,7 @@ adventurer.missions.create!(
     :energy     => 6,
     :experience => 8,
     :money_min  => 30,
-    :money_max  => 60,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Terror of Orcs"))
-    )
+    :money_max  => 60
   )
 end
 
@@ -109,10 +101,7 @@ adventurer.missions.create!(
     :energy     => 2,
     :experience => 3,
     :money_min  => 15,
-    :money_max  => 35,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Policeman"))
-    )
+    :money_max  => 35
   )
 end
 
@@ -132,8 +121,7 @@ adventurer.missions.create!(
     :money_min  => 15,
     :money_max  => 25,
     :payouts    => Payouts::Collection.new(
-      Payouts::Item.new(:value => Item.find_by_name("Potion of Upgrade").id),
-      Payouts::Title.new(:value => Title.create(:name => "Pixie Catcher"))
+      Payouts::Item.new(:value => Item.find_by_name("Potion of Upgrade").id)
     )
   )
 end
@@ -157,10 +145,7 @@ recruit.missions.create!(
     :energy     => 5,
     :experience => 5,
     :money_min  => 35,
-    :money_max  => 60,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Great Hunter"))
-    )
+    :money_max  => 60
   )
 end
 
@@ -177,10 +162,7 @@ recruit.missions.create!(
     :energy     => 6,
     :experience => 8,
     :money_min  => 40,
-    :money_max  => 70,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Dragonfly Hunter"))
-    )
+    :money_max  => 70
   )
 end
 
@@ -197,10 +179,7 @@ recruit.missions.create!(
     :energy     => 8,
     :experience => 12,
     :money_min  => 50,
-    :money_max  => 100,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Centaur Killer"))
-    )
+    :money_max  => 100
   )
 end
 
@@ -217,10 +196,7 @@ recruit.missions.create!(
     :energy     => 4,
     :experience => 4,
     :money_min  => 25,
-    :money_max  => 45,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Goblin Suppressor"))
-    )
+    :money_max  => 45
   )
 end
 
@@ -237,9 +213,6 @@ recruit.missions.create!(
     :energy     => 4,
     :experience => 3,
     :money_min  => 20,
-    :money_max  => 65,
-    :payouts    => Payouts::Collection.new(
-      Payouts::Title.new(:value => Title.create(:name => "Baron Assistant"))
-    )
+    :money_max  => 65
   )
 end

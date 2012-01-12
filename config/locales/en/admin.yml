@@ -24,7 +24,6 @@ en:
         global_payouts: "Global Payouts"
         characters: "Characters"
         promotions: "Promotions"
-        titles: "Titles"
         item_collections: "Collections"
         tips: "Tips"
         stories: "Feed Stories"
@@ -421,23 +420,6 @@ en:
           reference_type: "Reference:"
           profile_ids: "Facebook / Profile IDs:"
           submit: "Apply Filter"
-    titles:
-      index:
-        title: "Titles"
-        empty_set: "No titles"
-        controls:
-          new: "Add Title"
-          edit: "Edit"
-      new:
-        title: "New Title"
-        submit: "Create"
-      create:
-        success: "Title has been created successfully!"
-      edit:
-        title: "Edit Title"
-        submit: "Update"
-      update:
-        success: "Title has been updated successfully!"
 
     item_collections:
       index:
