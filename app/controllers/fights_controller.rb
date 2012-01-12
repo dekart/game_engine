@@ -8,7 +8,6 @@ class FightsController < ApplicationController
   end
   
   def new
-    @victims = Fight.new(:attacker => current_character).opponents if flash[:show_tutorial] == true
   end
 
   def create

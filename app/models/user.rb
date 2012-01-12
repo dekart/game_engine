@@ -21,12 +21,6 @@ class User < ActiveRecord::Base
   after_save :schedule_social_data_update,  :if => :access_token_changed?
   after_save :generate_personal_discount,   :if => :last_visit_at_changed?
   
-  before_create :set_first_tutorial_step
-  
-  def show_tutorial?
-    Setting.b(:user_tutorial_enabled) && self[:show_tutorial]
-  end
-
   def customized?
     true
   end
@@ -129,9 +123,5 @@ class User < ActiveRecord::Base
   
   def generate_personal_discount
     character.personal_discounts.generate_if_possible! if character.respond_to?(:personal_discounts)
-  end
-  
-  def set_first_tutorial_step
-    self.tutorial_step = Tutorial.first_step
   end
 end

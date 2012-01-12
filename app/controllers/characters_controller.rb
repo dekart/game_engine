@@ -55,9 +55,7 @@ class CharactersController < ApplicationController
       @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
       if @character.save
-        flash[:show_tutorial] = true
-        
-        # Always redirect newcomers to missions to make tutorial work as expected
+        # Always redirect newcomers to missions
         redirect_from_iframe(mission_groups_url(:canvas => true))
       else
         render :action => :new, :layout => 'unauthorized'

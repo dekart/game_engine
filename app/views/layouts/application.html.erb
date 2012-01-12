@@ -2,8 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
   <%= render('layouts/html_header') %>
-  
-  <%= javascript_include_tag "tutorial" if tutorial_visible? %>
 </head>
 <body>
   <% fb_connect_js(:channel_url => facebook_callback_url + '/channel.html', :weak_cache => Setting.b(:app_weak_fb_js_cache)) do %>
@@ -18,10 +16,6 @@
     </div>
   <% end %>
   
-  <% if tutorial_visible? %>
-    <%= render("tutorials/block") %>
-  <% end %>
-
   <% maintenance_warning do |settings| %>
     <div id="maintenance_warning">
       <%= t(".maintenance_warning",
