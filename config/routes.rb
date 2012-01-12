@@ -162,11 +162,6 @@ ActionController::Routing::Routes.draw do |map|
     }
   )
 
-  #TODO: Remove this deprecated route when updating system to major version
-  map.connect 'characters/load_vip_money',
-    :controller => 'vip_money_operations',
-    :action     => 'load_money'
-
   map.resources(:characters,
     :member => {
       :upgrade  => :any,

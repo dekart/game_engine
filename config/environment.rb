@@ -61,7 +61,6 @@ require "core_ext/rails"
 require "core_ext/hash"
 require 'ipaddr'
 require 'ostruct'
-require "facebook_money"
 require "i18n/backend/yaml_db"
 require "div_form_builder/extensions"
 
