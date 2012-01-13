@@ -1,15 +1,9 @@
-require 'facepalm/rails/controller'
-
 class ApplicationController
   module FacebookIntegration
     def self.included(base)
       base.class_eval do
-        include Facepalm::Rails::Controller
-        
-        helper Facepalm::Rails::Helpers::JavascriptHelper
-        
         facepalm_authentication(:email, :publish_actions) unless ENV['OFFLINE']
-        
+
         rescue_from Facepalm::OAuthException, :with => :rescue_facebook_oauth_exception
       end
     end

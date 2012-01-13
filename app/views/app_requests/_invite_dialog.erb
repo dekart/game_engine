@@ -35,7 +35,10 @@
           <span class="control deselect_all"><%= t('.stats.deselect_all') %></span> 
           <span class="control select_all"><%= t('.stats.select_all') %></span> 
 
-          <%= t('.stats.text', :value => '<span class="value"></span>', :total => '<span class="total"></span>').html_safe %>
+          <%= t('.stats.text',
+                :value => '<span class="value"></span>',
+                :total => '<span class="total"></span>'
+              ).html_safe %>
         </div>
       </div>
     </div>
@@ -49,6 +52,7 @@
 </script>
 
 <% dom_ready do %>
+  InviteDialog.excludeIds('clan_invite', <%= AppRequest::ClanInvite.ids_to_exclude_for(current_character).to_json %>);
   InviteDialog.excludeIds('invitation', <%= AppRequest::Invitation.ids_to_exclude_for(current_character).to_json %>);
   InviteDialog.excludeIds('gift', <%= AppRequest::Gift.ids_to_exclude_for(current_character).to_json %>);
   InviteDialog.excludeIds('property_worker', <%= AppRequest::PropertyWorker.ids_to_exclude_for(current_character).to_json %>);

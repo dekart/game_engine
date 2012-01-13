@@ -1,0 +1,27 @@
+<h3><%= t(".title") %></h3>
+
+<table class="participants" cellpadding="0" cellspacing="0">
+  <% invitations.each do |invitation| %>
+    <tr class="<%= dom_class(invitation) %>" id="<%= dom_id(invitation) %>">
+      <td class="picture"><%= character_picture_link(invitation.character) %></td>
+      <td class="name"><%= character_name_link(invitation.character) %></td>
+      <td class="level">
+        <span class="label"><%= Character.human_attribute_name("level") %></span>
+        <span class="value"><%= invitation.character.level %></span>
+      </td>
+      <td class="controls">
+        <div class="delete">
+          <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
+                :url      => clan_membership_invitation_path(invitation),
+                :method   => :delete,
+                :update   => :ajax,
+                :confirm  => t(".delete.confirmation"),
+                :html     => {
+                  :class => "delete"
+                }
+              ) %>
+        </div>
+      </td>
+    <% end %>
+  <% end %>
+</table>

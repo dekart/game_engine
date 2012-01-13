@@ -4,6 +4,20 @@ function debug(s) {
   }
 }
 
+var ClanEditForm = {
+  setup : function(){
+    $(".change").click(function(){
+      $(".file").show();
+      $(this).hide()
+    });
+    
+    $(".cancel a").click(function(){
+      $(".file").hide();
+      $(".change").show();
+    });
+  }
+};
+
 var Shop = {
   setup : function(){
     
@@ -431,19 +445,6 @@ var Equipment = {
 };
 
 
-var Mission = {
-  requirementCallback: function(){},
-  onRequirementSatisfy: function(){
-    $(document).unbind('requirement.satisfy', Mission.onRequirementSatisfy);
-
-    Mission.requirementCallback();
-  },
-  onItemPurchase: function(){
-    $(document).unbind('item.purchase', Mission.onItemPurchase);
-    $(document).trigger('requirement.satisfy');
-  }
-};
-
 var Fighting = {
   setup: function(){
     $(document).bind({
@@ -619,33 +620,6 @@ var FacebookPermissions = {
     });
   };
   
-  $.fn.setupBoost = function(show_limit) {
-    var prepare_boosts = function(selector){
-      var $boosts = $(selector);
-      var $items = $boosts.find('.boost');
-      
-      if($items.length == 0){
-        return false;
-      }
-      
-      var $current = $boosts.find('.active');
-      
-      $boosts.find('.container ul').jcarousel({
-        visible: show_limit,
-        itemFallbackDimension: show_limit,
-        start: $items.index($current)
-      });
-    }
-    
-    var $selector = $(this).selector;
-
-    prepare_boosts($selector);
-    
-    $(document).bind('boosts.update', {selector : $selector}, function(event){
-      prepare_boosts(event.data.selector);
-    });
-  };
-  
   $.fn.giftForm = function(options){
     var $gifts = $(this).find('.gifts .gift');
 
@@ -808,8 +782,6 @@ var FacebookPermissions = {
       
       $chat.chat('appendMessages', data.messages);
       $chat.chat('refreshOnlineList', data.characters_online);
-      
-      $(document).trigger('remote_content.received');
     }
   };
   
@@ -835,6 +807,49 @@ $(function(){
       var $element = $(this);
       
       $element.qtip($element.data('tooltip'));
+      
+      $element.removeAttr('data-tooltip');
+    });
+    
+     // Display tooltip on click
+    $('#content [data-tooltip-on-click]').each(function(){
+      var $element = $(this);
+      
+      var existingTooltip = $element.qtip('api');
+      var tooltipOptions = $element.data('tooltip-on-click');
+      
+      if (tooltipOptions.content.ajax) {
+        // hide global spinner here
+        $element.click(function() {
+          Spinner.enabled = false;
+        });
+        
+        $.extend(tooltipOptions.content.ajax, {
+          complete: function() {
+            Spinner.enabled = true;
+          }
+        });
+      }
+      
+      if (existingTooltip) {
+        tooltipOptions.events = tooltipOptions.events || {};
+        
+        $.extend(tooltipOptions.events, {
+          show: function() {
+            existingTooltip.disable();
+          },
+          hide: function() {
+            existingTooltip.enable();
+          }
+        });
+      }
+      
+      // for multiple tooltips per elemet. See more http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
+      $element.removeData('qtip');
+      
+      $element.qtip(tooltipOptions);
+      
+      $element.removeAttr('data-tooltip-on-click');
     });
   })
   

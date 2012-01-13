@@ -1,6 +1,7 @@
 class PropertyType < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasPictures
   include HasVisibility
 
   AVAILABILITIES = [:shop, :mission, :loot]
@@ -10,15 +11,13 @@ class PropertyType < ActiveRecord::Base
   has_requirements
 
   has_payouts :build, :upgrade, :collect
-
-  has_attached_file :image,
-    :styles => {
-      :icon   => "50x50>",
-      :small  => "120x120>",
-      :medium => "180x180>",
-      :stream => "90x90#"
-    },
-    :removable => true
+    
+  has_pictures :styles => [
+    [:medium, "180x180>"],
+    [:small,  "120x120>"],
+    [:stream, "90x90#"],
+    [:icon,   "50x50>"]
+  ]
 
   named_scope :available_in, Proc.new{|*keys|
     valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys
@@ -90,11 +89,11 @@ class PropertyType < ActiveRecord::Base
   def plural_name
     self[:plural_name].blank? ? name.pluralize : self[:plural_name]
   end
-  
+
   def description
-    self[:description].to_s.html_safe!
+    self[:description].to_s.html_safe
   end
-  
+
   def worker_names
     self[:worker_names].split(/[\n,]/).map{|n| n.strip }
   end
@@ -102,7 +101,7 @@ class PropertyType < ActiveRecord::Base
   def upgrade_price(level)
     upgrade_cost_increase ? basic_price + upgrade_cost_increase * level : basic_price
   end
-  
+
   def default_requirements
     @requirements ||= Requirements::Collection.new.tap do |r|
       r << Requirements::BasicMoney.new(:value => basic_price) if basic_price > 0
@@ -110,5 +109,5 @@ class PropertyType < ActiveRecord::Base
       r << Requirements::Level.new(:value => level, :visible => false)
     end
   end
-  
+
 end

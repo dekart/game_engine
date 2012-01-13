@@ -14,15 +14,15 @@
           <div id="<%= "user_#{facebook_id}" %>" class="user <%= "already_playing" if @app_users.include?(facebook_id) %>">
             <div class="name"><%= fb_name(facebook_id, :linked => false) %></div>
             <div class="image"><%= fb_profile_pic(facebook_id, :size => :normal) %></div>
-        
-            <%= link_to_function(button(:invite), 
+
+            <%= link_to_function(button(:invite),
                   invite_dialog(:invitation,
                     :dialog => {
                       :to       => facebook_id,
                       :title    => t('.title'),
                       :message  => t('.invitation_message', :app_name => t('app_name'))
                     },
-                    :callback => "$('#user_#{facebook_id}').html('#{content_tag(:div, t('.invitation_sent'), :class => :name)}').fadeOut(1200)"
+                    :callback => "$('#user_#{ facebook_id }').fadeOut(1200).find('.name').text('#{ t('.invitation_sent') }')"
                   ),
                   :class => 'invite button'
                 ) %>

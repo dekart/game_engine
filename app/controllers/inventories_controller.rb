@@ -1,13 +1,6 @@
 class InventoriesController < ApplicationController
   before_filter :check_auto_equipment, :only => [:equipment, :equip, :unequip]
 
-  def new
-    @item = Item.purchaseable_for(current_character).find_by_id(params[:item_id])
-    @amount = params[:amount].to_i
-
-    render :action => :new, :layout => "ajax"
-  end
-
   def create
     @item = Item.purchaseable_for(current_character).find(params[:item_id])
 

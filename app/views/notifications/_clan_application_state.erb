@@ -1,0 +1,32 @@
+<% dialog :clan_application_state_notification do |d| %>
+  <h2><%= t(".#{notification.status}.title") %></h2>
+  
+  <table width="100%">
+    <tr>
+      <% if notification.status == "asked" %>
+        <td class="image"><%= character_picture_link(notification.applicant) %></td>
+      <% end %>
+      <td>
+        <div class="text">
+          <%= t(".#{notification.status}.text",
+                :clan => strong_tag(notification.clan.name),
+                :applicant => (notification.status == "asked" ? character_name_link(notification.applicant) : nil)
+              ).html_safe %>
+        </div>
+
+        <% if notification.status == "accepted" %>
+          <div class="buttons">
+            <%= link_to(button(:view_clan), clan_path(notification.clan), :class => "view button") %>
+          </div>  
+        <% end %>  
+      </td>
+      
+      <td class="avatar">
+        <%= clan_avatar(notification.clan, :format => :small) %>
+      </td>
+    </tr>  
+  </table>
+
+  <%= render("notifications/disable", :notification => notification) %>
+
+<% end %>

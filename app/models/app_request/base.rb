@@ -130,8 +130,8 @@ class AppRequest::Base < ActiveRecord::Base
   validates_presence_of :facebook_id
   
   after_create  :schedule_data_update
-  after_save    :clear_exclude_ids_cache, :if => :sender
   after_save    :clear_counter_cache,     :if => :receiver_id?
+  after_save    :clear_exclude_ids_cache, :if => :sender
   
   class << self
     def cache_key(target)
@@ -199,9 +199,13 @@ class AppRequest::Base < ActiveRecord::Base
   end
 
   def update_data!
-    update_from_facebook_request(
-      Facepalm::Config.default.api_client.get_object(graph_api_id)
-    )
+    if graph_data = Facepalm::Config.default.api_client.get_object(graph_api_id)
+      update_from_facebook_request(graph_data)
+    else
+      logger.error "Request cannot be fetched using Graph API: #{ graph_api_id }"
+
+      mark_broken! if can_mark_broken?
+    end
   rescue Koala::Facebook::APIError => e
     logger.error "AppRequest data update error: #{ e }"
 
@@ -210,6 +214,10 @@ class AppRequest::Base < ActiveRecord::Base
   
   def delete_from_facebook!
     Facepalm::Config.default.api_client.delete_object(graph_api_id)
+  rescue Koala::Facebook::APIError => e
+    logger.error "AppRequest data update error: #{ e }"
+
+    mark_broken! if can_mark_broken?
   end
 
   def type_name
@@ -227,8 +235,8 @@ class AppRequest::Base < ActiveRecord::Base
   protected
   
   def request_class_from_data
-    if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker}.include?(data['type'])
-      "AppRequest::#{ data['type'].classify }"
+    if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
+      "AppRequest::#{ data['type'].camelize }"
     else
       'AppRequest::Invitation'
     end.constantize
@@ -282,9 +290,13 @@ class AppRequest::Base < ActiveRecord::Base
   
   def clear_counter_cache
     Rails.cache.delete(self.class.cache_key(receiver_id))
+    
+    true
   end
   
   def clear_exclude_ids_cache
     Rails.cache.delete(self.class.exclude_ids_cache_key(sender))
+    
+    true
   end
 end

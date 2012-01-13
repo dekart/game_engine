@@ -1,6 +1,7 @@
 class Mission < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasPictures
   include HasVisibility
 
   has_many    :levels, :class_name => "MissionLevel", :dependent => :destroy
@@ -29,13 +30,11 @@ class Mission < ActiveRecord::Base
     end
   end
 
-  has_attached_file :image,
-    :styles => {
-      :icon   => "50x50>",
-      :small  => "120x120>",
-      :stream => "90x90#"
-    },
-    :removable => true
+  has_pictures :styles => [
+    [:small,  "120x120>"],
+    [:stream, "90x90#"],
+    [:icon,   "50x50>"]
+  ]
 
   has_requirements
   

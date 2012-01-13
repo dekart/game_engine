@@ -20,7 +20,7 @@ module Requirements
       end
 
       def by_name(name)
-        "Requirements::#{name.to_s.classify}".constantize
+        "Requirements::#{name.to_s.camelize}".constantize
       end
 
       def human_attribute_name(field)

@@ -26,6 +26,7 @@ class Character < ActiveRecord::Base
   include Character::Exchanges
   include Character::Achievements
   include Character::EquipmentExtension
+  include Character::Clans
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
@@ -98,7 +99,7 @@ class Character < ActiveRecord::Base
 
   class << self
     def banned_ids
-      Rails.cache.fetch('character_banned_ids', :expires_in => 5.minutes) do
+      Rails.cache.fetch('character_banned_ids', :expires_in => 15.minutes) do
         [0] + Character.all(:select => "characters.id", :joins => :user, :conditions => 'banned IS TRUE').map{|c| c.id }
       end
     end

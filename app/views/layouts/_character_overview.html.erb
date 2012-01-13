@@ -32,8 +32,8 @@
       <div class="timer"></div>
       <div class="label"><%= Character.human_attribute_name("energy") %></div>
       <div class="value"></div>
-      
-      <%= link_to_remote(t(".refill"), 
+
+      <%= link_to_remote(t(".refill"),
             :url    => refill_dialog_premium_path(
               :type => :refill_energy, 
               :vip_money => Setting.i(:premium_energy_price)
@@ -46,10 +46,10 @@
       <div class="timer"></div>
       <div class="label"><%= Character.human_attribute_name("stamina") %></div>
       <div class="value"></div>
-      
-      <%= link_to_remote(t(".refill"), 
+
+      <%= link_to_remote(t(".refill"),
             :url    => refill_dialog_premium_path(
-              :type => :refill_stamina, 
+              :type => :refill_stamina,
               :vip_money => Setting.i(:premium_stamina_price)
             ),
             :update => :ajax,

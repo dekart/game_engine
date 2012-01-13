@@ -86,7 +86,7 @@ class Chat
       
       def expire_online(chat_id)
         key = online_characters_key(chat_id)
-        expired_time = (Time.now - Setting.i(:chat_online_users_expiration_time)).to_i
+        expired_time = Setting.i(:chat_online_users_expiration_time).seconds.ago.to_i
         
         $redis.zremrangebyscore(key, 0, expired_time)
       end

@@ -1,4 +1,4 @@
-<% dialog :id => :new_achievement_notification do |d| %>
+<% dialog :new_achievement_notification do |d| %>
   <h2><%= t(".title") %></h2>
 
   <p class="text">
@@ -6,7 +6,7 @@
   </p>
   
   <div class="achievement clearfix">
-    <div class="image"><%= image_tag(notification.achievement.image.url(:small)) if notification.achievement.image? %></div>
+    <div class="image"><%= image_tag(notification.achievement.pictures.url(:small)) if notification.achievement.pictures? %></div>
     <div class="name"><%= notification.achievement.name %></div>
     <div class="description"><%= notification.achievement.description %></div>
   </div>

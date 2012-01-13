@@ -4,7 +4,7 @@
   <% collection(exchange.exchange_offers) do %>
     <table class="offers" cellpadding="0" cellspacing="0">
       <% exchange.exchange_offers.each do |offer| %>
-        <% content_tag_for(:tr, offer) do %>
+        <tr class="exchange_offer" id="<%= dom_id(offer) %>">
           <td class="character">
             <%= character_picture(offer.character) %>
             <%= character_name_link(offer.character) %>
@@ -21,7 +21,7 @@
                   }
                 ) %>
           </td>
-        <% end %>
+        </tr>
       <% end %>
     </table>
   <% end %>

@@ -1,34 +1,35 @@
 module PromoHelper
   class Builder
-    attr_reader :template, :options, :context
+    attr_reader :template, :context
 
-    delegate :capture, :concat, :content_tag, :dom_ready, :to => :template
+    delegate :capture, :concat, :dom_ready, :to => :template
 
-    def initialize(template, context, options = {})
+    def initialize(template, context)
       @template = template
       @context  = context
-      @options  = options
       @pages    = []
     end
-    
+
     def page(id, options = {}, &block)
       @pages << [id, block, options]
     end
-    
+
     def html
       yield(self)
-      
+
       content = html_for_pages
 
       unless content.blank?
         dom_ready('$("#promo_block").promoBlock();')
-      
-        content_tag(:div, content, options.reverse_merge(:id => :promo_block))
+
+        (
+          %{<div id="promo_block">#{ content }</div>}
+        ).html_safe
       end
     end
-    
+
     protected
-    
+
     def html_for_pages
       result = ""
 
@@ -39,20 +40,20 @@ module PromoHelper
       }
 
       if pages_to_show.size > 1
-        result << content_tag(:div, "", :class => 'previous')
-        result << content_tag(:div, "", :class => 'next')
+        result << '<div class="previous"></div>'
+        result << '<div class="next"></div>'
       end
 
       pages_to_show.each do |id, block, options|
-        result << content_tag(:div, capture(&block), :id => "promo_block_page_#{id}", :class => 'page clearfix')
+        result << %{<div id="promo_block_page_#{ id }" class="page clearfix">#{ capture(&block) }</div>}
       end
-      
+
       result.html_safe
     end
   end
 
-  def promo_block(context, options = {}, &block)
-    content = Builder.new(self, context, options).html(&block)
+  def promo_block(context, &block)
+    content = Builder.new(self, context).html(&block)
 
     block_given? ? concat(content) : content
   end

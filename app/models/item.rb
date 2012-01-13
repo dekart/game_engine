@@ -2,9 +2,11 @@ class Item < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
   extend HasEffects
+  extend HasPictures
   include HasVisibility
 
   AVAILABILITIES = [:shop, :special, :loot, :mission, :gift]
+  PURCHASEABLE = [:shop, :special]
 
   BOOST_TYPES = {
     :fight => [:attack, :defence], 
@@ -24,9 +26,6 @@ class Item < ActiveRecord::Base
           (
             items.available_till IS NULL OR
             items.available_till > ?
-          ) AND (
-            items.limit IS NULL OR
-            items.limit > items.owned
           )
         },
         Time.now
@@ -90,15 +89,13 @@ class Item < ActiveRecord::Base
     end
   end
 
-  has_attached_file :image,
-    :styles => {
-      :icon   => "50x50>",
-      :small  => "72x72#",
-      :medium => "120x120#",
-      :large  => "200x200#",
-      :stream => "90x90#"
-    },
-    :removable => true
+  has_pictures :styles => [
+    [:large,  "200x200#"],
+    [:medium, "120x120#"],
+    [:stream, "90x90#"],
+    [:small,  "72x72#"],
+    [:icon,   "50x50>"]
+  ]
 
   has_payouts :use,
     :visible => true
@@ -147,7 +144,7 @@ class Item < ActiveRecord::Base
     end
     
     def purchaseable_for(character)
-      available_in(:shop, :special).available_for(character)
+      available_in(*PURCHASEABLE).available_for(character)
     end
     
     def gifts_for(character)
@@ -156,6 +153,18 @@ class Item < ActiveRecord::Base
     
     def boost_types_to_dropdown
       BOOST_TYPES.keys.map {|b| b.to_s}
+    end
+
+    def with_effect_ids(name)
+      Rails.cache.fetch("items_with_#{ name }_effect", :expires_in => 15.minutes) do
+        Item.all(:select => "items.id, items.effects").select { |i| i.effect(name) != 0 }.collect { |i| i.id }
+      end
+    end
+
+    def with_effect(name)
+      scoped(
+        :conditions => ["items.id IN (?)", [0] + with_effect_ids(name)]
+      )
     end
   end
 
@@ -173,10 +182,6 @@ class Item < ActiveRecord::Base
 
   def availability
     self[:availability].to_sym
-  end
-
-  def left
-    limit.to_i > 0 ? limit - owned : nil
   end
 
   def time_left
@@ -230,5 +235,33 @@ class Item < ActiveRecord::Base
   
   def usable?
     !payouts.empty?
+  end
+  
+  def available_for?(character)
+    !self.class.available_for(character).scoped(:conditions => {:id => id}).empty?
+  end
+  
+  def boost_for?(type, destination)
+    send("boost_for_#{type}_#{destination}?")
+  end
+  
+  def boost_for_fight_attack?
+    effect(:attack) > 0
+  end
+  
+  def boost_for_fight_defence?
+    effect(:defence) > 0
+  end
+  
+  def boost_for_monster_attack?
+    effect(:health) > 0
+  end
+
+  def increment_owned(value)
+    $redis.hincrby("items_owned", id, value)
+  end
+
+  def owned
+    $redis.hget("items_owned", id).to_i
   end
 end

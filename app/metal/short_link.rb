@@ -1,3 +1,5 @@
+require 'facepalm'
+
 class ShortLink
   extend ApplicationController::ReferenceCode
   extend Facepalm::Rails::Controller::Redirects

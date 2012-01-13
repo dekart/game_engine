@@ -1,6 +1,7 @@
 class MonsterType < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasPictures
   include HasVisibility
 
   has_many :monsters
@@ -22,16 +23,14 @@ class MonsterType < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
-
-  has_attached_file :image,
-    :styles => {
-      :icon   => "40x40#",
-      :small  => "120x120>",
-      :normal => "200x200>",
-      :large  => "350x350>",
-      :stream => "90x90#"
-    },
-    :removable => true
+    
+  has_pictures :styles => [
+    [:large,  "350x350>"],
+    [:normal, "200x200>"],
+    [:small,  "120x120>"],
+    [:stream, "90x90#"],
+    [:icon,   "40x40#"]
+  ]
 
   has_requirements
 

@@ -52,7 +52,7 @@ module StreamHelper
       {
         :item_id => item.id
       },
-      (item.image.url(:stream) if item.image?)
+      (item.pictures.url(:stream) if item.pictures?)
     ]
   end
   
@@ -63,7 +63,7 @@ module StreamHelper
       {
         :mission_id => mission.id
       },
-      (mission.image.url(:stream) if mission.image?)
+      (mission.pictures.url(:stream) if mission.pictures?)
     ]
   end
 
@@ -74,7 +74,7 @@ module StreamHelper
       {
         :mission_id => mission.id
       },
-      (mission.image.url(:stream) if mission.image?)
+      (mission.pictures.url(:stream) if mission.pictures?)
     ]
   end
 
@@ -85,7 +85,7 @@ module StreamHelper
       {
         :boss_id => boss.id
       },
-      (boss.image.url(:stream) if boss.image?)
+      (boss.pictures.url(:stream) if boss.pictures?)
     ]
   end
 
@@ -96,7 +96,7 @@ module StreamHelper
       {
         :monster_id => monster.id
       },
-      (monster.image.url(:stream) if monster.image?)
+      (monster.pictures.url(:stream) if monster.pictures?)
     ]
   end
 
@@ -107,7 +107,7 @@ module StreamHelper
       {
         :monster_id => monster.id
       },
-      (monster.image.url(:stream) if monster.image?)
+      (monster.pictures.url(:stream) if monster.pictures?)
     ]
   end
 
@@ -118,7 +118,7 @@ module StreamHelper
       {
         :property_id => property.id
       },
-      (property.image.url(:stream) if property.image?)
+      (property.pictures.url(:stream) if property.pictures?)
     ]
   end
 
@@ -220,7 +220,7 @@ module StreamHelper
       {
         :achievement_type_id => type.id
       },
-      (type.image.url(:stream) if type.image?)
+      (type.pictures.url(:stream) if type.pictures?)
     ]
   end
   
@@ -245,7 +245,7 @@ module StreamHelper
     interpolation_options = interpolation_options.symbolize_keys
     
     if story = Story.by_alias(story_alias).first
-      image ||= story.image.url if story.image?
+      image ||= story.pictures.url if story.pictures?
       
       name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
     else

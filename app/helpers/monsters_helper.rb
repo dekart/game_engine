@@ -1,7 +1,7 @@
 module MonstersHelper
   def monster_image(monster, format, options = {})
-    if monster.image?
-      image_tag(monster.image.url(format), options.reverse_merge(:alt => monster.name, :title => monster.name))
+    if monster.pictures?
+      image_tag(monster.pictures.url(format), options.reverse_merge(:alt => monster.name, :title => monster.name))
     else
       monster.name
     end
@@ -11,7 +11,7 @@ module MonstersHelper
     percentage = monster.hp.to_f / monster.health * 100
 
     percentage_bar(percentage,
-      :label => '%s: <span class="value">%d/%d</span>' % [
+      '%s: <span class="value">%d/%d</span>' % [
         t('monsters.show.health', :monster => monster.name),
         monster.hp,
         monster.health

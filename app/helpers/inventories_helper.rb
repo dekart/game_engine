@@ -27,80 +27,90 @@ module InventoriesHelper
     )
   end
   
-  def boosts_list(boosts, type, destination, &block)
-    active_boost_id = current_character.active_boosts[type][destination] if current_character.active_boosts[type]
-    
-    boosts.each do |boost|
-      concat(
-        capture(boost, active_boost_id == boost.id, &block)
-      )
-    end
+  def boosts_for(type, destination)
+    render("inventories/boosts", 
+      :type => type, 
+      :destination => destination
+    )
   end
   
   def boost_dom_id(boost, destination)
-    dom_id(boost, "boost_#{boost.boost_type}_#{destination}")
-  end
-  
-  def inventory_item_image(inventory, format, options = {})
-    result = "".html_safe
-    if count = options.delete(:count)
-      amount = count.is_a?(TrueClass) ? inventory.amount : count
-      count = content_tag(:span, amount, :class => "count #{format}")
-      
-      result << count 
-    end
+    item = boost.respond_to?(:item) ? boost.item : boost
     
-    content_tag(:div, result << item_image(inventory, format, options), :class => 'inventory_image')
+    dom_id(item, "boost_#{item.boost_type}_#{destination}")
   end
-  
+
+  def inventory_item_image(inventory, format, options = {})
+    result = ""
+
+    if count = options.delete(:count)
+      result << span_tag(count.is_a?(TrueClass) ? inventory.amount : count, "count #{format}")
+    end
+
+    result << item_image(inventory, format, options)
+
+    (
+      %{<div class="inventory_image">#{ result }</div>}
+    ).html_safe
+  end
+
   def inventories_grouped_by_item_group(inventories)
     inventories.group_by{|i| i.item_group}.sort{|a, b| a.first.position <=> b.first.position }
   end
-  
+
   def inventories_exchangeable_grouped_by_item_group
     @inventories_exchangeable_grouped_by_item_group ||= begin
       inventories_grouped_by_item_group(current_character.inventories.exchangeable.all)
     end
   end
-  
+
   def inventories_equippable_grouped_by_item_group
     @inventories_equippable_grouped_by_item_group ||= begin
       inventories_grouped_by_item_group(current_character.inventories.equippable.all)
     end
   end
-  
+
   def inventory_placement_tag(inventory, placement, content = nil, &block)
     content = capture(&block) if block_given?
-    
-    result = content_tag(:div, content,
-      :class => :inventory, 
-      :"data-placements" => inventory.placements.join(","),
-      :"data-equip" => equip_inventory_path(inventory),
-      :"data-unequip" => unequip_inventory_path(inventory, :placement => placement),
-      :"data-move" => move_inventory_path(inventory, :from_placement => placement)
-    )
-    
+
+    result = (
+      %{
+        <div
+          class="inventory"
+          data-placements="#{ inventory.placements.join(",") }"
+          data-equip="#{ equip_inventory_path(inventory) }"
+          data-unequip="#{ unequip_inventory_path(inventory, :placement => placement) }"
+          data-move="#{ move_inventory_path(inventory, :from_placement => placement) }"
+        >#{ content }</div>
+      }
+    ).html_safe
+
     block_given? ? concat(result) : result
   end
-  
+
   def inventory_group_placement(placement, &block)
     result = ""
-    
+
     inventories = current_character.equipment.inventories_by_placement(placement).inject(Hash.new(0)) {|h, v| h[v] += 1; h}
-    
+
     inventories.each_pair do |inventory, count|
-      result << content_tag(:li, 
-        inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
-      )
+      result << '<li>'
+      result << inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
+      result << '</li>'
     end
-    
-    result = content_tag(:div, 
-      content_tag(:ul, result.html_safe, :class => "carousel-container"),
-      :class => 'group_placement', 
-      :'data-placement' => placement, 
-      :'data-free-slots' => current_character.equipment.available_capacity(placement)
-    )
-    
+
+    result = (
+      %{
+        <div
+          class="group_placement"
+          data-placement="#{ placement }"
+          data-free-slots="#{ current_character.equipment.available_capacity(placement) }"
+        >
+          <ul class="carousel-container">#{ result }</ul>
+        </div>
+      }
+    ).html_safe
+
     concat(result)
   end
 end

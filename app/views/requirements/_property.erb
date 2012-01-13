@@ -7,9 +7,9 @@
     <span class="label">
       <% if requirement.display_level? %>
         <%= t(".text",
-              :name   => content_tag(:span, requirement.property_type.name, :class => :value),
+              :name   => span_tag(requirement.property_type.name, :value),
               :level  => requirement.level
-            ).html_safe! %>
+            ).html_safe %>
       <% else %>
         <span class="value"><%= requirement.property_type.name %></span>
       <% end %>

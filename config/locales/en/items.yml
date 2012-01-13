@@ -6,17 +6,19 @@ en:
       buttons:
         inventory: "Go to Inventory"
     item:
-      free: "FREE"
-      package_size: "(Pack of %{amount}) %{help_link}"
-      buttons:
-        buy: "Buy"
+      package_size: "(per %{amount} %{help_link})"
     specials:
       header: "Limited Time Offers"
       buttons:
         buy: "Buy"
     limit:
       amount_limit: "Only %{amount} left!"
-      time_limit: "Time Left: %{amount}"
+      time_limit: "Time Left:"
     tabs:
       services: "Services"
       buy_vip: "Buy Gems"
+    requirements:
+      free: "FREE"
+    buy_button:
+      buttons:
+        buy: "Buy"

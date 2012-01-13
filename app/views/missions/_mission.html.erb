@@ -1,12 +1,12 @@
-<% content_tag_for(:tr, mission) do %>
+<tr class="mission" id="<%= dom_id(mission) %>">
   <td class="info">
     <div class="image">
-      <% if mission.image? %>
-        <%= image_tag(mission.image.url(:small)) %>
+      <% if mission.pictures? %>
+        <%= image_tag(mission.pictures.url(:small)) %>
       <% else %>
         <%= asset_image_tag(:mission_placeholder) %>
       <% end %>
-      
+
       <div class="progress"><%= mission_progress(rank) %></div>
     </div>
 
@@ -23,7 +23,7 @@
                 :class => "fulfill button"
               }
             ) %>
-                
+
       <% else %>
         <div class="completed"><%= t('.completed') %></div>
       <% end %>
@@ -50,4 +50,4 @@
       <%= requirement_list(level.applicable_requirements, :visible => true) %>
     </div>
   </td>
-<% end %>
+</tr>

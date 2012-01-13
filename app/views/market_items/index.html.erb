@@ -5,7 +5,7 @@
 <% collection(@items) do %>
   <table id="market_item_list">
     <% @items.each do |item| %>
-      <% content_tag_for(:tr, item) do %>
+      <tr class="market_item" id="<%= dom_id(item) %>">
         <td class="picture"><%= item_image(item, :small) %></td>
         <td class="info">
           <div class="name"><%= item.name %> X <%= item.amount %></div>
@@ -54,7 +54,7 @@
                 ) %>
           <% end %>
         </td>
-      <% end %>
+      </tr>
     <% end %>
   </table>
 

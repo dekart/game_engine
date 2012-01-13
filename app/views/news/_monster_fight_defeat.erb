@@ -2,16 +2,16 @@
   <%= character_picture_link(news.character) %>
 </div>
 
-<% if news.monster.image? %>
+<% if news.monster.pictures? %>
   <div class="subject">
-    <%= image_tag(news.monster.image.url(:icon)) %>
+    <%= image_tag(news.monster.pictures.url(:icon)) %>
   </div>
 <% end %>
 
 <div class="description">
   <%= t('.text',
         :actor    => character_name_link(news.character, {}, {:useyou => true, :capitalize => true}),
-        :monster => content_tag(:strong, news.monster.name)
+        :monster  => strong_tag(news.monster.name)
       ).html_safe %>
 </div>
 

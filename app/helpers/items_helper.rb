@@ -2,30 +2,24 @@ module ItemsHelper
   def item_effects(item)
     raise "Wrong object class: #{item.class}" unless item.is_a?(Item)
 
-    Rails.cache.fetch(item.cache_key) do
+    $memory_store.fetch("#{ item.cache_key }/effects") do
       render('items/effects', :item => item)
     end
   end
 
   def item_image(item, format, options = {})
     if tooltip = options.delete(:tooltip)
-      tooltip = {} unless tooltip.is_a?(Hash)
-
-      tooltip = {
-        :content => {:text => item_tooltip_content(item)},
-        :position => {
-          :my => 'bottom center',
-          :at => 'top center',
-          :viewport => true,
-          :adjust => {
-           :x => 0,
-           :y => 0,
-           :method => 'shift'
-          }
-        }
-      }.deep_merge(tooltip)
-
-      options['data-tooltip'] = tooltip.to_json
+      options['data-tooltip'] = item_image_tooltip_options(item, tooltip).to_json
+    end
+    
+    if tooltip_on_click = options.delete(:tooltip_on_click)
+      options['data-tooltip-on-click'] = item_image_tooltip_on_click_options(item, tooltip_on_click).to_json
+      
+      if options['class']
+        options['class'] += ' clickable'
+      else 
+        options['class'] = 'clickable'
+      end
     end
     
     options.reverse_merge!(
@@ -33,7 +27,7 @@ module ItemsHelper
       :title => item.name
     )
       
-    image_tag(item.image.url(format), options)
+    image_tag(item.pictures.url(format), options)
   end
   
   def item_tooltip_content(item)
@@ -42,7 +36,6 @@ module ItemsHelper
     %{
       <div class="tooltip_content">
         <h2>#{item.name}</h2>
-        <div class="description">#{ item.description }</div>
         <div class="payouts">#{ item_effects(item) }</div>
       </div>
     }.gsub!(/[\n\s]+/, ' ').html_safe
@@ -52,16 +45,18 @@ module ItemsHelper
     if item.price?
       result = [].tap do |prices|
         if item.basic_price > 0
-          prices << content_tag(:span,
-            attribute_requirement_text(:basic_money, number_to_currency(item.basic_price * amount)),
-            :class => :basic_money
+          prices << span_tag(
+            attribute_requirement_text(:basic_money,
+              number_to_currency(item.basic_price * amount)
+            ),
+            :basic_money
           )
         end
 
         if item.vip_price > 0
-          prices << content_tag(:span,
+          prices << span_tag(
             attribute_requirement_text(:vip_money, item.vip_price * amount),
-            :class => :vip_money
+            :vip_money
           )
         end
       end
@@ -74,13 +69,65 @@ module ItemsHelper
 
   def item_package(item, &block)
     if item.package_size > 1
-      content_tag(:span, 
-        t('items.item.package_size', 
-          :amount     => item.package_size, 
+      span_tag(
+        t('items.item.package_size',
+          :amount     => item.package_size,
           :help_link  => help_link(:items_package)
-        ).html_safe, 
-        :class => :package_size
-      )
+        ),
+        :package_size
+      ).html_safe
     end
   end
+
+  protected
+
+    def item_image_tooltip_options(item, tooltip)
+      tooltip = {} unless tooltip.is_a?(Hash)
+
+      {
+        :content => {:text => item_tooltip_content(item)},
+        :position => {
+          :my => 'bottom center',
+          :at => 'top center',
+          :viewport => true,
+          :adjust => {
+            :x => 0,
+            :y => 0,
+            :method => 'shift'
+          }
+        }
+      }.deep_merge(tooltip)
+    end
+
+    def item_image_tooltip_on_click_options(item, tooltip)
+      tooltip = {} unless tooltip.is_a?(Hash)
+
+      tooltip = {
+        :content => {
+          :title => {
+            :text => item.name,
+            :button => 'Close'
+          },
+          :text => %{<div class="spinner">#{ asset_image_tag(:spinner) }</div>}, # show spinner while tooltip loading
+          :ajax => {
+            :url => item_path(item)
+          }
+        },
+        :position => {
+          :my => 'bottom center',
+          :at => 'top center',
+          :viewport => true,
+          :adjust => {
+            :x => 0,
+            :y => 0,
+            :method => 'shift'
+          },
+        },
+        :show => {
+          :event => 'click',
+          :solo => true
+        },
+        :hide => 'unfocus'
+      }.deep_merge(tooltip)
+    end
 end

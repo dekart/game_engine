@@ -1,0 +1,21 @@
+<% dialog :clan_state_notification do |d| %>
+  <h2><%= t(".#{notification.status}.title") %></h2>
+  
+  <table width="100%">
+    <tr>
+      <td>
+        <div class="text">
+          <%= t(".#{notification.status}.text",
+                :clan => strong_tag(notification.clan.name)
+              ).html_safe %>
+        </div>
+      </td>
+      <td class="avatar">
+        <%= clan_avatar(notification.clan, :format => :small) %>
+      </td>
+    </tr>  
+  </table>
+  
+  <%= render("notifications/disable", :notification => notification) %>
+
+<% end %>

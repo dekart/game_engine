@@ -10,7 +10,7 @@ module RequirementsHelper
         :satisfied    => requirement.satisfies?(current_character)
       )
     end
-    
+
     result = result.html_safe
 
     block_given? && !result.blank? ? yield(result) : result
@@ -21,7 +21,9 @@ module RequirementsHelper
     value     = block_given? ? capture(&block) : args.shift
     satisfied = args.first
 
-    result = content_tag(:div, value.html_safe, :class => "requirement #{type} #{"not_satisfied" unless satisfied}")
+    result = (
+      %{<div class="requirement #{ type } #{ :not_satisfied unless satisfied }">#{ value }</div>}
+    ).html_safe
 
     block_given? ? concat(result) : result
   end
@@ -39,10 +41,10 @@ module RequirementsHelper
 
     result.html_safe
   end
-  
+
   def unsatisfied_requirement_first(requirements)
     result = ""
-    
+
     requirements.each do |requirement|
       unless requirement.satisfies?(current_character)
         result = render("requirements/not_satisfied/#{requirement.name}",
@@ -51,13 +53,13 @@ module RequirementsHelper
         break
       end
     end
-    
+
     result.html_safe
   end
 
   def attribute_requirement_text(attribute, value)
     t("requirements.attribute.text",
-      :amount => content_tag(:span, value, :class => :value),
+      :amount => span_tag(value, :value),
       :name   => Character.human_attribute_name(attribute.to_s)
     ).html_safe
   end
@@ -75,28 +77,30 @@ module RequirementsHelper
     
     requirement(:vip_money, "#{ requirement_text } #{additional_text}", current_character.vip_money >= value)
   end
-  
+
   def refill_button(type)
-    if current_character.vip_money >= Setting.i(:"premium_#{type}_price")  
+    price = Setting.i(:"premium_#{type}_price")
+
+    if current_character.vip_money >= price
       link_to_remote(
-        button( :refill, :price => content_tag(:span, Setting.i(:"premium_#{type}_price"), :class => :amount)), 
+        button( :refill, :price => span_tag(price, :amount)),
         :url    => premium_path(:type => :"refill_#{type}"),
         :method => :put,
         :update => :result,
         :html   => {:class => "premium button"}
       )
-      
+
     else
       link_to_remote(
-        button( :refill, :price => content_tag(:span, Setting.i(:"premium_#{type}_price"), :class => :amount)), 
+        button( :refill, :price => span_tag(price, :amount)),
         :url    => refill_dialog_premium_path(
-          :type => :"refill_#{type}", 
-          :vip_money => Setting.i(:"premium_#{type}_price")
+          :type => :"refill_#{type}",
+          :vip_money => price
         ),
         :update => :ajax,
         :html   => {:class => "premium button"}
       )
-    end  
+    end
   end
-  
+
 end

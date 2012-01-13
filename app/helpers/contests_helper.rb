@@ -2,7 +2,7 @@ module ContestsHelper
   def current_contest
     @current_contest ||= (Contest.current || Contest.finished_recently.first)
   end
-  
+
   def contest_timer(contest)
     if contest.visible?
       if contest.starting_soon?
@@ -12,37 +12,35 @@ module ContestsHelper
         time_left = contest.time_left_to_finish
         timer_name = "finish_time"
       end
-      
+
       dom_ready("$('##{dom_id(contest)}').timer(#{time_left});")
-      
-      content_tag(:div,
-        t(".#{timer_name}", 
-          :value => content_tag(:span, "", :id => dom_id(contest), :class => :value)
-        ).html_safe,
-        :class => 'timer'
-      )
+
+      (
+        %{
+          <div class="timer">
+            #{ t(".#{ timer_name }") }
+            <span class="value" id="#{ dom_id(contest) }"></span>
+          </div>
+        }
+      ).html_safe
     end
   end
-  
+
   def contest_current_tag(contest, &block)
-    result = content_tag(:div, capture(&block),
-      :id     => 'current_contest',
-      :class  => 'clearfix',
-      :style  => contest_logo_background(contest)
-    )
-    
+    result = %{<div class="clearfix" id="current_contest" style="#{ contest_logo_background(contest) }">#{ capture(&block) }</div>}
+
     concat(result.html_safe)
   end
-  
+
   def contest_logo_background(contest)
-    if contest.image?
-      "background-image: url('#{contest.image.url}'); background-repeat: no-repeat;"
+    if contest.pictures?
+      "background-image: url('#{ contest.pictures.url }'); background-repeat: no-repeat;"
     end
   end
-  
+
   def contest_group_table(contest_group, options = {}, &block)
     contest = contest_group.contest
-    
+
     options.reverse_merge!(
       :include_current => true,
       :current => current_character

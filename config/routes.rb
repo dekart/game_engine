@@ -88,7 +88,8 @@ ActionController::Routing::Routes.draw do |map|
       :member => {
         :delete_users   => :delete,
         :restart        => :post,
-        :update_styles  => :post
+        :update_styles  => :post,
+        :clear_memcache => :post
       }
     admin.resources :characters, :only => [:index, :edit, :update],
       :collection => {
@@ -146,6 +147,8 @@ ActionController::Routing::Routes.draw do |map|
       :member => {
         :change_state => :put
       }
+    
+    admin.resources :pictures, :only => [:new]
     
     # Add your custom admin routes below this mark
     
@@ -292,6 +295,26 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :chat
   
   map.resources :achievements, :only => [:index, :show, :update]
+  
+  map.resources :clans,
+    :member => {
+      :change_image => :put,
+      :delete_member => :delete
+    }
+  
+  map.resources :clan_members,
+    :member => {
+      :delete => :delete
+    }
+  
+  map.resources :clan_membership_applications,
+    :member => {
+      :create => :get,
+      :approve => :put,
+      :reject => :delete
+    }
+   
+  map.resources :clan_membership_invitations, :only => [:update, :destroy]   
 
   # Add your custom routes below this mark
   

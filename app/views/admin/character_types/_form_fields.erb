@@ -1,7 +1,9 @@
 <%= form.text_field :name, :required => true, :size => 50 %>
 <%= form.text_area :description, :cols => 80, :rows => 5 %>
 
-<%= form.file_field :image, :after_field => form.attachment_preview(:image, :small) %>
+<% form.field_set form.object.class.human_attribute_name('pictures') do %>
+  <%= form.fields 'admin/pictures/form_fields' %>
+<% end %>
 
 <% form.field_set t(".basic_attributes") do %>
   <% CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute| %>

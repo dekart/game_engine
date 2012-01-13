@@ -35,6 +35,11 @@ Setting[:character_income_calculation_period] ||= 60
 Setting[:character_weakness_minimum] ||= 5
 Setting[:character_weakness_minimum_formula] ||= 'absolute'
 
+Setting[:clan_create_for_vip_money] ||= 25
+Setting[:clan_change_image_vip_money] ||= 10
+Setting[:clan_repeat_invite_delay] ||= 7 # days
+Setting[:clan_max_size] ||= 50
+
 Setting[:dashboard_news_count] ||= 30
 
 Setting[:premium_money_price] ||= 5
@@ -145,11 +150,8 @@ Setting[:monsters_maximum_reward_collectors] ||= 5
 
 Setting[:monster_fight_power_attack_factor] ||= 5
 
-Setting[:notifications_friends_to_invite_delay] ||= 48
-Setting[:notifications_friends_to_invite_displayed_at] ||= Time.now
-
-Setting[:notifications_send_gift_delay] ||= 48
-Setting[:notifications_send_gift_displayed_at] ||= Time.now + 24.hours
+Setting[:notifications_friends_to_invite_show_requests_count] ||= 40
+Setting[:notifications_send_gift_show_requests_count] ||= 100
 
 Setting[:chat_max_messages] ||= 50
 Setting[:chat_update_time] ||= 10.seconds.to_i

@@ -1,4 +1,4 @@
-<%= render("contests/current") if current_contest %>
+<%= render('layouts/promo_block', :context => :rating) if current_character.show_promo_block? %>
 
 <%= title(t(".title")) %>
 

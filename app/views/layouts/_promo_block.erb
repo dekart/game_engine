@@ -12,7 +12,7 @@
   <% end %>
 
   <% if current_contest %>
-    <% promo.page :contest, :context => [:home, current_contest.context] do %>
+    <% promo.page :contest, :context => [:home, :rating, current_contest.context] do %>
       <%= render("contests/current") %>
     <% end %>
   <% end %>

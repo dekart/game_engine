@@ -4,25 +4,25 @@ require 'models/app_request/common'
 describe AppRequest::Gift do
   describe '.accepted_recently?' do
     before do
-      @request = Factory(:app_request_gift)      
+      @request = Factory(:app_request_gift)
 
       @sender   = @request.sender
       @receiver = Factory(:character)
     end
-    
+
     it 'should return true if receiver has gifts from sender accepted less than 24 hours ago' do
-      @request.accept
-      
+      @request.accept!
+
       AppRequest::Gift.accepted_recently?(@sender, @receiver).should be_true
     end
-    
+
     it 'should return false if no gifts in last 24 hours' do
       AppRequest::Gift.accepted_recently?(@sender, @receiver).should be_false
-      
+
       Timecop.travel((24.hours + 1.minute).ago) do
         @request.accept!
       end
-      
+
       AppRequest::Gift.accepted_recently?(@sender, @receiver).should be_false
     end
   end

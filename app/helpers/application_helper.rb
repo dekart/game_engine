@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   MAINTENANCE_SETTINGS_PATH = Rails.root.join("public", "system", "maintenance.yml").to_s
-  
+
   def admin_only(&block)
     if current_user && current_user.admin? || ENV['OFFLINE']
       concat(capture(&block))
@@ -17,10 +17,10 @@ module ApplicationHelper
       block_given? ? yield(text) : text
     end
   end
-  
+
   def yield_once(group)
     @yield_once ||= {}
-    
+
     if !@yield_once[group] and @yield_once[group] = yield
       @yield_once[group]
     end
@@ -47,9 +47,11 @@ module ApplicationHelper
 
   def empty_set(*args)
     options = args.extract_options!
-    label = args.first
+    label = args.first || t(".empty_set", :default => t("common.empty_set"))
 
-    content_tag(:div, label || t(".empty_set", :default => t("common.empty_set")), options.reverse_merge(:class => :empty_set))
+    (
+      %{<div class="empty_set">#{ label }</div>}
+    ).html_safe
   end
 
   def amount_select_tag(*args)
@@ -59,7 +61,7 @@ module ApplicationHelper
     values.uniq!
     values.sort!
 
-    select_tag(:amount, options_for_select(values, options[:selected]), 
+    select_tag(:amount, options_for_select(values, options[:selected]),
       :class => 'amount',
       :"data-options" => options.to_json
     )
@@ -69,7 +71,7 @@ module ApplicationHelper
     @dom_ready ||= []
 
     if content || block_given?
-      content = capture(&block) unless content 
+      content = capture(&block) unless content
       options[:prepend] ? @dom_ready.insert(0, content) : @dom_ready << content
       nil
     else
@@ -84,7 +86,11 @@ module ApplicationHelper
 
     display_keys.each do |key|
       unless flash[key].blank?
-        result << (block_given? ? capture(key, flash[key], &block) : content_tag(:p, flash[key], :class => key))
+        if block_given?
+          result << capture(key, flash[key], &block)
+        else
+          result << %{<p class="key">#{ flash[key] }</p>}
+        end
       end
     end
 

@@ -1,0 +1,9 @@
+<% form_for @clan do |f| %>
+  <%= f.error_messages %>
+  
+  <%= f.text_field :name, :required => true, :size => 40 %>
+  
+  <%= f.text_area :description, :cols => 60, :rows => 7  %>
+  
+  <%= f.submit t(".save") %>
+<% end %>

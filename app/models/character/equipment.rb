@@ -29,7 +29,7 @@ class Character
     def main_placements
       MAIN_PLACEMENTS
     end
-  
+
     def all_placements
       PLACEMENTS
     end
@@ -239,12 +239,16 @@ class Character
 
 
     def best_offence
-      inventories.select{|i| i.effect(:attack) > 0 }.sort{|a, b| b.effect(:attack) <=> a.effect(:attack) }[0..2]
+      character.inventories.equipped.by_item_id(Item.with_effect_ids(:attack)).sort{|a, b|
+        b.effect(:attack) <=> a.effect(:attack)
+      }[0, 3]
     end
 
 
     def best_defence
-      inventories.select{|i| i.effect(:defence) > 0 }.sort{|a, b| b.effect(:defence) <=> a.effect(:defence) }[0..2]
+      character.inventories.equipped.by_item_id(Item.with_effect_ids(:defence)).sort{|a, b|
+        b.effect(:defence) <=> a.effect(:defence)
+      }[0, 3]
     end
 
     protected

@@ -10,6 +10,12 @@ class Inventory < ActiveRecord::Base
       :order      => "items.level ASC, items.basic_price ASC"
     }
   }
+  named_scope :by_item_id, Proc.new{|ids|
+    {
+      :conditions => ["inventories.item_id IN (?)", [0] + ids], # 0 is required to correctly return empty set when ids is empty
+      :include    => :item
+    }
+  }
   named_scope :equipped, :conditions => "equipped > 0"
   named_scope :equippable,
     :include => :item,
@@ -26,7 +32,7 @@ class Inventory < ActiveRecord::Base
   delegate(
     *(
       %w{
-        item_group  name plural_name description image image?
+        item_group  name plural_name description pictures pictures?
         basic_price vip_price can_be_sold? can_be_sold_on_market? exchangeable?
         placements placement_options_for_select
         payouts payouts? use_button_label use_message effects effects? effect boost?
@@ -39,7 +45,6 @@ class Inventory < ActiveRecord::Base
   attr_accessor :charge_money, :deposit_money, :basic_money, :vip_money
 
   validate :enough_character_money?
-  validate :item_limit
   validates_numericality_of :amount, :greater_than => 0
 
   before_save   :charge_or_deposit_character
@@ -84,6 +89,10 @@ class Inventory < ActiveRecord::Base
     changes["amount"] ? (changes["amount"].last - changes["amount"].first) / item.package_size : 0
   end
 
+  def active_boost?(destination)
+    character.active_boosts[boost_type] && character.active_boosts[boost_type][destination] == id
+  end
+
   protected
 
   def enough_character_money?
@@ -91,12 +100,6 @@ class Inventory < ActiveRecord::Base
 
     errors.add(:character, :not_enough_basic_money, :name => name) if character.basic_money < basic_price * purchase_amount
     errors.add(:character, :not_enough_vip_money, :name => name) if character.vip_money < vip_price * purchase_amount
-  end
-  
-  def item_limit
-    return unless charge_money && purchase_amount > 0
-    
-    errors.add(:item, :limit_exceeded) if item.left && (amount > item.left)
   end
 
   def charge_or_deposit_character

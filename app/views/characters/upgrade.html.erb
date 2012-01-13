@@ -1,4 +1,4 @@
-<% dialog :id => :upgrade_dialog do |d| %>
+<% dialog :upgrade_dialog do |d| %>
   <h2><%= t(".title") %></h2>
 
   <div id="upgrade_result"></div>
@@ -12,22 +12,19 @@
           <%= t(".sliders") %>
         </td>
       </tr>
+
       <% Character::UPGRADABLE_ATTRIBUTES.each do |attribute| %>
         <tr class="<%= attribute %> attribute_item">
           <td class="name"><%= Character.human_attribute_name(attribute.to_s) %></td>
           <td class="value"><%= current_character.send(attribute) %></td>
           <td class="points"></td>
-          <td class="controls">	
+          <td class="controls">
           	<%= hidden_field_tag(attribute, 0, :class => :hidden_value) %>
-          	
+
             <div class="minus_value_attribute"></div>
-            
-            <%= content_tag(:div, "", 
-                  :class => :attribute_slider,
-                  :"data-count-points"      => Setting.i("character_#{attribute}_upgrade_points"),
-                  :"data-character-upgrade" => Setting.i("character_#{attribute}_upgrade")
-                ) %>	
-            
+
+            <div class="attribute_slider" data-count-points="<%= Setting.i("character_#{attribute}_upgrade_points")%>" data-character-upgrade="<%= Setting.i("character_#{attribute}_upgrade")%>"></div>
+
             <div class="plus_value_attribute"></div>
           </td>
         </tr>

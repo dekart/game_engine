@@ -19,17 +19,28 @@ en:
       note: "Here you can accept requests from your friends. You can only accept one gift per person every %{hours} hours."
       empty_set: "Your friends haven't sent you any requests yet."
       buttons:
-        accept: 'Accept'
         ignore: 'Ignore this request'
     details:
       gift:
         text: "%{user} sends you %{item}"
+        buttons:
+          accept: 'Accept'
       monster_invite:
         text: "%{user} invites you to join fight against %{monster}"
+        buttons:
+          view: 'View'
       invitation:
         text: "%{user} invites you to join their Alliance"
+        buttons:
+          accept: 'Accept'
+      clan_invite:
+        text: "%{user} invites you to join their Clan %{clan}"   
+        buttons:
+          view: 'View'
       property_worker:
         text: "%{user} asks you to help them finish the %{property}"
+        buttons:
+          accept: 'Accept'
     update:
       gift:
         accepted: 'Gift accepted!'

@@ -20,19 +20,11 @@
         <div class="best_items">
           <strong><%= t(".best_attacking_boost") %></strong>
           
-          <%= item_image(fight.attacker_boost, :icon, :tooltip => true) %>
+          <%= item_image(fight.attacker_boost.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
         </div>
       <% end %>
 
-      <% if offence = fight.attacker.equipment.best_offence and offence.any? %>
-        <div class="best_items">
-          <strong><%= t(".best_offence") %></strong>
-
-          <% offence.each do |inventory| %>
-            <%= item_image(inventory, :icon, :tooltip => true) %>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render "fights/create/best_items", :character => fight.attacker %>
     </td>
     <td class="vs"><%= t(".vs") %></td>
     <td class="victim">
@@ -55,26 +47,18 @@
         <div class="best_items">
           <strong><%= t(".best_defending_boost") %></strong>
 
-          <%= item_image(fight.victim_boost, :icon, :tooltip => true) %>
+          <%= item_image(fight.victim_boost.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
         </div>
       <% end %>
-
-      <% if defence = fight.victim.equipment.best_defence and defence.any? %>
-        <div class="best_items">
-          <strong><%= t(".best_defence") %></strong>
-
-          <% defence.each do |inventory| %>
-            <%= item_image(inventory, :icon, :tooltip => true) %>
-          <% end %>
-        </div>
-      <% end %>
+      
+      <%= render "fights/create/best_items", :character => fight.victim %>
     </td>
   </tr>
 </table>
 
-<% content_tag(:div, :class => :item_details, :id => dom_id(fight, :items)) do %>
+<div class="item_details" id="<%= dom_id(fight, :items) %>">
   <%= link_to_remote(t(".show_items"),
         :url    => used_items_fight_path(fight),
         :update => dom_id(fight, :items)
       ) %>
-<% end %>
+</div>

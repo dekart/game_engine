@@ -44,7 +44,7 @@ module Notification
 
     class << self
       def type_to_class_name(type)
-        "Notification::#{type.to_s.classify}"
+        "Notification::#{type.to_s.camelize}"
       end
   
       def type_to_class(type)
@@ -54,6 +54,10 @@ module Notification
 
     def class_to_type
       self.class.name.split("::").last.underscore.to_sym
+    end
+    
+    def title
+      self.class.name.split("::").last.titleize
     end
   end
 end

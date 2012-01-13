@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111223124037) do
+ActiveRecord::Schema.define(:version => 20120105180554) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -234,6 +234,40 @@ ActiveRecord::Schema.define(:version => 20111223124037) do
   add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
+  create_table "clan_members", :force => true do |t|
+    t.integer  "character_id"
+    t.integer  "clan_id"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clan_membership_applications", :force => true do |t|
+    t.integer  "clan_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clan_membership_invitations", :force => true do |t|
+    t.integer  "clan_id"
+    t.integer  "character_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clans", :force => true do |t|
+    t.string   "name",               :limit => 100
+    t.text     "description"
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_file_content", :limit => 100
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.integer  "members_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contest_groups", :force => true do |t|
     t.integer  "contest_id"
     t.integer  "max_character_level"
@@ -321,14 +355,6 @@ ActiveRecord::Schema.define(:version => 20111223124037) do
   end
 
   add_index "exchanges", ["character_id"], :name => "index_exchanges_on_character_id"
-
-  create_table "facebook_templates", :force => true do |t|
-    t.string "template_name", :null => false
-    t.string "content_hash",  :null => false
-    t.string "bundle_id"
-  end
-
-  add_index "facebook_templates", ["template_name"], :name => "index_facebook_templates_on_template_name", :unique => true
 
   create_table "fights", :force => true do |t|
     t.integer  "attacker_id",                                    :null => false
@@ -449,7 +475,6 @@ ActiveRecord::Schema.define(:version => 20111223124037) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
-    t.integer  "owned",                                  :default => 0
     t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
@@ -708,6 +733,18 @@ ActiveRecord::Schema.define(:version => 20111223124037) do
   end
 
   add_index "personal_discounts", ["character_id", "available_till"], :name => "index_personal_discounts_on_character_id_and_available_till"
+
+  create_table "pictures", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type",         :limit => 100, :default => ""
+    t.string   "style"
+    t.string   "image_file_name",                   :default => "", :null => false
+    t.string   "image_content_type", :limit => 100, :default => "", :null => false
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "promotion_receipts", :force => true do |t|
     t.integer  "promotion_id", :null => false

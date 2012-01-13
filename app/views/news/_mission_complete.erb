@@ -2,9 +2,9 @@
   <%= character_picture_link(news.character) %>
 </div>
 
-<% if news.mission.image? %>
+<% if news.mission.pictures? %>
   <div class="subject">
-    <%= image_tag(news.mission.image.url(:icon)) %>
+    <%= image_tag(news.mission.pictures.url(:icon)) %>
   </div>
 <% end %>
 
@@ -12,13 +12,13 @@
   <% if news.mission.levels.size > 1 %>
     <%= t(".text.multi_level",
           :actor    => character_name_link(news.character, {}, {:useyou => true, :capitalize => true}),
-          :mission  => content_tag(:strong, news.mission.name),
-          :level    => content_tag(:strong, news.level_rank.level.position)
+          :mission  => strong_tag(news.mission.name),
+          :level    => strong_tag(news.level_rank.level.position)
         ).html_safe %>
   <% else %>
     <%= t(".text.single_level",
           :actor    => character_name_link(news.character, {}, {:useyou => true, :capitalize => true}),
-          :mission  => content_tag(:strong, news.mission.name)
+          :mission  => strong_tag(news.mission.name)
         ).html_safe %>
   <% end %>
 </div>

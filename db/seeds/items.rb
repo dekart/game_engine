@@ -11,7 +11,10 @@ weapons.items.create!(
   ],
   :placements   => [:left_hand, :right_hand, :additional],
   :can_be_sold_on_market => true,
-  :image        => File.open(Rails.root.join("db", "pictures", "knife.jpg"))
+
+  :picture_attributes     => [{
+    :image => File.open(Rails.root.join("db", "pictures", "knife.jpg"))
+  }]
 )
 
 weapons.items.create!(
@@ -24,7 +27,10 @@ weapons.items.create!(
   ],
   :placements   => [:left_hand, :right_hand, :additional],
   :can_be_sold  => false,
-  :image        => File.open(Rails.root.join("db", "pictures", "dagger.jpg"))
+
+  :picture_attributes     => [{
+    :image => File.open(Rails.root.join("db", "pictures", "dagger.jpg"))
+  }]
 )
 
 armors = ItemGroup.create!(:name => "Armors")
@@ -37,7 +43,10 @@ armors.items.create!(
     {:type => :defence, :value => 1}
   ],
   :placements   => [:left_hand, :right_hand, :additional],
-  :image        => File.open(Rails.root.join("db", "pictures", "shield.jpg"))
+  
+  :picture_attributes     => [{
+    :image => File.open(Rails.root.join("db", "pictures", "shield.jpg"))
+  }]
 )
 
 potions = ItemGroup.create!(:name => "Potions")
@@ -46,10 +55,14 @@ potions.items.create!(
   :name         => "Potion of Healing",
   :level        => 2,
   :basic_price  => 100,
-  :image        => File.open(Rails.root.join("db", "pictures", "potion_of_healing.jpg")),
+
   :payouts      => Payouts::Collection.new(
     Payouts::HealthPoint.new(:value => 50, :apply_on => :use, :visible => true)
-  )
+  ),
+
+  :picture_attributes     => [{
+    :image => File.open(Rails.root.join("db", "pictures", "potion_of_healing.jpg"))
+  }]
 )
 
 potions.items.create!(
@@ -57,8 +70,13 @@ potions.items.create!(
   :level        => 2,
   :basic_price  => 50,
   :vip_price    => 5,
-  :image        => File.open(Rails.root.join("db", "pictures", "potion_of_upgrade.jpg")),
+
   :payouts      => Payouts::Collection.new(
     Payouts::UpgradePoint.new(:value => 5, :apply_on => :use, :visible => true)
-  )
+  ),
+
+  :picture_attributes     => [{
+    :image => File.open(Rails.root.join("db", "pictures", "potion_of_upgrade.jpg"))
+  }]
+
 )

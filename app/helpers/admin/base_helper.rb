@@ -11,8 +11,8 @@ module Admin::BaseHelper
 
         flash.discard(key)
 
-        result << content_tag(:div, value,
-          options.reverse_merge(:id => :flash, :class => key)
+        result << (
+          %{<div #{ tag_options(options.reverse_merge(:id => :flash, :class => key)) }>#{ value }</div>}
         )
       end
     end
@@ -26,37 +26,37 @@ module Admin::BaseHelper
       :exclude  => [],
       :confirm  => [:deleted]
     )
-    
+
     result = [
-      content_tag(:span, object.state.to_s.titleize, :class => object.state)
+      span_tag(object.state.to_s.titleize, object.state)
     ]
-    
+
     if options[:controls]
       object.class.state_machine(:state).states.each do |state|
         next if (state.name == object.state.to_sym) || options[:exclude].include?(state.name)
-        
+
         link_options = {
           :url    => polymorphic_url([:change_state, :admin, object], :state => state.name),
           :method => :put
         }
-        
+
         if options[:confirm].include?(state.name)
           link_options[:confirm] = t('admin.change_state.confirm', 
             :object_name  => object.class.human_name, 
             :state        => state.name.to_s.titleize
           )
         end
-          
+
         result.push link_to_remote(state.name.to_s.titleize, link_options) 
       end
     end
-    
+
     result.join(' ').html_safe
   end
 
   def admin_position_controls(object)
     controls = []
-    
+
     unless object.first?
       controls << link_to_remote(t('admin.change_position.move_higher'),
         :url    => polymorphic_url([:change_position, :admin, object], :direction => :up),
@@ -72,19 +72,23 @@ module Admin::BaseHelper
         :html   => {:class => 'move_lower'}
       )
     end
-    
-    content_tag(:div, controls.join(' ').html_safe, :id => dom_id(object, :position_controls))
+
+    (
+      %{<div id="#{ dom_id(object, :position_controls) }">#{ controls.join(' ') }</div>}
+    ).html_safe
   end
-  
+
   def admin_title(value, doc_topic = nil)
     @admin_title = value
 
     label = [
       value,
       (admin_documentation_link(doc_topic) unless doc_topic.blank?)
-    ].compact.join(" ").html_safe
+    ].compact.join(" ")
 
-    content_tag(:h1, label, :class => :title)
+    (
+      %{<h1 class="title">#{ label }</h1>}
+    ).html_safe
   end
 
   def admin_documentation_link(topic)
@@ -97,17 +101,17 @@ module Admin::BaseHelper
   def admin_documentation_url(topic)
     "http://railorz.com/help/#{topic}"
   end
-  
+
   def admin_menu_link(*args)
     name, link, controllers, actions = args
-    
+
     controllers = Array.wrap(controllers)
     actions = Array.wrap(actions)
     current = (controller_name == name.to_s || (controllers.include?(controller_name))) &&
       (actions.empty? || actions.include?(action_name))
-    
+
     link_to(t(".#{ name }"), link,
-      :class => "item %s" % (:current if current)
+      :class => "item #{ :current if current }"
     )
   end
 

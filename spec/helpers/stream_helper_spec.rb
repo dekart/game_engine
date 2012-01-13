@@ -24,8 +24,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:level_up).and_return([@story])
@@ -38,7 +38,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for inventory item" do
     before :each do
-      @item = Factory(:item, :image => File.open('public/images/1px.gif'))
+      @item = Factory(:item)
     end
 
     it "should not fail with default story" do
@@ -50,8 +50,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:item_purchased).and_return([@story])
@@ -64,7 +64,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for mission help request" do
     before :each do
-      @mission = Factory(:mission, :image => File.open('public/images/1px.gif'))
+      @mission = Factory(:mission)
     end
 
     it "should not fail with default options" do
@@ -76,8 +76,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:mission_help).and_return([@story])
@@ -90,7 +90,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for mission completion" do
     before :each do
-      @mission = Factory(:mission, :image => File.open('public/images/1px.gif'))
+      @mission = Factory(:mission)
     end
 
     it "should not fail with default options" do
@@ -102,8 +102,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:mission_completed).and_return([@story])
@@ -116,7 +116,7 @@ describe StreamHelper do
 
   describe "when generating stream dialog for boss defeat" do
     before :each do
-      @boss = Factory(:boss, :image => File.open('public/images/1px.gif'))
+      @boss = Factory(:boss)
     end
 
     it "should not fail with default story" do
@@ -128,8 +128,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:boss_defeated).and_return([@story])
@@ -143,7 +143,7 @@ describe StreamHelper do
   describe 'when generating stream dialog for monster fight invitation' do
     before do
       @monster = Factory(:monster, 
-        :monster_type => Factory(:monster_type, :image => File.open('public/images/1px.gif'))
+        :monster_type => Factory(:monster_type)
       )
     end
     
@@ -156,8 +156,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:monster_invite).and_return([@story])
@@ -171,7 +171,7 @@ describe StreamHelper do
   describe 'when generating stream dialog for monster defeat' do
     before do
       @monster = Factory(:monster, 
-        :monster_type => Factory(:monster_type, :image => File.open('public/images/1px.gif'))
+        :monster_type => Factory(:monster_type)
       )
     end
     
@@ -184,8 +184,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:monster_defeated).and_return([@story])
@@ -199,7 +199,7 @@ describe StreamHelper do
   describe "when generating stream dialog for property" do
     before :each do
       @property = Factory(:property, 
-        :property_type => Factory(:property_type, :image => File.open('public/images/1px.gif'))
+        :property_type => Factory(:property_type)
       )
     end
 
@@ -212,8 +212,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:property).and_return([@story])
@@ -238,8 +238,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:promotion).and_return([@story])
@@ -264,8 +264,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:hit_listing_new).and_return([@story])
@@ -290,8 +290,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
 
       Story.should_receive(:by_alias).with(:hit_listing_completed).and_return([@story])
@@ -316,8 +316,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:collection_completed).and_return([@story])
@@ -342,8 +342,8 @@ describe StreamHelper do
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
         :interpolate  => 'text',
-        :image?       => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:collection_missing_items).and_return([@story])
