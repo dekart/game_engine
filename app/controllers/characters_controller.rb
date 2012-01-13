@@ -48,7 +48,7 @@ class CharactersController < ApplicationController
 
   def create
     if current_character
-      update
+      redirect_from_iframe root_url(:canvas => true)
     else
       @character = current_user.build_character(params[:character])
 
@@ -72,19 +72,6 @@ class CharactersController < ApplicationController
       @allow_name = true
     else
       redirect_from_iframe root_url(:canvas => true)
-    end
-  end
-
-  def update
-    @character = current_character
-
-    @character.attributes = params[:character]
-    @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
-
-    if @character.save
-      redirect_from_iframe root_url(:canvas => true)
-    else
-      render :action => :edit
     end
   end
 
