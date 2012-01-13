@@ -25,7 +25,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:level_up).and_return([@story])
@@ -51,7 +51,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:item_purchased).and_return([@story])
@@ -77,7 +77,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:mission_help).and_return([@story])
@@ -103,7 +103,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures      => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:mission_completed).and_return([@story])
@@ -131,7 +131,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:monster_invite).and_return([@story])
@@ -159,7 +159,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:monster_defeated).and_return([@story])
@@ -187,7 +187,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:property).and_return([@story])
@@ -213,7 +213,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:promotion).and_return([@story])
@@ -239,7 +239,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:hit_listing_new).and_return([@story])
@@ -265,7 +265,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
 
       Story.should_receive(:by_alias).with(:hit_listing_completed).and_return([@story])
@@ -291,7 +291,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:collection_completed).and_return([@story])
@@ -317,7 +317,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :image        => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:collection_missing_items).and_return([@story])

@@ -103,8 +103,6 @@ describe PropertiesController do
     end
 
     it "should be checked for errors" do
-      @property.should_receive(:errors).and_return([])
-
       post :create, :property_type_id => 1
 
       assigns[:property].should == @property
