@@ -52,7 +52,7 @@ module HasPictures
         end
       end
 
-      id_will_change! # Force object to save with timestamp update
+      id_will_change! unless new_record? # Force object to save with timestamp update
     end
 
     def pictures?
