@@ -34,7 +34,7 @@
     <% builder.on_ready do %>
       <%= ga_track_event('Monsters', 'Reward Already Collected', @fight.monster.name) %>
     <% end %>
-  <% elsif !@fight.significant_damage? %>
+  <% elsif !@fight.will_get_reward? %>
     <% builder.fail do %>
       <%= t(".messages.insignificant_damage").html_safe %>
     <% end %>
