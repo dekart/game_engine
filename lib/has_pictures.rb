@@ -56,7 +56,7 @@ module HasPictures
     end
 
     def pictures?
-      !pictures.empty? && pictures.first.image?
+      !pictures.urls.empty?
     end
 
     def create_missing_picture_styles
