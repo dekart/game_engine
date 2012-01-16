@@ -12,8 +12,7 @@
       <th><%= MonsterType.human_attribute_name("name") %></th>
       <th><%= MonsterType.human_attribute_name("level") %></th>
       <th><%= MonsterType.human_attribute_name("health") %></th>
-      <th><%= MonsterType.human_attribute_name("attack") %></th>
-      <th><%= MonsterType.human_attribute_name("defence") %></th>
+      <th><%= MonsterType.human_attribute_name("effects") %></th>
       <th><%= MonsterType.human_attribute_name("requirements") %></th>
       <th><%= MonsterType.human_attribute_name("payouts") %></th>
       <th><%= MonsterType.human_attribute_name("state") %></th>
@@ -26,8 +25,9 @@
         <td class="name"><%= link_to(type.name, edit_admin_monster_type_path(type)) %></td>
         <td class="level"><%= type.level %></td>
         <td class="health"><%= type.health %></td>
-        <td class="attack"><%= type.attack %></td>
-        <td class="defence"><%= type.defence %></td>
+        <td class="effects">
+          <%= admin_effects_preview(type.effects) %>
+        </td>
         <td class="requirements"><%= admin_requirements_preview(type.requirements) %></td>
         <td class="payouts"><%= admin_payouts_preview(type.payouts) %></td>
         <td class="state"><%= admin_state(type) %></td>
