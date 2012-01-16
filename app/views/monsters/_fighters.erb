@@ -10,13 +10,4 @@
       <div class="name"><%= character_name_link(character) %></div>
     </div>
   <% end %>
-
-  <% if false %>
-  <% monster.monster_fights.top_damage.each do |fight| %>
-    <div class="fighter <%= 'current' if fight.character == current_character %>  clearfix">
-      <div class="damage"><%= fight.damage %></div>
-      <div class="name"><%= character_name_link(fight.character) %></div>
-    </div>
-  <% end %>
-  <%end %>
 </div>
