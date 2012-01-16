@@ -14,7 +14,7 @@ class CopyMonsterFightDamageDataToRedis < ActiveRecord::Migration
 
       i += 1
 
-      puts "Updated #{ i } of #{ total }..." if i % 100 == 0
+      puts "Updated #{ i } of #{ total }..." if i % 10 == 0
     end
 
     puts "Done!"
