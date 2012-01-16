@@ -10,6 +10,9 @@ module FightingSystem
         end
 
         def calculate_damage_for(attack, defence, min_damage, max_damage)
+          attack = 1 if attack == 0
+          defence = 1 if defence == 0
+
           percentage = attack.to_f / (attack + defence)
 
           if percentage < 0.1
