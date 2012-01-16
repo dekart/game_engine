@@ -1,6 +1,7 @@
 class MonsterType < ActiveRecord::Base
   extend HasPayouts
   extend HasRequirements
+  extend HasEffects
   extend HasPictures
   include HasVisibility
 
@@ -37,9 +38,11 @@ class MonsterType < ActiveRecord::Base
   has_payouts :victory, :repeat_victory, :fight_start, :success, :repeat_success, :invite,
     :apply_on => [:victory, :repeat_victory]
 
-  validates_presence_of :name, :level, :health, :attack, :defence, :experience, :money, :fight_time,
+  has_effects
+
+  validates_presence_of :name, :level, :health, :experience, :money, :fight_time,
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response
-  validates_numericality_of :level, :attack, :defence, :experience, :money, :fight_time,
+  validates_numericality_of :level, :experience, :money, :fight_time,
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response, :maximum_reward_collectors,
     :allow_nil    => true,
     :greater_than => 0
