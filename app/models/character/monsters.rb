@@ -49,7 +49,7 @@ class Character
       def available_for_fight
         scope = MonsterType.with_state(:visible).scoped(:conditions => ["level <= ?", proxy_owner.level])
 
-        if exclude_ids = proxy_owner.monster_fights.own.current.collect{|m| m.monster.monster_type_id } and exclude_ids.any?
+        if exclude_ids = proxy_owner.monster_fights.own.current.collect{|m| m.monster.monster_type_id }.uniq and exclude_ids.any?
           scope = scope.scoped(:conditions => ["id NOT IN (?)", exclude_ids])
         end
 

@@ -49,6 +49,10 @@ class Monster < ActiveRecord::Base
   before_update :check_negative_health_points
   after_update  :check_winning_status
 
+  def damage
+    @damage ||= DamageTable.new(self)
+  end
+
   def time_remaining
     (expire_at - Time.now).to_i
   end
@@ -58,6 +62,11 @@ class Monster < ActiveRecord::Base
       :reference_id => self.id,
       :reference_type => "Monster"
     }
+  end
+
+  def will_get_reward?(character)
+    damage.reached_reward_minimum?(character) &&
+      damage.position(character) < monster_type.number_of_maximum_reward_collectors
   end
 
   protected

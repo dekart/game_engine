@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120116092647) do
+ActiveRecord::Schema.define(:version => 20120116103224) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -475,6 +475,7 @@ ActiveRecord::Schema.define(:version => 20120116092647) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
+    t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
     t.string   "state",                   :limit => 50,  :default => "",     :null => false
@@ -734,7 +735,7 @@ ActiveRecord::Schema.define(:version => 20120116092647) do
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id"
-    t.string   "owner_type"
+    t.string   "owner_type",         :limit => 100, :default => ""
     t.string   "style"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false
