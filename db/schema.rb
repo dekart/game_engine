@@ -664,8 +664,6 @@ ActiveRecord::Schema.define(:version => 20120116103224) do
     t.string   "name",                         :limit => 100, :default => "",   :null => false
     t.text     "description"
     t.integer  "health"
-    t.integer  "attack"
-    t.integer  "defence"
     t.integer  "minimum_damage"
     t.integer  "maximum_damage"
     t.integer  "minimum_response"
@@ -684,6 +682,7 @@ ActiveRecord::Schema.define(:version => 20120116103224) do
     t.boolean  "available_for_friends_invite",                :default => true
     t.integer  "maximum_reward_collectors"
     t.boolean  "power_attack_enabled",                        :default => true
+    t.text     "effects"
   end
 
   create_table "monsters", :force => true do |t|
