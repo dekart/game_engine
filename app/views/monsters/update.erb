@@ -128,7 +128,10 @@
 
   <% builder.on_ready do %>
     $('#monster').html('<%= escape_javascript(render(@fight.monster.state, :monster => @fight.monster, :fight => @fight)) %>');
-    $('#monster_boosts').replaceWith('<%= escape_javascript(render('boosts')) %>');
-    $(document).trigger('boosts.update');
+
+    <% if @fight.boost %>
+      $('#monster_boosts').replaceWith('<%= escape_javascript(render('boosts')) %>');
+      $(document).trigger('boosts.update');
+    <% end %>
   <% end %>
 <% end %>
