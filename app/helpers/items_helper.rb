@@ -8,6 +8,8 @@ module ItemsHelper
   end
 
   def item_image(item, format, options = {})
+    return unless item.pictures?
+
     if tooltip = options.delete(:tooltip)
       options['data-tooltip'] = item_image_tooltip_options(item, tooltip).to_json
     end
