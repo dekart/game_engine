@@ -4,8 +4,6 @@ MonsterType.create!(
   :name => "Barbarian",
   :level => 1,
   :health => 100,
-  :attack => 1,
-  :defence => 1,
   :minimum_damage => 34,
   :maximum_damage => 40,
   :minimum_response => 1,
@@ -16,6 +14,12 @@ MonsterType.create!(
   :power_attack_enabled => false,
   :experience => 1,
   :money => 5,
+
+  :effects => Effects::Collection.new(
+    Effects::Attack.new(:value => 1),
+    Effects::Defence.new(:value => 1)
+  ),
+
   :payouts => Payouts::Collection.new(
     Payouts::VipMoney.new(:value => 1, :apply_on => :victory),
     Payouts::BasicMoney.new(:value => 200, :apply_on => [:victory, :repeat_victory])
@@ -30,8 +34,6 @@ MonsterType.create!(
   :name => "Hydra (multi-player fight)",
   :level => 3,
   :health => 100,
-  :attack => 1,
-  :defence => 1,
   :minimum_damage => 1,
   :maximum_damage => 5,
   :minimum_response => 1,
@@ -39,6 +41,12 @@ MonsterType.create!(
   :fight_time => 12,
   :experience => 1,
   :money => 5,
+
+  :effects => Effects::Collection.new(
+    Effects::Attack.new(:value => 1),
+    Effects::Defence.new(:value => 1)
+  ),
+
   :payouts => Payouts::Collection.new(
     Payouts::VipMoney.new(:value => 1, :apply_on => :victory),
     Payouts::BasicMoney.new(:value => 200, :apply_on => [:victory, :repeat_victory])
