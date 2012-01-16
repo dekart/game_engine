@@ -8,8 +8,6 @@ module ItemsHelper
   end
 
   def item_image(item, format, options = {})
-    return unless item.pictures?
-
     if tooltip = options.delete(:tooltip)
       options['data-tooltip'] = item_image_tooltip_options(item, tooltip).to_json
     end
@@ -29,7 +27,7 @@ module ItemsHelper
       :title => item.name
     )
       
-    image_tag(item.pictures.url(format), options)
+    image_tag(item.pictures? ? item.pictures.url(format) : asset_image_path("1px"), options)
   end
   
   def item_tooltip_content(item)
