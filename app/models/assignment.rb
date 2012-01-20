@@ -7,7 +7,7 @@ class Assignment < ActiveRecord::Base
   validates_presence_of :context_id, :context_type, :relation_id
   validates_uniqueness_of :role, :scope => [:context_id, :context_type]
   
-  validate_on_create :validate_relation_ownership
+  validate :validate_relation_ownership, :on => :create
 
   before_create :destroy_current_assignments
 

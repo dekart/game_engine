@@ -27,13 +27,13 @@ module Notification
       end
     end
 
-    named_scope :by_type, Proc.new{|type|
+    scope :by_type, Proc.new{|type|
       {
         :conditions => {:type => type_to_class_name(type)}
       }
     }
 
-    named_scope :pending_by_type, Proc.new{|type|
+    scope :pending_by_type, Proc.new{|type|
       {
         :conditions => {
           :type   => type_to_class_name(type),

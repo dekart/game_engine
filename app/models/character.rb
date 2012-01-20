@@ -54,7 +54,7 @@ class Character < ActiveRecord::Base
   has_many :wall_posts,
     :dependent => :destroy
     
-  named_scope :by_profile_ids, Proc.new{|ids|
+  scope :by_profile_ids, Proc.new{|ids|
     {
       :joins => :user,
       :conditions => ["characters.id IN (:ids) OR users.facebook_id IN (:ids)", {:ids => ids}]
@@ -80,7 +80,7 @@ class Character < ActiveRecord::Base
     :restore_period => :stamina_restore_period,
     :restore_bonus  => :stamina_restore_bonus
 
-  after_validation_on_create :apply_character_type_defaults
+  after_validation :apply_character_type_defaults, :on => :create
   before_save :update_level_and_points, :unless => :level_up_applied
   before_save :update_total_money
   after_save :update_current_contest_points

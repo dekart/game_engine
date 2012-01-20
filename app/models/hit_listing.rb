@@ -3,15 +3,15 @@ class HitListing < ActiveRecord::Base
   belongs_to :victim,   :class_name => "Character"
   belongs_to :executor, :class_name => "Character"
 
-  named_scope :incomplete,
+  scope :incomplete,
     :conditions => {:completed => false},
     :include    => [:victim, :client]
-  named_scope :completed_recently, Proc.new {
+  scope :completed_recently, Proc.new {
     {
       :conditions => ["completed = 1 AND updated_at > ?", Setting.i(:hit_list_repeat_listing_delay).hours.ago]
     }
   }
-  named_scope :available_for, Proc.new{|character|
+  scope :available_for, Proc.new{|character|
     exclude_ids = [character.id]
     exclude_ids.push(*character.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
 
@@ -26,7 +26,8 @@ class HitListing < ActiveRecord::Base
     :allow_blank => true,
     :on => :create
 
-  validate_on_create :check_minimum_reward, :check_victim_weakness, :check_victim_listed, :check_client_balance
+  validate :check_minimum_reward, :check_victim_weakness, :check_victim_listed, :check_client_balance, 
+    :on => :create
 
   before_create :charge_client, :take_fee_from_reward
 

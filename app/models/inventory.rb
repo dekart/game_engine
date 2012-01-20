@@ -3,29 +3,29 @@ class Inventory < ActiveRecord::Base
   belongs_to  :item
   has_one     :market_item, :dependent => :destroy
   
-  named_scope :by_item_group, Proc.new{|group|
+  scope :by_item_group, Proc.new{|group|
     {
       :conditions => ["items.item_group_id = ?", group.id],
       :include    => :item,
       :order      => "items.level ASC, items.basic_price ASC"
     }
   }
-  named_scope :by_item_id, Proc.new{|ids|
+  scope :by_item_id, Proc.new{|ids|
     {
       :conditions => ["inventories.item_id IN (?)", [0] + ids], # 0 is required to correctly return empty set when ids is empty
       :include    => :item
     }
   }
-  named_scope :equipped, :conditions => "equipped > 0"
-  named_scope :equippable,
+  scope :equipped, :conditions => "equipped > 0"
+  scope :equippable,
     :include => :item,
     :conditions => "items.equippable = 1 AND (inventories.equipped < inventories.amount)"
     
-  named_scope :usable,
+  scope :usable,
     :include => :item,
     :conditions => "items.payouts != ''"  
   
-  named_scope :exchangeable,
+  scope :exchangeable,
     :include => :item,
     :conditions => "items.exchangeable = 1"
 

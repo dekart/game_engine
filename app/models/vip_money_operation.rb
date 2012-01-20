@@ -1,11 +1,11 @@
 class VipMoneyOperation < ActiveRecord::Base
   belongs_to :character
 
-  named_scope :latest, :order => "id DESC"
-  named_scope :by_reference_type, Proc.new{|type|
+  scope :latest, :order => "id DESC"
+  scope :by_reference_type, Proc.new{|type|
     {:conditions => ["reference_type = ?", type]}
   }
-  named_scope :by_profile_ids, Proc.new{|ids|
+  scope :by_profile_ids, Proc.new{|ids|
     {
       :joins => {:character => :user},
       :conditions => ["characters.id IN (:ids) OR users.facebook_id IN (:ids)", {:ids => ids}]

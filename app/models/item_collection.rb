@@ -8,11 +8,11 @@ class ItemCollection < ActiveRecord::Base
   validates_presence_of :name, :level
   validates_numericality_of :level, :greater_than => 0, :only_integer => true
 
-  validate_on_create :check_item_list
+  validate :check_item_list, :on => :create
 
   default_scope :order => "level DESC"
 
-  named_scope :available_by_level, Proc.new {|character|
+  scope :available_by_level, Proc.new {|character|
     {
       :conditions => ["item_collections.level <= ?", character.level]
     }

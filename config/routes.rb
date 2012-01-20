@@ -1,58 +1,109 @@
-ActionController::Routing::Routes.draw do |map|
-  map.namespace :admin do |admin|
-    admin.resources :item_groups,
+GameEngine::Application.routes.draw do
+  # The priority is based upon order of creation:
+  # first created -> highest priority.
+
+  # Sample of regular route:
+  #   match 'products/:id' => 'catalog#view'
+  # Keep in mind you can assign values other than :controller and :action
+
+  # Sample of named route:
+  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+  # This route can be invoked with purchase_url(:id => product.id)
+
+  # Sample resource route (maps HTTP verbs to controller actions automatically):
+  #   resources :products
+
+  # Sample resource route with options:
+  #   resources :products do
+  #     member do
+  #       get 'short'
+  #       post 'toggle'
+  #     end
+  #
+  #     collection do
+  #       get 'sold'
+  #     end
+  #   end
+
+  # Sample resource route with sub-resources:
+  #   resources :products do
+  #     resources :comments, :sales
+  #     resource :seller
+  #   end
+
+  # Sample resource route with more complex sub-resources
+  #   resources :products do
+  #     resources :comments
+  #     resources :sales do
+  #       get 'recent', :on => :collection
+  #     end
+  #   end
+
+  # Sample resource route within a namespace:
+  #   namespace :admin do
+  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # (app/controllers/admin/products_controller.rb)
+  #     resources :products
+  #   end
+
+  # You can have the root of your site routed with "root"
+  # just remember to delete public/index.html.
+  # root :to => 'welcome#index'
+  
+  namespace :admin do
+    resources :item_groups,
       :member => {
         :change_position  => :put,
         :change_state     => :put
-      } do |group|
-        group.resources :items, :only => :index,
+      } do
+        resources :items, :only => :index,
           :collection => { :balance => :any }
       end
 
-    admin.resources :items,
+    resources :items,
       :collection => {
         :balance => :any
       },
       :member => {
         :change_state => :put
       }
-    admin.resources :mission_groups,
+    resources :mission_groups,
       :member => {
         :change_position  => :put,
         :change_state     => :put
       }
       
-    admin.resources(:missions,
+    resources(:missions,
       :collection => {:balance => :any},
       :member => {
         :change_position  => :put,
         :change_state     => :put
       }
-    ) do |mission|
-      mission.resources :mission_levels
+    ) do
+      resources :mission_levels
     end
     
-    admin.resources :mission_levels, :only => [],
+    resources :mission_levels, :only => [],
       :member => {
         :change_position => :put
       }
     
-    admin.resources :messages,
+    resources :messages,
       :member => {
         :change_state => :put
       }
 
-    admin.resources :property_types,
+    resources :property_types,
       :member => {
         :change_state => :put
       }
       
-    admin.resources :payouts,       :only => [:new]
-    admin.resources :requirements,  :only => [:new]
-    admin.resources :effects,       :only => [:new]
+    resources :payouts,       :only => [:new]
+    resources :requirements,  :only => [:new]
+    resources :effects,       :only => [:new]
 
-    admin.resources :promotions
-    admin.resources :statistics, 
+    resources :promotions
+    resources :statistics, 
       :only => :index,
       :collection => {
         :user       => :any,
@@ -61,42 +112,42 @@ ActionController::Routing::Routes.draw do |map|
         :visits     => :any
       }
 
-    admin.resources :tips,
+    resources :tips,
       :member => {
         :change_state => :put
       }
-    admin.resources :translations
-    admin.resources :assets
+    resources :translations
+    resources :assets
 
-    admin.resources :character_types,
-      :member => {
-        :change_state => :put
-      }
-
-    admin.resources :help_pages,
+    resources :character_types,
       :member => {
         :change_state => :put
       }
 
-    admin.resources :settings
+    resources :help_pages,
+      :member => {
+        :change_state => :put
+      }
 
-    admin.resource :global_task, 
+    resources :settings
+
+    resource :global_task, 
       :member => {
         :delete_users   => :delete,
         :restart        => :post,
         :update_styles  => :post,
         :clear_memcache => :post
       }
-    admin.resources :characters, :only => [:index, :edit, :update],
+    resources :characters, :only => [:index, :edit, :update],
       :collection => {
         :search => :any,
         :payout => :any
       }
-    admin.resources :users
+    resources :users
 
-    admin.resources :vip_money_operations, :only => :index
+    resources :vip_money_operations, :only => :index
 
-    admin.resources :item_collections,
+    resources :item_collections,
       :new => {
         :add_item => :any
       },
@@ -104,74 +155,74 @@ ActionController::Routing::Routes.draw do |map|
         :change_state => :put
       }
 
-    admin.resources :monster_types,
+    resources :monster_types,
       :member => {
         :change_state => :put
       }
 
-    admin.resources :item_sets,
+    resources :item_sets,
       :new => { :add_item => :any }
 
-    admin.resources :stories,
+    resources :stories,
       :member => {
         :change_state => :put
       }
 
-    admin.resources :global_payouts,
+    resources :global_payouts,
       :member => {
         :change_state => :put
       }
       
-    admin.resources :credit_packages,
+    resources :credit_packages,
       :member => {
         :change_state => :put
       }
 
-    admin.resources :contests,
+    resources :contests,
       :member => {
         :change_state => :put
-      } do |contest|
-      contest.resources :contest_groups
+      } do
+      resources :contest_groups
     end
     
-    admin.resources :achievement_types,
+    resources :achievement_types,
       :member => {
         :change_state => :put
       }
     
-    admin.resources :pictures, :only => [:new]
+    resources :pictures, :only => [:new]
     
     # Add your custom admin routes below this mark
+  end
+  
+  root :to => 'characters#index'
+
+  resources :users do
+    collection do
+      match 'subscribe'
+      match 'settings'
+    end
     
+    member do
+      match 'toggle_block'
+    end
   end
 
-  map.root :controller => "characters", :action => "index"
-
-  map.resources(:users,
-    :collection => {
-      :subscribe => :any, 
-      :settings => :any
-    },
-    :member => {
-      :toggle_block => :any
-    }
-  )
-
-  map.resources(:characters,
+  resources(:characters,
     :member => {
       :upgrade  => :any,
       :hospital => :get,
       :hospital_heal => :post,
     }
-  ) do |character|
-    character.resources :assignments, :shallow => true
-    character.resources :hit_listings, :only => [:new, :create]
+  ) do
+    resources :assignments, :shallow => true
+    resources :hit_listings, :only => [:new, :create]
 
-    character.resources :wall_posts, :shallow => true, :only => [:index, :create, :destroy]
+    resources :wall_posts, :shallow => true, :only => [:index, :create, :destroy]
   end
 
-  map.resources :mission_groups, :only => [:index, :show]
-  map.resources :missions, 
+  resources :mission_groups, :only => [:index, :show]
+  resources :missions, 
     :only   => :fulfill,
     :collection => {
       :collect_help_reward => :post
@@ -181,15 +232,15 @@ ActionController::Routing::Routes.draw do |map|
       :help     => :any
     }
   
-  map.resources :items
+  resources :items
 
-  map.resources :item_groups do |group|
-    group.resources :items
+  resources :item_groups do
+    resources :items
   end
   
-  map.resources :personal_discounts, :only => :update
+  resources :personal_discounts, :only => :update
   
-  map.resources :inventories,
+  resources :inventories,
     :collection => {
       :equipment  => :any,
       :unequip    => :post,
@@ -203,16 +254,16 @@ ActionController::Routing::Routes.draw do |map|
       :toggle_boost => :post,
       :move     => :post
     }
-  map.resources :fights,
+  resources :fights,
     :member     => {:respond => :post, :used_items => :post}
-  map.resources :relations
-  map.resources :bank_operations,
+  resources :relations
+  resources :bank_operations,
     :only => :new,
     :collection => {
       :deposit  => :post,
       :withdraw => :post
     }
-  map.resources :properties, :only => [:index, :create],
+  resources :properties, :only => [:index, :create],
     :member => {
       :hire           => :any,
       :upgrade        => :put,
@@ -222,9 +273,9 @@ ActionController::Routing::Routes.draw do |map|
       :collect_money  => :put
     }
 
-  map.resources :promotions, :only => :show
+  resources :promotions, :only => :show
 
-  map.resource :premium, 
+  resource :premium, 
     :member => {
       :change_name => :get
     },
@@ -232,15 +283,15 @@ ActionController::Routing::Routes.draw do |map|
       :refill_dialog => :post
     }
 
-  map.resource :rating
+  resource :rating
 
-  map.resources :gifts, :only => :new
+  resources :gifts, :only => :new
 
-  map.resources :hit_listings, :only => [:index, :update]
+  resources :hit_listings, :only => [:index, :update]
 
-  map.resources :help_pages, :only => :show
+  resources :help_pages, :only => :show
 
-  map.resources :notifications, 
+  resources :notifications, 
     :only => [], 
     :member => {:disable => :post},
     :collection => {
@@ -248,55 +299,56 @@ ActionController::Routing::Routes.draw do |map|
       :update_settings => :post
     }
 
-  map.resources :market_items,
+  resources :market_items,
     :only => [:index, :new, :create, :destroy],
     :member => {
       :buy => :post
     }
-  map.resources :item_collections, :only => [:index, :update]
+  resources :item_collections, :only => [:index, :update]
 
-  map.resources :monsters, 
+  resources :monsters, 
     :member => {:reward => :post}
     
-  map.resources :stories, :only => :show
+  resources :stories, :only => :show
   
-  map.resources :app_requests, :member => {:ignore => :put}
+  resources :app_requests, :member => {:ignore => :put}
   
-  map.resources :contests, :only => :show
+  resources :contests, :only => :show
   
-  map.resources :exchanges
+  resources :exchanges
   
-  map.resources :exchange_offers, 
+  resources :exchange_offers, 
     :member => {
       :accept => :post
     }
   
-  map.resource :chat
+  resource :chat
   
-  map.resources :achievements, :only => [:index, :show, :update]
+  resources :achievements, :only => [:index, :show, :update]
   
-  map.resources :clans,
+  resources :clans,
     :member => {
       :change_image => :put,
       :delete_member => :delete
     }
   
-  map.resources :clan_members,
+  resources :clan_members,
     :member => {
       :delete => :delete
     }
   
-  map.resources :clan_membership_applications,
+  resources :clan_membership_applications,
     :member => {
       :create => :get,
       :approve => :put,
       :reject => :delete
     }
    
-  map.resources :clan_membership_invitations, :only => [:update, :destroy]   
+  resources :clan_membership_invitations, :only => [:update, :destroy]  
 
-  # Add your custom routes below this mark
-  
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  # See how all your routes lay out with "rake routes"
+
+  # This is a legacy wild controller route that's not recommended for RESTful applications.
+  # Note: This route will make all actions in every controller accessible via GET requests.
+  # match ':controller(/:action(/:id(.:format)))'
 end

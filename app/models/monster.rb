@@ -60,6 +60,8 @@ class Monster < ActiveRecord::Base
     }
   end
 
+  validate :validate_monster, :on => :create
+
   protected
 
   def assign_initial_attributes
@@ -72,7 +74,7 @@ class Monster < ActiveRecord::Base
     @payouts = monster_type.payouts.apply(character, :fight_start, monster_type)
   end
 
-  def validate_on_create
+  def validate_monster
     return unless character && monster_type
 
     errors.add_to_base(:recently_attacked) if character.monster_fights.own.current.by_type(monster_type).count > 0

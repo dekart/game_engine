@@ -3,7 +3,7 @@ class ItemGroup < ActiveRecord::Base
 
   acts_as_list
 
-  named_scope :visible_in_shop,
+  scope :visible_in_shop,
     :conditions => {
       :state => 'visible', 
       :display_in_shop => true

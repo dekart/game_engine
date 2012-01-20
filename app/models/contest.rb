@@ -67,7 +67,7 @@ class Contest < ActiveRecord::Base
     end
   end
 
-  named_scope :finished_recently, {
+  scope :finished_recently, {
     :conditions => ["state = 'finished' AND finished_at > ?", 
       Setting.i(:contests_show_after_finished_time).days.ago],
     :order => 'finished_at DESC'

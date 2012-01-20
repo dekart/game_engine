@@ -2,7 +2,7 @@ class Story < ActiveRecord::Base
   extend HasPayouts
   extend HasPictures
   
-  named_scope :by_alias, Proc.new{|value|
+  scope :by_alias, Proc.new{|value|
     {
       :conditions => {:state => 'visible', :alias => value.to_s},
       :order => "RAND()"

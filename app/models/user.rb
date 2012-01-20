@@ -1,22 +1,24 @@
+require 'ipaddr'
+
 class User < ActiveRecord::Base
   GENDERS = {:male => 1, :female => 2}
   
   has_one     :character, :dependent => :destroy
   belongs_to  :referrer, :class_name => "User"
 
-  named_scope :latest, {
+  scope :latest, {
     :order    => 'users.created_at DESC',
     :include  => :character,
     :limit    => 50
   }
-  named_scope :after, Proc.new{|user|
+  scope :after, Proc.new{|user|
     {
       :conditions => ["`users`.id > ?", user.is_a?(User) ? user.id : user.to_i],
       :order      => "`users`.id ASC"
     }
   }
   
-  named_scope :with_email, {:conditions => "email != ''"}
+  scope :with_email, {:conditions => "email != ''"}
   
   after_save :schedule_social_data_update,  :if => :access_token_changed?
   after_save :generate_personal_discount,   :if => :last_visit_at_changed?

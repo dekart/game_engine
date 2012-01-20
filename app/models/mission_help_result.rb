@@ -5,6 +5,8 @@ class MissionHelpResult < ActiveRecord::Base
   
   before_create :give_payout
   
+  validate :validate_helped, :on => :create
+  
   class << self
     def characters
       all(:include => :character).collect{|r| r.character }
@@ -13,7 +15,7 @@ class MissionHelpResult < ActiveRecord::Base
   
   protected
   
-  def validate_on_create
+  def validate_helped
     errors.add_to_base(:already_helped) if character.mission_help_results.find_by_requester_id_and_mission_id(requester_id, mission_id)
     errors.add_to_base(:cannot_help_themself) if character_id == requester_id
   end

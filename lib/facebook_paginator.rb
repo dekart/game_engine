@@ -21,7 +21,7 @@ module FacebookPaginator
     end
   end
 
-  class LinkRenderer < WillPaginate::LinkRenderer
+  class LinkRenderer < WillPaginate::ViewHelpers::LinkRenderer
     def prepare(collection, options, template)
       super(collection, options, TemplateProxy.new(template))
     end

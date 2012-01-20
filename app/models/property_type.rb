@@ -19,7 +19,7 @@ class PropertyType < ActiveRecord::Base
     [:icon,   "50x50>"]
   ]
 
-  named_scope :available_in, Proc.new{|*keys|
+  scope :available_in, Proc.new{|*keys|
     valid_keys = keys.collect{|k| k.to_sym } & AVAILABILITIES # Find intersections between passed key list and available keys
 
     if valid_keys.any?
@@ -31,7 +31,7 @@ class PropertyType < ActiveRecord::Base
     end
   }
 
-  named_scope :available_by_level, Proc.new {|character|
+  scope :available_by_level, Proc.new {|character|
     {
       :conditions => ["level <= ?", character.level],
       :order      => :basic_price

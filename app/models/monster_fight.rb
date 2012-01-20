@@ -2,8 +2,8 @@ class MonsterFight < ActiveRecord::Base
   belongs_to :character
   belongs_to :monster
 
-  named_scope :top_damage, :order => "damage DESC", :include => :character
-  named_scope :current, Proc.new {
+  scope :top_damage, :order => "damage DESC", :include => :character
+  scope :current, Proc.new {
     {
       :joins => :monster,
       :conditions => ["(monsters.defeated_at IS NULL AND monsters.expire_at >= :time) OR (monsters.defeated_at >= :time)",
@@ -12,18 +12,18 @@ class MonsterFight < ActiveRecord::Base
     }
   }
   
-  named_scope :own, 
+  scope :own, 
     :joins      => :monster,
     :conditions => 'monsters.character_id = monster_fights.character_id'
     
-  named_scope :by_type, Proc.new{|type|
+  scope :by_type, Proc.new{|type|
     {
       :joins => :monster,
       :conditions => ["monsters.monster_type_id = ?", type.id]
     }
   }
   
-  named_scope :by_monster, Proc.new{|monster|
+  scope :by_monster, Proc.new{|monster|
     {
       :conditions => {:monster_id => monster}
     }

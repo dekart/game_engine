@@ -14,8 +14,8 @@ class Exchange < ActiveRecord::Base
   validates_numericality_of :amount, :greater_than => 0
   validates_length_of :text, :maximum => 1024
   
-  validate_on_create :validate_amount_less_or_equals_then_in_inventories, 
-    :validate_item_exchangeable
+  validate :validate_amount_less_or_equals_then_in_inventories, 
+    :validate_item_exchangeable, :on => :create
   
   state_machine :initial => :created do
     state :transacted

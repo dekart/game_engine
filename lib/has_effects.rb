@@ -8,8 +8,8 @@ module HasEffects
   end
   
   def preload_effects!
-    Dir[File.join(RAILS_ROOT, "app", "models", "effects", "*.rb")].each do |file|
-      file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").camelize.constantize
+    Dir[File.join(Rails.root, "app", "models", "effects", "*.rb")].each do |file|
+      file.gsub(File.join(Rails.root, "app", "models"), "").gsub(".rb", "").camelize.constantize
     end
   end
 

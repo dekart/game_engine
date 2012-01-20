@@ -30,8 +30,8 @@ module HasPayouts
   end
 
   def preload_payouts!
-    Dir[File.join(RAILS_ROOT, "app", "models", "payouts", "*.rb")].each do |file|
-      file.gsub(File.join(RAILS_ROOT, "app", "models"), "").gsub(".rb", "").camelize.constantize
+    Dir[File.join(Rails.root, "app", "models", "payouts", "*.rb")].each do |file|
+      file.gsub(File.join(Rails.root, "app", "models"), "").gsub(".rb", "").camelize.constantize
     end
   end
 

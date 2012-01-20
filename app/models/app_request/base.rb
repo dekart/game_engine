@@ -5,17 +5,17 @@ class AppRequest::Base < ActiveRecord::Base
   
   belongs_to :target, :polymorphic => true
   
-  named_scope :for_character, Proc.new {|character|
+  scope :for_character, Proc.new {|character|
     {
       :conditions => {:receiver_id => character.facebook_id}
     }
   }
-  named_scope :from_character, Proc.new{|character|
+  scope :from_character, Proc.new{|character|
     {
       :conditions => {:sender_id => character.id}
     }
   }
-  named_scope :between, Proc.new{|sender, receiver|
+  scope :between, Proc.new{|sender, receiver|
     {
       :conditions => {
         :sender_id    => sender.id, 
@@ -23,7 +23,7 @@ class AppRequest::Base < ActiveRecord::Base
       }
     }
   }
-  named_scope :with_target, Proc.new{|target|
+  scope :with_target, Proc.new{|target|
     {
       :conditions => {
         :target_id    => target,
@@ -31,29 +31,29 @@ class AppRequest::Base < ActiveRecord::Base
       }
     }
   }
-  named_scope :without, Proc.new{|request|
+  scope :without, Proc.new{|request|
     {
       :conditions => ["app_requests.id != ?", request.id]
     }
   }
-  named_scope :sent_before, Proc.new{|time|
+  scope :sent_before, Proc.new{|time|
     {
       :conditions => ["sent_at < :time OR (sent_at IS NULL AND created_at < :time)", {:time => time.utc}]
     }
   }
-  named_scope :sent_after, Proc.new{|time|
+  scope :sent_after, Proc.new{|time|
     {
       :conditions => ["sent_at > :time OR (sent_at IS NULL AND app_requests.created_at > :time)", {:time => time.utc}]
     }
   }
-  named_scope :accepted_after, Proc.new{|time|
+  scope :accepted_after, Proc.new{|time|
     {
       :conditions => ["accepted_at >= ?", time.utc]
     }
   }
   
-  named_scope :visible, :conditions => {:state => ['processed', 'visited']}
-  named_scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
+  scope :visible, :conditions => {:state => ['processed', 'visited']}
+  scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
   
   state_machine :initial => :pending do
     state :processed

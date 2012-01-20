@@ -2,12 +2,12 @@ class PersonalDiscount < ActiveRecord::Base
   belongs_to :character
   belongs_to :item
   
-  named_scope :not_expired, Proc.new {
+  scope :not_expired, Proc.new {
     {
       :conditions => ["available_till > ?", Time.now.utc]
     }
   }
-  named_scope :created_recently, Proc.new {
+  scope :created_recently, Proc.new {
     {
       :conditions => ["personal_discounts.available_till > ?", 
         (Setting.i(:personal_discount_period).hours - Setting.i(:personal_discount_time_frame).minutes).ago.utc

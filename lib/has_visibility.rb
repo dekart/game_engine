@@ -12,7 +12,7 @@ module HasVisibility
 
     base.after_save :update_visibilities
 
-    base.named_scope :visible_for, Proc.new {|character_or_type|
+    base.scope :visible_for, Proc.new {|character_or_type|
       case character_or_type
       when Character
         type_id = character_or_type.character_type.id

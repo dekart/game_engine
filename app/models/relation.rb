@@ -5,13 +5,13 @@ class Relation < ActiveRecord::Base
   belongs_to  :character
   has_one     :assignment, :dependent => :destroy, :foreign_key => "relation_id"
 
-  named_scope :not_assigned,
+  scope :not_assigned,
     :include    => [:assignment, :character],
     :conditions => "assignments.id IS NULL"
-  named_scope :assigned,
+  scope :assigned,
     :include    => [:assignment, :character],
     :conditions => "assignments.id IS NOT NULL"
-  named_scope :not_banned, Proc.new{
+  scope :not_banned, Proc.new{
     {
       :include    => :character,
       :conditions => ["characters.id NOT IN(?)", Character.banned_ids]

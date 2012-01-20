@@ -4,7 +4,7 @@ class MarketItem < ActiveRecord::Base
   belongs_to :character
   belongs_to :inventory, :counter_cache => true
 
-  named_scope :expired, Proc.new{
+  scope :expired, Proc.new{
     {
       :conditions => ["created_at < ?", Setting.i(:market_expire_period).hours.ago]
     }
@@ -19,9 +19,9 @@ class MarketItem < ActiveRecord::Base
   validates_numericality_of :amount, :allow_nil => true, :greater_than => 0
   validates_numericality_of :basic_price, :vip_price, :allow_nil => true, :greater_than => -1
   
-  validate_on_create :vip_price_dont_more_than_max
-  validate_on_create :check_amount
-  validate_on_create :item_allowed_to_sell
+  
+  validate :vip_price_dont_more_than_max, :check_amount, :item_allowed_to_sell, 
+    :on => :create
 
   before_create :destroy_previous_items, :assign_character
 

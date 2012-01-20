@@ -6,8 +6,8 @@ class ExchangeOffer < ActiveRecord::Base
   validates_presence_of :exchange_id, :item_id, :character_id, :amount
   validates_numericality_of :amount, :greater_than => 0
   
-  validate_on_create :validate_amount_less_or_equals_then_in_inventories,
-    :validate_item_exchangeable
+  validate :validate_amount_less_or_equals_then_in_inventories,
+    :validate_item_exchangeable, :on => :create
   
   after_create :send_created_notification_to_exchanger
   

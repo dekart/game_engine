@@ -20,7 +20,7 @@ class Item < ActiveRecord::Base
     :as => :target, 
     :class_name => 'AppRequest::Base'
 
-  named_scope :available, Proc.new{
+  scope :available, Proc.new{
     {
       :conditions => [%{
           (
@@ -33,13 +33,13 @@ class Item < ActiveRecord::Base
     }
   }
 
-  named_scope :available_by_level, Proc.new {|character|
+  scope :available_by_level, Proc.new {|character|
     {
       :conditions => ["items.level <= ?", character.level]
     }
   }
 
-  named_scope :available_in, Proc.new{|*keys|
+  scope :available_in, Proc.new{|*keys|
     valid_keys = keys.collect{|k| k.try(:to_sym) } & AVAILABILITIES # Find intersections between passed key list and available keys
 
     if valid_keys.any?
@@ -50,14 +50,14 @@ class Item < ActiveRecord::Base
       {}
     end
   }
-  named_scope :next_for, Proc.new{|character|
+  scope :next_for, Proc.new{|character|
     {
       :conditions => ["items.level > ? AND items.availability = 'shop' AND items.state = 'visible'", character.level],
       :order      => "items.level"
     }
   }
   
-  named_scope :boosts, Proc.new{|type|
+  scope :boosts, Proc.new{|type|
     {
       :conditions => (
         type ? { :boost_type => type } : ["boost_type != ''"]
@@ -68,8 +68,8 @@ class Item < ActiveRecord::Base
 
   before_save :update_max_vip_price_in_market, :if => :vip_price_changed?
 
-  named_scope :vip, {:conditions => "items.vip_price > 0"}
-  named_scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
+  scope :vip, {:conditions => "items.vip_price > 0"}
+  scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
   
   state_machine :initial => :hidden do
     state :hidden

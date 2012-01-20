@@ -4,7 +4,7 @@ module News
 
     belongs_to :character
 
-    named_scope :latest, Proc.new{|limit|
+    scope :latest, Proc.new{|limit|
       {
         :order => "id DESC",
         :limit => limit

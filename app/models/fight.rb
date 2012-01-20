@@ -20,7 +20,7 @@ class Fight < ActiveRecord::Base
 
   belongs_to  :cause, :polymorphic => true
 
-  named_scope :with_participant, Proc.new {|character|
+  scope :with_participant, Proc.new {|character|
     {
       :conditions => ["attacker_id = :id OR victim_id = :id", {:id => character.id}],
       :order => "created_at DESC",
