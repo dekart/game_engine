@@ -4,8 +4,8 @@
       <div class="label"><%= Character.human_attribute_name("basic_money") %></div>
       <div class="value"></div>
 
-      <%= link_to_remote(t(".bank"),
-            :url    => new_bank_operation_path,
+      <%= link_to(t(".bank"), new_bank_operation_path,
+            :remote => true,
             :update => :ajax,
             :html   => {:class => :bank}
           ) %>
@@ -21,8 +21,8 @@
       <div class="label"><%= Character.human_attribute_name("health") %></div>
       <div class="value"></div>
 
-      <%= link_to_remote(t(".hospital"),
-            :url    => hospital_character_path(:current),
+      <%= link_to(t(".hospital"), hospital_character_path(:current),
+            :remote => true,
             :method => :get,
             :update => :ajax,
             :html   => {:class => :hospital}
@@ -33,11 +33,12 @@
       <div class="label"><%= Character.human_attribute_name("energy") %></div>
       <div class="value"></div>
 
-      <%= link_to_remote(t(".refill"),
-            :url    => refill_dialog_premium_path(
+      <%= link_to(t(".refill"),
+            refill_dialog_premium_path(
               :type => :refill_energy, 
               :vip_money => Setting.i(:premium_energy_price)
             ),
+            :remote => true,
             :update => :ajax,
             :html   => {:class => "refill"}
           ) %>
@@ -47,11 +48,12 @@
       <div class="label"><%= Character.human_attribute_name("stamina") %></div>
       <div class="value"></div>
 
-      <%= link_to_remote(t(".refill"),
-            :url    => refill_dialog_premium_path(
+      <%= link_to(t(".refill"),
+            refill_dialog_premium_path(
               :type => :refill_stamina,
               :vip_money => Setting.i(:premium_stamina_price)
             ),
+            :remote => true,
             :update => :ajax,
             :html   => {:class => "refill"}
           ) %>
@@ -66,8 +68,8 @@
       <div class="label"><%= Character.human_attribute_name("level") %></div>
       <div class="value"></div>
 
-      <%= link_to_remote(t(".upgrade"),
-            :url    => upgrade_character_path(:current),
+      <%= link_to(t(".upgrade"), upgrade_character_path(:current),
+            :remote => true,
             :method => :get,
             :update => :ajax,
             :html   => {
