@@ -1,7 +1,6 @@
 <%= admin_title(t(".title")) %>
 
 <%= render("controls") %>
-<div id="dashboard">
 <table class="data">
   <tr>
     <th><%= t(".parameter") %></th>
@@ -27,16 +26,16 @@
     <td><%= @day.vip_money.total_withdrawal %></td>
     <td class="controls"><%= link_to(t(".details"), vip_money_admin_statistics_path) %></td>
   </tr>
+  <tr>
+    <th></th>
+    <th><%= t(".all") %></th>
+    <th><%= t(".new") %></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><%= t(".total_complaints") %></td>
+    <td><%= @complaints %></td>
+    <td><%= @unread_complaints %></td>
+    <td class="controls"><%= link_to(t(".details"), admin_complaints_path) %></td>
+  </tr>  
 </table>
-</div>
-
-<div id="total_complaints">
-  <h2><%= t(".total_complaints.title") %></h2>
-  
-  <p class="all">
-    <%= t(".total_complaints.text", 
-          :total => strong_tag(@complaints), 
-          :total_unread => strong_tag(@unread_complaints)
-         ).html_safe %>
-  </p>
-</div>
