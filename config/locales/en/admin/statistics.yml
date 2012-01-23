@@ -9,6 +9,7 @@ en:
         users: "Users"
         level: "Levels"
         visits: "Visits"
+        complaints: "Complaints"
       index:
         title: "Dashboard"
         parameter: "Parameter"
@@ -19,6 +20,9 @@ en:
           users: "Total Users"
           deposit: "VIP Money Deposit"
           withdraw: "VIP Money Withdraw"
+        total_complaints: 
+          title: "Total Complaints"
+          text: "%{total} (unread: %{total_unread})"  
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"

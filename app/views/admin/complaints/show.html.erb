@@ -1,0 +1,37 @@
+<h2><%= t(".title") %></h2>
+
+<div id="complaint">
+  <div class="cause"><%= strong_tag(Complaint.human_attribute_name("cause")).html_safe %>: <%= @complaint.cause %></div>
+  
+  <div class="description">
+     <%= strong_tag(Complaint.human_attribute_name("description")).html_safe %>:
+     <div class="text"><%= @complaint.description %></div>
+  </div>
+  
+  <div class="owner">
+    <%= strong_tag(Complaint.human_attribute_name("owner")).html_safe %>:
+    
+    <%= link_to(character_name(@complaint.owner), edit_admin_character_path(@complaint.owner)) %>
+          
+    <%= link_to(t(".profile"), fb_profile_url(@complaint.owner.user),
+            :class  => :profile,
+            :target => :_blank
+          )  %>
+  </div>
+  
+  <div class="offender">
+    <%= strong_tag(Complaint.human_attribute_name("offender")).html_safe %>:
+    
+    <%= link_to(character_name(@complaint.offender), edit_admin_character_path(@complaint.offender)) %>
+          
+    <%= link_to(t(".profile"), fb_profile_url(@complaint.offender.user),
+            :class  => :profile,
+            :target => :_blank
+          )  %>
+  </div>  
+  
+  <div class="controls"><%= link_to(t(".all"), admin_complaints_path) %></div>
+  
+  
+  
+</div>  

@@ -4,14 +4,9 @@ class Complaint < ActiveRecord::Base
   state_machine :initial => :unread do
     state :read
     state :unread
-    state :deleted
 
-    event :read do
+    event :mark_read do
       transition :unread => :read
-    end
-    
-    event :mark_deleted do
-      transition(any - [:deleted] => :deleted)
     end
   end
   
