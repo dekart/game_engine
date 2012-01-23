@@ -1,6 +1,8 @@
 class Complaint < ActiveRecord::Base
   belongs_to :owner, :class_name => "Character"
   
+  default_scope :order => "created_at DESC"
+  
   state_machine :initial => :unread do
     state :read
     state :unread

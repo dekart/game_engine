@@ -1,6 +1,8 @@
 <h2><%= t(".title") %></h2>
 
 <div id="complaint">
+  <div class="controls"><%= link_to(t(".all"), admin_complaints_path) %></div>
+  
   <div class="cause"><%= strong_tag(Complaint.human_attribute_name("cause")).html_safe %>: <%= @complaint.cause %></div>
   
   <div class="description">
@@ -29,9 +31,5 @@
             :target => :_blank
           )  %>
   </div>  
-  
-  <div class="controls"><%= link_to(t(".all"), admin_complaints_path) %></div>
-  
-  
   
 </div>  
