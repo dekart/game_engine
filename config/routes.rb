@@ -150,7 +150,7 @@ ActionController::Routing::Routes.draw do |map|
     
     admin.resources :pictures, :only => [:new]
     
-    admin.resources :complaints
+    admin.resources :complaints, :only => [:index, :show]
     
     # Add your custom admin routes below this mark
     

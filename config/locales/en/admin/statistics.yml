@@ -9,7 +9,6 @@ en:
         users: "Users"
         level: "Levels"
         visits: "Visits"
-        complaints: "Complaints"
       index:
         title: "Dashboard"
         parameter: "Parameter"
