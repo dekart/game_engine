@@ -475,7 +475,6 @@ ActiveRecord::Schema.define(:version => 20120116103224) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
-    t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
     t.string   "state",                   :limit => 50,  :default => "",     :null => false
