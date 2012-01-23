@@ -9,7 +9,7 @@ class Character
     module AssociationExtension
       def add(news_type, data)
         news_klass = News.const_get(news_type.to_s.camelize)
-        news_klass.create(:character => proxy_owner, :data => data)
+        news_klass.create(:character => proxy_association.owner, :data => data)
       end
     end
   end

@@ -15,19 +15,19 @@ class Character
 
     module CollectionRankAssociationExtension
       def rank_for(collection)
-        proxy_owner.collection_ranks.find_by_collection_id(collection.id) || proxy_owner.collection_ranks.build(:collection => collection)
+        proxy_association.owner.collection_ranks.find_by_collection_id(collection.id) || proxy_association.owner.collection_ranks.build(:collection => collection)
       end
     end
 
     module CollectionAssociationExtension
       def apply!(collection)
-        proxy_owner.collection_ranks.rank_for(collection).tap do |rank|
+        proxy_association.owner.collection_ranks.rank_for(collection).tap do |rank|
           rank.apply!
         end
       end
 
       def next_payout_triggers(collection)
-        if proxy_owner.collection_ranks.rank_for(collection).collected?
+        if proxy_association.owner.collection_ranks.rank_for(collection).collected?
           [:repeat_collected]
         else
           [:collected]

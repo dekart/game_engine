@@ -47,9 +47,9 @@ class Character
       end
       
       def available_for_fight
-        scope = MonsterType.with_state(:visible).scoped(:conditions => ["level <= ?", proxy_owner.level])
+        scope = MonsterType.with_state(:visible).scoped(:conditions => ["level <= ?", proxy_association.owner.level])
 
-        if exclude_ids = proxy_owner.monster_fights.own.current.collect{|m| m.monster.monster_type_id } and exclude_ids.any?
+        if exclude_ids = proxy_association.owner.monster_fights.own.current.collect{|m| m.monster.monster_type_id } and exclude_ids.any?
           scope = scope.scoped(:conditions => ["id NOT IN (?)", exclude_ids])
         end
 
@@ -58,14 +58,14 @@ class Character
       
       def available_in_future
         MonsterType.with_state(:visible).scoped(
-          :conditions => ["level > ?", proxy_owner.level], 
+          :conditions => ["level > ?", proxy_association.owner.level], 
           :order => :level
         )
       end
       
       
       def collected
-        @collected ||= CollectedMonsterTypes.new(proxy_owner)
+        @collected ||= CollectedMonsterTypes.new(proxy_association.owner)
       end
       
       def payout_triggers(type)

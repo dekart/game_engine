@@ -32,7 +32,7 @@ class Character
       def establish!(target)
         transaction do
           create(:character => target)
-          target.friend_relations.create(:character => proxy_owner)
+          target.friend_relations.create(:character => proxy_association.owner)
         end
       end
       

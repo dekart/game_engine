@@ -1,6 +1,6 @@
 module Notification
   class Base < ActiveRecord::Base
-    set_table_name :notifications
+    self.table_name = :notifications
 
     belongs_to :character
 

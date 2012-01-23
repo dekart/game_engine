@@ -40,10 +40,10 @@ class Character
 
     module MissionLevelsExtension
       def rank_for(mission)
-        if incomplete = proxy_owner.mission_level_ranks.incomplete_for(mission)
+        if incomplete = proxy_association.owner.mission_level_ranks.incomplete_for(mission)
           incomplete
-        elsif proxy_owner.missions.completed?(mission)
-          proxy_owner.mission_level_ranks.find_by_level_id(mission.levels.last.id)
+        elsif proxy_association.owner.missions.completed?(mission)
+          proxy_association.owner.mission_level_ranks.find_by_level_id(mission.levels.last.id)
         else
           exclude_ids = completed_ids(mission)
 
@@ -53,12 +53,12 @@ class Character
             level = mission.levels.first
           end
 
-          proxy_owner.mission_level_ranks.build(:level => level, :mission => mission)
+          proxy_association.owner.mission_level_ranks.build(:level => level, :mission => mission)
         end
       end
 
       def completed_ids(mission)
-        proxy_owner.mission_level_ranks.all(
+        proxy_association.owner.mission_level_ranks.all(
           :select     => "level_id",
           :conditions => {
             :completed  => true,
@@ -70,7 +70,7 @@ class Character
 
     module MissionAssociationExtension
       def fulfill!(mission)
-        MissionResult.create(proxy_owner, mission)
+        MissionResult.create(proxy_association.owner, mission)
       end
 
       def check_completion!(mission)
@@ -86,7 +86,7 @@ class Character
       end
 
       def completed_ids(group)
-        proxy_owner.mission_ranks.all(
+        proxy_association.owner.mission_ranks.all(
           :select     => "mission_id",
           :conditions => {
             :completed        => true,
@@ -96,13 +96,13 @@ class Character
       end
 
       def rank_for(mission)
-        proxy_owner.mission_ranks.find_or_initialize_by_mission_id(mission.id)
+        proxy_association.owner.mission_ranks.find_or_initialize_by_mission_id(mission.id)
       end
       
       def first_levels_completed?(group)
         mission_ids = group.missions.with_state(:visible).all(:select => :id).map(&:id)    
             
-        proxy_owner.mission_level_ranks.scoped(
+        proxy_association.owner.mission_level_ranks.scoped(
           :conditions => {:completed => true, :mission_id => mission_ids}
         ).count('DISTINCT mission_level_ranks.mission_id') == mission_ids.size
       end
@@ -113,17 +113,17 @@ class Character
         groups = MissionGroup.with_state(:visible)
 
         group = groups.find_by_id(group_id) if group_id
-        group ||= groups.find_by_id(proxy_owner.current_mission_group_id) if proxy_owner.current_mission_group_id
+        group ||= groups.find_by_id(proxy_association.owner.current_mission_group_id) if proxy_association.owner.current_mission_group_id
         group ||= first_accessible_group
 
-        proxy_owner.update_attribute(:current_mission_group_id, group.id) if group.id != proxy_owner.current_mission_group_id
+        proxy_association.owner.update_attribute(:current_mission_group_id, group.id) if group.id != proxy_association.owner.current_mission_group_id
 
         group
       end
       
       def first_accessible_group
         MissionGroup.with_state(:visible).all.detect{|group| 
-          group.requirements.satisfies?(proxy_owner)
+          group.requirements.satisfies?(proxy_association.owner)
         }
       end
 
@@ -137,9 +137,9 @@ class Character
 
       def rank_for(group)
         # Rank instance is created from class except of association to avoid rank creation when saving character
-        proxy_owner.mission_group_ranks.find_by_mission_group_id(group.id) ||
+        proxy_association.owner.mission_group_ranks.find_by_mission_group_id(group.id) ||
           MissionGroupRank.new(
-            :character      => proxy_owner,
+            :character      => proxy_association.owner,
             :mission_group  => group
           )
       end
@@ -155,10 +155,10 @@ class Character
         experience  = uncollected.sum(:experience)
         
         transaction do
-          proxy_owner.charge(- basic_money, 0)
-          proxy_owner.experience += experience
+          proxy_association.owner.charge(- basic_money, 0)
+          proxy_association.owner.experience += experience
           
-          proxy_owner.save!
+          proxy_association.owner.save!
           
           uncollected.update_all(:collected => true)
         end

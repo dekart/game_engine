@@ -1,5 +1,5 @@
 class AppRequest::Base < ActiveRecord::Base
-  set_table_name :app_requests
+  self.table_name = :app_requests
   
   belongs_to :sender, :class_name => "Character"
   

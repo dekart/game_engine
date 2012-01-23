@@ -19,7 +19,7 @@ class Character
           inventory.amount += amount
         else
           inventory = build(:item => item, :amount => amount)
-          inventory.character = proxy_owner
+          inventory.character = proxy_association.owner
         end
 
         inventory
@@ -47,12 +47,12 @@ class Character
         inventory.charge_money = true
 
         transaction do
-          if inventory.save and proxy_owner.save
+          if inventory.save and proxy_association.owner.save
             inventory.item.increment_owned(effective_amount)
 
             equip!(inventory)
 
-            proxy_owner.news.add(:item_purchase, :item_id => item.id, :amount => effective_amount)
+            proxy_association.owner.news.add(:item_purchase, :item_id => item.id, :amount => effective_amount)
           end
         end
 
@@ -84,7 +84,7 @@ class Character
 
             inventory.item.increment_owned(-amount)
 
-            proxy_owner.save
+            proxy_association.owner.save
 
             unequip!(inventory)
           end
@@ -116,7 +116,7 @@ class Character
       def find_by_item(item)
         inventory = item.is_a?(Inventory) ? item : find_by_item_id(item.id, :include => :item)
 
-        inventory.try(:character=, proxy_owner)
+        inventory.try(:character=, proxy_association.owner)
       
         inventory
       end
@@ -125,9 +125,9 @@ class Character
         return unless inventory.item.equippable?
         
         if Setting.b(:character_auto_equipment)
-          proxy_owner.equipment.equip_best!(true)
+          proxy_association.owner.equipment.equip_best!(true)
         else
-          proxy_owner.equipment.auto_equip!(inventory)
+          proxy_association.owner.equipment.auto_equip!(inventory)
         end
       end
 
@@ -135,9 +135,9 @@ class Character
         return unless inventory.item.equippable?
         
         if Setting.b(:character_auto_equipment)
-          proxy_owner.equipment.equip_best!(true)
+          proxy_association.owner.equipment.equip_best!(true)
         else
-          proxy_owner.equipment.auto_unequip!(inventory)
+          proxy_association.owner.equipment.auto_unequip!(inventory)
         end
       end
     end

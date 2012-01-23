@@ -6,7 +6,7 @@ class Exchange < ActiveRecord::Base
     :dependent  => :delete_all do
       
     def created_by(character)
-      proxy_owner.exchange_offers.scoped(:conditions => {:character_id => character})
+      proxy_association.owner.exchange_offers.scoped(:conditions => {:character_id => character})
     end  
   end
   

@@ -18,7 +18,7 @@ class Character
       end
       
       def generate!
-        if item = Item.discountable_for(proxy_owner).first(:order => 'RAND()')
+        if item = Item.discountable_for(proxy_association.owner).first(:order => 'RAND()')
           discount = rand(Setting.i(:personal_discount_maximum_discount) - Setting.i(:personal_discount_minimum_discount)) + 
             Setting.i(:personal_discount_minimum_discount)
         

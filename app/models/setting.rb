@@ -4,7 +4,8 @@ class Setting < ActiveRecord::Base
 
   class << self
     def cache
-      logger.silence do
+      # TODO: temporary fix for Rails 3.2.0
+      logger.silence(Logger::ERROR) do
         $memory_store.fetch('settings', :expires_in => 1.minute) do
           {}.tap do |result|
             all.each do |setting|

@@ -12,7 +12,7 @@ class Character
     
     module AchievementsExtension
       def cache_key
-        "character_#{ proxy_owner.id }_achievements"
+        "character_#{ proxy_association.owner.id }_achievements"
       end
       
       def clear_achievements_cache!
@@ -24,13 +24,13 @@ class Character
       def achieved_ids
         @achieved_ids ||= Rails.cache.fetch(cache_key, :expires_in => 15.minutes) do
           find_by_sql(
-            Achievement.send(:sanitize_sql, ['SELECT achievement_type_id FROM achievements WHERE character_id = ?', proxy_owner.id])
+            Achievement.send(:sanitize_sql, ['SELECT achievement_type_id FROM achievements WHERE character_id = ?', proxy_association.owner.id])
           ).map{|a| a.achievement_type_id }
         end
       end
       
       def value(type)
-        proxy_owner.send(type.key)
+        proxy_association.owner.send(type.key)
       end
       
       def progress(type)
@@ -50,7 +50,7 @@ class Character
 
         unless types.empty?
           types.each do |type|
-            create!(:character => proxy_owner, :achievement_type => type)
+            create!(:character => proxy_association.owner, :achievement_type => type)
           end
 
           clear_achievements_cache!
