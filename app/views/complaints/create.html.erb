@@ -1,2 +1,14 @@
-<h1>Complaints#create</h1>
-<p>Find me in app/views/complaints/create.html.erb</p>
+<% result_for :create_complaint do |r| %>
+  <% if @complaint.errors.empty? %>
+    <% r.success do %>
+      <%= t(".success") %>
+    <% end %>
+  
+  <% else %>
+    <% @complaint.errors.each_error do |attr, message| %>
+      <% r.fail do %>
+        <%= attr %> <%= message %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,12 @@
+en:
+  complaints:
+    new:
+      title: "Leave a complaint"
+      causes:
+        first: "Cause 1"
+        second: "Cause 2"
+        third: "Cause 3"
+      buttons:
+        save: "Send"
+    create: 
+      success: "Your complaint was sent"    

@@ -45,7 +45,7 @@
       <td class="complaints">
         <div class="controls">
           <%= link_to_remote(button(:complain), 
-              :url => new_complaint_path,
+              :url => new_complaint_path(:offender_id => @character.id),
               :update => :result,
               :html   => {:class => "button"}
             ) %> 
