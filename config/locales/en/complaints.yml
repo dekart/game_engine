@@ -3,9 +3,9 @@ en:
     new:
       title: "Leave a complaint"
       causes:
-        first: "Cause 1"
-        second: "Cause 2"
-        third: "Cause 3"
+        cause_1: "Cause 1"
+        cause_2: "Cause 2"
+        cause_3: "Cause 3"
       buttons:
         save: "Send"
     create: 
