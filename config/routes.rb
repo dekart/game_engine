@@ -50,6 +50,7 @@ GameEngine::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
   
+  # TODO: change to rails 3 way
   namespace :admin do
     resources :item_groups,
       :member => {
@@ -208,13 +209,13 @@ GameEngine::Application.routes.draw do
     end
   end
 
-  resources(:characters,
-    :member => {
-      :upgrade  => :any,
-      :hospital => :get,
-      :hospital_heal => :post,
-    }
-  ) do
+  resources :characters do
+    member do
+      match 'upgrade'
+      get 'hospital'
+      post 'hospital_heal'
+    end
+    
     resources :assignments, :shallow => true
     resources :hit_listings, :only => [:new, :create]
 
@@ -222,15 +223,16 @@ GameEngine::Application.routes.draw do
   end
 
   resources :mission_groups, :only => [:index, :show]
-  resources :missions, 
-    :only   => :fulfill,
-    :collection => {
-      :collect_help_reward => :post
-    },
-    :member => {
-      :fulfill  => :post,
-      :help     => :any
-    }
+  resources :missions, :only => :fulfill do
+    collection do
+      post 'collect_help_reward'
+    end
+    
+    member do
+      post 'fulfill'
+      match 'help'
+    end
+  end
   
   resources :items
 
@@ -240,48 +242,58 @@ GameEngine::Application.routes.draw do
   
   resources :personal_discounts, :only => :update
   
-  resources :inventories,
-    :collection => {
-      :equipment  => :any,
-      :unequip    => :post,
-      :equip      => :post,
-      :give       => :any
-    },
-    :member     => {
-      :use      => :any,
-      :equip    => :post,
-      :unequip  => :post,
-      :toggle_boost => :post,
-      :move     => :post
-    }
-  resources :fights,
-    :member     => {:respond => :post, :used_items => :post}
+  resources :inventories do
+    collection do
+      match 'equipment'
+      post 'unequip'
+      post 'equip'
+      match 'give'
+    end
+    
+    member do
+      match 'use'
+      post 'equip'
+      post 'unequip'
+      post 'toggle_boost'
+      post 'move'
+    end
+  end
+  
+  resources :fights do
+    member do
+      post 'respond'
+      post 'used_items'
+    end
+  end
+   
   resources :relations
-  resources :bank_operations,
-    :only => :new,
-    :collection => {
-      :deposit  => :post,
-      :withdraw => :post
-    }
-  resources :properties, :only => [:index, :create],
-    :member => {
-      :hire           => :any,
-      :upgrade        => :put,
-      :collect_money  => :put
-    },
-    :collection => {
-      :collect_money  => :put
-    }
+  
+  resources :bank_operations, :only => :new do
+    collection do
+      post 'deposit'
+      post 'withdraw'
+    end
+  end
+  
+  resources :properties, :only => [:index, :create] do
+    member do
+      match 'hire'
+      put 'upgrade'
+      put 'collect_money'
+    end
+    
+    collection do
+      put 'collect_money'
+    end
+  end
 
   resources :promotions, :only => :show
 
-  resource :premium, 
-    :member => {
-      :change_name => :get
-    },
-    :collection => {
-      :refill_dialog => :post
-    }
+  resource :premium do
+    get 'change_name', :on => :member
+    
+    post 'refill_dialog', :on => :collection
+  end
 
   resource :rating
 
@@ -291,58 +303,63 @@ GameEngine::Application.routes.draw do
 
   resources :help_pages, :only => :show
 
-  resources :notifications, 
-    :only => [], 
-    :member => {:disable => :post},
-    :collection => {
-      :settings => :post, 
-      :update_settings => :post
-    }
+  resources :notifications, :only => [] do
+    member do
+     post 'disable'
+    end 
+    
+    collection do
+      post 'settings' 
+      post 'update_settings'
+    end
+  end
 
-  resources :market_items,
-    :only => [:index, :new, :create, :destroy],
-    :member => {
-      :buy => :post
-    }
+  resources :market_items, :only => [:index, :new, :create, :destroy] do
+    post 'buy', :on => :member
+  end
+    
   resources :item_collections, :only => [:index, :update]
 
-  resources :monsters, 
-    :member => {:reward => :post}
+  resources :monsters do
+    post 'reward', :on => :member
+  end
     
   resources :stories, :only => :show
   
-  resources :app_requests, :member => {:ignore => :put}
+  resources :app_requests do
+    put 'ignore', :on => :member
+  end
   
   resources :contests, :only => :show
   
   resources :exchanges
   
-  resources :exchange_offers, 
-    :member => {
-      :accept => :post
-    }
+  resources :exchange_offers do
+    post 'accept', :on => :member
+  end
   
   resource :chat
   
   resources :achievements, :only => [:index, :show, :update]
   
-  resources :clans,
-    :member => {
-      :change_image => :put,
-      :delete_member => :delete
-    }
+  resources :clans do
+    member do
+      put 'change_image'
+      delete 'delete_member'
+    end
+  end
   
-  resources :clan_members,
-    :member => {
-      :delete => :delete
-    }
+  resources :clan_members do
+    delete 'delete', :on => :member
+  end
   
-  resources :clan_membership_applications,
-    :member => {
-      :create => :get,
-      :approve => :put,
-      :reject => :delete
-    }
+  resources :clan_membership_applications do
+    member do
+      get 'create'
+      put 'approve'
+      delete 'reject'
+    end
+  end
    
   resources :clan_membership_invitations, :only => [:update, :destroy]  
 
