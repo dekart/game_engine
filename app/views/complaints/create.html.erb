@@ -1,0 +1,14 @@
+<% result_for :create_complaint do |r| %>
+  <% if @complaint.errors.empty? %>
+    <% r.success do %>
+      <%= t(".success") %>
+    <% end %>
+  
+  <% else %>
+    <% @complaint.errors.each_error do |attr, message| %>
+      <% r.fail do %>
+        <%= attr %> <%= message %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

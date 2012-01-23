@@ -38,6 +38,7 @@ en:
         messages: "Messages"
         contests: "Contests" 
         achievement_types: "Achievements"
+        complaints: "Complaints"
         
         # Add your custom menu items below this mark
         
@@ -527,5 +528,15 @@ en:
         new: "Add Picture"
       picture:
         remove: "Remove"
+    complaints: 
+      index:
+        title: "Complaints"
+        profile: "FB Profile"    
+        controls: 
+          show: "Show"
+      show:
+        title: "Complaint"    
+        profile: "FB Profile"
+        all: "All Complaints"
     
     # Add your custom translation strings below this mark

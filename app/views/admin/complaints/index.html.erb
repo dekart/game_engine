@@ -1,0 +1,43 @@
+<%= admin_title(t(".title")) %>
+
+<% collection @complaints do %>
+  <%= will_paginate @complaints %>
+  
+  <table id="complaints_list" class="data">
+    <tr>
+      <th><%= Complaint.human_attribute_name("owner") %></th>
+      <th><%= Complaint.human_attribute_name("offender") %></th>
+      <th><%= Complaint.human_attribute_name("cause") %></th>
+      <th><%= Complaint.human_attribute_name("state") %></th>
+      <th></th>
+    </tr>
+    
+    <% @complaints.each do |complaint| %>
+      <% content_tag_for(:tr, complaint) do %>
+        <td class="owner">
+          <%= link_to(character_name(complaint.owner), edit_admin_character_path(complaint.owner)) %>
+          
+          <%= link_to(t(".profile"), fb_profile_url(complaint.owner.user),
+                  :class  => :profile,
+                  :target => :_blank
+                )  %>
+        </td>
+        <td class="offender">
+          <%= link_to(character_name(complaint.offender), edit_admin_character_path(complaint.offender)) %>
+          
+          <%= link_to(t(".profile"), fb_profile_url(complaint.offender.user),
+                  :class  => :profile,
+                  :target => :_blank
+                )  %>
+        </td>
+        <td class="cause"><%= complaint.cause %></td>
+        <td class="state"><%= complaint.state %></td>
+        <td class="controls">
+          <%= link_to(t(".controls.show"), admin_complaint_path(complaint)) %>
+        </td>
+      <% end %>
+    <% end %>
+  </table>
+  
+  <%= will_paginate @complaints %>
+<% end %>
