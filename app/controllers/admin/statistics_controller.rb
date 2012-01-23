@@ -2,6 +2,9 @@ class Admin::StatisticsController < Admin::BaseController
   def index
     @all = Statistics::Dashboard.new
     @day = Statistics::Dashboard.new(24.hours.ago)
+    
+    @complaints = Complaint.count
+    @unread_complaints = Complaint.with_state(:unread).count
   end
 
   def user

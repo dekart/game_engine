@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120116103224) do
+ActiveRecord::Schema.define(:version => 20120123055311) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -268,6 +268,16 @@ ActiveRecord::Schema.define(:version => 20120116103224) do
     t.datetime "updated_at"
   end
 
+  create_table "complaints", :force => true do |t|
+    t.string   "cause"
+    t.text     "description"
+    t.integer  "owner_id"
+    t.integer  "offender_id"
+    t.string   "state",       :limit => 50
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contest_groups", :force => true do |t|
     t.integer  "contest_id"
     t.integer  "max_character_level"
@@ -475,7 +485,6 @@ ActiveRecord::Schema.define(:version => 20120116103224) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
-    t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
     t.string   "state",                   :limit => 50,  :default => "",     :null => false
