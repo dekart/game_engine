@@ -242,24 +242,24 @@ describe MonsterFight do
     
   end
   
-  describe "when checking if player dealt significant damage to monster" do
+  describe "when checking if player can get reward from monster" do
     it 'should return true if user is in monsters_maximum_reward_collectors limit and false otherwise with default settings' do
       @monster = Factory(:monster)
       
-      @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 50)
-      @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 50)
-      @monster_fight3 = Factory(:monster_fight, :monster => @monster, :damage => 50)
-      @monster_fight4 = Factory(:monster_fight, :monster => @monster, :damage => 50)
-      @monster_fight5 = Factory(:monster_fight, :monster => @monster, :damage => 50)
-      @monster_fight6 = Factory(:monster_fight, :monster => @monster, :damage => 40)
+      @monster_fight1 = Factory(:monster_fight, :character => Factory(:character), :monster => @monster, :damage => 50)
+      @monster_fight2 = Factory(:monster_fight, :character => Factory(:character), :monster => @monster, :damage => 50)
+      @monster_fight3 = Factory(:monster_fight, :character => Factory(:character), :monster => @monster, :damage => 50)
+      @monster_fight4 = Factory(:monster_fight, :character => Factory(:character), :monster => @monster, :damage => 50)
+      @monster_fight5 = Factory(:monster_fight, :character => Factory(:character), :monster => @monster, :damage => 50)
+      @monster_fight6 = Factory(:monster_fight, :character => Factory(:character), :monster => @monster, :damage => 40)
       
-      @monster_fight1.significant_damage?.should be_true
-      @monster_fight2.significant_damage?.should be_true
-      @monster_fight3.significant_damage?.should be_true
-      @monster_fight4.significant_damage?.should be_true
-      @monster_fight5.significant_damage?.should be_true
+      @monster_fight1.will_get_reward?.should be_true
+      @monster_fight2.will_get_reward?.should be_true
+      @monster_fight3.will_get_reward?.should be_true
+      @monster_fight4.will_get_reward?.should be_true
+      @monster_fight5.will_get_reward?.should be_true
       
-      @monster_fight6.significant_damage?.should be_false
+      @monster_fight6.will_get_reward?.should be_false
     end
     
     it 'should return true if user is in monsters_maximum_reward_collectors limit and false otherwise with default settings' do
@@ -268,8 +268,8 @@ describe MonsterFight do
       @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 50)
       @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 40)
       
-      @monster_fight1.significant_damage?.should be_true
-      @monster_fight2.significant_damage?.should be_false
+      @monster_fight1.will_get_reward?.should be_true
+      @monster_fight2.will_get_reward?.should be_false
     end
     
     it 'should not return true if user dont do significant damage, because one user dont attack monster' do
@@ -278,8 +278,8 @@ describe MonsterFight do
       @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 50)
       @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 0)
       
-      @monster_fight1.significant_damage?.should be_true
-      @monster_fight2.significant_damage?.should be_false
+      @monster_fight1.will_get_reward?.should be_true
+      @monster_fight2.will_get_reward?.should be_false
     end
     
     it 'should return true if users do significant damage' do
@@ -288,8 +288,8 @@ describe MonsterFight do
       @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 10)
       @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 1)
       
-      @monster_fight1.significant_damage?.should be_true
-      @monster_fight2.significant_damage?.should be_true
+      @monster_fight1.will_get_reward?.should be_true
+      @monster_fight2.will_get_reward?.should be_true
     end
     
     it 'should return false for users who dont do significant damage, because its too little' do
@@ -298,8 +298,8 @@ describe MonsterFight do
       @monster_fight1 = Factory(:monster_fight, :monster => @monster, :damage => 20)
       @monster_fight2 = Factory(:monster_fight, :monster => @monster, :damage => 1)
       
-      @monster_fight1.significant_damage?.should be_true
-      @monster_fight2.significant_damage?.should be_false
+      @monster_fight1.will_get_reward?.should be_true
+      @monster_fight2.will_get_reward?.should be_false
     end
   end
   
@@ -331,7 +331,7 @@ describe MonsterFight do
     it "should return false if player didn't done significant damage to monster" do
       @monster_fight.monster.win
       
-      @monster_fight.should_receive(:significant_damage?).and_return(false)
+      @monster_fight.should_receive(:will_get_reward?).and_return(false)
       
       @monster_fight.reward_collectable?.should_not be_true
     end

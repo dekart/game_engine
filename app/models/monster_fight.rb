@@ -6,6 +6,7 @@ class MonsterFight < ActiveRecord::Base
   scope :current, Proc.new {
     {
       :joins => :monster,
+      :include => :monster,
       :conditions => ["(monsters.defeated_at IS NULL AND monsters.expire_at >= :time) OR (monsters.defeated_at >= :time)",
         {:time => Setting.i(:monsters_reward_time).hours.ago}
       ]
@@ -38,7 +39,8 @@ class MonsterFight < ActiveRecord::Base
   
   validates_uniqueness_of :character_id, :scope => :monster_id, :on => :create
   
-  after_create :create_character_news
+  after_create  :create_character_news
+  after_save    :update_damage_score
 
   # @power_attack - this is usual attack but effects multiplied by special factor
   def attack!(power_attack = false)
@@ -85,7 +87,7 @@ class MonsterFight < ActiveRecord::Base
           character.news.add(:monster_fight_defeat, :monster_fight_id => id)
         end
       end
-      
+
       true
     else
       false
@@ -117,7 +119,11 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def reward_collectable?
-    !new_record? && monster.won? && !reward_collected? && significant_damage?
+    !new_record? && monster.won? && !reward_collected? && will_get_reward?
+  end
+
+  def will_get_reward?
+    monster.will_get_reward?(character)
   end
 
   def stamina_requirement(power_attack = false)
@@ -141,13 +147,7 @@ class MonsterFight < ActiveRecord::Base
       end 
     end
   end
-  
-  def significant_damage?
-    # user caused significant damage and was in top damage players
-    damage >= Setting.p(:monster_minimum_damage, monster.monster_fights.top_damage[0].damage) &&
-      monster.monster_fights.top_damage.index(self) < monster_type.number_of_maximum_reward_collectors
-  end
-  
+
   def summoner?
     character == monster.character
   end
@@ -193,5 +193,10 @@ class MonsterFight < ActiveRecord::Base
   
     def create_character_news
       character.news.add(:monster_fight_start, :monster_fight_id => id)
+      true
+    end
+
+    def update_damage_score
+      monster.damage.set(character, damage)
     end
 end

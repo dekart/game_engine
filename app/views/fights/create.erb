@@ -38,10 +38,12 @@
     <% else %>
       $('#<%= dom_id(@fight.victim) %>').remove();
     <% end %>
-  
-    $("#fight_boosts").replaceWith('<%= escape_javascript(render('boosts')) %>');
-    $(document).trigger('boosts.update');
-  
+
+    <% if @fight.attacker_boost %>
+      $("#fight_boosts").replaceWith('<%= escape_javascript(render('boosts')) %>');
+      $(document).trigger('boosts.update');
+    <% end %>
+
     $(document).trigger('fights.create');
   <% end %>
 <% end %>

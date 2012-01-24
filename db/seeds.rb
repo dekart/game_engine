@@ -1,5 +1,5 @@
 ActiveRecord::Base.transaction do
-  %w{settings assets items missions monsters properties tips character_types achievements credit_packages}.each do |section|
+  %w{settings assets items missions monsters properties tips character_types achievements credit_packages help_pages item_collections}.each do |section|
     require File.expand_path("../seeds/#{section}", __FILE__)
   end
 end
@@ -7,7 +7,7 @@ end
 puts "Publishing seeded data..."
 
 ActiveRecord::Base.transaction do
-  [MissionGroup, Mission, MonsterType, ItemGroup, Item, PropertyType, CharacterType, Tip, AchievementType, CreditPackage].each do |model|
+  [MissionGroup, Mission, MonsterType, ItemGroup, Item, PropertyType, CharacterType, Tip, AchievementType, CreditPackage, HelpPage, ItemCollection].each do |model|
     model.all.each do |record|
       record.publish
     end

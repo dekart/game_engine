@@ -13,8 +13,14 @@ class ItemSet < ActiveRecord::Base
       if self[:item_ids].blank?
         @items = []
       else
-        @items = JSON.parse(self[:item_ids]).collect do |item_id, frequency|
-          if item = Item.find_by_id(item_id)
+        ids_with_frequency = JSON.parse(self[:item_ids])
+
+        items = Item.find_all_by_id(
+          ids_with_frequency.map{|i| i[0] }
+        )
+
+        @items = ids_with_frequency.collect do |item_id, frequency|
+          if item = items.detect{|i| i.id == item_id.to_i }
             [item, frequency]
           else
             nil

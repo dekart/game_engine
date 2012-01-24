@@ -144,8 +144,10 @@ Factory.define :monster_type do |t|
     Payouts::BasicMoney.new(:value => 456, :apply_on => :repeat_victory)
   )
 
-  t.attack 10
-  t.defence 10
+  t.effects Effects::Collection.new(
+    Effects::Attack.new(:value => 10),
+    Effects::Defence.new(:value => 10)
+  )
 
   t.minimum_damage 3
   t.maximum_damage 10

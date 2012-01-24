@@ -193,6 +193,8 @@ GameEngine::Application.routes.draw do
     
     resources :pictures, :only => [:new]
     
+    resources :complaints, :only => [:index, :show]
+    
     # Add your custom admin routes below this mark
   end
   
@@ -362,6 +364,8 @@ GameEngine::Application.routes.draw do
   end
    
   resources :clan_membership_invitations, :only => [:update, :destroy]  
+  
+  resources :complaints, :only => [:new, :create]
 
   # See how all your routes lay out with "rake routes"
 

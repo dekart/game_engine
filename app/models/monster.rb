@@ -36,7 +36,7 @@ class Monster < ActiveRecord::Base
     end
   end
 
-  delegate :name, :pictures, :pictures?, :health, :level, :experience, :money, :requirements, :attack, :defence, :description,
+  delegate :name, :pictures, :pictures?, :health, :level, :experience, :money, :requirements, :effects, :effects?, :effect, :description,
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response, :average_response, :to => :monster_type
 
   attr_reader :payouts
@@ -48,6 +48,10 @@ class Monster < ActiveRecord::Base
 
   before_update :check_negative_health_points
   after_update  :check_winning_status
+
+  def damage
+    @damage ||= DamageTable.new(self)
+  end
 
   def time_remaining
     (expire_at - Time.now).to_i
@@ -61,6 +65,11 @@ class Monster < ActiveRecord::Base
   end
 
   validate :validate_monster, :on => :create
+  
+  def will_get_reward?(character)
+    damage.reached_reward_minimum?(character) &&
+      damage.position(character) < monster_type.number_of_maximum_reward_collectors
+  end
 
   protected
 

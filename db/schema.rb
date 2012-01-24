@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120120090741) do
+ActiveRecord::Schema.define(:version => 20120123055311) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -223,6 +223,16 @@ ActiveRecord::Schema.define(:version => 20120120090741) do
     t.integer  "members_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "complaints", :force => true do |t|
+    t.string   "cause"
+    t.text     "description"
+    t.integer  "owner_id"
+    t.integer  "offender_id"
+    t.string   "state",       :limit => 50
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "contest_groups", :force => true do |t|
@@ -596,8 +606,6 @@ ActiveRecord::Schema.define(:version => 20120120090741) do
     t.string   "name",                         :limit => 100, :default => "",   :null => false
     t.text     "description"
     t.integer  "health"
-    t.integer  "attack"
-    t.integer  "defence"
     t.integer  "minimum_damage"
     t.integer  "maximum_damage"
     t.integer  "minimum_response"
@@ -616,6 +624,7 @@ ActiveRecord::Schema.define(:version => 20120120090741) do
     t.boolean  "available_for_friends_invite",                :default => true
     t.integer  "maximum_reward_collectors"
     t.boolean  "power_attack_enabled",                        :default => true
+    t.text     "effects"
   end
 
   create_table "monsters", :force => true do |t|

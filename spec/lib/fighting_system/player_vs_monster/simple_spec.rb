@@ -12,13 +12,14 @@ describe FightingSystem::PlayerVsMonster::Simple do
         :defence_points => 2
       )
       @monster = mock('monster',
-        :attack => 3,
-        :defence => 4,
         :minimum_damage => 5,
         :maximum_damage => 6,
         :minimum_response => 7,
         :maximum_response => 8
       )
+
+      @monster.stub!(:effect).with(:attack).and_return(3)
+      @monster.stub!(:effect).with(:defence).and_return(4)
 
       @system.stub!(:calculate_damage_for).and_return(9, 10)
     end

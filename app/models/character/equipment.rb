@@ -195,10 +195,14 @@ class Character
           equipped = nil
 
           Effects::Base::BASIC_TYPES.each do |effect|
-            candidates = equippables.select{|i| i.equippable? and i.effect(effect) != 0}
+            candidates = equippables.select{|i| i.equippable? and i.effect(effect) != 0}.sort_by{|i| [i.effect(effect), i.effects.metric]}.reverse
 
-            if inventory = candidates.max_by{|i| [i.effect(effect), i.effects.metric]} and auto_equip(inventory, 1)
-              equipped = inventory
+            candidates.each do |inventory|
+              if auto_equip(inventory, 1)
+                equipped = inventory
+                
+                break
+              end
             end
           end
 

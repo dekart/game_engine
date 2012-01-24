@@ -21,7 +21,7 @@ module HasPictures
 
   module InstanceMethods
     def picture_attributes
-      pictures.map{|p| p.attributes}
+      pictures.map{|p| p.attributes }
     end
 
     def picture_attributes=(collection)
@@ -52,14 +52,16 @@ module HasPictures
         end
       end
 
-      id_will_change! # Force object to save with timestamp update
+      id_will_change! unless new_record? # Force object to save with timestamp update
     end
 
     def pictures?
-      !pictures.empty? && pictures.first.image?
+      !pictures.urls.empty?
     end
 
     def create_missing_picture_styles
+      return unless Picture.table_exists? # This is necessary to make avoid fail of migrations operating with objects when the table is not created yet
+
       missing_styles = picture_options[:styles].collect{|name, value| name } -
                        pictures.reject{|p| p.marked_for_destruction? }.collect{|p| p.style.try(:to_sym) }
 

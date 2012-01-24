@@ -20,7 +20,7 @@ class Asset < ActiveRecord::Base
     def update_sass
       File.open(sass_path, "w+") do |file|
         all.each do |asset|
-          file.puts "!asset_#{asset.alias.underscore} = url(\"#{asset.image.url}\")"
+          file.puts "!asset_#{asset.alias.underscore} = url(\"#{ URI.escape(asset.image.url) }\")"
         end
       end
     end

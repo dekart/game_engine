@@ -19,6 +19,9 @@ en:
           users: "Total Users"
           deposit: "VIP Money Deposit"
           withdraw: "VIP Money Withdraw"
+        total_complaints: "Total Complaints"
+        all: "All" 
+        new: "New"
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
