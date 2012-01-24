@@ -15,7 +15,7 @@ class ItemUpgradesController < ApplicationController
 
     @amount = params[:inventory][:amount].to_i
     
-    if @recipe.use!(current_character, @amount)
+    if @inventory.amount >= @amount && @recipe.use!(current_character, @amount)
       render :layout => "ajax"
     else
       render :show, :layout => "ajax"

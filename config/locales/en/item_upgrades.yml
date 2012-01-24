@@ -4,6 +4,8 @@ en:
       title: "Item Upgrade"
       price: "Upgrade price is %{amount} tokens"
       tokens: "You have %{amount} tokens"
+      item: "Item:"
+      new_item: "Upgrade to:"
       buttons:
         upgrade: "Upgrade"
     update:
