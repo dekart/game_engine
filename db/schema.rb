@@ -491,7 +491,7 @@ ActiveRecord::Schema.define(:version => 20120124050726) do
     t.integer  "original_vip_price"
     t.boolean  "exchangeable",                           :default => false
     t.text     "effects"
-    t.integer  "upgrade_recipes_count",                  :default => 0
+    t.boolean  "upgradable",                             :default => false
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"

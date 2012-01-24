@@ -78,7 +78,7 @@
       <% end %>
     <% end %>
 
-    <% if inventory.item.upgrade_recipes_count > 0 %>
+    <% if inventory.item.upgradable %>
       <%= link_to_remote(button(:upgrade),
             :url    => item_upgrade_path(inventory),
             :method => :get,

@@ -1,6 +1,6 @@
 class UpgradeRecipe < ActiveRecord::Base
 
-  belongs_to :item, :counter_cache => true
+  belongs_to :item
   belongs_to :result, :class_name => "Item"
 
   state_machine :initial => :hidden do
