@@ -48,6 +48,7 @@ class Inventory < ActiveRecord::Base
   validates_numericality_of :amount, :greater_than => 0
 
   before_save   :charge_or_deposit_character
+  after_save    :check_collections
   after_update  :check_market_items, :check_exchanges!
   after_destroy :deposit_character, :check_exchanges!
 
@@ -142,5 +143,47 @@ class Inventory < ActiveRecord::Base
       Exchange.invalidate_created_by_inventory!(self)
       ExchangeOffer.destroy_created_by_inventory(self)
     end
+  end
+  
+  def check_collections
+    if items = items_for_collections
+      items[self.item_id].each do |collection_id, amount_for_collection|
+        if self.amount == amount_for_collection
+          collection = ItemCollection.find(collection_id)
+          
+          inventories = inventories_for_collection(collection).select{|i| i.amount >= collection.amount_items[collection.item_ids.index(i.item_id)]}
+          
+          if inventories.size == collection.item_ids.size
+            character.notifications.schedule(:items_collection,
+              :collection_id => collection.id
+            )
+          end
+        end
+      end
+    end
+  end
+  
+  def items_for_collections
+    $memory_store.fetch('items_for_collections', :expires_in => 15.minutes) do
+      {}.tap do |result|
+        Item.all.each do |i|
+          result[i.id] = {}
+    
+          ItemCollection.all.each do |c|
+            if c.item_ids.include?(i.id)
+             result[i.id][c.id] = c.amount_items[c.item_ids.index(i.id)]
+            end   
+          end 
+        end
+      end
+    end
+  end
+  
+  def inventories_for_collection(collection)
+    Inventory.find_by_sql(
+     ["SELECT * FROM inventories WHERE character_id = ? AND item_id IN (#{collection.item_ids.join(", ")})", 
+       character_id
+      ]
+    )
   end
 end
