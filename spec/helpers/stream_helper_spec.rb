@@ -103,7 +103,7 @@ describe StreamHelper do
       @story = mock_model(Story, 
         :interpolate  => 'text',
         :pictures?    => true,
-        :pictures      => mock("image", :url => "/path/to/image.jpg")
+        :pictures     => mock("image", :url => "/path/to/image.jpg")
       )
       
       Story.should_receive(:by_alias).with(:mission_completed).and_return([@story])
