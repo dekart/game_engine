@@ -1,0 +1,272 @@
+#fight_buttons
+  margin-bottom: 15px
+
+  .button
+    float: left
+    width: auto
+    margin-right: 15px
+
+  .fight
+    +button($fight_buttons_fight_icon)
+
+  .hitlist
+    +button($fight_buttons_hitlist_icon)
+
+#inventory_fight_attributes
+  overflow: hidden
+
+#fight_attributes
+  margin-bottom: 10px
+  width: 30%
+  float: left
+
+  th
+    font-size: 12px
+    
+    &.personal
+      width: $fight_attributes_personal_width
+      
+    &.inventory
+      width: $fight_attributes_inventory_width
+      
+    &.best
+      text-align: right
+      width: $fight_attributes_best_width
+      
+      .text
+        float: right
+        padding: 5px
+        border: $fight_attributes_best_border
+      
+  td
+    padding: 5px 0
+    
+  .values
+    .value, .sign
+      line-height: 22px
+      height: 22px
+      padding: 2px 5px
+      
+    .attack, .defence, .relations
+      padding: 2px 5px 2px 21px
+      background-position: center left
+      background-repeat: no-repeat
+    
+    .sign
+      font-weight: bold
+  
+    .result
+      border: $fight_attributes_result_effects_border
+      margin-right: 4px
+      padding: 0 10px
+
+    .attack
+      background-image: $fight_attributes_attack_icon
+  
+    .defence
+      background-image: $fight_attributes_defence_icon
+  
+    .relations
+      background-image: $fight_attributes_relations_icon
+      padding-left: 25px
+  
+#best_inventories
+  padding-top: 15px
+  float: right
+  
+  .inventories
+    float: left
+    margin-right: 10px
+    position: relative
+    
+    .text
+      border: $fight_attributes_best_border
+      position: absolute
+      top: -15px
+      right: 0
+      padding: 5px 7px
+      font-size: 14px
+      font-weight: bold
+      background-color: $fight_attributes_best_bg_color
+      +border-radius(20px)
+      
+    .items
+      padding: 15px 5px 5px 5px
+      border: $fight_attributes_best_border
+      position: relative
+      background-color: $fight_attributes_best_bg_color
+      +border-radius(10px)
+      width: $fight_attributes_best_items_width
+      
+#victim_list
+  width: 100%
+
+  td
+    padding: 10px 0
+    vertical-align: middle
+    border-bottom: $fight_victim_border
+    height: 73px
+
+  .picture
+    padding-right: 10px
+
+  .name
+    width: 200px
+
+  .level
+    width: 80px
+
+  .relations .larger
+    color: $fight_victim_larger_alliance_color
+
+  .controls .attack
+    +button($fight_victim_attack_icon)
+
+#more_fight_opponents
+  margin: 15px 0
+  
+  .button
+    margin: 0 auto
+    +button($fight_victim_attack_icon, 150px)
+  
+
+#fight_result
+  background-image: $fight_result_icon
+  
+  .success, .fail
+    clear: both
+    text-align: center
+    font-size: 25px
+    font-weight: bold
+
+  .lost b, .victim_lost b
+    width: 55px
+
+  .attack_again
+    float: none
+    margin: 0px auto
+    +button($fight_result_attack_again_icon)
+    
+  .help
+    width: 120px
+    margin: 0 auto
+
+  .details
+    border-top: $fight_result_details_border
+    padding-top: 10px
+    width: 100%
+    margin: 0px auto
+
+    .vs
+      width: 65px
+      text-align: center
+      font-weight: bold
+      font-size: 16px
+      line-height: 80px
+      vertical-align: middle
+
+    .attacker, .victim
+      width: 280px
+
+      .attributes
+        .attack
+          background-image: $fight_result_character_attack_icon
+
+        .defence
+          background-image: $fight_result_character_defence_icon
+
+        .relations
+          background-image: $fight_result_character_relations_icon
+
+    .attacker
+      text-align: right
+
+      .character .picture
+        float: right
+        margin-left: 10px
+
+      .attributes div
+        float: right
+        margin-left: 10px
+
+      .best_items img
+        margin-left: 10px
+
+    .victim
+      .character .picture
+        float: left
+        margin-right: 10px
+
+      .attributes div
+        float: left
+        margin-right: 10px
+
+      .best_items img
+        margin-right: 10px
+
+    .character
+      height: auto
+      font-size: 14px
+
+      .name
+        font-weight: bold
+        margin-bottom: 5px
+
+      .level
+        margin-top: 5px
+
+    .attributes
+      margin-top: 5px
+      height: 30px
+
+      div
+        padding-left: 20px
+        line-height: 22px
+        background:
+          position: center left
+          repeat: no-repeat
+
+    .best_items
+      clear: both
+
+      strong
+        display: block
+        margin-bottom: 5px
+        font-size: 14px
+
+  .item_details
+    text-align: center
+    border-top: $fight_result_items_border
+    padding-top: 10px
+
+    .attacker
+      width: 280px
+
+    .items
+      text-align: left
+
+      strong
+        display: block
+        margin-bottom: 5px
+
+    .victim
+      padding-left: 85px
+
+    .group
+      margin-bottom: 10px
+      
+
+#fight_boosts
+  overflow: hidden
+  
+  .boosts.fight
+    &.attack
+      float: left
+    &.defence
+      float: right
+      
+#loading_opponents
+  text-align: center
+  color: $subheader_color
+  padding: 50px
+  display: none

@@ -2,9 +2,6 @@ source 'http://rubygems.org'
 
 gem "rails", "3.2.0"
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
 gem 'mysql2'
 gem "memcache-client",  "~> 1.8.5"
 gem "will_paginate",    "~> 3.0.2"
@@ -48,5 +45,3 @@ group :test do
   # TODO:
   gem "spork",              "~> 0.8.5"
 end
-
-

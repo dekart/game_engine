@@ -1,0 +1,80 @@
+// App Toolbar
+
+#app_toolbar
+  margin-bottom: 5px
+  
+  #applifier_bar
+    height: 80px
+  
+// Top header
+
+#header
+  border-bottom: $header_border
+
+// Logo image
+
+#logo
+  display: block
+  background:
+    color: transparent
+    repeat: no-repeat
+    image: $logo_image
+  width: $logo_width
+  height: $logo_height
+
+#app_requests_counter
+  float: right
+  display: block
+  font-weight: bold
+  padding-left: 20px
+  height: 20px
+  line-height: 20px
+  margin-top: 12px
+  background:
+    image: $asset_icons_app_requests
+    repeat: no-repeat
+    position: left
+    
+#global_chat_icon
+  float: right
+  height: 50px
+  width: 50px
+  margin-left: 10px
+  text-align: center
+  line-height: 43px
+  color: white
+  font-weight: bold
+  background:
+    image: $asset_icons_chat
+    repeat: no-repeat
+
+// Tip block in the header
+
+#tips
+  padding: 10px
+  text-align: center
+  border-top: $tip_border
+
+  .label
+    font-weight: bold
+    color: $label_color
+
+
+// AJAX spinner displayed when loading data from server
+
+#spinner
+  position: absolute
+  top: $spinner_top
+  left: $spinner_left
+  width: $spinner_width
+  height: $spinner_height
+  padding: 5px
+  z-index: 20000
+  background:
+    color: $spinner_bg_color
+  border: $spinner_border
+
+  img
+    float: left
+    margin-right: 10px
+    margin-left: -1px

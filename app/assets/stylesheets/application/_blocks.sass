@@ -1,0 +1,40 @@
+=block($border, $bg_color, $header_color)
+  border: $border
+  background-color: $bg_color
+
+  h2
+    color: $header_color
+
+
+
+// General block
+
+.block
+  margin: 10px 0px
+  padding: 8px
+
+  h2
+    margin-bottom: 15px
+
+  .hide
+    float: right
+    padding-left: 14px
+    background:
+      image: $block_hide_icon
+      repeat: no-repeat
+      position: center left
+
+
+
+// Fan specials block at the dashboard
+
+#fan_specials
+  +block($block_fan_specials_border, $block_fan_specials_bg_color, $block_fan_specials_header_color)
+
+  .button
+    display: block
+    margin: 5px auto
+    width: 116px
+    text-align: center
+
+   

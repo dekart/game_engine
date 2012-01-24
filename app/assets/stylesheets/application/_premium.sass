@@ -1,0 +1,88 @@
+.current_vip_money
+  font-size: 18px
+  text-align: center
+  margin-bottom: 20px
+
+  .value
+    font-weight: bold
+    line-height: 22px
+    height: 22px
+    padding: 5px 0 5px 21px
+    background: 
+      image: $premium_current_vip_money_icon
+      position: center left
+      repeat: no-repeat
+  
+#premia
+  margin:
+    left: auto
+    bottom: 15px
+    right: auto
+
+  td
+    vertical-align: middle
+    border-bottom: $premium_service_border
+    padding: 5px 10px
+
+  .name
+    width: 300px
+
+  .basic_money, .points
+    line-height: 22px
+    height: 22px
+    padding: 5px 0 5px 21px
+    font-weight: bold
+    background:
+      position: center left
+      repeat: no-repeat
+
+  .basic_money
+    background-image: $premium_basic_money_icon
+
+  .points
+    background-image: $premium_points_icon
+
+  .controls
+    text-align: center
+
+    .button
+      text-align: left
+      float: none
+      margin: auto
+      +button($premium_accept_icon, $premium_accept_width)
+
+.need_more_vip
+  font-size: 18px
+  text-align: center
+  
+  .button
+    margin: auto
+    font-size: 18px
+    +button($asset_icons_vip_money, 180px)
+
+#premia_result
+  background-image: $premium_result_icon
+  
+  .get_more
+    +button($premium_result_get_more_icon)
+  
+  
+#premia_change_name_dialog
+  #field_for_character_name
+    margin: 15px 0
+  
+  .apply
+    +button($premium_accept_icon)
+    
+#refill_dialog
+  .requirements
+    padding-top: 10px
+    
+  .button
+    margin: 10px 10px 0 0
+    
+    &.refill
+      +button($premium_dialog_refill_icon)
+      
+    &.premium
+      +button($premium_dialog_premium_icon)

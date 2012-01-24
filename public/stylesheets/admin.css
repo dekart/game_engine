@@ -1,0 +1,86 @@
+/*
+Syntax error: Invalid CSS after "": expected selector, was "!dialog_width =..."
+        on line 1 of /home/mike/work/web/rails/game_engine/public/stylesheets/sass/admin.sass
+
+1: !dialog_width = 500px
+2: !dialog_bg_color = white
+3: !dialog_close_icon = url("/images/icons/delete.gif")
+4: !dialog_close_width = 16px
+5: !dialog_close_height = 16px
+6: !dialog_overlay_opacity = 0.6
+
+Backtrace:
+/home/mike/work/web/rails/game_engine/public/stylesheets/sass/admin.sass:1
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/scss/parser.rb:929:in `expected'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/scss/parser.rb:875:in `expected'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/scss/parser.rb:857:in `expr!'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/scss/static_parser.rb:18:in `parse_selector'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:230:in `visit_rule'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `visit'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `map'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:47:in `visit_root'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/base.rb:37:in `visit'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/visitors/perform.rb:7:in `visit'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/tree/root_node.rb:20:in `render'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/engine.rb:300:in `_render'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/engine.rb:248:in `block in render'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/util.rb:297:in `silence_sass_warnings'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/engine.rb:248:in `render'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/plugin/compiler.rb:339:in `update_stylesheet'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/plugin/compiler.rb:202:in `block in update_stylesheets'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/plugin/compiler.rb:200:in `each'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/plugin/compiler.rb:200:in `update_stylesheets'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/plugin.rb:81:in `update_stylesheets'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/plugin.rb:54:in `check_for_updates'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/sass-3.1.12/lib/sass/plugin/rack.rb:51:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/best_standards_support.rb:17:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/etag.rb:23:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/conditionalget.rb:25:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/head.rb:14:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/facepalm-0.2.2/lib/facepalm/rack/post_canvas_middleware.rb:23:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/params_parser.rb:21:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/flash.rb:242:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/session/abstract/id.rb:205:in `context'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/session/abstract/id.rb:200:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/cookies.rb:338:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/activerecord-3.2.0/lib/active_record/query_cache.rb:64:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/activerecord-3.2.0/lib/active_record/connection_adapters/abstract/connection_pool.rb:443:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/callbacks.rb:28:in `block in call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/activesupport-3.2.0/lib/active_support/callbacks.rb:405:in `_run__82636895__call__1064763746__callbacks'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/activesupport-3.2.0/lib/active_support/callbacks.rb:405:in `__run_callback'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/activesupport-3.2.0/lib/active_support/callbacks.rb:385:in `_run_call_callbacks'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/activesupport-3.2.0/lib/active_support/callbacks.rb:81:in `run_callbacks'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/reloader.rb:65:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/remote_ip.rb:31:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/railties-3.2.0/lib/rails/rack/logger.rb:26:in `call_app'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/railties-3.2.0/lib/rails/rack/logger.rb:16:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/request_id.rb:22:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/methodoverride.rb:21:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/runtime.rb:17:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/activesupport-3.2.0/lib/active_support/cache/strategy/local_cache.rb:72:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/lock.rb:15:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/actionpack-3.2.0/lib/action_dispatch/middleware/static.rb:53:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/railties-3.2.0/lib/rails/engine.rb:479:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/railties-3.2.0/lib/rails/application.rb:220:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/content_length.rb:14:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/railties-3.2.0/lib/rails/rack/log_tailer.rb:14:in `call'
+/home/mike/.rvm/gems/ruby-1.9.3-p0@game_engine/gems/rack-1.4.1/lib/rack/handler/webrick.rb:59:in `service'
+/home/mike/.rvm/rubies/ruby-1.9.3-p0/lib/ruby/1.9.1/webrick/httpserver.rb:138:in `service'
+/home/mike/.rvm/rubies/ruby-1.9.3-p0/lib/ruby/1.9.1/webrick/httpserver.rb:94:in `run'
+/home/mike/.rvm/rubies/ruby-1.9.3-p0/lib/ruby/1.9.1/webrick/server.rb:191:in `block in start_thread'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Invalid CSS after \"\": expected selector, was \"!dialog_width =...\"\A         on line 1 of /home/mike/work/web/rails/game_engine/public/stylesheets/sass/admin.sass\A \A 1: !dialog_width = 500px\A 2: !dialog_bg_color = white\A 3: !dialog_close_icon = url(\"/images/icons/delete.gif\")\A 4: !dialog_close_width = 16px\A 5: !dialog_close_height = 16px\A 6: !dialog_overlay_opacity = 0.6"; }

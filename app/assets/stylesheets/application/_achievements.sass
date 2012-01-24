@@ -1,0 +1,91 @@
+#achievement_permissions
+  display: none
+
+  .permissions
+    +button($asset_icons_accept, 160px)
+
+#achievement_list
+  .achievement_type
+    padding-bottom: 10px
+    margin-bottom: 10px
+    border-bottom: $splitter_border
+    
+    .image
+      float: left
+      width: 110px
+      
+    .status
+      float: right
+      width: 200px
+      
+      .achieved, .locked
+        height: 20px
+        line-height: 17px
+        padding-left: 23px
+        background: 
+          position: left
+          repeat: no-repeat
+      
+      .achieved
+        font-weight: bold
+        color: green
+        background-image: $asset_icons_achievement
+        
+      .locked
+        color: gray
+        background-image: $asset_icons_lock
+        
+      .buttons
+        margin-top: 10px
+        
+        .button
+          margin-bottom: 5px
+          
+        .collect
+          +button($asset_icons_basic_money)
+
+        .publish
+          +button($asset_icons_publish)
+      
+    .name
+      margin: 0 210px 10px 120px
+      font-weight: bold
+      font-size: 16px
+      
+    .description
+      margin: 0 210px 0 120px
+      
+#achievement
+  .image
+    width: 160px
+    
+  .description
+    margin-bottom: 20px
+    
+  .play_now
+    +button($asset_icons_accept, 200px)
+      
+#achievement_result
+  background-image: $asset_icons_achievement
+  
+#new_achievement_notification
+  .achievement
+    .image
+      float: left
+      width: 110px
+      
+    .name
+      margin: 0 0 10px 120px
+      font-weight: bold
+      font-size: 16px
+
+    .description
+      margin-left: 120px
+  
+  .controls
+    .collect
+      +button($asset_icons_basic_money)
+
+    .publish
+      +button($asset_icons_publish)
+  
