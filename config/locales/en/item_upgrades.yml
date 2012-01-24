@@ -1,0 +1,10 @@
+en:
+  item_upgrades:
+    show:
+      title: "Item Upgrade"
+      price: "Upgrade price is %{amount} tokens"
+      tokens: "You have %{amount} tokens"
+      buttons:
+        upgrade: "Upgrade"
+    update:
+      title: "Item successfully upgraded!"

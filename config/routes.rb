@@ -291,7 +291,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contests, :only => :show
   
   map.resources :exchanges
-  
+
   map.resources :exchange_offers, 
     :member => {
       :accept => :post
@@ -321,6 +321,8 @@ ActionController::Routing::Routes.draw do |map|
    
   map.resources :clan_membership_invitations, :only => [:update, :destroy]   
 
+  map.resources :item_upgrades
+  
   # Add your custom routes below this mark
   
   map.connect ':controller/:action/:id'

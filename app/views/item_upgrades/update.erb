@@ -1,0 +1,13 @@
+<% dialog :item_upgrades do %>
+  <h2><%= t(".title") %></h2>
+
+  <div class="item field">
+	<div>
+	  <div class="item_image">
+	    <%= item_image(@recipe.result, :small) %>
+	  </div>
+	  <div class="name"><%= @recipe.result.name %></div>
+      <div class="amount">(<%= @amount %>)</div>
+	</div>
+  </div>
+<% end %>
