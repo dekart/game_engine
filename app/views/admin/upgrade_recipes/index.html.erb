@@ -1,0 +1,31 @@
+<%= admin_title(t(".title")) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.new"), new_admin_upgrade_recipe_path) %>
+</div>
+
+<% collection @recipes do %>
+  <table id="recipe_list" class="data">
+    <tr>
+      <th><%= UpgradeRecipe.human_attribute_name("item") %></th>
+      <th><%= UpgradeRecipe.human_attribute_name("result") %></th>
+      <th><%= UpgradeRecipe.human_attribute_name("price") %></th>
+      <th><%= UpgradeRecipe.human_attribute_name("state") %></th>
+      <th></th>
+    </tr>
+    
+    <% @recipes.each do |recipe| %>
+      <% content_tag_for(:tbody, recipe) do %>
+        <tr>
+          <td class="item"><%= recipe.item.name %></td>
+          <td class="result"><%= recipe.result.name %></td>
+          <td class="price"><%= recipe.price %></td>
+          <td class="state"><%= admin_state(recipe) %></td>
+          <td class="controls">
+            <%= link_to(t(".controls.edit"), edit_admin_upgrade_recipe_path(recipe)) %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+<% end %>

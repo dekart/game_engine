@@ -147,7 +147,12 @@ ActionController::Routing::Routes.draw do |map|
       :member => {
         :change_state => :put
       }
-    
+
+    admin.resources :upgrade_recipes,
+      :member => {
+        :change_state => :put
+      }
+
     admin.resources :pictures, :only => [:new]
     
     # Add your custom admin routes below this mark

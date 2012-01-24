@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123101656) do
+ActiveRecord::Schema.define(:version => 20120124050726) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -491,6 +491,7 @@ ActiveRecord::Schema.define(:version => 20120123101656) do
     t.integer  "original_vip_price"
     t.boolean  "exchangeable",                           :default => false
     t.text     "effects"
+    t.integer  "upgrade_recipes_count",                  :default => 0
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
@@ -873,6 +874,15 @@ ActiveRecord::Schema.define(:version => 20120123101656) do
   create_table "translations", :force => true do |t|
     t.string   "key",        :default => "", :null => false
     t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "upgrade_recipes", :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "result_id"
+    t.integer  "price"
+    t.string   "state",      :limit => 50, :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
