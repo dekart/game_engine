@@ -36,4 +36,16 @@ class UpgradeRecipe < ActiveRecord::Base
   validates_presence_of :item, :result
   validates_numericality_of :price, :greater_than => 0
 
+  def use!(character, amount)
+    return false if character.upgrade_tokens < amount * price
+
+    transaction do
+      character.inventories.replace!(item, result, amount)
+
+      character.upgrade_tokens -= amount * price
+
+      character.save
+    end
+  end
+
 end
