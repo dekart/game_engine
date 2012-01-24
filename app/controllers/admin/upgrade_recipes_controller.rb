@@ -27,9 +27,24 @@ class Admin::UpgradeRecipesController < Admin::BaseController
 
   def update
     @recipe = UpgradeRecipe.find(params[:id])
+    previous = @recipe.item
 
     if @recipe.update_attributes(params[:upgrade_recipe])
       flash[:success] = t(".success")
+
+      if @recipe.state == "visible"
+        @recipe.reload
+
+        if previous != @recipe.item
+          @recipe.item.upgradable = true
+          @recipe.item.save if @recipe.item.changed?
+
+          if UpgradeRecipe.with_state(:visible).select{|rec| rec != @recipe && rec.item == previous}.empty?
+            previous.upgradable = false
+            previous.save if previous.changed?
+          end
+        end
+      end
 
       unless_continue_editing do
         redirect_to admin_upgrade_recipes_path
@@ -48,8 +63,6 @@ class Admin::UpgradeRecipesController < Admin::BaseController
         @recipe.publish if @recipe.can_publish?
       when :hidden
         @recipe.hide if @recipe.can_hide?
-      when :finished
-        @recipe.finish if @recipe.can_finish?
       when :deleted
         @recipe.mark_deleted if @recipe.can_mark_deleted?
       end

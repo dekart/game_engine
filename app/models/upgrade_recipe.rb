@@ -19,6 +19,18 @@ class UpgradeRecipe < ActiveRecord::Base
     event :mark_deleted do
       transition(any - [:deleted] => :deleted)
     end
+
+    after_transition :on => :publish do |recipe|
+      recipe.item.upgradable = true
+      recipe.item.save
+    end
+
+    after_transition :on => [:hide, :mark_deleted] do |recipe|
+      if UpgradeRecipe.with_state(:visible).select{|rec| rec != @recipe && rec.item == recipe.item}.empty?
+        recipe.item.upgradable = false
+        recipe.item.save
+      end
+    end
   end
 
   validates_presence_of :item, :result
