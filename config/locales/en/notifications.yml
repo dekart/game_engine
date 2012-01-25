@@ -105,4 +105,10 @@ en:
     clan_invitation_state:
       accepted:
         title: "The use of invitation"
-        text: "%{character} has used your invitation to join the clan %{clan}"    
+        text: "%{character} has used your invitation to join the clan %{clan}"  
+        
+    items_collection:
+      title: "Contains a collection"  
+      text: "Contains a collection %{collection}"   
+      buttons:
+        collection: "View collection" 

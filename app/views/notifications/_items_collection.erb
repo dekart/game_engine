@@ -1,0 +1,26 @@
+<% dialog :items_collection do |d| %>
+
+  <h2><%= t(".title") %></h2>
+ 
+  <div class="text">
+    <%= t(".text",
+          :collection => strong_tag(notification.collection.name)
+        ).html_safe %>
+  </div>
+  
+  <div class="items clearfix">
+    <% collection_items(notification.collection) do |item, inventory| %>
+      <div class="item">
+        <div class="name"><%= item.name %></div>
+        <div class="image"><%= item_image(item, :small) %></div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="controls">
+    <%= link_to(button(:collection), item_collections_path,
+            :class => "collect button"
+        ) %>
+  </div>
+
+<% end %>

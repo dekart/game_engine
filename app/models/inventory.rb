@@ -48,6 +48,7 @@ class Inventory < ActiveRecord::Base
   validates_numericality_of :amount, :greater_than => 0
 
   before_save   :charge_or_deposit_character
+  after_save    :check_collections
   after_update  :check_market_items, :check_exchanges!
   after_destroy :deposit_character, :check_exchanges!
 
@@ -142,5 +143,29 @@ class Inventory < ActiveRecord::Base
       Exchange.invalidate_created_by_inventory!(self)
       ExchangeOffer.destroy_created_by_inventory(self)
     end
+  end
+  
+  def check_collections
+    if item_ids = ItemCollection.used_item_ids[item_id]
+      item_ids.each do |collection_id, amount_for_collection|
+        if self.amount == amount_for_collection
+          collection = ItemCollection.find(collection_id)
+          
+          inventories = inventories_for_collection(collection).select{|inventory| collection.enough_of?(inventory)}
+          
+          if inventories.size == collection.item_ids.size
+            character.notifications.schedule(:items_collection,
+              :collection_id => collection.id
+            )
+            
+            break
+          end
+        end
+      end
+    end
+  end
+  
+  def inventories_for_collection(collection)
+    character.inventories.scoped(:conditions => {:item_id => collection.item_ids})
   end
 end
