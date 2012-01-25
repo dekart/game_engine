@@ -146,44 +146,24 @@ class Inventory < ActiveRecord::Base
   end
   
   def check_collections
-    if items = items_for_collections
-      items[self.item_id].each do |collection_id, amount_for_collection|
-        if self.amount == amount_for_collection
-          collection = ItemCollection.find(collection_id)
+    ItemCollection.used_item_ids[self.item_id].each do |collection_id, amount_for_collection|
+      if self.amount == amount_for_collection
+        collection = ItemCollection.find(collection_id)
+        
+        inventories = inventories_for_collection(collection).select{|inventory| collection.enough_of?(inventory)}
+        
+        if inventories.size == collection.item_ids.size
+          character.notifications.schedule(:items_collection,
+            :collection_id => collection.id
+          )
           
-          inventories = inventories_for_collection(collection).select{|i| i.amount >= collection.amount_items[collection.item_ids.index(i.item_id)]}
-          
-          if inventories.size == collection.item_ids.size
-            character.notifications.schedule(:items_collection,
-              :collection_id => collection.id
-            )
-          end
-        end
-      end
-    end
-  end
-  
-  def items_for_collections
-    $memory_store.fetch('items_for_collections', :expires_in => 15.minutes) do
-      {}.tap do |result|
-        Item.all.each do |i|
-          result[i.id] = {}
-    
-          ItemCollection.all.each do |c|
-            if c.item_ids.include?(i.id)
-             result[i.id][c.id] = c.amount_items[c.item_ids.index(i.id)]
-            end   
-          end 
+          break
         end
       end
     end
   end
   
   def inventories_for_collection(collection)
-    Inventory.find_by_sql(
-     ["SELECT * FROM inventories WHERE character_id = ? AND item_id IN (#{collection.item_ids.join(", ")})", 
-       character_id
-      ]
-    )
+    character.inventories.scoped(:conditions => {:item_id => collection.item_ids})
   end
 end

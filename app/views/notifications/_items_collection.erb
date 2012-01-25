@@ -8,7 +8,7 @@
         ).html_safe %>
   </div>
   
-  <div class="items">
+  <div class="items clearfix">
     <% collection_items(notification.collection) do |item, inventory| %>
       <div class="item">
         <div class="name"><%= item.name %></div>
