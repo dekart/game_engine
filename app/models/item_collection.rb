@@ -39,9 +39,9 @@ class ItemCollection < ActiveRecord::Base
   def self.used_item_ids
     $memory_store.fetch('items_for_collections', :expires_in => 15.minutes) do
       {}.tap do |result|
-        ItemCollection.with_state(:visible).all.each do |c|
+        ItemCollection.with_state(:visible).each do |c|
            c.item_ids.each do |item_id|
-             result[item_id] = {} unless result.has_key?(item_id)
+             result[item_id] ||= {}
            
              result[item_id][c.id] = c.amount_items[c.item_ids.index(item_id)]
            end

@@ -146,18 +146,20 @@ class Inventory < ActiveRecord::Base
   end
   
   def check_collections
-    ItemCollection.used_item_ids[self.item_id].each do |collection_id, amount_for_collection|
-      if self.amount == amount_for_collection
-        collection = ItemCollection.find(collection_id)
-        
-        inventories = inventories_for_collection(collection).select{|inventory| collection.enough_of?(inventory)}
-        
-        if inventories.size == collection.item_ids.size
-          character.notifications.schedule(:items_collection,
-            :collection_id => collection.id
-          )
+    if item_ids = ItemCollection.used_item_ids[item_id]
+      item_ids.each do |collection_id, amount_for_collection|
+        if self.amount == amount_for_collection
+          collection = ItemCollection.find(collection_id)
           
-          break
+          inventories = inventories_for_collection(collection).select{|inventory| collection.enough_of?(inventory)}
+          
+          if inventories.size == collection.item_ids.size
+            character.notifications.schedule(:items_collection,
+              :collection_id => collection.id
+            )
+            
+            break
+          end
         end
       end
     end
