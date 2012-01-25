@@ -22,3 +22,5 @@ en:
       name: "Fight Defence"
     monster_attack:
       name: "Monster Attack"
+    damage:
+      name: "Damage"
