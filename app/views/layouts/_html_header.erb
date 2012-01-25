@@ -1,6 +1,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<% javascript_tag do %>
+<%= javascript_tag do %>
   var signed_request = '<%= escape_javascript(fb_signed_request) %>';
 <% end %>
 
@@ -10,7 +10,7 @@
 
 <%= csrf_meta_tag %>
 
-<% javascript_tag do %>
+<%= javascript_tag do %>
   if(typeof window.jsLoadedProperly === 'undefined'){
     if( confirm('The page wasn\'t loaded properly because of some connection problem. Would you like to reload it?') ) {
       // TODO: Send notification to exception tracking if this code was triggered
