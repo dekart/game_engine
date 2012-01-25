@@ -5,6 +5,8 @@
 </div>
 
 <% collection @recipes do %>
+  <%= will_paginate @recipes %>
+
   <table id="recipe_list" class="data">
     <tr>
       <th><%= UpgradeRecipe.human_attribute_name("item") %></th>
@@ -28,4 +30,6 @@
       <% end %>
     <% end %>
   </table>
+
+  <%= will_paginate @recipes %>
 <% end %>

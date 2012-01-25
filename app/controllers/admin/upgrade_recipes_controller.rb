@@ -1,6 +1,6 @@
 class Admin::UpgradeRecipesController < Admin::BaseController
   def index
-    @recipes = UpgradeRecipe.without_state(:deleted)
+    @recipes = UpgradeRecipe.without_state(:deleted).paginate(:page => params[:page], :per_page => 50)
   end
 
   def new
@@ -27,24 +27,9 @@ class Admin::UpgradeRecipesController < Admin::BaseController
 
   def update
     @recipe = UpgradeRecipe.find(params[:id])
-    previous = @recipe.item
 
     if @recipe.update_attributes(params[:upgrade_recipe])
       flash[:success] = t(".success")
-
-      if @recipe.state == "visible"
-        @recipe.reload
-
-        if previous != @recipe.item
-          @recipe.item.upgradable = true
-          @recipe.item.save if @recipe.item.changed?
-
-          if UpgradeRecipe.with_state(:visible).select{|rec| rec != @recipe && rec.item == previous}.empty?
-            previous.upgradable = false
-            previous.save if previous.changed?
-          end
-        end
-      end
 
       unless_continue_editing do
         redirect_to admin_upgrade_recipes_path
