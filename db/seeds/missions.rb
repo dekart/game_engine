@@ -1,3 +1,4 @@
+# encoding: utf-8
 puts "Seeding missions..."
 
 tutorial = MissionGroup.create!(:name => "Tutorial")

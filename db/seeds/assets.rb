@@ -1,6 +1,6 @@
 puts "Seeding assets..."
 
-asset_folder = File.join(RAILS_ROOT, "public", "images")
+asset_folder = File.join(Rails.root, "public", "images")
 
 Dir[File.join(asset_folder, "**", "*")].each do |file_name|
   if File.file?(file_name)

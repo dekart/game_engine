@@ -147,7 +147,7 @@ class Character
     
     module MissionHelpAssociationExtension
       def uncollected
-        scoped(:conditions => {:collected => false}, :order => "mission_help_results.created_at DESC")
+        where(:collected => false).order("mission_help_results.created_at DESC")
       end
       
       def collect_reward!

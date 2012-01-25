@@ -15,8 +15,8 @@
 
     <div class="controls">
       <% if mission.repeatable? || rank.nil? || !rank.completed? %>
-        <%= link_to_remote(mission_button(mission, rank),
-              :url    => fulfill_mission_path(mission),
+        <%= link_to(mission_button(mission, rank), fulfill_mission_path(mission),
+              :remote => true,
               :update => :result,
               :html   => {
                 :"data-click-once" => true,

@@ -1,6 +1,6 @@
 <%= title(t(".title", :app => t("app_name"))) %>
 
-<% form_for(@character) do |form| %>
+<%= form_for(@character) do |form| %>
   <%= hidden_field_tag(:reference_code, params[:reference_code]) %>
   <%= hidden_field_tag(:reference, reference_key) %>
   <%= hidden_field_tag(:request_ids, params[:request_ids]) %>
