@@ -7,5 +7,44 @@
 
   .info
     clear: both
-    padding: 10px 0
+    padding-top: 10px
 
+  .text, .points
+    display: block
+    float: left
+    padding: 10px 0
+    min-width: 40px
+
+  .points
+    font-weight: bold
+
+  .button
+    clear: both
+    padding-top: 15px
+
+  .attribute_item
+    clear: both
+    display: block
+    float: left
+
+    .minus_value_attribute, .plus_value_attribute
+      float: left
+      cursor: pointer
+      width: 16px
+      height: 16px
+      background:
+        repeat: no-repeat
+        position: center
+
+    .minus_value_attribute
+      margin-right: 10px
+      background-image = !asset_icons_delete
+
+    .plus_value_attribute
+      margin-left: 10px
+      background-image = !asset_icons_add
+
+    div.attribute_slider
+      float: left
+      width: 160px
+      height: 10px
