@@ -104,7 +104,17 @@ class Character
           character.inventories.give!(item.is_a?(Inventory) ? item.item : item, amount)
         end
       end
-      
+
+      def replace!(item, new_item, amount = 1)
+        raise ArgumentError.new('Cannot transfer negative amount of items') if amount < 1
+        raise ArgumentError.new('Character doesn\'t have enough items') if find_by_item(item).amount < amount
+
+        transaction do
+          take!(item, amount)
+          give!(new_item, amount)
+        end
+      end
+
       def usable_with_payout(name)
         self.usable.find_all do |inventory|
           inventory.payouts.payout_include?(name)

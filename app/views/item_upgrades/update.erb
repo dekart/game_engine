@@ -1,0 +1,26 @@
+<% render_to_result do %>
+  <% result_for :item_upgrade do |builder| %>
+    <% builder.success do %>
+      <%= t(".messages.success",
+            :amount     => @amount,
+            :item_name  => strong_tag(@amount > 1 ? @inventory.plural_name : @inventory.name)
+          ).html_safe %>
+    <% end %>
+
+    <h3><%= t(".you_received.title") %></h3>
+
+    <div class="payouts">
+      <%= payout(:item, item_image(@recipe.result, :medium), 
+            :label => (@amount ? @recipe.result.name + t(".amount", :amount => @amount) : @recipe.result.name)
+          ) %>
+    </div>
+
+    <% builder.on_ready do %>
+      $.dialog.close();
+
+      $('#inventory_list').html('<%= escape_javascript(render("inventories/list", :inventories => current_character.inventories)) %>');
+
+      $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
+    <% end %>
+  <% end %>
+<% end %>

@@ -6,7 +6,7 @@
           <th colspan="3"><h2><%= group.name %></h2></th>
         </tr>
         <% by_group.each do |inventory| %>
-          <%= render("list_inventory", :inventory => inventory) %>
+          <%= render("inventories/list_inventory", :inventory => inventory) %>
         <% end %>
       <% end %>
     <% end %>
