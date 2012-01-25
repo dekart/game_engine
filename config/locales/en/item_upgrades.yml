@@ -1,0 +1,18 @@
+en:
+  item_upgrades:
+    show:
+      title: "Item Upgrade"
+      price: "Upgrade price: %{amount}"
+      tokens: "Your tokens: %{amount}"
+      items_to_upgrade: "Items to upgrade: "
+      get_tokens: "Get more tokens to upgrade your weapons!"
+      buttons:
+        upgrade: "Upgrade"
+    update:
+      title: "Item successfully upgraded!"
+      amount: " x %{amount}"
+      messages:
+        success: "You successfully upgraded %{amount} of %{item_name}"
+      you_received:
+        title: "You received:"
+

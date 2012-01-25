@@ -1,0 +1,7 @@
+<div class="note"><%= t('forms.all_fields_required') %></div>
+
+<%= form.grouped_select :item_id, Item.to_grouped_dropdown %>
+
+<%= form.grouped_select :result_id, Item.to_grouped_dropdown %>
+
+<%= form.text_field :price, :size => 6, :autocomplete => :off %>

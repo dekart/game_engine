@@ -147,7 +147,12 @@ ActionController::Routing::Routes.draw do |map|
       :member => {
         :change_state => :put
       }
-    
+
+    admin.resources :upgrade_recipes,
+      :member => {
+        :change_state => :put
+      }
+
     admin.resources :pictures, :only => [:new]
     
     # Add your custom admin routes below this mark
@@ -286,7 +291,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contests, :only => :show
   
   map.resources :exchanges
-  
+
   map.resources :exchange_offers, 
     :member => {
       :accept => :post
@@ -316,6 +321,8 @@ ActionController::Routing::Routes.draw do |map|
    
   map.resources :clan_membership_invitations, :only => [:update, :destroy]   
 
+  map.resources :item_upgrades
+  
   # Add your custom routes below this mark
   
   map.connect ':controller/:action/:id'

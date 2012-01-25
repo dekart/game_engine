@@ -1,0 +1,51 @@
+<% dialog :item_upgrades do |d| %>
+  <h2><%= t(".title") %></h2>
+
+  <% remote_form_for(@inventory, :url => item_upgrade_path(@inventory.id), :html => {:method => :put}, :update => :ajax) do |f| %>
+    <div class="item">
+      <div class="name"><%= @inventory.item.name %></div>
+      <div class="item_image">
+        <%= item_image(@inventory.item, :small, :tooltip => true) %>
+      </div>
+      <div class="effects"><%= item_effects(@inventory.item) %></div>
+    </div>
+
+    <div id="upgrade_list">
+      <div class="info">
+        <div><%= t(".price", :amount => @recipe.price) %></div>
+        <div><%= t(".tokens", :amount => current_character.upgrade_tokens) %></div>
+      </div>
+
+      <% if @maximum_amount > 0 %>
+        <div class="attribute_item">
+          <%= hidden_field_tag(:amount, 0, :class => :hidden_value) %>
+
+          <div class="minus_value_attribute"></div>
+          <div class="attribute_slider" data-count-points="1" data-character-upgrade="1"></div>
+          <div class="plus_value_attribute"></div>
+
+          <div class="text"><%= t(".items_to_upgrade") %></div>
+          <div class="points"></div>
+        </div>
+      <% else %>
+        <%= t('.get_tokens') %>
+      <% end %>
+    </div>
+
+    <div class="item">
+      <div class="name"><%= @recipe.result.name %></div>
+      <div class="item_image">
+        <%= item_image(@recipe.result, :small, :tooltip => true) %>
+      </div>
+      <div class="effects"><%= item_effects(@inventory.item) %></div>
+    </div>
+
+    <%= link_to_function(button(:upgrade), "$(this).parents('form').submit()", 
+          :class => 'upgrade button', :'data-click-once' => true
+        ) if @maximum_amount > 0 %>
+  <% end %>
+
+  <% d.on_ready do %>
+    $.upgradeSliders(<%= @maximum_amount %>);
+  <% end %>
+<% end %>

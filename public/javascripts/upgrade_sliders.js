@@ -43,7 +43,7 @@
       var character_upgrade = $(this).attr("data-character-upgrade");
       var count_upgrade = (ui.value - (ui.value % count_points)) / count_points;
       var sum_upgrade = count_upgrade * character_upgrade;
-      
+
       $(this).parents(".attribute_item").children(".points").html((sum_upgrade > 0) ? "+ " + sum_upgrade : "");
       $("#upgrade_points").html(max_points);
       

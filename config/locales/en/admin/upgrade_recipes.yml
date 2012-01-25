@@ -1,0 +1,19 @@
+en:
+  admin:
+    upgrade_recipes:
+      index:
+        title: "Item Upgrade Pecipes"
+        empty_set: "No recipes"
+        controls:
+          new: "Add Recipe"
+          edit: "Edit"
+      new:
+        title: "New Recipe"
+        submit: "Create"
+      create:
+        success: "Recipe has been created successfully!"
+      edit:
+        title: "Edit Recipe"
+        submit: "Update"
+      update:
+        success: "Recipe has been updated successfully!"

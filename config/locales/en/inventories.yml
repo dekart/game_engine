@@ -53,6 +53,7 @@ en:
         use_again: "%{use} Again"
         exchange: "Exchange"
         view_exchange: "View Exchange"
+        upgrade: "Upgrade"
     use:
       you_received: "You received:"
       you_spent: "You spent:"
