@@ -207,11 +207,9 @@ var CharacterForm = {
 
 
 var Character = {
-  update: function(a){
-    if(typeof a === 'undefined' || a === null){ return; }
+  update: function(c){
+    if(typeof c === 'undefined' || c === null){ return; }
     
-    var c = a.character;
-
     if($.isEmptyObject(c)){ return; }
     
     $("#co .basic_money .value").text(c.formatted_basic_money);
