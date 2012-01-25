@@ -155,7 +155,7 @@ class DivFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def error_message_on(method)
-    if errors = object.errors.on(method)
+    if errors = object.errors.include?(method)
       error = errors.is_a?(Array) ? errors.first : errors
       error = error.call if error.respond_to?(:call)
 
