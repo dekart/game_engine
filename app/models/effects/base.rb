@@ -6,7 +6,7 @@ module Effects
     end
     
     BASIC_TYPES = [:attack, :defence, :health, :energy, :stamina, 
-      :hp_restore_rate, :sp_restore_rate, :ep_restore_rate
+      :hp_restore_rate, :sp_restore_rate, :ep_restore_rate, :damage
     ]
     COMPLEX_TYPES = []
     
