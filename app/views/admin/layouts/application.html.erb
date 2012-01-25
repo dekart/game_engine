@@ -12,7 +12,7 @@
   <title><%= @admin_title %></title>
 </head>
 <body>
-  <% fb_connect_js(:channel_url => facebook_callback_url + '/channel.html') do %>
+  <%= fb_connect_js(:channel_url => facebook_callback_url + '/channel.html') do %>
     $(function(){
       $(document).trigger('facebook.ready');
     });
