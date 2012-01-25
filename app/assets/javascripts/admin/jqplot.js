@@ -1,3 +1,4 @@
+//= require_tree ./jqplot
 /**
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
