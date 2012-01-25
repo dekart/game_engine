@@ -17,9 +17,12 @@ class ItemUpgradesController < ApplicationController
 
     @amount = params[:amount].to_i
     
-    if @inventory.amount >= @amount && @recipe.use!(current_character, @amount)
+    if @amount != 0 && @inventory.amount >= @amount && @recipe.use!(current_character, @amount)
+
       render :layout => "ajax"
     else
+      @maximum_amount = [@inventory.amount, current_character.upgrade_tokens/@recipe.price].min
+
       render :show, :layout => "ajax"
     end
   end
