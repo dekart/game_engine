@@ -11,3 +11,9 @@ en:
         upgrade: "Upgrade"
     update:
       title: "Item successfully upgraded!"
+      amount: " x %{amount}"
+      messages:
+        success: "You successfully upgraded %{amount} of %{item_name}"
+      you_received:
+        title: "You received:"
+
