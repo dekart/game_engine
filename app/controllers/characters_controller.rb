@@ -50,7 +50,7 @@ class CharactersController < ApplicationController
     if current_character
       redirect_from_iframe root_url(:canvas => true)
     else
-      @character = current_user.build_character(params[:character])
+      @character = current_user.build_character(:name => params[:character][:name])
 
       @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
 
