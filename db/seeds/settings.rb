@@ -102,6 +102,7 @@ Setting[:mission_group_show_limit] ||= 4
 Setting[:mission_completion_dialog] ||= true
 Setting[:mission_help_money] ||= 25
 Setting[:mission_help_experience] ||= 25
+Setting[:mission_help_enabled] ||= true
 
 Setting[:app_google_analytics_id] ||= ""
 
