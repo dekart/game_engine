@@ -51,7 +51,7 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     cubus-settingslogic (2.2.0)
-    delayed_job (3.0.0)
+    delayed_job (3.0.1)
       activesupport (~> 3.0)
     delayed_job_active_record (0.3.1)
       activerecord (> 2.1.0)
@@ -73,7 +73,7 @@ GEM
       multipart-post (~> 1.1)
       rack (~> 1.1)
     haml (3.1.4)
-    highline (1.6.9)
+    highline (1.6.11)
     hike (1.2.1)
     i18n (0.6.0)
     ie_iframe_cookies (0.1.2)
