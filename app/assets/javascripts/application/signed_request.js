@@ -44,6 +44,10 @@ function localUrl(url){
     }
   });
 
+  $("[data-remote]").live('ajax:beforeSend', function(event, request){
+    request.setRequestHeader('signed-request', signed_request);
+  });
+
   $.ajaxSetup({
     beforeSend : function(request){
       request.setRequestHeader('signed-request', signed_request);

@@ -907,6 +907,11 @@ $(function(){
       delay: 0
     }
   });
+  
+  // throw error if it in ajax javascript response
+  $("[data-remote]").live('ajax:error', function(event, request, status, error){
+    throw error;
+  });
 });
 
 window.jsLoadedProperly = true;
