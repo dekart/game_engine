@@ -1,12 +1,13 @@
 en:
   complaints:
     new:
-      title: "Leave a complaint"
+      title: "Report this player"
       causes:
-        cause_1: "Cause 1"
-        cause_2: "Cause 2"
-        cause_3: "Cause 3"
+        cause_1: "Inappropriate name or avatar"
+        cause_2: "Abusive behavior"
+        cause_3: "Duplicate or fake account"
+        cause_4: "Other"
       buttons:
         save: "Send"
-    create: 
-      success: "Your complaint was sent"    
+    create:
+      success: "Thank you for your report! We'll review it as soon as possible!"
