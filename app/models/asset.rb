@@ -7,8 +7,7 @@ class Asset < ActiveRecord::Base
 
   class << self
     def [](value)
-      # TODO: Logger::ERROR - Rails 3.2.0 fix
-      logger.silence(Logger::ERROR) do
+      logger.silence do
         find_by_alias(value.to_s)
       end
     end
