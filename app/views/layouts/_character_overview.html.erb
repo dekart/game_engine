@@ -6,8 +6,7 @@
 
       <%= link_to(t(".bank"), new_bank_operation_path,
             :remote => true,
-            :update => :ajax,
-            :html   => {:class => :bank}
+            :class => :bank
           ) %>
     </td>
     <td class="vip_money">
@@ -24,8 +23,7 @@
       <%= link_to(t(".hospital"), hospital_character_path(:current),
             :remote => true,
             :method => :get,
-            :update => :ajax,
-            :html   => {:class => :hospital}
+            :class => :hospital
           ) if Setting.b(:hospital_enabled) %>
     </td>
     <td class="energy">
@@ -39,8 +37,7 @@
               :vip_money => Setting.i(:premium_energy_price)
             ),
             :remote => true,
-            :update => :ajax,
-            :html   => {:class => "refill"}
+            :class => "refill"
           ) %>
     </td>
     <td class="stamina">
@@ -54,8 +51,7 @@
               :vip_money => Setting.i(:premium_stamina_price)
             ),
             :remote => true,
-            :update => :ajax,
-            :html   => {:class => "refill"}
+            :class => "refill"
           ) %>
     </td>
     <td class="experience">
@@ -71,10 +67,7 @@
       <%= link_to(t(".upgrade"), upgrade_character_path(:current),
             :remote => true,
             :method => :get,
-            :update => :ajax,
-            :html   => {
-              :class => :upgrade
-            }
+            :class => :upgrade
           ) %>
     </td>
   </tr>

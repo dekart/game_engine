@@ -10,14 +10,16 @@
   <table id="bank" cellspacing="0" cellpadding="0">
     <tr>
       <td>
-        <% remote_form_for(:bank_operation, @deposit || BankDeposit.new, :url => deposit_bank_operations_path, :update => :ajax) do |f| %>
+        <%= form_for(@deposit || BankDeposit.new, :as => :bank_operation, 
+              :url => deposit_bank_operations_path, :remote => true) do |f| %>
           <%= f.text_field :amount, :label => t(".deposit"), :size => 10 %>
 
           <%= submit_tag(t(".deposit")) %>
         <% end %>
       </td>
       <td>
-        <% remote_form_for(:bank_operation, @withdrawal || BankWithdraw.new, :url => withdraw_bank_operations_path, :update => :ajax) do |f| %>
+        <%= form_for(@withdrawal || BankWithdraw.new, :as => :bank_operation, 
+              :url => withdraw_bank_operations_path, :remote => true) do |f| %>
           <%= f.text_field :amount, :label => t(".withdraw"), :size => 10 %>
 
           <%= submit_tag(t(".withdraw")) %>

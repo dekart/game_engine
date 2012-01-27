@@ -4,7 +4,9 @@ class BankOperationsController < ApplicationController
 
     @withdrawal = BankWithdraw.new
 
-    render :new, :layout => 'ajax'
+    respond_to do |format|
+      format.js
+    end
   end
 
   def deposit
