@@ -1,4 +1,4 @@
-class Metal::CharacterStatus < ActionController::Metal
+class CharacterStatusController < ActionController::Metal
   def show
     begin
       facebook_user = Facepalm::User.from_signed_request(Facepalm::Config.default, request.env['HTTP_SIGNED_REQUEST'])

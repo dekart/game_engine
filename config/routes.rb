@@ -316,6 +316,6 @@ GameEngine::Application.routes.draw do
   
   resources :complaints, :only => [:new, :create]
   
-  match "/character_status" => Metal::CharacterStatus.action(:show)
-  match "/chats/:chat_id" => Metal::Chats.action(:show)
+  match "/character_status" => "character_status#show"
+  match "/chats/:chat_id" => "chat_messages#index"
 end

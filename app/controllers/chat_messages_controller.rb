@@ -1,5 +1,5 @@
-class Metal::Chats < ActionController::Metal
-  def show
+class ChatMessagesController < ActionController::Metal
+  def index
     facebook_user = Facepalm::User.from_signed_request(Facepalm::Config.default, request.env['HTTP_SIGNED_REQUEST'])
     chat_id = params[:chat_id]
   
