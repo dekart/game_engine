@@ -28,7 +28,11 @@ class ApplicationController < ActionController::Base
   end
   
   def self.skip_authentication_filters(options = {})
-    skip_before_filter(:check_character_existance, :check_user_ban, facepalm_authentication_filter, options)
+    skip_before_filter(:check_character_existance, :check_user_ban, options)
+
+    if respond_to?(:facepalm_authentication_filter)
+      skip_before_filter(facepalm_authentication_filter, options)
+    end
   end
   
   def check_character_existance
