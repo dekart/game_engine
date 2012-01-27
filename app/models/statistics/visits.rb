@@ -30,6 +30,10 @@ class Statistics
       def average_amount(requests, date)
         "%.2f" % (requests.to_f / (date == Date.today ? Time.now.hour : 24))
       end
+      
+      def average_amount_hourly(requests, hour)
+        "%.2f" % (requests.to_f / (hour == Time.now.hour ? Time.now.min : 60))
+      end
     end
   end
 end

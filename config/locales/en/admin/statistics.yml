@@ -2,7 +2,8 @@ en:
   admin:
     statistics:
       amount_change: "(+%{amount} in last 24 hours)"
-      average_amount: "(%{amount} average per hour)"
+      average_amount_per_hour: "(%{amount} average per hour)"
+      average_amount_per_minute: "(%{amount} average per minute)"
       controls:
         dashboard: "Dashboard"
         vip_money: "VIP Money"
@@ -78,7 +79,8 @@ en:
         title: "Statistics: Visits"  
         profile: "FB Profile"
         count_requests: "Requests"  
-        average_amount: "Average Per Hour"
+        average_per_hour: "Average Per Hour"
+        average_per_minute: "Average Per Minute"
         dates: "By Dates"
         total_visits_by_date: "Total Visits By Date"
         total_visits_hourly: "Total Visits Hourly"

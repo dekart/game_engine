@@ -8,7 +8,7 @@
   <p id="total_visits">
     <strong><%= @total %></strong>
     
-    <%= admin_requests_average_amount(@total, @day) unless @hour %>
+    <%= @hour ? admin_requests_average_amount_per_minute(@total, @hour) : admin_requests_average_amount_per_hour(@total, @day) %>
   </p>
 </div>
 
@@ -22,9 +22,7 @@
           <th><%= Character.human_attribute_name("level") %></th>
           <th><%= Character.human_attribute_name("created_at") %></th>
           <th><%= t(".count_requests") %></th>
-          <% unless @hour %>
-            <th><%= t(".average_amount") %></th>
-          <% end %>   
+          <th><%= t(@hour ? ".average_per_minute" : ".average_per_hour") %></th>
         </tr>
         <% @users.each_with_index do |user, index| %>
           <tr>
@@ -46,9 +44,7 @@
             <td><%= user.character.level if user.try(:character) %></td>
             <td><%= l(user.character ? user.character.created_at : user.created_at, :format => :short) if user %></td>
             <td><%= @requests[index] %></td>
-            <% unless @hour %>
-              <td><%= Statistics::Visits.average_amount(@requests[index], @day) %></td>
-            <% end %>   
+            <td><%= @hour ? Statistics::Visits.average_amount_hourly(@requests[index], @hour)  : Statistics::Visits.average_amount(@requests[index], @day) %></td>
           </tr>
         <% end %>
       </table>
@@ -62,7 +58,7 @@
         <% (14).times do |day| %>
           <tr>
             <td>
-              <% if @day == Date.today - day %>
+              <% if !@hour && @day == Date.today - day %>
                 <%= Date.today - day %>
               <% else %>
                 <%= link_to(Date.today - day, :date => Date.today - day) %>
