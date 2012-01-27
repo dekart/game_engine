@@ -9,8 +9,7 @@ class ItemGroup < ActiveRecord::Base
     :conditions => {
       :state => 'visible',
       :display_in_shop => true
-    },
-    :order      => "position"
+    }
 
   state_machine :initial => :hidden do
     state :hidden
