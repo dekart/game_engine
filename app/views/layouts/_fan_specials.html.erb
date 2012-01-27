@@ -7,10 +7,14 @@
     <%= t(".text", :app => t("app_name")).html_safe  %>
   </p>
 
-  <%= fb_fan_box(
-        :stream       => 0,
-        :connections  => 6,
-        :width        => 230,
-        :logobar      => 0
-      ) %>
+  <div
+    class="fb-like-box"
+    data-href="<%= Setting.s(:app_fan_page_url) %>"
+    data-width="230"
+    data-show-faces="true"
+    data-stream="false"
+    data-header="false"
+    data-border-color="white"
+    style="background-color: white"
+  ></div>
 </div>
