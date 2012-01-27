@@ -7,8 +7,6 @@
 
 <%= form.text_field :level, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.text_field :health, :required => true, :size => 6, :autocomplete => :off %>
-<%= form.text_field :attack, :required => true, :size => 6, :autocomplete => :off %>
-<%= form.text_field :defence, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.text_field :minimum_damage, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.text_field :maximum_damage, :required => true, :size => 6, :autocomplete => :off %>
 <%= form.text_field :minimum_response, :required => true, :size => 6, :autocomplete => :off %>
@@ -21,6 +19,10 @@
 <%= form.check_box :available_for_friends_invite %>
 
 <%= form.fields 'admin/visibilities/form_fields' %>
+
+<% form.field_set MonsterType.human_attribute_name("effects") do %>
+  <%= form.fields "admin/effects/collection" %>
+<% end %>
 
 <% form.field_set MonsterType.human_attribute_name("requirements") do %>
   <%= form.fields "admin/requirements/collection" %>

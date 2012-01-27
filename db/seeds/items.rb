@@ -80,3 +80,16 @@ potions.items.create!(
   }]
 
 )
+
+potions.items.create!(
+  :name         => "Set of Antidotes",
+  :level        => 2,
+  :basic_price  => 50,
+
+  :boost_type   => "monster",
+
+  :effects      => [
+    {:type => :health, :value => 5}
+  ]
+
+)

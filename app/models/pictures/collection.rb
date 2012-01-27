@@ -4,15 +4,19 @@ module Pictures
       $memory_store.fetch(picture_url_cache_key) do
         load_target unless loaded?
 
-        {}.tap do |result|
-          proxy_owner.picture_options[:styles].each do |style, value|
-            picture = proxy_target.find{|p| p.style == style.to_s } || build(:style => style)
+        if proxy_target.empty?
+          {}
+        else
+          {}.tap do |result|
+            proxy_owner.picture_options[:styles].each do |style, value|
+              picture = proxy_target.find{|p| p.style == style.to_s } || build(:style => style)
 
-            result[style] = picture.image.url
+              result[style] = picture.image.url
+            end
+
+            default = proxy_target.find{|p| p.style == default_style } || build(:style => nil)
+            result[nil] = default.image.url
           end
-
-          default = proxy_target.find{|p| p.style == default_style } || build(:style => nil)
-          result[nil] = default.image.url
         end
       end
     end

@@ -150,6 +150,8 @@ ActionController::Routing::Routes.draw do |map|
     
     admin.resources :pictures, :only => [:new]
     
+    admin.resources :complaints, :only => [:index, :show]
+    
     # Add your custom admin routes below this mark
     
   end
@@ -317,6 +319,8 @@ ActionController::Routing::Routes.draw do |map|
     }
    
   map.resources :clan_membership_invitations, :only => [:update, :destroy]   
+  
+  map.resources :complaints, :only => [:new, :create]
 
   # Add your custom routes below this mark
   

@@ -13,31 +13,49 @@
 <% end %>
 
 <div id="character">
-  <div class="controls clearfix">
-    <% if @character == current_character %>
-      <%= link_to_remote(button(:upgrade),
-            :url    => upgrade_character_path(@character),
-            :method => :get,
-            :update => :ajax,
-            :html   => {:class => "upgrade button"}
-          ) if current_character.points > 0 %>
+  <table class="profile_controls">
+    <tr>
+      <td>
+        <div class="controls clearfix">
+          <% if @character == current_character %>
+            <%= link_to_remote(button(:upgrade),
+                  :url    => upgrade_character_path(@character),
+                  :method => :get,
+                  :update => :ajax,
+                  :html   => {:class => "upgrade button"}
+                ) if current_character.points > 0 %>
+            
+            <%= link_to(button(:achievements), achievements_path, :class => 'achievements button') if Setting.b(:achievements_enabled) %>
+          <% elsif @secured %>
+            <%= link_to_remote(button(:attack),
+                  :url    => fights_path(:victim_id => @character),
+                  :update => :result,
+                  :html   => {:class => "attack button"}
+                ) if Fight.can_attack?(current_character, @character) %>
       
-      <%= link_to(button(:achievements), achievements_path, :class => 'achievements button') if Setting.b(:achievements_enabled) %>
-    <% elsif @secured %>
-      <%= link_to_remote(button(:attack),
-            :url    => fights_path(:victim_id => @character),
-            :update => :result,
-            :html   => {:class => "attack button"}
-          ) if Fight.can_attack?(current_character, @character) %>
-
-      <%= link_to_remote(button(:hitlist),
-            :url    => new_character_hit_listing_path(@character),
-            :method => :get,
-            :update => :ajax,
-            :html   => {:class => "hitlist button"}
-          ) if current_character.can_hitlist?(@character) %>
-    <% end %>
-  </div>
+            <%= link_to_remote(button(:hitlist),
+                  :url    => new_character_hit_listing_path(@character),
+                  :method => :get,
+                  :update => :ajax,
+                  :html   => {:class => "hitlist button"}
+                ) if current_character.can_hitlist?(@character) %>
+          <% end %>
+        </div>
+      </td>
+      <% if @character != current_character %>
+        <td class="complaints">
+          <div class="controls">
+            <%= link_to_remote(button(:complain), 
+                :url => new_complaint_path(:offender_id => @character.id),
+                :update => :result,
+                :html   => {:class => "button"}
+              ) %> 
+          </div>
+        </td>
+      <% end %>  
+      
+    </tr>
+  </table>       
 
   <table class="info" cellspacing="0" cellpadding="0">
     <tr>

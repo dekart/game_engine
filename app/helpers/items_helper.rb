@@ -27,7 +27,7 @@ module ItemsHelper
       :title => item.name
     )
       
-    image_tag(item.pictures.url(format), options)
+    image_tag(item.pictures? ? item.pictures.url(format) : asset_image_path("1px"), options)
   end
   
   def item_tooltip_content(item)
@@ -127,10 +127,7 @@ module ItemsHelper
           :event => 'click',
           :solo => true
         },
-        :hide => 'unfocus',
-        :style => {
-          :classes => 'show_item'
-        }
+        :hide => 'unfocus'
       }.deep_merge(tooltip)
     end
 end

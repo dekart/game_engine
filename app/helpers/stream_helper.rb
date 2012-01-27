@@ -245,7 +245,7 @@ module StreamHelper
     interpolation_options = interpolation_options.symbolize_keys
     
     if story = Story.by_alias(story_alias).first
-      image ||= story.image.url if story.pictures?
+      image ||= story.pictures.url if story.pictures?
       
       name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
     else

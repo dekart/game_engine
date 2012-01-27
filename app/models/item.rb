@@ -266,6 +266,6 @@ class Item < ActiveRecord::Base
   end
 
   def owned
-    $redis.hget("items_owned", id)
+    $redis.hget("items_owned", id).to_i
   end
 end

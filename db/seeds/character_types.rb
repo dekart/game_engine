@@ -2,6 +2,7 @@ puts "Seeding character types..."
 
 CharacterType.create(
   :name         => "Warrior",
+  :description  => "High damage and health",
   :attack       => 1,
   :defence      => 1,
   :health       => 100,
@@ -13,6 +14,7 @@ CharacterType.create(
 
 CharacterType.create(
   :name         => "Ranger",
+  :description  => "High defence and energy",
   :attack       => 1,
   :defence      => 1,
   :health       => 100,
@@ -24,6 +26,7 @@ CharacterType.create(
 
 CharacterType.create(
   :name         => "Trader",
+  :description  => "Any other description you may want",
   :attack       => 1,
   :defence      => 1,
   :health       => 100,
