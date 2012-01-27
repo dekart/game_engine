@@ -31,9 +31,15 @@ module Admin::StatisticsHelper
     result.html_safe
   end
   
-  def admin_requests_average_amount(value, day)
-    t("admin.statistics.average_amount",
+  def admin_requests_average_amount_per_hour(value, day)
+    t("admin.statistics.average_amount_per_hour",
       :amount => strong_tag(Statistics::Visits.average_amount(value, day))
+    ).html_safe
+  end
+  
+  def admin_requests_average_amount_per_minute(value, hour)
+    t("admin.statistics.average_amount_per_minute",
+      :amount => strong_tag(Statistics::Visits.average_amount_hourly(value, hour))
     ).html_safe
   end
 end

@@ -83,5 +83,42 @@ namespace :app do
 
       remove_data(old_events)
     end
+    
+    desc "Remove old tracking requests"
+    task :tracking_requests => :environment do
+      puts "Removing tracking requests..."
+
+      date_limit = 30
+
+      while true
+        date = Date.today - date_limit
+      
+        if $redis.exists("tracking_requests_#{ date }")
+          $redis.del("tracking_requests_#{ date }")
+        else
+          break
+        end
+      
+        date_limit += 1
+      end
+      
+      time_limit = 48
+      hours = time_limit - (Time.now.hour + 24)
+    
+      if hours > 0
+        date = Date.today - 3
+        hours = 24 - hours
+        
+        hours.downto(1){|hour| $redis.del("tracking_requests_hourly_#{ date }_#{ hour }")}
+      else
+        date = Date.today - 2
+        hours = 24
+    
+        hours.downto(1){|hour| $redis.del("tracking_requests_hourly_#{ date }_#{ hour }")}
+      end
+      
+      puts "Done!"
+      
+    end
   end
 end
