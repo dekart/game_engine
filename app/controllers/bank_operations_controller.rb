@@ -3,10 +3,6 @@ class BankOperationsController < ApplicationController
     @deposit = BankDeposit.new(:amount => current_character.basic_money)
 
     @withdrawal = BankWithdraw.new
-
-    respond_to do |format|
-      format.js
-    end
   end
 
   def deposit
@@ -14,10 +10,8 @@ class BankOperationsController < ApplicationController
 
     if @deposit.save
       current_character.reload
-
-      render :deposit, :layout => 'ajax'
     else
-      render :new, :layout => 'ajax'
+      render :new
     end
   end
 
@@ -26,11 +20,8 @@ class BankOperationsController < ApplicationController
 
     if @withdrawal.save
       current_character.reload
-
-      render :withdraw, :layout => 'ajax'
     else
-      render :new, :layout => 'ajax'
+      render :new
     end
   end
-  
 end
