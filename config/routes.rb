@@ -315,10 +315,6 @@ GameEngine::Application.routes.draw do
   resources :clan_membership_invitations, :only => [:update, :destroy]  
   
   resources :complaints, :only => [:new, :create]
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
+  
+  match "/character_status" => Metal::CharacterStatus.action(:show)
 end
