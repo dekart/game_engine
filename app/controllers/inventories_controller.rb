@@ -28,11 +28,18 @@ class InventoriesController < ApplicationController
   end
 
   def index
-    @inventories = current_character.inventories
-    
-    respond_to do |format|
-      format.html
-      format.js
+    @item_groups = ItemGroup.with_state(:visible)
+
+    @current_group = parents.item_group || @item_groups.first
+
+    @inventories = current_character.inventories.by_item_group(@current_group)
+
+    if request.xhr?
+      render(
+        :partial => "list",
+        :locals => {:inventories => @inventories},
+        :layout => false
+      )
     end
   end
 

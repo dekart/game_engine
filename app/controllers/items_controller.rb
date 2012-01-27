@@ -10,16 +10,16 @@ class ItemsController < ApplicationController
 
     if request.xhr?
       render(
-        :partial => "list", 
-        :locals => {:items => @items, :next_items => @next_items}, 
-        :layout => 'ajax'
+        :partial => "list",
+        :locals => {:items => @items, :next_items => @next_items},
+        :layout => false
       )
     end
   end
-  
+
   def show
     @item = Item.find(params[:id])
-    
+
     render :layout => 'ajax'
   end
 end

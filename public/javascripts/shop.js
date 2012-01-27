@@ -21,7 +21,7 @@ var Shop = (function(){
 
       $.History.bind(function(state){
         switch(state){
-          case 'services': 
+          case 'services':
             shop_tabs.tabs('select', shop_tabs.tabs('length') - 2);
             break;
 
@@ -36,14 +36,14 @@ var Shop = (function(){
       $(".amount").live('change', function(){
         var amount = $(this).val();
         var data = $.parseJSON($(this).attr('data-options'), 10);
-        
+
         if(data.basic_price > 0){
           $("#item_" + data.id + " .requirements .basic_money .value").html(data.basic_price * amount);
         }
-          
+
         if(data.vip_price > 0){
           $("#item_" + data.id + " .requirements .vip_money .value").html(data.vip_price * amount);
-        }   
+        }
       });
     },
 
@@ -66,4 +66,4 @@ var Shop = (function(){
   });
 
   return shop;
-})(jQuery);
+})();

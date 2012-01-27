@@ -1,54 +1,53 @@
-<tr class="inventory" id="<%= dom_id(inventory) %>">
-  <td class="picture"><%= item_image(inventory, :small) %></td>
-  <td class="info">
+<div class="inventory" id="<%= dom_id(inventory) %>">
+  <div class="picture"><%= inventory_item_image(inventory, :medium, :count => true) %></div>
+
+  <div class="info">
     <div class="name"><%= inventory.name %></div>
-    <div class="description"><%= inventory.description %></div>
-    <div class="stats">
-      <div class="owned">
-        <%= t(".owned",
-              :amount => span_tag(inventory.amount, :value)
+
+    <% unless inventory.description.blank? %>
+      <div class="description"><%= inventory.description %></div>
+    <% end %>
+
+    <% if inventory.equipped > 0 %>
+      <div class="equipped">
+        <%= t(".equipped",
+              :amount => span_tag(inventory.equipped, :value)
             ).html_safe %>
       </div>
+    <% end %>
 
-      <% if inventory.equipped > 0 %>
-        <div class="used">
-          <%= t(".equipped",
-                :amount => span_tag(inventory.equipped, :value)
-              ).html_safe %>
-        </div>
-      <% end %>
+    <div class="payouts">
+      <%= item_effects(inventory.item) %>
     </div>
-  </td>
-  <td class="payouts">
-    <%= item_effects(inventory.item) %>
-  </td>
-  <td class="controls">
-    <%= link_to_remote(inventory_use_button(inventory),
-          :url    => use_inventory_path(inventory),
-          :update => :result,
-          :html   => {
-            :"data-click-once" => true,
-            :class => "use button"
-          }
-        ) if inventory.usable? %>
+  </div>
 
+  <div class="controls clearfix">
     <% if inventory.can_be_sold? %>
       <% form_tag("", :class => :clearfix) do %>
-        <%= amount_select_tag %>
-
         <%= link_to_remote(button(:sell, :price => number_to_currency(inventory.sell_price)),
               :url    => inventory_path(inventory.item),
               :method => :delete,
               :with   => "$(this).parent('form').serialize()",
               :update => :result,
               :confirm  => t(".sell_confirm", :price => number_to_currency(inventory.sell_price)),
+              :before => lock_link,
               :html   => {
-                :"data-click-once" => true,
                 :class => "sell button"
               }
             ) %>
+
+        <%= amount_select_tag %>
       <% end %>
     <% end %>
+
+    <%= link_to_remote(inventory_use_button(inventory),
+          :url    => use_inventory_path(inventory),
+          :update => :result,
+          :before => lock_link,
+          :html   => {
+            :class => "use button"
+          }
+        ) if inventory.usable? %>
 
     <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) %>
       <% if inventory.market_items_count == 0 %>
@@ -77,5 +76,5 @@
             ) %>
       <% end %>
     <% end %>
-  </td>
-</tr>
+  </div>
+</div>

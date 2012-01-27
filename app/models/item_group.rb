@@ -3,9 +3,11 @@ class ItemGroup < ActiveRecord::Base
 
   acts_as_list
 
+  default_scope :order => :position
+
   named_scope :visible_in_shop,
     :conditions => {
-      :state => 'visible', 
+      :state => 'visible',
       :display_in_shop => true
     },
     :order      => "position"

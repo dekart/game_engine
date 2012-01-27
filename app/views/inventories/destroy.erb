@@ -13,7 +13,10 @@
   </div>
 
   <% builder.on_ready do %>
-    $('#inventory_list').html('<%= escape_javascript(render("list", :inventories => current_character.inventories)) %>');
+    $(document).trigger('sold.items', {
+      inventory_id: '<%= dom_id(@inventory) %>',
+      amount: <%= @inventory.frozen? ? 0 : @inventory.amount %>
+    });
 
     $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
