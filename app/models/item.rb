@@ -258,7 +258,7 @@ class Item < ActiveRecord::Base
   end
   
   def boost_for_monster_attack?
-    effect(:health) > 0
+    effect(:damage) > 0
   end
 
   def increment_owned(value)
