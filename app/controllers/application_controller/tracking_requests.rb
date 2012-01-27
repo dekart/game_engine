@@ -10,6 +10,7 @@ class ApplicationController
     
     def tracking_requests
       Statistics::Visits.track_visit(current_user) 
+      Statistics::Visits.track_visit_hourly(current_user) 
     end
   end
 end

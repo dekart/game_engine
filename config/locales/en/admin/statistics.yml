@@ -79,8 +79,10 @@ en:
         profile: "FB Profile"
         count_requests: "Requests"  
         average_amount: "Average Per Hour"
-        dates: "Dates"
-        total_visits: "Total Visits"
+        dates: "By Dates"
+        total_visits_by_date: "Total Visits By Date"
+        total_visits_hourly: "Total Visits Hourly"
         no_character: "(No character)"
         no_user: "(No User)"
+        hourly: "Hourly"
           
