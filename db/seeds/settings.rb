@@ -77,7 +77,6 @@ Setting[:rating_show_limit] ||= 20
 Setting[:inventory_sell_price] ||= 50
 Setting[:inventory_exchange_enabled] ||= true
 
-Setting[:item_show_basic] ||= 10
 Setting[:item_show_special] ||= 3
 Setting[:promo_block_minimum_level] ||= 3
 

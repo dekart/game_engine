@@ -90,7 +90,7 @@ en:
         text: "You were accepted into the clan %{clan}"
       rejected:
         title: "You were rejected"
-        text: Your application to join the clan %{clan} was rejected" 
+        text: "Your application to join the clan %{clan} was rejected" 
       asked:
         title: "A new application for membership in the clan"  
         text: "%{applicant} has applied to join the clan %{clan}"
@@ -106,9 +106,9 @@ en:
       accepted:
         title: "The use of invitation"
         text: "%{character} has used your invitation to join the clan %{clan}"  
-        
+
     items_collection:
-      title: "Contains a collection"  
-      text: "Contains a collection %{collection}"   
+      title: "Collection Ready!"
+      text: "You got all items required for the %{collection} collection! Now you can get the reward from it!"
       buttons:
-        collection: "View collection" 
+        collection: "View Collections"

@@ -5,8 +5,16 @@ en:
       next_item: "Reach level %{level} to unlock new items"
       buttons:
         inventory: "Go to Inventory"
+      tabs:
+        services: "Services"
+        buy_vip_money: "Buy Gems"
+    list:
+      empty_set: "No items available for now"
+      locked: "Locked Items"
     item:
       package_size: "(per %{amount} %{help_link})"
+    item_locked:
+      badge: "Locked"
     specials:
       header: "Limited Time Offers"
       buttons:
@@ -14,9 +22,6 @@ en:
     limit:
       amount_limit: "Only %{amount} left!"
       time_limit: "Time Left:"
-    tabs:
-      services: "Services"
-      buy_vip: "Buy Gems"
     requirements:
       free: "FREE"
     buy_button:

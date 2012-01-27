@@ -2,6 +2,10 @@
 module ApplicationHelper
   MAINTENANCE_SETTINGS_PATH = Rails.root.join("public", "system", "maintenance.yml").to_s
 
+  def lock_link
+    "if( $(this).linkLock('status') ){ return false; } else { $(this).linkLock(); }"
+  end
+
   def admin_only(&block)
     if current_user && current_user.admin? || ENV['OFFLINE']
       concat(capture(&block))

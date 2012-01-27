@@ -1,5 +1,8 @@
 class CharactersController < ApplicationController
-  skip_before_filter facepalm_authentication_filter,        :only => :new
+  if respond_to?(:facepalm_authentication_filter)
+    skip_before_filter facepalm_authentication_filter, :only => :new
+  end
+
   skip_before_filter :check_character_existance,            :only => [:new, :create]
   skip_before_filter :check_user_ban,                       :only => [:new, :create]
 
@@ -7,7 +10,7 @@ class CharactersController < ApplicationController
 
   before_filter :fetch_character_types,   :only => [:new, :create, :edit, :update]
   around_filter :check_user_app_requests, :only => :index
-    
+
   def index
     @news = current_character.news.latest(Setting.i(:dashboard_news_count))
   end

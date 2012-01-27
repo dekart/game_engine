@@ -1,20 +1,13 @@
-<% if inventories.size > 0 %>
-  <table cellspacing="0" cellpadding="0">
-    <% ItemGroup.all.each do |group| %>
-      <% if by_group = inventories.by_item_group(group) and by_group.any? %>
-        <tr>
-          <th colspan="3"><h2><%= group.name %></h2></th>
-        </tr>
-        <% by_group.each do |inventory| %>
-          <%= render("list_inventory", :inventory => inventory) %>
-        <% end %>
+<div class="inventory_list clearfix">
+  <% if inventories.size > 0 %>
+      <% inventories.each do |inventory| %>
+        <%= render("list_inventory", :inventory => inventory) %>
       <% end %>
-    <% end %>
-  </table>
-<% else %>
-  <div class="empty_set">
-    <%= t(".empty_set.text",
-          :shop => link_to(t(".empty_set.shop"), items_path)
-        ).html_safe %>
-  </div>
-<% end %>
+  <% else %>
+    <div class="empty_set">
+      <%= t(".empty_set.text",
+            :shop => link_to(t(".empty_set.shop"), items_path)
+          ).html_safe %>
+    </div>
+  <% end %>
+</div>

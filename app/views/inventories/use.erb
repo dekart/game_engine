@@ -37,8 +37,11 @@
     </table>
 
     <% builder.on_ready do %>
-      $(document).trigger('items.used');
-    
+      $(document).trigger('used.items', {
+        inventory_id: '<%= dom_id(@inventory) %>',
+        amount: <%= @inventory.frozen? ? 0 : @inventory.amount %>
+      });
+
       <%= ga_track_event('Items', 'Used', "#{ @inventory.name } (#{ @inventory.item.availability })", current_character.level) %>
     <% end %>
   <% else %>

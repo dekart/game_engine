@@ -184,6 +184,10 @@ class Item < ActiveRecord::Base
     self[:availability].to_sym
   end
 
+  def limited?
+    available_till
+  end
+
   def time_left
     (available_till - Time.now).to_i
   end

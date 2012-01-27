@@ -4,33 +4,28 @@
 
 <%= render('layouts/promo_block', :context => :shop) if current_character.show_promo_block? %>
 
-<%= render('items/tabs', :groups => @item_groups, :current => @current_group) %>
+<% tabs :id => :shop_tabs do |t| %>
 
-<%= will_paginate @items %>
+  <% @item_groups.each do |group| %>
 
-<div id="item_list" class="item_list">
-  <%= render("list", :items => @items) %>
-</div>
+    <% if group == @current_group %>
+      <% t.tab(dom_id(group), group.name) do %>
+        <%= render("list", :items => @items, :next_items => @next_items) %>
+      <% end %>
+    <% else %>
+      <% t.tab(dom_id(group), group.name, item_group_items_path(group)) do %>
+      <% end %>
+    <% end %>
 
-<% if @next_item %>
-  <div id="next_item">
-    <%= t(".next_item",
-          :level => span_tag(@next_item.level, :level),
-          :group => span_tag(@next_item.item_group.name.mb_chars.downcase, :weapon)
-        ).html_safe %>
-  </div>
+  <% end %>
+
+  <% t.tab(:services, nil, service_premium_path) do %>
+  <% end %>
+
+  <% t.tab(:buy_vip_money, nil, buy_vip_premium_path) do %>
+  <% end %>
 <% end %>
 
-<%= will_paginate @items %>
-
 <% dom_ready do %>
-
   Shop.setup();
-
-  $(document).bind('item.purchase', function(){
-    <%= remote_function(
-          :url => item_group_items_path(@current_group),
-          :method => :get
-        ) %>
-  });
 <% end %>

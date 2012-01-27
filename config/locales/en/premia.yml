@@ -1,13 +1,8 @@
 en:
   premia:
     get_vip: "Get More"
-    show:
-      buttons:
-        buy: "Buy Gems"
-        earn_credits: "Earn Credits"
-      current: "You have %{amount} Gems."
-      get_more: "Get More »"
-      need_more: "Need more Gems? You can buy them using a major Credit Card or Paypal!"
+
+    service:
       hire_mercenary:
         text: "Hire Mercenary to join your Alliance"
         button: "Hire"
@@ -37,8 +32,17 @@ en:
       buy_points:
         text: "Add %{amount} attribute points to your character"
         button: "Add Points"
+      need_more: "Need more Gems? You can buy them using a major Credit Card or Paypal!"
+      buttons:
+        buy: "Buy Gems"
+
+
+    buy_vip:
+      buttons:
+        earn_credits: "Earn Credits"
       earn_credits:
         note: 'Need more Facebook Credits? You can earn them by completing special offers provided by Facebook partners! It’s easy and secure.'
+
     change_name:
       title: "Change Your Nickname"
       note: "Please enter your new nickname below. Please note that each name change will charge Gems from your character so try to avoid typos. If you want to use your real Facebook name - keep the field blank and click 'Apply'."

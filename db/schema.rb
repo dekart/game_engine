@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125055814) do
+ActiveRecord::Schema.define(:version => 20120127054731) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -485,6 +485,7 @@ ActiveRecord::Schema.define(:version => 20120125055814) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
+    t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
     t.string   "state",                   :limit => 50,  :default => "",     :null => false
@@ -774,14 +775,14 @@ ActiveRecord::Schema.define(:version => 20120125055814) do
   end
 
   create_table "properties", :force => true do |t|
-    t.integer  "property_type_id",                  :null => false
-    t.integer  "character_id",                      :null => false
+    t.integer  "property_type_id",                 :null => false
+    t.integer  "character_id",                     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level",             :default => 1
     t.datetime "collected_at"
     t.integer  "workers",           :default => 0
-    t.string   "worker_friend_ids", :default => "", :null => false
+    t.text     "worker_friend_ids",                :null => false
   end
 
   add_index "properties", ["character_id"], :name => "index_properties_on_character_id"

@@ -1,16 +1,16 @@
 <% dialog :complaints do %>
   <h2><%= t(".title") %></h2>
-  
+
   <% remote_form_for(@complaint, :update => :result,
        :after => '$.dialog.close()') do |form| %>
-     <%= form.hidden_field :offender_id, :value => params[:offender_id] %>  
-     
-     <%= form.select :cause, causes_list %>  
-       
+     <%= form.hidden_field :offender_id, :value => params[:offender_id] %>
+
+     <%= form.select :cause, causes_list %>
+
      <%= form.text_area :description, :required => true, :rows => 7, :cols => 40 %>
-       
+
      <%= link_to_function(button(:save), "$(this).parents('form').submit()", :class => 'save button')%>
-  <% end %>     
+  <% end %>
 <% end %>
 
 

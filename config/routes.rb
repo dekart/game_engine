@@ -207,7 +207,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :items
 
   map.resources :item_groups do |group|
-    group.resources :items
+    group.resources :items, :only => :index
+    group.resources :inventories, :only => :index
   end
   
   map.resources :personal_discounts, :only => :update
@@ -252,7 +253,9 @@ ActionController::Routing::Routes.draw do |map|
       :change_name => :get
     },
     :collection => {
-      :refill_dialog => :post
+      :service        => :any,
+      :buy_vip        => :any,
+      :refill_dialog  => :post
     }
 
   map.resource :rating

@@ -90,7 +90,7 @@ class ItemCollection < ActiveRecord::Base
 
   def missing_items(character)
     items.dup.tap do |result|
-      character.inventories.each do |inventory|
+      character.inventories.each do |inventory| # We need t refactor this to avoid iterating through the whole inventory
         if items.include?(inventory.item) && inventory.amount >= amount_of_item(inventory.item)
           result.delete(inventory.item)
         end
