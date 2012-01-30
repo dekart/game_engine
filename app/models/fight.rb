@@ -52,6 +52,7 @@ class Fight < ActiveRecord::Base
   end
 
   def can_attack?
+    return false if attacker.exclude_from_fights? || victim.exclude_from_fights?
     return false unless attacker_level_range.include?(victim.level)   # Checking level range match
     return false if !Setting.b(:fight_weak_opponents) && victim.weak? # Checking if opponent is too weak
     return false if latest_opponent_ids.include?(victim.id)           # Checking if opponent was attacked recently
