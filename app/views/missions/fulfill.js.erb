@@ -1,4 +1,4 @@
-<% render_to_result(:mission) do |builder| %>
+<%= render_to_result(:mission) do |builder| %>
 
   <% builder.on_ready do %>
     var mission = $('#<%= dom_id(@mission) %>');

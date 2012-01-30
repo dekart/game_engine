@@ -48,7 +48,7 @@ class Character
           exclude_ids = completed_ids(mission)
 
           if exclude_ids.any?
-            level = mission.levels.scoped(:conditions => ["id NOT IN(?)", exclude_ids]).first
+            level = mission.levels.where(["id NOT IN(?)", exclude_ids]).first
           else
             level = mission.levels.first
           end
@@ -102,8 +102,8 @@ class Character
       def first_levels_completed?(group)
         mission_ids = group.missions.with_state(:visible).all(:select => :id).map(&:id)    
             
-        proxy_association.owner.mission_level_ranks.scoped(
-          :conditions => {:completed => true, :mission_id => mission_ids}
+        proxy_association.owner.mission_level_ranks.where(
+          :completed => true, :mission_id => mission_ids
         ).count('DISTINCT mission_level_ranks.mission_id') == mission_ids.size
       end
     end
