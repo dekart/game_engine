@@ -439,12 +439,13 @@ en:
         attributes: "Attributes"
         attribute: "Attribute"
         value: "Value"
+        game_profile: "Game Profile"
         restorable: "%{current} / %{max} (%{base})"
         inventory: "Inventory"
         properties: "Properties"
         property_income: "+%{value} per %{period} hours"
         statistics: "Statistics"
-        profile: "Facebook Profile"
+        fb_profile: "Facebook Profile"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"

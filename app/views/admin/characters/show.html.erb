@@ -96,7 +96,16 @@
 
       <table class="data">
         <tr>
-          <td><%= t('.profile') %></td>
+          <td><%= t('.game_profile')%></td>
+          <td>
+            <%= link_to(@character.id, character_url(@character.key, :canvas => :true),
+                  :target => :_blank
+                ) %>
+          </td>
+        </tr>
+
+        <tr>
+          <td><%= t('.fb_profile') %></td>
           <td>
             <%= link_to(fb_name(@character.user, :useyou => false, :linked => false), fb_profile_url(@character.user),
                   :target => :_blank
