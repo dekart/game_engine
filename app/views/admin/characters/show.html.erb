@@ -1,5 +1,12 @@
 <%= admin_title(t('.title', :name => character_name(@character), :level => @character.level)) %>
 
+<div class="controls">
+  <%= link_to(t(".controls.index"), admin_characters_path) %>
+  <%= link_to(t(".controls.edit"), edit_admin_character_path(@character)) %>
+  <%= link_to(t(".controls.payouts"), payout_admin_characters_path(:ids => @character)) %>
+  <%= link_to(t(".controls.edit_user"), edit_admin_user_path(@character.user)) %>
+</div>
+
 <table>
   <tr>
     <td>

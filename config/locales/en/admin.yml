@@ -431,6 +431,11 @@ en:
         success: "Payouts have been applied to the character!"
       show:
         title: "View Character: %{name}, Level %{level}"
+        controls:
+          index: "« Back to Index"
+          edit: "Edit Character"
+          edit_user: "Edit User"
+          payouts: "Apply Payouts"
         attributes: "Attributes"
         attribute: "Attribute"
         value: "Value"
