@@ -164,6 +164,11 @@
       <% admin_character_payment_stats(@character) do |s| %>
         <table class="data">
           <tr>
+            <td><%= t('.payments.free_amount') %></td>
+            <td><%= s.total_amount %></td>
+          </tr>
+
+          <tr>
             <td><%= t('.payments.total_amount') %></td>
             <td><%= s.total_amount %></td>
           </tr>

@@ -448,7 +448,8 @@ en:
         fb_profile: "Facebook Profile"
         payments:
           title: "Payments"
-          total_amount: "Total Purchased VIP Money"
+          free_amount: "Earned VIP Money (free)"
+          total_amount: "Purchased VIP Money"
           total_transactions: "Total Translations"
           last_payment: "Last Payment At"
     vip_money_operations:

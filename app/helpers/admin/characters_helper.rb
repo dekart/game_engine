@@ -12,6 +12,10 @@ module Admin::CharactersHelper
       @total_amount ||= purchases.sum(:amount)
     end
 
+    def free_amount
+      @character.vip_money_deposits.sum(:amount) - total_amount
+    end
+
     def total_transactions
       @total_transactions ||= purchases.count
     end
