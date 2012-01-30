@@ -88,7 +88,6 @@
           </tr>
         <% end %>
       </table>
-
     </td>
 
     <td>
@@ -158,8 +157,33 @@
             <%= @character.user.last_visit_ip %>
           </td>
         </tr>
-
       </table>
+
+      <h2><%= t('.payments.title') %></h2>
+
+      <% admin_character_payment_stats(@character) do |s| %>
+        <table class="data">
+          <tr>
+            <td><%= t('.payments.total_amount') %></td>
+            <td><%= s.total_amount %></td>
+          </tr>
+
+          <tr>
+            <td><%= t('.payments.total_transactions') %></td>
+            <td><%= s.total_transactions %></td>
+          </tr>
+
+          <tr>
+            <td><%= t('.payments.last_payment') %></td>
+            <td>
+              <% if s.last_payment_at %>
+                <%= l(l.last_payment_at, :format => :long) %>
+                (<%= time_ago_in_words(l.last_payment_at) %>)
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
     </td>
   </tr>
 </table>
