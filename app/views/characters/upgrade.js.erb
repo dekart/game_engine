@@ -3,7 +3,7 @@
 
   <div id="upgrade_result"></div>
 
-  <% form_tag do %>
+  <%= form_tag(upgrade_character_path(current_character), :remote => true) do %>
     <table id="upgrade_list" cellspacing="0" cellpadding="0" style="display:none">
       <tr class="points">
         <td class="name"><%= Character.human_attribute_name("points") %></td>
@@ -32,11 +32,9 @@
     </table>
 
     <div>
-  	  <%= link_to_remote(button("Upgrade", :disable_asset => true),
-            :url    => upgrade_character_path(current_character),
-            :update => :ajax,
-            :with   => "$(this).parents('form').serialize()",
-            :html   => {:class => "button upgrade"}
+  	  <%= link_to_function(button("Upgrade", :disable_asset => true), 
+  	        "$(this).parents('form').submit()",
+            :class => "button upgrade"
           ) %>
     </div> 	
   <% end %>

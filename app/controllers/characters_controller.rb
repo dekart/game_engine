@@ -16,9 +16,7 @@ class CharactersController < ApplicationController
     if request.post?
       @success = current_character.upgrade_attributes!(params)
 
-      render :action => :upgrade_result, :layout => "ajax"
-    else
-      render :action => :upgrade, :layout => "ajax"
+      render :action => :upgrade_result
     end
   end
 

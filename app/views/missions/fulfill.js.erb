@@ -1,4 +1,4 @@
-<% result_for(:mission) do |builder| %>
+<% render_to_result(:mission) do |builder| %>
 
   <% builder.on_ready do %>
     var mission = $('#<%= dom_id(@mission) %>');
@@ -47,10 +47,7 @@
 
     <% builder.on_ready do %>
       $(document).unbind('requirement.satisfy').one('requirement.satisfy', function() {
-        <%= remote_function(
-              :url    => fulfill_mission_path(@mission),
-              :update => :result
-            ) %>
+        $.post('<%= fulfill_mission_path(@mission) %>');
       });
 
       <%= ga_track_event('Missions', 'Requirements Unsatisfied') %>

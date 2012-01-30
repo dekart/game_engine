@@ -7,8 +7,6 @@ class MissionsController < ApplicationController
     if @result.level_rank.just_completed?
       @missions = current_character.mission_groups.current.missions.available_for(current_character)
     end
-
-    render :fulfill, :layout => "ajax"
   end
  
   def help

@@ -12,11 +12,9 @@
           :class => "publish button"
         ) if Setting.b(:stream_dialog_enabled) %>
         
-    <%= link_to_remote(button(:upgrade), 
-          :url    => upgrade_character_url(current_character),
-          :method => :get,
-          :update => :ajax,
-          :html   => {:class => "upgrade button"}
+    <%= link_to(button(:upgrade), upgrade_character_url(current_character),
+          :remote => true,
+          :class => "upgrade button"
         ) %>
   </div>
 
@@ -26,11 +24,7 @@
     $(document).trigger('character.new_level');
 
     $(document).one('character.level_up_publish', function(){
-      <%= remote_function(
-            :url    => upgrade_character_url(current_character),
-            :method => :get,
-            :update => :ajax
-          ) %>
+      $.get('<%= upgrade_character_url(current_character) %>');
     });
 
     <%= ga_track_event('Character', 'Level Up', 'Level', current_character.level) %>

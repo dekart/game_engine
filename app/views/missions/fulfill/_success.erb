@@ -1,11 +1,8 @@
 <% builder.buttons do %>
-  <%= link_to_remote(button(:continue),
-        :url    => fulfill_mission_path(mission),
-        :update => :result,
-        :html   => {
-          :"data-click-once" => true,
-          :class => "fulfill_again button"
-        }
+  <%= link_to(button(:continue), fulfill_mission_path(mission),
+        :method => :post,
+        :"data-click-once" => true,
+        :class => "fulfill_again button"
       ) %>
 
     <%= link_to_function(button(:request_help), stream_dialog(:mission_help, mission),

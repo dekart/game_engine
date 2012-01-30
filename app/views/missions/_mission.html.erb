@@ -17,11 +17,9 @@
       <% if mission.repeatable? || rank.nil? || !rank.completed? %>
         <%= link_to(mission_button(mission, rank), fulfill_mission_path(mission),
               :remote => true,
-              :update => :result,
-              :html   => {
-                :"data-click-once" => true,
-                :class => "fulfill button"
-              }
+              :method => :post,
+              :"data-click-once" => true,
+              :class => "fulfill button"
             ) %>
 
       <% else %>
