@@ -429,6 +429,17 @@ en:
         submit: "Apply"
         submit_and_continue: "Apply & Continue editing"
         success: "Payouts have been applied to the character!"
+      show:
+        title: "View Character: %{name}, Level %{level}"
+        attributes: "Attributes"
+        attribute: "Attribute"
+        value: "Value"
+        restorable: "%{current} / %{max} (%{base})"
+        inventory: "Inventory"
+        properties: "Properties"
+        property_income: "+%{value} per %{period} hours"
+        statistics: "Statistics"
+        profile: "Facebook Profile"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"
