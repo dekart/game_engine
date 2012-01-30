@@ -13,7 +13,7 @@
   <div class="owner">
     <%= strong_tag(Complaint.human_attribute_name("owner")).html_safe %>:
     
-    <%= link_to(character_name(@complaint.owner), edit_admin_character_path(@complaint.owner)) %>
+    <%= link_to(character_name(@complaint.owner), admin_character_path(@complaint.owner)) %>
           
     <%= link_to(t(".profile"), fb_profile_url(@complaint.owner.user),
             :class  => :profile,
@@ -24,7 +24,7 @@
   <div class="offender">
     <%= strong_tag(Complaint.human_attribute_name("offender")).html_safe %>:
     
-    <%= link_to(character_name(@complaint.offender), edit_admin_character_path(@complaint.offender)) %>
+    <%= link_to(character_name(@complaint.offender), admin_character_path(@complaint.offender)) %>
           
     <%= link_to(t(".profile"), fb_profile_url(@complaint.offender.user),
             :class  => :profile,
