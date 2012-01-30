@@ -50,8 +50,9 @@ module ResultHelper
 
     def on_ready(content = nil, &block)
       @on_ready ||= ""
-      @on_ready << (content || capture(&block))
-      @on_ready << ";"
+      @on_ready << (content || capture(&block)) << ";"
+      
+      nil
     end
 
     def help_link(*args)
@@ -107,12 +108,10 @@ module ResultHelper
     options = args.extract_options!
     type, content = args
 
-    content = Builder.new(self, type, options).html(content, &block)
-
-    block_given? ? concat(content) : content
+    Builder.new(self, type, options).html(content, &block)
   end
 
-  def render_to_result(&block)
-    dom_ready("$('#result').html('#{ escape_javascript(capture(&block)) }');")
+  def render_to_result(*args, &block)
+    "$('#result').html('#{ escape_javascript(result_for(*args, &block)) }');".html_safe
   end
 end

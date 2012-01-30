@@ -1,4 +1,4 @@
-<% result_for(:premia) do |builder| %>
+<%= render_to_result(:premia) do |builder| %>
   <% if flash[:success] %>
     <% builder.success do %>
       <%= flash[:success] %>

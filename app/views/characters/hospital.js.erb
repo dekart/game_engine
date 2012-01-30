@@ -29,23 +29,18 @@
 
     <div class="buttons clearfix">
       <% if current_character.hospital_may_heal? %>
-        <%= link_to_remote(button(:heal),
-              :url    => hospital_heal_character_path(:current),
-              :update => :result,
-              :success => "$(document).trigger('close.dialog')",
-              :html   => {
-                :"data-click-once" => true,
-                :class => "button heal"
-              }
+        <%= link_to(button(:heal), hospital_heal_character_path(:current),
+              :remote => true,
+              :"data-click-once" => true,
+              :class => "button heal"
             ) %>
       <% else %>
-        <%= link_to_remote(button(:refill_health),
-                :url    => premium_path(:type => :refill_health),
-                :method => :put,
-                :update => :result,
-                :success => "$(document).trigger('close.dialog')",
-                :html   => {:class => 'button premium'}
-              ) %>
+        <%= link_to(button(:refill_health), premium_path(:type => :refill_health),
+              :remote => true,
+              :method => :put,
+              :onclick => "$(document).trigger('close.dialog')",
+              :class => 'button premium'
+            ) %>
       <% end %>
     </div>
   <% end %>

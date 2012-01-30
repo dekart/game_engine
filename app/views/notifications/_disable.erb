@@ -1,7 +1,7 @@
 <div class="disable_notification">
-  <%= link_to_remote(t(".disable"),
-        :url      => disable_notification_path(notification),
+  <%= link_to(t(".disable"), disable_notification_path(notification),
+        :remote => "true",
         :confirm  => t(".confirm", :type => notification.title),
-        :before   => "$.dialog.close(); #{ga_track_event('Notifications', 'Disable', notification.title)}"
+        :onclick   => "$.dialog.close(); #{ga_track_event('Notifications', 'Disable', notification.title)}"
       ) %>
 </div>

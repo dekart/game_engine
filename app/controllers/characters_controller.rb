@@ -74,12 +74,10 @@ class CharactersController < ApplicationController
   end
 
   def hospital
-    render :layout => "ajax"
   end
   
   def hospital_heal
     @result = current_character.hospital!
-    render :layout => "ajax"
   end
 
   protected

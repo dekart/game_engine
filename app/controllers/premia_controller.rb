@@ -28,8 +28,6 @@ class PremiaController < ApplicationController
     if @result
       flash.now[:success] = t("premia.update.messages.success.#{params[:type]}")
     end
-
-    render :layout => 'ajax'
   end
   
   def change_name
