@@ -91,7 +91,7 @@ ActionController::Routing::Routes.draw do |map|
         :update_styles  => :post,
         :clear_memcache => :post
       }
-    admin.resources :characters, :only => [:index, :edit, :update],
+    admin.resources :characters,
       :collection => {
         :search => :any,
         :payout => :any

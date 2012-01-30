@@ -3,6 +3,10 @@ class Admin::CharactersController < Admin::BaseController
     @characters = Character.paginate(:page => params[:page])
   end
 
+  def show
+    @character = Character.find(params[:id])
+  end
+
   def search
     if params[:profile_ids].present?
       @ids = params[:profile_ids].split(/[^\d]+/)
