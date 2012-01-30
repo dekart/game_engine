@@ -25,7 +25,7 @@
 
   <% dom_ready do %>
     $(document).bind('item.purchase', function(){
-      <%= remote_function(:url => mission_group_path(@mission_group), :method => :get).html_safe %>
+      $.get('<%= mission_group_path(@mission_group) %>');
     });
   <% end %>
 <% else %>
