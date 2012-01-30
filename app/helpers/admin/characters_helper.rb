@@ -25,7 +25,29 @@ module Admin::CharactersHelper
     end
   end
 
+  class SocialStatsPresenter
+    def initialize(character)
+      @character = character
+    end
+
+    def friends
+      @character.user.friend_ids.size
+    end
+
+    def friends_in_game
+      @character.friend_filter.app_users.size
+    end
+
+    def referrals
+      User.referred_by(@character.user).count
+    end
+  end
+
   def admin_character_payment_stats(character)
     yield PaymentStatsPresenter.new(character)
+  end
+
+  def admin_character_social_stats(character)
+    yield SocialStatsPresenter.new(character)
   end
 end

@@ -113,22 +113,6 @@
         </tr>
 
         <tr>
-          <td><%= User.human_attribute_name("reference") %></td>
-          <td>
-            <%= @character.user.reference %>
-          </td>
-        </tr>
-
-        <tr>
-          <td><%= User.human_attribute_name("referrer") %></td>
-          <td>
-            <% if referrer = @character.user.referrer %>
-              <%= link_to(character_name(referrer.character), admin_character_url(referrer)) %>
-            <% end %>
-          </td>
-        </tr>
-
-        <tr>
           <td><%= Character.human_attribute_name("created_at") %></td>
           <td>
             <%= l(@character.user.created_at, :format => :long) %>
@@ -158,6 +142,49 @@
           </td>
         </tr>
       </table>
+
+      <h2><%= t('.social.title')%></h2>
+
+      <% admin_character_social_stats(@character) do |s| %>
+        <table class="data">
+          <tr>
+            <td><%= User.human_attribute_name("referrer") %></td>
+            <td>
+              <% if referrer = @character.user.referrer %>
+                <%= link_to(character_name(referrer.character), admin_character_url(referrer)) %>
+              <% end %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= User.human_attribute_name("reference") %></td>
+            <td>
+              <%= @character.user.reference %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= t('.social.friends') %></td>
+            <td>
+              <%= s.friends %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= t('.social.in_game') %></td>
+            <td>
+              <%= s.friends_in_game %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= t('.social.referrals') %></td>
+            <td>
+              <%= s.referrals %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
 
       <h2><%= t('.payments.title') %></h2>
 

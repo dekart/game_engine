@@ -446,6 +446,11 @@ en:
         property_income: "+%{value} per %{period} hours"
         statistics: "Statistics"
         fb_profile: "Facebook Profile"
+        social:
+          title: "Social"
+          friends: "Number of Friends"
+          in_game: "Friends in Game"
+          referrals: "Referrals"
         payments:
           title: "Payments"
           free_amount: "Earned VIP Money (free)"

@@ -17,6 +17,12 @@ class User < ActiveRecord::Base
   }
   
   named_scope :with_email, {:conditions => "email != ''"}
+
+  named_scope :referred_by, Proc.new{|user|
+    {
+      :conditions => {:referrer_id => user.id}
+    }
+  }
   
   after_save :schedule_social_data_update,  :if => :access_token_changed?
   after_save :generate_personal_discount,   :if => :last_visit_at_changed?
