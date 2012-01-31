@@ -2,15 +2,16 @@ var AppRequests = (function(){
   var app_requests = {};
   
   $.extend(app_requests, {
-    setup: function(){
-      this.setupTabs();
+    setup: function(index){
+      this.setupTabs(index);
     },
     
-    setupTabs: function(){
+    setupTabs: function(index){
       var app_request_tabs = $("#app_request_tabs");
       
       app_request_tabs.tabs({
-        cache: true
+        cache: true,
+        selected: index
       });
     }
     

@@ -19,5 +19,5 @@
 
 
 <% dom_ready do %>
-  AppRequests.setup();
+  AppRequests.setup(<%= @app_requests_types.index(@current_type) %>);
 <% end %>

@@ -5,6 +5,13 @@ class AppRequest::Base < ActiveRecord::Base
   
   belongs_to :target, :polymorphic => true
   
+  named_scope :by_type, Proc.new {|type|
+    {
+      :conditions => ["type = ?", request_class_name_for_type(type)],
+      :order => "sender_id, type, created_at DESC"
+    }
+  }
+  
   named_scope :for_character, Proc.new {|character|
     {
       :conditions => {:receiver_id => character.facebook_id}
@@ -158,13 +165,6 @@ class AppRequest::Base < ActiveRecord::Base
         
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
-    end
-    
-    def all_by_type(type)
-      all(
-           :conditions => ["type = ?", request_class_name_for_type(type)],
-           :order => "sender_id, type, created_at DESC"
-         )
     end
     
     def request_class_name_for_type(type)

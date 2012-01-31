@@ -5,16 +5,11 @@ class AppRequestsController < ApplicationController
   def index
     @app_requests_types = current_character.app_requests.visible.all(:select => "DISTINCT type").collect{|a| a.type_name}
     
-    @current_type = params[:app_request_id] ? AppRequest::Base.find_by_facebook_id(params[:app_request_id]).type_name : nil ||
-                    params[:type] || 
-                    @app_requests_types.first
+    @current_type = AppRequest::Base.find_by_facebook_id(params[:app_request_id]).type_name if params[:app_request_id]
+    @current_type ||= params[:type]
+    @current_type ||= @app_requests_types.first
     
-    @app_requests = current_character.app_requests.visible.all_by_type(@current_type)
-    
-    if params[:app_request_id]
-      @app_requests_types.delete(@current_type)      
-      @app_requests_types.unshift(@current_type)     
-    end                                                           
+    @app_requests = current_character.app_requests.visible.by_type(@current_type)                                               
                                                    
     if request.xhr?
       render(
