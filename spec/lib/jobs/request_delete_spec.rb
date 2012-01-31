@@ -5,8 +5,8 @@ describe Jobs::RequestDelete do
     before do
       @job = Jobs::RequestDelete.new([123, 456])
       
-      @request1 = mock_model(AppRequest, :delete_from_facebook! => true)
-      @request2 = mock_model(AppRequest, :delete_from_facebook! => true)
+      @request1 = mock_model(AppRequest::Base, :delete_from_facebook! => true)
+      @request2 = mock_model(AppRequest::Base, :delete_from_facebook! => true)
       
       AppRequest::Base.stub!(:find_all_by_id).and_return([@request1, @request2])
     end

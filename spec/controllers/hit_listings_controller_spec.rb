@@ -7,34 +7,34 @@ describe HitListingsController do
   
   describe "when routing" do
     it "should map GET /hit_listings to a hitlist page" do
-      params_from(:get, "/hit_listings").should == {
+      {:get => "/hit_listings"}.should route_to(
         :controller   => "hit_listings",
         :action       => "index"
-      }
+      )
     end
 
     it "should map GET /characters/123/hit_listings/new to a new hit listing page" do
-      params_from(:get, "/characters/123/hit_listings/new").should == {
+      {:get => "/characters/123/hit_listings/new"}.should route_to(
         :controller   => "hit_listings",
         :action       => "new",
         :character_id => "123"
-      }
+      )
     end
 
     it "should map POST /characters/123/hit_listings to a hit listing creation page" do
-      params_from(:post, "/characters/123/hit_listings").should == {
+      {:post => "/characters/123/hit_listings"}.should route_to(
         :controller   => "hit_listings",
         :action       => "create",
         :character_id => "123"
-      }
+      )
     end
 
     it "should map PUT /hit_listings/123 to a hit listing attack page" do
-      params_from(:put, "/hit_listings/123").should == {
+      {:put => "/hit_listings/123"}.should route_to(
         :controller => "hit_listings",
         :action     => "update",
         :id         => "123"
-      }
+      )
     end
   end
 

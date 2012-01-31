@@ -39,9 +39,12 @@ group :assets do
 end
 
 group :test do
+  gem 'turn', :require => false
+  
   gem "rspec-rails",        "~> 2.8.1"
+  gem "autotest-rails",     "~> 4.1.1"
   gem "shoulda-matchers",   "~> 1.0.0"
   gem "factory_girl_rails", "~> 1.5.0"
-  # TODO:
+  gem "timecop",            "0.3.5"
   gem "spork",              "~> 0.8.5"
 end

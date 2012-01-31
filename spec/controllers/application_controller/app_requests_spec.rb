@@ -11,7 +11,7 @@ describe ApplicationController do
     end
   end
   
-  controller_name :fake
+  subject { FakeController }
   
   before do
     controller.stub!(:current_facebook_user).and_return(fake_fb_user)

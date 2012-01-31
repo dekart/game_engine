@@ -7,24 +7,24 @@ describe BankOperationsController do
 
   describe "when routing" do
     it "should map GET /bank_operations/new to a deposit/withdraw form" do
-      params_from(:get, "/bank_operations/new").should == {
+      {:get => "/bank_operations/new"}.should route_to(
         :controller   => "bank_operations",
         :action       => "new"
-      }
+      )
     end
 
     it "should map POST /bank_operations/deposit to a deposit creation page" do
-      params_from(:post, "/bank_operations/deposit").should == {
+      {:post => "/bank_operations/deposit"}.should route_to(
         :controller   => "bank_operations",
         :action       => "deposit"
-      }
+      )
     end
 
     it "should map POST /bank_operations/withdraw to a withdrawal creation page" do
-      params_from(:post, "/bank_operations/withdraw").should == {
+      {:post => "/bank_operations/withdraw"}.should route_to(
         :controller   => "bank_operations",
         :action       => "withdraw"
-      }
+      )
     end
   end
 
@@ -56,7 +56,7 @@ describe BankOperationsController do
     end
 
     def do_request
-      get :new
+      get :new, :format => :js
     end
 
     it "should instantiate new deposit with current character money" do
@@ -81,7 +81,6 @@ describe BankOperationsController do
       do_request
 
       response.should render_template(:new)
-      response.should use_layout('ajax')
     end
   end
 
@@ -101,11 +100,11 @@ describe BankOperationsController do
     end
 
     def do_request
-      post :deposit, :bank_operation => {:amount => 1000}
+      post :deposit, :bank_operation => {:amount => 1000}, :format => :js
     end
 
     it "should build new deposit for character" do
-      @character_deposits.should_receive(:build).with("amount" => 1000).and_return(@deposit)
+      @character_deposits.should_receive(:build).with("amount" => '1000').and_return(@deposit)
 
       do_request
     end
@@ -133,7 +132,6 @@ describe BankOperationsController do
         do_request
 
         response.should render_template(:deposit)
-        response.should use_layout('ajax')
       end
     end
 
@@ -146,7 +144,6 @@ describe BankOperationsController do
         do_request
 
         response.should render_template(:new)
-        response.should use_layout('ajax')
       end
     end
   end
@@ -167,11 +164,11 @@ describe BankOperationsController do
     end
 
     def do_request
-      post :withdraw, :bank_operation => {:amount => 1000}
+      post :withdraw, :bank_operation => {:amount => 1000}, :format => :js
     end
 
     it "should build new withdrawal for character" do
-      @character_withdrawals.should_receive(:build).with("amount" => 1000).and_return(@withdrawal)
+      @character_withdrawals.should_receive(:build).with("amount" => '1000').and_return(@withdrawal)
 
       do_request
     end
@@ -199,7 +196,6 @@ describe BankOperationsController do
         do_request
 
         response.should render_template(:withdraw)
-        response.should use_layout('ajax')
       end
     end
 
@@ -212,7 +208,6 @@ describe BankOperationsController do
         do_request
 
         response.should render_template(:new)
-        response.should use_layout('ajax')
       end
     end
   end

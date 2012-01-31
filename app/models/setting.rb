@@ -4,7 +4,6 @@ class Setting < ActiveRecord::Base
 
   class << self
     def cache
-      logger.silence do
         $memory_store.fetch('settings', :expires_in => 1.minute) do
           {}.tap do |result|
             all.each do |setting|
@@ -12,7 +11,6 @@ class Setting < ActiveRecord::Base
             end
           end
         end
-      end
     end
     
     # Returns value casted to integer

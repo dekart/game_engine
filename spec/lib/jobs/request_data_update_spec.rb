@@ -5,9 +5,9 @@ describe Jobs::RequestDataUpdate do
     before do
       @job = Jobs::RequestDataUpdate.new(123)
       
-      @request = mock_model(AppRequest, :update_data! => true)
+      @request = mock_model(AppRequest::Base, :update_data! => true)
       
-      AppRequest::Base.stub!(:find).and_return(@request)
+      AppRequest::Base.stub!(:find_by_id).and_return(@request)
     end
     
     it 'should fetch request by passed ID' do

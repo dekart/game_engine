@@ -6,8 +6,7 @@ require 'spork'
 
 Spork.prefork do
   require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
-  require 'spec/autorun'
-  require 'spec/rails'
+  require 'rspec/rails'
   require "paperclip/matchers"
   
   Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
@@ -19,7 +18,7 @@ end
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
   config.include FacebookSpecHelper
   config.include SettingSpecHelper

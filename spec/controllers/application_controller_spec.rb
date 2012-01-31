@@ -5,7 +5,7 @@ describe ApplicationController do
     def index; render :text => "foos"; end
   end
   
-  controller_name :fake
+  subject { FakeController }
 
   describe 'when fetching current user' do
     before do

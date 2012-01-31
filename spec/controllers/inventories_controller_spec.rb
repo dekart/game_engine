@@ -7,11 +7,11 @@ describe InventoriesController do
   
   describe "when routing" do
     it "should correctly map to inventory usage for a single inventory" do
-      params_from(:post, "/inventories/123/use").should == {
+      {:post => "/inventories/123/use"}.should route_to(
         :controller => "inventories",
         :action     => "use",
         :id         => "123"
-      }
+      )
     end
   end
 

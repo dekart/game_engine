@@ -1,5 +1,4 @@
 require 'spec_helper'
-require File.expand_path('../bank_operation_spec.rb', __FILE__)
 
 describe BankWithdraw do
   before do

@@ -7,40 +7,40 @@ describe PropertiesController do
   
   describe "when routing" do
     it "should correctly map to property list" do
-      params_from(:get, "/properties").should == {
+      {:get => "/properties"}.should route_to(
         :controller => "properties",
         :action     => "index"
-      }
+      )
     end
 
     it "should correctly map to property purchase" do
-      params_from(:post, "/properties").should == {
+      {:post => "/properties"}.should route_to(
         :controller => "properties",
         :action     => "create"
-      }
+      )
     end
 
     it "should correctly map to property upgrade" do
-      params_from(:put, "/properties/1/upgrade").should == {
+      {:put => "/properties/1/upgrade"}.should route_to(
         :controller => "properties",
         :action     => "upgrade",
         :id         => "1"
-      }
+      )
     end
 
     it "should correctly map to property collect money for a single property" do
-      params_from(:put, "/properties/1/collect_money").should == {
+      {:put => "/properties/1/collect_money"}.should route_to(
         :controller => "properties",
         :action     => "collect_money",
         :id         => "1"
-      }
+      )
     end
 
     it "should correctly map to property collect money for property collection" do
-      params_from(:put, "/properties/collect_money").should == {
+      {:put => "/properties/collect_money"}.should route_to(
         :controller => "properties",
         :action     => "collect_money"
-      }
+      )
     end
   end
 

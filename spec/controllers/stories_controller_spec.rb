@@ -7,11 +7,11 @@ describe StoriesController do
   
   describe "when routing" do
     it "should correctly map to story page" do
-      params_from(:get, "/stories/asd123").should == {
+      {:get => "/stories/asd123"}.should route_to(
         :controller => "stories",
         :action     => "show",
         :id         => "asd123"
-      }
+      )
     end
   end
   

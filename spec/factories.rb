@@ -122,7 +122,7 @@ end
 
 Factory.define :hit_listing do |t|
   t.client {|c| 
-    c.association :character, Factory.attributes_for(:character).merge(:basic_money => 10_000)
+    c.association :character, Factory.create(:character).attributes.merge(:basic_money => 10_000)
   }
   t.victim {|v|
     v.association :character

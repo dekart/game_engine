@@ -7,10 +7,10 @@ describe MissionsController do
   
   describe 'routes' do
     it "should map POST /missions/collect_help_reward to reward collection" do
-      params_from(:post, "/missions/collect_help_reward").should == {
+      {:post => "/missions/collect_help_reward"}.should route_to(
         :controller   => "missions",
         :action       => "collect_help_reward"
-      }
+      )
     end
   end
   

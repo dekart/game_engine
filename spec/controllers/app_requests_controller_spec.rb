@@ -3,10 +3,10 @@ require 'spec_helper'
 describe AppRequestsController do
   describe "when routing" do
     it "should map POST /app_requests to the request creation action" do
-      params_from(:post, "/app_requests").should == {
+      {:post => "/app_requests"}.should route_to(
         :controller   => "app_requests",
         :action       => "create"
-      }
+      )
     end
   end
   
