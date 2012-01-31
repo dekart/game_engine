@@ -1,7 +1,7 @@
 en:
   complaints:
     new:
-      title: "Report this player"
+      title: "Report This Player"
       causes:
         cause_1: "Inappropriate name or avatar"
         cause_2: "Abusive behavior"

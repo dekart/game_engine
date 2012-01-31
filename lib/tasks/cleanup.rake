@@ -1,6 +1,6 @@
 namespace :app do
   desc "Cleanup old data"
-  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:events}
+  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:events app:cleanup:tracking_requests}
 
   namespace :cleanup do
     def remove_data(scope, batch = 100)

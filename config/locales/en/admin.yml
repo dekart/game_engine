@@ -429,6 +429,34 @@ en:
         submit: "Apply"
         submit_and_continue: "Apply & Continue editing"
         success: "Payouts have been applied to the character!"
+      show:
+        title: "View Character: %{name}, Level %{level}"
+        controls:
+          index: "« Back to Index"
+          edit: "Edit Character"
+          edit_user: "Edit User"
+          payouts: "Apply Payouts"
+        attributes: "Attributes"
+        attribute: "Attribute"
+        value: "Value"
+        game_profile: "Game Profile"
+        restorable: "%{current} / %{max} (%{base})"
+        inventory: "Inventory"
+        properties: "Properties"
+        property_income: "+%{value} per %{period} hours"
+        statistics: "Statistics"
+        fb_profile: "Facebook Profile"
+        social:
+          title: "Social"
+          friends: "Number of Friends"
+          in_game: "Friends in Game"
+          referrals: "Referrals"
+        payments:
+          title: "Payments"
+          free_amount: "Earned VIP Money (free)"
+          total_amount: "Purchased VIP Money"
+          total_transactions: "Total Translations"
+          last_payment: "Last Payment At"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"

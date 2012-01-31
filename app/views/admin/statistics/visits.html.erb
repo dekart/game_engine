@@ -29,7 +29,7 @@
             <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
             <td>
               <% if user.try(:character) %>
-                <%= link_to(character_name(user.character), edit_admin_character_path(user.character)) %>
+                <%= link_to(character_name(user.character), admin_character_path(user.character)) %>
               <% else %>
                 <span class="empty">
                   <%= user ? t(".no_character") : t(".no_user") %>

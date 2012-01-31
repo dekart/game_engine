@@ -7,7 +7,7 @@
 
      <%= form.select :cause, causes_list %>
 
-     <%= form.text_area :description, :required => true, :rows => 7, :cols => 40 %>
+     <%= form.text_area :description, :required => true, :rows => 7, :cols => 60 %>
 
      <%= link_to_function(button(:save), "$(this).parents('form').submit()", :class => 'save button')%>
   <% end %>

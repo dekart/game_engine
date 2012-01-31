@@ -15,7 +15,7 @@ en:
         achievements: 'Achievements'
         attack: "Attack!"
         hitlist: "Add to Hitlist"
-        complain: "Complain"
+        report: "Report this player"
       titles:
         empty_set: "%{user} doesn't have any titles yet"
         empty_set_my: "You don't have any titles yet"
