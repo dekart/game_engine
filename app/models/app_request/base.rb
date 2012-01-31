@@ -169,7 +169,7 @@ class AppRequest::Base < ActiveRecord::Base
     
     def types
       all(
-          :select => "DISTINCT(type), COUNT(type) as count_requests", 
+          :select => "type, COUNT(type) as count_requests", 
           :group => "type"
          ).collect{|a| {:name => a.type_name, :count => a.count_requests}}
     end
