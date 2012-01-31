@@ -21,11 +21,11 @@ en:
       buttons:
         ignore: 'Ignore this request'
       tabs:
-        clan_invite: "Clan Invite"
-        gift: "Gift"  
-        invitation: "Invitation"
-        monster_invite: "Monster Invite"
-        property_worker: "Property Worker"
+        clan_invite: "Clan Invite (%{count})"
+        gift: "Gift (%{count})"  
+        invitation: "Invitation (%{count})"
+        monster_invite: "Monster Invite (%{count})"
+        property_worker: "Property Worker (%{count})"
     details:
       gift:
         text: "%{user} sends you %{item}"

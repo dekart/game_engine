@@ -3,11 +3,11 @@ class AppRequestsController < ApplicationController
   skip_before_filter :tracking_requests, :only => :create
   
   def index
-    @app_requests_types = current_character.app_requests.visible.all(:select => "DISTINCT type").collect{|a| a.type_name}
+    @app_requests_types = current_character.app_requests.visible.types
     
     @current_type = AppRequest::Base.find_by_facebook_id(params[:app_request_id]).type_name if params[:app_request_id]
     @current_type ||= params[:type]
-    @current_type ||= @app_requests_types.first
+    @current_type ||= @app_requests_types.first[:name]
     
     @app_requests = current_character.app_requests.visible.by_type(@current_type)                                               
                                                    

@@ -5,13 +5,13 @@
 <% tabs :id => :app_request_tabs do |t| %>
   <% @app_requests_types.each do |type| %>
     
-    <% if type == @current_type %>
-      <% t.tab(type, t(".tabs.#{type}")) do %>
+    <% if type[:name] == @current_type %>
+      <% t.tab(type[:name], t(".tabs.#{type[:name]}", :count => type[:count])) do %>
         <%= render("list", :app_requests => @app_requests ) %>  
       <% end %>
       
     <% else %>
-      <% t.tab(type, t(".tabs.#{type}"), app_requests_path(:type => type)) do %>
+      <% t.tab(type, t(".tabs.#{type[:name]}", :count => type[:count]), app_requests_path(:type => type[:name])) do %>
       <% end %>  
     <% end %>
   <% end %>
@@ -19,5 +19,5 @@
 
 
 <% dom_ready do %>
-  AppRequests.setup(<%= @app_requests_types.index(@current_type) %>);
+  AppRequests.setup(<%= @app_requests_types.index{|a| a[:name] == @current_type} %>);
 <% end %>
