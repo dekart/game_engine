@@ -162,7 +162,7 @@ class AppRequest::Base < ActiveRecord::Base
     
     def all_by_type(type)
       all(
-           :conditions => ["type = ?", AppRequest::Base.request_class_name_for_type(type)],
+           :conditions => ["type = ?", request_class_name_for_type(type)],
            :order => "sender_id, type, created_at DESC"
          )
     end
