@@ -3,7 +3,26 @@ class AppRequestsController < ApplicationController
   skip_before_filter :tracking_requests, :only => :create
   
   def index
-    @app_requests = current_character.app_requests.visible.all(:order => "sender_id, type, created_at DESC")
+    @app_requests_types = current_character.app_requests.visible.all(:select => "DISTINCT type").collect{|a| a.type_name}
+    
+    @current_type = params[:app_request_id] ? AppRequest::Base.find_by_facebook_id(params[:app_request_id]).type_name : nil ||
+                    params[:type] || 
+                    @app_requests_types.first
+    
+    @app_requests = current_character.app_requests.visible.all_by_type(@current_type)
+    
+    if params[:app_request_id]
+      @app_requests_types.delete(@current_type)      
+      @app_requests_types.unshift(@current_type)     
+    end                                                           
+                                                   
+    if request.xhr?
+      render(
+        :partial => "list",
+        :locals => {:app_requests => @app_requests},
+        :layout => false
+      )
+    end                                                                  
   end
   
   def create

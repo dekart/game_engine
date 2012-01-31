@@ -159,6 +159,17 @@ class AppRequest::Base < ActiveRecord::Base
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
     end
+    
+    def all_by_type(type)
+      all(
+           :conditions => ["type = ?", AppRequest::Base.request_class_name_for_type(type)],
+           :order => "sender_id, type, created_at DESC"
+         )
+    end
+    
+    def request_class_name_for_type(type)
+      "AppRequest::#{ type.camelize }"
+    end
   end
   
   def receiver
