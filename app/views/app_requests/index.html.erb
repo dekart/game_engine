@@ -2,29 +2,22 @@
 
 <%= render("relations/buttons", :current => :accept_requests) %>
 
-<% collection(@app_requests) do %>
-  <table id="app_request_list">
-    <% @app_requests.each do |app_request| %>
-      <tr class="<%= dom_class(app_request) %>" id="<%= dom_id(app_request) %>">
-        <td class="sender_picture">
-          <%= character_picture_link(app_request.sender, {}, {:size => :normal}) %>
-        </td>
-
-        <%= render("app_requests/details/#{ app_request.type_name }", :app_request => app_request) %>
-
-        <td class="ignore">
-          <%= link_to_remote(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore')),
-                :url => ignore_app_request_path(app_request),
-                :update => :ajax,
-                :method => :put,
-                :html => {
-                  :'data-click-once' => true,
-                  :class => :ignore
-                }
-              ) %>
-        </td>
-
-      </tr>
+<% tabs :id => :app_request_tabs do |t| %>
+  <% @app_requests_types.each do |type| %>
+    
+    <% if type[:name] == @current_type %>
+      <% t.tab(type[:name], t(".tabs.#{type[:name]}", :count => type[:count])) do %>
+        <%= render("list", :app_requests => @app_requests ) %>  
+      <% end %>
+      
+    <% else %>
+      <% t.tab(type, t(".tabs.#{type[:name]}", :count => type[:count]), app_requests_path(:type => type[:name])) do %>
+      <% end %>  
     <% end %>
-  </table>
+  <% end %>
+<% end %>
+
+
+<% dom_ready do %>
+  AppRequests.setup(<%= @app_requests_types.index{|a| a[:name] == @current_type} %>);
 <% end %>
