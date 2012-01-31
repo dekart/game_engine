@@ -2,7 +2,7 @@ class AchievementType < ActiveRecord::Base
   extend HasPayouts
   extend HasPictures
   
-  KEYS = [:level, :fights_won, :total_money, :killed_monsters_count, :total_monsters_damage]
+  KEYS = [:level, :fights_won, :total_money, :killed_monsters_count, :total_monsters_damage, :missions_succeeded, :missions_completed]
   
   default_scope :order => "achievement_types.key, value"
 
