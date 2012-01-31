@@ -20,6 +20,12 @@ en:
       empty_set: "Your friends haven't sent you any requests yet."
       buttons:
         ignore: 'Ignore this request'
+      tabs:
+        clan_invite: "Clan Invite"
+        gift: "Gift"  
+        invitation: "Invitation"
+        monster_invite: "Monster Invite"
+        property_worker: "Property Worker"
     details:
       gift:
         text: "%{user} sends you %{item}"

@@ -6,12 +6,12 @@
   <% @app_requests_types.each do |type| %>
     
     <% if type == @current_type %>
-      <% t.tab(type, type) do %>
+      <% t.tab(type, t(".tabs.#{type}")) do %>
         <%= render("list", :app_requests => @app_requests ) %>  
       <% end %>
       
     <% else %>
-      <% t.tab(type, type, app_requests_path(:type => type)) do %>
+      <% t.tab(type, t(".tabs.#{type}"), app_requests_path(:type => type)) do %>
       <% end %>  
     <% end %>
   <% end %>
