@@ -295,6 +295,10 @@ module StreamHelper
       src = asset_image_path('logo_stream')
     end
 
+    if Rails.env.development?
+      src = Facepalm::Config.default.callback_url(request ? request.protocol : 'http://') + src
+    end
+
     [
       {
         :type => "image",
