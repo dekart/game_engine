@@ -57,7 +57,7 @@ describe AppRequest::Gift do
       @other_request.accept
       
       @request.accept.should be_false
-      @request.errors.on(:base).should =~ /You already accepted a gift from this player recently/i
+      @request.errors[:base].should =~ /You already accepted a gift from this player recently/i
     end
     
     it 'should give item to receiver' do

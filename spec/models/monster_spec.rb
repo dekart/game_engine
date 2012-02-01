@@ -52,14 +52,14 @@ describe Monster do
       @monster.character = nil
 
       @monster.should_not be_valid
-      @monster.errors.on(:character).should_not be_empty
+      @monster.errors[:character].should_not be_empty
     end
 
     it "should be invalid without assigned monster type" do
       @monster.monster_type = nil
 
       @monster.should_not be_valid
-      @monster.errors.on(:monster_type).should_not be_empty
+      @monster.errors[:monster_type].should_not be_empty
     end
 
     it "should be invalid if there are current monsters of the same type" do
@@ -68,14 +68,14 @@ describe Monster do
       end
 
       @monster.should_not be_valid
-      @monster.errors.on(:base).should_not be_empty
+      @monster.errors[:base].should_not be_empty
     end
 
     it "should be invalid if character's level is lower than required" do
       @monster.monster_type = Factory.create(:monster_type, :level => 2)
 
       @monster.should_not be_valid
-      @monster.errors.on(:character).should_not be_empty
+      @monster.errors[:character].should_not be_empty
     end
 
     it "should be invalid if requirements are not satisfied" do
@@ -86,7 +86,7 @@ describe Monster do
       )
 
       @monster.should_not be_valid
-      @monster.errors.on(:character).should_not be_empty
+      @monster.errors[:character].should_not be_empty
     end
 
     describe 'when valid' do

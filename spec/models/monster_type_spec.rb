@@ -54,7 +54,7 @@ describe MonsterType do
         @monster_type.send("#{attribute}=", 0)
 
         @monster_type.should_not be_valid
-        @monster_type.errors.on(attribute).should include('must be greater than 0')
+        @monster_type.errors[attribute].should include('must be greater than 0')
       end
     end
   end

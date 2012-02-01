@@ -176,7 +176,7 @@ describe Contest do
         @contest.send("#{attribute}=", nil)
         
         @contest.should_not be_valid
-        @contest.errors.on(attribute).should be_present
+        @contest.errors[attribute].should be_present
       end
     end
     

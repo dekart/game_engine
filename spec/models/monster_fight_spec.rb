@@ -71,7 +71,7 @@ describe MonsterFight do
       
       @monster_fight.save.should be_false
       @monster_fight.should_not be_valid
-      @monster_fight.errors.on(:character_id).should_not be_empty
+      @monster_fight.errors[:character_id].should_not be_empty
     end
   end
 

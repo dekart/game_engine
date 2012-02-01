@@ -131,19 +131,17 @@ describe Property do
     end
   end
 
-  shared_examples_for "character validation" do
-    def character_should_have_enough_money(currency, suffix = nil)
-      @character.send("#{currency}=", 0)
+  def character_should_have_enough_money(currency, suffix = nil)
+    @character.send("#{currency}=", 0)
 
-      yield
+    yield
 
-      @property.errors.on(:character).should include(
-        I18n.t("activerecord.errors.models.property.attributes.character.requirements_no_satisfied",
-          :name     => "Property Type",
-          currency  => Character.human_attribute_name(currency)
-        )
+    @property.errors[:character].should include(
+      I18n.t("activerecord.errors.models.property.attributes.character.requirements_no_satisfied",
+        :name     => "Property Type",
+        currency  => Character.human_attribute_name(currency)
       )
-    end
+    )
   end
 
   describe "when getting time to next collection" do
@@ -161,7 +159,7 @@ describe Property do
   end
 
   describe "when buying a property" do
-    it_should_behave_like "character validation"
+    
 
     it "should add new property instance" do
       lambda{
@@ -201,7 +199,6 @@ describe Property do
   end
 
   describe "when upgrading a property" do
-    it_should_behave_like "character validation"
 
     before :each do
       @property.save!

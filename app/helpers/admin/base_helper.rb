@@ -42,7 +42,7 @@ module Admin::BaseHelper
 
         if options[:confirm].include?(state.name)
           link_options[:confirm] = t('admin.change_state.confirm', 
-            :object_name  => object.class.human_name, 
+            :object_name  => object.class.model_name.human, 
             :state        => state.name.to_s.titleize
           )
         end

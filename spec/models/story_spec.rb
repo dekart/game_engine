@@ -30,7 +30,7 @@ describe Story do
       end
     
       it 'should order stories randomly' do
-        Story.by_alias('level_up').proxy_options[:order].should =~ /RAND\(\)/
+        Story.by_alias('level_up').arel.orders.should include("RAND()")
       end
     
       it 'should work with symbols as well as with strings' do

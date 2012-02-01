@@ -39,5 +39,18 @@ RSpec.configure do |config|
   config.before :all do
     require File.expand_path(File.join(File.dirname(__FILE__),'..', "db", "seeds", "settings"))
   end
+  
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
 

@@ -97,6 +97,6 @@ class Story < ActiveRecord::Base
   end
   
   def name
-    '%s #%d (%s)' % [self.class.human_name, id, self.alias]
+    '%s #%d (%s)' % [self.class.model_name.human, id, self.alias]
   end
 end

@@ -21,7 +21,7 @@ module Admin::StatisticsHelper
   def admin_statistics_reference(reference)
     if reference.is_a?(ActiveRecord::Base)
       result = "(%s) %s" % [
-        reference.class.human_name,
+        reference.class.model_name.human,
         link_to(reference.name, [:edit, :admin, reference])
       ]
     else

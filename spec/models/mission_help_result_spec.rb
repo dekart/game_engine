@@ -76,8 +76,8 @@ describe MissionHelpResult do
       it 'should fail to save and add error message' do
         @help_result.save.should be_false
         
-        @help_result.errors.on(:base).should_not be_empty
-        @help_result.errors.on(:base).should =~ /already helped/
+        @help_result.errors[:base].should_not be_empty
+        @help_result.errors[:base].should =~ /already helped/
       end
     end
     
@@ -89,8 +89,8 @@ describe MissionHelpResult do
       it 'should fail to save and add error message' do
         @help_result.save.should be_false
         
-        @help_result.errors.on(:base).should_not be_empty
-        @help_result.errors.on(:base).should =~ /cannot help yourself/
+        @help_result.errors[:base].should_not be_empty
+        @help_result.errors[:base].should =~ /cannot help yourself/
       end
     end
   end

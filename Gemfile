@@ -26,10 +26,16 @@ gem 'facepalm',         '~> 0.2'
 
 gem 'jquery-rails'
 
+
 group :development do
   gem "capistrano",   "~> 2.9.0"
   #gem 'ruby-debug19', :require => 'ruby-debug'
   gem "net-scp",      "~> 1.0.4"
+  
+  # TODO: bug with ruby-debug19 http://stackoverflow.com/questions/8251349/ruby-threadptr-data-type-error
+  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+  gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :assets do
@@ -47,4 +53,5 @@ group :test do
   gem "factory_girl_rails", "~> 1.5.0"
   gem "timecop",            "0.3.5"
   gem "spork",              "~> 0.8.5"
+  gem "database_cleaner",   "~> 0.7.1"
 end

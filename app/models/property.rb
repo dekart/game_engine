@@ -126,7 +126,7 @@ class Property < ActiveRecord::Base
 
         result = payouts.apply(character, :upgrade, property_type)
      
-        save(false) && character.charge!(property_type.upgrade_price(level - 1), vip_price, property_type)
+        save(:validate => false) && character.charge!(property_type.upgrade_price(level - 1), vip_price, property_type)
 
         character.news.add(:property_upgrade, :property_id => id, :level => level)
         

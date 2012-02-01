@@ -35,7 +35,7 @@ describe ExchangeOffer do
       @exchange_offer = Factory.build(:exchange_offer, :amount => 2, :character => character)
       
       @exchange_offer.should_not be_valid
-      @exchange_offer.errors.on(:amount).should be_present
+      @exchange_offer.errors[:amount].should be_present
     end
     
     it 'should validate that item exchangeable' do
@@ -46,7 +46,7 @@ describe ExchangeOffer do
       @exchange_offer = Factory.build(:exchange_offer, :item => item, :character => character)
       
       @exchange_offer.should_not be_valid
-      @exchange_offer.errors.on(:item).should be_present
+      @exchange_offer.errors[:item].should be_present
     end
   end
   
@@ -153,7 +153,7 @@ describe ExchangeOffer do
           @exchange_offer.accept!
         }.should raise_exception(StateMachine::InvalidTransition)
         
-        @exchange.errors.on(:amount).should be_present
+        @exchange.errors[:amount].should be_present
       end
       
       it 'should not transact if exchange offer creator doesnt have item in inventory' do
@@ -163,7 +163,7 @@ describe ExchangeOffer do
           @exchange_offer.accept!
         }.should raise_exception(StateMachine::InvalidTransition)
         
-        @exchange_offer.errors.on(:amount).should be_present
+        @exchange_offer.errors[:amount].should be_present
       end
     end
   end

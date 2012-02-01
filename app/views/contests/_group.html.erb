@@ -1,7 +1,7 @@
 <table class="contest_table contest_group" id="<%= dom_id(group) %>" cellspacing="0" cellpadding="0">
   <tr>
     <th>#</th>
-    <th colspan="2"><%= Character.human_name %></th>
+    <th colspan="2"><%= Character.model_name.human %></th>
     <th><%= t(".points_types.#{group.contest.points_type}") %></th>
     <% if group.contest.finished? %>
       <th><%= t(".payouts") %></th>

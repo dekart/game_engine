@@ -1,5 +1,4 @@
 require 'spec_helper'
-require File.expand_path('../bank_operation_spec.rb', __FILE__)
 
 describe BankDeposit do
   before do
@@ -16,7 +15,7 @@ describe BankDeposit do
       @operation.amount = 101
       
       @operation.save.should be_false
-      @operation.errors.on(:amount).should_not be_empty
+      @operation.errors[:amount].should_not be_empty
     end
     
     it 'should successfully save' do

@@ -3,7 +3,7 @@
     <%= link_to_function(t(".remove"), "SerializableList.remove('#item_#{item.object_id}')", :class => :remove) %>
   </div>
 
-  <%= label_tag "item_set_items_#{item.object_id}_item_id", Item.human_name %>
+  <%= label_tag "item_set_items_#{item.object_id}_item_id", Item.model_name.human %>
   <%= select_tag("item_set[items][#{item.object_id}][item_id]", grouped_options_for_select(Item.to_grouped_dropdown, item.try(:id)).html_safe) %>
 
   <%= label_tag "item_set_items_#{item.object_id}_frequency", ItemSet.human_attribute_name('frequency') %>

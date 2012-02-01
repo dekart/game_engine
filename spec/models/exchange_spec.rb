@@ -35,7 +35,7 @@ describe Exchange do
       @exchange = Factory.build(:exchange, :amount => 2, :character => character)
       
       @exchange.should_not be_valid
-      @exchange.errors.on(:amount).should be_present
+      @exchange.errors[:amount].should be_present
     end
     
     it 'should validate that item exchangeable' do
@@ -46,7 +46,7 @@ describe Exchange do
       @exchange = Factory.build(:exchange, :item => item, :character => character)
       
       @exchange.should_not be_valid
-      @exchange.errors.on(:item).should be_present
+      @exchange.errors[:item].should be_present
     end
   end
   

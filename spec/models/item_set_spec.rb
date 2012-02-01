@@ -14,7 +14,7 @@ describe ItemSet do
       @item_set.items = []
 
       @item_set.should_not be_valid
-      @item_set.errors.on(:items).should_not be_empty
+      @item_set.errors[:items].should_not be_empty
     end
   end
 

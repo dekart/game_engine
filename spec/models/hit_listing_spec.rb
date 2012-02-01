@@ -41,7 +41,7 @@ describe HitListing do
 
       @hit_listing.should_not be_valid
 
-      @hit_listing.errors.on(:client).should_not be_empty
+      @hit_listing.errors[:client].should_not be_empty
     end
 
     it "should not be valid without a victim" do
@@ -49,7 +49,7 @@ describe HitListing do
 
       @hit_listing.should_not be_valid
 
-      @hit_listing.errors.on(:victim).should_not be_empty
+      @hit_listing.errors[:victim].should_not be_empty
     end
 
     it "should not be valid without a reward" do
@@ -57,7 +57,7 @@ describe HitListing do
 
       @hit_listing.should_not be_valid
 
-      @hit_listing.errors.on(:reward).should_not be_empty
+      @hit_listing.errors[:reward].should_not be_empty
     end
 
     it "should not be valid when reward is below the minumum value" do
@@ -65,7 +65,7 @@ describe HitListing do
 
       @hit_listing.should_not be_valid
 
-      @hit_listing.errors.on(:reward).should_not be_empty
+      @hit_listing.errors[:reward].should_not be_empty
     end
 
     it "should not be valid when client doesn't have enough money" do
@@ -73,7 +73,7 @@ describe HitListing do
 
       @hit_listing.should_not be_valid
 
-      @hit_listing.errors.on(:reward).should_not be_empty
+      @hit_listing.errors[:reward].should_not be_empty
     end
 
     it "should not be valid if victim is weak" do
@@ -81,7 +81,7 @@ describe HitListing do
 
       @hit_listing.should_not be_valid
 
-      @hit_listing.errors.on(:victim).should_not be_empty
+      @hit_listing.errors[:victim].should_not be_empty
     end
 
     it "should not be valid if victim is already listed" do
@@ -89,7 +89,7 @@ describe HitListing do
 
       @hit_listing.should_not be_valid
 
-      @hit_listing.errors.on(:victim).should_not be_empty
+      @hit_listing.errors[:victim].should_not be_empty
     end
     
     it 'should not be valid is victim was listed less than 12 hours ago' do
@@ -97,7 +97,7 @@ describe HitListing do
       HitListing.update_all({:updated_at => (12.hours - 1.minute).ago}, {:id => @other_listing.id})
       
       @hit_listing.should_not be_valid
-      @hit_listing.errors.on(:victim).should_not be_empty
+      @hit_listing.errors[:victim].should_not be_empty
     end
   end
 
@@ -206,7 +206,7 @@ describe HitListing do
         @hit_listing.execute!(@attacker)
         
         @hit_listing.errors.should_not be_empty
-        @hit_listing.errors.on(:base).should =~ /Somebody already took out this target before you got the chance/
+        @hit_listing.errors[:base].should =~ /Somebody already took out this target before you got the chance/
       end
     end
     

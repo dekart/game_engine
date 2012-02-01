@@ -15,7 +15,7 @@ describe BankWithdraw do
       @operation.amount = 101
       
       @operation.save.should be_false
-      @operation.errors.on(:amount).should_not be_empty
+      @operation.errors[:amount].should_not be_empty
     end
     
     it 'should successfully save' do
