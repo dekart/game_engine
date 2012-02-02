@@ -1,12 +1,16 @@
 <%= admin_title(t(".title")) %>
 
-<div id="character_search">
+<div id="character_search" class="data_filter clearfix">
   <h2><%= t(".search.title") %></h2>
 
   <% form_tag(search_admin_characters_path) do %>
-    <%= label_tag :profile_ids, t(".search.profile_ids") %>
-    <%= text_field_tag :profile_ids, params[:profile_ids], :size => 70 %>
+    <%= label_tag :search_profile_ids, t(".search.profile_ids") %>
+    <%= text_field_tag "search[profile_ids]", (params[:search] || {})[:profile_ids], :size => 70 %>
 
+    <%= label_tag :search_signed_request, t(".search.signed_request") %>
+    <%= text_field_tag 'search[signed_request]', (params[:search] || {})[:signed_request], :size => 70 %>
+
+    <br />
     <%= submit_tag t(".search.submit") %>
   <% end %>
 </div>
@@ -33,7 +37,7 @@
                 <td><%= check_box_tag("ids[]", character.id) %></td>
                 <td><%= link_to(character.id, character_url(character.key, :canvas => true)) %></td>
                 <td>
-                  <%= link_to(character_name(character), edit_admin_character_path(character)) %>
+                  <%= link_to(character_name(character), admin_character_path(character)) %>
                   <%= link_to(t(".profile"), fb_profile_url(character.user),
                         :class  => :profile,
                         :target => :_blank
