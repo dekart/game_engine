@@ -26,10 +26,10 @@ class Relation < ActiveRecord::Base
   protected
 
   def increment_owner_relations_counter
-    Character.update_counters_without_lock(owner_id, :relations_count => 1)
+    Character.update_counters(owner_id, :relations_count => 1)
   end
 
   def decrement_owner_relations_counter
-    Character.update_counters_without_lock(owner_id, :relations_count => -1)
+    Character.update_counters(owner_id, :relations_count => -1)
   end
 end

@@ -76,7 +76,6 @@ class MissionResult
         
         @payouts = level.applicable_payouts.apply(@character, payout_triggers, @mission)
 
-        @character.save!
       end
 
       @saved = true

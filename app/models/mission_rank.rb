@@ -5,6 +5,11 @@ class MissionRank < ActiveRecord::Base
 
   before_create :assign_group
   before_save :cache_completion
+  #after_initialize :debug
+  
+  def debug
+    debugger
+  end
 
   def completed?
     self[:completed] || levels_completed?

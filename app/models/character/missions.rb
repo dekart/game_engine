@@ -96,7 +96,10 @@ class Character
       end
 
       def rank_for(mission)
-        proxy_association.owner.mission_ranks.find_or_initialize_by_mission_id(mission.id)
+        # TODO: fixed in 3.2.2 https://github.com/rails/rails/commit/ee2ae378cb08c4a671c08093ceab77efbd3a001d
+        #proxy_association.owner.mission_ranks.find_or_initialize_by_mission_id(mission.id)
+        proxy_association.owner.mission_ranks.where(:mission_id => mission.id).first ||
+          proxy_association.owner.mission_ranks.build(:mission_id => mission.id)
       end
       
       def first_levels_completed?(group)

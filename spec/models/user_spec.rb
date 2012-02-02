@@ -243,7 +243,7 @@ describe User do
     it 'should update friend_ids field to a list of friend UIDs' do
       lambda{
         @user.update_social_data!
-      }.should change(@user, :friend_ids).from(nil).to([123, 456, 789])
+      }.should change(@user, :friend_ids).from([]).to([123, 456, 789])
     end
 
     it 'should save user' do
