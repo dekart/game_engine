@@ -409,6 +409,7 @@ en:
         search:
           title: "Search Characters"
           profile_ids: "Facebook/Profile IDs"
+          signed_request: "Signed Request"
           submit: "Search"
         profile: "FB Profile"
         controls:

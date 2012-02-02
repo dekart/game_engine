@@ -8,12 +8,18 @@ class Admin::CharactersController < Admin::BaseController
   end
 
   def search
-    if params[:profile_ids].present?
+    if params[:search][:profile_ids].present?
       @ids = params[:profile_ids].split(/[^\d]+/)
-
-      @characters = Character.by_profile_ids(@ids)
+    elsif params[:search][:signed_request].present?
+      @ids = [Facepalm::User.from_signed_request(facepalm, params[:search][:signed_request]).uid]
     else
+      @ids = []
+    end
+
+    if @ids.empty?
       @characters = Character
+    else
+      @characters = Character.by_profile_ids(@ids)
     end
 
     @characters = @characters.paginate(
