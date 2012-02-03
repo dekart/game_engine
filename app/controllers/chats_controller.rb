@@ -1,7 +1,14 @@
 class ChatsController < ApplicationController
+  before_filter :check_talk_restrictions
+  
   def show
-    if current_character.restrict_talking?
-      redirect_to root_url
+  end
+  
+  protected
+  
+  def check_talk_restrictions
+    if current_character.restrict_fighting?
+      render 'characters/restrictions', :locals => { :restriction_type => :talking }
     end
   end
 end

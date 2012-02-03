@@ -68,3 +68,4 @@ en:
       success: "Your health has been restored!"
     restrictions:
       fighting: "You are not allowed to participate in fighting"
+      talking: "You are not allowed to chat with other players"
