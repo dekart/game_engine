@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120127054731) do
+ActiveRecord::Schema.define(:version => 20120130084530) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -229,9 +229,10 @@ ActiveRecord::Schema.define(:version => 20120127054731) do
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
+    t.boolean  "exclude_from_fights",                            :default => false
   end
 
-  add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
+  add_index "characters", ["level", "fighting_available_at", "exclude_from_fights"], :name => "by_level_and_fighting_time_and_exclusion"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "clan_members", :force => true do |t|
@@ -744,7 +745,7 @@ ActiveRecord::Schema.define(:version => 20120127054731) do
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id"
-    t.string   "owner_type",         :limit => 100, :default => ""
+    t.string   "owner_type"
     t.string   "style"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false
