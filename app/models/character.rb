@@ -68,7 +68,7 @@ class Character < ActiveRecord::Base
 
   serialize :active_boosts
 
-  attr_accessible :name, :exclude_from_fights
+  attr_accessible :name, :exclude_from_fights, :restrict_fighting, :restrict_market, :restrict_talking
 
   has_payouts :save
 

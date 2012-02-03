@@ -30,7 +30,7 @@ class CharactersController < ApplicationController
 
     @secured = (@character.key == params[:id])
 
-    @wall_enabled = Setting.b(:wall_enabled)
+    @wall_enabled = Setting.b(:wall_enabled) && !current_character.restrict_talking?
 
     if @wall_enabled
       @wall_posts = @character.wall_posts.paginate(:page => params[:page])

@@ -1,4 +1,6 @@
 class FightsController < ApplicationController
+  before_filter :check_fight_restrictions, :only => :new
+  
   def index
     @victims = Fight.new(:attacker => current_character).opponents
     
@@ -44,4 +46,11 @@ class FightsController < ApplicationController
     render :action => :used_items, :layout => "ajax"
   end
 
+  protected
+  
+  def check_fight_restrictions
+    if current_character.restrict_fighting?
+      render 'characters/restrictions', :locals => { :restriction_type => :fighting }
+    end
+  end
 end
