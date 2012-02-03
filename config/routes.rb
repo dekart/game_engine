@@ -5,14 +5,10 @@ ActionController::Routing::Routes.draw do |map|
         :change_position  => :put,
         :change_state     => :put
       } do |group|
-        group.resources :items, :only => :index,
-          :collection => { :balance => :any }
+        group.resources :items, :only => :index
       end
 
     admin.resources :items,
-      :collection => {
-        :balance => :any
-      },
       :member => {
         :change_state => :put
       }
@@ -23,7 +19,6 @@ ActionController::Routing::Routes.draw do |map|
       }
       
     admin.resources(:missions,
-      :collection => {:balance => :any},
       :member => {
         :change_position  => :put,
         :change_state     => :put

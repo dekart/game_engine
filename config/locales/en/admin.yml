@@ -71,7 +71,6 @@ en:
     items:
       controls:
         new: "Add Item"
-        balance: "Balance Items"
         groups: "Manage Groups"
         sets: "Item Sets"
       index:
@@ -98,11 +97,6 @@ en:
         use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '%{default_value}'"
       effect:
         remove: "Remove"
-      balance:
-        title: "Balance Items"
-        filter:
-          title: "Filter Items"
-          all_groups: "All Groups"
 
     mission_groups:
       index:
@@ -123,7 +117,6 @@ en:
         success: "Mission group has been updated successfully!"
     missions:
       controls:
-        balance: "Balance"
         new: "Add Mission"
         groups: "Manage Groups"
       index:
@@ -146,9 +139,6 @@ en:
         submit: "Update"
       update:
         success: "Mission has been updated successfully!"
-      balance:
-        title: "Mission Balance"
-        character_type_filter: "Filter By Character Type:"
 
     mission_levels:
       new:
