@@ -1,37 +1,29 @@
 <%= title(t(".title")) %>
 
-<% if current_character.restrict_fighting? %>
-  <div class="restrictions">
-    <%= t("characters.restrictions.fighting") %>
-  </div>
-<% else %>
+<%= render("fights/buttons", :current => :fight) %>
 
-  <%= render("fights/buttons", :current => :fight) %>
-  
-  <%= render('layouts/promo_block', :context => :fights) %>
-  
-  <%= render("boosts") if Setting.b(:boosts_enabled) %>
-  
-  <% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
-    <% render_to_result do %>
-      <% result_for :fight do %>
-        <div class="unsatisfied_requirements">
-          <%= unsatisfied_requirement %>
-        </div>
-      <% end %>
+<%= render('layouts/promo_block', :context => :fights) %>
+
+<%= render("boosts") if Setting.b(:boosts_enabled) %>
+
+<% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
+  <% render_to_result do %>
+    <% result_for :fight do %>
+      <div class="unsatisfied_requirements">
+        <%= unsatisfied_requirement %>
+      </div>
     <% end %>
   <% end %>
-  
-  <%= @victims ? render("victim_list", :victims => @victims) : render("victim_list", :victims => nil ) %>
-  
-  <div id="more_fight_opponents">
-    <%= link_to_function(button(:more_opponents), "Fighting.loadOpponents()",
-          :class => "button more_opponents"
-        ) %>
-  </div>
-  
-  <% dom_ready do %>
-    Fighting.setup();
-  <% end %>
+<% end %>
 
+<%= @victims ? render("victim_list", :victims => @victims) : render("victim_list", :victims => nil ) %>
+
+<div id="more_fight_opponents">
+  <%= link_to_function(button(:more_opponents), "Fighting.loadOpponents()",
+        :class => "button more_opponents"
+      ) %>
+</div>
+
+<% dom_ready do %>
+  Fighting.setup();
 <% end %>

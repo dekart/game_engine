@@ -35,11 +35,9 @@
                 ) %>
           </div>
           
-          <% unless current_character.restrict_talking? %>
-            <div id="clan_chat">
-              <%= chat("#{@clan.key_for_chat}") %>
-            </div>
-          <% end %>
+          <div id="clan_chat">
+            <%= chat("#{@clan.key_for_chat}") %>
+          </div>
         <% end %>    
         
       </td>

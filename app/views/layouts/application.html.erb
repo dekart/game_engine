@@ -35,7 +35,7 @@
 
   <div id="content">
     <div id="header">
-      <%= global_chat unless current_character.restrict_talking? %>
+      <%= global_chat %>
       <%= app_requests_counter %>
       
       <%= link_to("", root_path, :id => :logo) %>

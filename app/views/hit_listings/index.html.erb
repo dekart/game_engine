@@ -1,13 +1,7 @@
 <%= title(t(".title")) %>
 
-<% if current_character.restrict_fighting? %>
-  <div class="restrictions">
-    <%= t("characters.restrictions.fighting") %>
-  </div>
-<% else %>
-  <%= render("fights/buttons", :current => :hitlist) %>
-  
-  <div id="hitlist">
-    <%= render("list", :hit_listings => @hit_listings) %>
-  </div>
-<% end %>
+<%= render("fights/buttons", :current => :hitlist) %>
+
+<div id="hitlist">
+  <%= render("list", :hit_listings => @hit_listings) %>
+</div>
