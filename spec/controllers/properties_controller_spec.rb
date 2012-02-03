@@ -128,7 +128,7 @@ describe PropertiesController do
       post :create, :property_type_id => 1
 
       response.should render_template("create")
-      response.should use_layout("ajax")
+      response.should render_template("layouts/ajax")
     end
   end
 
@@ -182,7 +182,7 @@ describe PropertiesController do
       post :upgrade, :id => 1
 
       response.should render_template("upgrade")
-      response.should use_layout("ajax")
+      response.should render_template("layouts/ajax")
     end
   end
 
@@ -240,7 +240,7 @@ describe PropertiesController do
         post :collect_money, :id => 1
 
         response.should render_template("collect_money")
-        response.should use_layout("ajax")
+        response.should render_template("layouts/ajax")
       end
     end
 
@@ -263,7 +263,7 @@ describe PropertiesController do
         post :collect_money
 
         response.should render_template("collect_money")
-        response.should use_layout("ajax")
+        response.should render_template("layouts/ajax")
       end
     end
   end

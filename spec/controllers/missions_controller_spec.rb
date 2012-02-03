@@ -58,7 +58,7 @@ describe MissionsController do
       do_request
 
       response.should render_template(:collect_help_reward)
-      response.should use_layout('ajax')
+      response.should render_template("layouts/ajax")
     end
   end
 end

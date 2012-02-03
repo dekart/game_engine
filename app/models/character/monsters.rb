@@ -47,20 +47,17 @@ class Character
       end
       
       def available_for_fight
-        scope = MonsterType.with_state(:visible).scoped(:conditions => ["level <= ?", proxy_association.owner.level])
+        scope = MonsterType.with_state(:visible).where(["level <= ?", proxy_association.owner.level])
 
         if exclude_ids = proxy_association.owner.monster_fights.own.current.collect{|m| m.monster.monster_type_id }.uniq and exclude_ids.any?
-          scope = scope.scoped(:conditions => ["id NOT IN (?)", exclude_ids])
+          scope = scope.where(["id NOT IN (?)", exclude_ids])
         end
 
         scope
       end
       
       def available_in_future
-        MonsterType.with_state(:visible).scoped(
-          :conditions => ["level > ?", proxy_association.owner.level], 
-          :order => :level
-        )
+        MonsterType.with_state(:visible).where(["level > ?", proxy_association.owner.level]).order(:level)
       end
       
       

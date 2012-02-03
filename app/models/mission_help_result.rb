@@ -16,8 +16,8 @@ class MissionHelpResult < ActiveRecord::Base
   protected
   
   def validate_helped
-    errors.add_to_base(:already_helped) if character.mission_help_results.find_by_requester_id_and_mission_id(requester_id, mission_id)
-    errors.add_to_base(:cannot_help_themself) if character_id == requester_id
+    errors.add(:base, :already_helped) if character.mission_help_results.find_by_requester_id_and_mission_id(requester_id, mission_id)
+    errors.add(:base, :cannot_help_themself) if character_id == requester_id
   end
 
   def give_payout

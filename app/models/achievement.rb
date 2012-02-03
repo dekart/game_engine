@@ -8,7 +8,7 @@ class Achievement < ActiveRecord::Base
   
   def collect!
     if collected?
-      errors.add_to_base(:already_collected)
+      errors.add(:base, :already_collected)
       
       false
     else

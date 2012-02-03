@@ -11,7 +11,7 @@ class MissionsController < ApplicationController
  
   def help
     if params[:key].present?
-      request_data = encryptor.decrypt_and_verify(params[:key])
+      request_data = encryptor.decrypt(params[:key])
     
       @requester = Character.find_by_id(request_data[:character_id])
       @mission = Mission.find(request_data[:mission_id])

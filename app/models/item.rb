@@ -128,14 +128,12 @@ class Item < ActiveRecord::Base
     end
     
     def in_shop_for(character)
-      available_in(:shop).available_for(character).scoped(
-        :order => 'items.level DESC, vip_price DESC'
-      )
+      available_in(:shop).available_for(character).order('items.level DESC, vip_price DESC')
     end
     
     def discountable_for(character)
-      available_in(:shop).available_for(character).scoped(
-        :conditions => ["vip_price >= ?", Setting.i(:personal_discount_minimum_price)]
+      available_in(:shop).available_for(character).where(
+        ["vip_price >= ?", Setting.i(:personal_discount_minimum_price)]
       )
     end
 
@@ -148,7 +146,7 @@ class Item < ActiveRecord::Base
     end
     
     def gifts_for(character)
-      available_in(:gift).available_for(character).scoped(:order => "items.level DESC")
+      available_in(:gift).available_for(character).order("items.level DESC")
     end
     
     def boost_types_to_dropdown
@@ -162,9 +160,7 @@ class Item < ActiveRecord::Base
     end
 
     def with_effect(name)
-      scoped(
-        :conditions => ["items.id IN (?)", [0] + with_effect_ids(name)]
-      )
+      where(["items.id IN (?)", [0] + with_effect_ids(name)])
     end
   end
 
@@ -238,7 +234,7 @@ class Item < ActiveRecord::Base
   end
   
   def available_for?(character)
-    !self.class.available_for(character).scoped(:conditions => {:id => id}).empty?
+    !self.class.available_for(character).where(:id => id).empty?
   end
   
   def boost_for?(type, destination)

@@ -21,11 +21,11 @@ class Character
 
     def hospital!
       if !hospital_enough_money?
-        errors.add_to_base(:hospital_not_enough_money)
+        errors.add(:base, :hospital_not_enough_money)
 
         return false
       elsif hospital_recently_used?
-        errors.add_to_base(:hospital_recently_used)
+        errors.add(:base, :hospital_recently_used)
 
         return false
       end

@@ -48,7 +48,7 @@ describe InventoriesController do
       post :use, :id => 123
 
       response.should render_template("use")
-      response.should use_layout("ajax")
+      response.should render_template("layouts/ajax")
     end
   end
 end

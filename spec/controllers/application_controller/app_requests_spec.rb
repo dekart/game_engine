@@ -6,6 +6,7 @@ describe ApplicationController do
     def do_redirect_by_app_request; redirect_by_app_request || render(:text => "foo"); end
     
     around_filter :check_user_app_requests, :only => :with_request_processing
+    
     def with_request_processing
       render(:text => "foo")
     end
@@ -110,6 +111,8 @@ describe ApplicationController do
   
   
   describe '#redirect_by_app_request' do
+    subject { FakeController }
+    
     def do_request
       get :do_redirect_by_app_request
     end
@@ -161,6 +164,8 @@ describe ApplicationController do
   
   
   describe 'when request processing with application requests' do
+    subject { FakeController }
+    
     before do
       @request1 = mock_model(AppRequest::Base, :visit => true)
       @request2 = mock_model(AppRequest::Base, :visit => true)

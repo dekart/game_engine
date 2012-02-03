@@ -13,7 +13,7 @@ class Monster
       unless @leaders
         ids_with_values = $redis.zrevrange(storage_key, 0, -1, :with_scores => true).in_groups_of(2)
 
-        characters = Character.scoped(:include => :user).find_all_by_id(
+        characters = Character.includes(:user).find_all_by_id(
           ids_with_values.map{|i| i[0] }
         )
 

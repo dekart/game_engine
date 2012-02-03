@@ -32,7 +32,7 @@ class ContestGroup < ActiveRecord::Base
       :order => 'points DESC'
     )
     
-    character_contest_groups.scoped(:conditions => ["character_id NOT IN (?)", Character.banned_ids]).scoped(options)
+    character_contest_groups.where(["character_id NOT IN (?)", Character.banned_ids]).scoped(options)
   end
   
   def leaders_with_points_for_rating

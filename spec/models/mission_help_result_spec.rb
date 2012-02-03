@@ -77,7 +77,7 @@ describe MissionHelpResult do
         @help_result.save.should be_false
         
         @help_result.errors[:base].should_not be_empty
-        @help_result.errors[:base].should =~ /already helped/
+        @help_result.errors[:base].first.should =~ /already helped/
       end
     end
     
@@ -90,7 +90,7 @@ describe MissionHelpResult do
         @help_result.save.should be_false
         
         @help_result.errors[:base].should_not be_empty
-        @help_result.errors[:base].should =~ /cannot help yourself/
+        @help_result.errors[:base].first.should =~ /cannot help yourself/
       end
     end
   end

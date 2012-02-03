@@ -265,7 +265,7 @@ describe HitListingsController do
       do_request
 
       response.should render_template(:update)
-      response.should use_layout(:ajax)
+      response.should render_template('layouts/application')
     end
 
     describe "when listing is completed" do

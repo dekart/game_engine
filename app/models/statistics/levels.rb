@@ -14,7 +14,7 @@ class Statistics
     end
     
     def default_scope
-      @time_range ? Character.scoped(:joins => :user, :conditions => ["users.last_visit_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) : Character
+      @time_range ? Character.joins(:user).where(["users.last_visit_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) : Character
     end
         
     def total
@@ -82,15 +82,12 @@ class Statistics
             s.send("#{attr}=", record[attr].to_f.round)
           end
           
-          relation_scope = Relation.scoped(
-            :joins => {:owner => :user}, 
-            :conditions => ["characters.level = ?", record.level]
-          )
-          relation_scope.scoped(:conditions => ["users.last_visit_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) if @time_range
+          relation_scope = Relation.joins(:owner => :user).where(["characters.level = ?", record.level])
+          relation_scope.where(["users.last_visit_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) if @time_range
           
-          s.mercenaries = (relation_scope.scoped(:conditions => {:type => 'MercenaryRelation'}).count.to_f / s.total).round
+          s.mercenaries = (relation_scope.where(:type => 'MercenaryRelation').count.to_f / s.total).round
           
-          s.friends = (relation_scope.scoped(:conditions => {:type => 'FriendRelation'}).count.to_f / s.total).round
+          s.friends = (relation_scope.where(:type => 'FriendRelation').count.to_f / s.total).round
         end
       end
     end

@@ -1,7 +1,7 @@
 class Statistics
   class Users < self
     def default_scope
-      @time_range ? User.scoped(:conditions => ["users.created_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) : User
+      @time_range ? User.where(["users.created_at BETWEEN ? AND ?", @time_range.begin, @time_range.end]) : User
     end
         
     def total_users
@@ -9,7 +9,7 @@ class Statistics
     end
     
     def recent_visitors(time = 7.days)
-      scope.scoped(:conditions => ["last_visit_at > ?", time.ago])
+      scope.where(["last_visit_at > ?", time.ago])
     end
     
     def users_by_day

@@ -6,9 +6,8 @@ class Admin::ItemsController < Admin::BaseController
     @scope = @item_group ? @item_group.items : Item
     @scope = @scope.available_in(@availability)
 
-    @items = @scope.without_state(:deleted).scoped(
-      :include  => :item_group,
-      :order    => "item_groups.position, items.availability, items.level"
+    @items = @scope.without_state(:deleted).includes(:item_group).order(
+      "item_groups.position, items.availability, items.level"
     ).paginate(:page => params[:page])
   end
 

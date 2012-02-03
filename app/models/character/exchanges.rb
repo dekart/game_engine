@@ -30,7 +30,7 @@ class Character
      def exchanges
        exchange_ids = proxy_association.owner.exchange_offers.all(:select => :exchange_id).map{|e| e.exchange_id}
        
-       Exchange.scoped(:conditions => {:id => exchange_ids})
+       Exchange.where(:id => exchange_ids)
      end 
    end
   end

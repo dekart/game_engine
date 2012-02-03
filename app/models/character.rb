@@ -111,7 +111,7 @@ class Character < ActiveRecord::Base
   end
 
   def self_and_relations
-    self.class.scoped(:conditions => {:id => [id] + friend_relations.character_ids})
+    self.class.where(:id => [id] + friend_relations.character_ids)
   end
   
   def upgrade_attributes!(params)

@@ -5,7 +5,7 @@ class Character
     end
 
     def inventories
-      @character.inventories.scoped(:joins => :item, :conditions => "items.boost_type != ''")
+      @character.inventories.joins(:item).where("items.boost_type != ''")
     end
 
     def for(type, destination)
@@ -15,9 +15,7 @@ class Character
     end
     
     def by_type(boost_type)
-      @character.inventories.scoped(:joins => :item, :conditions => {
-        'items.boost_type' => boost_type.to_s
-      })
+      @character.inventories.joins(:item).where('items.boost_type' => boost_type.to_s)
     end
     
     def active_for(type, destination)
@@ -33,7 +31,7 @@ class Character
       owned_boosts_ids = @character.boosts.for(type, destination).collect{ |i| i.item_id }
 
       boosts = Item.purchaseable_for(@character).boosts(type)
-      boosts = boosts.scoped(:conditions => ['items.id NOT IN(?)', owned_boosts_ids]) unless owned_boosts_ids.empty?
+      boosts = boosts.where(['items.id NOT IN(?)', owned_boosts_ids]) unless owned_boosts_ids.empty?
 
       boosts.select do |i|
         i.boost_for?(type, destination)

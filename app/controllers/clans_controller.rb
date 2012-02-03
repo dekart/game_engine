@@ -3,7 +3,7 @@ class ClansController < ApplicationController
   before_filter :check_creator_for_clan, :only => [:edit]
   
   def index
-    @clans = Clan.scoped(:order => "members_count DESC").paginate(:per_page => 50, :page => params[:page])
+    @clans = Clan.order("members_count DESC").paginate(:per_page => 50, :page => params[:page])
   end
   
   def show

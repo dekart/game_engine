@@ -73,7 +73,7 @@ class Rating
     ranks = $redis.zrevrange(key, 0, limit - 1, :with_scores => true).map{|value| value.to_i }.in_groups_of(2)
     ids = ranks.map{|r| r[0] }
 
-    Character.scoped(:include => :user).find_all_by_id(ids).tap do |characters|
+    Character.includes(:user).find_all_by_id(ids).tap do |characters|
       characters.map!{|c| [ranks.assoc(c.id)[1], c] }
       characters.sort!{|a,b| a[0] <=> b[0] }
       characters.reverse!
