@@ -66,3 +66,5 @@ en:
         refill_health: "Refill health"
     hospital_heal:
       success: "Your health has been restored!"
+    restrictions:
+      fighting: "You are not allowed to participate in fighting"

@@ -2,7 +2,9 @@ class HitListingsController < ApplicationController
   before_filter :check_hitlist_enabled
 
   def index
-    fetch_incomplete_listings
+    unless current_character.restrict_fighting?
+      fetch_incomplete_listings
+    end
   end
 
   def new
