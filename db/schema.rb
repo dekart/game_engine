@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120130084530) do
+ActiveRecord::Schema.define(:version => 20120203093652) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -230,9 +230,12 @@ ActiveRecord::Schema.define(:version => 20120130084530) do
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
     t.boolean  "exclude_from_fights",                            :default => false
+    t.boolean  "restrict_fighting",                              :default => false
+    t.boolean  "restrict_market",                                :default => false
+    t.boolean  "restrict_talking",                               :default => false
   end
 
-  add_index "characters", ["level", "fighting_available_at", "exclude_from_fights"], :name => "by_level_and_fighting_time_and_exclusion"
+  add_index "characters", ["level", "fighting_available_at", "exclude_from_fights", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "clan_members", :force => true do |t|
@@ -913,6 +916,7 @@ ActiveRecord::Schema.define(:version => 20120130084530) do
     t.string   "tutorial_step",          :limit => 50,  :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
+    t.text     "restrictions"
   end
 
   add_index "users", ["created_at"], :name => "index_users_on_created_at"
