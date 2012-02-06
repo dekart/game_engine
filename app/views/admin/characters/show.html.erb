@@ -209,8 +209,8 @@
             <td><%= t('.payments.last_payment') %></td>
             <td>
               <% if s.last_payment_at %>
-                <%= l(l.last_payment_at, :format => :long) %>
-                (<%= time_ago_in_words(l.last_payment_at) %>)
+                <%= l(s.last_payment_at, :format => :long) %>
+                (<%= time_ago_in_words(s.last_payment_at) %>)
               <% end %>
             </td>
           </tr>
