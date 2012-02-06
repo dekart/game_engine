@@ -194,7 +194,7 @@ describe Fight do
       
       with_setting(:fight_weak_opponents => false) do
         @fight.should_not be_valid
-        @fight.errors[:victim].should =~ /too weak/
+        @fight.errors[:victim].first.should =~ /too weak/
       end
     end
     

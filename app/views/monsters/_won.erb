@@ -7,13 +7,11 @@
 
       <% if fight.reward_collectable? %>
         <div class="controls clearfix">
-          <%= link_to_remote(button(:reward),
-                :url    => reward_monster_path(monster),
-                :update => :result,
-                :html   => {
-                  :"data-click-once" => true,
-                  :class => "reward button"
-                }
+          <%= link_to(button(:reward), reward_monster_path(monster),
+                :remote => true,
+                :method => :post,
+                :"data-click-once" => true,
+                :class => "reward button"
               ) %>
         </div>
       <% elsif fight.new_record? %>

@@ -23,40 +23,32 @@
     <%= item_effects(inventory.item) %>
   </td>
   <td class="controls">
-    <%= link_to_remote(inventory_use_button(inventory),
-          :url    => use_inventory_path(inventory),
-          :update => :result,
-          :html   => {
-            :"data-click-once" => true,
-            :class => "use button"
-          }
+    <%= link_to(inventory_use_button(inventory), use_inventory_path(inventory),
+          :remote => true,
+          :method => :post,
+          :"data-click-once" => true,
+          :class => "use button"
         ) if inventory.usable? %>
 
     <% if inventory.can_be_sold? %>
-      <% form_tag("", :class => :clearfix) do %>
+      <% form_tag(inventory_path(inventory.item), :remote => true, :method => :delete, :class => :clearfix) do %>
         <%= amount_select_tag %>
 
-        <%= link_to_remote(button(:sell, :price => number_to_currency(inventory.sell_price)),
-              :url    => inventory_path(inventory.item),
-              :method => :delete,
-              :with   => "$(this).parent('form').serialize()",
-              :update => :result,
+        <%= link_to_function(button(:sell, :price => number_to_currency(inventory.sell_price)),
+              "$(this).parent('form').submit()",
               :confirm  => t(".sell_confirm", :price => number_to_currency(inventory.sell_price)),
-              :html   => {
-                :"data-click-once" => true,
-                :class => "sell button"
-              }
+              :"data-click-once" => true,
+              :class => "sell button"
             ) %>
       <% end %>
     <% end %>
 
     <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) %>
       <% if inventory.market_items_count == 0 %>
-        <%= link_to_remote(button(:sell_on_market),
-              :url    => new_market_item_path(:inventory_id => inventory),
+        <%= link_to(button(:sell_on_market), new_market_item_path(:inventory_id => inventory),
+              :remote => true,
               :method => :get,
-              :update => :result,
-              :html   => {:class => "market button"}
+              :class => "market button"
             ) %>
       <% else %>
         <div class="market_listing"><%= t(".listed_on_market") %></div>
@@ -69,11 +61,9 @@
               :class => "exchange button"
             ) %>
       <% else %>
-        <%= link_to_remote(button(:exchange),
-              :url    => new_exchange_path(:inventory_id => inventory),
+        <%= link_to(button(:exchange), new_exchange_path(:inventory_id => inventory),
               :method => :get,
-              :update => :result,
-              :html   => {:class => "exchange button"}
+              :class => "exchange button"
             ) %>
       <% end %>
     <% end %>

@@ -1,8 +1,10 @@
 require File.expand_path("../../spec_helper", __FILE__)
 
 describe Picture do
+  include 
+  
   before(:each) do
-    @picture = Picture.new(:style => "original", :image => File.open('public/images/1px.gif'))
+    @picture = Picture.new(:style => "original", :image => File.open("#{Rails.root}/app/assets/images/1px.gif"))
   end
   
   it 'should have attachment' do

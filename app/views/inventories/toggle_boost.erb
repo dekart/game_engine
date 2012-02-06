@@ -1,5 +1,0 @@
-<% dom_ready do %>
-  Boost.toggle('<%= boost_dom_id(@boost, @destination) %>', '<%= @boost.boost_type %>', '<%= @destination %>', '<%= escape_javascript(render("inventories/boost", :boost => @boost, :destination => @destination))%>');
-  
-  <%= ga_track_event("Boosts", "Activate", @boost.name) %>
-<% end %>

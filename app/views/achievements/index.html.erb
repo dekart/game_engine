@@ -18,14 +18,11 @@
           <div class="achieved"><%= t('.status.achieved') %></div>
 
           <div class="buttons">
-            <%= link_to_remote(button(:collect),
-                  :url => achievement_path(achievement),
+            <%= link_to(button(:collect), achievement_path(achievement),
+                  :remote => true,
                   :method => :put,
-                  :update => :result,
-                  :html => {
-                    :'data-click-once' => true,
-                    :class => 'collect button'
-                  }
+                  :'data-click-once' => true,
+                  :class => 'collect button'
                 ) unless achievement.collected? %>
 
             <%= link_to_function(button(:publish), stream_dialog(:achievement, type),

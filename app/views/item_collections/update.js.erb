@@ -1,4 +1,4 @@
-<% result_for :item_collection do |builder| %>
+<%= render_to_result :item_collection do |builder| %>
   <% if @result.applied? %>
     <% builder.buttons do %>
       <%= link_to_function(button(:publish), stream_dialog(:collection_completed, @collection),
@@ -29,14 +29,12 @@
   <% end %>
 <% end %>
 
-<% dom_ready do %>
-  <% if @result.applied? %>
-    $('#<%= dom_id(@collection) %>').replaceWith('<%= escape_javascript(render('item_collection', :collection => @collection)) %>');
+<% if @result.applied? %>
+  $('#<%= dom_id(@collection) %>').replaceWith('<%= escape_javascript(render('item_collection', :collection => @collection)) %>');
  
     CollectionList.blurItems(
       $('<%= @collection.missing_items(current_character).collect{|i| ".#{dom_id(i)}" }.join(",") %>')
-    );
-  <% end %>
-
-  $(document).trigger('result.received');
+  );
 <% end %>
+
+$(document).trigger('result.received');

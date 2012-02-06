@@ -1,16 +1,12 @@
-<% result_for(:monster) do |builder| %>
+<%= render_to_result(:monster) do |builder| %>
   <% if @attack_result %>
     <% if @fight.monster.progress? %>
       <% builder.buttons do %>
-        <%= link_to_remote(button(:attack),
-              :url    => monster_path(@fight.monster),
+        <%= link_to(button(:attack), monster_path(@fight.monster, :power_attack => (@power_attack ? 1 : nil)),
+              :remote => true,
               :method => :put,
-              :update => :result,
-              :with   => (@power_attack ? "'power_attack=1'" : nil),
-              :html   => {
-                :"data-click-once" => true,
-                :class => "attack button"
-              }
+              :"data-click-once" => true,
+              :class => "attack button"
             ) %>
       <% end %>
 
@@ -36,14 +32,12 @@
         </p>
 
         <div class="buttons">
-          <%= link_to_remote(button(:reward),
-                :url    => reward_monster_path(@fight.monster),
-                :before => '$.dialog.close()',
-                :update => :result,
-                :html   => {
-                  :"data-click-once" => true,
-                  :class => "reward button"
-                }
+          <%= link_to(button(:reward), reward_monster_path(@fight.monster),
+                :remote => true,
+                :method => :post,
+                :onclick => '$.dialog.close()',
+                :"data-click-once" => true,
+                :class => "reward button"
               ) %>
         </div>
       <% end %>

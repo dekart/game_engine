@@ -25,16 +25,14 @@
             <% else %>
               <div class="image"><%= asset_image_tag(:worker_missing) %></div>
 
-              <%= link_to_remote(
+              <%= link_to(
                     button(:hire,
                       :price => span_tag(Setting.i(:property_worker_price), :price)
                     ),
-                    :url => hire_property_path(@property),
+                    hire_property_path(@property),
+                    :remote => true,
                     :method => :put,
-                    :update => :ajax,
-                    :html => {
-                      :class => "hire button"
-                    }
+                    :class => "hire button"
                   ) %>
             <% end %>
           </div>
@@ -60,16 +58,14 @@
               :class => "invite button"
             ) %>
 
-        <%= link_to_remote(
+        <%= link_to(
               button(:hire_all,
                 :price => span_tag(@property.missing_workers * Setting.i(:property_worker_price), :price)
               ),
-              :url => hire_property_path(@property, :hire_all => true),
+              hire_property_path(@property, :hire_all => true),
+              :remote => true,
               :method => :put,
-              :update => :ajax,
-              :html => {
-                :class => "hire button"
-              }
+              :class => "hire button"
             ) %>
       </div>
 
@@ -85,16 +81,13 @@
     <% end %>
   <% end %>
 <% else %>
-  <% render_to_result do %>
-    <% result_for :hire_workers do %>
-      <div class="unsatisfied_requirements">
-        <%= unsatisfied_requirement_list(@result) %>
-      </div>
-    <% end %>
+
+  <%= render_to_result :hire_workers do %>
+    <div class="unsatisfied_requirements">
+      <%= unsatisfied_requirement_list(@result) %>
+    </div>
   <% end %>
   
-  <% dom_ready do %>
-    $.dialog.close();
-    $(document).trigger('result.received');
-  <% end %>
+  $.dialog.close();
+  $(document).trigger('result.received');
 <% end %>

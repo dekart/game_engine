@@ -1,13 +1,10 @@
 <div id="property_collect_all" class="note clearfix" style="<%= "display:none" if properties.collectable.empty? %>">
   <div class="controls">
-    <%= link_to_remote(button(:collect_all),
-          :url    => collect_money_properties_path,
+    <%= link_to(button(:collect_all), collect_money_properties_path,
+          :remote => true,
           :method => :put,
-          :update => :result,
-          :html   => {
-            :"data-click-once" => true,
-            :class => "button collect_all"
-          }
+          :"data-click-once" => true,
+          :class => "button collect_all"
         ) %>
   </div>
 
@@ -28,13 +25,11 @@
           <div class="description"><%= type.description %></div>
 
           <div class="controls">
-            <%= link_to_remote(button(:buy),
-                  :url    => properties_path(:property_type_id => type.id),
-                  :update => :result,
-                  :html   => {
-                    :"data-click-once" => true,
-                    :class => "buy button"
-                  }
+            <%= link_to(button(:buy), properties_path(:property_type_id => type.id),
+                  :remote => true,
+                  :method => :post,
+                  :"data-click-once" => true,
+                  :class => "buy button"
                 ) %>
           </div>
 
@@ -58,25 +53,19 @@
 
           <% if property.active? %>
             <div class="controls">
-              <%= link_to_remote(button(:collect),
-                    :url    => collect_money_property_path(property),
+              <%= link_to(button(:collect), collect_money_property_path(property),
+                    :remote => true,
                     :method => :put,
-                    :update => :result,
-                    :html   => {
-                      :"data-click-once" => true,
-                      :class => "collect button",
-                      :style => ("display: none" unless property.collectable?)
-                    }
+                    :"data-click-once" => true,
+                    :class => "collect button",
+                    :style => ("display: none" unless property.collectable?)
                   ) %>
 
-              <%= link_to_remote(button(:upgrade),
-                    :url    => upgrade_property_path(property),
+              <%= link_to(button(:upgrade), upgrade_property_path(property),
+                    :remote => true,
                     :method => :put,
-                    :update => :result,
-                    :html   => {
-                      :"data-click-once" => true,
-                      :class => "upgrade button"
-                    }
+                    :"data-click-once" => true,
+                    :class => "upgrade button"
                   ) if property.upgradeable? %>
             </div>
 
@@ -105,12 +94,10 @@
             <% end %>
           <% else %>
             <div class="controls">
-              <%= link_to_remote(button(:hire),
-                    :url    => hire_property_path(property),
-                    :update => :ajax,
-                    :html   => {
-                      :class => "hire button"
-                    }
+              <%= link_to(button(:hire), hire_property_path(property),
+                    :remote => true,
+                    :method => :post,
+                    :class => "hire button"
                   ) %>
             </div>
 

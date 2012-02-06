@@ -10,8 +10,6 @@ class PropertiesController < ApplicationController
     @property, @result = current_character.properties.buy!(@property_type)
 
     @properties = current_character.properties(true)
-
-    render :create, :layout => "ajax"
   end
   
   def hire
@@ -20,8 +18,6 @@ class PropertiesController < ApplicationController
     if request.put?
       @result = @property.hire_worker!(params[:hire_all])
     end
-    
-    render :layout => "ajax"
   end
 
   def upgrade
@@ -30,8 +26,6 @@ class PropertiesController < ApplicationController
     @result = @property.upgrade!
 
     @properties = current_character.properties(true)
-
-    render :upgrade, :layout => "ajax"
   end
 
   def collect_money
@@ -44,8 +38,6 @@ class PropertiesController < ApplicationController
     else
       @result = @properties.collect_money!
     end
-
-    render :collect_money, :layout => "ajax"
   end
 
 end

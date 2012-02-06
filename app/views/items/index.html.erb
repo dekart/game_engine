@@ -28,9 +28,6 @@
   Shop.setup();
 
   $(document).bind('item.purchase', function(){
-    <%= remote_function(
-          :url => item_group_items_path(@current_group),
-          :method => :get
-        ) %>
+    $.get('<%= item_group_items_path(@current_group) %>');
   });
 <% end %>

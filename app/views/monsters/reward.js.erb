@@ -1,4 +1,4 @@
-<% result_for(:monster) do |builder| %>
+<%= render_to_result(:monster) do |builder| %>
   <% if @reward_collected %>
     <% builder.success do %>
       <%= t(".messages.success",

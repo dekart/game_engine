@@ -17,8 +17,6 @@ class ExchangesController < ApplicationController
     @inventory = current_character.inventories.find(params[:inventory_id])
     
     @exchange = Exchange.new(:item_id => @inventory.item.id)
-    
-    render :layout => "ajax"
   end
   
   def create

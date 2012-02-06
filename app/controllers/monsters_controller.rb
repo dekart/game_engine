@@ -40,18 +40,13 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
-    @power_attack = (!params[:power_attack].nil? && @monster.monster_type.power_attack_enabled?)
+    @power_attack = (!params[:power_attack].blank? && @monster.monster_type.power_attack_enabled?)
     @attack_result = @fight.attack!(@power_attack)
-
-    render :layout => 'ajax'
   end
 
   def reward
     @fight = current_character.monster_fights.find_by_monster_id(params[:id])
 
     @reward_collected = @fight.collect_reward!
-
-    render :layout => 'ajax'
   end
-
 end

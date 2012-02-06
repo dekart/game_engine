@@ -7,8 +7,5 @@ class ItemCollectionsController < ApplicationController
     @collection = ItemCollection.find(params[:id])
 
     @result = current_character.collections.apply!(@collection)
-
-    render :layout => "ajax"
   end
-
 end

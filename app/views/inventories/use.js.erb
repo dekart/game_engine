@@ -1,4 +1,4 @@
-<% result_for :inventory_use do |builder| %>
+<%= render_to_result :inventory_use do |builder| %>
   <% if @result %>
     <% builder.success do %>
       <% if @inventory.use_message.present? %>
@@ -9,13 +9,11 @@
     <% end %>
   
     <% builder.buttons do %>
-      <%= link_to_remote(inventory_use_again_button(@inventory),
-            :url    => use_inventory_path(@inventory),
-            :update => :result,
-            :html   => {
-              :"data-click-once" => true,
-              :class => "use button"
-            }
+      <%= link_to(inventory_use_again_button(@inventory), use_inventory_path(@inventory),
+            :remote => true,
+            :method => :post,
+            :"data-click-once" => true,
+            :class => "use button"
           ) if @inventory.usable? %>
     <% end %>
 

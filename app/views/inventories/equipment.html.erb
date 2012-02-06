@@ -16,16 +16,16 @@
   </div>
 
   <div id="equipment_buttons" class="buttons clearfix">
-    <%= link_to_remote(button(:auto_equip),
-          :url => equip_inventories_path,
-          :update => :result,
-          :html => {:class => "button auto_equip"}
+    <%= link_to(button(:auto_equip), equip_inventories_path,
+          :remote => true,
+          :method => :post,
+          :class => "button auto_equip"
         ) %>
         
-    <%= link_to_remote(button(:unequip),
-          :url => unequip_inventories_path,
-          :update => :result,
-          :html => {:class => "button unequip"}
+    <%= link_to(button(:unequip), unequip_inventories_path,
+          :remote => true,
+          :method => :post,
+          :class => "button unequip"
         ) %>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<% result_for :property do |builder| %>
+<%= render_to_result :property do |builder| %>
   <% if @property.errors.empty? %>
     <% builder.buttons do %>
       <%= link_to_function(button(:publish), stream_dialog(:property, @property),
@@ -37,12 +37,10 @@
     <% if @property.missing_workers? %>
       <p><%= t('.need_workers', :amount => @property.missing_workers) %></p>
       
-      <%= link_to_remote(button(:hire),
-            :url    => hire_property_path(@property),
-            :update => :ajax,
-            :html   => {
-              :class => "hire button"
-            }
+      <%= link_to(button(:hire), hire_property_path(@property),
+            :remote => true,
+            :method => :post,
+            :class => "hire button"
           ) %>
     <% end %>
 

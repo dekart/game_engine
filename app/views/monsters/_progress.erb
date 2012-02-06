@@ -12,26 +12,20 @@
       </div>
 
       <div class="controls clearfix">
-        <%= link_to_remote(button(:attack),
-              :url    => monster_path(monster),
+        <%= link_to(button(:attack), monster_path(monster),
+              :remote => true,
               :method => :put,
-              :update => :result,
-              :html   => {
-                :"data-click-once" => true,
-                :class => "attack button"
-              }
+              :"data-click-once" => true,
+              :class => "attack button"
             ) %>
 
         <% if monster.monster_type.power_attack_enabled? %>
-          <%= link_to_remote(button(:power_attack, :factor => Setting.i(:monster_fight_power_attack_factor)),
-                :url    => monster_path(monster),
+          <%= link_to(button(:power_attack, :factor => Setting.i(:monster_fight_power_attack_factor), :power_attack => 1),
+                monster_path(monster),
+                :remote => true,
                 :method => :put,
-                :update => :result,
-                :with   => "'power_attack=1'",
-                :html   => {
-                  :"data-click-once" => true,
-                  :class => "power_attack button"
-                }
+                :"data-click-once" => true,
+                :class => "power_attack button"
               ) %>
         <% end %>
         

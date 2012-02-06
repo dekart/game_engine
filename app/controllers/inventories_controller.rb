@@ -7,8 +7,6 @@ class InventoriesController < ApplicationController
     @inventory = current_character.inventories.buy!(@item, params[:amount].to_i)
 
     @amount = params[:amount].to_i * @item.package_size
-
-    render :action => :create, :layout => "ajax"
   end
 
   def destroy
@@ -17,8 +15,6 @@ class InventoriesController < ApplicationController
     @item = Item.find(params[:id])
 
     @inventory = current_character.inventories.sell!(@item, @amount)
-
-    render :action => :destroy, :layout => "ajax"
   end
 
   def index
@@ -34,12 +30,9 @@ class InventoriesController < ApplicationController
     if @inventory = current_character.inventories.find_by_id(params[:id])
       @result = @inventory.use!
     end
-
-    render :action => :use, :layout => "ajax"
   end
 
   def equipment
-
   end
 
   def equip
@@ -52,8 +45,6 @@ class InventoriesController < ApplicationController
       placements = current_character.placements.clone
       current_character.equipment.equip_best!
     end
-
-    render :layout => "ajax"
   end
 
   def unequip
@@ -66,7 +57,7 @@ class InventoriesController < ApplicationController
       current_character.equipment.unequip_all!
     end
 
-    render :action => "equip", :layout => "ajax"
+    render :action => "equip"
   end
   
   def move
@@ -76,7 +67,7 @@ class InventoriesController < ApplicationController
     current_character.equipment.unequip!(@inventory, params[:from_placement])
     current_character.equipment.equip!(@inventory, params[:to_placement])
     
-    render :action => "equip", :layout => "ajax"
+    render :action => "equip"
   end
 
   def give
@@ -128,8 +119,6 @@ class InventoriesController < ApplicationController
     @boost = current_character.boosts.inventories.find(params[:id])
     
     current_character.toggle_boost!(@boost, @destination)
-    
-    render :layout => "ajax"
   end
 
   protected

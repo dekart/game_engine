@@ -206,7 +206,7 @@ describe HitListing do
         @hit_listing.execute!(@attacker)
         
         @hit_listing.errors.should_not be_empty
-        @hit_listing.errors[:base].should =~ /Somebody already took out this target before you got the chance/
+        @hit_listing.errors[:base].first.should =~ /Somebody already took out this target before you got the chance/
       end
     end
     

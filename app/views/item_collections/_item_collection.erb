@@ -38,14 +38,11 @@
             ) unless collection.missing_items(current_character).empty? %>
       <% end %>
 
-      <%= link_to_remote(button(:collect),
-            :url    => item_collection_path(collection),
+      <%= link_to(button(:collect), item_collection_path(collection),
+            :remote => true,
             :method => :put,
-            :update => :result,
-            :html   => {
-              :"data-click-once" => true,
-              :class => "collect button"
-            }
+            :"data-click-once" => true,
+            :class => "collect button"
           ) %>
     </div>
   </div>

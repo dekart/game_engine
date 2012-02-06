@@ -1,4 +1,4 @@
-<% result_for :inventory_sell do |builder| %>
+<%= render_to_result :inventory_sell do |builder| %>
   <% builder.success do %>
     <%= t(".messages.success",
           :amount     => @amount,
