@@ -9,7 +9,7 @@ class Admin::CharactersController < Admin::BaseController
 
   def search
     if params[:search][:profile_ids].present?
-      @ids = params[:profile_ids].split(/[^\d]+/)
+      @ids = params[:search][:profile_ids].split(/[^\d]+/)
     elsif params[:search][:signed_request].present?
       @ids = [Facepalm::User.from_signed_request(facepalm, params[:search][:signed_request]).uid]
     else
