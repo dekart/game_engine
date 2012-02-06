@@ -49,7 +49,7 @@
           }
         ) if inventory.usable? %>
 
-    <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) %>
+    <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) and !current_character.restrict_market? %>
       <% if inventory.market_items_count == 0 %>
         <%= link_to_remote(button(:sell_on_market),
               :url    => new_market_item_path(:inventory_id => inventory),

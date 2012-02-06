@@ -1,6 +1,6 @@
 module ChatsHelper
   def chat(chat_id)
-    render('chats/chat', :chat_id => chat_id) if Setting.b(:chat_enabled)
+    render('chats/chat', :chat_id => chat_id) if Setting.b(:chat_enabled) && !current_character.restrict_talking?
   end
   
   def chat_dom_id(chat_id)
@@ -12,7 +12,7 @@ module ChatsHelper
   end
   
   def global_chat
-    if Setting[:global_chat_enabled]
+    if Setting[:global_chat_enabled] && !current_character.restrict_talking?
       online_count = Chat.online_count(global_chat_key)
       
       if online_count == 0

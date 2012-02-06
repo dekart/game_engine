@@ -1,5 +1,6 @@
 class HitListingsController < ApplicationController
   before_filter :check_hitlist_enabled
+  before_filter :check_fight_restrictions, :only => :index
 
   def index
     fetch_incomplete_listings
@@ -57,5 +58,11 @@ class HitListingsController < ApplicationController
 
   def check_hitlist_enabled
     redirect_from_iframe root_url(:canvas => true) unless Setting.b(:hit_list_enabled)
+  end
+  
+  def check_fight_restrictions
+    if current_character.restrict_fighting?
+      render 'characters/restrictions', :locals => { :restriction_type => :fighting }
+    end
   end
 end
