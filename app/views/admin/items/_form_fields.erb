@@ -43,7 +43,10 @@
 
 <% form.field_set Item.human_attribute_name("payouts") do %>
   <%= form.fields "admin/payouts/collection" %>
-  
-  <%= form.text_field :use_button_label, :comment => t(".use_button_label", :default_value => t('inventories.list.buttons.use')) %>
+
+  <%= form.text_field :use_button_label,
+        :comment => t(".use_button_label",
+          :default_value => t('inventories.list_inventory.buttons.use')
+        ) %>
   <%= form.text_area :use_message, :rows => 2, :cols => 80 %>
 <% end %>
