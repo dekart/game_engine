@@ -6,8 +6,6 @@ class MarketItemsController < ApplicationController
   def new
     @inventory = current_character.inventories.find(params[:inventory_id])
     @item = @inventory.build_market_item
-
-    render :layout => "ajax"
   end
 
   def create

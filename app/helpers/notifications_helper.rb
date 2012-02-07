@@ -3,7 +3,7 @@ module NotificationsHelper
     if notifications = current_character.notifications.with_state(:pending).all and notifications.any?
       Notification::Base.transaction do
         notifications.each do |n|
-          n.display
+          n.display_notification
         end
       end
 

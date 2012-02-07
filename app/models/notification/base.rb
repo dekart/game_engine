@@ -14,7 +14,7 @@ module Notification
         transition :displayed => :pending
       end
 
-      event :display do
+      event :display_notification do
         transition any => :displayed
       end
 
