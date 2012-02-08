@@ -4,11 +4,12 @@
   <div class="wall_post clearfix">
     <div class="picture"><%= character_picture_link(notification.author) %></div>
     <div class="text">
-      <%= t(".text", 
-             :author => character_name(notification.author), 
-             :link => link_to(t(".read") , character_path(current_character)) 
-           ).html_safe %>
+      <%= t(".text", :author => character_name(notification.author)) %>
     </div>
+  </div>
+  
+  <div class="buttons">
+    <%= link_to(button(:read), character_path(current_character), :class => "button read") %>
   </div>
 
   <%= render("notifications/disable", :notification => notification) %>

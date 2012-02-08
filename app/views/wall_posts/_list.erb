@@ -1,6 +1,6 @@
 <div id="wall_post_list">
   <% wall_posts.each do |post| %>
-    <% if !post.private? || post.author == current_character || post.character == current_character %>
+    <% if post.visible_for?(current_character) %>
       <div class="wall_post clearfix <%= :author_post if post.author_post? %>" id="<%= dom_id(post) %>">
         <% group_header(post.author) do %>
           <div class="author">

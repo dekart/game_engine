@@ -115,5 +115,6 @@ en:
         
     wall_post:
       title: "New post on the wall"
-      text: "%{author} left a new post on your wall  %{link}"  
-      read: "read post" 
+      text: "%{author} posted something on your profile wall."  
+      buttons:
+        read: "Read Post"
