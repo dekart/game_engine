@@ -11,7 +11,7 @@ module HasParents
       attr_accessor :parent_keys
       
       def parent_keys
-        @parent_keys || []
+        @parent_keys ||= []
       end
 
       def has_parents(*args)
@@ -27,7 +27,7 @@ module HasParents
         return self.class.parent_keys unless self.class.parent_keys.empty?
         
         request.path_parameters.keys.map{|key|
-          key.match(/^(.*)_id$/).to_a[1]
+          key.to_s.match(/^(.*)_id$/).to_a[1]
         }.compact
       end
       

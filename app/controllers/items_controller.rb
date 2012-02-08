@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   def index
     @item_groups = ItemGroup.visible_in_shop
-
+    
     @current_group = parents.item_group || @item_groups.first(:order => :position)
 
     @items = @current_group.items.in_shop_for(current_character).paginate(
