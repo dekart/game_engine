@@ -7,9 +7,9 @@ class AppRequestsController < ApplicationController
     
     @current_type = AppRequest::Base.find_by_facebook_id(params[:app_request_id]).try(:type_name) if params[:app_request_id]
     @current_type ||= params[:type]
-    @current_type ||= @app_requests_types.first[:name]
+    @current_type ||= @app_requests_types.first[:name] if @app_requests_types.present?
     
-    @app_requests = current_character.app_requests.visible.by_type(@current_type)                                               
+    @app_requests = @current_type ? current_character.app_requests.visible.by_type(@current_type) : []                                               
                                                    
     if request.xhr?
       render(
