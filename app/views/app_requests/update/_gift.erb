@@ -3,13 +3,11 @@
 <% end%>
 
 <% controls = capture do %>
-  <%= link_to_remote(inventory_use_button(app_request.inventory),
-        :url    => use_inventory_path(app_request.inventory),
-        :update => :result,
-        :html   => {
-          :"data-click-once" => true,
-          :class => "use button"
-        }
+  <%= link_to(inventory_use_button(app_request.inventory), use_inventory_path(app_request.inventory),
+        :remote => true,
+        :method => :post,
+        :"data-click-once" => true,
+        :class => "use button"
       ) if app_request.inventory.try(:usable?) %>
     
   <% if app_request.can_send_back? %>
@@ -21,11 +19,9 @@
   <% end %>
 <% end %>
 
-<% dom_ready do %>
-  var $request = $('#<%= dom_id(app_request) %>');
+var $request = $('#<%= dom_id(app_request) %>');
 
-  $request.find('.message').html('<%= escape_javascript(message) %>');
-  $request.find('.controls').html('<%= escape_javascript(controls) %>');
+$request.find('.message').html('<%= escape_javascript(message) %>');
+$request.find('.controls').html('<%= escape_javascript(controls) %>');
 
-  <%= ga_track_event('Requests', "#{app_request.type_name.titleize} - Accepted", app_request.item.name) %>
-<% end %>
+<%= ga_track_event('Requests', "#{app_request.type_name.titleize} - Accepted", app_request.item.name) %>

@@ -7,8 +7,6 @@ class NotificationsController < ApplicationController
   
   def settings
     @notifications = current_character.notifications
-    
-    render :layout => "ajax"
   end
   
   def update_settings
@@ -26,7 +24,5 @@ class NotificationsController < ApplicationController
         notification.disable!
       end
     end
-    
-    render :layout => 'ajax'
   end
 end

@@ -30,14 +30,11 @@
                   :class => 'button publish'
                 ) %>
             
-            <%= link_to_remote(button(:delete), 
-                  :url      => exchange_path(@exchange),
+            <%= link_to(button(:delete), exchange_path(@exchange),
+                  :remote   => true,
                   :method   => :delete,
-                  :update   => :ajax,
                   :confirm  => t(".buttons.delete_confirm"),
-                  :html     => {
-                    :class => 'button delete'
-                  }
+                  :class => 'button delete'
                 ) %>
           </td>
         <% end %>

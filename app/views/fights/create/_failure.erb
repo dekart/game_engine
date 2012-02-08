@@ -6,13 +6,12 @@
 
 <% unless @fight.cause.is_a?(HitListing) %>
   <% builder.buttons do %>
-    <%= link_to_remote(button(:attack_again),
-            :url => @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
-            :update => :result,
-            :html => {
-                    :"data-click-once" => true,
-                    :class => "attack_again button"
-            }
+    <%= link_to(button(:attack_again), 
+          @fight.cause ? respond_fight_path(@fight.cause) : fights_path(:victim_id => @fight.victim),
+          :remote => true,
+          :method => :post,
+          :"data-click-once" => true,
+          :class => "attack_again button"
         ) %>
   <% end %>
 <% end %>

@@ -3,11 +3,10 @@
 
   <div id="user_mailing_lists">
     <h3><%= t(".mailing_lists").html_safe %></h3>
-      <% form_for(current_user) do |form| %>
+      <%= form_for(current_user) do |form| %>
         
-      <%= form.submit %>
+        <%= form.submit %>
       
     <% end %>
-    
   </div>
 <% end %>

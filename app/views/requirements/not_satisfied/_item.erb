@@ -26,17 +26,16 @@
     </p>
 
     <div class="buttons">
-      <%= link_to_remote(button(:buy),
-            :url => inventories_path(
+      <%= link_to(button(:buy),
+            inventories_path(
               :item_id  => requirement.item,
               :amount   => requirement.missing_amount(current_character)
             ),
-            :update => :result,
-            :before => "$(document).one('item.purchase', function(){ $(document).trigger('requirement.satisfy') });",
-            :html   => {
-              :"data-click-once" => true,
-              :class => "buy button"
-            }
+            :remote => true,
+            :method => :post,
+            :onclick => "$(document).one('item.purchase', function(){ $(document).trigger('requirement.satisfy') });",
+            :"data-click-once" => true,
+            :class => "buy button"
           ) %>
     </div>
   <% else %>

@@ -1,7 +1,7 @@
 <% dialog :exchange_inventories do %>
   <h2><%= t(".title") %></h2>
   
-  <% remote_form_for(@exchange, :update => :ajax) do |f| %>
+  <%= form_for(@exchange, :remote => true) do |f| %>
     <div class="item field">
       <div class="label"><label><%= t(".item") %></label></div>
       

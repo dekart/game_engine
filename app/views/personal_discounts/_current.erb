@@ -36,14 +36,11 @@
           </div>
 
           <div class="controls">
-              <%= link_to_remote(button(:buy),
-                    :url    => personal_discount_path(discount),
+              <%= link_to(button(:buy), personal_discount_path(discount),
+                    :remote => true,
                     :method => :put,
-                    :update => :result,
-                    :html   => {
-                      :'data-click-once' => true,
-                      :class => "buy button"
-                    }
+                    :'data-click-once' => true,
+                    :class => "buy button"
                   ) %>
           </div>
         </div>

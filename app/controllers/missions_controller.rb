@@ -24,7 +24,5 @@ class MissionsController < ApplicationController
   
   def collect_help_reward
     @basic_money, @experience = current_character.mission_helps.collect_reward!
-    
-    render :layout => 'ajax'
   end
 end

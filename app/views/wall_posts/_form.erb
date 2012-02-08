@@ -1,13 +1,8 @@
-<% form_for([character, wall_post]) do |form| %>
+<%= form_for([character, wall_post], :remote => true) do |form| %>
   <%= form.text_area :text, :label => t('.title') %>
 
-  <%= link_to_remote(button(:submit),
-        :url    => [character, wall_post],
-        :update => :ajax,
-        :with   => "$(this).parents('form').serialize()",
-        :html   => {
-          :"data-click-once" => true,
-          :class => 'publish button'
-        }
+  <%= link_to_function(button(:submit), "$(this).parents('form').submit()",
+        :"data-click-once" => true,
+        :class => 'publish button'
       ) %>
 <% end %>

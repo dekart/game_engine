@@ -1,0 +1,3 @@
+$('#alliance_members').html(<%= render('relations/members', :relations => @relations).to_json.html_safe %>);
+
+<%= ga_track_event('Alliance', 'Broken') %>

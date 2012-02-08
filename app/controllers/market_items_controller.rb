@@ -9,31 +9,22 @@ class MarketItemsController < ApplicationController
   end
 
   def create
-    @inventory = current_character.inventories.find(params[:market_item][:inventory_id])
+    @inventory = current_character.inventories.find(params[:market_item].delete(:inventory_id))
 
     @item = @inventory.build_market_item(params[:market_item])
 
-    if @item.save
-      render :create, :layout => "ajax"
-    else
-      render :new, :layout => "ajax"
-    end
+    render :new unless @item.save
   end
 
   def buy
     @item = MarketItem.find(params[:id])
 
     @item.buy!(current_character)
-
-    render :buy, :layout => "ajax"
   end
 
   def destroy
     @item = current_character.market_items.find(params[:id])
 
     @item.destroy
-
-    render :destroy, :layout => "ajax"
   end
-
 end

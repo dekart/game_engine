@@ -17,8 +17,6 @@ class FightsController < ApplicationController
       :attacker => current_character,
       :victim   => @victim
     )
-
-    render :action => :create, :layout => "ajax"
   end
 
   def respond
@@ -31,7 +29,7 @@ class FightsController < ApplicationController
       :cause    => @cause
     )
 
-    render :action => :create, :layout => "ajax"
+    render :action => :create
   end
 
   def used_items
@@ -40,7 +38,7 @@ class FightsController < ApplicationController
     @attacker_items = @fight.attacker.used_items
     @victim_items   = @fight.victim.used_items
 
-    render :action => :used_items, :layout => "ajax"
+    render :action => :used_items
   end
 
 end

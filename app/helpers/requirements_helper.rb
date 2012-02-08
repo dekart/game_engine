@@ -82,23 +82,22 @@ module RequirementsHelper
     price = Setting.i(:"premium_#{type}_price")
 
     if current_character.vip_money >= price
-      link_to_remote(
-        button( :refill, :price => span_tag(price, :amount)),
-        :url    => premium_path(:type => :"refill_#{type}"),
+      link_to(button( :refill, :price => span_tag(price, :amount)),
+        premium_path(:type => :"refill_#{type}"),
+        :remote => true,
         :method => :put,
-        :update => :result,
-        :html   => {:class => "premium button"}
+        :class => "premium button"
       )
 
     else
-      link_to_remote(
-        button( :refill, :price => span_tag(price, :amount)),
-        :url    => refill_dialog_premium_path(
+      link_to(button( :refill, :price => span_tag(price, :amount)),
+        refill_dialog_premium_path(
           :type => :"refill_#{type}",
           :vip_money => price
         ),
-        :update => :ajax,
-        :html   => {:class => "premium button"}
+        :remote => true,
+        :method => :post,
+        :class => "premium button"
       )
     end
   end

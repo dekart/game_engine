@@ -32,25 +32,20 @@
         </td>
         <td class="controls">
           <% if item.character == current_character %>
-            <%= link_to_remote(button(:delete),
-                  :url      => market_item_path(item),
+            <%= link_to(button(:delete), market_item_path(item),
+                  :remote   => true,
                   :method   => :delete,
-                  :update   => :result,
                   :confirm  => t(".buttons.delete_confirm"),
-                  :html     => {
-                    :"data-click-once" => true,
-                    :class => "delete button"
-                  }
+                  :"data-click-once" => true,
+                  :class => "delete button"
                 ) %>
           <% else %>
-            <%= link_to_remote(button(:buy),
-                  :url      => buy_market_item_path(item),
-                  :update   => :result,
+            <%= link_to(button(:buy), buy_market_item_path(item),
+                  :remote   => true,
+                  :method   => :post,
                   :confirm  => t('.buttons.buy_confirm'),
-                  :html     => {
-                    :"data-click-once" => true,
-                    :class => "buy button"
-                  }
+                  :"data-click-once" => true,
+                  :class => "buy button"
                 ) %>
           <% end %>
         </td>

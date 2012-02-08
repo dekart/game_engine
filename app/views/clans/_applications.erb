@@ -11,26 +11,21 @@
       </td>
       <td class="controls">
         <div class="approve">
-          <%= link_to_remote(button(:accept),
-                :url => approve_clan_membership_application_path(application),
-                :update => :ajax,
+          <%= link_to(button(:accept), approve_clan_membership_application_path(application),
+                :remote => true,
                 :method => :put,
-                :html => {
-                  :'data-click-once' => false,
-                  :class => 'accept button'
-                }
+                :'data-click-once' => false,
+                :class => 'accept button'
               ) %>
         </div>
 
         <div class="reject">
-          <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
-                :url      => reject_clan_membership_application_path(application),
+          <%= link_to(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
+                reject_clan_membership_application_path(application),
+                :remote   => true,
                 :method   => :delete,
-                :update   => :ajax,
                 :confirm  => t(".delete.confirmation"),
-                :html     => {
-                  :class => "delete"
-                }
+                :class => "delete"
               ) %>
         </div>
       </td>

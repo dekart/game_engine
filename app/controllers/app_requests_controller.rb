@@ -18,8 +18,6 @@ class AppRequestsController < ApplicationController
     @recipients.each do |recipient_id|
       AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id)
     end
-
-    render :layout => 'ajax'
   end
   
   def update
@@ -29,8 +27,6 @@ class AppRequestsController < ApplicationController
     
     if @next_page = page_for_redirect
       redirect_from_iframe(@next_page)
-    else  
-      render :layout => 'ajax'
     end  
   end
   
@@ -38,8 +34,6 @@ class AppRequestsController < ApplicationController
     @app_request = current_character.app_requests.find(params[:id])
     
     @app_request.ignore
-    
-    render :layout => 'ajax'
   end
   
   protected

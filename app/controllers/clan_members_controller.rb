@@ -11,7 +11,5 @@ class ClanMembersController < ApplicationController
     member.delete_by_creator!
      
     @clan = Clan.find(member.clan_id)
-
-    render :layout => "ajax"
   end
 end

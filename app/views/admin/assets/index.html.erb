@@ -23,8 +23,8 @@
           <%= link_to(t(".controls.edit"), edit_admin_asset_path(asset),
                 :class => :edit
               ) %>
-          <%= link_to_remote(t(".controls.delete"), 
-                :url      => admin_asset_path(asset),
+          <%= link_to(t(".controls.delete"), admin_asset_path(asset),
+                :remote   => true,
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm"),
                 :class    => :edit

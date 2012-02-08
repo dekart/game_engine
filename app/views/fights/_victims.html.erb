@@ -12,13 +12,11 @@
       <% end %>
     </td>
     <td class="controls">
-      <%= link_to_remote(button(:attack),
-            :url    => fights_path(:victim_id => victim.id),
-            :update => :result,
-            :html   => {
-              :"data-click-once" => true,
-              :class => "button attack"
-            }
+      <%= link_to(button(:attack), fights_path(:victim_id => victim.id),
+            :remote => true,
+            :method => :post,
+            :"data-click-once" => true,
+            :class => "button attack"
           ) %>
     </td>
   </tr>

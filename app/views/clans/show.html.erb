@@ -55,15 +55,12 @@
     
     <% unless current_character.clan_member.creator? %>
       <div class="buttons">
-        <%= link_to_remote(button(:quit),
-              :url    => clan_member_path,
+        <%= link_to(button(:quit), clan_member_path,
+              :remote => true,
               :method => :delete,
-              :update => :result,
               :confirm  => t(".quit_confirm"),
-              :html   => {
-                :"data-click-once" => true,
-                :class => "quit button"
-              }
+              :"data-click-once" => true,
+              :class => "quit button"
             ) %>
       </div>    
     <% end %>
@@ -79,30 +76,23 @@
    
     <div class="buttons sent" id="join_clan">
       <% if @invitation %>
-        <%= link_to_remote(button(:join),
-              :url    => clan_membership_invitation_path(@invitation),
+        <%= link_to(button(:join), clan_membership_invitation_path(@invitation),
+              :remote => true,
               :method => :put,
-              :update => :ajax,
               :confirm  => t(current_character.clan ? ".clan_member.join_confirm" : ".join_confirm"),
-              :html   => {
-                :"data-click-once" => true,
-                :class => "join button"
-              }
+              :"data-click-once" => true,
+              :class => "join button"
             ) %>
       
       <% elsif current_character.clan_membership_applications.asked_to_join?(@clan) %>
         <%= t(".sent_application") %>
               
       <% else %>
-        <%= link_to_remote(button(:apply),
-              :url    => create_clan_membership_application_path(:clan_id => @clan.id),
-              :method => :get,
-              :update => :ajax,
+        <%= link_to(button(:apply), create_clan_membership_application_path(:clan_id => @clan.id),
+              :remote => true,
               :confirm  => t(current_character.clan ? ".clan_member.apply_confirm" : ".apply_confirm"),
-              :html   => {
-                :"data-click-once" => true,
-                :class => "apply button"
-              }
+              :"data-click-once" => true,
+              :class => "apply button"
             ) %>
       <% end %>    
     </div>

@@ -1,4 +1,6 @@
-<% result_for :create_complaint do |r| %>
+$.dialog.close();
+
+<%= render_to_result :create_complaint do |r| %>
   <% if @complaint.errors.empty? %>
     <% r.success do %>
       <%= t(".success") %>

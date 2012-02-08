@@ -21,8 +21,8 @@
       </td>
 
       <td class="controls">
-        <%= link_to_remote(t(".controls.delete"),
-              :url      => admin_translation_path(customization),
+        <%= link_to(t(".controls.delete"), admin_translation_path(customization),
+              :remote   => true,
               :method   => :delete,
               :confirm  => t(".controls.delete_confirm")
             ) if customization %>

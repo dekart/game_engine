@@ -14,8 +14,6 @@ class ExchangeOffersController < ApplicationController
     @exchange_offer = current_character.exchange_offers.find(params[:id])
     
     @exchange_offer.destroy
-    
-    render :layout => 'ajax'
   end
   
   def accept
@@ -23,7 +21,5 @@ class ExchangeOffersController < ApplicationController
     @exchange = current_character.exchanges.find(@exchange_offer.exchange)
     
     @transacted = @exchange.transact(@exchange_offer)
-    
-    render :layout => 'ajax'
   end
 end

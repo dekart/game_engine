@@ -1,12 +1,10 @@
 <div id="mission_help_list">
   <div class="controls">
-    <%= link_to_remote(button(:collect), 
-          :url    => collect_help_reward_missions_path, 
-          :update => :result,
-          :html   => {
-            :"data-click-once" => true,
-            :class => 'collect button'
-          }
+    <%= link_to(button(:collect), collect_help_reward_missions_path,
+          :remote => true, 
+          :method => :post,
+          :"data-click-once" => true,
+          :class => 'collect button'
         ) %>
   </div>
 

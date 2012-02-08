@@ -8,14 +8,11 @@
             <td class="image"><%= item_image(offer.item, :small, :tooltip => true) %></td>
             <td class="name"><%= t('.item_name', :item => offer.item.name, :amount => offer.amount) %></td>
             <td class="buttons">
-              <%= link_to_remote(button(:delete), 
-                    :url    => exchange_offer_path(offer),
+              <%= link_to(button(:delete), exchange_offer_path(offer),
+                    :remote => true,
                     :method => :delete,
-                    :update => :ajax,
                     :confirm => t(".buttons.delete_confirm"),
-                    :html => {
-                      :class => 'button delete'
-                    }
+                    :class => 'button delete'
                   ) %>
             </td>
           </tr>

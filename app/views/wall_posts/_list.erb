@@ -17,14 +17,11 @@
 
       <% if post.character == current_character %>
         <div class="controls">
-          <%= link_to_remote(t('.controls.remove'),
-                :url      => wall_post_path(post, :page => wall_posts.current_page),
-                :update   => :ajax,
+          <%= link_to(t('.controls.remove'), wall_post_path(post, :page => wall_posts.current_page),
+                :remote   => true,
                 :method   => :delete,
                 :confirm  => t('.controls.remove_confirm'),
-                :html     => {
-                  :"data-click-once" => true,
-                }
+                :"data-click-once" => true
               ) %>
         </div>
       <% end %>

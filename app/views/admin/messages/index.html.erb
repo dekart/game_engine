@@ -27,13 +27,13 @@
         <td class="state"><%= admin_state(message, :controls => false) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_message_path(message)) %>
-          <%= link_to_remote(t(".controls.publish"), 
-                :url      => change_state_admin_message_path(message, :state => :sending),
+          <%= link_to(t(".controls.publish"), change_state_admin_message_path(message, :state => :sending),
+                :remote   => true,
                 :method   => :put,
                 :confirm  => t(".controls.publish_confirm")
               )  if message.can_start_sending? %>
-          <%= link_to_remote(t(".controls.delete"), 
-                :url      => change_state_admin_message_path(message, :state => :deleted),
+          <%= link_to(t(".controls.delete"), change_state_admin_message_path(message, :state => :deleted),
+                :remote => true,
                 :method   => :put,
                 :confirm  => t(".controls.delete_confirm")
               ) if message.can_mark_deleted? %>

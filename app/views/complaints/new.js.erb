@@ -1,8 +1,7 @@
 <% dialog :complaints do %>
   <h2><%= t(".title") %></h2>
   
-  <% remote_form_for(@complaint, :update => :result,
-       :after => '$.dialog.close()') do |form| %>
+  <%= form_for(@complaint, :remote => :true) do |form| %>
      <%= form.hidden_field :offender_id, :value => params[:offender_id] %>  
      
      <%= form.select :cause, causes_list %>  

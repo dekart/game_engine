@@ -6,14 +6,12 @@
     <span class="value"><%= relation.level %></span>
   </td>
   <td class="controls">
-    <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.break')),
-          :url      => relation_path(relation.character),
+    <%= link_to(asset_image_tag(:icons_delete, :alt => t('.buttons.break')),
+          relation_path(relation.character),
+          :remote   => true,
           :method   => :delete,
-          :update   => :ajax,
           :confirm  => t(".break.confirmation"),
-          :html     => {
-            :class => "delete"
-          }
+          :class => "delete"
         ) %>
   </td>
 </tr>

@@ -12,9 +12,10 @@
   <% end %>
 </div>
 
-<%= link_to_remote(t(".add_item"),
-      :url  => add_item_new_admin_item_collection_path,
-      :html => {:class => :add_item}
+<%= link_to(t(".add_item"),add_item_new_admin_item_collection_path,
+      :remote => true,
+      :method => :post,
+      :class => :add_item
     ) %>
 
 <h2><%= ItemCollection.human_attribute_name("payouts") %></h2>

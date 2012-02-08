@@ -41,7 +41,7 @@
       <% end %>
     </div>
 
-    <% form_for(@exchange_offer) do |f| %>
+    <%= form_for(@exchange_offer) do |f| %>
       <%= f.hidden_field :exchange_id %>
       <%= f.hidden_field :item_id %>
       <%= f.text_field :amount %>

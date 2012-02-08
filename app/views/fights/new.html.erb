@@ -7,12 +7,10 @@
 <%= render("boosts") if Setting.b(:boosts_enabled) %>
 
 <% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
-  <% render_to_result do %>
-    <% result_for :fight do %>
-      <div class="unsatisfied_requirements">
-        <%= unsatisfied_requirement %>
-      </div>
-    <% end %>
+  <%= render_to_result :fight do %>
+    <div class="unsatisfied_requirements">
+      <%= unsatisfied_requirement %>
+    </div>
   <% end %>
 <% end %>
 

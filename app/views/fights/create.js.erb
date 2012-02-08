@@ -1,4 +1,4 @@
-<% result_for :fight do |builder| %>
+<%= render_to_result :fight do |builder| %>
   <% if !@fight.new_record? %>
     <%= builder.render("fights/create/#{ @fight.winner == current_character ? 'success' : 'failure' }", 
           :fight => @fight

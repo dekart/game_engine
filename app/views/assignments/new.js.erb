@@ -1,5 +1,5 @@
 <% dialog do |d| %>
-  <% form_for([@assignment.context, @assignment]) do |f| %>
+  <%= form_for([@assignment.context, @assignment], :remote => true) do |f| %>
     <h2><%= t(".title") %></h2>
 
     <%= f.hidden_field :role %>
@@ -48,15 +48,10 @@
       <% end %>
     </div>
 
-    <%= link_to_remote(button(:promote),
-          :url  => polymorphic_path([@assignment.context, @assignment]),
-          :with   => "$(this).parents('form').serialize()",
-          :update => :ajax,
-          :after  => '$.dialog.close()',
-          :html   => {
-            :'data-click-once' => true,
-            :class => 'promote button'
-          }
+    <%= link_to_function(button(:promote), "$(this).parents('form').submit()",
+          :onclick  => '$.dialog.close()',
+          :'data-click-once' => true,
+          :class => 'promote button'
         ) %>
   <% end %>
 

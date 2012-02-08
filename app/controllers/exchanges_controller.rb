@@ -22,11 +22,7 @@ class ExchangesController < ApplicationController
   def create
     @exchange = current_character.exchanges.build(params[:exchange])
     
-    if @exchange.save
-      render :create, :layout => "ajax"
-    else
-      render :new, :layout => "ajax"
-    end
+    render :new unless @exchange.save
   end
   
   def destroy

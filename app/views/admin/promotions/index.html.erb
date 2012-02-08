@@ -33,8 +33,8 @@
         <td class="link"><%= link_to(t(".link"), promotion_url(promotion, :canvas => true), :target => :_blank) %></td>
         <td class="controls">
           <%= link_to(t(".controls.edit"), edit_admin_promotion_path(promotion)) %>
-          <%= link_to_remote(t(".controls.delete"), 
-                :url      => admin_promotion_path(promotion),
+          <%= link_to(t(".controls.delete"), admin_promotion_path(promotion),
+                :remote   => true,
                 :method   => :delete,
                 :confirm  => t(".controls.delete_confirm")
               ) %>

@@ -12,10 +12,9 @@
     <b><%= t(".add_effect") %></b>
 
     <% Effects::Base.types.sort_by{|type| t("effects.#{type.effect_name}.name") }.each do |type| %>
-      <%= link_to_remote(t("effects.#{type.effect_name}.name"),
-            :url    => new_admin_effect_path(:type => type.effect_name, :container => form.object_name),
-            :method => :get,
-            :update => :result
+      <%= link_to(t("effects.#{type.effect_name}.name"),
+            new_admin_effect_path(:type => type.effect_name, :container => form.object_name),
+            :remote => true
           ) %>
     <% end %>
   </div>

@@ -1,4 +1,4 @@
-<% result_for(:hospital_heal) do |builder| %>
+<%= render_to_result(:hospital_heal) do |builder| %>
   <% if @result %>
     <% builder.success do %>
       <%= t(".success") %>

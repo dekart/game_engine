@@ -1,4 +1,4 @@
-<% result_for(:invitation) do |builder| %>
+<%= render_to_result(:invitation) do |builder| %>
   <% builder.success do %>
     <%= t("relations.create.message").html_safe %>
   <% end %>

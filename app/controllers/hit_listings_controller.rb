@@ -12,8 +12,6 @@ class HitListingsController < ApplicationController
       :victim => @victim,
       :reward => Setting.i(:hit_list_minimum_reward)
     )
-
-    render :new, :layout => "ajax"
   end
 
   def create
@@ -29,10 +27,8 @@ class HitListingsController < ApplicationController
 
       # Reloading current character to show changed attributes
       current_character(true)
-
-      render :create, :layout => "ajax"
     else
-      render :new, :layout => "ajax"
+      render :new
     end
   end
 
@@ -42,8 +38,6 @@ class HitListingsController < ApplicationController
     @fight = @hit_listing.execute!(current_character)
 
     fetch_incomplete_listings if @hit_listing.completed?
-
-    render :action => :update, :layout => "ajax"
   end
 
   protected

@@ -1,4 +1,4 @@
-<% result_for :shop do |builder| %>
+<%= render_to_result :shop do |builder| %>
   <% if @discount.try(:used?) %>
     <% builder.buttons do %>
       <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @discount.item),
@@ -9,13 +9,11 @@
             :class => "inventory button"
           ) %>
 
-      <%= link_to_remote(inventory_use_button(@discount.inventory),
-            :url    => use_inventory_path(@discount.inventory),
-            :update => :result,
-            :html   => {
-              :"data-click-once" => true,
-              :class => "use button"
-            }
+      <%= link_to(inventory_use_button(@discount.inventory), use_inventory_path(@discount.inventory),
+            :remote => true,
+            :method => :post,
+            :"data-click-once" => true,
+            :class => "use button"
           ) if @discount.inventory.usable? %>
     <% end %>
 

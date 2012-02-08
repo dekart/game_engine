@@ -18,11 +18,11 @@
       
       <div class="buttons">
         <% if enough_vip_money %>
-          <%= link_to_remote(button(:refill), 
-                :url    => premium_path(:type => @type),
+          <%= link_to(button(:refill), premium_path(:type => @type),
+                :remote => true,
                 :method => :put,
-                :update => :result,
-                :html   => {:class => "refill button", :onclick => "$(document).trigger('close.dialog')"}
+                :class => "refill button", 
+                :onclick => "$(document).trigger('close.dialog')"
               ) %>
         <% else %>
           <%= link_to(button(:gem_market), premium_path(:anchor => :buy), 

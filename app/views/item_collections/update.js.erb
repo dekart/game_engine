@@ -25,7 +25,7 @@
       </tr>
     </table>
   <% else %>
-    <p class="fail"><%= @result.errors.on(:character) %></p>
+    <p class="fail"><%= @result.errors[:character].join("\n") %></p>
   <% end %>
 <% end %>
 

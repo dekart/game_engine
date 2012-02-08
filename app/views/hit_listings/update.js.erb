@@ -1,16 +1,13 @@
-<% result_for :hit_listing do |builder| %>
+<%= render_to_result :hit_listing do |builder| %>
   <% if @fight %>
     <% if !@fight.new_record? %>
       <% unless @hit_listing.completed? %>
         <% builder.buttons do %>
-          <%= link_to_remote(button(:attack_again),
-                :url    => hit_listing_path(@hit_listing),
+          <%= link_to(button(:attack_again), hit_listing_path(@hit_listing),
+                :remote => true
                 :method => :put,
-                :update => :result,
-                :html   => {
-                  :"data-click-once" => true,
-                  :class => "attack_again button"
-                }
+                :"data-click-once" => true,
+                :class => "attack_again button"
               ) %>
         <% end %>
       <% end %>

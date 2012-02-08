@@ -14,14 +14,11 @@ module AppRequestsHelper
 
   def accept_request_button(app_request, name)
     if app_request.acceptable?
-      link_to_remote(button(name),
-        :url => app_request_path(app_request),
-        :update => "ajax",
+      link_to(button(name), app_request_path(app_request),
+        :remote => true,
         :method => :put,
-        :html => {
-          :'data-click-once' => true,
-          :class => 'accept button'
-        }
+        :'data-click-once' => true,
+        :class => 'accept button'
       )
     else
       app_request.acceptance_error

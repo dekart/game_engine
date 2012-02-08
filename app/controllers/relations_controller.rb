@@ -8,8 +8,6 @@ class RelationsController < ApplicationController
     @character = Character.find(params[:character_id])
     
     current_character.friend_relations.establish!(@character)
-    
-    render :layout => 'ajax'
   end
   
   def index
@@ -42,8 +40,6 @@ class RelationsController < ApplicationController
     FriendRelation.destroy_between(current_character, @target)
 
     @relations = fetch_relations
-
-    render :layout => 'ajax'
   end
 
   protected

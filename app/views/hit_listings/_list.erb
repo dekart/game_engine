@@ -11,14 +11,11 @@
         <td class="client"><%= character_name_link(listing.client) %></td>
         <td class="payouts"><%= payout(:basic_money, number_to_currency(listing.reward)) %></td>
         <td class="controls">
-          <%= link_to_remote(button(:attack),
-                :url    => hit_listing_path(listing),
+          <%= link_to(button(:attack), hit_listing_path(listing),
+                :remote => true,
                 :method => :put,
-                :update => :result,
-                :html   => {
-                  :"data-click-once" => true,
-                  :class => "attack button"
-                }
+                :"data-click-once" => true,
+                :class => "attack button"
               ) %>
         </td>
       </tr>

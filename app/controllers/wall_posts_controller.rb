@@ -3,8 +3,6 @@ class WallPostsController < ApplicationController
     @character = Character.find(params[:character_id])
 
     @wall_posts = @character.wall_posts.paginate(:page => params[:page])
-
-    render :layout => 'ajax'
   end
 
   def create
@@ -16,8 +14,6 @@ class WallPostsController < ApplicationController
     if @wall_post.save
       @wall_posts = @character.wall_posts.paginate(:page => 1)
     end
-
-    render :layout => 'ajax'
   end
 
   def destroy
@@ -26,7 +22,5 @@ class WallPostsController < ApplicationController
     @wall_post.destroy
 
     @wall_posts = current_character.wall_posts.paginate(:page => params[:page])
-
-    render :layout => 'ajax'
   end
 end

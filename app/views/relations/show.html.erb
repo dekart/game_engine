@@ -15,13 +15,11 @@
             :class => "ignore button"
           ) %>
           
-      <%= link_to_remote(button(:accept),
-            :url    => relations_path(:character_id => @character.id),
-            :update => :result,
-            :html => {
-              :"data-click-once" => true,
-              :class  => "accept button"
-            }
+      <%= link_to(button(:accept), relations_path(:character_id => @character.id),
+            :remote => true,
+            :method => :post,
+            :"data-click-once" => true,
+            :class  => "accept button"
           ) %>
     </td>
   </tr>

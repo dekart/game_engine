@@ -8,8 +8,8 @@
   <p><%= t(".delete_users.note", :limit => delete_user_limit) %></p>
 
   <p>
-    <%= link_to_remote(t(".delete_users.perform"), 
-          :url      => delete_users_admin_global_task_path,
+    <%= link_to(t(".delete_users.perform"), delete_users_admin_global_task_path,
+          :remote   => true,
           :method   => :delete,
           :confirm  => t(".delete_users.confirm")
         ) %>
@@ -22,8 +22,9 @@
   <p><%= t(".restart.note") %></p>
 
   <p>
-    <%= link_to_remote(t(".restart.perform"), 
-          :url      => restart_admin_global_task_path,
+    <%= link_to(t(".restart.perform"), restart_admin_global_task_path,
+          :remote => true,
+          :method => :post,
           :confirm  => t(".restart.confirm")
         ) %>
   </p>
@@ -35,8 +36,9 @@
   <p><%= t(".update_styles.note") %></p>
 
   <p>
-    <%= link_to_remote(t(".update_styles.perform"), 
-          :url => update_styles_admin_global_task_path
+    <%= link_to(t(".update_styles.perform"), update_styles_admin_global_task_path,
+          :remote => true,
+          :method => :post
         ) %>
   </p>
 </div>
@@ -47,8 +49,9 @@
   <p><%= t(".clear_memcache.note") %></p>
 
   <p>
-    <%= link_to_remote(t(".clear_memcache.perform"), 
-          :url => clear_memcache_admin_global_task_path
+    <%= link_to(t(".clear_memcache.perform"), clear_memcache_admin_global_task_path,
+          :remote => true,
+          :method => :post
         ) %>
   </p>
 </div>

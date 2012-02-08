@@ -36,8 +36,8 @@ module Admin::BaseHelper
         next if (state.name == object.state.to_sym) || options[:exclude].include?(state.name)
 
         link_options = {
-          :url    => polymorphic_url([:change_state, :admin, object], :state => state.name),
-          :method => :put
+          :method => :put,
+          :remote => true
         }
 
         if options[:confirm].include?(state.name)
@@ -47,7 +47,10 @@ module Admin::BaseHelper
           )
         end
 
-        result.push link_to_remote(state.name.to_s.titleize, link_options) 
+        result.push link_to(state.name.to_s.titleize, 
+          polymorphic_url([:change_state, :admin, object], :state => state.name), 
+          link_options
+        ) 
       end
     end
 
@@ -58,18 +61,19 @@ module Admin::BaseHelper
     controls = []
 
     unless object.first?
-      controls << link_to_remote(t('admin.change_position.move_higher'),
-        :url    => polymorphic_url([:change_position, :admin, object], :direction => :up),
-        :method => :put,
-        :html   => {:class => 'move_higher'}
+      controls << link_to(t('admin.change_position.move_higher'),
+        polymorphic_url([:change_position, :admin, object], :direction => :up),
+        :remote => true,
+        :class => 'move_higher'
       )
     end
 
     unless object.last?
-      controls << link_to_remote(t('admin.change_position.move_lower'),
-        :url    => polymorphic_url([:change_position, :admin, object], :direction => :down),
+      controls << link_to(t('admin.change_position.move_lower'),
+        polymorphic_url([:change_position, :admin, object], :direction => :down),
         :method => :put,
-        :html   => {:class => 'move_lower'}
+        :remote => true,
+        :class => 'move_lower'
       )
     end
 

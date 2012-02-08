@@ -13,14 +13,12 @@
         <%= render("app_requests/details/#{ app_request.type_name }", :app_request => app_request) %>
 
         <td class="ignore">
-          <%= link_to_remote(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore')),
-                :url => ignore_app_request_path(app_request),
-                :update => :ajax,
+          <%= link_to(asset_image_tag(:icons_hide, :alt => t('.buttons.ignore')),
+                ignore_app_request_path(app_request),
+                :remote => true,
                 :method => :put,
-                :html => {
-                  :'data-click-once' => true,
-                  :class => :ignore
-                }
+                :'data-click-once' => true,
+                :class => :ignore
               ) %>
         </td>
 

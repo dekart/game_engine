@@ -1,7 +1,7 @@
 <% dialog do |d| %>
   <h2><%= t(".title") %></h2>
 
-  <% remote_form_for([@victim, @hit_listing], :update => :ajax) do |form| %>
+  <%= form_for([@victim, @hit_listing], :remote => true) do |form| %>
     <%= form.field :victim, character_picture(@victim) + character_name(@victim) %>
 
     <%= form.text_field :reward %>

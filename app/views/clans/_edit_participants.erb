@@ -11,14 +11,12 @@
           <span class="value"><%= member.character.level %></span>
         </td>
         <td class="controls">
-          <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
-                :url      => delete_clan_member_path(member),
+          <%= link_to(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
+                delete_clan_member_path(member),
+                :remote   => true,
                 :method   => :delete,
-                :update   => :ajax,
                 :confirm  => t(".delete_confirm"),
-                :html     => {
-                  :class => "delete"
-                }
+                :class => "delete"
               ) %>
         </td>
       </tr>

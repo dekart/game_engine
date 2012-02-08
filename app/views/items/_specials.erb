@@ -26,14 +26,11 @@
         <% end %>
 
         <div class="controls">
-          <% form_tag("", :class => :clearfix) do %>
+          <%= form_tag(inventories_path(:item_id => item.id), :remote => true, :class => :clearfix) do %>
             <%= amount_select_tag %>
 
-            <%= link_to_remote(button(:buy),
-                  :url    => inventories_path(:item_id => item.id),
-                  :update => :result,
-                  :with   => "$(this).parent('form').serialize()",
-                  :html   => {:class => "buy button"}
+            <%= link_to_function(button(:buy), "$(this).parent('form').submit()",
+                  :class => "buy button"
                 ) %>
           <% end %>
         </div>

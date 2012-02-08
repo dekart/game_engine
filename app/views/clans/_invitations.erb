@@ -11,14 +11,12 @@
       </td>
       <td class="controls">
         <div class="delete">
-          <%= link_to_remote(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
-                :url      => clan_membership_invitation_path(invitation),
+          <%= link_to(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
+                clan_membership_invitation_path(invitation),
+                :remote   => true,
                 :method   => :delete,
-                :update   => :ajax,
                 :confirm  => t(".delete.confirmation"),
-                :html     => {
-                  :class => "delete"
-                }
+                :class => "delete"
               ) %>
         </div>
       </td>
