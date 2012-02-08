@@ -20,8 +20,8 @@ class WallPost < ActiveRecord::Base
   
   after_save :schedule_notification, :unless => :author_post?
   
-  def visible_for?(current_character)
-    !private? || author == current_character || character == current_character
+  def visible_for?(viewer)
+    !private? || author == viewer || character == viewer
   end
 
   def author_post?
