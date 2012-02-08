@@ -7,7 +7,7 @@ class ChatsController < ApplicationController
   protected
   
   def check_talk_restrictions
-    if current_character.restrict_fighting?
+    if current_character.restrict_talking?
       render 'characters/restrictions', :locals => { :restriction_type => :talking }
     end
   end
