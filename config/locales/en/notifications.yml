@@ -112,3 +112,8 @@ en:
       text: "You got all items required for the %{collection} collection! Now you can get the reward from it!"
       buttons:
         collection: "View Collections"
+        
+    wall_post:
+      title: "New post on the wall"
+      text: "%{author} left a new post on your wall  %{link}"  
+      read: "read post" 

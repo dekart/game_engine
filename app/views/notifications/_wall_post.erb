@@ -1,0 +1,15 @@
+<% dialog :wall_post_notification do |d| %>
+  <h2><%= t(".title") %></h2>
+
+  <div class="wall_post clearfix">
+    <div class="picture"><%= character_picture_link(notification.author) %></div>
+    <div class="text">
+      <%= t(".text", 
+             :author => character_name(notification.author), 
+             :link => link_to(t(".read") , character_path(current_character)) 
+           ).html_safe %>
+    </div>
+  </div>
+
+  <%= render("notifications/disable", :notification => notification) %>
+<% end %>

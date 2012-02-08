@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120203093652) do
+ActiveRecord::Schema.define(:version => 20120208073952) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -489,7 +489,6 @@ ActiveRecord::Schema.define(:version => 20120203093652) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
-    t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
     t.string   "state",                   :limit => 50,  :default => "",     :null => false
@@ -946,11 +945,12 @@ ActiveRecord::Schema.define(:version => 20120203093652) do
   add_index "visibilities", ["target_id", "target_type"], :name => "index_visibilities_on_target_id_and_target_type"
 
   create_table "wall_posts", :force => true do |t|
-    t.integer  "character_id", :null => false
-    t.integer  "author_id",    :null => false
+    t.integer  "character_id",                    :null => false
+    t.integer  "author_id",                       :null => false
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "private",      :default => false, :null => false
   end
 
   add_index "wall_posts", ["character_id"], :name => "index_wall_posts_on_character_id"
