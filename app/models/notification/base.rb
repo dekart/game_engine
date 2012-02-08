@@ -59,5 +59,9 @@ module Notification
     def title
       self.class.name.split("::").last.titleize
     end
+    
+    def optional?
+      true
+    end
   end
 end
