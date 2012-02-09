@@ -39,6 +39,9 @@ en:
         button: "Add Points"
       earn_credits:
         note: 'Need more Facebook Credits? You can earn them by completing special offers provided by Facebook partners! It’s easy and secure.'
+      buy_tokens:
+        text: "Add %{amount} upgrade tokens"
+        button: "Add Tokens"
     change_name:
       title: "Change Your Nickname"
       note: "Please enter your new nickname below. Please note that each name change will charge Gems from your character so try to avoid typos. If you want to use your real Facebook name - keep the field blank and click 'Apply'."
@@ -56,6 +59,7 @@ en:
           hire_mercenary: "You've successfully hired a new mercenary!"
           reset_attributes: "Your attributes are now back to defaults!"
           change_name: "Your name was updated!"
+          buy_tokens: "Item upgrade tokens were added to your character!"
         failure: "You don't have enough Gems"
       buttons:
         get_more_vip: "Get More Gems"
