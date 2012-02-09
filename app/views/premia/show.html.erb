@@ -168,6 +168,25 @@
             ) %>
       </td>
     </tr>
+
+    <tr>
+      <td class="name">
+        <%= t(".buy_tokens.text",
+              :amount => span_tag(Setting.i(:premium_tokens_amount), :tokens)
+            ).html_safe %>
+      </td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_tokens_price)) %>
+      </td>
+      <td class="controls">
+        <%= link_to_remote(button(t(".buy_tokens.button")),
+              :url      => premium_path(:type => :buy_tokens),
+              :method   => :put,
+              :update   => :result,
+              :html     => {:class => :button}
+            ) %>
+      </td>
+    </tr>
   </table>
 
   <div class="need_more_vip">

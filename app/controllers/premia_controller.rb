@@ -21,6 +21,8 @@ class PremiaController < ApplicationController
         current_character.reset_attributes!
       when :change_name
         current_character.change_name!(params[:character][:name])
+      when :buy_tokens
+        current_character.buy_upgrade_tokens!
       else
         false
       end
