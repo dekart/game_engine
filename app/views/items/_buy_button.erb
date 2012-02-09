@@ -1,5 +1,6 @@
-<%= form_tag(inventories_path(:item_id => item.id), :remote => true, :class => :clearfix) do %>
+<%= form_tag(inventories_path, :remote => true, :class => :clearfix) do %>
   <%= amount_select_tag(:id => item.id, :vip_price => item.vip_price, :basic_price => item.basic_price) %>
+  <%= hidden_field_tag(:item_id, item.id) %>
 
   <%= link_to_function(button(:buy), "$(this).parent('form').submit()",
         :class => "buy button"
