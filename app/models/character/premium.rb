@@ -38,6 +38,14 @@ class Character
       charge!(0, Setting.i(:premium_points_price), :premium_points)
     end
 
+    def buy_upgrade_tokens!
+      return if vip_money < Setting.i(:premium_tokens_price)
+
+      self.upgrade_tokens += Setting.i(:premium_tokens_amount)
+
+      charge!(0, Setting.i(:premium_tokens_price), :premium_tokens)
+    end
+
     def hire_mercenary!
       return if vip_money < Setting.i(:premium_mercenary_price)
 
