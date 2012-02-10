@@ -1,7 +1,7 @@
 class VipMoneyDeposit < VipMoneyOperation
   PAYMENT_PROVIDERS = %w{offerpal super_rewards credits}
 
-  named_scope :purchases, :conditions => ["reference_type IN (?)", PAYMENT_PROVIDERS]
+  scope :purchases, :conditions => ["reference_type IN (?)", PAYMENT_PROVIDERS]
 
   after_create :deposit_money
 
