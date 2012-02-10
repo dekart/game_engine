@@ -37,13 +37,11 @@
       <% end %>
     <% end %>
 
-    <%= link_to_remote(inventory_use_button(inventory),
-          :url    => use_inventory_path(inventory),
-          :update => :result,
-          :before => lock_link,
-          :html   => {
-            :class => "use button"
-          }
+    <%= link_to(inventory_use_button(inventory), use_inventory_path(inventory),
+          :remote => true,
+          :method => :post,
+          :class => "use button",
+          :'data-click-once' => true
         ) if inventory.usable? %>
 
     <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) and !current_character.restrict_market? %>
