@@ -1,7 +1,7 @@
 <% builder.buttons do %>
   <%= link_to_function(button(:request_help), stream_dialog(:mission_help, mission),
         :class => "request_help button"
-      ) if Setting.b(:stream_dialog_enabled) %>
+      ) if Setting.b(:stream_dialog_enabled) && Setting.b(:mission_help_enabled) %>
 
   <%= link_to(button(:try_again), fulfill_mission_path(mission),
         :method => :post,

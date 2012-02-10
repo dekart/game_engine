@@ -171,7 +171,7 @@ class MonsterFight < ActiveRecord::Base
 
       character.hp  -= @character_damage
       
-      @monster_damage += @boost.effect(:health) if @boost
+      @monster_damage += @boost.effect(:damage) if @boost
       monster.hp    -= @monster_damage
 
       self.damage   += @monster_damage

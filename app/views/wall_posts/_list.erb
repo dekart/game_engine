@@ -1,31 +1,34 @@
 <div id="wall_post_list">
   <% wall_posts.each do |post| %>
-    <div class="wall_post clearfix <%= :author_post if post.author_post? %>" id="<%= dom_id(post) %>">
-      <% group_header(post.author) do %>
-        <div class="author">
-          <div class="name"><%= character_name_link(post.author) %></div>
-          <div class="image"><%= character_picture_link(post.author, {}, {:size => :normal}) %></div>
-          <div class="info">
-            <span class="character_type"><%= post.author.character_type.name %></span>,
-            <span class="level"><%= Character.human_attribute_name('level') %> <%= post.author.level %></span>
+    <% if post.visible_for?(current_character) %>
+      <div class="wall_post clearfix <%= :author_post if post.author_post? %>" id="<%= dom_id(post) %>">
+        <% group_header(post.author) do %>
+          <div class="author">
+            <div class="name"><%= character_name_link(post.author) %></div>
+            <div class="image"><%= character_picture_link(post.author, {}, {:size => :normal}) %></div>
+            <div class="info">
+              <span class="character_type"><%= post.author.character_type.name %></span>,
+              <span class="level"><%= Character.human_attribute_name('level') %> <%= post.author.level %></span>
+            </div>
           </div>
-        </div>
-      <% end %>
-
-      <div class="created_at"><%= l(post.created_at, :format => :short) %>:</div>
-      <div class="text"><%= simple_format(post.text) %></div>
-
-      <% if post.character == current_character %>
-        <div class="controls">
-          <%= link_to(t('.controls.remove'), wall_post_path(post, :page => wall_posts.current_page),
+        <% end %>    
+        
+        <div class="created_at"><%= l(post.created_at, :format => :short) %>:</div>
+        <div class="text"><%= simple_format(post.text) %></div>
+    
+        <% if post.character == current_character %>
+          <div class="controls">
+            <%= link_to(t('.controls.remove'), wall_post_path(post, :page => wall_posts.current_page),
                 :remote   => true,
                 :method   => :delete,
                 :confirm  => t('.controls.remove_confirm'),
                 :"data-click-once" => true
               ) %>
-        </div>
-      <% end %>
-    </div>
+          </div>
+        <% end %>
+        
+      </div>
+    <% end %> 
   <% end %>
 
   <%= will_paginate(wall_posts, :renderer => 'WallPostsHelper::PaginationRenderer') %>

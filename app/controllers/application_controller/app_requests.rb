@@ -22,7 +22,7 @@ class ApplicationController
       if visit_from_app_request?
         session[:return_to] = nil
 
-        redirect_back app_requests_url(:canvas => true)
+        redirect_back app_requests_url(:canvas => true, :app_request_id => app_request_ids.last)
       end
     end
 

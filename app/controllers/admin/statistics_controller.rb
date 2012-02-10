@@ -25,9 +25,10 @@ class Admin::StatisticsController < Admin::BaseController
   end
   
   def visits
-    @day = params[:date] ? Date.parse(params[:date]) : Date.today
+    @day  = params[:date] ? Date.parse(params[:date]) : Date.today
+    @hour = params[:hour]
     
-    result = Statistics::Visits.visited_by_users(@day)
+    result = @hour ? Statistics::Visits.visited_hourly_by_users(@day , @hour) : Statistics::Visits.visited_by_users(@day)
     
     ids = result.collect{|a| a[0]}
     @requests = result.collect{|a| a[1]}

@@ -6,19 +6,11 @@ GameEngine::Application.routes.draw do
         put 'change_state'
       end
       
-      resources :items, :only => :index do
-        match 'balance', :on => :collection
-      end
+      resources :items, :only => :index
     end
 
     resources :items do
-      collection do
-        match 'balance'
-      end
-      
-      member do
-        put 'change_state'
-      end
+      put 'change_state', :on => :member
     end
     
     resources :mission_groups do
@@ -29,10 +21,6 @@ GameEngine::Application.routes.draw do
     end
       
     resources :missions do
-      collection do 
-        match 'balance'
-      end
-      
       member do
         put 'change_position'
         put 'change_state'
@@ -93,7 +81,7 @@ GameEngine::Application.routes.draw do
       end
     end
     
-    resources :characters, :only => [:index, :edit, :update] do
+    resources :characters do
       collection do
         match 'search'
         match 'payout'
@@ -185,7 +173,8 @@ GameEngine::Application.routes.draw do
   resources :items
 
   resources :item_groups do
-    resources :items
+    resources :items, :only => :index
+    resources :inventories, :only => :index
   end
   
   resources :personal_discounts, :only => :update
@@ -240,7 +229,11 @@ GameEngine::Application.routes.draw do
   resource :premium do
     get 'change_name', :on => :member
     
-    post 'refill_dialog', :on => :collection
+    collection do
+      match 'service'
+      match 'buy_vip'
+      post 'refill_dialog'
+    end
   end
 
   resource :rating

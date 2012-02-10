@@ -1,5 +1,6 @@
 <%= form_for([character, wall_post], :remote => true) do |form| %>
   <%= form.text_area :text, :label => t('.title') %>
+  <%= form.check_box :private %>
 
   <%= link_to_function(button(:submit), "$(this).parents('form').submit()",
         :"data-click-once" => true,

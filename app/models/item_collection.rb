@@ -35,6 +35,20 @@ class ItemCollection < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
+  
+  def self.used_item_ids
+    $memory_store.fetch('items_for_collections', :expires_in => 15.minutes) do
+      {}.tap do |result|
+        ItemCollection.with_state(:visible).each do |c|
+           c.item_ids.each do |item_id|
+             result[item_id] ||= {}
+           
+             result[item_id][c.id] = c.amount_items[c.item_ids.index(item_id)]
+           end
+        end 
+      end
+    end
+  end
 
   def amount_of_item(item)
     amount_items[item_ids.index(item.id)] || 1
@@ -76,7 +90,7 @@ class ItemCollection < ActiveRecord::Base
 
   def missing_items(character)
     items.dup.tap do |result|
-      character.inventories.each do |inventory|
+      character.inventories.each do |inventory| # We need t refactor this to avoid iterating through the whole inventory
         if items.include?(inventory.item) && inventory.amount >= amount_of_item(inventory.item)
           result.delete(inventory.item)
         end

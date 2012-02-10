@@ -3,12 +3,12 @@
 <%= render("controls") %>
 
 <div class="total_visits">
-  <h2><%= t(".total_visits") %></h2>
+  <h2><%= t(@hour ? ".total_visits_hourly" : ".total_visits_by_date") %></h2>
   
   <p id="total_visits">
     <strong><%= @total %></strong>
     
-    <%= admin_requests_average_amount(@total, @day) %>
+    <%= @hour ? admin_requests_average_amount_per_minute(@total, @hour) : admin_requests_average_amount_per_hour(@total, @day) %>
   </p>
 </div>
 
@@ -22,14 +22,14 @@
           <th><%= Character.human_attribute_name("level") %></th>
           <th><%= Character.human_attribute_name("created_at") %></th>
           <th><%= t(".count_requests") %></th>
-          <th><%= t(".average_amount") %></th>
+          <th><%= t(@hour ? ".average_per_minute" : ".average_per_hour") %></th>
         </tr>
         <% @users.each_with_index do |user, index| %>
           <tr>
             <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
             <td>
               <% if user.try(:character) %>
-                <%= link_to(character_name(user.character), edit_admin_character_path(user.character)) %>
+                <%= link_to(character_name(user.character), admin_character_path(user.character)) %>
               <% else %>
                 <span class="empty">
                   <%= user ? t(".no_character") : t(".no_user") %>
@@ -44,7 +44,7 @@
             <td><%= user.character.level if user.try(:character) %></td>
             <td><%= l(user.character ? user.character.created_at : user.created_at, :format => :short) if user %></td>
             <td><%= @requests[index] %></td>
-            <td><%= Statistics::Visits.average_amount(@requests[index], @day) %></td>
+            <td><%= @hour ? Statistics::Visits.average_amount_hourly(@requests[index], @hour)  : Statistics::Visits.average_amount(@requests[index], @day) %></td>
           </tr>
         <% end %>
       </table>
@@ -58,10 +58,32 @@
         <% (14).times do |day| %>
           <tr>
             <td>
-              <% if @day == Date.today - day %>
+              <% if !@hour && @day == Date.today - day %>
                 <%= Date.today - day %>
               <% else %>
                 <%= link_to(Date.today - day, :date => Date.today - day) %>
+              <% end %>   
+            </td>  
+          </tr>
+        <% end %>
+      </table>
+      
+    </td>
+    
+    <td class="hourly">
+      <table class="data">
+        <tr>
+          <th><%= t(".hourly") %></th>
+        </tr>
+        <% (24).times do |hour| %>
+          <tr>
+            <td>  
+              <% if @hour && @hour.to_i == Time.now.hour - hour %>
+                <%= Time.now.hour - hour %>
+              <% elsif (h = Time.now.hour - hour) > 0 %>
+                <%= link_to("#{h}", :date => Date.today, :hour => h) %>
+              <% else %>  
+                <%= link_to("#{24 + Time.now.hour - hour}", :date => (Date.today - 1), :hour => (24 + Time.now.hour - hour)) %>
               <% end %>   
             </td>  
           </tr>

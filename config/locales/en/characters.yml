@@ -15,7 +15,7 @@ en:
         achievements: 'Achievements'
         attack: "Attack!"
         hitlist: "Add to Hitlist"
-        complain: "Complain"
+        report: "Report this player"
       titles:
         empty_set: "%{user} doesn't have any titles yet"
         empty_set_my: "You don't have any titles yet"
@@ -66,3 +66,6 @@ en:
         refill_health: "Refill health"
     hospital_heal:
       success: "Your health has been restored!"
+    restrictions:
+      fighting: "You are not allowed to participate in fighting"
+      talking: "You are not allowed to chat with other players"

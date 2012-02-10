@@ -180,6 +180,10 @@ class Item < ActiveRecord::Base
     self[:availability].to_sym
   end
 
+  def limited?
+    available_till
+  end
+
   def time_left
     (available_till - Time.now).to_i
   end
@@ -250,7 +254,7 @@ class Item < ActiveRecord::Base
   end
   
   def boost_for_monster_attack?
-    effect(:health) > 0
+    effect(:damage) > 0
   end
 
   def increment_owned(value)

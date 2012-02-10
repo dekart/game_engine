@@ -165,7 +165,7 @@
               <td><%= user.reference %></td>
               <td>
                 <% if user.referrer.try(:character) %>
-                  <%= link_to(character_name(user.referrer.character), character_url(user.referrer.character.key, :canvas => true)) %>
+                  <%= link_to(character_name(user.referrer.character), admin_character_url(user.referrer.character.key)) %>
                   <%= link_to(t(".profile"), fb_profile_url(user.referrer),
                         :class  => :profile,
                         :target => :_blank

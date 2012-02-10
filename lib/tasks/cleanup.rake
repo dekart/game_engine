@@ -1,6 +1,6 @@
 namespace :app do
   desc "Cleanup old data"
-  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests}
+  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:events app:cleanup:tracking_requests}
 
   namespace :cleanup do
     def remove_data(scope, batch = 100)
@@ -70,6 +70,55 @@ namespace :app do
       puts "Removing old application requests..."
 
       remove_data(old_requests)
+    end
+    
+    
+    desc "Remove old logged events"
+    task :events => :environment do
+      time_limit = 2.weeks.ago
+
+      old_events = LoggedEvent.scoped(:conditions => ["created_at < ?", time_limit])
+
+      puts "Removing logged events..."
+
+      remove_data(old_events)
+    end
+    
+    desc "Remove old tracking requests"
+    task :tracking_requests => :environment do
+      puts "Removing tracking requests..."
+
+      date_limit = 30
+
+      while true
+        date = Date.today - date_limit
+      
+        if $redis.exists("tracking_requests_#{ date }")
+          $redis.del("tracking_requests_#{ date }")
+        else
+          break
+        end
+      
+        date_limit += 1
+      end
+      
+      time_limit = 48
+      hours = time_limit - (Time.now.hour + 24)
+    
+      if hours > 0
+        date = Date.today - 3
+        hours = 24 - hours
+        
+        hours.downto(1){|hour| $redis.del("tracking_requests_hourly_#{ date }_#{ hour }")}
+      else
+        date = Date.today - 2
+        hours = 24
+    
+        hours.downto(1){|hour| $redis.del("tracking_requests_hourly_#{ date }_#{ hour }")}
+      end
+      
+      puts "Done!"
+      
     end
   end
 end

@@ -5,6 +5,13 @@ class AppRequest::Base < ActiveRecord::Base
   
   belongs_to :target, :polymorphic => true
   
+  scope :by_type, Proc.new {|type|
+    {
+      :conditions => ["type = ?", request_class_name_for_type(type)],
+      :order => "sender_id, type, created_at DESC"
+    }
+  }
+  
   scope :for_character, Proc.new {|character|
     {
       :conditions => {:receiver_id => character.facebook_id}
@@ -158,6 +165,17 @@ class AppRequest::Base < ActiveRecord::Base
         
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
+    end
+    
+    def types
+      all(
+          :select => "type, COUNT(type) as count_requests", 
+          :group => "type"
+         ).collect{|a| {:name => a.type_name, :count => a.count_requests}}
+    end
+    
+    def request_class_name_for_type(type)
+      "AppRequest::#{ type.camelize }"
     end
   end
   

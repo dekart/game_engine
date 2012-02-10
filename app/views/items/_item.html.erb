@@ -1,22 +1,27 @@
-<tr class="item" id="<%= dom_id(item) %>">
-  <td class="picture"><%= item_image(item, :small) %></td>
-  <td class="info">
+<div class="item" id="<%= dom_id(item) %>">
+  <div class="picture"><%= item_image(item, :medium) %></div>
+
+  <div class="info">
     <div class="name"><%= item.name %></div>
-    <div class="description"><%= item.description %></div>
 
-    <% if item.available_till %>
-      <%= render("items/limit", :item => item) %>
+    <% unless item.description.blank? %>
+      <div class="description"><%= item.description %></div>
     <% end %>
-  </td>
 
-  <td class="payouts">
-    <%= item_effects(item) %>
-  </td>
+    <div class="payouts">
+      <%= item_effects(item) %>
+    </div>
+  </div>
 
-  <td class="requirements">
-    <%= render("items/requirements", :item => item) %>
-  </td>
-  <td class="controls">
-    <%= render("items/buy_button", :item => item) %>
-  </td>
-</tr>
+  <div class="purchase_options clearfix">
+    <div class="controls">
+      <%= render("items/buy_button", :item => item) %>
+    </div>
+
+    <div class="requirements">
+      <%= render("items/requirements", :item => item) %>
+    </div>
+
+    <%= render("items/limit", :item => item) if item.limited? %>
+  </div>
+</div>

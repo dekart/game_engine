@@ -11,7 +11,7 @@ class Fight
           ids = Character.connection.select_values(
             Character.send(:sanitize_sql_array,
               [
-                "SELECT id FROM characters WHERE level BETWEEN ? AND ? AND fighting_available_at < ?",
+                "SELECT id FROM characters WHERE level BETWEEN ? AND ? AND exclude_from_fights = false AND fighting_available_at < ? and restrict_fighting = false",
                 range.begin,
                 range.end,
                 Time.now.utc

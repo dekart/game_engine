@@ -6,17 +6,6 @@ class Admin::MissionsController < Admin::BaseController
     )
   end
 
-  def balance
-    @character_types = CharacterType.without_state(:deleted)
-
-    @character_type = @character_types.find_by_id(params[:character_type_id]) || @character_types.first
-
-    @missions = Mission.without_state(:deleted).visible_for(@character_type).all(
-      :include  => :mission_group,
-      :order    => "mission_groups.position"
-    )
-  end
-
   def new
     redirect_to new_admin_mission_group_path if MissionGroup.count == 0
 

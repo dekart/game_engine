@@ -69,7 +69,6 @@ en:
     items:
       controls:
         new: "Add Item"
-        balance: "Balance Items"
         groups: "Manage Groups"
         sets: "Item Sets"
       index:
@@ -96,11 +95,6 @@ en:
         use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '%{default_value}'"
       effect:
         remove: "Remove"
-      balance:
-        title: "Balance Items"
-        filter:
-          title: "Filter Items"
-          all_groups: "All Groups"
 
     mission_groups:
       index:
@@ -121,7 +115,6 @@ en:
         success: "Mission group has been updated successfully!"
     missions:
       controls:
-        balance: "Balance"
         new: "Add Mission"
         groups: "Manage Groups"
       index:
@@ -144,9 +137,6 @@ en:
         submit: "Update"
       update:
         success: "Mission has been updated successfully!"
-      balance:
-        title: "Mission Balance"
-        character_type_filter: "Filter By Character Type:"
 
     mission_levels:
       new:
@@ -387,6 +377,7 @@ en:
         search:
           title: "Search Characters"
           profile_ids: "Facebook/Profile IDs"
+          signed_request: "Signed Request"
           submit: "Search"
         profile: "FB Profile"
         controls:
@@ -407,6 +398,34 @@ en:
         submit: "Apply"
         submit_and_continue: "Apply & Continue editing"
         success: "Payouts have been applied to the character!"
+      show:
+        title: "View Character: %{name}, Level %{level}"
+        controls:
+          index: "« Back to Index"
+          edit: "Edit Character"
+          edit_user: "Edit User"
+          payouts: "Apply Payouts"
+        attributes: "Attributes"
+        attribute: "Attribute"
+        value: "Value"
+        game_profile: "Game Profile"
+        restorable: "%{current} / %{max} (%{base})"
+        inventory: "Inventory"
+        properties: "Properties"
+        property_income: "+%{value} per %{period} hours"
+        statistics: "Statistics"
+        fb_profile: "Facebook Profile"
+        social:
+          title: "Social"
+          friends: "Number of Friends"
+          in_game: "Friends in Game"
+          referrals: "Referrals"
+        payments:
+          title: "Payments"
+          free_amount: "Earned VIP Money (free)"
+          total_amount: "Purchased VIP Money"
+          total_transactions: "Purchase Translations"
+          last_payment: "Last Payment At"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"

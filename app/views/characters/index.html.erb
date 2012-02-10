@@ -7,7 +7,7 @@
 
       <%= render("characters/attributes", :character => current_character) %>
 
-      <%= render("layouts/fan_specials") if current_user.show_fan_specials? %>
+      <%= render("layouts/fan_specials") if show_fan_specials? %>
     </td>
 
     <td class="wall">
