@@ -12,8 +12,8 @@
 
     <div id="upgrade_list">
       <div class="info">
-        <div><%= t(".price", :amount => @recipe.price) %></div>
-        <div><%= t(".tokens", :amount => current_character.upgrade_tokens) %></div>
+        <div><%= t(".price", :amount => span_tag(number_to_currency(@recipe.price), :tokens)).html_safe %></div>
+        <div><%= t(".tokens", :amount => span_tag(number_to_currency(current_character.upgrade_tokens), :tokens)).html_safe %></div>
       </div>
 
       <% if @maximum_amount > 0 %>

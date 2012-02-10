@@ -2,8 +2,8 @@ en:
   item_upgrades:
     show:
       title: "Item Upgrade"
-      price: "Upgrade price: %{amount}"
-      tokens: "Your tokens: %{amount}"
+      price: "Upgrade price: %{amount} tokens"
+      tokens: "You have %{amount} tokens"
       items_to_upgrade: "Items to upgrade: "
       get_tokens: "Get more tokens to upgrade your weapons!"
       buttons:
