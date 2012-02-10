@@ -19,5 +19,7 @@ class ItemsController < ApplicationController
   
   def show
     @item = Item.find(params[:id])
+    
+    render :layout => 'ajax'
   end
 end

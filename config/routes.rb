@@ -1,144 +1,141 @@
 GameEngine::Application.routes.draw do
-  # TODO: change to rails 3 way
   namespace :admin do
-    resources :item_groups,
-      :member => {
-        :change_position  => :put,
-        :change_state     => :put
-      } do
-        resources :items, :only => :index,
-          :collection => { :balance => :any }
+    resources :item_groups do
+      member do 
+        put 'change_position'
+        put 'change_state'
       end
-
-    resources :items,
-      :collection => {
-        :balance => :any
-      },
-      :member => {
-        :change_state => :put
-      }
-    resources :mission_groups,
-      :member => {
-        :change_position  => :put,
-        :change_state     => :put
-      }
       
-    resources(:missions,
-      :collection => {:balance => :any},
-      :member => {
-        :change_position  => :put,
-        :change_state     => :put
-      }
-    ) do
+      resources :items, :only => :index do
+        match 'balance', :on => :collection
+      end
+    end
+
+    resources :items do
+      collection do
+        match 'balance'
+      end
+      
+      member do
+        put 'change_state'
+      end
+    end
+    
+    resources :mission_groups do
+      member do
+        put 'change_position'
+        put 'change_state'
+      end
+    end
+      
+    resources :missions do
+      collection do 
+        match 'balance'
+      end
+      
+      member do
+        put 'change_position'
+        put 'change_state'
+      end
+    
       resources :mission_levels
     end
     
-    resources :mission_levels, :only => [],
-      :member => {
-        :change_position => :put
-      }
+    resources :mission_levels, :only => [] do
+      put 'change_position', :on => :member
+    end
     
-    resources :messages,
-      :member => {
-        :change_state => :put
-      }
+    resources :messages do
+      put 'change_state', :on => :member
+    end
 
-    resources :property_types,
-      :member => {
-        :change_state => :put
-      }
+    resources :property_types do
+      put 'change_state', :on => :member
+    end
       
     resources :payouts,       :only => [:new]
     resources :requirements,  :only => [:new]
     resources :effects,       :only => [:new]
 
     resources :promotions
-    resources :statistics, 
-      :only => :index,
-      :collection => {
-        :user       => :any,
-        :vip_money  => :any,
-        :level      => :any,
-        :visits     => :any
-      }
+    resources :statistics, :only => :index do
+      collection do
+        match 'user'
+        match 'vip_money'
+        match 'level'
+        match 'visits'
+      end
+    end
 
-    resources :tips,
-      :member => {
-        :change_state => :put
-      }
+    resources :tips do
+      put 'change_state', :on => :member
+    end
+    
     resources :translations
     resources :assets
 
-    resources :character_types,
-      :member => {
-        :change_state => :put
-      }
+    resources :character_types do
+      put 'change_state', :on => :member
+    end
 
-    resources :help_pages,
-      :member => {
-        :change_state => :put
-      }
+    resources :help_pages do
+      put 'change_state', :on => :member
+    end
 
     resources :settings
 
-    resource :global_task, 
-      :member => {
-        :delete_users   => :delete,
-        :restart        => :post,
-        :update_styles  => :post,
-        :clear_memcache => :post
-      }
-    resources :characters, :only => [:index, :edit, :update],
-      :collection => {
-        :search => :any,
-        :payout => :any
-      }
+    resource :global_task do
+      member do
+        delete 'delete_users'
+        post 'restart'
+        post 'update_styles'
+        post 'clear_memcache'
+      end
+    end
+    
+    resources :characters, :only => [:index, :edit, :update] do
+      collection do
+        match 'search'
+        match 'payout'
+      end
+    end
+      
     resources :users
 
     resources :vip_money_operations, :only => :index
 
-    resources :item_collections,
-      :new => {
-        :add_item => :any
-      },
-      :member => {
-        :change_state => :put
-      }
+    resources :item_collections, :path_names => {:new => :add_item} do
+      put 'change_state', :on => :member
+    end
 
-    resources :monster_types,
-      :member => {
-        :change_state => :put
-      }
+    resources :monster_types do
+      put 'change_state', :on => :member
+    end
 
     resources :item_sets,
-      :new => { :add_item => :any }
+      :path_names => { :new => :add_item }
 
-    resources :stories,
-      :member => {
-        :change_state => :put
-      }
+    resources :stories do
+      put 'change_state', :on => :member
+    end
 
-    resources :global_payouts,
-      :member => {
-        :change_state => :put
-      }
+    resources :global_payouts do
+      put 'change_state', :on => :member
+    end
       
-    resources :credit_packages,
-      :member => {
-        :change_state => :put
-      }
+    resources :credit_packages do
+      put 'change_state', :on => :member
+    end
 
-    resources :contests,
-      :member => {
-        :change_state => :put
-      } do
+    resources :contests do
+      put 'change_state', :on => :member
+      
       resources :contest_groups
     end
     
-    resources :achievement_types,
-      :member => {
-        :change_state => :put
-      }
+    resources :achievement_types do
+      put 'change_state', :on => :member
+    end
     
     resources :pictures, :only => [:new]
     

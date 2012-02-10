@@ -18,7 +18,7 @@ class Statistics
   end
 
   def scope=(value)
-    if value.class == ActiveRecord::NamedScope::Scope
+    if value.class == ActiveRecord::Scoping::Named
       @scope = value
     else
       @scope = default_scope.scoped(value)
