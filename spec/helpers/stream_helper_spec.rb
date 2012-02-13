@@ -49,7 +49,9 @@ describe StreamHelper do
     
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
-        :interpolate  => 'text'
+        :interpolate  => 'text',
+        :pictures?    => true,
+        :pictures     => mock("image", :url => "1px.gif")
       )
       
       Story.should_receive(:by_alias).with(:item_purchased).and_return([@story])
