@@ -34,6 +34,18 @@ class Monster < ActiveRecord::Base
         app_request.expire!
       end
     end
+    
+    after_transition :on => :win do |monster|
+      monster.monster_fights.each do |fight|
+        fight.reward_collectable? ? fight.add_to_defeated_fights : fight.add_to_finished_fights
+      end
+    end
+    
+    after_transition :on => :expire do |monster|
+      monster.monster_fights.each do |fight|
+        fight.add_to_finished_fights
+      end
+    end
   end
 
   delegate :name, :pictures, :pictures?, :health, :level, :experience, :money, :requirements, :effects, :effects?, :effect, :description,
@@ -67,6 +79,14 @@ class Monster < ActiveRecord::Base
   def will_get_reward?(character)
     damage.reached_reward_minimum?(character) &&
       damage.position(character) < monster_type.number_of_maximum_reward_collectors
+  end
+  
+  def remove_at
+    if defeated_at
+      defeated_at + monster_type.reward_time.hours
+    else
+      expire_at + monster_type.wait_time.hours
+    end
   end
 
   protected
