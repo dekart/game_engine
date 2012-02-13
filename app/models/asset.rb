@@ -7,9 +7,9 @@ class Asset < ActiveRecord::Base
 
   class << self
     def [](value)
-      logger.silence do
+      #logger.silence do
         find_by_alias(value.to_s)
-      end
+      #end
     end
 
     def sass_path

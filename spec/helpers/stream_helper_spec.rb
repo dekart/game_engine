@@ -49,13 +49,11 @@ describe StreamHelper do
     
     it 'should not fail with custom story' do
       @story = mock_model(Story, 
-        :interpolate  => 'text',
-        :pictures?    => true,
-        :pictures     => mock("image", :url => "/path/to/image.jpg")
+        :interpolate  => 'text'
       )
       
       Story.should_receive(:by_alias).with(:item_purchased).and_return([@story])
-
+  
       lambda{
         helper.stream_dialog(:item_purchased, @item)
       }.should_not raise_exception
