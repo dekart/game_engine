@@ -29,23 +29,7 @@ class Monster < ActiveRecord::Base
       monster.defeated_at = Time.now
     end
     
-    after_transition :on => [:win, :expire] do |monster|
-      monster.app_requests.for_expire.each do |app_request|
-        app_request.expire!
-      end
-    end
-    
-    after_transition :on => :win do |monster|
-      monster.monster_fights.each do |fight|
-        fight.reward_collectable? ? fight.add_to_defeated_fights : fight.add_to_finished_fights
-      end
-    end
-    
-    after_transition :on => :expire do |monster|
-      monster.monster_fights.each do |fight|
-        fight.add_to_finished_fights
-      end
-    end
+    after_transition :on => [:win, :expire], :do => [:expire_app_requests, :update_fight_lists]
   end
 
   delegate :name, :pictures, :pictures?, :health, :level, :experience, :money, :requirements, :effects, :effects?, :effect, :description,
@@ -85,10 +69,10 @@ class Monster < ActiveRecord::Base
     if defeated_at
       defeated_at + monster_type.reward_time.hours
     else
-      expire_at + monster_type.wait_time.hours
+      expire_at + monster_type.respawn_time.hours
     end
   end
-
+  
   protected
 
   def assign_initial_attributes
@@ -121,5 +105,23 @@ class Monster < ActiveRecord::Base
 
   def check_winning_status
     win! if progress? and hp == 0
+  end
+  
+  def expire_app_requests
+    app_requests.for_expire.each do |app_request|
+      app_request.expire!
+    end
+  end
+
+  def update_fight_lists
+    if won?
+      monster_fights.each do |fight|
+        fight.reward_collectable? ? fight.add_to_defeated_fights : fight.add_to_finished_fights
+      end
+    elsif expired?
+      monster_fights.each do |fight|
+        fight.add_to_finished_fights
+      end
+    end
   end
 end

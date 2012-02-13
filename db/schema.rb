@@ -696,7 +696,7 @@ ActiveRecord::Schema.define(:version => 20120210084301) do
     t.integer  "maximum_reward_collectors"
     t.boolean  "power_attack_enabled",                        :default => true
     t.text     "effects"
-    t.integer  "wait_time",                                   :default => 24
+    t.integer  "respawn_time",                                :default => 24
     t.integer  "reward_time",                                 :default => 24
   end
 
@@ -750,7 +750,7 @@ ActiveRecord::Schema.define(:version => 20120210084301) do
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id"
-    t.string   "owner_type"
+    t.string   "owner_type",         :limit => 100, :default => ""
     t.string   "style"
     t.string   "image_file_name",                   :default => "", :null => false
     t.string   "image_content_type", :limit => 100, :default => "", :null => false
@@ -918,7 +918,6 @@ ActiveRecord::Schema.define(:version => 20120210084301) do
     t.string   "tutorial_step",          :limit => 50,  :default => ""
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
-    t.text     "restrictions"
   end
 
   add_index "users", ["created_at"], :name => "index_users_on_created_at"

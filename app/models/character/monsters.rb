@@ -15,8 +15,8 @@ class Character
     end
 
     module MonsterFightsAssociationExtension
-      def redis_key(str)
-        "character_#{proxy_owner.id}_#{str}_monster_fight_ids"
+      def redis_key(name)
+        "character_#{proxy_owner.id}_#{name}_monster_fight_ids"
       end
       
       def add_to_active(fight)
