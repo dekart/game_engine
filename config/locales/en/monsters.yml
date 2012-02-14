@@ -7,11 +7,14 @@ en:
       available: "Available Monsters"
       locked: "Locked Monster (unlocks at level %{level})"
       previous: "Defeated Monsters"
+      finished: "Recently Defeated Monsters"
       buttons:
         attack: "Attack"
         engage: "Engage"
         view: "View"
         reward: "Get Reward"
+    finished:
+      previous: "Recently Defeated Monsters"
     show:
       health: "%{monster}'s Health"
     progress:

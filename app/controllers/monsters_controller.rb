@@ -1,14 +1,16 @@
 class MonstersController < ApplicationController
   def index
-    monster_fights = current_character.monster_fights.current
-
-    @active_monster_fights = monster_fights.select{|f| f.monster.progress? || f.reward_collectable? }.sort_by{|f| f.time_remaining }
-    @previous_monster_fights = monster_fights - @active_monster_fights
-
-    @monster_types  = current_character.monster_types.available_for_fight
+    @defeated_monster_fights = current_character.monster_fights.defeated
+    @active_monster_fights   = current_character.monster_fights.active
+    
     @locked_monster = current_character.monster_types.available_in_future.first
-
-    render :index
+    @monster_types  = current_character.monster_types.available_for_fight
+  end
+  
+  def finished
+    @finished_monster_fights = current_character.monster_fights.finished
+    
+    render :layout => 'ajax'
   end
 
   def show
