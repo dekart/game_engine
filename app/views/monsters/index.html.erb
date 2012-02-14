@@ -4,6 +4,19 @@
 
 <%= render('layouts/promo_block', :context => :monsters) %>
 
+<% unless @defeated_monster_fights.empty? %>
+  <div id="previous_monsters" class="monster_list clearfix">
+    <h2><%= t(".previous") %></h2>
+
+    <% @defeated_monster_fights.each do |fight| %>
+      <%= render("monsters/preview/completed", 
+            :monster  => fight.monster, 
+            :fight    => fight
+          ) %>
+    <% end %>
+  </div>
+<% end %>
+
 <% unless @active_monster_fights.empty? %>
   <div id="current_monsters" class="monster_list clearfix">
     <h2><%= t(".current") %></h2>
@@ -35,15 +48,8 @@
   </div>
 <% end %>
 
-<% unless @previous_monster_fights.empty? %>
-  <div id="previous_monsters" class="monster_list clearfix">
-    <h2><%= t(".previous") %></h2>
-
-    <% @previous_monster_fights.each do |fight| %>
-      <%= render("monsters/preview/completed", 
-            :monster  => fight.monster, 
-            :fight    => fight
-          ) %>
-    <% end %>
-  </div>
-<% end %>
+<div id="finished_fights">
+  <%= link_to(t(".finished"), finished_monsters_path,
+        :remote => true
+      ) %>
+</div>

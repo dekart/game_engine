@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208073952) do
+ActiveRecord::Schema.define(:version => 20120210084301) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -629,6 +629,8 @@ ActiveRecord::Schema.define(:version => 20120208073952) do
     t.integer  "maximum_reward_collectors"
     t.boolean  "power_attack_enabled",                        :default => true
     t.text     "effects"
+    t.integer  "respawn_time",                                :default => 24
+    t.integer  "reward_time",                                 :default => 24
   end
 
   create_table "monsters", :force => true do |t|

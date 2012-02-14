@@ -2,7 +2,8 @@ class Character
   module Monsters
     def self.included(base)
       base.class_eval do
-        has_many :monster_fights
+        has_many :monster_fights,
+          :extend   => MonsterFightsAssociationExtension
 
         has_many :monsters,
           :through  => :monster_fights
@@ -10,6 +11,56 @@ class Character
         has_many :monster_types,
           :through  => :monsters,
           :extend   => MonsterTypeAssociationExtension
+      end
+    end
+
+    module MonsterFightsAssociationExtension
+      def redis_key(name)
+        "character_#{proxy_association.owner.id}_#{name}_monster_fight_ids"
+      end
+      
+      def add_to_active(fight)
+        $redis.sadd(redis_key(:active), fight.id)
+      end
+
+      def add_to_defeated(fight)
+        $redis.srem(redis_key(:active), fight.id)
+        
+        $redis.zadd(redis_key(:defeated), fight.monster.remove_at.to_i, fight.id)
+      end
+      
+      def add_to_finished(fight)
+        $redis.srem(redis_key(:active), fight.id)
+        $redis.zrem(redis_key(:defeated), fight.id)
+        
+        $redis.zadd(redis_key(:finished), fight.monster.remove_at.to_i, fight.id)
+      end
+      
+      def active
+        where(:id => $redis.smembers(redis_key(:active)))
+      end
+      
+      def defeated
+        $redis.zremrangebyscore(redis_key(:defeated), 0, Time.now.to_i)
+        
+        where(:id => $redis.zrange(redis_key(:defeated), 0, -1))
+      end
+      
+      def finished
+        $redis.zremrangebyscore(redis_key(:finished), 0, Time.now.to_i)
+        
+        where(:id => $redis.zrange(redis_key(:finished), 0, -1))
+      end
+      
+      def current
+        $redis.zremrangebyscore(redis_key(:defeated), 0, Time.now.to_i)
+        $redis.zremrangebyscore(redis_key(:finished), 0, Time.now.to_i)
+        
+        ids = $redis.smembers(redis_key(:active)) + 
+          $redis.zrange(redis_key(:defeated), 0, -1) + 
+          $redis.zrange(redis_key(:finished), 0, -1)
+          
+        where(:id => ids)
       end
     end
 

@@ -263,6 +263,7 @@ GameEngine::Application.routes.draw do
 
   resources :monsters do
     post 'reward', :on => :member
+    get 'finished', :on => :collection
   end
     
   resources :stories, :only => :show

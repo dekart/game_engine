@@ -1,0 +1,16 @@
+<% content = capture do %>
+  <% unless @finished_monster_fights.empty? %>
+    <div id="previous_monsters" class="monster_list clearfix">
+      <h2><%= t(".previous") %></h2>
+  
+      <% @finished_monster_fights.each do |fight| %>
+        <%= render("monsters/preview/completed", 
+              :monster  => fight.monster, 
+              :fight    => fight
+            ) %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+$('#finished_fights').html('<%= escape_javascript(content)%>');
