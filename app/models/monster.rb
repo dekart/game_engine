@@ -73,6 +73,10 @@ class Monster < ActiveRecord::Base
     end
   end
   
+  def chat_id
+    "monster_%09d" % id 
+  end
+  
   protected
 
   def assign_initial_attributes
