@@ -123,7 +123,7 @@ namespace :app do
     
     desc "Remove old monster chats"
     task :monster_chats => :environment do
-      recent_monster = Monster.first(:conditions => ["updated_at < ?", 1.day.ago], :order => :id)
+      recent_monster = Monster.first(:conditions => ["updated_at > ?", 3.days.ago], :order => :id)
       
       if recent_monster
         old_monster_chat_keys = $redis.keys("chat_monster_*")
