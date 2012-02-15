@@ -1,6 +1,6 @@
 namespace :app do
   desc "Cleanup old data"
-  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:events app:cleanup:tracking_requests}
+  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:events app:cleanup:tracking_requests app:cleanup:monster_chats}
 
   namespace :cleanup do
     def remove_data(scope, batch = 100)
@@ -119,6 +119,28 @@ namespace :app do
       
       puts "Done!"
       
+    end
+    
+    desc "Remove old monster chats"
+    task :monster_chats => :environment do
+      recent_monster = Monster.first(:conditions => ["updated_at > ?", 3.days.ago], :order => :id)
+      
+      if recent_monster
+        old_monster_chat_keys = $redis.keys("chat_monster_*")
+        old_monster_chat_keys.reject!{|key| key >= "chat_#{recent_monster.chat_id}" }
+        
+        puts "Removing #{old_monster_chat_keys.size} old monster chats from redis..."
+        
+        $redis.del(*old_monster_chat_keys) unless old_monster_chat_keys.empty?
+        
+        
+        old_monster_online_keys = $redis.keys("online_characters_chat_monster_*")
+        old_monster_online_keys.reject!{|key| key >= "online_characters_chat_#{recent_monster.chat_id}" }
+        
+        puts "Removing #{old_monster_online_keys.size} old monster online-lists from redis..."
+        
+        $redis.del(*old_monster_online_keys) unless old_monster_online_keys.empty?
+      end
     end
   end
 end
