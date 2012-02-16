@@ -14,12 +14,13 @@ en:
         deselect_all: 'Deselect All'
       buttons:
         send: 'Send'
+    list:
+      buttons:
+        ignore: 'Ignore this request'
     index:
       title: 'Friend Requests'
       note: "Here you can accept requests from your friends. You can only accept one gift per person every %{hours} hours."
       empty_set: "Your friends haven't sent you any requests yet."
-      buttons:
-        ignore: 'Ignore this request'
       tabs:
         clan_invite: "Clan Invite (%{count})"
         gift: "Gift (%{count})"  
