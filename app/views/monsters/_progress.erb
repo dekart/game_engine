@@ -20,8 +20,8 @@
             ) %>
 
         <% if monster.monster_type.power_attack_enabled? %>
-          <%= link_to(button(:power_attack, :factor => Setting.i(:monster_fight_power_attack_factor), :power_attack => 1),
-                monster_path(monster),
+          <%= link_to(button(:power_attack),
+                monster_path(monster, :power_attack => 1),
                 :remote => true,
                 :method => :put,
                 :"data-click-once" => true,
