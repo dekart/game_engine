@@ -309,4 +309,5 @@ GameEngine::Application.routes.draw do
   
   match "/character_status" => "character_status#show"
   match "/chats/:chat_id" => "chat_messages#index"
+  match "/cil/:key" => "short_links#show"
 end
