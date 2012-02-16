@@ -1,28 +1,8 @@
 namespace :app do
   desc 'Setup application'
-  task :setup => [:environment, 'setup:assets', 'setup:stylesheets', 'setup:settings', 'setup:experience', 'setup:subscriptions']
+  task :setup => [:environment, 'setup:settings', 'setup:experience', 'setup:subscriptions']
   
   namespace :setup do
-    desc "Setup application stylesheets"
-    task :stylesheets => :environment do
-      Asset.update_sass
-
-      Sass::Plugin.update_stylesheets
-    end
-
-    desc "Re-import development assets. All existing assets will be destroyed!"
-    task :assets, :destroy_old, :needs => :environment do |task, options|
-      if options["destroy_old"] == "true" || ENV['DESTROY_ASSETS'] == 'true'
-        puts "Destroying existing assets..."
-
-        Asset.destroy_all
-      end
-
-      require Rails.root.join("db", "seeds", "assets")
-
-      Rake::Task["app:setup:stylesheets"].execute
-    end
-
     desc "Re-import settings"
     task :settings => :environment do
       require Rails.root.join("db", "seeds", "settings")

@@ -29,10 +29,11 @@ gem 'jquery-rails'
 
 group :development do
   gem "capistrano",   "~> 2.9.0"
-  #gem 'ruby-debug19', :require => 'ruby-debug'
+  gem "capistrano-ext"
   gem "net-scp",      "~> 1.0.4"
   
   # TODO: bug with ruby-debug19 http://stackoverflow.com/questions/8251349/ruby-threadptr-data-type-error
+  #gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
   gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
   gem 'ruby-debug19', :require => 'ruby-debug'
@@ -42,6 +43,8 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier',     '>= 1.0.3'
+  gem 'execjs'
+  gem 'therubyracer'
 end
 
 group :test do
