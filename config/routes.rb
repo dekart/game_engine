@@ -246,11 +246,11 @@ GameEngine::Application.routes.draw do
 
   resources :notifications, :only => [] do
     member do
-     post 'disable'
+      post 'disable'
     end 
     
     collection do
-      post 'settings' 
+      get 'settings' 
       post 'update_settings'
     end
   end

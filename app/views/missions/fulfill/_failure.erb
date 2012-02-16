@@ -4,6 +4,7 @@
       ) if Setting.b(:stream_dialog_enabled) && Setting.b(:mission_help_enabled) %>
 
   <%= link_to(button(:try_again), fulfill_mission_path(mission),
+        :remote => true,
         :method => :post,
         :"data-click-once" => true,
         :class => "fulfill_again button"

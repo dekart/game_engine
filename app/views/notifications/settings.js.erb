@@ -3,8 +3,8 @@
   
   <div class="note"><%= t('.note') %></div>
 
-  <%= form_for(current_character, :url => update_settings_notifications_path, :remote => true,
-       :onsubmit => '$.dialog.close()') do |form| %>
+  <%= form_for(current_character, :url => update_settings_notifications_path, 
+        :method => :post, :remote => true) do |form| %>
   
     <div class="notifications">
       <% @notifications.each do |notification| %>
