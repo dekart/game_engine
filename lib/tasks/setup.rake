@@ -11,7 +11,7 @@ namespace :app do
     end
 
     desc "Re-import development assets. All existing assets will be destroyed!"
-    task :assets, :destroy_old, :needs => :environment do |task, options|
+    task :assets, [:destroy_old] => :environment do |task, options|
       if options["destroy_old"] == "true" || ENV['DESTROY_ASSETS'] == 'true'
         puts "Destroying existing assets..."
 
@@ -54,7 +54,7 @@ namespace :app do
     end
     
     desc "Generate experience table for levels"
-    task :experience, :regenerate, :needs => :environment do |task, options|
+    task :experience, [:regenerate] => :environment do |task, options|
       if Character::Levels::EXPERIENCE.empty? || options['regenerate'] == 'true'
         puts 'Generating experience table for levels...'
         
