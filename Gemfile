@@ -8,6 +8,7 @@ gem "will_paginate",    "~> 3.0.2"
 gem "paperclip",        "~> 2.5.0"
 gem "aws-s3",           "~> 0.6.2"
 gem "delayed_job_active_record", "~> 0.3.1"
+gem 'daemons'
 gem "json_pure",        "~> 1.6.5"
 gem "haml",             "~> 3.1.4"
 gem "RedCloth",         "~> 4.2.9"

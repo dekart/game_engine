@@ -66,6 +66,7 @@ GEM
     coffee-script-source (1.2.0)
     columnize (0.3.6)
     cubus-settingslogic (2.2.0)
+    daemons (1.1.8)
     database_cleaner (0.7.1)
     delayed_job (3.0.1)
       activesupport (~> 3.0)
@@ -222,6 +223,7 @@ DEPENDENCIES
   capistrano-ext
   coffee-rails (~> 3.2.1)
   cubus-settingslogic (~> 2.2.0)
+  daemons
   database_cleaner (~> 0.7.1)
   delayed_job_active_record (~> 0.3.1)
   execjs
