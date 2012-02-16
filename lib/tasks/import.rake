@@ -1,7 +1,7 @@
 namespace :app do
   namespace :import do
     desc "Import missions and mission groups"
-    task :missions, :file_path, :needs => :environment do |t, options|
+    task :missions, [:file_path] => :environment do |t, options|
       require 'csv'
       
       if File.file?(options.file_path)
@@ -60,7 +60,7 @@ namespace :app do
     end
   
     desc "Import items and item groups"
-    task :items, :folder_path, :needs => :environment do |t, options|
+    task :items, [:folder_path] => :environment do |t, options|
       require 'csv'
       
       file_path = File.join(options.folder_path, "items.csv")
