@@ -34,7 +34,7 @@ namespace :app do
     end
     
     desc "Generate experience table for levels"
-    task :experience, :regenerate, :needs => :environment do |task, options|
+    task :experience, [:regenerate] => :environment do |task, options|
       if Character::Levels::EXPERIENCE.empty? || options['regenerate'] == 'true'
         puts 'Generating experience table for levels...'
         
