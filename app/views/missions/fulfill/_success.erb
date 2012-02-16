@@ -1,5 +1,6 @@
 <% builder.buttons do %>
   <%= link_to(button(:continue), fulfill_mission_path(mission),
+        :remote => true,
         :method => :post,
         :"data-click-once" => true,
         :class => "fulfill_again button"
