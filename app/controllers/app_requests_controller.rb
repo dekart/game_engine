@@ -30,7 +30,7 @@ class AppRequestsController < ApplicationController
     @recipients = Array.wrap(params[:to])
 
     @recipients.each do |recipient_id|
-      AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id, :type => @request_type)
+      AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id)
     end
   end
   
@@ -51,7 +51,27 @@ class AppRequestsController < ApplicationController
   end
 
   def invite
+    invite_type = params[:type]
+    ids = []
 
+    case invite_type
+    when "clan_invite"
+      ids = AppRequest::ClanInvite.ids_to_exclude_for(current_character)
+    when "invitation"
+      ids = AppRequest::Invitation.ids_to_exclude_for(current_character)
+    when "gift"
+      ids = AppRequest::Gift.ids_to_exclude_for(current_character)
+    when "property_worker"
+      ids = AppRequest::PropertyWorker.ids_to_exclude_for(current_character)
+    end
+
+    response = {
+      :exclude_ids => { invite_type.to_sym => ids },
+      :dialog_template => render("invite_dialog.json").first
+    }
+
+    self.content_type = Mime::JSON
+    self.response_body = response.to_json
   end
 
   protected

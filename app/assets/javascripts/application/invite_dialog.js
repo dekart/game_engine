@@ -382,7 +382,7 @@ var InviteDialog = (function(){
               var exclude_ids;
               var users;
 
-              $.get('/app_requests/invite', function(data){
+              $.getJSON('/app_requests/invite', {type: invite_type}, function(data){
 
                 exclude_ids = data.exclude_ids[invite_type];
                 users = $.map(response.data, function(user){
