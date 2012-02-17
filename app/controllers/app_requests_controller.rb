@@ -30,7 +30,7 @@ class AppRequestsController < ApplicationController
     @recipients = Array.wrap(params[:to])
 
     @recipients.each do |recipient_id|
-      AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id)
+      AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id, :type => @request_type)
     end
   end
   
@@ -49,7 +49,11 @@ class AppRequestsController < ApplicationController
     
     @app_request.ignore
   end
-  
+
+  def invite
+
+  end
+
   protected
   
   def page_for_redirect

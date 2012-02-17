@@ -270,6 +270,7 @@ GameEngine::Application.routes.draw do
   
   resources :app_requests do
     put 'ignore', :on => :member
+    get 'invite', :on => :collection
   end
   
   resources :contests, :only => :show

@@ -2,7 +2,7 @@ en:
   app_requests:
     counter:
       text: "You have %{count} requests from your friends"
-    invite_dialog:
+    invite:
       note: 'Select the friends you would like to help. Requests will be sent in batches of 24.'
       search: 'Search'
       filters:
