@@ -34,7 +34,7 @@ $button_bg_color_hover: #F1F7FA
 $button_icons: true
 
 =button($icon, $width: '')
-  @if $width == ''
+  @if $width != ''
     width: $width
 
   @if $button_icons == true
