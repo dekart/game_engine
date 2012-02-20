@@ -49,6 +49,7 @@ en:
         clan_application_state: "Status of the application to join the clan"
         clan_state: "Status of the clan"
         clan_invitation_state: "Status of the invitation to join the clan"
+        items_collection: "Items collection"
       buttons: 
         save: "Save"
       
