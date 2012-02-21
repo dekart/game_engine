@@ -245,7 +245,7 @@ GameEngine::Application.routes.draw do
   resources :help_pages, :only => :show
 
   resources :notifications, :only => [] do
-    member do
+    collection do
       post 'disable'
     end 
     

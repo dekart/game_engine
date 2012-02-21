@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
   def disable
-    @notification = current_character.notifications.find(params[:id])
+    @notification = current_character.notifications.list.detect{|notification| notification.type == params[:type].to_sym }
 
     @notification.disable
   end
