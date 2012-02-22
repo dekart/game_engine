@@ -1,3 +1,5 @@
+require 'ostruct'
+
 class Statistics
   class Levels < self
     FILTERS = %w{all 3days week}
