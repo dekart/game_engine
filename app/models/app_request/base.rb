@@ -188,26 +188,24 @@ class AppRequest::Base < ActiveRecord::Base
       ignore!
     else
       self.data = JSON.parse(facebook_request['data']) if facebook_request['data']
-  
-      becomes(request_class_from_data).tap do |request|
-        # Ensure that the new type will be saved correctly
-        request.type = request.class.sti_name
-      
-        request.sender = User.find_by_facebook_id(facebook_request['from']['id']).character
-        request.receiver_id = facebook_request['to']['id'] if facebook_request['to']
 
-        request.sent_at = Time.parse(facebook_request["created_time"]).utc
+      # Ensure that the new type will be saved correctly
+      self.type = request_class_from_data.name
+
+      self.sender = User.find_by_facebook_id(facebook_request['from']['id']).character
+      self.receiver_id = facebook_request['to']['id'] if facebook_request['to']
+
+      self.sent_at = Time.parse(facebook_request["created_time"]).utc
+
+      transaction do
+        save!
         
-        request.transaction do
-          request.save!
-          
-          # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
-          if data && data['target_id'] && data['target_type']
-            request.target = data['target_type'].constantize.find(data['target_id'])
-          end
-          
-          request.process
+        # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
+        if data && data['target_id'] && data['target_type']
+          self.target = data['target_type'].constantize.find(data['target_id'])
         end
+
+        self.process
       end
     end
   end
