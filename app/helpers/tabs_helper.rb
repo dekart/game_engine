@@ -11,8 +11,10 @@ module TabsHelper
       @tab_contents = []
     end
 
-    def tab(id, name = nil, &block)
-      @tab_names << [id, name || t(".tabs.#{id}")]
+    def tab(id, *args, &block)
+      name, url = args
+      
+      @tab_names << [id, name || t(".tabs.#{id}"), url]
       @tab_contents << [id, block]
     end
 
@@ -22,8 +24,10 @@ module TabsHelper
       yield(self)
 
       result << '<ul>'
-
-      result << @tab_names.map{|t| %{<li><a href="##{ t.first }">#{ t.last }</a></li>} }.join
+      
+      @tab_names.each do |id, name, url|
+        result << %{<li>#{ link_to(name, url ? url : "##{id}") }</li>}
+      end
 
       result << '</ul>'
 
