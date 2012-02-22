@@ -1,0 +1,9 @@
+<% content = capture do %>
+  <%= form_for([:admin, @translation], :remote => true) do |form| %>
+    <%= form.text_field :value, :required => true %>
+  
+    <%= form.submit %>
+  <% end %>
+<% end %>
+
+$("#<%= translation_id(@translation.key) %>").html('<%= escape_javascript(content) %>');
