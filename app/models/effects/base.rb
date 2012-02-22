@@ -1,10 +1,5 @@
 module Effects
   class Base
-    class Errors
-      def on(*args)
-      end
-    end
-    
     BASIC_TYPES = [:attack, :defence, :health, :energy, :stamina, 
       :hp_restore_rate, :sp_restore_rate, :ep_restore_rate, :damage
     ]
@@ -54,7 +49,7 @@ module Effects
     end
 
     def errors
-      Errors.new
+      []
     end
     
     def value=(value)
