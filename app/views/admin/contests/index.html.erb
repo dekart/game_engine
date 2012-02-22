@@ -16,7 +16,7 @@
     </tr>
     
     <% @contests.each do |contest| %>
-      <% content_tag_for(:tbody, contest) do %>
+      <%= content_tag_for(:tbody, contest) do %>
         <tr>
           <td class="name"><%= link_to(contest.name, edit_admin_contest_path(contest)) %></td>
           <td class="started_at"><%= contest.started_at %></td>

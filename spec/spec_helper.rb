@@ -51,6 +51,7 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+    $redis.flushdb
   end
 end
 

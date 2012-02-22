@@ -1,5 +1,11 @@
-<table cellspacing="0" cellpadding="0">
-  <% @items.each do |item| %>
-    <%= render(item) %>
+<div class="item_list clearfix">
+  <% items.each do |item| %>
+    <%= render('item', :item => item) %>
   <% end %>
-</table>
+
+  <% if local_assigns[:next_items] && !next_items.empty? %>
+    <% next_items.each do |item| %>
+      <%= render('item_locked', :item => item) %>
+    <% end %>
+  <% end %>
+</div>

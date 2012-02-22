@@ -1,6 +1,6 @@
 namespace :app do
   desc "Cleanup old data"
-  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests}
+  task :cleanup => %w{app:cleanup:fights app:cleanup:bank_operations app:cleanup:news app:cleanup:app_requests app:cleanup:tracking_requests app:cleanup:monster_chats}
 
   namespace :cleanup do
     def remove_data(scope, batch = 100)
@@ -70,6 +70,65 @@ namespace :app do
       puts "Removing old application requests..."
 
       remove_data(old_requests)
+    end
+    
+    desc "Remove old tracking requests"
+    task :tracking_requests => :environment do
+      puts "Removing tracking requests..."
+
+      date_limit = 30
+
+      while true
+        date = Date.today - date_limit
+      
+        if $redis.exists("tracking_requests_#{ date }")
+          $redis.del("tracking_requests_#{ date }")
+        else
+          break
+        end
+      
+        date_limit += 1
+      end
+      
+      time_limit = 48
+      hours = time_limit - (Time.now.hour + 24)
+    
+      if hours > 0
+        date = Date.today - 3
+        hours = 24 - hours
+        
+        hours.downto(1){|hour| $redis.del("tracking_requests_hourly_#{ date }_#{ hour }")}
+      else
+        date = Date.today - 2
+        hours = 24
+    
+        hours.downto(1){|hour| $redis.del("tracking_requests_hourly_#{ date }_#{ hour }")}
+      end
+      
+      puts "Done!"
+      
+    end
+    
+    desc "Remove old monster chats"
+    task :monster_chats => :environment do
+      recent_monster = Monster.first(:conditions => ["updated_at > ?", 3.days.ago], :order => :id)
+      
+      if recent_monster
+        old_monster_chat_keys = $redis.keys("chat_monster_*")
+        old_monster_chat_keys.reject!{|key| key >= "chat_#{recent_monster.chat_id}" }
+        
+        puts "Removing #{old_monster_chat_keys.size} old monster chats from redis..."
+        
+        $redis.del(*old_monster_chat_keys) unless old_monster_chat_keys.empty?
+        
+        
+        old_monster_online_keys = $redis.keys("online_characters_chat_monster_*")
+        old_monster_online_keys.reject!{|key| key >= "online_characters_chat_#{recent_monster.chat_id}" }
+        
+        puts "Removing #{old_monster_online_keys.size} old monster online-lists from redis..."
+        
+        $redis.del(*old_monster_online_keys) unless old_monster_online_keys.empty?
+      end
     end
   end
 end

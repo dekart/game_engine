@@ -1,7 +1,7 @@
 namespace :app do
   namespace :export do
     desc "Export items in CSV format"
-    task :items, :folder_path, :needs => :environment do |task, options|
+    task :items, [:folder_path] => :environment do |task, options|
       require 'csv'
       
       File.open(File.join(options.folder_path, "items.csv"), 'w+') do |file|

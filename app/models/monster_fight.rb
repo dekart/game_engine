@@ -3,15 +3,6 @@ class MonsterFight < ActiveRecord::Base
   belongs_to :monster
 
   scope :top_damage, :order => "damage DESC", :include => :character
-  scope :current, Proc.new {
-    {
-      :joins => :monster,
-      :include => :monster,
-      :conditions => ["(monsters.defeated_at IS NULL AND monsters.expire_at >= :time) OR (monsters.defeated_at >= :time)",
-        {:time => Setting.i(:monsters_reward_time).hours.ago}
-      ]
-    }
-  }
   
   scope :own, 
     :joins      => :monster,
@@ -39,7 +30,7 @@ class MonsterFight < ActiveRecord::Base
   
   validates_uniqueness_of :character_id, :scope => :monster_id, :on => :create
   
-  after_create  :create_character_news
+  after_create  :create_character_news, :add_to_active_fights
   after_save    :update_damage_score
 
   # @power_attack - this is usual attack but effects multiplied by special factor
@@ -113,8 +104,10 @@ class MonsterFight < ActiveRecord::Base
       self.reward_collected = true
       
       character.monster_types.collected.clear_cache!
-
+      
       save!
+      
+      add_to_finished_fights
     end
   end
 
@@ -163,6 +156,18 @@ class MonsterFight < ActiveRecord::Base
       :experience => self.experience.to_i
     }
   end
+  
+  def add_to_active_fights
+    character.monster_fights.add_to_active(self)
+  end
+
+  def add_to_defeated_fights
+    character.monster_fights.add_to_defeated(self)
+  end
+  
+  def add_to_finished_fights
+    character.monster_fights.add_to_finished(self)
+  end
 
   protected
   
@@ -171,7 +176,7 @@ class MonsterFight < ActiveRecord::Base
 
       character.hp  -= @character_damage
       
-      @monster_damage += @boost.effect(:health) if @boost
+      @monster_damage += @boost.effect(:damage) if @boost
       monster.hp    -= @monster_damage
 
       self.damage   += @monster_damage
@@ -195,7 +200,7 @@ class MonsterFight < ActiveRecord::Base
       character.news.add(:monster_fight_start, :monster_fight_id => id)
       true
     end
-
+    
     def update_damage_score
       monster.damage.set(character, damage)
     end

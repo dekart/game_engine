@@ -22,47 +22,57 @@
     background-color: $item_group_current_bg_color
 
 
-#item_list table
-  width: 100%
-  height: auto
+.item_list
+  padding: 10px
 
-  td
-    padding: 10px 0
-    border-bottom: $shop_item_border
-    height: auto
+  .item
+    padding: 10px
+    margin: 0 10px 10px 0
+    width: 330px
+    border: $shop_item_border
+    float: left
 
-  .picture
-    width: 80px
+    .picture
+      width: 130px
+      height: 130px
+      float: left
 
-  .info
-    padding-right: 10px
+    .info
+      margin-left: 130px
 
-    .name
-      font-size: 16px
-      font-weight: bold
+      .name
+        font-size: 16px
+        font-weight: bold
 
-    .name, .description
-      margin-bottom: 10px
+      .name, .description
+        margin-bottom: 10px
 
-    .limit
-      color: $shop_item_limit_color
+      .payout
+        clear: none
 
-  .info, .payouts, .requirements
-    padding-right: 10px
+    .purchase_options
+      clear: left
 
-  .package_size
-    font-weight: normal
-    font-size: 12px
+      .package_size
+        font-weight: normal
+        font-size: 12px
 
-  .controls
-    text-align: right
-    width: 130px
+      .requirement
+        clear: none
 
-    select
-      margin: 5px
+      .controls
+        width: 130px
+        float: right
 
-    .buy
-      +button($shop_item_buy_icon)
+        select
+          margin: 5px
+
+        .buy
+          +button($shop_item_buy_icon)
+
+      .limit
+        color: $shop_item_limit_color
+
 
 
 #special_items

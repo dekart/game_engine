@@ -19,6 +19,12 @@ class User < ActiveRecord::Base
   }
   
   scope :with_email, {:conditions => "email != ''"}
+
+  scope :referred_by, Proc.new{|user|
+    {
+      :conditions => {:referrer_id => user.id}
+    }
+  }
   
   after_save :schedule_social_data_update,  :if => :access_token_changed?
   after_save :generate_personal_discount,   :if => :last_visit_at_changed?
@@ -96,7 +102,7 @@ class User < ActiveRecord::Base
   end
   
   def gender
-    GENDERS.index(self[:gender]) || :unknown
+    GENDERS.key(self[:gender]) || :unknown
   end
   
   def full_name

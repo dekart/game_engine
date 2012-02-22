@@ -1,5 +1,6 @@
 <% builder.buttons do %>
   <%= link_to(button(:continue), fulfill_mission_path(mission),
+        :remote => true,
         :method => :post,
         :"data-click-once" => true,
         :class => "fulfill_again button"
@@ -7,7 +8,7 @@
 
     <%= link_to_function(button(:request_help), stream_dialog(:mission_help, mission),
           :class => "request_help button"
-        ) if Setting.b(:stream_dialog_enabled) %>
+        ) if Setting.b(:stream_dialog_enabled) && Setting.b(:mission_help_enabled) %>
 <% end %>
 
 <% builder.success do %>

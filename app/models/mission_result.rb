@@ -53,7 +53,6 @@ class MissionResult
             @character.points += 1
 
             @mission_rank = @character.missions.check_completion!(@mission)
-            @character.save!
             @group_rank = @character.mission_groups.check_completion!(@mission_group)
 
             @character.news.add(:mission_complete,
@@ -75,7 +74,7 @@ class MissionResult
         end
         
         @payouts = level.applicable_payouts.apply(@character, payout_triggers, @mission)
-
+        @character.save!
       end
 
       @saved = true

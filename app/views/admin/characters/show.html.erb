@@ -1,0 +1,221 @@
+<%= admin_title(t('.title', :name => character_name(@character), :level => @character.level)) %>
+
+<div class="controls">
+  <%= link_to(t(".controls.index"), admin_characters_path) %>
+  <%= link_to(t(".controls.edit"), edit_admin_character_path(@character)) %>
+  <%= link_to(t(".controls.payouts"), payout_admin_characters_path(:ids => @character)) %>
+  <%= link_to(t(".controls.edit_user"), edit_admin_user_path(@character.user)) %>
+</div>
+
+<table>
+  <tr>
+    <td>
+      <h2><%= t('.attributes') %></h2>
+
+      <table class="data">
+        <tr>
+          <th><%= t('.attribute') %></th>
+          <th><%= t('.value') %></th>
+        </tr>
+
+        <% %w{level experience basic_money bank vip_money attack defence points}.each do |attr| %>
+          <tr>
+            <td><%= Character.human_attribute_name(attr) %></td>
+            <td><%= @character.send(attr) %></td>
+          </tr>
+        <% end %>
+
+        <% {:health => :hp, :energy => :ep, :stamina => :sp}.each do |attr, points| %>
+          <tr>
+            <td><%= Character.human_attribute_name(attr) %></td>
+            <td>
+              <%= t('.restorable',
+                    :current  => @character.send(points),
+                    :max      => @character.send("#{attr}_points"),
+                    :base     => @character.send(attr)
+                  ) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+
+      <h2><%= t('.inventory') %></h2>
+
+      <table class="data">
+        <tr>
+          <th><%= Item.human_name %></th>
+          <th><%= Inventory.human_attribute_name("amount") %></th>
+        </tr>
+
+        <% @character.inventories.sort_by{|i| i.name }.each do |inventory| %>
+          <tr>
+            <td><%= inventory.name %></td>
+            <td><%= inventory.amount %></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <h2><%= t('.properties') %></h2>
+
+      <table class="data">
+        <tr>
+          <th><%= Property.human_name %></th>
+          <th><%= Property.human_attribute_name("level") %></th>
+          <th><%= PropertyType.human_attribute_name("income") %></th>
+        </tr>
+
+        <% @character.properties.sort_by{|i| i.name }.each do |property| %>
+          <tr>
+            <td><%= property.name %></td>
+            <td><%= property.level %></td>
+            <td><%= t('.property_income', :value => property.income, :period => property.collect_period) %></td>
+          </tr>
+        <% end %>
+      </table>
+
+      <h2><%= t('.statistics') %></h2>
+
+      <table class="data">
+        <tr>
+          <th><%= t('.attribute') %></th>
+          <th><%= t('.value') %></th>
+        </tr>
+
+        <% %w{fights_won fights_lost missions_succeeded missions_completed relations_count missions_mastered killed_monsters_count total_monsters_damage achievement_points}.each do |attr| %>
+          <tr>
+            <td><%= Character.human_attribute_name(attr) %></td>
+            <td><%= @character.send(attr) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+
+    <td>
+      <h2><%= User.human_name %></h2>
+
+      <table class="data">
+        <tr>
+          <td><%= t('.game_profile')%></td>
+          <td>
+            <%= link_to(@character.id, character_url(@character.key, :canvas => :true),
+                  :target => :_blank
+                ) %>
+          </td>
+        </tr>
+
+        <tr>
+          <td><%= t('.fb_profile') %></td>
+          <td>
+            <%= link_to(fb_name(@character.user, :useyou => false, :linked => false), fb_profile_url(@character.user),
+                  :target => :_blank
+                ) %>
+          </td>
+        </tr>
+
+        <tr>
+          <td><%= Character.human_attribute_name("created_at") %></td>
+          <td>
+            <%= l(@character.user.created_at, :format => :long) %>
+            (<%= time_ago_in_words(@character.user.created_at) %>)
+          </td>
+        </tr>
+
+        <tr>
+          <td><%= User.human_attribute_name("signup_ip") %></td>
+          <td>
+            <%= @character.user.signup_ip %>
+          </td>
+        </tr>
+
+        <tr>
+          <td><%= User.human_attribute_name("last_visit_at") %></td>
+          <td>
+            <%= l(@character.user.last_visit_at, :format => :long) %>
+            (<%= time_ago_in_words(@character.user.last_visit_at) %>)
+          </td>
+        </tr>
+
+        <tr>
+          <td><%= User.human_attribute_name("last_visit_ip") %></td>
+          <td>
+            <%= @character.user.last_visit_ip %>
+          </td>
+        </tr>
+      </table>
+
+      <h2><%= t('.social.title')%></h2>
+
+      <% admin_character_social_stats(@character) do |s| %>
+        <table class="data">
+          <tr>
+            <td><%= User.human_attribute_name("referrer") %></td>
+            <td>
+              <% if referrer = @character.user.referrer %>
+                <%= link_to(character_name(referrer.character), admin_character_url(referrer)) %>
+              <% end %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= User.human_attribute_name("reference") %></td>
+            <td>
+              <%= @character.user.reference %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= t('.social.friends') %></td>
+            <td>
+              <%= s.friends %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= t('.social.in_game') %></td>
+            <td>
+              <%= s.friends_in_game %>
+            </td>
+          </tr>
+
+          <tr>
+            <td><%= t('.social.referrals') %></td>
+            <td>
+              <%= s.referrals %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+
+      <h2><%= t('.payments.title') %></h2>
+
+      <% admin_character_payment_stats(@character) do |s| %>
+        <table class="data">
+          <tr>
+            <td><%= t('.payments.free_amount') %></td>
+            <td><%= s.free_amount %></td>
+          </tr>
+
+          <tr>
+            <td><%= t('.payments.total_amount') %></td>
+            <td><%= s.total_amount %></td>
+          </tr>
+
+          <tr>
+            <td><%= t('.payments.total_transactions') %></td>
+            <td><%= s.total_transactions %></td>
+          </tr>
+
+          <tr>
+            <td><%= t('.payments.last_payment') %></td>
+            <td>
+              <% if s.last_payment_at %>
+                <%= l(s.last_payment_at, :format => :long) %>
+                (<%= time_ago_in_words(s.last_payment_at) %>)
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+    </td>
+  </tr>
+</table>

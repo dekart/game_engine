@@ -1,0 +1,148 @@
+<table id="premia" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="name"><%= t(".refill_energy.text") %></td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_energy_price)) %>
+    </td>
+    <td class="controls">
+      <% if current_character.full_ep? %>
+        <%= t(".refill_energy.full") %>
+      <% else %>
+        <%= link_to(button(t(".refill_energy.button")), premium_path(:type => :refill_energy),
+              :remote => true,
+              :method => :put,
+              :class => :button
+            ) %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="name"><%= t(".refill_stamina.text") %></td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_stamina_price)) %>
+    </td>
+    <td class="controls">
+      <% if current_character.full_sp? %>
+        <%= t(".refill_stamina.full") %>
+      <% else %>
+        <%= link_to(button(t(".refill_stamina.button")), premium_path(:type => :refill_stamina),
+              :remote => true,
+              :method => :put,
+              :class => :button
+            ) %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="name"><%= t(".refill_health.text") %></td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_health_price)) %>
+    </td>
+    <td class="controls">
+      <% if current_character.full_hp? %>
+        <%= t(".refill_health.full") %>
+      <% else %>
+        <%= link_to(button(t(".refill_health.button")), premium_path(:type => :refill_health),
+              :remote => true,
+              :method => :put,
+              :class => :button
+            ) %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="name">
+      <%= t(".buy_points.text",
+            :amount => span_tag(Setting.i(:premium_points_amount), :points)
+          ).html_safe %>
+    </td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_points_price)) %>
+    </td>
+    <td class="controls">
+      <%= link_to(button(t(".buy_points.button")), premium_path(:type => :buy_points),
+            :remote => true,
+            :method => :put,
+            :class => :button
+          ) %>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="name"><%= t(".hire_mercenary.text") %></td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_mercenary_price)) %>
+    </td>
+    <td class="controls">
+      <% if !current_character.relations.maximum_size? %>
+        <%= link_to(button(t(".hire_mercenary.button")), premium_path(:type => :hire_mercenary),
+              :remote => true,
+              :method => :put,
+              :class => :button
+            ) %>
+      <% else %>
+        <%= t('.hire_mercenary.maximum') %>
+      <% end %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="name">
+      <%= t(".exchange_money.text",
+            :amount => span_tag(number_to_currency(Setting.i(:premium_money_amount)), :basic_money)
+          ).html_safe %>
+    </td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_money_price)) %>
+    </td>
+    <td class="controls">
+      <%= link_to(button(t(".exchange_money.button")), premium_path(:type => :exchange_money),
+            :remote => true,
+            :method => :put,
+            :class => :button
+          ) %>
+    </td>
+  </tr>
+
+  <% if current_character.character_type %>
+    <tr>
+      <td class="name"><%= t(".reset_attributes.text") %></td>
+      <td class="requirements">
+        <%= attribute_requirement(:vip_money, Setting.i(:premium_reset_attributes_price)) %>
+      </td>
+      <td class="controls">
+        <%= link_to(button(t(".reset_attributes.button")), premium_path(:type => :reset_attributes),
+              :remote => true,
+              :method   => :put,
+              :confirm  => t(".reset_attributes.confirm"),
+              :class => :button
+            ) %>
+      </td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td class="name">
+      <%= t(".change_name.text").html_safe %>
+    </td>
+    <td class="requirements">
+      <%= attribute_requirement(:vip_money, Setting.i(:premium_change_name_price)) %>
+    </td>
+    <td class="controls">
+      <%= link_to(button(t(".change_name.button")), change_name_premium_path,
+            :remote => true,
+            :class => :button
+          ) %>
+    </td>
+  </tr>
+</table>
+
+<div class="need_more_vip">
+  <p><%= t('.need_more') %></p>
+  
+  <%= link_to(button(:buy), '#buy_vip_money', {:class => "buy button"})%>
+</div>

@@ -16,7 +16,7 @@
       <th></th>
     </tr>
     <% @character_types.each do |type| %>
-      <% content_tag_for(:tr, type) do %>
+      <%= content_tag_for(:tr, type) do %>
         <td class="image"><%= image_tag(type.pictures.url(:icon)) if type.pictures? %></td>
         <td class="name"><%= link_to(type.name, edit_admin_character_type_path(type)) %></td>
         <td class="attributes">

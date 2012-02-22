@@ -1,15 +1,15 @@
 <% dialog :complaints do %>
   <h2><%= t(".title") %></h2>
   
-  <%= form_for(@complaint, :remote => :true) do |form| %>
+  <%= form_for(@complaint, :remote => :true, :onsubmit => '$.dialog.close()') do |form| %>
      <%= form.hidden_field :offender_id, :value => params[:offender_id] %>  
      
      <%= form.select :cause, causes_list %>  
        
-     <%= form.text_area :description, :required => true, :rows => 7, :cols => 40 %>
+     <%= form.text_area :description, :required => true, :rows => 7, :cols => 60 %>
        
      <%= link_to_function(button(:save), "$(this).parents('form').submit()", :class => 'save button')%>
-  <% end %>     
+  <% end %>
 <% end %>
 
 

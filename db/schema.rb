@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123055311) do
+ActiveRecord::Schema.define(:version => 20120210084301) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -186,9 +186,13 @@ ActiveRecord::Schema.define(:version => 20120123055311) do
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
+    t.boolean  "exclude_from_fights",                            :default => false
+    t.boolean  "restrict_fighting",                              :default => false
+    t.boolean  "restrict_market",                                :default => false
+    t.boolean  "restrict_talking",                               :default => false
   end
 
-  add_index "characters", ["level", "fighting_available_at"], :name => "by_level_and_fighting_time"
+  add_index "characters", ["level", "fighting_available_at", "exclude_from_fights", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "clan_members", :force => true do |t|
@@ -625,6 +629,8 @@ ActiveRecord::Schema.define(:version => 20120123055311) do
     t.integer  "maximum_reward_collectors"
     t.boolean  "power_attack_enabled",                        :default => true
     t.text     "effects"
+    t.integer  "respawn_time",                                :default => 24
+    t.integer  "reward_time",                                 :default => 24
   end
 
   create_table "monsters", :force => true do |t|
@@ -707,14 +713,14 @@ ActiveRecord::Schema.define(:version => 20120123055311) do
   end
 
   create_table "properties", :force => true do |t|
-    t.integer  "property_type_id",                  :null => false
-    t.integer  "character_id",                      :null => false
+    t.integer  "property_type_id",                 :null => false
+    t.integer  "character_id",                     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level",             :default => 1
     t.datetime "collected_at"
     t.integer  "workers",           :default => 0
-    t.string   "worker_friend_ids", :default => "", :null => false
+    t.text     "worker_friend_ids",                :null => false
   end
 
   add_index "properties", ["character_id"], :name => "index_properties_on_character_id"
@@ -865,11 +871,12 @@ ActiveRecord::Schema.define(:version => 20120123055311) do
   add_index "visibilities", ["target_id", "target_type"], :name => "index_visibilities_on_target_id_and_target_type"
 
   create_table "wall_posts", :force => true do |t|
-    t.integer  "character_id", :null => false
-    t.integer  "author_id",    :null => false
+    t.integer  "character_id",                    :null => false
+    t.integer  "author_id",                       :null => false
     t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "private",      :default => false, :null => false
   end
 
   add_index "wall_posts", ["character_id"], :name => "index_wall_posts_on_character_id"

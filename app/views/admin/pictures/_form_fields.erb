@@ -15,7 +15,7 @@
 </div>
 
 <div class="controls">
-  <%= link_to_remote(t(".new"), 
+  <%= link_to(t(".new"), 
         new_admin_picture_path(:container => form.object_name, :id => form.object.id),
         :remote => true
   ) %>

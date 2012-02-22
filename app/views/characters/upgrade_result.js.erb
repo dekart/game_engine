@@ -36,4 +36,6 @@ $(document).trigger('remote_content.received');
 
 <%= ga_track_event('Character', 'Upgrade') %>
 
-$.upgradeSliders(<%= current_character.points %>);
+<% if current_character.points > 0 %>
+  $.upgradeSliders(<%= current_character.points %>);
+<% end %>

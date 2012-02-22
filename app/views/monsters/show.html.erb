@@ -8,7 +8,7 @@
   <%= render(@monster.state, :monster => @monster, :fight => @fight) %>
 </div>
 
-<%= chat(dom_id(@monster)) %>
+<%= chat(@monster.chat_id) %>
 
 <% if @monster.created_at > 5.seconds.ago %>
   <% dom_ready do %>

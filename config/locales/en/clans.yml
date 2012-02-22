@@ -29,6 +29,7 @@ en:
         manage: "Manage"
       title_invite: "Recruit To Your Alliance"  #***
       sent_application: "Your application was sent to"
+      invitation_message: "Join my Clan in %{app_name}, a fantasy-style combat game played on Facebook!"
     participants: 
       title: "Participants"
     new: 

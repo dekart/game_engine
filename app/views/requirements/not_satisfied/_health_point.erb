@@ -22,12 +22,12 @@
   <% else %>
     <p>
       <%= t(".low_base_level.message",
-            :premium_page => link_to(t("layouts.main_menu.items"), premium_path(:anchor => :services))
+            :premium_page => link_to(t("layouts.main_menu.items"), items_path(:anchor => :services))
           ).html_safe %>
     </p>
 
     <div class="buttons">
-      <%= link_to(button(:get_points), premium_path(:anchor => :services),
+      <%= link_to(button(:get_points), items_path(:anchor => :services),
             :class => "premium button"
           ) %>
     </div>

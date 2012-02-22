@@ -25,17 +25,23 @@
     +button($asset_icons_exchange)
 
 .inventory_list
-  table
-    width: 100%
+  padding: 10px
 
-  th
-    padding-top: 10px
-
-  td
+  .inventory
     padding: 10px
-    border-bottom: $inventory_item_border
+    margin: 0 10px 10px 0
+    width: 330px
+    border: $inventory_item_border
+    float: left
+
+  .picture
+    width: 120px
+    height: 120px
+    float: left
 
   .info
+    margin-left: 130px
+
     .name
       font-size: 16px
       font-weight: bold
@@ -43,28 +49,30 @@
     .name, .description
       margin-bottom: 5px
 
-  .payouts
-    padding-right: 10px
+    .payout
+      clear: none
 
-  .stats
+  .equipped
     font-weight: bold
-
-    .owned, .used
-      margin-bottom: 5px
+    margin-bottom: 5px
 
     .value
       font-weight: normal
 
-  .spacer
-    border: 0
-
   .controls
-    width: 90px
-    width: 200px
-    text-align: right
+    clear: left
 
-    select
-      margin: 5px
+    form
+      float: left
+
+      select
+        margin: 5px
+
+      .button
+        float: left
+
+    .button
+      clear: right
 
     .sell
       +button($inventory_item_sell_icon)
@@ -168,10 +176,8 @@
   
   .count
     position: absolute
-    
-    &.small
-      right: 0px
-      bottom: 5px
-      background-color: black
-      color: white
-      padding: 0 4px
+    right: 0px
+    bottom: 5px
+    background-color: black
+    color: white
+    padding: 0 4px

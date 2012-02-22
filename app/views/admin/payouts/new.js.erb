@@ -1,0 +1,7 @@
+$('#payout_list').append('<%=
+  escape_javascript(
+    render("admin/payouts/payout", :payout => @payout, :container => @container)
+  )
+%>');
+
+SerializableList.updateBorderClasses('#payout_list');

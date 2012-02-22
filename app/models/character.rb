@@ -64,7 +64,7 @@ class Character < ActiveRecord::Base
 
   serialize :active_boosts
 
-  attr_accessible :name
+  attr_accessible :name, :exclude_from_fights, :restrict_fighting, :restrict_market, :restrict_talking
 
   has_payouts :save
 
@@ -234,7 +234,7 @@ class Character < ActiveRecord::Base
   def can_hitlist?(victim)
     friendly_attack = Setting.b(:fight_alliance_attack) ? false : friend_relations.established?(victim)
 
-    Setting.b(:hit_list_enabled) && !friendly_attack
+    Setting.b(:hit_list_enabled) && !friendly_attack && !victim.exclude_from_fights?
   end
 
   def allow_fight_with_invite?

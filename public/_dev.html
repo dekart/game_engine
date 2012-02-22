@@ -4,20 +4,54 @@
   </head>
   <body id="" onload="">
     <form method="POST" accept-charset="utf-8" target="canvas">
-      <div>URL: <input type="text" value="/" id="url" size="50"></div>
+      <table>
+        <tr>
+          <td>URL:</td>
+          <td><input type="text" name="url" value="/" size="100"></td>
+        </tr>
 
-      <div>signed_request: <input type="text" name="signed_request" value=""></div>
+        <tr>
+          <td>Signed Request:</td>
+          <td><input type="text" name="signed_request" value="" size="100"></td>
+        </tr>
+
+        <tr>
+          <td>Facebook UID:</td>
+          <td><input type="text" name="user_id" value="" size="20"></td>
+        </tr>
+      </table>
 
       <input type="submit" name="submit" value="Submit">
     </form>
 
-    <iframe name="canvas" id="canvas" width="760" height="2000" border="0"></iframe>
+    <iframe
+      name="canvas"
+      id="canvas"
+      style="border:1px dashed gray; margin: 0 auto; display:block; width: 760px; height: 4000px"
+    ></iframe>
 
     <script type="text/javascript" charset="utf-8">
       $(function(){
         $('form').submit(function(){
-          $(this).attr('action', $('#url').val());
+          $(this).attr('action', $(this).find('input[name=url]').val());
+
+          var values = $.map($(this).find('input[type!=submit]').get(), function(el){
+            return {
+              key: $(el).attr('name'),
+              value: $(el).val()
+            };
+          });
+
+          localStorage.setItem('dev_form', JSON.stringify(values));
         });
+
+        var stored_value = localStorage.getItem('dev_form');
+
+        if(stored_value){
+          $.each(JSON.parse(stored_value), function(){
+            $('form input[name=' + this.key + ']').val(this.value);
+          });
+        }
       })
     </script>
   </body>

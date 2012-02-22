@@ -13,7 +13,7 @@ module TabsHelper
 
     def tab(id, *args, &block)
       name, url = args
-      
+
       @tab_names << [id, name || t(".tabs.#{id}"), url]
       @tab_contents << [id, block]
     end
@@ -24,14 +24,19 @@ module TabsHelper
       yield(self)
 
       result << '<ul>'
-      
+
       @tab_names.each do |id, name, url|
         result << %{<li>#{ link_to(name, url ? url : "##{id}") }</li>}
       end
 
       result << '</ul>'
 
-      result << @tab_contents.map{|t| %{<div id="#{ t.first }">#{ capture(&t.last) }</div>} }.join
+      @tab_contents.each do |id, block|
+        # Do not add containers for tabs with URLs - they'll be created automatically
+        unless @tab_names.assoc(id).last
+          result <<  %{<div id="#{ id }">#{ capture(&block) }</div>}
+        end
+      end
 
       result = (
         %{<div #{ tag_options(options) }>#{ result }</div>}

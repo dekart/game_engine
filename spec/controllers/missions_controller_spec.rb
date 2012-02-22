@@ -38,7 +38,7 @@ describe MissionsController do
     end
     
     def do_request
-      post :collect_help_reward
+      post :collect_help_reward, :format => :js
     end
     
     it 'should collect reward for current character' do
@@ -58,7 +58,6 @@ describe MissionsController do
       do_request
 
       response.should render_template(:collect_help_reward)
-      response.should render_template("layouts/ajax")
     end
   end
 end

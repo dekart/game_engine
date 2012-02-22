@@ -15,7 +15,7 @@
     </tr>
     
     <% mission.levels.each do |level| %>
-      <% content_tag_for(:tr, level) do %>
+      <%= content_tag_for(:tr, level) do %>
         <td class="win_amount"><%= level.win_amount %></td>
         <td class="chance"><%= '%d%' % level.chance %></td>
         <td class="energy"><%= level.energy %></td>

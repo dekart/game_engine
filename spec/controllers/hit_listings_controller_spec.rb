@@ -86,7 +86,7 @@ describe HitListingsController do
 
   describe "when displaying hitlist" do
     before :each do
-      controller.stub!(:current_character).and_return(mock_model(Character))
+      controller.stub!(:current_character).and_return(mock_model(Character, :restrict_fighting? => false))
     end
 
     def do_request
@@ -116,7 +116,7 @@ describe HitListingsController do
     end
     
     def do_request
-      get :new, :character_id => 123
+      get :new, :character_id => 123, :format => :js
     end
 
     it "should fetch victim from the database" do
@@ -164,7 +164,7 @@ describe HitListingsController do
     end
 
     def do_request
-      post :create, :character_id => 123, :hit_listing => {:reward => 10_000}
+      post :create, :character_id => 123, :hit_listing => {:reward => 10_000}, :format => :js
     end
 
     it "should fetch victim from the database" do
@@ -174,7 +174,7 @@ describe HitListingsController do
     end
     
     it "should build new hit listing for current character" do
-      @client_hit_listings.should_receive(:build).with(:victim => @victim, :reward => 10_000).and_return(@hit_listing)
+      @client_hit_listings.should_receive(:build).with(:victim => @victim, :reward => "10000").and_return(@hit_listing)
 
       do_request
     end
@@ -234,7 +234,7 @@ describe HitListingsController do
     end
 
     def do_request
-      put :update, :id => 123
+      put :update, :id => 123, :format => :js
     end
 
     it "should fetch listing from the database" do

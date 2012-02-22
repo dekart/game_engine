@@ -15,7 +15,7 @@
       <th></th>
     </tr>
     <% @groups.each do |group| %>
-      <% content_tag_for(:tr, group) do %>
+      <%= content_tag_for(:tr, group) do %>
         <td class="name"><%= link_to(group.name, edit_admin_mission_group_path(group)) %></td>
         <td class="missions"><%= group.missions.size %></td>
         <td class="requirements"><%= admin_requirements_preview(group.requirements) %></td>

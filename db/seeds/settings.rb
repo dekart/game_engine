@@ -77,7 +77,6 @@ Setting[:rating_show_limit] ||= 20
 Setting[:inventory_sell_price] ||= 50
 Setting[:inventory_exchange_enabled] ||= true
 
-Setting[:item_show_basic] ||= 10
 Setting[:item_show_special] ||= 3
 Setting[:promo_block_minimum_level] ||= 3
 
@@ -101,8 +100,10 @@ Setting[:mission_group_show_limit] ||= 4
 Setting[:mission_completion_dialog] ||= true
 Setting[:mission_help_money] ||= 25
 Setting[:mission_help_experience] ||= 25
+Setting[:mission_help_enabled] ||= true
 
 Setting[:app_google_analytics_id] ||= ""
+Setting[:app_fan_page_url] ||= ""
 
 Setting[:gifting_enabled] ||= true
 Setting[:gifting_item_show_limit] ||= 10

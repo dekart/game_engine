@@ -10,6 +10,8 @@
 //= require ./libs/jquery/jcarousel
 //= require ./libs/jquery/ui
 //= require ./application/signed_request
+//= require ./application/link_lock
+//= require ./application/app_requests
 //= require ./application/facebook_credits
 //= require ./application/promo_block
 //= require ./application/invite_dialog
@@ -17,6 +19,8 @@
 //= require ./application/upgrade_sliders
 //= require ./application/timer
 //= require ./application/boost
+//= require ./application/shop
+//= require ./application/inventory
 //= require_self
 
 
@@ -37,25 +41,6 @@ var ClanEditForm = {
       $(".file").hide();
       $(".change").show();
     });
-  }
-};
-
-var Shop = {
-  setup : function(){
-    
-    $(".amount").change(function(){
-      var amount = $(this).val();
-      var data = $.parseJSON($(this).attr('data-options'));
-      
-      if(data['basic_price'] > 0){
-        $("#item_" + data['id'] + " .requirements .basic_money .value").html(data['basic_price'] * amount);
-      }
-        
-      if(data['vip_price'] > 0){
-        $("#item_" + data['id'] + " .requirements .vip_money .value").html(data['vip_price'] * amount);
-      }   
-    });
-    
   }
 };
 

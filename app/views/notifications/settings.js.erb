@@ -3,17 +3,19 @@
   
   <div class="note"><%= t('.note') %></div>
 
-  <%= form_for(current_character, :url => update_settings_notifications_path, :remote => true,
-       :onsubmit => '$.dialog.close()') do |form| %>
+  <%= form_for(current_character, :url => update_settings_notifications_path, 
+        :method => :post, :remote => true) do |form| %>
   
     <div class="notifications">
       <% @notifications.each do |notification| %>
-        <div class="notification">
-          <%= check_box_tag "notification[ids][]", 
-                notification.id, !notification.disabled?, 
-                :id => "notification_#{notification.id}" %>
-          <%= label_tag "notification_#{notification.id}", t(".types.#{notification.class.name.split("::").last.underscore}") %>
-        </div>
+        <% if notification.optional? %>
+          <div class="notification">
+            <%= check_box_tag "notification[ids][]", 
+                  notification.id, !notification.disabled?, 
+                  :id => "notification_#{notification.id}" %>
+            <%= label_tag "notification_#{notification.id}", t(".types.#{notification.class.name.split("::").last.underscore}") %>
+          </div>
+        <% end %>
       <% end %>
     </div>
       

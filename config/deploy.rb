@@ -1,3 +1,4 @@
+require 'bundler/capistrano'
 require "active_support"
 require "yaml"
 require "uri"
@@ -159,7 +160,7 @@ namespace :deploy do
     task :system_gems do
       config = YAML.dump(
         :verbose        => true,
-        "gem"           => "--no-ri --no-rdoc --user-install",
+        "gem"           => "--no-ri --no-rdoc",
         :bulk_threshold => 1000,
         :sources        => %w{http://gemcutter.org http://gems.github.com},
         :benchmark      => false,
@@ -169,7 +170,7 @@ namespace :deploy do
 
       put(config, ".gemrc")
 
-      run "gem install bundler -v=1.0.14"
+      run "gem install bundler -v=1.0.21"
     end
 
     desc "Install required gems"

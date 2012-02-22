@@ -41,7 +41,7 @@ namespace :app do
     end
     
     desc "Report duplicate users by signup ip"
-    task :signup_ip, :limit, :needs => :environment do |task, options|
+    task :signup_ip, [:limit] => :environment do |task, options|
       limit = options.limit ? options.limit.to_i : 5
       
       puts "Reporting users who signed up from the same IP (%d users minimum)" % limit
@@ -52,7 +52,7 @@ namespace :app do
     end
     
     desc "Report duplicate users by last visit ip"
-    task :last_visit_ip, :limit, :needs => :environment do |task, options|
+    task :last_visit_ip, [:limit] => :environment do |task, options|
       limit = options.limit ? options.limit.to_i : 5
       
       puts "Reporting users who logged in from the same IP (%d users minimum)" % limit

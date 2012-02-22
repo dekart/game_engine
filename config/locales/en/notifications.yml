@@ -49,6 +49,7 @@ en:
         clan_application_state: "Status of the application to join the clan"
         clan_state: "Status of the clan"
         clan_invitation_state: "Status of the invitation to join the clan"
+        items_collection: "Items collection"
       buttons: 
         save: "Save"
       
@@ -90,7 +91,7 @@ en:
         text: "You were accepted into the clan %{clan}"
       rejected:
         title: "You were rejected"
-        text: Your application to join the clan %{clan} was rejected" 
+        text: "Your application to join the clan %{clan} was rejected" 
       asked:
         title: "A new application for membership in the clan"  
         text: "%{applicant} has applied to join the clan %{clan}"
@@ -105,4 +106,16 @@ en:
     clan_invitation_state:
       accepted:
         title: "The use of invitation"
-        text: "%{character} has used your invitation to join the clan %{clan}"    
+        text: "%{character} has used your invitation to join the clan %{clan}"  
+
+    items_collection:
+      title: "Collection Ready!"
+      text: "You got all items required for the %{collection} collection! Now you can get the reward from it!"
+      buttons:
+        collection: "View Collections"
+        
+    wall_post:
+      title: "New post on the wall"
+      text: "%{author} posted something on your profile wall."  
+      buttons:
+        read: "Read Post"

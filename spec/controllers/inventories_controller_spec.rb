@@ -29,26 +29,25 @@ describe InventoriesController do
     it "should fetch inventory from current character by ID" do
       @character_inventories.should_receive(:find_by_id).with("123").and_return(@inventory)
 
-      post :use, :id => 123
+      post :use, :id => 123, :format => :js
     end
 
     it "should use the inventory" do
       @inventory.should_receive(:use!).and_return(@usage_result)
 
-      post :use, :id => 123
+      post :use, :id => 123, :format => :js
     end
 
     it "should pass usage result to the template" do
-      post :use, :id => 123
+      post :use, :id => 123, :format => :js
       
       assigns[:result].should == @usage_result
     end
 
     it "should render AJAX response" do
-      post :use, :id => 123
+      post :use, :id => 123, :format => :js
 
       response.should render_template("use")
-      response.should render_template("layouts/ajax")
     end
   end
 end

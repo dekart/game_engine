@@ -18,7 +18,7 @@
     </tr>
 
     <% @promotions.each do |promotion| %>
-      <% content_tag_for(:tr, promotion) do %>
+      <%= content_tag_for(:tr, promotion) do %>
         <td class="created_at"><%= l(promotion.created_at, :format => :short) %></td>
         <td class="valid_till">
           <span class="<%= promotion.expired? ? :invalid : :valid %>">

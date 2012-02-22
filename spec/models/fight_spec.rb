@@ -108,6 +108,7 @@ describe Fight do
         f.save!
       end
       
+      
       @fight.opponents.should_not include(@victim)
       
       Timecop.freeze(61.minute.from_now) do

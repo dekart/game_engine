@@ -15,21 +15,18 @@ describe Exchange do
     end
   end
   
-  describe 'when creating' do
+  describe '#validations' do
     before do
-      @exchange = Factory.build(:exchange)
+      @exchange = Factory(:exchange)
     end
     
-    %w{item_id character_id amount text}.each do |attribute|
-      it "should validate presence of #{attribute}" do
-        @exchange.should validate_presence_of(attribute)
-      end
-    end
-    
-    it "should validate numericality of amount" do
-      @exchange.should validate_numericality_of(:amount)
-    end
-    
+    it {should validate_presence_of(:item_id)}
+    it {should validate_presence_of(:amount)}
+    it {should validate_presence_of(:text)}
+    it {should validate_numericality_of(:amount)}
+  end
+  
+  describe 'when creating' do
     it 'should validate amount less or equals then in inventories' do
       character = Factory(:character)
       @exchange = Factory.build(:exchange, :amount => 2, :character => character)

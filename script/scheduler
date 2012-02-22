@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "config/environment"
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
 
 def task
   start_time = Time.now

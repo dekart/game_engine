@@ -13,9 +13,9 @@
     </tr>
     
     <% @complaints.each do |complaint| %>
-      <% content_tag_for(:tr, complaint) do %>
+      <%= content_tag_for(:tr, complaint) do %>
         <td class="owner">
-          <%= link_to(character_name(complaint.owner), edit_admin_character_path(complaint.owner)) %>
+          <%= link_to(character_name(complaint.owner), admin_character_path(complaint.owner)) %>
           
           <%= link_to(t(".profile"), fb_profile_url(complaint.owner.user),
                   :class  => :profile,
@@ -23,7 +23,7 @@
                 )  %>
         </td>
         <td class="offender">
-          <%= link_to(character_name(complaint.offender), edit_admin_character_path(complaint.offender)) %>
+          <%= link_to(character_name(complaint.offender), admin_character_path(complaint.offender)) %>
           
           <%= link_to(t(".profile"), fb_profile_url(complaint.offender.user),
                   :class  => :profile,

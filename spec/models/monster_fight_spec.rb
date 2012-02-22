@@ -156,17 +156,17 @@ describe MonsterFight do
     
     # test monster attack and power attack
     [
-      {:who => :monster, :what => :hp, :from => 1000, :to => 980, :power_to => 900},
-      {:who => :monster_fight, :what => :monster_damage, :from => nil, :to => 20},
-      {:who => :character, :what => :hp, :from => 100, :to => 90},
-      {:who => :monster_fight, :what => :character_damage, :from => nil, :to => 10},
-      {:who => :character, :what => :experience, :from => 0, :to => 1},
-      {:who => :monster_fight, :what => :experience, :from => nil, :to => 1},
-      {:who => :character, :what => :basic_money, :from => 0, :to => 5},
-      {:who => :monster_fight, :what => :money, :from => nil, :to => 5},
-      {:who => :character, :what => :sp, :from => 10, :to => 9},
-      {:who => :monster_fight, :what => :stamina, :from => nil, :to => 1},
-      {:who => :monster_fight, :what => :damage, :from => 0, :to => 20},
+      {who: :monster,       what: :hp,               from: 1000, to: 980, power_to: 900},
+      {who: :character,     what: :hp,               from: 100,  to: 90,  power_to: 50},
+      {who: :character,     what: :experience,       from: 0,    to: 1,   power_to: 5},
+      {who: :character,     what: :basic_money,      from: 0,    to: 5,   power_to: 25},
+      {who: :character,     what: :sp,               from: 10,   to: 9,   power_to: 5},
+      {who: :monster_fight, what: :monster_damage,   from: nil,  to: 20,  power_to: 100},
+      {who: :monster_fight, what: :character_damage, from: nil,  to: 10,  power_to: 50},
+      {who: :monster_fight, what: :experience,       from: nil,  to: 1,   power_to: 5},
+      {who: :monster_fight, what: :money,            from: nil,  to: 5,   power_to: 25},
+      {who: :monster_fight, what: :stamina,          from: nil,  to: 1,   power_to: 5},
+      {who: :monster_fight, what: :damage,           from: 0,    to: 20,  power_to: 100},
     ].each do |t|
       
       it "should change #{t[:who]} #{t[:what]} from #{t[:from]} to #{t[:to]}" do
@@ -458,7 +458,7 @@ describe MonsterFight do
       monster_attack_item_boost = Factory(:item, 
         :boost_type => 'monster',
         :effects => [
-          {:type => :health, :value => 1}
+          {:type => :damage, :value => 1}
         ]
       )
       @monster_attack_boost = @character.inventories.give!(monster_attack_item_boost)
