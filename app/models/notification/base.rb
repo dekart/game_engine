@@ -2,10 +2,7 @@ module Notification
   class Base
     cattr_accessor :types
 
-    attr_accessor :character, :visible
-    attr_accessor :data, :visible
-    attr_accessor :state, :visible
-    attr_accessor :type, :visible
+    attr_accessor :character, :data, :state, :type
 
     state_machine :initial => :pending do
       state :displayed
@@ -68,8 +65,8 @@ module Notification
         self.state = "disabled"
         self.data = nil
       else
-        data = ActiveSupport::JSON.decode(data_string)
-        self.state = data.delete("state")
+        data = ActiveSupport::JSON.decode(data_string).symbolize_keys
+        self.state = data.delete(:state)
         self.data = data
       end
     end

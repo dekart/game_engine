@@ -6,7 +6,7 @@
   </p>
 
   <div class="users clearfix">
-    <% notification.data["friend_ids"][0, 6].each do |facebook_id| %>
+    <% notification.data[:friend_ids][0, 6].each do |facebook_id| %>
       <div class="user">
         <div class="picture"><%= fb_profile_pic(facebook_id, :size => :square) %></div>
         <div class="name"><%= fb_name(facebook_id, :linked => false, :firstnameonly => true) %></div>
