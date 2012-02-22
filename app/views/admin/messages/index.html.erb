@@ -18,7 +18,7 @@
     </tr>
 
     <% @messages.each do |message| %>
-      <% content_tag_for(:tr, message) do %>
+      <%= content_tag_for(:tr, message) do %>
         <td class="content"><%= message.content %></td>
         <td class="level"><%= message.min_level %></td>
         <td class="level"><%= message.notify_new_users %></td>

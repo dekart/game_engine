@@ -15,7 +15,7 @@
     </tr>
 
     <% @assets.each do |asset| %>
-      <% content_tag_for(:tr, asset) do %>
+      <%= content_tag_for(:tr, asset) do %>
         <td class="alias"><%= link_to(asset.alias, edit_admin_asset_path(asset)) %></td>
         <td class="preview"><%= image_tag(asset.image.url(:small)) %></td>
         <td class="controls">

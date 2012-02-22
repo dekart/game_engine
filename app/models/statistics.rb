@@ -18,10 +18,10 @@ class Statistics
   end
 
   def scope=(value)
-    if value.class == ActiveRecord::Scoping::Named
-      @scope = value
-    else
+    if value.class.is_a?(Hash)
       @scope = default_scope.scoped(value)
+    else
+      @scope = value
     end
   end
   

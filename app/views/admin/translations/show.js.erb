@@ -1,0 +1,9 @@
+<% content = capture do %>
+  <%= link_to(@translation.value.present? ? @translation.value : span_tag(t(".no_value"), :empty).html_safe,
+        edit_admin_translation_path(@translation),
+        :remote => true
+      ) %>
+<% end %>
+
+$("#<%= translation_id(@translation.key) %>").html('<%= escape_javascript(content) %>');
+$('#<%= translation_id(@translation.key) %>').parent().addClass('customized');

@@ -15,7 +15,7 @@
     </tr>
     
     <% @packages.each do |package| %>
-      <% content_tag_for(:tr, package) do %>
+      <%= content_tag_for(:tr, package) do %>
         <td class="default"><%= CreditPackage.human_attribute_name("default") if package.default? %></td>
         <td class="vip_money"><%= package.vip_money %></td>
         <td class="price"><%= package.price %></td>

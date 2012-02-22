@@ -22,7 +22,7 @@
         </tr>
       <% end %>
       
-      <% content_tag_for(:tbody, mission) do %>
+      <%= content_tag_for(:tbody, mission) do %>
         <tr>
           <td class="image"><%= image_tag(mission.pictures.url(:icon)) if mission.pictures? %></td>
           <td class="name"><%= link_to(mission.name, edit_admin_mission_path(mission)) %></td>

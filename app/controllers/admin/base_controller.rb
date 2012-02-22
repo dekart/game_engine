@@ -12,10 +12,6 @@ class Admin::BaseController < ApplicationController
     redirect_from_iframe root_url(:canvas => true) unless current_user.admin? || ENV['OFFLINE']
   end
 
-  def ajax_layout
-    "admin/layouts/ajax"
-  end
-
   def unless_continue_editing(options = {}, &block)
     if params[:continue]
       render options.reverse_merge(:action => :edit)

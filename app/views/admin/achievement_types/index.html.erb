@@ -23,7 +23,7 @@
         </tr>
       <% end %>
 
-      <% content_tag_for(:tr, achievement_type) do %>
+      <%= content_tag_for(:tr, achievement_type) do %>
         <td class="value"><%= achievement_type.value %></div>
         <td class="image"><%= image_tag(achievement_type.pictures.url(:icon)) if achievement_type.pictures? %></td>
         <td class="name"><%= link_to(achievement_type.name, edit_admin_achievement_type_path(achievement_type)) %></td>

@@ -13,7 +13,7 @@
     </tr>
     
     <% @complaints.each do |complaint| %>
-      <% content_tag_for(:tr, complaint) do %>
+      <%= content_tag_for(:tr, complaint) do %>
         <td class="owner">
           <%= link_to(character_name(complaint.owner), admin_character_path(complaint.owner)) %>
           

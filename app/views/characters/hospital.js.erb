@@ -31,6 +31,7 @@
       <% if current_character.hospital_may_heal? %>
         <%= link_to(button(:heal), hospital_heal_character_path(:current),
               :remote => true,
+              :method => :post,
               :"data-click-once" => true,
               :class => "button heal"
             ) %>

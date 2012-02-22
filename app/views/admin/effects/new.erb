@@ -1,9 +1,0 @@
-<% dom_ready do %>
-  $('#effect_list').append('<%=
-    escape_javascript(
-      render("admin/effects/effect", :effect => @effect, :container => @container)
-    )
-  %>');
-
-  SerializableList.updateBorderClasses('#effect_list');
-<% end %>

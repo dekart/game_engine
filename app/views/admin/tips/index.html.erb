@@ -15,7 +15,7 @@
     </tr>
     
     <% @tips.each do |tip| %>
-      <% content_tag_for(:tr, tip) do %>
+      <%= content_tag_for(:tr, tip) do %>
         <td class="text"><%= tip.text.html_safe %></td>
         <td class="state"><%= admin_state(tip) %></td>
         <td class="controls">
