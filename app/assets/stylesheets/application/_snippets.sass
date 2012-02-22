@@ -12,6 +12,6 @@
   
 =rgba-background($red, $green, $blue, $alpha)
   background: transparent
-  background: rgba(#{$red}, #{$green}, #{$blue}, #{$alpha})
+  background: rgba($red, $green, $blue, $alpha)
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=##{hex(round($alpha*255)) + hex($red) + hex($green) + hex($blue)}, endColorstr=##{hex(round($alpha*255)) + hex($red) + hex($green) + hex($blue)})
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=##{hex(round($alpha*255)) + hex($red) + hex($green) + hex($blue)}, endColorstr=##{hex(round($alpha*255)) + hex($red) + hex($green) + hex($blue)})"
