@@ -7,7 +7,7 @@
 
   <h4><%= t("requirements.#{requirement.name}.name") %></h4>
 
-  <% fields_for "#{container}[requirements][requirement_#{requirement.object_id}]", requirement do |form| %>
+  <%= fields_for "#{container}[requirements][requirement_#{requirement.object_id}]", requirement do |form| %>
     <%= form.hidden_field :type, :value => requirement.name %>
 
     <table>
