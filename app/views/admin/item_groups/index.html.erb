@@ -14,7 +14,7 @@
       <th></th>
     </tr>
     <% @groups.each do |group| %>
-      <% content_tag_for(:tr, group) do %>
+      <%= content_tag_for(:tr, group) do %>
         <td class="name"><%= link_to(group.name, edit_admin_item_group_path(group)) %></td>
         <td class="display_in_shop"><%= group.display_in_shop %></td>
         <td class="items"><%= link_to(group.items.size, admin_item_group_items_path(group)) %></td>

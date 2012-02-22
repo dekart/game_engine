@@ -15,7 +15,7 @@
     </tr>
 
     <% @global_payouts.each do |global_payout| %>
-      <% content_tag_for(:tr, global_payout) do %>
+      <%= content_tag_for(:tr, global_payout) do %>
         <td class="alias"><%= link_to(global_payout.alias, edit_admin_global_payout_path(global_payout)) %></td>
         <td class="name"><%= global_payout.name %></td>
         <td class="payouts"><%= admin_payouts_preview(global_payout.payouts) %></td>

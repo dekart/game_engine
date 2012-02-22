@@ -14,7 +14,7 @@
       <th></th>
     </tr>
     <% @pages.each do |page| %>
-      <% content_tag_for(:tr, page) do %>
+      <%= content_tag_for(:tr, page) do %>
         <td class="name"><%= link_to(page.name, edit_admin_help_page_path(page)) %></td>
         <td class="alias"><%= page.alias %></td>
         <td class="state"><%= admin_state(page) %></td>

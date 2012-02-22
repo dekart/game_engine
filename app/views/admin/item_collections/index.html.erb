@@ -16,7 +16,7 @@
     </tr>
 
     <% @item_collections.each do |item_collection| %>
-      <% content_tag_for(:tr, item_collection) do %>
+      <%= content_tag_for(:tr, item_collection) do %>
         <td class="name"><%= link_to(item_collection.name, edit_admin_item_collection_path(item_collection)) %></td>
         <td class="level"><%= item_collection.level %></div>
         <td class="items">

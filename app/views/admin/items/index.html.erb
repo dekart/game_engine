@@ -70,7 +70,7 @@
         </tr>
       <% end %>
       
-      <% content_tag_for(:tr, item) do %>
+      <%= content_tag_for(:tr, item) do %>
         <td class="image"><%= item_image(item, :icon) if item.pictures? %></td>
         <td class="name"><%= link_to(item.name, edit_admin_item_path(item)) %></td>
         <td class="availability"><%= item.availability %></td>
