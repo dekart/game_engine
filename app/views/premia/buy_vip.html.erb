@@ -5,9 +5,13 @@
 <% if Setting.b(:premium_offer_wall_enabled) %>
   <div id="earn_credits">
     <p class="earn_credits text"><%= t('.earn_credits.note')%></p>
-   
+
     <div class="buttons">
       <span class="earn_credits button"><%= button(:earn_credits) %></span>
     </div>
   </div>
+
+  <% dom_ready do %>
+    $('#earn_credits .button').earnCreditButton();
+  <% end %>
 <% end %>
