@@ -37,8 +37,8 @@ class FightsController < ApplicationController
   def used_items
     @fight = current_character.attacks.find(params[:id])
 
-    @attacker_items = @fight.attacker.used_items
-    @victim_items   = @fight.victim.used_items
+    @attacker_items = @fight.attacker_used_items
+    @victim_items   = @fight.victim_used_items
   end
 
   protected
