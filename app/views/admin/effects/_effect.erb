@@ -7,7 +7,7 @@
 
   <h4><%= t("effects.#{effect.name}.name") %></h4>
 
-  <% fields_for "#{container}[effects][effect_#{effect.object_id}]", effect do |form| %>
+  <%= fields_for "#{container}[effects][effect_#{effect.object_id}]", effect do |form| %>
     <%= form.hidden_field :type, :value => effect.name %>
 
     <table>

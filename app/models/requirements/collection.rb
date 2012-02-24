@@ -13,7 +13,7 @@ module Requirements
         collection = collection.values.sort_by{|v| v["position"].to_i } if collection.is_a?(Hash)
         
         items = collection.collect do |requirement|
-          requirement.symbolize_keys!
+          requirement = requirement.symbolize_keys
 
           Requirements::Base.by_name(requirement[:type]).new(requirement.except(:type, :position))
         end

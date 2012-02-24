@@ -1,10 +1,5 @@
 module Requirements
   class Base
-    class Errors
-      def on(*args)
-      end
-    end
-
     cattr_accessor :types
 
     attr_accessor :value, :visible
@@ -45,7 +40,7 @@ module Requirements
     end
 
     def errors
-      Errors.new
+      []
     end
 
     def value=(value)

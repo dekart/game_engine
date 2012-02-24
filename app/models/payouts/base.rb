@@ -1,10 +1,5 @@
 module Payouts
   class Base
-    class Errors
-      def on(*args)
-      end
-    end
-
     ACTIONS = [:add, :remove]
     
     cattr_accessor :types
@@ -55,7 +50,7 @@ module Payouts
     end
 
     def errors
-      Errors.new
+      []
     end
 
     def chance

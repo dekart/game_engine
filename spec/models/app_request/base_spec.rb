@@ -235,7 +235,7 @@ describe AppRequest::Base do
     it 'should assign receiver ID' do
       lambda{
         @request.update_from_facebook_request(@remote_request)
-      }.should change(@request, :receiver_id).from(nil).to(456)
+      }.should change(@request, :receiver_id).from(123456789).to(456)
     end
     
     it 'should parse and assign request data' do
