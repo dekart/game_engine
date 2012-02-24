@@ -27,7 +27,7 @@ module Notification
       after_transition :on => :schedule, :do => :mark_pending
       after_transition :on => :display_notification, :do => :mark_displayed
       after_transition :on => :disable, :do => :mark_disabled
-      after_transition :on => :enable, :do => :mark_displayed
+      after_transition :on => :enable, :do => :delete_disabled
     end
 
     class << self
@@ -89,6 +89,10 @@ module Notification
 
     def mark_disabled
       $redis.hset("notifications_#{self.character.id}", self.type, "false")
+    end
+
+    def delete_disabled
+      $redis.hdel("notifications_#{self.character.id}", self.type)
     end
   end
 end
