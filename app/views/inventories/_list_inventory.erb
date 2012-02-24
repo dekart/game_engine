@@ -63,6 +63,7 @@
             ) %>
       <% else %>
         <%= link_to(button(:exchange), new_exchange_path(:inventory_id => inventory),
+              :remote => true,
               :method => :get,
               :class => "exchange button"
             ) %>
