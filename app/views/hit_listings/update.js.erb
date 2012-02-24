@@ -4,7 +4,7 @@
       <% unless @hit_listing.completed? %>
         <% builder.buttons do %>
           <%= link_to(button(:attack_again), hit_listing_path(@hit_listing),
-                :remote => true
+                :remote => true,
                 :method => :put,
                 :"data-click-once" => true,
                 :class => "attack_again button"
