@@ -39,8 +39,6 @@ class FightsController < ApplicationController
 
     @attacker_items = @fight.attacker.used_items
     @victim_items   = @fight.victim.used_items
-
-    render :action => :used_items
   end
 
   protected
