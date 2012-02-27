@@ -34,21 +34,18 @@ class ApplicationController < ActionController::Base
   end
   
   def check_character_existance
-    Rails.logger.debug "check_character_existance: fb_canvas? = #{fb_canvas?}"
-    puts "check_character_existance: fb_canvas? = #{fb_canvas?}"
-    
     unless current_character
       store_return_to
 
-      #url_params = params_without_facebook_data.to_hash.symbolize_keys
       url_params = params.to_hash.symbolize_keys
       url_params.merge!(
         :controller => "/characters",
         :action     => :new,
-        :id         => nil
+        :id         => nil,
+        :canvas     => fb_canvas?
       )
-Rails.logger.debug "check_character_existance: url_params = #{url_params.inspect}"
-      redirect_to url_for(url_params)
+      
+      redirect_from_iframe url_for(url_params)
     end
   end
 
@@ -124,7 +121,7 @@ Rails.logger.debug "check_character_existance: url_params = #{url_params.inspect
   def store_return_to(uri = nil)
     session[:return_to] = uri
     session[:return_to] ||= params[:return_to]
-    session[:return_to] ||= url_for(params_without_facebook_data.merge(:canvas => true)) unless controller_name == 'characters' && action_name == 'index'
+    session[:return_to] ||= url_for(params_without_facebook_data.merge(:canvas => fb_canvas?)) unless controller_name == 'characters' && action_name == 'index'
   end
 
   def redirect_back(uri)

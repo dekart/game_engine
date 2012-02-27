@@ -91,9 +91,10 @@ class CharactersController < ApplicationController
   end
 
   def check_character_existance_or_create
-    if !fb_canvas?
-      true
-    elsif current_character
+    #if !fb_canvas?
+    #  true
+    #els
+    if current_character
       true
     elsif params[:character]
       create
@@ -103,10 +104,6 @@ class CharactersController < ApplicationController
   end
   
   def require_facebook_permissions_if_standalone
-    if fb_canvas?
-      true
-    else
-      require_facebook_permissions unless ENV['OFFLINE']
-    end
+    require_facebook_permissions unless ENV['OFFLINE'] || fb_canvas?
   end
 end
