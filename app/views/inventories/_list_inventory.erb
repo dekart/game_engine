@@ -23,7 +23,7 @@
 
   <div class="controls clearfix">
     <% if inventory.can_be_sold? %>
-      <% form_tag(inventory_path(inventory.item), :remote => true, :method => :delete, :class => :clearfix) do %>
+      <%= form_tag(inventory_path(inventory.item), :remote => true, :method => :delete, :class => :clearfix) do %>
         <%= amount_select_tag %>
 
         <%= link_to_function(button(:sell, :price => number_to_currency(inventory.sell_price)),
