@@ -32,7 +32,7 @@ class MonstersController < ApplicationController
       
       index
     else
-      redirect_from_iframe monster_url(@monster, :canvas => true)
+      redirect_to monster_url(@monster)
     end
   end
 

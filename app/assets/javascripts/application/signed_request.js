@@ -18,6 +18,9 @@ function localUrl(url){
 }
 
 (function($){
+  if(signed_request == "")
+    return;
+  
   $('a[href]:not([href^="#"], [onclick], [data-remote])').live('click', function(){
     var link = $(this);
     

@@ -2,6 +2,8 @@ class CharactersController < ApplicationController
   if respond_to?(:facepalm_authentication_filter)
     skip_before_filter facepalm_authentication_filter, :only => :new
   end
+  
+  prepend_before_filter :facepalm_authentication_if_standalone, :only => :new
 
   skip_before_filter :check_character_existance,            :only => [:new, :create]
   skip_before_filter :check_user_ban,                       :only => [:new, :create]
@@ -37,7 +39,7 @@ class CharactersController < ApplicationController
 
   def new
     if current_character && params[:_force_form].blank?
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
@@ -49,7 +51,7 @@ class CharactersController < ApplicationController
 
   def create
     if current_character
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     else
       @character = current_user.build_character(:name => params[:character][:name])
 
@@ -57,7 +59,7 @@ class CharactersController < ApplicationController
 
       if @character.save
         # Always redirect newcomers to missions
-        redirect_from_iframe(mission_groups_url(:canvas => true))
+        redirect_to mission_groups_url
       else
         render :action => :new, :layout => 'unauthorized'
       end
@@ -70,7 +72,7 @@ class CharactersController < ApplicationController
     if flash[:premium_change_name]
       @allow_name = true
     else
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     end
   end
 
@@ -82,7 +84,7 @@ class CharactersController < ApplicationController
   end
 
   protected
-
+  
   def fetch_character_types
     @character_types = CharacterType.with_state(:visible).all
     
@@ -92,7 +94,9 @@ class CharactersController < ApplicationController
   end
 
   def check_character_existance_or_create
-    if current_character
+    if !fb_canvas?
+      true
+    elsif current_character
       true
     elsif params[:character]
       create
@@ -101,4 +105,13 @@ class CharactersController < ApplicationController
     end
   end
   
+  def facepalm_authentication_if_standalone
+    Rails.logger.debug "check_canvas BEFORE characters/new: fb_canvas? = #{fb_canvas?}"
+    
+    if fb_canvas?
+      true
+    else
+      facepalm_require_authentication(:email, :publish_actions) unless ENV['OFFLINE']
+    end
+  end
 end

@@ -18,7 +18,7 @@ class MissionsController < ApplicationController
       
       @help_result = current_character.mission_help_results.create(:requester => @requester, :mission => @mission)
     else
-      redirect_from_iframe root_url(:canvas => true) 
+      redirect_to root_url
     end
   end
   

@@ -11,7 +11,7 @@ class ClanMembershipInvitationsController < ApplicationController
     
     @invitation.accept!
     
-    redirect_from_iframe(clan_url(@invitation.clan, :canvas => true))
+    redirect_to clan_url(@invitation.clan)
   end
 
 end

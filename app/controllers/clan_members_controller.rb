@@ -2,7 +2,7 @@ class ClanMembersController < ApplicationController
   def destroy
     current_character.clan_member.destroy
     
-    redirect_from_iframe(clans_url(:canvas => true))
+    redirect_to clans_url
   end
   
   def delete

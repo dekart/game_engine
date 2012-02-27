@@ -132,7 +132,7 @@ describe ApplicationController do
     it 'should redirect to application request list page' do
       do_request
       
-      response.should redirect_from_iframe_to('http://apps.facebook.com/test/app_requests')
+      response.should redirect_to('http://apps.facebook.com/test/app_requests')
     end
     
     it 'should redirect to application request even if return URL is in the session' do
@@ -140,7 +140,7 @@ describe ApplicationController do
       
       do_request
       
-      response.should redirect_from_iframe_to('http://apps.facebook.com/test/app_requests')
+      response.should redirect_to('http://apps.facebook.com/test/app_requests')
     end
     
     describe 'when not a visit by app request' do
@@ -151,7 +151,7 @@ describe ApplicationController do
       it 'should not redirect' do
         do_request
         
-        response.should_not redirect_from_iframe
+        response.should_not redirect
       end
       
       it 'should return nil' do
@@ -198,7 +198,7 @@ describe ApplicationController do
       it 'should redirect to application request list' do
         do_request
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/app_requests')
+        response.should redirect_to('http://apps.facebook.com/test/app_requests')
       end
       
       it 'should mark current app requests as visited' do

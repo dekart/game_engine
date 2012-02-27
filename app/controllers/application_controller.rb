@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   include AppRequests
   include Notifications
 
+  before_filter :check_standalone
+
   before_filter :check_character_existance
   before_filter :check_user_ban
   
@@ -36,18 +38,21 @@ class ApplicationController < ActionController::Base
   end
   
   def check_character_existance
+    Rails.logger.debug "check_character_existance: fb_canvas? = #{fb_canvas?}"
+    puts "check_character_existance: fb_canvas? = #{fb_canvas?}"
+    
     unless current_character
       store_return_to
 
-      url_params = params_without_facebook_data.to_hash.symbolize_keys
+      #url_params = params_without_facebook_data.to_hash.symbolize_keys
+      url_params = params.to_hash.symbolize_keys
       url_params.merge!(
         :controller => "/characters",
         :action     => :new,
-        :id         => nil,
-        :canvas     => true
+        :id         => nil
       )
-
-      redirect_from_iframe url_for(url_params)
+Rails.logger.debug "check_character_existance: url_params = #{url_params.inspect}"
+      redirect_to url_for(url_params)
     end
   end
 
@@ -133,6 +138,22 @@ class ApplicationController < ActionController::Base
       session[:return_to] = nil
     end
     
-    redirect_from_iframe(uri)
+    redirect_to uri
+  end
+  
+  def check_standalone
+    if from_canvas = params.delete(:from_canvas) and from_canvas == 'false'
+      store_signed_request_in_session
+      
+      redirect_from_iframe url_for(
+        params.merge(:host => facepalm.callback_domain)
+      )
+    end
+    
+    true
+  end
+  
+  def store_signed_request_in_session
+    session[fb_sighed_request_session] = fb_signed_request
   end
 end

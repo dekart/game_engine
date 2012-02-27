@@ -152,6 +152,11 @@ GameEngine::Application.routes.draw do
       post 'hospital_heal'
     end
     
+    collection do
+      match 'standalone'
+      match 'play'
+    end
+    
     resources :assignments, :shallow => true
     resources :hit_listings, :only => [:new, :create]
 
