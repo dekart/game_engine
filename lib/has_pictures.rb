@@ -28,7 +28,7 @@ module HasPictures
       collection = collection.values if collection.is_a?(Hash)
 
       collection.each do |attributes|
-        attributes.symbolize_keys!
+        attributes = attributes.symbolize_keys
 
         picture_id = attributes.delete(:id)
         remove     = attributes.delete(:_destroy)

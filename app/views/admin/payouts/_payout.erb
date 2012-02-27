@@ -7,7 +7,7 @@
 
   <h4><%= t("payouts.#{payout.name}.name") %></h4>
 
-  <% fields_for "#{container.to_s.underscore}[payouts][payout_#{payout.object_id}]", payout do |form| %>
+  <%= fields_for "#{container.to_s.underscore}[payouts][payout_#{payout.object_id}]", payout do |form| %>
     <%= form.hidden_field :type, :value => payout.name %>
 
     <table>

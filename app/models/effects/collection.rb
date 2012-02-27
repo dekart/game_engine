@@ -13,7 +13,7 @@ module Effects
         collection = collection.values.sort_by{|v| v["position"].to_i } if collection.is_a?(Hash)
         
         items = collection.collect do |effect|
-          effect.symbolize_keys!
+          effect = effect.symbolize_keys
             
           Effects::Base.by_name(effect[:type]).new(effect.except(:type, :position))
         end

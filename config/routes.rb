@@ -308,6 +308,8 @@ GameEngine::Application.routes.draw do
   
   resources :complaints, :only => [:new, :create]
   
+  resources :credit_orders
+  
   match "/character_status" => "character_status#show"
   match "/chats/:chat_id" => "chat_messages#index"
   match "/cil/:key" => "short_links#show"
