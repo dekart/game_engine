@@ -19,14 +19,14 @@ class Exchange < ActiveRecord::Base
   
   state_machine :initial => :created do
     state :transacted
-    state :invalid
+    state :failed
     
     event :transact do
       transition :created => :transacted
     end
     
     event :invalidate do
-      transition :created => :invalid
+      transition :created => :failed
     end
     
     after_transition :on => :transact, :do => :transact_exchange_offers
