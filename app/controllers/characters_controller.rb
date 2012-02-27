@@ -1,9 +1,6 @@
 class CharactersController < ApplicationController
-  if respond_to?(:facepalm_authentication_filter)
-    skip_before_filter facepalm_authentication_filter, :only => :new
-  end
-  
-  prepend_before_filter :facepalm_authentication_if_standalone, :only => :new
+  skip_before_filter :require_facebook_permissions, :only => :new
+  prepend_before_filter :require_facebook_permissions_if_standalone, :only => :new
 
   skip_before_filter :check_character_existance,            :only => [:new, :create]
   skip_before_filter :check_user_ban,                       :only => [:new, :create]
@@ -105,13 +102,11 @@ class CharactersController < ApplicationController
     end
   end
   
-  def facepalm_authentication_if_standalone
-    Rails.logger.debug "check_canvas BEFORE characters/new: fb_canvas? = #{fb_canvas?}"
-    
+  def require_facebook_permissions_if_standalone
     if fb_canvas?
       true
     else
-      facepalm_require_authentication(:email, :publish_actions) unless ENV['OFFLINE']
+      require_facebook_permissions unless ENV['OFFLINE']
     end
   end
 end

@@ -18,7 +18,7 @@
         </tr>
       <% end %>
 
-      <% content_tag_for(:tr, setting) do %>
+      <%= content_tag_for(:tr, setting) do %>
         <td><%= setting.alias %></td>
         <td>
           <% if setting.value.present? %>

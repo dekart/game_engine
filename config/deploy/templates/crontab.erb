@@ -1,5 +1,5 @@
 RAILS_ENV=<%= rails_env %>
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:<%= "/home/#{user}/.rbenv/shims:/home/#{user}/.rbenv/bin:$PATH" %>
 
 # Delayed Job Processor
 

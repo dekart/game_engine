@@ -3,6 +3,7 @@
 //= require ./admin/jqplot
 //= require ./libs/jquery/dialog
 //= require ./libs/jquery/qtip2
+//= require ./application/signed_request
 //= require_self
 
 var SerializableList = {

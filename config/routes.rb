@@ -275,6 +275,7 @@ GameEngine::Application.routes.draw do
   
   resources :app_requests do
     put 'ignore', :on => :member
+    get 'invite', :on => :collection
   end
   
   resources :contests, :only => :show
@@ -311,6 +312,8 @@ GameEngine::Application.routes.draw do
   resources :clan_membership_invitations, :only => [:update, :destroy]  
   
   resources :complaints, :only => [:new, :create]
+  
+  resources :credit_orders
   
   match "/character_status" => "character_status#show"
   match "/chats/:chat_id" => "chat_messages#index"

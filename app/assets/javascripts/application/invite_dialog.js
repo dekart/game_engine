@@ -8,7 +8,7 @@ var InviteDialog = (function(){
   var fnMethods = {
     initialize: function(users, send_button_callback){
       var dialog = $(this);
-      
+
       // Storing initial data
       dialog.data({ 'users' : users });
 
@@ -368,8 +368,6 @@ var InviteDialog = (function(){
     },
 
     selectRecipients: function(invite_type, options, callback){
-      var dialog_template = $('#invite_dialog_template');
-
       Spinner.show();
 
       FB.getLoginStatus(function(response) {
@@ -380,23 +378,28 @@ var InviteDialog = (function(){
             }, 
             function(response){
               Spinner.hide();
-            
-              var exclude_ids = invite_dialog.getExcludedIds(invite_type);
-              var users = $.map(response.data, function(user){
-                return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
-              });
-              
-              $.dialog(
-                dialog_template.tmpl({
-                  options : options,
-                  users : users
-                })
-              );
 
-              $('#invite_dialog').inviteDialog(users, function(ids){
-                callback(ids);
-                
-                invite_dialog.excludeIds(invite_type, ids);
+              var exclude_ids;
+              var users;
+
+              $.getJSON('/app_requests/invite', {type: invite_type}, function(data){
+
+                exclude_ids = data.exclude_ids[invite_type];
+                users = $.map(response.data, function(user){
+                  return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
+                });
+
+                $.dialog(
+                  $(data.dialog_template).tmpl({
+                    options : options,
+                    users : users
+                  })
+                );
+
+                $('#invite_dialog').inviteDialog(users, function(ids){
+                  callback(ids);
+                  invite_dialog.excludeIds(invite_type, ids);
+                });
               });
             }
           );

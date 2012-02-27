@@ -3,7 +3,7 @@
     <%= link_to_function(t(".remove"), "PictureForm.markForRemove(this)", :class => :remove) %>
   </div>
   
-  <% fields_for "#{container}[picture_attributes][#{picture.object_id}]", picture do |f| %>
+  <%= fields_for "#{container}[picture_attributes][#{picture.object_id}]", picture do |f| %>
     <%= f.hidden_field :id %>
     
     <% if styles = picture.owner_class.picture_styles_for_select and styles.any? %>

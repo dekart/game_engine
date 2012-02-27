@@ -1,0 +1,17 @@
+<% content = capture do %>
+  <%= form_for([:admin, @translation], :remote => true) do |form| %>
+    <%= form.hidden_field :key %>
+  
+    <%= form.text_field(:value,
+          :required     => true,
+          :after_field  => '%s %s' % [
+            strong_tag(t(".current_value")),
+            @current_value
+          ]
+        ) %>
+  
+    <%= form.submit %>
+  <% end %>
+<% end %>
+
+$("#<%= translation_id(@translation.key) %>").html('<%= escape_javascript(content) %>');
