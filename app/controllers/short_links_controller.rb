@@ -31,7 +31,7 @@ class ShortLinksController < ActionController::Metal
       }
       
       self.content_type = Mime::HTML
-      self.response_body = iframe_redirect_code(target_url, custom_headers)
+      self.response_body = iframe_redirect_html_code(target_url, custom_headers)
     rescue Exception => e
       #TODO Possibly this rescue is not necessary. Remove it if there will be no errors.
       Rails.logger.error "Failed to parse short link: '#{ env["PATH_INFO"] }'"
@@ -39,7 +39,7 @@ class ShortLinksController < ActionController::Metal
       Rails.logger.error e.backtrace.join("\n")
 
       self.content_type = Mime::HTML
-      self.response_body = iframe_redirect_code(facepalm.canvas_page_url('http://'))
+      self.response_body = iframe_redirect_html_code(facepalm.canvas_page_url('http://'))
     end
   end
 end
