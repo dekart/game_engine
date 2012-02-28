@@ -83,7 +83,7 @@ class ApplicationController
     def fatal_log_processing_for_request_id
       request_id = "\n\nProcessing #{self.class.name}\##{action_name} "
       request_id << "to #{params[:format]} " if params[:format]
-      request_id << "(for #{request_origin}) [#{request.method.to_s.upcase}]"
+      request_id << "(for #{request.remote_ip} at #{Time.now.to_s(:db)}) [#{request.method.to_s.upcase}]"
 
       logger.fatal(request_id)
     end
@@ -98,7 +98,7 @@ class ApplicationController
     def log_browser_info
       logger.fatal "Requested URL: #{request.url}"
       logger.fatal "Referer: #{request.headers["Referer"]}" unless request.headers["Referer"].blank?
-      logger.fatal "Request Origin: #{request_origin}"
+      logger.fatal "Request Origin: #{request.remote_ip} at #{Time.now.to_s(:db)}"
       logger.fatal "User Agent: #{request.headers["User-Agent"]}\n\n"
     end
 
