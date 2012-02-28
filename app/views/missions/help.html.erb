@@ -20,7 +20,7 @@
       </div>
     <% else %>
       <% builder.fail do %>
-        <%= @help_result.errors[:base] %>
+        <%= @help_result.errors[:base].first %>
       <% end %>
     <% end%>
   <% end %>
