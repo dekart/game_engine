@@ -37,7 +37,7 @@ class Character
       end
       
       def active
-        where(:id => $redis.smembers(redis_key(:active)))
+        where(:id => $redis.smembers(redis_key(:active))).joins(:monster).order('monsters.expire_at ASC')
       end
       
       def defeated
