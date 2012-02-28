@@ -28,6 +28,8 @@ class Fight < ActiveRecord::Base
     }
   }
 
+  validate :fight_availability
+
   before_create :calculate_fight
   after_create  :save_payout, :post_to_newsfeed
   after_create :calculate_victories, :if => :attacker_won?
@@ -161,19 +163,19 @@ class Fight < ActiveRecord::Base
 
   protected
 
-  def validate
+  def fight_availability
     if !enough_stamina?
-      errors.add(:character, :not_enough_stamina)
+      errors.add(:attacker, :not_enough_stamina)
     elsif attacker.weak?
-      errors.add(:character, :too_weak)
+      errors.add(:attacker, :too_weak)
     elsif !Setting.b(:fight_weak_opponents) && victim.weak? && !cause.is_a?(HitListing)
       errors.add(:victim, :too_weak)
     elsif !Setting.b(:fight_alliance_attack) && attacker.friend_relations.established?(victim)
-      errors.add(:character, :cannot_attack_friends)
+      errors.add(:attacker, :cannot_attack_friends)
     elsif (is_response? && cause.is_a?(Fight) && !cause.respondable?) || (!is_response? && !can_attack?)
-      errors.add(:character, :cannot_attack)
+      errors.add(:attacker, :cannot_attack)
     elsif attacker == victim
-      errors.add(:character, :cannot_attack_self)
+      errors.add(:attacker, :cannot_attack_self)
     end
   end
 
