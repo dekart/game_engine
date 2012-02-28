@@ -6,6 +6,13 @@ GIT
       ie_iframe_cookies (~> 0.1.2)
       koala (~> 1.2.1)
 
+GIT
+  remote: git://github.com/mark-moseley/linecache
+  revision: 869c6a65155068415925067e480741bd0a71527e
+  specs:
+    linecache19 (0.5.12)
+      ruby_core_source (>= 0.1.4)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -40,6 +47,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.6)
     ansi (1.4.2)
+    archive-tar-minitar (0.5.2)
     arel (3.0.0)
     autotest-rails (4.1.1)
       ZenTest (= 4.5)
@@ -64,6 +72,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.2.0)
+    columnize (0.3.6)
     cubus-settingslogic (2.2.0)
     daemons (1.1.8)
     database_cleaner (0.7.1)
@@ -162,6 +171,21 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.8.0)
+    ruby-debug-base19 (0.11.25)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug-base19x (0.11.30.pre8)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      rake (>= 0.8.1)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby_core_source (0.1.5)
+      archive-tar-minitar (>= 0.5.2)
     rufus-scheduler (2.0.16)
       tzinfo (>= 0.3.23)
     sass (3.1.12)
@@ -215,6 +239,7 @@ DEPENDENCIES
   jquery-rails
   json_pure (~> 1.6.5)
   koala (~> 1.2.1)
+  linecache19!
   memcache-client (~> 1.8.5)
   multi_json (~> 1.0.4)
   mysql2
@@ -224,6 +249,8 @@ DEPENDENCIES
   rails (= 3.2.1)
   redis (~> 2.2.2)
   rspec-rails (~> 2.8.1)
+  ruby-debug-base19x (~> 0.11.30.pre4)
+  ruby-debug19
   rufus-scheduler (~> 2.0.16)
   sass-rails (~> 3.2.3)
   shoulda-matchers (~> 1.0.0)

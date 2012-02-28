@@ -35,9 +35,9 @@ group :development do
   
   # TODO: bug with ruby-debug19 http://stackoverflow.com/questions/8251349/ruby-threadptr-data-type-error
   #gem 'ruby-debug19', :require => 'ruby-debug'
-  #gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
-  #gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
-  #gem 'ruby-debug19', :require => 'ruby-debug'
+  gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
+  gem 'ruby-debug-base19x', '~> 0.11.30.pre4'
+  gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :assets do
