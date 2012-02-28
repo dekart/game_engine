@@ -509,7 +509,7 @@ var AchievementList = {
 
 var Rating = {
   setup: function() {
-    $("#rating_list").tabs();
+    $("#rating_list").tabs({cache: true});
     
     $(document).bind('facebook.permissions.missing facebook.permissions.not_granted', function() {
       $("#rating_score_permissions").show();
