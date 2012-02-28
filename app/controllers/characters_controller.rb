@@ -91,9 +91,6 @@ class CharactersController < ApplicationController
   end
 
   def check_character_existance_or_create
-    #if !fb_canvas?
-    #  true
-    #els
     if current_character
       true
     elsif params[:character]

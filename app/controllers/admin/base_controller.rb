@@ -9,7 +9,6 @@ class Admin::BaseController < ApplicationController
   protected
 
   def admin_required
-    # FIXME redirects to standalone
     redirect_to(root_url) unless current_user.admin? || ENV['OFFLINE']
   end
 
