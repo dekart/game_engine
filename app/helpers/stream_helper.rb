@@ -221,7 +221,7 @@ module StreamHelper
         :rating_name => t("stories.position_in_rating.ratings.#{ rating_name }")
       },
       {},
-      image_path("stream/rating.gif")
+      image_path("stream/rating.jpg")
     ]
   end
   
