@@ -199,7 +199,7 @@ module StreamHelper
       {
         :exchange_id => exchange.id
       },
-      image_path(:stream_exchange)
+      image_path("stream/exchange.jpg")
     ]
   end
   
@@ -221,7 +221,7 @@ module StreamHelper
         :rating_name => t("stories.position_in_rating.ratings.#{ rating_name }")
       },
       {},
-      image_path(:stream_rating)
+      image_path("stream/rating.gif")
     ]
   end
   
