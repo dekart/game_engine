@@ -4,7 +4,7 @@
       <% if mission.pictures? %>
         <%= image_tag(mission.pictures.url(:small)) %>
       <% else %>
-        <%= asset_image_tag(:mission_placeholder) %>
+        <%= image_tag("mission_placeholder.png") %>
       <% end %>
 
       <div class="progress"><%= mission_progress(rank) %></div>

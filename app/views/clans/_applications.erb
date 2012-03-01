@@ -20,7 +20,7 @@
         </div>
 
         <div class="reject">
-          <%= link_to(asset_image_tag(:icons_delete, :alt => t('.buttons.delete')),
+          <%= link_to(image_tag("icons/delete.gif", :alt => t('.buttons.delete')),
                 reject_clan_membership_application_path(application),
                 :remote   => true,
                 :method   => :delete,

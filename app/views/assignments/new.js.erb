@@ -29,7 +29,7 @@
                     <td class="picture"><%= character_picture(relation.character) %></td>
                     <td class="name"><%= character_name(relation.character) %></td>
                   <% else %>
-                    <td class="picture"><%= asset_image_tag(:mercenary, :alt => relation.name) %></td>
+                    <td class="picture"><%= image_tag('mercenary.gif', :alt => relation.name) %></td>
                     <td class="name"><%= relation.name %></td>
                   <% end %>
 

@@ -199,7 +199,7 @@ module StreamHelper
       {
         :exchange_id => exchange.id
       },
-      asset_image_path(:stream_exchange)
+      image_path(:stream_exchange)
     ]
   end
   
@@ -221,7 +221,7 @@ module StreamHelper
         :rating_name => t("stories.position_in_rating.ratings.#{ rating_name }")
       },
       {},
-      asset_image_path(:stream_rating)
+      image_path(:stream_rating)
     ]
   end
   
@@ -279,10 +279,8 @@ module StreamHelper
   def stream_image(image, url)
     if image.is_a?(String)
       src = image_path(image)
-    elsif Asset[image]
-      src = asset_image_path(image)
     else
-      src = asset_image_path('logo_stream')
+      src = image_path('logo_stream.jpg')
     end
 
     [
