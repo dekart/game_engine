@@ -27,9 +27,9 @@
 
   <%= render_to_result :accept_exchange_offer_error do |builder| %>
     <% builder.fail do %>
-      <%= t(".errors.exchange_creator") if @exchange.errors.on(:amount) %>
+      <%= t(".errors.exchange_creator") if @exchange.errors.include?(:amount) %>
 
-      <%= t(".errors.exchange_offer_creator") if @exchange_offer.errors.on(:amount) %>
+      <%= t(".errors.exchange_offer_creator") if @exchange_offer.errors.include?(:amount) %>
     <% end %>
   <% end %>
 
