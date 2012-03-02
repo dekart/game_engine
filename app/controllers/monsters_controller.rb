@@ -28,9 +28,9 @@ class MonstersController < ApplicationController
     @monster ||= @monster_type.monsters.create(:character => current_character)
   
     if @monster.new_record?
-      flash.now[:error] = @monster.errors.full_messages
+      flash[:error] = @monster.errors.full_messages
       
-      index
+      redirect_from_iframe monsters_url(:canvas => true)
     else
       redirect_from_iframe monster_url(@monster, :canvas => true)
     end
