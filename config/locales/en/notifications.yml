@@ -118,3 +118,11 @@ en:
       text: "%{author} posted something on your profile wall."  
       buttons:
         read: "Read Post"
+        
+    hit_listing:
+      title:
+        client: "Your target is to hit the list was killed"
+        victim: "You have been placed in the hit list"       
+      text:
+        client: "Your target %{victim} is to hit the list was killed"
+        victim: "You have been placed in the hit list and set the reward %{reward}"  
