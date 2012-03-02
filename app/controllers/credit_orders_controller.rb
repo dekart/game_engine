@@ -55,15 +55,6 @@ class CreditOrdersController < ApplicationController
           :status => 'settled'
         }
       }
-    elsif params[:status] == 'settled'
-      @order.settle!
-      
-      render :json => {
-        :method => 'payments_status_update',
-        :content => {
-          :status => 'settled'
-        }
-      }
     end
   end
 end

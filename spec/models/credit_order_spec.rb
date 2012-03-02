@@ -32,36 +32,14 @@ describe CreditOrder do
         @order.update_attribute(:state, 'placed')
       end
       
-      it 'should be settleable' do
-        @order.can_settle?.should be_true
-      end
-      
       it 'should be cancelable' do
         @order.can_cancel?.should be_true
-      end
-    end
-    
-    describe 'when settled' do
-      before do
-        @order.update_attribute(:state, 'settled')
-      end
-      
-      it 'should be disputable' do
-        @order.can_dispute?.should be_true
-      end
-      
-      it 'should be refundable' do
-        @order.can_refund?.should be_true
       end
     end
     
     describe 'when disputed' do
       before do
         @order.update_attribute(:state, 'disputed')
-      end
-      
-      it 'should be settleable' do
-        @order.can_settle?.should be_true
       end
       
       it 'should be refundable' do
