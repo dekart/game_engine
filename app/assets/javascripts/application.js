@@ -379,14 +379,10 @@ var Equipment = {
         
         if ($(ui.draggable).data('move')) {
           // move inventory from one placement to another
-          $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')}, function(request) {
-            $("#result").html(request);
-          });
+          $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')});
         } else {
           // simply equip inventory in this placement
-          $.post($(ui.draggable).data('equip'), {placement: $(this).data('placement')}, function(request) {
-            $("#result").html(request);
-          });
+          $.post($(ui.draggable).data('equip'), {placement: $(this).data('placement')});
         }
       }
     }));
@@ -401,9 +397,7 @@ var Equipment = {
       drop: function(event, ui) {
         disableDraggables();
         
-        $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')}, function(request) {
-          $("#result").html(request);
-        });
+        $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')});
       }
     }));
   },
