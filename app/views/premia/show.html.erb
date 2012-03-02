@@ -215,6 +215,10 @@
         <span class="earn_credits button"><%= button(:earn_credits) %></span>
       </div>
     </div>
+
+    <% dom_ready do %>
+      $('#earn_credits .button').earnCreditButton();
+    <% end %>
   <% end %>
 </div>
 
