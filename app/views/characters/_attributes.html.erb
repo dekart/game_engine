@@ -54,6 +54,12 @@
         <%= number_to_currency(character.vip_money) %>
       </td>
     </tr>
+    <tr class="upgrade_tokens">
+      <th><%= Character.human_attribute_name("upgrade_tokens") %></th>
+      <td class="value">
+        <%= number_to_currency(character.upgrade_tokens) %>
+      </td>
+    </tr>
   <% else %>
     <tr class="attack">
       <th><%= Character.human_attribute_name("attack") %></th>
