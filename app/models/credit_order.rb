@@ -5,7 +5,6 @@ class CreditOrder < ActiveRecord::Base
   state_machine :initial => :previewed do
     state :previewed
     state :placed
-    state :settled
     state :canceled
     state :disputed
     state :refunded
@@ -14,20 +13,16 @@ class CreditOrder < ActiveRecord::Base
       transition :previewed => :placed
     end
     
-    event :settle do
-      transition [:placed, :disputed] => :settled
-    end
-    
     event :cancel do
       transition [:previewed, :placed] => :canceled
     end
     
     event :dispute do
-      transition :settled => :disputed
+      transition :placed => :disputed
     end
     
     event :refund do
-      transition [:settled, :disputed] => :refunded
+      transition [:placed, :disputed] => :refunded
     end
     
     after_transition :previewed => :placed, :do => :deposit_vip_money
