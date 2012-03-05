@@ -160,6 +160,9 @@ Factory.define :monster_type do |t|
   t.health 1000
 
   t.state 'visible'
+  
+  t.reward_time 24
+  t.respawn_time 24
 end
 
 Factory.define :monster do |t|

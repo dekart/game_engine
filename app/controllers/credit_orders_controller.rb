@@ -35,7 +35,7 @@ class CreditOrdersController < ApplicationController
             :amount => @package.vip_money, 
             :app    => t('app_name')
           ),
-          :image_url    => @package.pictures? ? view_context.image_path(@package.pictures.url) : view_context.asset_image_path(:credit_package),
+          :image_url    => @package.pictures? ? view_context.image_path(@package.pictures.url) : view_context.image_path("credit_package.jpg"),
           :product_url  => items_url(:anchor => :buy_vip_money, :canvas => true),
           :price        => @package.price
         }
@@ -48,15 +48,6 @@ class CreditOrdersController < ApplicationController
     
     if params[:status] == 'placed'
       @order.place!
-      
-      render :json => {
-        :method => 'payments_status_update',
-        :content => {
-          :status => 'settled'
-        }
-      }
-    elsif params[:status] == 'settled'
-      @order.settle!
       
       render :json => {
         :method => 'payments_status_update',

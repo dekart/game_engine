@@ -360,7 +360,7 @@ var InviteDialog = (function(){
     sendRequest: function(options, callback){
       FB.ui(options.dialog, function(response){
         if(response){
-          $('#ajax').load('/app_requests', $.extend({request_id: response.request, to: response.to}, options.request), function(){ 
+          $.post('/app_requests', $.extend({request_id: response.request, to: response.to}, options.request), function(){
             callback(); 
           });
         }

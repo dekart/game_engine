@@ -28,7 +28,7 @@
     <% end %>
   <% else %>
     <% builder.fail do %>
-      <%= @fight.errors.collect{|e| e.last }.join(' ') %>
+      <%= @fight.errors.full_messages.join("\n") %>
     <% end %>
   <% end %>
 

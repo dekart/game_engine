@@ -7,7 +7,7 @@ $.dialog.close();
     <% end %>
   
   <% else %>
-    <% @complaint.errors.each_error do |attr, message| %>
+    <% @complaint.errors.each do |attr, message| %>
       <% r.fail do %>
         <%= attr %> <%= message %>
       <% end %>

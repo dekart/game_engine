@@ -28,7 +28,6 @@ en:
         tips: "Tips"
         stories: "Feed Stories"
         translations: "Translations"
-        assets: "Assets"
         help_pages: "Help Pages"
         settings: "Settings"
         global_tasks: "Global Tasks"
@@ -244,26 +243,6 @@ en:
         submit: "Create"
       edit:
         submit: "Update"
-    assets:
-      index:
-        title: "Assets"
-        controls:
-          new: "Add Asset"
-          view: "View"
-          edit: "Edit"
-          delete: "Delete"
-          delete_confirm: "WARNING: Default assets are used by default application skin. If you'll delete one of these assets it may cause corruption of the application design! Are you sure you want to delete this asset?"
-        empty_set: "No assets"
-      new:
-        title: "New Asset"
-        submit: "Create"
-      create:
-        success: "Asset has been created successfully!"
-      edit:
-        title: "%{name} - Edit Asset"
-        submit: "Update"
-      update:
-        success: "Asset has been updated successfully!"
     character_types:
       index:
         title: "Character Types"

@@ -70,7 +70,7 @@
     </div>
   <% else %>
     <% builder.fail do %>
-      <% @inventory.errors.each_error do |attr, message| %>
+      <% @inventory.errors.each do |attr, message| %>
         <%= message %>
       <% end %>
     <% end %>

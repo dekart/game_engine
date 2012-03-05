@@ -27,7 +27,7 @@ module ItemsHelper
       :title => item.name
     )
       
-    image_tag(item.pictures? ? item.pictures.url(format) : asset_image_path("1px"), options)
+    image_tag(item.pictures? ? item.pictures.url(format) : image_path("1px.gif"), options)
   end
   
   def item_tooltip_content(item)
@@ -108,7 +108,7 @@ module ItemsHelper
             :text => item.name,
             :button => 'Close'
           },
-          :text => %{<div class="spinner">#{ asset_image_tag(:spinner) }</div>}, # show spinner while tooltip loading
+          :text => %{<div class="spinner">#{ image_tag("spinner.gif") }</div>}, # show spinner while tooltip loading
           :ajax => {
             :url => item_path(item)
           }
