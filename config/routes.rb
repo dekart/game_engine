@@ -34,7 +34,10 @@ GameEngine::Application.routes.draw do
     end
     
     resources :messages do
-      put 'change_state', :on => :member
+      member do
+        put 'change_state'
+        put 'send_to_admin'
+      end
     end
 
     resources :property_types do

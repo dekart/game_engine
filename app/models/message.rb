@@ -40,4 +40,8 @@ class Message < ActiveRecord::Base
       save!
     end
   end
+  
+  def send_to_admin(character)
+    character.notifications.schedule(:information, :message_id => id)
+  end
 end

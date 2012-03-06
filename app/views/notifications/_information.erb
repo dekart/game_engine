@@ -2,7 +2,7 @@
   <h2><%= t(".title", :app => t('app_name')) %></h2>
 
   <p class="text">
-    <%= notification.message.content %>
+    <%= notification.message.content.html_safe %>
   </p>
 
   <%= render("notifications/disable", :notification => notification) %>

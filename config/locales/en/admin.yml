@@ -472,6 +472,7 @@ en:
           publish_confirm: "Are you sure you want to send this message to players?"
           delete: "Delete"
           delete_confirm: "Are you sure you want to delete this message?"
+          send_to_admin: "Sent To Admin"
       new:
         title: "New Message"
       edit:
@@ -482,6 +483,8 @@ en:
         success: "Message has been updated successfully!"
       controls:
         new: "Add Message"
+      send_to_admin:
+        success: "Message was sent successfully"  
     pictures:
       form_fields:
         new: "Add Picture"
