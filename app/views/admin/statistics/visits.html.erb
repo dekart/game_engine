@@ -17,6 +17,7 @@
     <td>
       <table id="character_list" class="data">
         <tr>
+          <th>#</th>
           <th><%= Character.human_attribute_name("id") %></th>
           <th><%= Character.human_attribute_name("name") %></th>
           <th><%= Character.human_attribute_name("level") %></th>
@@ -26,6 +27,7 @@
         </tr>
         <% @users.each_with_index do |user, index| %>
           <tr>
+            <td><%= index + 1 %></td>
             <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
             <td>
               <% if user.try(:character) %>
