@@ -70,7 +70,13 @@ module HasPictures
 
         missing_styles.each do |style|
           picture = pictures.build(:style => style)
-          picture.image = original.image.to_file
+
+          # Copying original image to avoid conflict of interests while working with files
+          path = original.image.to_file.path
+          new_path = "/tmp/%d-%s" % [rand(1_000_000), File.basename(path)]
+          FileUtils.cp(path, new_path)
+
+          picture.image = File.open(new_path, "r")
         end
       end
 
