@@ -1,5 +1,4 @@
-rails_env = ENV['RAILS_ENV'] || 'development'
-workers = ENV['UNICORN_WORKERS'] || 3
+workers = [ENV['UNICORN_WORKERS'].to_i, 1].max
 port = ENV['UNICORN_PORT'] || 8080
 
 
@@ -19,8 +18,12 @@ listen port, :backlog => workers * 10
 stderr_path File.expand_path("../../log/unicorn.log", __FILE__)
 stdout_path File.expand_path("../../log/unicorn.log", __FILE__)
 
+pid File.expand_path("../../tmp/pids/unicorn.pid", __FILE__)
+
 
 before_fork do |server, worker|
+  ActiveRecord::Base.connection.disconnect!
+
   ##
   # When sent a USR2, Unicorn will suffix its pidfile with .oldbin and
   # immediately start loading up a new version of itself (loaded with a new
@@ -54,5 +57,4 @@ after_fork do |server, worker|
   # Redis and Memcached would go here but their connections are established
   # on demand, so the master never opens a socket
 
-  $unicorn_worker = worker.nr
 end
