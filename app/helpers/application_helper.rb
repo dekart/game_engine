@@ -118,9 +118,9 @@ module ApplicationHelper
   end
   
   def display_by_limit(type, limit)
-    amount = $redis.hget("character_#{ current_character.id }_display_limit", type)
+    amount = $redis.hget("character_#{ current_character.id }_display_limit", type).to_i
     
-    if block_given? && (!amount || amount.to_i < limit) 
+    if block_given? && amount < limit
       $redis.hincrby("character_#{ current_character.id }_display_limit", type, 1)
       
       yield
