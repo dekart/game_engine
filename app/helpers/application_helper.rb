@@ -116,4 +116,14 @@ module ApplicationHelper
       yield(settings) if settings[:start] > Time.now
     end
   end
+  
+  def display_by_limit(type, limit)
+    amount = $redis.hget("character_#{ current_character.id }_display_limit", type)
+    
+    if block_given? && (!amount || amount.to_i < limit) 
+      $redis.hincrby("character_#{ current_character.id }_display_limit", type, 1)
+      
+      yield
+    end  
+  end
 end
