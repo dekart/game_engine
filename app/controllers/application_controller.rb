@@ -18,6 +18,11 @@ class ApplicationController < ActionController::Base
 
   helper :all
 
+  before_filter :log_u_worker
+  def log_u_worker
+    logger.debug "Unicorn: #{$unicorn_worker}"
+  end
+
   protected
   
   def special_items

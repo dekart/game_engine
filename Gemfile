@@ -27,6 +27,7 @@ gem 'facepalm',         '~> 0.2', :git => 'git://github.com/dekart/facepalm.git'
 
 gem 'jquery-rails'
 
+gem 'unicorn'
 
 group :development do
   gem "capistrano",   "~> 2.9.0"
