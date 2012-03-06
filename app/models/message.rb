@@ -31,7 +31,7 @@ class Message < ActiveRecord::Base
   def mass_notify(characters)
     transaction do   
       characters.each do |character|
-        character.notifications.schedule(:information, :message_id => id)
+        send_to(character)
       end
       
       self.last_recipient_id = characters.last.id
@@ -41,7 +41,7 @@ class Message < ActiveRecord::Base
     end
   end
   
-  def send_to_admin(character)
+  def send_to(character)
     character.notifications.schedule(:information, :message_id => id)
   end
 end

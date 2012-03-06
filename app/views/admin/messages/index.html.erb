@@ -39,7 +39,7 @@
               ) if message.can_mark_deleted? %>
               
           <div class="send_to_admin">
-            <%= link_to(t(".controls.send_to_admin"), send_to_admin_admin_message_path(message),
+            <%= link_to(t(".controls.send_to_admin"), send_to_admin_message_path(message),
                 :remote => true,
                 :method   => :put
               ) %>

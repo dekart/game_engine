@@ -36,7 +36,7 @@ GameEngine::Application.routes.draw do
     resources :messages do
       member do
         put 'change_state'
-        put 'send_to_admin'
+        put 'send_to'
       end
     end
 

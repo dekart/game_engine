@@ -68,8 +68,8 @@ class Admin::MessagesController < Admin::BaseController
     end
   end
   
-  def send_to_admin
+  def send_to
     @message = Message.find(params[:id])
-    @message.send_to_admin(current_character)
+    @message.send_to(current_character)
   end
 end
