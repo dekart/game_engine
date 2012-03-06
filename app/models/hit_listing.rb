@@ -30,6 +30,8 @@ class HitListing < ActiveRecord::Base
     :on => :create
 
   before_create :charge_client, :take_fee_from_reward
+  
+  after_create :schedule_notification_for_victim
 
   def execute!(attacker)
     errors.add(:base, :already_completed) if completed?
@@ -44,6 +46,8 @@ class HitListing < ActiveRecord::Base
           self.completed  = true
 
           attacker.charge!(- reward, 0, self)
+          
+          schedule_notification_for_client
 
           save!
         end
@@ -84,5 +88,20 @@ class HitListing < ActiveRecord::Base
 
   def take_fee_from_reward
     self.reward -= Setting.p(:hit_list_reward_fee, reward)
+  end
+  
+  def schedule_notification_for_victim    
+    victim.notifications.schedule(:hit_listing,
+      :status => :victim,
+      :reward => reward
+    )
+  end
+  
+  def schedule_notification_for_client    
+    client.notifications.schedule(:hit_listing,
+      :status => :client,
+      :victim_id => victim_id,
+      :reward => reward
+    )
   end
 end
