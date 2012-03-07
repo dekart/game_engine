@@ -390,10 +390,10 @@ var InviteDialog = (function(){
 
       FB.getLoginStatus(function(response) {
         if (response.authResponse) {
-          FB.api('/fql',
+          FB.api('/fql', 
             {
               q : 'SELECT uid, name, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name'
-            },
+            }, 
             function(response){
               Spinner.hide();
 
@@ -403,22 +403,21 @@ var InviteDialog = (function(){
               $.getJSON('/app_requests/invite', {type: invite_type}, function(data){
 
                 exclude_ids = data.exclude_ids[invite_type];
-
                 users = $.map(response.data, function(user){
                   return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
                 });
 
                 $.dialog(
                   $(data.dialog_template).tmpl({
-	                options : options,
-	                users : users
-	              })
-  	            );
+                    options : options,
+                    users : users
+                  })
+                );
 
-	            $('#invite_dialog').inviteDialog(users, function(ids){
-	              callback(ids);
-	              invite_dialog.excludeIds(invite_type, ids);
-	            });
+                $('#invite_dialog').inviteDialog(users, function(ids){
+                  callback(ids);
+                  invite_dialog.excludeIds(invite_type, ids);
+                });
               });
             }
           );
