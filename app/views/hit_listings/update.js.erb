@@ -4,7 +4,7 @@
       <% unless @hit_listing.completed? %>
         <% builder.buttons do %>
           <%= link_to(button(:attack_again), hit_listing_path(@hit_listing),
-                :remote => true
+                :remote => true,
                 :method => :put,
                 :"data-click-once" => true,
                 :class => "attack_again button"
@@ -55,12 +55,12 @@
           ) %>
     <% else %>
       <% builder.fail do %>
-        <%= @fight.errors.on(:character) %>
+        <%= @fight.errors[:character].join("\n") %>
       <% end %>
     <% end %>
   <% else %>
     <% builder.notice do %>
-      <%= @hit_listing.errors.on(:base) %>
+      <%= @hit_listing.errors[:base].join("\n") %>
     <% end %>
   <% end %>
 

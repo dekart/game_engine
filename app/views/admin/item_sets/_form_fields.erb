@@ -9,9 +9,8 @@
     <% end %>
   </div>
 
-<%= link_to(t(".add_item"), new_admin_item_set_path,
+<%= link_to(t(".add_item"), add_item_admin_item_sets_path,
       :remote => true,
-      :method => :post,
       :class => :add_item
     ) %>
 <% end %>

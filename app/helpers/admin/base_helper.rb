@@ -63,6 +63,7 @@ module Admin::BaseHelper
     unless object.first?
       controls << link_to(t('admin.change_position.move_higher'),
         polymorphic_url([:change_position, :admin, object], :direction => :up),
+        :method => :put,
         :remote => true,
         :class => 'move_higher'
       )

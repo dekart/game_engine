@@ -34,7 +34,10 @@ GameEngine::Application.routes.draw do
     end
     
     resources :messages do
-      put 'change_state', :on => :member
+      member do
+        put 'change_state'
+        put 'send_to'
+      end
     end
 
     resources :property_types do
@@ -60,7 +63,6 @@ GameEngine::Application.routes.draw do
     end
     
     resources :translations
-    resources :assets
 
     resources :character_types do
       put 'change_state', :on => :member
@@ -76,7 +78,6 @@ GameEngine::Application.routes.draw do
       member do
         delete 'delete_users'
         post 'restart'
-        post 'update_styles'
         post 'clear_memcache'
       end
     end
@@ -92,7 +93,8 @@ GameEngine::Application.routes.draw do
 
     resources :vip_money_operations, :only => :index
 
-    resources :item_collections, :path_names => {:new => :add_item} do
+    resources :item_collections do
+      get 'add_item', :on => :collection
       put 'change_state', :on => :member
     end
 
@@ -100,8 +102,9 @@ GameEngine::Application.routes.draw do
       put 'change_state', :on => :member
     end
 
-    resources :item_sets,
-      :path_names => { :new => :add_item }
+    resources :item_sets do
+      get 'add_item', :on => :collection
+    end
 
     resources :stories do
       put 'change_state', :on => :member
@@ -307,6 +310,8 @@ GameEngine::Application.routes.draw do
   resources :clan_membership_invitations, :only => [:update, :destroy]  
   
   resources :complaints, :only => [:new, :create]
+  
+  resources :credit_orders
   
   match "/character_status" => "character_status#show"
   match "/chats/:chat_id" => "chat_messages#index"

@@ -8,20 +8,6 @@ require 'fileutils'
 
 tunnel_ns = namespace :tunnelr do
 
-  desc "Create a basic tunnelr.yml configuration file"
-  task :setup => :environment do   
-    tunnelr_config = File.join(Rails.root,"config","tunnelr.yml")
-    unless File.exist?(tunnelr_config)
-      plugin_root = File.join(Rails.root,"vendor","plugins")
-      tunnelr_config_tpl = File.join(plugin_root,"tunnelr","generators","tunnelr","templates","config","tunnelr.yml")
-      FileUtils.cp tunnelr_config_tpl, tunnelr_config 
-      puts "Ensure 'GatewayPorts yes' is enabled in the remote development server's sshd config when using any of the tunnelr:*' rake tasks"
-      puts "Configuration created in #{Rails.root}/config/tunnelr.yml"
-    else
-      puts "#{Rails.root}/config/tunnelr.yml already exists"
-    end
-  end
-
   desc "Create a reverse ssh tunnel from a public server to a private development server." 
   task :start => [ :environment, :config ] do  
     puts @notification 
@@ -47,7 +33,7 @@ tunnel_ns = namespace :tunnelr do
   task :config => :environment do
    tunnelr_config = File.join(Rails.root, 'config', 'tunnelr.yml')
    if !File.exists?(tunnelr_config)
-     puts "No config file, try running tunnelr:setup"
+     puts "No config file, create config/tunnelr.yml"
    else
      TUNNELR = YAML.load(ERB.new(File.read(tunnelr_config)).result)[Rails.env]
      @public_host_username = TUNNELR['public_host_username'] 

@@ -39,7 +39,7 @@ en:
         fight_boost_defence: "Defence in Fight"
         total_score: "Total Score"
         total_monsters_damage: "Total Damage to Monsters"
-        monsters_killed: "Monsters Killed"
+        killed_monsters_count: "Monsters Killed"
         
       property_type:
         income: "Income"
@@ -110,7 +110,7 @@ en:
               not_loaded_image: "You need to select an image"     
         fight:
           attributes:
-            character:
+            attacker:
               not_enough_stamina: "You don't have enough stamina to fight. Take a rest!"
               cannot_attack: "You cannot attack this player!"
               cannot_attack_friends: "You cannot attack your allies!"

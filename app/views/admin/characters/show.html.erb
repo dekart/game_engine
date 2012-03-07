@@ -43,7 +43,7 @@
 
       <table class="data">
         <tr>
-          <th><%= Item.human_name %></th>
+          <th><%= Item.name %></th>
           <th><%= Inventory.human_attribute_name("amount") %></th>
         </tr>
 
@@ -59,7 +59,7 @@
 
       <table class="data">
         <tr>
-          <th><%= Property.human_name %></th>
+          <th><%= Property.name %></th>
           <th><%= Property.human_attribute_name("level") %></th>
           <th><%= PropertyType.human_attribute_name("income") %></th>
         </tr>
@@ -91,7 +91,7 @@
     </td>
 
     <td>
-      <h2><%= User.human_name %></h2>
+      <h2><%= User.name %></h2>
 
       <table class="data">
         <tr>

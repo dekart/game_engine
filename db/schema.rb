@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120210084301) do
+ActiveRecord::Schema.define(:version => 20120302070506) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -61,19 +61,6 @@ ActiveRecord::Schema.define(:version => 20120210084301) do
   add_index "app_requests", ["receiver_id", "state"], :name => "index_app_requests_on_receiver_id_and_state"
   add_index "app_requests", ["sender_id", "type"], :name => "index_app_requests_on_sender_id_and_type"
   add_index "app_requests", ["target_id", "target_type"], :name => "index_app_requests_on_target_id_and_target_type"
-  add_index "app_requests", ["target_id"], :name => "index_app_requests_on_target_id"
-
-  create_table "assets", :force => true do |t|
-    t.string   "alias",              :limit => 200, :default => "", :null => false
-    t.string   "image_file_name",                   :default => "", :null => false
-    t.string   "image_content_type", :limit => 100, :default => "", :null => false
-    t.integer  "image_file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "image_updated_at"
-  end
-
-  add_index "assets", ["alias"], :name => "index_assets_on_alias"
 
   create_table "assignments", :force => true do |t|
     t.integer  "relation_id"
@@ -235,8 +222,8 @@ ActiveRecord::Schema.define(:version => 20120210084301) do
     t.integer  "owner_id"
     t.integer  "offender_id"
     t.string   "state",       :limit => 50
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "contest_groups", :force => true do |t|

@@ -171,6 +171,7 @@ namespace :deploy do
       put(config, ".gemrc")
 
       run "gem install bundler -v=1.0.21"
+      run "gem install rake -v=0.9.2.2"
     end
 
     desc "Install required gems"

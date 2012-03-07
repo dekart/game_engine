@@ -23,7 +23,7 @@ gem "multi_json",       "~> 1.0.4"
 gem "faraday",          "~> 0.7.5"
 
 gem "koala",            "~> 1.2.1"
-gem 'facepalm',         '~> 0.2'
+gem 'facepalm',         '~> 0.2', :git => 'git://github.com/dekart/facepalm.git'
 
 gem 'jquery-rails'
 

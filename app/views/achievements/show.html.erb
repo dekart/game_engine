@@ -7,7 +7,7 @@
       
       'og:title'        => @achievement_type.name,
       'og:description'  => @achievement_type.description,
-      'og:image'        => @achievement_type.pictures? ? image_path(@achievement_type.pictures.url(:stream)) : asset_image_path(:achievement),
+      'og:image'        => @achievement_type.pictures? ? image_path(@achievement_type.pictures.url(:stream)) : image_path("achievement.png"),
       
       'og:points'       => 1
     }.each do |key, value|

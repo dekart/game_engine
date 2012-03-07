@@ -166,6 +166,6 @@ class Inventory < ActiveRecord::Base
   end
   
   def inventories_for_collection(collection)
-    character.inventories.scoped(:conditions => {:item_id => collection.item_ids})
+    character.inventories.where(:item_id => collection.item_ids)
   end
 end
