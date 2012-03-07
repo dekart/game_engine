@@ -338,7 +338,7 @@ var InviteDialog = (function(){
       if_fb_initialized(function(){
         if(options.dialog.to){
           invite_dialog.sendRequest(options, callback);
-        } else {
+        } else if (options.modern == true) {
           invite_dialog.selectRecipients(invite_type, options, function(ids){
             var options_with_receivers = $.extend(true, 
               {
@@ -351,12 +351,30 @@ var InviteDialog = (function(){
 
             invite_dialog.sendRequest(options_with_receivers, callback);
           });
+        } else {
+          $.getJSON('/app_requests/invite', {type: invite_type}, function(data){
+
+            FB.ui({method: 'apprequests', message: options.dialog.title, exclude_ids: data.exclude_ids[invite_type]}, function(fb_response) {
+              if (fb_response != null && typeof fb_response != "undefined") {
+                var options_with_receivers = $.extend(true,
+                  {
+                    dialog : {
+                      to : fb_response.to.join(',')
+                    }
+                  },
+                  options
+                );
+
+                invite_dialog.sendRequest(options_with_receivers, callback);
+              }
+            });
+          });
         }
 
         $(document).trigger('facebook.dialog');
       });
     },
-  
+
     sendRequest: function(options, callback){
       FB.ui(options.dialog, function(response){
         if(response){
