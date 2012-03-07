@@ -338,7 +338,7 @@ var InviteDialog = (function(){
       if_fb_initialized(function(){
         if(options.dialog.to){
           invite_dialog.sendRequest(options, callback);
-        } else {
+        } else if (options.modern == true) {
           invite_dialog.selectRecipients(invite_type, options, function(ids){
             var options_with_receivers = $.extend(true, 
               {
@@ -350,6 +350,24 @@ var InviteDialog = (function(){
             );
 
             invite_dialog.sendRequest(options_with_receivers, callback);
+          });
+        } else {
+          $.getJSON('/app_requests/invite', {type: invite_type}, function(data){
+
+            FB.ui({method: 'apprequests', message: options.dialog.title, exclude_ids: data.exclude_ids[invite_type]}, function(fb_response) {
+              if (fb_response != null && typeof fb_response != "undefined") {
+	            var options_with_receivers = $.extend(true,
+	              {
+	                dialog : {
+	                  to : fb_response.to.join(',')
+	                }
+	              },
+	              options
+	            );
+
+                invite_dialog.sendRequest(options_with_receivers, callback);
+              }
+            });
           });
         }
 
@@ -372,44 +390,38 @@ var InviteDialog = (function(){
 
       FB.getLoginStatus(function(response) {
         if (response.authResponse) {
-          if (options.modern == true) {
-            FB.api('/fql', 
-              {
-                q : 'SELECT uid, name, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name'
-              }, 
-              function(response){
-                Spinner.hide();
+          FB.api('/fql',
+            {
+              q : 'SELECT uid, name, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name'
+            },
+            function(response){
+              Spinner.hide();
 
-                var exclude_ids;
-                var users;
+              var exclude_ids;
+              var users;
 
-                $.getJSON('/app_requests/invite', {type: invite_type}, function(data){
+              $.getJSON('/app_requests/invite', {type: invite_type}, function(data){
 
-                  exclude_ids = data.exclude_ids[invite_type];
+                exclude_ids = data.exclude_ids[invite_type];
 
-                  users = $.map(response.data, function(user){
-                    return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
-                  });
-
-                  $.dialog(
-                    $(data.dialog_template).tmpl({
-	                  options : options,
-	                  users : users
-	                })
-  	              );
-
-	              $('#invite_dialog').inviteDialog(users, function(ids){
-	                callback(ids);
-	                invite_dialog.excludeIds(invite_type, ids);
-	              });
+                users = $.map(response.data, function(user){
+                  return $.inArray(user.uid, exclude_ids) > -1 ? null : user;
                 });
-              }
-            );
-          } else {
-            FB.ui({method: 'apprequests', message: options.dialog.title}, function(fb_responce) {
-              callback(fb_response.to);
-            });
-          }
+
+                $.dialog(
+                  $(data.dialog_template).tmpl({
+	                options : options,
+	                users : users
+	              })
+  	            );
+
+	            $('#invite_dialog').inviteDialog(users, function(ids){
+	              callback(ids);
+	              invite_dialog.excludeIds(invite_type, ids);
+	            });
+              });
+            }
+          );
         }
       });
     }
