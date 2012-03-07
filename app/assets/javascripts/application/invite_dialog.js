@@ -356,14 +356,14 @@ var InviteDialog = (function(){
 
             FB.ui({method: 'apprequests', message: options.dialog.title, exclude_ids: data.exclude_ids[invite_type]}, function(fb_response) {
               if (fb_response != null && typeof fb_response != "undefined") {
-	            var options_with_receivers = $.extend(true,
-	              {
-	                dialog : {
-	                  to : fb_response.to.join(',')
-	                }
-	              },
-	              options
-	            );
+                var options_with_receivers = $.extend(true,
+                  {
+                    dialog : {
+                      to : fb_response.to.join(',')
+                    }
+                  },
+                  options
+                );
 
                 invite_dialog.sendRequest(options_with_receivers, callback);
               }
