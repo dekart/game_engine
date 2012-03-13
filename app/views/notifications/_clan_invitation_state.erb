@@ -3,12 +3,12 @@
   
   <table width="100%">
     <tr>
-      <td class="image"><%= character_picture_link(notification.character) %></td>
+      <td class="image"><%= character_picture_link(notification.applicant) %></td>
       <td>
         <div class="text">
           <%= t(".#{notification.status}.text",
                 :clan => strong_tag(notification.clan.name),
-                :character => character_name_link(notification.character)
+                :character => character_name_link(notification.applicant)
               ).html_safe %>
         </div>
       </td>
