@@ -340,9 +340,9 @@ describe AppRequest::Base do
   end
   
   
-  describe '#update_data!' do
+  describe '#check_request' do
     before do
-      @request = Factory(:app_request_base, :state => 'pending')
+      @request = Factory(:app_request_invitation, :state => 'pending')
       @request.stub!(:update_from_facebook_request).and_return(true)
 
       @remote_request = mock('remote_request')
@@ -356,34 +356,16 @@ describe AppRequest::Base do
       Facepalm::Config.send(:remove_class_variable, :@@default)
     end
 
-    it 'should fetch data from API using application token' do
+    it 'should find or initialize new request for facebook request' do
       @koala.should_receive(:get_object).with("123456789_123456789").and_return(@remote_request)
-      
-      @request.update_data!
-    end
-    
-    it 'should update request from remote request' do
-      @request.should_receive(:update_from_facebook_request).with(@remote_request).and_return(true)
-      
-      @request.update_data!
-    end
-    
-    it 'should mark request as broken if failed to fetch request data' do
-      @koala.should_receive(:get_object).with("123456789_123456789").and_raise(Koala::Facebook::APIError)
-      
-      lambda{
-        @request.update_data!
-      }.should change(@request, :broken?).from(false).to(true)
-    end
-    
-    it 'should not try to mark request as broken if it\'s not possible' do
-      @request.ignore!
-      
-      @koala.should_receive(:get_object).with("123456789_123456789").and_raise(Koala::Facebook::APIError)
-      
-      lambda{
-        @request.update_data!
-      }.should_not change(@request, :broken?)
+
+      @remote_request.should_receive(:[]).with("data").twice.and_return(@remote_request['data'])
+
+      @remote_request.should_receive(:[]).with("id").and_return("123456789_123456789")
+
+      AppRequest::Base.should_receive(:find_or_initialize_by_facebook_id_and_receiver_id).and_return(@request)
+
+      AppRequest::Base.check_request(123456789, ["123456789"])
     end
   end
   
