@@ -1,7 +1,7 @@
 module Jobs
-  class RequestDataUpdate < Struct.new(:request_id)
+  class RequestDataUpdate < Struct.new(:request_id, :recipient_ids)
     def perform
-      AppRequest::Base.find_by_id(request_id).try(:update_data!)
+      AppRequest::Base.check_request(request_id, recipient_ids)
     end
   end
 end

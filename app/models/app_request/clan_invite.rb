@@ -16,7 +16,7 @@ class AppRequest::ClanInvite < AppRequest::Base
   def after_process
     super
     
-    if receiver.clan != sender.clan && sender.clan_member.creator?
+    if receiver && receiver.clan != sender.clan && sender.clan_member.creator?
       sender.clan.clan_membership_invitations.create(:character => receiver)
     end
   end
@@ -32,6 +32,6 @@ class AppRequest::ClanInvite < AppRequest::Base
   def after_ignore
     super
     
-    receiver.clan_membership_invitations.invitation_to_join(sender.clan).try(:destroy)
+    receiver.clan_membership_invitations.invitation_to_join(sender.clan).try(:destroy) if receiver
   end
 end
