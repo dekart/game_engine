@@ -30,8 +30,10 @@ class AppRequestsController < ApplicationController
     @recipients = Array.wrap(params[:to])
 
     @recipients.each do |recipient_id|
-      AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id)
+      $redis.rpush("app_requests_#{params[:request_id]}", recipient_id)
     end
+
+    Delayed::Job.enqueue Jobs::RequestDataUpdate.new(params[:request_id])
   end
   
   def update

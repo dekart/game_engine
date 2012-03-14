@@ -154,14 +154,29 @@ class AppRequest::Base < ActiveRecord::Base
       
       Delayed::Job.enqueue(Jobs::RequestDelete.new(ids)) unless ids.empty?
     end
-    
+
     def receiver_ids
       all(:select => "DISTINCT receiver_id").collect{|r| r.receiver_id }
     end
-    
+
+    def check_request(request_id, recipient_ids)
+      recipient_ids.each do |recipient_id|
+        graph_data = Facepalm::Config.default.api_client.get_object("#{ request_id }_#{ recipient_id }")
+  
+        data = JSON.parse(graph_data['data']) if graph_data['data']
+  
+        request = app_request_class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*graph_data['id'].split('_'))
+  
+        request.update_from_facebook_request(graph_data) if request.pending?
+      end
+    end
+
     def check_user_requests(user)
       user.facebook_client.get_connections('me', 'apprequests').each do |facebook_request|
-        request = AppRequest::Base.find_or_initialize_by_facebook_id_and_receiver_id(*facebook_request['id'].split('_'))
+
+        data = JSON.parse(facebook_request['data']) if facebook_request['data']
+
+        request = app_request_class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*facebook_request['id'].split('_'))
         
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
@@ -176,6 +191,14 @@ class AppRequest::Base < ActiveRecord::Base
     
     def request_class_name_for_type(type)
       "AppRequest::#{ type.camelize }"
+    end
+
+    def app_request_class_from_data(data)
+      if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
+        "AppRequest::#{ data['type'].camelize }"
+      else
+        'AppRequest::Invitation'
+      end.constantize
     end
   end
   
@@ -209,25 +232,11 @@ class AppRequest::Base < ActiveRecord::Base
       end
     end
   end
-  
+
   def graph_api_id
     receiver_id ? "#{ facebook_id }_#{ receiver_id }" : facebook_id
   end
 
-  def update_data!
-    if graph_data = Facepalm::Config.default.api_client.get_object(graph_api_id)
-      update_from_facebook_request(graph_data)
-    else
-      logger.error "Request cannot be fetched using Graph API: #{ graph_api_id }"
-
-      mark_broken! if can_mark_broken?
-    end
-  rescue Koala::Facebook::APIError => e
-    logger.error "AppRequest data update error: #{ e }"
-
-    mark_broken! if can_mark_broken?
-  end
-  
   def delete_from_facebook!
     Facepalm::Config.default.api_client.delete_object(graph_api_id)
   rescue Koala::Facebook::APIError => e
