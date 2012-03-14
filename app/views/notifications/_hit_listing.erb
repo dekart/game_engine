@@ -4,7 +4,7 @@
   <p class="text">
     <%= t(".text.#{ notification.data[:status] }", 
           :reward => span_tag(number_to_currency(notification.data[:reward]), 'attribute basic_money'),
-          :victim => (notification.data[:status] == :client) ? notification.victim.name : nil
+          :victim => (notification.data[:status].to_sym == :client) ? notification.victim.name : nil
          ).html_safe %>
   </p>
 

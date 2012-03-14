@@ -1,10 +1,8 @@
 module NotificationsHelper
   def display_notifications
-    if notifications = current_character.notifications.with_state(:pending).all and notifications.any?
-      Notification::Base.transaction do
-        notifications.each do |n|
-          n.display_notification
-        end
+    if notifications = current_character.notifications.with_state(:pending) and notifications.any?
+      notifications.each do |n|
+        n.display_notification
       end
 
       notifications.collect do |notification|
