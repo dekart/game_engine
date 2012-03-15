@@ -46,7 +46,9 @@ class Rating
     def rebuild!
       clear!
       
-      Character.find_each(:batch_size => 100) do |c|
+      Character.find_each(:batch_size => 100, :include => :user) do |c|
+        next if c.user.banned?
+
         update(c.id, c.rating_values)
       end
     end
