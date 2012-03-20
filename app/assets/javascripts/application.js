@@ -1,5 +1,10 @@
+//= require handlebars.runtime
 //= require jquery
 //= require jquery_ujs
+//= require i18n
+//= require i18n/helpers
+//= require i18n/translations
+//= require_tree ../templates
 //= require ./application/visibility
 //= require ./libs/jquery/labelify
 //= require ./libs/jquery/dialog
