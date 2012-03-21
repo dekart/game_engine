@@ -8,6 +8,8 @@ require "active_resource/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
+require File.expand_path("../../lib/rails/config", __FILE__)
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
@@ -17,6 +19,8 @@ end
 
 module GameEngine
   class Application < Rails::Application
+    config.cache_store = :mem_cache_store, Rails::Config.cache.server, {:namespace => Rails.env}
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -49,10 +53,12 @@ module GameEngine
     config.assets.enabled = true
 
     config.assets.logger = false
-  
+
+    config.assets.paths += %w{app/assets/templates}
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
-    
+
     config.generators do |g|
       g.test_framework :rspec, :fixture => false, :views => false
       g.fixture_replacement :factory_girl, :dir => "spec/factories"

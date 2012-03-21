@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/dekart/facepalm.git
-  revision: 16d8ea61e8ce1bead24afd1169e3dee17de3e347
+  revision: 742472bad904112bb21a81f581810bbace953514
   specs:
     facepalm (0.2.2)
       ie_iframe_cookies (~> 0.1.2)
@@ -45,7 +45,7 @@ GEM
     activesupport (3.2.1)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    addressable (2.2.6)
+    addressable (2.2.7)
     ansi (1.4.2)
     archive-tar-minitar (0.5.2)
     arel (3.0.0)
@@ -64,6 +64,7 @@ GEM
       net-ssh-gateway (>= 1.1.0)
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
+    chunky_png (1.2.5)
     cocaine (0.2.1)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -73,6 +74,12 @@ GEM
       execjs
     coffee-script-source (1.2.0)
     columnize (0.3.6)
+    compass (0.12.1)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.1)
+      compass (~> 0.12.0)
     cubus-settingslogic (2.2.0)
     daemons (1.1.8)
     database_cleaner (0.7.1)
@@ -94,10 +101,17 @@ GEM
       addressable (~> 2.2)
       multipart-post (~> 1.1)
       rack (~> 1.1)
+    fssm (0.2.8.1)
     haml (3.1.4)
+    handlebars_assets (0.4.0)
+      execjs (>= 1.2.9)
+      sprockets (>= 2.0.3)
+      tilt
     highline (1.6.11)
     hike (1.2.1)
     i18n (0.6.0)
+    i18n-js (2.1.2)
+      i18n
     ie_iframe_cookies (0.1.2)
     journey (1.0.1)
     jquery-rails (2.0.0)
@@ -116,7 +130,7 @@ GEM
     memcache-client (1.8.5)
     mime-types (1.17.2)
     multi_json (1.0.4)
-    multipart-post (1.1.4)
+    multipart-post (1.1.5)
     mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -227,6 +241,7 @@ DEPENDENCIES
   capistrano (~> 2.9.0)
   capistrano-ext
   coffee-rails (~> 3.2.1)
+  compass-rails
   cubus-settingslogic (~> 2.2.0)
   daemons
   database_cleaner (~> 0.7.1)
@@ -236,6 +251,8 @@ DEPENDENCIES
   factory_girl_rails (~> 1.5.0)
   faraday (~> 0.7.5)
   haml (~> 3.1.4)
+  handlebars_assets
+  i18n-js
   jquery-rails
   json_pure (~> 1.6.5)
   koala (~> 1.2.1)

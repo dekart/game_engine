@@ -13,6 +13,8 @@ set :use_sudo, false
 set :scm, "git"
 set :deploy_via, :remote_cache
 
+set :rake, "bundle exec rake --trace"
+
 default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
@@ -183,7 +185,7 @@ namespace :deploy do
   namespace :app do
     desc "Setup application"
     task :setup, :roles => :app do
-      run "cd #{release_path}; rake app:setup --trace"
+      run "cd #{release_path}; #{rake} app:setup"
     end
   end
   
@@ -205,6 +207,13 @@ namespace :deploy do
       run "crontab -r || true"
     end
   end
+
+  namespace :assets do
+    desc "Export i18n locales to javascript"
+    task :export_i18n, :roles => :web do
+      run "cd #{release_path}; #{ rake } i18n:js:export"
+    end
+  end
 end
 
 # Application setup
@@ -218,6 +227,8 @@ after "deploy:update_code", "deploy:dependencies:bundled_gems"
 after "deploy:update_code", "deploy:configure:facebook"
 after "deploy:update_code", "deploy:configure:database"
 after "deploy:update_code", "deploy:configure:settings"
+
+before "deploy:assets:precompile", "deploy:assets:export_i18n"
 
 ["deploy", "deploy:migrations", "deploy:cold"].each do |t|
   after t, "deploy:configure:nginx"
