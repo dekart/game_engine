@@ -98,7 +98,7 @@ this.InviteDialog = class
   loadUserImages: ()=>
     el = @dialog_el.find('.users')
 
-    user_el = el.find('.user')
+    user_el = el.find('.user:not(.hidden)')
     scroll = el.scrollTop()
 
     first_user = Math.floor(scroll / @.user_element_height) *  @.users_per_row
