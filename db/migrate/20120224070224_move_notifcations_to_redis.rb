@@ -10,7 +10,7 @@ class MoveNotifcationsToRedis < ActiveRecord::Migration
       $redis.hset("notifications_#{char_id}", type, "false")
     end
 
-    drop table :notifications
+    drop_table :notifications
   end
 
   def down
