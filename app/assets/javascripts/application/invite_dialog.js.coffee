@@ -171,6 +171,7 @@ this.InviteDialog = class
       )
 
     @.updateBars()
+    @.loadUserImages()
 
   updateStatsBar: ()->
     all_users = @dialog_el.find('.user:not(.hidden)')
