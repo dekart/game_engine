@@ -169,6 +169,7 @@ Setting[:personal_discount_period] ||= 24
 
 Setting[:friends_invite_enabled] ||= true
 Setting[:stream_dialog_enabled] ||= true
+Setting[:invitation_dialog_custom] ||= true
 
 Setting[:achievements_enabled] ||= true
 

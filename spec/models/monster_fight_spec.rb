@@ -24,24 +24,27 @@ describe MonsterFight do
       end
     end
 
-    describe "when fetching current fights" do
-      it "should fetch fights with monsters who expired less than 24 hours ago" do
+    describe "when fetching active fights" do
+      before :each do
         @fight1 = Factory(:monster_fight)
         @fight2 = Factory(:monster_fight)
+        
+        @character1 = @fight1.character
+        @character2 = @fight2.character
+      end
+      
+      it "should fetch fights with monsters who expired less than 24 hours ago" do
+        @fight2.monster.expire!
 
-        Monster.update_all({:expire_at => (24.hours + 1.minute).ago}, {:id => @fight2.monster_id})
-
-        MonsterFight.current.should include(@fight1)
-        MonsterFight.current.should_not include(@fight2)
+        @character1.monster_fights.active.should include(@fight1)
+        @character2.monster_fights.active.should_not include(@fight2)
       end
 
       it "should fetch figths with monsters defeated less than 24 hours ago" do
-        @fight1 = Factory(:monster_fight)
-        @fight2 = Factory(:monster_fight)
-        @fight2.monster.update_attributes(:defeated_at => (24.hours.days + 1.minute).ago)
+        @fight2.monster.win!
 
-        MonsterFight.current.should include(@fight1)
-        MonsterFight.current.should_not include(@fight2)
+        @character1.monster_fights.active.should include(@fight1)
+        @character2.monster_fights.active.should_not include(@fight2)
       end
     end
   end

@@ -1,5 +1,5 @@
 ActiveRecord::Base.transaction do
-  %w{settings assets items missions monsters properties tips character_types achievements credit_packages help_pages item_collections}.each do |section|
+  %w{settings items missions monsters properties tips character_types achievements credit_packages help_pages item_collections}.each do |section|
     require File.expand_path("../seeds/#{section}", __FILE__)
   end
 end

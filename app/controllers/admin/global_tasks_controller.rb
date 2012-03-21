@@ -19,14 +19,6 @@ class Admin::GlobalTasksController < Admin::BaseController
     render :layout => false
   end
   
-  def update_styles
-    Asset.update_sass
-
-    Sass::Plugin.update_stylesheets
-    
-    render :layout => false
-  end
-
   def clear_memcache
     Rails.cache.clear
 

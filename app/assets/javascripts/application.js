@@ -1,5 +1,10 @@
+//= require handlebars.runtime
 //= require jquery
 //= require jquery_ujs
+//= require i18n
+//= require i18n/helpers
+//= require i18n/translations
+//= require_tree ../templates
 //= require ./application/visibility
 //= require ./libs/jquery/labelify
 //= require ./libs/jquery/dialog
@@ -379,14 +384,10 @@ var Equipment = {
         
         if ($(ui.draggable).data('move')) {
           // move inventory from one placement to another
-          $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')}, function(request) {
-            $("#result").html(request);
-          });
+          $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')});
         } else {
           // simply equip inventory in this placement
-          $.post($(ui.draggable).data('equip'), {placement: $(this).data('placement')}, function(request) {
-            $("#result").html(request);
-          });
+          $.post($(ui.draggable).data('equip'), {placement: $(this).data('placement')});
         }
       }
     }));
@@ -401,9 +402,7 @@ var Equipment = {
       drop: function(event, ui) {
         disableDraggables();
         
-        $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')}, function(request) {
-          $("#result").html(request);
-        });
+        $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')});
       }
     }));
   },
@@ -509,7 +508,7 @@ var AchievementList = {
 
 var Rating = {
   setup: function() {
-    $("#rating_list").tabs();
+    $("#rating_list").tabs({cache: true});
     
     $(document).bind('facebook.permissions.missing facebook.permissions.not_granted', function() {
       $("#rating_score_permissions").show();

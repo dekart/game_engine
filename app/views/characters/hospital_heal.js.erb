@@ -6,7 +6,7 @@
   <% else %>
     <% if current_character.errors.any? %>
       <% builder.fail do %>
-        <%= current_character.errors.on_base %>
+        <%= current_character.errors[:base].join("\n") %>
       <% end %>
     <% end %>
   <% end %>

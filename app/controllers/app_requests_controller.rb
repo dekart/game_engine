@@ -29,9 +29,7 @@ class AppRequestsController < ApplicationController
     
     @recipients = Array.wrap(params[:to])
 
-    @recipients.each do |recipient_id|
-      AppRequest::Base.create(:facebook_id => params[:request_id], :receiver_id => recipient_id)
-    end
+    Delayed::Job.enqueue Jobs::RequestDataUpdate.new(params[:request_id], @recipients)
   end
   
   def update
@@ -65,22 +63,18 @@ class AppRequestsController < ApplicationController
       ids = AppRequest::PropertyWorker.ids_to_exclude_for(current_character)
     end
 
-    response = {
-      :exclude_ids => { invite_type.to_sym => ids },
-      :dialog_template => render("invite_dialog.json").first
+    render :json => {
+      :exclude_ids  => ids
     }
-
-    self.content_type = Mime::JSON
-    self.response_body = response.to_json
   end
 
   protected
-  
+
   def page_for_redirect
     case @app_request
     when AppRequest::MonsterInvite
-      monster_url(@app_request.monster, 
-        :key => encryptor.encrypt(@app_request.monster.id), 
+      monster_url(@app_request.monster,
+        :key => encryptor.encrypt(@app_request.monster.id),
         :canvas => true
       )
     when AppRequest::ClanInvite
