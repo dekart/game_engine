@@ -10,10 +10,10 @@
       <% @notifications.each do |notification| %>
         <% if notification.optional? %>
           <div class="notification">
-            <%= check_box_tag "notification[ids][]", 
-                  notification.id, !notification.disabled?, 
-                  :id => "notification_#{notification.id}" %>
-            <%= label_tag "notification_#{notification.id}", t(".types.#{notification.class.name.split("::").last.underscore}") %>
+            <%= check_box_tag "notification[types][]",
+                  notification.type, !notification.disabled?,
+                  :id => "notification_#{notification.type}" %>
+            <%= label_tag "notification_#{notification.type}", t(".types.#{notification.class.name.split("::").last.underscore}") %>
           </div>
         <% end %>
       <% end %>

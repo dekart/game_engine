@@ -1,5 +1,7 @@
 source 'http://rubygems.org'
 
+gem 'unicorn'
+
 gem "rails", "3.2.1"
 
 gem 'mysql2'
@@ -27,13 +29,13 @@ gem 'facepalm',         '~> 0.2', :git => 'git://github.com/dekart/facepalm.git'
 
 gem 'jquery-rails'
 
-gem 'unicorn'
+gem 'i18n-js'
 
 group :development do
   gem "capistrano",   "~> 2.9.0"
   gem "capistrano-ext"
   gem "net-scp",      "~> 1.0.4"
-  
+
   # TODO: bug with ruby-debug19 http://stackoverflow.com/questions/8251349/ruby-threadptr-data-type-error
   #gem 'ruby-debug19', :require => 'ruby-debug'
   gem 'linecache19', :git => 'git://github.com/mark-moseley/linecache'
@@ -47,11 +49,13 @@ group :assets do
   gem 'uglifier',     '>= 1.0.3'
   gem 'execjs'
   gem 'therubyracer'
+  gem 'handlebars_assets'
+  gem 'compass-rails'
 end
 
 group :test do
   gem 'turn', :require => false
-  
+
   gem "rspec-rails",        "~> 2.8.1"
   gem "autotest-rails",     "~> 4.1.1"
   gem "shoulda-matchers",   "~> 1.0.0"

@@ -1,5 +1,5 @@
 <div class="disable_notification">
-  <%= link_to(t(".disable"), disable_notification_path(notification),
+  <%= link_to(t(".disable"), disable_notifications_path(:type => notification.type),
         :remote => "true",
         :method => :post,
         :confirm  => t(".confirm", :type => notification.title)
