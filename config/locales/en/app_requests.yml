@@ -3,17 +3,19 @@ en:
     counter:
       text: "You have %{count} requests from your friends"
     invite_dialog:
-      note: 'Select the friends you would like to help. Requests will be sent in batches of 24.'
+      note: 'Select the friends you would like to help. Requests will be sent in batches of 25.'
       search: 'Search'
       filters:
         all: 'All Friends'
-        app_users: '%{app_name} Friends'
-      stats: 
-        text: '%{value} of %{total} friends selected'
+        app_users: 'Friends In Game'
+        non_app_users: 'Not Playing Yet'
+      stats:
+        text: 'friends selected'
         select_all: 'Select All'
         deselect_all: 'Deselect All'
       buttons:
         send: 'Send'
+      sent: 'Sent:'
     list:
       buttons:
         ignore: 'Ignore this request'
