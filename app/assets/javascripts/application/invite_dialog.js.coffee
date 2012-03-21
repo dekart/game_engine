@@ -136,7 +136,7 @@ this.InviteDialog = class
       @.changeFilter(new_filter)
 
   onSendButtonClick: ()=>
-    users_to_send = @dialog_el.find('.user:not(.hidden, .sent)').slice(0, @.send_limit)
+    users_to_send = @dialog_el.find('.user.selected:not(.hidden, .sent)').slice(0, @.send_limit)
 
     ids = users_to_send.map(()->
       parseInt($(@).data('uid'), 10);
