@@ -37,6 +37,10 @@ class InventoriesController < ApplicationController
     if @inventory = current_character.inventories.find_by_id(params[:id])
       @result = @inventory.use!
     end
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def equipment
