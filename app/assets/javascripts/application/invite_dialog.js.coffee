@@ -47,6 +47,8 @@ this.InviteDialog = class
 
   selectRecipientsAndSendRequest: ()->
     unless @.launchWhenPopulated()
+      Spinner.show(200, I18n.t('app_requests.invite_dialog.spinner_text'))
+
       FB.getLoginStatus((response)=>
         if response.authResponse
           FB.api('/fql',
@@ -77,9 +79,11 @@ this.InviteDialog = class
     true # Should return true if all data was successfully populated and dialog rendered
 
   renderDialog: ()->
-    $.dialog(
-      JST['invite_dialog/dialog'](@)
-    )
+    content = JST['invite_dialog/dialog'](@)
+
+    Spinner.hide()
+
+    $.dialog(content)
 
     @dialog_el = $('#invite_dialog')
 

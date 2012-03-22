@@ -3,6 +3,7 @@ en:
     counter:
       text: "You have %{count} requests from your friends"
     invite_dialog:
+      spinner_text: 'Loading friend list...'
       note: 'Select the friends you would like to help. Requests will be sent in batches of 25.'
       search: 'Search'
       filters:

@@ -16,6 +16,7 @@
 //= require ./libs/jquery/ui
 //= require ./application/signed_request
 //= require ./application/link_lock
+//= require ./application/spinner
 //= require ./application/app_requests
 //= require ./application/facebook_credits
 //= require ./application/promo_block
@@ -49,59 +50,6 @@ var ClanEditForm = {
   }
 };
 
-var Spinner = {
-  x: -1,
-  y: -1,
-  enabled: true,
-  
-  setup: function(){
-    $('#spinner').ajaxStart(Spinner.show).ajaxStop(Spinner.hide);
-    $('form:not([target])').live('submit', Spinner.show);
-      
-    $('body').mousemove(Spinner.alignToMouse);
-  },
-  show: function(speed){
-    if(!Spinner.enabled){ return; }
-    
-    Spinner.moveToPosition();
-
-    $('#spinner').fadeIn(speed);
-  },
-  hide: function(speed){
-    $('#spinner').fadeOut(speed);
-  },
-  blink: function(speed, delay){
-    if(!Spinner.enabled){ return; }
-
-    Spinner.moveToPosition();
-
-    $('#spinner').fadeIn(speed).delay(delay).fadeOut(speed);
-  },
-  storePosition: function(x, y){
-    Spinner.x = x;
-    Spinner.y = y;
-  },
-  moveToPosition: function(){
-    if(Spinner.x > -1 && Spinner.y > -1){
-      $('#spinner').css({
-        top: Spinner.y - $('#spinner').height() / 2
-      });
-    }
-  },
-  alignToMouse: function(e){
-    Spinner.storePosition(e.pageX, e.pageY);
-  },
-  alignTo: function(selector){
-    var position = $(selector).offset();
-
-    Spinner.storePosition(position.left, position.top);
-  },
-  disable: function(callback){
-    Spinner.enabled = false;
-    callback.call(this);
-    Spinner.enabled = true;
-  }
-};
 
 var jCarouselHelper = {
   wrap: function($container, wrapFactor) {
@@ -244,12 +192,10 @@ var Character = {
   },
 
   update_from_remote: function(){
-    Spinner.disable(function(){
-      $.getJSON('/character_status/?rand=' + Math.random(), function(data){
-        Character.update(data);
-        
-        $(document).trigger('application.ready'); // Triggering event to start timers
-      });
+    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
+      Character.update(data);
+      
+      $(document).trigger('application.ready'); // Triggering event to start timers
     });
   }
 };
@@ -640,13 +586,11 @@ var FacebookPermissions = {
     loadMessages: function() {
       var $chat = $(this);
       
-      Spinner.disable(function(){
-        $.getJSON('/chats/' + $chat.data('chat-id'), {
-            last_message_id: $chat.chat('lastMessageId')
-          }, 
-          function(data) {
-            $chat.chat('processData', data);
-        });
+      $.getJSON('/chats/' + $chat.data('chat-id'), {
+          last_message_id: $chat.chat('lastMessageId')
+        }, 
+        function(data) {
+          $chat.chat('processData', data);
       });
     },
     
@@ -791,19 +735,6 @@ $(function(){
       
       var existingTooltip = $element.qtip('api');
       var tooltipOptions = $element.data('tooltip-on-click');
-      
-      if (tooltipOptions.content.ajax) {
-        // hide global spinner here
-        $element.click(function() {
-          Spinner.enabled = false;
-        });
-        
-        $.extend(tooltipOptions.content.ajax, {
-          complete: function() {
-            Spinner.enabled = true;
-          }
-        });
-      }
       
       if (existingTooltip) {
         tooltipOptions.events = tooltipOptions.events || {};

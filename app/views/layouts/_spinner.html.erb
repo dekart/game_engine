@@ -1,5 +1,8 @@
 <div id="spinner" style="display:none;">
   <%= image_tag("spinner.gif", :alt => t(".alt")) %>
 
-  <%= t(".text") %>
+  <span class="text">
+    <span class="default"><%= t(".text") %></span>
+    <span class="custom"></span>
+  </span>
 </div>
