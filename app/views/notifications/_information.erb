@@ -1,9 +1,9 @@
 <% dialog :information do |d| %>
   <h2><%= t(".title", :app => t('app_name')) %></h2>
 
-  <p class="text">
-    <%= notification.message.content %>
-  </p>
+  <div class="text">
+    <%= notification.message.content.html_safe %>
+  </div>
 
   <%= render("notifications/disable", :notification => notification) %>
 <% end %>

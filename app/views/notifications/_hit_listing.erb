@@ -1,0 +1,12 @@
+<% dialog :hit_listing_notification do |d| %>
+  <h2><%= t(".title.#{ notification.data[:status] }") %></h2>
+
+  <p class="text">
+    <%= t(".text.#{ notification.data[:status] }", 
+          :reward => span_tag(number_to_currency(notification.data[:reward]), 'attribute basic_money'),
+          :victim => (notification.data[:status].to_sym == :client) ? notification.victim.name : nil
+         ).html_safe %>
+  </p>
+
+  <%= render("notifications/disable", :notification => notification) %>
+<% end %>

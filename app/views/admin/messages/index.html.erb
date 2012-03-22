@@ -19,7 +19,7 @@
 
     <% @messages.each do |message| %>
       <%= content_tag_for(:tr, message) do %>
-        <td class="content"><%= message.content %></td>
+        <td class="content"><%= message.content.html_safe %></td>
         <td class="level"><%= message.min_level %></td>
         <td class="level"><%= message.notify_new_users %></td>
         <td class="level"><%= message.amount_sent %></td>
@@ -37,6 +37,13 @@
                 :method   => :put,
                 :confirm  => t(".controls.delete_confirm")
               ) if message.can_mark_deleted? %>
+              
+          <div class="send_to_admin">
+            <%= link_to(t(".controls.send_to_admin"), send_to_admin_message_path(message),
+                :remote => true,
+                :method   => :put
+              ) %>
+          </div>      
         </td>
       <% end %>
     <% end %>

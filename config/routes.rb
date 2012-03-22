@@ -34,7 +34,10 @@ GameEngine::Application.routes.draw do
     end
     
     resources :messages do
-      put 'change_state', :on => :member
+      member do
+        put 'change_state'
+        put 'send_to'
+      end
     end
 
     resources :property_types do
@@ -245,7 +248,7 @@ GameEngine::Application.routes.draw do
   resources :help_pages, :only => :show
 
   resources :notifications, :only => [] do
-    member do
+    collection do
       post 'disable'
     end 
     

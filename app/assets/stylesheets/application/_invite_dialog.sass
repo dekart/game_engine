@@ -1,102 +1,74 @@
-$user_height: 53px
-$user_list_height: $user_height * 8 + 5px
+$user_height: 55px
+$user_list_height: $user_height * 6 + 20px
+
+$icons: sprite-map('invite_dialog/*.png')
 
 #invite_dialog
-  .search
-    float: right
-    margin: 5px 5px 0 0
-    
-    input
-      border: $main_border
-      background-color: $content_bg_color
-      color: $content_text_color
-    
   .friend_selector
     margin-bottom: 10px
 
-  .previous, .next
-    height: $user_list_height
-    width: 30px
-    margin-top: 5px
-    cursor: pointer
-    
-    &.disabled
-      background-position: -96px center
-  
-  .previous
-    float: left
-    background: transparent image-url("jcarousel/prev-horizontal.png") no-repeat 0 center
-    
-  .next
-    float: right
-    background: transparent image-url("jcarousel/next-horizontal.png") no-repeat 0 center
-
   .users
     margin-bottom: 10px
-    overflow: hidden
+    overflow-y: auto
+    overflow-x: hidden
     padding: 5px
     height: $user_list_height
-    
+
     .user
-      width: 135px
+      width: 150px
       height: $user_height
       float: left
       cursor: pointer
       position: relative
-      
-      input, .icon
-        display: block
-        width: 16px
-        height: 16px
+      margin: 0 3px 3px 0
+      border: 1px solid transparent
+      +border-radius(3px)
+
+      .icon
+        width: 24px
+        height: 24px
         position: absolute
-        top: 35px
-        left: 35px
+        bottom: 3px
+        right: 3px
         margin: 0
         padding: 0
-        cursor: pointer
-      
+        background: sprite($icons, deselected) no-repeat
+
       img
         position: absolute
-        top: 0
-        left: 0
-        
+        top: 3px
+        left: 3px
+
       .name
         position: absolute
-        top: 0px
-        left: 53px
+        top: 3px
+        left: 57px
         width: 80px
-        font-size: 12px
+        font-size: 14px
         line-height: 16px
-        
-      .icon
-        display: none
-        
+
       &.hidden
         display: none
-        
+
       &.selected
-        background-color: $current_item_bg_color
-        
+        background-color: #c8f8c8
+        border-color: #a1cba1
+
+        .icon
+          background: sprite($icons, selected) no-repeat
+
       &.sent
         cursor: inherit
-        
+        border-color: #a1cba1
+
         .icon
-          display: block
-          background:
-            image: $asset_icons_accept
-            position: left
-            repeat: no-repeat
-      
-  .progress_bar
-    float: right
-    width: 300px
-    margin-top: 10px
-  
+          background: sprite($icons, sent) no-repeat
+
   .stats
     padding: 5px
     line-height: 20px
     background-color: $current_item_bg_color
-    
+
     .control
       color: $link_color
       text-decoration: underline
@@ -109,12 +81,16 @@ $user_list_height: $user_height * 8 + 5px
       background:
         position: left
         repeat: no-repeat
-        
+
     .select_all
       background-image: $asset_icons_accept
 
     .deselect_all
       background-image: $asset_icons_delete
-  
-  .send
+
+  .progress
+    float: right
+    width: 300px
+
+  .button
     +button($asset_icons_accept)
