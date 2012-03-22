@@ -55,6 +55,8 @@ class CreditOrdersController < ApplicationController
           :status => 'settled'
         }
       }
+    elsif params[:status] == 'settled'
+      render :text => "OK"
     end
   end
 end
