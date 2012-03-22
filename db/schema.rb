@@ -434,6 +434,7 @@ ActiveRecord::Schema.define(:version => 20120302070506) do
     t.datetime "updated_at"
     t.integer  "item_group_id",                                              :null => false
     t.boolean  "can_be_sold",                            :default => true
+    t.integer  "limit"
     t.datetime "available_till"
     t.string   "plural_name",             :limit => 100, :default => "",     :null => false
     t.string   "state",                   :limit => 50,  :default => "",     :null => false
@@ -644,17 +645,6 @@ ActiveRecord::Schema.define(:version => 20120302070506) do
   end
 
   add_index "news", ["character_id"], :name => "index_news_on_character_id"
-
-  create_table "notifications", :force => true do |t|
-    t.string   "type",         :limit => 100, :default => "", :null => false
-    t.integer  "character_id",                                :null => false
-    t.string   "state",        :limit => 50,  :default => "", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "data"
-  end
-
-  add_index "notifications", ["character_id"], :name => "index_notifications_on_character_id"
 
   create_table "personal_discounts", :force => true do |t|
     t.integer  "character_id"
