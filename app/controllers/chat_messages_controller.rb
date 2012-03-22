@@ -1,6 +1,9 @@
 class ChatMessagesController < ActionController::Metal
   def index
-    facebook_user = Facepalm::User.from_signed_request(Facepalm::Config.default, request.env['HTTP_SIGNED_REQUEST'])
+    signed_request = request.env['HTTP_SIGNED_REQUEST'] || session["fb_signed_request_#{ Facepalm::Config.default.app_id }"]
+    
+    facebook_user = Facepalm::User.from_signed_request(Facepalm::Config.default, signed_request)
+    
     chat_id = params[:chat_id]
   
     if facebook_user and character = User.find_by_facebook_id(facebook_user.uid).try(:character)

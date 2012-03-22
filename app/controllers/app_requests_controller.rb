@@ -38,7 +38,7 @@ class AppRequestsController < ApplicationController
     @app_request.accept
     
     if @next_page = page_for_redirect
-      redirect_from_iframe(@next_page)
+      redirect_to @next_page
     end  
   end
   

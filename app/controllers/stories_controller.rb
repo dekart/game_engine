@@ -12,7 +12,7 @@ class StoriesController < ApplicationController
       @next_page = next_page_for_story(params[:id], story_data)
     end
     
-    redirect_from_iframe(@next_page) if @payouts.empty?
+    redirect_to(@next_page) if @payouts.empty?
   end
   
   protected

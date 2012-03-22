@@ -18,6 +18,10 @@ function localUrl(url){
 }
 
 (function($){
+  if(typeof signed_request == 'undefined'){ 
+    return;
+  }
+  
   $('a[href]:not([href^="#"], [onclick], [data-remote])').live('click', function(){
     var link = $(this);
     

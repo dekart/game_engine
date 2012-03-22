@@ -89,7 +89,7 @@ describe StoriesController do
       it 'should redirect to next page if there were no payouts' do
         do_request
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
+        response.should redirect_to('http://apps.facebook.com/test/')
       end
     end
     
@@ -97,13 +97,13 @@ describe StoriesController do
       it 'should target to home page from level up story' do
         do_request :id => 'level_up'
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
+        response.should redirect_to('http://apps.facebook.com/test/')
       end
       
       it 'should target to shop page from inventory story' do
         do_request :id => 'item_purchased'
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/items')
+        response.should redirect_to('http://apps.facebook.com/test/items')
       end
       
       it 'should target to mission help page from mission help request story' do
@@ -114,7 +114,7 @@ describe StoriesController do
           :story_data => 'MGkvJJvNnYLx4AdeLp+K2rGBbn75MUMmhs9iFolovvIbTPO49ivKMpb4R+1mqTQA--5i8CyrzRPaYSvpRZnkh2oQ==' # {:mission_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/missions/1/help?key=securehelpkey')
+        response.should redirect_to('http://apps.facebook.com/test/missions/1/help?key=securehelpkey')
       end
       
       it 'should target to mission group page from mission completion story' do
@@ -123,7 +123,7 @@ describe StoriesController do
           :story_data => 'MGkvJJvNnYLx4AdeLp+K2rGBbn75MUMmhs9iFolovvIbTPO49ivKMpb4R+1mqTQA--5i8CyrzRPaYSvpRZnkh2oQ==' # {:mission_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/mission_groups')
+        response.should redirect_to('http://apps.facebook.com/test/mission_groups')
       end
       
       it 'should target to monster page from monster invitation story' do
@@ -134,7 +134,7 @@ describe StoriesController do
           :story_data => 'cMKj+S40uXVpaez9dt6pGwIyDk76SM0HcjIGYO2RDKgl3oEc/sANp0IGq5G1xmrh--7lGcWvHmmnyuVjkrRGCrVg==' # {:monster_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/monsters/1?key=securemonsterkey')
+        response.should redirect_to('http://apps.facebook.com/test/monsters/1?key=securemonsterkey')
       end
       
       it 'should target to monster page from monster defeat story' do
@@ -143,13 +143,13 @@ describe StoriesController do
           :story_data => 'cMKj+S40uXVpaez9dt6pGwIyDk76SM0HcjIGYO2RDKgl3oEc/sANp0IGq5G1xmrh--7lGcWvHmmnyuVjkrRGCrVg==' # {:monster_id => 1, :character_id => 1}
         )
 
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/monsters')
+        response.should redirect_to('http://apps.facebook.com/test/monsters')
       end
       
       it 'should target to property list page from property purchase story' do
         do_request(:id => 'property')
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/properties')
+        response.should redirect_to('http://apps.facebook.com/test/properties')
       end
       
       it 'should target to promotion page from promotion story' do
@@ -160,25 +160,25 @@ describe StoriesController do
           :story_data => 'WQABey+hEPYwdKsLFWQBFiJfiDrT3sG3RaTA01EM/awLcCpdhPfEHPvW5VAoJBV5--VVYB4eZIDO9zTEu989SUAA==' # {:promotion_id => 123, :character_id => 1}
         )
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/promotions/asd123')
+        response.should redirect_to('http://apps.facebook.com/test/promotions/asd123')
       end
       
       it 'should target to hitlist page from new hit listing story' do
         do_request :id => 'hit_listing_new'
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/hit_listings')
+        response.should redirect_to('http://apps.facebook.com/test/hit_listings')
       end
       
       it 'should target to hitlist page from completed hit listing story' do
         do_request :id => 'hit_listing_completed'
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/hit_listings')
+        response.should redirect_to('http://apps.facebook.com/test/hit_listings')
       end
       
       it 'should target to collection list page from collection completion story' do
         do_request :id => 'collection_completed'
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/item_collections')
+        response.should redirect_to('http://apps.facebook.com/test/item_collections')
       end
       
       it 'should target to item giveout page from missing collection items story' do
@@ -194,7 +194,7 @@ describe StoriesController do
           # {:items => [1,2,3], :valid_till => Time.parse('Tue Jan 25 14:18:45 +0500 2011'), :character_id => 1}
         )
         
-        response.should redirect_from_iframe_to('http://apps.facebook.com/test/inventories/give?request_data=securegiveoutkey')
+        response.should redirect_to('http://apps.facebook.com/test/inventories/give?request_data=securegiveoutkey')
       end
     end
     
@@ -203,7 +203,7 @@ describe StoriesController do
         do_broken_request :id => 'item_purchased'
       }.should_not raise_exception
       
-      response.should redirect_from_iframe_to('http://apps.facebook.com/test/items')
+      response.should redirect_to('http://apps.facebook.com/test/items')
     end
   end
 end

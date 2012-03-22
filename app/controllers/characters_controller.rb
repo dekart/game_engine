@@ -1,5 +1,6 @@
 class CharactersController < ApplicationController
   skip_before_filter :require_facebook_permissions, :only => :new
+  prepend_before_filter :require_facebook_permissions_if_standalone, :only => :new
 
   skip_before_filter :check_character_existance,            :only => [:new, :create]
   skip_before_filter :check_user_ban,                       :only => [:new, :create]
@@ -35,7 +36,7 @@ class CharactersController < ApplicationController
 
   def new
     if current_character && params[:_force_form].blank?
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
@@ -47,7 +48,7 @@ class CharactersController < ApplicationController
 
   def create
     if current_character
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     else
       @character = current_user.build_character(:name => params[:character][:name])
 
@@ -55,7 +56,7 @@ class CharactersController < ApplicationController
 
       if @character.save
         # Always redirect newcomers to missions
-        redirect_from_iframe(mission_groups_url(:canvas => true))
+        redirect_to mission_groups_url
       else
         render :action => :new, :layout => 'unauthorized'
       end
@@ -68,7 +69,7 @@ class CharactersController < ApplicationController
     if flash[:premium_change_name]
       @allow_name = true
     else
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     end
   end
 
@@ -80,7 +81,7 @@ class CharactersController < ApplicationController
   end
 
   protected
-
+  
   def fetch_character_types
     @character_types = CharacterType.with_state(:visible).all
     
@@ -99,4 +100,7 @@ class CharactersController < ApplicationController
     end
   end
   
+  def require_facebook_permissions_if_standalone
+    require_facebook_permissions unless ENV['OFFLINE'] || fb_canvas?
+  end
 end
