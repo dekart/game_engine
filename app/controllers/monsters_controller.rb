@@ -30,7 +30,7 @@ class MonstersController < ApplicationController
     if @monster.new_record?
       flash[:error] = @monster.errors.full_messages
       
-      redirect_from_iframe monsters_url(:canvas => true)
+      redirect_to monsters_url
     else
       redirect_to monster_url(@monster)
     end
