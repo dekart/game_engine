@@ -12,7 +12,7 @@ class RelationsController < ApplicationController
   
   def index
     if current_character.relations.size == 0 and params[:noredirect].nil?
-      redirect_from_iframe new_relation_url(:canvas => true)
+      redirect_to new_relation_url
     else
       @relations = fetch_relations
     end
@@ -22,15 +22,15 @@ class RelationsController < ApplicationController
     @character = Character.find_by_invitation_key(params[:id])
 
     if @character.nil? or @character == current_character
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     elsif current_character.friend_relations.established?(@character)
       flash[:notice] = t("relations.show.messages.already_joined")
 
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     elsif Setting.b(:relation_friends_only) && !friend_with?(@character)
       flash[:notice] = t("relations.show.messages.only_friends")
 
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     end
   end
   

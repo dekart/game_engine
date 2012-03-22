@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Your settings have been updated!"
 
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     else
       render :action => :edit
     end
