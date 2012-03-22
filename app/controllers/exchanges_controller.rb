@@ -2,7 +2,7 @@ class ExchangesController < ApplicationController
   def show
     @exchange = Exchange.find(params[:id])
     
-    redirect_from_iframe(inventories_path(:canvas => true)) if @exchange.key != params[:id]
+    redirect_to(inventories_path) if @exchange.key != params[:id]
     
     @exchange_offer = @exchange.exchange_offers.build if current_character != @exchange.character
   end
@@ -30,6 +30,6 @@ class ExchangesController < ApplicationController
     
     @exchange.destroy
     
-    redirect_from_iframe(exchanges_path(:canvas => true))
+    redirect_to exchanges_path(:canvas => true)
   end
 end

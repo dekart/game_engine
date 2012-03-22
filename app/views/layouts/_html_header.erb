@@ -1,7 +1,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<%= javascript_tag do %>
-  var signed_request = '<%= escape_javascript(fb_signed_request) %>';
+<% if fb_canvas? %>
+  <%= javascript_tag do %>
+    var signed_request = '<%= escape_javascript(fb_signed_request) %>';
+  <% end %>
 <% end %>
 
 <%= stylesheet_link_tag    "application" %>

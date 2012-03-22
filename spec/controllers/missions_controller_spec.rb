@@ -24,7 +24,7 @@ describe MissionsController do
     it 'should redirect to root if there is no key passed' do
       get :help
       
-      response.should redirect_from_iframe_to('http://apps.facebook.com/test/')
+      response.should redirect_to('http://apps.facebook.com/test/')
     end
   end
   

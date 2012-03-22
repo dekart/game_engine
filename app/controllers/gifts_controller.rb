@@ -4,6 +4,6 @@ class GiftsController < ApplicationController
       :limit => Setting.i(:gifting_item_show_limit)
     )
 
-    redirect_from_iframe root_url(:canvas => true) if @items.empty?
+    redirect_to root_url if @items.empty?
   end
 end

@@ -84,7 +84,7 @@ class InventoriesController < ApplicationController
       @character = Character.find(data[:character_id])
 
       if @character == current_character
-        redirect_from_iframe root_url(:canvas => true)
+        redirect_to root_url
       elsif request.get?
         @inventories = current_character.inventories.find_all_by_item_id(data[:items])
       else
@@ -112,12 +112,12 @@ class InventoriesController < ApplicationController
         flash[:success] = t('inventories.give.messages.success')
 
         # TODO Refactor this to use AJAX instead of redirects
-        redirect_from_iframe root_url(:canvas => true)
+        redirect_to root_url
       end
     else
       flash[:error] = t('inventories.give.messages.expired')
 
-      redirect_from_iframe root_url(:canvas => true)
+      redirect_to root_url
     end
   end
   
@@ -131,7 +131,7 @@ class InventoriesController < ApplicationController
   protected
 
   def check_auto_equipment
-    redirect_from_iframe inventories_url(:canvas => true) if Setting.b(:character_auto_equipment)
+    redirect_to inventories_url if Setting.b(:character_auto_equipment)
   end
 
 end

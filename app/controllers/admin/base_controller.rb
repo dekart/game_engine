@@ -9,7 +9,7 @@ class Admin::BaseController < ApplicationController
   protected
 
   def admin_required
-    redirect_from_iframe root_url(:canvas => true) unless current_user.admin? || ENV['OFFLINE']
+    redirect_to(root_url) unless current_user.admin? || ENV['OFFLINE']
   end
 
   def unless_continue_editing(options = {}, &block)

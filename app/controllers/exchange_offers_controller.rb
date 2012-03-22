@@ -4,7 +4,7 @@ class ExchangeOffersController < ApplicationController
     @exchange = @exchange_offer.exchange
     
     if @exchange_offer.save
-      redirect_from_iframe(exchange_path(@exchange_offer.exchange.key, :canvas => true))
+      redirect_to exchange_path(@exchange_offer.exchange.key)
     else
       render 'exchanges/show'
     end
