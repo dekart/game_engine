@@ -20,9 +20,7 @@ class ApplicationController
     
     def redirect_by_app_request
       if visit_from_app_request?
-        session[:return_to] = nil
-
-        redirect_back app_requests_url(:app_request_id => app_request_ids.last)
+        redirect_to app_requests_path(:app_request_id => app_request_ids.last)
       end
     end
 

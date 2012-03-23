@@ -124,16 +124,6 @@ class ApplicationController < ActionController::Base
     session[:return_to] ||= url_for(params_without_facebook_data.merge(:canvas => fb_canvas?)) unless controller_name == 'characters' && action_name == 'index'
   end
 
-  def redirect_back(uri)
-    if session[:return_to].present?
-      uri = session[:return_to]
-
-      session[:return_to] = nil
-    end
-    
-    redirect_to uri
-  end
-  
   def check_standalone
     if from_canvas = params.delete(:from_canvas) and from_canvas == 'false'
       store_signed_request_in_session
