@@ -37,9 +37,7 @@ class AppRequestsController < ApplicationController
 
     @app_request.accept
     
-    if @next_page = page_for_redirect
-      redirect_to @next_page
-    end  
+    @next_page = page_for_redirect
   end
   
   def ignore
@@ -73,12 +71,11 @@ class AppRequestsController < ApplicationController
   def page_for_redirect
     case @app_request
     when AppRequest::MonsterInvite
-      monster_url(@app_request.monster,
-        :key => encryptor.encrypt(@app_request.monster.id),
-        :canvas => true
+      monster_path(@app_request.monster,
+        :key => encryptor.encrypt(@app_request.monster.id)
       )
     when AppRequest::ClanInvite
-      clan_url(@app_request.sender.clan, :canvas => true)
+      clan_path(@app_request.sender.clan)
     else
       false
     end
