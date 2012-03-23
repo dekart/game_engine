@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/dekart/facepalm.git
-  revision: 77ff3829fd098bc12cd9e383a85503875b16aee5
+  revision: 05621d70132dab19d469d7a10bca1f21e3a3a386
   specs:
     facepalm (0.2.2)
       ie_iframe_cookies (~> 0.1.2)
