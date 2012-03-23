@@ -2,7 +2,6 @@ this.InviteDialog = class
   send_limit: 25
   users_per_page: 18
   users_per_row: 3
-  user_element_height: 56
 
   fb_friends: null
   exclude_ids: {}
@@ -87,6 +86,9 @@ this.InviteDialog = class
 
     @dialog_el = $('#invite_dialog')
 
+    # Caching user element height for image load calculations
+    @user_height = @dialog_el.find('.user').eq(0).outerHeight(true)
+
     @.updateBars()
     @.loadUserImages()
 
@@ -97,7 +99,14 @@ this.InviteDialog = class
     @dialog_el.on('click', '.stats .select_all', @.onSelectAllClick)
     @dialog_el.on('click', '.stats .deselect_all', @.onDeselectAllClick)
     @dialog_el.on('click', '.send .button:not(.disabled)', @.onSendButtonClick)
-    @dialog_el.find('.users').on('scroll', @.loadUserImages)
+    @dialog_el.find('.users').on('scroll', @.onUserListScroll)
+
+    Visibility.every(500, ()=>
+      if @scroll_updated
+        @scroll_updated = false
+
+        @.loadUserImages()
+    )
 
   loadUserImages: ()=>
     el = @dialog_el.find('.users')
@@ -105,7 +114,7 @@ this.InviteDialog = class
     user_el = el.find('.user:not(.hidden)')
     scroll = el.scrollTop()
 
-    first_user = Math.floor(scroll / @.user_element_height) *  @.users_per_row
+    first_user = Math.floor(scroll / @user_height) *  @.users_per_row
     last_user = first_user + @.users_per_page + @.users_per_row
 
     user_el.slice(first_user, last_user).find('img:not([src])').each (i,e)->
@@ -151,6 +160,14 @@ this.InviteDialog = class
     users_to_send.removeClass('selected').addClass('sent')
 
     @.updateBars()
+
+  onUserListScroll: ()=>
+    new_scroll = @dialog_el.find('.users').scrollTop()
+
+    if @current_scroll != new_scroll
+      @current_scroll = new_scroll
+
+      @scroll_updated = true
 
   changeFilter: (filter)->
     @filter = filter
