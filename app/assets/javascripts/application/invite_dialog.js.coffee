@@ -96,7 +96,7 @@ this.InviteDialog = class
     @dialog_el.on('click', '.user:not(.sent)', @.onUserClick)
     @dialog_el.on('click', '.stats .select_all', @.onSelectAllClick)
     @dialog_el.on('click', '.stats .deselect_all', @.onDeselectAllClick)
-    @dialog_el.on('click', '.send .button', @.onSendButtonClick)
+    @dialog_el.on('click', '.send .button:not(.disabled)', @.onSendButtonClick)
     @dialog_el.find('.users').on('scroll', @.loadUserImages)
 
   loadUserImages: ()=>
@@ -180,6 +180,7 @@ this.InviteDialog = class
   updateStatsBar: ()->
     all_users = @dialog_el.find('.user:not(.hidden)')
     selected_users = all_users.filter('.selected')
+    selectable_users = all_users.filter(':not(.sent)')
 
     stats = @dialog_el.find('.stats')
 
@@ -187,10 +188,10 @@ this.InviteDialog = class
     stats.find('.value').html(selected_users.length)
 
     stats.find('.deselect_all').toggle(selected_users.length != 0)
-    stats.find('.select_all').toggle(selected_users.length != all_users.length)
+    stats.find('.select_all').toggle(selectable_users.length > 0 && selected_users.length != selectable_users.length)
 
   updateSendBar: ()->
-    all_users = @dialog_el.find('.user:not(.hidden)')
+    all_users = @dialog_el.find('.user:not(.hidden, .sent)')
     selected_users  = all_users.filter('.selected')
     sent_users      = all_users.filter('.sent')
 
