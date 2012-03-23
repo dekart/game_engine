@@ -260,8 +260,7 @@ module StreamHelper
     story_url(story,
       :story_data => encryptor.encrypt(data.merge(:character_id => current_character.id)),
       :reference_code => reference_code(reference),
-      :canvas => true,
-      :escape => false
+      :canvas => true
     )
   end
 
