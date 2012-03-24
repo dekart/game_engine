@@ -3,8 +3,12 @@
 *
   zoom: 1
 
-body *
-  +user-select(none)
+body
+  *
+    +user-select(none)
+
+  input, textarea
+    +user-select(text)
 
 
 html, body
