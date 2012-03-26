@@ -42,6 +42,10 @@ class MonstersController < ApplicationController
 
     @power_attack = (!params[:power_attack].blank? && @monster.monster_type.power_attack_enabled?)
     @attack_result = @fight.attack!(@power_attack)
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def reward
