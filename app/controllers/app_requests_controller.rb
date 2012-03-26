@@ -30,6 +30,10 @@ class AppRequestsController < ApplicationController
     @recipients = Array.wrap(params[:to])
 
     Delayed::Job.enqueue Jobs::RequestDataUpdate.new(params[:request_id], @recipients)
+
+    respond_to do |format|
+      format.js
+    end
   end
   
   def update
@@ -38,12 +42,20 @@ class AppRequestsController < ApplicationController
     @app_request.accept
     
     @next_page = page_for_redirect
+
+    respond_to do |format|
+      format.js
+    end
   end
   
   def ignore
     @app_request = current_character.app_requests.find(params[:id])
     
     @app_request.ignore
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def invite
