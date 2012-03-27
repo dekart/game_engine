@@ -36,7 +36,10 @@
   
   <% unless locked %>
     <div class="controls">
-      <%= link_to(button(:attack), new_monster_path(:monster_type_id => type), :class => "attack button") %>
+      <%= link_to(button(:attack), new_monster_path(:monster_type_id => type),
+            :class => "attack button",
+            :"data-click-once" => true
+          ) %>
     </div>
   <% end %>
 </div>
