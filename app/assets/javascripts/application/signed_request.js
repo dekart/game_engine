@@ -22,7 +22,7 @@ function localUrl(url){
     return;
   }
   
-  $('a[href]:not([href^="#"], [onclick], [data-remote])').live('click', function(){
+  $('a[href]:not([href^="#"], [onclick], [data-remote])').on('click', function(){
     var link = $(this);
     
     if(localUrl(link.attr('href'))){
@@ -32,7 +32,7 @@ function localUrl(url){
     }
   });
 
-  $('form:not(#redirect-with-signed-request)').live('submit', function(){
+  $('form:not(#redirect-with-signed-request)').on('submit', function(){
     var form = $(this);
     
     if(localUrl(form.attr('action'))){
