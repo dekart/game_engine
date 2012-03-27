@@ -10,13 +10,21 @@ class PropertiesController < ApplicationController
     @property, @result = current_character.properties.buy!(@property_type)
 
     @properties = current_character.properties(true)
+
+    respond_to do |format|
+      format.js
+    end
   end
-  
+
   def hire
     @property = current_character.properties.find(params[:id])
-    
+
     if request.put?
       @result = @property.hire_worker!(params[:hire_all])
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -26,6 +34,10 @@ class PropertiesController < ApplicationController
     @result = @property.upgrade!
 
     @properties = current_character.properties(true)
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def collect_money
@@ -37,6 +49,10 @@ class PropertiesController < ApplicationController
       @result = @property.collect_money!
     else
       @result = @properties.collect_money!
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 

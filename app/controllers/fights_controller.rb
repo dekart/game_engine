@@ -1,14 +1,14 @@
 class FightsController < ApplicationController
   before_filter :check_fight_restrictions, :only => :new
-  
+
   def index
     @victims = Fight.new(:attacker => current_character).opponents
-    
+
     respond_to do |format|
       format.js
     end
   end
-  
+
   def new
   end
 
@@ -19,6 +19,10 @@ class FightsController < ApplicationController
       :attacker => current_character,
       :victim   => @victim
     )
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def respond
@@ -31,7 +35,11 @@ class FightsController < ApplicationController
       :cause    => @cause
     )
 
-    render :action => :create
+    respond_to do |format|
+      format.js do
+        render :action => :create
+      end
+    end
   end
 
   def used_items
@@ -39,10 +47,14 @@ class FightsController < ApplicationController
 
     @attacker_items = @fight.attacker_used_items
     @victim_items   = @fight.victim_used_items
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   protected
-  
+
   def check_fight_restrictions
     if current_character.restrict_fighting?
       render 'characters/restrictions', :locals => { :restriction_type => :fighting }
