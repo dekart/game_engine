@@ -5,10 +5,13 @@ class VipMoneyOperation < ActiveRecord::Base
   scope :by_reference_type, Proc.new{|type|
     {:conditions => ["reference_type = ?", type]}
   }
+
   scope :by_profile_ids, Proc.new{|ids|
+    user_ids = User.where(:facebook_id => ids).pluck(:id)
+
     {
       :joins => {:character => :user},
-      :conditions => ["characters.id IN (:ids) OR users.facebook_id IN (:ids)", {:ids => ids}]
+      :conditions => ["characters.id IN (?) OR characters.user_id IN (?)", ids, user_ids]
     }
   }
 

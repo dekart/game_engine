@@ -54,11 +54,13 @@ class Character < ActiveRecord::Base
   
   has_many :wall_posts,
     :dependent => :destroy
-    
+
   scope :by_profile_ids, Proc.new{|ids|
+    user_ids = User.where(:facebook_id => ids).pluck(:id)
+
     {
       :joins => :user,
-      :conditions => ["characters.id IN (:ids) OR users.facebook_id IN (:ids)", {:ids => ids}]
+      :conditions => ["characters.id IN (?) OR characters.user_id IN (?)", ids, user_ids]
     }
   }
 
