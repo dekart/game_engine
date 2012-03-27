@@ -760,7 +760,7 @@ $(function(){
   
   $(document).trigger('tooltips.setup');
        
-  $('a[data-click-once=true]').live('click', function(){
+  $('a[data-click-once=true]').on('click', function(){
     $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
   });
 
