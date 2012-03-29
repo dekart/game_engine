@@ -1,6 +1,6 @@
 <% if @app_request.accepted? %>
   <% if @next_page %>
-    redirectWithSignedRequest('<%= escape_javascript(@next_page) %>');
+    redirectTo('<%= escape_javascript(@next_page) %>');
   <% else %>
     <%= render("app_requests/update/#{@app_request.type_name}", :app_request => @app_request) %>
 

@@ -536,7 +536,7 @@ var FacebookPermissions = {
       e.preventDefault();
       e.stopPropagation();
 
-      redirectWithSignedRequest($(this).find('a').attr('href'));
+      redirectTo($(this).find('a').attr('href'));
     });
   };
   
