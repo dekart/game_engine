@@ -36,17 +36,6 @@ namespace :deploy do
   end
 
   namespace :configure do
-    desc "Updates apache virtual host config"
-    task :apache do
-      template = ERB.new(
-        File.read(File.expand_path("../deploy/templates/apache.conf.erb", __FILE__))
-      )
-
-      config = template.result(binding)
-
-      put(config, "#{shared_path}/apache_vhost.conf")
-    end
-
     desc "Updates nginx virtual host config"
     task :nginx, :roles => :web do
       template = ERB.new(
