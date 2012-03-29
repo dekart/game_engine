@@ -33,9 +33,11 @@ var Shop = (function(){
     },
 
     setupAmountSelector: function(){
-      $(".amount").live('change', function(){
-        var amount = $(this).val();
-        var data = $.parseJSON($(this).attr('data-options'), 10);
+      $("#content").on('change', 'select.amount', function(e){
+        var el = $(e.currentTarget);
+
+        var amount  = el.val();
+        var data    = el.data('options');
 
         if(data.basic_price > 0){
           $("#item_" + data.id + " .requirements .basic_money .value").html(data.basic_price * amount);

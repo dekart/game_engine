@@ -34,7 +34,7 @@ function localUrl(url){
 }
 
 $(function(){
-  $('#content').on('click', 'a[href]:not([href^="#"], [onclick], [data-remote])', function(e){
+  $(document).on('click', 'a[href]:not([href^="#"], [onclick], [data-remote])', function(e){
     if(!isSignedRequest()){ return; }
 
     var link = $(e.currentTarget);
@@ -46,7 +46,7 @@ $(function(){
     }
   });
 
-  $('#content').on('submit', 'form:not(#redirect-with-signed-request)', function(e){
+  $(document).on('submit', 'form:not(#redirect-with-signed-request)', function(e){
     if(!isSignedRequest()){ return; }
 
     var form = $(e.currentTarget);
@@ -64,7 +64,7 @@ $(function(){
     }
   });
 
-  $("[data-remote]").on('ajax:beforeSend', function(event, request){
+  $(document).on('ajax:beforeSend', function(event, request){
     if(!isSignedRequest()){ return; }
 
     request.setRequestHeader('signed-request', signed_request);

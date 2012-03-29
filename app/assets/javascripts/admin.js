@@ -93,10 +93,11 @@ $(function(){
 
   $('#flash').click(function(){$(this).remove()}).delay(3000).fadeOut(3000);
 
-  $('a.help').live('click', function(e){
+  $('#content').on('click', 'a.help', function(e){
     e.preventDefault();
+    e.stopPropagation();
 
-    $.dialog({ajax: $(this).attr('href')});
+    $.dialog({ajax: $(e.currentTarget).attr('href')});
   });
 
   $('#character_list #all_ids').click(function(){
