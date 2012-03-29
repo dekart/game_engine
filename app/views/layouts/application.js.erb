@@ -1,15 +1,13 @@
-$(function() {
-  <%= yield %>
-  
-  <% if current_character(true) %>
-    Character.update(<%= current_character.to_json_for_overview.html_safe %>);
-  
-    <%= display_notifications %>
-  <% end %>
-  
-  <%= Array.wrap(@dom_ready).join("\n").html_safe %>
-  
-  $(document).trigger('application.ready');
-  
-  <%= ga_track_pageview %>
-});
+<%= yield %>
+
+<% if current_character(true) %>
+  Character.update(<%= current_character.to_json_for_overview.html_safe %>);
+
+  <%= display_notifications %>
+<% end %>
+
+<%= Array.wrap(@dom_ready).join("\n").html_safe %>
+
+$(document).trigger('application.ready');
+
+<%= ga_track_pageview %>
