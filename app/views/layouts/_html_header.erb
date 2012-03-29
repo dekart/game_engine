@@ -32,6 +32,7 @@
     <%= ga_set_variable(1, 'Level', character_level_group(current_character), :visitor) %>
     <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.titleize, :visitor) %>
   <% end %>
-  
+
   <%= ga_set_variable(3, 'SSL', request.ssl? ? 'Yes' : 'No', :visitor) %>
+  <%= ga_set_variable(4, 'Canvas', fb_canvas? ? 'FB' : 'Standalone', :visitor) %>
 <% end %>
