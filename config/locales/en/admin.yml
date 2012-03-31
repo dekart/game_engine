@@ -419,6 +419,10 @@ en:
           reference_type: "Reference:"
           profile_ids: "Facebook / Profile IDs:"
           submit: "Apply Filter"
+      report:
+        title: "Operation History"
+        player: "Player:"
+        total: "Total Amount:"
 
     item_collections:
       index:
