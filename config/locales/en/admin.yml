@@ -403,7 +403,7 @@ en:
           title: "Payments"
           free_amount: "Earned VIP Money (free)"
           total_amount: "Purchased VIP Money"
-          total_transactions: "Purchase Translations"
+          total_transactions: "Purchase Transactions"
           last_payment: "Last Payment At"
     vip_money_operations:
       controls:
