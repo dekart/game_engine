@@ -62,11 +62,14 @@ var Shop = (function(){
 
     updateItem: function(selector, code){
       var element = $(selector);
-      var parent = element.parents('.item_list');
 
-      element.replaceWith(code);
+      if(element.length > 0){
+        var parent = element.parents('.item_list');
 
-      Shop.setupItemList(parent);
+        element.replaceWith(code);
+
+        Shop.setupItemList(parent);
+      }
     },
 
     // Events
