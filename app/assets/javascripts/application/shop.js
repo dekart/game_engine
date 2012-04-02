@@ -60,6 +60,15 @@ var Shop = (function(){
       items.height(max_height);
     },
 
+    updateItem: function(selector, code){
+      var element = $(selector);
+      var parent = element.parents('.item_list');
+
+      element.replaceWith(code);
+
+      Shop.setupItemList(parent);
+    },
+
     // Events
 
     onTabLoad: function(event, ui){

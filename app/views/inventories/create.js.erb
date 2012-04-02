@@ -60,7 +60,7 @@
     <% builder.on_ready do %>
       $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
-      $('#<%= dom_id(@item) %>').replaceWith(<%= render("items/item", :item => @item).to_json.html_safe %>);
+      Shop.updateItem('#<%= dom_id(@item) %>', <%= render("items/item", :item => @item).to_json.html_safe %>);
 
       $(document).trigger('item.purchase', {item_id: <%= @item.id %>, inventory_id: <%= @inventory.id %>});
 
