@@ -60,8 +60,6 @@
     <% builder.on_ready do %>
       $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
-      Shop.updateItem('#<%= dom_id(@item) %>', <%= render("items/item", :item => @item).to_json.html_safe %>);
-
       $(document).trigger('item.purchase', {item_id: <%= @item.id %>, inventory_id: <%= @inventory.id %>});
 
       <%= ga_track_event('Items', 'Purchased', "#{@item.name} (#{@item.availability})", @amount) %>
@@ -76,5 +74,9 @@
         <%= message %>
       <% end %>
     <% end %>
+  <% end %>
+
+  <% dom_ready do %>
+    Shop.updateItem('#<%= dom_id(@item) %>', <%= render("items/item", :item => @item).to_json.html_safe %>);
   <% end %>
 <% end %>
