@@ -1,0 +1,66 @@
+en:
+  exchanges:
+    show:
+      title: "Swap Items"
+      item_name: "%{item} X %{amount}"
+      text: "Desired Items:"
+      invalid: "Sorry, but this offer is not available anymore"
+      buttons:
+        publish: "Publish"
+        delete: "Delete"
+        delete_confirm: "Are you sure you want to delete this offer?"
+    new:
+      title: "Swap Items"
+      item: "Item"
+      labels:
+        text: "I want to get:"
+      buttons:
+        publish: "Publish"
+      
+    create:
+      title: "Your offer has been saved!"
+      text: "Don't forget to tell your friends about it by publishing the offer to your wall! You'll be notified when someone will respond to your offer."
+      buttons:
+        publish: "Publish"
+        view: "View Offer"
+        
+    index:
+      title: "Swap Items"
+      my_exchanges: "My Offers"
+      participant_exchanges: "Offers I Responded To"
+      item_name: "%{item} X %{amount}"
+      text: "Desired Items:"
+      buttons:
+        publish: "Publish"
+        view: "View"
+        
+  exchange_offers:
+    accept:
+      text: "The offer has been accepted!"
+      you_received: "You received:"
+      you_lost: "You spent:"
+      # I'm not sure if this is necessary
+      errors:
+        exchange_creator: "You don't have enough item amount to make exchange. Increase exchange item amount and try again"
+        exchange_offer_creator: "Person, which you want to make exchange don't have enough item amount. Choose another person"
+      
+    proposed_for_transactor:
+      title: "Exchange Offers"
+      item_name: '%{item} X %{amount}'
+      buttons:
+        accept: "Accept"
+        accept_confirm: "Are you sure you want to accept this offer?"
+        
+    proposed_by_participant:
+      title: "My Offers"
+      item_name: "%{item} X %{amount}"
+      buttons:
+        delete: "Delete"
+        delete_confirm: "Are you sure you want to delete this offer?"
+        
+    exchangeables:
+      make_offer: "Make New Offer"
+      exchangeables_help: "Choose an item from your inventory:"
+      empty_inventory: "You cannot offer anything to this player because you don't have anything."
+      buttons:
+        add: "Add"

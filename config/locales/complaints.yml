@@ -1,0 +1,13 @@
+en:
+  complaints:
+    new:
+      title: "Report This Player"
+      causes:
+        cause_1: "Inappropriate name or avatar"
+        cause_2: "Abusive behavior"
+        cause_3: "Duplicate or fake account"
+        cause_4: "Other"
+      buttons:
+        save: "Send"
+    create:
+      success: "Thank you for your report! We'll review it as soon as possible!"

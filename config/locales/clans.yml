@@ -1,0 +1,73 @@
+en:
+  clans:
+    create:
+      success: "The clan has been successfully created"    
+    update:
+      success: "The clan has been successfully updated" 
+    update_image:
+      success: "The image has been successfully updated"   
+    index:
+      title: "Clans"
+      buttons:
+        create: "Create Clan For %{price}"
+        my_clan: "My Clan"
+    show:
+      quit_confirm: "Are you sure you want to leave a clan?"
+      apply_confirm: "Are you sure you want to apply to join the clan?"
+      join_confirm: "Are you sure you want to join the clan?"
+      clan_member:
+        apply_confirm: "You are a member of another clan. If your application accepted, you will be automatically deleted from your clan" #***
+        join_confirm: "You are a member of another clan.  if you agree to join, you will be automatically deleted from your clan"
+      join_clan:
+        title: "To Join The Clan"
+        text:  "Description of the process" #***
+      buttons:
+        quit: "Out Of The Clan"
+        invite: "Choose Friends to Invite"
+        apply: "Apply"
+        join: "Join"
+        manage: "Manage"
+      title_invite: "Recruit To Your Alliance"  #***
+      sent_application: "Your application was sent to"
+      invitation_message: "Join my Clan in %{app_name}, a fantasy-style combat game played on Facebook!"
+    participants: 
+      title: "Participants"
+    new: 
+      title: "New Clan"
+    edit: 
+      title: "Edit Clan"  
+    clan_members:
+      title: "Clan Members (%{count} of %{limit_count})"
+      
+    edit_image:  
+      buttons:
+        change_image: "Change image for %{price}"
+      save: "Save" 
+      cancel: "Cancel"
+      notice: "After saving you will be charged with %{price} gems"  
+    edit_participants:
+      title: "Participants"
+      buttons:
+        delete: "Delete Member"
+      delete_confirm: "Are you sure you want to delete clan member?"    
+    applications: 
+      title: "Applications"  
+      buttons:
+        accept: "Accept"
+        delete: "Reject application"
+      delete:
+        confirmation: "You sure you want to reject the request?"  
+    invitations:
+      title: "Invitations"
+      buttons:
+        delete: "Delete invitation"
+      delete:
+        confirmation: "You sure want to delete the invitation"      
+    form:
+      save: "Save"     
+  clan_membership_applications:
+    create:
+      sent_application: "Your application was sent to"   
+    approve: 
+      accept: "Application accept"  
+      limit_exceeded: "Denied receiving the participants in the clan, as you have reached the limit of participants" #***    

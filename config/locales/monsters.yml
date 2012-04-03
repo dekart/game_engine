@@ -1,0 +1,78 @@
+en:
+  monsters:
+    index:
+      timer: "Time limit"
+      title: "Monsters"
+      current: "Current Monster Fights"
+      available: "Available Monsters"
+      locked: "Locked Monster (unlocks at level %{level})"
+      previous: "Defeated Monsters"
+      finished: "Recently Defeated Monsters"
+      buttons:
+        attack: "Attack"
+        engage: "Engage"
+        view: "View"
+        reward: "Get Reward"
+    finished:
+      previous: "Recently Defeated Monsters"
+    show:
+      health: "%{monster}'s Health"
+    progress:
+      timer: "Time Remaining:"
+      invitation:
+        title: "Call to Arms"
+        message: "I need your assistance to defeat %{name} in %{app}!"
+      buttons:
+        attack: "Attack"
+        invite: "Call to Arms"
+        invite_request: "Ask friends to join"
+        power_attack: "Power Attack (x%{factor})"
+    won:
+      too_late: "It's too late to join the battle! Monster is already defeated."
+      reward_collected: "Monster is defeated and you already collected your reward."
+      insignificant_damage: "Monster is defeated and you didn't do any significant damage to it"
+      buttons:
+        reward: "Get Reward"
+    expired:
+      too_late: "It's too late to join the battle! Monster is already defeated."
+      expired: "You didn't manage to defeat the monster in time."
+    update:
+      message:
+        progress: "You've successfully attacked %{monster}! Keep attacking!"
+        won: "You've defeated %{monster}!"
+        expired: "You didn't manage to defeat %{monster} in time."
+      you_received: "You received:"
+      you_spent: "You spent:"
+      monster_spent: "Monster spent:"
+      buttons:
+        attack: "Attack Again"
+        reward: "Get Reward"
+      dialog:
+        title: "You defeated %{monster}!"
+        message: "You did it! %{monster} is defeated and you're the winner! Let your friends know about your success!"
+    reward:
+      messages:
+        success: "Well done! You defeated %{monster} and the reward is yours!"
+        already_collected: "You've already collected reward for this fight."
+        insignificant_damage: "You didn't do any significant damage to this monster."
+      you_received: "You received:"
+      buttons:
+        publish: "Brag About It"
+    fighters:
+      title: "Top Hitters"
+    preview:
+      available:
+        fight_time: "%{amount} Hours"
+        buttons:
+          attack: "Attack!"
+      current:
+        time_remaining: "Time Left:"
+        buttons:
+          engage: "Engage"
+          view: "View"
+      completed:
+        won: "Monster defeated!"
+        expired: "Time is up"
+        buttons:
+          reward: "Get Reward"
+          view: "View"

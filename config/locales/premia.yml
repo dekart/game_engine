@@ -1,0 +1,78 @@
+en:
+  premia:
+    get_vip: "Get More"
+
+    service:
+      hire_mercenary:
+        text: "Hire Mercenary to join your Alliance"
+        button: "Hire"
+        maximum: "You have maximum alliance"
+      exchange_money:
+        text: "Add %{amount} gold to your character"
+        button: "Add Gold"
+      refill_energy:
+        text: "Refill your energy"
+        button: "Refill"
+        full: "You have full energy"
+      refill_health:
+        text: "Refill your health"
+        button: "Refill"
+        full: "You have full health"
+      refill_stamina:
+        text: "Refill your stamina"
+        button: "Refill"
+        full: "You have full stamina"
+      reset_attributes:
+        text: "Reset character attributes"
+        button: "Reset"
+        confirm: "Are you sure you want to reset your character attributes? You'll need to re-assign all attributes when you'll get all your attribute points back."
+      change_name:
+        text: "Change character name"
+        button: "Change"
+      buy_points:
+        text: "Add %{amount} attribute points to your character"
+        button: "Add Points"
+      need_more: "Need more Gems? You can buy them using a major Credit Card or Paypal!"
+      buttons:
+        buy: "Buy Gems"
+
+
+    buy_vip:
+      buttons:
+        earn_credits: "Earn Credits"
+      earn_credits:
+        note: 'Need more Facebook Credits? You can earn them by completing special offers provided by Facebook partners! It’s easy and secure.'
+
+    change_name:
+      title: "Change Your Nickname"
+      note: "Please enter your new nickname below. Please note that each name change will charge Gems from your character so try to avoid typos. If you want to use your real Facebook name - keep the field blank and click 'Apply'."
+      label: "New Nickname"
+      buttons:
+        apply: 'Apply'
+    update:
+      messages:
+        success:
+          exchange_money: "Gold have been added to your character!"
+          refill_energy: "Now you have maximum energy!"
+          refill_health: "Now you have maximum health!"
+          refill_stamina: "Now you have maximum stamina!"
+          buy_points: "Attribute points were added to your character!"
+          hire_mercenary: "You've successfully hired a new mercenary!"
+          reset_attributes: "Your attributes are now back to defaults!"
+          change_name: "Your name was updated!"
+        failure: "You don't have enough Gems"
+      buttons:
+        get_more_vip: "Get More Gems"
+    refill_dialog:
+      buttons:
+        refill: "Refill"
+        cancel: "Cancel"
+        gem_market: "Get More Gems"
+      refill_health:
+        text: "Would you like to refill your health using Gems? Full health refull would cost:"
+      refill_energy:
+        text: "Would you like to refill your energy using Gems? Full energy refull would cost:"
+      refill_stamina:
+        text: "Would you like to refill your stamina using Gems? Full stamina refull would cost:"
+      dont_have_gems: "You don't have enough gems to refill."
+      

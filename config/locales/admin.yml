@@ -1,0 +1,508 @@
+en:
+  admin:
+    change_state:
+      confirm: 'Are you sure you want to change state of this %{object_name} to %{state}?'
+    change_position:
+      move_higher: "Move Up"
+      move_lower: "Move Down"
+    documentation: "What's this?"
+    layouts:
+      main_menu:
+        statistics: "Statistics"
+        dashboard: "Dashboard"
+        users: "Users"
+        vip_money: "VIP Money"
+        visits: "Visits"
+        content: 'Game Content'
+        support: 'Support'
+        configuration: 'Configuration'
+        character_types: "Character Types"
+        items: "Items"
+        missions: "Missions"
+        monster_types: "Monsters"
+        property_types: "Property Types"
+        global_payouts: "Global Payouts"
+        characters: "Characters"
+        promotions: "Promotions"
+        item_collections: "Collections"
+        tips: "Tips"
+        stories: "Feed Stories"
+        translations: "Translations"
+        help_pages: "Help Pages"
+        settings: "Settings"
+        global_tasks: "Global Tasks"
+        credit_packages: "Facebook Credits"
+        messages: "Messages"
+        contests: "Contests" 
+        achievement_types: "Achievements"
+        complaints: "Complaints"
+        
+        # Add your custom menu items below this mark
+        
+      application:
+        spinner:
+          alt: "Please wait..."
+          text: "Please wait for a few seconds..."
+        footer:
+          text: "Powered by %{engine} version %{version}"
+          engine: "Railorz Game Engine"
+          
+    item_groups:
+      index:
+        title: "Item Groups"
+        empty_set: "No item groups"
+        controls:
+          new: "Add Group"
+          edit: "Edit"
+      new:
+        title: "New Item Group"
+        submit: "Create"
+      create:
+        success: "Item group has been created successfully!"
+      edit:
+        title: "%{name} - Edit Item Group"
+        submit: "Update"
+      update:
+        success: "Item group has been updated successfully!"
+        
+    items:
+      controls:
+        new: "Add Item"
+        groups: "Manage Groups"
+        sets: "Item Sets"
+      index:
+        title: "Items"
+        filter:
+          title: "Filter Items"
+          all_groups: "All Groups"
+          all_availabilities: "All Availabilities"
+        empty_set: "No items"
+        not_usable: "Not usable"
+        controls:
+          edit: "Edit"
+      new:
+        title: "New Item"
+        submit: "Create"
+      create:
+        success: "Item has been created successfully!"
+      edit:
+        title: "%{name} - Edit Item"
+        submit: "Update"
+      update:
+        success: "Item has been updated successfully!"
+      form_fields:
+        use_button_label: "Samples: 'Open', 'Drink', 'Eat', etc. Default: '%{default_value}'"
+      effect:
+        remove: "Remove"
+
+    mission_groups:
+      index:
+        title: "Mission Groups"
+        empty_set: "No mission groups"
+        controls:
+          new: "Add Group"
+          edit: "Edit"
+      new:
+        title: "New Mission Group"
+        submit: "Create"
+      create:
+        success: "Mission group has been created successfully!"
+      edit:
+        title: "%{name} - Edit Mission Group"
+        submit: "Update"
+      update:
+        success: "Mission group has been updated successfully!"
+    missions:
+      controls:
+        new: "Add Mission"
+        groups: "Manage Groups"
+      index:
+        title: "Missions"
+        empty_set: "No missions"
+        controls:
+          edit: "Edit"
+      levels:
+        controls:
+          new: "Add Mastery Level"
+          edit: "Edit"
+        empty_set: "No mastery levels for this mission. You should add at least 1 level before publishing this mission."
+      new:
+        title: "New Mission"
+        submit: "Create"
+      create:
+        success: "Mission has been created successfully!"
+      edit:
+        title: "%{name} - Edit Mission"
+        submit: "Update"
+      update:
+        success: "Mission has been updated successfully!"
+
+    mission_levels:
+      new:
+        title: "New Mission Level"
+        submit: "Create"
+      create:
+        success: "Mission level has been created successfully!"
+      edit:
+        title: "Edit Mission Level"
+        submit: "Update"
+      update:
+        success: "Mission level has been updated successfully!"
+
+    tips:
+      index:
+        title: "Tips"
+        empty_set: "No tips"
+        controls:
+          new: "Add Tip"
+          edit: "Edit"
+      new:
+        title: "New Tip"
+        submit: "Create"
+      create:
+        success: "Tip has been created successfully!"
+      edit:
+        title: "Edit Tip"
+        submit: "Update"
+      update:
+        success: "Tip has been updated successfully!"
+    promotions:
+      index:
+        title: "Promotions"
+        note: "<b>Important:</b> promotion links work differently for admins and other players. For testing purposes admins can use links unlimited number of times and receive a bonus <b>each time</b>. Non-admins can use each link and receive a bonus <b>only once</b>."
+        empty_set: "No promotions"
+        link: "Link"
+        controls:
+          new: "Add Promotion"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Are you sure?"
+      new:
+        title: "New Promotion"
+        submit: "Create"
+      create:
+        success: "Promotion has been created successfully!"
+      edit:
+        title: "Edit Promotion"
+        submit: "Update"
+      update:
+        success: "Promotion has been updated successfully!"
+    visibilities:
+      form_fields:
+        visible_for: "Visible For"
+        comment: "Don't check any flags if you want to make this visible for all character types"
+    payouts:
+      collection:
+        add_payout: "Add Payout:"
+      payout:
+        remove: "Remove"
+        move_up: "Move Up"
+        move_down: "Move Down"
+    requirements:
+      collection:
+        add_requirement: "Add Requirement:"
+      requirement:
+        remove: "Remove"
+        move_up: "Move Up"
+        move_down: "Move Down"
+    effects:
+      collection:
+        add_effect: "Add Effect:"
+      effect:
+        remove: "Remove"
+        move_up: "Move Up"
+        move_down: "Move Down"
+    property_types:
+      index:
+        title: "Property Types"
+        empty_set: "No property types"
+        controls:
+          new: "Add Property Type"
+          edit: "Edit"
+      new:
+        title: "New Property Type"
+        submit: "Create"
+      create:
+        success: "Property type has been created successfully!"
+      edit:
+        title: "%{name} - Edit Property Type"
+        submit: "Update"
+      update:
+        success: "Property type has been updated successfully!"
+    translations:
+      index:
+        title: "Translations"
+        no_value: "(No value)"
+        controls:
+          delete: "Reset to Default"
+          delete_confirm: "Are you sure?"
+      show:
+        no_value: "(No value)"
+      new:
+        current_value: "Current Value: "
+        submit: "Create"
+      edit:
+        submit: "Update"
+    character_types:
+      index:
+        title: "Character Types"
+        empty_set: "No types"
+        controls:
+          new: "Add Type"
+          edit: "Edit"
+          change_state_confirm: "Are you sure you want to change state of this character type?"
+      new:
+        title: "New Character Type"
+        submit: "Create"
+      create:
+        success: "Character type has been created successfully!"
+      edit:
+        title: "%{name} - Edit Character Type"
+        submit: "Update"
+      update:
+        success: "Character type has been updated successfully!"
+      form_fields:
+        basic_attributes: "Basic Attributes"
+        bonuses: "Bonuses"
+        other: "Other Attributes"
+    help_pages:
+      index:
+        title: "Help Pages"
+        empty_set: "No pages"
+        page_preview: "Page Preview"
+        controls:
+          new: "Add Page"
+          edit: "Edit"
+          preview:
+            dialog: "Dialog"
+            page: "Page"
+      new:
+        title: "New Help Page"
+        submit: "Create"
+      create:
+        success: "Help page has been created successfully!"
+      edit:
+        title: "%{name} - Edit Help Page"
+        submit: "Update"
+      update:
+        success: "Help page has been updated successfully!"
+      form_fields:
+        comments:
+          alias: "Only letters, numbers, dashes, and underscores are allowed."
+          content:
+            text: "Please read %{documentation} to know more about formatting options."
+            documentation: "documentation"
+    settings:
+      index:
+        title: "Settings"
+        empty_set: "No settings"
+        empty_value: "(No value)"
+        controls:
+          new: "Add Value"
+          new_payout: "Add Payout"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirm: "Removing this setting may cause improper script behaviour! Are you sure you want to delete it?"
+      new:
+        title: "New Value"
+        submit: "Create"
+      new_payout:
+        title: "New Payout Value"
+        submit: "Create"
+      create:
+        success: "Value has been created successfully!"
+      edit:
+        title: "%{name} - Edit Value"
+        submit: "Update"
+      edit_payout:
+        title: "%{name} - Edit Payout Value"
+        submit: "Update"
+      update:
+        success: "Value has been updated successfully!"
+    global_tasks:
+      show:
+        title: "Global Tasks"
+        note: "This page allows you to perform different application-wide tasks. Please be carefull with all the functions at this page - they can cause damage to your application if used without care."
+        delete_users:
+          title: "Delete All Users"
+          note: "This function allows you to delete all game users (including admins) and clear all their game data. Please use it only when testing your game before oficial launch. For security reasons this function stops working when your application gets more than %{limit} users. WARNING: User data cannot be restored after deletion!"
+          perform: "Delete Users"
+          confirm: "Are you sure you want to delete all users? This operation CANNOT BE UNDONE!"
+        restart:
+          title: "Restart Application"
+          note: "This function allows you to restart your application. When restarting application will reload all code, templates, and settings. Please note that the application will be unavailable for all users while restarting. Restart process may take up to a minute or two."
+          perform: "Restart"
+          confirm: "Are you sure you want to restart the application?"
+        update_styles:
+          title: "Update Styles"
+          note: "This function allows you to rebuild CSS stylesheet files for the application. Use it to apply changes when you edit SASS files directly on your server. Please note that all changes done in CSS files instead of SASS files will be lost."
+          perform: "Update Styles"
+        clear_memcache:
+          title: "Clear Memcache Values"
+          note: "This function deletes all temporary values stored in Memcached. Please note that clearing cache may affect overall game performance while cache values are being recalculated."
+          perform: "Clear"
+      delete_users:
+        success: 'All application users were deleted'
+        user_limit_reached: "This task cannot be performed because your application already reached %{limit} user limit."
+      restart:
+        success: "The application was successfully restarted!"
+      update_styles:
+        success: "Game stylesheets were successfully updated! Please reload your game page to check out the updated version."
+      clear_memcache:
+        success: "Memcache values were successfully deleted!"
+    characters:
+      index:
+        title: "Characters"
+        search:
+          title: "Search Characters"
+          profile_ids: "Facebook/Profile IDs"
+          signed_request: "Signed Request"
+          submit: "Search"
+        profile: "FB Profile"
+        controls:
+          edit: "Edit"
+          edit_user: "Edit User"
+          payout: "Apply Payout"
+        batch:
+          title: "Batch Operations"
+          note: "These operations can be applied to all selected characters:"
+          payout: "Apply Payout"
+      edit:
+        title: "Edit Character"
+        submit: "Update"
+      update:
+        success: "Character has been updated successfully!"
+      payout:
+        title: "Apply Payouts To Character"
+        submit: "Apply"
+        submit_and_continue: "Apply & Continue editing"
+        success: "Payouts have been applied to the character!"
+      show:
+        title: "View Character: %{name}, Level %{level}"
+        controls:
+          index: "« Back to Index"
+          edit: "Edit Character"
+          edit_user: "Edit User"
+          payouts: "Apply Payouts"
+        attributes: "Attributes"
+        attribute: "Attribute"
+        value: "Value"
+        game_profile: "Game Profile"
+        restorable: "%{current} / %{max} (%{base})"
+        inventory: "Inventory"
+        properties: "Properties"
+        property_income: "+%{value} per %{period} hours"
+        statistics: "Statistics"
+        fb_profile: "Facebook Profile"
+        social:
+          title: "Social"
+          friends: "Number of Friends"
+          in_game: "Friends in Game"
+          referrals: "Referrals"
+        payments:
+          title: "Payments"
+          free_amount: "Earned VIP Money (free)"
+          total_amount: "Purchased VIP Money"
+          total_transactions: "Purchase Transactions"
+          last_payment: "Last Payment At"
+    vip_money_operations:
+      controls:
+        statistics: "Back to Statistics"
+        deposits: "Deposits"
+        withdrawals: "Withdrawals"
+      index:
+        title:
+          deposit: "Latest Deposits"
+          withdrawal: "Latest Withdrawals"
+        filter:
+          title: "Filter"
+          reference_type: "Reference:"
+          profile_ids: "Facebook / Profile IDs:"
+          submit: "Apply Filter"
+      report:
+        title: "Operation History"
+        player: "Player:"
+        total: "Total Amount:"
+
+    item_collections:
+      index:
+        title: "Collections"
+        empty_set: "No collections"
+        controls:
+          new: "Add Collection"
+          edit: "Edit"
+      new:
+        title: "New Collection"
+        submit: "Create"
+      create:
+        success: "Collection has been created successfully!"
+      edit:
+        title: "Edit Collection"
+        submit: "Update"
+      update:
+        success: "Collection has been updated successfully!"
+      form_fields:
+        items: "Items"
+        add_item: "Add Item..."
+      item_fields:
+        remove: "Remove"
+
+    stories:
+      index:
+        title: "Stories"
+        empty_set: "No stories"
+        controls:
+          new: "Add Story"
+          edit: "Edit"
+      form_fields:
+        story: "Story Content"
+      new:
+        title: "New Story"
+        submit: "Create"
+      create:
+        success: "Story has been created successfully!"
+      edit:
+        title: "Edit Story"
+        submit: "Update"
+      update:
+        success: "Story has been updated successfully!"
+
+    messages:
+      index:
+        title: "Messages"
+        controls:
+          edit: "Edit"
+          publish: "Publish"
+          publish_confirm: "Are you sure you want to send this message to players?"
+          delete: "Delete"
+          delete_confirm: "Are you sure you want to delete this message?"
+          send_to_admin: "Sent To Admin"
+      new:
+        title: "New Message"
+      edit:
+        title: "Edit Message"
+      create:
+        success: "Message has been created successfully!"
+      update:
+        success: "Message has been updated successfully!"
+      controls:
+        new: "Add Message"
+      send_to:
+        success: "Message was sent successfully"  
+    pictures:
+      form_fields:
+        new: "Add Picture"
+      picture:
+        remove: "Remove"
+    complaints: 
+      index:
+        title: "Complaints"
+        profile: "FB Profile"    
+        controls: 
+          show: "Show"
+      show:
+        title: "Complaint"    
+        profile: "FB Profile"
+        all: "All Complaints"
+    
+    # Add your custom translation strings below this mark

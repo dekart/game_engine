@@ -1,0 +1,34 @@
+en:
+  admin:
+    contests:
+      index:
+        title: "Contests"
+        empty_set: "No contents"
+        controls:
+          new: "Add Contest"
+          edit: "Edit"
+      new:
+        title: "New Contest"
+        submit: "Create"
+      create:
+        success: "Contest has been created successfully!"
+      edit:
+        title: "%{name} - Edit Contest"
+        submit: "Update"
+      update:
+        success: "Contest has been updated successfully!"
+      groups:
+        controls:
+          new: "Add Contest Group"
+          edit: "Edit Contest Group"
+          delete: "Delete"
+          delete_confirm: "Are you sure? Contest results of users in this group will also be removed!"
+    contest_groups:
+      new:
+        title: "New Contest Group"
+      edit:
+        title: "Edit Contest Group"
+      create:
+        success: "Contest group was successfully created"
+      update:
+        success: "Contest group was successfully updated"

@@ -1,0 +1,8 @@
+en:
+  admin:
+    users:
+      edit: 
+        title: "Edit User"
+        submit: "Update"
+      update:
+        success: "User settings were saved!"

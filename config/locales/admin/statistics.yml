@@ -1,0 +1,90 @@
+en:
+  admin:
+    statistics:
+      amount_change: "(+%{amount} in last 24 hours)"
+      average_amount_per_hour: "(%{amount} average per hour)"
+      average_amount_per_minute: "(%{amount} average per minute)"
+      controls:
+        dashboard: "Dashboard"
+        vip_money: "VIP Money"
+        users: "Users"
+        level: "Levels"
+        visits: "Visits"
+      index:
+        title: "Dashboard"
+        parameter: "Parameter"
+        value: "Value"
+        change: "Last 24 hours"
+        details: "Details »"
+        values:
+          users: "Total Users"
+          deposit: "VIP Money Deposit"
+          withdraw: "VIP Money Withdraw"
+        total_complaints: "Total Complaints"
+        all: "All" 
+        new: "New"
+      user:
+        title: "Statistics: New Users"
+        total_users: "Total Users"
+        recent_visitors: "Recent Visitors (7 days)"
+        new_users: 'New Users'
+        new_users_chart:
+          title: 'New Users By Day'
+          total: 'Total'
+          level5: 'Level 5'
+          level10: 'Level 10'
+        returning_users: 'Returning Users'
+        returning_users_chart:
+          title: 'Returning Users By Day'
+          total: 'Total'
+          same_day: 'Same Day'
+          next_day: 'Next Day'
+          three_days: 'Day 3'
+          more_days: 'Day 4+'
+        latest_users: "Latest Users"
+        profile: "FB Profile"
+        references: "References"
+        no_reference: "No reference"
+        no_character: "(No character)"
+      vip_money:
+        title: "Statistics: VIP Money"
+        reference_type: "Reference Type"
+        reference: "Reference"
+        amount:
+          total: "Total Amount"
+          by_period: "24 hours"
+        deposit:
+          overview: "Deposit"
+          operations: "See latest deposits"
+          reference_types: "Deposit Reference Types"
+          popular_references: "Popular Deposit References"
+        withdraw:
+          overview: "Withdraw"
+          operations: "See latest withdrawals"
+          reference_types: "Withdraw Reference Types"
+          popular_references: "Popular Withdraw References"
+      level:
+        title: "Statistics: Attributes by Levels"
+        filter:
+          title: 'Filter by Last Visit'
+          all: 'All Time'
+          3days: 'Last 3 days'
+          week: 'Last Week'
+        columns:
+          users: 'Users'
+          mercenaries: 'Mercenaries'
+          friends: 'Friends'
+          fights: 'Fights'
+      visits:
+        title: "Statistics: Visits"  
+        profile: "FB Profile"
+        count_requests: "Requests"  
+        average_per_hour: "Average Per Hour"
+        average_per_minute: "Average Per Minute"
+        dates: "By Dates"
+        total_visits_by_date: "Total Visits By Date"
+        total_visits_hourly: "Total Visits Hourly"
+        no_character: "(No character)"
+        no_user: "(No User)"
+        hourly: "Hourly"
+          
