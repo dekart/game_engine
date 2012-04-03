@@ -1,8 +1,0 @@
-en:
-  users:
-    edit:
-      title: "Settings"
-      submit: "Save"
-    settings:
-      title: "Settings"
-      mailing_lists: "Mailing lists"

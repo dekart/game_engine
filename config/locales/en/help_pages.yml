@@ -1,9 +1,0 @@
-en:
-  help_pages:
-    link:
-      title: "What's this?"
-    show:
-      buttons:
-        close: "Close"
-        return: "Return to the game"
-      not_found: 'Help Page Not Found'
