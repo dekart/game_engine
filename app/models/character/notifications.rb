@@ -24,21 +24,20 @@ class Character
 
         if notification.nil?
           notification = Notification::Base.type_to_class(type).new(proxy_association.owner, data.to_json)
+
           list << notification
+        else
+          notification.data = data
         end
 
-        if notification.state != "disabled"
-          $redis.hset("notifications_#{proxy_association.owner.id}", type, data.to_json)
-
-          notification.schedule if notification.displayed?
-        end
+        notification.schedule unless notification.disabled?
 
         true
       end
 
       def schedule_friends_to_invite
         friend_ids = proxy_association.owner.friend_filter.for_invitation(15)
-        
+
         proxy_association.owner.notifications.schedule(:friends_to_invite, :friend_ids => friend_ids) unless friend_ids.empty?
       end
 
