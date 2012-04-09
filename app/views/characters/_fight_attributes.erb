@@ -37,8 +37,8 @@
     <% if current_character.equipment.send("best_#{group}").any? %>
       <div class="inventories">
         <div class="items">
-          <% current_character.equipment.send("best_#{group}").each do |inventory| %>
-            <%= item_image(inventory, :icon,
+          <% current_character.equipment.send("best_#{group}").each do |item| %>
+            <%= item_image(item, :icon,
                   :class    => :inventory,
                   :tooltip  => true
                 ) %>

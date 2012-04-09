@@ -458,17 +458,17 @@ describe MonsterFight do
       @character = @monster_fight.character
       @monster = @monster_fight.monster
       
-      monster_attack_item_boost = Factory(:item, 
+      @monster_attack_item_boost = Factory(:item, 
         :boost_type => 'monster',
         :effects => [
           {:type => :damage, :value => 1}
         ]
       )
-      @monster_attack_boost = @character.inventories.give!(monster_attack_item_boost)
+      @character.inventories.give!(@monster_attack_item_boost)
     end
     
     it 'should increase monster damage if boost is active' do
-      @character.activate_boost!(@monster_attack_boost, 'attack')
+      @character.activate_boost!(@monster_attack_item_boost, 'attack')
       
       lambda {
         @monster_fight.attack!
@@ -482,7 +482,7 @@ describe MonsterFight do
     end
     
     it 'should take monster attack boost if it is active' do
-      @character.activate_boost!(@monster_attack_boost, 'attack')
+      @character.activate_boost!(@monster_attack_item_boost, 'attack')
       
       lambda {
         @monster_fight.attack!

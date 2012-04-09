@@ -1,7 +1,7 @@
 <%= render_to_result :market do |builder| %>
-  <% if @item.errors.empty? %>
+  <% if @market_item.errors.empty? %>
     <% builder.buttons do %>
-      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @item.inventory.item),
+      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @market_item.inventory.item),
             :class => "publish button"
           ) if Setting.b(:stream_dialog_enabled) %>
 
@@ -12,23 +12,23 @@
 
     <% builder.success do %>
       <%= t(".messages.success",
-            :amount     => @item.amount,
-            :item_name  => strong_tag(@item.amount > 1 ? @item.plural_name : @item.name)
+            :amount     => @market_item.amount,
+            :item_name  => strong_tag(@market_item.amount > 1 ? @market_item.plural_name : @market_item.name)
           ).html_safe %>
     <% end %>
 
-    <% if @item.price? %>
+    <% if @market_item.price? %>
       <table class="payouts">
         <tr>
           <td class="spent">
             <h3><%= t(".you_spent.title") %></h3>
 
-            <% if @item.basic_price > 0 %>
-              <%= payout(:basic_money, number_to_currency(@item.basic_price)) %>
+            <% if @market_item.basic_price > 0 %>
+              <%= payout(:basic_money, number_to_currency(@market_item.basic_price)) %>
             <% end %>
 
-            <% if @item.vip_price > 0 %>
-              <%= payout(:vip_money, number_to_currency(@item.vip_price)) %>
+            <% if @market_item.vip_price > 0 %>
+              <%= payout(:vip_money, number_to_currency(@market_item.vip_price)) %>
             <% end %>
           </td>
         </tr>
@@ -36,13 +36,13 @@
     <% end %>
 
     <% builder.on_ready do %>
-      $('#<%= dom_id(@item) %>').remove();
+      $('#<%= dom_id(@market_item) %>').remove();
 
-      <%= ga_track_event('Items', 'Purchased on Market', "#{@item.name} (#{@item.inventory.item.availability})", current_character.level) %>
+      <%= ga_track_event('Items', 'Purchased on Market', "#{@market_item.name} (#{@market_item.item.availability})", current_character.level) %>
     <% end %>
   <% else %>
     <div class="unsatisfied_requirements">
-      <%= unsatisfied_requirement_first(@item.requirements) %>
+      <%= unsatisfied_requirement_first(@market_item.requirements) %>
     </div>
   <% end %>
 <% end %>

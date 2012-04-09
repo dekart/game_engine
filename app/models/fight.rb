@@ -148,7 +148,7 @@ class Fight < ActiveRecord::Base
   end
 
   def used_items(character)
-    items = character.inventories.equipped.all(:include => {:item => :item_group})
+    items = character.inventories.equipped_items.joins(:item_group)
 
     groups = ItemGroup.with_state(:visible).all(:order => :position)
 
@@ -194,7 +194,7 @@ class Fight < ActiveRecord::Base
     self.loser_money  = (loser.basic_money >= winner_money ? winner_money : loser.basic_money)
 
     @attacker_boost = attacker.boosts.active_for(:fight, :attack)
-    @victim_boost = victim.boosts.active_for(:fight, :defence)
+    @victim_boost   = victim.boosts.active_for(:fight, :defence)
   end
 
   def winner_reward

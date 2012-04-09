@@ -1,6 +1,5 @@
 class Character
   class Equipment < ActiveRecord::Base
-
     MAIN_PLACEMENTS = [:right_hand, :left_hand, :head, :body, :legs]
     PLACEMENTS = MAIN_PLACEMENTS + [:additional]
 
@@ -19,12 +18,22 @@ class Character
     belongs_to :character
 
     serialize :placements
+    serialize :inventories, Inventories::Collection
 
     class << self
       def placement_name(name)
         I18n.t("inventories.placements.names.#{name}", :default => name.to_s.humanize)
       end
     end
+
+    def inventories
+      inventories = self[:inventories]
+      inventories.character ||= character
+
+      inventories
+    end
+    
+    delegate(:items, :equipped_items, :to => :inventories)
 
     def main_placements
       MAIN_PLACEMENTS
@@ -38,118 +47,53 @@ class Character
       self[:placements] ||= {}
     end
 
-    def inventories
-      unless @inventories
-        ids = placements.values.flatten
-
-        if ids.any?
-          inventories = Inventory.find_all_by_id(ids.uniq.sort, :include => :item)
-
-          # Sorting inventories by ID order
-          @inventories = ids.collect do |id|
-            inventories.detect{|inventory| inventory.id == id}
-          end
-        else
-          @inventories = []
-        end
-      end
-
-      @inventories
-    end
-
-
     def inventories_by_placement(placement)
       Array.wrap(placements[placement.to_sym]).collect do |id|
-        inventories.detect{|i| i.id == id}
+        inventories.find_by_item_id(id)
       end
     end
-
-
-    def equip(inventory, placement)
+    
+    def equip(item, placement)
       placement = placement.to_sym
-
-      return unless inventory.placements.include?(placement) && inventory.equippable?
-
+      inventory = inventories.find_by_item(item)
+      
+      return unless item.placements.include?(placement) && inventory && inventory.equippable?
+      
       previous = nil
-
+      
       if available_capacity(placement) > 0
         placements[placement] ||= []
-        placements[placement] << inventory.id
+        placements[placement] << item.id
 
-        inventory.equipped = equipped_amount(inventory)
+        inventory.equipped = equipped_amount(item)
       elsif main_placements.include?(placement) # Main placements can be replaced
-        previous = character.inventories.find(placements[placement].last)
+        previous = inventories.find_by_item_id(placements[placement].last)
 
         unless previous == inventory # Do not re-equip the same inventory
-          unequip(previous, placement)
-          equip(inventory, placement)
+          unequip(previous.item, placement)
+          equip(inventory.item,  placement)
         end
       end
-
-      @inventories = nil
 
       previous
     end
 
-
-    def unequip(inventory, placement)
+    def unequip(item, placement)
       placement = placement.to_sym
 
-      if placements[placement] and index = placements[placement].index(inventory.id)
+      if placements[placement] and index = placements[placement].index(item.id)
         placements[placement].delete_at(index)
 
-        inventory.equipped = equipped_amount(inventory) unless inventory.frozen?
-      end
-
-      @inventories = nil
-    end
-
-
-    def equip!(inventory, placement)
-      Character.transaction do
-
-        previous = equip(inventory, placement)
-
-        previous.try(:save)
-
-        inventory.save
-        save
-
-        clear_effect_cache!
-      end
-    end
-
-
-    def unequip!(inventory, placement)
-      Character.transaction do
-        unequip(inventory, placement)
-
-        inventory.save
-        save
-
-        clear_effect_cache!
-      end
-    end
-
-
-    def auto_equip(inventory, amount = nil)
-      amount ||= inventory.amount_available_for_equipment
-
-      amount.times do
-        if placement = (placements_with_free_slots & inventory.placements).first
-          equip(inventory, placement)
-        else
-          break
+        if inventory = inventories.find_by_item(item)
+          inventory.equipped = equipped_amount(item)
         end
       end
     end
 
-
-    def auto_equip!(inventory, amount = nil)
+    def equip!(item, placement)
       Character.transaction do
-        auto_equip(inventory, amount)
 
-        inventory.save
+        previous = equip(item, placement)
 
         save
 
@@ -157,26 +101,58 @@ class Character
       end
     end
 
-    def auto_unequip(inventory)
-      amount_to_unequip = inventory.destroyed? ? inventory.amount : (inventory.equipped - inventory.amount)
+    def unequip!(item, placement)
+      Character.transaction do
+        unequip(item, placement)
+
+        save
+
+        clear_effect_cache!
+      end
+    end
+
+    def auto_equip(item, amount = nil)
+      inventory = inventories.find_by_item(item)
+      amount ||= inventory.amount_available_for_equipment
+
+      amount.times do
+        if placement = (placements_with_free_slots & item.placements).first
+          equip(item, placement)
+        else
+          break
+        end
+      end
+      
+    end
+
+    def auto_equip!(item, amount = nil)
+      Character.transaction do
+        auto_equip(item, amount)
+
+        save
+
+        clear_effect_cache!
+      end
+    end
+
+    def auto_unequip(item)
+      inventory = inventories.find_by_item(item)
+      amount_to_unequip = inventory ? (inventory.equipped - inventory.amount) : equipped_amount(item)
 
       return if amount_to_unequip <= 0
 
       amount_to_unequip.times do
-        if placement = equipped_slots(inventory).last
-          unequip(inventory, placement)
+        if placement = equipped_slots(item).last
+          unequip(item, placement)
         else
           break
         end
       end
     end
 
-
-    def auto_unequip!(inventory)
+    def auto_unequip!(item)
       Character.transaction do
-        auto_unequip(inventory)
-
-        inventory.save unless inventory.destroyed?
+        auto_unequip(item)
 
         save
 
@@ -184,22 +160,21 @@ class Character
       end
     end
 
-
     def equip_best!(force_unequip = false)
       unequip_all! if force_unequip
 
-      equippables = character.inventories.equippable.all
+      equippables = inventories.items.equippable
 
       Character.transaction do
         while free_slots > 0
           equipped = nil
 
           Effects::Base::BASIC_TYPES.each do |effect|
-            candidates = equippables.select{|i| i.equippable? and i.effect(effect) != 0}.sort_by{|i| [i.effect(effect), i.effects.metric]}.reverse
+            candidates = equippables.select{|i| i.effect(effect) != 0}.sort_by{|i| [i.effect(effect), i.effects.metric]}.reverse
 
-            candidates.each do |inventory|
-              if auto_equip(inventory, 1)
-                equipped = inventory
+            candidates.each do |item|
+              if auto_equip(item, 1)
+                equipped = item
                 
                 break
               end
@@ -209,8 +184,8 @@ class Character
           break if equipped == nil
         end
 
-        equippables.each do |inventory|
-          inventory.save if inventory.changed?
+        equippables.each do |item|
+          item.save if item.changed?
         end
 
         save
@@ -219,54 +194,53 @@ class Character
       end
     end
 
-
     def unequip_all!
       Character.transaction do
-        character.inventories.equipped.update_all(:equipped => 0)
-
+        inventories.each do |inventory|
+          inventory.equipped = 0
+        end
         self.placements = {}
+        
         save
 
         clear_effect_cache!
       end
     end
 
-
     def free_slots
       PLACEMENTS.sum{|placement| available_capacity(placement) }
     end
-
 
     def available_capacity(placement)
       placement_capacity(placement) - used_capacity(placement)
     end
 
-
     def best_offence
-      character.inventories.equipped.by_item_id(Item.with_effect_ids(:attack)).sort{|a, b|
+      inventories.equipped_items.where(:id => Item.with_effect_ids(:attack)).sort{|a, b|
         b.effect(:attack) <=> a.effect(:attack)
       }[0, 3]
     end
 
-
     def best_defence
-      character.inventories.equipped.by_item_id(Item.with_effect_ids(:defence)).sort{|a, b|
+      inventories.equipped_items.where(:id => Item.with_effect_ids(:defence)).sort{|a, b|
         b.effect(:defence) <=> a.effect(:defence)
       }[0, 3]
     end
-  
+
     def effects
+      equipped = equipped_items
+      
       @effects ||= Rails.cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
         [
           {}.tap do |result|
             Effects::Base::BASIC_TYPES.each do |effect|
-              result[effect] = inventories.sum{|i| i.effect(effect) }
+              result[effect] = equipped.sum{|i| i.effect(effect) }
             end
           end,
           
           [].tap do |result|
-            inventories.each do |inventory|
-              inventory.effects.each do |effect|
+            equipped.each do |item|
+              item.effects.each do |effect|
                 if Effects::Base::COMPLEX_TYPES.include?(effect.name.to_sym)
                   result << effect
                 end
@@ -276,15 +250,15 @@ class Character
         ]
       end
     end
-    
+
     def effect(name)
       effects[0][name.to_sym]
     end
 
     protected
 
-    def equipped_amount(inventory)
-      placements.values.flatten.count(inventory.id)
+    def equipped_amount(item)
+      placements.values.flatten.count(item.id)
     end
 
     def placements_with_free_slots
@@ -306,8 +280,8 @@ class Character
       end
     end
 
-    def equipped_slots(inventory)
-      PLACEMENTS.select{|placement| placements[placement].try(:include?, inventory.id) }
+    def equipped_slots(item)
+      PLACEMENTS.select{|placement| placements[placement].try(:include?, item.id) }
     end
 
     def used_capacity(placement)

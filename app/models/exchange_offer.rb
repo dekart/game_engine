@@ -22,7 +22,7 @@ class ExchangeOffer < ActiveRecord::Base
   end
   
   def inventory
-    character.inventories.find_by_item_id(item) if item
+    character.inventories.find_by_item(item) if item
   end
   
   def payout
@@ -30,12 +30,12 @@ class ExchangeOffer < ActiveRecord::Base
   end
   
   class << self
-    def destroy_created_by_inventory(inventory)
-      exchange_offers = with_state(:created).all(:conditions => {:item_id => inventory.item})
-    
+    def destroy_created_by_character_for_item(character, item)
+      exchange_offers = character.exchange_offers.with_state(:created).find_all_by_item_id(item)
+      
       ExchangeOffer.transaction do
         exchange_offers.each do |exchange_offer|
-          if exchange_offer.amount > inventory.amount || inventory.destroyed?
+          if exchange_offer.amount > character.inventories.count(item)
             exchange_offer.destroy
           end
         end

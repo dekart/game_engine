@@ -6,11 +6,11 @@ describe Character do
       @character = Factory(:character, :basic_money => 100)
       @item = Factory(:item)
     end
-    
+
     it 'should give one item to character' do
       lambda{
         @character.inventories.buy!(@item)
-      }.should change(@character.inventories, :count).from(0).to(1)
+      }.should change(@character.inventories, :size).from(0).to(1)
 
       @character.inventories.first.item.should == @item
       @character.inventories.first.amount.should == 1
@@ -19,9 +19,9 @@ describe Character do
     it 'should charge money from character' do
       lambda{
         @character.inventories.buy!(@item)
-      }.should change(@character, :basic_money).from(100).to(90)
+      }.should change(@character.reload, :basic_money).from(100).to(90)
     end
-    
+
     it 'should save character' do
       @character.inventories.buy!(@item)
       @character.should_not be_changed
@@ -59,8 +59,7 @@ describe Character do
     it 'should return inventory as result' do
       result = @character.inventories.buy!(@item)
 
-      result.should be_kind_of(Inventory)
-      result.character.should == @character
+      result.should be_kind_of(Character::Equipment::Inventories::Inventory)
       result.item.should == @item
       result.amount.should == 1
     end
@@ -69,7 +68,7 @@ describe Character do
       it 'should give 3 items to character' do
         lambda{
           @character.inventories.buy!(@item, 3)
-        }.should change(@character.inventories, :count).from(0).to(1)
+        }.should change(@character.inventories, :size).from(0).to(1)
         
         @character.inventories.first.amount.should == 3
       end
@@ -77,7 +76,7 @@ describe Character do
       it 'should charge money for 3 items' do
         lambda{
           @character.inventories.buy!(@item, 3)
-        }.should change(@character, :basic_money).from(100).to(70)
+        }.should change(@character.reload, :basic_money).from(100).to(70)
       end
 
       it 'should increment item usage counter by 3' do
@@ -96,7 +95,7 @@ describe Character do
       it 'should give 5 items to character' do
         lambda{
           @character.inventories.buy!(@item)
-        }.should change(@character.inventories, :count).from(0).to(1)
+        }.should change(@character.inventories, :size).from(0).to(1)
 
         @character.inventories.first.amount.should == 5
       end
@@ -104,7 +103,7 @@ describe Character do
       it 'should charge money for 1 item' do
         lambda{
           @character.inventories.buy!(@item)
-        }.should change(@character, :basic_money).from(100).to(90)
+        }.should change(@character.reload, :basic_money).from(100).to(90)
       end
 
       it 'should increment item usage counter by 5' do
@@ -113,13 +112,13 @@ describe Character do
         @item.reload.owned.should == 5
       end
 
-      it 'should moltiply package size values to 3 when amount is set to 3' do
+      it 'should multiply package size values to 3 when amount is set to 3' do
         lambda{
           @character.inventories.buy!(@item, 3)
-        }.should change(@character.inventories, :count).from(0).to(1)
+        }.should change(@character.inventories, :size).from(0).to(1)
 
         @character.inventories.first.amount.should == 15
-        @character.basic_money.should == 70
+        @character.reload.basic_money.should == 70
         @item.reload.owned.should == 15
       end
     end
@@ -130,35 +129,60 @@ describe Character do
       @character = Factory(:character)
       @item = Factory(:item)
       
-      @inventory = Factory(:inventory, :character => @character, :item => @item)
+      @character.inventories.give!(@item, 5)
     end
     
     it 'should give money to character' do
       lambda{
         @character.inventories.sell!(@item)
-      }.should change(@character, :basic_money).by(5)
+      }.should change(@character.reload, :basic_money).by(5)
     end
-    
+
     it 'take item from character' do
-      @character.inventories.should_receive(:take!).with(@inventory, 1)
+      @character.inventories.should_receive(:take).with(@item, 1)
       
       @character.inventories.sell!(@item)
     end
+    
+    describe 'when listed on market' do
+      before do
+        @item.update_attribute(:can_be_sold_on_market, true)
+        
+        @market_item = Factory(:market_item, :character => @character, :item => @item, :amount => 4)
+      end
+
+      it 'should destroy market item if new amount is less than amount listed on market' do
+        lambda{
+          @character.inventories.sell!(@item, 2)
+        }.should change(MarketItem, :count).by(-1)
+      end
+      
+      it 'should not change market item if new amount is equal or greater than listed' do
+        lambda{
+          @character.inventories.sell!(@item)
+        }.should_not change(MarketItem, :count)
+        
+        @character.market_items.find_by_item_id(@item).should == @market_item
+      end
+    end
+    
+    it 'should invalidate exchanges' do
+      
+    end
   end
   
-
   describe '#take!' do
     before do
       @character = Factory(:character)
       @item = Factory(:item)
       
-      @inventory = Factory(:inventory, :character => @character, :item => @item)
+      @character.inventories.give!(@item, 5)
     end
     
     it 'should not give money to character' do
       lambda{
         @character.inventories.take!(@item)
-      }.should_not change(@character, :basic_money).by(5)
+      }.should_not change(@character.reload, :basic_money).by(5)
     end
     
     it 'should save character' do
@@ -175,9 +199,10 @@ describe Character do
 
     describe 'when taking part of available items' do
       it 'should reduce amount if inventory' do
+        @inventory = @character.inventories.find_by_item(@item)
+        
         lambda{
           @character.inventories.take!(@item)
-          @inventory.reload
         }.should change(@inventory, :amount).by(-1)
       end
       
@@ -186,10 +211,6 @@ describe Character do
           @character.inventories.take!(@item)
           @item.reload
         }.should change(@item, :owned).by(-1)
-      end
-      
-      it 'should save inventory' do
-        @character.inventories.sell!(@item).should_not be_changed
       end
     end
     
@@ -202,41 +223,66 @@ describe Character do
       end
       
       it 'should destroy inventory' do
-        @character.inventories.sell!(@item, 5).should be_frozen
+        @character.inventories.sell!(@item, 5)
+        @character.inventories.find_by_item(@item).should be_nil
       end
     end
     
     it 'should unequip sold inventory' do
-      @character.equipment.auto_equip!(@inventory)
+      @character.equipment.auto_equip!(@item)
       
-      @character.equipment.inventories.count(@inventory).should == 5
+      @character.equipment.inventories.count(@item).should == 5
       
       @character.inventories.take!(@item)
       
-      @character.equipment.inventories.count(@inventory).should == 4
+      @character.equipment.inventories.count(@item).should == 4
       
       @character.inventories.take!(@item, 4)
       
-      @character.equipment.inventories.count(@inventory).should == 0
+      @character.equipment.inventories.count(@item).should == 0
     end
     
     it 'should return inventory' do
-      @character.inventories.take!(@item).should be_kind_of(Inventory)
+      @character.inventories.take!(@item).should be_kind_of(Character::Equipment::Inventories::Inventory)
     end
     
     describe 'when character doesn\'t have passed item' do
       before do
-        @inventory.destroy
+        if inventory = @character.inventories.find_by_item(@item)
+          @character.inventories.take!(@item, inventory.amount)
+        end
       end
       
       it 'should not charge money from character' do
         lambda{
           @character.inventories.take!(@item)
-        }.should_not change(@character, :basic_money)
+        }.should_not change(@character.reload, :basic_money)
       end
         
       it 'should return false' do
         @character.inventories.take!(@item).should be_false
+      end
+    end
+    
+    describe 'when listed on market' do
+      before do
+        @item.update_attribute(:can_be_sold_on_market, true)
+        
+        @market_item = Factory(:market_item, :character => @character, :item => @item, :amount => 4)
+      end
+      
+      it 'should destroy market item if new amount is less than amount listed on market' do
+        lambda{
+          @character.inventories.take!(@item, 2)
+        }.should change(MarketItem, :count).by(-1)
+      end
+      
+      it 'should not change market item if new amount is equal or greater than listed' do
+        lambda{
+          @character.inventories.take!(@item)
+        }.should_not change(MarketItem, :count)
+        
+        @character.market_items.find_by_item_id(@item).should == @market_item
       end
     end
   end
@@ -283,7 +329,7 @@ describe Character do
 
     it 'should correctly work when passing inventory' do
       lambda{
-        @character1.inventories.transfer!(@character2, @character1.inventories.first, 2)
+        @character1.inventories.transfer!(@character2, @character1.inventories.first.item, 2)
       }.should_not raise_exception
 
       @character1.inventories.first.amount.should == 3

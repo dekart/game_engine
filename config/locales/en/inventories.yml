@@ -14,6 +14,9 @@ en:
       buttons:
         buy: "Buy"
     create:
+      errors:
+        not_enough_basic_money: "You don't have enough gold to buy a %{name}."
+        not_enough_vip_money: "You don't have enough Gems to buy a %{name}."
       amount: " x %{amount}"
       buttons:
         publish: "Brag About It!"

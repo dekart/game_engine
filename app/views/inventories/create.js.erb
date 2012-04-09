@@ -1,11 +1,11 @@
 <%= render_to_result :shop do |builder| %>
-  <% if @inventory.valid? %>
+  <% if @errors.empty? %>
     <% builder.buttons do %>
-      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @inventory.item),
+      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @item),
             :class => "publish button"
           ) if Setting.b(:stream_dialog_enabled) %>
       
-      <% if @inventory.item.equippable? %> 
+      <% if @item.equippable? %> 
         <%= link_to(button(:equipment), equipment_inventories_path,
           :class => "equipment button"
         ) %>
@@ -17,7 +17,7 @@
        
       <% end %>      
 
-      <%= link_to(inventory_use_button(@inventory), use_inventory_path(@inventory),
+      <%= link_to(inventory_use_button(@inventory), use_inventory_path(@inventory.item),
             :remote => true,
             :method => :post,
             :"data-click-once" => true,
@@ -38,19 +38,19 @@
           <td class="received">
             <h3><%= t(".you_received.title") %></h3>
 
-            <%= payout(:item, item_image(@inventory, :medium), 
-                  :label => (@amount ? @inventory.name + t(".amount", :amount => @amount) : @inventory.name)
+            <%= payout(:item, item_image(@item, :medium), 
+                  :label => (@amount ? @item.name + t(".amount", :amount => @amount) : @item.name)
                 ) %>
           </td>
           <td class="spent">
             <h3><%= t(".you_spent.title") %></h3>
 
             <% if @item.basic_price > 0 %>
-              <%= payout(:basic_money, number_to_currency(@inventory.basic_money)) %>
+              <%= payout(:basic_money, number_to_currency(@purchase_amount * @item.basic_price)) %>
             <% end %>
 
             <% if @item.vip_price > 0 %>
-              <%= payout(:vip_money, number_to_currency(@inventory.vip_money)) %>
+              <%= payout(:vip_money, number_to_currency(@purchase_amount * @item.vip_price)) %>
             <% end %>
           </td>
         </tr>
@@ -60,18 +60,18 @@
     <% builder.on_ready do %>
       $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
-      $(document).trigger('item.purchase', {item_id: <%= @item.id %>, inventory_id: <%= @inventory.id %>});
+      $(document).trigger('item.purchase', {item_id: <%= @item.id %>});
       
       <%= ga_track_event('Items', 'Purchased', "#{@item.name} (#{@item.availability})", @amount) %>
     <% end %>
-  <% elsif !@inventory.requirements.satisfies?(current_character) %>
+  <% elsif !@item.requirements(@purchase_amount).satisfies?(current_character) %>
     <div class="unsatisfied_requirements">
-      <%= unsatisfied_requirement_first(@inventory.requirements) %>
+      <%= unsatisfied_requirement_first(@item.requirements(@purchase_amount)) %>
     </div>
   <% else %>
     <% builder.fail do %>
-      <% @inventory.errors.each do |attr, message| %>
-        <%= message %>
+      <% @errors.each do |code| %>
+        <%= t(".errors.#{code}", :name => @item.name) %>
       <% end %>
     <% end %>
   <% end %>
