@@ -163,18 +163,18 @@ class Character
     def equip_best!(force_unequip = false)
       unequip_all! if force_unequip
 
-      equippables = inventories.items.equippable
+      equippables = inventories.equippable
 
       Character.transaction do
         while free_slots > 0
           equipped = nil
 
           Effects::Base::BASIC_TYPES.each do |effect|
-            candidates = equippables.select{|i| i.effect(effect) != 0}.sort_by{|i| [i.effect(effect), i.effects.metric]}.reverse
-
-            candidates.each do |item|
-              if auto_equip(item, 1)
-                equipped = item
+            candidates = equippables.select{|i| i.equippable? && i.effect(effect) != 0}.sort_by{|i| [i.effect(effect), i.effects.metric]}.reverse
+            
+            candidates.each do |inventory|
+              if auto_equip(inventory.item, 1)
+                equipped = inventory
                 
                 break
               end
@@ -184,8 +184,8 @@ class Character
           break if equipped == nil
         end
 
-        equippables.each do |item|
-          item.save if item.changed?
+        equippables.each do |inventory|
+          inventory.item.save if inventory.item.changed?
         end
 
         save
