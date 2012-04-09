@@ -208,7 +208,7 @@ this.InviteDialog = class
     stats.find('.select_all').toggle(selectable_users.length > 0 && selected_users.length != selectable_users.length)
 
   updateSendBar: ()->
-    all_users = @dialog_el.find('.user:not(.hidden, .sent)')
+    all_users = @dialog_el.find('.user:not(.hidden)')
     selected_users  = all_users.filter('.selected')
     sent_users      = all_users.filter('.sent')
 

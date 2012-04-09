@@ -91,7 +91,11 @@ GameEngine::Application.routes.draw do
       
     resources :users
 
-    resources :vip_money_operations, :only => :index
+    resources :vip_money_operations, :only => :index do
+      member do
+        get :report
+      end
+    end
 
     resources :item_collections do
       get 'add_item', :on => :collection

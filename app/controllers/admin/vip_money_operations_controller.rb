@@ -9,6 +9,12 @@ class Admin::VipMoneyOperationsController < Admin::BaseController
     @operations = scope.latest.paginate(:page => params[:page], :per_page => 100)
   end
 
+  def report
+    @character = Character.find(params[:id])
+
+    @operations = VipMoneyOperation.where(:character_id => @character.id).order("id desc")
+  end
+
   protected
 
   def operation_type

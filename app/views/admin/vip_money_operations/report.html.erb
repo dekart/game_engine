@@ -1,0 +1,39 @@
+<%= admin_title(t(".title")) %>
+
+<div class="data_filter clearfix">
+  <strong><%= t('.player') %></strong>
+  <%= link_to(character_name(@character), admin_character_url(@character.key)) %>
+</div>
+
+<table class="data">
+  <tr>
+    <th>#</th>
+    <th><%= VipMoneyOperation.human_attribute_name(:created_at) %></th>
+    <th colspan="2"><%= VipMoneyOperation.human_attribute_name(:amount) %></th>
+    <th><%= VipMoneyOperation.human_attribute_name(:reference) %></th>
+  </tr>
+
+  <% @operations.each do |operation| %>
+    <tr>
+      <td><%= operation.id %></td>
+      <td><%= l(operation.created_at, :format => :long) %></td>
+
+      <% if operation.is_a?(VipMoneyDeposit) %>
+        <td class="amount deposit">+ <%= operation.amount %></td>
+        <td class="amount withdrawal"></td>
+      <% else %>
+        <td class="amount deposit"></td>
+        <td class="amount withdrawal">- <%= operation.amount %></td>
+      <% end %>
+
+      <td class="reference"><%= admin_statistics_reference(operation.reference) %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th colspan="2"><%= t('.total') %></th>
+    <th>+ <%= @operations.sum{|o| o.is_a?(VipMoneyDeposit) ? o.amount : 0 } %></th>
+    <th>- <%= @operations.sum{|o| o.is_a?(VipMoneyWithdrawal) ? o.amount : 0 } %></th>
+    <th><%= @operations.sum{|o| o.is_a?(VipMoneyDeposit) ? o.amount : -o.amount } %></th>
+  </tr>
+</table>

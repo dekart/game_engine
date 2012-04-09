@@ -61,7 +61,7 @@
       $('#inventory_fight_attributes').html('<%= escape_javascript(render("characters/fight_attributes")) %>');
 
       $(document).trigger('item.purchase', {item_id: <%= @item.id %>});
-      
+
       <%= ga_track_event('Items', 'Purchased', "#{@item.name} (#{@item.availability})", @amount) %>
     <% end %>
   <% elsif !@item.requirements(@purchase_amount).satisfies?(current_character) %>
@@ -74,5 +74,9 @@
         <%= t(".errors.#{code}", :name => @item.name) %>
       <% end %>
     <% end %>
+  <% end %>
+
+  <% dom_ready do %>
+    Shop.updateItem('#<%= dom_id(@item) %>', <%= render("items/item", :item => @item).to_json.html_safe %>);
   <% end %>
 <% end %>

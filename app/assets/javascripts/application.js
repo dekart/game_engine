@@ -760,8 +760,8 @@ $(function(){
   
   $(document).trigger('tooltips.setup');
        
-  $('a[data-click-once=true]').on('click', function(){
-    $(this).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
+  $('#content').on('click', 'a[data-click-once=true]', function(e){
+    $(e.currentTarget).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
   });
 
   $(document).bind('facebook.ready', function(){
@@ -793,10 +793,11 @@ $(function(){
 
   Spinner.setup();
 
-  $('a.help').live('click', function(e){
+  $('#content').on('click', 'a.help', function(e){
     e.preventDefault();
+    e.stopPropagation();
     
-    $.dialog({ajax: $(this).attr('href')});
+    $.dialog({ajax: $(e.currentTarget).attr('href')});
   });
 
   $(document).bind('dialog.close_complete application.ready', function(){
@@ -824,7 +825,7 @@ $(function(){
   });
   
   // throw error if it in ajax javascript response
-  $("[data-remote]").live('ajax:error', function(event, request, status, error){
+  $(document).on('ajax:error', function(event, request, status, error){
     throw error;
   });
 });

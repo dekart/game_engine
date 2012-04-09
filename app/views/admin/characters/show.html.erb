@@ -213,6 +213,9 @@
                 (<%= time_ago_in_words(s.last_payment_at) %>)
               <% end %>
             </td>
+            <td>
+              <%= link_to(t('.payments.history'), report_admin_vip_money_operation_path(@character)) %>
+            </td>
           </tr>
         </table>
       <% end %>
