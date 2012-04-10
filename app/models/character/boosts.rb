@@ -5,7 +5,15 @@ class Character
     end
 
     def inventories
-      @character.inventories.joins(:item).where("items.boost_type != ''")
+      @character.inventories.boosts
+    end
+    
+    def items
+      @character.inventories.items.boosts
+    end
+    
+    def by_item(item)
+      @character.inventories.find_by_item(item) if item.boost?
     end
 
     def for(type, destination)
@@ -15,16 +23,16 @@ class Character
     end
     
     def by_type(boost_type)
-      @character.inventories.joins(:item).where('items.boost_type' => boost_type.to_s)
+      @character.inventories.by_boost_type(boost_type)
     end
     
-    def active_for(type, destination)
+    def active_for(type, destination) #returns inventory
       type = type.to_s
       destination = destination.to_s
       
       boost_id = @character.active_boosts[type][destination] if @character.active_boosts[type]
       
-      @character.inventories.find_by_id(boost_id) if boost_id
+      @character.inventories.find_by_item_id(boost_id) if boost_id
     end
 
     def available_for_purchase(type, destination)

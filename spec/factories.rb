@@ -96,15 +96,9 @@ Factory.define :item do |t|
   t.placements [:left_hand, :additional]
 end
 
-Factory.define :inventory do |t|
-  t.association :character
-  t.association :item, :effects => [{:type => :attack, :value => 1}]
-  
-  t.amount 5
-end
-
 Factory.define :market_item do |t|
-  t.association :inventory
+  t.association :item
+  t.association :character
   
   t.amount 1
 end
@@ -340,14 +334,14 @@ Factory.define :character_contest_group do |t|
   t.association :character
 end
 
-Factory.define :character_with_exchangeable_inventory, :parent => :character do |t|
+Factory.define :character_with_exchangeable_item, :parent => :character do |t|
   t.after_create do |c|
-    Factory(:inventory, :character => c, :amount => 1, :item => Factory(:item, :exchangeable => true))
+    c.inventories.give!(Factory(:item, :exchangeable => true))
   end
 end
 
 Factory.define :exchange do |t|
-  t.association :character, :factory => :character_with_exchangeable_inventory
+  t.association :character, :factory => :character_with_exchangeable_item
   t.item {|e| e.character.items.first }
   
   t.text 'What I want to get'
@@ -355,6 +349,6 @@ end
 
 Factory.define :exchange_offer do |t|
   t.association :exchange
-  t.association :character, :factory => :character_with_exchangeable_inventory
+  t.association :character, :factory => :character_with_exchangeable_item
   t.item {|e| e.character.items.first }
 end

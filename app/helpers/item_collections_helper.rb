@@ -1,7 +1,7 @@
 module ItemCollectionsHelper
   def collection_items(collection)
     collection.items.each do |item|
-      inventory = current_character.inventories.detect{|inventory| inventory.item_id == item.id }
+      inventory = current_character.inventories.find_by_item(item)
 
       yield(item, inventory)
     end

@@ -3,16 +3,18 @@ class InventoriesController < ApplicationController
 
   def create
     @item = Item.purchaseable_for(current_character).find(params[:item_id])
-
-    @inventory = current_character.inventories.buy!(@item, params[:amount].to_i)
-
-    @amount = params[:amount].to_i * @item.package_size
+    @purchase_amount = params[:amount].to_i
+    @amount = @purchase_amount * @item.package_size
+    
+    @result = current_character.inventories.buy!(@item, @purchase_amount)
   end
 
   def destroy
     @amount = params[:amount].to_i
-
     @item = Item.find(params[:id])
+    
+    available_amount = current_character.inventories.count(@item)
+    @amount = available_amount > @amount ? @amount : available_amount
 
     @inventory = current_character.inventories.sell!(@item, @amount)
   end
@@ -34,8 +36,8 @@ class InventoriesController < ApplicationController
   end
 
   def use
-    if @inventory = current_character.inventories.find_by_id(params[:id])
-      @result = @inventory.use!
+    if @inventory = current_character.inventories.find_by_item_id(params[:id])
+      @result = @inventory.use!(current_character)
     end
 
     respond_to do |format|
@@ -48,23 +50,20 @@ class InventoriesController < ApplicationController
 
   def equip
     if params[:id]
-      @inventory = current_character.inventories.find(params[:id])
-      equipped = @inventory.equipped
+      @inventory = current_character.inventories.find_by_item_id(params[:id])
 
-      current_character.equipment.equip!(@inventory, params[:placement])
+      current_character.equipment.equip!(@inventory.item, params[:placement])
     else
-      placements = current_character.placements.clone
       current_character.equipment.equip_best!
     end
   end
 
   def unequip
     if params[:id]
-      @inventory = current_character.inventories.find(params[:id])
+      @inventory = current_character.inventories.find_by_item_id(params[:id])
 
-      current_character.equipment.unequip!(@inventory, params[:placement])
+      current_character.equipment.unequip!(@inventory.item, params[:placement])
     else
-      placements = current_character.placements.clone
       current_character.equipment.unequip_all!
     end
 
@@ -72,11 +71,11 @@ class InventoriesController < ApplicationController
   end
   
   def move
-    @inventory = current_character.inventories.find(params[:id])
+    @inventory = current_character.inventories.find_by_item_id(params[:id])
     
     # TODO: refactor to one action from equipment
-    current_character.equipment.unequip!(@inventory, params[:from_placement])
-    current_character.equipment.equip!(@inventory, params[:to_placement])
+    current_character.equipment.unequip!(@inventory.item, params[:from_placement])
+    current_character.equipment.equip!(@inventory.item, params[:to_placement])
     
     render :action => "equip"
   end
@@ -90,21 +89,16 @@ class InventoriesController < ApplicationController
       if @character == current_character
         redirect_to root_url
       elsif request.get?
-        @inventories = current_character.inventories.find_all_by_item_id(data[:items])
+        @inventories = current_character.inventories.by_item_ids(data[:items]) # check string/int
       else
-        @inventories = current_character.inventories.all(
-          :conditions => {
-            :item_id => data[:items],
-            :id => params[:inventory].keys
-          }
-        )
+        @inventories = current_character.inventories.by_item_ids(data[:items])
 
-        Inventory.transaction do
+        Character::Equipment.transaction do
           given = []
           
           @inventories.each do |inventory|
-            if amount = params[:inventory][inventory.id.to_s].to_i and amount > 0
-              current_character.inventories.transfer!(@character, inventory, amount)
+            if amount = params[:inventory][inventory.item_id.to_s].to_i and amount > 0
+              current_character.inventories.transfer!(@character, inventory.item, amount)
               
               given << [inventory.item_id, amount]
             end
@@ -115,7 +109,6 @@ class InventoriesController < ApplicationController
 
         flash[:success] = t('inventories.give.messages.success')
 
-        # TODO Refactor this to use AJAX instead of redirects
         redirect_to root_url
       end
     else
@@ -127,9 +120,10 @@ class InventoriesController < ApplicationController
   
   def toggle_boost
     @destination = params[:destination]
-    @boost = current_character.boosts.inventories.find(params[:id])
     
-    current_character.toggle_boost!(@boost, @destination)
+    if @boost = current_character.boosts.by_item(Item.find(params[:id]))
+      current_character.toggle_boost!(@boost.item, @destination)
+    end
   end
 
   protected

@@ -18,16 +18,16 @@ describe InventoriesController do
   describe "when using inventory" do
     before :each do
       @usage_result = Payouts::Collection.new
-      @inventory = mock_model(Inventory, :use! => @usage_result)
+      @inventory = mock(Character::Equipment::Inventories::Inventory, :use! => @usage_result)
 
-      @character_inventories = mock(:inventories, :find_by_id => @inventory)
+      @character_inventories = mock(:inventories, :find_by_item_id => @inventory)
       @character = mock_model(Character, :inventories => @character_inventories)
 
       controller.stub!(:current_character).and_return(@character)
     end
 
     it "should fetch inventory from current character by ID" do
-      @character_inventories.should_receive(:find_by_id).with("123").and_return(@inventory)
+      @character_inventories.should_receive(:find_by_item_id).with("123").and_return(@inventory)
 
       post :use, :id => 123, :format => :js
     end

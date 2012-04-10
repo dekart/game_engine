@@ -80,12 +80,12 @@
   <% end %>
 
   <% ItemGroup.find_each do |group| %>
-    <% collection(@character.inventories.by_item_group(group), :empty_set => false) do |items| %>
+    <% collection(@character.inventories.by_item_group(group), :empty_set => false) do |inventories| %>
       <div class="item_group">
         <h2><%= group.name %></h2>
 
         <div class="items clearfix">
-          <% items.each do |inventory| %>
+          <% inventories.each do |inventory| %>
             <div class="item">
               <%= item_image(inventory.item, :small, :tooltip => true, :tooltip_on_click => true) %>
 

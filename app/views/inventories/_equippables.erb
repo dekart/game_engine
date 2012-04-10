@@ -12,7 +12,9 @@
         <div class="item_group" id="<%= dom_id(item_group, :inventories) %>">
           <ul class="carousel-container">
             <% inventories.each do |inventory| %>
-              <li class="inventory" id="<%= dom_id(inventory, :equipment) %>" data-placements="<%= inventory.placements.join(',') %>" data-equip="<%= equip_inventory_path(inventory) %>">
+              <li class="inventory" id="<%= dom_id(inventory.item, :equipment) %>" 
+                  data-placements="<%= inventory.placements.join(',') %>" 
+                  data-equip="<%= equip_inventory_path(inventory.item) %>">
                 <%= inventory_item_image(inventory, :small, 
                       :count => inventory.amount_available_for_equipment, 
                       :tooltip => {

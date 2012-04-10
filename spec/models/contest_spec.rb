@@ -300,9 +300,9 @@ describe Contest do
       
       @contest.finish!
       
-      @character.notifications.first.class.should == Notification::ContestWinner
-      @character2.notifications.first.class.should == Notification::ContestWinner
-      @character3.notifications.first.class.should == Notification::ContestWinner
+      @character.notifications.list.first.class.should == Notification::ContestWinner
+      @character2.notifications.list.first.class.should == Notification::ContestWinner
+      @character3.notifications.list.first.class.should == Notification::ContestWinner
     end
     
     it 'should return description_when_finished' do

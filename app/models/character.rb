@@ -8,8 +8,7 @@ class Character < ActiveRecord::Base
   include Character::Fights
   include Character::AppRequests
   include Character::Relations
-  include Character::Assignments
-  include Character::Inventories
+  include Character::Assignments  
   include Character::Properties
   include Character::Notifications
   include Character::Missions
@@ -268,12 +267,20 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def market_items_count(item)
+    market_items.where(:item_id => item).count
+  end
+
   def boosts
     @boosts ||= Character::Boosts.new(self)
   end
 
   def active_boosts
     self[:active_boosts] ||= {}
+  end
+  
+  def active_boost?(boost, destination)
+    active_boosts[boost.boost_type] && active_boosts[boost.boost_type][destination] == boost.id
   end
   
   def activate_boost(boost, destination)

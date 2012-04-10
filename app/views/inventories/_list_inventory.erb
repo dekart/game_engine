@@ -1,4 +1,4 @@
-<div class="inventory" id="<%= dom_id(inventory) %>">
+<div class="inventory" id="<%= dom_id(inventory.item) %>">
   <div class="picture"><%= inventory_item_image(inventory, :medium, :count => true) %></div>
 
   <div class="info">
@@ -35,7 +35,7 @@
       <% end %>
     <% end %>
 
-    <%= link_to(inventory_use_button(inventory), use_inventory_path(inventory),
+    <%= link_to(inventory_use_button(inventory), use_inventory_path(inventory.item),
           :remote => true,
           :method => :post,
           :class => "use button",
@@ -43,8 +43,8 @@
         ) if inventory.usable? %>
 
     <% if inventory.can_be_sold_on_market? and Setting.b(:market_enabled) and !current_character.restrict_market? %>
-      <% if inventory.market_items_count == 0 %>
-        <%= link_to(button(:sell_on_market), new_market_item_path(:inventory_id => inventory),
+      <% if current_character.market_items_count(inventory.item) == 0 %>
+        <%= link_to(button(:sell_on_market), new_market_item_path(:item_id => inventory.item_id),
               :remote => true,
               :method => :get,
               :class => "market button"
@@ -60,7 +60,7 @@
               :class => "exchange button"
             ) %>
       <% else %>
-        <%= link_to(button(:exchange), new_exchange_path(:inventory_id => inventory),
+        <%= link_to(button(:exchange), new_exchange_path(:item_id => inventory.item_id),
               :remote => true,
               :method => :get,
               :class => "exchange button"

@@ -3,12 +3,12 @@
 <% end%>
 
 <% controls = capture do %>
-  <%= link_to(inventory_use_button(app_request.inventory), use_inventory_path(app_request.inventory),
+  <%= link_to(inventory_use_button(app_request.item), use_inventory_path(app_request.item),
         :remote => true,
         :method => :post,
         :"data-click-once" => true,
         :class => "use button"
-      ) if app_request.inventory.try(:usable?) %>
+      ) if app_request.item.try(:usable?) %>
     
   <% if app_request.can_send_back? %>
     <%= gift_send_button(app_request.item, 

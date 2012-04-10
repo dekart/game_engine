@@ -127,8 +127,8 @@ describe Exchange do
     describe '#invalidated' do
       it 'should invalidate exchange if inventory was destroyed' do
         lambda {
-          @exchange.inventory.destroy
-        }.should change{@exchange.reload.state}.from('created').to('invalid')
+          @exchange.character.inventories.take!(@exchange.item)
+        }.should change{@exchange.reload.state}.from('created').to('failed')
       end
       
       it 'should invalidate exchange if inventory amount is not enough' do
@@ -137,7 +137,7 @@ describe Exchange do
         
         lambda {
           @exchange.character.inventories.take!(@exchange.item)
-        }.should change{@exchange.reload.state}.from('created').to('invalid')
+        }.should change{@exchange.reload.state}.from('created').to('failed')
       end
     end
   end

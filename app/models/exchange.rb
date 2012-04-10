@@ -39,7 +39,7 @@ class Exchange < ActiveRecord::Base
   end
   
   def inventory
-    character.inventories.find_by_item_id(item) if item
+    character.inventories.find_by_item(item) if item
   end
   
   def payout
@@ -53,17 +53,17 @@ class Exchange < ActiveRecord::Base
   end
   
   class << self
-    def invalidate_created_by_inventory!(inventory)
-      exchange = with_state(:created).find_by_item_id(inventory.item)
-    
-      if exchange && ((exchange.amount > inventory.amount) || inventory.destroyed?)
+    def invalidate_created_by_character_for_item(character, item)
+      exchange = character.exchanges.with_state(:created).find_by_item_id(item)
+      
+      if exchange && (exchange.amount > character.inventories.count(item))
         exchange.invalidate!
       end
     end
   end
   
   protected
-    
+  
     def validate_item_exchangeable
       errors.add(:item, :not_exchangeable) if item && !item.exchangeable
     end
