@@ -133,8 +133,14 @@ class Character
         end
         
         def buy!(item, amount = 1)
+          errors = []
+          errors.push(:not_enough_basic_money) if character.basic_money < item.basic_price * amount
+          errors.push(:not_enough_vip_money)   if character.vip_money < item.vip_price * amount
+          
+          return errors unless errors.empty?
+          
           effective_amount = amount * item.package_size
-    
+          
           inventory = give(item, effective_amount)
           charge_character(item, amount)
           

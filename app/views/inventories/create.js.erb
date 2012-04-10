@@ -1,5 +1,5 @@
 <%= render_to_result :shop do |builder| %>
-  <% if @errors.empty? %>
+  <% if @result.is_a?(Character::Equipment::Inventories::Inventory) %>
     <% builder.buttons do %>
       <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @item),
             :class => "publish button"
@@ -17,12 +17,12 @@
        
       <% end %>      
 
-      <%= link_to(inventory_use_button(@inventory), use_inventory_path(@inventory.item),
+      <%= link_to(inventory_use_button(@result), use_inventory_path(@result.item),
             :remote => true,
             :method => :post,
             :"data-click-once" => true,
             :class => "use button"
-          ) if @inventory.usable? %>
+          ) if @result.usable? %>
     <% end %>
 
     <% builder.success do %>
@@ -70,7 +70,7 @@
     </div>
   <% else %>
     <% builder.fail do %>
-      <% @errors.each do |code| %>
+      <% @result.each do |code| %>
         <%= t(".errors.#{code}", :name => @item.name) %>
       <% end %>
     <% end %>

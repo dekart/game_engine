@@ -4,12 +4,9 @@ class InventoriesController < ApplicationController
   def create
     @item = Item.purchaseable_for(current_character).find(params[:item_id])
     @purchase_amount = params[:amount].to_i
+    @amount = @purchase_amount * @item.package_size
     
-    if check_money(@item, @purchase_amount)
-      @inventory = current_character.inventories.buy!(@item, @purchase_amount)
-  
-      @amount = @purchase_amount * @item.package_size
-    end
+    @result = current_character.inventories.buy!(@item, @purchase_amount)
   end
 
   def destroy
@@ -130,15 +127,6 @@ class InventoriesController < ApplicationController
   end
 
   protected
-
-  def check_money(item, amount)
-    @errors = []
-    
-    @errors.push(:not_enough_basic_money) if current_character.basic_money < item.basic_price * amount
-    @errors.push(:not_enough_vip_money)   if current_character.vip_money < item.vip_price * amount
-    
-    @errors.empty?
-  end
 
   def check_auto_equipment
     redirect_to inventories_url if Setting.b(:character_auto_equipment)
