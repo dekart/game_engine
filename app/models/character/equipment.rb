@@ -27,10 +27,9 @@ class Character
     end
 
     def inventories
-      inventories = self[:inventories]
-      inventories.character ||= character
-
-      inventories
+      self[:inventories].tap do |inventories|
+        inventories.character ||= character
+      end
     end
     
     delegate(:items, :equipped_items, :to => :inventories)

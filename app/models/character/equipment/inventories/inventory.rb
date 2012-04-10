@@ -41,12 +41,18 @@ class Character
           equipped > 0
         end
         
+        def usable?
+          item.usable? && amount > 0
+        end
+        
         def use!(character)
           return false unless usable?
       
           Character::Equipment.transaction do
             payouts.apply(character, :use, item).tap do
               character.inventories.take!(item)
+              
+              self.amount = character.inventories.count(item)
               
               character.save
             end

@@ -19,7 +19,7 @@ class Item < ActiveRecord::Base
     :as => :target, 
     :class_name => 'AppRequest::Base'
 
-  module Scopes
+  class << self
     def available
       where(
         [%{
@@ -58,7 +58,6 @@ class Item < ActiveRecord::Base
       where(type ? { :boost_type => type } : ["boost_type != ''"])
     end
   end
-  extend Scopes
 
   scope :equippable,   where(:equippable => true)
   scope :usable,       where("items.payouts != ''")

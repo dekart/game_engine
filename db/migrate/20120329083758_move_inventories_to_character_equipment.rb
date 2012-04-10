@@ -32,7 +32,7 @@ class MoveInventoriesToCharacterEquipment < ActiveRecord::Migration
           
           # item ids in placements
           equipment.placements.each do |key, values|
-            equipment.placements[key] = values.map{|id| Inventory.find_by_id(id).try(:item_id) }.compact
+            equipment.placements[key] = values.map{|id| character.old_inventories.detect{|i| i.id == id }.try(:item_id) }.compact
           end
           
           equipment.save!

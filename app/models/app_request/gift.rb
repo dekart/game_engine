@@ -77,7 +77,6 @@ class AppRequest::Gift < AppRequest::Base
     super
     
     receiver.inventories.give!(item)
-    @item = item
 
     self.class.store_accept_time(sender, receiver)
 
