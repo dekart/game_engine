@@ -324,14 +324,14 @@ describe Fight do
       @victim = Factory(:character)
       @fight = Fight.new(:attacker => @attacker, :victim => @victim)
       
-      fight_attack_item_boost = Factory(:item, 
+      @fight_attack_item_boost = Factory(:item, 
         :boost_type => 'fight',
         :effects => [
           {:type => :attack, :value => 1}, 
           {:type => :defence, :value => 0}
         ]
       )
-      fight_defence_item_boost = Factory(:item, 
+      @fight_defence_item_boost = Factory(:item, 
         :boost_type => 'fight',
         :effects => [
           {:type => :attack, :value => 0}, 
@@ -339,24 +339,24 @@ describe Fight do
         ]
       )
       
-      @fight_attack_boost = @attacker.inventories.give!(fight_attack_item_boost)
-      @fight_defence_boost = @victim.inventories.give!(fight_defence_item_boost)
+      @attacker.inventories.give!(@fight_attack_item_boost)
+      @victim.inventories.give!(@fight_defence_item_boost)
     end
     
     it 'should increase attack points' do
         lambda {
-          @attacker.activate_boost!(@fight_attack_boost, 'attack')
+          @attacker.activate_boost!(@fight_attack_item_boost, 'attack')
         }.should change(@attacker, :attack_points).by(1)
       end
       
       it 'should increase defence points' do
         lambda {
-          @victim.activate_boost!(@fight_defence_boost, 'defence')
+          @victim.activate_boost!(@fight_defence_item_boost, 'defence')
         }.should change(@victim, :defence_points).by(1)
       end
     
     it 'should take fight attack boost if it is active' do
-      @attacker.activate_boost!(@fight_attack_boost, 'attack')
+      @attacker.activate_boost!(@fight_attack_item_boost, 'attack')
       
       lambda {
         @fight.save!
@@ -370,7 +370,7 @@ describe Fight do
     end
     
     it 'should take fight defence boost if it is active' do
-      @victim.activate_boost!(@fight_defence_boost, 'defence')
+      @victim.activate_boost!(@fight_defence_item_boost, 'defence')
       
       lambda {
         @fight.save!

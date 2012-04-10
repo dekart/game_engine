@@ -14,9 +14,9 @@ class ExchangesController < ApplicationController
   end
   
   def new
-    @inventory = current_character.inventories.find(params[:inventory_id])
+    @item = Item.find(params[:item_id])
     
-    @exchange = Exchange.new(:item_id => @inventory.item.id)
+    @exchange = current_character.exchanges.new(:item_id => @item.id)
   end
   
   def create
@@ -30,6 +30,6 @@ class ExchangesController < ApplicationController
     
     @exchange.destroy
     
-    redirect_to exchanges_path(:canvas => true)
+    redirect_to exchanges_path
   end
 end

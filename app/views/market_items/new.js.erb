@@ -2,16 +2,16 @@
   <h2><%= t(".title") %></h2>
 
   <div class="item clearfix">
-    <div class="picture"><%= item_image(@item, :small) %></div>
-    <div class="name"><%= @item.name %></div>
+    <div class="picture"><%= item_image(@market_item, :small) %></div>
+    <div class="name"><%= @market_item.name %></div>
   </div>
 
-  <%= form_for(@item, :remote => true) do |form| %>
-    <%= form.hidden_field :inventory_id %>
+  <%= form_for(@market_item, :remote => true) do |form| %>
+    <%= form.hidden_field :item_id %>
 
     <%= form.text_field(:amount,
           :size   => 3,
-          :label  => t(".labels.amount", :maximum => @item.inventory.amount)
+          :label  => t(".labels.amount", :maximum => current_character.inventories.count(@item))
         ) %>
 
     <h3><%= MarketItem.human_attribute_name("price") %></h3>

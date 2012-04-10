@@ -6,7 +6,7 @@
       <% character.equipment.inventories_by_placement(placement).each do |inventory| %>
         <% inventory_placement_tag(inventory, placement) do %>
           <%= link_to(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
-                unequip_inventory_path(inventory, :placement => placement),
+                unequip_inventory_path(inventory.item, :placement => placement),
                 :remote => true,
                 :method => :post,
                 :"data-click-once" => true,
@@ -14,7 +14,7 @@
                 :title => t(".remove")
               ) if character == current_character %>
 
-          <%= item_image(inventory, Character::Equipment::IMAGE_SIZES[placement], :tooltip => true) -%>
+          <%= item_image(inventory.item, Character::Equipment::IMAGE_SIZES[placement], :tooltip => true) -%>
         <% end %>
       <% end %>
     </div>
@@ -32,7 +32,7 @@
         <%= inventory_item_image(inventory, Character::Equipment::IMAGE_SIZES[:additional], :tooltip => true, :count => count) -%>
 
         <%= link_to(image_tag("1px.gif", :width => 16, :height => 16, :alt => t(".remove")),
-              unequip_inventory_path(inventory, :placement => :additional),
+              unequip_inventory_path(inventory.item, :placement => :additional),
               :remote => true,
               :method => :post,
               :"data-click-once" => true,

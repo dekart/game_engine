@@ -10,7 +10,8 @@ class Character
 
         after_validation :build_equipment, :on => :create
 
-        delegate(:placements, :to => :equipment)
+        delegate(:placements, :inventories, :to => :equipment)
+        delegate(:items, :equipped_items, :to => :inventories)
 
       end
     end

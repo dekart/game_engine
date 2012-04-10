@@ -20,7 +20,7 @@ describe ExchangeOffer do
       @exchange_offer = Factory.build(:exchange_offer)
     end
     
-    %w{exchange_id item_id character_id amount}.each do |attribute|
+    %w{exchange_id item_id amount character_id}.each do |attribute|
       it "should validate presence of #{attribute}" do
         @exchange_offer.should validate_presence_of(attribute)
       end
@@ -63,8 +63,8 @@ describe ExchangeOffer do
     
     it 'should create notification to exchanger' do
       @exchange_offer.save
-      
-      notification = @exchange_offer.exchange.character.notifications.first
+
+      notification = @exchange_offer.exchange.character.notifications.list.first
       
       notification.class.should == Notification::ExchangeOfferCreated
       notification.exchange_offer.should == @exchange_offer
@@ -121,8 +121,7 @@ describe ExchangeOffer do
       
       it 'should send notification' do
         @exchange_offer.accept!
-        
-        @exchange_offer.character.notifications.first.class.should == Notification::ExchangeOfferAccepted
+        @exchange_offer.character.notifications.list.first.class.should == Notification::ExchangeOfferAccepted
       end
       
       it 'should make items transfer' do
@@ -141,9 +140,9 @@ describe ExchangeOffer do
         
         @exchange_offer.accept!
         
-        @exchange_offer.character.inventories.find_by_item_id(@exchange.item).amount.should == 3
+        @exchange_offer.character.inventories.find_by_item(@exchange.item).amount.should == 3
         
-        @exchange.character.inventories.find_by_item_id(@exchange_offer.item).amount.should == 2
+        @exchange.character.inventories.find_by_item(@exchange_offer.item).amount.should == 2
       end
       
       it 'should not transact if exchange creator doesnt have item in inventory' do
@@ -176,7 +175,7 @@ describe ExchangeOffer do
     
     it 'should destroy exchange offer if inventory destroyed and offer is not accepted' do
       lambda {
-        @exchange_offer.inventory.destroy
+        @exchange_offer.character.inventories.take!(@exchange_offer.item)
       }.should change(ExchangeOffer, :count).by(-1)
     end
     

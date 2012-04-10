@@ -23,7 +23,7 @@ module Requirements
     end
 
     def missing_amount(character)
-      if inventory = character.inventories.find_by_item_id(item.id)
+      if inventory = character.inventories.find_by_item(item)
         result = amount - inventory.amount
 
         result > 0 ? result : 0

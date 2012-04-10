@@ -2,9 +2,9 @@
 
 <%= render("inventories/buttons", :current => :market) %>
 
-<% collection(@items) do %>
+<% collection(@market_items) do %>
   <table id="market_item_list">
-    <% @items.each do |item| %>
+    <% @market_items.each do |item| %>
       <tr class="market_item" id="<%= dom_id(item) %>">
         <td class="picture"><%= item_image(item, :small) %></td>
         <td class="info">
@@ -53,5 +53,5 @@
     <% end %>
   </table>
 
-  <%= will_paginate @items %>
+  <%= will_paginate @market_items %>
 <% end %>

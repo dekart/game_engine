@@ -3,12 +3,12 @@
     <div class="name"><%= inventory.name %></div>
     <div class="image"><%= inventory_item_image(inventory, :small, :tooltip => true, :count => inventory.amount) %></div>
     <div class="controls">
-      <%= link_to(inventory_use_button(inventory), use_inventory_path(inventory),
+      <%= link_to(inventory_use_button(inventory), use_inventory_path(inventory.item),
             :remote => true,
             :method => :post,
             :"data-click-once" => true,
             :class => "use button"
-          ) %>   
+          ) %>
     </div>
   </div>
 <% end %> 

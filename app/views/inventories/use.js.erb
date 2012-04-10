@@ -9,7 +9,7 @@
     <% end %>
   
     <% builder.buttons do %>
-      <%= link_to(inventory_use_again_button(@inventory), use_inventory_path(@inventory),
+      <%= link_to(inventory_use_again_button(@inventory), use_inventory_path(@inventory.item),
             :remote => true,
             :method => :post,
             :"data-click-once" => true,
@@ -29,15 +29,15 @@
 
           <%= payout_list(@inventory, @result, :action => :remove) %>
 
-          <%= payout(:item, item_image(@inventory, :icon, :tooltip => true), :label => @inventory.name) %>
+          <%= payout(:item, item_image(@inventory.item, :icon, :tooltip => true), :label => @inventory.name) %>
         </td>
       </tr>
     </table>
 
     <% builder.on_ready do %>
       $(document).trigger('used.items', {
-        inventory_id: '<%= dom_id(@inventory) %>',
-        amount: <%= @inventory.frozen? ? 0 : @inventory.amount %>
+        inventory_id: '<%= dom_id(@inventory.item) %>',
+        amount: <%= @inventory.amount %>
       });
 
       <%= ga_track_event('Items', 'Used', "#{ @inventory.name } (#{ @inventory.item.availability })", current_character.level) %>

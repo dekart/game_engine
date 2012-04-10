@@ -10,11 +10,9 @@ describe Character::Equipment do
           {:type => :defence, :value => 2}
         ]
       )
-      @inventory  = Factory(:inventory, :item => @item, :character => @character)
-      
-      @character.equipment.auto_equip!(@inventory)
-      
-      @character.equipment.stub!(:inventories).and_return([@inventory])
+
+      @character.inventories.give!(@item, 1)
+      @character.equipment.auto_equip!(@item)
     end
     
     it 'should read cached values from Rails cache' do
@@ -30,7 +28,7 @@ describe Character::Equipment do
       
       it 'should collect all effects from equipped inventories' do
         Effects::Base::BASIC_TYPES.each do |attribute|
-          @inventory.should_receive(:effect).with(attribute).and_return(1)
+          @item.should_receive(:effect).with(attribute).and_return(1)
         end
         
         @character.equipment.effect(:attack)
@@ -38,7 +36,7 @@ describe Character::Equipment do
       
       it 'should not re-collect effects' do
         Effects::Base::BASIC_TYPES.each do |effect|
-          @inventory.should_receive(:effect).with(effect).once
+          @item.should_receive(:effect).with(effect).once
         end
         
         @character.equipment.effect(:attack)
@@ -54,21 +52,21 @@ describe Character::Equipment do
       it 'should increase hp restore rate' do
         lambda {
           @item.update_attributes!(:effects => [{:type => :hp_restore_rate, :value => 10}])
-          @character.equipment.auto_equip!(@inventory)
+          @character.equipment.auto_equip!(@item)
         }.should change(@character, :health_restore_period).from(60).to(54)
       end
       
       it 'should increase ep restore rate' do
         lambda {
           @item.update_attributes!(:effects => [{:type => :ep_restore_rate, :value => 10}])
-          @character.equipment.auto_equip!(@inventory)
+          @character.equipment.auto_equip!(@item)
         }.should change(@character, :energy_restore_period).from(120).to(108)
       end
       
       it 'should increase sp restore rate' do
         lambda {
           @item.update_attributes!(:effects => [{:type => :sp_restore_rate, :value => 10}])
-          @character.equipment.auto_equip!(@inventory)
+          @character.equipment.auto_equip!(@item)
         }.should change(@character, :stamina_restore_period).from(180).to(162)
       end
     end
@@ -79,39 +77,29 @@ describe Character::Equipment do
   describe '#inventories' do
     before do
       @character = Factory(:character)
-      @inventory1 = Factory(:inventory, :character => @character)
-      @inventory2 = Factory(:inventory, :character => @character)
+      @item1 = Factory(:item)
+      @item2 = Factory(:item)
 
-      
+      @character.inventories.give!(@item1, 2)
+      @character.inventories.give!(@item2, 2)
+
       @character.equipment.placements = {
-        :additional => [@inventory1.id, @inventory2.id], 
-        :left_hand  => [@inventory1.id],
-        :right_hand => [@inventory2.id]
+        :additional => [@item1.id, @item2.id], 
+        :left_hand  => [@item1.id],
+        :right_hand => [@item2.id]
       }
     end
-    
-    it 'should find inventories by IDs stored in placements' do
-      Inventory.should_receive(:find_all_by_id).with([@inventory1.id, @inventory2.id], {:include => :item}).and_return([@inventory1, @inventory2])
-      
-      @character.equipment.inventories
-    end
-    
+       
     it 'should collect an array of inventories respective to number of their IDs' do
-      @character.equipment.inventories.count(@inventory1).should == 2
-      @character.equipment.inventories.count(@inventory2).should == 2
+      @character.equipment.inventories.count(@item1).should == 2
+      @character.equipment.inventories.count(@item2).should == 2
     end
     
     it 'should return empty array if character doesn\'t have equipped inventories' do
       @character.equipment.placements = {}
+      @character.inventories.each{|inventory| inventory.equipped = 0}
       
-      @character.equipment.inventories.should == []
-    end
-
-    it 'should not re-collect inventories' do
-      Inventory.should_receive(:find_all_by_id).once.and_return([@inventory1])
-      
-      @character.equipment.inventories
-      @character.equipment.inventories
+      @character.equipment.inventories.equipped.should be_empty
     end
   end
   
@@ -119,20 +107,25 @@ describe Character::Equipment do
   describe '#inventories_by_placement' do
     before do
       @character = Factory(:character)
-      @inventory1 = Factory(:inventory, :character => @character)
-      @inventory2 = Factory(:inventory, :character => @character)
-
+      @item1 = Factory(:item)
+      @item2 = Factory(:item)
+      
+      @character.inventories.give!(@item1, 2)
+      @character.inventories.give!(@item2, 2)
       
       @character.equipment.placements = {
-        :additional => [@inventory1.id, @inventory2.id], 
-        :left_hand  => [@inventory1.id],
-        :right_hand => [@inventory2.id]
+        :additional => [@item1.id, @item2.id], 
+        :left_hand  => [@item1.id],
+        :right_hand => [@item2.id]
       }
     end
 
     it 'should return array of inventories by their IDs stored in defined placement' do
-      @character.equipment.inventories_by_placement(:additional).should == [@inventory1, @inventory2]
-      @character.equipment.inventories_by_placement(:left_hand).should == [@inventory1]
+      @character.equipment.inventories_by_placement(:additional).should == 
+        [@character.inventories.find_by_item(@item1), @character.inventories.find_by_item(@item2)]
+      
+      @character.equipment.inventories_by_placement(:left_hand).should == 
+        [@character.inventories.find_by_item(@item1)]
     end
     
     it 'should return empty array if there are no equipped items in the placement' do
@@ -164,48 +157,42 @@ describe Character::Equipment do
   describe '#equip!' do
     before do
       @character = Factory(:character)
-      @inventory = Factory(:inventory, :character => @character)
+      @item = Factory(:item)
+      
+      @character.inventories.give!(@item)
     end
     
     it 'should equip inventory' do
-      @character.equipment.proxy_target.should_receive(:equip).with(@inventory, :left_hand).and_return(nil)
+      @character.equipment.should_receive(:equip).with(@item, :left_hand).and_return(nil)
       
-      @character.equipment.equip!(@inventory, :left_hand)
+      @character.equipment.equip!(@item, :left_hand)
     end
-    
-    it 'should save previous inventory if equipping to non-free placement' do
-      @other = mock_model(Inventory, :save => true)
-      
-      @character.equipment.proxy_target.stub!(:equip).and_return(@other)
-      @other.should_receive(:save)
-      
-      @character.equipment.equip!(@inventory, :left_hand)
-    end
-    
+     
     it 'should save inventory' do
-      @character.equipment.equip!(@inventory, :left_hand)
+      @character.equipment.equip!(@item, :left_hand)
       
-      @inventory.should_not be_changed
+      @item.should_not be_changed
     end
     
     it 'should save character' do
-      @character.equipment.equip!(@inventory, :left_hand)
+      @character.equipment.equip!(@item, :left_hand)
       
-      @character.should_not be_changed
+      @item.should_not be_changed
     end
     
     it 'should clear effect cache' do
       @character.equipment.should_receive(:clear_effect_cache!)
       
-      @character.equipment.equip!(@inventory, :left_hand)
+      @character.equipment.equip!(@item, :left_hand)
     end
     
     it 'should actually put inventory to the placement' do
       @character.equipment.inventories_by_placement(:left_hand).should be_empty
       
-      @character.equipment.equip!(@inventory, :left_hand)
+      @character.equipment.equip!(@item, :left_hand)
       
-      @character.reload.equipment.inventories_by_placement(:left_hand).should include(@inventory)
+      @character.reload.equipment.inventories_by_placement(:left_hand).should 
+        include @character.inventories.find_by_item(@item)
     end
   end
   
@@ -213,26 +200,29 @@ describe Character::Equipment do
   describe '#unequip' do
     before do
       @character = Factory(:character)
-      @inventory = Factory(:inventory, :character => @character)
+      @item = Factory(:item)
       
-      @character.equipment.auto_equip!(@inventory)
+      @character.inventories.give!(@item, 5)
+      @character.equipment.auto_equip!(@item)
     end
     
     it 'should remove item ID from passed placement' do
-      @character.equipment.unequip(@inventory, :additional)
+      @character.equipment.unequip(@item, :additional)
       
-      @character.placements.values.flatten.count(@inventory.id).should == 4
+      @character.placements.values.flatten.count(@item.id).should == 4
     end
     
     it 'should reduce amount of equipped inventory' do
+      inventory = @character.inventories.find_by_item(@item)
+      
       lambda{
-        @character.equipment.unequip(@inventory, :additional)
-      }.should change(@inventory, :equipped).by(-1)
+        @character.equipment.unequip(@item, :additional)
+      }.should change(inventory, :equipped).by(-1)
     end
     
     it 'should clear cached inventory list' do
       lambda{
-        @character.equipment.unequip(@inventory, :additional)
+        @character.equipment.unequip!(@item, :additional)
       }.should change(@character.equipment, :inventories)
     end
   end
@@ -241,25 +231,26 @@ describe Character::Equipment do
   describe '#unequip!' do
     before do
       @character = Factory(:character)
-      @inventory = Factory(:inventory, :character => @character)
+      @item = Factory(:item)
       
-      @character.equipment.auto_equip!(@inventory)
+      @character.inventories.give!(@item, 5)
+      @character.equipment.auto_equip!(@item)
     end
 
     it 'should unequip inventory' do
-      @character.equipment.proxy_target.should_receive(:unequip).with(@inventory, :additional)
+      @character.equipment.should_receive(:unequip).with(@item, :additional)
       
-      @character.equipment.unequip!(@inventory, :additional)
+      @character.equipment.unequip!(@item, :additional)
     end
     
     it 'should save inventory' do
-      @character.equipment.unequip!(@inventory, :additional)
+      @character.equipment.unequip!(@item, :additional)
       
-      @inventory.should_not be_changed
+      @item.should_not be_changed
     end
     
     it 'should save character' do
-      @character.equipment.unequip!(@inventory, :additional)
+      @character.equipment.unequip!(@item, :additional)
       
       @character.should_not be_changed
     end
@@ -267,7 +258,7 @@ describe Character::Equipment do
     it 'should clear inventory effect cache' do
       @character.equipment.should_receive(:clear_effect_cache!)
       
-      @character.equipment.unequip!(@inventory, :additional)
+      @character.equipment.unequip!(@item, :additional)
     end
   end
 
@@ -300,23 +291,23 @@ describe Character::Equipment do
         ]
       )
 
-      @inventory1 = Factory(:inventory, :character => @character, :item => @item1)
-      @inventory2 = Factory(:inventory, :character => @character, :item => @item2)
-      @inventory3 = Factory(:inventory, :character => @character, :item => @item3)
-      @inventory4 = Factory(:inventory, :character => @character, :item => @item4)
+      @character.inventories.give!(@item1)
+      @character.inventories.give!(@item2)
+      @character.inventories.give!(@item3)
+      @character.inventories.give!(@item4)
 
-      @character.equipment.equip!(@inventory1, :left_hand)
-      @character.equipment.equip!(@inventory2, :additional)
-      @character.equipment.equip!(@inventory3, :additional)
-      @character.equipment.equip!(@inventory4, :additional)
+      @character.equipment.equip!(@item1, :left_hand)
+      @character.equipment.equip!(@item2, :additional)
+      @character.equipment.equip!(@item3, :additional)
+      @character.equipment.equip!(@item4, :additional)
     end
 
     it 'should return best offence items' do
-      @character.equipment.best_offence.should == [@inventory1, @inventory3, @inventory4]
+      @character.equipment.best_offence.should == [@item1, @item3, @item4]
     end
 
     it 'should return best defence items' do
-      @character.equipment.best_defence.should == [@inventory2, @inventory3, @inventory4]
+      @character.equipment.best_defence.should == [@item2, @item3, @item4]
     end
   end
 end

@@ -20,8 +20,8 @@
             <% inventories.each do |inventory| %>
               <li>
                 <div
-                  class="inventory <%= :active if @exchange_offer.inventory == inventory %>"
-                  id="<%= dom_id(inventory, :equipment) %>"
+                  class="inventory <%= :active if @exchange_offer.item == inventory.item %>"
+                  id="<%= dom_id(inventory.item, :equipment) %>"
                   data-id="<%= inventory.item_id %>"
                 >
                   <%= inventory_item_image(inventory, :small,
