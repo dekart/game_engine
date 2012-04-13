@@ -2,7 +2,7 @@ class MarketItem < ActiveRecord::Base
   extend HasRequirements
   
   belongs_to :character
-  belongs_to :inventory, :counter_cache => true
+  belongs_to :item
 
   scope :expired, Proc.new{
     {
@@ -10,20 +10,19 @@ class MarketItem < ActiveRecord::Base
     }
   }
 
-  delegate(*(%w{name plural_name description pictures pictures? effects effects? effect boost? payouts placements} + [{:to => :inventory}]))
+  delegate(*(%w{name plural_name description pictures pictures? effects effects? effect boost? payouts placements} + [{:to => :item}]))
 
-  attr_accessible :amount, :basic_price, :vip_price
+  attr_accessible :amount, :basic_price, :vip_price, :item_id
 
-  validates_presence_of :inventory_id
+  validates :item_id, :presence => true, :uniqueness => {:scope => :character_id }
   validates_presence_of :amount
   validates_numericality_of :amount, :allow_nil => true, :greater_than => 0
   validates_numericality_of :basic_price, :vip_price, :allow_nil => true, :greater_than => -1
   
-  
   validate :vip_price_dont_more_than_max, :check_amount, :item_allowed_to_sell, 
     :on => :create
 
-  before_create :destroy_previous_items, :assign_character
+  before_create :destroy_previous_items
 
   %w{basic_price vip_price}.each do |attribute|
     class_eval %{
@@ -31,6 +30,10 @@ class MarketItem < ActiveRecord::Base
         self[:#{attribute}] || 0
       end
     }
+  end
+
+  def inventory
+    character.inventories.find_by_item(item)
   end
 
   def price?
@@ -65,18 +68,18 @@ class MarketItem < ActiveRecord::Base
     else
       transaction do
         target_character.charge!(basic_price, vip_price, :market)
-        target_character.inventories.give!(inventory.item, amount)
+        target_character.inventories.give!(item, amount)
 
         basic_money = basic_price - basic_fee
         vip_money   = vip_price - vip_fee
 
         character.charge!(- basic_money, - vip_money, :market)
-        character.inventories.take!(inventory, amount)
+        character.inventories.take!(item, amount)
 
-        destroy unless inventory.market_item.destroyed?
+        destroy unless character.market_items.find_by_item_id(item).destroyed?
 
         character.notifications.schedule(:market_item_sold,
-          :item_id      => inventory.item_id,
+          :item_id      => item_id,
           :basic_money  => basic_money,
           :vip_money    => vip_money
         )
@@ -106,7 +109,7 @@ class MarketItem < ActiveRecord::Base
 
   def vip_price_dont_more_than_max
     if vip_price
-      max_vip_price = inventory.item.max_vip_price_in_market || 0
+      max_vip_price = item.max_vip_price_in_market || 0
        
       if vip_price > max_vip_price
         errors.add(:vip_price, :less_than_or_equal_to, :count => max_vip_price)
@@ -121,14 +124,10 @@ class MarketItem < ActiveRecord::Base
   end
   
   def item_allowed_to_sell
-    errors.add(:item, :not_allowed_to_sell) unless inventory.can_be_sold_on_market?
+    errors.add(:item, :not_allowed_to_sell) unless item.can_be_sold_on_market?
   end
 
   def destroy_previous_items
-    self.class.destroy_all(:inventory_id => inventory.id)
-  end
-
-  def assign_character
-    self.character = inventory.character
+    #self.class.destroy_all(:item => item.id, :character_id => character.id)
   end
 end

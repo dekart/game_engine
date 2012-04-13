@@ -9,12 +9,12 @@
             :class => "inventory button"
           ) %>
 
-      <%= link_to(inventory_use_button(@discount.inventory), use_inventory_path(@discount.inventory),
+      <%= link_to(inventory_use_button(@discount.item), use_inventory_path(@discount.item),
             :remote => true,
             :method => :post,
             :"data-click-once" => true,
             :class => "use button"
-          ) if @discount.inventory.usable? %>
+          ) if @discount.item.usable? %>
     <% end %>
 
     <% builder.success do %>

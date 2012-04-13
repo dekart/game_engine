@@ -29,6 +29,7 @@ gem 'jquery-rails'
 
 gem 'i18n-js'
 
+gem 'yajl-ruby', :require => 'yajl'
 
 group :development do
   gem "capistrano",   "~> 2.9.0"

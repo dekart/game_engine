@@ -5,7 +5,7 @@ class AppRequest::Gift < AppRequest::Base
     end
   end
 
-  attr_accessor :inventory
+  attr_accessor :item
 
   class << self
     def ids_to_exclude_for(character)
@@ -75,8 +75,8 @@ class AppRequest::Gift < AppRequest::Base
 
   def after_accept
     super
-
-    @inventory = receiver.inventories.give!(item)
+    
+    receiver.inventories.give!(item)
 
     self.class.store_accept_time(sender, receiver)
 

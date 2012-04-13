@@ -1,30 +1,31 @@
 class MarketItemsController < ApplicationController
   def index
-    @items = MarketItem.paginate(:page => params[:page])
+    @market_items = MarketItem.paginate(:page => params[:page])
   end
 
   def new
-    @inventory = current_character.inventories.find(params[:inventory_id])
-    @item = @inventory.build_market_item
+    @item = current_character.inventories.items.find(params[:item_id])
+    
+    @market_item = current_character.market_items.build(:item_id => @item.id)
   end
 
   def create
-    @inventory = current_character.inventories.find(params[:market_item].delete(:inventory_id))
+    @item = current_character.inventories.items.find(params[:market_item].delete(:item_id))
 
-    @item = @inventory.build_market_item(params[:market_item])
+    @market_item = current_character.market_items.build(params[:market_item].merge(:item_id => @item.id))
 
-    render :new unless @item.save
+    render :new unless @market_item.save
   end
 
   def buy
-    @item = MarketItem.find(params[:id])
+    @market_item = MarketItem.find(params[:id])
 
-    @item.buy!(current_character)
+    @market_item.buy!(current_character)
   end
 
   def destroy
-    @item = current_character.market_items.find(params[:id])
+    @market_item = current_character.market_items.find(params[:id])
 
-    @item.destroy
+    @market_item.destroy
   end
 end

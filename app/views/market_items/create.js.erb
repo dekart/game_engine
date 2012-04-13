@@ -9,6 +9,6 @@
   </p>
   
   <% d.on_ready do %>
-    <%= ga_track_event('Items', 'Listed on Market', "#{@inventory.name} (#{@inventory.item.availability})", current_character.level) %>
+    <%= ga_track_event('Items', 'Listed on Market', "#{@item.name} (#{@item.availability})", current_character.level) %>
   <% end %>
 <% end %>

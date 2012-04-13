@@ -63,9 +63,9 @@ describe AppRequest::Gift do
     it 'should give item to receiver' do
       lambda{
         @request.accept
-      }.should change(@receiver.character.inventories, :count).from(0).to(1)
+      }.should change(@request.receiver.inventories, :size).from(0).to(1)
       
-      @request.inventory.should == @receiver.character.inventories.first
+      @request.item.should == @receiver.character.inventories.first.item
     end
   end
   

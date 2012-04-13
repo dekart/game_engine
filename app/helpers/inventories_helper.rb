@@ -47,7 +47,7 @@ module InventoriesHelper
       result << span_tag(count.is_a?(TrueClass) ? inventory.amount : count, "count #{format}")
     end
 
-    result << item_image(inventory, format, options)
+    result << item_image(inventory.item, format, options)
 
     (
       %{<div class="inventory_image">#{ result }</div>}
@@ -55,18 +55,18 @@ module InventoriesHelper
   end
 
   def inventories_grouped_by_item_group(inventories)
-    inventories.group_by{|i| i.item_group}.sort{|a, b| a.first.position <=> b.first.position }
+    inventories.group_by{|i| i.item.item_group}.sort{|a, b| a.first.position <=> b.first.position }
   end
 
   def inventories_exchangeable_grouped_by_item_group
     @inventories_exchangeable_grouped_by_item_group ||= begin
-      inventories_grouped_by_item_group(current_character.inventories.exchangeable.all)
+      inventories_grouped_by_item_group(current_character.inventories.exchangeable)
     end
   end
 
   def inventories_equippable_grouped_by_item_group
     @inventories_equippable_grouped_by_item_group ||= begin
-      inventories_grouped_by_item_group(current_character.inventories.equippable.all)
+      inventories_grouped_by_item_group(current_character.inventories.equippable)
     end
   end
 
@@ -78,9 +78,9 @@ module InventoriesHelper
         <div
           class="inventory"
           data-placements="#{ inventory.placements.join(",") }"
-          data-equip="#{ equip_inventory_path(inventory) }"
-          data-unequip="#{ unequip_inventory_path(inventory, :placement => placement) }"
-          data-move="#{ move_inventory_path(inventory, :from_placement => placement) }"
+          data-equip="#{ equip_inventory_path(inventory.item) }"
+          data-unequip="#{ unequip_inventory_path(inventory.item, :placement => placement) }"
+          data-move="#{ move_inventory_path(inventory.item, :from_placement => placement) }"
         >#{ content }</div>
       }
     ).html_safe

@@ -43,7 +43,7 @@ class ItemCollection < ActiveRecord::Base
            c.item_ids.each do |item_id|
              result[item_id] ||= {}
            
-             result[item_id][c.id] = c.amount_items[c.item_ids.index(item_id)]
+             result[item_id][c.id] = c.amount_items[c.item_ids.index(item_id)] || 1
            end
         end 
       end

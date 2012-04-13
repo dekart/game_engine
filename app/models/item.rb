@@ -14,62 +14,58 @@ class Item < ActiveRecord::Base
   }
 
   belongs_to  :item_group
-  has_many    :inventories, :dependent => :destroy
   
   has_many    :app_requests, 
     :as => :target, 
     :class_name => 'AppRequest::Base'
 
-  scope :available, Proc.new{
-    {
-      :conditions => [%{
-          (
-            items.available_till IS NULL OR
-            items.available_till > ?
-          )
-        },
-        Time.now
-      ]
-    }
-  }
-
-  scope :available_by_level, Proc.new {|character|
-    {
-      :conditions => ["items.level <= ?", character.level]
-    }
-  }
-
-  scope :available_in, Proc.new{|*keys|
-    valid_keys = keys.collect{|k| k.try(:to_sym) } & AVAILABILITIES # Find intersections between passed key list and available keys
-
-    if valid_keys.any?
-      valid_keys.collect!{|k| k.to_s }
-
-      {:conditions => ["items.availability IN (?)", valid_keys]}
-    else
-      {}
-    end
-  }
-  scope :next_for, Proc.new{|character|
-    {
-      :conditions => ["items.level > ? AND items.availability = 'shop' AND items.state = 'visible'", character.level],
-      :order      => "items.level"
-    }
-  }
-  
-  scope :boosts, Proc.new{|type|
-    {
-      :conditions => (
-        type ? { :boost_type => type } : ["boost_type != ''"]
+  class << self
+    def available
+      where(
+        [%{
+            (
+              items.available_till IS NULL OR
+              items.available_till > ?
+            )
+          },
+          Time.now
+        ]
       )
-    } 
-  }
+    end
+    
+    def available_by_level(character)
+      where(["items.level <= ?", character.level])
+    end
+    
+    def available_in(*keys)
+      valid_keys = keys.collect{|k| k.try(:to_sym) } & AVAILABILITIES # Find intersections between passed key list and available keys
+  
+      if valid_keys.any?
+        valid_keys.collect!{|k| k.to_s }
+  
+        where(["items.availability IN (?)", valid_keys])
+      else
+        scoped
+      end
+    end
+    
+    def next_for(character)
+      where(["items.level > ? AND items.availability = 'shop' AND items.state = 'visible'", character.level]).
+      order("items.level")
+    end
+    
+    def boosts(type = nil)
+      where(type ? { :boost_type => type } : ["boost_type != ''"])
+    end
+  end
 
-
+  scope :equippable,   where(:equippable => true)
+  scope :usable,       where("items.payouts != ''")
+  scope :exchangeable, where(:exchangeable => true)
+  scope :vip,          where("items.vip_price > 0")
+  scope :basic,        where("items.vip_price IS NULL or items.vip_price = 0")
+  
   before_save :update_max_vip_price_in_market, :if => :vip_price_changed?
-
-  scope :vip, {:conditions => "items.vip_price > 0"}
-  scope :basic, {:conditions => "items.vip_price IS NULL or items.vip_price = 0"}
   
   state_machine :initial => :hidden do
     state :hidden
@@ -174,6 +170,10 @@ class Item < ActiveRecord::Base
 
   def price?
     basic_price > 0 or vip_price > 0
+  end
+
+  def sell_price
+    Setting.p(:inventory_sell_price, basic_price).ceil
   end
 
   def availability

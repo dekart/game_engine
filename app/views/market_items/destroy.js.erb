@@ -4,8 +4,8 @@
   <% end %>
 
   <% builder.on_ready do %>
-    $('#<%= dom_id(@item) %>').remove();
+    $('#<%= dom_id(@market_item) %>').remove();
 
-    <%= ga_track_event('Items', 'Market Listing Removed', "#{@item.name} (#{@item.inventory.item.availability})") %>
+    <%= ga_track_event('Items', 'Market Listing Removed', "#{@market_item.name} (#{@market_item.inventory.item.availability})") %>
   <% end %>
 <% end %>
