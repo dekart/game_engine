@@ -228,20 +228,22 @@ class Character
 
     def effects
       equipped = equipped_items
-      
+
       @effects ||= Rails.cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
         [
           {}.tap do |result|
             Effects::Base::BASIC_TYPES.each do |effect|
-              result[effect] = equipped.sum{|i| i.effect(effect) }
+              result[effect] = equipped.sum{|i| i.effect(effect) * inventories.find_by_item(i).equipped }
             end
           end,
-          
+
           [].tap do |result|
             equipped.each do |item|
               item.effects.each do |effect|
                 if Effects::Base::COMPLEX_TYPES.include?(effect.name.to_sym)
-                  result << effect
+                  inventories.find_by_item(item).equipped.times do
+                    result << effect
+                  end
                 end
               end
             end
