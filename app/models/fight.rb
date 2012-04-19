@@ -148,13 +148,13 @@ class Fight < ActiveRecord::Base
   end
 
   def used_items(character)
-    items = character.inventories.equipped_items.joins(:item_group)
+    items = character.inventories.equipped
 
     groups = ItemGroup.with_state(:visible).all(:order => :position)
 
     ActiveSupport::OrderedHash.new.tap do |result|
       groups.each do |group|
-        items_by_group = items.select{|i| i.item_group == group }
+        items_by_group = items.select{|i| i.item_group_id == group.id }
 
         result[group] = items_by_group if items_by_group.any?
       end

@@ -2,8 +2,8 @@
   <div class="best_items">
     <strong><%= t(".best_offence") %></strong>
   
-    <% offence.each do |inventory| %>
-      <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+    <% offence.each do |item| %>
+      <%= item_image(item, :icon, :tooltip => true, :tooltip_on_click => true) %>
     <% end %>
   </div>
 <% end %>
@@ -12,8 +12,8 @@
   <div class="best_items">
     <strong><%= t(".best_defence") %></strong>
 
-    <% defence.each do |inventory| %>
-      <%= item_image(inventory.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+    <% defence.each do |item| %>
+      <%= item_image(item, :icon, :tooltip => true, :tooltip_on_click => true) %>
     <% end %>
   </div>
 <% end %>

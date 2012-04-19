@@ -97,7 +97,7 @@ class InventoriesController < ApplicationController
           given = []
           
           @inventories.each do |inventory|
-            if amount = params[:inventory][inventory.item_id.to_s].to_i and amount > 0
+            if amount = params[:amount][inventory.item_id.to_s].to_i and amount > 0
               current_character.inventories.transfer!(@character, inventory.item, amount)
               
               given << [inventory.item_id, amount]

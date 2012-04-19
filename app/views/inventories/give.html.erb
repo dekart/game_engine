@@ -16,7 +16,7 @@
             </td>
             <td class="give">
               <%= t('.give') %>
-              <%= select_tag("inventory[#{inventory.id}]", options_for_select([''] + (1 .. inventory.amount).to_a)) %>
+              <%= select_tag("amount[#{inventory.item_id}]", options_for_select([''] + (1 .. inventory.amount).to_a)) %>
             </td>
           </tr>
         <% end %>
