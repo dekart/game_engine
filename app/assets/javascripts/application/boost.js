@@ -37,7 +37,7 @@ var Boost = {
         var $boost = $selector.find(".boost.not_owned[data-item-id='" + options.item_id + "']");
         
         if ($boost.length > 0) {
-          $.post("/inventories/" + options.inventory_id + "/toggle_boost", {
+          $.post("/inventories/" + options.item_id + "/toggle_boost", {
             destination: event.data.destination
           });
         }
