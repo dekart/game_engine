@@ -68,7 +68,7 @@ class AppRequest::Gift < AppRequest::Base
   end
 
   def can_send_back?
-    !AppRequest::Gift.ids_to_exclude_for(receiver).include?(sender.facebook_id)
+    !AppRequest::Gift.ids_to_exclude_for(receiver).include?(sender.facebook_id) && item.visible?
   end
 
   protected
