@@ -119,28 +119,30 @@ class Character < ActiveRecord::Base
     sum_points = 0
     
     UPGRADABLE_ATTRIBUTES.each do |attribute|
-      sum_points += Setting.i("character_#{attribute}_upgrade_points") * params[attribute].to_i
+      sum_points += Setting.i("character_#{attribute}_upgrade_points") * params[attribute].to_i.abs
     end
     
     return false if points < sum_points
     
     transaction do
       UPGRADABLE_ATTRIBUTES.each do |attribute|
+        upgrade_by = params[attribute].to_i.abs
+
         case attribute
         when :health
-          self.health += Setting.i(:character_health_upgrade) * params[:health].to_i
-          self.hp     += Setting.i(:character_health_upgrade) * params[:health].to_i
+          self.health += Setting.i(:character_health_upgrade) * params[:health].to_i.abs
+          self.hp     += Setting.i(:character_health_upgrade) * params[:health].to_i.abs
         when :energy
-          self.energy += Setting.i(:character_energy_upgrade) * params[:energy].to_i
-          self.ep     += Setting.i(:character_energy_upgrade) * params[:energy].to_i
+          self.energy += Setting.i(:character_energy_upgrade) * params[:energy].to_i.abs
+          self.ep     += Setting.i(:character_energy_upgrade) * params[:energy].to_i.abs
         when :stamina
-          self.stamina  += Setting.i(:character_stamina_upgrade) * params[:stamina].to_i
-          self.sp       += Setting.i(:character_stamina_upgrade) * params[:stamina].to_i
+          self.stamina  += Setting.i(:character_stamina_upgrade) * params[:stamina].to_i.abs
+          self.sp       += Setting.i(:character_stamina_upgrade) * params[:stamina].to_i.abs
         else
-          increment(attribute, Setting.i("character_#{attribute}_upgrade") * params[attribute].to_i)
+          increment(attribute, Setting.i("character_#{attribute}_upgrade") * upgrade_by)
         end  
         
-        self.points -= Setting.i("character_#{attribute}_upgrade_points") * params[attribute].to_i
+        self.points -= Setting.i("character_#{attribute}_upgrade_points") * upgrade_by
       end
       
       save
