@@ -31,7 +31,7 @@ module DesignHelper
       <div class="progress_bar">
         <div class="percentage #{ :complete if percentage >= 100 }" style="width: %.4f%%"></div>
       </div>
-    } % percentage
+    } % [percentage, 100].min
 
     result.html_safe
   end
