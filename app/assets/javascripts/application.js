@@ -24,6 +24,7 @@
 //= require ./application/stream_dialog
 //= require ./application/upgrade_sliders
 //= require ./application/timer
+//= require ./application/visual_timer
 //= require ./application/boost
 //= require ./application/shop
 //= require ./application/inventory
@@ -160,12 +161,10 @@ var Character = {
     $("#co .energy .value").text(c.ep + "/" + c.energy_points);
     $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
 
-    $('#co .health .timer').timer(c.time_to_hp_restore, this.update_from_remote);
-    $('#co .energy .timer').timer(c.time_to_ep_restore, this.update_from_remote);
-    $('#co .stamina .timer').timer(c.time_to_sp_restore, this.update_from_remote);
-
-    $('#co .timer').unbind('click', Character.update_from_remote).bind('click', Character.update_from_remote);
-
+    new VisualTimer(['#co .health .timer'], this.update_from_remote).start(c.time_to_hp_restore);
+    new VisualTimer(['#co .energy .timer'], this.update_from_remote).start(c.time_to_ep_restore);
+    new VisualTimer(['#co .stamina .timer'], this.update_from_remote).start(c.time_to_sp_restore);
+    
     if (c.points > 0) {
       $("#co .level .upgrade").show();
     } else {

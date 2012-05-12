@@ -7,7 +7,7 @@
     </span>
 
     <% dom_ready do %>
-      $('#<%= dom_id(item, :timer) %>').timer(<%= item.time_left %>);
+      new VisualTimer(['#<%= dom_id(item, :timer) %>']).start(<%= item.time_left %>);
     <% end %>
   <% end %>
 </div>

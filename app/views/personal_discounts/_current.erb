@@ -31,7 +31,7 @@
             </span>
 
             <% dom_ready do %>
-              $('#<%= dom_id(discount, :timer) %>').timer(<%= discount.time_left %>);
+              new VisualTimer(['#<%= dom_id(discount, :timer) %>']).start(<%= discount.time_left %>);
             <% end %>
           </div>
 

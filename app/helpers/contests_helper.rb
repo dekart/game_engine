@@ -13,7 +13,7 @@ module ContestsHelper
         timer_name = "finish_time"
       end
 
-      dom_ready("$('##{dom_id(contest)}').timer(#{time_left});")
+      dom_ready("new VisualTimer(['##{dom_id(contest)}']).start(#{time_left});")
 
       (
         %{

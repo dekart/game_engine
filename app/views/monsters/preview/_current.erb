@@ -37,5 +37,5 @@
 </div>
 
 <% dom_ready do %>
-  $('#<%= dom_id(monster) %> .fight_time .value').timer(<%= monster.time_remaining %>);
+  new VisualTimer(['#<%= dom_id(monster) %> .fight_time .value']).start(<%= monster.time_remaining %>);
 <% end %>

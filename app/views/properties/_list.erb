@@ -82,7 +82,7 @@
             </div>
 
             <% dom_ready do %>
-              $('#<%= dom_id(property, :timer) %>').timer(<%= property.time_to_next_collection %>, PropertyList.enableCollection);
+              new VisualTimer(['#<%= dom_id(property, :timer) %>'], PropertyList.enableCollection).start(<%= property.time_to_next_collection %>);
             <% end %>
 
             <% if property.upgradeable? %>

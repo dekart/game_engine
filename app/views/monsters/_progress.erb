@@ -72,5 +72,5 @@
 </table>
 
 <% dom_ready do %>
-  $('#monster .timer .value').timer(<%= monster.time_remaining %>);
+  new VisualTimer(['#monster .timer .value']).start(<%= monster.time_remaining %>);
 <% end %>
