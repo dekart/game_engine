@@ -161,10 +161,15 @@ var Character = {
     $("#co .energy .value").text(c.ep + "/" + c.energy_points);
     $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
 
-    new VisualTimer(['#co .health .timer'], this.update_from_remote).start(c.time_to_hp_restore);
-    new VisualTimer(['#co .energy .timer'], this.update_from_remote).start(c.time_to_ep_restore);
-    new VisualTimer(['#co .stamina .timer'], this.update_from_remote).start(c.time_to_sp_restore);
+    Character.hp_timer().stop();
+    Character.hp_timer().start(c.time_to_hp_restore);
     
+    Character.ep_timer().stop();
+    Character.ep_timer().start(c.time_to_ep_restore);
+
+    Character.sp_timer().stop();
+    Character.sp_timer().start(c.time_to_sp_restore);
+
     if (c.points > 0) {
       $("#co .level .upgrade").show();
     } else {
@@ -189,6 +194,30 @@ var Character = {
       $('#co .stamina .refill').show();
     }
     
+  },
+
+  hp_timer: function(){
+    if(typeof this.hptimer === 'undefined' || this.hptimer === null) {
+      this.hptimer = new VisualTimer(['#co .health .timer'], this.update_from_remote);
+    }
+
+    return this.hptimer;
+  },
+
+  ep_timer: function(){
+    if(typeof this.eptimer === 'undefined' || this.eptimer === null) {
+      this.eptimer = new VisualTimer(['#co .energy .timer'], this.update_from_remote);
+    }
+
+    return this.eptimer;
+  },
+  
+  sp_timer: function(){
+    if(typeof this.sptimer === 'undefined' || this.sptimer === null) {
+      this.sptimer = new VisualTimer(['#co .stamina .timer'], this.update_from_remote);
+    }
+
+    return this.sptimer;
   },
 
   update_from_remote: function(){
