@@ -1,9 +1,12 @@
 require 'bundler/capistrano'
 require "active_support"
+require "active_support/core_ext/numeric/time"
 require "yaml"
 require "uri"
 require "capistrano/ext/multistage"
-require "lib/core_ext/hash"
+require "./lib/core_ext/hash"
+require "./lib/capistrano/capture_fix"
+require './config/boot'
 
 set :stages, %w(staging production)
 set :default_stage, "production"
@@ -14,8 +17,6 @@ set :scm, "git"
 set :deploy_via, :remote_cache
 
 set :rake, "bundle exec rake --trace"
-
-default_environment["PATH"] = "$PATH:~/.gem/ruby/1.8/bin"
 
 namespace :deploy do
   desc "Deploy 'cold' application"

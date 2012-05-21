@@ -13,7 +13,10 @@ set :deploy_to, "/home/#{user}/#{application}"
 
 set :rails_env, "production"
 
-default_environment["RAILS_ENV"] = "production"
+set :default_environment, {
+  'PATH'      => "/home/#{user}/.rbenv/shims:/home/#{user}/.rbenv/bin:$PATH",
+  'RAILS_ENV' => "production"
+}
 
 set :facebook_config, {
   :app_id           => "your_fb_app_id",
