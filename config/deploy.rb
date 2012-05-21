@@ -111,7 +111,7 @@ namespace :deploy do
     
     desc "Setup database"
     task :setup, :roles => :db, :only => {:primary => true} do
-      run "cd #{current_path}; rake db:setup --trace"
+      run "cd #{release_path}; #{rake} db:setup --trace"
     end
     
     desc "Package all non-packaged backups"
@@ -214,10 +214,10 @@ after "deploy:setup", "deploy:dependencies:system_gems"
 # All deploys
 before "deploy:update_code", "deploy:maintenance:stop_cron"
 
-after "deploy:update_code", "deploy:dependencies:bundled_gems"
-after "deploy:update_code", "deploy:configure:facebook"
-after "deploy:update_code", "deploy:configure:database"
-after "deploy:update_code", "deploy:configure:settings"
+after "deploy:finalize_update", "deploy:dependencies:bundled_gems"
+after "deploy:finalize_update", "deploy:configure:facebook"
+after "deploy:finalize_update", "deploy:configure:database"
+after "deploy:finalize_update", "deploy:configure:settings"
 
 before "deploy:assets:precompile", "deploy:assets:export_i18n"
 

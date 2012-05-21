@@ -26,7 +26,7 @@ set :facebook_config, {
 }
 
 set :database_config, {
-  :adapter  => "mysql",
+  :adapter  => "mysql2",
   :host     => "localhost",
   :encoding => "utf8",
   :database => "your_db_name",
