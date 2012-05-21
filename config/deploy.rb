@@ -164,6 +164,7 @@ namespace :deploy do
 
       run "gem install bundler -v=1.0.21"
       run "gem install rake -v=0.9.2.2"
+      run "rbenv rehash"
     end
 
     desc "Install required gems"
