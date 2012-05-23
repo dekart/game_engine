@@ -49,7 +49,7 @@ class ApplicationController
 
     def rescue_unknown_action(exception)
       logger.fatal("Unknown action for #{request.request_uri} [#{request.method.to_s.upcase}]")
-      
+
       fatal_log_processing_for_parameters
 
       log_error(exception)
@@ -63,12 +63,12 @@ class ApplicationController
     def rescue_locking_error(exception)
       fatal_log_processing_for_request_id
       fatal_log_processing_for_parameters
-      
+
       Rails.logger.fatal "Stale object update error"
 
       render :text => "You're clicking too fast. Please calm down :)"
     end
-    
+
     def rescue_decryption_error(exception)
       fatal_log_processing_for_request_id
       fatal_log_processing_for_parameters
@@ -104,8 +104,12 @@ class ApplicationController
 
     def redirect_from_exception
       logger.fatal "Redirecting to root...\n"
-      
+
       redirect_to root_url
+    end
+
+    def log_error(exception)
+      Rails.logger.error("\n#{exception.class} (#{exception.message}):\n #{Rails.backtrace_cleaner.clean(exception.backtrace).join("\n ")}")
     end
   end
 end
