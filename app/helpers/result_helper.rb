@@ -112,6 +112,6 @@ module ResultHelper
   end
 
   def render_to_result(*args, &block)
-    "$('#result').html('#{ escape_javascript(result_for(*args, &block)) }');".html_safe
+    dom_ready("$('#result').html('#{ escape_javascript(result_for(*args, &block)) }');")
   end
 end
