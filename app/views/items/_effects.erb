@@ -4,7 +4,8 @@
   <% item.effects.each do |effect| %>
     <%= payout(
           effect.name, 
-          effect.value > 0 ? "+%d" % effect.value : effect.value
+          effect.value > 0 ? "+%d" % effect.value : effect.value,
+          :label => t("effects.#{ effect.name }.name")
         ) %>
   <% end %>
 <% end %>
