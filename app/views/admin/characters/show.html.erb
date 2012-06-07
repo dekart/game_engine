@@ -44,7 +44,7 @@
       <table class="data">
         <tr>
           <th><%= Item.name %></th>
-          <th><%= Inventory.human_attribute_name("amount") %></th>
+          <th><%= t(".amount") %></th>
         </tr>
 
         <% @character.inventories.sort_by{|i| i.name }.each do |inventory| %>

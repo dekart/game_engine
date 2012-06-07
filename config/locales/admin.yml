@@ -386,6 +386,7 @@ en:
         game_profile: "Game Profile"
         restorable: "%{current} / %{max} (%{base})"
         inventory: "Inventory"
+        amount: "Amount"
         properties: "Properties"
         property_income: "+%{value} per %{period} hours"
         statistics: "Statistics"
