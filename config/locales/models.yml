@@ -8,6 +8,7 @@ en:
       item: "Item"
       notification/level_up: "Level Up"
       achievement_type: 'Achievement'
+      clan: "Clan"
     attributes:     
       character:
         level: "Level"
@@ -85,6 +86,9 @@ en:
         action_link: 'Action Link Text'
       personal_discount:
         price: "Exclusive Price"
+
+      clan:
+        members: "Members"
         
     errors:
       models:
