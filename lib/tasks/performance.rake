@@ -17,10 +17,13 @@ namespace :app do
       end
 
       def generate_inventory(character, item)
-        Inventory.create(
-          :character => character,
-          :item => item,
-          :amount => 1)
+        inventory = Character::Equipment::Inventories::Inventory.new(
+          :item_id => item.id,
+          :amount  => 1)
+
+        character.inventories.push(inventory)
+
+        character.inventories.save
       end
 
       def generate_collection(items)
