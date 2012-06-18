@@ -1,7 +1,7 @@
 class ClanMembershipInvitationsController < ApplicationController
   def destroy
     if current_character.clan_member.try(:creator?)
-      @invitation = ClanMembershipInvitation.find(params[:id])
+      @invitation = current_character.clan.clan_membership_invitations.find(params[:id])
       @invitation.destroy
     end  
   end
@@ -11,7 +11,8 @@ class ClanMembershipInvitationsController < ApplicationController
     
     @invitation.accept!
     
-    redirect_to clan_url(@invitation.clan)
+    #redirect_to clan_url(@invitation.clan)
+    redirect_from_iframe(clan_path(@invitation.clan, :canvas => true))
   end
 
 end

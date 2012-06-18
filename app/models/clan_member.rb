@@ -5,6 +5,8 @@ class ClanMember < ActiveRecord::Base
   before_create :remove_from_other_clan
   
   after_create  :remove_all_applications_to_join_clan
+
+  validate :validate_of_max_size_clan, :on => :create
   
   def self.all_clan_creators_facebook_ids
     all(
@@ -35,19 +37,23 @@ class ClanMember < ActiveRecord::Base
   end
   
   protected
-  
-  def schedule_notification(status)
-    character.notifications.schedule(:clan_state,
-      :clan_id => clan_id,
-      :status  => status.to_s
-    )
-  end
-  
-  def remove_from_other_clan
-    character.clan_member.try(:destroy)
-  end
-  
-  def remove_all_applications_to_join_clan
-    character.clan_membership_applications.destroy_all
-  end
+
+    def validate_of_max_size_clan
+      errors.add(:clan, :max_size_clan) if clan.clan_members.count >= Setting.i(:clan_max_size)
+    end
+    
+    def schedule_notification(status)
+      character.notifications.schedule(:clan_state,
+        :clan_id => clan_id,
+        :status  => status.to_s
+      )
+    end
+    
+    def remove_from_other_clan
+      character.clan_member.try(:destroy)
+    end
+    
+    def remove_all_applications_to_join_clan
+      character.clan_membership_applications.destroy_all
+    end
 end
