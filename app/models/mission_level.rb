@@ -2,8 +2,6 @@ class MissionLevel < ActiveRecord::Base
   extend HasRequirements
   extend HasPayouts
 
-  default_scope :order => "mission_levels.position"
-
   belongs_to :mission, :counter_cache => :levels_count
   has_many   :ranks,
     :class_name   => "MissionLevelRank",
