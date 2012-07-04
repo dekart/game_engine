@@ -1,6 +1,6 @@
 class ClansController < ApplicationController
   before_filter :check_for_presence_of_clan, :only => [:new]
-  before_filter :check_creator_for_clan, :only => [:edit]
+  before_filter :check_creator_for_clan, :only => [:edit, :update, :change_image]
   
   def index
     @clans = Clan.order("members_count DESC").paginate(:per_page => 50, :page => params[:page])
@@ -31,9 +31,7 @@ class ClansController < ApplicationController
     @clan = Clan.find(params[:id])
   end
   
-  def update
-    @clan = Clan.find(params[:id])
-     
+  def update    
     if @clan.update_attributes(params[:clan])
       flash[:success] = t("clans.update.success")
       
@@ -44,8 +42,6 @@ class ClansController < ApplicationController
   end
   
   def change_image
-    @clan = Clan.find(params[:id])
-    
     if @clan.change_image!(params[:clan])
       flash[:success] = t("clans.update_image.success")
       
@@ -62,9 +58,11 @@ class ClansController < ApplicationController
       redirect_to clans_path
     end
   end
-  
+
   def check_creator_for_clan
-    unless current_character.clan_member.try(:creator?)
+    @clan = Clan.find(params[:id])
+
+    if !current_character.clan_member.try(:creator?) || @clan != current_character.clan
       redirect_to clans_path
     end
   end

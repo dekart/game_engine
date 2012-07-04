@@ -1,5 +1,13 @@
-<%= form_for @clan do |f| %>
-  <%= f.error_messages %>
+<%= form_for clan do |f| %>
+
+  <% if f.object.errors[:creator].any? || f.object.errors[:image].any? %>
+	  <%= render_to_result :clan do |builder| %>
+	    <% builder.fail do %>
+	      <%= f.object.errors[:creator].first if f.object.errors[:creator] %>
+	      <%= f.object.errors[:image].first if f.object.errors[:image] %>
+	    <% end %>  
+	  <% end %>  
+	<% end %>  
   
   <%= f.text_field :name, :required => true, :size => 40 %>
   

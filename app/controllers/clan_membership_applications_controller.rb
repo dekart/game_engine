@@ -1,7 +1,7 @@
 class ClanMembershipApplicationsController < ApplicationController
   before_filter :find_application, :only => [:approve, :reject]
   
-  def create
+  def apply
     @clan = Clan.find(params[:clan_id])
     
     @application = current_character.clan_membership_applications.create(:clan => @clan)

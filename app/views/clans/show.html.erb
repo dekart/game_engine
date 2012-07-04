@@ -27,7 +27,8 @@
                       :title    => t('.title_invite'),
                       :message  => t('.invitation_message', :app_name => t('app_name')),
                       :data     => {
-                        :reference => :invite_page
+                        :reference => :invite_page,
+                        :clan_id   => @clan.id
                       }
                     }
                   ),
@@ -88,7 +89,7 @@
         <%= t(".sent_application") %>
               
       <% else %>
-        <%= link_to(button(:apply), create_clan_membership_application_path(:clan_id => @clan.id),
+        <%= link_to(button(:apply), apply_clan_membership_application_path(:clan_id => @clan.id),
               :remote => true,
               :confirm  => t(current_character.clan ? ".clan_member.apply_confirm" : ".apply_confirm"),
               :"data-click-once" => true,

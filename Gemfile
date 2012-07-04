@@ -31,6 +31,8 @@ gem 'i18n-js'
 
 gem 'yajl-ruby', :require => 'yajl'
 
+gem 'dynamic_form',     '~> 1.1.4'
+
 group :development do
   gem "capistrano",   "~> 2.9.0"
   gem "capistrano-ext"

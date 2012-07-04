@@ -31,7 +31,7 @@ module ItemsHelper
   end
   
   def item_tooltip_content(item)
-    item = item.item if item.is_a?(Inventory)
+    item = item.item if item.is_a?(Character::Equipment::Inventories::Inventory)
 
     %{
       <div class="tooltip_content">

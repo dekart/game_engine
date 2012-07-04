@@ -4,19 +4,19 @@ class StoriesController < ApplicationController
 
     if @story = Story.find_by_id(params[:id])
       @payouts = @story.track_visit!(current_character, story_data)
-      
+
       @next_page = next_page_for_story(@story.alias, story_data)
     else
       @payouts = []
-      
+
       @next_page = next_page_for_story(params[:id], story_data)
     end
-    
-    redirect_to(@next_page) if @payouts.empty?
+
+    redirect_from_iframe(@next_page) if @payouts.empty?
   end
-  
+
   protected
-  
+
   def next_page_for_story(key, story_data)
     case key
     when 'item_purchased'
@@ -32,8 +32,8 @@ class StoriesController < ApplicationController
     when 'mission_completed'
       mission_groups_url(:canvas => true)
     when 'monster_invite'
-      monster_url(story_data[:monster_id], 
-        :key => encryptor.encrypt(story_data[:monster_id]), 
+      monster_url(story_data[:monster_id],
+        :key => encryptor.encrypt(story_data[:monster_id]),
         :canvas => true
       )
     when 'monster_defeated'
@@ -42,7 +42,7 @@ class StoriesController < ApplicationController
       properties_url(:canvas => true)
     when 'promotion'
       promotion = Promotion.find(story_data[:promotion_id])
-      
+
       promotion_url(promotion, :canvas => true)
     when 'hit_listing_new', 'hit_listing_completed'
       hit_listings_url(:canvas => true)
@@ -59,7 +59,7 @@ class StoriesController < ApplicationController
       )
     when 'exchange'
       exchange = Exchange.find(story_data[:exchange_id])
-      
+
       exchange_url(exchange.key, :canvas => true)
     when 'achievement'
       achievements_url(:canvas => true)

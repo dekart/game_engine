@@ -305,7 +305,7 @@ GameEngine::Application.routes.draw do
   
   resources :clan_membership_applications do
     member do
-      get 'create'
+      get 'apply'
       put 'approve'
       delete 'reject'
     end

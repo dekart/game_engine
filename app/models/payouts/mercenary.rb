@@ -13,11 +13,11 @@ module Payouts
 
           @mercenaries << mercenary
         else
-          @mercenaries << character.mercenary_relations.create
+          @mercenaries << character.mercenary_relations.buid
         end
       end
     end
-    
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,

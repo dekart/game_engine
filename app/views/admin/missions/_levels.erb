@@ -2,7 +2,7 @@
   <%= link_to(t(".controls.new"), new_polymorphic_path([:admin, mission, MissionLevel])) %>
 </div>
 
-<% collection(mission.levels) do %>
+<% collection(mission.levels.order(:position)) do %>
   <table>
     <tr>
       <th><%= MissionLevel.human_attribute_name("win_amount") %></th>
@@ -13,8 +13,8 @@
       <th><%= MissionLevel.human_attribute_name("requirements") %></th>
       <th><%= MissionLevel.human_attribute_name("payouts") %></th>
     </tr>
-    
-    <% mission.levels.each do |level| %>
+
+    <% mission.levels.order(:position).each do |level| %>
       <%= content_tag_for(:tr, level) do %>
         <td class="win_amount"><%= level.win_amount %></td>
         <td class="chance"><%= '%d%' % level.chance %></td>

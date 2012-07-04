@@ -51,7 +51,7 @@ class Clan < ActiveRecord::Base
   end
   
   def creator
-    clan_members.find_by_role('creator').character
+    clan_members.find_by_role('creator').try(:character)
   end
   
   protected
@@ -60,7 +60,7 @@ class Clan < ActiveRecord::Base
     if character.vip_money >= price
       true
     else  
-      errors.add(:character, :not_enough_vip_money)
+      errors.add(:creator, :not_enough_vip_money)
       
       false
     end
