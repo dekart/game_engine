@@ -58,6 +58,10 @@ var Shop = (function(){
       }).toArray().sort(function(i,j){ return i > j ? -1 : 1; })[0];
 
       items.height(max_height);
+
+      items.map(function(){
+        new VisualTimer(['#timer_' + $(this).attr("id")]).start($('#timer_' + $(this).attr("id")).data('time-left'));
+      })
     },
 
     updateItem: function(selector, code){
