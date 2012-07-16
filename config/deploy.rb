@@ -214,7 +214,6 @@ after "deploy:setup", "deploy:dependencies:system_gems"
 # All deploys
 before "deploy:update_code", "deploy:maintenance:stop_cron"
 
-after "deploy:finalize_update", "deploy:dependencies:bundled_gems"
 after "deploy:finalize_update", "deploy:configure:facebook"
 after "deploy:finalize_update", "deploy:configure:database"
 after "deploy:finalize_update", "deploy:configure:settings"
