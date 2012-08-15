@@ -3,11 +3,7 @@
     <span class="time_limit">
       <%= t(".time_limit") %>
 
-      <strong id="<%= dom_id(item, :timer) %>"></strong>
+      <strong id="<%= dom_id(item, :timer) %>" data-time-left="<%= item.time_left %>"></strong>
     </span>
-
-    <% dom_ready do %>
-      new VisualTimer(['#<%= dom_id(item, :timer) %>']).start(<%= item.time_left %>);
-    <% end %>
   <% end %>
 </div>
