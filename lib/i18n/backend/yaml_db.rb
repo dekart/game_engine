@@ -6,6 +6,8 @@ module I18n
       def init_translations
         super
 
+        return unless Translation.table_exists?
+
         available_locales.each do |locale|
           store_translations(locale, Translation.to_hash)
         end
