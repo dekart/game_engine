@@ -1,17 +1,19 @@
 module Payouts
   class StaminaPoint < Base
     include RecoveryMode
-    
-    def apply(character, reference = nil)
+
+    attr_accessor :can_exceed_maximum
+
+    def apply(character, reward, reference)
       @calculated_value = calculate_value(character.stamina)
-      
+
       if action == :remove
-        character.sp -= @calculated_value
+        reward.take_stamina(@calculated_value)
       else
-        character.sp += @calculated_value
+        reward.give_stamina(@calculated_value, can_exceed_maximum)
       end
     end
-    
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,

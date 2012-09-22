@@ -2,19 +2,11 @@ module Payouts
   class Mercenary < Base
     attr_reader :mercenaries
 
-    def apply(character, reference = nil)
-      @mercenaries = []
-
-      @value.times do
-        if action == :remove
-          if mercenary = character.mercenary_relations.first
-            mercenary.destroy
-          end
-
-          @mercenaries << mercenary
-        else
-          @mercenaries << character.mercenary_relations.buid
-        end
+    def apply(character, reward, reference)
+      if action == :remove
+        reward.take_mercenaries(@value)
+      else
+        reward.give_mercenaries(@value)
       end
     end
 

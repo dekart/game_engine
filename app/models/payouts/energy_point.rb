@@ -1,17 +1,27 @@
 module Payouts
   class EnergyPoint < Base
     include RecoveryMode
-    
-    def apply(character, reference = nil)
+
+    attr_accessor :can_exceed_maximum
+
+    def apply(character, reward, reference)
       @calculated_value = calculate_value(character.energy)
-      
+
       if action == :remove
-        character.ep -= @calculated_value
+        reward.take_energy(@calculated_value)
       else
-        character.ep += @calculated_value
+        reward.give_energy(@calculated_value, can_exceed_maximum)
       end
     end
-    
+
+    def can_exceed_maximum=(value)
+      if value == true || value == false
+        @can_exceed_maximum = value
+      else
+        @can_exceed_maximum = (value.to_i != 0)
+      end
+    end
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,

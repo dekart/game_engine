@@ -1,13 +1,13 @@
 module Payouts
   class EnergyPointsTotal < Base
-    def apply(character, reference = nil)
+    def apply(character, reward, reference)
       if action == :remove
-        character.energy -= @value
+        reward.increase_attribute(:energy, @value)
       else
-        character.energy += @value
+        reward.decrease_attribute(:energy, @value)
       end
     end
-    
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,

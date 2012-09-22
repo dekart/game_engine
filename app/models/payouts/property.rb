@@ -1,7 +1,7 @@
 module Payouts
   class Property < Base
     delegate :state, :to => :property_type
-    
+
     def value=(value)
       @value = value.is_a?(::PropertyType) ? value.id : value.to_i
     end
@@ -10,12 +10,12 @@ module Payouts
       @property_type ||= ::PropertyType.find_by_id(value)
     end
 
-    def apply(character, reference = nil)
+    def apply(character, reward, reference)
       if action != :remove
-        character.properties.give!(property_type)
+        reward.give_property(property_type)
       end
     end
-    
+
     def to_s
       "%s: %s (%d%% %s)" % [
         apply_on_label,

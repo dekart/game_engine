@@ -1,9 +1,9 @@
 module Payouts
   class Experience < Base
-    def apply(character, reference = nil)
-      character.experience += @value
+    def apply(character, reward, reference)
+      reward.give_experience(@value)
     end
-    
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,

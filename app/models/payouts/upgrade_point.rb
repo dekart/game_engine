@@ -1,14 +1,13 @@
 module Payouts
   class UpgradePoint < Base
-    def apply(character, reference = nil)
+    def apply(character, reward, reference)
       if action == :remove
-        character.points -= @value
-        character.points = 0 if character.points < 0
+        reward.take_upgrade_points(@value)
       else
-        character.points += @value
+        reward.give_upgrade_points(@value)
       end
     end
-    
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,

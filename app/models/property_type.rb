@@ -7,11 +7,11 @@ class PropertyType < ActiveRecord::Base
   AVAILABILITIES = [:shop, :mission, :loot]
 
   has_many :properties, :dependent => :destroy
-  
+
   has_requirements
 
   has_payouts :build, :upgrade, :collect
-    
+
   has_pictures :styles => [
     [:medium, "180x180>"],
     [:small,  "120x120>"],
@@ -110,4 +110,9 @@ class PropertyType < ActiveRecord::Base
     end
   end
 
+  def as_json_for_reward
+    {
+      :name => name
+    }
+  end
 end

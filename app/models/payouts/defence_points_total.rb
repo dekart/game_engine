@@ -1,10 +1,10 @@
 module Payouts
   class DefencePointsTotal < Base
-    def apply(character, reference = nil)
+    def apply(character, reward, reference)
       if action == :remove
-        character.defence -= @value
+        reward.increase_attribute(:defence, @value)
       else
-        character.defence += @value
+        reward.decrease_attribute(:defence, @value)
       end
     end
 

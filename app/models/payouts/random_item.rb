@@ -10,9 +10,9 @@ module Payouts
       @item_set_id = value.to_i
     end
 
-    def apply(character, reference = nil)
+    def apply(character, reward, reference)
       if @item = choose_item(character)
-        character.inventories.give!(@item)
+        reward.give_item(@item, 1)
       end
     end
 
@@ -27,7 +27,7 @@ module Payouts
     def shift_item_set=(value)
       @shift_item_set = (value.to_i == 1)
     end
-    
+
     def to_s
       if item_set
         "%s: Random Item from '%s' (%d%% %s)" % [
@@ -45,7 +45,7 @@ module Payouts
           chance,
           action
         ]
-      end 
+      end
     end
 
     protected

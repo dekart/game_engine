@@ -1,2 +1,5 @@
 <%= form.select :recovery_mode, Payouts::RecoveryMode::MODES %>
+
 <%= form.text_field :value, :size => 6, :autocomplete => :off %>
+
+<%= form.check_box :can_exceed_maximum %>

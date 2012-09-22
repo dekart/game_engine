@@ -24,12 +24,23 @@ module Payouts
       @items = payouts
     end
 
+    # TODO: this method should be replaced with 'apply_with_result' everywhere
     def apply(character, trigger, reference = nil)
+      reward = Reward.new(character, reference)
+
       find_all(trigger).tap do |payouts|
-        payouts.each {|payout| payout.apply(character, reference) }
+        payouts.each {|payout| payout.apply(character, reward, reference) }
       end
     end
-    
+
+    def apply_with_result(character, trigger, reference = nil)
+      Reward.new(character, reference) do |result|
+        find_all(trigger).each do |payout|
+          payout.apply(character, result, reference)
+        end
+      end
+    end
+
     def find_all(trigger)
       Payouts::Collection.new.tap do |result|
         items.each do |payout|
@@ -43,7 +54,7 @@ module Payouts
     def by_action(action)
       items.select{|p| p.action == action }
     end
-    
+
     def payout_include?(name)
       !self.detect{ |p| p.class == Payouts::Base.by_name(name) }.nil?
     end

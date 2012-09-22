@@ -1,13 +1,13 @@
 module Payouts
   class VipMoney < Base
-    def apply(character, reference = nil)
+    def apply(character, reward, reference)
       if action == :remove
-        character.charge(0, @value, reference)
+        reward.take_vip_money(@value)
       else
-        character.charge(0, - @value, reference)
+        reward.give_vip_money(@value)
       end
     end
-    
+
     def to_s
       "%s: %s %s (%d%% %s)" % [
           apply_on_label,

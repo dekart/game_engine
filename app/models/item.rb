@@ -272,4 +272,13 @@ class Item < ActiveRecord::Base
   def owned
     $redis.hget("items_owned", id).to_i
   end
+
+  def as_json_for_reward
+    {
+      :name => name,
+      :alias => self.alias,
+      :pictures => pictures.urls,
+      :description => description
+    }
+  end
 end

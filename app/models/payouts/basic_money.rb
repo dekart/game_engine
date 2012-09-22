@@ -1,10 +1,10 @@
 module Payouts
   class BasicMoney < Base
-    def apply(character, reference = nil)
+    def apply(character, reward, reference)
       if action == :remove
-        character.charge(@value, 0, reference)
+        reward.take_basic_money(@value)
       else
-        character.charge(- @value, 0, reference)
+        reward.give_basic_money(@value)
       end
     end
 
