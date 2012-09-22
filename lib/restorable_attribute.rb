@@ -7,7 +7,7 @@ module RestorableAttribute
     end
 
     def updated_at
-      @container["#{@name}_updated_at"] || Time.at(0)
+      @container["#{@name}_updated_at"]
     end
 
     def restore_rate
@@ -42,14 +42,18 @@ module RestorableAttribute
     end
 
     def value
-      calculated_value = stored_value + restore_rate * restores_since_last_update
-
-      if calculated_value >= limit
-        limit
-      elsif calculated_value < 0
-        0
+      if updated_at.nil?
+        stored_value
       else
-        calculated_value
+        calculated_value = stored_value + restore_rate * restores_since_last_update
+
+        if calculated_value >= limit
+          limit
+        elsif calculated_value < 0
+          0
+        else
+          calculated_value
+        end
       end
     end
 
@@ -59,7 +63,10 @@ module RestorableAttribute
 
     def value=(value)
       @container[@name] = value.to_i > 0 ? value : 0
-      @container["#{@name}_updated_at"] = (time_to_restore > 0 ? restore_period - time_to_restore : 0).seconds.ago
+
+      if @container[@name] <= limit
+        @container["#{@name}_updated_at"] = (time_to_restore > 0 ? restore_period - time_to_restore : 0).seconds.ago
+      end
     end
 
     def restore_time(restore_to)
@@ -74,12 +81,12 @@ module RestorableAttribute
     end
 
     def time_to_restore
-      return 0 if full?
+      return 0 if full? || updated_at.nil?
 
       time = restore_period - (Time.now - updated_at).to_i % restore_period.to_i
       time > 0 ? time : 0
     end
-    
+
     def full?
       value == limit
     end
@@ -110,7 +117,7 @@ module RestorableAttribute
     define_method("time_to_#{name}_restore") do
       send("#{name}_restorable").time_to_restore
     end
-    
+
     define_method("full_#{name}?") do
       send("#{name}_restorable").full?
     end
