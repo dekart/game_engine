@@ -1,9 +1,11 @@
-<%= form.select :item_group_id, ItemGroup.to_dropdown, :required => true %>
-
 <%= form.text_field :name, :required => true, :size => 40 %>
 <%= form.text_field :plural_name, :size => 40 %>
 
 <%= form.text_area :description, :cols => 80, :rows => 5 %>
+
+<%= form.text_field :alias, :required => true, :size => 40 %>
+
+<%= form.select :item_group_id, ItemGroup.to_dropdown, :required => true %>
 
 <% form.field_set form.object.class.human_attribute_name('pictures') do %>
   <%= form.fields 'admin/pictures/form_fields' %>

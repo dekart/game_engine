@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120329083758) do
+ActiveRecord::Schema.define(:version => 20120922101905) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -450,6 +450,7 @@ ActiveRecord::Schema.define(:version => 20120329083758) do
     t.integer  "original_vip_price"
     t.boolean  "exchangeable",                           :default => false
     t.text     "effects"
+    t.string   "alias",                                  :default => "",     :null => false
   end
 
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
