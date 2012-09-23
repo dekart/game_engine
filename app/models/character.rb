@@ -3,12 +3,12 @@ class Character < ActiveRecord::Base
   extend RestorableAttribute
   extend HasPayouts
   include ActionView::Helpers::NumberHelper
-  
+
   include Character::Levels
   include Character::Fights
   include Character::AppRequests
   include Character::Relations
-  include Character::Assignments  
+  include Character::Assignments
   include Character::Properties
   include Character::Notifications
   include Character::Missions
@@ -33,24 +33,24 @@ class Character < ActiveRecord::Base
   belongs_to :character_type,
     :counter_cache => true
 
-  has_many :ordered_hit_listings, 
-    :foreign_key  => :client_id, 
-    :class_name   => "HitListing", 
+  has_many :ordered_hit_listings,
+    :foreign_key  => :client_id,
+    :class_name   => "HitListing",
     :dependent    => :destroy
 
-  has_many :bank_deposits, 
+  has_many :bank_deposits,
     :dependent => :delete_all
-  has_many :bank_withdrawals, 
-    :class_name => "BankWithdraw", 
+  has_many :bank_withdrawals,
+    :class_name => "BankWithdraw",
     :dependent  => :delete_all
 
   has_many :vip_money_deposits,
     :dependent => :destroy
-  has_many :vip_money_withdrawals, 
+  has_many :vip_money_withdrawals,
     :dependent => :destroy
 
   has_many :market_items
-  
+
   has_many :wall_posts,
     :dependent => :destroy
 
@@ -114,16 +114,16 @@ class Character < ActiveRecord::Base
   def self_and_relations
     self.class.where(:id => [id] + friend_relations.character_ids)
   end
-  
+
   def upgrade_attributes!(params)
     sum_points = 0
-    
+
     UPGRADABLE_ATTRIBUTES.each do |attribute|
       sum_points += Setting.i("character_#{attribute}_upgrade_points") * params[attribute].to_i.abs
     end
-    
+
     return false if points < sum_points
-    
+
     transaction do
       UPGRADABLE_ATTRIBUTES.each do |attribute|
         upgrade_by = params[attribute].to_i.abs
@@ -140,17 +140,17 @@ class Character < ActiveRecord::Base
           self.sp       += Setting.i(:character_stamina_upgrade) * params[:stamina].to_i.abs
         else
           increment(attribute, Setting.i("character_#{attribute}_upgrade") * upgrade_by)
-        end  
-        
+        end
+
         self.points -= Setting.i("character_#{attribute}_upgrade_points") * upgrade_by
       end
-      
+
       save
-    end  
+    end
   end
 
   def attack_points
-    attack + 
+    attack +
       equipment.effect(:attack) +
       assignments.attack_effect +
       boosts.active_for(:fight, :attack).try(:effect, :attack).to_i
@@ -182,7 +182,7 @@ class Character < ActiveRecord::Base
   def weak?
     hp < weakness_minimum
   end
-  
+
   def weakness_requirement
     Requirements::HealthPoint.new(:value => weakness_minimum)
   end
@@ -194,7 +194,7 @@ class Character < ActiveRecord::Base
       Setting.i(:character_weakness_minimum)
     end
   end
-  
+
   def formatted_basic_money
     number_to_currency(basic_money)
   end
@@ -204,7 +204,11 @@ class Character < ActiveRecord::Base
   end
 
   def to_json_for_overview
-    to_json(
+    as_json_for_overview.to_json
+  end
+
+  def as_json_for_overview
+    as_json(
       :only => [
         :basic_money,
         :vip_money,
@@ -229,7 +233,7 @@ class Character < ActiveRecord::Base
       ]
     )
   end
-  
+
   def show_promo_block?
     level >= Setting.i(:promo_block_minimum_level)
   end
@@ -250,7 +254,7 @@ class Character < ActiveRecord::Base
 
     if vip_amount.to_i != 0
       target = (vip_amount.to_i > 0 ? vip_money_withdrawals : vip_money_deposits)
-      
+
       target.build(
         :amount     => vip_amount.abs,
         :reference  => reference
@@ -264,7 +268,7 @@ class Character < ActiveRecord::Base
   def charge!(*args)
     transaction do
       charge(*args)
-    
+
       save!
     end
   end
@@ -280,46 +284,46 @@ class Character < ActiveRecord::Base
   def active_boosts
     self[:active_boosts] ||= {}
   end
-  
+
   def active_boost?(boost, destination)
     active_boosts[boost.boost_type] && active_boosts[boost.boost_type][destination] == boost.id
   end
-  
+
   def activate_boost(boost, destination)
     active_boosts[boost.boost_type] ||= {}
     active_boosts[boost.boost_type][destination] = boost.id
   end
-  
+
   def activate_boost!(boost, destination)
     activate_boost(boost, destination)
     save!
   end
-  
+
   def deactivate_boost(boost, destination)
-    active_boosts[boost.boost_type].delete(destination) if active_boosts[boost.boost_type] && 
+    active_boosts[boost.boost_type].delete(destination) if active_boosts[boost.boost_type] &&
       active_boosts[boost.boost_type][destination] == boost.id
   end
-  
+
   def deactivate_boost!(boost, destination)
     deactivate_boost(boost, destination)
     save!
   end
-  
+
   def toggle_boost(boost, destination)
     if active_boosts[boost.boost_type] && active_boosts[boost.boost_type][destination] == boost.id
       deactivate_boost(boost, destination)
     else
-      activate_boost(boost, destination) 
+      activate_boost(boost, destination)
     end
   end
-  
+
   def toggle_boost!(boost, destination)
     toggle_boost(boost, destination)
     save!
   end
-  
+
   def health_restore_period
-    (Setting.i(:character_health_restore_period) * (1 - equipment.effect(:hp_restore_rate).to_f / 100)).seconds  
+    (Setting.i(:character_health_restore_period) * (1 - equipment.effect(:hp_restore_rate).to_f / 100)).seconds
   end
 
   def energy_restore_period
@@ -340,15 +344,15 @@ class Character < ActiveRecord::Base
       :level => self.level
     }
   end
-    
+
   protected
 
   def update_level_and_points
     self.level = [level, level_for_current_experience].max
-    
+
     if level_changed?
       self.level_up_applied = true
-      
+
       self.points += level_up_amount * Setting.i(:character_points_per_upgrade)
 
       charge!(0, - vip_money_per_upgrade, :level_up)
@@ -358,13 +362,13 @@ class Character < ActiveRecord::Base
       self.sp = stamina_points
 
       notifications.schedule(:level_up)
-      
+
       update_opponent_bucket # Update character position in opponent buckets
     end
-    
+
     true
   end
-  
+
   def level_up_amount
     level_change[1] - level_change[0]
   end
@@ -382,17 +386,17 @@ class Character < ActiveRecord::Base
   def update_total_money
     self.total_money = basic_money + bank
   end
-    
+
   def schedule_notifications
     message = Message.last(:conditions => {:notify_new_users => true, :state => ["sending", "sent"]})
-    
+
     self.notifications.schedule(:information, :message_id => message.id) if message
   end
-  
+
   def update_current_contest_points
     if contest = Contest.current and contest.active? and try(contest.points_type + "_changed?")
       old, now = send(contest.points_type + '_change')
-      
+
       contest.increment_points!(self, now - old)
     end
   end
