@@ -25,7 +25,7 @@ namespace :deploy do
     db.setup
     app.setup
   end
-  
+
   desc "Restart service"
   task :restart, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
@@ -54,7 +54,7 @@ namespace :deploy do
 
       put(config, "#{release_path}/config/facebook.yml")
     end
-    
+
     desc "Generate DB config file"
     task :database do
       config = YAML.dump(rails_env => database_config.deep_stringify_keys)
@@ -102,18 +102,18 @@ namespace :deploy do
     desc "Backup database"
     task :backup, :roles => :db, :only => {:primary => true} do
       dump_path = 'dump.%s.%d.sql' % [database_config[:database], Time.now.to_i]
-      
+
       common_options = "--host='#{ database_config[:host] }' --user='#{ database_config[:username] }' --password='#{ database_config[:password] }' --default-character-set='#{ database_config[:encoding] }' --set-charset"
-      
+
       run "mysqldump #{common_options} --no-data #{ database_config[:database] } >> #{ dump_path }" # Dumping structure
       run "mysqldump #{common_options} --no-create-info --ignore-table='#{ database_config[:database] }.logged_events' #{ database_config[:database] } >> #{ dump_path }"
     end
-    
+
     desc "Setup database"
     task :setup, :roles => :db, :only => {:primary => true} do
-      run "cd #{release_path}; #{rake} db:setup --trace"
+      run "cd #{release_path}; #{rake} db:setup"
     end
-    
+
     desc "Package all non-packaged backups"
     task :package_backups, :roles => :db, :only => {:primary => true} do
       run "nohup gzip *.sql"
@@ -144,7 +144,7 @@ namespace :deploy do
           database_config[:password]
         ]
       end
-    end    
+    end
   end
 
   namespace :dependencies do
@@ -172,14 +172,14 @@ namespace :deploy do
       run "rm -rf ~/.gems/ruby/1.8/cache; cd #{release_path}; bundle install --deployment --without development test"
     end
   end
-  
+
   namespace :app do
     desc "Setup application"
     task :setup, :roles => :app do
       run "cd #{release_path}; #{rake} app:setup"
     end
   end
-  
+
   namespace :maintenance do
     desc "Configure warning message about scheduled downtime"
     task :schedule, :roles => :app do
@@ -229,7 +229,7 @@ end
 
 # Ordinary deploys
 unless ENV['BACKUP'] == 'false'
-  before "deploy:migrations", "deploy:db:backup" 
+  before "deploy:migrations", "deploy:db:backup"
   after "deploy:migrations", "deploy:db:package_backups"
   after "deploy:migrations", "deploy:db:cleanup_backups"
 end
