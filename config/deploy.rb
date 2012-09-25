@@ -198,13 +198,6 @@ namespace :deploy do
       run "crontab -r || true"
     end
   end
-
-  namespace :assets do
-    desc "Export i18n locales to javascript"
-    task :export_i18n, :roles => :web do
-      run "cd #{release_path}; #{ rake } i18n:js:export"
-    end
-  end
 end
 
 # Application setup
@@ -217,8 +210,6 @@ before "deploy:update_code", "deploy:maintenance:stop_cron"
 after "deploy:finalize_update", "deploy:configure:facebook"
 after "deploy:finalize_update", "deploy:configure:database"
 after "deploy:finalize_update", "deploy:configure:settings"
-
-before "deploy:assets:precompile", "deploy:assets:export_i18n"
 
 ["deploy", "deploy:migrations", "deploy:cold"].each do |t|
   after t, "deploy:configure:nginx"
