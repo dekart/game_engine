@@ -2,3 +2,4 @@ translations:
   - file: "app/assets/javascripts/i18n/translations.js"
     only:
       - "*.app_requests.invite_dialog"
+      - "*.active_record.models.attributes"
