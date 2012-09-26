@@ -7,7 +7,7 @@
 
   <%= form_tag(admin_vip_money_operations_path(:type => operation_type), :method => :get) do %>
     <%= hidden_field_tag :type, operation_type %>
-  
+
     <%= label_tag :reference_type, t(".filter.reference_type") %>
     <%= select_tag(:reference_type, options_for_select([''] + operation_class.reference_type_options_for_select, params[:reference_type])) %>
 
@@ -21,7 +21,7 @@
 <%= will_paginate(@operations) %>
 
 <% collection(@operations) do %>
-  <table class="data">
+  <table class="data" id="vip_money_operations">
     <tr>
       <th><%= VipMoneyOperation.human_attribute_name("created_at") %></th>
       <th><%= Character.model_name.human %></th>
@@ -29,7 +29,11 @@
       <th><%= VipMoneyOperation.human_attribute_name("amount") %></th>
     </tr>
     <% @operations.each do |operation| %>
-      <tr>
+      <tr
+        <% if operation.created_at > 24.hours.ago %>
+          class="recent"
+        <% end %>
+      >
         <td><%= l(operation.created_at, :format => :short) %></td>
         <td><%= link_to(character_name(operation.character), admin_character_url(operation.character.key)) %></td>
         <td><%= admin_statistics_reference(operation.reference) %></td>
