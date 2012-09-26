@@ -44,7 +44,7 @@ var ClanEditForm = {
       $(".file").show();
       $(this).hide()
     });
-    
+
     $(".cancel a").click(function(){
       $(".file").hide();
       $(".change").show();
@@ -57,30 +57,30 @@ var jCarouselHelper = {
   wrap: function($container, wrapFactor) {
     var result = "";
     var wrapped = [];
-    
+
     var items = $container.find('li').toArray();
-    
+
     for (var i = 0; i < items.length; i++) {
       var $item = $(items[i]);
-      
+
       wrapped.push($item.html());
-      
+
       if (wrapped.length == wrapFactor || i == items.length - 1) {
         result += '<li>' + wrapped.join("\n") + '</li>';
         wrapped = []
       }
     }
-    
+
     $container.html(result);
   }
 };
 
 
 function if_fb_initialized(callback){
-  if(typeof FB !== 'undefined'){ 
+  if(typeof FB !== 'undefined'){
     callback.call();
-  } else { 
-    alert('The page failed to initialize properly. Please reload it and try again.'); 
+  } else {
+    alert('The page failed to initialize properly. Please reload it and try again.');
   }
 }
 
@@ -149,9 +149,9 @@ var CharacterForm = {
 var Character = {
   update: function(c){
     if(typeof c === 'undefined' || c === null){ return; }
-    
+
     if($.isEmptyObject(c)){ return; }
-    
+
     $("#co .basic_money .value").text(c.formatted_basic_money);
     $("#co .vip_money .value").text(c.formatted_vip_money);
     $("#co .experience .value").text(c.experience + "/" + c.next_level_experience);
@@ -163,7 +163,7 @@ var Character = {
 
     Character.hp_timer().stop();
     Character.hp_timer().start(c.time_to_hp_restore);
-    
+
     Character.ep_timer().stop();
     Character.ep_timer().start(c.time_to_ep_restore);
 
@@ -175,25 +175,25 @@ var Character = {
     } else {
       $("#co .level .upgrade").hide();
     }
-    
+
     if (c.hp == c.health_points) {
       $('#co .health .hospital').hide();
     } else {
       $('#co .health .hospital').show();
     }
-    
+
     if (c.ep > (c.energy_points / 2)) {
       $('#co .energy .refill').hide();
     } else {
       $('#co .energy .refill').show();
     }
-    
+
     if (c.sp > (c.stamina_points / 2)) {
       $('#co .stamina .refill').hide();
     } else {
       $('#co .stamina .refill').show();
     }
-    
+
   },
 
   hp_timer: function(){
@@ -211,7 +211,7 @@ var Character = {
 
     return this.eptimer;
   },
-  
+
   sp_timer: function(){
     if(typeof this.sptimer === 'undefined' || this.sptimer === null) {
       this.sptimer = new VisualTimer(['#co .stamina .timer'], this.update_from_remote);
@@ -223,7 +223,7 @@ var Character = {
   update_from_remote: function(){
     $.getJSON('/character_status/?rand=' + Math.random(), function(data){
       Character.update(data);
-      
+
       $(document).trigger('application.ready'); // Triggering event to start timers
     });
   }
@@ -263,41 +263,41 @@ var AssignmentForm = {
 
 var Equipment = {
   options: {},
-  
+
   setup: function(_options) {
     if (_options) {
       this.options = _options;
-      
+
       if (this.options.wrapGroupEquipment)
         this.options.groupedPlacementSize /= this.options.wrapGroupEquipment;
     }
-    
+
     $("#equippables-tabs").tabs({
       show: function(event, ui) {
         $(ui.panel).find(".carousel-container").jcarousel({
           visible: 8,
           itemFallbackDimension: 8
-        }); 
+        });
       }
     });
-    
+
     $('#placements .group_placement').each(function(){
       var $placement = $(this);
       var $carousel = $placement.find('.carousel-container');
-      
+
       // Appending free placeholders
       var free_slots = parseInt($placement.data('free-slots'));
-      
+
       if(free_slots > 0) {
         for(var i = 0; i < free_slots; i ++){
           $carousel.append('<li><div class="additional-placeholder"></div></li>');
         }
       }
-      
+
       if (Equipment.options.wrapGroupEquipment) {
         jCarouselHelper.wrap($carousel, Equipment.options.wrapGroupEquipment);
       }
-      
+
       $carousel.jcarousel({
         vertical: true,
         visible: Equipment.options.groupedPlacementSize,
@@ -306,7 +306,7 @@ var Equipment = {
         itemFallbackDimension: Equipment.options.groupedPlacementSize
       });
     });
-    
+
     $("#equippables .inventory, #placements .inventory").draggable({
       appendTo: $("#equipment"),
       helper: function() {
@@ -318,37 +318,37 @@ var Equipment = {
       revert: "invalid",
       cursor: "move"
     });
-    
+
     var elementInContainer = function(container, el) {
       return $(el).parents("[data-placement='" + $(container).data('placement') + "']").length == 1;
     }
-    
+
     var checkPlacementAcceptance = function(container, el) {
       return $.inArray($(container).data('placement'), $(el).data('placements').split(',')) != -1;
     };
-    
+
     var disableDraggables = function() {
       $("#equippables .inventory").draggable("disable");
       $("#placements .inventory").draggable("disable");
     };
-    
+
     var droppableDefaults = {
       activeClass: "state-active",
       hoverClass: "state-hover",
-      activate: function(){ 
+      activate: function(){
         $(this).css('opacity', 0.7);
       },
       deactivate: function(){
         $(this).css('opacity', 1);
       }
     };
-    
+
     $("#placements .placement, #placements .group_placement").droppable($.extend(droppableDefaults, {
       accept: function(el) {
         if ($(this).attr('data-free-slots') == 0) {
           return false;
         }
-          
+
         if (checkPlacementAcceptance(this, el) && !elementInContainer(this, el)) {
           return true;
         }
@@ -356,7 +356,7 @@ var Equipment = {
       },
       drop: function(event, ui) {
         disableDraggables();
-        
+
         if ($(ui.draggable).data('move')) {
           // move inventory from one placement to another
           $.post($(ui.draggable).data('move'), {to_placement: $(this).data('placement')});
@@ -366,7 +366,7 @@ var Equipment = {
         }
       }
     }));
-    
+
     $("#equippables-tabs .item_group").droppable($.extend(droppableDefaults, {
       accept: function(el) {
         if ($(el).parents("#equippables-tabs").length == 0) {
@@ -376,16 +376,16 @@ var Equipment = {
       },
       drop: function(event, ui) {
         disableDraggables();
-        
+
         $.post($(ui.draggable).data('unequip'), {placement: $(ui.draggable).data('placement')});
       }
     }));
   },
-  
+
   getActiveTabId: function() {
     return $('#equippables-tabs .ui-tabs-selected a').attr('href');
   },
-  
+
   setActiveTab: function(tabId) {
     if (typeof tabId !== 'undefined') {
       $("#equippables-tabs").tabs('select', tabId);
@@ -405,19 +405,19 @@ var Fighting = {
         Fighting.loadOpponents();
       }
     });
-    
+
     Fighting.checkOpponentPresence();
   },
-  
+
   checkOpponentPresence: function(){
     if($('#victim_list .character:visible').length == 0){
       Fighting.loadOpponents();
     }
   },
-  
+
   loadOpponents : function(){
     $("#loading_opponents").show();
-    
+
     $.get('/fights', function(response){
       $("#loading_opponents").hide();
     }, 'script');
@@ -427,10 +427,10 @@ var Fighting = {
 var Contest = {
   setup: function(contestGroup) {
     var $tabs = $(".contest .results .tabs");
-    
+
     if ($tabs.length > 0) {
       $tabs.tabs();
-      
+
       var tabIndex = $tabs.find('.ui-tabs-nav .contest_group').index($('#' + contestGroup));
       $tabs.tabs('select', tabIndex);
     }
@@ -444,21 +444,21 @@ var Exchange = {
         $(ui.panel).find(".carousel-container").jcarousel({
           visible: 8,
           itemFallbackDimension: 8
-        }); 
+        });
       }
     });
-    
+
     $("#exchangeables_tabs .inventory").click(function() {
       $("#exchangeables_tabs .inventory.active").removeClass('active');
-      
+
       $(this).addClass('active');
       $(".exchangeables .button.add").removeClass("disabled");
     });
-    
+
     $("#new_exchange_offer").submit(function() {
       $("#exchange_offer_item_id").val($("#exchangeables_tabs .inventory.active").data('id'));
     });
-    
+
     if ($("#exchangeables_tabs .inventory.active").length == 0) {
       $(".exchangeables .button.add").addClass("disabled");
     }
@@ -472,10 +472,10 @@ var AchievementList = {
     }).bind('facebook.permissions.present facebook.permissions.granted', function(){
       $("#achievement_permissions").hide();
     });
-    
+
     FacebookPermissions.test('publish_actions');
   },
-  
+
   requestPermissions: function(){
     FacebookPermissions.request('publish_actions');
   }
@@ -489,16 +489,16 @@ var Rating = {
         FB.XFBML.parse();
       }
     });
-    
+
     $(document).bind('facebook.permissions.missing facebook.permissions.not_granted', function() {
       $("#rating_score_permissions").show();
     }).bind('facebook.permissions.present facebook.permissions.granted', function(){
       $("#rating_score_permissions").hide();
     });
-    
+
     FacebookPermissions.test('publish_actions');
   },
-  
+
   requestPermissions: function() {
     FacebookPermissions.request('publish_actions');
   }
@@ -507,27 +507,27 @@ var Rating = {
 var FacebookPermissions = {
   test: function(permissions) {
     permissions = permissions.split(",");
-    
+
     FB.getLoginStatus(function(response) {
       if (response.authResponse) {
         // logged in and connected user, someone you know
         FB.api('/me/permissions', function(r) {
           var data = r.data[0]; // TODO: We should handle a case when r.data is undefined (it happens sometimes)
-          
+
           var missingPermissions = [];
-          
+
           for (var i = 0; i < permissions.length; i++) {
             var permission = permissions[i];
-            
+
             if (data[permission] != 1) {
               missingPermissions.push(permission);
             }
           }
-          
+
           if (missingPermissions.length > 0) {
             $(document).trigger('facebook.permissions.missing', missingPermissions);
           } else {
-            $(document).trigger('facebook.permissions.present'); 
+            $(document).trigger('facebook.permissions.present');
           }
         });
       } else {
@@ -535,7 +535,7 @@ var FacebookPermissions = {
       }
     });
   },
-  
+
   request: function(permissions) {
     FB.login(
       function(response){
@@ -544,7 +544,7 @@ var FacebookPermissions = {
         } else {
           $(document).trigger('facebook.permissions.not_granted');
         }
-      }, 
+      },
       {
         scope: permissions
       }
@@ -557,13 +557,13 @@ var FacebookPermissions = {
     var $container = $(this);
     var $items = $container.find('li');
     var $current = $(current_group);
-    
+
     $container.find('.container ul').jcarousel({
       visible: show_limit,
       itemFallbackDimension: show_limit,
       start: $items.index($current)
     });
-     
+
     $current.addClass('current');
 
     $items.click(function(e){
@@ -573,7 +573,7 @@ var FacebookPermissions = {
       redirectTo($(this).find('a').attr('href'));
     });
   };
-  
+
   $.fn.giftForm = function(options){
     var $gifts = $(this).find('.gifts .gift');
 
@@ -593,26 +593,28 @@ var FacebookPermissions = {
 
 
 $(function(){
-  $(document).bind('tooltips.setup', function(){
+  $(document).bind('tooltips.setup', function(event, container) {
+    var target = $(container || '#content')
+
     // Display tooltips
-    $('#content [data-tooltip]').each(function(){
+    target.find('[data-tooltip]').each(function(){
       var $element = $(this);
-      
+
       $element.qtip($element.data('tooltip'));
-      
+
       $element.removeAttr('data-tooltip');
     });
-    
+
      // Display tooltip on click
-    $('#content [data-tooltip-on-click]').each(function(){
+    target.find('[data-tooltip-on-click]').each(function(){
       var $element = $(this);
-      
+
       var existingTooltip = $element.qtip('api');
       var tooltipOptions = $element.data('tooltip-on-click');
-      
+
       if (existingTooltip) {
         tooltipOptions.events = tooltipOptions.events || {};
-        
+
         $.extend(tooltipOptions.events, {
           show: function() {
             existingTooltip.disable();
@@ -622,18 +624,18 @@ $(function(){
           }
         });
       }
-      
+
       // for multiple tooltips per elemet. See more http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
       $element.removeData('qtip');
-      
+
       $element.qtip(tooltipOptions);
-      
+
       $element.removeAttr('data-tooltip-on-click');
     });
-  })
-  
+  });
+
   $(document).trigger('tooltips.setup');
-       
+
   $('#content').on('click', 'a[data-click-once=true]', function(e){
     $(e.currentTarget).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
   });
@@ -651,7 +653,7 @@ $(function(){
 
   $(document).bind('remote_content.received', function(){
     $(document).trigger('tooltips.setup');
-    
+
     if_fb_initialized(function(){
       FB.XFBML.parse();
     });
@@ -660,7 +662,7 @@ $(function(){
   $(document).bind('loading.dialog', function(){
     $.scrollTo('#dialog .popup');
   });
-  
+
   $(document).bind('afterReveal.dialog', function(){
     $.scrollTo('#dialog .popup .body');
   });
@@ -670,14 +672,14 @@ $(function(){
   $('#content').on('click', 'a.help', function(e){
     e.preventDefault();
     e.stopPropagation();
-    
+
     $.dialog({ajax: $(e.currentTarget).attr('href')});
   });
 
   $(document).bind('dialog.close_complete application.ready', function(){
     $(document).dequeue('dialog');
   });
-  
+
   $('#app_requests_counter').qtip({
     position: {
       my: 'top right',
@@ -687,7 +689,7 @@ $(function(){
       delay: 0
     }
   });
-  
+
   $('#global_chat_icon').qtip({
     position: {
       my: 'top right',
@@ -697,7 +699,7 @@ $(function(){
       delay: 0
     }
   });
-  
+
   // throw error if it in ajax javascript response
   $(document).on('ajax:error', function(event, request, status, error){
     throw error;
