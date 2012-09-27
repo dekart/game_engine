@@ -2,9 +2,9 @@ module Payouts
   class HealthPointsTotal < Base
     def apply(character, reward, reference)
       if action == :remove
-        reward.increase_attribute(:health, @value)
-      else
         reward.decrease_attribute(:health, @value)
+      else
+        reward.increase_attribute(:health, @value)
       end
     end
 

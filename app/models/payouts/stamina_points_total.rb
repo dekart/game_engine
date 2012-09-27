@@ -2,9 +2,9 @@ module Payouts
   class StaminaPointsTotal < Base
     def apply(character, reward, reference)
       if action == :remove
-        reward.increase_attribute(:stamina, @value)
-      else
         reward.decrease_attribute(:stamina, @value)
+      else
+        reward.increase_attribute(:stamina, @value)
       end
     end
 
