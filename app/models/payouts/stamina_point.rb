@@ -2,8 +2,6 @@ module Payouts
   class StaminaPoint < Base
     include RecoveryMode
 
-    attr_accessor :can_exceed_maximum
-
     def apply(character, reward, reference)
       @calculated_value = calculate_value(character.stamina)
 
