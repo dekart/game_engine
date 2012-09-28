@@ -28,6 +28,8 @@ th
   float: left
   width: 190px
   position: fixed
+  max-height: 90%
+  overflow-y: auto
 
   a
     margin-right: 10px
@@ -46,19 +48,19 @@ th
       background-color: #e9f4Ff
       outline: 1px solid #BEDDFE
       font-weight: bold
-      
+
   .item_group
     padding-left: 20px
     background:
       image: $asset_admin_collapsed
       repeat: no-repeat
-  
+
     h3
       cursor: pointer
-  
+
     &.expanded
       background-image: $asset_admin_expanded
-    
+
       a
         display: block
 

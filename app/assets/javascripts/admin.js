@@ -35,7 +35,7 @@ var SerializableList = {
     var $before = $element.prev('.serializable_item');
 
     $element.hide().detach().insertBefore($before).fadeIn('slow');
-    
+
     SerializableList.updateBorderClasses($element.parent());
   },
 
@@ -44,7 +44,7 @@ var SerializableList = {
     var $after = $element.next('.serializable_item');
 
     $element.hide().detach().insertAfter($after).fadeIn('slow');
-    
+
     SerializableList.updateBorderClasses($element.parent());
   },
 
@@ -67,7 +67,7 @@ var PictureForm = {
   markForRemove: function(el){
     $(el).hide();
     var form = $(el).parents('.picture');
-    
+
     form.find('input.remove').val(1);
     form.find('input[type=file], select').attr('disabled', 'disabled');
     form.find('img').css({opacity: 0.4});
@@ -76,14 +76,14 @@ var PictureForm = {
 
 $(function(){
   $.dialog.settings.container = 'body';
-  
+
   $('form input.submit_and_continue[type=submit]').click(function(){
     $('<input type="hidden" name="continue" value="true">').appendTo($(this).parents('form'));
   });
 
   $('form a.remove_attachment').click(function(e){
     e.preventDefault();
-    
+
     var $this = $(this);
 
     $('<input type="hidden" name="' + $this.attr('data-field') + '" value="1" />').insertBefore($this);
@@ -107,9 +107,8 @@ $(function(){
   $('#character_list :checkbox').click(function(){
     $('#character_list :checked').length > 0 ? $('#character_batch').show() : $('#character_batch').hide();
   });
-  
+
   $('#admin_menu .item_group h3').click(function(){
-    $('#admin_menu .item_group:not(:has(a.current))').removeClass('expanded');
     $(this).parents('.item_group').toggleClass('expanded');
   });
   $('#admin_menu .item_group:has(a.current)').addClass('expanded');
