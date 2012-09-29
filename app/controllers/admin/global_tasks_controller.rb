@@ -3,8 +3,12 @@ class Admin::GlobalTasksController < Admin::BaseController
 
   def delete_users
     if User.count < delete_user_limit
-      User.destroy_all
-      
+      User.transaction do
+        ActiveRecord::Base.lock_optimistically = false
+
+        User.all(:lock => true).map{|u| u.destroy }
+      end
+
       @result = :success
     else
       @result = :failure
@@ -18,7 +22,7 @@ class Admin::GlobalTasksController < Admin::BaseController
 
     render :layout => false
   end
-  
+
   def clear_memcache
     Rails.cache.clear
 
