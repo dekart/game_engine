@@ -3,7 +3,7 @@ class MissionResult
     :energy, :money, :experience, :boost,
     :mission_rank, :group_rank,
     :payouts
-    
+
   delegate :level, :to => :level_rank
   delegate :applicable_requirements, :to => :level
 
@@ -18,7 +18,7 @@ class MissionResult
     @mission        = mission
     @mission_group  = mission.mission_group
   end
-  
+
   def level_rank
     @level_rank ||= character.mission_levels.rank_for(@mission)
   end
@@ -32,7 +32,7 @@ class MissionResult
         @character.ep -= @energy
 
         payout_triggers = []
-        
+
         if success?
           @experience = level.experience
           @money      = (level.money * (1 + @character.assignments.mission_income_effect * 0.01)).ceil
@@ -50,8 +50,6 @@ class MissionResult
             @character.missions_completed += 1
             @character.missions_mastered  += 1 if level.last?
 
-            @character.points += 1
-
             @mission_rank = @character.missions.check_completion!(@mission)
             @group_rank = @character.mission_groups.check_completion!(@mission_group)
 
@@ -62,7 +60,7 @@ class MissionResult
 
             payout_triggers << :level_complete
             payout_triggers << :mission_complete if @mission_rank.completed?
-            
+
             if @group_rank.just_completed? && @character.missions.first_levels_completed?(@mission.mission_group)
               payout_triggers << :mission_group_complete
             end
@@ -72,7 +70,7 @@ class MissionResult
         else
           payout_triggers << (level_rank.completed? ? :repeat_failure : :failure)
         end
-        
+
         @payouts = level.applicable_payouts.apply(@character, payout_triggers, @mission)
         @character.save!
       end
