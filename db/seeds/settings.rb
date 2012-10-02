@@ -173,6 +173,7 @@ Setting[:achievements_enabled] ||= true
 
 Setting[:app_toolbar] ||= ''
 Setting[:app_toolbar_applifier_id] ||= ''
+Setting[:app_toolbar_appatyze_id] ||= ''
 Setting[:app_toolbar_minimum_level] ||= 1
 
 # total score

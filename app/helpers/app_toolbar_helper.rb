@@ -1,5 +1,5 @@
 module AppToolbarHelper
-  AVAILABLE_TOOLBARS = %w{applifier}
+  AVAILABLE_TOOLBARS = %w{applifier appatyze}
 
   def app_toolbar
     toolbar = Setting.s(:app_toolbar)
