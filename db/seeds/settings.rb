@@ -56,8 +56,6 @@ Setting[:premium_credits_enabled] ||= true
 Setting[:premium_offer_wall_enabled] ||= false
 
 Setting[:fight_victim_show_limit] ||= 10
-Setting[:fight_victim_levels_lower] ||= 0
-Setting[:fight_victim_levels_higher] ||= 5
 Setting[:fight_attack_repeat_delay] ||= 60
 Setting[:fight_stamina_required] ||= 1
 Setting[:fight_experience] ||= 50
