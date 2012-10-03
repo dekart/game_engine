@@ -3,16 +3,19 @@ class AddPayingFlagToUsers < ActiveRecord::Migration
     add_column :users, :paying, :boolean
 
     say_with_time "Updating users..." do
-      User.update_all "paying = 1", %{
-        users.id IN (
-          SELECT DISTINCT(characters.user_id)
-          FROM vip_money_operations
-          LEFT JOIN characters ON (characters.id = vip_money_operations.character_id)
-          WHERE
-            vip_money_operations.type = 'VipMoneyDeposit' AND
-            vip_money_operations.reference_type IN ('offerpal', 'super_rewards', 'credits', 'paypal')
-        )
+      character_ids = VipMoneyDeposit.connection.select_values %{
+        SELECT DISTINCT(character_id)
+        FROM vip_money_operations
+        WHERE
+          vip_money_operations.type = 'VipMoneyDeposit' AND
+          vip_money_operations.reference_type IN ('offerpal', 'super_rewards', 'credits', 'paypal')
       }
+
+      character_ids.each_slice(100) do |ids|
+        User.where(
+          "users.id IN (SELECT user_id FROM characters WHERE characters.id IN (?))", ids
+        ).update_all "paying = 1"
+      end
     end
   end
 
