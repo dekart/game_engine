@@ -321,7 +321,7 @@ var Equipment = {
 
     var elementInContainer = function(container, el) {
       return $(el).parents("[data-placement='" + $(container).data('placement') + "']").length == 1;
-    }
+    };
 
     var checkPlacementAcceptance = function(container, el) {
       return $.inArray($(container).data('placement'), $(el).data('placements').split(',')) != -1;
