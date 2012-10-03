@@ -10,6 +10,6 @@ class VipMoneyDeposit < VipMoneyOperation
   def deposit_money
     character.vip_money += amount
 
-    character.save
+    character.user.update_attribute(:paying, true) if PAYMENT_PROVIDERS.include?(reference_type)
   end
 end
