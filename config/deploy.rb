@@ -114,11 +114,6 @@ namespace :deploy do
       run "cd #{release_path}; #{rake} db:setup"
     end
 
-    desc "Package all non-packaged backups"
-    task :package_backups, :roles => :db, :only => {:primary => true} do
-      run "nohup gzip *.sql"
-    end
-
     desc "Cleanup old backups"
     task :cleanup_backups, :roles => :db, :only => {:primary => true} do
       backups = capture("ls -xt | grep dump.%s || true" % database_config[:database]).split.reverse
@@ -221,7 +216,6 @@ end
 # Ordinary deploys
 unless ENV['BACKUP'] == 'false'
   before "deploy:migrations", "deploy:db:backup"
-  after "deploy:migrations", "deploy:db:package_backups"
   after "deploy:migrations", "deploy:db:cleanup_backups"
 end
 
