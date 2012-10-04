@@ -21,3 +21,9 @@ en:
 
   errors:
     broken_url: "It seems that you clicked a broken link. Maybe the person who gave you this link didn\'t copy it in full?"
+
+  client:
+    timer:
+      days:
+        one: "%{count} day"
+        other: "%{count} days"

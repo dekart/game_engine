@@ -3,3 +3,4 @@ translations:
     only:
       - "*.app_requests.invite_dialog"
       - "*.activerecord.attributes"
+      - "*.client"
