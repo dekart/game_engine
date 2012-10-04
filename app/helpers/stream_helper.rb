@@ -1,39 +1,39 @@
 module StreamHelper
   include FacebookHelper
-  
+
   def stream_dialog(type, *args)
     options = args.extract_options!
     options = prepare_story(type, *(send("#{ type }_story_options", *args))).deep_merge(options)
-    
+
     post_options = {
       :attachment   => options[:attachment],
       :action_links => options[:action_links]
     }
-    
+
     success_event_track = ga_track_event('Stream Dialog', "#{ type.to_s.titleize } - Published")
-    
+
     ''.tap do |result|
       result << ga_track_event('Stream Dialog', "#{ type.to_s.titleize } - Dialog").to_s
       result << options[:before].to_s
       result << %[
-        StreamDialog.show(#{ post_options.to_json }, function(response){ 
+        StreamDialog.show(#{ post_options.to_json }, function(response){
           if(response){
             #{ success_event_track };
             #{ options[:success] };
           } else {
             #{ options[:failure] };
           }
-          
+
           #{ options[:callback] };
         });
       ]
-      
+
       result.gsub!(/\n\s+/, ' ')
     end.html_safe
   end
 
   protected
-  
+
   def level_up_story_options
     [
       {
@@ -55,8 +55,8 @@ module StreamHelper
       (item.pictures.url(:stream) if item.pictures?)
     ]
   end
-  
-  
+
+
   def mission_help_story_options(mission)
     [
       mission.attributes,
@@ -172,38 +172,39 @@ module StreamHelper
         :collection_id  => collection.id,
         :items          => missing_items.collect{|i| i.id },
         :valid_till     => Setting.i(:collections_request_time).hours.from_now
-      }
+      },
+      (missing_items.first.pictures.url(:stream) if missing_items.first.pictures?)
     ]
   end
-  
+
   def won_contest_story_options(notification)
     [
       {
-        :position => notification.contest_position, 
-        :name => notification.contest.name 
+        :position => notification.contest_position,
+        :name => notification.contest.name
       },
       {
-        :position => notification.contest_position, 
-        :name => notification.contest.name 
+        :position => notification.contest_position,
+        :name => notification.contest.name
       }
     ]
   end
-  
+
   def exchange_story_options(exchange)
     [
       {
-        :item_name => exchange.item.name, 
+        :item_name => exchange.item.name,
         :amount => exchange.amount,
-        :text => exchange.text 
+        :text => exchange.text
       },
       {
         :exchange_id => exchange.id
       },
-      image_path("stream/exchange.jpg")
+      (exchange.item.pictures.url(:stream) if exchange.item.pictures?)
     ]
   end
-  
-  
+
+
   def achievement_story_options(type)
     [
       type.attributes,
@@ -213,7 +214,7 @@ module StreamHelper
       (type.pictures.url(:stream) if type.pictures?)
     ]
   end
-  
+
   def position_in_rating_story_options(position, rating_name)
     [
       {
@@ -224,19 +225,19 @@ module StreamHelper
       image_path("stream/rating.jpg")
     ]
   end
-  
-  
+
+
   def prepare_story(story_alias, interpolation_options = {}, story_data = {}, image = nil)
     interpolation_options.reverse_merge!(
       :player_name => current_character.user.first_name,
       :app => t("app_name")
     )
-    
+
     interpolation_options = interpolation_options.symbolize_keys
-    
+
     if story = Story.by_alias(story_alias).first
       image ||= story.pictures.url if story.pictures?
-      
+
       name, description, action_link = story.interpolate([:title, :description, :action_link], interpolation_options)
     else
       story = story_alias
@@ -252,10 +253,10 @@ module StreamHelper
         :media => stream_image(image || :"stream_#{ story_alias }", stream_url(story, :"stream_#{ story_alias }_image", story_data))
       },
       :action_links => stream_action_link(action_link, stream_url(story, :"stream_#{ story_alias }_link", story_data))
-    }    
+    }
   end
-  
-  
+
+
   def stream_url(story, reference, data = {})
     story_url(story,
       :story_data => encryptor.encrypt(data.merge(:character_id => current_character.id)),
