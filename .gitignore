@@ -25,7 +25,7 @@ config/database.yml
 config/settings.yml
 
 public/javascripts/cache
-public/assets/**/*
+public/assets/
 .sass-cache/
 
 # Public files
