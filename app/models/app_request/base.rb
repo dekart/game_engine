@@ -1,17 +1,17 @@
 class AppRequest::Base < ActiveRecord::Base
   self.table_name = :app_requests
-  
+
   belongs_to :sender, :class_name => "Character"
-  
+
   belongs_to :target, :polymorphic => true
-  
+
   scope :by_type, Proc.new {|type|
     {
       :conditions => ["type = ?", request_class_name_for_type(type)],
       :order => "sender_id, type, created_at DESC"
     }
   }
-  
+
   scope :for_character, Proc.new {|character|
     {
       :conditions => {:receiver_id => character.facebook_id}
@@ -25,7 +25,7 @@ class AppRequest::Base < ActiveRecord::Base
   scope :between, Proc.new{|sender, receiver|
     {
       :conditions => {
-        :sender_id    => sender.id, 
+        :sender_id    => sender.id,
         :receiver_id  => receiver
       }
     }
@@ -58,10 +58,10 @@ class AppRequest::Base < ActiveRecord::Base
       :conditions => ["accepted_at >= ?", time.utc]
     }
   }
-  
+
   scope :visible, :conditions => {:state => ['processed', 'visited']}
   scope :for_expire, :conditions => {:state => ['pending', 'processed', 'visited']}
-  
+
   state_machine :initial => :pending do
     state :processed
     state :visited
@@ -78,7 +78,7 @@ class AppRequest::Base < ActiveRecord::Base
     event :mark_broken do
       transition :pending => :broken
     end
-    
+
     event :mark_incorrect do
       transition :processed => :incorrect
     end
@@ -86,23 +86,23 @@ class AppRequest::Base < ActiveRecord::Base
     event :visit do
       transition [:pending, :processed] => :visited
     end
-    
+
     event :accept do
       transition [:processed, :visited] => :accepted
     end
-    
+
     event :ignore do
       transition [:pending, :processed, :visited] => :ignored
     end
-    
+
     event :expire do
       transition [:pending, :processed, :visited] => :expired
     end
-    
+
     before_transition :on => [:process, :mark_broken] do |request|
       request.processed_at = Time.now
     end
-    
+
     after_transition :on => :process do |request|
       request.send(:after_process)
     end
@@ -110,7 +110,7 @@ class AppRequest::Base < ActiveRecord::Base
     before_transition :on => :visit do |request|
       request.visited_at = Time.now
     end
-    
+
     before_transition :on => :accept do |request|
       request.send(:before_accept)
     end
@@ -122,36 +122,36 @@ class AppRequest::Base < ActiveRecord::Base
     after_transition :on => :ignore do |request|
       request.send(:after_ignore)
     end
-    
+
     before_transition :on => :expire do |request|
       request.send(:before_expire)
     end
-    
+
     after_transition :on => :expire do |request|
       request.send(:after_expire)
     end
   end
 
   serialize :data
-  
+
   validates_presence_of :facebook_id
-  
+
   after_create  :schedule_data_update
   after_save    :clear_counter_cache,     :if => :receiver_id?
   after_save    :clear_exclude_ids_cache, :if => :sender
-  
+
   class << self
     def cache_key(target)
       "user_#{ target.is_a?(User) ? target.facebook_id : target.to_i }_app_request_counter"
     end
-    
+
     def exclude_ids_cache_key(character)
       "#{ sti_name.underscore }_exclude_ids_#{ character.id }"
     end
-    
+
     def schedule_deletion(*ids_or_requests)
       ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.id : value}.uniq
-      
+
       Delayed::Job.enqueue(Jobs::RequestDelete.new(ids)) unless ids.empty?
     end
 
@@ -161,7 +161,13 @@ class AppRequest::Base < ActiveRecord::Base
 
     def check_request(request_id, recipient_ids)
       recipient_ids.each do |recipient_id|
-        next unless graph_data = Facepalm::Config.default.api_client.get_object("#{ request_id }_#{ recipient_id }")
+        begin
+          graph_data = Facepalm::Config.default.api_client.get_object("#{ request_id }_#{ recipient_id }")
+        rescue Koala::Facebook::APIError => e
+          Rails.logger.error e
+        end
+
+        next unless graph_data
 
         data = JSON.parse(graph_data['data']) if graph_data['data']
 
@@ -179,18 +185,18 @@ class AppRequest::Base < ActiveRecord::Base
         data = JSON.parse(facebook_request['data']) if facebook_request['data']
 
         request = app_request_class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*facebook_request['id'].split('_'))
-        
+
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
     end
-    
+
     def types
       all(
-          :select => "type, COUNT(type) as count_requests", 
+          :select => "type, COUNT(type) as count_requests",
           :group => "type"
          ).collect{|a| {:name => a.type_name, :count => a.count_requests}}
     end
-    
+
     def request_class_name_for_type(type)
       "AppRequest::#{ type.camelize }"
     end
@@ -203,11 +209,11 @@ class AppRequest::Base < ActiveRecord::Base
       end.constantize
     end
   end
-  
+
   def receiver
     @receiver ||= User.find_by_facebook_id(receiver_id).try(:character)
   end
-  
+
   def update_from_facebook_request(facebook_request)
     if facebook_request['from'].nil?
       ignore!
@@ -224,7 +230,7 @@ class AppRequest::Base < ActiveRecord::Base
 
       transaction do
         save!
-        
+
         # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
         if data && data['target_id'] && data['target_type']
           self.target = data['target_type'].constantize.find(data['target_id'])
@@ -250,17 +256,17 @@ class AppRequest::Base < ActiveRecord::Base
   def type_name
     self.class.name.split('::')[1].underscore
   end
-  
+
   def acceptable?
     true
   end
-  
+
   def correct?
     true
   end
-  
+
   protected
-  
+
   def request_class_from_data
     if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
       "AppRequest::#{ data['type'].camelize }"
@@ -268,43 +274,43 @@ class AppRequest::Base < ActiveRecord::Base
       'AppRequest::Invitation'
     end.constantize
   end
-  
+
   def before_accept
     self.accepted_at = Time.now
   end
-  
+
   def after_accept
     self.class.schedule_deletion(self)
   end
-  
+
   def after_ignore
     self.class.schedule_deletion(self)
   end
-  
+
   def before_expire
     self.expired_at = Time.now
   end
-  
+
   def after_expire
     self.class.schedule_deletion(self)
   end
-  
+
   def after_process
     if later_similar_requests.count > 0
       ignore
     elsif !correct?
       mark_incorrect
     end
-    
+
     previous_similar_requests.with_state(:processed, :visited).each do |request|
       request.ignore
     end
   end
-  
+
   def previous_similar_requests
     self.class.between(sender, receiver_id).without(self).sent_before(sent_at)
   end
-  
+
   def later_similar_requests
     self.class.between(sender, receiver_id).without(self).sent_after(sent_at)
   end
@@ -314,16 +320,16 @@ class AppRequest::Base < ActiveRecord::Base
       Delayed::Job.enqueue Jobs::RequestDataUpdate.new(id)
     end
   end
-  
+
   def clear_counter_cache
     Rails.cache.delete(self.class.cache_key(receiver_id))
-    
+
     true
   end
-  
+
   def clear_exclude_ids_cache
     Rails.cache.delete(self.class.exclude_ids_cache_key(sender))
-    
+
     true
   end
 end
