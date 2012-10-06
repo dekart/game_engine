@@ -65,7 +65,7 @@ module ApplicationHelper
   def amount_select_tag(*args)
     options = args.extract_options!
 
-    values = (1..10).to_a + args
+    values = [1, 5, 10, 25, 50, 100] + args
     values.uniq!
     values.sort!
 
@@ -116,14 +116,14 @@ module ApplicationHelper
       yield(settings) if settings[:start] > Time.now
     end
   end
-  
+
   def display_by_limit(type, limit)
     amount = $redis.hget("character_#{ current_character.id }_display_limit", type).to_i
-    
+
     if block_given? && amount < limit
       $redis.hincrby("character_#{ current_character.id }_display_limit", type, 1)
-      
+
       yield
-    end  
+    end
   end
 end

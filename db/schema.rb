@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003224512) do
+ActiveRecord::Schema.define(:version => 20121006093119) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -456,9 +456,9 @@ ActiveRecord::Schema.define(:version => 20121003224512) do
   add_index "items", ["item_group_id"], :name => "index_items_on_item_group_id"
 
   create_table "market_items", :force => true do |t|
-    t.integer  "character_id", :null => false
-    t.integer  "item_id",      :null => false
-    t.integer  "amount"
+    t.integer  "character_id",                :null => false
+    t.integer  "item_id",                     :null => false
+    t.integer  "amount",       :default => 1
     t.integer  "basic_price"
     t.integer  "vip_price"
     t.datetime "created_at"
