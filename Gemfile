@@ -47,6 +47,8 @@ group :assets do
   gem 'therubyracer'
   gem 'handlebars_assets'
   gem 'compass-rails'
+
+  gem 'oily_png'
 end
 
 group :test do
