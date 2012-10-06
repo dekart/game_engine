@@ -13,16 +13,14 @@ en:
       index:
         title: "Dashboard"
         parameter: "Parameter"
-        value: "Value"
-        change: "Last 24 hours"
-        details: "Details »"
-        values:
-          users: "Total Users"
-          deposit: "VIP Money Deposit"
-          withdraw: "VIP Money Withdraw"
-        total_complaints: "Total Complaints"
-        all: "All" 
+        total: "Total"
         new: "New"
+        details: "Details »"
+        users: "Users"
+        deposit: "VIP Money Deposit"
+        withdraw: "VIP Money Withdraw"
+        complaints: "Complaints"
+        jobs: "Background Jobs"
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
@@ -76,9 +74,9 @@ en:
           friends: 'Friends'
           fights: 'Fights'
       visits:
-        title: "Statistics: Visits"  
+        title: "Statistics: Visits"
         profile: "FB Profile"
-        count_requests: "Requests"  
+        count_requests: "Requests"
         average_per_hour: "Average Per Hour"
         average_per_minute: "Average Per Minute"
         dates: "By Dates"
@@ -87,4 +85,3 @@ en:
         no_character: "(No character)"
         no_user: "(No User)"
         hourly: "Hourly"
-          
