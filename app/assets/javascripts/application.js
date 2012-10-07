@@ -120,7 +120,7 @@ var CharacterForm = {
       },
       content: {
         text: function(){
-          return $('#description_character_type_' + $(this).attr('value')).html();
+          return $('#description_character_type_' + $(this).data('value')).html();
         }
       }
     });
