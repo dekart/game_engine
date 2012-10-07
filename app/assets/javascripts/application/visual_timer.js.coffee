@@ -26,9 +26,9 @@ class VisualTimer extends window.Timer
       result = "#{ result } #{ hours }:"
 
     if minutes < 10
-      result = "#{ result } 0#{ minutes }"
+      result = "#{ result }0#{ minutes }"
     else
-      result = "#{ result } #{ minutes }"
+      result = "#{ result }#{ minutes }"
 
     if seconds < 10
       result = "#{ result }:0#{ seconds }"
