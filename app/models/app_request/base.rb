@@ -181,13 +181,14 @@ class AppRequest::Base < ActiveRecord::Base
 
     def check_user_requests(user)
       user.facebook_client.get_connections('me', 'apprequests').each do |facebook_request|
-
         data = JSON.parse(facebook_request['data']) if facebook_request['data']
 
         request = app_request_class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*facebook_request['id'].split('_'))
 
         request.update_from_facebook_request(facebook_request) if request.pending?
       end
+    rescue Koala::Facebook::APIError => e
+      Rails.logger.error e
     end
 
     def types
