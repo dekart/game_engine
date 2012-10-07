@@ -33,6 +33,8 @@ gem 'yajl-ruby', :require => 'yajl'
 
 gem 'dynamic_form',     '~> 1.1.4'
 
+gem 'compass-rails'
+
 group :development do
   gem "capistrano",   "~> 2.9.0"
   gem "capistrano-ext"
@@ -46,7 +48,6 @@ group :assets do
   gem 'execjs'
   gem 'therubyracer'
   gem 'handlebars_assets'
-  gem 'compass-rails'
 
   gem 'oily_png'
 end
