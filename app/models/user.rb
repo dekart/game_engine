@@ -89,6 +89,8 @@ class User < ActiveRecord::Base
     self.friend_ids = friends.collect{|f| f["id"] }
 
     save!
+  rescue Koala::Facebook::APIError => e
+    Rails.logger.error e
   end
 
   def gender=(value)
@@ -118,17 +120,13 @@ class User < ActiveRecord::Base
   end
 
   def permissions
-    if access_token_valid?
-      begin
-        Koala::Facebook::API.new(access_token).get_connections(:me, :permissions).first.keys.map{|k| k.to_sym }
-      rescue Koala::Facebook::APIError => e
-        Rails.logger.error e
+    return [] unless access_token_valid?
 
-        []
-      end
-    else
-      []
-    end
+    Koala::Facebook::API.new(access_token).get_connections(:me, :permissions).first.keys.map{|k| k.to_sym }
+  rescue Koala::Facebook::APIError => e
+    Rails.logger.error e
+
+    []
   end
 
   def schedule_social_data_update
