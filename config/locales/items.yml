@@ -27,3 +27,4 @@ en:
     buy_button:
       buttons:
         buy: "Buy"
+      confirm: "Are you sure you want to purchase %{count} of %{name} for %{price}"

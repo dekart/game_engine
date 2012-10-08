@@ -80,6 +80,29 @@ var Shop = (function(){
 
     onTabLoad: function(event, ui){
       shop.setupItemList($(ui.panel).find('.item_list'));
+    },
+
+    confirmPurchase: function(link){
+      var link = $(link);
+      var form = link.parent('form');
+      var item = link.parents('.item')
+
+      var amount = form.find('select.amount').val();
+
+      var confirm_text = I18n.t('items.buy_button.confirm', {
+        count: amount,
+        name: item.find('.name').text(),
+        price: [
+          item.find('.requirements .basic_money').text(),
+          item.find('.requirements .vip_money').text()
+        ].join(' ')
+      });
+
+      if(amount < 5 || confirm(confirm_text)){
+        link.linkLock('lock');
+
+        form.submit();
+      }
     }
   });
 

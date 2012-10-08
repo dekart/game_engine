@@ -4,3 +4,4 @@ translations:
       - "*.app_requests.invite_dialog"
       - "*.activerecord.attributes"
       - "*.client"
+      - "*.items.buy_button"

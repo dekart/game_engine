@@ -2,8 +2,7 @@
   <%= amount_select_tag(:id => item.id, :vip_price => item.vip_price, :basic_price => item.basic_price) %>
   <%= hidden_field_tag(:item_id, item.id) %>
 
-  <%= link_to_function(button(:buy), "$(this).parent('form').submit()",
-        :class => "buy button",
-        :"data-click-once" => true
+  <%= link_to_function(button(:buy), "Shop.confirmPurchase(this)",
+        :class => "buy button"
       ) %>
 <% end %>
