@@ -21,6 +21,16 @@ en:
         withdraw: "VIP Money Withdraw"
         complaints: "Complaints"
         jobs: "Background Jobs"
+        background:
+          title: "Background Processing"
+          jobs: "Jobs"
+          task: "Last Task"
+          total: "%{count} since launch"
+          started_at: "Started At"
+          finished_at: "Finished At"
+          ago: 'ago'
+          failed: 'failed'
+          processing: 'Processing...'
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"

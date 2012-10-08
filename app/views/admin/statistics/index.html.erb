@@ -32,11 +32,43 @@
     <td>+<%= @unread_complaints %></td>
     <td class="controls"><%= link_to(t(".details"), admin_complaints_path) %></td>
   </tr>
+</table>
 
-  <% Delayed::Job.count.tap do |jobs| %>
+<h2><%= t('.background.title')%></h2>
+
+<table class="data">
   <tr>
     <td><%= t(".jobs") %></td>
-    <td <% if jobs >= 100 %>style="color: red"<% end %>><%= jobs %></td>
+    <td <% if @delayed_jobs[:total] >= 100 %>style="color: red"<% end %>><%= @delayed_jobs[:total] %></td>
+    <td><%= @delayed_jobs[:failed] %> <%= t('.background.failed') %></td>
   </tr>
-  <% end %>
+
+  <tr>
+    <td><%= t('.background.task') %></td>
+    <td><%= @scheduler[:task] %></td>
+    <td><%= t('.background.total', :count => @scheduler[:total_tasks]) %></td>
+  </tr>
+
+  <tr>
+    <td><%= t('.background.started_at')%></td>
+
+    <% if @scheduler[:started_at].is_a?(Time) %>
+      <td><%= @scheduler[:started_at].strftime('%Y-%m-%d %H:%M:%S') %></td>
+      <td><%= time_ago_in_words(@scheduler[:started_at]) %> <%= t('.background.ago') %></td>
+    <% end %>
+  </tr>
+
+  <tr>
+    <td><%= t('.background.finished_at')%></td>
+
+    <% if @scheduler[:finished_at].is_a?(Time) %>
+      <td><%= @scheduler[:finished_at].strftime('%Y-%m-%d %H:%M:%S') %></td>
+      <td><%= time_ago_in_words(@scheduler[:finished_at]) %> <%= t('.background.ago') %></td>
+    <% elsif @scheduler[:started_at].is_a?(Time) %>
+      <td>
+        <%= t('.background.processing') %>
+      </td>
+    <% end %>
+  </tr>
+
 </table>

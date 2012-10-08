@@ -2,85 +2,88 @@
 
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
 
-def task
-  start_time = Time.now
-
-  puts
-  puts "-" * 40
-  
-  puts "Started at %s" % start_time.to_s(:db)
-
-  puts "-" * 40
-  
-  yield
-  
-  puts "-" * 40
-
-  puts "Done in %.2f seconds" % (Time.now - start_time)
-  
-  puts "-" * 40
-  puts
-end
-
-def last_restart_at
-  path = File.expand_path('../../tmp/restart.txt', __FILE__)
-  
-  File.file?(path) ? File.mtime(path) : Time.at(0)
-end
-
-
-scheduler = Rufus::Scheduler.start_new
-
-
-scheduler.every 1.minute, :blocking => true do
-  task do
-    Jobs::Characters::UpdateRating.new.perform
-  end
-end
-
-scheduler.every 30.minutes, :blocking => true do
-  task do
-    Jobs::Market::RemoveExpiredListings.new.perform
-  end
-end
-
-scheduler.every 5.minutes, :blocking => true do
-  task do
-    Jobs::Fighting::RebuildBuckets.new.perform
-  end
-end
-
-scheduler.every 5.minutes, :blocking => true do
-  task do
-    Jobs::Monsters::Expire.new.perform
-  end
-end
-
-scheduler.every 1.minute, :blocking => true do
-  task do
-    Jobs::Contests::Finish.new.perform
-  end
-end
-
-scheduler.every 10.minutes, :blocking => true do
-  task do
-    Jobs::Characters::PublishScoreInFacebook.new.perform
-  end
-end
+$scheduler = Rufus::Scheduler.start_new
 
 # Setting up monitoring task that should restart scheduler if restart.txt file was modified
 
+def last_restart_at
+  path = File.expand_path('../../tmp/restart.txt', __FILE__)
+
+  File.file?(path) ? File.mtime(path) : Time.at(0)
+end
+
 start_time = last_restart_at
 
-scheduler.every 5.seconds, :blocking => true do
+$scheduler.every 5.seconds, :blocking => true do
   if last_restart_at != start_time
     puts "Restarting scheduler (%s)..." % Time.now.to_s(:db)
-    
-    scheduler.stop
+
+    $scheduler.stop
   end
+end
+
+$redis.del(:scheduler)
+
+def task(name, period)
+  $scheduler.every(period, :blocking => true) do
+    start_time = Time.now
+
+    puts
+    puts "-" * 40
+
+    puts "Started #{name} at %s" % start_time.to_s(:db)
+
+    puts "-" * 40
+
+    $redis.hmset(:scheduler,
+      :task, name,
+      :started_at, start_time.to_i,
+      :finished_at, nil
+    )
+
+    yield
+
+    puts "-" * 40
+
+    puts "Done in %.2f seconds" % (Time.now - start_time)
+
+    puts "-" * 40
+    puts
+
+    $redis.hmset(:scheduler,
+      :finished_at, Time.now.to_i
+    )
+
+    $redis.hincrby(:scheduler, :total_tasks, 1)
+  end
+end
+
+
+task(:update_rating, 1.minute) do
+  Jobs::Characters::UpdateRating.new.perform
+end
+
+task(:remove_expired_listings, 30.minutes) do
+  Jobs::Market::RemoveExpiredListings.new.perform
+end
+
+task(:rebuild_buckets, 5.minutes) do
+  Jobs::Fighting::RebuildBuckets.new.perform
+end
+
+task(:expire_monsters, 5.minutes) do
+  Jobs::Monsters::Expire.new.perform
+end
+
+task(:finish_contests, 1.minute) do
+  Jobs::Contests::Finish.new.perform
+end
+
+task(:publish_scores_in_facebook, 10.minutes) do
+  Jobs::Characters::PublishScoreInFacebook.new.perform
 end
 
 
 puts "Launching scheduler (%s)..." % Time.now.to_s(:db)
 
-scheduler.join
+$scheduler.join
