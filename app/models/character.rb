@@ -195,14 +195,6 @@ class Character < ActiveRecord::Base
     end
   end
 
-  def formatted_basic_money
-    number_to_currency(basic_money)
-  end
-
-  def formatted_vip_money
-    number_to_currency(vip_money)
-  end
-
   def to_json_for_overview
     as_json_for_overview.to_json
   end
@@ -220,10 +212,7 @@ class Character < ActiveRecord::Base
         :sp
       ],
       :methods => [
-        :formatted_basic_money,
-        :formatted_vip_money,
         :next_level_experience,
-        :level_progress_percentage,
         :health_points,
         :energy_points,
         :stamina_points,

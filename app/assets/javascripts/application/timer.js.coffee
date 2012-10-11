@@ -1,4 +1,4 @@
-class Timer
+window.Timer = class
   tick_length: 1000
 
   constructor: (args...)->
@@ -17,11 +17,15 @@ class Timer
       10
     )
 
+    @.onTick()
+
   stop: ()->
     if @ticker
       clearInterval(@ticker)
 
       @ticker = null
+
+    @.onStop()
 
   secondsToFinish: ()->
     Math.round(
@@ -45,7 +49,4 @@ class Timer
   onFinish: ()->
     @finish_callback?(@)
 
-
-
-
-window.Timer = Timer
+  onStop: ->

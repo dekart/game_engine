@@ -4,15 +4,25 @@ class VisualTimer extends window.Timer
   constructor: (args...)->
     [@selector, @finish_callback, @tick_callback] = args
 
-  onTick: ()->
-    $(@selector...).html(
-      @.formatTime(@.secondsToFinish())
-    )
+  onTick: ->
+    @.render()
 
     super
 
+  onStop: ->
+    @.render()
+
+    super
+
+  render: ->
+    $(@selector...).text(
+      @.formatTime(@.secondsToFinish())
+    )
+
   formatTime: (value)->
     result = ""
+
+    return result unless value > 0
 
     days    = Math.floor(value / 86400)
     hours   = Math.floor((value - days * 86400) / 3600)

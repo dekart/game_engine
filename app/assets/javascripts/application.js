@@ -29,6 +29,12 @@
 //= require ./application/shop
 //= require ./application/inventory
 //= require ./application/chat
+
+// Spine-based part of the application
+//= require spine/spine
+//= require_tree ./models
+//= require_tree ./controllers
+
 //= require_self
 
 
@@ -146,88 +152,7 @@ var CharacterForm = {
 };
 
 
-var Character = {
-  update: function(c){
-    if(typeof c === 'undefined' || c === null){ return; }
 
-    if($.isEmptyObject(c)){ return; }
-
-    $("#co .basic_money .value").text(c.formatted_basic_money);
-    $("#co .vip_money .value").text(c.formatted_vip_money);
-    $("#co .experience .value").text(c.experience + "/" + c.next_level_experience);
-    $("#co .experience .percentage").css({width: c.level_progress_percentage + "%"});
-    $("#co .level .value").text(c.level);
-    $("#co .health .value").text(c.hp + "/" + c.health_points);
-    $("#co .energy .value").text(c.ep + "/" + c.energy_points);
-    $("#co .stamina .value").text(c.sp + "/" + c.stamina_points);
-
-    Character.hp_timer().stop();
-    Character.hp_timer().start(c.time_to_hp_restore);
-
-    Character.ep_timer().stop();
-    Character.ep_timer().start(c.time_to_ep_restore);
-
-    Character.sp_timer().stop();
-    Character.sp_timer().start(c.time_to_sp_restore);
-
-    if (c.points > 0) {
-      $("#co .level .upgrade").show();
-    } else {
-      $("#co .level .upgrade").hide();
-    }
-
-    if (c.hp == c.health_points) {
-      $('#co .health .hospital').hide();
-    } else {
-      $('#co .health .hospital').show();
-    }
-
-    if (c.ep > (c.energy_points / 2)) {
-      $('#co .energy .refill').hide();
-    } else {
-      $('#co .energy .refill').show();
-    }
-
-    if (c.sp > (c.stamina_points / 2)) {
-      $('#co .stamina .refill').hide();
-    } else {
-      $('#co .stamina .refill').show();
-    }
-
-  },
-
-  hp_timer: function(){
-    if(typeof this.hptimer === 'undefined' || this.hptimer === null) {
-      this.hptimer = new VisualTimer(['#co .health .timer'], this.update_from_remote);
-    }
-
-    return this.hptimer;
-  },
-
-  ep_timer: function(){
-    if(typeof this.eptimer === 'undefined' || this.eptimer === null) {
-      this.eptimer = new VisualTimer(['#co .energy .timer'], this.update_from_remote);
-    }
-
-    return this.eptimer;
-  },
-
-  sp_timer: function(){
-    if(typeof this.sptimer === 'undefined' || this.sptimer === null) {
-      this.sptimer = new VisualTimer(['#co .stamina .timer'], this.update_from_remote);
-    }
-
-    return this.sptimer;
-  },
-
-  update_from_remote: function(){
-    $.getJSON('/character_status/?rand=' + Math.random(), function(data){
-      Character.update(data);
-
-      $(document).trigger('application.ready'); // Triggering event to start timers
-    });
-  }
-};
 
 
 var PropertyList = {
@@ -593,6 +518,8 @@ var FacebookPermissions = {
 
 
 $(function(){
+  var character_overview = new CharacterOverviewController();
+
   $(document).bind('tooltips.setup', function(event, container) {
     var target = $(container || '#content')
 
