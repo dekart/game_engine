@@ -35,7 +35,7 @@ window.CharacterOverviewController = class extends Spine.Controller
     character = Character.first()
 
     @basic_money.text(character.basic_money)
-    @vip_money.text(character.basic_money)
+    @vip_money.text(character.vip_money)
     @experience.text(character.experience + "/" + character.next_level_experience)
     @experience_progress.css(width: "#{ character.experience / character.next_level_experience * 100}%")
     @level.text(character.level)
