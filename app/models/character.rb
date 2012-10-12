@@ -213,6 +213,7 @@ class Character < ActiveRecord::Base
       ],
       :methods => [
         :next_level_experience,
+        :level_progress_percentage,
         :health_points,
         :energy_points,
         :stamina_points,
