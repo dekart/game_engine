@@ -20,6 +20,7 @@
 
 <% form.field_set Mission.human_attribute_name("requirements") do %>
   <%= form.fields "admin/requirements/collection" %>
+  <%= form.check_box :hide_unsatisfied %>
 <% end %>
 
 <% form.field_set Mission.human_attribute_name("payouts") do %>

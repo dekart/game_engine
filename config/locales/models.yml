@@ -62,6 +62,7 @@ en:
         progress: "Progress"
         requirements: "Requirements"
         payouts: "Reward"
+        hide_unsatisfied: "Hide if requirements are not satisfied"
       item:
         price: "Price"
         effects: "Item Effects"
