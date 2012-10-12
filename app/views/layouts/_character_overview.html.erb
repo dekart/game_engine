@@ -33,7 +33,7 @@
 
       <%= link_to(t(".refill"),
             refill_dialog_premium_path(
-              :type => :refill_energy, 
+              :type => :refill_energy,
               :vip_money => Setting.i(:premium_energy_price)
             ),
             :remote => true,
@@ -74,7 +74,3 @@
     </td>
   </tr>
 </table>
-
-<% dom_ready do %>
-  Character.update(<%= current_character.to_json_for_overview.html_safe %>);
-<% end %>

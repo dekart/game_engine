@@ -15,7 +15,7 @@
       <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :_blank)  %>
     </div>
   <% end %>
-  
+
   <% maintenance_warning do |settings| %>
     <div id="maintenance_warning">
       <%= t(".maintenance_warning",
@@ -24,14 +24,14 @@
           ).html_safe %>
     </div>
   <% end %>
-  
+
   <%= app_toolbar %>
 
   <div id="content">
     <div id="header">
       <%= global_chat %>
       <%= app_requests_counter %>
-      
+
       <%= link_to("", root_path, :id => :logo) %>
 
       <%= render("layouts/main_menu") %>
@@ -52,15 +52,17 @@
     <% end %>
 
     <%= yield %>
-    
+
     <%= render("layouts/footer") %>
   </div>
 
   <div id="ajax" style="display:none;"></div>
-  
+
   <%= display_notifications %>
 
   <% dom_ready do %>
+    Character.update(<%= current_character.to_json_for_overview.html_safe %>);
+
     $(document).trigger('application.ready');
   <% end %>
 
