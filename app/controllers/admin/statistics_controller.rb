@@ -50,4 +50,13 @@ class Admin::StatisticsController < Admin::BaseController
 
     @users.insert(ids.index(0), nil) if ids.index(0) #Insert 'no user' value if present
   end
+
+  def payments
+  end
+
+  def retention
+  end
+  
+  def sociality
+  end
 end

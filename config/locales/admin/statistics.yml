@@ -10,6 +10,9 @@ en:
         users: "Users"
         level: "Levels"
         visits: "Visits"
+        payments: "Payments"
+        retention: "Retention"
+        sociality: "Sociality"
       index:
         title: "Dashboard"
         parameter: "Parameter"
@@ -95,3 +98,9 @@ en:
         no_character: "(No character)"
         no_user: "(No User)"
         hourly: "Hourly"
+      payments:
+        title: "Statistics: Payments by Reference"
+      retention:
+        title: "Statistics: Retention by Reference"
+      sociality:
+        title: "Statistics: Sociality by Reference"
