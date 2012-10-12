@@ -52,6 +52,21 @@ class Admin::StatisticsController < Admin::BaseController
   end
 
   def payments
+    all = Statistics::Payments.new
+    reference_types = all.reference_types
+
+    payments = {}
+    reference_types.collect{|a| a[0]}.each do |reference|
+      payments[reference] = all.total_payments_by_reference(reference)
+    end
+
+    @result = reference_types.collect do |name, users_count, paying_count|
+      [name.to_s, users_count, paying_count, payments[name].to_i]
+    end
+
+    @result.sort!{|a, b| b[1] <=> a[1] } # sort by number of users
+
+    @result
   end
 
   def retention

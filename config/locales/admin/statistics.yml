@@ -100,7 +100,16 @@ en:
         hourly: "Hourly"
       payments:
         title: "Statistics: Payments by Reference"
+        reference_types: "Reference Types"
+        reference_type: "Reference Type"
+        users_amount: "Amount of Users"
+        paying_amount: "Amount of Paying Users"
+        payments_amount: "Amount of Payments"
+        payments_per_user: "Payments per User"
+        payments_per_paying: "Payments per Paying User"
       retention:
         title: "Statistics: Retention by Reference"
+        reference_types: "Reference Types"
       sociality:
         title: "Statistics: Sociality by Reference"
+        reference_types: "Reference Types"
