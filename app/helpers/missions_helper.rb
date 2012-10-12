@@ -5,7 +5,7 @@ module MissionsHelper
         rank = current_character.mission_levels.rank_for(mission)
         level = rank ? rank.level : mission.levels.first
 
-        yield(mission, level, rank)
+        yield(mission, level, rank) if !mission.hide_unsatisfied? or level.applicable_requirements.satisfies?(current_character)
       end
     end
   end

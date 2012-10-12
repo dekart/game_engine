@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121006093119) do
+ActiveRecord::Schema.define(:version => 20121011114916) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -577,6 +577,7 @@ ActiveRecord::Schema.define(:version => 20121006093119) do
     t.integer  "position"
     t.datetime "image_updated_at"
     t.string   "button_label",                      :default => "", :null => false
+    t.boolean  "hide_unsatisfied"
   end
 
   add_index "missions", ["mission_group_id"], :name => "index_missions_on_mission_group_id"
