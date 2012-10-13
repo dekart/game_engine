@@ -25,6 +25,8 @@ window.Timer = class
 
       @ticker = null
 
+      @finish_at = (new Date()).valueOf()
+
     @.onStop()
 
   secondsToFinish: ()->
