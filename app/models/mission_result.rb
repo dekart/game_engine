@@ -44,6 +44,13 @@ class MissionResult
 
           @character.charge(- @money, 0, @mission)
 
+          ActiveSupport::Notifications.instrument(:mission_success,
+            :mission      => @mission,
+            :energy       => @energy,
+            :basic_money  => @money,
+            :experience   => @experience,
+          )
+
           @character.missions_succeeded += 1
 
           if level_rank.just_completed?
