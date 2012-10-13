@@ -347,9 +347,9 @@ class Character < ActiveRecord::Base
 
       charge!(0, - vip_money_per_upgrade, :level_up)
 
-      self.ep = energy_points
-      self.hp = health_points
-      self.sp = stamina_points
+      refill_ep!
+      refill_hp!
+      refill_sp!
 
       notifications.schedule(:level_up)
 

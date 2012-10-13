@@ -5,11 +5,11 @@ class Character
 
       charge!(- Setting.i(:premium_money_amount), Setting.i(:premium_money_price), :premium_money)
     end
-    
+
     def refill_energy!(free = false)
       return if full_ep? or (!free and vip_money < Setting.i(:premium_energy_price))
 
-      self.ep = energy_points
+      refill_ep!
 
       free ? save : charge!(0, Setting.i(:premium_energy_price), :premium_energy)
     end
@@ -17,7 +17,7 @@ class Character
     def refill_health!(free = false)
       return if full_hp? or (!free and vip_money < Setting.i(:premium_health_price))
 
-      self.hp = health_points
+      refill_hp!
 
       free ? save : charge!(0, Setting.i(:premium_health_price), :premium_health)
     end
@@ -25,7 +25,7 @@ class Character
     def refill_stamina!(free = false)
       return if full_sp? or (!free and vip_money < Setting.i(:premium_stamina_price))
 
-      self.sp = stamina_points
+      refill_sp!
 
       free ? save : charge!(0, Setting.i(:premium_stamina_price), :premium_stamina)
     end
@@ -78,7 +78,7 @@ class Character
 
       transaction do
         update_attribute(:name, new_name)
-        
+
         charge!(0, Setting.i(:premium_change_name_price), :premium_change_name)
       end
     end

@@ -90,6 +90,10 @@ module RestorableAttribute
     def full?
       value >= limit
     end
+
+    def refill!
+      self.value = limit unless full?
+    end
   end
 
   def restorable_attribute(name, options = {})
@@ -120,6 +124,10 @@ module RestorableAttribute
 
     define_method("full_#{name}?") do
       send("#{name}_restorable").full?
+    end
+
+    define_method("refill_#{ name }!") do
+      send("#{ name }_restorable").refill!
     end
   end
 end
