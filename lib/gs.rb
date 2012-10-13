@@ -7,7 +7,7 @@ module GS
 
   def self.event_logger
     @@event_logger ||= EventLogger.new.tap do |l|
-      l.start_worker
+      l.setup_flushing
     end
   end
 end
