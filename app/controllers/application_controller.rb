@@ -62,10 +62,10 @@ class ApplicationController < ActionController::Base
   def current_user
     return unless current_facebook_user
 
-    if current_facebook_user.authenticated?
-      @current_user ||= find_or_create_current_user
-    elsif ENV['OFFLINE']
+    if ENV['OFFLINE']
       @current_user ||= find_or_create_offline_user
+    elsif current_facebook_user.authenticated?
+      @current_user ||= find_or_create_current_user
     end
   end
 
