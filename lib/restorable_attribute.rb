@@ -88,7 +88,7 @@ module RestorableAttribute
     end
 
     def full?
-      value == limit
+      value >= limit
     end
   end
 
