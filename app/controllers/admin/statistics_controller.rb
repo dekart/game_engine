@@ -70,6 +70,28 @@ class Admin::StatisticsController < Admin::BaseController
   end
 
   def retention
+    all = Statistics::Retention.new
+    reference_types = all.reference_types
+
+    returned = all.returned_users
+    reached_level_2 = all.users_reached_level(2)
+    reached_level_5 = all.users_reached_level(5)
+    reached_level_20 = all.users_reached_level(20)
+
+    @result = reference_types.collect do |name, users_count|
+      {
+        :name => name.to_s, 
+        :users_amount => users_count, 
+        :returned_amount => returned[name], 
+        :level_2 => reached_level_2[name],
+        :level_5 => reached_level_5[name],
+        :level_20 => reached_level_20[name],
+      }
+    end
+
+    @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
+
+    @result
   end
   
   def sociality

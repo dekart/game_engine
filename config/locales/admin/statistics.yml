@@ -110,6 +110,12 @@ en:
       retention:
         title: "Statistics: Retention by Reference"
         reference_types: "Reference Types"
+        reference_type: "Reference Type"
+        users_amount: "Amount of Users"
+        returned_amount: "Returned Users"
+        returned_percent: "Returned Users (%)"
+        users_reached_level: "Level %{level}+"
+        percentage: "%"
       sociality:
         title: "Statistics: Sociality by Reference"
         reference_types: "Reference Types"
