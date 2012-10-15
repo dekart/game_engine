@@ -119,3 +119,9 @@ en:
       sociality:
         title: "Statistics: Sociality by Reference"
         reference_types: "Reference Types"
+        reference_type: "Reference Type"
+        users_amount: "Amount of Users"
+        friends_amount: "Average Friends"
+        friends_in_game_amount: "Average Friends in Game"
+        friends_in_game_percent: "Friends in Game (%)"
+        referers_amount: "Average Referers"

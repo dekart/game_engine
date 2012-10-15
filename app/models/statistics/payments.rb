@@ -15,12 +15,7 @@ class Statistics
     def total_payments_by_reference(reference)
       character_ids = Character.joins(:user).where("users.reference = ?", reference).collect{|c| c.id }
 
-      result = VipMoneyDeposit.purchases.all(
-          :select => "count(*) as total_amount",
-          :conditions => ["character_id IN (?)", character_ids]
-        )
-
-      result.collect{|d| d[:total_amount].to_i}.first
+      VipMoneyDeposit.purchases.where("character_id IN (?)", character_ids).count
     end
   end
 end

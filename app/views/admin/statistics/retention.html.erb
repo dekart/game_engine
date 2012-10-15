@@ -30,19 +30,19 @@
 
               <td><%= reference[:returned_amount] %></td>
 
-              <td><%= reference[:users_amount] > 0 ? (100 * reference[:returned_amount].to_f / reference[:users_amount]).round : 0 %></td>
+              <td><%= (100 * reference[:returned_amount].to_f / reference[:users_amount]).round %></td>
 
               <td><%= reference[:level_2] %></td>
 
-              <td><%= reference[:users_amount] > 0 ? (100 * reference[:level_2].to_f / reference[:users_amount]).round : 0 %></td>
+              <td><%= (100 * reference[:level_2].to_f / reference[:users_amount]).round %></td>
 
               <td><%= reference[:level_5] %></td>
 
-              <td><%= reference[:users_amount] > 0 ? (100 * reference[:level_5].to_f / reference[:users_amount]).round : 0 %></td>
+              <td><%= (100 * reference[:level_5].to_f / reference[:users_amount]).round %></td>
 
               <td><%= reference[:level_20] %></td>
 
-              <td><%= reference[:users_amount] > 0 ? (100 * reference[:level_20].to_f / reference[:users_amount]).round : 0 %></td>
+              <td><%= (100 * reference[:level_20].to_f / reference[:users_amount]).round %></td>
             </tr>
           <% end %>
         </table>

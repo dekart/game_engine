@@ -26,7 +26,7 @@
 
               <td><%= reference[:payments_amount] %></td>
 
-              <td><%= reference[:users_amount] > 0 ? (reference[:payments_amount].to_f / reference[:users_amount]).round(2) : 0 %></td>
+              <td><%= (reference[:payments_amount].to_f / reference[:users_amount]).round(2) %></td>
 
               <td><%= reference[:paying_amount] %></td>
 

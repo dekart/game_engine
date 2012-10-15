@@ -55,13 +55,13 @@ class Admin::StatisticsController < Admin::BaseController
     all = Statistics::Payments.new
     reference_types = all.reference_types
 
-    payments = {}
-    reference_types.collect{|a| a[0]}.each do |reference|
-      payments[reference] = all.total_payments_by_reference(reference)
-    end
-
     @result = reference_types.collect do |name, users_count, paying_count|
-      {:name => name.to_s, :users_amount => users_count, :paying_amount => paying_count, :payments_amount => payments[name].to_i}
+      {
+        :name => name, 
+        :users_amount => users_count, 
+        :paying_amount => paying_count, 
+        :payments_amount => all.total_payments_by_reference(name)
+      }
     end
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
@@ -74,17 +74,17 @@ class Admin::StatisticsController < Admin::BaseController
     reference_types = all.reference_types
 
     returned = all.returned_users
-    reached_level_2 = all.users_reached_level(2)
-    reached_level_5 = all.users_reached_level(5)
+    reached_level_2  = all.users_reached_level(2)
+    reached_level_5  = all.users_reached_level(5)
     reached_level_20 = all.users_reached_level(20)
 
     @result = reference_types.collect do |name, users_count|
       {
-        :name => name.to_s, 
+        :name => name, 
         :users_amount => users_count, 
         :returned_amount => returned[name], 
-        :level_2 => reached_level_2[name],
-        :level_5 => reached_level_5[name],
+        :level_2  => reached_level_2[name],
+        :level_5  => reached_level_5[name],
         :level_20 => reached_level_20[name],
       }
     end
@@ -95,5 +95,21 @@ class Admin::StatisticsController < Admin::BaseController
   end
   
   def sociality
+    all = Statistics::Sociality.new
+    reference_types = all.reference_types
+
+    @result = reference_types.collect do |name, users_count|
+      {
+        :name             => name,
+        :users_amount     => users_count, 
+        :friends_amount   => all.average_friends_by_reference(name), 
+        :friends_in_game  => all.average_in_game_friends_by_reference(name),
+        :referrers_amount => all.average_referrers_by_reference(name)
+      }
+    end
+
+    @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
+
+    @result
   end
 end
