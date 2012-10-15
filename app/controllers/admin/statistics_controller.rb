@@ -61,10 +61,10 @@ class Admin::StatisticsController < Admin::BaseController
     end
 
     @result = reference_types.collect do |name, users_count, paying_count|
-      [name.to_s, users_count, paying_count, payments[name].to_i]
+      {:name => name.to_s, :users_amount => users_count, :paying_amount => paying_count, :payments_amount => payments[name].to_i}
     end
 
-    @result.sort!{|a, b| b[1] <=> a[1] } # sort by number of users
+    @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
 
     @result
   end
