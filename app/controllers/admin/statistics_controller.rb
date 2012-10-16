@@ -72,8 +72,15 @@ class Admin::StatisticsController < Admin::BaseController
     @result
   end
 
-  def generate_payments
-    Delayed::Job.enqueue Jobs::Statistic::GeneratePayments.new
+  def generate_statistics
+    case params[:type]
+    when "payments"
+      Delayed::Job.enqueue Jobs::Statistic::GeneratePayments.new
+    when "retention"
+      Delayed::Job.enqueue Jobs::Statistic::GenerateRetention.new
+    when 'sociality'
+      Delayed::Job.enqueue Jobs::Statistic::GenerateSociality.new
+    end
 
     respond_to do |format|
       format.js {render :generate}

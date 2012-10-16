@@ -10,7 +10,7 @@
 
         <div class="controls">
           <%= link_to(t("admin.statistics.generate"), 
-              generate_payments_admin_statistics_path,
+              generate_statistics_admin_statistics_path(:type => :payments),
               :id => :generate,
               :remote => true
           ) %>
