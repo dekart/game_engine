@@ -55,11 +55,7 @@ class Admin::StatisticsController < Admin::BaseController
     @keys = $redis.keys("payment_by_reference_*")
 
     key = params[:key] || @keys.max
-    payments = key ? $redis.hgetall(key) : []
-
-    @result = payments.collect do |name, values|
-      Marshal.load(values)
-    end
+    @result = key ? Marshal.load($redis.get(key)) : []
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
 
@@ -70,11 +66,7 @@ class Admin::StatisticsController < Admin::BaseController
     @keys = $redis.keys("retention_by_reference_*")
 
     key = params[:key] || @keys.max
-    retention = key ? $redis.hgetall(key) : []
-
-    @result = retention.collect do |name, values|
-      Marshal.load(values)
-    end
+    @result = key ? Marshal.load($redis.get(key)) : []
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
 
@@ -85,11 +77,7 @@ class Admin::StatisticsController < Admin::BaseController
     @keys = $redis.keys("sociality_by_reference_*")
 
     key = params[:key] || @keys.max
-    sociality = key ? $redis.hgetall(key) : []
-
-    @result = sociality.collect do |name, values|
-      Marshal.load(values)
-    end
+    @result = key ? Marshal.load($redis.get(key)) : []
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
 

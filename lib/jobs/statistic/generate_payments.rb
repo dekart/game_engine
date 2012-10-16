@@ -7,16 +7,18 @@ module Jobs
         statistic = Statistics::Payments.new
         reference_types = statistic.reference_types
 
-        reference_types.each do |name, users_count, paying_count|
-          data = {
-            :name            => name,
-            :users_amount    => users_count,
-            :paying_amount   => paying_count,
-            :payments_amount => statistic.total_payments_by_reference(name)
-          }
-
-          $redis.hset("payment_by_reference_#{Time.new.strftime("%Y-%m-%d")}", name, Marshal.dump(data))
+        data = [].tap do |result|
+          reference_types.each do |name, users_count, paying_count|
+            result << {
+              :name            => name,
+              :users_amount    => users_count,
+              :paying_amount   => paying_count,
+              :payments_amount => statistic.total_payments_by_reference(name)
+            }
+          end
         end
+
+        $redis.set("payment_by_reference_#{Time.new.strftime("%Y-%m-%d")}", Marshal.dump(data))
 
         puts "Done!"
       end
