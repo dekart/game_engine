@@ -15,7 +15,7 @@ module Jobs
         reference_types.each do |name, users_count|
           data = [users_count, returned[name], reached_level_2[name], reached_level_5[name], reached_level_20[name]].join(",")
 
-          $redis.hset("retention_by_reference_#{(Time.new-24.hours).strftime("%Y-%m-%d")}", name, data)
+          $redis.hset("retention_by_reference_#{Time.new.strftime("%Y-%m-%d")}", name, data)
         end
 
         puts "Done!"

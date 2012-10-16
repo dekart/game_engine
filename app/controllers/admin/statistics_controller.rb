@@ -98,16 +98,17 @@ class Admin::StatisticsController < Admin::BaseController
   def sociality
     @keys = $redis.keys("sociality_by_reference_*")
 
-    all = Statistics::Sociality.new
-    reference_types = all.reference_types
+    key = params[:key] || @keys.max
+    sociality = key ? $redis.hgetall(key) : []
 
-    @result = reference_types.collect do |name, users_count|
+    @result = sociality.collect do |name, values|
+      values = values.split(",")
       {
         :name             => name,
-        :users_amount     => users_count, 
-        :friends_amount   => all.average_friends_by_reference(name), 
-        :friends_in_game  => all.average_in_game_friends_by_reference(name),
-        :referrers_amount => all.average_referrers_by_reference(name)
+        :users_amount     => values[0].to_i,
+        :friends_amount   => values[1].to_i,
+        :friends_in_game  => values[2].to_i,
+        :referrers_amount => values[3].to_i
       }
     end
 
