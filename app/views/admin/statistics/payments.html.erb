@@ -37,18 +37,18 @@
           </tr>
 
           <% @result.each_with_index do |reference, index| %>
-            <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 50 && @result[index][:users_amount] <= 50 %>">
+            <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 100 && @result[index][:users_amount] <= 100 %>">
               <td><%= reference[:name].blank? ? "-" : reference[:name].humanize %></td>
 
               <td><%= reference[:users_amount] %></td>
 
               <td><%= reference[:payments_amount] %></td>
 
-              <td><%= (reference[:payments_amount].to_f / reference[:users_amount]).round(2) %></td>
+              <td><%= (reference[:payments_amount].to_f / reference[:users_amount]).round(3) %></td>
 
               <td><%= reference[:paying_amount] %></td>
 
-              <td><%= reference[:paying_amount] > 0 ? (reference[:payments_amount].to_f / reference[:paying_amount]).round(2) : 0 %></td>
+              <td><%= reference[:paying_amount] > 0 ? (reference[:payments_amount].to_f / reference[:paying_amount]).round(3) : 0 %></td>
             </tr>
           <% end %>
         </table>
