@@ -2,56 +2,61 @@
 
 <%= render("controls") %>
 
-<table>
+<table id="statistics_data" width="100%">
   <tr>
     <td>
-      <div class="section">
-        <h2><%= t("admin.statistics.all_reports") %></h2>
+      <h2><%= t("admin.statistics.reference_types") %></h2>
 
-        <div class="controls">
-          <%= link_to(t("admin.statistics.generate"), 
-              generate_statistics_admin_statistics_path(:type => :sociality),
-              :id => :generate,
-              :remote => true
-          ) %>
+      <table class="data">
+        <tr>
+          <th><%= t(".reference_type") %></th>
+          <th><%= t(".users_amount") %></th>
+          <th><%= t(".friends_amount") %></th>
+          <th colspan="2"><%= t(".friends_in_game_amount") %></th>
+          <th><%= t(".referers_amount") %></th>
+        </tr>
 
-          <% @keys.each do |key| %>
-            <%= link_to(key.match(/sociality_by_reference_(.*)/)[1],
-                sociality_admin_statistics_path(:key => key) 
-            ) %>
-          <% end %>
-        </div>
-      </div>
+        <% @result.each_with_index do |reference, index| %>
+          <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 100 && @result[index][:users_amount] <= 100 %>">
+            <td><%= reference[:name].blank? ? "-" : reference[:name].humanize %></td>
 
-      <div class="section">
-        <h2><%= t("admin.statistics.reference_types") %></h2>
+            <td><%= reference[:users_amount] %></td>
 
-        <table class="data">
-          <tr>
-            <th><%= t(".reference_type") %></th>
-            <th><%= t(".users_amount") %></th>
-            <th><%= t(".friends_amount") %></th>
-            <th colspan="2"><%= t(".friends_in_game_amount") %></th>
-            <th><%= t(".referers_amount") %></th>
+            <td><%= (reference[:friends_amount].to_f / reference[:users_amount]).round(3) %></td>
+
+            <td><%= (reference[:friends_in_game].to_f / reference[:users_amount]).round(3) %></td>
+
+            <td><%= reference[:friends_amount] > 0 ? (100 * reference[:friends_in_game].to_f / reference[:friends_amount]).round(2) : 0 %>%</td>
+
+            <td><%= (reference[:referrers_amount].to_f / reference[:users_amount]).round(3) %></td>
           </tr>
+        <% end %>
+      </table>
+    </td>
 
-          <% @result.each_with_index do |reference, index| %>
-            <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 100 && @result[index][:users_amount] <= 100 %>">
-              <td><%= reference[:name].blank? ? "-" : reference[:name].humanize %></td>
-
-              <td><%= reference[:users_amount] %></td>
-
-              <td><%= (reference[:friends_amount].to_f / reference[:users_amount]).round(3) %></td>
-
-              <td><%= (reference[:friends_in_game].to_f / reference[:users_amount]).round(3) %></td>
-
-              <td><%= reference[:friends_amount] > 0 ? (100 * reference[:friends_in_game].to_f / reference[:friends_amount]).round(2) : 0 %>%</td>
-
-              <td><%= (reference[:referrers_amount].to_f / reference[:users_amount]).round(3) %></td>
-            </tr>
-          <% end %>
-        </table>
+    <td>
+      <div class="controls">
+        <%= link_to(t("admin.statistics.generate"), 
+            generate_statistics_admin_statistics_path(:type => :sociality),
+            :id => :generate,
+            :remote => true
+        ) %>
       </div>
+
+      <table class="data">
+        <tr>
+          <th><%= t("admin.statistics.dates") %></th>
+        </tr>
+        <% @keys.each do |key| %>
+          <tr>
+            <td>
+              <%= link_to(key.match(/sociality_by_reference_(.*)/)[1],
+                  sociality_admin_statistics_path(:key => key) 
+              ) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
     </td>
   </tr>
 </table>

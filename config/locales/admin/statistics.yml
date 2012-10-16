@@ -6,7 +6,7 @@ en:
       average_amount_per_minute: "(%{amount} average per minute)"
       generate: "Generate New Report"
       generating: "Generating..."
-      all_reports: "All Reports"
+      dates: "By Dates"
       reference_types: "Reference Types"
       controls:
         dashboard: "Dashboard"
