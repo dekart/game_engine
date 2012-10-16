@@ -72,38 +72,21 @@ class Admin::StatisticsController < Admin::BaseController
     @result
   end
 
-  def generate_statistics
-    case params[:type]
-    when "payments"
-      Delayed::Job.enqueue Jobs::Statistic::GeneratePayments.new
-    when "retention"
-      Delayed::Job.enqueue Jobs::Statistic::GenerateRetention.new
-    when 'sociality'
-      Delayed::Job.enqueue Jobs::Statistic::GenerateSociality.new
-    end
-
-    respond_to do |format|
-      format.js {render :generate}
-    end
-  end
-
   def retention
-    all = Statistics::Retention.new
-    reference_types = all.reference_types
+    @keys = $redis.keys("retention_by_reference_*")
 
-    returned = all.returned_users
-    reached_level_2  = all.users_reached_level(2)
-    reached_level_5  = all.users_reached_level(5)
-    reached_level_20 = all.users_reached_level(20)
+    key = params[:key] || @keys.max
+    retention = key ? $redis.hgetall(key) : []
 
-    @result = reference_types.collect do |name, users_count|
+    @result = retention.collect do |name, values|
+      values = values.split(",")
       {
-        :name => name, 
-        :users_amount => users_count, 
-        :returned_amount => returned[name], 
-        :level_2  => reached_level_2[name],
-        :level_5  => reached_level_5[name],
-        :level_20 => reached_level_20[name],
+        :name            => name,
+        :users_amount    => values[0].to_i,
+        :returned_amount => values[1].to_i,
+        :level_2         => values[2].to_i,
+        :level_5         => values[3].to_i,
+        :level_20        => values[4].to_i
       }
     end
 
@@ -113,6 +96,8 @@ class Admin::StatisticsController < Admin::BaseController
   end
   
   def sociality
+    @keys = $redis.keys("sociality_by_reference_*")
+
     all = Statistics::Sociality.new
     reference_types = all.reference_types
 
@@ -129,5 +114,20 @@ class Admin::StatisticsController < Admin::BaseController
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
 
     @result
+  end
+
+  def generate_statistics
+    case params[:type]
+    when "payments"
+      Delayed::Job.enqueue Jobs::Statistic::GeneratePayments.new
+    when "retention"
+      Delayed::Job.enqueue Jobs::Statistic::GenerateRetention.new
+    when 'sociality'
+      Delayed::Job.enqueue Jobs::Statistic::GenerateSociality.new
+    end
+
+    respond_to do |format|
+      format.js {render :generate}
+    end
   end
 end

@@ -6,7 +6,25 @@
   <tr>
     <td>
       <div class="section">
-        <h2><%= t(".reference_types") %></h2>
+        <h2><%= t("admin.statistics.all_reports") %></h2>
+
+        <div class="controls">
+          <%= link_to(t("admin.statistics.generate"), 
+              generate_statistics_admin_statistics_path(:type => :sociality),
+              :id => :generate,
+              :remote => true
+          ) %>
+
+          <% @keys.each do |key| %>
+            <%= link_to(key.match(/sociality_by_reference_(.*)/)[1],
+                sociality_admin_statistics_path(:key => key) 
+            ) %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2><%= t("admin.statistics.reference_types") %></h2>
 
         <table class="data">
           <tr>
