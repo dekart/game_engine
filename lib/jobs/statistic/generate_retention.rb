@@ -13,9 +13,16 @@ module Jobs
         reached_level_20 = statistic.users_reached_level(20)
 
         reference_types.each do |name, users_count|
-          data = [users_count, returned[name], reached_level_2[name], reached_level_5[name], reached_level_20[name]].join(",")
+          data = {
+            :name            => name,
+            :users_amount    => users_count,
+            :returned_amount => returned[name] || 0,
+            :level_2         => reached_level_2[name] || 0,
+            :level_5         => reached_level_5[name] || 0,
+            :level_20        => reached_level_20[name] || 0
+          }
 
-          $redis.hset("retention_by_reference_#{Time.new.strftime("%Y-%m-%d")}", name, data)
+          $redis.hset("retention_by_reference_#{Time.new.strftime("%Y-%m-%d")}", name, Marshal.dump(data))
         end
 
         puts "Done!"

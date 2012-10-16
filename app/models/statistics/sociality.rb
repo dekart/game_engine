@@ -17,13 +17,13 @@ class Statistics
     end
 
     def average_in_game_friends_by_reference(reference)
-      character_ids = Character.joins(:user).where("users.reference = ?", reference).collect{|c| c.id }
+      character_ids = Character.joins(:user).where("users.reference = ?", reference).pluck("characters.id")
 
       FriendRelation.where("owner_id IN (?)",character_ids).count
     end
 
     def average_referrers_by_reference(reference)
-      user_ids = User.where("reference = ?", reference).collect{|u| u.id }
+      user_ids = User.where("reference = ?", reference).pluck(:id)
 
       User.where("referrer_id IN (?)", user_ids).count
     end

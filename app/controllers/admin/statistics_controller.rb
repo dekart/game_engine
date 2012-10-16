@@ -58,13 +58,7 @@ class Admin::StatisticsController < Admin::BaseController
     payments = key ? $redis.hgetall(key) : []
 
     @result = payments.collect do |name, values|
-      values = values.split(",")
-      {
-        :name            => name,
-        :users_amount    => values[0].to_i,
-        :paying_amount   => values[1].to_i,
-        :payments_amount => values[2].to_i
-      }
+      Marshal.load(values)
     end
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
@@ -79,15 +73,7 @@ class Admin::StatisticsController < Admin::BaseController
     retention = key ? $redis.hgetall(key) : []
 
     @result = retention.collect do |name, values|
-      values = values.split(",")
-      {
-        :name            => name,
-        :users_amount    => values[0].to_i,
-        :returned_amount => values[1].to_i,
-        :level_2         => values[2].to_i,
-        :level_5         => values[3].to_i,
-        :level_20        => values[4].to_i
-      }
+      Marshal.load(values)
     end
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
@@ -102,14 +88,7 @@ class Admin::StatisticsController < Admin::BaseController
     sociality = key ? $redis.hgetall(key) : []
 
     @result = sociality.collect do |name, values|
-      values = values.split(",")
-      {
-        :name             => name,
-        :users_amount     => values[0].to_i,
-        :friends_amount   => values[1].to_i,
-        :friends_in_game  => values[2].to_i,
-        :referrers_amount => values[3].to_i
-      }
+      Marshal.load(values)
     end
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
