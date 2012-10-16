@@ -13,6 +13,9 @@ en:
         users: "Users"
         vip_money: "VIP Money"
         visits: "Visits"
+        payments: "Payments"
+        retention: "Retention"
+        sociality: "Sociality"
         content: 'Game Content'
         support: 'Support'
         configuration: 'Configuration'

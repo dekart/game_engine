@@ -1,0 +1,71 @@
+<%= admin_title(t('.title'))%>
+
+<%= render("controls") %>
+
+<table id="statistics_data" width="100%">
+  <tr>
+    <td>
+      <h2><%= t("admin.statistics.reference_types") %></h2>
+
+      <table class="data">
+        <tr>
+          <th><%= t(".reference_type") %></th>
+          <th><%= t(".users_amount") %></th>
+          <th colspan="2"><%= t(".returned_amount") %></th>
+          <th colspan="2"><%= t(".users_reached_level", :level => 2) %></th>
+          <th colspan="2"><%= t(".users_reached_level", :level => 5) %></th>
+          <th colspan="2"><%= t(".users_reached_level", :level => 20) %></th>
+        </tr>
+
+        <% @result.each_with_index do |reference, index| %>
+          <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 100 && @result[index][:users_amount] <= 100 %>">
+            <td><%= reference[:name].blank? ? "-" : reference[:name].humanize %></td>
+
+            <td><%= reference[:users_amount] %></td>
+
+            <td><%= reference[:returned_amount] %></td>
+
+            <td><%= (100 * reference[:returned_amount].to_f / reference[:users_amount]).round(1) %>%</td>
+
+            <td><%= reference[:level_2] %></td>
+
+            <td><%= (100 * reference[:level_2].to_f / reference[:users_amount]).round(1) %>%</td>
+
+            <td><%= reference[:level_5] %></td>
+
+            <td><%= (100 * reference[:level_5].to_f / reference[:users_amount]).round(1) %>%</td>
+
+            <td><%= reference[:level_20] %></td>
+
+            <td><%= (100 * reference[:level_20].to_f / reference[:users_amount]).round(1) %>%</td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+
+    <td>
+      <div class="controls">
+        <%= link_to(t("admin.statistics.generate"), 
+            generate_statistics_admin_statistics_path(:type => :retention),
+            :id => :generate,
+            :remote => true
+        ) %>
+      </div>
+
+      <table class="data">
+        <tr>
+          <th><%= t("admin.statistics.dates") %></th>
+        </tr>
+        <% @keys.each do |key| %>
+          <tr>
+            <td>
+              <%= link_to(key.match(/retention_by_reference_(.*)/)[1],
+                  retention_admin_statistics_path(:key => key) 
+              ) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>

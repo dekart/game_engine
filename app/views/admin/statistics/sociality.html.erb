@@ -1,0 +1,62 @@
+<%= admin_title(t('.title'))%>
+
+<%= render("controls") %>
+
+<table id="statistics_data" width="100%">
+  <tr>
+    <td>
+      <h2><%= t("admin.statistics.reference_types") %></h2>
+
+      <table class="data">
+        <tr>
+          <th><%= t(".reference_type") %></th>
+          <th><%= t(".users_amount") %></th>
+          <th><%= t(".friends_amount") %></th>
+          <th colspan="2"><%= t(".friends_in_game_amount") %></th>
+          <th><%= t(".referers_amount") %></th>
+        </tr>
+
+        <% @result.each_with_index do |reference, index| %>
+          <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 100 && @result[index][:users_amount] <= 100 %>">
+            <td><%= reference[:name].blank? ? "-" : reference[:name].humanize %></td>
+
+            <td><%= reference[:users_amount] %></td>
+
+            <td><%= (reference[:friends_amount].to_f / reference[:users_amount]).round(3) %></td>
+
+            <td><%= (reference[:friends_in_game].to_f / reference[:users_amount]).round(3) %></td>
+
+            <td><%= reference[:friends_amount] > 0 ? (100 * reference[:friends_in_game].to_f / reference[:friends_amount]).round(2) : 0 %>%</td>
+
+            <td><%= (reference[:referrers_amount].to_f / reference[:users_amount]).round(3) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+
+    <td>
+      <div class="controls">
+        <%= link_to(t("admin.statistics.generate"), 
+            generate_statistics_admin_statistics_path(:type => :sociality),
+            :id => :generate,
+            :remote => true
+        ) %>
+      </div>
+
+      <table class="data">
+        <tr>
+          <th><%= t("admin.statistics.dates") %></th>
+        </tr>
+        <% @keys.each do |key| %>
+          <tr>
+            <td>
+              <%= link_to(key.match(/sociality_by_reference_(.*)/)[1],
+                  sociality_admin_statistics_path(:key => key) 
+              ) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>

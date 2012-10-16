@@ -55,6 +55,10 @@ GameEngine::Application.routes.draw do
         match 'vip_money'
         match 'level'
         match 'visits'
+        match 'payments'
+        match 'retention'
+        match 'sociality'
+        get   'generate_statistics'
       end
     end
 

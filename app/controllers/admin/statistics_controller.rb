@@ -50,4 +50,52 @@ class Admin::StatisticsController < Admin::BaseController
 
     @users.insert(ids.index(0), nil) if ids.index(0) #Insert 'no user' value if present
   end
+
+  def payments
+    @keys = $redis.keys("payment_by_reference_*")
+
+    key = params[:key] || @keys.max
+    @result = key ? Marshal.load($redis.get(key)) : []
+
+    @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
+
+    @result
+  end
+
+  def retention
+    @keys = $redis.keys("retention_by_reference_*")
+
+    key = params[:key] || @keys.max
+    @result = key ? Marshal.load($redis.get(key)) : []
+
+    @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
+
+    @result
+  end
+  
+  def sociality
+    @keys = $redis.keys("sociality_by_reference_*")
+
+    key = params[:key] || @keys.max
+    @result = key ? Marshal.load($redis.get(key)) : []
+
+    @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
+
+    @result
+  end
+
+  def generate_statistics
+    case params[:type]
+    when "payments"
+      Delayed::Job.enqueue Jobs::Statistic::GeneratePayments.new
+    when "retention"
+      Delayed::Job.enqueue Jobs::Statistic::GenerateRetention.new
+    when 'sociality'
+      Delayed::Job.enqueue Jobs::Statistic::GenerateSociality.new
+    end
+
+    respond_to do |format|
+      format.js {render :generate}
+    end
+  end
 end

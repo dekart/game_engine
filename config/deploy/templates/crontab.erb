@@ -14,5 +14,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:<%= "/home/#{u
 
 0 5 * * *     cd <%= current_path %> && flock ./tmp/pids/rake.lock rake app:cleanup --trace >> <%= shared_path %>/log/cleanup.log 2>&1
 
+0 4 * * *     cd <%= current_path %> && flock ./tmp/pids/rake.lock rake app:statistics:generate --trace >> <%= shared_path %>/log/statistics.log 2>&1
+
 # Archieve backups
 45 * * * * gzip *.sql
