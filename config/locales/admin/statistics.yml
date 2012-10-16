@@ -4,6 +4,10 @@ en:
       amount_change: "(+%{amount} in last 24 hours)"
       average_amount_per_hour: "(%{amount} average per hour)"
       average_amount_per_minute: "(%{amount} average per minute)"
+      generate: "Generate New Report"
+      generating: "Generating..."
+      all_reports: "All Reports"
+      reference_types: "Reference Types"
       controls:
         dashboard: "Dashboard"
         vip_money: "VIP Money"
@@ -100,7 +104,6 @@ en:
         hourly: "Hourly"
       payments:
         title: "Statistics: Payments by Reference"
-        reference_types: "Reference Types"
         reference_type: "Reference Type"
         users_amount: "Amount of Users"
         paying_amount: "Amount of Paying Users"
@@ -109,7 +112,6 @@ en:
         payments_per_paying: "Payments per Paying User"
       retention:
         title: "Statistics: Retention by Reference"
-        reference_types: "Reference Types"
         reference_type: "Reference Type"
         users_amount: "Amount of Users"
         returned_amount: "Returned Users"
@@ -118,7 +120,6 @@ en:
         percentage: "%"
       sociality:
         title: "Statistics: Sociality by Reference"
-        reference_types: "Reference Types"
         reference_type: "Reference Type"
         users_amount: "Amount of Users"
         friends_amount: "Average Friends"

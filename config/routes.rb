@@ -56,6 +56,7 @@ GameEngine::Application.routes.draw do
         match 'level'
         match 'visits'
         match 'payments'
+        match 'generate_payments'
         match 'retention'
         match 'sociality'
       end

@@ -52,21 +52,32 @@ class Admin::StatisticsController < Admin::BaseController
   end
 
   def payments
-    all = Statistics::Payments.new
-    reference_types = all.reference_types
+    @keys = $redis.keys("payment_by_reference_*")
 
-    @result = reference_types.collect do |name, users_count, paying_count|
+    key = params[:key] || @keys.max
+    payments = key ? $redis.hgetall(key) : []
+
+    @result = payments.collect do |name, values|
+      values = values.split(",")
       {
-        :name => name, 
-        :users_amount => users_count, 
-        :paying_amount => paying_count, 
-        :payments_amount => all.total_payments_by_reference(name)
+        :name            => name,
+        :users_amount    => values[0].to_i,
+        :paying_amount   => values[1].to_i,
+        :payments_amount => values[2].to_i
       }
     end
 
     @result.sort!{|a, b| b[:users_amount] <=> a[:users_amount] } # sort by number of users
 
     @result
+  end
+
+  def generate_payments
+    Delayed::Job.enqueue Jobs::Statistic::GeneratePayments.new
+
+    respond_to do |format|
+      format.js {render :generate}
+    end
   end
 
   def retention
