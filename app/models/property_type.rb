@@ -110,7 +110,7 @@ class PropertyType < ActiveRecord::Base
     end
   end
 
-  def as_json_for_reward
+  def as_json(*args)
     {
       :name => name
     }

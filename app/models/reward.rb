@@ -82,7 +82,7 @@ class Reward
     if item = find_item(item)
       @character.inventories.give!(item, amount)
 
-      @values[:items][item.alias] ||= [item.as_json_for_reward, 0]
+      @values[:items][item.alias] ||= [item, 0]
       @values[:items][item.alias][1] += amount
     end
   end
@@ -91,7 +91,7 @@ class Reward
     if item = find_item(item)
       @character.inventories.take!(item, amount)
 
-      @values[:items][item.alias] ||= [item.as_json_for_reward, 0]
+      @values[:items][item.alias] ||= [item, 0]
       @values[:items][item.alias][1] -= amount
     end
   end
@@ -99,7 +99,7 @@ class Reward
   def give_property(property_type)
     @character.properties.give!(property_type)
 
-    @values[:properties][property_type.id] ||= [property_type.as_json_for_reward, 1]
+    @values[:properties][property_type.id] ||= [property_type, 1]
   end
 
   def give_upgrade_points(amount)
