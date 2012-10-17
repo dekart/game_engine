@@ -1,4 +1,8 @@
 class MoveItemOwnedCounterToRedis < ActiveRecord::Migration
+  class Inventory < ActiveRecord::Base
+    set_table_name :inventories
+  end
+
   def self.up
     change_table :items do |t|
       t.remove  :owned
