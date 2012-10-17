@@ -33,12 +33,12 @@ en:
         global_tasks: "Global Tasks"
         credit_packages: "Facebook Credits"
         messages: "Messages"
-        contests: "Contests" 
+        contests: "Contests"
         achievement_types: "Achievements"
         complaints: "Complaints"
-        
+
         # Add your custom menu items below this mark
-        
+
       application:
         spinner:
           alt: "Please wait..."
@@ -46,7 +46,7 @@ en:
         footer:
           text: "Powered by %{engine} version %{version}"
           engine: "Railorz Game Engine"
-          
+
     item_groups:
       index:
         title: "Item Groups"
@@ -64,7 +64,7 @@ en:
         submit: "Update"
       update:
         success: "Item group has been updated successfully!"
-        
+
     items:
       controls:
         new: "Add Item"
@@ -485,21 +485,21 @@ en:
       controls:
         new: "Add Message"
       send_to:
-        success: "Message was sent successfully"  
+        success: "Message was sent successfully"
     pictures:
       form_fields:
         new: "Add Picture"
       picture:
         remove: "Remove"
-    complaints: 
+    complaints:
       index:
         title: "Complaints"
-        profile: "FB Profile"    
-        controls: 
+        profile: "FB Profile"
+        controls:
           show: "Show"
       show:
-        title: "Complaint"    
+        title: "Complaint"
         profile: "FB Profile"
         all: "All Complaints"
-    
+
     # Add your custom translation strings below this mark
