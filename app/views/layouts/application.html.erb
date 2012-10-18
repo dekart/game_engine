@@ -10,10 +10,8 @@
     });
   <% end %>
 
-  <% admin_only do %>
-    <div id="admin_menu">
-      <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :_blank)  %>
-    </div>
+  <% if true %>
+    <%= render("layouts/browser_tip") %>
   <% end %>
 
   <% maintenance_warning do |settings| %>
@@ -59,6 +57,12 @@
   <div id="ajax" style="display:none;"></div>
 
   <%= display_notifications %>
+
+  <% admin_only do %>
+    <div id="admin_menu">
+      <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :_blank)  %>
+    </div>
+  <% end %>
 
   <% dom_ready do %>
     Character.update(<%= current_character.to_json_for_overview.html_safe %>);

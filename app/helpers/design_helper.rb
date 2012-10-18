@@ -1,8 +1,8 @@
 module DesignHelper
   def hide_block_link(id, options = {})
     options[:title] ||= t("blocks.hide")
-    options[:before] ||= "$('##{id}').hide()"
-    options[:html] ||= {:class => :hide}
+    options[:onclick] ||= "$('##{id}').hide()"
+    options[:class] ||= :hide
     
     # TODO: remote
     options[:remote] = true
