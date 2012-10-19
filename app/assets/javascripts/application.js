@@ -29,6 +29,7 @@
 //= require ./application/shop
 //= require ./application/inventory
 //= require ./application/chat
+//= require ./application/browser_detect
 
 // Spine-based part of the application
 //= require spine/spine

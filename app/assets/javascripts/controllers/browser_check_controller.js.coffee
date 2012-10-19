@@ -7,11 +7,13 @@ window.BrowserCheckController = class extends Spine.Controller
   constructor: ->
     super
 
-    # check browser and hide #browser_check or show text
-    Character.bind('save', @.onDataUpdate)
+    # check browser, then hide block or show text
+    info = BrowserDetect.browser + ", " + BrowserDetect.version + ", " + BrowserDetect.OS;
 
-  render: ()->
-    @text.text("browser_info")
+    @.render(info)
 
-  onDataUpdate: =>
-    @.render()
+  render: (info)->
+    @text.text(info)
+
+  hide: ()->
+    @el.hide()
