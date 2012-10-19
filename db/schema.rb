@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121019182440) do
+ActiveRecord::Schema.define(:version => 20121011114916) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -817,12 +817,11 @@ ActiveRecord::Schema.define(:version => 20121019182440) do
     t.string   "locale",                 :limit => 5,   :default => "en_US", :null => false
     t.datetime "access_token_expire_at"
     t.string   "third_party_id",         :limit => 50,  :default => "",      :null => false
-    t.text     "old_friend_ids"
     t.string   "email",                                 :default => "",      :null => false
     t.boolean  "banned"
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
     t.boolean  "paying"
-    t.binary   "friend_ids"
+    t.text     "friend_ids"
   end
 
   add_index "users", ["created_at"], :name => "index_users_on_created_at"
