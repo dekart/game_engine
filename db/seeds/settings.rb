@@ -185,5 +185,5 @@ Setting[:total_score_missions_succeeded_factor] ||= 1
 Setting[:total_score_level_factor] ||= 1
 
 Setting[:total_score_publishing_in_facebook_enabled] ||= true
-
+Setting[:browser_check_enabled] ||= true
 # Put your custom settings below this line

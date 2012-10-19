@@ -10,8 +10,8 @@
     });
   <% end %>
 
-  <% if true %>
-    <%= render("layouts/browser_tip") %>
+  <% if Setting.b(:browser_check_enabled) and current_user.show_browser_check %>
+    <%= render("layouts/browser_check") %>
   <% end %>
 
   <% maintenance_warning do |settings| %>

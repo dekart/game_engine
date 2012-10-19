@@ -107,6 +107,20 @@ class User < ActiveRecord::Base
     GENDERS.key(self[:gender]) || :unknown
   end
 
+  def show_browser_check=(value)
+    if value
+      $redis.zrem("browser_check_disabled", self.id)
+    else
+      $redis.zadd("browser_check_disabled", Time.now.to_i, self.id)
+    end
+  end
+
+  def show_browser_check
+    $redis.zremrangebyscore("browser_check_disabled", 0, 7.days.ago.to_i)
+
+    $redis.zscore("browser_check_disabled", self.id).nil?
+  end
+
   def full_name
     [first_name, last_name].join(' ')
   end

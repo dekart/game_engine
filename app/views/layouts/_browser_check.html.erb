@@ -1,0 +1,9 @@
+<div id="browser_check" class="block">
+  <%= hide_block_link(:browser_check) %>
+    
+  <span class="text">some text</span>
+</div>
+
+<% dom_ready do %>
+  $("#browser_check").browserCheck();
+<% end %>

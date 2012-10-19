@@ -511,6 +511,10 @@ var FacebookPermissions = {
     return $(this);
   };
 
+  $.fn.browserCheck = function(){
+  	var browser_check = new BrowserCheckController();
+  };
+
   if(!$.isEmptyObject($.fn.qtip)) {
     $.fn.qtip.zindex = 10001;
   }
