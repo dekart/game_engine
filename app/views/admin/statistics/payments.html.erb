@@ -1,0 +1,63 @@
+<%= admin_title(t('.title'))%>
+
+<%= render("controls") %>
+
+<table id="statistics_data" width="100%">
+  <tr>
+    <td>
+      <h2><%= t("admin.statistics.reference_types") %></h2>
+
+      <table class="data">
+        <tr>
+          <th><%= t(".reference_type") %></th>
+          <th><%= t(".users_amount") %></th>
+          <th><%= t(".payments_amount") %></th>
+          <th><%= t(".payments_per_user") %></th>
+          <th><%= t(".paying_amount") %></th>
+          <th><%= t(".payments_per_paying") %></th>
+        </tr>
+
+        <% @result.each_with_index do |reference, index| %>
+          <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 100 && @result[index][:users_amount] <= 100 %>">
+            <td><%= reference[:name].blank? ? "-" : reference[:name].humanize %></td>
+
+            <td><%= reference[:users_amount] %></td>
+
+            <td><%= reference[:payments_amount] %></td>
+
+            <td><%= (reference[:payments_amount].to_f / reference[:users_amount]).round(3) %></td>
+
+            <td><%= reference[:paying_amount] %></td>
+
+            <td><%= reference[:paying_amount] > 0 ? (reference[:payments_amount].to_f / reference[:paying_amount]).round(3) : 0 %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+
+    <td>
+      <div class="controls">
+        <%= link_to(t("admin.statistics.generate"), 
+            generate_statistics_admin_statistics_path(:type => :payments),
+            :id => :generate,
+            :remote => true
+        ) %>
+      </div>
+
+      <table class="data">
+        <tr>
+          <th><%= t("admin.statistics.dates") %></th>
+        </tr>
+        <% @keys.each do |key| %>
+          <tr>
+            <td>
+              <%= link_to(key.match(/payment_by_reference_(.*)/)[1],
+                  payments_admin_statistics_path(:key => key) 
+              ) %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>
