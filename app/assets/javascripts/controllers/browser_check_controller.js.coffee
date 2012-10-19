@@ -7,28 +7,24 @@ window.BrowserCheckController = class extends Spine.Controller
   constructor: ->
     super
 
-    # check browser, then hide block or show text
-    switch BrowserDetect.browser
-      when "Firefox"
-        if BrowserDetect.version < 11 # right - 10
-          info = "Update your browser: " + BrowserDetect.browser + ", " + BrowserDetect.version
-      when "Chrome"
-        if BrowserDetect.version < 21 # right - 18
-          info = "Update your browser: " + BrowserDetect.browser + ", " + BrowserDetect.version
-      when "Opera"
-        if BrowserDetect.version < 12 # right - 11
-          info = "Update your browser or install another one: " + BrowserDetect.browser + ", " + BrowserDetect.version
-      when "Explorer"
-        if BrowserDetect.version < 9 # right - 9
-          info = "Install another browser or update yours: " + BrowserDetect.browser + ", " + BrowserDetect.version
+    browser = BrowserDetect.browser.toLowerCase()
+    version = BrowserDetect.version
 
+    if (browser == "firefox"  and version < 12) or # 10
+       (browser == "chrome" and version < 23) or # 20
+       (browser == "opera" and version < 12) or # 10
+       (browser == "explorer" and version < 9) # 9
+      info = I18n.t('browser_check.' + browser)
+      selector = "#" + browser
+      
     if info
-      @.render(info)
+      @.render(info, selector)
     else
       @.hide()
 
-  render: (info)->
-    @text.text(info)
+  render: (info, selector)->
+    @text.html(info)
+    $(selector).show()
 
   hide: ()->
     @el.hide()
