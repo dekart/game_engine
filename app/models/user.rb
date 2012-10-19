@@ -58,11 +58,11 @@ class User < ActiveRecord::Base
   end
 
   def friend_ids=(values)
-    self[:friend_ids] = Array.wrap(values).join(',')
+    self[:friend_ids] = Array.wrap(values).map{|v| v.to_i }.pack('Q*')
   end
 
   def friend_ids
-    self[:friend_ids].blank? ? [] : self[:friend_ids].split(',').collect{|i| i.to_i }
+    self[:friend_ids].blank? ? [] : self[:friend_ids].unpack('Q*')
   end
 
   def friends_with?(player)
