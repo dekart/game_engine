@@ -14,7 +14,6 @@ window.CharacterOverviewController = class extends Spine.Controller
     '.health .hospital' : 'hospital'
     '.energy .refill' : 'refill_energy'
     '.stamina .refill' : 'refill_stamina'
-    '.health .timer' : 'hp_timer_el'
 
 
   constructor: ->
@@ -27,7 +26,7 @@ window.CharacterOverviewController = class extends Spine.Controller
     Character.bind('save', @.onDataUpdate)
 
   setupTimers: ->
-    @hp_timer = new VisualTimer(@hp_timer_el, @.onTimerFinish)
+    @hp_timer = new VisualTimer(['#co .health .timer'], @.onTimerFinish)
     @ep_timer = new VisualTimer(['#co .energy .timer'], @.onTimerFinish)
     @sp_timer = new VisualTimer(['#co .stamina .timer'], @.onTimerFinish)
 
