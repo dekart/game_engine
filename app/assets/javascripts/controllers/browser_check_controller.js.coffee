@@ -14,7 +14,6 @@ window.BrowserCheckController = class extends Spine.Controller
        (browser == "chrome" and version < 20) or 
        (browser == "opera" and version < 10) or 
        (browser == "explorer" and version < 9)
-      @el.show()
       @.render(browser)
 
   setupEventListeners: ->
@@ -29,3 +28,4 @@ window.BrowserCheckController = class extends Spine.Controller
     @html(
       JST["views/browsers/#{path}"](@)
     )
+    @el.show()

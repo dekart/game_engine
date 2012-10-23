@@ -1,10 +1,10 @@
-<a class='hide' data-remote='true' href='#'>
+<a class='hide' href='#'>
   <%= I18n.t('browser_check.hide') %>
 </a>    
 
 <span class="text"><%= I18n.t('browser_check.explorer') %></span>
 
-<div class="browser_type" id="explorer">
+<div class="browser_type">
   <a href='http://www.mozilla.org/en-US/firefox/update/' target='_blank' class="firefox_logo">
     <%= I18n.t('browser_check.install.firefox') %>
   </a>
