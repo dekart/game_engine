@@ -1,5 +1,5 @@
 class ContestsController < ApplicationController
-  def show  
+  def show
     @contest = Contest.find(params[:id])
 
     @current_group = @contest.group_for(current_character)

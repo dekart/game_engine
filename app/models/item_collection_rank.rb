@@ -14,7 +14,7 @@ class ItemCollectionRank < ActiveRecord::Base
 
       @payouts = collection.payouts.apply(character, (collection_count > 1 ? :repeat_collected : :collected), collection)
       @payouts += collection.spendings.apply(character, :collected, collection)
-      
+
       character.save!
 
       @applied = true
@@ -24,7 +24,7 @@ class ItemCollectionRank < ActiveRecord::Base
   def collected?
     collection_count > 0
   end
-  
+
   def applied?
     @applied
   end
