@@ -5,20 +5,27 @@ window.BrowserCheckController = class extends Spine.Controller
   constructor: ->
     super
 
+    @.setupEventListeners()
+
     browser = BrowserDetect.browser.toLowerCase()
     version = BrowserDetect.version
 
-    if (browser == "firefox"  and version < 10)
-       (browser == "chrome" and version < 20)
-       (browser == "opera" and version < 10)
+    if (browser == "firefox"  and version < 10) or 
+       (browser == "chrome" and version < 20) or 
+       (browser == "opera" and version < 10) or 
        (browser == "explorer" and version < 9)
       @el.show()
       @.render(browser)
 
-  render: (selector)->
-    @html(
-      @.renderTemplate(selector)
+  setupEventListeners: ->
+    @el.on('click', '.hide', @.onHideClick)
+
+  onHideClick: (e)=>
+    $.get("/users/toggle_block?block=browser_check", (response)=>
+      @el.hide()
     )
 
-  renderTemplate: (path)->
-    JST["views/browsers/#{path}"](@)
+  render: (path)->
+    @html(
+      JST["views/browsers/#{path}"](@)
+    )

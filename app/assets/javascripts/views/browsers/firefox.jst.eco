@@ -1,4 +1,4 @@
-<a class='hide' onclick="$('#browser_check').hide()" data-remote='true' href="/users/toggle_block?block=browser_check" >
+<a class='hide' data-remote='true' href='#'>
   <%= I18n.t('browser_check.hide') %>
 </a>    
 

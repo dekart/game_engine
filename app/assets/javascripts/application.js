@@ -30,7 +30,7 @@
 //= require ./application/shop
 //= require ./application/inventory
 //= require ./application/chat
-//= require ./application/browser_detect
+//= require browser_detect
 
 // Spine-based part of the application
 //= require spine/spine
@@ -511,10 +511,6 @@ var FacebookPermissions = {
     });
 
     return $(this);
-  };
-
-  $.fn.browserCheck = function(){
-  	var browser_check = new BrowserCheckController();
   };
 
   if(!$.isEmptyObject($.fn.qtip)) {

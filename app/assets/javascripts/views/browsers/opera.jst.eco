@@ -1,4 +1,4 @@
-<a class='hide' onclick="$('#browser_check').hide()" data-remote='true' href="/users/toggle_block?block=browser_check" >
+<a class='hide' data-remote='true' href='#'>
   <%= I18n.t('browser_check.hide') %>
 </a>    
 
@@ -8,7 +8,7 @@
   <a href='http://www.opera.com/download/' target='_blank' class="opera_logo">
     <%= I18n.t('browser_check.update.opera') %>
   </a>
-  <span>OR</span>
+  <span><%= I18n.t('browser_check.or') %></span>
   <a href='http://www.mozilla.org/en-US/firefox/update/' target='_blank' class="firefox_logo">
     <%= I18n.t('browser_check.install.firefox') %>
   </a>  
