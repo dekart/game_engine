@@ -149,9 +149,6 @@ GameEngine::Application.routes.draw do
     collection do
       match 'subscribe'
       match 'settings'
-    end
-    
-    member do
       match 'toggle_block'
     end
   end

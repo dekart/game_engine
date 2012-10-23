@@ -7,7 +7,7 @@ module DesignHelper
     # TODO: remote
     options[:remote] = true
 
-    link_to(options[:title].html_safe, toggle_block_user_path(current_user, :block => id), options)
+    link_to(options[:title].html_safe, toggle_block_users_path(:block => id), options)
   end
 
   def title(text)

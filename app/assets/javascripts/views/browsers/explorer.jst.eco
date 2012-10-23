@@ -1,0 +1,15 @@
+<a class='hide' onclick="$('#browser_check').hide()" data-remote='true' href="/users/toggle_block?block=browser_check" >
+  <%= I18n.t('browser_check.hide') %>
+</a>    
+
+<span class="text"><%= I18n.t('browser_check.explorer') %></span>
+
+<div class="browser_type" id="explorer">
+  <a href='http://www.mozilla.org/en-US/firefox/update/' target='_blank' class="firefox_logo">
+    <%= I18n.t('browser_check.install.firefox') %>
+  </a>
+  <span>OR</span>
+  <a href='http://windows.microsoft.com/is-IS/windows-vista/Update-Internet-Explorer/' target='_blank' class="explorer_logo">
+    <%= I18n.t('browser_check.update.explorer') %>
+  </a>
+</div>

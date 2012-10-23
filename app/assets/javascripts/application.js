@@ -5,6 +5,7 @@
 //= require i18n/helpers
 //= require i18n/translations
 //= require_tree ../templates
+//= require_tree ./views
 //= require ./application/visibility
 //= require ./libs/jquery/labelify
 //= require ./libs/jquery/dialog

@@ -1,0 +1,11 @@
+<a class='hide' onclick="$('#browser_check').hide()" data-remote='true' href="/users/toggle_block?block=browser_check" >
+  <%= I18n.t('browser_check.hide') %>
+</a>    
+
+<span class="text"><%= I18n.t('browser_check.firefox') %></span>
+
+<div class="browser_type" id="firefox">
+  <a href='http://www.mozilla.org/en-US/firefox/update/' target='_blank' class="firefox_logo">
+    <%= I18n.t('browser_check.update.firefox') %>
+  </a>
+</div>

@@ -1,0 +1,11 @@
+<a class='hide' onclick="$('#browser_check').hide()" data-remote='true' href="/users/toggle_block?block=browser_check" >
+  <%= I18n.t('browser_check.hide') %>
+</a>    
+
+<span class="text"><%= I18n.t('browser_check.chrome') %></span>
+
+<div class="browser_type" id="chrome">
+  <a href='http://www.google.com/chrome/' target='_blank' class="chrome_logo">
+    <%= I18n.t('browser_check.update.chrome') %>
+  </a>
+</div>

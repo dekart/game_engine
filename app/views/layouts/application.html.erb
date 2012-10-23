@@ -10,9 +10,7 @@
     });
   <% end %>
 
-  <% if Setting.b(:browser_check_enabled) and current_user.show_browser_check %>
-    <%= render("layouts/browser_check") %>
-  <% end %>
+  <div id="browser_check" class="block" style="display:none;"></div>
 
   <% maintenance_warning do |settings| %>
     <div id="maintenance_warning">
@@ -66,6 +64,10 @@
 
   <% dom_ready do %>
     Character.update(<%= current_character.to_json_for_overview.html_safe %>);
+
+    <% if Setting.b(:browser_check_enabled) and current_user.show_browser_check %>
+      $("#browser_check").browserCheck();
+    <% end %>
 
     $(document).trigger('application.ready');
   <% end %>

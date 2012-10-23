@@ -1,8 +1,6 @@
 window.BrowserCheckController = class extends Spine.Controller
-  el: '#browser_check'
 
-  elements:
-    '.text' : 'text'
+  el: '#browser_check'
 
   constructor: ->
     super
@@ -14,17 +12,13 @@ window.BrowserCheckController = class extends Spine.Controller
        (browser == "chrome" and version < 23) or # 20
        (browser == "opera" and version < 12) or # 10
        (browser == "explorer" and version < 9) # 9
-      info = I18n.t('browser_check.' + browser)
-      selector = "#" + browser
-      
-    if info
-      @.render(info, selector)
-    else
-      @.hide()
+      @el.show()
+      @.render(browser)
 
-  render: (info, selector)->
-    @text.html(info)
-    $(selector).show()
+  render: (selector)->
+    @html(
+      @.renderTemplate(selector)
+    )
 
-  hide: ()->
-    @el.hide()
+  renderTemplate: (path)->
+    JST["views/browsers/#{path}"](@)
