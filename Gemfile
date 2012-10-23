@@ -50,6 +50,8 @@ group :assets do
   gem 'handlebars_assets'
 
   gem 'oily_png'
+
+  gem 'eco'
 end
 
 group :test do

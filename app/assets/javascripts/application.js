@@ -5,6 +5,7 @@
 //= require i18n/helpers
 //= require i18n/translations
 //= require_tree ../templates
+//= require_tree ./views
 //= require ./application/visibility
 //= require ./libs/jquery/labelify
 //= require ./libs/jquery/dialog
@@ -29,6 +30,7 @@
 //= require ./application/shop
 //= require ./application/inventory
 //= require ./application/chat
+//= require browser_detect
 
 // Spine-based part of the application
 //= require spine/spine

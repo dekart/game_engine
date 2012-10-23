@@ -1,13 +1,13 @@
 module DesignHelper
   def hide_block_link(id, options = {})
     options[:title] ||= t("blocks.hide")
-    options[:before] ||= "$('##{id}').hide()"
-    options[:html] ||= {:class => :hide}
+    options[:onclick] ||= "$('##{id}').hide()"
+    options[:class] ||= :hide
     
     # TODO: remote
     options[:remote] = true
 
-    link_to(options[:title].html_safe, toggle_block_user_path(current_user, :block => id), options)
+    link_to(options[:title].html_safe, toggle_block_users_path(:block => id), options)
   end
 
   def title(text)

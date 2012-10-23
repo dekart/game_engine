@@ -1,0 +1,15 @@
+en:
+  browser_check:
+    firefox: "Your Firefox browser is out of date! Update it to improve your game experience!"
+    chrome: "Your Chrome browser is out of date! Update it to improve your game experience!"
+    opera: "Your Opera browser is out of date! Update it or install another browser!"
+    explorer: "Your Internet Explorer is out of date! Install another browser or update it!"
+    hide: "Hide"
+    or: "OR"
+    update: 
+      firefox: "Update Mozilla Firefox"
+      chrome: "Update Google Chrome"
+      opera: "Update Opera"
+      explorer: "Update Internet Explorer"
+    install:
+      firefox: "Install Mozilla Firefox"
