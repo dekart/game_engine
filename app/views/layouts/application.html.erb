@@ -10,11 +10,7 @@
     });
   <% end %>
 
-  <% admin_only do %>
-    <div id="admin_menu">
-      <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :_blank)  %>
-    </div>
-  <% end %>
+  <div id="browser_check" class="block" style="display:none;"></div>
 
   <% maintenance_warning do |settings| %>
     <div id="maintenance_warning">
@@ -60,8 +56,18 @@
 
   <%= display_notifications %>
 
+  <% admin_only do %>
+    <div id="admin_menu">
+      <%= link_to(t(".admin_interface"), admin_statistics_path, :target => :_blank)  %>
+    </div>
+  <% end %>
+
   <% dom_ready do %>
     Character.update(<%= current_character.to_json_for_overview.html_safe %>);
+
+    <% if Setting.b(:browser_check_enabled) and current_user.show_browser_check %>
+      var browser_check = new BrowserCheckController();
+    <% end %>
 
     $(document).trigger('application.ready');
   <% end %>
