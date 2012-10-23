@@ -1,6 +1,6 @@
 <a class='hide' href='#'>
   <%= I18n.t('browser_check.hide') %>
-</a>    
+</a>
 
 <span class="text"><%= I18n.t('browser_check.opera') %></span>
 
@@ -9,7 +9,7 @@
     <%= I18n.t('browser_check.update.opera') %>
   </a>
   <span><%= I18n.t('browser_check.or') %></span>
-  <a href='http://www.mozilla.org/en-US/firefox/update/' target='_blank' class="firefox_logo">
-    <%= I18n.t('browser_check.install.firefox') %>
-  </a>  
+  <a href='http://www.google.com/chrome/' target='_blank' class="chrome_logo">
+    <%= I18n.t('browser_check.install.chrome') %>
+  </a>
 </div>

@@ -1,15 +1,30 @@
 en:
   browser_check:
-    firefox: "Your Firefox browser is out of date! Update it to improve your game experience!"
-    chrome: "Your Chrome browser is out of date! Update it to improve your game experience!"
-    opera: "Your Opera browser is out of date! Update it or install another browser!"
-    explorer: "Your Internet Explorer is out of date! Install another browser or update it!"
+    firefox: |
+      It seems that your Firefox browser is out of date and may not provide the best possible gaming experience.
+      We strongly recommend you to update it to the latest version which is usually much faster and more
+      secure than the outdated one.
+    chrome: |
+      It seems that your Chrome browser is out of date and may not provide the best possible gaming experience.
+      We strongly recommend you to update it to the latest version which is usually much faster and more
+      secure than the outdated one.
+    opera: |
+      It seems that your Opera browser is out of date and may not provide the best possible gaming experience.
+      We strongly recommend you to update it to the latest version which is usually much faster and more
+      secure than the outdated one. Additionally, we would like to recommed you another fast & secure browser
+      that you may like - Google Chrome.
+    explorer: |
+      Your Internet Explorer browser is out of date! The current version of your browser may have serious
+      security flaws and also much slower than the most of the modern browsers. We strongly recommend you to
+      try the fastest and safest browser that will provide a much better gaming experience - Google Chrome.
+      For sure, you can update your Internet Explorer to the latest version, but it won't be the best browser
+      anyway :)
     hide: "Hide"
     or: "OR"
-    update: 
+    update:
       firefox: "Update Mozilla Firefox"
       chrome: "Update Google Chrome"
       opera: "Update Opera"
       explorer: "Update Internet Explorer"
     install:
-      firefox: "Install Mozilla Firefox"
+      chrome: "Install Google Chrome"

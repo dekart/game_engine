@@ -1,0 +1,36 @@
+#browser_check {
+  border: 2px dashed #EC7000;
+  padding: 15px;
+  color: #444444;
+  margin-bottom: 30px;
+
+  .hide {
+    margin: 0 0 20px 20px;
+  }
+
+  .browser_type {
+    margin: 30px 0;
+    span {
+      font-weight: bold;
+      margin: 0 20px;
+    }
+    text-align: center;
+  }
+
+  .firefox_logo, .chrome_logo, .opera_logo, .explorer_logo {
+    padding: 20px 0 20px 60px;
+    background: {
+      repeat: no-repeat;
+      position: center left;
+    }
+
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  @each $browser in firefox, chrome, opera, explorer {
+    .#{ $browser }_logo {
+      background-image: image-url("browsers/#{ $browser }.png")
+    }
+  }
+}

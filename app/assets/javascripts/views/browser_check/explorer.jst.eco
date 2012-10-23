@@ -1,12 +1,12 @@
 <a class='hide' href='#'>
   <%= I18n.t('browser_check.hide') %>
-</a>    
+</a>
 
 <span class="text"><%= I18n.t('browser_check.explorer') %></span>
 
 <div class="browser_type">
-  <a href='http://www.mozilla.org/en-US/firefox/update/' target='_blank' class="firefox_logo">
-    <%= I18n.t('browser_check.install.firefox') %>
+  <a href='http://www.google.com/chrome/' target='_blank' class="chrome_logo">
+    <%= I18n.t('browser_check.install.chrome') %>
   </a>
   <span><%= I18n.t('browser_check.or') %></span>
   <a href='http://windows.microsoft.com/is-IS/windows-vista/Update-Internet-Explorer/' target='_blank' class="explorer_logo">
