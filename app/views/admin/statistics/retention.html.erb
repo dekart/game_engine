@@ -19,7 +19,7 @@
 
         <% @result.each_with_index do |reference, index| %>
           <tr class="<%= 'separator' if index > 0 && @result[index - 1][:users_amount] > 100 && @result[index][:users_amount] <= 100 %>">
-            <td><%= reference[:name].blank? ? "-" : reference[:name].humanize %></td>
+            <td><%= reference[:name].blank? ? "-" : reference[:name] %></td>
 
             <td><%= reference[:users_amount] %></td>
 
