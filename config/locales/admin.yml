@@ -49,6 +49,7 @@ en:
         footer:
           text: "Powered by %{engine} version %{version}"
           engine: "Railorz Game Engine"
+          server_time: "Server Time:"
 
     item_groups:
       index:
