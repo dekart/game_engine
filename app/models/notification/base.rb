@@ -12,7 +12,7 @@ module Notification
         transition any => :pending
       end
 
-      event :display_notification do
+      event :mark_read do
         transition any => :displayed
       end
 
@@ -24,10 +24,7 @@ module Notification
         transition :disabled => :displayed
       end
 
-      after_transition :on => :schedule, :do => :update_data
-      after_transition :on => :display_notification, :do => :update_data
-      after_transition :on => :disable, :do => :update_data
-      after_transition :on => :enable, :do => :update_data
+      after_transition any => any, :do => :update_data
     end
 
     class << self
@@ -55,6 +52,10 @@ module Notification
 
     def optional?
       true
+    end
+
+    def mark_read_manually
+      false
     end
 
     def initialize(character, data_string = "{}")
