@@ -3,9 +3,9 @@
 <%= form.text_field :name, :size => 50 %>
 <%= form.select :points_type, Contest.points_type_to_dropdown %>
 
-<%= form.text_area :description_before_started, :cols => 80, :rows => 5 %>
-<%= form.text_area :description_when_started, :cols => 80, :rows => 5 %>
-<%= form.text_area :description_when_finished, :cols => 80, :rows => 5 %>
+<%= form.text_area :description_before_started, :cols => 120, :rows => 20 %>
+<%= form.text_area :description_when_started, :cols => 120, :rows => 20 %>
+<%= form.text_area :description_when_finished, :cols => 120, :rows => 20 %>
 
 <%= form.datetime_select :started_at %>
 
