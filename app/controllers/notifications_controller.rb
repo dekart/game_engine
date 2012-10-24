@@ -12,7 +12,8 @@ class NotificationsController < ApplicationController
   end
 
   def mark_read
-    @notification = current_character.notifications.by_type(params[:type].to_sym)
+    @notification = current_character.notifications.list.detect{|notification| notification.type == params[:type].to_sym }
+
     @notification.mark_read
   end
 

@@ -2,8 +2,19 @@
   <h2><%= t(".title", :app => t('app_name')) %></h2>
 
   <div class="text">
-    <%= notification.message.content.html_safe %>
+    <%= simple_format(notification.message.content.html_safe, {}, :sanitize => false) %>
   </div>
+
+  <div class="buttons clearfix">
+    <%= link_to(button(:close), '#',
+          :onclick => '$.dialog.close()',
+          :class => "button"
+        ) %>
+  </div>
+
+  <% d.on_ready do %>
+    <%= close_notification_event(notification) %>
+  <% end %>
 
   <%= render("notifications/disable", :notification => notification) %>
 <% end %>
