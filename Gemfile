@@ -6,6 +6,7 @@ gem 'mysql2'
 gem "memcache-client",  "~> 1.8.5"
 gem "will_paginate",    "~> 3.0.2"
 gem "paperclip",        "~> 2.5.0"
+gem 'cocaine',          '~> 0.3.2' # Dependency of paperclip, should set a strict version to avoid this bug: https://github.com/thoughtbot/paperclip/issues/1038
 gem "aws-s3",           "~> 0.6.2"
 gem "delayed_job_active_record", "~> 0.3.1"
 gem 'daemons'
