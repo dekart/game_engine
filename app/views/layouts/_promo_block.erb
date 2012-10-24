@@ -1,8 +1,14 @@
 <% promo_block(context) do |promo| %>
+  <% if current_contest %>
+    <% promo.page :contest, :context => [:home, :rating, current_contest.context] do %>
+      <%= render("contests/current") %>
+    <% end %>
+  <% end %>
+
   <% if discount = current_character.personal_discounts.current %>
     <% promo.page :personal_discount, :context => [:home, :shop, :premium] do %>
       <%= render("personal_discounts/current", :discount => discount) %>
-      
+
       <% dom_ready do %>
         $(document).bind('disable.personal_discount', function(){
           $('#promo_block').promoBlock().removePage('personal_discount');
@@ -11,12 +17,6 @@
     <% end %>
   <% end %>
 
-  <% if current_contest %>
-    <% promo.page :contest, :context => [:home, :rating, current_contest.context] do %>
-      <%= render("contests/current") %>
-    <% end %>
-  <% end %>
-  
   <% unless special_items.empty? %>
     <% promo.page :special_items, :context => [:home, :shop, :premium] do %>
       <%= render("items/specials", :items => special_items) %>
