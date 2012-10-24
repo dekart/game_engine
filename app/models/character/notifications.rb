@@ -13,24 +13,28 @@ class Character
         @notifications ||= [].tap do |result|
           $redis.hgetall("notifications_#{proxy_association.owner.id}").each do |type, data|
             noti = Notification::Base.type_to_class(type).new(proxy_association.owner, data)
+
             result << noti
           end
         end
       end
 
-      def schedule(type, data = {})
-        notification = list.detect{|notification| notification.type == type}
-        data[:state] = notification ? notification.state : "pending"
+      def count
+        $redis.hgetall("notifications_#{proxy_association.owner.id}").size
+      end
 
-        if notification.nil?
+      def disabled_types
+        $redis.smembers("disabled_notifications_#{proxy_association.owner.id}")
+      end
+
+      def schedule(type, data = {})
+        if !disabled_types.include?(type.to_s)        
           notification = Notification::Base.type_to_class(type).new(proxy_association.owner, data.to_json)
 
-          list << notification
-        else
-          notification.data = data
-        end
+          notification.enable
 
-        notification.schedule unless notification.disabled?
+          list << notification
+        end
 
         true
       end
@@ -39,10 +43,6 @@ class Character
         friend_ids = proxy_association.owner.friend_filter.for_invitation(15)
 
         proxy_association.owner.notifications.schedule(:friends_to_invite, :friend_ids => friend_ids) unless friend_ids.empty?
-      end
-
-      def with_state(state)
-        list.select{|notification| notification.state == state.to_s}
       end
     end
   end

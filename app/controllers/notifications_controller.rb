@@ -1,9 +1,9 @@
 class NotificationsController < ApplicationController
   def index
-    @notifications = current_character.notifications.with_state(:pending)
+    @notifications = current_character.notifications.list
 
     @notifications.each do |n|
-      n.mark_read unless n.mark_read_manually
+      n.delete unless n.mark_read_manually
     end
 
     respond_to do |format|
@@ -14,17 +14,19 @@ class NotificationsController < ApplicationController
   def mark_read
     @notification = current_character.notifications.list.detect{|notification| notification.type == params[:type].to_sym }
 
-    @notification.mark_read
+    @notification.delete
   end
 
   def disable
-    @notification = current_character.notifications.list.detect{|notification| notification.type == params[:type].to_sym }
+    @notification = Notification::Base.type_to_class(params[:type].to_sym).new(current_character)
 
     @notification.disable
   end
   
   def settings
-    @notifications = current_character.notifications.list
+    @notification_types = Notification::Base::TYPES
+
+    @disabled_notifications = current_character.notifications.disabled_types
   end
   
   def update_settings
@@ -33,12 +35,16 @@ class NotificationsController < ApplicationController
     else
       notification_types = []
     end
-    
-    current_character.notifications.list.each do |notification|
-      if notification_types.include?(notification.type.to_s)
-        notification.enable! if notification.disabled?
+
+    Notification::Base::TYPES.each do |type|
+      type_name = type.class_to_type_name
+
+      if notification_types.include?(type.name)
+        $redis.srem("disabled_notifications_#{ current_character.id }", type_name)
       else
-        notification.disable!
+        $redis.hdel("notifications_#{ current_character.id }", type_name)
+  
+        $redis.sadd("disabled_notifications_#{ current_character.id }", type_name)
       end
     end
   end

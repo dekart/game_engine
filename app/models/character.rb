@@ -337,7 +337,7 @@ class Character < ActiveRecord::Base
   end
 
   def pending_notifications_count
-    self.notifications.with_state(:pending).size
+    self.notifications.count
   end
 
   protected
