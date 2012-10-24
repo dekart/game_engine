@@ -10,9 +10,9 @@ window.BrowserCheckController = class extends Spine.Controller
     browser = BrowserDetect.browser.toLowerCase()
     version = BrowserDetect.version
 
-    if (browser == "firefox"  and version < 10) or
-       (browser == "chrome" and version < 20) or
-       (browser == "opera" and version < 10) or
+    if (browser == "firefox"  and version < 15) or
+       (browser == "chrome" and version < 21) or
+       (browser == "opera" and version < 12) or
        (browser == "explorer" and version < 9)
       @.render(browser)
 
