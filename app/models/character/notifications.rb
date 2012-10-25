@@ -19,8 +19,14 @@ class Character
         end
       end
 
+      def find_by_type(type)
+        data = $redis.hget("notifications_#{proxy_association.owner.id}", type)
+
+        Notification::Base.type_to_class(type).new(proxy_association.owner, data)
+      end
+
       def count
-        $redis.hgetall("notifications_#{proxy_association.owner.id}").size
+        $redis.hlen("notifications_#{proxy_association.owner.id}")
       end
 
       def disabled_types
