@@ -12,11 +12,11 @@ class Character
       def fetch
         [].tap do |result|
           $redis.hgetall("notifications_#{proxy_association.owner.id}").each do |type, data|
-            noti = Notification::Base.type_to_class(type).new(proxy_association.owner, data)
+            n = Notification::Base.type_to_class(type).new(proxy_association.owner, data)
 
-            $redis.hdel("notifications_#{proxy_association.owner.id}", type) unless noti.mark_read_manually
+            $redis.hdel("notifications_#{proxy_association.owner.id}", type) unless n.mark_read_manually
 
-            result << noti
+            result << n
           end
         end
       end
