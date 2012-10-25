@@ -51,6 +51,8 @@ window.CharacterOverviewController = class extends Spine.Controller
     @refill_energy.toggle(character.ep < character.energy_points / 2)
     @refill_stamina.toggle(character.sp < character.stamina_points / 2)
 
+    if character.notifications_count > 0
+      $.getScript('/notifications')
 
   onDataUpdate: =>
     @.render()

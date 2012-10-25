@@ -1,0 +1,13 @@
+<% @notifications.each do |notification| %>
+  <%= render("notifications/#{notification.class_to_type}", :notification => notification) %>
+
+  <% dom_ready do %>
+    <%= ga_track_event("Notifications", "Show", notification.title) %>
+  <% end %>
+<% end %>
+
+<% dom_ready do %>
+  $(document).trigger('application.ready');
+<% end %>
+
+<%= dom_ready_code %>
