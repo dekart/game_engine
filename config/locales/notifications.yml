@@ -33,6 +33,8 @@ en:
     
     information:
       title: "%{app} News"
+      buttons:
+        close: "Close"
     
     settings:
       title: "Notification Settings"

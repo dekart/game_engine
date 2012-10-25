@@ -2,11 +2,9 @@
 
 <% if current_character(true) %>
   Character.update(<%= current_character.to_json_for_overview.html_safe %>);
-
-  <%= display_notifications %>
 <% end %>
 
-<%= Array.wrap(@dom_ready).join("\n").html_safe %>
+<%= dom_ready_code %>
 
 $(document).trigger('application.ready');
 

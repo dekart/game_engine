@@ -4,8 +4,6 @@
   <% dom_ready do %>
     Character.update(<%= current_character.to_json_for_overview.html_safe %>);
   <% end %>
-
-  <%= display_notifications %>
 <% end %>
 
 <% dom_ready do %>

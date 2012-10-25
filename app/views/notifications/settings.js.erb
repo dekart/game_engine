@@ -7,13 +7,13 @@
         :method => :post, :remote => true) do |form| %>
   
     <div class="notifications">
-      <% @notifications.each do |notification| %>
-        <% if notification.optional? %>
+      <% @notification_types.each do |type| %>
+        <% if type.optional? %>
           <div class="notification">
             <%= check_box_tag "notification[types][]",
-                  notification.type, !notification.disabled?,
-                  :id => "notification_#{notification.type}" %>
-            <%= label_tag "notification_#{notification.type}", t(".types.#{notification.class.name.split("::").last.underscore}") %>
+                  type, !@disabled_notifications.include?(type.class_to_type_name),
+                  :id => "notification_#{type}" %>
+            <%= label_tag "notification_#{type}", t(".types.#{type.class_to_type_name}") %>
           </div>
         <% end %>
       <% end %>

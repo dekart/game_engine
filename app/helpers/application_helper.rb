@@ -83,8 +83,12 @@ module ApplicationHelper
       options[:prepend] ? @dom_ready.insert(0, content) : @dom_ready << content
       nil
     else
-      javascript_tag("$(function(){ #{ @dom_ready.join("\n") } });")
+      javascript_tag("$(function(){ #{ dom_ready_code } });")
     end
+  end
+
+  def dom_ready_code
+    Array.wrap(@dom_ready).join("\n").html_safe
   end
 
   def flash_block(*args, &block)

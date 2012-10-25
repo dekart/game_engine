@@ -1,39 +1,32 @@
 module Notification
   class Base
+    TYPES = [
+      ContestWinner, 
+      ExchangeOfferAccepted, 
+      ExchangeOfferCreated, 
+      FriendsToInvite, 
+      HitListing, 
+      Information, 
+      ItemsCollection, 
+      LevelUp, 
+      MarketItemSold, 
+      NewAchievement, 
+      SendGift, 
+      WallPost
+    ]
+
     cattr_accessor :types
 
     attr_accessor :character, :data, :state, :type
-
-    state_machine :initial => :pending do
-      state :displayed
-      state :disabled
-
-      event :schedule do
-        transition any => :pending
-      end
-
-      event :display_notification do
-        transition any => :displayed
-      end
-
-      event :disable do
-        transition any => :disabled
-      end
-
-      event :enable do
-        transition :disabled => :displayed
-      end
-
-      after_transition :on => :schedule, :do => :update_data
-      after_transition :on => :display_notification, :do => :update_data
-      after_transition :on => :disable, :do => :update_data
-      after_transition :on => :enable, :do => :update_data
-    end
 
     class << self
       def inherited(base)
         Notification::Base.types ||= []
         Notification::Base.types << base
+      end
+
+      def title
+        name.split("::").last.titleize
       end
 
       def type_to_class_name(type)
@@ -43,6 +36,14 @@ module Notification
       def type_to_class(type)
         type_to_class_name(type).constantize
       end
+
+      def class_to_type_name
+        name.split("::").last.underscore
+      end
+
+      def optional?
+        true
+      end
     end
 
     def class_to_type
@@ -50,11 +51,11 @@ module Notification
     end
 
     def title
-      self.class.name.split("::").last.titleize
+      self.class.title
     end
 
-    def optional?
-      true
+    def mark_read_manually
+      false
     end
 
     def initialize(character, data_string = "{}")
@@ -63,14 +64,25 @@ module Notification
 
       data = ActiveSupport::JSON.decode(data_string).symbolize_keys
 
-      self.state = data.delete(:state) if data[:state]
       self.data = data
     end
 
-    def update_data
-      data[:state] = state
+    def enable
+      $redis.srem("disabled_notifications_#{ character.id }", type)
 
       $redis.hset("notifications_#{ character.id }", type, data.to_json)
+    end
+
+    def disable
+      $redis.hdel("notifications_#{ character.id }", type)
+
+      $redis.sadd("disabled_notifications_#{ character.id }", type)
+    end
+
+    def delete
+      $redis.srem("disabled_notifications_#{ character.id }", type)
+
+      $redis.hdel("notifications_#{ character.id }", type)
     end
   end
 end
