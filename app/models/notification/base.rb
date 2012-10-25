@@ -1,10 +1,18 @@
 module Notification
   class Base
     TYPES = [
-      Notification::ContestWinner, Notification::ExchangeOfferAccepted, Notification::ExchangeOfferCreated, 
-      Notification::FriendsToInvite, Notification::HitListing, Notification::Information, Notification::ItemsCollection, 
-      Notification::LevelUp, Notification::MarketItemSold, Notification::NewAchievement, Notification::SendGift, 
-      Notification::WallPost
+      ContestWinner, 
+      ExchangeOfferAccepted, 
+      ExchangeOfferCreated, 
+      FriendsToInvite, 
+      HitListing, 
+      Information, 
+      ItemsCollection, 
+      LevelUp, 
+      MarketItemSold, 
+      NewAchievement, 
+      SendGift, 
+      WallPost
     ]
 
     cattr_accessor :types
