@@ -1,10 +1,6 @@
 class NotificationsController < ApplicationController
   def index
-    @notifications = current_character.notifications.list
-
-    @notifications.each do |n|
-      n.delete unless n.mark_read_manually
-    end
+    @notifications = current_character.notifications.fetch
 
     respond_to do |format|
       format.js { render :layout => false }
