@@ -18,9 +18,9 @@ class NotificationsController < ApplicationController
   end
 
   def disable
-    @notification = Notification::Base.type_to_class(params[:type].to_sym).new(current_character)
+    @type = Notification::Base.type_to_class(params[:type].to_sym)
 
-    @notification.disable
+    current_character.notifications.disable_type(params[:type])
   end
   
   def settings
@@ -40,11 +40,11 @@ class NotificationsController < ApplicationController
       type_name = type.class_to_type_name
 
       if notification_types.include?(type.name)
-        $redis.srem("disabled_notifications_#{ current_character.id }", type_name)
+
+        current_character.notifications.enable_type(type_name)
       else
-        $redis.hdel("notifications_#{ current_character.id }", type_name)
-  
-        $redis.sadd("disabled_notifications_#{ current_character.id }", type_name)
+
+        current_character.notifications.disable_type(type_name)
       end
     end
   end

@@ -27,6 +27,16 @@ class Character
         $redis.smembers("disabled_notifications_#{proxy_association.owner.id}")
       end
 
+      def enable_type(type)
+        $redis.srem("disabled_notifications_#{ proxy_association.owner.id }", type)
+      end
+
+      def disable_type(type)
+        $redis.hdel("notifications_#{ proxy_association.owner.id }", type)
+  
+        $redis.sadd("disabled_notifications_#{ proxy_association.owner.id }", type)
+      end
+
       def schedule(type, data = {})
         if !disabled_types.include?(type.to_s)        
           notification = Notification::Base.type_to_class(type).new(proxy_association.owner, data.to_json)

@@ -1,8 +1,10 @@
 module Notification
   class Base
-    TYPES = [Notification::ContestWinner, Notification::ExchangeOfferAccepted, Notification::ExchangeOfferCreated, 
+    TYPES = [
+      Notification::ContestWinner, Notification::ExchangeOfferAccepted, Notification::ExchangeOfferCreated, 
       Notification::FriendsToInvite, Notification::HitListing, Notification::Information, Notification::ItemsCollection, 
-      Notification::LevelUp, Notification::MarketItemSold, Notification::NewAchievement, Notification::SendGift, Notification::WallPost
+      Notification::LevelUp, Notification::MarketItemSold, Notification::NewAchievement, Notification::SendGift, 
+      Notification::WallPost
     ]
 
     cattr_accessor :types
@@ -13,6 +15,10 @@ module Notification
       def inherited(base)
         Notification::Base.types ||= []
         Notification::Base.types << base
+      end
+
+      def title
+        name.split("::").last.titleize
       end
 
       def type_to_class_name(type)
@@ -37,7 +43,7 @@ module Notification
     end
 
     def title
-      self.class.name.split("::").last.titleize
+      self.class.title
     end
 
     def mark_read_manually

@@ -220,7 +220,7 @@ class Character < ActiveRecord::Base
         :time_to_hp_restore,
         :time_to_ep_restore,
         :time_to_sp_restore,
-        :pending_notifications_count
+        :notifications_count
       ]
     )
   end
@@ -336,7 +336,7 @@ class Character < ActiveRecord::Base
     }
   end
 
-  def pending_notifications_count
+  def notifications_count
     self.notifications.count
   end
 
