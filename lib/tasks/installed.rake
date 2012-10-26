@@ -14,7 +14,7 @@ namespace :app do
             result = api_client.get_objects(user_ids, :fields => [:installed])
   
             result.each do |facebook_id, facebook_data|
-              if facebook_data["installed"] != true
+              unless facebook_data["installed"]
                 user = users.detect{|u| u.facebook_id == facebook_id.to_i }
   
                 user.update_attribute(:installed, false)
