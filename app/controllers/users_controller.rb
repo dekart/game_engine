@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  skip_authentication_filters :only => :subscribe
-  skip_before_filter :tracking_requests, :only => :subscribe
+  skip_authentication_filters :only => [:subscribe, :uninstall]
+  skip_before_filter :tracking_requests, :only => [:subscribe, :uninstall]
   
   def toggle_block
     @user = current_user
@@ -44,7 +44,15 @@ class UsersController < ApplicationController
       render :text => 'OK'
     end
   end
-  
+
+  def uninstall
+    user = User.find_by_facebook_id(current_facebook_user.uid)
+
+    user.update_attribute(:installed, false)
+
+    render :text => 'OK'
+  end
+
   def settings
   end
 end
