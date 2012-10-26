@@ -2,13 +2,13 @@ namespace :app do
   namespace :users do
     desc "Set up 'installed' flag for users"
     task :installed => :environment do
-      begin
-        api_client = Facepalm::Config.default.api_client
-        i = 0
+      api_client = Facepalm::Config.default.api_client
+      i = 0
 
-        User.find_in_batches(:batch_size => 100) do |users|
+      User.find_in_batches(:batch_size => 100) do |users|
 
-          User.transaction do
+        User.transaction do
+          begin
             user_ids = users.collect{|u| u.facebook_id }
   
             result = api_client.get_objects(user_ids, :fields => [:installed])
@@ -23,13 +23,13 @@ namespace :app do
               i += 1
               puts "Processed #{i}..." if i % 100 == 0
             end
+          rescue Koala::Facebook::APIError => e
+            Rails.logger.error e
           end
         end
-
-        puts "Done"
-      rescue Koala::Facebook::APIError => e
-        Rails.logger.error e
       end
+
+      puts "Done"
     end
   end
 end

@@ -46,11 +46,7 @@ class UsersController < ApplicationController
   end
 
   def uninstall
-    signed_request = request.env['HTTP_SIGNED_REQUEST'] || session["fb_signed_request_#{ Facepalm::Config.default.app_id }"]
-    
-    facebook_user = Facepalm::User.from_signed_request(Facepalm::Config.default, signed_request)
-
-    user = User.find_by_facebook_id(facebook_user.uid)
+    user = User.find_by_facebook_id(current_facebook_user.uid)
 
     user.update_attribute(:installed, false)
 
