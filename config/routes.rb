@@ -148,6 +148,7 @@ GameEngine::Application.routes.draw do
   resources :users do
     collection do
       match 'subscribe'
+      match 'uninstall'
       match 'settings'
       match 'toggle_block'
     end
