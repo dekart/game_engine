@@ -24,7 +24,7 @@ namespace :app do
               puts "Processed #{i}..." if i % 100 == 0
             end
           rescue Koala::Facebook::APIError => e
-            Rails.logger.error e
+            puts e
           end
         end
       end
