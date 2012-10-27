@@ -148,6 +148,7 @@ GameEngine::Application.routes.draw do
   resources :users do
     collection do
       match 'subscribe'
+      match 'uninstall'
       match 'settings'
       match 'toggle_block'
     end
@@ -252,13 +253,14 @@ GameEngine::Application.routes.draw do
 
   resources :help_pages, :only => :show
 
-  resources :notifications, :only => [] do
+  resources :notifications, :only => [:index] do
     collection do
       post 'disable'
-    end 
-    
+      post 'mark_read'
+    end
+
     collection do
-      get 'settings' 
+      get 'settings'
       post 'update_settings'
     end
   end

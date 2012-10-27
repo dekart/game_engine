@@ -822,6 +822,7 @@ ActiveRecord::Schema.define(:version => 20121019182440) do
     t.string   "ban_reason",             :limit => 100, :default => "",      :null => false
     t.boolean  "paying"
     t.binary   "friend_ids"
+    t.boolean  "installed",                             :default => true
   end
 
   add_index "users", ["created_at"], :name => "index_users_on_created_at"
