@@ -160,22 +160,20 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def check_request(request_id, recipient_ids)
-      recipient_ids.each do |recipient_id|
-        begin
-          graph_data = Facepalm::Config.default.api_client.get_object("#{ request_id }_#{ recipient_id }")
-        rescue Koala::Facebook::APIError => e
-          Rails.logger.error e
+      fbids = recipient_ids.map{|r| "#{ request_id }_#{ r }"}
+
+      begin
+        Facepalm::Config.default.api_client.get_objects(fbids).each do |id, graph_data|
+          data = JSON.parse(graph_data['data']) if graph_data['data']
+
+          app_request_class = app_request_class_from_data(data)
+
+          request = app_request_class.find_or_initialize_by_facebook_id_and_receiver_id(request_id, graph_data['to']['id'])
+
+          request.update_from_facebook_request(graph_data) if request.pending?
         end
-
-        next unless graph_data
-
-        data = JSON.parse(graph_data['data']) if graph_data['data']
-
-        app_request_class = app_request_class_from_data(data)
-
-        request = app_request_class.find_or_initialize_by_facebook_id_and_receiver_id(request_id, recipient_id)
-
-        request.update_from_facebook_request(graph_data) if request.pending?
+      rescue Exception => e
+        Rails.logger.error e
       end
     end
 
