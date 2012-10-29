@@ -3,9 +3,6 @@
     <th>#</th>
     <th colspan="2"><%= Character.model_name.human %></th>
     <th><%= t(".points_types.#{group.contest.points_type}") %></th>
-    <% if group.contest.finished? %>
-      <th><%= t(".payouts") %></th>
-    <% end %>
   </tr>
 
   <% contest_group_table(group) do |character, points, position, current| %>
@@ -13,11 +10,7 @@
       <td class="position"><%= position %></td>
       <td class="picture"><%= character_picture_link(character) %></td>
       <td class="name"><%= character_name_link(character, {}, {:capitalize => true}) %></td>
-      <td class="points <%= "last" unless group.contest.finished? %>"><%= points %></td>
-
-      <% if group.contest.finished? %>
-        <td class="payouts last"><%= payout_list(character, group.payouts_for_position(position)) %></td>
-      <% end %>
+      <td class="points last"><%= points %></td>
     </tr>
   <% end %>
 </table>
