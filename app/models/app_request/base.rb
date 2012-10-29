@@ -132,8 +132,6 @@ class AppRequest::Base < ActiveRecord::Base
     end
   end
 
-  serialize :data
-
   validates_presence_of :facebook_id
 
   after_create  :schedule_data_update
