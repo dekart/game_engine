@@ -3,7 +3,7 @@
     <tr>
       <td class="clan">
         <h2><%= @clan.name %></h2>
-    
+
         <table cellpadding="0" cellpadding="0">
           <tr>
             <td class="avatar">
@@ -14,46 +14,46 @@
             </td>
           </tr>
         </table>
-        
+
         <% if current_character.clan == @clan %>
           <div class="buttons">
             <% if current_character.clan_member.creator? %>
               <%= link_to( button(:manage), edit_clan_path(@clan), :class => "manage button" ) %>
             <% end %>
-            
-            <%= link_to_function(button(:invite), 
+
+            <%= link_to_function(button(:invite),
                   invite_dialog(:clan_invite,
                     :dialog => {
                       :title    => t('.title_invite'),
                       :message  => t('.invitation_message', :app_name => t('app_name')),
                       :data     => {
-                        :reference => :invite_page,
-                        :clan_id   => @clan.id
+                        :target_id   => @clan.id
+                        :target_type => Clan.name
                       }
                     }
                   ),
                   :class => 'invite button'
                 ) %>
           </div>
-          
+
           <div id="clan_chat">
             <%= chat("#{@clan.key_for_chat}") %>
           </div>
-        <% end %>    
-        
+        <% end %>
+
       </td>
-      
+
       <td class="members">
         <div class="block_members">
           <%= render("participants", :members => @clan.clan_members ) %>
-        </div>  
-        
+        </div>
+
       </td>
     </tr>
   </table>
-  
+
   <% if current_character.clan == @clan %>
-    
+
     <% unless current_character.clan_member.creator? %>
       <div class="buttons">
         <%= link_to(button(:quit), clan_member_path,
@@ -63,18 +63,18 @@
               :"data-click-once" => true,
               :class => "quit button"
             ) %>
-      </div>    
+      </div>
     <% end %>
-  
+
   <% elsif !current_character.clan_member.try(:creator?) %>
     <div class="join_clan">
       <h2><%= t(".join_clan.title")%></h2>
-      
+
       <% unless current_character.clan_membership_applications.asked_to_join?(@clan) %>
         <p class="description"><%= t(".join_clan.text")%></p>
-      <% end %>  
+      <% end %>
     </div>
-   
+
     <div class="buttons sent" id="join_clan">
       <% if @invitation %>
         <%= link_to(button(:join), clan_membership_invitation_path(@invitation),
@@ -84,10 +84,10 @@
               :"data-click-once" => true,
               :class => "join button"
             ) %>
-      
+
       <% elsif current_character.clan_membership_applications.asked_to_join?(@clan) %>
         <%= t(".sent_application") %>
-              
+
       <% else %>
         <%= link_to(button(:apply), apply_clan_membership_application_path(:clan_id => @clan.id),
               :remote => true,
@@ -95,9 +95,9 @@
               :"data-click-once" => true,
               :class => "apply button"
             ) %>
-      <% end %>    
+      <% end %>
     </div>
-    
+
   <% end %>
-  
+
 </div>

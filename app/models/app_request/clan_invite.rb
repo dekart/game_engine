@@ -12,7 +12,7 @@ class AppRequest::ClanInvite < AppRequest::Base
   end
 
   def clan
-    @clan ||= (data && data['clan_id'] ? Clan.find(data['clan_id']) : sender.clan)
+    @clan ||= target || sender.clan
   end
 
   protected

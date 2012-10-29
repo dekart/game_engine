@@ -62,9 +62,8 @@ class AppRequest::Gift < AppRequest::Base
     I18n.t('activerecord.errors.models.app_request/gift.accepted_recently', :hours => Setting.i(:gifting_repeat_accept_delay))
   end
 
-  # FIXME remove temporary support of old data keys
   def item
-    target || (Item.find(data['item_id']) if data && data['item_id'])
+    target
   end
 
   def can_send_back?
@@ -75,7 +74,7 @@ class AppRequest::Gift < AppRequest::Base
 
   def after_accept
     super
-    
+
     receiver.inventories.give!(item)
 
     self.class.store_accept_time(sender, receiver)
