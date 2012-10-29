@@ -1,32 +1,32 @@
 class AppRequestsController < ApplicationController
   skip_authentication_filters :only => :create
   skip_before_filter :tracking_requests, :only => :create
-  
+
   def index
     @app_requests_types = current_character.app_requests.visible.types
-    
+
     @current_type = AppRequest::Base.find_by_facebook_id(params[:app_request_id]).try(:type_name) if params[:app_request_id]
     @current_type ||= params[:type]
     @current_type ||= @app_requests_types.first[:name] if @app_requests_types.present?
-    
-    @app_requests = @current_type ? current_character.app_requests.visible.by_type(@current_type) : []                                               
-                                                   
+
+    @app_requests = @current_type ? current_character.app_requests.visible.by_type(@current_type) : []
+
     if request.xhr?
       render(
         :partial => "list",
         :locals => {:app_requests => @app_requests},
         :layout => false
       )
-    end                                                                  
+    end
   end
-  
+
   def create
     @request_type = params[:type]
-    
+
     if params[:target_id] && params[:target_type]
       @target = params[:target_type].constantize.find(params[:target_id])
     end
-    
+
     @recipients = Array.wrap(params[:to])
 
     Delayed::Job.enqueue Jobs::RequestDataUpdate.new(params[:request_id], @recipients)
@@ -35,22 +35,22 @@ class AppRequestsController < ApplicationController
       format.js
     end
   end
-  
+
   def update
     @app_request = current_character.app_requests.find(params[:id])
 
     @app_request.accept
-    
+
     @next_page = page_for_redirect
 
     respond_to do |format|
       format.js
     end
   end
-  
+
   def ignore
     @app_request = current_character.app_requests.find(params[:id])
-    
+
     @app_request.ignore
 
     respond_to do |format|

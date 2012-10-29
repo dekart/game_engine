@@ -164,13 +164,7 @@ class AppRequest::Base < ActiveRecord::Base
 
       begin
         Facepalm::Config.default.api_client.get_objects(fbids).each do |id, graph_data|
-          data = JSON.parse(graph_data['data']) if graph_data['data']
-
-          app_request_class = app_request_class_from_data(data)
-
-          request = app_request_class.find_or_initialize_by_facebook_id_and_receiver_id(request_id, graph_data['to']['id'])
-
-          request.update_from_facebook_request(graph_data) if request.pending?
+          request_from_graph_data(graph_data)
         end
       rescue Exception => e
         Rails.logger.error e
@@ -178,15 +172,19 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def check_user_requests(user)
-      user.facebook_client.get_connections('me', 'apprequests').each do |facebook_request|
-        data = JSON.parse(facebook_request['data']) if facebook_request['data']
-
-        request = app_request_class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*facebook_request['id'].split('_'))
-
-        request.update_from_facebook_request(facebook_request) if request.pending?
+      user.facebook_client.get_connections('me', 'apprequests').each do |graph_data|
+        request_from_graph_data(graph_data)
       end
     rescue Koala::Facebook::APIError => e
       Rails.logger.error e
+    end
+
+    def request_from_graph_data(graph_data)
+      data = JSON.parse(graph_data['data']) if graph_data['data']
+
+      request = class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*graph_data['id'].split('_'))
+
+      request.update_from_facebook_request(graph_data, data) if request.pending?
     end
 
     def types
@@ -200,7 +198,7 @@ class AppRequest::Base < ActiveRecord::Base
       "AppRequest::#{ type.camelize }"
     end
 
-    def app_request_class_from_data(data)
+    def class_from_data(data)
       if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
         "AppRequest::#{ data['type'].camelize }"
       else
@@ -213,14 +211,12 @@ class AppRequest::Base < ActiveRecord::Base
     @receiver ||= User.find_by_facebook_id(receiver_id).try(:character)
   end
 
-  def update_from_facebook_request(facebook_request)
+  def update_from_facebook_request(facebook_request, data)
     if facebook_request['from'].nil?
       ignore!
     else
-      self.data = JSON.parse(facebook_request['data']) if facebook_request['data']
-
       # Ensure that the new type will be saved correctly
-      self.type = request_class_from_data.name
+      self.type = self.class.class_from_data(data).name
 
       self.sender = User.find_by_facebook_id(facebook_request['from']['id']).character
       self.receiver_id = facebook_request['to']['id'] if facebook_request['to']
@@ -265,14 +261,6 @@ class AppRequest::Base < ActiveRecord::Base
   end
 
   protected
-
-  def request_class_from_data
-    if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
-      "AppRequest::#{ data['type'].camelize }"
-    else
-      'AppRequest::Invitation'
-    end.constantize
-  end
 
   def before_accept
     self.accepted_at = Time.now
