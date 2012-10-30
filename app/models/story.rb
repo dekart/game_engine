@@ -62,8 +62,8 @@ class Story < ActiveRecord::Base
     'monster_defeated'          => :monster_id,
     'property'                  => :property_id,
     'promotion'                 => :promotion_id,
-    'hit_listing_new'           => :hit_listing_id,
-    'hit_listing_completed'     => :hit_listing_id,
+    'hit_listing_new'           => :hit_listing_id, # not used
+    'hit_listing_completed'     => :hit_listing_id, # not used
     'collection_completed'      => :collection_id,
     'collection_missing_items'  => :collection_id,
     'achievement'               => :achievement_type_id

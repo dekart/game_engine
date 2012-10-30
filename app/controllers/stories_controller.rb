@@ -44,7 +44,7 @@ class StoriesController < ApplicationController
       promotion = Promotion.find(story_data[:promotion_id])
 
       promotion_url(promotion, :canvas => fb_canvas?)
-    when 'hit_listing_new', 'hit_listing_completed'
+    when 'hit_listing_new', 'hit_listing_completed' # not used
       hit_listings_url(:canvas => fb_canvas?)
     when 'collection_completed'
       item_collections_url(:canvas => fb_canvas?)
