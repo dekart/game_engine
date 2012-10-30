@@ -14,8 +14,8 @@
   </tr>
 
   <% @operations.each do |operation| %>
-    <tr class=<%= VipMoneyDeposit::PAYMENT_PROVIDERS.include?(operation.reference) ? "payment " : "" %>
-      <%= operation.created_at > 24.hours.ago ? "recent" : "" %>
+    <tr class=<%= 'payment ' if VipMoneyDeposit::PAYMENT_PROVIDERS.include?(operation.reference) %>
+      <%= 'recent' if operation.created_at > 24.hours.ago %>
     >
       <td><%= operation.id %></td>
       <td><%= l(operation.created_at, :format => :long) %></td>
