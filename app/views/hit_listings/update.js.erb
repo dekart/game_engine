@@ -31,16 +31,6 @@
               </td>
             </tr>
           </table>
-
-          <% if Setting.b(:stream_dialog_enabled) %>
-            <p><%= t(".completed.publish") %></p>
-          
-            <div class="buttons">
-              <%= link_to_function(button(:publish), stream_dialog(:hit_listing_completed, @hit_listing),
-                    :class => "publish button"
-                  ) %>
-            </div>
-          <% end %>
         <% end %>
       <% else %>
         <p class="incomplete"><%= t(".incomplete") %></p>

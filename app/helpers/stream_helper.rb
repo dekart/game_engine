@@ -124,7 +124,7 @@ module StreamHelper
     ]
   end
 
-
+  # not used
   def hit_listing_new_story_options(listing)
     [
       {
@@ -137,7 +137,7 @@ module StreamHelper
     ]
   end
 
-
+  # not used
   def hit_listing_completed_story_options(listing)
     [
       {
