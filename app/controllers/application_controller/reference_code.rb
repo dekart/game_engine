@@ -14,10 +14,10 @@ class ApplicationController
       options   = args.extract_options!
       reference = args.shift
       user_id   = args.shift || current_user.try(:id)
-      
+
       encryptor.encrypt([reference, user_id, options].to_json)
     end
-    
+
     def reference_data
       @reference_data ||= decrypt_reference_code(params[:reference_code]) if params[:reference_code]
     end
@@ -31,7 +31,7 @@ class ApplicationController
     end
 
     def reference_key
-      (params[:reference] || params[:fb_source] || params[:ref]).to_s
+      (params[:forced_reference] || params[:reference] || params[:fb_source] || params[:ref]).to_s
     end
   end
 end
