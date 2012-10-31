@@ -3,7 +3,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:<%= "/home/#{u
 
 # Delayed Job Processor
 
-* * * * *     cd <%= current_path %> && flock -n ./tmp/pids/delayed_job.lock <%= current_path %>/script/delayed_job >> <%= shared_path %>/log/delayed_job.log 2>&1
+* * * * *     cd <%= current_path %> && flock -n ./tmp/pids/delayed_job.lock <%= current_path %>/script/delayed_job run >> <%= shared_path %>/log/delayed_job.log 2>&1
 
 # Scheduler
 
