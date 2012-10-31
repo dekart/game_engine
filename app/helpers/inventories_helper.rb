@@ -93,9 +93,13 @@ module InventoriesHelper
 
     inventories = current_character.equipment.inventories_by_placement(placement).inject(Hash.new(0)) {|h, v| h[v] += 1; h}
 
-    inventories.each_pair do |inventory, count|
+    inventories.each_slice(2) do |slice|
       result << '<li>'
-      result << inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
+
+      slice.each do |inventory, count|
+        result << inventory_placement_tag(inventory, placement, capture(inventory, count, &block))
+      end
+
       result << '</li>'
     end
 
