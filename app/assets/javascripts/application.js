@@ -61,29 +61,6 @@ var ClanEditForm = {
 };
 
 
-var jCarouselHelper = {
-  wrap: function($container, wrapFactor) {
-    var result = "";
-    var wrapped = [];
-
-    var items = $container.find('li').toArray();
-
-    for (var i = 0; i < items.length; i++) {
-      var $item = $(items[i]);
-
-      wrapped.push($item.html());
-
-      if (wrapped.length == wrapFactor || i == items.length - 1) {
-        result += '<li>' + wrapped.join("\n") + '</li>';
-        wrapped = []
-      }
-    }
-
-    $container.html(result);
-  }
-};
-
-
 function if_fb_initialized(callback){
   if(typeof FB !== 'undefined'){
     callback.call();
@@ -219,10 +196,6 @@ var Equipment = {
         for(var i = 0; i < free_slots; i ++){
           $carousel.append('<li><div class="additional-placeholder"></div></li>');
         }
-      }
-
-      if (Equipment.options.wrapGroupEquipment) {
-        jCarouselHelper.wrap($carousel, Equipment.options.wrapGroupEquipment);
       }
 
       $carousel.jcarousel({
