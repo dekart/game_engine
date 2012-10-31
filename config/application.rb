@@ -19,7 +19,7 @@ end
 
 module GameEngine
   class Application < Rails::Application
-    config.cache_store = :mem_cache_store, Rails::Config.cache.server, {:namespace => Rails.env}
+    config.cache_store = :mem_cache_store, Rails::Config.cache.server, {:namespace => Rails::Config.cache[:namespace] || Rails.env}
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
