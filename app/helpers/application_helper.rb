@@ -69,6 +69,8 @@ module ApplicationHelper
     values.uniq!
     values.sort!
 
+    values.select!{|value| value <= options[:max] } if options[:max]
+
     select_tag(:amount, options_for_select(values, options[:selected]),
       :class => 'amount',
       :"data-options" => options.to_json

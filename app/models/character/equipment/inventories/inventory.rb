@@ -45,18 +45,24 @@ class Character
           item.usable? && amount > 0
         end
         
-        def use!(character)
+        def use!(character, amount = 1)
           return false unless usable?
+
+          result = Payouts::Collection.new
       
           Character::Equipment.transaction do
-            payouts.apply(character, :use, item).tap do
-              character.inventories.take!(item)
-              
-              self.amount = character.inventories.count(item)
-              
-              character.save
+            amount.times do
+              result += payouts.apply(character, :use, item)
             end
+
+            character.inventories.take!(item, amount)
+            
+            self.amount = character.inventories.count(item)
+            
+            character.save
           end
+
+          result
         end
         
         def to_attr_hash

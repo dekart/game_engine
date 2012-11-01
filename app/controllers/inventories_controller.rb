@@ -36,8 +36,14 @@ class InventoriesController < ApplicationController
   end
 
   def use
-    if @inventory = current_character.inventories.find_by_item_id(params[:id])
-      @result = @inventory.use!(current_character)
+    @amount = params[:amount] ? params[:amount].to_i : 1
+
+    @inventory = current_character.inventories.find_by_item_id(params[:id])
+
+    if @inventory
+      @amount = @inventory.amount > @amount ? @amount : @inventory.amount
+
+      @result = @inventory.use!(current_character, @amount)
     end
 
     respond_to do |format|
