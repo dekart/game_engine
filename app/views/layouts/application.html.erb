@@ -23,6 +23,8 @@
 
   <%= app_toolbar %>
 
+  <%= render('notifications/information', :message => current_character.message) if !current_character.message.nil? %>
+
   <div id="content">
     <div id="header">
       <%= global_chat %>

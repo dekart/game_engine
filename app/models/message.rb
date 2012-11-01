@@ -2,46 +2,33 @@ class Message < ActiveRecord::Base
   validates_presence_of :content, :min_level
   validates_numericality_of :min_level
   
-  state_machine :initial => :pending do
-    state :sending
-    state :sent
+  state_machine :initial => :hidden do
+    state :hidden
+    state :visible
     state :deleted
 
-    event :start_sending do
-      transition :pending => :sending
+    event :publish do
+      transition :hidden => :visible
     end
-    
-    event :mark_sent do
-      transition :sending => :sent
+
+    event :hide do
+      transition :visible => :hidden
     end
-    
+
     event :mark_deleted do
-      transition :pending => :deleted
-    end
-    
-    after_transition :on => :start_sending do |message|
-      message.send(:schedule_mass_notification)
+      transition(any - [:deleted] => :deleted)
     end
   end
-  
-  def schedule_mass_notification
-    Delayed::Job.enqueue Jobs::MassNotify.new(self.id)
+
+  scope :by_level, Proc.new{ |level|
+    {:conditions => ["min_level <= ?", level]}
+  }
+
+  def mark_read(character)
+    $redis.hset("info_message_#{id}", character.id, Time.now.to_i)
   end
-  
-  def mass_notify(characters)
-    transaction do   
-      characters.each do |character|
-        send_to(character)
-      end
-      
-      self.last_recipient_id = characters.last.id
-      self.amount_sent += characters.size
-      
-      save!
-    end
-  end
-  
-  def send_to(character)
-    character.notifications.schedule(:information, :message_id => id)
+
+  def message_displayed?(character)
+    !$redis.hget("info_message_#{id}", character.id).nil?
   end
 end
