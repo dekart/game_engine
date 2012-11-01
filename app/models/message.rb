@@ -24,11 +24,19 @@ class Message < ActiveRecord::Base
     {:conditions => ["min_level <= ?", level]}
   }
 
-  def mark_read(character)
-    $redis.hset("info_message_#{id}", character.id, Time.now.to_i)
+  def mark_displayed(character)
+    $redis.zadd("info_message_#{id}", Time.now.to_i, character.id)
   end
 
-  def message_displayed?(character)
-    !$redis.hget("info_message_#{id}", character.id).nil?
+  def displayed_to_character?(character)
+    !$redis.zscore("info_message_#{id}", character.id).nil?
+  end
+
+  def amount_displayed
+    $redis.zcount("info_message_#{id}", 0, Time.now.to_i)
+  end
+
+  def amount_displayed_today
+    $redis.zcount("info_message_#{id}", 24.hours.ago.to_i, Time.now.to_i)
   end
 end

@@ -23,7 +23,9 @@
 
   <%= app_toolbar %>
 
-  <%= render('notifications/information', :message => current_character.message) if !current_character.message.nil? %>
+  <% if message = current_character.message and !message.nil? %>
+    <%= render('notifications/information', :message => message) %>
+  <% end %>
 
   <div id="content">
     <div id="header">

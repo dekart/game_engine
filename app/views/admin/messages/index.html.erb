@@ -11,6 +11,7 @@
       <th><%= Message.human_attribute_name("content") %></th>
       <th><%= Message.human_attribute_name("min_level") %></th>
       <th><%= Message.human_attribute_name("amount_sent") %></th>
+      <th><%= Message.human_attribute_name("amount_sent_today") %></th>
       <th><%= Message.human_attribute_name("created_at") %></th>
       <th><%= Message.human_attribute_name("state") %></th>
       <th></th>
@@ -20,7 +21,8 @@
       <%= content_tag_for(:tr, message) do %>
         <td class="content"><%= message.content.html_safe %></td>
         <td class="level"><%= message.min_level %></td>
-        <td class="level"><%= message.amount_sent %></td>
+        <td class="displayed"><%= message.amount_displayed %></td>
+        <td class="displayed_today"><%= message.amount_displayed_today %></td>
         <td class="created_at"><%= message.created_at.strftime("%d:%m:%Y %H:%M") %></td>
         <td class="state"><%= admin_state(message) %></td>
         <td class="controls">
