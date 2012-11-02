@@ -26,6 +26,7 @@ class Character < ActiveRecord::Base
   include Character::EquipmentExtension
   include Character::Clans
   include Character::Complaints
+  include Character::Messages
 
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
@@ -86,7 +87,6 @@ class Character < ActiveRecord::Base
   before_save :update_level_and_points, :unless => :level_up_applied
   before_save :update_total_money
   after_save :update_current_contest_points
-  after_create :schedule_notifications
 
   validates_presence_of :character_type, :on => :create
 
@@ -380,12 +380,6 @@ class Character < ActiveRecord::Base
 
   def update_total_money
     self.total_money = basic_money + bank
-  end
-
-  def schedule_notifications
-    message = Message.last(:conditions => {:notify_new_users => true, :state => ["sending", "sent"]})
-
-    self.notifications.schedule(:information, :message_id => message.id) if message
   end
 
   def update_current_contest_points

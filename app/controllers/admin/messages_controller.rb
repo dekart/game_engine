@@ -56,20 +56,6 @@ class Admin::MessagesController < Admin::BaseController
   end
 
   def change_state
-    @message = Message.find(params[:id])
-
-    state_change_action(@message, :controls => false) do |state|
-      case state
-      when :sending
-        @message.start_sending if @message.can_start_sending?
-      when :deleted
-        @message.mark_deleted if @message.can_mark_deleted?
-      end
-    end
-  end
-  
-  def send_to
-    @message = Message.find(params[:id])
-    @message.send_to(current_character)
+    publish_hide_delete_states(Message.find(params[:id]))
   end
 end

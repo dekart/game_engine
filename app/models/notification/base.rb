@@ -6,7 +6,6 @@ module Notification
       ExchangeOfferCreated, 
       FriendsToInvite, 
       HitListing, 
-      Information, 
       ItemsCollection, 
       LevelUp, 
       MarketItemSold, 
