@@ -8,13 +8,18 @@
       <% end %>
     <% end %>
   
-    <% builder.buttons do %>
-      <%= link_to(inventory_use_again_button(@inventory), use_inventory_path(@inventory.item),
-            :remote => true,
-            :method => :post,
-            :"data-click-once" => true,
-            :class => "use button"
-          ) if @inventory.usable? %>
+    <% if @inventory.usable? %>
+      <% builder.buttons do %>
+        <%= form_tag(use_inventory_path(@inventory.item), :remote => true, :method => :post, :class => :clearfix) do %>
+          <%= amount_select_tag(:max => @inventory.amount) %>
+
+          <%= link_to_function(inventory_use_again_button(@inventory),
+                "$(this).parent('form').submit()",
+                :"data-click-once" => true,
+                :class => "use button"
+              ) %>
+        <% end %>
+      <% end %>
     <% end %>
 
     <table class="payouts" cellspacing="0" cellpadding="0">
@@ -29,7 +34,7 @@
 
           <%= payout_list(@inventory, @result, :action => :remove) %>
 
-          <%= payout(:item, item_image(@inventory.item, :icon, :tooltip => true), :label => @inventory.name) %>
+          <%= payout(:item, inventory_item_image(@inventory, :icon, :tooltip => true, :count => @amount), :label => @inventory.name) %>
         </td>
       </tr>
     </table>
