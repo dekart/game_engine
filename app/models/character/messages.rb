@@ -3,13 +3,7 @@ class Character
     def message
       messages = Message.with_state(:visible).by_level(self.level)
 
-      messages.each do |message|
-        if show_message?(message)
-          return message
-        end
-      end
-
-      nil
+      messages.detect{|message| show_message?(message) }
     end
 
     def show_message?(message)

@@ -23,7 +23,7 @@
 
   <%= app_toolbar %>
 
-  <% if message = current_character.message and !message.nil? %>
+  <% if message = current_character.message %>
     <%= render('notifications/information', :message => message) %>
   <% end %>
 

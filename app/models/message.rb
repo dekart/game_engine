@@ -33,7 +33,7 @@ class Message < ActiveRecord::Base
   end
 
   def amount_displayed
-    $redis.zcount("info_message_#{id}", 0, Time.now.to_i)
+    $redis.zcard("info_message_#{id}")
   end
 
   def amount_displayed_today
