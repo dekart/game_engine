@@ -87,7 +87,9 @@ en:
         action_link: 'Action Link Text'
       personal_discount:
         price: "Exclusive Price"
-
+      message:
+        amount_displayed: "Displayed"
+        amount_displayed_today: "Displayed Today"
       clan:
         members: "Members"
         
