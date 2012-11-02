@@ -41,8 +41,6 @@ class InventoriesController < ApplicationController
     @inventory = current_character.inventories.find_by_item_id(params[:id])
 
     if @inventory
-      @amount = @inventory.amount > @amount ? @amount : @inventory.amount
-
       @result = @inventory.use!(current_character, @amount)
     end
 

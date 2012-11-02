@@ -66,10 +66,16 @@ module ApplicationHelper
     options = args.extract_options!
 
     values = [1, 5, 10, 25, 50, 100] + args
+
+    if options[:max]
+      values << options[:max] if options[:max] < 100
+
+      values.select!{|value| value <= options[:max] }
+    end
+
     values.uniq!
     values.sort!
 
-    values.select!{|value| value <= options[:max] } if options[:max]
 
     select_tag(:amount, options_for_select(values, options[:selected]),
       :class => 'amount',

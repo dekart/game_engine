@@ -48,6 +48,8 @@ class Character
         def use!(character, amount = 1)
           return false unless usable?
 
+          amount = self.amount > amount ? amount : self.amount
+
           result = Payouts::Collection.new
       
           Character::Equipment.transaction do
