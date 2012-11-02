@@ -28,6 +28,11 @@ class ItemGroup < ActiveRecord::Base
     end
 
     after_transition :to => :deleted do |group|
+      ItemGroup.update_all(
+        "position = (position - 1)", "item_groups.state != \'deleted\' AND position > #{group.position}"
+      )
+      group.update_attribute(:position, nil)
+
       group.delete_items!
     end
   end
