@@ -3,16 +3,17 @@ class DeleteOldInformationNotifications < ActiveRecord::Migration
     Message.update_all("state = 'hidden'", "state not in ('hidden', 'visible', 'deleted')")
 
     puts "Deleting information notification for #{Character.count} characters..."
+
     i = 0
+    keys = $redis.keys("notifications_*")
 
-    Character.find_in_batches(:batch_size => 100) do |characters|
-      characters.each do |character|
-        $redis.hdel("notifications_#{character.id}", "information")
+    keys.each do |key|
+      $redis.hdel(key, "information")
 
-        i += 1
-        puts "Processed #{i}..." if i % 100 == 0
-      end
+      i += 1
+      puts "Processed #{i}..." if i % 100 == 0
     end
+
     puts "Done!"
   end
 
