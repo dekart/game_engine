@@ -8,7 +8,7 @@ class MissionGroup < ActiveRecord::Base
     :dependent  => :destroy
   has_many :ranks, :class_name => "MissionGroupRank", :dependent => :delete_all
 
-  acts_as_list
+  acts_as_list :scope => 'mission_groups.state != \'deleted\''
 
   default_scope :order => "mission_groups.position"
 
@@ -30,6 +30,11 @@ class MissionGroup < ActiveRecord::Base
     end
 
     after_transition :to => :deleted do |group|
+      MissionGroup.update_all(
+        "position = (position - 1)", "mission_groups.state != \'deleted\' AND position > #{group.position}"
+      )
+      group.update_attribute(:position, nil)
+
       group.delete_children!
     end
   end
