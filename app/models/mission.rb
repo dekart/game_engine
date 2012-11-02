@@ -28,6 +28,13 @@ class Mission < ActiveRecord::Base
     event :mark_deleted do
       transition(any - [:deleted] => :deleted)
     end
+
+    after_transition :to => :deleted do |mission|
+      Mission.update_all(
+        "position = (position - 1)", "missions.state != \'deleted\' AND position > #{mission.position}"
+      )
+      mission.update_attribute(:position, nil)
+    end
   end
 
   has_pictures :styles => [
