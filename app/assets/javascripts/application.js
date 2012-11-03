@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require i18n
 //= require i18n/translations
+//= require browser_detect
 //= require ./application/visibility
 //= require ./libs/jquery/labelify
 //= require ./libs/jquery/dialog
@@ -26,7 +27,6 @@
 //= require ./application/shop
 //= require ./application/inventory
 //= require ./application/chat
-//= require browser_detect
 
 // Spine-based part of the application
 //= require spine/spine
