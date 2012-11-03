@@ -1,22 +1,16 @@
 <div id="equippables">
   <% if inventories_equippable_grouped_by_item_group.any? %>
 
-    <div id="equippables-tabs">
-      <ul>
-        <% inventories_equippable_grouped_by_item_group.each do |item_group, inventories| %>
-          <li><%= link_to(item_group.name, "##{dom_id(item_group, :inventories)}") %></li>
-        <% end %>
-      </ul>
-
+    <% tabs :id => :equipment_tabs do |t| %>
       <% inventories_equippable_grouped_by_item_group.each do |item_group, inventories| %>
-        <div class="item_group" id="<%= dom_id(item_group, :inventories) %>">
-          <ul class="carousel-container">
+        <% t.tab dom_id(item_group, :inventories), item_group.name do %>
+          <ul class="carousel-container item_group">
             <% inventories.each do |inventory| %>
-              <li class="inventory" id="<%= dom_id(inventory.item, :equipment) %>" 
-                  data-placements="<%= inventory.placements.join(',') %>" 
+              <li class="inventory" id="<%= dom_id(inventory.item, :equipment) %>"
+                  data-placements="<%= inventory.placements.join(',') %>"
                   data-equip="<%= equip_inventory_path(inventory.item) %>">
-                <%= inventory_item_image(inventory, :small, 
-                      :count => inventory.amount_available_for_equipment, 
+                <%= inventory_item_image(inventory, :small,
+                      :count => inventory.amount_available_for_equipment,
                       :tooltip => {
                         :position => {
                           :my => 'top center',
@@ -27,9 +21,9 @@
               </li>
             <% end %>
           </ul>
-        </div>
+        <% end %>
       <% end %>
-    </div>
+    <% end %>
 
     <div class="drag_tip">
       <%= t(".drag_tip") %>

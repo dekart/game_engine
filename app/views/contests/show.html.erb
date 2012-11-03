@@ -7,19 +7,13 @@
 
     <% if @contest.groups.size > 1 %>
 
-      <div class="tabs">
-        <ul>
-          <% @contest.groups_in_natural_order.each do |group| %>
-            <li class="contest_group" id="<%= dom_id(group, :tab) %>">
-              <a href="#<%= dom_id(group) %>"><%= group.title %></a>
-            </li>
-          <% end %>
-        </ul>
-
+      <% tabs :id => :contest_tabs do |t| %>
         <% @contest.groups_in_natural_order.each do |group| %>
-          <%= render('group', :group => group) %>
+          <% t.tab dom_id(group, :tab), group.title do %>
+            <%= render('group', :group => group) %>
+          <% end %>
         <% end %>
-      </div>
+      <% end %>
 
     <% else %>
 

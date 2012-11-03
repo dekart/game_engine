@@ -15,18 +15,17 @@ var Shop = (function(){
       var shop_tabs = $("#shop_tabs");
 
       shop_tabs.tabs({
-        cache: true,
-        load: this.onTabLoad
+        onLoad: this.onTabLoad
       });
 
       $.History.bind(function(state){
         switch(state){
           case 'services':
-            shop_tabs.tabs('select', shop_tabs.tabs('length') - 2);
+            shop_tabs.tabs().selectTab('services');
             break;
 
           case 'buy_vip_money':
-            shop_tabs.tabs('select', shop_tabs.tabs('length') - 1);
+            shop_tabs.tabs().selectTab('buy_vip_money');
             break;
         }
       });
@@ -78,8 +77,8 @@ var Shop = (function(){
 
     // Events
 
-    onTabLoad: function(event, ui){
-      shop.setupItemList($(ui.panel).find('.item_list'));
+    onTabLoad: function(tab, container){
+      shop.setupItemList(container.find('.item_list'));
     },
 
     confirmPurchase: function(link){

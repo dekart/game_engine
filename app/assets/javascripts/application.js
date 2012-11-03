@@ -1,3 +1,4 @@
+//= require underscore
 //= require jquery
 //= require jquery_ujs
 //= require i18n
@@ -11,6 +12,7 @@
 //= require ./libs/jquery/tmpl
 //= require ./libs/jquery/jcarousel
 //= require ./libs/jquery/ui
+//= require ./libs/tabs
 //= require ./application/signed_request
 //= require ./application/link_lock
 //= require ./application/spinner
@@ -145,7 +147,7 @@ var PropertyList = {
 
 var AssignmentForm = {
   setup: function(){
-    $('#new_assignment .tabs').tabs();
+    $('#new_assignment #assignment_tabs').tabs();
 
     $('#new_assignment .relations .relation').click(AssignmentForm.select_relation);
   },
@@ -173,14 +175,12 @@ var Equipment = {
         this.options.groupedPlacementSize /= this.options.wrapGroupEquipment;
     }
 
-    $("#equippables-tabs").tabs({
-      show: function(event, ui) {
-        $(ui.panel).find(".carousel-container").jcarousel({
-          visible: 8,
-          itemFallbackDimension: 8
-        });
-      }
+    $('#equipment_tabs .carousel-container').jcarousel({
+      visible: 8,
+      itemFallbackDimension: 8
     });
+
+    $("#equipment_tabs").tabs();
 
     $('#placements .group_placement').each(function(){
       var $placement = $(this);
@@ -264,9 +264,9 @@ var Equipment = {
       }
     }));
 
-    $("#equippables-tabs .item_group").droppable($.extend(droppableDefaults, {
+    $("#equipment_tabs .item_group").droppable($.extend(droppableDefaults, {
       accept: function(el) {
-        if ($(el).parents("#equippables-tabs").length == 0) {
+        if ($(el).parents("#equipment_tabs").length == 0) {
           return true;
         }
         return false;
@@ -280,12 +280,12 @@ var Equipment = {
   },
 
   getActiveTabId: function() {
-    return $('#equippables-tabs .ui-tabs-selected a').attr('href');
+    return $('#equipment_tabs').tabs().selectedTabId();
   },
 
   setActiveTab: function(tabId) {
     if (typeof tabId !== 'undefined') {
-      $("#equippables-tabs").tabs('select', tabId);
+      $("#equipment_tabs").tabs().selectTab(tabId);
     }
   }
 };
@@ -323,27 +323,24 @@ var Fighting = {
 
 var Contest = {
   setup: function(contestGroup) {
-    var $tabs = $(".contest .results .tabs");
+    var $tabs = $("#contest_tabs");
 
     if ($tabs.length > 0) {
       $tabs.tabs();
 
-      var tabIndex = $tabs.find('.ui-tabs-nav .contest_group').index($('#' + contestGroup));
-      $tabs.tabs('select', tabIndex);
+      $tabs.tabs().selectTab(contestGroup);
     }
   }
 };
 
 var Exchange = {
   setup: function() {
-    $("#exchangeables_tabs").tabs({
-      show: function(event, ui) {
-        $(ui.panel).find(".carousel-container").jcarousel({
-          visible: 8,
-          itemFallbackDimension: 8
-        });
-      }
+    $('#exchangeables_tabs .carousel-container').jcarousel({
+      visible: 8,
+      itemFallbackDimension: 8
     });
+
+    $("#exchangeables_tabs").tabs();
 
     $("#exchangeables_tabs .inventory").click(function() {
       $("#exchangeables_tabs .inventory.active").removeClass('active');
@@ -381,8 +378,7 @@ var AchievementList = {
 var Rating = {
   setup: function() {
     $("#rating_list").tabs({
-      cache: true,
-      load: function(){
+      onLoad: function(){
         FB.XFBML.parse();
       }
     });
