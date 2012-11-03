@@ -96,6 +96,7 @@ class ApplicationController < ActionController::Base
     # Updating visit info
     user.last_visit_at = Time.now if user.last_visit_at.nil? || user.last_visit_at < 30.minutes.ago
     user.last_visit_ip = request.remote_ip
+    user.last_visit_user_agent = request.user_agent
 
     # Updating app state
     user.installed = true
