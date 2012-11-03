@@ -24,6 +24,9 @@
   .exchange
     +button($asset_icons_exchange)
 
+#inventory_tabs
+  @include tabs
+
 .inventory_list
   padding: 10px
 
@@ -91,7 +94,7 @@
 
 #inventory_use_result
   background-image: $inventory_use_result_icon
-  
+
   .use
     +button($inventory_item_use_icon)
 
@@ -124,7 +127,7 @@
 
   .give.button
     +button($inventory_give_button_icon)
-    
+
 .boosts_container
   border-bottom: $thin_border
   margin-bottom: 15px
@@ -133,47 +136,47 @@
   overflow: hidden
   padding-bottom: 10px
   width: 335px
-  
+
   .description
     font-weight: bold
     text-align: center
-    
+
   .container
     .jcarousel-prev-horizontal, .jcarousel-next-horizontal
       top: 32px
-  
+
     .jcarousel-item
       height: 80px
-  
+
     .boost
       img
         cursor: pointer
       width: 72px
       height: 72px
       margin: 5px
-      
+
       &.not_owned
         +opacity(0.4)
-      
+
       &.active
         border: $boosts_active_border
         border-width: 4px
         margin: 1px
         +opacity(1.0)
-      
+
       .inventory_image
-      
+
   .buy
     text-align: center
     margin-bottom: 10px
-    
+
   .button.shop
     margin: 0 auto
     +button($inventory_buttons_shop_icon, 140px)
 
 .inventory_image
   position: relative
-  
+
   .count
     position: absolute
     right: 0px

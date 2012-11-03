@@ -110,26 +110,18 @@
       .effect
         border-right: $new_assignment_selected_border
 
-  .tabs
-    padding: 5px 0
-    border-bottom: $new_assignment_tabs_border
-
-    a
-      margin-right: 15px
-
-    .selected
-      font-weight: bold
-      font-size: 14px
+  #assignment_tabs
+    @include tabs
 
   .promote
     +button($assignments_promote_icon)
-    
-    
+
+
 .invitation_method
   padding-bottom: 10px
   margin-bottom: 10px
   border-bottom: $invitation_form_type_border
-    
+
   .invitation_text
     margin: 15px
     font-weight: bold
@@ -139,7 +131,7 @@
   &#users_to_invite
     h2
       margin: 15px 0
-  
+
     .users
       .user
         float: left
@@ -159,21 +151,21 @@
           overflow: hidden
           margin-bottom: 10px
           text-align: center
-          
+
         .invite
           margin: 0 auto
           +button($invitation_form_invite_icon, $invitation_form_invite_width)
-         
-          
+
+
       .already_playing
         background-color: $invitation_already_playing_bg_color
-          
+
     .controls
       .invite
         float: none
         margin: 20px auto
         +button($invitation_form_invite_icon, $invitation_form_invite_other_width)
-        
+
 
 #invitation
   td

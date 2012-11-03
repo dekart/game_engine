@@ -1,113 +1,115 @@
 #exchanges
   table
     width: 100%
-    
+
     .image
       width: 100px
-    
+
     .buttons
       width: 150px
-      
+
       .button
         margin: 5px
         width: 80px
-    
+
   .exchange_offers
     margin-top: 20px
 
+#exchangeables_tabs
+  @include tabs
 
 #show_exchange
   table
     width: 100%
-    
+
     .buttons
       width: 170px
-  
+
   .exchange_info
     .item
       width: 200px
-      
+
     .buttons
       .button
         margin: 5px
         width: 80px
-        
+
       .publish
         +button($asset_icons_publish)
-        
+
       .delete
         +button($asset_icons_delete)
-  
+
   .proposed_by_participant, .proposed_for_transactor, .exchangeables
     margin-top: 20px
-    
+
     vertical-align: middle
-    
+
     .character
       img
         vertical-align: middle
-        
+
     .image
       width: 100px
-    
-  .proposed_for_transactor  
+
+  .proposed_for_transactor
     .accept
       +button($asset_icons_accept, 80px)
-      
+
   .proposed_by_participant
     .delete
       +button($asset_icons_delete, 80px)
-      
+
   .exchangeables
     .jcarousel-item
       height: 80px
       margin: 0
-      
+
     .inventory
       width: 72px
       height: 72px
       cursor: pointer
       margin: 5px
-      
+
       &.active
-        border: $main_border 
+        border: $main_border
         border-width: 4px
         margin: 1px
-    
+
     #exchange_offer_amount
       width: 70px
-   
+
     #new_exchange_offer
       .add
         +button($asset_icons_add)
 
-        
+
 #exchange_inventories
   .item
     overflow: hidden
-    
+
     .item_image, .name
       float: left
       padding: 5px
-      
+
     .name
       line-height: 60px
-      
+
   #exchange_amount
     width: 50px
-  
+
   #exchange_text
     width: 80%
     height: 70px
-    
+
   .publish
     +button($asset_icons_publish)
-    
+
 #accept_exchange_offer_result
   background-image: $asset_icons_exchange
-    
+
 #exchange_inventories_result
   background-image: $asset_icons_exchange
-  
+
   .view
     +button($asset_icons_exchange)

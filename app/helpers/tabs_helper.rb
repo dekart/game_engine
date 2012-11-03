@@ -26,7 +26,7 @@ module TabsHelper
       result << '<ul>'
 
       @tab_names.each do |id, name, url|
-        result << %{<li class="tab" data-tab="#{ id }"}
+        result << %{<li data-tab="#{ id }"}
         result << %{ data-url="#{ url }"} if url
         result << %{>#{name}</li>}
       end

@@ -1,6 +1,7 @@
 class window.TabController
   constructor: (@element, @options)->
-    @tabs = @element.find('ul>li.tab')
+    @tab_list = @element.children('ul')
+    @tabs = @tab_list.find('li')
     @containers = @element.find('>div.tab_content')
 
     @.setupEventListeners()
@@ -8,7 +9,7 @@ class window.TabController
     @.setCurrentTab(@tabs.filter(':not([data-url]):first'))
 
   setupEventListeners: ->
-    @element.on('click', 'li.tab', @.onTabClick)
+    @tab_list.on('click', 'li', @.onTabClick)
 
   onTabClick: (e)=>
     e.preventDefault()
