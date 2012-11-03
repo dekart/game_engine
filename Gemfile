@@ -48,7 +48,6 @@ group :assets do
   gem 'uglifier',     '>= 1.0.3'
   gem 'execjs'
   gem 'therubyracer'
-  gem 'handlebars_assets'
 
   gem 'oily_png'
 

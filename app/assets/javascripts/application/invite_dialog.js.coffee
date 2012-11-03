@@ -78,7 +78,7 @@ this.InviteDialog = class
     true # Should return true if all data was successfully populated and dialog rendered
 
   renderDialog: ()->
-    content = JST['invite_dialog/dialog'](@)
+    content = JST['views/invite_dialog'](@)
 
     Spinner.hide()
 
