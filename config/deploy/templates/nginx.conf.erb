@@ -11,23 +11,31 @@ server {
     # SSL setup
     listen <%= respond_to?(:public_ip) ? "#{ public_ip }:443" : "443" %> ssl;
 
-    ssl_protocols SSLv3 TLSv1;
-    ssl_certificate <%= current_path %>/config/deploy/certificates/<%= rails_env %>.csr;
-    ssl_certificate_key <%= current_path %>/config/deploy/certificates/<%= rails_env %>.key;
-    ssl_session_cache    shared:SSL:10m;
-    ssl_session_timeout  20m;
+    ssl_protocols         SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers           RC4:HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache     shared:SSL:10m;
+    ssl_session_timeout   20m;
+    ssl_certificate       <%= current_path %>/config/deploy/certificates/<%= rails_env %>.csr;
+    ssl_certificate_key   <%= current_path %>/config/deploy/certificates/<%= rails_env %>.key;
   <% end %>
 
   access_log off;
 
 
   # GZIP compression
-  
+
   gzip            on;
-  gzip_min_length 500;
+  gzip_min_length 1000;
   gzip_comp_level 3;
   gzip_types      text/plain text/css text/javascript application/x-javascript application/json;
+  gzip_proxied    any;
+  gzip_vary       on;
 
+  # Performance & connectivity optimizations
+
+  tcp_nodelay on;
+  keepalive_timeout 600s;
 
   # Ignored URLs
   location ~ null { return 404; }
@@ -36,7 +44,7 @@ server {
 
   location / {
     error_page 405 = /system/maintenance.html;
-    
+
     try_files $uri /system/maintenance.html @passenger;
   }
 
@@ -48,16 +56,17 @@ server {
     passenger_enabled on;
   }
 
-  location ~* /(images|stylesheets|javascripts|fonts|system) {
+  location ~* /(assets|system) {
     expires 1y;
     add_header Cache-Control public;
+    add_header Last-Modified "";
+    add_header ETag "";
 
-    try_files $uri =404;
-  }
+    gzip_static on;
 
-  location ~* ^.+\.(jpg|jpeg|gif|png|css|bmp|ico|swf)$ {
-    expires 1y;
-    add_header Cache-Control public;
+    open_file_cache          max=1000 inactive=600s;
+    open_file_cache_valid    600s;
+    open_file_cache_errors   on;
 
     try_files $uri =404;
   }
