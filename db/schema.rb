@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029201409) do
+ActiveRecord::Schema.define(:version => 20121102075622) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -467,14 +467,11 @@ ActiveRecord::Schema.define(:version => 20121029201409) do
   add_index "market_items", ["character_id"], :name => "index_market_items_on_character_id"
 
   create_table "messages", :force => true do |t|
-    t.string   "content"
+    t.text     "content"
     t.integer  "min_level"
-    t.integer  "amount_sent",                     :default => 0
-    t.integer  "last_recipient_id"
-    t.string   "state",             :limit => 50, :default => "",    :null => false
+    t.string   "state",      :limit => 50, :default => "", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "notify_new_users",                :default => false
   end
 
   create_table "mission_group_ranks", :force => true do |t|

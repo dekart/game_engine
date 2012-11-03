@@ -23,6 +23,10 @@
 
   <%= app_toolbar %>
 
+  <% if message = current_character.message %>
+    <%= render('notifications/information', :message => message) %>
+  <% end %>
+
   <div id="content">
     <div id="header">
       <%= global_chat %>
