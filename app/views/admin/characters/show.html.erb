@@ -141,6 +141,13 @@
             <%= @character.user.last_visit_ip %>
           </td>
         </tr>
+
+        <tr>
+          <td><%= User.human_attribute_name("last_visit_user_agent") %></td>
+          <td>
+            <%= @character.user.last_visit_user_agent %>
+          </td>
+        </tr>
       </table>
 
       <h2><%= t('.social.title')%></h2>
