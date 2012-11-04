@@ -24,6 +24,7 @@ window.CharacterOverviewController = class extends Spine.Controller
 
   setupEventListeners: ->
     Character.bind('save', @.onDataUpdate)
+    @upgrade.click(@.onUpgradeClick)
 
   setupTimers: ->
     @hp_timer = new VisualTimer(['#co .health .timer'], @.onTimerFinish)
@@ -59,3 +60,8 @@ window.CharacterOverviewController = class extends Spine.Controller
 
   onTimerFinish: =>
     Character.updateFromRemote()
+
+  onUpgradeClick: (e)=>
+    e.preventDefault()
+
+    UpgradeDialogController.show()

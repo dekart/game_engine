@@ -1,0 +1,39 @@
+<h2><%= I18n.t('characters.upgrade.title') %></h2>
+
+<div class="points">
+  <%=@safe I18n.t('characters.upgrade.points', count: "<strong class='current'>#{ @character.points }</strong>") %>
+</div>
+
+<div class="attributes">
+  <% for attribute in Character.upgradeableAttributes: %>
+    <div class="attribute <%= attribute %>" data-attribute="<%= attribute %>">
+      <div class="name"><%= I18n.t("activerecord.attributes.character.#{ attribute }") %></div>
+      <% if @changes[attribute] and @changes[attribute] > 0: %>
+        <div class="value changed"><%= @character[attribute] + @changes[attribute] %></div>
+      <% else: %>
+        <div class="value"><%= @character[attribute] %></div>
+      <% end %>
+      <div class="control decrease <%= 'disabled' unless @.canDecrease(attribute) %>"></div>
+      <div class="control increase <%= 'disabled' unless @.canIncrease(attribute) %>"></div>
+      <div class="upgrade_cost">
+        <%= I18n.t("characters.upgrade.cost", attribute: I18n.t("activerecord.attributes.character.#{ attribute }"), cost: @character.upgrade_cost[attribute], increase: @character.upgrade_increase[attribute]) %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% if @character.success: %>
+  <div class="message success">
+    <%= I18n.t('characters.upgrade.success') %>
+  </div>
+<% end %>
+
+<div class="buttons">
+  <button class="save <%= 'disabled' unless @.isChanged() %>">
+    <%= I18n.t('characters.upgrade.save') %>
+  </button>
+
+  <button class="close">
+    <%= I18n.t('characters.upgrade.close') %>
+  </button>
+</div>

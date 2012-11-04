@@ -6,3 +6,4 @@ translations:
       - "*.client"
       - "*.items.buy_button"
       - "*.browser_check"
+      - "*.characters.upgrade"

@@ -18,11 +18,10 @@
       <td>
         <div class="controls clearfix">
           <% if @character == current_character %>
-            <%= link_to(button(:upgrade), upgrade_character_path(@character),
-                  :remote => true,
+            <%= link_to_function(button(:upgrade), "UpgradeDialogController.show()",
                   :class => "upgrade button"
                 ) if current_character.points > 0 %>
-            
+
             <%= link_to(button(:achievements), achievements_path, :class => 'achievements button') if Setting.b(:achievements_enabled) %>
           <% elsif @secured %>
             <%= link_to(button(:attack), fights_path(:victim_id => @character),
@@ -30,7 +29,7 @@
                   :method => :post,
                   :class => "attack button"
                 ) if Fight.can_attack?(current_character, @character) %>
-      
+
             <%= link_to(button(:hitlist), new_character_hit_listing_path(@character),
                   :remote => true,
                   :class => "hitlist button"
@@ -43,13 +42,13 @@
           <div class="controls">
             <%= link_to(t(".buttons.report"), new_complaint_path(:offender_id => @character.id),
                   :remote => true
-              ) %> 
+              ) %>
           </div>
         </td>
-      <% end %>  
-      
+      <% end %>
+
     </tr>
-  </table>       
+  </table>
 
   <table class="info" cellspacing="0" cellpadding="0">
     <tr>
@@ -62,16 +61,16 @@
       </td>
     </tr>
   </table>
-  
+
   <% if Setting.b(:achievements_enabled) %>
     <% collection(@character.achievements, :empty_set => false) do |achievements| %>
       <div class="achievements clearfix">
         <h2><%= t('.achievements') %></h2>
-        
+
         <% achievements.each do |achievement| %>
           <div class="achievement">
             <div class="name"><%= achievement.name %></div>
-            
+
             <div class="image"><%= image_tag(achievement.pictures.url(:small)) if achievement.pictures? %></div>
           </div>
         <% end %>

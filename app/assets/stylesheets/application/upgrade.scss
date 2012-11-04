@@ -1,0 +1,88 @@
+$upgradeable_attributes: attack, defence, health, energy, stamina;
+
+#dialog .upgrade_dialog {
+  .points {
+    margin-bottom: 20px;
+  }
+
+  .attribute {
+    position: relative;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .name, .value, .control, .upgrade_cost {
+    position: absolute;
+  }
+
+  .name {
+    font-weight: bold;
+    width: 120px;
+    padding-left: 25px;
+    background: {
+      position: left;
+      repeat: no-repeat;
+    }
+  }
+
+  @each $attribute in $upgradeable_attributes {
+    .#{ $attribute } .name {
+      background-image: image-url("icons/#{ $attribute }.gif");
+    }
+  }
+
+  .value {
+    left: 150px;
+    width: 40px;
+    text-align: center;
+
+    &.changed {
+      font-style: italic;
+    }
+  }
+
+  .control {
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background: {
+      position: center;
+      repeat: no-repeat;
+    }
+    cursor: pointer;
+
+    &.decrease {
+      left: 120px;
+
+      background-image: image-url('icons/delete.gif');
+    }
+
+    &.increase {
+      left: 200px;
+      background-image: image-url('icons/add.gif');
+    }
+
+    &.disabled {
+      @include opacity(0.3);
+      cursor: normal;
+    }
+  }
+
+  .upgrade_cost {
+    left: 250px;
+  }
+
+  button.save {
+    margin-top: 20px;
+
+    &.disabled {
+      @include opacity(0.3);
+      cursor: normal;
+    }
+  }
+
+  .message.success{
+    margin-top: 20px;
+    color: green;
+  }
+}

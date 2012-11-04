@@ -18,7 +18,11 @@ class CharactersController < ApplicationController
     if request.post?
       @success = current_character.upgrade_attributes!(params)
 
-      render :action => :upgrade_result
+      render :json => current_character.as_json_for_upgrade.merge(
+        :success => @success
+      )
+    else
+      render :json => current_character.as_json_for_upgrade
     end
   end
 
@@ -41,7 +45,7 @@ class CharactersController < ApplicationController
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
       @character.character_type ||= @character_types.first
-      
+
       render :layout => 'unauthorized'
     end
   end
@@ -75,16 +79,16 @@ class CharactersController < ApplicationController
 
   def hospital
   end
-  
+
   def hospital_heal
     @result = current_character.hospital!
   end
 
   protected
-  
+
   def fetch_character_types
     @character_types = CharacterType.with_state(:visible).all
-    
+
     if params[:default_type_id] && default_type = @character_types.detect{|t| t.id == params[:default_type_id].to_i }
       @character_types.unshift(@character_types.delete(default_type))
     end
@@ -99,7 +103,7 @@ class CharactersController < ApplicationController
       check_character_existance
     end
   end
-  
+
   def require_facebook_permissions_if_standalone
     require_facebook_permissions unless ENV['OFFLINE'] || fb_canvas?
   end

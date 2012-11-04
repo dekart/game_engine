@@ -21,7 +21,6 @@
 //= require ./application/promo_block
 //= require ./application/invite_dialog
 //= require ./application/stream_dialog
-//= require ./application/upgrade_sliders
 //= require ./application/timer
 //= require ./application/visual_timer
 //= require ./application/boost
