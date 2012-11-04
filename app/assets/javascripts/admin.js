@@ -1,8 +1,7 @@
 //= require jquery
 //= require jquery_ujs
-//= require ./admin/jqplot
+//= require jqplot
 //= require ./libs/jquery/dialog
-//= require ./libs/jquery/qtip2
 //= require ./application/signed_request
 //= require_self
 
