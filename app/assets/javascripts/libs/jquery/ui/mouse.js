@@ -1,17 +1,169 @@
 /*!
- * jQuery UI Mouse 1.8.16
+ * jQuery UI Mouse 1.9.1
+ * http://jqueryui.com
  *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
+ * Copyright 2012 jQuery Foundation and other contributors
+ * Released under the MIT license.
  * http://jquery.org/license
  *
- * http://docs.jquery.com/UI/Mouse
+ * http://api.jqueryui.com/mouse/
  *
  * Depends:
  *	jquery.ui.widget.js
  */
-(function(b){var d=false;b(document).mouseup(function(){d=false});b.widget("ui.mouse",{options:{cancel:":input,option",distance:1,delay:0},_mouseInit:function(){var a=this;this.element.bind("mousedown."+this.widgetName,function(c){return a._mouseDown(c)}).bind("click."+this.widgetName,function(c){if(true===b.data(c.target,a.widgetName+".preventClickEvent")){b.removeData(c.target,a.widgetName+".preventClickEvent");c.stopImmediatePropagation();return false}});this.started=false},_mouseDestroy:function(){this.element.unbind("."+
-this.widgetName)},_mouseDown:function(a){if(!d){this._mouseStarted&&this._mouseUp(a);this._mouseDownEvent=a;var c=this,f=a.which==1,g=typeof this.options.cancel=="string"&&a.target.nodeName?b(a.target).closest(this.options.cancel).length:false;if(!f||g||!this._mouseCapture(a))return true;this.mouseDelayMet=!this.options.delay;if(!this.mouseDelayMet)this._mouseDelayTimer=setTimeout(function(){c.mouseDelayMet=true},this.options.delay);if(this._mouseDistanceMet(a)&&this._mouseDelayMet(a)){this._mouseStarted=
-this._mouseStart(a)!==false;if(!this._mouseStarted){a.preventDefault();return true}}true===b.data(a.target,this.widgetName+".preventClickEvent")&&b.removeData(a.target,this.widgetName+".preventClickEvent");this._mouseMoveDelegate=function(e){return c._mouseMove(e)};this._mouseUpDelegate=function(e){return c._mouseUp(e)};b(document).bind("mousemove."+this.widgetName,this._mouseMoveDelegate).bind("mouseup."+this.widgetName,this._mouseUpDelegate);a.preventDefault();return d=true}},_mouseMove:function(a){if(b.browser.msie&&
-!(document.documentMode>=9)&&!a.button)return this._mouseUp(a);if(this._mouseStarted){this._mouseDrag(a);return a.preventDefault()}if(this._mouseDistanceMet(a)&&this._mouseDelayMet(a))(this._mouseStarted=this._mouseStart(this._mouseDownEvent,a)!==false)?this._mouseDrag(a):this._mouseUp(a);return!this._mouseStarted},_mouseUp:function(a){b(document).unbind("mousemove."+this.widgetName,this._mouseMoveDelegate).unbind("mouseup."+this.widgetName,this._mouseUpDelegate);if(this._mouseStarted){this._mouseStarted=
-false;a.target==this._mouseDownEvent.target&&b.data(a.target,this.widgetName+".preventClickEvent",true);this._mouseStop(a)}return false},_mouseDistanceMet:function(a){return Math.max(Math.abs(this._mouseDownEvent.pageX-a.pageX),Math.abs(this._mouseDownEvent.pageY-a.pageY))>=this.options.distance},_mouseDelayMet:function(){return this.mouseDelayMet},_mouseStart:function(){},_mouseDrag:function(){},_mouseStop:function(){},_mouseCapture:function(){return true}})})(jQuery);
+(function( $, undefined ) {
+
+var mouseHandled = false;
+$( document ).mouseup( function( e ) {
+	mouseHandled = false;
+});
+
+$.widget("ui.mouse", {
+	version: "1.9.1",
+	options: {
+		cancel: 'input,textarea,button,select,option',
+		distance: 1,
+		delay: 0
+	},
+	_mouseInit: function() {
+		var that = this;
+
+		this.element
+			.bind('mousedown.'+this.widgetName, function(event) {
+				return that._mouseDown(event);
+			})
+			.bind('click.'+this.widgetName, function(event) {
+				if (true === $.data(event.target, that.widgetName + '.preventClickEvent')) {
+					$.removeData(event.target, that.widgetName + '.preventClickEvent');
+					event.stopImmediatePropagation();
+					return false;
+				}
+			});
+
+		this.started = false;
+	},
+
+	// TODO: make sure destroying one instance of mouse doesn't mess with
+	// other instances of mouse
+	_mouseDestroy: function() {
+		this.element.unbind('.'+this.widgetName);
+		if ( this._mouseMoveDelegate ) {
+			$(document)
+				.unbind('mousemove.'+this.widgetName, this._mouseMoveDelegate)
+				.unbind('mouseup.'+this.widgetName, this._mouseUpDelegate);
+		}
+	},
+
+	_mouseDown: function(event) {
+		// don't let more than one widget handle mouseStart
+		if( mouseHandled ) { return; }
+
+		// we may have missed mouseup (out of window)
+		(this._mouseStarted && this._mouseUp(event));
+
+		this._mouseDownEvent = event;
+
+		var that = this,
+			btnIsLeft = (event.which === 1),
+			// event.target.nodeName works around a bug in IE 8 with
+			// disabled inputs (#7620)
+			elIsCancel = (typeof this.options.cancel === "string" && event.target.nodeName ? $(event.target).closest(this.options.cancel).length : false);
+		if (!btnIsLeft || elIsCancel || !this._mouseCapture(event)) {
+			return true;
+		}
+
+		this.mouseDelayMet = !this.options.delay;
+		if (!this.mouseDelayMet) {
+			this._mouseDelayTimer = setTimeout(function() {
+				that.mouseDelayMet = true;
+			}, this.options.delay);
+		}
+
+		if (this._mouseDistanceMet(event) && this._mouseDelayMet(event)) {
+			this._mouseStarted = (this._mouseStart(event) !== false);
+			if (!this._mouseStarted) {
+				event.preventDefault();
+				return true;
+			}
+		}
+
+		// Click event may never have fired (Gecko & Opera)
+		if (true === $.data(event.target, this.widgetName + '.preventClickEvent')) {
+			$.removeData(event.target, this.widgetName + '.preventClickEvent');
+		}
+
+		// these delegates are required to keep context
+		this._mouseMoveDelegate = function(event) {
+			return that._mouseMove(event);
+		};
+		this._mouseUpDelegate = function(event) {
+			return that._mouseUp(event);
+		};
+		$(document)
+			.bind('mousemove.'+this.widgetName, this._mouseMoveDelegate)
+			.bind('mouseup.'+this.widgetName, this._mouseUpDelegate);
+
+		event.preventDefault();
+
+		mouseHandled = true;
+		return true;
+	},
+
+	_mouseMove: function(event) {
+		// IE mouseup check - mouseup happened when mouse was out of window
+		if ($.ui.ie && !(document.documentMode >= 9) && !event.button) {
+			return this._mouseUp(event);
+		}
+
+		if (this._mouseStarted) {
+			this._mouseDrag(event);
+			return event.preventDefault();
+		}
+
+		if (this._mouseDistanceMet(event) && this._mouseDelayMet(event)) {
+			this._mouseStarted =
+				(this._mouseStart(this._mouseDownEvent, event) !== false);
+			(this._mouseStarted ? this._mouseDrag(event) : this._mouseUp(event));
+		}
+
+		return !this._mouseStarted;
+	},
+
+	_mouseUp: function(event) {
+		$(document)
+			.unbind('mousemove.'+this.widgetName, this._mouseMoveDelegate)
+			.unbind('mouseup.'+this.widgetName, this._mouseUpDelegate);
+
+		if (this._mouseStarted) {
+			this._mouseStarted = false;
+
+			if (event.target === this._mouseDownEvent.target) {
+				$.data(event.target, this.widgetName + '.preventClickEvent', true);
+			}
+
+			this._mouseStop(event);
+		}
+
+		return false;
+	},
+
+	_mouseDistanceMet: function(event) {
+		return (Math.max(
+				Math.abs(this._mouseDownEvent.pageX - event.pageX),
+				Math.abs(this._mouseDownEvent.pageY - event.pageY)
+			) >= this.options.distance
+		);
+	},
+
+	_mouseDelayMet: function(event) {
+		return this.mouseDelayMet;
+	},
+
+	// These are placeholder methods, to be overriden by extending plugin
+	_mouseStart: function(event) {},
+	_mouseDrag: function(event) {},
+	_mouseStop: function(event) {},
+	_mouseCapture: function(event) { return true; }
+});
+
+})(jQuery);
