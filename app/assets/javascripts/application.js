@@ -5,10 +5,10 @@
 //= require i18n
 //= require i18n/translations
 //= require ./application/visibility
-//= require ./libs/jquery/dialog
 //= require ./libs/jquery/scroll_to
 //= require ./libs/jquery/jcarousel
 //= require ./libs/tabs
+//= require ./libs/mouse_tracker
 //= require ./application/signed_request
 //= require ./application/link_lock
 //= require ./application/spinner
@@ -468,6 +468,8 @@ var FacebookPermissions = {
 
 
 $(function(){
+  window.mouse = new MouseTracker();
+
   var character_overview = new CharacterOverviewController();
 
   $(document).tooltip({
@@ -502,24 +504,18 @@ $(function(){
     });
   });
 
-  $(document).bind('loading.dialog', function(){
-    $.scrollTo('#dialog .popup');
-  });
-
-  $(document).bind('afterReveal.dialog', function(){
-    $.scrollTo('#dialog .popup .body');
-  });
-
   Spinner.setup();
 
   $('#content').on('click', 'a.help', function(e){
     e.preventDefault();
     e.stopPropagation();
 
-    $.dialog({ajax: $(e.currentTarget).attr('href')});
+    $.get($(e.currentTarget).attr('href'), function(response){
+      DialogController.show(response);
+    });
   });
 
-  $(document).bind('dialog.close_complete application.ready', function(){
+  $(document).bind('close.dialog application.ready', function(){
     $(document).dequeue('dialog');
   });
 

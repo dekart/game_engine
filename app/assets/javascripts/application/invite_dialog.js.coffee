@@ -82,7 +82,7 @@ this.InviteDialog = class
 
     Spinner.hide()
 
-    $.dialog(content)
+    DialogController.show(content)
 
     @dialog_el = $('#invite_dialog')
 

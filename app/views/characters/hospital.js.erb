@@ -2,11 +2,11 @@
   <h2><%= t(".title") %></h2>
 
   <% if current_character.hospital_price < 0 %>
-  
+
     <p><%= t(".messages.full_health") %></p>
-    
+
   <% else %>
-  
+
     <% if current_character.hospital_recently_used? %>
       <p><%= t(".recently_used") %></p>
     <% else %>
@@ -16,7 +16,7 @@
         <p><%= t(".not_enough_money") %></p>
       <% end %>
     <% end %>
-  
+
     <p>
       <strong><%= t(".price") %></strong>
 
@@ -39,7 +39,7 @@
         <%= link_to(button(:refill_health), premium_path(:type => :refill_health),
               :remote => true,
               :method => :put,
-              :onclick => "$(document).trigger('close.dialog')",
+              :onclick => "DialogController.close()",
               :class => 'button premium'
             ) %>
       <% end %>

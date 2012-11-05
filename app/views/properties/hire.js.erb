@@ -2,11 +2,11 @@
   <% if @property.missing_workers? %>
     <% dialog :hire_property_dialog do |d| %>
       <h2><%= t('.title') %></h2>
-        
+
       <div class="note">
         <%= t('.note', :property => @property.name, :amount => @property.property_type.workers) %>
       </div>
-  
+
       <div class="workers clearfix">
         <% @property.property_type.workers.times do |index| %>
           <div class="worker">
@@ -15,11 +15,11 @@
             <% if index <= @property.workers - 1 %>
               <% if friend = @property.worker_friends[index] %>
                 <div class="image"><%= character_picture(friend) %></div>
-        
+
                 <div class="name"><%= character_name(friend) %></div>
               <% else %>
                 <div class="image"><%= image_tag("worker.jpg") %></div>
-      
+
                 <div class="name"><%= t('.hired') %></div>
               <% end %>
             <% else %>
@@ -76,8 +76,8 @@
   <% else %>
     <% dom_ready do %>
       $('#property_list').html('<%= escape_javascript(render("list", :properties => current_character.properties)) %>');
-      
-      $.dialog.close();
+
+      DialogController.close();
     <% end %>
   <% end %>
 <% else %>
@@ -87,7 +87,7 @@
       <%= unsatisfied_requirement_list(@result) %>
     </div>
   <% end %>
-  
-  $.dialog.close();
+
+  DialogController.close();
   $(document).trigger('result.received');
 <% end %>

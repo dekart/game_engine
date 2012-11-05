@@ -1,32 +1,24 @@
-window.UpgradeDialogController = class extends Spine.Controller
+window.UpgradeDialogController = class extends DialogController
   @show: ->
     @controller ?= new @()
     @controller.show()
 
-  className: 'upgrade_dialog'
-
-  constructor: ->
-    super
+  className: 'dialog upgrade'
 
   render: ->
     @html(
-      JST['views/upgrade_dialog'](@)
+      @.dialogWrapper(JST['views/upgrade_dialog'](@))
     )
 
   show: ->
-    @el.text(I18n.t('common.loading'))
+    @loading = true
 
     $.getJSON('/characters/current/upgrade', @.onDataLoad)
 
-    $.dialog(@el)
-
-    @.setupEventListeners()
-
-  close: ->
-    $.dialog.close()
+    super
 
   setupEventListeners: ->
-    $(document).one('close.dialog', @.onDialogClose)
+    super
 
     @el.on('click', '.increase', @.onIncreaseClick)
     @el.on('click', '.decrease', @.onDecreaseClick)
@@ -35,6 +27,8 @@ window.UpgradeDialogController = class extends Spine.Controller
     @el.on('click', 'button.close', @.onCloseButtonClick)
 
   unbindEventListeners: ->
+    super
+
     @el.off('click', '.increase', @.onIncreaseClick)
     @el.off('click', '.decrease', @.onDecreaseClick)
 
@@ -42,6 +36,8 @@ window.UpgradeDialogController = class extends Spine.Controller
     @el.off('click', 'button.close', @.onCloseButtonClick)
 
   onDataLoad: (response)=>
+    @loading = false
+
     @character = response
     @changes = {}
 

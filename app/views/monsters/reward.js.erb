@@ -8,7 +8,7 @@
 
     <% builder.buttons do %>
       <%= link_to_function(button(:publish),
-            stream_dialog(:monster_defeated, @fight.monster, :before => '$.dialog.close();'),
+            stream_dialog(:monster_defeated, @fight.monster, :before => 'DialogController.close();'),
             :class => "publish button"
           ) if Setting.b(:stream_dialog_enabled) %>
     <% end %>
@@ -22,7 +22,7 @@
         </td>
       </tr>
     </table>
-    
+
     <% builder.on_ready do %>
       <%= ga_track_event('Monsters', 'Reward Collected', @fight.monster.name, @fight.damage) %>
     <% end %>

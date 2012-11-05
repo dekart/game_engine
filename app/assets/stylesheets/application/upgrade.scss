@@ -1,6 +1,6 @@
 $upgradeable_attributes: attack, defence, health, energy, stamina;
 
-#dialog .upgrade_dialog {
+.dialog.upgrade {
   .points {
     margin-bottom: 20px;
   }

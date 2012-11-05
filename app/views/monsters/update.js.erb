@@ -35,7 +35,7 @@
           <%= link_to(button(:reward), reward_monster_path(@fight.monster),
                 :remote => true,
                 :method => :post,
-                :onclick => '$.dialog.close()',
+                :onclick => 'DialogController.close()',
                 :"data-click-once" => true,
                 :class => "reward button"
               ) %>
@@ -63,7 +63,7 @@
           <%= payout(:experience, @fight.experience) %>
 
           <%= payout(:basic_money, number_to_currency(@fight.money)) %>
-          
+
           <%= payout_list(@fight, @fight.payouts) %>
         </td>
 
@@ -73,10 +73,10 @@
           <%= payout(:hp, @fight.character_damage) %>
 
           <%= payout(:sp, @fight.stamina) %>
-          
-          <%= builder.render("payouts/result/item", 
+
+          <%= builder.render("payouts/result/item",
                 :payout => Payouts::Item.new(:value => @fight.boost.item)
-              ) if @fight.boost %> 
+              ) if @fight.boost %>
         </td>
 
         <td class="monster_spent">

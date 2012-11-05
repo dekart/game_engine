@@ -1,11 +1,11 @@
-$.dialog.close();
+DialogController.close();
 
 <%= render_to_result :create_complaint do |r| %>
   <% if @complaint.errors.empty? %>
     <% r.success do %>
       <%= t(".success") %>
     <% end %>
-  
+
   <% else %>
     <% @complaint.errors.each do |attr, message| %>
       <% r.fail do %>
