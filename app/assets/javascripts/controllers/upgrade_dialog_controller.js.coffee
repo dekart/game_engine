@@ -14,7 +14,7 @@ window.UpgradeDialogController = class extends Spine.Controller
     )
 
   show: ->
-    @el.text('Loadin...')
+    @el.text(I18n.t('common.loading'))
 
     $.getJSON('/characters/current/upgrade', @.onDataLoad)
 

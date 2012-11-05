@@ -1,9 +1,9 @@
 <% if offence = character.equipment.best_offence and !offence.empty? %>
   <div class="best_items">
     <strong><%= t(".best_offence") %></strong>
-  
+
     <% offence.each do |item| %>
-      <%= item_image(item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+      <%= item_image(item, :icon, :tooltip => true, :details => true) %>
     <% end %>
   </div>
 <% end %>
@@ -13,7 +13,7 @@
     <strong><%= t(".best_defence") %></strong>
 
     <% defence.each do |item| %>
-      <%= item_image(item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+      <%= item_image(item, :icon, :tooltip => true, :details => true) %>
     <% end %>
   </div>
 <% end %>

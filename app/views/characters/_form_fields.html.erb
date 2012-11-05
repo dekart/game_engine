@@ -5,7 +5,20 @@
     <% types = capture do %>
       <div id="character_types" class="clearfix">
         <% @character_types.each do |type| %>
-          <div class="character_type" id="<%= dom_id(type) %>" data-value="<%= type.id %>">
+          <% description = capture do %>
+            <div class="description">
+              <h3><%= type.name %></h3>
+
+              <p><%= type.description %></p>
+            </div>
+          <% end %>
+
+          <div
+            class="character_type"
+            id="<%= dom_id(type) %>"
+            data-value="<%= type.id %>"
+            data-tooltip-content="<%= escape_once(description).html_safe %>"
+          >
             <span class="name"><%= type.name %></span>
             <%= image_tag(type.pictures.url(:small)) if type.pictures? %>
           </div>
@@ -13,19 +26,7 @@
       </div>
     <% end %>
 
-    <% type_descriptions = capture do %>
-      <div id="character_type_descriptions" style="display:none;">
-        <% @character_types.each do |type| %>
-          <div class="description" id="<%= dom_id(type, :description) %>">
-            <h3><%= type.name %></h3>
-
-            <p><%= type.description %></p>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-
-    <%= form.field :character_type, types, :after_field => type_descriptions, :label => t(".labels.character_type") %>
+    <%= form.field :character_type, types, :label => t(".labels.character_type") %>
 
     <% if type = form.object.character_type || @character_types.first %>
       <% dom_ready do %>

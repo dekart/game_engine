@@ -16,7 +16,7 @@
         <% current_character.boosts.available_for_purchase(type, destination).each do |item| %>
           <li>
             <div class="boost not_owned" data-item-id="<%= item.id %>" id="<%= boost_dom_id(item, destination) %>">
-              <%= item_image(item, :small, :tooltip => true, :tooltip_on_click => true) %>
+              <%= item_image(item, :small, :tooltip => true, :details => true) %>
             </div>
           </li>
         <% end %>

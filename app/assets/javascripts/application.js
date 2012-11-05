@@ -7,7 +7,6 @@
 //= require ./libs/jquery/labelify
 //= require ./libs/jquery/dialog
 //= require ./libs/jquery/scroll_to
-//= require ./libs/jquery/qtip2
 //= require ./libs/jquery/history
 //= require ./libs/jquery/tmpl
 //= require ./libs/jquery/jcarousel
@@ -97,15 +96,6 @@ var CharacterForm = {
 
     form.find('#character_types .character_type').click(function(){
       CharacterForm.set_character_type(this);
-    }).qtip({
-      show: {
-        delay : 0
-      },
-      content: {
-        text: function(){
-          return $('#description_character_type_' + $(this).data('value')).html();
-        }
-      }
     });
 
     form.find('input[type=submit]').click(function(e){
@@ -477,58 +467,22 @@ var FacebookPermissions = {
 
     return $(this);
   };
-
-  if(!$.isEmptyObject($.fn.qtip)) {
-    $.fn.qtip.zindex = 10001;
-  }
 })(jQuery);
 
 
 $(function(){
   var character_overview = new CharacterOverviewController();
 
-  $(document).bind('tooltips.setup', function(event, container) {
-    var target = $(container || '#content')
-
-    // Display tooltips
-    target.find('[data-tooltip]').each(function(){
-      var $element = $(this);
-
-      $element.qtip($element.data('tooltip'));
-
-      $element.removeAttr('data-tooltip');
-    });
-
-     // Display tooltip on click
-    target.find('[data-tooltip-on-click]').each(function(){
-      var $element = $(this);
-
-      var existingTooltip = $element.qtip('api');
-      var tooltipOptions = $element.data('tooltip-on-click');
-
-      if (existingTooltip) {
-        tooltipOptions.events = tooltipOptions.events || {};
-
-        $.extend(tooltipOptions.events, {
-          show: function() {
-            existingTooltip.disable();
-          },
-          hide: function() {
-            existingTooltip.enable();
-          }
-        });
-      }
-
-      // for multiple tooltips per elemet. See more http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
-      $element.removeData('qtip');
-
-      $element.qtip(tooltipOptions);
-
-      $element.removeAttr('data-tooltip-on-click');
-    });
+  $(document).tooltip({
+    items: '[data-tooltip-content]',
+    content: function(){
+      return $(this).attr('data-tooltip-content');
+    }
   });
 
-  $(document).trigger('tooltips.setup');
+  $(document).on('click', '[data-item-details-url]', function(e){
+    ItemDetailsController.show(e.currentTarget);
+  });
 
   $('#content').on('click', 'a[data-click-once=true]', function(e){
     $(e.currentTarget).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
@@ -546,8 +500,6 @@ $(function(){
   $(document).bind('result.available', show_result);
 
   $(document).bind('remote_content.received', function(){
-    $(document).trigger('tooltips.setup');
-
     if_fb_initialized(function(){
       FB.XFBML.parse();
     });
@@ -572,26 +524,6 @@ $(function(){
 
   $(document).bind('dialog.close_complete application.ready', function(){
     $(document).dequeue('dialog');
-  });
-
-  $('#app_requests_counter').qtip({
-    position: {
-      my: 'top right',
-      at: 'bottom left'
-    },
-    show: {
-      delay: 0
-    }
-  });
-
-  $('#global_chat_icon').qtip({
-    position: {
-      my: 'top right',
-      at: 'bottom left'
-    },
-    show: {
-      delay: 0
-    }
   });
 
   // throw error if it in ajax javascript response

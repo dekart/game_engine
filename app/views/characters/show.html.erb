@@ -86,7 +86,7 @@
         <div class="items clearfix">
           <% inventories.each do |inventory| %>
             <div class="item">
-              <%= item_image(inventory.item, :small, :tooltip => true, :tooltip_on_click => true) %>
+              <%= item_image(inventory.item, :small, :tooltip => true, :details => true) %>
 
               <% if @character == current_character %>
                 <div class="amount">

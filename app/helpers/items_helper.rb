@@ -9,27 +9,27 @@ module ItemsHelper
 
   def item_image(item, format, options = {})
     if tooltip = options.delete(:tooltip)
-      options['data-tooltip'] = item_image_tooltip_options(item, tooltip).to_json
+      options['data-tooltip-content'] = escape_once(item_tooltip_content(item)).html_safe
     end
-    
-    if tooltip_on_click = options.delete(:tooltip_on_click)
-      options['data-tooltip-on-click'] = item_image_tooltip_on_click_options(item, tooltip_on_click).to_json
-      
+
+    if show_details = options.delete(:details)
+      options['data-item-details-url'] = item_path(item)
+
       if options['class']
         options['class'] += ' clickable'
-      else 
+      else
         options['class'] = 'clickable'
       end
     end
-    
+
     options.reverse_merge!(
-      :alt => item.name, 
+      :alt => item.name,
       :title => item.name
     )
-      
+
     image_tag(item.pictures? ? item.pictures.url(format) : image_path("1px.gif"), options)
   end
-  
+
   def item_tooltip_content(item)
     item = item.item if item.is_a?(Character::Equipment::Inventories::Inventory)
 
@@ -38,9 +38,9 @@ module ItemsHelper
         <h2>#{item.name}</h2>
         <div class="payouts">#{ item_effects(item) }</div>
       </div>
-    }.gsub!(/[\n\s]+/, ' ').html_safe
+    }.gsub!(/[\n\s]+/, ' ')
   end
-  
+
   def item_price_inline(item, amount = 1)
     if item.price?
       result = [].tap do |prices|
@@ -78,56 +78,4 @@ module ItemsHelper
       ).html_safe
     end
   end
-
-  protected
-
-    def item_image_tooltip_options(item, tooltip)
-      tooltip = {} unless tooltip.is_a?(Hash)
-
-      {
-        :content => {:text => item_tooltip_content(item)},
-        :position => {
-          :my => 'bottom center',
-          :at => 'top center',
-          :viewport => true,
-          :adjust => {
-            :x => 0,
-            :y => 0,
-            :method => 'shift'
-          }
-        }
-      }.deep_merge(tooltip)
-    end
-
-    def item_image_tooltip_on_click_options(item, tooltip)
-      tooltip = {} unless tooltip.is_a?(Hash)
-
-      tooltip = {
-        :content => {
-          :title => {
-            :text => item.name,
-            :button => 'Close'
-          },
-          :text => %{<div class="spinner">#{ image_tag("spinner.gif") }</div>}, # show spinner while tooltip loading
-          :ajax => {
-            :url => item_path(item)
-          }
-        },
-        :position => {
-          :my => 'bottom center',
-          :at => 'top center',
-          :viewport => true,
-          :adjust => {
-            :x => 0,
-            :y => 0,
-            :method => 'shift'
-          },
-        },
-        :show => {
-          :event => 'click',
-          :solo => true
-        },
-        :hide => 'unfocus'
-      }.deep_merge(tooltip)
-    end
 end
