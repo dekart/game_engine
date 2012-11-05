@@ -1,13 +1,13 @@
 //= require underscore
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/all
 //= require i18n
 //= require i18n/translations
 //= require ./application/visibility
 //= require ./libs/jquery/dialog
 //= require ./libs/jquery/scroll_to
 //= require ./libs/jquery/jcarousel
-//= require ./libs/jquery/ui
 //= require ./libs/tabs
 //= require ./application/signed_request
 //= require ./application/link_lock
