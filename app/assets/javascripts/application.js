@@ -4,7 +4,6 @@
 //= require i18n
 //= require i18n/translations
 //= require ./application/visibility
-//= require ./libs/jquery/labelify
 //= require ./libs/jquery/dialog
 //= require ./libs/jquery/scroll_to
 //= require ./libs/jquery/history
