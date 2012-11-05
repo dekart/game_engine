@@ -18,17 +18,11 @@ var Shop = (function(){
         onLoad: this.onTabLoad
       });
 
-      $.History.bind(function(state){
-        switch(state){
-          case 'services':
-            shop_tabs.tabs().selectTab('services');
-            break;
-
-          case 'buy_vip_money':
-            shop_tabs.tabs().selectTab('buy_vip_money');
-            break;
-        }
-      });
+      if(window.location.hash == '#buy_vip_money') {
+        shop_tabs.tabs().selectTab('buy_vip_money');
+      } else if (window.location.hash == '#services') {
+        shop_tabs.tabs().selectTab('services');
+      }
     },
 
     setupAmountSelector: function(){
