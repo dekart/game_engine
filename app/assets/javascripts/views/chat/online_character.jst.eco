@@ -1,0 +1,16 @@
+<div class="character clearfix <%= 'friend' if @friend %>" data-id="<%= @facebook_id %>">
+  <div class="picture">
+    <a href="/characters/<%= @character_key %>" title="<%= @name %>">
+      <img
+        src="https://graph.facebook.com/<%= @facebook_id %>/picture?type=square&return_ssl_resources=1"
+        alt="<%= @name %>"
+      />
+    </a>
+  </div>
+  <div class="info">
+    <div class="level"><%= I18n.t("activerecord.attributes.character.level") %> <%= @level %></div>
+    <div class="name">
+      <a href="/characters/<%= @character_key %>"><%= @name %></a>
+    </div>
+  </div>
+</div>

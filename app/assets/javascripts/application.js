@@ -7,7 +7,6 @@
 //= require ./libs/jquery/dialog
 //= require ./libs/jquery/scroll_to
 //= require ./libs/jquery/history
-//= require ./libs/jquery/tmpl
 //= require ./libs/jquery/jcarousel
 //= require ./libs/jquery/ui
 //= require ./libs/tabs

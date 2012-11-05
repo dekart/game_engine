@@ -40,8 +40,6 @@
         return;
       }
 
-      var $template = $("#online-characters-template");
-
       // currentCharacter always first
       var currentCharacter = charactersOnline.shift();
 
@@ -49,7 +47,7 @@
 
       // first load
       if ($characters.length == 0) {
-        $content.append($template.tmpl(currentCharacter));
+        $content.append(JST['views/chat/online_character'](currentCharacter));
       }
 
       var wasOnline = $characters.map(function() {
@@ -63,7 +61,7 @@
       // add new users
       $.each(charactersOnline, function(index, character) {
         if ($.inArray(character.facebook_id, wasOnline) == -1) {
-          $content.prepend($template.tmpl(character));
+          $content.prepend(JST['views/chat/online_character'](character));
         }
       });
 
@@ -87,9 +85,8 @@
 
           for (var i = 0; i < messages.length; i++) {
             var message = $.parseJSON(messages[i]);
-            var messageContent = $(this).chat('template').tmpl(message);
 
-            $messages.append(messageContent);
+            $messages.append(JST['views/chat/message'](message));
           }
 
           $(this).find('.messages-container').scrollTop($messages.outerHeight());
