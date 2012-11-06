@@ -1,16 +1,20 @@
-<table cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="0" class="item">
   <tr>
     <td>
       <div class="picture"><%= item_image(@item, :large) %></div>
     </td>
     <td>
+      <h2 class="name"><%= @item.name %></h2>
+
       <% if @item.description.present? %>
         <div class="description"><%= @item.description %></div>
       <% end %>
 
       <table class="actions" cellpadding="0" cellspacing="0">
         <tr>
-          <td class="payouts"><%= render("items/effects", :item => @item) %></td>
+          <td class="payouts">
+            <%= render("items/effects", :item => @item) %>
+          </td>
 
           <% if Item::PURCHASEABLE.include?(@item.availability) && @item.available_for?(current_character) %>
             <td>
