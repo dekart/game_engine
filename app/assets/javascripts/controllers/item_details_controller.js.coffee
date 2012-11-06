@@ -27,19 +27,23 @@ window.ItemDetailsController = class extends Spine.Controller
         item.data('item-details', @details)
 
         @.render()
+
+        @.updatePosition(item)
       )
 
-    offset = item.offset()
-
     @el.stop(false, true).appendTo('#content')
-      .position(of: item, my: 'right top', at: 'left top', collision: 'flipfit')
       .hide()
       .fadeIn()
+
+    @.updatePosition(item)
 
   render: ()->
     @html(
       JST['views/item_details'](@)
     )
+
+  updatePosition: (item)->
+    @el.position(of: item, my: 'top+5', at: 'bottom', collision: 'flipfit')
 
   close: ->
     @el.detach()
