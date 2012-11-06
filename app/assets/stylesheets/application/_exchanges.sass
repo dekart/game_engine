@@ -18,6 +18,9 @@
 #exchangeables_tabs
   @include tabs
 
+  .tab_content
+    @include horizontal-list
+
 #show_exchange
   table
     width: 100%
@@ -61,10 +64,6 @@
       +button($asset_icons_delete, 80px)
 
   .exchangeables
-    .jcarousel-item
-      height: 80px
-      margin: 0
-
     .inventory
       width: 72px
       height: 72px

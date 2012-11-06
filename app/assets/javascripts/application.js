@@ -2,12 +2,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui/all
+//= require mousewheel
 //= require i18n
 //= require i18n/translations
 //= require ./application/visibility
-//= require ./libs/jquery/scroll_to
-//= require ./libs/jquery/jcarousel
+//= require ./libs/scroll_to
 //= require ./libs/tabs
+//= require ./libs/list
+//= require ./libs/page_list
 //= require ./libs/mouse_tracker
 //= require ./application/signed_request
 //= require ./application/link_lock
@@ -161,33 +163,18 @@ var Equipment = {
         this.options.groupedPlacementSize /= this.options.wrapGroupEquipment;
     }
 
-    $('#equipment_tabs .carousel-container').jcarousel({
-      visible: 8,
-      itemFallbackDimension: 8
+    $('#equipment_tabs .tab_content').each(function(){
+      $(this).horizontalList()
     });
 
     $("#equipment_tabs").tabs();
 
     $('#placements .group_placement').each(function(){
-      var $placement = $(this);
-      var $carousel = $placement.find('.carousel-container');
+      var placement = $(this);
+      var list = placement.find('ul');
 
-      // Appending free placeholders
-      var free_slots = parseInt($placement.data('free-slots'));
 
-      if(free_slots > 0) {
-        for(var i = 0; i < free_slots; i ++){
-          $carousel.append('<li><div class="additional-placeholder"></div></li>');
-        }
-      }
-
-      $carousel.jcarousel({
-        vertical: true,
-        visible: Equipment.options.groupedPlacementSize,
-        // TODO: hack. without it control button is active
-        size: $carousel.find("li").length,
-        itemFallbackDimension: Equipment.options.groupedPlacementSize
-      });
+      placement.verticalList();
     });
 
     $("#equippables .inventory, #placements .inventory").draggable({
@@ -321,9 +308,8 @@ var Contest = {
 
 var Exchange = {
   setup: function() {
-    $('#exchangeables_tabs .carousel-container').jcarousel({
-      visible: 8,
-      itemFallbackDimension: 8
+    $('#exchangeables_tabs .tab_content').each(function(){
+      $(this).horizontalList()
     });
 
     $("#exchangeables_tabs").tabs();
@@ -437,13 +423,9 @@ var FacebookPermissions = {
     var $items = $container.find('li');
     var $current = $(current_group);
 
-    $container.find('.container ul').jcarousel({
-      visible: show_limit,
-      itemFallbackDimension: show_limit,
-      start: $items.index($current)
-    });
-
     $current.addClass('current');
+
+    $container.pageList();
 
     $items.click(function(e){
       e.preventDefault();

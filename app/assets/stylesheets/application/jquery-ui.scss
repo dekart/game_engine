@@ -31,6 +31,8 @@
 
 /* Overlays */
 .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+
 .ui-tooltip {
   padding: 8px;
   position: absolute;
@@ -46,3 +48,20 @@
   background-image: none;
 }
 body .ui-tooltip { border-width: 2px; }
+
+
+.ui-slider { position: relative; text-align: left; }
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; cursor: all-scroll; background-color: $link_color;}
+.ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; background-position: 0 0; }
+
+.ui-slider-horizontal { height: 10px; }
+.ui-slider-horizontal .ui-slider-handle { margin-left: -10px; width: 20px; height: 10px; }
+.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.ui-slider-horizontal .ui-slider-range-max { right: 0; }
+
+.ui-slider-vertical { width: 10px; height: 100px; }
+.ui-slider-vertical .ui-slider-handle { margin-bottom: -10px; width: 10px; height: 20px; }
+.ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
+.ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+.ui-slider-vertical .ui-slider-range-max { top: 0; }

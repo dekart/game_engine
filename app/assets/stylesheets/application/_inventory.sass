@@ -141,38 +141,24 @@
     font-weight: bold
     text-align: center
 
-  .container
-    .jcarousel-prev-horizontal, .jcarousel-next-horizontal
-      top: 32px
+  .boost
+    img
+      cursor: pointer
+    width: 72px
+    height: 72px
+    margin: 5px
 
-    .jcarousel-item
-      height: 80px
-
-    .boost
+    &.not_owned
       img
-        cursor: pointer
-      width: 72px
-      height: 72px
-      margin: 5px
-
-      &.not_owned
         +opacity(0.4)
 
-      &.active
-        border: $boosts_active_border
-        border-width: 4px
-        margin: 1px
-        +opacity(1.0)
+    &.active
+      border: $boosts_active_border
+      border-width: 4px
+      margin: 1px
 
-      .inventory_image
-
-  .buy
-    text-align: center
-    margin-bottom: 10px
-
-  .button.shop
-    margin: 0 auto
-    +button($inventory_buttons_shop_icon, 140px)
+  .boost_content
+    @include page-list
 
 .inventory_image
   position: relative

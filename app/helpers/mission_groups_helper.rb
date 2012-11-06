@@ -43,9 +43,7 @@ module MissionGroupsHelper
       result = (
         %{
           <div id="mission_group_list" class="clearfix">
-            <div class="container classic-carousel">
-              <ul class="clearfix">#{ result }</ul>
-            </div>
+            <ul>#{ result }</ul>
           </div>
           <script type="text/javascript">
             $(function(){

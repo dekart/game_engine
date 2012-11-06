@@ -4,7 +4,7 @@
     <% tabs :id => :equipment_tabs do |t| %>
       <% inventories_equippable_grouped_by_item_group.each do |item_group, inventories| %>
         <% t.tab dom_id(item_group, :inventories), item_group.name do %>
-          <ul class="carousel-container item_group">
+          <ul class="item_group">
             <% inventories.each do |inventory| %>
               <li class="inventory" id="<%= dom_id(inventory.item, :equipment) %>"
                   data-placements="<%= inventory.placements.join(',') %>"

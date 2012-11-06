@@ -5,18 +5,10 @@
 
     <p><%= t(".exchangeables_help") %></p>
 
-    <div id="exchangeables_tabs">
-      <ul>
-        <% inventories_exchangeable_grouped_by_item_group.each do |item_group, inventories| %>
-          <li>
-            <a href="#<%= dom_id(item_group, :inventories) %>"><%= item_group.name %></a>
-          </li>
-        <% end %>
-      </ul>
-
+    <% tabs :id => :exchangeables_tabs do |t| %>
       <% inventories_exchangeable_grouped_by_item_group.each do |item_group, inventories| %>
-        <div class="item_group" id="<%= dom_id(item_group, :inventories) %>">
-          <ul class="carousel-container">
+        <% t.tab dom_id(item_group, :inventories), item_group.name do %>
+          <ul>
             <% inventories.each do |inventory| %>
               <li>
                 <div
@@ -37,9 +29,9 @@
               </li>
             <% end %>
           </ul>
-        </div>
+        <% end %>
       <% end %>
-    </div>
+    <% end %>
 
     <%= form_for(@exchange_offer) do |f| %>
       <%= f.hidden_field :exchange_id %>

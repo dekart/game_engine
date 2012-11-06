@@ -68,12 +68,9 @@
         display: inline
 
     .container
-      width: 210px
+      width: 220px
+      padding: 5px
       border: $thin_border
-
-      .note
-        border: none
-        border-top: $thin_border
 
     .help
       margin-bottom: 15px
@@ -81,33 +78,32 @@
     .inventory, .additional-placeholder
       margin: 5px
       float: left
-      width: $placements_additional_width
-      height: $placements_additional_height
+      width: 75px
+      height: 75px
 
     .note
       clear: both
+      border: none
+      border-top: $thin_border
 
       .zero
         font-size: 16px
         color: $placements_additional_zero_color
 
-    .jcarousel-container-vertical, .jcarousel-item, .jcarousel-clip-vertical
-      width: 172px
+    .group_placement
+      height: 300px
+      @include vertical-list
 
-    .jcarousel-container-vertical, .jcarousel-clip-vertical
-      height: 246px
-
-    .jcarousel-container-vertical
-
-      .jcarousel-prev-vertical, .jcarousel-next-vertical
-        left: 90px
-
-      .jcarousel-item
-        height: 82px
-        margin: 0
 
 #equipment_tabs
   @include tabs
+
+  .tab_content
+    @include horizontal-list
+
+    .inventory
+      width: 75px
+      height: 75px
 
 #equipment
   .placement, .group_placement, #equipment_tabs .item_group
