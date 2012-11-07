@@ -61,11 +61,11 @@ class HorizontalList extends List
     super.appendTo(@element)
 
   onScroll: (e, delta, deltaX, deltaY)=>
-    e.preventDefault() if deltaX != 0
+    e.preventDefault()
 
     range = @slider.slider('option', 'max')
 
-    new_value = Math.round(@slider.slider('value') + @.sliderStep() * deltaX)
+    new_value = Math.round(@slider.slider('value') + @.sliderStep() * delta)
 
     if new_value < 0
       new_value = 0
@@ -123,11 +123,11 @@ class VerticalList extends List
     super.prependTo(@element)
 
   onScroll: (e, delta, deltaX, deltaY)=>
-    e.preventDefault() if deltaY != 0
+    e.preventDefault()
 
     range = @slider.slider('option', 'min')
 
-    new_value = Math.round(@slider.slider('value') + @.sliderStep() * deltaY)
+    new_value = Math.round(@slider.slider('value') + @.sliderStep() * delta)
 
     if new_value < range
       new_value = range
