@@ -3,22 +3,22 @@
 
   <div class="note"><%= I18n.t("app_requests.invite_dialog.note") %></div>
 
-  <div class="friend_selector    ui-tabs ui-widget ui-widget-content ui-corner-all">
-    <ul class="filters    ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-      <li data-filter="all" class="filter    ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
-        <a name="all"><span><%= I18n.t("app_requests.invite_dialog.filters.all") %></span></a>
+  <div class="friend_selector">
+    <ul class="filters">
+      <li data-filter="all" class="filter selected">
+        <%= I18n.t("app_requests.invite_dialog.filters.all") %>
       </li>
 
-      <li data-filter="app_users" class="filter    ui-state-default ui-corner-top">
-        <a name="app_users"><span><%= I18n.t("app_requests.invite_dialog.filters.app_users") %></span></a>
+      <li data-filter="app_users" class="filter">
+        <%= I18n.t("app_requests.invite_dialog.filters.app_users") %>
       </li>
 
-      <li data-filter="non_app_users" class="filter    ui-state-default ui-corner-top">
-        <a name="app_users"><span><%= I18n.t("app_requests.invite_dialog.filters.non_app_users") %></span></a>
+      <li data-filter="non_app_users" class="filter">
+        <%= I18n.t("app_requests.invite_dialog.filters.non_app_users") %>
       </li>
     </ul>
 
-    <div class="user_list ui-tabs-panel ui-widget-content ui-corner-bottom">
+    <div class="user_list">
       <div class="users">
         <% for user in @users: %>
           <div class="user selected <%= 'app_user' if user.is_app_user %>" data-uid="<%= user.uid %>">

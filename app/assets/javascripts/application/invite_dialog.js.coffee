@@ -173,9 +173,9 @@ this.InviteDialog = class
     @filter = filter
 
     @dialog_el.find('.filter')
-      .removeClass('ui-tabs-selected ui-state-active')
+      .removeClass('selected')
       .filter("[data-filter='#{ filter }']")
-      .addClass('ui-tabs-selected ui-state-active')
+      .addClass('selected')
 
     @dialog_el.find('.users')
       .scrollTop(0)
