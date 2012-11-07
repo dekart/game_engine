@@ -65,7 +65,7 @@ class HorizontalList extends List
 
     range = @slider.slider('option', 'max')
 
-    new_value = Math.round(@slider.slider('value') + @.sliderStep() * delta)
+    new_value = Math.round(@slider.slider('value') - @.sliderStep() * delta)
 
     if new_value < 0
       new_value = 0
