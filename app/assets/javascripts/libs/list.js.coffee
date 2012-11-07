@@ -61,7 +61,7 @@ class HorizontalList extends List
     super.appendTo(@element)
 
   onScroll: (e, delta, deltaX, deltaY)=>
-    e.preventDefault()
+    e.preventDefault() if deltaX != 0
 
     range = @slider.slider('option', 'max')
 
@@ -123,7 +123,7 @@ class VerticalList extends List
     super.prependTo(@element)
 
   onScroll: (e, delta, deltaX, deltaY)=>
-    e.preventDefault()
+    e.preventDefault() if deltaY != 0
 
     range = @slider.slider('option', 'min')
 
