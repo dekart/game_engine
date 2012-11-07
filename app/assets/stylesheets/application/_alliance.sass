@@ -71,10 +71,6 @@
   table
     width: 100%
 
-  .list
-    height: 250px
-    overflow: auto
-
   .relations
     margin-top: 10px
     display: block
@@ -112,6 +108,11 @@
 
   #assignment_tabs
     @include tabs
+
+    .tab_content
+      max-height: 450px
+      overflow: auto
+      margin-bottom: 15px
 
   .promote
     +button($assignments_promote_icon)
