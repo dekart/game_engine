@@ -24,10 +24,13 @@ window.DialogController = class extends Spine.Controller
   show: (content)->
     @content = content
 
+    # Element should be in dom before we render any content into it, or content scripts won't work properly
+    @el.css(opacity: 0).appendTo('#content')
+
     @.render()
 
     @overlay.css(opacity: 0).appendTo('#content').fadeTo(400, 0.7)
-    @el.css(opacity: 0).appendTo('#content').css(@.calculateOffset()).fadeTo(400, 1)
+    @el.css(@.calculateOffset()).fadeTo(400, 1)
 
   close: ->
     @overlay.detach()
