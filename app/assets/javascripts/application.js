@@ -5,7 +5,9 @@
 //= require mousewheel
 //= require i18n
 //= require i18n/translations
-//= require ./application/visibility
+//= require browser_detect
+//= require visibility
+
 //= require ./libs/scroll_to
 //= require ./libs/tabs
 //= require ./libs/list
@@ -25,7 +27,6 @@
 //= require ./application/shop
 //= require ./application/inventory
 //= require ./application/chat
-//= require browser_detect
 
 // Spine-based part of the application
 //= require spine/spine

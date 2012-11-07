@@ -12,16 +12,13 @@ window.Timer = class
     @last_tick = (new Date()).valueOf()
     @finish_at = @last_tick + countdown * 1000
 
-    @ticker = setInterval(
-      ()=> @.checkTick()
-      10
-    )
+    @ticker = Visibility.every(10, ()=> @.checkTick())
 
     @.onTick()
 
   stop: ()->
     if @ticker
-      clearInterval(@ticker)
+      Visibility.stop(@ticker)
 
       @ticker = null
 
