@@ -58,5 +58,5 @@ window.DialogController = class extends Spine.Controller
 
     {
       left: left
-      top: if top < 0 then 0 else top
+      top: if top < 0 then $('#content').offset().top + 100 else top
     }
