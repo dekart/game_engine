@@ -21,8 +21,24 @@ class List
   onSlide: (event, ui)=>
     @.scrollTo(ui.value)
 
-  onScroll: (e, delta, deltaX, deltaY)=>
-    throw 'Should be re-defined'
+  onScroll: (e, new_value)=>
+    e.preventDefault()
+
+    unless @slider.slider('value') == new_value
+      @slider.slider('value', new_value)
+
+      @.scrollTo(new_value)
+
+  scrollSpeed: (delta)->
+    # Limiting maximum scroll speed to an opinion-based magic number
+    if delta < -0.105
+      speed = -0.105
+    else if delta > 0.105
+      speed = 0.105
+    else
+      speed = delta
+
+    Math.round(@.sliderStep() * speed)
 
   maxItemHeight: ->
     @max_item_heigth ?= _.max(
@@ -61,21 +77,16 @@ class HorizontalList extends List
     super.appendTo(@element)
 
   onScroll: (e, delta, deltaX, deltaY)=>
-    e.preventDefault()
-
     range = @slider.slider('option', 'max')
 
-    new_value = Math.round(@slider.slider('value') - @.sliderStep() * delta)
+    new_value = @slider.slider('value') - @.scrollSpeed(delta)
 
     if new_value < 0
       new_value = 0
     else if new_value > range
       new_value = range
 
-    unless @slider.slider('value') == new_value
-      @slider.slider('value', new_value)
-
-      @.scrollTo(new_value)
+    super(e, new_value)
 
   sliderOptions: ->
     {
@@ -123,21 +134,16 @@ class VerticalList extends List
     super.prependTo(@element)
 
   onScroll: (e, delta, deltaX, deltaY)=>
-    e.preventDefault()
-
     range = @slider.slider('option', 'min')
 
-    new_value = Math.round(@slider.slider('value') + @.sliderStep() * delta)
+    new_value = @slider.slider('value') + @.scrollSpeed(delta)
 
     if new_value < range
       new_value = range
     else if new_value > 0
       new_value = 0
 
-    unless @slider.slider('value') == new_value
-      @slider.slider('value', new_value)
-
-      @.scrollTo(new_value)
+    super(e, new_value)
 
   sliderOptions: ->
     {
