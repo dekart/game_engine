@@ -7,6 +7,8 @@ class Admin::GlobalTasksController < Admin::BaseController
         ActiveRecord::Base.lock_optimistically = false
 
         User.all(:lock => true).map{|u| u.destroy }
+
+        AppRequest::Base.delete_all
       end
 
       @result = :success

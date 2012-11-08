@@ -2,7 +2,10 @@ class Character
   module Newsfeed
     def self.included(base)
       base.class_eval do
-        has_many :news, :class_name => "News::Base", :extend => AssociationExtension
+        has_many :news,
+          :class_name => "News::Base",
+          :extend     => AssociationExtension,
+          :dependent  => :delete_all
       end
     end
 
