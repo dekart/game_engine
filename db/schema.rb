@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102095219) do
+ActiveRecord::Schema.define(:version => 20121103132744) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -819,6 +819,7 @@ ActiveRecord::Schema.define(:version => 20121102095219) do
     t.boolean  "paying"
     t.binary   "friend_ids"
     t.boolean  "installed",                             :default => true
+    t.string   "last_visit_user_agent",  :limit => 250, :default => "",      :null => false
   end
 
   add_index "users", ["created_at"], :name => "index_users_on_created_at"
