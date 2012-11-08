@@ -9,5 +9,3 @@ en:
     global:
       tooltip: "Chat"
       tooltip_with_count: "Chat (%{online_count} users online)"
-    online_character:
-      level: "Level %{value}"

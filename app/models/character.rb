@@ -225,6 +225,20 @@ class Character < ActiveRecord::Base
     )
   end
 
+  def as_json_for_upgrade
+    {
+      :points   => points,
+      :upgrade_cost => {},
+      :upgrade_increase => {}
+    }.tap do |result|
+      UPGRADABLE_ATTRIBUTES.each do |attribute|
+        result[attribute] = send(attribute)
+        result[:upgrade_cost][attribute] = Setting.i("character_#{attribute}_upgrade_points")
+        result[:upgrade_increase][attribute] = Setting.i("character_#{attribute}_upgrade")
+      end
+    end.as_json
+  end
+
   def show_promo_block?
     level >= Setting.i(:promo_block_minimum_level)
   end

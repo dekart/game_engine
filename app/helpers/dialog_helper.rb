@@ -27,6 +27,6 @@ module DialogHelper
   def dialog(dom_id = nil, &block)
     content = Builder.new(self, dom_id).html(&block)
 
-    dom_ready("$(document).queue('dialog', function(){ $.dialog('#{ escape_javascript(content).html_safe }') });")
+    dom_ready("$(document).queue('dialog', function(){ DialogController.show('#{ escape_javascript(content).html_safe }') });")
   end
 end

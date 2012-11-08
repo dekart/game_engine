@@ -1,23 +1,43 @@
-.ui-tooltip
-  .show_item
-    .picture
-      padding-right: 10px
-    
-    table.actions
-      width: 100%
-      
-      td
-        padding-right: 20px
-  
-        .package_size
-          font-weight: normal
-      
-        .controls
-          width: 130px
-          text-align: right
-          
-          .buy
-            +button($shop_item_buy_icon)
-          
-          select
-            margin: 5px
+.item_details
+  position: absolute
+
+  border: $main_border
+  background-color: $content_bg_color
+
+  .close
+    float: right
+    margin: 0 0 5px 5px
+    width: 20px
+    height: 20px
+    cursor: pointer
+    background:
+      image: image-url('icons/delete.gif')
+      position: center
+      repeat: no-repeat
+
+  .content
+    padding: 10px
+
+  .picture
+    padding-right: 10px
+    width: 200px
+    height: 200px
+
+  table.actions
+    width: 100%
+
+    td
+      padding-right: 20px
+
+      .package_size
+        font-weight: normal
+
+      .controls
+        width: 130px
+        text-align: right
+
+        .buy
+          +button($shop_item_buy_icon)
+
+        select
+          margin: 5px

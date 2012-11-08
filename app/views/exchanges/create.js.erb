@@ -1,25 +1,25 @@
 <%= render_to_result :exchange_inventories do |builder| %>
   <h2><%= t(".title") %></h2>
-  
+
   <p>
     <%= t(".text") %>
   </p>
-  
+
   <div class="buttons">
-    <%= link_to_function(button(:publish), stream_dialog(:exchange, @exchange), 
+    <%= link_to_function(button(:publish), stream_dialog(:exchange, @exchange),
           :class => 'button publish'
         ) %>
-        
-    <%= link_to(button(:view), exchange_path(@exchange.key), 
+
+    <%= link_to(button(:view), exchange_path(@exchange.key),
           :class => 'button view'
         ) %>
   </div>
-  
+
   <% builder.on_ready do %>
-    $.dialog.close();
-    
+    DialogController.close();
+
     $("#<%= dom_id(@exchange.item) %>").replaceWith("<%= escape_javascript(render("inventories/list_inventory", :inventory => @exchange.inventory))%>");
-    
+
     <%= stream_dialog(:exchange, @exchange) %>
   <% end %>
 <% end %>

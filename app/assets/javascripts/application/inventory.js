@@ -28,11 +28,8 @@ var Inventory = (function(){
     },
 
     setupTabs: function(){
-      var inventory_tabs = $('#inventory_tabs');
-
-      inventory_tabs.tabs({
-        cache: true,
-        load: this.onTabLoad
+      $('#inventory_tabs').tabs({
+        onLoad: this.onTabLoad
       });
     },
 

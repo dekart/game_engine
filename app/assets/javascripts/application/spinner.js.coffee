@@ -1,16 +1,9 @@
 this.Spinner = new class
-  x: -1
-  y: -1
   enabled : true
 
   setup: ()->
-    @x = -1
-    @y = -1
     @enabled = true
     @element = $('#spinner')
-
-    # Tracking mouse
-    $('body').mousemove(@.onMouseMove)
 
   show: (speed, text)->
     return unless @enabled
@@ -40,14 +33,10 @@ this.Spinner = new class
 
     @element.fadeIn(speed).delay(delay).fadeOut(speed)
 
-  storePosition: (x, y)->
-    @x = x
-    @y = y
-
   moveToPosition: ()->
-    if @x > -1 && @y > -1
+    if mouse.isTracked()
       @element.css(
-        top: @y - @element.height() / 2
+        top: mouse.y - @element.height() / 2
       )
 
   alignTo: (selector)->
@@ -67,5 +56,3 @@ this.Spinner = new class
   onAjaxStop: ()=>
     @.show()
 
-  onMouseMove: (e)=>
-    @.storePosition(e.pageX, e.pageY)

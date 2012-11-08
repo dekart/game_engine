@@ -1,8 +1,6 @@
 //= require jquery
 //= require jquery_ujs
-//= require ./admin/jqplot
-//= require ./libs/jquery/dialog
-//= require ./libs/jquery/qtip2
+//= require jqplot
 //= require ./application/signed_request
 //= require_self
 
@@ -75,8 +73,6 @@ var PictureForm = {
 }
 
 $(function(){
-  $.dialog.settings.container = 'body';
-
   $('form input.submit_and_continue[type=submit]').click(function(){
     $('<input type="hidden" name="continue" value="true">').appendTo($(this).parents('form'));
   });
@@ -92,13 +88,6 @@ $(function(){
   })
 
   $('#flash').click(function(){$(this).remove()}).delay(3000).fadeOut(3000);
-
-  $('#content').on('click', 'a.help', function(e){
-    e.preventDefault();
-    e.stopPropagation();
-
-    $.dialog({ajax: $(e.currentTarget).attr('href')});
-  });
 
   $('#character_list #all_ids').click(function(){
     $('#character_list td :checkbox').attr({checked : $(this).attr('checked')});

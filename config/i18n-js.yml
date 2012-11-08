@@ -1,8 +1,10 @@
 translations:
   - file: "app/assets/javascripts/i18n/translations.js"
     only:
+      - "*.common"
       - "*.app_requests.invite_dialog"
       - "*.activerecord.attributes"
       - "*.client"
       - "*.items.buy_button"
       - "*.browser_check"
+      - "*.characters.upgrade"

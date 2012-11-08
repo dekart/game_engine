@@ -6,8 +6,8 @@ module AppRequestsHelper
 
     if amount > 0
       link_to(amount, app_requests_path,
-        :id     => :app_requests_counter,
-        :title  => t('app_requests.counter.text', :count => amount)
+        :id => :app_requests_counter,
+        'data-tooltip-content' => t('app_requests.counter.text', :count => amount)
       )
     end
   end

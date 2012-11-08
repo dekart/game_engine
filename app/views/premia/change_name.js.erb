@@ -1,17 +1,17 @@
 <% dialog :premia_change_name_dialog do %>
   <h2><%= t('.title') %></h2>
-  
+
   <p class="note"><%= t('.note') %></p>
-  
-  <%= form_for(current_character, :url => premium_path, 
+
+  <%= form_for(current_character, :url => premium_path,
         :remote => true, :method => :put) do |f| %>
     <%= hidden_field_tag :type, :change_name %>
-  
+
     <%= f.text_field :name, :label => t('.label') %>
-    
+
     <%= link_to_function(button(:apply), "$(this).parents('form').submit()",
           :'data-click-once' => true,
-          :onclick => "$.dialog.close()",
+          :onclick => "DialogController.close()",
           :class => 'apply button'
         ) %>
   <% end %>

@@ -1,38 +1,38 @@
 #current_contest
   #contest_info
     .name
-    
+
     .description
-    
+
     .image
-    
+
     .current_position
       .value
         font-weight: bold
-        
+
     .timer
       text-align: right
-      
+
       .value
         font-weight: bold
-        
+
     .buttons
       margin-top: 15px
-      
+
       .button
         float: left
         width: auto
         margin-right: 15px
-        
+
       .fight
         +button($fight_buttons_fight_icon)
-      
+
       .monsters
         +button($asset_icons_monsters)
-        
+
       .contest
         +button($contest_buttons_contest_icon)
-        
+
     .results
       .contest_table
         height: $contest_result_table_height
@@ -45,48 +45,46 @@
       +button($contest_buttons_contest_icon, $contest_buttons_contest_width)
       float: left
       margin-right: 15px
-        
-        
-        
-        
+
+
+
+
 #contest, #current_contest
   .results
-    .ui-tabs-nav
-      .contest_group
-        font-weight: normal
-      
     .contest_table
       margin-bottom: 30px
       padding: 15px
-    
+
       td
         padding: 5px 10px
         vertical-align: middle
-    
+
       th
         padding: 5px 10px
         vertical-align: middle
         text-align: center
         border-bottom: $splitter_border
-    
+
       .current
         font-weight: bold
         background-color: $rating_current_bg_color
-    
+
         td
           border:
             top: $rating_current_border
             bottom: $rating_current_border
-    
+
         .position
           border-left: $rating_current_border
           font-size: 16px
           color: $rating_current_color
-    
+
         .last
           border-right: $rating_current_border
-    
+
       .position
         font-size: 14px
         font-weight: bold
-  
+
+#contest_tabs
+  @include tabs

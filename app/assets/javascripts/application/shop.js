@@ -15,21 +15,14 @@ var Shop = (function(){
       var shop_tabs = $("#shop_tabs");
 
       shop_tabs.tabs({
-        cache: true,
-        load: this.onTabLoad
+        onLoad: this.onTabLoad
       });
 
-      $.History.bind(function(state){
-        switch(state){
-          case 'services':
-            shop_tabs.tabs('select', shop_tabs.tabs('length') - 2);
-            break;
-
-          case 'buy_vip_money':
-            shop_tabs.tabs('select', shop_tabs.tabs('length') - 1);
-            break;
-        }
-      });
+      if(window.location.hash == '#buy_vip_money') {
+        shop_tabs.tabs().selectTab('buy_vip_money');
+      } else if (window.location.hash == '#services') {
+        shop_tabs.tabs().selectTab('services');
+      }
     },
 
     setupAmountSelector: function(){
@@ -78,8 +71,8 @@ var Shop = (function(){
 
     // Events
 
-    onTabLoad: function(event, ui){
-      shop.setupItemList($(ui.panel).find('.item_list'));
+    onTabLoad: function(tab, container){
+      shop.setupItemList(container.find('.item_list'));
     },
 
     confirmPurchase: function(link){

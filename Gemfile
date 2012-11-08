@@ -36,6 +36,8 @@ gem 'dynamic_form',     '~> 1.1.4'
 
 gem 'compass-rails'
 
+gem 'visibilityjs'
+
 group :development do
   gem "capistrano",   "~> 2.9.0"
   gem "capistrano-ext"

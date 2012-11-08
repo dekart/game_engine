@@ -7,15 +7,9 @@
 
     <% filters = %w{not_assigned assigned} %>
 
-    <div class="tabs">
-      <ul>
-        <% filters.each do |filter| %>
-          <li><%= link_to(t(".#{filter}.title"), "##{filter}") %></li>
-        <% end %>
-      </ul>
-
+    <% tabs :id => :assignment_tabs do |t| %>
       <% filters.each do |filter| %>
-        <div id="<%= filter %>" class="list">
+        <% t.tab filter, t(".#{filter}.title") do %>
           <% if relations = @relations.send(filter) and relations.any? %>
             <table class="relations" cellspacing="0" cellpadding="0">
               <tr>
@@ -44,12 +38,12 @@
           <% else %>
             <div class="empty_set"><%= t(".#{filter}.empty_set") %></div>
           <% end %>
-        </div>
+        <% end %>
       <% end %>
-    </div>
+    <% end %>
 
     <%= link_to_function(button(:promote), "$(this).parents('form').submit()",
-          :onclick  => '$.dialog.close()',
+          :onclick  => 'DialogController.close()',
           :'data-click-once' => true,
           :class => 'promote button'
         ) %>

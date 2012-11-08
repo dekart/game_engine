@@ -1,0 +1,45 @@
+@mixin page-list {
+  position: relative;
+  overflow: hidden;
+
+  ul {
+    position: absolute;
+    left: 32px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: block;
+  }
+
+  li {
+    display: block;
+    float: left;
+  }
+
+  .arrow {
+    position: absolute;
+    width: 32px;
+    cursor: pointer;
+
+    background: {
+      repeat: no-repeat;
+      position: center;
+    }
+
+    &.left {
+      left: 0;
+      background-image: image-url('arrows/previous.png');
+    }
+
+    &.right {
+      right: 0;
+      background-image: image-url('arrows/next.png');
+    }
+
+    &.disabled {
+      @include opacity(0.3);
+      cursor: default;
+    }
+  }
+}

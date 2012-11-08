@@ -26,17 +26,17 @@ module InventoriesHelper
       )
     )
   end
-  
+
   def boosts_for(type, destination)
-    render("inventories/boosts", 
-      :type => type, 
+    render("inventories/boosts",
+      :type => type,
       :destination => destination
     )
   end
-  
+
   def boost_dom_id(boost, destination)
     item = boost.respond_to?(:item) ? boost.item : boost
-    
+
     dom_id(item, "boost_#{item.boost_type}_#{destination}")
   end
 
@@ -110,7 +110,7 @@ module InventoriesHelper
           data-placement="#{ placement }"
           data-free-slots="#{ current_character.equipment.available_capacity(placement) }"
         >
-          <ul class="carousel-container">#{ result }</ul>
+          <ul>#{ result }</ul>
         </div>
       }
     ).html_safe

@@ -22,39 +22,39 @@
 
   th
     font-size: 12px
-    
+
     &.personal
       width: $fight_attributes_personal_width
-      
+
     &.inventory
       width: $fight_attributes_inventory_width
-      
+
     &.best
       text-align: right
       width: $fight_attributes_best_width
-      
+
       .text
         float: right
         padding: 5px
         border: $fight_attributes_best_border
-      
+
   td
     padding: 5px 0
-    
+
   .values
     .value, .sign
       line-height: 22px
       height: 22px
       padding: 2px 5px
-      
+
     .attack, .defence, .relations
       padding: 2px 5px 2px 21px
       background-position: center left
       background-repeat: no-repeat
-    
+
     .sign
       font-weight: bold
-  
+
     .result
       border: $fight_attributes_result_effects_border
       margin-right: 4px
@@ -62,23 +62,23 @@
 
     .attack
       background-image: $fight_attributes_attack_icon
-  
+
     .defence
       background-image: $fight_attributes_defence_icon
-  
+
     .relations
       background-image: $fight_attributes_relations_icon
       padding-left: 25px
-  
+
 #best_inventories
   padding-top: 15px
   float: right
-  
+
   .inventories
     float: left
     margin-right: 10px
     position: relative
-    
+
     .text
       border: $fight_attributes_best_border
       position: absolute
@@ -89,7 +89,7 @@
       font-weight: bold
       background-color: $fight_attributes_best_bg_color
       +border-radius(20px)
-      
+
     .items
       padding: 15px 5px 5px 5px
       border: $fight_attributes_best_border
@@ -97,7 +97,7 @@
       background-color: $fight_attributes_best_bg_color
       +border-radius(10px)
       width: $fight_attributes_best_items_width
-      
+
 #victim_list
   width: 100%
 
@@ -124,15 +124,15 @@
 
 #more_fight_opponents
   margin: 15px 0
-  
+
   .button
     margin: 0 auto
     +button($fight_victim_attack_icon, 150px)
-  
+
 
 #fight_result
   background-image: $fight_result_icon
-  
+
   .success, .fail
     clear: both
     text-align: center
@@ -146,7 +146,7 @@
     float: none
     margin: 0px auto
     +button($fight_result_attack_again_icon)
-    
+
   .help
     width: 120px
     margin: 0 auto
@@ -254,17 +254,20 @@
 
     .group
       margin-bottom: 10px
-      
+
 
 #fight_boosts
   overflow: hidden
-  
+
   .boosts.fight
     &.attack
       float: left
+      width: 350px
+
     &.defence
       float: right
-      
+      width: 350px
+
 #loading_opponents
   text-align: center
   color: $subheader_color

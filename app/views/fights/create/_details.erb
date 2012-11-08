@@ -19,8 +19,8 @@
       <% if fight.attacker_boost %>
         <div class="best_items">
           <strong><%= t(".best_attacking_boost") %></strong>
-          
-          <%= item_image(fight.attacker_boost.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+
+          <%= item_image(fight.attacker_boost.item, :icon, :tooltip => true, :details => true) %>
         </div>
       <% end %>
 
@@ -47,10 +47,10 @@
         <div class="best_items">
           <strong><%= t(".best_defending_boost") %></strong>
 
-          <%= item_image(fight.victim_boost.item, :icon, :tooltip => true, :tooltip_on_click => true) %>
+          <%= item_image(fight.victim_boost.item, :icon, :tooltip => true, :details => true) %>
         </div>
       <% end %>
-      
+
       <%= render "fights/create/best_items", :character => fight.victim %>
     </td>
   </tr>

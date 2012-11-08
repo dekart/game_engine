@@ -8,48 +8,47 @@
 
 #rating_score_permissions
   display: none
-  
+
   .permissions
     +button($asset_icons_accept, 160px)
 
 #rating_list
-  .ui-tabs-panel
-    padding: 20px
- 
+  @include tabs
+
   .rating
     width: 100%
-  
+
     .button.publish
       +button($asset_icons_publish, 85px)
       margin-top: 5px
-  
+
     td
       padding: 5px 10px
       vertical-align: middle
-  
+
     th
       padding: 5px 10px
       vertical-align: middle
       text-align: left
       border-bottom: $splitter_border
-  
+
     .current
       font-weight: bold
       background-color: $rating_current_bg_color
-  
+
       td
         border:
           top: $rating_current_border
           bottom: $rating_current_border
-  
+
       .position
         border-left: $rating_current_border
         font-size: 16px
         color: $rating_current_color
-  
+
       .last
         border-right: $rating_current_border
-  
+
     .position
       font-size: 14px
       font-weight: bold

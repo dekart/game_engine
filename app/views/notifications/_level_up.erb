@@ -11,9 +11,8 @@
     <%= link_to_function(button(:publish), stream_dialog(:level_up, :callback => "$(document).trigger('character.level_up_publish')"),
           :class => "publish button"
         ) if Setting.b(:stream_dialog_enabled) %>
-        
-    <%= link_to(button(:upgrade), upgrade_character_url(current_character),
-          :remote => true,
+
+    <%= link_to_function(button(:upgrade), "UpgradeDialogController.show()",
           :class => "upgrade button"
         ) %>
   </div>
@@ -24,7 +23,7 @@
     $(document).trigger('character.new_level');
 
     $(document).one('character.level_up_publish', function(){
-      $.get('<%= upgrade_character_url(current_character) %>');
+      UpgradeDialogController.show();
     });
 
     <%= ga_track_event('Character', 'Level Up', 'Level', current_character.level) %>

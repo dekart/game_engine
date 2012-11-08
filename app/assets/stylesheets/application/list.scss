@@ -1,0 +1,80 @@
+@import "compass/utilities/general/clearfix";
+
+@mixin list {
+  position: relative;
+  overflow: hidden;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: block;
+  }
+
+  li {
+    display: block;
+    margin: 5px;
+    padding: 0;
+  }
+
+  .scroller {
+    border: $thin_border;
+
+    @include border-radius(10px);
+
+    .ui-slider-handle{
+      @include border-radius(10px);
+    }
+  }
+}
+
+@mixin horizontal-list {
+  @include list;
+
+  li {
+    float: left;
+  }
+
+  .scroller {
+    margin-top: 5px;
+    height: 12px;
+    padding: 0 15px;
+
+    .ui-slider-handle{
+      height: 10px;
+      top: 1px;
+    }
+  }
+}
+
+@mixin vertical-list {
+  @include list;
+
+  li {
+    @include clearfix;
+  }
+
+  .scroller {
+    position: absolute;
+    top: 0;
+    right: 17px;
+    bottom: 0;
+
+    width: 12px;
+    margin-left: 5px;
+
+    .ui-slider {
+      top: 15px;
+      bottom: 15px;
+      height: inherit;
+      position: absolute;
+    }
+
+    .ui-slider-handle {
+      width: 10px;
+      left: 1px;
+    }
+  }
+
+}

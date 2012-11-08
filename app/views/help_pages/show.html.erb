@@ -6,14 +6,14 @@
 
     <div class="controls">
       <% if request.xhr? %>
-        <%= link_to_function(button(:close), '$.dialog.close()', :class => "button close") %>
+        <%= link_to_function(button(:close), 'DialogController.close()', :class => "button close") %>
       <% else %>
         <%= link_to(button(:return), root_path, :class => "button return") %>
       <% end %>
     </div>
   <% else %>
     <h1><%= params[:id] %></h1>
-    
+
     <div class="content"><%= t('.not_found') %></div>
   <% end %>
 </div>

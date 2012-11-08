@@ -1,0 +1,5 @@
+<div class="close"></div>
+
+<div class="content">
+  <%=@safe @content %>
+</div>

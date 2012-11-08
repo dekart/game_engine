@@ -66,11 +66,7 @@
       <div class="label"><%= Character.human_attribute_name("level") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".upgrade"), upgrade_character_path(:current),
-            :remote => true,
-            :method => :get,
-            :class => :upgrade
-          ) %>
+      <%= link_to(t(".upgrade"), '#upgrade', :class => :upgrade) %>
     </td>
   </tr>
 </table>

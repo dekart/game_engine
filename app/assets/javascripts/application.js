@@ -1,17 +1,18 @@
+//= require underscore
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/all
+//= require mousewheel
 //= require i18n
 //= require i18n/translations
 //= require browser_detect
-//= require ./application/visibility
-//= require ./libs/jquery/labelify
-//= require ./libs/jquery/dialog
-//= require ./libs/jquery/scroll_to
-//= require ./libs/jquery/qtip2
-//= require ./libs/jquery/history
-//= require ./libs/jquery/tmpl
-//= require ./libs/jquery/jcarousel
-//= require ./libs/jquery/ui
+//= require visibility
+
+//= require ./libs/scroll_to
+//= require ./libs/tabs
+//= require ./libs/list
+//= require ./libs/page_list
+//= require ./libs/mouse_tracker
 //= require ./application/signed_request
 //= require ./application/link_lock
 //= require ./application/spinner
@@ -20,7 +21,6 @@
 //= require ./application/promo_block
 //= require ./application/invite_dialog
 //= require ./application/stream_dialog
-//= require ./application/upgrade_sliders
 //= require ./application/timer
 //= require ./application/visual_timer
 //= require ./application/boost
@@ -96,15 +96,6 @@ var CharacterForm = {
 
     form.find('#character_types .character_type').click(function(){
       CharacterForm.set_character_type(this);
-    }).qtip({
-      show: {
-        delay : 0
-      },
-      content: {
-        text: function(){
-          return $('#description_character_type_' + $(this).data('value')).html();
-        }
-      }
     });
 
     form.find('input[type=submit]').click(function(e){
@@ -145,7 +136,7 @@ var PropertyList = {
 
 var AssignmentForm = {
   setup: function(){
-    $('#new_assignment .tabs').tabs();
+    $('#new_assignment #assignment_tabs').tabs();
 
     $('#new_assignment .relations .relation').click(AssignmentForm.select_relation);
   },
@@ -173,35 +164,18 @@ var Equipment = {
         this.options.groupedPlacementSize /= this.options.wrapGroupEquipment;
     }
 
-    $("#equippables-tabs").tabs({
-      show: function(event, ui) {
-        $(ui.panel).find(".carousel-container").jcarousel({
-          visible: 8,
-          itemFallbackDimension: 8
-        });
-      }
+    $('#equipment_tabs .tab_content').each(function(){
+      $(this).horizontalList()
     });
 
+    $("#equipment_tabs").tabs();
+
     $('#placements .group_placement').each(function(){
-      var $placement = $(this);
-      var $carousel = $placement.find('.carousel-container');
+      var placement = $(this);
+      var list = placement.find('ul');
 
-      // Appending free placeholders
-      var free_slots = parseInt($placement.data('free-slots'));
 
-      if(free_slots > 0) {
-        for(var i = 0; i < free_slots; i ++){
-          $carousel.append('<li><div class="additional-placeholder"></div></li>');
-        }
-      }
-
-      $carousel.jcarousel({
-        vertical: true,
-        visible: Equipment.options.groupedPlacementSize,
-        // TODO: hack. without it control button is active
-        size: $carousel.find("li").length,
-        itemFallbackDimension: Equipment.options.groupedPlacementSize
-      });
+      placement.verticalList();
     });
 
     $("#equippables .inventory, #placements .inventory").draggable({
@@ -264,9 +238,9 @@ var Equipment = {
       }
     }));
 
-    $("#equippables-tabs .item_group").droppable($.extend(droppableDefaults, {
+    $("#equipment_tabs .item_group").droppable($.extend(droppableDefaults, {
       accept: function(el) {
-        if ($(el).parents("#equippables-tabs").length == 0) {
+        if ($(el).parents("#equipment_tabs").length == 0) {
           return true;
         }
         return false;
@@ -280,12 +254,12 @@ var Equipment = {
   },
 
   getActiveTabId: function() {
-    return $('#equippables-tabs .ui-tabs-selected a').attr('href');
+    return $('#equipment_tabs').tabs().selectedTabId();
   },
 
   setActiveTab: function(tabId) {
     if (typeof tabId !== 'undefined') {
-      $("#equippables-tabs").tabs('select', tabId);
+      $("#equipment_tabs").tabs().selectTab(tabId);
     }
   }
 };
@@ -323,27 +297,23 @@ var Fighting = {
 
 var Contest = {
   setup: function(contestGroup) {
-    var $tabs = $(".contest .results .tabs");
+    var $tabs = $("#contest_tabs");
 
     if ($tabs.length > 0) {
       $tabs.tabs();
 
-      var tabIndex = $tabs.find('.ui-tabs-nav .contest_group').index($('#' + contestGroup));
-      $tabs.tabs('select', tabIndex);
+      $tabs.tabs().selectTab(contestGroup);
     }
   }
 };
 
 var Exchange = {
   setup: function() {
-    $("#exchangeables_tabs").tabs({
-      show: function(event, ui) {
-        $(ui.panel).find(".carousel-container").jcarousel({
-          visible: 8,
-          itemFallbackDimension: 8
-        });
-      }
+    $('#exchangeables_tabs .tab_content').each(function(){
+      $(this).horizontalList()
     });
+
+    $("#exchangeables_tabs").tabs();
 
     $("#exchangeables_tabs .inventory").click(function() {
       $("#exchangeables_tabs .inventory.active").removeClass('active');
@@ -381,8 +351,7 @@ var AchievementList = {
 var Rating = {
   setup: function() {
     $("#rating_list").tabs({
-      cache: true,
-      load: function(){
+      onLoad: function(){
         FB.XFBML.parse();
       }
     });
@@ -455,13 +424,9 @@ var FacebookPermissions = {
     var $items = $container.find('li');
     var $current = $(current_group);
 
-    $container.find('.container ul').jcarousel({
-      visible: show_limit,
-      itemFallbackDimension: show_limit,
-      start: $items.index($current)
-    });
-
     $current.addClass('current');
+
+    $container.pageList();
 
     $items.click(function(e){
       e.preventDefault();
@@ -482,58 +447,24 @@ var FacebookPermissions = {
 
     return $(this);
   };
-
-  if(!$.isEmptyObject($.fn.qtip)) {
-    $.fn.qtip.zindex = 10001;
-  }
 })(jQuery);
 
 
 $(function(){
+  window.mouse = new MouseTracker();
+
   var character_overview = new CharacterOverviewController();
 
-  $(document).bind('tooltips.setup', function(event, container) {
-    var target = $(container || '#content')
-
-    // Display tooltips
-    target.find('[data-tooltip]').each(function(){
-      var $element = $(this);
-
-      $element.qtip($element.data('tooltip'));
-
-      $element.removeAttr('data-tooltip');
-    });
-
-     // Display tooltip on click
-    target.find('[data-tooltip-on-click]').each(function(){
-      var $element = $(this);
-
-      var existingTooltip = $element.qtip('api');
-      var tooltipOptions = $element.data('tooltip-on-click');
-
-      if (existingTooltip) {
-        tooltipOptions.events = tooltipOptions.events || {};
-
-        $.extend(tooltipOptions.events, {
-          show: function() {
-            existingTooltip.disable();
-          },
-          hide: function() {
-            existingTooltip.enable();
-          }
-        });
-      }
-
-      // for multiple tooltips per elemet. See more http://craigsworks.com/projects/qtip2/tutorials/advanced/#multi
-      $element.removeData('qtip');
-
-      $element.qtip(tooltipOptions);
-
-      $element.removeAttr('data-tooltip-on-click');
-    });
+  $(document).tooltip({
+    items: '[data-tooltip-content]',
+    content: function(){
+      return $(this).attr('data-tooltip-content');
+    }
   });
 
-  $(document).trigger('tooltips.setup');
+  $(document).on('click', '[data-item-details-url]', function(e){
+    ItemDetailsController.show(e.currentTarget);
+  });
 
   $('#content').on('click', 'a[data-click-once=true]', function(e){
     $(e.currentTarget).attr('onclick', null).css({opacity: 0.3, filter: '', cursor: 'wait'}).blur();
@@ -551,19 +482,9 @@ $(function(){
   $(document).bind('result.available', show_result);
 
   $(document).bind('remote_content.received', function(){
-    $(document).trigger('tooltips.setup');
-
     if_fb_initialized(function(){
       FB.XFBML.parse();
     });
-  });
-
-  $(document).bind('loading.dialog', function(){
-    $.scrollTo('#dialog .popup');
-  });
-
-  $(document).bind('afterReveal.dialog', function(){
-    $.scrollTo('#dialog .popup .body');
   });
 
   Spinner.setup();
@@ -572,31 +493,13 @@ $(function(){
     e.preventDefault();
     e.stopPropagation();
 
-    $.dialog({ajax: $(e.currentTarget).attr('href')});
+    $.get($(e.currentTarget).attr('href'), function(response){
+      DialogController.show(response);
+    });
   });
 
-  $(document).bind('dialog.close_complete application.ready', function(){
+  $(document).bind('close.dialog application.ready', function(){
     $(document).dequeue('dialog');
-  });
-
-  $('#app_requests_counter').qtip({
-    position: {
-      my: 'top right',
-      at: 'bottom left'
-    },
-    show: {
-      delay: 0
-    }
-  });
-
-  $('#global_chat_icon').qtip({
-    position: {
-      my: 'top right',
-      at: 'bottom left'
-    },
-    show: {
-      delay: 0
-    }
   });
 
   // throw error if it in ajax javascript response

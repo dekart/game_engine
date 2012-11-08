@@ -1,8 +1,0 @@
-<div class="boost <%= "#{destination} #{boost.boost_type} #{'active' if current_character.active_boost?(boost.item, destination)}" %>" 
-  id="<%= boost_dom_id(boost, destination) %>">
-  <%= link_to(inventory_item_image(boost, :small, :tooltip => true, :count => true),
-        toggle_boost_inventory_path(boost.item, :destination => destination),
-        :remote => true,
-        :method => :post
-      ) %>
-</div>

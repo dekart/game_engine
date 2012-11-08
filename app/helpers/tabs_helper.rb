@@ -26,16 +26,15 @@ module TabsHelper
       result << '<ul>'
 
       @tab_names.each do |id, name, url|
-        result << %{<li>#{ link_to(name, url ? url : "##{id}") }</li>}
+        result << %{<li data-tab="#{ id }"}
+        result << %{ data-url="#{ url }"} if url
+        result << %{>#{name}</li>}
       end
 
       result << '</ul>'
 
       @tab_contents.each do |id, block|
-        # Do not add containers for tabs with URLs - they'll be created automatically
-        unless @tab_names.assoc(id).last
-          result <<  %{<div id="#{ id }">#{ capture(&block) }</div>}
-        end
+        result <<  %{<div class="tab_content" id="#{ id }">#{ capture(&block) }</div>}
       end
 
       result = (

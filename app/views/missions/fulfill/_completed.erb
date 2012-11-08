@@ -18,8 +18,8 @@
   </div>
 <% end %>
 
-<%= builder.render("missions/fulfill/payouts", 
-      :mission  => mission, 
+<%= builder.render("missions/fulfill/payouts",
+      :mission  => mission,
       :result   => result
     ) %>
 
@@ -44,7 +44,7 @@
     <div class="buttons">
       <%= link_to_function(button(:publish),
             stream_dialog(:mission_completed, mission,
-              :before => '$.dialog.close();',
+              :before => 'DialogController.close();',
               :success => '$("#mission_result .buttons .publish").hide()'
             ),
             :class => "continue button"
@@ -57,8 +57,8 @@
   <% if missions %>
     $('#mission_list').html('<%= escape_javascript(render("list", :missions => missions)) %>');
   <% end %>
-  
+
   $(document).trigger('mission.complete');
-  
+
   <%= ga_track_event('Missions', 'Completed', "#{mission.name} - Level #{result.level.position}") %>
 <% end %>

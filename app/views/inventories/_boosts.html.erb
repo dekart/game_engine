@@ -5,23 +5,30 @@
   </h3>
 
   <div class="boost_content">
-    <div class="container classic-carousel">
-      <ul>
-        <% current_character.boosts.for(type, destination).each do |boost| %>
-          <li>
-            <%= render("inventories/boost", :boost => boost, :destination => destination) %>
-          </li>
-        <% end %>
+    <ul>
+      <% current_character.boosts.for(type, destination).each do |boost| %>
+        <li
+          class="boost <%= "#{destination} #{boost.boost_type} #{'active' if current_character.active_boost?(boost.item, destination)}" %>"
+          id="<%= boost_dom_id(boost, destination) %>"
+        >
+          <%= link_to(inventory_item_image(boost, :small, :tooltip => true, :count => true),
+                toggle_boost_inventory_path(boost.item, :destination => destination),
+                :remote => true,
+                :method => :post
+              ) %>
+        </li>
+      <% end %>
 
-        <% current_character.boosts.available_for_purchase(type, destination).each do |item| %>
-          <li>
-            <div class="boost not_owned" data-item-id="<%= item.id %>" id="<%= boost_dom_id(item, destination) %>">
-              <%= item_image(item, :small, :tooltip => true, :tooltip_on_click => true) %>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+      <% current_character.boosts.available_for_purchase(type, destination).each do |item| %>
+        <li
+          class="boost not_owned"
+          data-item-id="<%= item.id %>"
+          id="<%= boost_dom_id(item, destination) %>"
+        >
+          <%= item_image(item, :small, :tooltip => true, :details => true) %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
 

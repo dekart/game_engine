@@ -7,7 +7,6 @@ en:
     level_up:
       title: "New Level!"
       text: "You've gained enough experience to level up! You received %{point_amount} attribute points that you can spend to increase your attributes. Additionally, your energy and health have been refilled."
-      upgrade_link: "upgrade"
       buttons:
         publish: "Brag About It"
         upgrade: "Upgrade"
@@ -16,26 +15,26 @@ en:
       title: "Sold on Market!"
       text: "You've successfully sold %{item} on the Market!"
       you_received: "You received:"
-      
+
     friends_to_invite:
       title: "Recruit Friends To Your Alliance"
       text: "These friends are not in your alliance yet! Recruit them to make your alliance stronger!"
       suggested_users: "Suggested Users"
       buttons:
         invite: "Invite Friends"
-        
+
     send_gift:
       title: "Send Free Gifts To Your Friends"
       text: "You can send these items to your friends for free and they'll be able to send some gifts to you! Click 'Send' and choose whom to send the item:"
       buttons:
         send: "Send"
         send_other: "Send Other Items"
-    
+
     information:
       title: "%{app} News"
       buttons:
         close: "Close"
-    
+
     settings:
       title: "Notification Settings"
       note: "You can enable or disable all in-game notifications in this dialog. Check notifications that you want to receive and click 'Save'."
@@ -52,18 +51,18 @@ en:
         clan_state: "Status of the clan"
         clan_invitation_state: "Status of the invitation to join the clan"
         items_collection: "Items collection"
-      buttons: 
+      buttons:
         save: "Save"
-      
+
     update_settings:
       success: "Your notification settings were updated!"
-      
+
     contest_winner:
       title: "You're The Winner!"
       text: "You've reached the #%{position} position in the %{name}. You've got the prize:"
       buttons:
         publish: "Brag About It"
-    
+
     exchange_offer_created:
       title: "New Offer Response"
       text: "%{character} responded to your offer!"
@@ -73,59 +72,59 @@ en:
         unknown: 'They offer:'
       buttons:
         view: "View Offer"
-        
+
     exchange_offer_accepted:
       title: "Offer Accepted"
       text: "%{character} accepted your offer!"
       you_received: "You received:"
       you_lost: "You spent:"
-        
+
     new_achievement:
       title: 'New Achievement!'
       text: "You've got the new achievement:"
       buttons:
         collect: 'Collect Reward'
         publish: 'Brag About It'
-        
+
     clan_application_state:
-      accepted: 
+      accepted:
         title: "You were accepted"
         text: "You were accepted into the clan %{clan}"
       rejected:
         title: "You were rejected"
-        text: "Your application to join the clan %{clan} was rejected" 
+        text: "Your application to join the clan %{clan} was rejected"
       asked:
-        title: "A new application for membership in the clan"  
+        title: "A new application for membership in the clan"
         text: "%{applicant} has applied to join the clan %{clan}"
       buttons:
-        view_clan: "View clan"     
-        
+        view_clan: "View clan"
+
     clan_state:
-      excluded: 
+      excluded:
         title: "You were excluded"
-        text: "You were excluded from the clan"    
-        
+        text: "You were excluded from the clan"
+
     clan_invitation_state:
       accepted:
         title: "The use of invitation"
-        text: "%{character} has used your invitation to join the clan %{clan}"  
+        text: "%{character} has used your invitation to join the clan %{clan}"
 
     items_collection:
       title: "Collection Ready!"
       text: "You got all items required for the %{collection} collection! Now you can get the reward from it!"
       buttons:
         collection: "View Collections"
-        
+
     wall_post:
       title: "New post on the wall"
-      text: "%{author} posted something on your profile wall."  
+      text: "%{author} posted something on your profile wall."
       buttons:
         read: "Read Post"
-        
+
     hit_listing:
       title:
         client: "Your target is to hit the list was killed"
-        victim: "You have been placed in the hit list"       
+        victim: "You have been placed in the hit list"
       text:
         client: "Your target %{victim} is to hit the list was killed"
-        victim: "You have been placed in the hit list and set the reward %{reward}"  
+        victim: "You have been placed in the hit list and set the reward %{reward}"

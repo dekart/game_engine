@@ -15,6 +15,8 @@
 // Mission group switcher
 
 #mission_group_list
+  @include page-list
+
   border:
     top: $mission_group_border_top
     bottom: $mission_group_border_bottom
@@ -70,7 +72,7 @@
       float: left
       margin-right: 10px
       margin-bottom: 10px
-      
+
     .controls
       .button
         float: left
@@ -95,7 +97,7 @@
     float: right
     font-weight: bold
     font-size: 16px
-  
+
   .controls .fulfill
     +button($mission_fulfill_icon)
 
@@ -107,7 +109,7 @@
   .complete
     font-size: 18px
     color: green
-  
+
   .spent
     b
       width: 55px
@@ -137,7 +139,7 @@
     .child
       line-height: 22px
       padding-left: 23px
-      background: 
+      background:
         image: $mission_result_child_mission_icon
         position: center left
         repeat: no-repeat
@@ -150,26 +152,26 @@
 
   .continue
     +button($mission_dialog_continue_icon)
-    
+
 #mission_help_result
   background-image: $mission_help_result_icon
 
   .continue
     +button($mission_help_result_continue_icon)
-    
+
 #mission_help_list
   border: $mission_help_list_border
   margin: 15px 0
   padding: 10px
-  
-  table 
+
+  table
     width: 600px
-    
+
   .helpers
     width: 50%
 
   .collect
     +button($mission_help_list_collect_icon)
-    
+
 #mission_help_reward_result
   background-image: $mission_help_reward_result_icon
