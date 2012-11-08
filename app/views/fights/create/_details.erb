@@ -56,7 +56,7 @@
   </tr>
 </table>
 
-<div class="item_details" id="<%= dom_id(fight, :items) %>">
+<div class="used_item_details" id="<%= dom_id(fight, :items) %>">
   <%= link_to(t(".show_items"), used_items_fight_path(fight),
         :remote => true,
         :method => :post
