@@ -67,11 +67,16 @@
       +button($assignments_demote_icon)
 
 
-#new_assignment
-  table
-    width: 100%
+#assignment_tabs
+  @include tabs
+
+  .tab_content
+    max-height: 450px
+    overflow: auto
+    margin-bottom: 15px
 
   .relations
+    width: 100%
     margin-top: 10px
     display: block
 
@@ -87,11 +92,20 @@
     .picture
       width: 60px
 
-    .relations .name
+      &.mercenary
+        height: 60px
+        background:
+          image: image-url('mercenary.gif')
+          repeat: no-repeat
+          position: 5px 5px
+
+    .name
       padding-right: 10px
 
-    .selected
+    .relation:hover, .selected
       background-color: $new_assignment_selected_bg_color
+
+    .selected
       font-weight: bold
 
       td
@@ -106,13 +120,6 @@
       .effect
         border-right: $new_assignment_selected_border
 
-  #assignment_tabs
-    @include tabs
-
-    .tab_content
-      max-height: 450px
-      overflow: auto
-      margin-bottom: 15px
 
   .promote
     +button($assignments_promote_icon)

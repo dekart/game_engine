@@ -43,9 +43,6 @@ window.UpgradeDialogController = class extends DialogController
 
     @.render()
 
-  onDialogClose: ()=>
-    @.unbindEventListeners()
-
   onIncreaseClick: (e)=>
     attribute = $(e.currentTarget).parent().data('attribute')
 

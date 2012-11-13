@@ -7,5 +7,10 @@
     <div class="name"><%= assignment.relation.name %></div>
   <% end %>
 
-  <div class="effect"><%= assignment_effect(assignment) %></div>
+  <div class="effect">
+    <%= t("assignments.roles.#{assignment.role}.description") %>
+    <%= t("assignments.roles.#{assignment.role}.effect",
+          :value => assignment_effect(assignment)
+        ) %>
+  </div>
 </div>

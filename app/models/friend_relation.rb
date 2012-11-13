@@ -18,4 +18,12 @@ class FriendRelation < Relation
       ).destroy_all
     end
   end
+
+  def name
+    character.nickname(true)
+  end
+
+  def as_json_for_assignment(*args)
+    super(*args).merge(:facebook_id => character.facebook_id)
+  end
 end

@@ -32,7 +32,7 @@
   cursor: pointer
   background:
     color: $button_bg_color
-  
+
   &.disabled
     cursor: default
     +opacity(0.5)
@@ -55,6 +55,11 @@
   width: auto
   margin: 5px
   float: right
+
+button
+  &.disabled
+    @include opacity(0.3)
+    cursor: normal
 
 
 
@@ -107,10 +112,10 @@ a.help
     image: $help_link_icon
     repeat: no-repeat
     position: left
-    
+
 .restrictions
   color: red
   font-weight: bold
   line-height: 22px
   margin: 15px 10px
-  
+

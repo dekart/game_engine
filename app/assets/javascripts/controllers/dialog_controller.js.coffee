@@ -1,4 +1,6 @@
-window.DialogController = class extends Spine.Controller
+#= require controllers/base_controller
+
+window.DialogController = class extends BaseController
   @show: (content)->
     @controller ?= new @()
     @controller.show(content)
@@ -13,8 +15,6 @@ window.DialogController = class extends Spine.Controller
 
     @overlay = $("<div class='dialog_overlay'></div>")
 
-    @.setupEventListeners()
-
   setupEventListeners: ->
     @el.on('click', '.close', @.onCloseClick)
 
@@ -22,6 +22,8 @@ window.DialogController = class extends Spine.Controller
     @el.off('click', '.close', @.onCloseClick)
 
   show: (content)->
+    @.setupEventListeners()
+
     @content = content
 
     # Element should be in dom before we render any content into it, or content scripts won't work properly
@@ -33,6 +35,8 @@ window.DialogController = class extends Spine.Controller
     @el.css(@.calculateOffset()).fadeTo(400, 1)
 
   close: ->
+    @.unbindEventListeners()
+
     @overlay.detach()
     @el.detach()
 
@@ -44,7 +48,7 @@ window.DialogController = class extends Spine.Controller
     )
 
   dialogWrapper: (content)->
-    JST['views/dialog'](content: content)
+    @.renderTemplate('dialog', content: content)
 
   onCloseClick: (e)=>
     e.preventDefault()
