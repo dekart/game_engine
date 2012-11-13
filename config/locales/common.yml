@@ -5,7 +5,7 @@ en:
   app_name: "Sword & Magic"
   common:
     empty_set: "Nothing here"
-    loading: "Loading.."
+    loading: "Loading..."
   number:
     currency:
       format:
