@@ -1,0 +1,76 @@
+<% if @loading: %>
+  <%= I18n.t('common.loading') %>
+<% else: %>
+  <h2><%= I18n.t("assignments.new.title") %></h2>
+
+  <div id="assignment_tabs">
+    <ul>
+      <li data-tab="available"><%= I18n.t("assignments.new.available.title") %></li>
+      <li data-tab="assigned"><%= I18n.t("assignments.new.assigned.title") %></li>
+    </ul>
+
+    <div class="tab_content" id="available">
+      <% if @relations.available.length > 0: %>
+        <table class="relations" cellspacing="0" cellpadding="0">
+          <tr>
+            <th colspan="3"><%= I18n.t("assignments.new.user") %></th>
+            <th><%= I18n.t("assignments.roles.#{ @role }.description") %></th>
+          </tr>
+
+          <% for relation in @relations.available: %>
+            <tr class="relation" data-value="<%= relation.id %>">
+              <% if relation.type == 'friend_relation': %>
+                <td class="picture"><%= @fbProfilePic(relation.facebook_id, 'square') %></td>
+                <td class="name"><%= relation.name %></td>
+              <% else: %>
+                <td class="picture"><img src="/assets/mercenary.gif" /></td>
+                <td class="name"><%= relation.name %></td>
+              <% end %>
+
+              <td class="level">
+                <%= I18n.t('activerecord.attributes.character.level') %>
+                <%= relation.level %>
+              </td>
+              <td class="effect"><%= I18n.t("assignments.roles.#{ @role }.effect", value: relation.effect) %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else: %>
+        <div class="empty_set"><%= I18n.t("assignments.new.available.empty_set") %></div>
+      <% end %>
+    </div>
+
+    <div class="tab_content" id="assigned">
+      <% if @relations.assigned.length > 0: %>
+        <table class="relations" cellspacing="0" cellpadding="0">
+          <tr>
+            <th colspan="3"><%= I18n.t("assignments.new.user") %></th>
+            <th><%= I18n.t("assignments.roles.#{ @role }.description") %></th>
+          </tr>
+
+          <% for relation in @relations.assigned: %>
+            <tr class="relation" data-value="<%= relation.id %>">
+              <% if relation.type == 'friend_relation': %>
+                <td class="picture"><%= @fbProfilePic(relation.facebook_id, 'square') %></td>
+                <td class="name"><%= relation.name %></td>
+              <% else: %>
+                <td class="picture mercenary">&nbsp;</td>
+                <td class="name"><%= relation.name %></td>
+              <% end %>
+
+              <td class="level">
+                <%= I18n.t('activerecord.attributes.character.level') %>
+                <%= relation.level %>
+              </td>
+              <td class="effect"><%= I18n.t("assignments.roles.#{ @role }.effect", value: relation.effect) %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else: %>
+        <div class="empty_set"><%= I18n.t("assignments.new.assigned.empty_set") %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <button class="promote disabled"><%= I18n.t('assignments.new.buttons.promote') %></button>
+<% end %>
