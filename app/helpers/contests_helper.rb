@@ -1,6 +1,6 @@
 module ContestsHelper
   def current_contest
-    @current_contest ||= (Contest.current || Contest.finished_recently.first)
+    @current_contest ||= Contest.visible
   end
 
   def contest_timer(contest)

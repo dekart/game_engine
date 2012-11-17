@@ -38,6 +38,12 @@ class Contest < ActiveRecord::Base
     order('finished_at DESC')
   }
 
+  scope :upcoming, Proc.new {
+    where(:state => 'visible').
+    where("started_at > ?", Time.now).
+    order('started_at')
+  }
+
   has_pictures
 
   validates_presence_of :name, :points_type, :description_before_started, :description_when_started, :description_when_finished
@@ -52,6 +58,10 @@ class Contest < ActiveRecord::Base
   class << self
     def current
       where("state='visible' AND (? BETWEEN started_at AND finished_at)", Time.now).first
+    end
+
+    def visible
+      current || upcoming.first || finished_recently.first
     end
 
     def points_type_to_dropdown
