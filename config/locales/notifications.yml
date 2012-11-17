@@ -122,10 +122,10 @@ en:
       buttons:
         read: "Read Post"
 
-    hit_listing:
+    hit_listed:
       title:
-        client: "Your target is to hit the list was killed"
-        victim: "You have been placed in the hit list"
+        client: "Job is Done"
+        victim: "You're in the hitlist!"
       text:
-        client: "Your target %{victim} is to hit the list was killed"
-        victim: "You have been placed in the hit list and set the reward %{reward}"
+        client: "You added %{victim} to the hitlist. Someone did the job and eliminated this person and got the reward."
+        victim: "Someone added you to the hitlist! They're offering a reward of %{reward} for your head. Brace yourself."
