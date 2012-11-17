@@ -74,7 +74,7 @@ module ContestsHelper
       link_to(button(:fights), new_fight_path,
         :class => 'button fight'
       )
-    elsif 'total_monsters_damage' and params[:controller] != 'monsters'
+    elsif contest.points_type == 'total_monsters_damage' and params[:controller] != 'monsters'
       link_to(button(:monsters), monsters_path,
         :class => 'button monsters'
       )
