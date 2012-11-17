@@ -8,7 +8,7 @@ en:
         fights: "Fight!"
         rating: "Rating & Rewards"
         monsters: "Monsters"
-        collect_reward: "Collect Reward"
+
     group:
       points_types:
         fights_won: "Fights Won"

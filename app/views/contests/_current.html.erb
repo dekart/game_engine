@@ -8,16 +8,14 @@
               :value => span_tag(current_contest.position(current_character), :value)
             ).html_safe %>
       </div>
-    <% end %>
 
-    <%= contest_timer(current_contest) unless current_contest.finished? %>
-
-    <% if current_contest.started? %>
       <div class="buttons clearfix">
         <%= contest_action_button(current_contest) unless current_contest.finished? %>
 
         <%= link_to(button(:rating), contest_path(current_contest), :class => 'button rating') %>
       </div>
     <% end %>
+
+    <%= contest_timer(current_contest) unless current_contest.finished? %>
   </div>
 </div>
