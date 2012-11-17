@@ -53,6 +53,7 @@ en:
         items_collection: "Items collection"
         hit_listed: "Hitlist notifications"
         new_wall_post: "New wall posts"
+        contest_finished: "Contest completion notifications"
       buttons:
         save: "Save"
 
