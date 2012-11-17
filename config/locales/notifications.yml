@@ -51,6 +51,8 @@ en:
         clan_state: "Status of the clan"
         clan_invitation_state: "Status of the invitation to join the clan"
         items_collection: "Items collection"
+        hit_listed: "Hitlist notifications"
+        new_wall_post: "New wall posts"
       buttons:
         save: "Save"
 
