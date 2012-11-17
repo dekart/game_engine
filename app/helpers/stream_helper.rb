@@ -245,7 +245,7 @@ module StreamHelper
       name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => "stories.#{ story_alias }"}.merge(interpolation_options))
     end
 
-    url = stream_url(story, reference, story_data)
+    url = stream_url(story, "stream_#{ story_alias }", story_data)
 
     {
       :attachment => {
