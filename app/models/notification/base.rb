@@ -11,7 +11,7 @@ module Notification
       MarketItemSold,
       NewAchievement,
       SendGift,
-      WallPost
+      NewWallPost
     ]
 
     cattr_accessor :types
