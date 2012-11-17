@@ -26,17 +26,17 @@ class HitListing < ActiveRecord::Base
     :allow_blank => true,
     :on => :create
 
-  validate :check_minimum_reward, :check_victim_weakness, :check_victim_listed, :check_client_balance, 
+  validate :check_minimum_reward, :check_victim_weakness, :check_victim_listed, :check_client_balance,
     :on => :create
 
   before_create :charge_client, :take_fee_from_reward
-  
+
   after_create :schedule_notification_for_victim
 
   def execute!(attacker)
     errors.add(:base, :already_completed) if completed?
     errors.add(:base, :client_attack) if attacker == client
-    
+
     return false if errors.any?
 
     Fight.new(:attacker => attacker, :victim => victim, :cause => self).tap do |fight|
@@ -46,7 +46,7 @@ class HitListing < ActiveRecord::Base
           self.completed  = true
 
           attacker.charge!(- reward, 0, self)
-          
+
           schedule_notification_for_client
 
           save!
@@ -56,7 +56,7 @@ class HitListing < ActiveRecord::Base
   end
 
   protected
-  
+
   def check_minimum_reward
     if reward and reward.to_i < Setting.i(:hit_list_minimum_reward)
       errors.add(:reward, :greater_than_or_equal_to, :count => Setting.i(:hit_list_minimum_reward))
@@ -71,7 +71,7 @@ class HitListing < ActiveRecord::Base
 
   def check_victim_listed
     return unless victim
-    
+
     errors.add(:victim, :already_listed) if self.class.incomplete.find_by_victim_id(victim.id)
     errors.add(:victim, :recently_listed) if self.class.completed_recently.find_by_victim_id(victim.id)
   end
@@ -89,16 +89,16 @@ class HitListing < ActiveRecord::Base
   def take_fee_from_reward
     self.reward -= Setting.p(:hit_list_reward_fee, reward)
   end
-  
-  def schedule_notification_for_victim    
-    victim.notifications.schedule(:hit_listing,
+
+  def schedule_notification_for_victim
+    victim.notifications.schedule(:hit_listed,
       :status => :victim,
       :reward => reward
     )
   end
-  
-  def schedule_notification_for_client    
-    client.notifications.schedule(:hit_listing,
+
+  def schedule_notification_for_client
+    client.notifications.schedule(:hit_listed,
       :status => :client,
       :victim_id => victim_id,
       :reward => reward

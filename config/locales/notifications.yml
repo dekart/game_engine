@@ -116,7 +116,7 @@ en:
       buttons:
         collection: "View Collections"
 
-    wall_post:
+    new_wall_post:
       title: "New post on the wall"
       text: "%{author} posted something on your profile wall."
       buttons:
