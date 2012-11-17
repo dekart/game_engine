@@ -1,16 +1,16 @@
 module Notification
   class Base
     TYPES = [
-      ContestWinner, 
-      ExchangeOfferAccepted, 
-      ExchangeOfferCreated, 
-      FriendsToInvite, 
-      HitListing, 
-      ItemsCollection, 
-      LevelUp, 
-      MarketItemSold, 
-      NewAchievement, 
-      SendGift, 
+      ContestFinished,
+      ExchangeOfferAccepted,
+      ExchangeOfferCreated,
+      FriendsToInvite,
+      HitListing,
+      ItemsCollection,
+      LevelUp,
+      MarketItemSold,
+      NewAchievement,
+      SendGift,
       WallPost
     ]
 

@@ -5,12 +5,12 @@ en:
       you_received: "You Received:"
       buttons:
         continue: "Continue"
-    
+
     # Default story content
     default:
       action_link: "Play %{app} »"
       payout_message: "Thank you for playing %{app}!"
-      
+
     level_up:
       title: "I've just advanced to Level %{level} in %{app}!"
       description: ""
@@ -59,9 +59,9 @@ en:
       title: "Hitlist Reward"
       description: "I've just received a %{amount} bounty for hitting the %{level} level enemy in %{app}!"
       action_link: ""
-    won_contest:
-      title: "I won the %{name}"
-      description: "I've reached the #%{position} place in the %{name}"
+    contest_finished:
+      title: "I'm #%{position} in %{name}!"
+      description: "I've reached the #%{position} place in the %{name} contest! Join my alliance in %{app} to play together!"
       action_link: ""
     exchange:
       title: "I offer an item for exchange!"
@@ -83,4 +83,4 @@ en:
         relations: "Strongest Alliance"
         killed_monsters_count: "Monsters Killed"
         total_monsters_damage: "Monster Damage"
-        total_score: "Total"        
+        total_score: "Total"

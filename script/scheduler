@@ -76,7 +76,7 @@ task(:expire_monsters, 5.minutes) do
 end
 
 task(:finish_contests, 1.minute) do
-  Jobs::Contests::Finish.new.perform
+  Jobs::Contests::NotifyParticipants.new.perform
 end
 
 task(:publish_scores_in_facebook, 10.minutes) do

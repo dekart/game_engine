@@ -1,0 +1,17 @@
+<% dialog :contest_finished_notification do |d| %>
+  <h2><%= t(".title") %></h2>
+
+  <p class="text">
+    <%= t(".text", :name => notification.contest.name, :position => notification.contest_position) %>
+  </p>
+
+  <div class="controls clearfix">
+    <%= link_to(button(:rating), contest_path(notification.contest),
+          :class => 'button rating'
+        ) %>
+
+    <%= link_to_function(button(:publish), stream_dialog(:contest_finished, notification.contest),
+          :class => "publish button"
+        ) if Setting.b(:stream_dialog_enabled) %>
+  </div>
+<% end %>

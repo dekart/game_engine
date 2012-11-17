@@ -1,16 +1,16 @@
 <div class="note"><%= t('forms.all_fields_required') %></div>
 
 <%= form.text_field :name, :size => 50 %>
+
+<%= form.datetime_select :started_at %>
+<%= form.text_field :duration_time, :size => 6, :autocomplete => :off %>
+
 <%= form.select :points_type, Contest.points_type_to_dropdown %>
 
 <%= form.text_area :description_before_started, :cols => 120, :rows => 20 %>
 <%= form.text_area :description_when_started, :cols => 120, :rows => 20 %>
 <%= form.text_area :description_when_finished, :cols => 120, :rows => 20 %>
 
-<%= form.datetime_select :started_at %>
-
 <% form.field_set form.object.class.human_attribute_name('pictures') do %>
   <%= form.fields 'admin/pictures/form_fields' %>
 <% end %>
-
-<%= form.text_field :duration_time, :size => 6, :autocomplete => :off %>

@@ -177,15 +177,15 @@ module StreamHelper
     ]
   end
 
-  def won_contest_story_options(notification)
+  def contest_finished_story_options(contest)
     [
       {
-        :position => notification.contest_position,
-        :name => notification.contest.name
+        :position => contest.position(current_character),
+        :name => contest.name
       },
       {
-        :position => notification.contest_position,
-        :name => notification.contest.name
+        :position => contest.position(current_character),
+        :name => contest.name
       }
     ]
   end

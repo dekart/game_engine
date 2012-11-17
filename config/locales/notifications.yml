@@ -57,11 +57,12 @@ en:
     update_settings:
       success: "Your notification settings were updated!"
 
-    contest_winner:
-      title: "You're The Winner!"
-      text: "You've reached the #%{position} position in the %{name}. You've got the prize:"
+    contest_finished:
+      title: "The contest is over!"
+      text: "You've reached the #%{position} position in the %{name}. Congratulations!"
       buttons:
         publish: "Brag About It"
+        rating: "Rating & Rewards"
 
     exchange_offer_created:
       title: "New Offer Response"

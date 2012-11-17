@@ -1,0 +1,19 @@
+<%= render_to_result(:contest) do |builder| %>
+  <% if @reward %>
+    <% builder.success do %>
+      <%= t('.messages.success') %>
+    <% end %>
+
+    <h3><%= t(".you_received") %></h3>
+
+    <div class="payouts">
+      <%= payout_list(@contest, @reward) %>
+    </div>
+  <% elsif @group.rewarded?(current_character) %>
+    <% builder.fail do %>
+      <%= t('.messages.already_collected') %>
+    <% end %>
+
+
+  <% end %>
+<% end %>

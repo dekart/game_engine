@@ -11,29 +11,9 @@ class Contest < ActiveRecord::Base
     :dependent => :destroy
 
   state_machine :initial => :hidden do
-    state :hidden do
-      def description
-        description_before_started
-      end
-    end
-
-    state :visible do
-      def description
-        started? ? description_when_started : description_before_started
-      end
-    end
-
-    state :finished do
-      def description
-        description_when_finished
-      end
-    end
-
-    state :deleted do
-      def description
-        description_when_finished || description_when_started || description_before_started
-      end
-    end
+    state :hidden
+    state :visible
+    state :deleted
 
     event :publish do
       transition :hidden => :visible, :if => :started_at_set?
@@ -43,34 +23,19 @@ class Contest < ActiveRecord::Base
       transition :visible => :hidden
     end
 
-    event :finish do
-      transition :visible => :finished
-    end
-
     event :mark_deleted do
       transition(any - [:deleted] => :deleted)
     end
-
-    before_transition :on => :publish, :do => :set_finish_time
-
-    before_transition :on => :finish do |contest|
-      contest.finished_at = Time.now if Time.now < contest.finished_at
-    end
-
-    after_transition :on => :finish do |contest|
-      Character.transaction do
-        winners = contest.apply_payouts
-        contest.send_notifications_to_winners(winners)
-
-        winners.each {|c| c.save! }
-      end
-    end
   end
 
-  scope :finished_recently, {
-    :conditions => ["state = 'finished' AND finished_at > ?",
-      Setting.i(:contests_show_after_finished_time).days.ago],
-    :order => 'finished_at DESC'
+  scope :finished, Proc.new {
+    where("finished_at < ?", Time.now)
+  }
+
+  scope :finished_recently, Proc.new{
+    where(:state => 'visible').
+    where("finished_at BETWEEN ? AND ?", Setting.i(:contests_show_after_finished_time).days.ago, Time.now).
+    order('finished_at DESC')
   }
 
   has_pictures
@@ -80,11 +45,13 @@ class Contest < ActiveRecord::Base
   validates_numericality_of :duration_time,
     :greater_than => 0
 
+  before_save :set_finish_time
+
   after_create :create_initial_group!
 
   class << self
     def current
-      with_state(:visible).first
+      where("state='visible' AND (? BETWEEN started_at AND finished_at)", Time.now).first
     end
 
     def points_type_to_dropdown
@@ -97,11 +64,11 @@ class Contest < ActiveRecord::Base
   end
 
   def started?
-    visible? && started_at <= Time.now
+    visible? && Time.now > started_at
   end
 
-  def starting_soon?
-    visible? && started_at > Time.now
+  def finished?
+    visible? and Time.now > finished_at
   end
 
   def time_left_to_start
@@ -112,12 +79,14 @@ class Contest < ActiveRecord::Base
     (finished_at - Time.now).to_i
   end
 
-  def available?
-    started? || finished?
-  end
-
-  def active?
-    started? && time_left_to_finish >= 0
+  def description
+    if finished?
+      description_when_finished
+    elsif started?
+      description_when_started
+    else
+      description_before_started
+    end
   end
 
   def group_for(character)
@@ -148,51 +117,29 @@ class Contest < ActiveRecord::Base
     group_for(character).position(character)
   end
 
-  def payouts_for(character)
-    group_for(character).payouts_for(character)
+  def rewardable?(character)
+    group_for(character).rewardable?(character)
   end
 
   def increment_points!(character, points = 1)
-    if active?
-      contest_group = group_for(character)
+    contest_group = group_for(character)
 
-      contest_group.transaction do
-        character_contest_group = contest_group.character_contest_groups.find_or_create_by_character_id(character.id)
+    contest_group.transaction do
+      character_contest_group = contest_group.character_contest_groups.find_or_create_by_character_id(character.id)
 
-        character_contest_group.points += points
+      character_contest_group.points += points
 
-        character_contest_group.save!
-      end
+      character_contest_group.save!
     end
   end
 
-  def apply_payouts
-    winners = []
+  def send_finish_notification!
+    update_attribute(:finish_notification_sent, true)
 
     groups.each do |group|
-      winners << group.apply_payouts
-    end
-
-    winners.flatten!
-
-    winners
-  end
-
-  def apply_payouts!
-    winners = apply_payouts
-
-    if winners.any?
-      Character.transaction do
-        winners.each {|c| c.save!}
+      group.characters.find_each(:batch_size => 10) do |character|
+        character.notifications.schedule(:contest_finished, :contest_id => id)
       end
-    end
-
-    winners
-  end
-
-  def send_notifications_to_winners(winners)
-    winners.each do |winner|
-      winner.notifications.schedule(:contest_winner, :contest_id => id)
     end
   end
 
