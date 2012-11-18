@@ -1,3 +1,5 @@
+#= require controllers/dialog_controller
+
 window.UpgradeDialogController = class extends DialogController
   @show: ->
     @controller ?= new @()

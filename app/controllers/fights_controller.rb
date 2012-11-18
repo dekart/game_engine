@@ -2,7 +2,7 @@ class FightsController < ApplicationController
   before_filter :check_fight_restrictions, :only => :new
 
   def index
-    @victims = Fight.new(:attacker => current_character).opponents
+    @fight = Fight.new(:attacker => current_character)
 
     respond_to do |format|
       format.js
@@ -51,6 +51,18 @@ class FightsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def optout
+    if request.post?
+      current_character.update_fight_optout!(params[:optout] == 'true')
+    end
+
+    render :json => {
+      :opted_out => current_character.exclude_from_fights,
+      :minimum_timeframe => Setting.i(:fight_optout_minimum_timeframe),
+      :next_change_in => current_character.time_to_fight_optin
+    }
   end
 
   protected

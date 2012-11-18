@@ -210,6 +210,10 @@ GameEngine::Application.routes.draw do
       post 'respond'
       post 'used_items'
     end
+
+    collection do
+      match 'optout'
+    end
   end
 
   resources :relations

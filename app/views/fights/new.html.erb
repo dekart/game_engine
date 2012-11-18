@@ -4,24 +4,36 @@
 
 <%= render('layouts/promo_block', :context => :fights) %>
 
-<%= render("boosts") if Setting.b(:boosts_enabled) %>
+<% if not current_character.exclude_from_fights? %>
+  <%= render("boosts") if Setting.b(:boosts_enabled) %>
 
-<% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
-  <%= render_to_result :fight do %>
-    <div class="unsatisfied_requirements">
-      <%= unsatisfied_requirement %>
-    </div>
+  <% if unsatisfied_requirement = unsatisfied_requirement_first(current_character.fight_requirements) and !unsatisfied_requirement.empty? %>
+    <%= render_to_result :fight do %>
+      <div class="unsatisfied_requirements">
+        <%= unsatisfied_requirement %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
 
-<%= @victims ? render("victim_list", :victims => @victims) : render("victim_list", :victims => nil ) %>
+  <%= @fight ? render("victim_list", :victims => @fight.opponents) : render("victim_list", :victims => nil ) %>
 
-<div id="more_fight_opponents">
-  <%= link_to_function(button(:more_opponents), "Fighting.loadOpponents()",
-        :class => "button more_opponents"
-      ) %>
-</div>
+  <div id="more_fight_opponents">
+    <%= link_to_function(button(:more_opponents), "Fighting.loadOpponents()",
+          :class => "button more_opponents"
+        ) %>
+  </div>
 
-<% dom_ready do %>
-  Fighting.setup();
+  <div id="fight_opt_out">
+    <%= link_to_function(t('.opt_out.opt_out'), "FightOptoutDialogController.show()") %>
+  </div>
+
+  <% dom_ready do %>
+    Fighting.setup();
+  <% end %>
+<% else %>
+  <div class="note">
+    <p><%= t('.opt_out.text') %></p>
+
+    <%= link_to_function(t('.opt_out.opt_in'), "FightOptoutDialogController.show()") %>
+  </div>
 <% end %>
