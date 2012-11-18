@@ -45,7 +45,7 @@ class Character
 
     def update_fight_availability_time
       if !Setting.b(:fight_weak_opponents) && weak?
-        Fight::OpponentBuckets.delete(self) # Removing player from opponent list
+        ::Fight::OpponentBuckets.delete(self) # Removing player from opponent list
 
         self.fighting_available_at = hp_restore_time(weakness_minimum).seconds.from_now
       end
@@ -54,7 +54,7 @@ class Character
     end
 
     def update_opponent_bucket
-      Fight::OpponentBuckets.update(self)
+      ::Fight::OpponentBuckets.update(self)
 
       true
     end
