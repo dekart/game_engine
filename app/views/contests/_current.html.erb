@@ -16,7 +16,13 @@
       </div>
 
       <div class="buttons clearfix">
-        <%= contest_action_button(current_contest) unless current_contest.finished? %>
+        <% if current_contest.finished? %>
+          <%= link_to_function(button(:publish), stream_dialog(:contest_finished, current_contest),
+                :class => "publish button"
+              ) if Setting.b(:stream_dialog_enabled) %>
+        <% else %>
+          <%= contest_action_button(current_contest) %>
+        <% end %>
 
         <%= link_to(button(:rating), contest_path(current_contest), :class => 'button rating') %>
       </div>

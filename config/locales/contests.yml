@@ -8,6 +8,7 @@ en:
         fights: "Fight!"
         rating: "Rating & Rewards"
         monsters: "Monsters"
+        publish: "Publish My Score"
 
     group:
       points_types:
