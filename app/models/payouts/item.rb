@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Payouts
   class Item < Base
     delegate :state, :to => :item
@@ -27,9 +29,10 @@ module Payouts
     end
 
     def to_s
-      "%s: %s (%d%% %s)" % [
+      "%s: %s × %d (%d%% %s)" % [
         apply_on_label,
         item.name,
+        amount,
         chance,
         action
       ]
