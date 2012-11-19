@@ -24,18 +24,6 @@ module ContestsHelper
     ).html_safe
   end
 
-  def contest_current_tag(contest, &block)
-    result = %{<div class="clearfix" id="current_contest" style="#{ contest_logo_background(contest) }">#{ capture(&block) }</div>}
-
-    concat(result.html_safe)
-  end
-
-  def contest_logo_background(contest)
-    if contest.pictures?
-      "background-image: url('#{ contest.pictures.url }'); background-repeat: no-repeat;"
-    end
-  end
-
   def contest_group_table(contest_group, options = {}, &block)
     contest = contest_group.contest
 

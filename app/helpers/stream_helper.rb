@@ -186,7 +186,8 @@ module StreamHelper
       {
         :position => contest.position(current_character),
         :name => contest.name
-      }
+      },
+      (contest.pictures.url(:stream) if contest.pictures?)
     ]
   end
 

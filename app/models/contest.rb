@@ -44,7 +44,10 @@ class Contest < ActiveRecord::Base
     order('started_at')
   }
 
-  has_pictures
+  has_pictures :styles => [
+    [:promo, "760x>"],
+    [:stream, "90x90#"]
+  ]
 
   validates_presence_of :name, :points_type, :description_before_started, :description_when_started, :description_when_finished
 

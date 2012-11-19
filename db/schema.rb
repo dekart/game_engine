@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117094100) do
+ActiveRecord::Schema.define(:version => 20121119115732) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20121117094100) do
     t.boolean  "restrict_market",                                :default => false
     t.boolean  "restrict_talking",                               :default => false
     t.boolean  "exclude_from_fights"
+    t.datetime "excluded_from_fights_at",                        :default => '1970-01-01 00:00:00', :null => false
   end
 
   add_index "characters", ["level", "fighting_available_at", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"

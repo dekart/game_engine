@@ -1,4 +1,10 @@
-<div id="current_contest" class="contest clearfix" style="<%= contest_logo_background(current_contest) %>">
+<div
+  id="current_contest"
+  class="contest clearfix"
+  <% if current_contest.pictures? %>
+    style="background-image: url('<%= current_contest.pictures.url(:promo) %>');"
+  <% end %>
+>
   <div id="contest_info">
     <div class="description"><%= current_contest.description.html_safe %></div>
 
