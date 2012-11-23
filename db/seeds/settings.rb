@@ -103,6 +103,7 @@ Setting[:mission_help_enabled] ||= true
 
 Setting[:app_google_analytics_id] ||= ""
 Setting[:app_fan_page_url] ||= ""
+Setting[:app_standalone_enabled] ||= false
 
 Setting[:gifting_enabled] ||= true
 Setting[:gifting_item_show_limit] ||= 10

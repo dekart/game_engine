@@ -129,11 +129,17 @@ class ApplicationController < ActionController::Base
   end
 
   def check_standalone
-    if from_canvas = params.delete(:from_canvas) and from_canvas == 'false'
-      store_signed_request_in_session
+    if Setting.b(:app_standalone_enabled)
+      if params.delete(:from_canvas) == 'false'
+        store_signed_request_in_session
 
+        redirect_from_iframe url_for(
+          params.merge(:host => facepalm.callback_domain)
+        )
+      end
+    elsif !fb_canvas?
       redirect_from_iframe url_for(
-        params.merge(:host => facepalm.callback_domain)
+        params.merge(:canvas => true)
       )
     end
 

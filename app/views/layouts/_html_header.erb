@@ -33,6 +33,4 @@
     <%= ga_set_variable(2, 'Gender', current_user.gender.to_s.titleize, :visitor) %>
     <%= ga_set_variable(3, 'ID', current_character.id, :visitor) %>
   <% end %>
-
-  <%= ga_set_variable(4, 'Canvas', fb_canvas? ? 'FB' : 'Standalone', :visitor) %>
 <% end %>
