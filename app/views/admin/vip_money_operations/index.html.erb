@@ -35,7 +35,7 @@
         <% end %>
       >
         <td><%= l(operation.created_at, :format => :short) %></td>
-        <td><%= link_to(character_name(operation.character), admin_character_url(operation.character.key)) %></td>
+        <td><%= link_to(admin_character_name(operation.character), admin_character_url(operation.character.key)) %></td>
         <td><%= admin_statistics_reference(operation.reference) %></td>
         <td><%= operation.amount %></td>
       </tr>

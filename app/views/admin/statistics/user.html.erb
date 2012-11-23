@@ -14,10 +14,10 @@
           <%= admin_statistics_amount_change(@day.total_users) %>
         </p>
       </td>
-      
+
       <td>
         <h2><%= t('.recent_visitors') %></h2>
-        
+
         <p id="recent_visitors">
           <strong><%= @all.recent_visitors.count %></strong>
         </p>
@@ -34,7 +34,7 @@
 
 <% dom_ready do %>
   $.jqplot.config.enablePlugins = true;
-  
+
   var all     = <%= @month.users_by_day.to_json.html_safe %>;
   var level5  = <%= @month.scoped(:joins => :character, :conditions => 'characters.level >= 5').users_by_day.to_json.html_safe %>;
   var level10 = <%= @month.scoped(:joins => :character, :conditions => 'characters.level >= 10').users_by_day.to_json.html_safe %>;
@@ -42,12 +42,12 @@
   $.jqplot('new_users_chart', [all, level5, level10], {
     title:'<%= t('.new_users_chart.title') %>',
     series: [
-      { label: '<%= t('.new_users_chart.total') %>' }, 
+      { label: '<%= t('.new_users_chart.total') %>' },
       { label: '<%= t('.new_users_chart.level5') %>' },
       { label: '<%= t('.new_users_chart.level10') %>' },
     ],
     legend: {
-      show: true, 
+      show: true,
       location:'ne'
     },
     axes:{
@@ -55,8 +55,8 @@
             renderer:$.jqplot.DateAxisRenderer,
             rendererOptions:{tickRenderer:$.jqplot.CanvasAxisTickRenderer},
             tickOptions:{
-                formatString:'%b %#d', 
-                fontSize:'10pt', 
+                formatString:'%b %#d',
+                fontSize:'10pt',
                 fontFamily:'Tahoma'
             }
         },
@@ -77,7 +77,7 @@
 
 <% dom_ready do %>
   $.jqplot.config.enablePlugins = true;
-  
+
   var all         = <%= @month.users_by_day.to_json.html_safe %>;
   var same_day    = <%= @month.scoped(:conditions => "last_visit_at < created_at + INTERVAL 1 DAY").users_by_day.to_json.html_safe %>;
   var next_day    = <%= @month.scoped(:conditions => "last_visit_at BETWEEN (created_at + INTERVAL 1 DAY) AND (created_at + INTERVAL 2 DAY)").users_by_day.to_json.html_safe %>;
@@ -87,14 +87,14 @@
   $.jqplot('returning_users_chart', [all, same_day, next_day, three_days, more_days], {
     title:'<%= t('.returning_users_chart.title') %>',
     series: [
-      { label: '<%= t('.returning_users_chart.total') %>' }, 
+      { label: '<%= t('.returning_users_chart.total') %>' },
       { label: '<%= t('.returning_users_chart.same_day') %>' },
       { label: '<%= t('.returning_users_chart.next_day') %>' },
       { label: '<%= t('.returning_users_chart.three_days') %>' },
       { label: '<%= t('.returning_users_chart.more_days') %>' },
     ],
     legend: {
-      show: true, 
+      show: true,
       location:'ne'
     },
     axes:{
@@ -102,8 +102,8 @@
             renderer:$.jqplot.DateAxisRenderer,
             rendererOptions:{tickRenderer:$.jqplot.CanvasAxisTickRenderer},
             tickOptions:{
-                formatString:'%b %#d', 
-                fontSize:'10pt', 
+                formatString:'%b %#d',
+                fontSize:'10pt',
                 fontFamily:'Tahoma'
             }
         },
@@ -157,7 +157,7 @@
               <td><%= link_to(user.facebook_id, fb_profile_url(user), :target => :_blank) %></td>
               <td>
                 <% if user.character %>
-                  <%= link_to(user.character.character_type.name, character_url(user.character.key, :canvas => true)) %>
+                  <%= link_to(user.character.character_type.name, admin_character_url(user.character.key)) %>
                 <% else %>
                   <span class="empty"><%= t(".no_character") %></span>
                 <% end %>
@@ -165,7 +165,7 @@
               <td><%= user.reference %></td>
               <td>
                 <% if user.referrer.try(:character) %>
-                  <%= link_to(character_name(user.referrer.character), admin_character_url(user.referrer.character.key)) %>
+                  <%= link_to(admin_character_name(user.referrer.character), admin_character_url(user.referrer.character.key)) %>
                   <%= link_to(t(".profile"), fb_profile_url(user.referrer),
                         :class  => :profile,
                         :target => :_blank

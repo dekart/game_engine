@@ -358,7 +358,6 @@ en:
           profile_ids: "Facebook/Profile IDs"
           signed_request: "Signed Request"
           submit: "Search"
-        profile: "FB Profile"
         controls:
           edit: "Edit"
           edit_user: "Edit User"

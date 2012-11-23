@@ -2,7 +2,7 @@
 
 <% collection @complaints do %>
   <%= will_paginate @complaints %>
-  
+
   <table id="complaints_list" class="data">
     <tr>
       <th><%= Complaint.human_attribute_name("owner") %></th>
@@ -11,20 +11,20 @@
       <th><%= Complaint.human_attribute_name("state") %></th>
       <th></th>
     </tr>
-    
+
     <% @complaints.each do |complaint| %>
       <%= content_tag_for(:tr, complaint) do %>
         <td class="owner">
-          <%= link_to(character_name(complaint.owner), admin_character_path(complaint.owner)) %>
-          
+          <%= link_to(admin_character_name(complaint.owner), admin_character_path(complaint.owner)) %>
+
           <%= link_to(t(".profile"), fb_profile_url(complaint.owner.user),
                   :class  => :profile,
                   :target => :_blank
                 )  %>
         </td>
         <td class="offender">
-          <%= link_to(character_name(complaint.offender), admin_character_path(complaint.offender)) %>
-          
+          <%= link_to(admin_character_name(complaint.offender), admin_character_path(complaint.offender)) %>
+
           <%= link_to(t(".profile"), fb_profile_url(complaint.offender.user),
                   :class  => :profile,
                   :target => :_blank
@@ -38,6 +38,6 @@
       <% end %>
     <% end %>
   </table>
-  
+
   <%= will_paginate @complaints %>
 <% end %>

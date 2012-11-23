@@ -50,4 +50,12 @@ module Admin::CharactersHelper
   def admin_character_social_stats(character)
     yield SocialStatsPresenter.new(character)
   end
+
+  def admin_fb_profile_name(character)
+    character.user.full_name.present? ? character.user.full_name : "UID #{character.user.facebook_id}"
+  end
+
+  def admin_character_name(character)
+    character.nickname(true).present? ? character.nickname(true) : "UID #{character.user.facebook_id}"
+  end
 end
