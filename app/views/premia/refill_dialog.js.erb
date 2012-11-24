@@ -18,11 +18,8 @@
 
       <div class="buttons">
         <% if enough_vip_money %>
-          <%= link_to(button(:refill), premium_path(:type => @type),
-                :remote => true,
-                :method => :put,
-                :class => "refill button",
-                :onclick => "DialogController.close()"
+          <%= link_to_function(button(:refill), "$.ajax('#{ premium_path(:type => @type) }', {type: 'PUT'}); DialogController.close()",
+                :class => "refill button"
               ) %>
         <% else %>
           <%= link_to(button(:gem_market), items_path(:anchor => :buy_vip_money),
