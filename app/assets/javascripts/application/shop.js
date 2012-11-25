@@ -3,12 +3,12 @@ var Shop = (function(){
 
   $.extend(shop, {
     setup: function(){
-      this.setupTabs();
-      this.setupAmountSelector();
-
       $('#shop_tabs').find('.item_list').each(function(){
         shop.setupItemList(this);
       });
+
+      this.setupTabs();
+      this.setupAmountSelector();
     },
 
     setupTabs: function(){
