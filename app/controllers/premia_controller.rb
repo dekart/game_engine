@@ -34,12 +34,27 @@ class PremiaController < ApplicationController
       flash.now[:success] = t("premia.update.messages.success.#{params[:type]}")
     end
   end
-  
+
   def change_name
   end
-  
+
   def refill_dialog
     @type = params[:type].to_sym
-    @vip_money = params[:vip_money].to_i
+    @vip_money = refill_price(@type)
+  end
+
+  protected
+
+  def refill_price(type)
+    case type
+    when :refill_stamina
+      Setting.i(:premium_stamina_price)
+    when :refill_health
+      Setting.i(:premium_health_price)
+    when :refill_energy
+      Setting.i(:premium_energy_price)
+    else
+      0
+    end
   end
 end
