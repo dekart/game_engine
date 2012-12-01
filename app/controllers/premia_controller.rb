@@ -43,6 +43,26 @@ class PremiaController < ApplicationController
     @vip_money = refill_price(@type)
   end
 
+  def refill
+    case params[:type]
+    when 'health'
+      render :json => {
+        :vip_money => Setting.i(:premium_health_price),
+        :items => current_character.inventories.usable_with_payout(:health_point)
+      }
+    when 'energy'
+      render :json => {
+        :vip_money => Setting.i(:premium_energy_price),
+        :items => current_character.inventories.usable_with_payout(:energy_point)
+      }
+    when 'stamina'
+      render :json => {
+        :vip_money => Setting.i(:premium_stamina_price),
+        :items => current_character.inventories.usable_with_payout(:stamina_point)
+      }
+    end
+  end
+
   protected
 
   def refill_price(type)

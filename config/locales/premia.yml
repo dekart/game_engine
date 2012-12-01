@@ -75,4 +75,18 @@ en:
       refill_stamina:
         text: "Would you like to refill your stamina using Gems? Full stamina refull would cost:"
       dont_have_gems: "You don't have enough gems to refill."
-      
+
+    refill:
+      health:
+        title: "Refill Health"
+        text: "You've run out of health! You should either wait while your health replenishes or refill it using one of the following ways:"
+      energy:
+        title: "Refill Energy"
+        text: "You've run out of energy! You should either wait while your energy replenishes or refill it using one of the following ways:"
+      stamina:
+        title: "Refill Stamina"
+        text: "You've run out of stamina! You should either wait while your stamina replenishes or refill it using one of the following ways:"
+      premium: "Instant Refill"
+      buttons:
+        premium_refill: "Refill for"
+        use_item: 'Use'
