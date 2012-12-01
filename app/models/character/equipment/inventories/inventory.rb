@@ -1,9 +1,9 @@
 class Character
-  class Equipment  
+  class Equipment
     module Inventories
       class Inventory
         attr_accessor :item_id, :amount, :equipped
-        
+
         delegate(
           *(
             %w{
@@ -16,63 +16,69 @@ class Character
             [{:to => :item}]
           )
         )
-        
+
         def initialize(options)
           self.item_id  = options[:item_id]
           self.amount   = options[:amount] || 1
           self.equipped = options[:equipped] || 0
-              
+
           self
         end
-  
+
         def item
           @item ||= Item.find_by_id(item_id)
         end
-        
+
         def amount_available_for_equipment
           amount - equipped
         end
-        
+
         def equippable?
           item.equippable? and amount_available_for_equipment > 0
         end
-       
+
         def equipped?
           equipped > 0
         end
-        
+
         def usable?
           item.usable? && amount > 0
         end
-        
+
         def use!(character, amount = 1)
           return false unless usable?
 
           amount = self.amount > amount ? amount : self.amount
 
           result = Payouts::Collection.new
-      
+
           Character::Equipment.transaction do
             amount.times do
               result += payouts.apply(character, :use, item)
             end
 
             character.inventories.take!(item, amount)
-            
+
             self.amount = character.inventories.count(item)
-            
+
             character.save
           end
 
           result
         end
-        
+
         def to_attr_hash
           {:item_id => item_id, :amount => amount, :equipped => equipped }
         end
-        
+
         def to_s
           "#<Inventory: @item_id=#{item_id}, @amount=#{amount}, @equipped=#{equipped}>"
+        end
+
+        def as_json(*args)
+          item.as_json(*args).merge(
+            :amount => amount
+          )
         end
       end
     end
