@@ -11,8 +11,8 @@
         .css({opacity: 1, cursor: 'pointer'});
     },
 
-    status: function(){
-      return $(this).data('linkLock') || false;
+    locked: function(){
+      return $(this).data('linkLock') == true;
     }
   };
 
