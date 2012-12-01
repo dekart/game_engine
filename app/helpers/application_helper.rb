@@ -2,10 +2,6 @@
 module ApplicationHelper
   MAINTENANCE_SETTINGS_PATH = Rails.root.join("public", "system", "maintenance.yml").to_s
 
-  def lock_link
-    "if( $(this).linkLock('status') ){ return false; } else { $(this).linkLock(); }"
-  end
-
   def show_fan_specials?
     Setting.s(:app_fan_page_url).present? && current_user.show_fan_specials?
   end
