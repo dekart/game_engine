@@ -1,6 +1,7 @@
 translations:
   - file: "app/assets/javascripts/i18n/translations.js"
     only:
+      - "*.app_name"
       - "*.common"
       - "*.app_requests.invite_dialog"
       - "*.activerecord.attributes"
