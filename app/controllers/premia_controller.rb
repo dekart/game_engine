@@ -57,19 +57,4 @@ class PremiaController < ApplicationController
       }
     end
   end
-
-  protected
-
-  def refill_price(type)
-    case type
-    when :refill_stamina
-      Setting.i(:premium_stamina_price)
-    when :refill_health
-      Setting.i(:premium_health_price)
-    when :refill_energy
-      Setting.i(:premium_energy_price)
-    else
-      0
-    end
-  end
 end
