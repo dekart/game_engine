@@ -11,6 +11,9 @@
       <%= link_to_function(button(:refill), "EnergyRefillDialogController.show()", :class => "button")%>
     </div>
 
+    <% dom_ready do %>
+      EnergyRefillDialogController.show();
+    <% end %>
   <% else %>
     <p>
       <%= t(".low_base_level.message",

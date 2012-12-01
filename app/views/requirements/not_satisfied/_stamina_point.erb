@@ -11,6 +11,9 @@
       <%= link_to_function(button(:refill), "StaminaRefillDialogController.show()", :class => "button")%>
     </div>
 
+    <% dom_ready do %>
+      StaminaRefillDialogController.show();
+    <% end %>
   <% else %>
     <p>
       <%= t(".low_base_level.message",
