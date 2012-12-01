@@ -38,11 +38,6 @@ class PremiaController < ApplicationController
   def change_name
   end
 
-  def refill_dialog
-    @type = params[:type].to_sym
-    @vip_money = refill_price(@type)
-  end
-
   def refill
     case params[:type]
     when 'health'

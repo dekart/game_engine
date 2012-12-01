@@ -63,18 +63,6 @@ en:
         failure: "You don't have enough Gems"
       buttons:
         get_more_vip: "Get More Gems"
-    refill_dialog:
-      buttons:
-        refill: "Refill"
-        cancel: "Cancel"
-        gem_market: "Get More Gems"
-      refill_health:
-        text: "Would you like to refill your health using Gems? Full health refull would cost:"
-      refill_energy:
-        text: "Would you like to refill your energy using Gems? Full energy refull would cost:"
-      refill_stamina:
-        text: "Would you like to refill your stamina using Gems? Full stamina refull would cost:"
-      dont_have_gems: "You don't have enough gems to refill."
 
     refill:
       health:

@@ -245,7 +245,6 @@ GameEngine::Application.routes.draw do
     collection do
       match 'service'
       match 'buy_vip'
-      post 'refill_dialog'
 
       match 'refill'
     end

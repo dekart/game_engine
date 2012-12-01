@@ -7,16 +7,8 @@
           ).html_safe %>
     </p>
 
-    <div id="refill_options_list" class="clearfix">
-      <div class="item">
-        <div class="name"><%= t(".restorable.title") %></div>
-        <div class="image"><%= image_tag("refill_stamina.png") %></div>
-        <div class="controls">
-          <%= refill_button(:stamina) %>
-        </div>
-      </div>
-      
-      <%= render("requirements/not_satisfied/inventories_list", :payout_name => :stamina_point) %>
+    <div class="buttons">
+      <%= link_to_function(button(:refill), "StaminaRefillDialogController.show()", :class => "button")%>
     </div>
 
   <% else %>
