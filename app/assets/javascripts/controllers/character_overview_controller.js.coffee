@@ -11,7 +11,7 @@ window.CharacterOverviewController = class extends Spine.Controller
     '.energy .value' : 'energy'
     '.stamina .value' : 'stamina'
     '.level .upgrade' : 'upgrade'
-    '.health .hospital' : 'hospital'
+    '.health .refill' : 'refill_health'
     '.energy .refill' : 'refill_energy'
     '.stamina .refill' : 'refill_stamina'
 
@@ -24,7 +24,10 @@ window.CharacterOverviewController = class extends Spine.Controller
 
   setupEventListeners: ->
     Character.bind('save', @.onDataUpdate)
+
     @upgrade.click(@.onUpgradeClick)
+
+    @el.on('click', 'a.refill', @.onRefillClick)
 
   setupTimers: ->
     @hp_timer = new VisualTimer(['#co .health .timer'], @.onTimerFinish)
@@ -48,7 +51,7 @@ window.CharacterOverviewController = class extends Spine.Controller
     @sp_timer.start(character.time_to_sp_restore)
 
     @upgrade.toggle(character.points > 0)
-    @hospital.toggle(character.hp < character.health_points / 2)
+    @refill_health.toggle(character.hp < character.health_points / 2)
     @refill_energy.toggle(character.ep < character.energy_points / 2)
     @refill_stamina.toggle(character.sp < character.stamina_points / 2)
 
@@ -65,3 +68,12 @@ window.CharacterOverviewController = class extends Spine.Controller
     e.preventDefault()
 
     UpgradeDialogController.show()
+
+  onRefillClick: (e)=>
+    switch $(e.currentTarget).data('type')
+      when 'health'
+        HealthRefillDialogController.show()
+      when 'energy'
+        EnergyRefillDialogController.show()
+      when 'stamina'
+        StaminaRefillDialogController.show()

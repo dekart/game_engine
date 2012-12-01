@@ -1,0 +1,23 @@
+<% if @loading: %>
+  <%= I18n.t('common.loading') %>
+<% else: %>
+  <h2><%= I18n.t("premia.refill.stamina.title") %></h2>
+
+  <p>
+    <%= I18n.t("premia.refill.stamina.text") %>
+  </p>
+
+  <div class="options">
+    <div class="option vip_money">
+      <div class="name"><%= I18n.t('premia.refill.premium') %></div>
+
+      <button>
+        <%= I18n.t('premia.refill.buttons.premium_refill') %>
+
+        <span class="cost vip_money"><%= @status.vip_money %></span>
+      </button>
+    </div>
+
+    <%=@safe JST['views/refill_dialogs/items'](items: @status.items) %>
+  </div>
+<% end %>

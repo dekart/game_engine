@@ -57,10 +57,48 @@
   float: right
 
 button
+  border: $button_border
+  color: $button_color
+  display: inline-block
+  font-size: 14px
+  font-weight: bold
+  letter-spacing: 0.5px
+  cursor: pointer
+  background:
+    color: transparent
+    position: top center
+    repeat: no-repeat
+    clip: content-box
+  padding: 0 20px
+  position: relative
+  height: 27px
+  line-height: 25px
+  white-space: nowrap
+
   &.disabled
     @include opacity(0.3)
     cursor: default
 
+  .cost
+    display: inline-block
+    height: 25px
+    padding-left: 18px
+    margin-left: 5px
+    background:
+      position: left
+      repeat: no-repeat
+
+    &.stamina
+      background-image: image-url('icons/stamina.gif')
+
+    &.energy
+      background-image: image-url('icons/energy.gif')
+
+    &.vip_money
+      background-image: image-url('icons/vip_money.gif')
+
+    &.credits
+      background-image: image-url('icons/credits.png')
 
 
 // Page switchers

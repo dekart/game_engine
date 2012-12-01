@@ -1,0 +1,14 @@
+<% for item in @items: %>
+  <div class="option item">
+    <div class="picture">
+      <img src="<%= item.pictures.small %>" alt="<%= item.name %>"/>
+      <span class="amount"><%= item.amount %></span>
+    </div>
+
+    <div class="name"><%= item.name %></div>
+
+    <button data-item="<%= item.alias %>">
+      <%= item.use_button_label || I18n.t('premia.refill.buttons.use_item') %>
+    </button>
+  </div>
+<% end %>

@@ -20,33 +20,21 @@
       <div class="label"><%= Character.human_attribute_name("health") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".hospital"), hospital_character_path(:current),
-            :remote => true,
-            :method => :get,
-            :class => :hospital
-          ) if Setting.b(:hospital_enabled) %>
+      <a data-type="health" class="refill"><%= t(".refill") %></a>
     </td>
     <td class="energy">
       <div class="timer"></div>
       <div class="label"><%= Character.human_attribute_name("energy") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".refill"), refill_dialog_premium_path(:type => :refill_energy),
-            :remote => true,
-            :method => :post,
-            :class => "refill"
-          ) %>
+      <a data-type="energy" class="refill"><%= t(".refill") %></a>
     </td>
     <td class="stamina">
       <div class="timer"></div>
       <div class="label"><%= Character.human_attribute_name("stamina") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".refill"), refill_dialog_premium_path(:type => :refill_stamina),
-            :remote => true,
-            :method => :post,
-            :class => "refill"
-          ) %>
+      <a data-type="stamina" class="refill"><%= t(".refill") %></a>
     </td>
     <td class="experience">
       <div class="label"><%= Character.human_attribute_name("experience") %></div>

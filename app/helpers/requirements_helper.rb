@@ -78,13 +78,4 @@ module RequirementsHelper
     requirement(:vip_money, "#{ requirement_text } #{additional_text}", current_character.vip_money >= value)
   end
 
-  def refill_button(type)
-    price = Setting.i(:"premium_#{type}_price")
-
-    link_to(button(:refill, :price => span_tag(price, :amount)), refill_dialog_premium_path(:type => :"refill_#{type}"),
-      :remote => true,
-      :method => :post,
-      :class => "premium button"
-    )
-  end
 end

@@ -10,3 +10,4 @@ translations:
       - "*.characters.upgrade"
       - "*.assignments"
       - "*.fights.opt_out"
+      - "*.premia.refill"
