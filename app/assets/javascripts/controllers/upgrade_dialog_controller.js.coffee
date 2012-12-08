@@ -8,9 +8,7 @@ window.UpgradeDialogController = class extends DialogController
   className: 'dialog upgrade'
 
   render: ->
-    @html(
-      @.dialogWrapper(JST['views/upgrade_dialog'](@))
-    )
+    @.updateContent(JST['views/upgrade_dialog'](@))
 
   show: ->
     @loading = true

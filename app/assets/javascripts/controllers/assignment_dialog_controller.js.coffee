@@ -13,9 +13,7 @@ window.AssignmentDialogController = class extends DialogController
     'button.promote' : 'button'
 
   render: ->
-    @html(
-      @.dialogWrapper(@.renderTemplate('assignment_dialog', @))
-    )
+    @.updateContent(@.renderTemplate('assignment_dialog', @))
 
     @el.find('#assignment_tabs').tabs()
 

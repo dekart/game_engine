@@ -8,9 +8,7 @@ window.FightOptoutDialogController = class extends DialogController
   className: 'dialog fight_optout'
 
   render: ->
-    @html(
-      @.dialogWrapper(JST['views/fight_optout_dialog'](@))
-    )
+    @.updateContent(JST['views/fight_optout_dialog'](@))
 
     @.updateOptinTimer()
 

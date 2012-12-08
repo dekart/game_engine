@@ -6,6 +6,4 @@ window.EnergyRefillDialogController = class extends RefillDialogController
   refillAttribute: 'energy'
 
   render: ->
-    @html(
-      @.dialogWrapper(JST['views/refill_dialogs/energy'](@))
-    )
+    @.updateContent(JST['views/refill_dialogs/energy'](@))

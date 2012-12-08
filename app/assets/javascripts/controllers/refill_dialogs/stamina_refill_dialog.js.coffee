@@ -6,6 +6,4 @@ window.StaminaRefillDialogController = class extends RefillDialogController
   refillAttribute: 'stamina'
 
   render: ->
-    @html(
-      @.dialogWrapper(JST['views/refill_dialogs/stamina'](@))
-    )
+    @.updateContent(JST['views/refill_dialogs/stamina'](@))

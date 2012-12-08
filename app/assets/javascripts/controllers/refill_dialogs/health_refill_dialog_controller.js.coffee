@@ -6,6 +6,4 @@ window.HealthRefillDialogController = class extends RefillDialogController
   refillAttribute: 'health'
 
   render: ->
-    @html(
-      @.dialogWrapper(JST['views/refill_dialogs/health'](@))
-    )
+    @.updateContent(JST['views/refill_dialogs/health'](@))

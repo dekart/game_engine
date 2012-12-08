@@ -32,7 +32,7 @@ window.DialogController = class extends BaseController
     @.render()
 
     @overlay.css(opacity: 0).appendTo('#content').fadeTo(400, 0.7)
-    @el.css(@.calculateOffset()).fadeTo(400, 1)
+    @el.fadeTo(400, 1)
 
   close: ->
     @.unbindEventListeners()
@@ -43,12 +43,14 @@ window.DialogController = class extends BaseController
     $(document).trigger('close.dialog')
 
   render: ->
+    @.updateContent(@content)
+
+  updateContent: (content)->
     @html(
-      @.dialogWrapper(@content)
+      @.renderTemplate('dialog', content: content)
     )
 
-  dialogWrapper: (content)->
-    @.renderTemplate('dialog', content: content)
+    @.updateOffset()
 
   onCloseClick: (e)=>
     e.preventDefault()
@@ -56,11 +58,16 @@ window.DialogController = class extends BaseController
 
     @.close()
 
-  calculateOffset: ->
-    left = ($('#content').width() - @el.outerWidth()) / 2
+  updateOffset: ->
+    left = $('#content').offset().left + ($('#content').width() - @el.outerWidth(true)) / 2
     top = mouse.y - @el.outerHeight() / 2
 
-    {
-      left: left
-      top: if top < 0 then $('#content').offset().top + 100 else top
-    }
+    dialog_height = @el.outerHeight(true)
+    content_height = $('#content').outerHeight(true)
+
+    if top < 0
+      top = $('#content').offset().top + 100
+    else if top + dialog_height > content_height - 100
+      top = content_height - dialog_height - 100
+
+    @el.css(top: top, left: left)
