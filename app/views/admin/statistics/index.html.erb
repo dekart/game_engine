@@ -85,6 +85,6 @@
   </tr>
   <tr>
     <td><%= t(".app_requests.last_failed") %></td>
-    <td><%= $redis.smembers("app_requests_for_deletion").last %></td>
+    <td><%= $redis.smembers("app_requests_failed_deletion").last %></td>
   </tr>
 </table>
