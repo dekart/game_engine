@@ -148,7 +148,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def schedule_deletion(*ids_or_requests)
-      ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.id : value}.uniq
+      ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.graph_api_id : value}.uniq
 
       ids.each do |id|
         $redis.sadd("app_requests_for_deletion", id)
