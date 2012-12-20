@@ -70,5 +70,21 @@
       </td>
     <% end %>
   </tr>
+</table>
 
+<h2><%= t('.app_requests.title')%></h2>
+
+<table class="data">
+  <tr>
+    <td><%= t(".app_requests.total") %></td>
+    <td><%= $redis.scard("app_requests_for_deletion") %></td>
+  </tr>
+  <tr>
+    <td><%= t(".app_requests.failed") %></td>
+    <td><%= $redis.scard("app_requests_failed_deletion") %></td>
+  </tr>
+  <tr>
+    <td><%= t(".app_requests.last_failed") %></td>
+    <td><%= $redis.smembers("app_requests_for_deletion").last %></td>
+  </tr>
 </table>
