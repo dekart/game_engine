@@ -8,6 +8,8 @@
   </p>
 
   <div class="options">
+    <%=@safe JST['views/refill_dialogs/items'](items: @status.items) %>
+
     <div class="option vip_money">
       <div class="name"><%= I18n.t('premia.refill.premium') %></div>
 
@@ -17,7 +19,5 @@
         <span class="cost vip_money"><%= @status.vip_money %></span>
       </button>
     </div>
-
-    <%=@safe JST['views/refill_dialogs/items'](items: @status.items) %>
   </div>
 <% end %>

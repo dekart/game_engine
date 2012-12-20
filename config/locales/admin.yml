@@ -390,6 +390,7 @@ en:
         restorable: "%{current} / %{max} (%{base})"
         inventory: "Inventory"
         amount: "Amount"
+        equipped: "Equipped"
         properties: "Properties"
         property_income: "+%{value} per %{period} hours"
         statistics: "Statistics"

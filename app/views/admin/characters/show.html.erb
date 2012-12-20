@@ -45,12 +45,14 @@
         <tr>
           <th><%= Item.name %></th>
           <th><%= t(".amount") %></th>
+          <th><%= t(".equipped") %></th>
         </tr>
 
         <% @character.inventories.sort_by{|i| i.name }.each do |inventory| %>
           <tr>
             <td><%= inventory.name %></td>
             <td><%= inventory.amount %></td>
+            <td><%= inventory.equipped %></td>
           </tr>
         <% end %>
       </table>
