@@ -31,7 +31,7 @@
     <h2><%= I18n.t("monsters.index.available") %></h2>
 
     <% for type in @monster_types: %>
-      <%= type.name %>
+      <%= @available(type, false) %>
     <% end %>
   </div>
 <% end %>
@@ -40,7 +40,7 @@
   <div id="locked_monster" class="monster_list clearfix">
     <h2><%= I18n.t("monsters.index.locked", {"level" : @locked.level}) %></h2>
     
-    <%= @locked.name %>
+    <%= @available(@locked, true) %>
   </div>
 <% end %>
 

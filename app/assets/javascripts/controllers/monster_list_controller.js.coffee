@@ -1,6 +1,8 @@
 #= require controllers/base_controller
 
 window.MonsterListController = class extends BaseController
+  @include window.MonstersHelper
+
   el: "#content_wrapper"
 
   constructor: ->
