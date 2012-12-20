@@ -51,7 +51,9 @@
       <div id="result" style="display:none;"></div>
     <% end %>
 
-    <%= yield %>
+    <div id="content_wrapper">
+      <%= yield %>
+    </div>
 
     <%= render("layouts/footer") %>
   </div>

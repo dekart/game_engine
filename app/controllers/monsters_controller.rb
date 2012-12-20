@@ -5,6 +5,13 @@ class MonstersController < ApplicationController
     
     @locked_monster = current_character.monster_types.available_in_future.first
     @monster_types  = current_character.monster_types.available_for_fight
+
+    render :json => {
+      :defeated => @defeated_monster_fights.as_json,
+      :active   => @active_monster_fights.as_json,
+      :locked   => @locked_monster.as_json,
+      :monster_types => @monster_types.as_json
+    }
   end
   
   def finished
