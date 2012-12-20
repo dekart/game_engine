@@ -3,7 +3,7 @@ class Character
     def self.included(base)
       base.class_eval do
         has_many :personal_discounts,
-          :extend     => PersonalDiscountAssociationExtension
+          :extend     => PersonalDiscountAssociationExtension,
           :dependent  => :delete_all
       end
     end

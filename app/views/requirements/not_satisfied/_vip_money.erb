@@ -8,6 +8,12 @@
       <%= t(".message_without_value").html_safe %>
     <% end %>
   </p>
-<% end %>
 
-<%= render('credit_orders/form') if Setting.b(:premium_credits_enabled) %>
+  <div class="buttons">
+    <%= link_to_function(button(:buy_vip_money), "BuyVipDialogController.show()", :class => "button")%>
+  </div>
+
+  <% dom_ready do %>
+    BuyVipDialogController.show();
+  <% end %>
+<% end %>

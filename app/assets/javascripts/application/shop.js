@@ -18,9 +18,7 @@ var Shop = (function(){
         onLoad: this.onTabLoad
       });
 
-      if(window.location.hash == '#buy_vip_money') {
-        shop_tabs.tabs().selectTab('buy_vip_money');
-      } else if (window.location.hash == '#services') {
+      if (window.location.hash == '#services') {
         shop_tabs.tabs().selectTab('services');
       }
     },

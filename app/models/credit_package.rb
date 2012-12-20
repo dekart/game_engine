@@ -1,6 +1,6 @@
 class CreditPackage < ActiveRecord::Base
   extend HasPictures
-  
+
   default_scope :order => "vip_money"
 
   state_machine :initial => :hidden do
@@ -20,12 +20,12 @@ class CreditPackage < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
-  
+
   has_pictures
 
   validates_presence_of :vip_money, :price
   validates_numericality_of :vip_money, :price, :allow_blank => true, :greater_than => 0
-  
+
   after_save :reset_default
 
   def discount
@@ -38,9 +38,23 @@ class CreditPackage < ActiveRecord::Base
       ((full_price - price) / full_price * 100).round
     end
   end
-  
+
+  def as_json_for_purchase
+    as_json(
+      :only => [
+        :id,
+        :vip_money,
+        :price,
+        :default
+      ],
+      :methods => [
+        :discount
+      ]
+    )
+  end
+
   protected
-  
+
   def reset_default
     self.class.update_all({:default => false}, ['id != ?', self.id]) if default?
   end

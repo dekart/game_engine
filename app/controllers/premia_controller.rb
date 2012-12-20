@@ -4,7 +4,9 @@ class PremiaController < ApplicationController
   end
 
   def buy_vip
-    render :layout => 'ajax'
+    render :json => {
+      :packages => CreditPackage.with_state(:visible).map{ |package| package.as_json_for_purchase }
+    }
   end
 
   def update

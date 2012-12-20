@@ -5,6 +5,7 @@ en:
       next_item: "Reach level %{level} to unlock new items"
       buttons:
         inventory: "Go to Inventory"
+        buy_vip_money: "Buy Gems"
       tabs:
         services: "Services"
         buy_vip_money: "Buy Gems"

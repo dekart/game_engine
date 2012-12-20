@@ -17,7 +17,6 @@
 //= require ./application/link_lock
 //= require ./application/spinner
 //= require ./application/app_requests
-//= require ./application/facebook_credits
 //= require ./application/promo_block
 //= require ./application/invite_dialog
 //= require ./application/stream_dialog

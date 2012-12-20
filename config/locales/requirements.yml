@@ -111,7 +111,7 @@ en:
         message: "You don't have enough Gems! You need %{required_value} Gems."
         message_without_value: "You don't have enough Gems!"
         buttons:
-          get_more_vip: "Get More Gems"
+          buy_vip_money: "Buy Gems"
 
       property:
         message: "%{name} (Level %{level})"

@@ -1,0 +1,46 @@
+<% if @loading: %>
+  <%= I18n.t('common.loading') %>
+<% else: %>
+  <div id="credit_packages">
+    <h2><%= I18n.t('premia.buy_vip.title', { vip_money: I18n.t('premia.buy_vip.vip_money') }) %></h2>
+
+    <div class="select_package"><%= I18n.t('premia.buy_vip.select_package') %></div>
+
+    <table cellspacing="0" cellpadding="0">
+      <% for credit_package in @packages: %>
+        <tr class="credit_package <%= 'selected' if credit_package.default %>" id="package_<%= credit_package.id %>">
+          <td class="selector">
+            <input type="radio" id="credit_package_id_<%= credit_package.id %>"
+              name="credit_package_id" value="<%= credit_package.id %>"
+              <%= 'checked="checked"' if credit_package.default %>
+            />
+          </td>
+
+          <td class="vip_money">
+            <span class="value"><%= credit_package.vip_money %></span>
+            <%= I18n.t('premia.buy_vip.vip_money') %>
+          </td>
+
+          <td class="credits">
+            <span class="value"><%= credit_package.price %></span>
+            <%= I18n.t('premia.buy_vip.credits') %>
+          </td>
+
+          <td class="discount">
+            <% if credit_package.discount: %>
+              <%= I18n.t("premia.buy_vip.discount", { discount: credit_package.discount }) %>
+            <% else: %>
+              &nbsp;
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <div class="buttons">
+      <button class="purchase"><%= I18n.t("premia.buy_vip.buttons.purchase") %></button>
+
+      <a class="earn_credits" href="#"><%= I18n.t("premia.buy_vip.earn_credits") %></a>
+    </div>
+  </div>
+<% end %>
