@@ -148,9 +148,19 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def schedule_deletion(*ids_or_requests)
-      ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.id : value}.uniq
+      ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.graph_api_id : value}.uniq
 
-      Delayed::Job.enqueue(Jobs::RequestDelete.new(ids)) unless ids.empty?
+      ids.each do |id|
+        $redis.sadd("app_requests_for_deletion", id)
+      end
+    end
+
+    def delete_from_facebook!(ids)
+      Facepalm::Config.default.api_client.batch do |batch_api|
+        ids.collect{|id| batch_api.delete_object(id) }
+      end
+    rescue Koala::Facebook::APIError => e
+      logger.error "AppRequest data update error: #{ e }"
     end
 
     def receiver_ids
@@ -236,14 +246,6 @@ class AppRequest::Base < ActiveRecord::Base
 
   def graph_api_id
     receiver_id ? "#{ facebook_id }_#{ receiver_id }" : facebook_id
-  end
-
-  def delete_from_facebook!
-    Facepalm::Config.default.api_client.delete_object(graph_api_id)
-  rescue Koala::Facebook::APIError => e
-    logger.error "AppRequest data update error: #{ e }"
-
-    mark_broken! if can_mark_broken?
   end
 
   def type_name
