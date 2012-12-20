@@ -10,10 +10,12 @@ module Jobs
         batch_result = AppRequest::Base.delete_from_facebook!(graph_api_ids)
 
         batch_result.each_with_index do |result, index|
-          if result == true
-            $redis.srem("app_requests_for_deletion", requests[index].id)
-          else
+          $redis.srem("app_requests_for_deletion", requests[index].id)
+
+          if result != true
             requests[index].mark_broken! if requests[index].can_mark_broken?
+
+            $redis.sadd("app_requests_failed_deletion", requests[index].id)
           end
         end
       end
