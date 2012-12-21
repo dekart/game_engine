@@ -38,6 +38,11 @@ en:
           ago: 'ago'
           failed: 'failed'
           processing: 'Processing...'
+        app_requests:
+          title: "App Requests for deletion"
+          total: "Total"
+          failed: "Failed"
+          last_failed: "Last Failed ID"
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
