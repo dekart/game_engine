@@ -16,6 +16,10 @@ class MonstersController < ApplicationController
   
   def finished
     @finished_monster_fights = current_character.monster_fights.finished
+
+    render :json => {
+      :finished => @finished_monster_fights.as_json
+    }
   end
 
   def show

@@ -1,0 +1,9 @@
+<% if @finished.length > 0: %>
+  <div id='previous_monsters' class='monster_list clearfix'>
+    <h2><%= I18n.t("monsters.finished.previous") %></h2>
+  
+    <% for fight in @finished: %>
+      <%= @completed(fight.monster, fight) %>
+    <% end %>
+  </div>
+<% end %>

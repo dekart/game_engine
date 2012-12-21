@@ -48,8 +48,6 @@
   </div>
 <% end %>
 
-<div id="finished_fights">
-  <a data-remote="true" href="/monsters/finished">
-    <%= I18n.t("monsters.index.finished") %>
-  </a>
+<div id='finished_fights'>
+  <a href='#'><%= I18n.t("monsters.index.finished") %></a>
 </div>

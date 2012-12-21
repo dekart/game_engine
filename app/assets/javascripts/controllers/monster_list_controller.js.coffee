@@ -1,8 +1,6 @@
 #= require controllers/base_controller
 
 window.MonsterListController = class extends BaseController
-  @include window.MonstersHelper
-
   el: "#content_wrapper"
 
   constructor: ->
@@ -11,7 +9,7 @@ window.MonsterListController = class extends BaseController
     @.setupEventListeners()
 
   setupEventListeners: ->
-    @el.on('click', '.fight', @.onFightClick)
+    @el.on('click', '#finished_fights', @.onFinishedFightsClick)
 
   show: ->
     @loading = true
@@ -31,4 +29,13 @@ window.MonsterListController = class extends BaseController
   render: ()->
     @html(
       @.renderTemplate("monsters/list", @)
+    )
+
+    new VisualTimer(["#monster_#{fight.monster.id} .fight_time .value"]).start(fight.time_remaining) for fight in @active
+
+  onFinishedFightsClick: (e)=>
+    $.get("/monsters/finished", (response)=>
+      result = @.renderTemplate("monsters/finished", finished: response.finished)
+    
+      $('#finished_fights').html(result)
     )

@@ -88,7 +88,6 @@ class Monster < ActiveRecord::Base
       :image_url   => pictures.url(:normal),
       :hp          => hp,
       :health      => health,
-      :time_remaining => time_remaining,
       :state       => state
     }
   end
