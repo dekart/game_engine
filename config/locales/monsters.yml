@@ -62,6 +62,8 @@ en:
       title: "Top Hitters"
     preview:
       available:
+        fight_time_title: "Fight Time"
+        health_title: "Health"
         fight_time: "%{amount} Hours"
         buttons:
           attack: "Attack!"

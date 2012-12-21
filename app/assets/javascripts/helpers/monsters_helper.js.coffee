@@ -1,17 +1,18 @@
 window.MonstersHelper =
   completed: (monster, fight)->
-    @safe "completed"
+    result = JST["views/monsters/completed"](monster: monster, fight: fight)
+
+    @safe result
 
   current: (monster, fight)->
-    @safe "current"
+    percentage = monster.hp / monster.health * 100
+    percentage_text = Math.min [percentage, 100]...
+
+    result = JST["views/monsters/current"](monster: monster, fight: fight, percentage: percentage, percentage_text: percentage_text)
+
+    @safe result
 
   available: (type, locked)->
-    result = 
-      "<div class='monster clearfix'>\
-        <div class='info'>\
-          <div class='name'>#{type.name}</div>\
-          <div class='description'>#{type.description}</div>\
-        </div>\
-      </div>"
+    result = JST["views/monsters/available"](type: type, locked: locked)
 
     @safe result

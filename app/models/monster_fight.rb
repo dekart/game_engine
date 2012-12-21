@@ -164,6 +164,13 @@ class MonsterFight < ActiveRecord::Base
     }
   end
 
+  def as_json
+    {
+      :monster => monster.as_json,
+      :reward_collectable => reward_collectable?
+    }
+  end
+
   def add_to_active_fights
     character.monster_fights.add_to_active(self)
   end

@@ -62,4 +62,16 @@ class MonsterType < ActiveRecord::Base
       payouts
     end
   end
+
+  def as_json
+    {
+      :id          => id,
+      :name        => name,
+      :description => description,
+      :level       => level,
+      :image_url   => pictures.url(:normal),
+      :fight_time  => fight_time,
+      :health      => health
+    }
+  end
 end

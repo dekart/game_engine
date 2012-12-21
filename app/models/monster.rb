@@ -78,7 +78,21 @@ class Monster < ActiveRecord::Base
   def chat_id
     "monster_%09d" % id 
   end
-  
+
+  def as_json
+    {
+      :id          => id,
+      :name        => name,
+      :description => description,
+      :level       => level,
+      :image_url   => pictures.url(:normal),
+      :hp          => hp,
+      :health      => health,
+      :time_remaining => time_remaining,
+      :state       => state
+    }
+  end
+
   protected
 
   def assign_initial_attributes
