@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   has_one     :character, :dependent => :destroy
   belongs_to  :referrer, :class_name => "User"
+  has_one     :simulation, :foreign_key => :admin_id
 
   scope :latest, {
     :order    => 'users.created_at DESC',
@@ -39,6 +40,10 @@ class User < ActiveRecord::Base
 
   def admin?
     Setting.a(:user_admins).include?(facebook_id.to_s)
+  end
+
+  def simulated?
+    Simulation.where(:user_id => self.id).any?
   end
 
   def last_visit_ip=(value)

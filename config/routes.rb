@@ -90,6 +90,11 @@ GameEngine::Application.routes.draw do
       collection do
         match 'search'
         match 'payout'
+        match 'stop_simulate'
+      end
+
+      member do
+        match 'simulate'
       end
     end
 
