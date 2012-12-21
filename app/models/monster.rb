@@ -88,7 +88,8 @@ class Monster < ActiveRecord::Base
       :image_url   => pictures.url(:normal),
       :hp          => hp,
       :health      => health,
-      :state       => state
+      :state       => state,
+      :reward      => monster_type.payouts_as_json(character)
     }
   end
 

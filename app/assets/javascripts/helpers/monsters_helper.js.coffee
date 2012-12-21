@@ -1,6 +1,6 @@
 window.MonstersHelper =
   completed: (monster, fight)->
-    result = JST["views/monsters/completed"](monster: monster, fight: fight)
+    result = JST["views/monsters/completed"](_.extend({monster: monster, fight: fight}, RewardHelper))
 
     @safe result
 
@@ -8,11 +8,11 @@ window.MonstersHelper =
     percentage = monster.hp / monster.health * 100
     percentage_text = Math.min [percentage, 100]...
 
-    result = JST["views/monsters/current"](monster: monster, fight: fight, percentage: percentage, percentage_text: percentage_text)
+    result = JST["views/monsters/current"](_.extend({monster: monster, fight: fight, percentage: percentage, percentage_text: percentage_text}, RewardHelper))
 
     @safe result
 
   available: (type, locked)->
-    result = JST["views/monsters/available"](type: type, locked: locked)
+    result = JST["views/monsters/available"](_.extend({type: type, locked: locked}, RewardHelper))
 
     @safe result

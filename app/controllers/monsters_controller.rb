@@ -9,8 +9,8 @@ class MonstersController < ApplicationController
     render :json => {
       :defeated => @defeated_monster_fights.as_json,
       :active   => @active_monster_fights.as_json,
-      :locked   => @locked_monster.as_json,
-      :monster_types => @monster_types.as_json
+      :locked   => @locked_monster.as_json(current_character),
+      :monster_types => @monster_types.as_json(current_character)
     }
   end
   

@@ -7,7 +7,14 @@
     <div class='name'><%= @monster.name %></div>
     <div class='description'><%= @monster.description %></div>
   </div>
-  PAYOUTS
+
+  <%= @rewards @monster.reward, (content)=> %>
+    <div class="payouts info">
+      <h3><%= I18n.t('monsters.preview.payouts') %></h3>
+      <%= content %>
+    </div>
+  <% end %>
+
   <div class='info'>
     <div class='fight_time'>
       <span class='label'><%= I18n.t('monsters.preview.current.time_remaining')%></span>
