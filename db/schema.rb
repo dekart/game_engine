@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119115732) do
+ActiveRecord::Schema.define(:version => 20121220113614) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -174,14 +174,14 @@ ActiveRecord::Schema.define(:version => 20121119115732) do
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
+    t.boolean  "exclude_from_fights",                            :default => false
     t.boolean  "restrict_fighting",                              :default => false
     t.boolean  "restrict_market",                                :default => false
     t.boolean  "restrict_talking",                               :default => false
-    t.boolean  "exclude_from_fights"
     t.datetime "excluded_from_fights_at",                        :default => '1970-01-01 00:00:00', :null => false
   end
 
-  add_index "characters", ["level", "fighting_available_at", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"
+  add_index "characters", ["level", "fighting_available_at", "exclude_from_fights", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "clan_members", :force => true do |t|
@@ -752,6 +752,11 @@ ActiveRecord::Schema.define(:version => 20121119115732) do
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "simulations", :force => true do |t|
+    t.integer "admin_id"
+    t.integer "user_id"
   end
 
   create_table "stories", :force => true do |t|
