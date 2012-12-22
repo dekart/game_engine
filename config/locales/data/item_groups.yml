@@ -1,0 +1,7 @@
+---
+en:
+  data:
+    item_groups:
+      weapons: Weapons
+      armors: Armors
+      potions: Potions

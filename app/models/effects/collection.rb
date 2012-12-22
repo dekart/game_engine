@@ -6,18 +6,18 @@ module Effects
 
     def self.parse(collection)
       return if collection.blank?
-      
+
       if collection.is_a?(Effects::Collection)
         collection
       else
         collection = collection.values.sort_by{|v| v["position"].to_i } if collection.is_a?(Hash)
-        
+
         items = collection.collect do |effect|
           effect = effect.symbolize_keys
-            
+
           Effects::Base.by_name(effect[:type]).new(effect.except(:type, :position))
         end
-        
+
         new(*items)
       end
     end
@@ -25,18 +25,18 @@ module Effects
     def initialize(*effects)
       @items = effects
     end
-    
+
     def visible?
       !items.detect{|i| i.visible }.nil?
     end
-    
+
     def +(other)
       Effects::Collection.new.tap do |result|
         result.items.push(*items)
         result.items.push(*other.items)
       end
     end
-    
+
     def by_type(type)
       Effects::Collection.new.tap do |result|
         items.each do |effect|
@@ -46,11 +46,11 @@ module Effects
         end
       end
     end
-    
+
     def to_s
       items.collect{|i| i.to_s }.join("; ")
     end
-    
+
     def metric
       items.sum{|i| i.value }
     end
