@@ -162,11 +162,15 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def delete_from_facebook!(ids)
-      Facepalm::Config.default.api_client.batch do |batch_api|
+      result = Facepalm::Config.default.api_client.batch do |batch_api|
         ids.collect{|id| batch_api.delete_object(id) }
       end
-    rescue Koala::Facebook::APIError => e
-      logger.error "AppRequest data update error: #{ e }"
+
+      result.each_with_index do |r, i|
+        next unless r.is_a?(Koala::Facebook::APIError)
+
+        result[i] = r.message.include?('Specified object cannot be found')
+      end
     end
 
     def receiver_ids

@@ -9,7 +9,7 @@ module Jobs
         batch_result.each_with_index do |result, index|
           $redis.srem("app_requests_for_deletion", ids[index])
 
-          $redis.sadd("app_requests_failed_deletion", ids[index]) if result != true
+          $redis.sadd("app_requests_failed_deletion", ids[index]) unless result
         end
       end
     end
