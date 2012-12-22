@@ -173,6 +173,17 @@ class AppRequest::Base < ActiveRecord::Base
       end
     end
 
+    def reschedule_failed_for_deletion
+      failed = $redis.smembers("app_requests_failed_deletion")
+
+      failed.each do |id|
+        $redis.multi do
+          $redis.sadd('app_requests_for_deletion', id)
+          $redis.srem('app_requests_failed_deletion', id)
+        end
+      end
+    end
+
     def receiver_ids
       all(:select => "DISTINCT receiver_id").collect{|r| r.receiver_id }
     end
