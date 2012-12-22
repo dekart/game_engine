@@ -21,7 +21,7 @@ class Item < ActiveRecord::Base
 
   class << self
     def [](key)
-      find_by_alias(key)
+      key.is_a?(Numeric) || key =~ /^\d+$/ ? find(key) : find_by_alias(key)
     end
 
     def by_alias(keys)
@@ -73,6 +73,7 @@ class Item < ActiveRecord::Base
   scope :vip,          where("items.vip_price > 0")
   scope :basic,        where("items.vip_price IS NULL or items.vip_price = 0")
 
+  before_create :set_random_alias
   before_save :update_max_vip_price_in_market, :if => :vip_price_changed?
 
   state_machine :initial => :hidden do
@@ -278,7 +279,14 @@ class Item < ActiveRecord::Base
       :name => name,
       :alias => self.alias,
       :pictures => pictures.urls,
-      :description => description
+      :description => description,
+      :use_button_label => use_button_label.present? ? use_button_label : nil
     }
+  end
+
+  protected
+
+  def set_random_alias
+    self.alias = "item_#{ rand(1_000_000_000) }" if self.alias.blank?
   end
 end

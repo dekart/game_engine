@@ -5,7 +5,7 @@ class Relation < ActiveRecord::Base
   belongs_to  :character
   has_one     :assignment, :dependent => :destroy, :foreign_key => "relation_id"
 
-  scope :not_assigned,
+  scope :available,
     :include    => [:assignment, :character],
     :conditions => "assignments.id IS NULL"
   scope :assigned,
@@ -14,7 +14,7 @@ class Relation < ActiveRecord::Base
   scope :not_banned, Proc.new{
     {
       :include    => :character,
-      :conditions => ["characters.id NOT IN(?)", Character.banned_ids]
+      :conditions => ["characters.id IS NULL OR characters.id NOT IN(?)", Character.banned_ids]
     }
   }
 
@@ -22,6 +22,20 @@ class Relation < ActiveRecord::Base
 
   after_create  :increment_owner_relations_counter
   after_destroy :decrement_owner_relations_counter
+
+  def as_json_for_assignment(assignment)
+    {
+      :type   => self.class.name.underscore,
+      :id     => id,
+      :name   => name,
+      :level  => level,
+      :effect => effect(assignment)
+    }
+  end
+
+  def effect(assignment)
+    Assignment.effect_value(assignment.context, self, assignment.role)
+  end
 
   protected
 

@@ -36,10 +36,7 @@
               :class => "button heal"
             ) %>
       <% else %>
-        <%= link_to(button(:refill_health), premium_path(:type => :refill_health),
-              :remote => true,
-              :method => :put,
-              :onclick => "DialogController.close()",
+        <%= link_to_function(button(:refill_health), "$.ajax('#{ premium_path(:type => :refill_health)}', {type: 'PUT'}); DialogController.close()",
               :class => 'button premium'
             ) %>
       <% end %>

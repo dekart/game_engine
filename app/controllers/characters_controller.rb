@@ -105,6 +105,8 @@ class CharactersController < ApplicationController
   end
 
   def require_facebook_permissions_if_standalone
+    return unless Setting.b(:app_standalone_enabled)
+
     require_facebook_permissions unless ENV['OFFLINE'] || fb_canvas?
   end
 end

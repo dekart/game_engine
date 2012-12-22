@@ -4,10 +4,10 @@
 
 <div class="total_visits">
   <h2><%= t(@hour ? ".total_visits_hourly" : ".total_visits_by_date") %></h2>
-  
+
   <p id="total_visits">
     <strong><%= @total %></strong>
-    
+
     <%= @hour ? admin_requests_average_amount_per_minute(@total, @hour) : admin_requests_average_amount_per_hour(@total, @day) %>
   </p>
 </div>
@@ -31,7 +31,7 @@
             <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
             <td>
               <% if user.try(:character) %>
-                <%= link_to(character_name(user.character), admin_character_path(user.character)) %>
+                <%= link_to(admin_character_name(user.character), admin_character_path(user.character)) %>
               <% else %>
                 <span class="empty">
                   <%= user ? t(".no_character") : t(".no_user") %>
@@ -51,7 +51,7 @@
         <% end %>
       </table>
     </td>
-    
+
     <td class="dates">
       <table class="data">
         <tr>
@@ -64,14 +64,14 @@
                 <%= Date.today - day %>
               <% else %>
                 <%= link_to(Date.today - day, :date => Date.today - day) %>
-              <% end %>   
-            </td>  
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </table>
-      
+
     </td>
-    
+
     <td class="hourly">
       <table class="data">
         <tr>
@@ -79,19 +79,19 @@
         </tr>
         <% (24).times do |hour| %>
           <tr>
-            <td>  
+            <td>
               <% if @hour && @hour.to_i == Time.now.hour - hour %>
                 <%= Time.now.hour - hour %>
               <% elsif (h = Time.now.hour - hour) > 0 %>
                 <%= link_to("#{h}", :date => Date.today, :hour => h) %>
-              <% else %>  
+              <% else %>
                 <%= link_to("#{24 + Time.now.hour - hour}", :date => (Date.today - 1), :hour => (24 + Time.now.hour - hour)) %>
-              <% end %>   
-            </td>  
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </table>
-      
+
     </td>
   </tr>
 </table>

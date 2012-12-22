@@ -1,15 +1,15 @@
 class Fight < ActiveRecord::Base
   OPPONENT_LEVEL_RANGES = [
-    1 .. 1, 
-    2 .. 2, 
-    3 .. 3, 
-    4 .. 4, 
-    5 .. 5, 
-    6 .. 10, 
-    11 .. 15, 
-    16 .. 25, 
-    26 .. 50, 
-    51 .. 100, 
+    1 .. 1,
+    2 .. 2,
+    3 .. 3,
+    4 .. 4,
+    5 .. 5,
+    6 .. 10,
+    11 .. 15,
+    16 .. 25,
+    26 .. 50,
+    51 .. 100,
     101 .. 150,
     151 .. Character::Levels::EXPERIENCE.size
   ]
@@ -35,20 +35,20 @@ class Fight < ActiveRecord::Base
   after_create :calculate_victories, :if => :attacker_won?
 
   attr_reader :attacker_boost, :victim_boost, :payouts
-  
+
   include Fight::DamageCalculator::Proportion
   include Fight::ResultCalculator::Proportion
-  
+
   class << self
     def can_attack?(attacker, victim)
       new(:attacker => attacker, :victim => victim).can_attack?
     end
-    
+
     def level_range(character)
       OPPONENT_LEVEL_RANGES.detect{|r| r.include?(character.level) }
     end
   end
-  
+
   def attacker_level_range
     self.class.level_range(attacker)
   end
@@ -62,21 +62,21 @@ class Fight < ActiveRecord::Base
 
     true
   end
-  
+
   def opponents
     # Exclude recent opponents, friends, and self
     exclude_ids = latest_opponent_ids
     exclude_ids.push(*attacker.friend_relations.character_ids) unless Setting.b(:fight_alliance_attack)
     exclude_ids.push(attacker.id)
     exclude_ids.uniq!
-    
+
     opponent_ids = Fight::OpponentBuckets.random_opponents(attacker_level_range, exclude_ids, Setting.i(:fight_victim_show_limit))
 
     Character.all(:include => :user, :conditions => {:id => opponent_ids}).tap do |r|
       r.shuffle!
     end
   end
-    
+
   def attacker_won?
     @attacker_won ||= winner ? (winner == attacker) : calculate_attacker_victory
   end
@@ -126,7 +126,7 @@ class Fight < ActiveRecord::Base
       :experience => self.experience
     }
   end
-  
+
   def victim_event_data
     {
       :reference_id => self.attacker.id,
@@ -142,7 +142,7 @@ class Fight < ActiveRecord::Base
   def attacker_used_items
     used_items(attacker)
   end
-  
+
   def victim_used_items
     used_items(victim)
   end
@@ -219,12 +219,12 @@ class Fight < ActiveRecord::Base
     attacker.sp  -= Setting.i(:fight_stamina_required)
 
     attacker.hp  -= attacker_hp_loss
-    
+
     victim.hp    -= victim_hp_loss if decrease_victim_health?
 
     attacker.inventories.take!(@attacker_boost.item) if @attacker_boost
     victim.inventories.take!(@victim_boost.item) if @victim_boost
-    
+
     if global_payout = GlobalPayout.by_alias(:fights)
       @payouts = global_payout.payouts.apply(attacker, attacker == winner ? :success : :failure)
     end
@@ -250,13 +250,13 @@ class Fight < ActiveRecord::Base
     attacker.news.add(:fight_result, :fight_id => id)
     victim.news.add(:fight_result, :fight_id => id)
   end
-  
+
   def latest_opponent_ids
     $redis.zremrangebyscore("fight_victories_#{attacker.id}", 0, Setting.i(:fight_attack_repeat_delay).minutes.ago.to_i)
 
     $redis.zrange("fight_victories_#{attacker.id}", 0, -1).collect {|id| id.to_i }
   end
-  
+
   def decrease_victim_health?
     cause || (victim.user.last_visit_at && victim.user.last_visit_at > Setting.i(:fight_victim_hp_decrease_if_character_was_online).hours.ago)
   end

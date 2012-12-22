@@ -103,6 +103,27 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def nickname(friend = false)
+    if friend
+      if name.present?
+        I18n.t('characters.real_name_with_nickname',
+          :first_name => user.first_name,
+          :last_name  => user.last_name,
+          :nickname   => name
+        )
+      else
+        I18n.t('characters.real_name',
+          :first_name => user.first_name,
+          :last_name  => user.last_name
+        )
+      end
+    elsif name.present?
+      name
+    else
+      user.first_name
+    end
+  end
+
   def basic_money=(value)
     self[:basic_money] = [value.to_i, 0].max
   end
@@ -397,8 +418,8 @@ class Character < ActiveRecord::Base
   end
 
   def update_current_contest_points
-    if contest = Contest.current and contest.active? and try(contest.points_type + "_changed?")
-      old, now = send(contest.points_type + '_change')
+    if contest = Contest.current and try("#{ contest.points_type }_changed?")
+      old, now = send("#{ contest.points_type }_change")
 
       contest.increment_points!(self, now - old)
     end

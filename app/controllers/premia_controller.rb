@@ -4,7 +4,9 @@ class PremiaController < ApplicationController
   end
 
   def buy_vip
-    render :layout => 'ajax'
+    render :json => {
+      :packages => CreditPackage.with_state(:visible).map{ |package| package.as_json_for_purchase }
+    }
   end
 
   def update
@@ -34,12 +36,27 @@ class PremiaController < ApplicationController
       flash.now[:success] = t("premia.update.messages.success.#{params[:type]}")
     end
   end
-  
+
   def change_name
   end
-  
-  def refill_dialog
-    @type = params[:type].to_sym
-    @vip_money = params[:vip_money].to_i
+
+  def refill
+    case params[:type]
+    when 'health'
+      render :json => {
+        :vip_money => Setting.i(:premium_health_price),
+        :items => current_character.inventories.usable_with_payout(:health_point)
+      }
+    when 'energy'
+      render :json => {
+        :vip_money => Setting.i(:premium_energy_price),
+        :items => current_character.inventories.usable_with_payout(:energy_point)
+      }
+    when 'stamina'
+      render :json => {
+        :vip_money => Setting.i(:premium_stamina_price),
+        :items => current_character.inventories.usable_with_payout(:stamina_point)
+      }
+    end
   end
 end

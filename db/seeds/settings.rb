@@ -69,6 +69,7 @@ Setting[:fight_min_money_per_level] ||= 1.5
 Setting[:fight_max_difference] ||= 30
 Setting[:fight_weak_opponents] ||= true
 Setting[:fight_victim_hp_decrease_if_character_was_online] ||= 1
+Setting[:fight_optout_minimum_timeframe] ||= 7
 
 Setting[:rating_show_limit] ||= 20
 
@@ -102,6 +103,7 @@ Setting[:mission_help_enabled] ||= true
 
 Setting[:app_google_analytics_id] ||= ""
 Setting[:app_fan_page_url] ||= ""
+Setting[:app_standalone_enabled] ||= false
 
 Setting[:gifting_enabled] ||= true
 Setting[:gifting_item_show_limit] ||= 10

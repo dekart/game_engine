@@ -32,10 +32,7 @@
         </p>
 
         <div class="buttons">
-          <%= link_to(button(:reward), reward_monster_path(@fight.monster),
-                :remote => true,
-                :method => :post,
-                :onclick => 'DialogController.close()',
+          <%= link_to_function(button(:reward), "$.post('#{reward_monster_path(@fight.monster)}');DialogController.close();",
                 :"data-click-once" => true,
                 :class => "reward button"
               ) %>

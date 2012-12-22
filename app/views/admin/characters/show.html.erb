@@ -1,4 +1,4 @@
-<%= admin_title(t('.title', :name => character_name(@character), :level => @character.level)) %>
+<%= admin_title(t('.title', :name => admin_character_name(@character), :level => @character.level)) %>
 
 <div class="controls">
   <%= link_to(t(".controls.index"), admin_characters_path) %>
@@ -45,12 +45,14 @@
         <tr>
           <th><%= Item.name %></th>
           <th><%= t(".amount") %></th>
+          <th><%= t(".equipped") %></th>
         </tr>
 
         <% @character.inventories.sort_by{|i| i.name }.each do |inventory| %>
           <tr>
             <td><%= inventory.name %></td>
             <td><%= inventory.amount %></td>
+            <td><%= inventory.equipped %></td>
           </tr>
         <% end %>
       </table>
@@ -106,7 +108,7 @@
         <tr>
           <td><%= t('.fb_profile') %></td>
           <td>
-            <%= link_to(fb_name(@character.user, :useyou => false, :linked => false), fb_profile_url(@character.user),
+            <%= link_to(admin_fb_profile_name(@character), fb_profile_url(@character.user),
                   :target => :_blank
                 ) %>
           </td>
@@ -158,7 +160,7 @@
             <td><%= User.human_attribute_name("referrer") %></td>
             <td>
               <% if referrer = @character.user.referrer %>
-                <%= link_to(character_name(referrer.character), admin_character_url(referrer)) %>
+                <%= link_to(admin_character_name(referrer.character), admin_character_url(referrer)) %>
               <% end %>
             </td>
           </tr>

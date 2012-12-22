@@ -1,23 +1,11 @@
 module CharactersHelper
-  def character_nickname(character)
-    if current_user.friends_with?(character)
-      t('characters.real_name_with_nickname',
-        :first_name => character.user.first_name, 
-        :last_name  => character.user.last_name, 
-        :nickname   => character.name
-      )
-    else
-      character.name
-    end
-  end
-  
   def character_name(character_or_user, options = {})
     character = character_for(character_or_user)
 
     if character.name.blank?
       fb_name(character.user, {:linked => false, :useyou => false}.merge(options))
     else
-      character_nickname(character)
+      character.nickname(current_user.friends_with?(character))
     end
   end
 
@@ -25,7 +13,7 @@ module CharactersHelper
     character = character_for(character_or_user)
 
     options[:size] ||= :square
-    
+
     fb_profile_pic(character.user.facebook_id, :size => options[:size], :alt => character.name)
   end
 
@@ -64,10 +52,10 @@ module CharactersHelper
       ]
     )
   end
-  
+
   def character_level_group(character, group_size = 5)
     delta = character.level % group_size
-    
+
     "%03d-%03d" % [character.level - delta + 1, character.level + group_size - delta]
   end
 

@@ -1,4 +1,8 @@
 #current_contest
+  background:
+    position: top left
+    repeat: no-repeat
+
   #contest_info
     .name
 
@@ -23,6 +27,7 @@
         float: left
         width: auto
         margin-right: 15px
+        margin-bottom: 5px
 
       .fight
         +button($fight_buttons_fight_icon)
@@ -46,6 +51,17 @@
       float: left
       margin-right: 15px
 
+  .reward
+    margin: 20px 0
+    border: $main_border
+    padding: 20px
+
+    p
+      font-size: 16px
+      color: green
+
+    .controls .button
+      float: left
 
 
 

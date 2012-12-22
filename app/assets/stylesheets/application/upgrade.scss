@@ -74,11 +74,6 @@ $upgradeable_attributes: attack, defence, health, energy, stamina;
 
   button.save {
     margin-top: 20px;
-
-    &.disabled {
-      @include opacity(0.3);
-      cursor: normal;
-    }
   }
 
   .message.success{

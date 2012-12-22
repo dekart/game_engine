@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103132744) do
+ActiveRecord::Schema.define(:version => 20121220113614) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -84,11 +84,12 @@ ActiveRecord::Schema.define(:version => 20121103132744) do
   add_index "bank_operations", ["character_id"], :name => "index_bank_operations_on_character_id"
 
   create_table "character_contest_groups", :force => true do |t|
-    t.integer  "character_id",                    :null => false
+    t.integer  "character_id",                        :null => false
     t.integer  "points",           :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "contest_group_id",                :null => false
+    t.integer  "contest_group_id",                    :null => false
+    t.boolean  "reward_collected", :default => false
   end
 
   add_index "character_contest_groups", ["character_id"], :name => "index_character_contests_on_character_id"
@@ -177,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20121103132744) do
     t.boolean  "restrict_fighting",                              :default => false
     t.boolean  "restrict_market",                                :default => false
     t.boolean  "restrict_talking",                               :default => false
+    t.datetime "excluded_from_fights_at",                        :default => '1970-01-01 00:00:00', :null => false
   end
 
   add_index "characters", ["level", "fighting_available_at", "exclude_from_fights", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"
@@ -237,20 +239,21 @@ ActiveRecord::Schema.define(:version => 20121103132744) do
   add_index "contest_groups", ["contest_id"], :name => "index_contest_groups_on_contest_id"
 
   create_table "contests", :force => true do |t|
-    t.string   "name",                       :limit => 100, :default => "", :null => false
-    t.text     "description_when_finished",                                 :null => false
+    t.string   "name",                       :limit => 100, :default => "",    :null => false
+    t.text     "description_when_finished",                                    :null => false
     t.datetime "started_at"
     t.datetime "finished_at"
     t.integer  "duration_time",                             :default => 7
-    t.string   "state",                      :limit => 50,  :default => "", :null => false
-    t.string   "image_file_name",                           :default => "", :null => false
-    t.string   "image_content_type",         :limit => 100, :default => "", :null => false
+    t.string   "state",                      :limit => 50,  :default => "",    :null => false
+    t.string   "image_file_name",                           :default => "",    :null => false
+    t.string   "image_content_type",         :limit => 100, :default => "",    :null => false
     t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "points_type",                               :default => ""
     t.text     "description_when_started"
     t.text     "description_before_started"
+    t.boolean  "finish_notification_sent",                  :default => false
   end
 
   create_table "credit_orders", :force => true do |t|
@@ -749,6 +752,11 @@ ActiveRecord::Schema.define(:version => 20121103132744) do
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "simulations", :force => true do |t|
+    t.integer "admin_id"
+    t.integer "user_id"
   end
 
   create_table "stories", :force => true do |t|

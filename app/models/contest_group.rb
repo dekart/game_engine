@@ -1,7 +1,7 @@
 class ContestGroup < ActiveRecord::Base
   extend HasPayouts
 
-  POSITION_TO_SYM = {
+  PAYOUT_TRIGGER = {
     1 => :first,
     2 => :second,
     3 => :third,
@@ -22,7 +22,7 @@ class ContestGroup < ActiveRecord::Base
   has_many :characters,
     :through => :character_contest_groups
 
-  has_payouts POSITION_TO_SYM.values.uniq
+  has_payouts PAYOUT_TRIGGER.values.uniq
 
   validates_uniqueness_of :max_character_level, :scope => :contest_id
 
@@ -46,51 +46,34 @@ class ContestGroup < ActiveRecord::Base
     leaders_with_points(:limit => Setting.i(:contests_leaders_show_limit))
   end
 
-  def winners_with_points
-    leaders_with_points(:limit => POSITION_TO_SYM.length)
-  end
-
   def result_for(character)
     character_contest_groups.first(:conditions => {:character_id => character.id})
   end
 
   def position(character)
-    character_contest_group = character_contest_groups.first(
-      :select => 'character_contest_groups.points',
-      :conditions => {:character_id => character.id}
-    )
-
-    @conditions = ['character_contest_groups.points > ?', character_contest_group.points] if character_contest_group
+    if score = result_for(character)
+      @conditions = ['character_contest_groups.points > ?', score.points]
+    end
 
     leaders_with_points.count(:conditions => @conditions) + 1
   end
 
-  def apply_payouts
-    winners = []
+  def rewardable?(character)
+    !result_for(character).try(:reward_collected?) and PAYOUT_TRIGGER.keys.include?(position(character))
+  end
 
-    if payouts and winners_with_points = leaders_with_points.all(:limit => POSITION_TO_SYM.length) and winners_with_points.any?
-      winners = winners_with_points.map {|w| w.character }
+  def rewarded?(character)
+    result_for(character).try(:reward_collected?)
+  end
 
-      winners.each_with_index do |winner, i|
-        payouts.apply(winner, POSITION_TO_SYM[i + 1])
+  def apply_reward!(character)
+    transaction do
+      payouts.apply(character, PAYOUT_TRIGGER[position(character)], contest).tap do |result|
+        result_for(character).update_attribute(:reward_collected, true)
+
+        character.save!
       end
     end
-
-    winners
-  end
-
-  def apply_payouts!
-    winners = apply_payouts
-
-    Character.transaction do
-      winners.each {|c| c.save!}
-    end
-
-    winners
-  end
-
-  def payouts_for(character)
-    payouts_for_position(position_sym(character))
   end
 
   def previous_group
@@ -123,17 +106,4 @@ class ContestGroup < ActiveRecord::Base
       I18n.t("contest_groups.title.level_to", :from => start_level)
     end
   end
-
-  def payouts_for_position(position)
-    position = POSITION_TO_SYM[position] if position.is_a?(Integer)
-
-    payouts.find_all(position) if position
-  end
-
-  protected
-
-    def position_sym(character)
-      POSITION_TO_SYM[position(character)]
-    end
-
 end

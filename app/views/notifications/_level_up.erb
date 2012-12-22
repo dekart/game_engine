@@ -12,7 +12,7 @@
           :class => "publish button"
         ) if Setting.b(:stream_dialog_enabled) %>
 
-    <%= link_to_function(button(:upgrade), "UpgradeDialogController.show()",
+    <%= link_to_function(button(:upgrade), "DialogController.close();UpgradeDialogController.show();",
           :class => "upgrade button"
         ) %>
   </div>
@@ -23,6 +23,7 @@
     $(document).trigger('character.new_level');
 
     $(document).one('character.level_up_publish', function(){
+      DialogController.close();
       UpgradeDialogController.show();
     });
 

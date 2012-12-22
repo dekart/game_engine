@@ -3,6 +3,30 @@
 
   <%= render("ratings/buttons", :current => :contest) %>
 
+  <% if @contest.finished? and @current_group.rewardable?(current_character) %>
+    <div class="reward">
+      <p>
+        <%= t('.reward.text',
+              :contest => @contest.name,
+              :position => @current_group.position(current_character)
+            ) %>
+      </p>
+
+      <div class="controls clearfix">
+        <%= link_to(button(:collect_reward), collect_reward_contest_path(@contest),
+              :remote => true,
+              :method => :put,
+              :'data-click-once' => true,
+              :class => "collect_reward button"
+            ) %>
+
+        <%= link_to_function(button(:publish), stream_dialog(:contest_finished, @contest),
+              :class => "publish button"
+            ) if Setting.b(:stream_dialog_enabled) %>
+      </div>
+    </div>
+  <% end %>
+
   <div class="results">
 
     <% if @contest.groups.size > 1 %>

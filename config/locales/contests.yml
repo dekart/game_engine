@@ -6,13 +6,28 @@ en:
       current_position: "You are #%{value}"
       buttons:
         fights: "Fight!"
-        rating: "View Rating"
+        rating: "Rating & Rewards"
         monsters: "Monsters"
+        publish: "Publish My Score"
+
     group:
       points_types:
         fights_won: "Fights Won"
         total_monsters_damage: "Total Monsters Damage"
       payouts: "Prize"
+    show:
+      reward:
+        text: "Congratulations! You're #%{position} in your group so you can claim your reward right now!"
+      buttons:
+        collect_reward: "Collect Reward"
+        publish: "Brag About It"
+
+    collect_reward:
+      messages:
+        success: "Congratulations! You've successfully collected your reward! You deserve it!"
+        already_collected: "You already collected your reward."
+      you_received: "You received:"
+
   contest_groups:
     title:
       level_from_to: "Level %{from}-%{to}"

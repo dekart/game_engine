@@ -1,3 +1,5 @@
+#= require controllers/dialog_controller
+
 window.UpgradeDialogController = class extends DialogController
   @show: ->
     @controller ?= new @()
@@ -6,9 +8,7 @@ window.UpgradeDialogController = class extends DialogController
   className: 'dialog upgrade'
 
   render: ->
-    @html(
-      @.dialogWrapper(JST['views/upgrade_dialog'](@))
-    )
+    @.updateContent(JST['views/upgrade_dialog'](@))
 
   show: ->
     @loading = true
@@ -42,9 +42,6 @@ window.UpgradeDialogController = class extends DialogController
     @changes = {}
 
     @.render()
-
-  onDialogClose: ()=>
-    @.unbindEventListeners()
 
   onIncreaseClick: (e)=>
     attribute = $(e.currentTarget).parent().data('attribute')

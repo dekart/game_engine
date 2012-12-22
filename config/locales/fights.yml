@@ -30,7 +30,7 @@ en:
       best_items:
         best_offence: "Best Offence:"
         best_defence: "Best Defence:"
-        
+
     used_items:
       attacker: "Your items:"
       victim: "Their items:"
@@ -43,8 +43,26 @@ en:
       empty_set: "There are no opponents for you at this time."
       buttons:
         more_opponents: "More Opponents"
+      opt_out:
+        opt_out: "Don't want to fight?"
+        opt_in: "I changed my mind."
+        text: "You opted-out from player-vs-player fighting. Other players cannot attack you as well as you cannot attack them."
     victims:
       buttons:
         attack: "Attack!"
     victim_list:
-      loading: "Loading opponent list…"    
+      loading: "Loading opponent list…"
+
+    opt_out:
+      title: "Fighting Opt-out"
+      description: |
+        <p>
+          If you don't want to fight with other players (both attack and be attacked) - you can opt out from player-vs-player fighting. You'll be excluded from the fighting list and other players won't be able to attack you in any way.
+        </p>
+        <p>
+          It's possible to turn fighting back on, but we're limiting the minimum time frame for this feature to %{timeframe} days.
+        </p>
+      opted_out: "You opted-out from all player-vs-player fighting. Other players cannot attack you now, as well as you cannot attack them."
+      minimum_timeframe: "We're limiting the minimum time frame for this feature. You'll be able to turn fighting back on in"
+      checkbox_label: "Exclude me from fight lists"
+      save: "Save"

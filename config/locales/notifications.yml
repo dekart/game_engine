@@ -51,17 +51,21 @@ en:
         clan_state: "Status of the clan"
         clan_invitation_state: "Status of the invitation to join the clan"
         items_collection: "Items collection"
+        hit_listed: "Hitlist notifications"
+        new_wall_post: "New wall posts"
+        contest_finished: "Contest completion notifications"
       buttons:
         save: "Save"
 
     update_settings:
       success: "Your notification settings were updated!"
 
-    contest_winner:
-      title: "You're The Winner!"
-      text: "You've reached the #%{position} position in the %{name}. You've got the prize:"
+    contest_finished:
+      title: "The contest is over!"
+      text: "You've reached the #%{position} position in the %{name}. Congratulations!"
       buttons:
         publish: "Brag About It"
+        rating: "Rating & Rewards"
 
     exchange_offer_created:
       title: "New Offer Response"
@@ -115,16 +119,16 @@ en:
       buttons:
         collection: "View Collections"
 
-    wall_post:
+    new_wall_post:
       title: "New post on the wall"
       text: "%{author} posted something on your profile wall."
       buttons:
         read: "Read Post"
 
-    hit_listing:
+    hit_listed:
       title:
-        client: "Your target is to hit the list was killed"
-        victim: "You have been placed in the hit list"
+        client: "Job is Done"
+        victim: "You're in the hitlist!"
       text:
-        client: "Your target %{victim} is to hit the list was killed"
-        victim: "You have been placed in the hit list and set the reward %{reward}"
+        client: "You added %{victim} to the hitlist. Someone did the job and eliminated this person and got the reward."
+        victim: "Someone added you to the hitlist! They're offering a reward of %{reward} for your head. Brace yourself."

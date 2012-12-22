@@ -18,8 +18,7 @@
       <%= render(assignment) %>
     <% else %>
       <div class="controls">
-        <%= link_to(button(:promote), new_character_assignment_path(current_character, :role => role),
-              :remote => true,
+        <%= link_to_function(button(:promote), "AssignmentDialogController.show('#{role}')",
               :class => "promote button"
             ) %>
       </div>

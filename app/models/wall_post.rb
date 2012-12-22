@@ -17,9 +17,9 @@ class WallPost < ActiveRecord::Base
   validates_length_of :text, :maximum => 4.kilobytes
 
   attr_accessible :text, :private
-  
+
   after_save :schedule_notification, :unless => :author_post?
-  
+
   def visible_for?(viewer)
     !private? || author == viewer || character == viewer
   end
@@ -27,9 +27,9 @@ class WallPost < ActiveRecord::Base
   def author_post?
     character == author
   end
-  
+
   def schedule_notification
-    character.notifications.schedule(:wall_post,
+    character.notifications.schedule(:new_wall_post,
       :author_id => author.id,
       :post_id   => id
     )

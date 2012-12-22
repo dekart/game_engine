@@ -1,4 +1,6 @@
-window.DialogController = class extends Spine.Controller
+#= require controllers/base_controller
+
+window.DialogController = class extends BaseController
   @show: (content)->
     @controller ?= new @()
     @controller.show(content)
@@ -13,8 +15,6 @@ window.DialogController = class extends Spine.Controller
 
     @overlay = $("<div class='dialog_overlay'></div>")
 
-    @.setupEventListeners()
-
   setupEventListeners: ->
     @el.on('click', '.close', @.onCloseClick)
 
@@ -22,6 +22,8 @@ window.DialogController = class extends Spine.Controller
     @el.off('click', '.close', @.onCloseClick)
 
   show: (content)->
+    @.setupEventListeners()
+
     @content = content
 
     # Element should be in dom before we render any content into it, or content scripts won't work properly
@@ -30,21 +32,25 @@ window.DialogController = class extends Spine.Controller
     @.render()
 
     @overlay.css(opacity: 0).appendTo('#content').fadeTo(400, 0.7)
-    @el.css(@.calculateOffset()).fadeTo(400, 1)
+    @el.fadeTo(400, 1)
 
   close: ->
+    @.unbindEventListeners()
+
     @overlay.detach()
     @el.detach()
 
     $(document).trigger('close.dialog')
 
   render: ->
+    @.updateContent(@content)
+
+  updateContent: (content)->
     @html(
-      @.dialogWrapper(@content)
+      @.renderTemplate('dialog', content: content)
     )
 
-  dialogWrapper: (content)->
-    JST['views/dialog'](content: content)
+    @.updateOffset()
 
   onCloseClick: (e)=>
     e.preventDefault()
@@ -52,11 +58,16 @@ window.DialogController = class extends Spine.Controller
 
     @.close()
 
-  calculateOffset: ->
-    left = ($('#content').width() - @el.outerWidth()) / 2
+  updateOffset: ->
+    left = $('#content').offset().left + ($('#content').width() - @el.outerWidth(true)) / 2
     top = mouse.y - @el.outerHeight() / 2
 
-    {
-      left: left
-      top: if top < 0 then $('#content').offset().top + 100 else top
-    }
+    dialog_height = @el.outerHeight(true)
+    content_height = $('#content').outerHeight(true)
+
+    if top < 0
+      top = $('#content').offset().top + 100
+    else if top + dialog_height > content_height - 100
+      top = content_height - dialog_height - 100
+
+    @el.css(top: top, left: left)

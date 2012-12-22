@@ -6,8 +6,7 @@
   </div>
 
   <div class="buttons clearfix">
-    <%= link_to(button(:close), '#',
-          :onclick => 'DialogController.close()',
+    <%= link_to_function(button(:close), 'DialogController.close()',
           :class => "button"
         ) %>
   </div>

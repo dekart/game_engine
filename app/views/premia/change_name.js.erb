@@ -9,9 +9,8 @@
 
     <%= f.text_field :name, :label => t('.label') %>
 
-    <%= link_to_function(button(:apply), "$(this).parents('form').submit()",
+    <%= link_to_function(button(:apply), "$(this).parents('form').submit(); DialogController.close();",
           :'data-click-once' => true,
-          :onclick => "DialogController.close()",
           :class => 'apply button'
         ) %>
   <% end %>

@@ -4,7 +4,8 @@ class Character
       base.class_eval do
         has_many :collection_ranks,
           :class_name => "ItemCollectionRank",
-          :extend     => CollectionRankAssociationExtension
+          :extend     => CollectionRankAssociationExtension,
+          :dependent  => :delete_all
 
         has_many :collections,
           :class_name => "ItemCollection",

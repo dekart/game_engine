@@ -1,24 +1,33 @@
-<div id="current_contest" class="contest clearfix" style="<%= contest_logo_background(current_contest) %>">
+<div
+  id="current_contest"
+  class="contest clearfix"
+  <% if current_contest.pictures? %>
+    style="background-image: url('<%= current_contest.pictures.url(:promo) %>');"
+  <% end %>
+>
   <div id="contest_info">
-    <div class="description"><%= current_contest.description.html_safe if current_contest.description %></div>
+    <div class="description"><%= current_contest.description.html_safe %></div>
 
-    <% if current_contest.available? %>
+    <% if current_contest.started? %>
       <div class="current_position">
         <%= t('.current_position',
               :value => span_tag(current_contest.position(current_character), :value)
             ).html_safe %>
       </div>
-    <% end %>
 
-    <% unless current_contest.finished? %>
-      <%= contest_timer(current_contest) %>
-    <% end %>
-
-    <% if current_contest.available? %>
       <div class="buttons clearfix">
-        <%= contest_points_type_button(current_contest) %>
+        <% if current_contest.finished? %>
+          <%= link_to_function(button(:publish), stream_dialog(:contest_finished, current_contest),
+                :class => "publish button"
+              ) if Setting.b(:stream_dialog_enabled) %>
+        <% else %>
+          <%= contest_action_button(current_contest) %>
+        <% end %>
+
         <%= link_to(button(:rating), contest_path(current_contest), :class => 'button rating') %>
       </div>
     <% end %>
+
+    <%= contest_timer(current_contest) unless current_contest.finished? %>
   </div>
 </div>

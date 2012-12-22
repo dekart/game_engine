@@ -1,0 +1,32 @@
+<% if @loading: %>
+  <%= I18n.t('common.loading') %>
+<% else: %>
+  <h1><%= I18n.t('fights.opt_out.title') %></h1>
+
+  <% if @status.opted_out: %>
+    <p><%= I18n.t('fights.opt_out.opted_out') %></p>
+
+    <% if @status.next_change_in > 0: %>
+      <p>
+        <%= I18n.t('fights.opt_out.minimum_timeframe') %>
+        <span id="fight_optin_timer"></span>
+      </p>
+    <% else: %>
+      <p>
+        <input id="fight_optout" type="checkbox" <%= 'checked' if @status.opted_out %> >
+        <label for="fight_optout"><%= I18n.t('fights.opt_out.checkbox_label') %></label>
+      </p>
+
+      <button class="save"><%= I18n.t('fights.opt_out.save') %></button>
+    <% end %>
+  <% else: %>
+    <%=@safe I18n.t('fights.opt_out.description', timeframe: @status.minimum_timeframe) %>
+
+    <p>
+      <input id="fight_optout" type="checkbox" <%= 'checked' if @status.opted_out %> >
+      <label for="fight_optout"><%= I18n.t('fights.opt_out.checkbox_label') %></label>
+    </p>
+
+    <button class="save"><%= I18n.t('fights.opt_out.save') %></button>
+  <% end %>
+<% end %>

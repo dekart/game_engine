@@ -3,6 +3,10 @@ class AppRequest::MonsterInvite < AppRequest::Base
     target
   end
 
+  def correct?
+    target.is_a?(Monster) && target.progress?
+  end
+
   protected
 
   def previous_similar_requests

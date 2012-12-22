@@ -1,0 +1,61 @@
+.dialog.refill {
+  .options {
+    @include clearfix;
+
+    .option {
+      width: 150px;
+      height: 150px;
+
+      float: left;
+      margin: 5px;
+
+      text-align: center;
+
+      .name {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      &.vip_money {
+        background: {
+          position: top center;
+          repeat: no-repeat;
+        }
+
+        .name {
+          padding-top: 80px;
+        }
+      }
+
+      &.item {
+        .picture {
+          width: 72px;
+          height: 72px;
+          position: relative;
+          margin: 0 auto;
+
+          .amount {
+            position: absolute;
+            bottom: 3px;
+            right: 0;
+            background-color: #0f0f0f;
+            color: white;
+            padding: 0 4px;
+          }
+        }
+
+        .name {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  @each $attribute in health, energy, stamina {
+    &.#{ $attribute } {
+      .option.vip_money {
+        background-image: image-url('refill_#{ $attribute }.png');
+      }
+    }
+  }
+}

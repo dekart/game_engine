@@ -4,48 +4,36 @@ en:
       attack:
         title: "Fighter"
         description: "Bonus to attack"
-        effect:
-          full: "+%{value} to attack"
-          short: "+%{value}"
+        effect: "+%{value}"
       defence:
         title: "Guardian"
         description: "Bonus to defence"
-        effect:
-          full: "+%{value} to defence"
-          short: "+%{value}"
+        effect: "+%{value}"
       fight_damage:
         title: "Healer"
         description: "Reduce damage from fights"
-        effect:
-          full: "%{value}% less damage from fights"
-          short: "-%{value}%"
+        effect: "+%{value}%"
       fight_income:
         title: "Raider"
         description: "More money from fight"
-        effect:
-          full: "%{value}% more money from fights"
-          short: "+%{value}%"
+        effect: "+%{value}%"
       mission_energy:
         title: "Scout"
         description: "Saves energy on missions"
-        effect:
-          full: "%{value}% chance to complete mission for free"
-          short: "%{value}%"
+        effect: "%{value}%"
       mission_income:
         title: "Bagman"
         description: "More money from missions"
-        effect:
-          full: "%{value}% more money from missions"
-          short: "+%{value}%"
+        effect: "+%{value}%"
+
     new:
       title: "Promote Alliance Member"
-      not_assigned:
-        title: "Not Assigned"
+      user: "Alliance Member"
+      available:
+        title: "Available"
         empty_set: "You have no free alliance members"
       assigned:
         title: "Reassign"
         empty_set: "You have no assigned alliance members"
-      columns:
-        user: "Alliance Member"
       buttons:
         promote: "Promote"

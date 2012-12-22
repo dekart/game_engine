@@ -36,12 +36,15 @@ en:
       buttons:
         buy: "Buy Gems"
 
-
     buy_vip:
+      title: "Buy %{vip_money} using Facebook Credits"
+      select_package: "Select Package:"
+      vip_money: "Gems"
+      credits: "Facebook Credits"
+      discount: "%{discount}% off!"
+      earn_credits: "Earn More Credits"
       buttons:
-        earn_credits: "Earn Credits"
-      earn_credits:
-        note: 'Need more Facebook Credits? You can earn them by completing special offers provided by Facebook partners! It’s easy and secure.'
+        purchase: "Continue"
 
     change_name:
       title: "Change Your Nickname"
@@ -63,16 +66,18 @@ en:
         failure: "You don't have enough Gems"
       buttons:
         get_more_vip: "Get More Gems"
-    refill_dialog:
+
+    refill:
+      health:
+        title: "Refill Health"
+        text: "You've run out of health! You should either wait while your health replenishes or refill it using one of the following ways:"
+      energy:
+        title: "Refill Energy"
+        text: "You've run out of energy! You should either wait while your energy replenishes or refill it using one of the following ways:"
+      stamina:
+        title: "Refill Stamina"
+        text: "You've run out of stamina! You should either wait while your stamina replenishes or refill it using one of the following ways:"
+      premium: "Instant Refill"
       buttons:
-        refill: "Refill"
-        cancel: "Cancel"
-        gem_market: "Get More Gems"
-      refill_health:
-        text: "Would you like to refill your health using Gems? Full health refull would cost:"
-      refill_energy:
-        text: "Would you like to refill your energy using Gems? Full energy refull would cost:"
-      refill_stamina:
-        text: "Would you like to refill your stamina using Gems? Full stamina refull would cost:"
-      dont_have_gems: "You don't have enough gems to refill."
-      
+        premium_refill: "Refill for"
+        use_item: 'Use'

@@ -17,7 +17,6 @@
 //= require ./application/link_lock
 //= require ./application/spinner
 //= require ./application/app_requests
-//= require ./application/facebook_credits
 //= require ./application/promo_block
 //= require ./application/invite_dialog
 //= require ./application/stream_dialog
@@ -31,6 +30,7 @@
 // Spine-based part of the application
 //= require spine/spine
 //= require_tree ./models
+//= require_tree ./helpers
 //= require_tree ./controllers
 //= require_tree ./views
 
@@ -134,23 +134,6 @@ var PropertyList = {
   }
 };
 
-var AssignmentForm = {
-  setup: function(){
-    $('#new_assignment #assignment_tabs').tabs();
-
-    $('#new_assignment .relations .relation').click(AssignmentForm.select_relation);
-  },
-
-  select_relation: function(){
-    $('#new_assignment .relations .relation').removeClass('selected');
-
-    var $this = $(this);
-
-    $this.addClass('selected');
-
-    $('#assignment_relation_id').val($this.data('value'));
-  }
-};
 
 
 var Equipment = {

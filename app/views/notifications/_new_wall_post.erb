@@ -1,4 +1,4 @@
-<% dialog :wall_post_notification do |d| %>
+<% dialog :new_wall_post_notification do |d| %>
   <h2><%= t(".title") %></h2>
 
   <div class="wall_post clearfix">
@@ -7,7 +7,7 @@
       <%= t(".text", :author => character_name(notification.author)) %>
     </div>
   </div>
-  
+
   <div class="buttons">
     <%= link_to(button(:read), character_path(current_character), :class => "button read") %>
   </div>

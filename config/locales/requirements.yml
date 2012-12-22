@@ -60,15 +60,14 @@ en:
         message: "Your attack level is lower than required. You need to get addition attribute points to improve your attack to the required level. You can visit the %{premium_page} to get additional attribute points."
       defence:
         message: "Your defence level is lower than required. You need to get addition attribute points to improve your defence to the required level. You can visit the %{premium_page} to get additional attribute points."
-        
+
       energy_point:
         restorable:
           message: "You don't have enough energy! Take a rest until your energy replenishes to %{required_value} points. You need to wait for about %{restore_time} minutes."
-          title: "Full Energy Refill"
         low_base_level:
           message: "Your energy level is lower than required. You need to get addition attribute points to improve your energy to the required level. You can visit the %{premium_page} to get additional attribute points."
         buttons:
-          refill: "Refill for %{price}"
+          refill: "Refill Now"
           get_points: "Get Points"
 
       stamina_point:
@@ -100,19 +99,19 @@ en:
         buy_missing: "You need %{amount} more. You can buy them from Shop for %{price}."
         buttons:
           buy: "Buy"
-          
+
       basic_money:
         message: "You don't have enough Money! You need %{required_value} Money"
         get_more: "You can also visit the %{premium_page} to get Money in exchange to Gems."
         visit_to_mission: "You can do some %{mission_page} to earn money." # ***
         buttons:
           get_more_money: "Get More Money"
-          
+
       vip_money:
         message: "You don't have enough Gems! You need %{required_value} Gems."
         message_without_value: "You don't have enough Gems!"
         buttons:
-          get_more_vip: "Get More Gems"
-          
+          buy_vip_money: "Buy Gems"
+
       property:
         message: "%{name} (Level %{level})"

@@ -177,16 +177,17 @@ module StreamHelper
     ]
   end
 
-  def won_contest_story_options(notification)
+  def contest_finished_story_options(contest)
     [
       {
-        :position => notification.contest_position,
-        :name => notification.contest.name
+        :position => contest.position(current_character),
+        :name => contest.name
       },
       {
-        :position => notification.contest_position,
-        :name => notification.contest.name
-      }
+        :position => contest.position(current_character),
+        :name => contest.name
+      },
+      (contest.pictures.url(:stream) if contest.pictures?)
     ]
   end
 
@@ -245,14 +246,16 @@ module StreamHelper
       name, description, action_link = I18n.t(["title", "description", "action_link"], {:scope => "stories.#{ story_alias }"}.merge(interpolation_options))
     end
 
+    url = stream_url(story, "stream_#{ story_alias }", story_data)
+
     {
       :attachment => {
         :name => name,
         :description => description.to_s.html_safe,
-        :href => stream_url(story, :"stream_#{ story_alias }_name", story_data),
-        :media => stream_image(image || :"stream_#{ story_alias }", stream_url(story, :"stream_#{ story_alias }_image", story_data))
+        :href => url,
+        :media => stream_image(image || :"stream_#{ story_alias }", url)
       },
-      :action_links => stream_action_link(action_link, stream_url(story, :"stream_#{ story_alias }_link", story_data))
+      :action_links => stream_action_link(action_link, url)
     }
   end
 

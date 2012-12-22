@@ -139,6 +139,12 @@ class AppRequest::Base < ActiveRecord::Base
   after_save    :clear_exclude_ids_cache, :if => :sender
 
   class << self
+    def find_by_graph_id(id)
+      facebook_id, receiver = id.split('_')
+
+      where(:facebook_id => facebook_id, :receiver_id => receiver).first
+    end
+
     def cache_key(target)
       "user_#{ target.is_a?(User) ? target.facebook_id : target.to_i }_app_request_counter"
     end
@@ -148,9 +154,34 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def schedule_deletion(*ids_or_requests)
-      ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.id : value}.uniq
+      ids = ids_or_requests.flatten.compact.collect{|value| value.is_a?(AppRequest::Base) ? value.graph_api_id : value}.uniq
 
-      Delayed::Job.enqueue(Jobs::RequestDelete.new(ids)) unless ids.empty?
+      ids.each do |id|
+        $redis.sadd("app_requests_for_deletion", id)
+      end
+    end
+
+    def delete_from_facebook!(ids)
+      result = Facepalm::Config.default.api_client.batch do |batch_api|
+        ids.collect{|id| batch_api.delete_object(id) }
+      end
+
+      result.each_with_index do |r, i|
+        next unless r.is_a?(Koala::Facebook::APIError)
+
+        result[i] = r.message.include?('Specified object cannot be found')
+      end
+    end
+
+    def reschedule_failed_for_deletion
+      failed = $redis.smembers("app_requests_failed_deletion")
+
+      failed.each do |id|
+        $redis.multi do
+          $redis.sadd('app_requests_for_deletion', id)
+          $redis.srem('app_requests_failed_deletion', id)
+        end
+      end
     end
 
     def receiver_ids
@@ -236,14 +267,6 @@ class AppRequest::Base < ActiveRecord::Base
 
   def graph_api_id
     receiver_id ? "#{ facebook_id }_#{ receiver_id }" : facebook_id
-  end
-
-  def delete_from_facebook!
-    Facepalm::Config.default.api_client.delete_object(graph_api_id)
-  rescue Koala::Facebook::APIError => e
-    logger.error "AppRequest data update error: #{ e }"
-
-    mark_broken! if can_mark_broken?
   end
 
   def type_name
