@@ -139,6 +139,12 @@ class AppRequest::Base < ActiveRecord::Base
   after_save    :clear_exclude_ids_cache, :if => :sender
 
   class << self
+    def find_by_graph_id(id)
+      facebook_id, receiver = id.split('_')
+
+      where(:facebook_id => facebook_id, :receiver_id => receiver).first
+    end
+
     def cache_key(target)
       "user_#{ target.is_a?(User) ? target.facebook_id : target.to_i }_app_request_counter"
     end
