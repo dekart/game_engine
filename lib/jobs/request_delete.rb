@@ -1,8 +1,16 @@
 module Jobs
-  class RequestDelete < Struct.new(:request_ids)
+  class RequestDelete
     def perform
-      AppRequest::Base.find_all_by_id(request_ids).each do |request|
-        request.delete_from_facebook!
+      request_ids = $redis.smembers("app_requests_for_deletion")
+
+      request_ids.each_slice(50) do |ids|
+        batch_result = AppRequest::Base.delete_from_facebook!(ids)
+
+        batch_result.each_with_index do |result, index|
+          $redis.srem("app_requests_for_deletion", ids[index])
+
+          $redis.sadd("app_requests_failed_deletion", ids[index]) if result != true
+        end
       end
     end
   end

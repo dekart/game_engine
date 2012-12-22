@@ -143,6 +143,6 @@
 
 <div class="need_more_vip">
   <p><%= t('.need_more') %></p>
-  
-  <%= link_to(button(:buy), '#buy_vip_money', {:class => "buy button"})%>
+
+  <%= link_to_function(button(:buy), "BuyVipDialogController.show()", :class => "button")%>
 </div>

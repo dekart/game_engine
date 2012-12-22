@@ -12,3 +12,4 @@ translations:
       - "*.assignments"
       - "*.fights.opt_out"
       - "*.premia.refill"
+      - "*.premia.buy_vip"
