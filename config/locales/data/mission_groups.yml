@@ -1,0 +1,8 @@
+---
+en:
+  data:
+    mission_groups:
+      tutorial: Tutorial
+      adventurer: Adventurer
+      recruit: Recruit
+      special: special

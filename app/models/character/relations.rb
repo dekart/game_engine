@@ -19,6 +19,10 @@ class Character
       end
     end
 
+    def alliance_size
+      relations.effective_size
+    end
+
     module RelationsAssociationExtension
       def effective_size
         maximum_size? ? Setting.i(:relation_max_alliance_size) : size + 1

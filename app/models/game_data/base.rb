@@ -27,6 +27,7 @@ module GameData
 
       @rewards = {}
       @reward_previews = {}
+      @requirements = nil
     end
 
     def reward_on(key, &block)
@@ -48,5 +49,16 @@ module GameData
         (@reward_previews[key] || @rewards[key]).try(:call, reward)
       end
     end
+
+    def requires(&block)
+      @requirements = block
+    end
+
+    def requirements(character)
+      Requirement.new(character) do |r|
+        @requirements.try(:call, r)
+      end
+    end
+
   end
 end

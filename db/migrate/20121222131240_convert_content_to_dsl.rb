@@ -272,8 +272,55 @@ class ConvertContentToDsl < ActiveRecord::Migration
       end
     end
 
-    #contest
-    #help_page
+
+    announce 'Converting mission groups...'
+
+    group_names = {}
+
+    File.open(Rails.root.join('db/data/mission_groups.rb'), 'w+') do |dsl|
+      MissionGroup.without_state(:deleted).order(:position).each do |group|
+        key = group.name.parameterize.underscore
+
+        FileUtils.mkdir_p(Rails.root.join("db/data/missions/#{ key }"))
+
+        tags = []
+        tags << :hide_unsatisfied if group.hide_unsatisfied
+
+        group_names[key] = group.name
+
+        code = ''
+
+        code << %{
+          g.tags = #{ tags.inspect }
+        } unless tags.empty?
+
+        [:success, :failure, :repeat_success, :repeat_failure, :level_complete, :mission_complete, :mission_group_complete].each do |t|
+          code << payouts_to_dsl('g', group.payouts, t)
+        end
+
+        code << requirements_to_dsl('g', group.requirements)
+
+        code = %{
+          GameData::MissionGroup.define :#{ key } do |g|
+            #{code}
+          end
+        }
+
+        if group.hidden?
+          dsl.puts %{
+            if false # It's hidden
+              #{code}
+            end
+          }
+        else
+          dsl.puts code
+        end
+      end
+    end
+
+    File.open(Rails.root.join('config/locales/data/mission_groups.yml'), 'w+') do |locale|
+      locale.puts YAML.dump({'en' => {'data' => {'mission_groups' => group_names}}})
+    end
     #mission
     #mission_group
     #mission_level
@@ -283,6 +330,9 @@ class ConvertContentToDsl < ActiveRecord::Migration
     #story
     ##tip
     #translation
+    #contest
+    #help_page
+    #character_type
 
     say 'Done!'
   end
@@ -412,6 +462,51 @@ class ConvertContentToDsl < ActiveRecord::Migration
         #{preview_code}
       end
     } if preview_required
+
+    code
+  end
+
+  def requirements_to_dsl(variable, requirements)
+    return '' if requirements.empty?
+
+    code = %{
+      #{variable}.requires do |r|
+    }
+
+    requirements.each do |requirement|
+      case requirement
+        when Requirements::Alliance
+          code << "r.alliance_size #{ requirement.value }"
+        when Requirements::Attack
+          code << "r.attack #{ requirement.value }"
+        when Requirements::BasicMoney
+          code << "r.basic_money #{ requirement.value }"
+        when Requirements::CharacterType
+          code << "r.character_type :#{ requirement.character_type.name.parameterize.underscore }"
+        when Requirements::Defence
+          code << "r.defence #{ requirement.value }"
+        when Requirements::EnergyPoint
+          code << "r.ep #{ requirement.value }"
+        when Requirements::HealthPoint
+          code << "r.hp #{ requirement.value }"
+        when Requirements::Item
+          code << "r.item :#{ requirement.item.alias }#{ ', ' + requirement.amount.to_s if requirement.amount > 1 }"
+        when Requirements::Level
+          code << "r.level #{ requirement.value }"
+        when Requirements::Property
+          code << "r.property :#{ requirement.property_type.name.parameterize.underscore }"
+        when Requirements::StaminaPoint
+          code << "r.sp #{ requirement.value }"
+        when Requirements::VipMoney
+          code << "r.vip_money #{ requirement.value }"
+        end
+
+      code << "\n"
+    end
+
+    code << %{
+      end
+    }
 
     code
   end
