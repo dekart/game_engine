@@ -1,4 +1,4 @@
-class ConvertItemsToDsl < ActiveRecord::Migration
+class ConvertContentToDsl < ActiveRecord::Migration
   def up
     FileUtils.mkdir_p(Rails.root.join('config/locales/data'))
 
@@ -17,11 +17,21 @@ class ConvertItemsToDsl < ActiveRecord::Migration
 
         group_names[key] = group.name
 
-        dsl.puts %{
+        code = %{
           GameData::ItemGroup.define :#{ key } do |g|
             g.tags = #{ tags.inspect }
           end
         }
+
+        if group.hidden?
+          dsl.puts %{
+            if false # It's hidden
+              #{code}
+            end
+          }
+        else
+          dsl.puts code
+        end
       end
     end
 
@@ -93,7 +103,7 @@ class ConvertItemsToDsl < ActiveRecord::Migration
 
       code << payouts_to_dsl('i', item.payouts, :use)
 
-      File.open(Rails.root.join("db/data/items/#{item.item_group.name.parameterize.underscore}/#{key}.rb"), 'w+') do |dsl|
+      File.open(Rails.root.join("db/data/items/#{item.item_group.name.parameterize.underscore}/#{key}.rb#{ '.hidden' if item.hidden? }"), 'w+') do |dsl|
         dsl.puts %{
           GameData::Item.define :#{key} do |i|
             i.group = :#{ item.item_group.name.parameterize.underscore }
@@ -175,7 +185,7 @@ class ConvertItemsToDsl < ActiveRecord::Migration
       code << payouts_to_dsl('c', collection.payouts, :collected)
       code << payouts_to_dsl('c', collection.payouts, :repeat_collected)
 
-      File.open(Rails.root.join("db/data/item_collections/#{key}.rb"), 'w+') do |dsl|
+      File.open(Rails.root.join("db/data/item_collections/#{key}.rb#{ '.hidden' if collection.hidden? }"), 'w+') do |dsl|
         dsl.puts %{
           GameData::ItemCollection.define :#{ key } do |c|
             #{code}
@@ -188,9 +198,81 @@ class ConvertItemsToDsl < ActiveRecord::Migration
       locale.puts YAML.dump('en' => {'data' => {'item_collections' => collection_names}})
     end
 
-    #achievement_type
+
+    announce 'Converting achievement types...'
+
+    FileUtils.mkdir_p(Rails.root.join('db/data/achievements'))
+
+    achievement_locale = {}
+
+    AchievementType.without_state(:deleted).each do |achievement|
+      key = achievement.name.parameterize.underscore
+
+      achievement_locale[key] = {
+        'name' => achievement.name,
+        'description' => achievement.description
+      }
+
+      code = ''
+
+      code << %{
+        a.condition do |character|
+          character.#{achievement.key} >= #{achievement.value}
+        end
+      }
+
+      code << payouts_to_dsl('a', achievement.payouts, :achieve)
+
+      File.open(Rails.root.join("db/data/achievements/#{key}.rb#{ '.hidden' if achievement.hidden? }"), 'w+') do |dsl|
+        dsl.puts %{
+          GameData::Achievement.define :#{ key } do |c|
+            #{code}
+          end
+        }
+      end
+    end
+
+    File.open(Rails.root.join('config/locales/data/achievements.yml'), 'w+') do |locale|
+      locale.puts YAML.dump('en' => {'data' => {'achievements' => achievement_locale}})
+    end
+
+
+    announce 'Converting credit packages...'
+
+    File.open(Rails.root.join("db/data/credit_packages.rb"), 'w+') do |dsl|
+      CreditPackage.without_state(:deleted).each do |package|
+        code = ''
+
+        code << %{
+          p.tags = [:default]
+        } if package.default
+
+        code << %{
+          p.vip_money = #{package.vip_money}
+        }
+        code << %{
+          p.price = #{package.price}
+        }
+
+        code = %{
+          GameData::CreditPackage.define :package_#{ package.id } do |c|
+            #{code}
+          end
+        }
+
+        if package.hidden?
+          dsl.puts %{
+            if false # It's hidden
+              #{code}
+            end
+          }
+        else
+          dsl.puts code
+        end
+      end
+    end
+
     #contest
-    #credit_package
     #help_page
     #mission
     #mission_group
@@ -199,7 +281,7 @@ class ConvertItemsToDsl < ActiveRecord::Migration
     #property_type
     #setting
     #story
-    #tip
+    ##tip
     #translation
 
     say 'Done!'

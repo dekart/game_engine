@@ -1,0 +1,22 @@
+
+          GameData::ItemCollection.define :hidden_collection do |c|
+            
+        c.min_level = 2
+      
+        c.items = {
+          :item_6738267 => 2,
+:item_766701589 => 1
+        }
+      
+      c.reward_on :collected do |r|
+    r.give_experience(50)
+
+      end
+    
+      c.reward_on :repeat_collected do |r|
+    r.give_experience(50)
+
+      end
+    
+          end
+        
