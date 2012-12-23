@@ -18,8 +18,8 @@
       
           i.effects = {:attack=>5, :defence=>5}
         
-          i.reward_on :use do |r|
-        r.increase_attribute(:attack, 1) if Dice.chance(10) 
+      i.reward_on :use do |r|
+    r.increase_attribute(:attack, 1) if Dice.chance(10) 
 r.give_upgrade_points(1)
 r.increase_attribute(:defence, 1)
 r.give_energy(1)
@@ -35,10 +35,10 @@ r.increase_attribute(:health, 1)
 r.increase_attribute(:stamina, 1)
 r.give_random_item(:mega_set, true)
 
-          end
-        
-          i.reward_preview_on :use do |r|
-            r.increase_attribute(:attack, 1)
+      end
+    
+      i.reward_preview_on :use do |r|
+        r.increase_attribute(:attack, 1)
 r.give_upgrade_points(1)
 r.increase_attribute(:defence, 1)
 r.give_energy(1)
@@ -54,7 +54,7 @@ r.increase_attribute(:health, 1)
 r.increase_attribute(:stamina, 1)
 r.give_random_item(:mega_set, true)
 
-          end
-        
+      end
+    
           end
         

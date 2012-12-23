@@ -91,121 +91,7 @@ class ConvertItemsToDsl < ActiveRecord::Migration
         }
       end
 
-      unless item.payouts.empty?
-        code << %{
-          i.reward_on :use do |r|
-        }
-
-        preview_code = ""
-
-        item.payouts.each do |payout|
-          instruction = case payout
-            when Payouts::AttackPointsTotal
-              if payout.action == :add
-                %{r.increase_attribute(:attack, #{payout.value})}
-              else
-                %{r.decrease_attribute(:attack, #{payout.value})}
-              end
-            when Payouts::BasicMoney
-              if payout.action == :add
-                %{r.give_basic_money(#{payout.value})}
-              else
-                %{r.take_basic_money(#{payout.value})}
-              end
-            when Payouts::DefencePointsTotal
-              if payout.action == :add
-                %{r.increase_attribute(:defence, #{payout.value})}
-              else
-                %{r.decrease_attribute(:defence, #{payout.value})}
-              end
-            when Payouts::EnergyPoint
-              if payout.action == :add
-                %{r.give_energy(#{payout.value}#{ ', true' if payout.can_exceed_maximum })}
-              else
-                %{r.take_energy(#{payout.value})}
-              end
-            when Payouts::EnergyPointsTotal
-              if payout.action == :add
-                %{r.increase_attribute(:energy, #{payout.value})}
-              else
-                %{r.decrease_attribute(:energy, #{payout.value})}
-              end
-            when Payouts::Experience
-              %{r.give_experience(#{payout.value})}
-            when Payouts::HealthPoint
-              if payout.action == :add
-                %{r.give_health(#{payout.value}#{ ', true' if payout.can_exceed_maximum })}
-              else
-                %{r.take_health(#{payout.value})}
-              end
-            when Payouts::HealthPointsTotal
-              if payout.action == :add
-                %{r.increase_attribute(:health, #{payout.value})}
-              else
-                %{r.decrease_attribute(:health, #{payout.value})}
-              end
-            when Payouts::Item
-              if payout.action == :add
-                %{r.give_item(:#{payout.item.alias}, #{payout.amount})}
-              else
-                %{r.take_item(:#{payout.item.alias}, #{payout.amount})}
-              end
-            when Payouts::Mercenary
-              if payout.action == :add
-                %{r.give_mercenaries(#{payout.value})}
-              else
-                %{r.take_mercenaries(#{payout.value})}
-              end
-            when Payouts::StaminaPoint
-              if payout.action == :add
-                %{r.give_stamina(#{payout.value}#{ ', true' if payout.can_exceed_maximum })}
-              else
-                %{r.take_stamina(#{payout.value})}
-              end
-            when Payouts::StaminaPointsTotal
-              if payout.action == :add
-                %{r.increase_attribute(:stamina, #{payout.value})}
-              else
-                %{r.decrease_attribute(:stamina, #{payout.value})}
-              end
-            when Payouts::UpgradePoint
-              if payout.action == :add
-                %{r.give_upgrade_points(#{payout.value})}
-              else
-                %{r.take_upgrade_points(#{payout.value})}
-              end
-            when Payouts::VipMoney
-              if payout.action == :add
-                %{r.give_vip_money(#{payout.value})}
-              else
-                %{r.take_vip_money(#{payout.value})}
-              end
-            when Payouts::RandomItem
-              if payout.action == :add
-                %{r.give_random_item(:#{ payout.item_set.name.parameterize.underscore }#{', true' if payout.shift_item_set})}
-              else
-                %{r.take_random_item(:#{ payout.item_set.name.parameterize.underscore }#{', true' if payout.shift_item_set})}
-              end
-            end
-
-          code << instruction
-          code << %{ if Dice.chance(#{payout.chance}) } if payout.chance < 100
-          code << "\n"
-
-          preview_code << instruction
-          preview_code << "\n"
-        end
-
-        code << %{
-          end
-        }
-
-        code << %{
-          i.reward_preview_on :use do |r|
-            #{preview_code}
-          end
-        }
-      end
+      code << payouts_to_dsl('i', item.payouts, :use)
 
       File.open(Rails.root.join("db/data/items/#{item.item_group.name.parameterize.underscore}/#{key}.rb"), 'w+') do |dsl|
         dsl.puts %{
@@ -248,21 +134,203 @@ class ConvertItemsToDsl < ActiveRecord::Migration
       ItemSet.all.each do |set|
         key = set.name.parameterize.underscore
 
-        items = set.items.map{|i, c| "[#{c}, :#{ i.alias }]" }
+        items = set.items.map{|i, c| ":#{ i.alias } => #{c}" }
 
         dsl.puts %{
           GameData::ItemSet.define :#{ key } do |g|
-            g.items = [
+            g.items = {
               #{ items.join(",\n") }
-            ]
+            }
           end
         }
       end
     end
 
+
+    announce 'Converting item collections...'
+
+    FileUtils.mkdir_p(Rails.root.join('db/data/item_collections'))
+
+    collection_names = {}
+
+    ItemCollection.without_state(:deleted).each do |collection|
+      key = collection.name.parameterize.underscore
+
+      collection_names[key] = collection.name
+
+      code = ''
+
+      code << %{
+        c.min_level = #{collection.level}
+      } if collection.level > 1
+
+      code << %{
+        c.items = {
+          %s
+        }
+      } % collection.items.map do |item|
+        ":#{item.alias} => #{collection.amount_of_item(item)}"
+      end.join(",\n")
+
+      code << payouts_to_dsl('c', collection.payouts, :collected)
+      code << payouts_to_dsl('c', collection.payouts, :repeat_collected)
+
+      File.open(Rails.root.join("db/data/item_collections/#{key}.rb"), 'w+') do |dsl|
+        dsl.puts %{
+          GameData::ItemCollection.define :#{ key } do |c|
+            #{code}
+          end
+        }
+      end
+    end
+
+    File.open(Rails.root.join('config/locales/data/item_collections.yml'), 'w+') do |locale|
+      locale.puts YAML.dump('en' => {'data' => {'item_collections' => collection_names}})
+    end
+
+    #achievement_type
+    #contest
+    #credit_package
+    #help_page
+    #mission
+    #mission_group
+    #mission_level
+    #monster_type
+    #property_type
+    #setting
+    #story
+    #tip
+    #translation
+
     say 'Done!'
   end
 
   def down
+  end
+
+  def payouts_to_dsl(variable, payouts, trigger)
+    return '' if payouts.find_all(trigger).empty?
+
+    code = %{
+      #{variable}.reward_on :#{trigger} do |r|
+    }
+
+    preview_code = ""
+    preview_required = false
+
+    payouts.each do |payout|
+      instruction = case payout
+        when Payouts::AttackPointsTotal
+          if payout.action == :add
+            %{r.increase_attribute(:attack, #{payout.value})}
+          else
+            %{r.decrease_attribute(:attack, #{payout.value})}
+          end
+        when Payouts::BasicMoney
+          if payout.action == :add
+            %{r.give_basic_money(#{payout.value})}
+          else
+            %{r.take_basic_money(#{payout.value})}
+          end
+        when Payouts::DefencePointsTotal
+          if payout.action == :add
+            %{r.increase_attribute(:defence, #{payout.value})}
+          else
+            %{r.decrease_attribute(:defence, #{payout.value})}
+          end
+        when Payouts::EnergyPoint
+          if payout.action == :add
+            %{r.give_energy(#{payout.value}#{ ', true' if payout.can_exceed_maximum })}
+          else
+            %{r.take_energy(#{payout.value})}
+          end
+        when Payouts::EnergyPointsTotal
+          if payout.action == :add
+            %{r.increase_attribute(:energy, #{payout.value})}
+          else
+            %{r.decrease_attribute(:energy, #{payout.value})}
+          end
+        when Payouts::Experience
+          %{r.give_experience(#{payout.value})}
+        when Payouts::HealthPoint
+          if payout.action == :add
+            %{r.give_health(#{payout.value}#{ ', true' if payout.can_exceed_maximum })}
+          else
+            %{r.take_health(#{payout.value})}
+          end
+        when Payouts::HealthPointsTotal
+          if payout.action == :add
+            %{r.increase_attribute(:health, #{payout.value})}
+          else
+            %{r.decrease_attribute(:health, #{payout.value})}
+          end
+        when Payouts::Item
+          if payout.action == :add
+            %{r.give_item(:#{payout.item.alias}, #{payout.amount})}
+          else
+            %{r.take_item(:#{payout.item.alias}, #{payout.amount})}
+          end
+        when Payouts::Mercenary
+          if payout.action == :add
+            %{r.give_mercenaries(#{payout.value})}
+          else
+            %{r.take_mercenaries(#{payout.value})}
+          end
+        when Payouts::StaminaPoint
+          if payout.action == :add
+            %{r.give_stamina(#{payout.value}#{ ', true' if payout.can_exceed_maximum })}
+          else
+            %{r.take_stamina(#{payout.value})}
+          end
+        when Payouts::StaminaPointsTotal
+          if payout.action == :add
+            %{r.increase_attribute(:stamina, #{payout.value})}
+          else
+            %{r.decrease_attribute(:stamina, #{payout.value})}
+          end
+        when Payouts::UpgradePoint
+          if payout.action == :add
+            %{r.give_upgrade_points(#{payout.value})}
+          else
+            %{r.take_upgrade_points(#{payout.value})}
+          end
+        when Payouts::VipMoney
+          if payout.action == :add
+            %{r.give_vip_money(#{payout.value})}
+          else
+            %{r.take_vip_money(#{payout.value})}
+          end
+        when Payouts::RandomItem
+          if payout.action == :add
+            %{r.give_random_item(:#{ payout.item_set.name.parameterize.underscore }#{', true' if payout.shift_item_set})}
+          else
+            %{r.take_random_item(:#{ payout.item_set.name.parameterize.underscore }#{', true' if payout.shift_item_set})}
+          end
+        end
+
+      code << instruction
+
+      if payout.chance < 100
+        code << %{ if Dice.chance(#{payout.chance}) }
+        preview_required = true
+      end
+
+      code << "\n"
+
+      preview_code << instruction
+      preview_code << "\n"
+    end
+
+    code << %{
+      end
+    }
+
+    code << %{
+      #{variable}.reward_preview_on :#{trigger} do |r|
+        #{preview_code}
+      end
+    } if preview_required
+
+    code
   end
 end

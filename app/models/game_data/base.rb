@@ -39,13 +39,13 @@ module GameData
 
     def apply_reward_on(key, character)
       Reward.new(character) do |reward|
-        @rewards[key].call(reward) if @rewards[key]
+        @rewards[key].try(:call, reward)
       end
     end
 
     def preview_reward_on(key, character)
       RewardPreview.new(character) do |reward|
-        @reward_previews[key].call(reward) if @rewards[key]
+        (@reward_previews[key] || @rewards[key]).try(:call, reward)
       end
     end
   end

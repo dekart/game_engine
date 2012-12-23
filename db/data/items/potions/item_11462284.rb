@@ -16,15 +16,10 @@
       
         i.max_market_price = 5
       
-          i.reward_on :use do |r|
-        r.give_upgrade_points(5)
+      i.reward_on :use do |r|
+    r.give_upgrade_points(5)
 
-          end
-        
-          i.reward_preview_on :use do |r|
-            r.give_upgrade_points(5)
-
-          end
-        
+      end
+    
           end
         
