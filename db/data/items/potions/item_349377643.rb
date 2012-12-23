@@ -13,7 +13,7 @@
         i.sell_price = 50
       
       i.reward_on :use do |r|
-    r.give_health(50)
+        r.give_health(50)
 
       end
     

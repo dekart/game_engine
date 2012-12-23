@@ -119,18 +119,12 @@ class ConvertContentToDsl < ActiveRecord::Migration
           'one' => item.name,
           'many' => item.plural_name
         },
-        'description' => item.description
-      }
-
-      if item.use_button_label.present?
-        item_locale[key]['use'] ||= {}
-        item_locale[key]['use']['button'] = item.use_button_label
-      end
-
-      if item.use_message.present?
-        item_locale[key]['use'] ||= {}
-        item_locale[key]['use']['message'] = item.use_message
-      end
+        'description' => item.description,
+        'use' => {
+          'button' => item.use_button_label,
+          'message' => item.use_message
+        }.reject{|k,v| v.blank? }
+      }.reject{|k,v| v.blank? }
     end
 
     File.open(Rails.root.join('config/locales/data/items.yml'), 'w+') do |locale|
@@ -211,7 +205,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
       achievement_locale[key] = {
         'name' => achievement.name,
         'description' => achievement.description
-      }
+      }.reject{|k,v| v.blank? }
 
       code = ''
 
@@ -225,7 +219,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
       File.open(Rails.root.join("db/data/achievements/#{key}.rb#{ '.hidden' if achievement.hidden? }"), 'w+') do |dsl|
         dsl.puts %{
-          GameData::Achievement.define :#{ key } do |c|
+          GameData::Achievement.define :#{ key } do |a|
             #{code}
           end
         }
@@ -321,9 +315,97 @@ class ConvertContentToDsl < ActiveRecord::Migration
     File.open(Rails.root.join('config/locales/data/mission_groups.yml'), 'w+') do |locale|
       locale.puts YAML.dump({'en' => {'data' => {'mission_groups' => group_names}}})
     end
-    #mission
-    #mission_group
-    #mission_level
+
+
+    announce 'Converting missions...'
+
+    mission_locale = {}
+
+    Mission.without_state(:deleted).joins(:mission_group).order('mission_groups.position, missions.position').each do |mission|
+      key = mission.name.parameterize.underscore
+      group_key = mission.mission_group.name.parameterize.underscore
+
+      mission_locale[key] = {
+        'name' => mission.name,
+        'description' => mission.description,
+        'success' => mission.success_text,
+        'failure' => mission.failure_text,
+        'complete' => mission.complete_text,
+        'button' => mission.button_label
+      }.reject{|k,v| v.blank? }
+
+      code = %{
+        m.group = :#{ group_key }
+      }
+
+      tags = []
+      tags << :repeatable if mission.repeatable
+      tags << :hide_unsatisfied if mission.hide_unsatisfied
+
+      code << %{
+        m.tags = #{ tags.inspect }
+      } unless tags.empty?
+
+      code << requirements_to_dsl('m', mission.requirements)
+
+      [:success, :failure, :repeat_success, :repeat_failure, :level_complete, :mission_complete].each do |t|
+        code << payouts_to_dsl('m', mission.payouts, t)
+      end
+
+      mission.levels.order(:position).each do |level|
+        code << %{
+          m.level do |l|
+            l.steps = #{level.win_amount}
+        }
+
+        code << %{
+          l.chance = #{level.chance}
+        } if level.chance < 100
+
+        code << requirements_to_dsl('l', level.requirements) do
+          %{
+            r.ep #{level.energy}
+          }
+        end
+
+        [:success, :repeat_success].each do |t|
+          code << payouts_to_dsl('l', level.payouts, t) do
+            %{
+              r.take_energy #{level.energy}
+              r.give_experience #{level.experience}
+              r.give_basic_money #{level.money_min}..#{level.money_max}
+            }
+          end
+        end
+
+        [:failure, :repeat_failure].each do |t|
+          code << payouts_to_dsl('l', level.payouts, t) do
+            %{
+              r.take_energy #{level.energy}
+            }
+          end
+        end
+
+        code << payouts_to_dsl('m', mission.payouts, :level_complete)
+
+        code << %{
+          end
+        }
+      end
+
+      File.open(Rails.root.join("db/data/missions/#{group_key}/#{key}.rb#{ '.hidden' if mission.hidden? }"), 'w+') do |dsl|
+        dsl.puts %{
+          GameData::Mission.define :#{ key } do |m|
+            #{code}
+          end
+        }
+      end
+    end
+
+    File.open(Rails.root.join('config/locales/data/missions.yml'), 'w+') do |locale|
+      locale.puts YAML.dump('en' => {'data' => {'missions' => mission_locale}})
+    end
+
     #monster_type
     #property_type
     #setting
@@ -340,17 +422,12 @@ class ConvertContentToDsl < ActiveRecord::Migration
   def down
   end
 
-  def payouts_to_dsl(variable, payouts, trigger)
-    return '' if payouts.find_all(trigger).empty?
-
-    code = %{
-      #{variable}.reward_on :#{trigger} do |r|
-    }
-
+  def payouts_to_dsl(variable, payouts, trigger, &block)
+    code = ''
     preview_code = ""
     preview_required = false
 
-    payouts.each do |payout|
+    payouts.find_all(trigger).each do |payout|
       instruction = case payout
         when Payouts::AttackPointsTotal
           if payout.action == :add
@@ -453,7 +530,16 @@ class ConvertContentToDsl < ActiveRecord::Migration
       preview_code << "\n"
     end
 
-    code << %{
+    custom_code = block_given? ? yield : ''
+
+    code << custom_code
+    preview_code << custom_code
+
+    return '' if code.blank?
+
+    code = %{
+      #{variable}.reward_on :#{trigger} do |r|
+        #{code}
       end
     }
 
@@ -466,12 +552,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
     code
   end
 
-  def requirements_to_dsl(variable, requirements)
-    return '' if requirements.empty?
-
-    code = %{
-      #{variable}.requires do |r|
-    }
+  def requirements_to_dsl(variable, requirements, &block)
+    code = ''
 
     requirements.each do |requirement|
       case requirement
@@ -504,10 +586,14 @@ class ConvertContentToDsl < ActiveRecord::Migration
       code << "\n"
     end
 
-    code << %{
+    code << (block_given? ? yield : '')
+
+    return '' if code.blank?
+
+    %{
+      #{variable}.requires do |r|
+        #{code}
       end
     }
-
-    code
   end
 end

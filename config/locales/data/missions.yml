@@ -1,0 +1,128 @@
+---
+en:
+  data:
+    missions:
+      thieves:
+        name: Thieves
+        description: Thieves steal money from people. Arrest them.
+        success: You arrested a thief!
+        failure: You failed to arrest a thief!
+        complete: You arrested all thieves!
+      deratization:
+        name: Deratization
+        description: The rats are breeding by amazing quantities in capital underground
+          conduits. The biggest and impudent ones have already begun visiting houses,
+          stealing food and even bit several citizens. Local authorities announced  a  reward
+          for every destroyed rat’s nest.
+        success: You caught a giant rat! But something is still gritting in the conduits.
+        failure: You searched through a lot of conduits, but all the rats you have
+          met are not worthy. Probably, you should seek more thoroughly.
+        complete: You caught a giant rat! The remaining minor rodents are not dangerous
+          for the citizens.
+      debtor:
+        name: Debtor
+        description: Metropolitan merchant asked you to help him find one of his partners,
+          owing him a considerable amount of money. This bacchanal is well-known in
+          many local pubs, so it will take a while to find him.
+        success: The person that you look for was seen recently in a tavern. You’ve
+          got to continue your search.
+        failure: You’ve been pointed on to a guy, but he appeared to be an  average
+          drinker.
+        complete: Finally, You’ve found the debtor in a tavern. The guy doesn’t seem
+          to have any money, but there are some mortgages belonging to the merchant.
+          You’ve got to give them back to the owner.
+      orcs_in_iza:
+        name: Orcs in Iza
+        description: Minor orc bands living in the mountains are stealing the livestock
+          from the pastries. Regular army is useless – orcs hide from them in the
+          rocks. You should punish these rascals and bring peace to the farmers.
+        success: You defeated a minor orc group! The evidently didn’t expect to meet
+          such a strong enemy.
+        failure: You met a way too large group of orcs. You had to retreat.
+        complete: You eliminated the last orcs in the region. Farmers organized a
+          small feast in your name with singing and dancing.
+      lurchers:
+        name: Lurchers
+        description: A band of skillful lurchers appeared in the town and now the
+          property of its citizens is at risk. Help the guards to catch and punish
+          the criminals.
+        success: You have caught a lurcher! But the guards still report on the complaints
+          from the citizens.
+        failure: The lurcher you have just caught managed to escape. Next time you
+          must pay more attention.
+        complete: You have managed to arrest the lurchers’ boss! Now the theft quantity
+          will surely decrease.
+      pixies:
+        name: Pixies
+        description: Pixies are not dangerous for humans, but nevertheless they are
+          quite irritating – stealing minor things, food and sometimes, just for a
+          joke, they would steal babies, which frightens the city inhabitants. Participation
+          in the annual pixie hunt is a good opportunity for newbies.
+        success: You have managed to catch a pixie! But there are still plenty of
+          these guys on the roofs.
+        failure: Pixie appeared to be more nimble than you thought him to be, it has
+          just slipped from your hands.
+        complete: You have caught the last pixie! Even if some of these guys are left
+          in the town, they hide pretty well.
+      martial_tulnees:
+        name: Martial Tulnees
+        description: Tulnees tribe began to suppress the farmers of Gald vale, robbing
+          their livestock and attacking the outward farms. You need to visit nearby
+          villages and find the owners of the surrounding lands.
+        success: You visited one of Tulnees settlement and fought the strongest hunter.
+          The tribe will not recover for a long while.
+        failure: You came to a settlement and barely escaped from there. The savages
+          appeared to be quite an army.
+        complete: You came to the largest tribe settlement. The tribe leader having
+          heard about your deeds, invited you to his hut. In the following conversation
+          you got his promise not to attack the farmers.
+      swamp_dragonflies:
+        name: Swamp Dragonflies
+        description: Amazing, sometimes frightening and dangerous creatures are constantly
+          breeding in the old gloomy swamp near the Gold river rise. This year a pack
+          of giant dragonflies flew out of it. The insects tend to bite everyone they
+          see, so it is better to kill them.
+        success: You have killed a giant dragonfly! The more monsters you destroy,
+          the better for local people it will be.
+        failure: A huge dragonfly almost bit off your head! How could you suppose
+          that you are strong enough to deal with the creature?
+        complete: You have killed all giant dragonflies! Now everybody can admire
+          the views in safety.
+      wild_centaurs:
+        name: Wild Centaurs
+        description: Centaurs, half-wild creatures with cannibalistic habits, attack
+          travelers and small villages around Eastern wasteland. Your task is to provide
+          caravans’ passage alone these lands.
+        success: You have killed a fierce centaur! It was not a piece of cake, but
+          you have won.
+        failure: You came across a centaur which is too strong for you. Now you're
+          better find another opponent.
+        complete: You wiped the centaurs off the area! Now caravans may travel safely.
+      goblins_caves:
+        name: Goblins’ Caves
+        description: Goblins, settled in Ifen mountains, often steal people and make
+          them work in emerald mines. Regular army sometimes checks several caves,
+          but they cannot embrace all settlements. You need to check the caves where
+          patrols did not get.
+        success: You have visited a goblins’ cave and found several men there. You
+          managed to free them.
+        failure: The very moment you have entered a settlement, someone attempted
+          to kill you. They were stronger and you had to retreat.
+        complete: You have checked through all the settlements marked on the map.
+          Well done!
+      baron_vagra_s_ring:
+        name: Baron Vagra’s Ring
+        description: Baron Vagra, being young and flippant, played away his family
+          ring to centurion. Now baron is old and to legally form his will and leave
+          heritage to his son, he needs to stamp the document with the family insignia.
+          Find the ring and give it back to baron.
+        success: You got on the trail of an old soldier in a village, but unfortunately
+          the man you are seeking had moved long ago. You’ve got to continue your
+          search.
+        failure: Someone told you about a man looking like the one you lok for. But
+          you’ve met him and he is not the one you need.
+        complete: You asked about an old soldier and people showed you a road to a
+          farm where an old man lived. You met a lame old man there. At first he didn’t
+          understand your question, but then he remembered the ring, brought it out
+          and gave it to you, asking only to tell some words to baron. But when you
+          delivered the ring to baron, you didn’t dare to tell him these words.
