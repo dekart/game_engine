@@ -10,6 +10,8 @@ window.MonsterListController = class extends BaseController
 
   setupEventListeners: ->
     @el.on('click', '#finished_fights', @.onFinishedFightsClick)
+    @el.on('click', '.engage, .view, .reward',   @.onEngageClick)
+    @el.on('click', '.attack', @.onAttackClick)
 
   show: ->
     @loading = true
@@ -38,4 +40,16 @@ window.MonsterListController = class extends BaseController
       result = @.renderTemplate("monsters/finished", finished: response.finished)
     
       $('#finished_fights').html(result)
+    )
+
+  onEngageClick: (e)=>
+    id = $(e.currentTarget).data("id")
+
+    new MonsterController().show(id)
+
+  onAttackClick: (e)=>
+    id = $(e.currentTarget).data("id")
+
+    $.get("/monsters/new?monster_type_id=#{id}", (response)=>
+      new MonsterController().show(response.monster_id)
     )

@@ -30,7 +30,7 @@
 
   <% if !@locked: %>
     <div class='controls'>
-      <a href='/monsters/new?monster_type_id=<%= @type.id %>' class='attack button' data-click-once='true'>
+      <a href='#' class='attack button' data-id="<%= @type.id %>">
         <span><%= I18n.t('monsters.preview.available.buttons.attack') %></span>
       </a>
     </div>

@@ -30,6 +30,11 @@ class MonstersController < ApplicationController
     end
 
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
+
+    render :json => {
+      :monster => @monster.as_json,
+      :fight   => @fight.as_json
+    }
   end
 
   def new
@@ -43,7 +48,9 @@ class MonstersController < ApplicationController
       
       redirect_to monsters_url
     else
-      redirect_to monster_url(@monster)
+      render :json => {
+        :monster_id => @monster.id
+      }
     end
   end
 

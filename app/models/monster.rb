@@ -83,15 +83,18 @@ class Monster < ActiveRecord::Base
     triggers = character.monster_types.payout_triggers(monster_type)
 
     {
-      :id          => id,
-      :name        => name,
-      :description => description,
-      :level       => level,
-      :image_url   => pictures.url(:normal),
-      :hp          => hp,
-      :health      => health,
-      :state       => state,
-      :reward      => monster_type.applicable_payouts.preview(triggers)
+      :id           => id,
+      :name         => name,
+      :description  => description,
+      :level        => level,
+      :image_url    => pictures.url(:normal),
+      :hp           => hp,
+      :health       => health,
+      :state        => state,
+      :reward       => monster_type.applicable_payouts.preview(triggers),
+      :damage       => damage.leaders.as_json,
+      :power_attack => monster_type.power_attack_enabled?,
+      :friends_invite => monster_type.available_for_friends_invite
     }
   end
 

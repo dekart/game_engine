@@ -168,7 +168,8 @@ class MonsterFight < ActiveRecord::Base
     {
       :monster => monster.as_json,
       :reward_collectable => reward_collectable?,
-      :time_remaining => time_remaining
+      :will_get_reward => will_get_reward?,
+      :time_remaining  => time_remaining
     }
   end
 

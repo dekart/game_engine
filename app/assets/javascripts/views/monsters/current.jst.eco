@@ -27,18 +27,18 @@
       </div>
 
       <div class='progress_bar'>
-        <div class='percentage <%= 'complete' if @percentage >= 100 %>' style='width: <%= @percentage_text %> %'></div>
+        <div class='percentage <%= 'complete' if @percentage >= 100 %>' style='width:<%= @percentage_text %>%'></div>
       </div>
     </div>
   </div>
 
   <div class='controls'>
     <% if @monster.state == 'progress':%>
-      <a href='/monsters/<%= @monster.id %>' class='engage button'><span><%= I18n.t('monsters.preview.current.buttons.engage') %></span></a>
+      <a href='#' class='engage button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.current.buttons.engage') %></span></a>
     <% else if monster.state == 'expired' || fight.reward_collectable == false: %>
-      <a href='/monsters/<%= @monster.id %>' class='view button'><span><%= I18n.t('monsters.preview.current.buttons.view') %></span></a>
+      <a href='#' class='view button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.current.buttons.view') %></span></a>
     <% else: %>
-      <a href='/monsters/<%= @monster.id %>' class='reward button'><span><%= I18n.t('monsters.preview.completed.buttons.reward') %></span></a>
+      <a href='#' class='reward button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.completed.buttons.reward') %></span></a>
     <% end %>
   </div>
 </div>

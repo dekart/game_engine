@@ -18,9 +18,9 @@
 
   <div class='controls'>
     <% if @fight.reward_collectable: %>
-      <a href='/monsters/<%= @monster.id %>' class='reward button'><span><%= I18n.t('monsters.preview.completed.buttons.reward') %></span></a>
+      <a href='#' class='reward button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.completed.buttons.reward') %></span></a>
     <% else: %>
-      <a href='/monsters/<%= @monster.id %>' class='view button'><span><%= I18n.t('monsters.preview.completed.buttons.view') %></span></a>
+      <a href='#' class='view button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.completed.buttons.view') %></span></a>
     <% end %>
   </div>
 </div>
