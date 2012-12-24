@@ -429,6 +429,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
       code << %{
         m.tags = #{ tags.inspect }
       } unless tags.empty?
+
       code << %{
         m.level = #{monster.level}
       } if monster.level > 1
@@ -483,7 +484,112 @@ class ConvertContentToDsl < ActiveRecord::Migration
       locale.puts YAML.dump('en' => {'data' => {'monsters' => monster_locale}})
     end
 
-    #property_type
+
+    announce 'Converting properties...'
+
+    FileUtils.mkdir_p(Rails.root.join('db/data/property'))
+
+    property_locale = {}
+
+    PropertyType.without_state(:deleted).each do |property|
+      key = property.name.parameterize.underscore
+
+      property_locale[key] = {
+        'name' => property.name,
+        'description' => property.description,
+        'workers' => property.worker_names
+      }.reject{|k,v| v.blank? }
+
+      code = ''
+
+      tags = []
+      tags << :shop if property.availability == :shop
+
+      code << %{
+        p.tags = #{ tags.inspect }
+      } unless tags.empty?
+
+      code << %{
+        p.level = #{property.level}
+      } if property.level > 1
+
+      code << %{
+        p.upgrades = #{property.upgrade_limit || Setting.i(:property_upgrade_limit)}
+
+        p.collect_period = #{property.collect_period}.hours
+      }
+
+      code << %{
+        p.workers = #{property.workers}
+      } if property.workers.to_i > 0
+
+      code << requirements_to_dsl('p', property.requirements, :build) do
+        ''.tap do |r|
+          r << "r.basic_money(#{property.basic_price})\n" if property.basic_price > 0
+          r << "r.vip_money(#{property.vip_price})\n" if property.vip_price > 0
+        end
+      end
+
+      code << payouts_to_dsl('p', property.payouts, :build) do
+        ''.tap do |r|
+          r << "r.take_basic_money(#{property.basic_price})\n" if property.basic_price > 0
+          r << "r.take_vip_money(#{property.vip_price})\n" if property.basic_price > 0
+        end
+      end
+
+      code << requirements_to_dsl('p', property.requirements, :upgrade) do
+        ''.tap do |r|
+          if property.basic_price > 0
+            if property.upgrade_cost_increase
+              r << "r.basic_money(#{property.basic_price} + #{property.upgrade_cost_increase} * r.reference.level)\n"
+            else
+              r << "r.basic_money(#{property.basic_price})\n"
+            end
+          end
+
+          r << "r.vip_money(#{property.vip_price})\n" if property.vip_price > 0
+        end
+      end
+
+      code << payouts_to_dsl('p', property.payouts, :upgrade) do
+        ''.tap do |r|
+          if property.basic_price > 0
+            if property.upgrade_cost_increase
+              r << "r.take_basic_money(#{property.basic_price} + #{property.upgrade_cost_increase} * r.reference.level)\n"
+            else
+              r << "r.take_basic_money(#{property.basic_price})\n"
+            end
+          end
+
+          r << "r.take_vip_money(#{property.vip_price})\n" if property.basic_price > 0
+        end
+      end
+
+      code << payouts_to_dsl('p', property.payouts, :collect) do
+        if property.income_by_level > 0
+          %{
+            r.give_basic_money #{property.income} + #{property.income_by_level} * (r.reference.level - 1)
+          }
+        else
+          %{
+            r.give_basic_money #{property.income} * r.reference.level
+          }
+        end
+      end
+
+      File.open(Rails.root.join("db/data/property/#{key}.rb#{ '.hidden' if property.hidden? }"), 'w+') do |dsl|
+        dsl.puts %{
+          GameData::PropertyType.define :#{ key } do |p|
+            #{code}
+          end
+        }
+      end
+    end
+
+    File.open(Rails.root.join('config/locales/data/property.yml'), 'w+') do |locale|
+      locale.puts YAML.dump('en' => {'data' => {'property' => property_locale}})
+    end
+
     #character_type
 
     #setting
@@ -629,7 +735,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
     code
   end
 
-  def requirements_to_dsl(variable, requirements, &block)
+  def requirements_to_dsl(variable, requirements, trigger = nil, &block)
     code = ''
 
     requirements.each do |requirement|
@@ -667,10 +773,18 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
     return '' if code.blank?
 
-    %{
-      #{variable}.requires do |r|
-        #{code}
-      end
-    }
+    if trigger
+      %{
+        #{variable}.requires_for :#{trigger} do |r|
+          #{code}
+        end
+      }
+    else
+      %{
+        #{variable}.requires do |r|
+          #{code}
+        end
+      }
+    end
   end
 end

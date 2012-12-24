@@ -1,0 +1,12 @@
+---
+en:
+  data:
+    property:
+      windmill:
+        name: Windmill
+      mine:
+        name: Mine
+        workers:
+        - Senior Miner
+        - Miner
+        - Guardian

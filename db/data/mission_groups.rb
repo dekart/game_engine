@@ -6,21 +6,21 @@
 
           GameData::MissionGroup.define :adventurer do |g|
             
-      g.requires do |r|
-        r.level 2
+        g.requires do |r|
+          r.level 2
 
-      end
-    
+        end
+      
           end
         
 
           GameData::MissionGroup.define :recruit do |g|
             
-      g.requires do |r|
-        r.level 5
+        g.requires do |r|
+          r.level 5
 
-      end
-    
+        end
+      
           end
         
 
@@ -63,8 +63,8 @@
 
       end
     
-      g.requires do |r|
-        r.alliance_size 1
+        g.requires do |r|
+          r.alliance_size 1
 r.attack 1
 r.character_type :warrior
 r.defence 1
@@ -77,8 +77,8 @@ r.basic_money 1
 r.property :mine
 r.sp 1
 
-      end
-    
+        end
+      
           end
         
             end

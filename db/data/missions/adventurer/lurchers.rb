@@ -10,12 +10,12 @@
         
           l.chance = 60
         
-      l.requires do |r|
-        
+        l.requires do |r|
+          
             r.ep 2
           
-      end
-    
+        end
+      
       l.reward_on :success do |r|
         
               r.take_energy 2

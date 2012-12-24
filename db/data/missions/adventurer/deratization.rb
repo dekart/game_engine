@@ -5,20 +5,30 @@
       
         m.tags = [:repeatable]
       
-      m.requires do |r|
-        r.item :item_97931052
+        m.requires do |r|
+          r.item :item_97931052
+
+        end
+      
+      m.reward_on :mission_complete do |r|
+        r.give_vip_money(1) if Dice.chance(50) 
+
+      end
+    
+      m.reward_preview_on :mission_complete do |r|
+        r.give_vip_money(1)
 
       end
     
           m.level do |l|
             l.steps = 20
         
-      l.requires do |r|
-        
+        l.requires do |r|
+          
             r.ep 1
           
-      end
-    
+        end
+      
       l.reward_on :success do |r|
         
               r.take_energy 1

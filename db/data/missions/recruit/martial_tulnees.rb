@@ -8,12 +8,12 @@
         
           l.chance = 70
         
-      l.requires do |r|
-        
+        l.requires do |r|
+          
             r.ep 5
           
-      end
-    
+        end
+      
       l.reward_on :success do |r|
         
               r.take_energy 5
