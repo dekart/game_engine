@@ -37,8 +37,10 @@
 <% end %>
 
 <% if @reward.random_item?: %>
-  <div class="payout item">
-    <span class="value"><img src="/assets/random_item.gif" alt="<%= I18n.t('payouts.random_item.name') %>"/></span>
-    <span class="label"><%= I18n.t("payouts.random_item.name") %></span>
-  </div>
+  <% if @mode == 'rewards' and amount > 0 or @mode == 'spendings' and amount < 0: %>
+    <div class="payout item">
+      <span class="value"><img src="/assets/random_item.gif" alt="<%= I18n.t('payouts.random_item.name') %>"/></span>
+      <span class="label"><%= I18n.t("payouts.random_item.name") %></span>
+    </div>
+  <% end %>
 <% end %>

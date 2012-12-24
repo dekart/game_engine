@@ -17,7 +17,9 @@ module Payouts
     end
 
     def preview(reward)
-      reward.values[:random_item] = 1
+      if action != :remove
+        reward.values[:random_item] += 1
+      end
     end
 
     def item_ids

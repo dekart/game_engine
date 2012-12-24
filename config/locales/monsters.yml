@@ -62,6 +62,7 @@ en:
       title: "Top Hitters"
     preview:
       payouts: "Payouts"
+      requirements: "Requirements"
       available:
         fight_time_title: "Fight Time"
         health_title: "Health"
