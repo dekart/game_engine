@@ -12,6 +12,8 @@ module Jobs
           $redis.sadd("app_requests_failed_deletion", ids[index]) unless result
         end
       end
+
+      $redis.set("app_requests_last_processed_at", Time.now.to_i)
     end
   end
 end

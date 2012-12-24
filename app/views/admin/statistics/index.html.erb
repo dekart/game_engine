@@ -87,4 +87,10 @@
     <td><%= t(".app_requests.last_failed") %></td>
     <td><%= $redis.smembers("app_requests_failed_deletion").last %></td>
   </tr>
+  <tr>
+    <td><%= t(".app_requests.last_processed_at") %></td>
+    <td <%= "style='color:red'" if time = (Time.now.to_i - $redis.get("app_requests_last_processed_at").to_i) and time > 120 %>>
+      <%= time %>
+    </td>
+  </tr>
 </table>
