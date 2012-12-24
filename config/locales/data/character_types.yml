@@ -1,0 +1,13 @@
+---
+en:
+  data:
+    character_types:
+      warrior:
+        name: Warrior
+        description: High damage and health
+      ranger:
+        name: Ranger
+        description: High defence and energy
+      trader:
+        name: Trader
+        description: Any other description you may want

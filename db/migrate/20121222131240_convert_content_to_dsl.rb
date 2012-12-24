@@ -590,7 +590,58 @@ class ConvertContentToDsl < ActiveRecord::Migration
       locale.puts YAML.dump('en' => {'data' => {'property' => property_locale}})
     end
 
-    #character_type
+
+    announce 'Converting character types...'
+
+    FileUtils.mkdir_p(Rails.root.join('db/data/character_types'))
+
+    character_locale = {}
+
+    CharacterType.without_state(:deleted).each do |character|
+      key = character.name.parameterize.underscore
+
+      character_locale[key] = {
+        'name' => character.name,
+        'description' => character.description
+      }.reject{|k,v| v.blank? }
+
+      code = ''
+
+      code << %{
+        c.attributes = {
+          :attack => #{character.attack},
+          :defence => #{character.defence},
+          :health => #{character.health},
+          :energy => #{character.energy},
+          :stamina => #{character.stamina},
+          :hp_restore_rate => #{character.health_restore_bonus},
+          :ep_restore_rate => #{character.energy_restore_bonus},
+          :sp_restore_rate => #{character.stamina_restore_bonus},
+
+          :equipment_slots => #{character.equipment_slots}
+        }
+      }
+
+      code << %{
+        c.reward_on :create do |r|
+          r.give_basic_money #{character.basic_money}
+          r.give_vip_money #{character.vip_money}
+          r.give_upgrade_points #{character.points}
+        end
+      }
+
+      File.open(Rails.root.join("db/data/character_types/#{key}.rb#{ '.hidden' if character.hidden? }"), 'w+') do |dsl|
+        dsl.puts %{
+          GameData::CharacterType.define :#{ key } do |c|
+            #{code}
+          end
+        }
+      end
+    end
+
+    File.open(Rails.root.join('config/locales/data/character_types.yml'), 'w+') do |locale|
+      locale.puts YAML.dump('en' => {'data' => {'character_types' => character_locale}})
+    end
 
     #setting
     #story
