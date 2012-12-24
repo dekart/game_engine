@@ -1,0 +1,8 @@
+---
+en:
+  data:
+    monsters:
+      barbarian:
+        name: Barbarian
+      hydra_multi_player_fight:
+        name: Hydra (multi-player fight)

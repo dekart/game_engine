@@ -58,7 +58,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
       code = ''
 
       code << %{
-        i.min_level = #{item.level}
+        i.level = #{item.level}
       } if item.level > 1
 
       code << %{
@@ -165,7 +165,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
       code = ''
 
       code << %{
-        c.min_level = #{collection.level}
+        c.level = #{collection.level}
       } if collection.level > 1
 
       code << %{
@@ -406,15 +406,92 @@ class ConvertContentToDsl < ActiveRecord::Migration
       locale.puts YAML.dump('en' => {'data' => {'missions' => mission_locale}})
     end
 
-    #monster_type
+
+    announce 'Converting monsters...'
+
+    FileUtils.mkdir_p(Rails.root.join('db/data/monsters'))
+
+    monster_locale = {}
+
+    MonsterType.without_state(:deleted).each do |monster|
+      key = monster.name.parameterize.underscore
+
+      monster_locale[key] = {
+        'name' => monster.name,
+        'description' => monster.description
+      }.reject{|k,v| v.blank? }
+
+      code = ''
+
+      tags = []
+      tags << :multiplayer if monster.available_for_friends_invite
+
+      code << %{
+        m.tags = #{ tags.inspect }
+      } unless tags.empty?
+      code << %{
+        m.level = #{monster.level}
+      } if monster.level > 1
+
+      code << %{
+        m.fight_time = #{monster.fight_time}.hours
+        m.respawn_time = #{monster.respawn_time}.hours
+
+        m.health = #{monster.health}
+
+        m.damage = #{monster.minimum_damage}..#{monster.maximum_damage}
+        m.response = #{monster.minimum_response}..#{monster.maximum_response}
+
+        m.reward_collectors = #{monster.number_of_maximum_reward_collectors}
+      }
+
+      unless monster.effects.empty?
+        effects = {}
+
+        monster.effects.each do |e|
+          effects[e.name.to_sym] = e.value
+        end
+
+        code << %{
+          m.effects = #{ effects.inspect }
+        }
+      end
+
+      [:victory, :repeat_victory, :fight_start, :invite].each do |t|
+        code << payouts_to_dsl('m', monster.payouts, t)
+      end
+
+      code << payouts_to_dsl('m', monster.payouts, :attack) do
+        %{
+          r.give_experience #{monster.experience}
+          r.give_basic_money #{monster.money}
+        }
+      end
+
+      code << requirements_to_dsl('m', monster.requirements)
+
+      File.open(Rails.root.join("db/data/monsters/#{key}.rb#{ '.hidden' if monster.hidden? }"), 'w+') do |dsl|
+        dsl.puts %{
+          GameData::MonsterType.define :#{ key } do |m|
+            #{code}
+          end
+        }
+      end
+    end
+
+    File.open(Rails.root.join('config/locales/data/monsters.yml'), 'w+') do |locale|
+      locale.puts YAML.dump('en' => {'data' => {'monsters' => monster_locale}})
+    end
+
     #property_type
+    #character_type
+
     #setting
     #story
     ##tip
     #translation
     #contest
     #help_page
-    #character_type
 
     say 'Done!'
   end

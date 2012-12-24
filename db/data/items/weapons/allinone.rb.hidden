@@ -4,7 +4,7 @@
 
             i.tags = [:shop, :market, :exchange]
             
-        i.min_level = 5
+        i.level = 5
       
         i.placements = [:right_hand, :left_hand]
       

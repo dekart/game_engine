@@ -4,7 +4,7 @@
 
             i.tags = [:shop]
             
-        i.min_level = 2
+        i.level = 2
       
         i.basic_price = 50
       

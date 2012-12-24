@@ -8,7 +8,7 @@ module GameData
       end
     end
 
-    attr_accessor :min_level, :placements, :basic_price, :vip_price, :package_size, :sell_price, :max_market_price, :boost, :effects
+    attr_accessor :level, :placements, :basic_price, :vip_price, :package_size, :sell_price, :max_market_price, :boost, :effects
 
     def initialize(key)
       super

@@ -4,7 +4,7 @@
 
             i.tags = [:gift]
             
-        i.min_level = 3
+        i.level = 3
       
         i.placements = [:right_hand, :left_hand, :additional]
       

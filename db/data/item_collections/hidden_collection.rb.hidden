@@ -1,7 +1,7 @@
 
           GameData::ItemCollection.define :hidden_collection do |c|
             
-        c.min_level = 2
+        c.level = 2
       
         c.items = {
           :item_6738267 => 2,

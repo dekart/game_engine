@@ -8,6 +8,6 @@ module GameData
       end
     end
 
-    attr_accessor :items
+    attr_accessor :items, :level
   end
 end
