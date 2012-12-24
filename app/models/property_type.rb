@@ -112,7 +112,9 @@ class PropertyType < ActiveRecord::Base
 
   def as_json(*args)
     {
-      :name => name
+      :name => name,
+      :description => description,
+      :pictures => pictures.urls
     }
   end
 end

@@ -80,6 +80,8 @@ class Monster < ActiveRecord::Base
   end
 
   def as_json
+    triggers = character.monster_types.payout_triggers(monster_type)
+
     {
       :id          => id,
       :name        => name,
@@ -89,7 +91,7 @@ class Monster < ActiveRecord::Base
       :hp          => hp,
       :health      => health,
       :state       => state,
-      :reward      => monster_type.payouts_as_json(character)
+      :reward      => monster_type.applicable_payouts.preview(triggers)
     }
   end
 

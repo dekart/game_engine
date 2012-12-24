@@ -63,23 +63,9 @@ class MonsterType < ActiveRecord::Base
     end
   end
 
-  def payouts_as_json(character)
+  def as_json(character)
     triggers = character.monster_types.payout_triggers(self)
 
-    payouts_to_apply = applicable_payouts.by_action(:add).reject{|payout|
-      !payout.visible || !triggers.empty? && (triggers & payout.apply_on).empty?
-    }
-
-    {}.tap do |result|
-      payouts_to_apply.each do |p|
-        result[p.name] = p.value
-      end
-
-      Rails.logger.error "~~~ RESULT: #{result}"
-    end
-  end
-
-  def as_json(character)
     {
       :id          => id,
       :name        => name,
@@ -88,7 +74,7 @@ class MonsterType < ActiveRecord::Base
       :image_url   => pictures.url(:normal),
       :fight_time  => fight_time,
       :health      => health,
-      :reward      => payouts_as_json(character)
+      :reward      => applicable_payouts.preview(triggers)
     }
   end
 end

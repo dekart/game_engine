@@ -51,6 +51,14 @@ module Payouts
       end
     end
 
+    def preview(trigger)
+      Reward.new(nil) do |reward|
+        find_all(trigger).each do |payout|
+          payout.preview(reward)
+        end
+      end
+    end
+
     def by_action(action)
       items.select{|p| p.action == action }
     end

@@ -28,6 +28,16 @@ module Payouts
       end
     end
 
+    def preview(reward)
+      reward.values[:items][item.alias] ||= [item, 0]
+
+      if action == :remove
+        reward.values[:items][item.alias][1] -= amount
+      else
+        reward.values[:items][item.alias][1] += amount
+      end
+    end
+
     def to_s
       "%s: %s × %d (%d%% %s)" % [
         apply_on_label,

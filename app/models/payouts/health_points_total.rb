@@ -8,6 +8,14 @@ module Payouts
       end
     end
 
+    def preview(reward)
+      if action == :remove
+        reward.values[:health] -= @value
+      else
+        reward.values[:health] += @value
+      end
+    end
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,
