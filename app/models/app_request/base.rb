@@ -169,7 +169,7 @@ class AppRequest::Base < ActiveRecord::Base
       result.each_with_index do |r, i|
         next unless r.is_a?(Koala::Facebook::APIError)
 
-        result[i] = r.message.include?('Specified object cannot be found')
+        result[i] = r.message.include?('Specified object cannot be found') || r.message.include?('Permissions error')
       end
     end
 
