@@ -10,6 +10,7 @@ window.MonsterController = class extends BaseController
 
   setupEventListeners: ->
     @el.on('click', '#monster .attack', @.onAttackClick)
+    @el.on('click', '#monster .reward', @.onRewardClick)
 
   show: (id)->
     @loading = true
@@ -37,5 +38,15 @@ window.MonsterController = class extends BaseController
       alert "monster updated"
       @html(
         @.renderTemplate("monster/update", response: response)
+      )
+    )
+
+  onRewardClick: (e)=>
+    id = @monster.id
+
+    $.post("/monsters/#{id}/reward", (response)=>
+      alert "reward collected"
+      @html(
+        @.renderTemplate("monster/reward", response: response)
       )
     )

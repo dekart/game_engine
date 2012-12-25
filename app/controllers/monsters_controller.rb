@@ -73,5 +73,10 @@ class MonstersController < ApplicationController
     @fight = current_character.monster_fights.find_by_monster_id(params[:id])
 
     @reward_collected = @fight.collect_reward!
+
+    render :json => {
+      :fight => @fight.as_json,
+      :reward_collected => @reward_collected
+    }
   end
 end
