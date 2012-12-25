@@ -167,7 +167,7 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def basic_payouts
-    monster_type.applicable_payouts.preview(character.monster_types.payout_triggers(monster_type))
+    monster_type.applicable_payouts.preview(payout_triggers)
   end
 
   def as_json

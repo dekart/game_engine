@@ -31,6 +31,13 @@
         <% end %>
       </div>
 
+	  <%= @rewards @fight.reward, (content)=> %>
+	    <div class="payouts clearfix">
+	      <h3><%= I18n.t('monsters.preview.payouts') %></h3>
+	      <%= content %>
+	    </div>
+	  <% end %>
+
       <%= @fighters(@monster) %>
     </td>
 
