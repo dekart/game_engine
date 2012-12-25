@@ -18,10 +18,10 @@
       </div>
 
       <div class="controls clearfix">
-        <a href='#' class="attack button"><span><%= I18n.t("monsters.progress.buttons.attack") %></span></a>
+        <a href='#' class="attack button" data-power="false"><span><%= I18n.t("monsters.progress.buttons.attack") %></span></a>
 
         <% if @monster.power_attack == true: %>
-          <a href='#' class="power_attack button"><span><%= I18n.t("monsters.progress.buttons.power_attack", {'factor': 5}) %></span></a>
+          <a href='#' class="attack button" data-power="true"><span><%= I18n.t("monsters.progress.buttons.power_attack", {'factor': 5}) %></span></a>
         <% end %>
         
         <% if @monster.friends_invite == true: %>

@@ -9,6 +9,7 @@ window.MonsterController = class extends BaseController
     @.setupEventListeners()
 
   setupEventListeners: ->
+    @el.on('click', '#monster .attack', @.onAttackClick)
 
   show: (id)->
     @loading = true
@@ -26,4 +27,15 @@ window.MonsterController = class extends BaseController
   render: ()->
     @html(
       @.renderTemplate("monster/monster", @)
+    )
+
+  onAttackClick: (e)=>
+    id = @monster.id
+    power_attack = $(e.currentTarget).data("power")
+
+    $.ajax("/monsters/#{id}?power_attack=#{power_attack}", type: 'put', success: (response)=>
+      alert "monster updated"
+      @html(
+        @.renderTemplate("monster/update", response: response)
+      )
     )

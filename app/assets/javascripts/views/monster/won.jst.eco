@@ -11,11 +11,11 @@
         </div>
       </div>
 
-      <% if @fight.reward_collectable == 'true': %>
+      <% if @fight.reward_collectable == true: %>
         <div class="controls clearfix">
-          <a href='#' class="reward button"><%= I18n.t('monsters.won.buttons.reward') %></a>
+          <a href='#' class="reward button"><span><%= I18n.t('monsters.won.buttons.reward') %></span></a>
         </div>
-      <% else if @fight.will_get_reward != 'true': %>
+      <% else if @fight.will_get_reward != true: %>
         <p><%= I18n.t('monsters.won.insignificant_damage') %></p>
       <% else: %>
         <p><%= I18n.t('monsters.won.reward_collected') %></p>
