@@ -87,10 +87,10 @@ class CharactersController < ApplicationController
   protected
 
   def fetch_character_types
-    @character_types = CharacterType.with_state(:visible).all
+    @character_types = GameData::CharacterType.collection.values
 
-    if params[:default_type_id] && default_type = @character_types.detect{|t| t.id == params[:default_type_id].to_i }
-      @character_types.unshift(@character_types.delete(default_type))
+    if params[:default_type_id] and default_type = @character_types.detect{|t| t.key == params[:default_type_id].to_sym }
+      @character_types = [default_type] + (@character_types - [default_type])
     end
   end
 

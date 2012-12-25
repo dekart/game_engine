@@ -2,6 +2,19 @@ class ConvertContentToDsl < ActiveRecord::Migration
   def up
     FileUtils.mkdir_p(Rails.root.join('config/locales/data'))
 
+    ids_to_keys = {
+      :item_groups => {},
+      :items => {},
+      :item_collections => {},
+      :achievements => {},
+      :character_types => {},
+      :missions => {},
+      :mission_groups => {},
+      :mission_levels => {},
+      :monster_types => {},
+      :property_types => {}
+    }
+
     announce "Converting item groups..."
 
     group_names = {}
@@ -9,6 +22,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
     File.open(Rails.root.join('db/data/item_groups.rb'), 'w+') do |dsl|
       ItemGroup.without_state(:deleted).order(:position).each do |group|
         key = group.name.parameterize.underscore
+
+        ids_to_keys[:item_groups][group.id] = key
 
         FileUtils.mkdir_p(Rails.root.join("db/data/items/#{ key }"))
 
@@ -48,6 +63,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
     Item.without_state(:deleted).joins(:item_group).each do |item|
       key = item.alias
+
+      ids_to_keys[:items][item.id] = key
 
       tags = []
       tags << :shop if item.availability == :shop
@@ -160,6 +177,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
     ItemCollection.without_state(:deleted).each do |collection|
       key = collection.name.parameterize.underscore
 
+      ids_to_keys[:item_collections][collection.id] = key
+
       collection_names[key] = collection.name
 
       code = ''
@@ -201,6 +220,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
     AchievementType.without_state(:deleted).each do |achievement|
       key = achievement.name.parameterize.underscore
+
+      ids_to_keys[:achievements][achievement.id] = key
 
       achievement_locale[key] = {
         'name' => achievement.name,
@@ -275,6 +296,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
       MissionGroup.without_state(:deleted).order(:position).each do |group|
         key = group.name.parameterize.underscore
 
+        ids_to_keys[:mission_groups][group.id] = key
+
         FileUtils.mkdir_p(Rails.root.join("db/data/missions/#{ key }"))
 
         tags = []
@@ -324,6 +347,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
     Mission.without_state(:deleted).joins(:mission_group).order('mission_groups.position, missions.position').each do |mission|
       key = mission.name.parameterize.underscore
       group_key = mission.mission_group.name.parameterize.underscore
+
+      ids_to_keys[:missions][mission.id] = key
 
       mission_locale[key] = {
         'name' => mission.name,
@@ -416,6 +441,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
     MonsterType.without_state(:deleted).each do |monster|
       key = monster.name.parameterize.underscore
 
+      ids_to_keys[:monster_types][monster.id] = key
+
       monster_locale[key] = {
         'name' => monster.name,
         'description' => monster.description
@@ -493,6 +520,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
     PropertyType.without_state(:deleted).each do |property|
       key = property.name.parameterize.underscore
+
+      ids_to_keys[:property_types][property.id] = key
 
       property_locale[key] = {
         'name' => property.name,
@@ -600,6 +629,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
     CharacterType.without_state(:deleted).each do |character|
       key = character.name.parameterize.underscore
 
+      ids_to_keys[:character_types][character.id] = key
+
       character_locale[key] = {
         'name' => character.name,
         'description' => character.description
@@ -650,10 +681,20 @@ class ConvertContentToDsl < ActiveRecord::Migration
     #contest
     #help_page
 
-    say 'Done!'
+    announce 'Updating table fields'
+
+    change_column :characters, :character_type_id, 'integer unsigned'
+
+    announce 'Updating IDs...'
+
+    GameData::CharacterType.collection.clear
+    GameData::CharacterType.collection.each do |key, type|
+      Character.where(:character_type_id => ids_to_keys[:character_types].key(key.to_s)).update_all :character_type_id => type.id
+    end
   end
 
   def down
+    change_column :characters, :character_type_id, :integer
   end
 
   def payouts_to_dsl(variable, payouts, trigger, &block)

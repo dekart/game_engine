@@ -25,7 +25,7 @@ module GameData
     end
 
     def level(&block)
-      @levels << GameData::MissionLevel.new(self, @levels.size).tap(&block)
+      @levels << GameData::MissionLevel.define("#{ @key }_level_#{ @levels.size }", &block).tap{|l| l.mission = self }
     end
   end
 end

@@ -1,11 +1,11 @@
 module GameData
   class MissionLevel < Base
-    attr_accessor :steps, :chance
-
-    def initialize(mission, index)
-      super("#{mission.key}_level_#{index}")
-
-      @mission = mission
+    class << self
+      def load!
+        GameData::Mission.load!
+      end
     end
+
+    attr_accessor :mission, :steps, :chance
   end
 end

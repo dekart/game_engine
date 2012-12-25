@@ -31,8 +31,6 @@ class Character < ActiveRecord::Base
   UPGRADABLE_ATTRIBUTES = [:attack, :defence, :health, :energy, :stamina]
 
   belongs_to :user
-  belongs_to :character_type,
-    :counter_cache => true
 
   has_many :ordered_hit_listings,
     :foreign_key  => :client_id,
@@ -90,7 +88,6 @@ class Character < ActiveRecord::Base
 
   validates_presence_of :character_type, :on => :create
 
-  delegate(*(CharacterType::BONUSES + [:to => :character_type]))
   delegate(:facebook_id, :to => :user)
 
   attr_accessor :level_up_applied
@@ -101,6 +98,14 @@ class Character < ActiveRecord::Base
         [0] + Character.all(:select => "characters.id", :joins => :user, :conditions => 'banned IS TRUE').map{|c| c.id }
       end
     end
+  end
+
+  def character_type
+    GameData::CharacterType[character_type_id]
+  end
+
+  def character_type=(value)
+    self.character_type_id = value.is_a?(GameData::CharacterType) ? value.id : GameData::CharacterType[value].id
   end
 
   def nickname(friend = false)
@@ -408,9 +413,7 @@ class Character < ActiveRecord::Base
   end
 
   def apply_character_type_defaults
-    CharacterType::APPLICABLE_ATTRIBUTES.each do |attribute|
-      send("#{attribute}=", character_type.send(attribute)) if send(attribute).nil?
-    end
+    character_type.apply_reward_on(:create, self)
   end
 
   def update_total_money

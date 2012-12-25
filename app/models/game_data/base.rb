@@ -10,11 +10,21 @@ module GameData
       end
 
       def define(key, &block)
+        @collection ||= {}
+        @id_to_key = nil
         @collection[key] = new(key).tap(&block)
       end
 
       def [](key)
-        collection[key]
+        key.is_a?(Symbol) ? collection[key] : collection[id_to_key[key]]
+      end
+
+      def id_to_key
+        @id_to_key ||= {}.tap do |hash|
+          collection.each do |key, object|
+            hash[object.id] = key
+          end
+        end
       end
     end
 
@@ -28,6 +38,10 @@ module GameData
       @rewards = {}
       @reward_previews = {}
       @requirements = {}
+    end
+
+    def id
+      @id ||= Zlib.crc32("#{ self.class.name }_#{ @key }")
     end
 
     def reward_on(key, &block)
