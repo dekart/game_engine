@@ -45,8 +45,13 @@ window.MonsterController = class extends BaseController
     id = @monster.id
 
     $.post("/monsters/#{id}/reward", (response)=>
-      alert "reward collected"
-      @html(
-        @.renderTemplate("monster/reward", response: response)
+      result = @.renderTemplate("monster/reward", response: response)
+      $('#result').html(result)
+
+      monster_result = @.renderTemplate("monster/#{response.fight.monster.state}", 
+        monster: response.fight.monster, fight: response.fight, percentage: 0, percentage_text: 0
       )
+      $('#monster').html(monster_result)
+
+      $(document).trigger('result.received')
     )

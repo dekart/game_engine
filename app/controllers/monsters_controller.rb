@@ -71,12 +71,15 @@ class MonstersController < ApplicationController
 
   def reward
     @fight = current_character.monster_fights.find_by_monster_id(params[:id])
+    triggers = @fight.payout_triggers
 
-    @reward_collected = @fight.collect_reward!
+    result = @fight.collect_reward!
 
     render :json => {
-      :fight => @fight.as_json,
-      :reward_collected => @reward_collected
+      :monster => @fight.monster.as_json,
+      :fight   => @fight.as_json,
+      :reward  => result ? @fight.payouts.preview(triggers) : {},
+      :reward_collected => result
     }
   end
 end

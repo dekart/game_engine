@@ -24,7 +24,7 @@ window.MonstersHelper =
     percentage_text = Math.min [percentage, 100]...
 
     result = JST["views/monster/#{monster.state}"](
-      _.extend({monster: monster, fight: fight, percentage: percentage, percentage_text: percentage_text}, MonstersHelper)
+      _.extend({monster: monster, fight: fight, percentage: percentage, percentage_text: percentage_text}, MonstersHelper, RewardHelper)
     )
 
     @safe result

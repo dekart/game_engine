@@ -10,8 +10,8 @@ window.MonsterListController = class extends BaseController
 
   setupEventListeners: ->
     @el.on('click', '#finished_fights', @.onFinishedFightsClick)
-    @el.on('click', '.engage, .view, .reward',   @.onEngageClick)
-    @el.on('click', '.attack', @.onAttackClick)
+    @el.on('click', '.monster_list .engage, .monster_list .view, .monster_list .reward', @.onEngageClick)
+    @el.on('click', '.monster_list .attack', @.onAttackClick)
 
   show: ->
     @loading = true

@@ -116,6 +116,8 @@ class MonsterFight < ActiveRecord::Base
 
       add_to_finished_fights
     end
+
+    true
   end
 
   def reward_collectable?
@@ -164,12 +166,19 @@ class MonsterFight < ActiveRecord::Base
     }
   end
 
+  def basic_payouts
+    monster_type.applicable_payouts.preview(character.monster_types.payout_triggers(monster_type))
+  end
+
   def as_json
     {
       :monster => monster.as_json,
+      :damage  => damage,
+      :reward  => basic_payouts.as_json,
       :reward_collectable => reward_collectable?,
-      :will_get_reward => will_get_reward?,
-      :time_remaining  => time_remaining
+      :reward_collected => reward_collected?,
+      :will_get_reward  => will_get_reward?,
+      :time_remaining   => time_remaining
     }
   end
 
