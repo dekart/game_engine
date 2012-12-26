@@ -6,6 +6,10 @@
             
         i.level = 3
       
+      i.visible_if do |character|
+        character.character_type.key == :warrior or character.character_type.key == :trader
+      end
+    
         i.placements = [:right_hand, :left_hand, :additional]
       
         i.basic_price = 40

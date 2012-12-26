@@ -49,6 +49,7 @@ module GameData
       @rewards = {}
       @reward_previews = {}
       @requirements = {}
+      @visible_if = nil
     end
 
     def id
@@ -101,5 +102,12 @@ module GameData
       requirements_for(character, :base)
     end
 
+    def visible_if(&block)
+      @visible_if = block
+    end
+
+    def visible?(character)
+      @visible_if ? @visible_if.call(character) : true
+    end
   end
 end

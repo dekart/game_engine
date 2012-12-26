@@ -78,6 +78,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
         i.level = #{item.level}
       } if item.level > 1
 
+      code << visibility_to_dsl('i', item.visibilities)
+
       code << %{
         i.placements = #{ item.placements.inspect }
       } unless item.placements.empty?
@@ -371,6 +373,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
         m.tags = #{ tags.inspect }
       } unless tags.empty?
 
+      code << visibility_to_dsl('m', mission.visibilities)
+
       code << requirements_to_dsl('m', mission.requirements)
 
       [:success, :failure, :repeat_success, :repeat_failure, :level_complete, :mission_complete].each do |t|
@@ -461,6 +465,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
         m.level = #{monster.level}
       } if monster.level > 1
 
+      code << visibility_to_dsl('m', monster.visibilities)
+
       code << %{
         m.fight_time = #{monster.fight_time}.hours
         m.respawn_time = #{monster.respawn_time}.hours
@@ -541,6 +547,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
       code << %{
         p.level = #{property.level}
       } if property.level > 1
+
+      code << visibility_to_dsl('p', property.visibilities)
 
       code << %{
         p.upgrades = #{property.upgrade_limit || Setting.i(:property_upgrade_limit)}
@@ -886,5 +894,15 @@ class ConvertContentToDsl < ActiveRecord::Migration
         end
       }
     end
+  end
+
+  def visibility_to_dsl(variable, visibilities)
+    return '' if visibilities.empty?
+
+    %{
+      #{variable}.visible_if do |character|
+        %s
+      end
+    } % visibilities.map{|v| "character.character_type.key == :#{ v.character_type.name.parameterize.underscore }" }.join(' or ')
   end
 end
