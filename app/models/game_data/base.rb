@@ -59,8 +59,8 @@ module GameData
       "#{ self.class.name.demodulize.underscore }_#{ @key }"
     end
 
-    def picture(format)
-      "#{ self.class.name.demodulize.underscore }/#{ @key }/#{ format }.jpg"
+    def picture(size, format = 'jpg')
+      "#{ self.class.name.demodulize.underscore }/#{ @key }/#{ size }.#{ format }"
     end
 
     def reward_on(key, &block)

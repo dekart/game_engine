@@ -41,7 +41,7 @@ en:
         total_score: "Total Score"
         total_monsters_damage: "Total Damage to Monsters"
         killed_monsters_count: "Monsters Killed"
-        
+
       property_type:
         income: "Income"
         build_requirements: "Build Requirements"
@@ -50,12 +50,6 @@ en:
         collect_period: "Income collection period, hours"
       user:
         show_fan_specials: "Show 'Fan Specials' block"
-      character_type:
-        health_restore_bonus: "Decrease of health restore period, %"
-        energy_restore_bonus: "Decrease of energy restore period, %"
-        stamina_restore_bonus: "Decrease of stamina restore period, %"
-        income_period_bonus: "Decrease of income recalculation period, %"
-        equipment_slots: "Additional equipment slots"
       mission_group:
         hide_unsatisfied: "Hide if requirements are not satisfied"
       mission:
@@ -83,7 +77,7 @@ en:
         payouts: "Reward"
       credit_package:
         price: 'Price in Credits'
-      story:  
+      story:
         action_link: 'Action Link Text'
       personal_discount:
         price: "Exclusive Price"
@@ -92,7 +86,7 @@ en:
         amount_displayed_today: "Displayed Today"
       clan:
         members: "Members"
-        
+
     errors:
       models:
         character:
@@ -109,13 +103,13 @@ en:
           attributes:
             amount:
               not_enough: "You don't have enough money in your balance"
-        clan: 
+        clan:
           attributes:
             creator:
               not_enough_vip_money: "You don't have enough vip money"
             image:
-              not_loaded_image: "You need to select an image"   
-                
+              not_loaded_image: "You need to select an image"
+
         fight:
           attributes:
             attacker:
@@ -172,30 +166,29 @@ en:
           cannot_help_themself: "You cannot help yourself!"
         app_request/gift:
           accepted_recently: "You already accepted a gift from this player recently. You can accept only 1 gift per sender per every %{hours} hours."
-          
+
         monster:
           attributes:
             base:
               recently_attacked: 'You already attacked this monster recently'
             character:
               requirements_not_satisfied: "Some monster requirements are not satisfied"
-              
+
         exchange:
           attributes:
             item:
               not_exchangeable: "This item is not exchangeable"
             amount:
               not_enough: "You cannot offer more items than you have"
-              
+
         exchange_offer:
           attributes:
             item:
               not_exchangeable: "This item is not exchangeable"
             amount:
               not_enough: "You cannot offer more items than you have"
-          
+
         achievement:
           attributes:
             base:
               already_collected: 'You already collected reward for this achievement'
-       

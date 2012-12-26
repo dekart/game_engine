@@ -250,25 +250,9 @@ en:
     character_types:
       index:
         title: "Character Types"
-        empty_set: "No types"
-        controls:
-          new: "Add Type"
-          edit: "Edit"
-          change_state_confirm: "Are you sure you want to change state of this character type?"
-      new:
-        title: "New Character Type"
-        submit: "Create"
-      create:
-        success: "Character type has been created successfully!"
-      edit:
-        title: "%{name} - Edit Character Type"
-        submit: "Update"
-      update:
-        success: "Character type has been updated successfully!"
-      form_fields:
-        basic_attributes: "Basic Attributes"
-        bonuses: "Bonuses"
-        other: "Other Attributes"
+        image: 'Image'
+        name: 'Name'
+        players: 'Total Players'
     help_pages:
       index:
         title: "Help Pages"
