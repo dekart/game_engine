@@ -685,6 +685,10 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
     change_column :characters, :character_type_id, 'integer unsigned'
 
+    %w{basic_money vip_money attack defence health energy stamina points}.each do |column|
+      change_column :characters, column, :integer, :default => 0
+    end
+
     announce 'Updating IDs...'
 
     GameData::CharacterType.collection.clear
@@ -695,6 +699,10 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
   def down
     change_column :characters, :character_type_id, :integer
+
+    %w{basic_money vip_money attack defence health energy stamina points}.each do |column|
+      change_column :characters, column, :integer, :default => nil
+    end
   end
 
   def payouts_to_dsl(variable, payouts, trigger, &block)

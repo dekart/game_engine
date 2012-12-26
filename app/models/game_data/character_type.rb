@@ -9,5 +9,13 @@ module GameData
     end
 
     attr_accessor :attributes
+
+    def name
+      I18n.t("data.character_types.#{@key}.name")
+    end
+
+    def description
+      I18n.t("data.character_types.#{@key}.name")
+    end
   end
 end

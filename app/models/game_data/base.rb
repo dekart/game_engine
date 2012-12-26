@@ -16,7 +16,18 @@ module GameData
       end
 
       def [](key)
-        key.is_a?(Symbol) ? collection[key] : collection[id_to_key[key]]
+        case key
+        when Symbol
+          collection[key]
+        when Numeric
+          collection[id_to_key[key]]
+        when String
+          if key =~ /^[0-9]+$/
+            collection[id_to_key[key.to_i]]
+          else
+            collection[key.to_sym]
+          end
+        end
       end
 
       def id_to_key
@@ -41,7 +52,15 @@ module GameData
     end
 
     def id
-      @id ||= Zlib.crc32("#{ self.class.name }_#{ @key }")
+      @id ||= Zlib.crc32(to_key)
+    end
+
+    def to_key
+      "#{ self.class.name.demodulize.underscore }_#{ @key }"
+    end
+
+    def picture(format)
+      "#{ self.class.name.demodulize.underscore }/#{ @key }/#{ format }.jpg"
     end
 
     def reward_on(key, &block)

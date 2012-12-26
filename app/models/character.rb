@@ -70,15 +70,15 @@ class Character < ActiveRecord::Base
 
   restorable_attribute :hp,
     :limit          => :health_points,
-    :restore_period => :health_restore_period,
+    :restore_period => Setting.i(:character_health_restore_period),
     :restore_bonus  => :health_restore_bonus
   restorable_attribute :ep,
     :limit          => :energy_points,
-    :restore_period => :energy_restore_period,
+    :restore_period => Setting.i(:character_energy_restore_period),
     :restore_bonus  => :energy_restore_bonus
   restorable_attribute :sp,
     :limit          => :stamina_points,
-    :restore_period => :stamina_restore_period,
+    :restore_period => Setting.i(:character_stamina_restore_period),
     :restore_bonus  => :stamina_restore_bonus
 
   after_validation :apply_character_type_defaults, :on => :create
@@ -177,6 +177,7 @@ class Character < ActiveRecord::Base
 
   def attack_points
     attack +
+      character_type.attributes[:attack] +
       equipment.effect(:attack) +
       assignments.attack_effect +
       boosts.active_for(:fight, :attack).try(:effect, :attack).to_i
@@ -184,21 +185,28 @@ class Character < ActiveRecord::Base
 
   def defence_points
     defence +
+      character_type.attributes[:defence] +
       equipment.effect(:defence) +
       assignments.defence_effect +
       boosts.active_for(:fight, :defence).try(:effect, :defence).to_i
   end
 
   def health_points
-    health + equipment.effect(:health)
+    health +
+      character_type.attributes[:health] +
+      equipment.effect(:health)
   end
 
   def energy_points
-    energy + equipment.effect(:energy)
+    energy +
+      character_type.attributes[:energy] +
+      equipment.effect(:energy)
   end
 
   def stamina_points
-    stamina + equipment.effect(:stamina)
+    stamina +
+      character_type.attributes[:stamina] +
+      equipment.effect(:stamina)
   end
 
   def fight_damage_reduce
@@ -353,16 +361,16 @@ class Character < ActiveRecord::Base
     save!
   end
 
-  def health_restore_period
-    (Setting.i(:character_health_restore_period) * (1 - equipment.effect(:hp_restore_rate).to_f / 100)).seconds
+  def health_restore_bonus
+    character_type.attributes[:hp_restore_rate] + equipment.effect(:hp_restore_rate)
   end
 
-  def energy_restore_period
-    (Setting.i(:character_energy_restore_period) * (1 - equipment.effect(:ep_restore_rate).to_f / 100)).seconds
+  def energy_restore_bonus
+    character_type.attributes[:ep_restore_rate] + equipment.effect(:ep_restore_rate)
   end
 
-  def stamina_restore_period
-    (Setting.i(:character_stamina_restore_period) * (1 - equipment.effect(:sp_restore_rate).to_f / 100)).seconds
+  def stamina_restore_bonus
+    character_type.attributes[:sp_restore_rate] + equipment.effect(:sp_restore_rate)
   end
 
   def friend_filter

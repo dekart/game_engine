@@ -15,12 +15,13 @@
 
           <div
             class="character_type"
-            id="<%= dom_id(type) %>"
+            id="<%= type.to_key %>"
             data-value="<%= type.id %>"
             data-tooltip-content="<%= escape_once(description).html_safe %>"
           >
             <span class="name"><%= type.name %></span>
-            <%= image_tag(type.pictures.url(:small)) if type.pictures? %>
+
+            <%= image_tag(type.picture(:small)) %>
           </div>
         <% end %>
       </div>
@@ -30,7 +31,7 @@
 
     <% if type = form.object.character_type || @character_types.first %>
       <% dom_ready do %>
-        CharacterForm.set_character_type('#<%= dom_id(type) %>');
+        CharacterForm.set_character_type('#<%= type.to_key %>');
       <% end %>
     <% end %>
   <% end %>

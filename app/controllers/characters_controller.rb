@@ -56,7 +56,7 @@ class CharactersController < ApplicationController
     else
       @character = current_user.build_character(:name => params[:character][:name])
 
-      @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
+      @character.character_type ||= GameData::CharacterType[params[:character][:character_type_id]] #.find_by_id(params[:character][:character_type_id])
 
       if @character.save
         # Always redirect newcomers to missions
