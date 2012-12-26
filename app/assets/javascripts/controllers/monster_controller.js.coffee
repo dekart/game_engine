@@ -35,10 +35,17 @@ window.MonsterController = class extends BaseController
     power_attack = $(e.currentTarget).data("power")
 
     $.ajax("/monsters/#{id}?power_attack=#{power_attack}", type: 'put', success: (response)=>
-      alert "monster updated"
-      @html(
-        @.renderTemplate("monster/update", response: response)
+      result = @.renderTemplate("monster/update", response: response)
+      $('#result').html(result)
+
+      monster_result = @.renderTemplate("monster/#{response.fight.monster.state}", 
+        monster: response.fight.monster, fight: response.fight, percentage: 0, percentage_text: 0
       )
+      $('#monster').html(monster_result)
+
+      $(document).trigger('result.received')
+
+      Character.updateFromRemote()
     )
 
   onRewardClick: (e)=>
@@ -54,4 +61,6 @@ window.MonsterController = class extends BaseController
       $('#monster').html(monster_result)
 
       $(document).trigger('result.received')
+
+      Character.updateFromRemote()
     )
