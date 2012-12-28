@@ -59,7 +59,9 @@
       <div id="result" style="display:none;"></div>
     <% end %>
 
-    <%= yield %>
+    <div id="page">
+      <%= yield %>
+    </div>
 
     <%= render("layouts/footer") %>
   </div>
