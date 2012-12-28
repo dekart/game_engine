@@ -61,5 +61,7 @@ module GameEngine
       g.test_framework :rspec, :fixture => false, :views => false
       g.fixture_replacement :factory_girl, :dir => "spec/factories"
     end
+
+    config.compass.generated_images_dir = "public/assets"
   end
 end
