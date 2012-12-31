@@ -13,7 +13,7 @@
       <div class="label"><%= Character.human_attribute_name("vip_money") %></div>
       <div class="value"></div>
 
-      <%= link_to(t(".premium"), items_path(:anchor => :buy_vip_money), :class => :premium) %>
+      <a class="buy"><%= t('.buy_vip') %></a>
     </td>
     <td class="health">
       <div class="timer"></div>
