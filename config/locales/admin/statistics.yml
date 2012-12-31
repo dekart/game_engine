@@ -43,6 +43,7 @@ en:
           total: "Total"
           failed: "Failed"
           last_failed: "Last Failed ID"
+          last_processed_at: "Last Processed At"
       user:
         title: "Statistics: New Users"
         total_users: "Total Users"
