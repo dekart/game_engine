@@ -8,7 +8,7 @@
         p.collect_period = 1.hours
       
         p.requires_for :build do |r|
-          r.basic_money(200)
+          r.basic_money = 200
 
         end
       
@@ -19,7 +19,7 @@ r.take_vip_money(0)
       end
     
         p.requires_for :upgrade do |r|
-          r.basic_money(200 + 100 * r.reference.level)
+          r.basic_money = 200 + 100 * r.reference.level
 
         end
       

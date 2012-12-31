@@ -13,3 +13,5 @@ translations:
       - "*.fights.opt_out"
       - "*.premia.refill"
       - "*.premia.buy_vip"
+      - "*.missions"
+      - "*.requirements"

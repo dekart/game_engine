@@ -6,16 +6,26 @@
         m.tags = [:repeatable]
       
         m.requires do |r|
-          r.item :item_97931052
+          r.item = [:item_97931052]
 
         end
       
+      m.reward_on :mission_complete do |r|
+        r.give_vip_money(1) if Dice.chance(50) 
+
+      end
+    
+      m.reward_preview_on :mission_complete do |r|
+        r.give_vip_money(1)
+
+      end
+    
           m.level do |l|
             l.steps = 20
         
         l.requires do |r|
           
-            r.ep 1
+            r.ep = 1
           
         end
       

@@ -36,7 +36,7 @@ en:
       text: "%{amount} Alliance Members"
     level:
       name: "Level"
-      text: "Level %{required_value}+"
+      text: "Level %{value}+"
     basic_money:
       name: "Money"
       text: "%{amount} Money"

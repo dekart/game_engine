@@ -1,0 +1,48 @@
+.requires {
+  .requirement {
+    float: left;
+    line-height: 16px;
+    padding-left: 20px;
+    background-position: left;
+    background-repeat: no-repeat;
+    white-space: nowrap;
+    margin: 0 5px 5px 0;
+
+    .value {
+      font-weight: bold;
+      margin-right: 3px;
+    }
+  }
+
+  .experience {
+    @include icons-sprite(experience);
+  }
+
+  .basic_money {
+    @include icons-sprite(basic_money);
+  }
+
+  .vip_money {
+    @include icons-sprite(vip_money);
+  }
+
+  .ep {
+    @include icons-sprite(energy);
+  }
+
+  .sp {
+    @include icons-sprite(stamina);
+  }
+
+  .hp {
+    @include icons-sprite(health);
+  }
+
+  .points {
+    @include icons-sprite(points);
+  }
+
+  .level {
+    @include icons-sprite(level);
+  }
+}

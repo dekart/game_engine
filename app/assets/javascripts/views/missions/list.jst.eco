@@ -1,0 +1,93 @@
+<% if @loading: %>
+  <%= I18n.t('common.loading') %>
+<% else: %>
+  <h1><%= I18n.t('missions.title') %></h1>
+
+  <div id="mission_group_list" class="clearfix">
+    <ul>
+      <% for group in MissionGroup.all(): %>
+        <li
+          id="<%= group.key %>"
+          class="mission_group <%= 'locked' if group.locked %> <%= 'current' if group.current %>"
+          data-group-id="<%= group.id %>"
+        >
+          <% if group.isLocked(): %>
+            <span class="name"><%= I18n.t('missions.groups.locked') %></span>
+          <% else: %>
+            <span class="name"><%= group.name %></span>
+          <% end %>
+
+          <%= @requirements group.requirements, (content)=> %>
+            <div class="requires"><%= content %></div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="mission_list">
+    <% if not MissionGroup.current().isLocked(): %>
+      <div class="missions">
+        <% for mission in Mission.all(): %>
+          <div class="mission" id="<%= mission.key %>">
+            <div class="info">
+              <div class="image">
+                <img src="<%= mission.pictures.small %>" />
+
+                <div class="progress"><%= @missionProgress(mission) %></div>
+              </div>
+
+              <div class="name"><%= mission.name %></div>
+              <div class="description"><%=@safe mission.description %></div>
+
+              <div class="controls">
+                <% if 0 <= mission.level.progress < mission.level.steps or mission.repeatable: %>
+                  <button data-mission-id="<%= mission.id %>">
+                    <% if mission.button_label: %>
+                      <%= mission.button_label %>
+                    <% else if mission.level.progress == 0: %>
+                      <%= I18n.t('missions.buttons.start') %>
+                    <% else: %>
+                      <%= I18n.t('missions.buttons.continue') %>
+                    <% end %>
+                  </button>
+                <% else: %>
+                  <div class="completed"><%= I18n.t('missions.completed') %></div>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="details">
+              <%= @rewards mission.level.rewards.success, (content)=> %>
+                <div class="rewards clearfix">
+                  <h3><%= I18n.t('missions.reward') %></h3>
+
+                  <%= content %>
+                </div>
+              <% end %>
+
+              <%= @requirements mission.level.requirements, (content)=> %>
+                <div class="requires clearfix">
+                  <h3><%= I18n.t('missions.requirements') %></h3>
+
+                  <%= content %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          </div>
+        <% end %>
+      </div>
+    <% else: %>
+      <%= @requirements MissionGroup.current().requirements, (content)=> %>
+        <div class="empty_set">
+          <p><%= I18n.t("missions.requirements_not_satisfied") %></p>
+
+          <div class="requires clearfix">
+            <%= content %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

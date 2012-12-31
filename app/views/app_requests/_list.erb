@@ -8,7 +8,7 @@
       <%= render("app_requests/details/#{ app_request.type_name }", :app_request => app_request) %>
 
       <td class="ignore">
-        <%= link_to(image_tag("icons/hide.gif", :alt => t('.buttons.ignore')),
+        <%= link_to(image_tag("icons/hide.png", :alt => t('.buttons.ignore')),
               ignore_app_request_path(app_request),
               :remote => true,
               :method => :put,

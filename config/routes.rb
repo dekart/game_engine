@@ -172,14 +172,13 @@ GameEngine::Application.routes.draw do
     resources :wall_posts, :shallow => true, :only => [:index, :create, :destroy]
   end
 
-  resources :mission_groups, :only => [:index, :show]
-  resources :missions, :only => :fulfill do
+  resources :mission_groups, :only => [:index, :update]
+  resources :missions, :only => [:update] do
     collection do
       post 'collect_help_reward'
     end
 
     member do
-      post 'fulfill'
       match 'help'
     end
   end

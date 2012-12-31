@@ -12,7 +12,7 @@
         
         l.requires do |r|
           
-            r.ep 2
+            r.ep = 2
           
         end
       

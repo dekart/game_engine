@@ -1,0 +1,27 @@
+<h2><%= @mission.name %></h2>
+
+<% if @result.success: %>
+  <div class="message success"><%=@safe @mission.success_text %></div>
+<% else: %>
+  <div class="message failure"><%=@safe @mission.failure_text %></div>
+<% end %>
+
+<%= @rewards @result.rewards, (content)=> %>
+  <div class="rewards received">
+    <h3><%= I18n.t('missions.result.received') %></h3>
+
+    <%= content %>
+  </div>
+<% end %>
+
+<%= @spendings @result.rewards, (content)=> %>
+  <div class="rewards spent">
+    <h3><%= I18n.t('missions.result.spent') %></h3>
+
+    <%= content %>
+  </div>
+<% end %>
+
+<button class="continue">
+  <%= I18n.t('missions.result.continue') %>
+</button>

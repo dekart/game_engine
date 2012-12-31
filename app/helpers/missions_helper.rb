@@ -1,39 +1,31 @@
 module MissionsHelper
   def mission_list(missions)
     missions.each do |mission|
-      if mission.visible_for?(current_character)
-        rank = current_character.mission_levels.rank_for(mission)
-        level = rank ? rank.level : mission.levels.first
+      if mission.visible?(current_character)
+        level = current_character.mission_state.level_for(mission)
+        progress = current_character.mission_state.progress_for(level)
 
-        yield(mission, level, rank) if !mission.hide_unsatisfied? or level.applicable_requirements.satisfies?(current_character)
+        yield(mission, level, progress) if !mission.tags.include?(:hide_unsatisfied) or level.requirements(current_character).satisfied?
       end
     end
   end
 
-  def mission_progress(rank, options = {})
-    options = options.reverse_merge(
-      :level => true
-    )
-
+  def mission_progress(level, progress, options = {})
     result = ""
 
-    if options[:level] and rank.mission.levels.size > 1
-      result << %{<div class="level">#{ t("missions.mission.level", :level => rank.level.position) }</div>}
+    if level.mission.levels.size > 1
+      result << %{<div class="level">#{ t("missions.mission.level", :level => level.position + 1) }</div>}
     end
 
-    if rank.nil?
-      result << percentage_bar(0,
-        "%s: %d%" % [Mission.human_attribute_name("progress"), 0]
-      )
-    elsif rank.completed?
+    if progress >= level.steps
       result << percentage_bar(100,
-        "%s: %d%" % [Mission.human_attribute_name("progress"), 100]
+        "%s: %d%" % [t('missions.mission.progress'), 100]
       )
     else
-      percentage = rank.progress_percentage
+      percentage = (100.0 * progress.to_f / level.steps).round
 
       result << percentage_bar(percentage,
-        "%s: %d%" % [Mission.human_attribute_name("progress"), percentage]
+        "%s: %d%" % [t('missions.mission.progress'), percentage]
       )
     end
 
@@ -47,9 +39,9 @@ module MissionsHelper
     ]
   end
 
-  def mission_button(mission, rank)
+  def mission_button(mission, progress)
     if mission.button_label.blank?
-      button(rank.nil? || rank.progress == 0 ? :start : :fulfill)
+      button(progress == 0 ? :start : :fulfill)
     else
       button(mission.button_label)
     end

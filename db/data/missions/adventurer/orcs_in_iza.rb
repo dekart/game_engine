@@ -10,7 +10,7 @@
         
         l.requires do |r|
           
-            r.ep 6
+            r.ep = 6
           
         end
       

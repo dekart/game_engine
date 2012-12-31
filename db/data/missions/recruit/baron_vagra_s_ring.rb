@@ -10,7 +10,7 @@
         
         l.requires do |r|
           
-            r.ep 4
+            r.ep = 4
           
         end
       

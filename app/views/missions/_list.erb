@@ -1,10 +1,10 @@
 <% collection(missions) do %>
   <table cellspacing="0" cellpadding="0">
-    <% mission_list(missions) do |mission, level, rank| %>
+    <% mission_list(missions) do |mission, level, progress| %>
       <%= render('missions/mission',
             :mission  => mission,
             :level    => level,
-            :rank     => rank
+            :progress => progress
           ) %>
     <% end %>
   </table>

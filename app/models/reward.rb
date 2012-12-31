@@ -29,21 +29,80 @@ class Reward < RewardPreview
   end
 
   def give_basic_money(amount)
+    amount = amount_to_number(amount)
+
     @character.charge(- amount, 0, @reference)
 
     super(amount)
   end
 
   def take_basic_money(amount)
+    amount = amount_to_number(amount)
+
     @character.charge(amount, 0, @reference)
 
     super(amount)
   end
 
   def give_experience(amount)
+    amount = amount_to_number(amount)
+
     @character.experience += amount
 
     super(amount)
+  end
+
+  def give_upgrade_points(amount)
+    amount = amount_to_number(amount)
+
+    @character.points += amount
+
+    super(amount)
+  end
+
+  def take_upgrade_points(amount)
+    amount = amount_to_number(amount)
+
+    @character.points -= amount
+    @character.points = 0 if @character.points < 0
+
+    super(amount)
+  end
+
+  def give_vip_money(amount)
+    amount = amount_to_number(amount)
+
+    @character.charge(0, - amount, @reference)
+
+    super(amount)
+  end
+
+  def take_vip_money(amount)
+    amount = amount_to_number(amount)
+
+    @character.charge(0, amount, @reference)
+
+    super(amount)
+  end
+
+  def give_mercenaries(amount)
+    amount = amount_to_number(amount)
+
+    amount.times do
+      character.mercenary_relations.build
+    end
+
+    super(amount)
+  end
+
+  def take_mercenaries(amount)
+    amount = amount_to_number(amount)
+
+    character.mercenary_relations[0 ... amount].each do |mercenary|
+      mercenary.destroy
+
+      super(1)
+    end
   end
 
   def give_item(item, amount = 1)
@@ -76,31 +135,6 @@ class Reward < RewardPreview
     super(property_type)
   end
 
-  def give_upgrade_points(amount)
-    @character.points += amount
-
-    super(amount)
-  end
-
-  def take_upgrade_points(amount)
-    @character.points -= amount
-    @character.points = 0 if @character.points < 0
-
-    super(amount)
-  end
-
-  def give_vip_money(amount)
-    @character.charge(0, - amount, @reference)
-
-    super(amount)
-  end
-
-  def take_vip_money(amount)
-    @character.charge(0, amount, @reference)
-
-    super(amount)
-  end
-
   def increase_attribute(attribute, amount)
     @character.send("#{ attribute }=", @character.send(attribute) + amount)
 
@@ -113,19 +147,14 @@ class Reward < RewardPreview
     super(amount)
   end
 
-  def give_mercenaries(amount)
-    amount.times do
-      character.mercenary_relations.build
-    end
+  protected
 
-    super(amount)
-  end
-
-  def take_mercenaries(amount)
-    character.mercenary_relations[0 ... limit].each do |mercenary|
-      mercenary.destroy
-
-      super(1)
+  def amount_to_number(amount)
+    case amount
+    when Numeric
+      amount
+    when Range
+      amount.begin + rand(amount.end - amount.begin)
     end
   end
 end

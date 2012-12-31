@@ -1,7 +1,7 @@
 <table id="main_menu" cellspacing="0" cellpadding="0">
   <tr>
     <td>
-      <%= link_to(t(".missions"), mission_groups_path, :class => :missions) %>
+      <%= link_to_function(t(".missions"), 'MissionController.show()', :class => :missions) %>
       <%= link_to(t(".monsters"), monsters_path, :class => :monsters) %>
     </td>
     <td>

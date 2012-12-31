@@ -8,17 +8,30 @@ en:
       message: "You've completed all missions in this group!"
       title_received: "You received new title:"
       you_received: "You received:"
-    tabs:
-      locked: "Locked"
-      previous:
-        name: "« Previous"
-      next:
-        name: "Next »"
   missions:
+    title: 'Missions'
     buttons:
-      buttons:
-        missions: "Missions"
-        monsters: "Monsters"    
+      missions: "Missions"
+      monsters: "Monsters"
+    groups:
+      locked: 'Locked'
+    requirements_not_satisfied: "Some mission requirements are not satisfied. You need:"
+    level: "Level %{level}"
+    progress: "Progress"
+    completed: "Completed!"
+    buttons:
+      start: "Start Mission"
+      continue: "Continue Mission"
+
+    reward: "Reward:"
+    requirements: "Requires:"
+
+    result:
+      received: 'You received:'
+      spent: 'You spent:'
+      continue: 'Continue'
+
+
     fulfill:
       completed:
         message: "You've just completed this mission!"
@@ -53,16 +66,8 @@ en:
 
       already_completed:
         message: "You already completed this mission"
-      requirements_not_satisfied:
-        message: "Some mission requirements are not satisfied:"
     list:
       empty_set: "You have no missions available at this time"
-    mission:
-      completed: "Completed!"
-      level: "Level %{level}"
-      buttons:
-        start: "Start Mission"
-        fulfill: "Continue Mission"
     help:
       success: "You've successfully helped %{user} to complete the %{mission} mission!"
       you_received: "You received:"

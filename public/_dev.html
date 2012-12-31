@@ -21,7 +21,7 @@
         </tr>
       </table>
 
-      <input type="submit" name="submit" value="Submit">
+      <input type="submit" name="button" value="Submit">
     </form>
 
     <iframe
@@ -32,10 +32,10 @@
 
     <script type="text/javascript" charset="utf-8">
       $(function(){
-        $('form').submit(function(){
-          $(this).attr('action', $(this).find('input[name=url]').val());
+        var onSubmit = function(){
+          $('form').attr('action', $('form').find('input[name=url]').val());
 
-          var values = $.map($(this).find('input[type!=submit]').get(), function(el){
+          var values = $.map($('form').find('input[type!=submit]').get(), function(el){
             return {
               key: $(el).attr('name'),
               value: $(el).val()
@@ -43,7 +43,9 @@
           });
 
           localStorage.setItem('dev_form', JSON.stringify(values));
-        });
+        };
+
+        $('form').submit(onSubmit);
 
         var stored_value = localStorage.getItem('dev_form');
 
@@ -51,6 +53,10 @@
           $.each(JSON.parse(stored_value), function(){
             $('form input[name=' + this.key + ']').val(this.value);
           });
+        }
+
+        if($('form input[name=url]').val().length > 0){
+          $('form').submit()
         }
       })
     </script>

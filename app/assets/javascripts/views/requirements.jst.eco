@@ -1,0 +1,16 @@
+<% for requirement in @collection: %>
+  <% if requirement[0] == 'attribute': %>
+    <div class="requirement <%= requirement[1] %>"
+      data-tooltip-content="<%= I18n.t("requirements.#{ requirement[1] }.text", value: requirement[2]) %>"
+    >
+      <%= requirement[2] %>
+    </div>
+  <% else if requirement[0] == 'item': %>
+    <div class="requirement item"
+      data-tooltip-content="<%= requirement[1].name %>"
+      style="background-image: url(<%= requirement[1].pictures.icon %>)"
+    >
+      <span class="value"><%= requirement[2] %></span>
+    </div>
+  <% end %>
+<% end %>

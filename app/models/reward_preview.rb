@@ -14,7 +14,17 @@ class RewardPreview
   end
 
   def as_json(*args)
-    @values.reject{|k, v| v.is_a?(Enumerable) && v.empty? or v == 0 }.as_json(*args)
+    {}.tap do |result|
+      @values.each do |key, value|
+        if value.is_a?(Range)
+          result[key] = [:range, value.begin, value.end]
+        elsif value.is_a?(Array) and not value.empty?
+          result[key] = value
+        elsif value.is_a?(Numeric) and value != 0
+          result[key] = value
+        end
+      end
+    end.as_json(*args)
   end
 
   def give_spendable_attribute(attribute, amount, maximum, exceed_maximum = false)
@@ -23,6 +33,22 @@ class RewardPreview
 
   def take_spendable_attribute(attribute, amount)
     @values[attribute] -= amount
+  end
+
+  def give_basic_attribute(name, amount)
+    if amount.is_a?(Numeric) and @values[name].is_a?(Numeric)
+      @values[name] += amount
+    elsif amount.is_a?(Numeric) and @values[name].is_a?(Range)
+      @values[name] = (@values[name].begin + amount) .. (@values[name].end + amount)
+    elsif amount.is_a?(Range) and @values[name].is_a?(Numeric)
+      @values[name] = (@values[name] + amount.begin) .. (@values[name] + amount.end)
+    else
+      @values[name] = (@values[name].begin + amount.begin) .. (@values[name].end + amount.end)
+    end
+  end
+
+  def take_basic_attribute(name, amount)
+    give_basic_attribute(name, - amount)
   end
 
   def give_energy(amount, exceed_maximum = false)
@@ -50,15 +76,39 @@ class RewardPreview
   end
 
   def give_basic_money(amount)
-    @values[:basic_money] += amount
+    give_basic_attribute(:basic_money, amount)
   end
 
   def take_basic_money(amount)
-    @values[:basic_money] -= amount
+    take_basic_attribute(:basic_money, amount)
   end
 
   def give_experience(amount)
-    @values[:experience] += amount
+    give_basic_attribute(:experience, amount)
+  end
+
+  def give_upgrade_points(amount)
+    give_basic_attribute(:points, amount)
+  end
+
+  def take_upgrade_points(amount)
+    take_basic_attribute(:points, amount)
+  end
+
+  def give_vip_money(amount)
+    give_basic_attribute(:vip_money, amount)
+  end
+
+  def take_vip_money(amount)
+    take_basic_attribute(:vip_money, amount)
+  end
+
+  def give_mercenaries(amount)
+    give_basic_attribute(:mercenaries, amount)
+  end
+
+  def take_mercenaries(amount)
+    take_basic_attribute(:mercenaries, amount)
   end
 
   def give_item(item, amount = 1)
@@ -85,36 +135,12 @@ class RewardPreview
     @values[:properties][property_type.id] ||= [property_type, 1]
   end
 
-  def give_upgrade_points(amount)
-    @values[:points] += amount
-  end
-
-  def take_upgrade_points(amount)
-    @values[:points] -= amount
-  end
-
-  def give_vip_money(amount)
-    @values[:vip_money] += amount
-  end
-
-  def take_vip_money(amount)
-    @values[:vip_money] -= amount
-  end
-
   def increase_attribute(attribute, amount)
     @values[attribute] += amount
   end
 
   def decrease_attribute(attribute, amount)
     @values[attribute] -= amount
-  end
-
-  def give_mercenaries(amount)
-    @values[:mercenaries] += amount
-  end
-
-  def take_mercenaries(amount)
-    @values[:mercenaries] -= amount
   end
 
   protected

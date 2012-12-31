@@ -37,6 +37,14 @@ module GameData
           end
         end
       end
+
+      def all
+        collection.values
+      end
+
+      def select(&block)
+        collection.values.select(&block)
+      end
     end
 
     attr_reader :key
@@ -60,8 +68,15 @@ module GameData
       "#{ self.class.name.demodulize.underscore }_#{ @key }"
     end
 
-    def picture(size, format = 'jpg')
-      "#{ self.class.name.demodulize.underscore }/#{ @key }/#{ size }.#{ format }"
+    def to_param
+      @key
+    end
+
+    def as_json(*options)
+      {
+        :id => id,
+        :key => key
+      }
     end
 
     def reward_on(key, &block)
@@ -72,14 +87,14 @@ module GameData
       @reward_previews[key] = block
     end
 
-    def apply_reward_on(key, character)
-      Reward.new(character) do |reward|
+    def apply_reward_on(key, character, reward = nil)
+      (reward || Reward.new(character)).tap do |reward|
         @rewards[key].try(:call, reward)
       end
     end
 
-    def preview_reward_on(key, character)
-      RewardPreview.new(character) do |reward|
+    def preview_reward_on(key, character, reward = nil)
+      (reward || RewardPreview.new(character)).tap do |reward|
         (@reward_previews[key] || @rewards[key]).try(:call, reward)
       end
     end

@@ -27,7 +27,7 @@ $upgradeable_attributes: attack, defence, health, energy, stamina;
 
   @each $attribute in $upgradeable_attributes {
     .#{ $attribute } .name {
-      background-image: image-url("icons/#{ $attribute }.gif");
+      background-image: image-url("icons/#{ $attribute }.png");
     }
   }
 
@@ -54,12 +54,12 @@ $upgradeable_attributes: attack, defence, health, energy, stamina;
     &.decrease {
       left: 120px;
 
-      background-image: image-url('icons/delete.gif');
+      background-image: image-url('icons/delete.png');
     }
 
     &.increase {
       left: 200px;
-      background-image: image-url('icons/add.gif');
+      background-image: image-url('icons/add.png');
     }
 
     &.disabled {

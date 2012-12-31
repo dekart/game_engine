@@ -1,7 +1,7 @@
 <% if @loading: %>
   <%= I18n.t('common.loading') %>
 <% else: %>
-  <h1><%= I18n.t('fights.opt_out.title') %></h1>
+  <h2><%= I18n.t('fights.opt_out.title') %></h2>
 
   <% if @status.opted_out: %>
     <p><%= I18n.t('fights.opt_out.opted_out') %></p>

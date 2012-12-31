@@ -393,7 +393,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
         code << requirements_to_dsl('l', level.requirements) do
           %{
-            r.ep #{level.energy}
+            r.ep = #{level.energy}
           }
         end
 
@@ -562,8 +562,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
       code << requirements_to_dsl('p', property.requirements, :build) do
         ''.tap do |r|
-          r << "r.basic_money(#{property.basic_price})\n" if property.basic_price > 0
-          r << "r.vip_money(#{property.vip_price})\n" if property.vip_price > 0
+          r << "r.basic_money = #{property.basic_price}\n" if property.basic_price > 0
+          r << "r.vip_money = #{property.vip_price}\n" if property.vip_price > 0
         end
       end
 
@@ -578,9 +578,9 @@ class ConvertContentToDsl < ActiveRecord::Migration
         ''.tap do |r|
           if property.basic_price > 0
             if property.upgrade_cost_increase
-              r << "r.basic_money(#{property.basic_price} + #{property.upgrade_cost_increase} * r.reference.level)\n"
+              r << "r.basic_money = #{property.basic_price} + #{property.upgrade_cost_increase} * r.reference.level\n"
             else
-              r << "r.basic_money(#{property.basic_price})\n"
+              r << "r.basic_money = #{property.basic_price}\n"
             end
           end
 
@@ -697,12 +697,25 @@ class ConvertContentToDsl < ActiveRecord::Migration
       change_column :characters, column, :integer, :default => 0
     end
 
+    create_table :mission_states do |t|
+      t.belongs_to :character
+
+      t.column :current_group_id, 'integer unsigned'
+
+      t.binary :progress, :limit => 64.kilobytes
+    end
+
     announce 'Updating IDs...'
 
     GameData::CharacterType.collection.clear
     GameData::CharacterType.collection.each do |key, type|
       Character.where(:character_type_id => ids_to_keys[:character_types].key(key.to_s)).update_all :character_type_id => type.id
     end
+
+    # GameData::MissionGroup.collection.clear
+
+    # Character.find_each do |c|
+    # end
   end
 
   def down
@@ -711,6 +724,8 @@ class ConvertContentToDsl < ActiveRecord::Migration
     %w{basic_money vip_money attack defence health energy stamina points}.each do |column|
       change_column :characters, column, :integer, :default => nil
     end
+
+    drop_table :mission_states
   end
 
   def payouts_to_dsl(variable, payouts, trigger, &block)
@@ -849,29 +864,29 @@ class ConvertContentToDsl < ActiveRecord::Migration
     requirements.each do |requirement|
       case requirement
         when Requirements::Alliance
-          code << "r.alliance_size #{ requirement.value }"
+          code << "r.alliance_size = #{ requirement.value }"
         when Requirements::Attack
-          code << "r.attack #{ requirement.value }"
+          code << "r.attack = #{ requirement.value }"
         when Requirements::BasicMoney
-          code << "r.basic_money #{ requirement.value }"
+          code << "r.basic_money = #{ requirement.value }"
         when Requirements::CharacterType
-          code << "r.character_type :#{ requirement.character_type.name.parameterize.underscore }"
+          code << "r.character_type = :#{ requirement.character_type.name.parameterize.underscore }"
         when Requirements::Defence
-          code << "r.defence #{ requirement.value }"
+          code << "r.defence = #{ requirement.value }"
         when Requirements::EnergyPoint
-          code << "r.ep #{ requirement.value }"
+          code << "r.ep = #{ requirement.value }"
         when Requirements::HealthPoint
-          code << "r.hp #{ requirement.value }"
+          code << "r.hp = #{ requirement.value }"
         when Requirements::Item
-          code << "r.item :#{ requirement.item.alias }#{ ', ' + requirement.amount.to_s if requirement.amount > 1 }"
+          code << "r.item = [:#{ requirement.item.alias }#{ ', ' + requirement.amount.to_s if requirement.amount > 1 }]"
         when Requirements::Level
-          code << "r.level #{ requirement.value }"
+          code << "r.level = #{ requirement.value }"
         when Requirements::Property
-          code << "r.property :#{ requirement.property_type.name.parameterize.underscore }"
+          code << "r.property = :#{ requirement.property_type.name.parameterize.underscore }"
         when Requirements::StaminaPoint
-          code << "r.sp #{ requirement.value }"
+          code << "r.sp = #{ requirement.value }"
         when Requirements::VipMoney
-          code << "r.vip_money #{ requirement.value }"
+          code << "r.vip_money = #{ requirement.value }"
         end
 
       code << "\n"

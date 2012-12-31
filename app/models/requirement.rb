@@ -18,8 +18,12 @@ class Requirement
     hp ep sp
     alliance_size
   }.each do |attribute|
-    define_method("#{ attribute }") do |value|
+    define_method("#{ attribute }=") do |value|
       @attributes[attribute.to_sym] = value if value > @attributes[attribute.to_sym]
+    end
+
+    define_method("#{attribute}") do
+      @attributes[attribute.to_sym]
     end
   end
 
@@ -33,26 +37,27 @@ class Requirement
   end
 
   def satisfied?
-    unsatisfied.empty?
-  end
-
-  def unsatisfied
-    [].tap do |result|
-      @attributes.each do |name, value|
-        result << [:attribute, name, value] if @character.send(name) < value
-      end
-
-      @items.each do |key, amount|
-        if item = Item[key]
-          result << [:item, item, amount] if @character.inventories.count(item) < amount
-        end
-      end
-
-      # TODO: Implement property requirement check
+    @attributes.each do |name, value|
+      return false if @character.send(name) < value
     end
+
+    @items.each do |key, amount|
+      return false if @character.inventories.count(GameData::Item[key]) < amount
+    end
+
+    # TODO: Implement property requirement check
+    true
   end
 
   def as_json(*args)
-    unsatisfied.as_json
+    [].tap do |result|
+      @attributes.each do |name, value|
+        result << [:attribute, name, value, @character.send(name) >= value]
+      end
+
+      @items.each do |key, amount|
+        result << [:item, GameData::Item[key], amount, @character.inventories.count(item) >= amount]
+      end
+    end.as_json
   end
 end

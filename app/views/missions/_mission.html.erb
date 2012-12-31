@@ -1,21 +1,17 @@
-<tr class="mission" id="<%= dom_id(mission) %>">
+<tr class="mission" id="<%= mission.to_key %>">
   <td class="info">
     <div class="image">
-      <% if mission.pictures? %>
-        <%= image_tag(mission.pictures.url(:small)) %>
-      <% else %>
-        <%= image_tag("mission_placeholder.png") %>
-      <% end %>
+      <%= image_tag(mission.picture(:small)) %>
 
-      <div class="progress"><%= mission_progress(rank) %></div>
+      <div class="progress"><%= mission_progress(level, progress) %></div>
     </div>
 
     <div class="name"><%= mission.name %></div>
     <div class="description"><%= mission.description.to_s.html_safe %></div>
 
     <div class="controls">
-      <% if mission.repeatable? || rank.nil? || !rank.completed? %>
-        <%= link_to(mission_button(mission, rank), fulfill_mission_path(mission),
+      <% if mission.tags.include?(:repeatable) || progress == 0 || progress < level.steps %>
+        <%= link_to(mission_button(mission, progress), fulfill_mission_path(mission),
               :remote => true,
               :method => :post,
               :"data-click-once" => true,
@@ -27,6 +23,7 @@
       <% end %>
     </div>
   </td>
+  <% if false %>
   <td class="details">
     <div class="payouts">
       <h3><%= Mission.human_attribute_name("payouts") %></h3>
@@ -48,4 +45,5 @@
       <%= requirement_list(level.applicable_requirements, :visible => true) %>
     </div>
   </td>
+  <% end %>
 </tr>
