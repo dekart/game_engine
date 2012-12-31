@@ -38,9 +38,9 @@
     </table>
 
     <div class="buttons">
-      <button class="purchase"><%= I18n.t("premia.buy_vip.buttons.purchase") %></button>
+      <button class="purchase"><%= I18n.t("premia.buy_vip.purchase") %></button>
 
-      <a class="earn_credits" href="#"><%= I18n.t("premia.buy_vip.earn_credits") %></a>
+      <a class="earn_credits"><%= I18n.t("premia.buy_vip.earn_credits") %></a>
     </div>
   </div>
 <% end %>
