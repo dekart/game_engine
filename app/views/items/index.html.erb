@@ -4,9 +4,9 @@
 
 <%= render('layouts/promo_block', :context => :shop) if current_character.show_promo_block? %>
 
-<%= link_to_function(button(:buy_vip_money), "BuyVipDialogController.show()",
-      :id => "buy_vip_money", :class => "button"
-    ) %>
+<button id="buy_vip_money" onclick="BuyVipDialogController.show()">
+  <%= t('.buttons.buy_vip_money') %>
+</button>
 
 <% tabs :id => :shop_tabs do |t| %>
   <% @item_groups.each do |group| %>
