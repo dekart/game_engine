@@ -110,8 +110,7 @@ class HorizontalList extends List
     @total_list_width ?= _.reduce(
       @items
       (sum, i)->
-        element = $(i)
-        sum + element.outerWidth(true)
+        sum + $(i).outerWidth(true)
       0
     )
 
@@ -167,8 +166,7 @@ class VerticalList extends List
     @total_list_height ?= _.reduce(
       @items
       (sum, i)->
-        element = $(i)
-        sum + element.outerHeight(true)
+        sum + $(i).outerHeight(true)
       0
     )
 
