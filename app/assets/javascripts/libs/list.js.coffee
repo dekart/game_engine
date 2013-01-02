@@ -111,7 +111,7 @@ class HorizontalList extends List
       @items
       (sum, i)->
         sum + $(i).outerWidth(true)
-      0
+      10 # Give some additional pixels
     )
 
   sliderRange: ->
@@ -167,7 +167,7 @@ class VerticalList extends List
       @items
       (sum, i)->
         sum + $(i).outerHeight(true)
-      0
+      10 # Give some additional pixels
     )
 
   sliderRange: ->
