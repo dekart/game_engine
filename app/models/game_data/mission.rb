@@ -65,14 +65,6 @@ module GameData
       ).reject!{|k, v| v.blank? }
     end
 
-    def pictures
-      @pictures ||= {}.tap do |p|
-        %w{small}.each do |format|
-          p[format.to_sym] = ActionController::Base.helpers.asset_path("missions/#{ format }/#{ @key }.png")
-        end
-      end
-    end
-
     def total_steps
       @total_steps ||= levels.sum{|l| l.steps }
     end
@@ -83,6 +75,14 @@ module GameData
 
     def preview_reward_on(key, character, reward = nil)
       super(key, character, group.preview_reward_on(key, character, reward))
+    end
+
+    def picture_formats
+      %w{small}
+    end
+
+    def picture_path(format)
+      "missions/#{ format }/#{ @key }.png"
     end
   end
 end

@@ -124,5 +124,13 @@ module GameData
     def visible?(character)
       @visible_if ? @visible_if.call(character) : true
     end
+
+    def pictures
+      @pictures ||= {}.tap do |p|
+        picture_formats.each do |format|
+          p[format.to_sym] = ActionController::Base.helpers.asset_path(picture_path(format))
+        end
+      end
+    end
   end
 end
