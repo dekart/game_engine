@@ -28,8 +28,6 @@
           end
         
 
-            if false # It's hidden
-              
           GameData::CreditPackage.define :package_4 do |c|
             
           p.vip_money = 195
@@ -38,5 +36,3 @@
         
           end
         
-            end
-          

@@ -2,10 +2,10 @@
           GameData::ItemCollection.define :sample_collection do |c|
             
         c.items = {
-          :item_97931052 => 1,
-:item_549898559 => 1,
-:item_6738267 => 1,
-:item_349377643 => 1
+          :item_521700085 => 1,
+:item_44753946 => 1,
+:item_320799325 => 1,
+:item_724365491 => 1
         }
       
       c.reward_on :collected do |r|

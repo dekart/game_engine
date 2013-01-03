@@ -2,37 +2,27 @@
 en:
   data:
     items:
-      item_97931052:
+      item_521700085:
         name:
           one: Knife
           many: Knives
-      item_549898559:
+      item_44753946:
         name:
           one: Dagger
           many: Daggers
-      allinone:
-        name:
-          one: all in one
-          many: all in two
-        description: all settings in one item
-        use:
-          button: Drink
-          message: It's tasty!
-      item_6738267:
+      item_320799325:
         name:
           one: Wooden Shield
           many: Wooden Shields
-      item_349377643:
+      item_724365491:
         name:
           one: Potion of Healing
           many: Potion of Healings
-        use:
-          button: Drink
-      item_11462284:
+      item_552156825:
         name:
           one: Potion of Upgrade
           many: Potion of Upgrades
-      item_766701589:
+      item_208180051:
         name:
           one: Set of Antidotes
           many: Set of Antidotes
