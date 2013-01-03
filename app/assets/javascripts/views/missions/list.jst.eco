@@ -41,15 +41,9 @@
               <div class="description"><%=@safe mission.description %></div>
 
               <div class="controls">
-                <% if 0 <= mission.level.progress < mission.level.steps or mission.repeatable: %>
+                <% if mission.isPerformable(): %>
                   <button data-mission-id="<%= mission.id %>">
-                    <% if mission.button_label: %>
-                      <%= mission.button_label %>
-                    <% else if mission.level.progress == 0: %>
-                      <%= I18n.t('missions.buttons.start') %>
-                    <% else: %>
-                      <%= I18n.t('missions.buttons.continue') %>
-                    <% end %>
+                    <%= mission.buttonLabel() %>
                   </button>
                 <% else: %>
                   <div class="completed"><%= I18n.t('missions.completed') %></div>

@@ -10,12 +10,17 @@ window.MissionResultDialogController = class extends DialogController
   show: (result)->
     @result = result
 
-    @mission = Mission.find(result.id)
+    @mission = Mission.find(result.mission.id)
 
     super
 
   render: ->
     @.updateContent(@.renderTemplate('missions/result', @))
+
+  prepareHelpers: ->
+    super
+
+    _.extend(@helpers, MissionHelper)
 
   setupEventListeners: ->
     super
@@ -28,4 +33,6 @@ window.MissionResultDialogController = class extends DialogController
     @el.off('click', 'button.continue', @.onClientContinueButtonClick)
 
   onClientContinueButtonClick: =>
+    @.close()
+
     @mission.perform()

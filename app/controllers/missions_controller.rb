@@ -7,9 +7,9 @@ class MissionsController < ApplicationController
     case @result.first
     when :success
       render :json => {
-        :id => @mission.id,
         :success => true,
-        :rewards => @result[1][:reward]
+        :rewards => @result[1][:reward],
+        :mission => @mission.as_json_for(current_character)
       }
     when :mission_complete
       render :json => {

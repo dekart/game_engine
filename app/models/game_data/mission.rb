@@ -65,6 +65,21 @@ module GameData
       ).reject!{|k, v| v.blank? }
     end
 
+    def as_json_for(character)
+      level = character.mission_state.level_for(self)
+
+      as_json.merge!(
+        :level => level.as_json.merge!(
+          :progress => character.mission_state.progress_for(level),
+          :requirements => level.requirements(character),
+          :rewards => {
+            :success => level.preview_reward_on(:success, character),
+            :repeat_success => level.preview_reward_on(:repeat_success, character)
+          }
+        )
+      )
+    end
+
     def total_steps
       @total_steps ||= levels.sum{|l| l.steps }
     end

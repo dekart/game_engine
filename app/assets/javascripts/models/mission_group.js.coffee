@@ -9,3 +9,15 @@ window.MissionGroup = class extends Spine.Model
 
   isLocked: ->
     _.some(@.requirements, (r)-> r[3] == false)
+
+  activate: ->
+    $.ajax("/mission_groups/#{ @.id }",
+      type: 'PUT'
+      success: @.onActivated
+    )
+
+  onActivated: (response)=>
+    MissionGroup.set(response.groups)
+    Mission.set(response.missions)
+
+    @trigger('activated')

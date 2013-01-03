@@ -13,22 +13,7 @@ class MissionGroupsController < ApplicationController
           r[:requirements] = g.requirements(current_character)
         end
       },
-      :missions => @missions.map{|m|
-        level = current_character.mission_state.level_for(m)
-
-        logger.debug level.requirements(current_character).to_json.inspect
-
-        m.as_json.merge!(
-          :level => level.as_json.merge!(
-            :progress => current_character.mission_state.progress_for(level),
-            :requirements => level.requirements(current_character),
-            :rewards => {
-              :success => level.preview_reward_on(:success, current_character),
-              :repeat_success => level.preview_reward_on(:repeat_success, current_character)
-            }
-          )
-        )
-      }
+      :missions => @missions.map{|m| m.as_json_for(current_character) }
     }
   end
 

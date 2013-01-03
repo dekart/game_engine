@@ -22,6 +22,10 @@
   </div>
 <% end %>
 
-<button class="continue">
-  <%= I18n.t('missions.result.continue') %>
-</button>
+<div class="progress"><%= @missionProgress(@mission) %></div>
+
+<% if @mission.isPerformable(): %>
+  <button class="continue">
+    <%= @mission.buttonLabel() %>
+  </button>
+<% end %>

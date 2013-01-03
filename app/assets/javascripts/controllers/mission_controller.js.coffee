@@ -16,6 +16,7 @@ window.MissionController = class extends BaseController
     @el.on('click', '#mission_group_list .mission_group', @.onClientMissionGroupClick)
     @el.on('click', '.mission button:not(.disabled)', @.onClientMissionButtonClick)
 
+    MissionGroup.bind('activated', @.onDataMissionGroupActivate)
     Mission.bind('performed', @.onDataMissionPerform)
 
   unbindEventListeners: ->
@@ -51,15 +52,21 @@ window.MissionController = class extends BaseController
     @.render()
 
   onDataMissionPerform: (mission, response)=>
-    MissionResultDialogController.show(response)
+    if response.success
+      MissionResultDialogController.show(response)
+    else if response.error == 'unsatisfied_requirements' and response.requirements[0][1] == 'ep' and response.requirements[0][3] == false
+      EnergyRefillDialogController.show()
 
+    @.render()
+
+  onDataMissionGroupActivate: (group)=>
     @.render()
 
   onClientMissionGroupClick: (e)=>
     target = $(e.currentTarget)
 
     unless target.hasClass('current')
-      Mission.find(parseInt(target.data('group-id'), 10)).perform()
+      MissionGroup.find(parseInt(target.data('group-id'), 10)).activate()
 
   onClientMissionButtonClick: (e)=>
     Mission.find(parseInt($(e.currentTarget).data('mission-id'), 10)).perform()
