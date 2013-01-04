@@ -27,6 +27,9 @@ en:
     requirements: "Requires:"
 
     result:
+      success: "Well done!"
+      failure: "Ouch!"
+      complete: "You've just completed this mission!"
       received: 'You received:'
       spent: 'You spent:'
       continue: 'Continue'
@@ -34,25 +37,12 @@ en:
 
     fulfill:
       completed:
-        message: "You've just completed this mission!"
-        new_title: "You've got the new title:"
         child_missions: "You also opened new missions:"
         buttons:
           publish: "Brag About It!"
         dialog:
           title: "You've just completed this mission!"
           message: "Let your friends know about your success!"
-      success:
-        message: "Well done!"
-        buttons:
-          continue: "Complete Again!"
-          request_help: "Request Help & Earn Bonus"
-
-      failure:
-        message: "Ouch!"
-        buttons:
-          try_again: "Try Again!"
-          request_help: "Request Help & Earn Bonus"
 
       payouts:
         you_received:

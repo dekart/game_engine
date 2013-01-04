@@ -3,7 +3,7 @@ GameData::Mission.define :thieves do |m|
 
   m.group = :tutorial
 
-  m.tags = [:repeatable]
+  #m.tags = [:repeatable]
 
   m.level do |l|
     l.steps = 4

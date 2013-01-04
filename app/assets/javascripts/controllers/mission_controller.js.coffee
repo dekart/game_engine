@@ -23,6 +23,9 @@ window.MissionController = class extends BaseController
     @el.off('click', '#mission_group_list .mission_group', @.onClientMissionGroupClick)
     @el.off('click', '.mission button:not(.disabled)', @.onClientMissionButtonClick)
 
+    MissionGroup.unbind('activated', @.onDataMissionGroupActivate)
+    Mission.unbind('performed', @.onDataMissionPerform)
+
   show: ()->
     @loading = true
 
@@ -52,7 +55,7 @@ window.MissionController = class extends BaseController
     @.render()
 
   onDataMissionPerform: (mission, response)=>
-    if response.success
+    if response.success?
       MissionResultDialogController.show(response)
     else if response.error == 'unsatisfied_requirements' and response.requirements[0][1] == 'ep' and response.requirements[0][3] == false
       EnergyRefillDialogController.show()

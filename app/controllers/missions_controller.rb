@@ -11,6 +11,12 @@ class MissionsController < ApplicationController
         :rewards => @result[1][:reward],
         :mission => @mission.as_json_for(current_character)
       }
+    when :failure
+      render :json => {
+        :success => false,
+        :rewards => @result[1][:reward],
+        :mission => @mission.as_json_for(current_character)
+      }
     when :mission_complete
       render :json => {
         :error => :mission_complete

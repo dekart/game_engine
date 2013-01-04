@@ -11,7 +11,7 @@ window.MissionGroup = class extends Spine.Model
     _.some(@.requirements, (r)-> r[3] == false)
 
   activate: ->
-    $.ajax("/mission_groups/#{ @.id }",
+    $.ajax("/mission_groups/#{ @.id }.json",
       type: 'PUT'
       success: @.onActivated
     )

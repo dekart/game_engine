@@ -1,9 +1,20 @@
 <h2><%= @mission.name %></h2>
 
 <% if @result.success: %>
-  <div class="message success"><%=@safe @mission.success_text %></div>
+  <div class="message success">
+    <% if @mission.isJustComplete(): %>
+      <strong><%= I18n.t('missions.result.complete') %></strong>
+      <%=@safe @mission.complete_text %>
+    <% else: %>
+      <strong><%= I18n.t('missions.result.success') %></strong>
+      <%=@safe @mission.success_text %>
+    <% end %>
+  </div>
 <% else: %>
-  <div class="message failure"><%=@safe @mission.failure_text %></div>
+  <div class="message failure">
+    <strong><%= I18n.t('missions.result.failure') %></strong>
+    <%=@safe @mission.failure_text %>
+  </div>
 <% end %>
 
 <%= @rewards @result.rewards, (content)=> %>

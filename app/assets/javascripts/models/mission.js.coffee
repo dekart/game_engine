@@ -5,7 +5,7 @@ window.Mission = class extends Spine.Model
     @refresh(missions, clear: true)
 
   perform: ->
-    $.ajax("/missions/#{ @.id }",
+    $.ajax("/missions/#{ @.id }.json",
       type: 'PUT'
       success: @.onPerformed
     )
@@ -17,6 +17,10 @@ window.Mission = class extends Spine.Model
 
   isPerformable: ->
     0 <= @.level.progress < @.level.steps or @.repeatable
+
+  isJustComplete: ->
+    @.level.position > 0 and @.level.progress == 0 or
+    @.level.progress == @.level.steps
 
   buttonLabel: ->
     if @.button_label
