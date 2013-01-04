@@ -158,7 +158,7 @@ class VerticalList extends List
     }
 
   totalListHeight: ->
-    @total_list_height ?= @.maxItemHeight * @items.length
+    @total_list_height ?= @.maxItemHeight() * @items.length
 
   sliderRange: ->
     @.totalListHeight() - @element.innerHeight()
