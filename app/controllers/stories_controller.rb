@@ -1,4 +1,6 @@
 class StoriesController < ApplicationController
+  include StreamHelper
+
   def show
     story_data = encryptor.decrypt((params[:story_data] || params['amp;story_data']).to_s)
 
@@ -13,6 +15,13 @@ class StoriesController < ApplicationController
     end
 
     redirect_from_iframe(@next_page) if @payouts.empty?
+  end
+
+  def prepare
+    case params[:id]
+    when 'mission_help'
+      render :json => stream_dialog_options(:mission_help, GameData::Mission[params[:mission_id]])
+    end
   end
 
   protected

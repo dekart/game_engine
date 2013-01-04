@@ -285,7 +285,11 @@ GameEngine::Application.routes.draw do
     get 'finished', :on => :collection
   end
 
-  resources :stories, :only => :show
+  resources :stories, :only => :show do
+    member do
+      match 'prepare'
+    end
+  end
 
   resources :app_requests do
     put 'ignore', :on => :member

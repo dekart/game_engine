@@ -49,4 +49,8 @@
   <button class="continue">
     <%= @mission.buttonLabel() %>
   </button>
+
+  <button class="request_help">
+    <%= I18n.t('missions.result.request_help') %>
+  </button>
 <% end %>

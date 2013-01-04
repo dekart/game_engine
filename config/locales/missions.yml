@@ -32,8 +32,9 @@ en:
       complete: "You've just completed this mission!"
       received: 'You received:'
       spent: 'You spent:'
-      continue: 'Continue'
       helper: "<strong>%{user}</strong> helped you to save energy on this mission!"
+      continue: 'Continue'
+      request_help: "Get Help & Bonus"
 
 
     fulfill:

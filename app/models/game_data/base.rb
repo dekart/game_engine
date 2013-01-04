@@ -129,7 +129,7 @@ module GameData
       @pictures ||= {}.tap do |p|
         self.class.const_get(:PICTURE_FORMATS).each do |format|
           %w{png jpg}.each do |extension|
-            if ActionController::Base.helpers.asset_paths.asset_for(picture_path(format), extension)
+            if a = ActionController::Base.helpers.asset_paths.asset_for(picture_path(format), extension)
               p[format.to_sym] = ActionController::Base.helpers.asset_path("#{ picture_path(format) }.#{extension}")
 
               break

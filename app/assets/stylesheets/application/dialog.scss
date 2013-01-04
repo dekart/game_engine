@@ -5,19 +5,23 @@
   z-index: 1000;
 
   background-color: $content_bg_color;
-  width: 500px;
-  padding: 15px;
+  width: 730px;
 
   & > .close {
     float: right;
     width: 20px;
     height: 20px;
+    margin: 15px 15px 0 0;
     cursor: pointer;
     background: {
       image: image-url('icons/delete.png');
       position: center;
       repeat: no-repeat;
     }
+  }
+
+  .content {
+    margin: 15px;
   }
 }
 

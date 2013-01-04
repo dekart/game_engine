@@ -3,7 +3,8 @@ module StreamHelper
 
   def stream_dialog(type, *args)
     options = args.extract_options!
-    options = prepare_story(type, *(send("#{ type }_story_options", *args))).deep_merge(options)
+
+    options = stream_dialog_options(type, *args).deep_merge(options)
 
     post_options = {
       :attachment   => options[:attachment],
@@ -30,6 +31,10 @@ module StreamHelper
 
       result.gsub!(/\n\s+/, ' ')
     end.html_safe
+  end
+
+  def stream_dialog_options(type, *args)
+    prepare_story(type, *(send("#{ type }_story_options", *args)))
   end
 
   protected
@@ -59,11 +64,11 @@ module StreamHelper
 
   def mission_help_story_options(mission)
     [
-      mission.attributes,
+      mission.as_json,
       {
         :mission_id => mission.id
       },
-      (mission.pictures.url(:stream) if mission.pictures?)
+      mission.pictures[:stream]
     ]
   end
 
@@ -280,11 +285,7 @@ module StreamHelper
 
 
   def stream_image(image, url)
-    if image.is_a?(String)
-      src = image_path(image)
-    else
-      src = image_path('logo_stream.jpg')
-    end
+    src = view_context.image_path(image.is_a?(String) ? image : 'logo_stream.jpg')
 
     [
       {

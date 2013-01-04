@@ -8,18 +8,13 @@
 //= require browser_detect
 //= require visibility
 
-//= require ./libs/scroll_to
-//= require ./libs/tabs
-//= require ./libs/list
-//= require ./libs/page_list
-//= require ./libs/mouse_tracker
+//= require_tree ./libs
 //= require ./application/signed_request
 //= require ./application/link_lock
 //= require ./application/spinner
 //= require ./application/app_requests
 //= require ./application/promo_block
 //= require ./application/invite_dialog
-//= require ./application/stream_dialog
 //= require ./application/timer
 //= require ./application/visual_timer
 //= require ./application/boost

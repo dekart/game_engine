@@ -8,7 +8,7 @@ module GameData
       end
     end
 
-    PICTURE_FORMATS = %w{small}
+    PICTURE_FORMATS = %w{small stream}
 
     attr_reader :levels
 
