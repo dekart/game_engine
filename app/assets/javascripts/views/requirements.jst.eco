@@ -1,7 +1,7 @@
 <% for requirement in @collection: %>
   <% if requirement[0] == 'attribute': %>
     <div class="requirement <%= requirement[1] %>"
-      data-tooltip-content="<%= I18n.t("requirements.#{ requirement[1] }.text", value: requirement[2]) %>"
+      data-tooltip-content="<%= I18n.t("requirements.#{ requirement[1] }", value: requirement[2]) %>"
     >
       <%= requirement[2] %>
     </div>

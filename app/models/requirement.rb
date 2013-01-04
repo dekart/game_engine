@@ -1,6 +1,26 @@
 class Requirement
   attr_accessor :character
 
+  class << self
+    def requirement_definition(attribute)
+      define_method("#{ attribute }=") do |value|
+        @attributes[attribute.to_sym] = value if value > @attributes[attribute.to_sym]
+      end
+    end
+
+    def requirement_accessor(attribute)
+      define_method("#{attribute}") do
+        @attributes[attribute.to_sym]
+      end
+    end
+
+    def requirement_check(attribute, character_field = nil)
+      define_method("#{attribute}_satisfied?") do
+        @character.send(character_field || attribute) >= @attributes[attribute.to_sym]
+      end
+    end
+  end
+
   def initialize(character)
     @character = character
     @attributes = Hash.new(0)
@@ -13,18 +33,18 @@ class Requirement
   %w{
     basic_money vip_money
     level experience points
-    attack defence health energy stamina
-    attack_points defence_points health_points energy_points stamina_points
     hp ep sp
     alliance_size
   }.each do |attribute|
-    define_method("#{ attribute }=") do |value|
-      @attributes[attribute.to_sym] = value if value > @attributes[attribute.to_sym]
-    end
+    requirement_definition(attribute)
+    requirement_accessor(attribute)
+    requirement_check(attribute)
+  end
 
-    define_method("#{attribute}") do
-      @attributes[attribute.to_sym]
-    end
+  %w{attack defence health energy stamina}.each do |attribute|
+    requirement_definition(attribute)
+    requirement_accessor(attribute)
+    requirement_check(attribute, "#{attribute}_points")
   end
 
   def item(key, amount = 1)
@@ -38,7 +58,7 @@ class Requirement
 
   def satisfied?
     @attributes.each do |name, value|
-      return false if @character.send(name) < value
+      return false unless send("#{ name }_satisfied?")
     end
 
     @items.each do |key, amount|
@@ -52,7 +72,7 @@ class Requirement
   def as_json(*args)
     [].tap do |result|
       @attributes.each do |name, value|
-        result << [:attribute, name, value, @character.send(name) >= value]
+        result << [:attribute, name, value, send("#{name}_satisfied?")]
       end
 
       @items.each do |key, amount|

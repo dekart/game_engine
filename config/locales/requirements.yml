@@ -1,51 +1,19 @@
 en:
   requirements:
-    attribute:
-      text: "%{amount} %{name}"
-    character_type:
-      name: "Character Type"
-      text: "%{name} Class"
-    item:
-      name: "Item"
-      text: "%{name} X %{amount}"
-      shop_link_title: "Purchase %{item} from Shop"
-      missing: "Missing Item!"
-    title:
-      name: "Title"
-      text: "'%{name}' Title"
-    health_point:
-      name: "Health Points"
-      text: "%{amount} Health Points"
-    energy_point:
-      name: "Energy Points"
-      text: "%{amount} Energy Points"
-    stamina_point:
-      name: "Stamina Points"
-      text: "%{amount} Stamina Points"
-    upgrade_point:
-      name: "Attribute Points"
-      text: "%{amount} Attribute Points"
-    attack:
-      name: "Attack"
-      text: "%{amount} Attack Points"
-    defence:
-      name: "Defence"
-      text: "%{amount} Defence Points"
-    alliance:
-      name: "Alliance"
-      text: "%{amount} Alliance Members"
-    level:
-      name: "Level"
-      text: "Level %{value}+"
-    basic_money:
-      name: "Money"
-      text: "%{amount} Money"
-    vip_money:
-      name: "Gems"
-      text: "%{amount} Gems"
-    property:
-      name: 'Property'
-      text: '%{name} (Level %{level})'
+    basic_money: "You need %{value} gold"
+    vip_money: "You need %{value} gems"
+    level: "You should be at least level %{value}"
+    experience: "You should have at least %{value} experience points"
+    points: "You need %{value} upgrade points"
+    attack: "Your attack level should be %{value} or higher"
+    defence: "Your defence level should be %{value} or higher"
+    health: "Your total health should be %{value} or higher"
+    energy: "Your total energy should be %{value} or higher"
+    stamina: "Your total stamina should be %{value} or higher"
+    hp: "You need %{value} points of health"
+    ep: "You need %{value} points of energy"
+    sp: "You need %{value} points of stamina"
+    alliance_size: "You should have at least %{value} members in your Alliance"
 
     not_satisfied:
       title:
