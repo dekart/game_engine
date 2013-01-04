@@ -12,6 +12,7 @@ class CharactersController < ApplicationController
 
   def index
     @news = current_character.news.latest(Setting.i(:dashboard_news_count))
+    @newcomer = params[:newcomer]
   end
 
   def upgrade
@@ -60,7 +61,7 @@ class CharactersController < ApplicationController
 
       if @character.save
         # Always redirect newcomers to missions
-        redirect_to mission_groups_url
+        redirect_to root_url(:newcomer => true)
       else
         render :action => :new, :layout => 'unauthorized'
       end
