@@ -17,21 +17,23 @@
   </div>
 <% end %>
 
-<%= @rewards @result.rewards, (content)=> %>
-  <div class="rewards received">
-    <h3><%= I18n.t('missions.result.received') %></h3>
+<div class="rewards">
+  <%= @rewards @result.rewards, (content)=> %>
+    <div class="received">
+      <h3><%= I18n.t('missions.result.received') %></h3>
 
-    <%= content %>
-  </div>
-<% end %>
+      <%= content %>
+    </div>
+  <% end %>
 
-<%= @spendings @result.rewards, (content)=> %>
-  <div class="rewards spent">
-    <h3><%= I18n.t('missions.result.spent') %></h3>
+  <%= @spendings @result.rewards, (content)=> %>
+    <div class="spent">
+      <h3><%= I18n.t('missions.result.spent') %></h3>
 
-    <%= content %>
-  </div>
-<% end %>
+      <%= content %>
+    </div>
+  <% end %>
+</div>
 
 <div class="progress"><%= @missionProgress(@mission) %></div>
 

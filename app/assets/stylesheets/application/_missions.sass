@@ -53,105 +53,102 @@
 // Mission list
 
 #mission_list
-  table
-    width: 100%
-
-  td
+  .mission
     padding: 10px 0px
     border-bottom: $mission_border
+    @include clearfix
 
   .info
-    padding-right: 15px
-    width: 60%
+    float: left
+    width: 485px
 
     .name
       font-size: 16px
       font-weight: bold
+      margin-bottom: 10px
+
+    .description
+      margin-bottom: 10px
 
     .image
       float: left
       margin-right: 10px
       margin-bottom: 10px
 
-    .controls
-      .button
-        float: left
+    .progress
+      clear: left
+      width: 200px
 
-  .payouts, .requirements, .description, .name
-    margin-bottom: 10px
+      .level
+        font-weight: bold
 
-  .level
-    font-weight: bold
+      .text
+        font-weight: bold
 
-  .progress
-    clear: left
+      .progress_bar
+        width: 100%
+
+  .details
+    float: right
     width: 200px
 
-    .text
-      font-weight: bold
-
-    .progress_bar
-      width: 100%
+    .rewards, .requirements
+      margin-bottom: 10px
 
   .completed
-    float: right
     font-weight: bold
     font-size: 16px
 
-  .controls .fulfill
-    +button($mission_fulfill_icon)
 
 
+.mission_result
+  .message
+    margin-bottom: 10px
 
-#mission_result
-  background-image: $mission_result_icon
+    &.success
+      color: green
 
-  .complete
-    font-size: 18px
-    color: green
+    &.failure
+      color: red
 
-  .spent
-    b
-      width: 55px
+    &.complete
+      font-size: 16px
+      color: green
 
-    .zero
-      .value
-        font-weight: bold
-        color: $mission_result_zero_spending_color
-        font-size: 14px
+  .rewards
+    @include clearfix
+    margin-bottom: 10px
 
-      .relation
-        padding-left: 10px
+    .received, .spent
+      width: 240px
 
-  .fulfill_again
-    +button($mission_result_fulfill_again_icon, $mission_result_fulfill_again_width)
+    .received
+      float: left
+
+    .spent
+      float: right
+
+      .zero
+        .value
+          font-weight: bold
+          color: $mission_result_zero_spending_color
+          font-size: 14px
+
+        .relation
+          padding-left: 10px
+
 
   .request_help
     +button($mission_result_request_help_icon, $mission_result_request_help_width)
 
   .progress
+    width: 200px
+    float: left
+    margin-right: 15px
+
     .progress_bar
-      width: 150px
+      width: 200px
 
-  .child_missions
-    margin: 15px 0
-
-    .child
-      line-height: 22px
-      padding-left: 23px
-      background:
-        image: $mission_result_child_mission_icon
-        position: center left
-        repeat: no-repeat
-      margin-bottom: 15px
-
-#mission_dialog
-  .image
-    float: right
-    margin-left: 15px
-
-  .continue
-    +button($mission_dialog_continue_icon)
 
 #mission_help_result
   background-image: $mission_help_result_icon
