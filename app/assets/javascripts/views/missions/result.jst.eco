@@ -1,21 +1,28 @@
-<h2><%= @mission.name %></h2>
 
-<% if @result.success: %>
-  <div class="message success">
-    <% if @mission.isJustComplete(): %>
-      <strong><%= I18n.t('missions.result.complete') %></strong>
-      <%=@safe @mission.complete_text %>
-    <% else: %>
-      <strong><%= I18n.t('missions.result.success') %></strong>
-      <%=@safe @mission.success_text %>
-    <% end %>
-  </div>
-<% else: %>
-  <div class="message failure">
-    <strong><%= I18n.t('missions.result.failure') %></strong>
-    <%=@safe @mission.failure_text %>
-  </div>
-<% end %>
+<div class="image">
+  <img src="<%= @mission.pictures.small %>" />
+</div>
+
+<div class="info">
+  <h2><%= @mission.name %></h2>
+
+  <% if @result.success: %>
+    <div class="message success">
+      <% if @mission.isJustComplete(): %>
+        <strong><%= I18n.t('missions.result.complete') %></strong>
+        <%=@safe @mission.complete_text %>
+      <% else: %>
+        <strong><%= I18n.t('missions.result.success') %></strong>
+        <%=@safe @mission.success_text %>
+      <% end %>
+    </div>
+  <% else: %>
+    <div class="message failure">
+      <strong><%= I18n.t('missions.result.failure') %></strong>
+      <%=@safe @mission.failure_text %>
+    </div>
+  <% end %>
+</div>
 
 <div class="rewards">
   <%= @rewards @result.rewards, (content)=> %>
@@ -48,9 +55,5 @@
 <% if @mission.isPerformable(): %>
   <button class="continue">
     <%= @mission.buttonLabel() %>
-  </button>
-
-  <button class="request_help">
-    <%= I18n.t('missions.result.request_help') %>
   </button>
 <% end %>

@@ -26,18 +26,13 @@ window.MissionResultDialogController = class extends DialogController
     super
 
     @el.on('click', 'button.continue:not(.disabled)', @.onClientContinueButtonClick)
-    @el.on('click', 'button.request_help:not(.disabled)', @.onClientRequestHelpButtonClick)
 
   unbindEventListeners: ->
     super
 
     @el.off('click', 'button.continue:not(.disabled)', @.onClientContinueButtonClick)
-    @el.off('click', 'button.request_help:not(.disabled)', @.onClientRequestHelpButtonClick)
 
   onClientContinueButtonClick: (e)=>
     $(e.currentTarget).addClass('disabled')
 
     @mission.perform()
-
-  onClientRequestHelpButtonClick: (e)=>
-    StreamDialog.prepare('mission_help', mission_id: @mission.id)
