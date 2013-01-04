@@ -155,4 +155,13 @@ class User < ActiveRecord::Base
   def generate_personal_discount
     character.personal_discounts.generate_if_possible! if character.respond_to?(:personal_discounts)
   end
+
+  def as_json_for(user)
+    {
+      :first_name   => first_name,
+      :last_name    => last_name,
+      :friend       => friends_with?(user),
+      :facebook_id  => facebook_id
+    }
+  end
 end

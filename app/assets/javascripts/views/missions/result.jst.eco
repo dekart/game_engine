@@ -35,6 +35,14 @@
   <% end %>
 </div>
 
+<% if @result.helper: %>
+  <div class="helper">
+    <%= @fbProfilePic(@result.helper.user.facebook_id, 'square') %>
+
+    <%=@safe I18n.t('missions.result.helper', user: @result.helper.nickname) %>
+  </div>
+<% end %>
+
 <div class="progress"><%= @missionProgress(@mission) %></div>
 
 <% if @mission.isPerformable(): %>

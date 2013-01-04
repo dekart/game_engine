@@ -128,23 +128,24 @@
     .spent
       float: right
 
-      .zero
-        .value
-          font-weight: bold
-          color: $mission_result_zero_spending_color
-          font-size: 14px
+  .helper
+    color: green
+    @include clearfix
+    margin-bottom: 10px
+    line-height: 50px
 
-        .relation
-          padding-left: 10px
-
+    img
+      display: block
+      float: left
+      margin-right: 10px
 
   .request_help
     +button($mission_result_request_help_icon, $mission_result_request_help_width)
 
   .progress
     width: 200px
-    float: left
-    margin-right: 15px
+    float: right
+    margin-left: 15px
 
     .progress_bar
       width: 200px

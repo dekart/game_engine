@@ -45,14 +45,16 @@ class MissionState < ActiveRecord::Base
         [
           :success,
           {
-            :reward => reward
+            :reward => reward,
+            :free_fulfillment => free_fulfillment
           }
         ]
       else
         [
           :failure,
           {
-            :reward => reward
+            :reward => reward,
+            :free_fulfillment => free_fulfillment
           }
         ]
       end

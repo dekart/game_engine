@@ -109,6 +109,8 @@ class Character < ActiveRecord::Base
   end
 
   def nickname(friend = false)
+    friend = friend.user.friends_with?(self) if friend.is_a?(Character)
+
     if friend
       if name.present?
         I18n.t('characters.real_name_with_nickname',
@@ -271,6 +273,14 @@ class Character < ActiveRecord::Base
         result[:upgrade_increase][attribute] = Setting.i("character_#{attribute}_upgrade")
       end
     end.as_json
+  end
+
+  def as_json_for(character)
+    {
+      :key => key,
+      :nickname => nickname(character),
+      :user => user.as_json_for(character.user)
+    }
   end
 
   def show_promo_block?

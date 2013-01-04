@@ -9,13 +9,15 @@ class MissionsController < ApplicationController
       render :json => {
         :success => true,
         :rewards => @result[1][:reward],
-        :mission => @mission.as_json_for(current_character)
+        :mission => @mission.as_json_for(current_character),
+        :helper  => (current_character.assignments.by_role(:mission_energy).character.as_json_for(current_character) if @result[1][:free_fulfillment])
       }
     when :failure
       render :json => {
         :success => false,
         :rewards => @result[1][:reward],
-        :mission => @mission.as_json_for(current_character)
+        :mission => @mission.as_json_for(current_character),
+        :helper  => (current_character.assignments.by_role(:mission_energy).character.as_json_for(current_character) if @result[1][:free_fulfillment])
       }
     when :mission_complete
       render :json => {
