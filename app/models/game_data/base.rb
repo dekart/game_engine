@@ -127,10 +127,26 @@ module GameData
 
     def pictures
       @pictures ||= {}.tap do |p|
-        picture_formats.each do |format|
-          p[format.to_sym] = ActionController::Base.helpers.asset_path(picture_path(format))
+        self.class.const_get(:PICTURE_FORMATS).each do |format|
+          %w{png jpg}.each do |extension|
+            if ActionController::Base.helpers.asset_paths.asset_for(picture_path(format), extension)
+              p[format.to_sym] = ActionController::Base.helpers.asset_path("#{ picture_path(format) }.#{extension}")
+
+              break
+            end
+          end
+
+          p[format.to_sym] ||= ActionController::Base.helpers.asset_path(picture_placeholder_path(format))
         end
       end
+    end
+
+    def picture_path(format)
+      "#{self.class.name.tableize}/#{ format }/#{ @key }"
+    end
+
+    def picture_placeholder_path(format)
+      "#{self.class.name.tableize}/#{ format }.png"
     end
   end
 end

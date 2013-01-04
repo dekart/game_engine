@@ -8,6 +8,8 @@ module GameData
       end
     end
 
+    PICTURE_FORMATS = %w{small}
+
     attr_accessor :attributes
 
     def name
@@ -16,14 +18,6 @@ module GameData
 
     def description
       I18n.t("data.character_types.#{@key}.name")
-    end
-
-    def picture_formats
-      %w{small}
-    end
-
-    def picture_path(format)
-      "character_types/#{ format }/#{ @key }.png"
     end
   end
 end

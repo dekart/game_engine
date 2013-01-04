@@ -8,6 +8,8 @@ module GameData
       end
     end
 
+    PICTURE_FORMATS = %w{small}
+
     attr_reader :levels
 
     def initialize(key)
@@ -90,14 +92,6 @@ module GameData
 
     def preview_reward_on(key, character, reward = nil)
       super(key, character, group.preview_reward_on(key, character, reward))
-    end
-
-    def picture_formats
-      %w{small}
-    end
-
-    def picture_path(format)
-      "missions/#{ format }/#{ @key }.png"
     end
   end
 end
