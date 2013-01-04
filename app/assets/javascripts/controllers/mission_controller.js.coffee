@@ -13,6 +13,8 @@ window.MissionController = class extends BaseController
     _.extend(@helpers, MissionHelper)
 
   setupEventListeners: ->
+    @.unbindEventListeners()
+
     @el.on('click', '#mission_group_list .mission_group', @.onClientMissionGroupClick)
     @el.on('click', '.mission button:not(.disabled)', @.onClientMissionButtonClick)
 
@@ -34,8 +36,6 @@ window.MissionController = class extends BaseController
     @.render()
 
   render: ->
-    @.unbindEventListeners()
-
     @html(
       @.renderTemplate('missions/list', @)
     )

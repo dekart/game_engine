@@ -25,7 +25,6 @@ window.MissionResultDialogController = class extends DialogController
   setupEventListeners: ->
     super
 
-    console.log('bind')
     @el.on('click', 'button.continue:not(.disabled)', @.onClientContinueButtonClick)
 
   unbindEventListeners: ->
@@ -35,7 +34,5 @@ window.MissionResultDialogController = class extends DialogController
 
   onClientContinueButtonClick: (e)=>
     $(e.currentTarget).addClass('disabled')
-
-    @.close()
 
     @mission.perform()
