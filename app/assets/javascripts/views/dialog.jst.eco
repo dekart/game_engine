@@ -1,4 +1,4 @@
-<div class="close"></div>
+<div class="close" data-tooltip-content="<%= I18n.t('common.close') %>"></div>
 
 <div class="content">
   <%=@safe @content %>

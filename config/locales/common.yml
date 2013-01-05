@@ -6,6 +6,7 @@ en:
   common:
     empty_set: "Nothing here"
     loading: "Loading..."
+    close: "Close"
   number:
     currency:
       format:

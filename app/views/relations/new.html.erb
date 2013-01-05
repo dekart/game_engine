@@ -8,7 +8,7 @@
   <div id="users_to_invite" class="invitation_method">
     <% if @recommended.any? %>
       <h2><%= t('.recommended' )%></h2>
-    
+
       <div class="users clearfix">
         <% @recommended.each do |facebook_id| %>
           <div id="<%= "user_#{facebook_id}" %>" class="user <%= "already_playing" if @app_users.include?(facebook_id) %>">
@@ -19,8 +19,8 @@
                   invite_dialog(:invitation,
                     :dialog => {
                       :to       => facebook_id,
-                      :title    => t('.title'),
-                      :message  => t('.invitation_message', :app_name => t('app_name'))
+                      :title    => t('relations.invitation.title'),
+                      :message  => t('relations.invitation.message', :app_name => t('app_name'))
                     },
                     :callback => "$('#user_#{ facebook_id }').fadeOut(1200).find('.name').text('#{ t('.invitation_sent') }')"
                   ),
@@ -30,13 +30,13 @@
         <% end %>
       </div>
     <% end %>
-    
+
     <div class="controls">
-      <%= link_to_function(button(:invite_all), 
+      <%= link_to_function(button(:invite_all),
             invite_dialog(:invitation,
               :dialog => {
-                :title    => t('.title'),
-                :message  => t('.invitation_message', :app_name => t('app_name')),
+                :title    => t('relations.invitation.title'),
+                :message  => t('relations.invitation.message', :app_name => t('app_name')),
                 :data     => {
                   :reference => :invite_page
                 }
@@ -46,12 +46,12 @@
           ) %>
     </div>
   </div>
-  
+
   <div class="invitation_method">
     <h2><%= t(".copy_paste.title") %></h2>
-  
+
     <p><%= t(".copy_paste.note") %></p>
-  
+
     <p class="invitation_text">
       <%= t(".copy_paste.invitation",
             :app  => t("app_name"),

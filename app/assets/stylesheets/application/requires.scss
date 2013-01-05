@@ -8,9 +8,8 @@
     white-space: nowrap;
     margin: 0 5px 5px 0;
 
-    .value {
-      font-weight: bold;
-      margin-right: 3px;
+    &.unsatisfied {
+      color: red;
     }
   }
 

@@ -13,18 +13,18 @@
       </div>
     <% end %>
   </div>
-  
+
   <div class="controls">
-    <%= link_to_function(button(:invite), 
+    <%= link_to_function(button(:invite),
           invite_dialog(:invitation,
             :dialog => {
-              :title    => t('.title'),
-              :message  => t('relations.new.invitation_message', :app_name => t('app_name')),
+              :title    => t('relations.invitation.title'),
+              :message  => t('relations.invitation.message', :app_name => t('app_name')),
               :data     => {
                 :reference => :invite_dialog
               }
             }
-          ), 
+          ),
           :class => 'invite button'
         ) %>
   </div>

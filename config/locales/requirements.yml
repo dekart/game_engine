@@ -1,19 +1,116 @@
 en:
   requirements:
-    basic_money: "You need %{value} gold"
-    vip_money: "You need %{value} gems"
-    level: "You should be at least level %{value}"
-    experience: "You should have at least %{value} experience points"
-    points: "You need %{value} upgrade points"
-    attack: "Your attack level should be %{value} or higher"
-    defence: "Your defence level should be %{value} or higher"
-    health: "Your total health should be %{value} or higher"
-    energy: "Your total energy should be %{value} or higher"
-    stamina: "Your total stamina should be %{value} or higher"
-    hp: "You need %{value} points of health"
-    ep: "You need %{value} points of energy"
-    sp: "You need %{value} points of stamina"
-    alliance_size: "You should have at least %{value} members in your Alliance"
+    tooltip:
+      basic_money: "You need %{value} gold"
+      vip_money: "You need %{value} gems"
+      level: "You should be at least level %{value}"
+      experience: "You should have at least %{value} experience points"
+      points: "You need %{value} upgrade points"
+      attack: "Your attack level should be %{value} or higher"
+      defence: "Your defence level should be %{value} or higher"
+      health: "Your total health should be %{value} or higher"
+      energy: "Your total energy should be %{value} or higher"
+      stamina: "Your total stamina should be %{value} or higher"
+      hp: "You need %{value} points of health"
+      ep: "You need %{value} points of energy"
+      sp: "You need %{value} points of stamina"
+      alliance_size: "You should have at least %{value} members in your Alliance"
+
+    dialog:
+      basic_money:
+        title: "Not Enough Gold"
+        message: |
+          <p>
+            You don't have enought gold. You need at least %{value} gold coins to proceed.
+            You can earn additional coins by completing quests, killing monsters, collecting income from
+            properties, or selling some of the items you own.
+          </p>
+          <p>
+            Additionally, you can exchange Gems to Gold in the Shop.
+          </p>
+      vip_money:
+        title: "Not Enough Gems"
+        message: |
+          <p>
+            You don't have enough Gems. You need at least %{value} gems to proceed.
+            You can obtain gems by completing quests, killing monsters, unlocking achievements, or selling
+            items in the Balckmarket.
+          </p>
+          <p>Additionally, you can purchase more gems using Facebook Credits.</p>
+        button: "Buy Gems"
+      level:
+        title: "Low Level"
+        message: |
+          <p>
+            You're not experienced enough! You should reach level %{value} to proceed. You can get more
+            experience by completing quests and killing monsters.
+          </p>
+      experience:
+        title: "Not Enough Experience"
+        message: |
+          <p>
+            You're not experienced enough! You need at least %{value} points of experience to proceed.
+            You can get more experience by completing quests and killing monsters.
+          </p>
+      points:
+        title: "Not Enough Upgrade Points"
+        message: |
+          <p>
+            You don't have enough upgrade points! You need at least %{value} upgrade points to proceed.
+            Upgrade points are given on every level up.
+          </p>
+      alliance_size:
+        title: "Small Alliance"
+        message: |
+          <p>
+            Your alliance is too small. You need at least %{value} members in your alliance to proceed.
+            You can get more alliance members by inviting your friends.
+          </p>
+          <p>
+            Additionally, you can hire mercenaries to your alliance in the Shop.
+          </p>
+        button: "Invite Friends"
+      attack:
+        title: "Low Attack"
+        message: |
+          <p>
+            Your attack level is too low! You need to increase your attack level to %{value} to proceed.
+            Attack can be increased by equipping more powerful items or using upgrade points.
+          </p>
+      defence:
+        title: "Low Defence"
+        message: |
+          <p>
+            Your defence level is too low! You need to increase your defence level to %{value} to proceed.
+            Defence can be increased by equipping more powerful items or using upgrade points.
+          </p>
+      health:
+        title: "Low Health"
+        message: |
+          <p>
+            Your total health level is too low! You need to increase your maximum health to %{value} to proceed.
+            Health can be increased by equipping more powerful items or using upgrade points.
+          </p>
+      energy:
+        title: "Low Energy"
+        message: |
+          <p>
+            Your total energy level is too low! You need to increase your maximum energy to %{value} to proceed.
+            Energy can be increased by equipping more powerful items or using upgrade points.
+          </p>
+      stamina:
+        title: "Low Stamina"
+        message: |
+          <p>
+            Your total stamina level is too low! You need to increase your maximum stamina to %{value} to proceed.
+            Stamina can be increased by equipping more powerful items or using upgrade points.
+          </p>
+
+      item:
+        title: "Missing Item"
+        message: "You don't have enough of %{item}. You need at least %{value} to proceed."
+        have: "You already have %{value}."
+        shop: "You can purchase this item in the Shop. It is available for sale starting from level %{level}."
 
     not_satisfied:
       title:
@@ -67,13 +164,6 @@ en:
         buy_missing: "You need %{amount} more. You can buy them from Shop for %{price}."
         buttons:
           buy: "Buy"
-
-      basic_money:
-        message: "You don't have enough Money! You need %{required_value} Money"
-        get_more: "You can also visit the %{premium_page} to get Money in exchange to Gems."
-        visit_to_mission: "You can do some %{mission_page} to earn money." # ***
-        buttons:
-          get_more_money: "Get More Money"
 
       vip_money:
         message: "You don't have enough Gems! You need %{required_value} Gems."

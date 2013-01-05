@@ -15,3 +15,4 @@ translations:
       - "*.premia.buy_vip"
       - "*.missions"
       - "*.requirements"
+      - "*.relations.invitation"

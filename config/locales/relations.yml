@@ -1,9 +1,12 @@
 en:
   relations:
+    invitation:
+      title: "Recruit To Your Alliance"
+      message: "Join my Alliance in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
+
     new:
       title: "Recruit To Your Alliance"
       success_message: "You've successfully sent %{amount} invitations to your friends!"
-      invitation_message: "Join my Alliance in %{app_name}, a fantasy-style combat game played on Facebook. Start out as a petty swordsman and work your way up to be the Hero of a fantasy world!"
       recommended: "We recommend you to invite these friends:"
       invitation_sent: "Invitation sent!"
       buttons:
@@ -13,14 +16,14 @@ en:
         title: "Your Invitation Link"
         note: "Use your status message to recruit more friends to your Alliance. Copy and paste the following message to the 'What's on your mind?' form and publish it. Or just send this message to your friends:"
         invitation: "Join my %{app} Alliance! %{link}"
-        
+
     short_link:
       title: 'Join my Alliance in %{app}!'
       description: 'Join my Alliance in %{app}, a magic game played on Facebook. Start out as a petty apprentice and work your way up to be the Overlord of the world of wizards and witches!'
-        
+
     create:
       message: "Invitation accepted! The player became part of your Alliance!"
-      
+
     show:
       title: "Alliance Invitation"
       note: "This user invites you to join their Alliance."
@@ -30,11 +33,11 @@ en:
       messages:
         only_friends: "Only friends can join your Alliance"
         already_joined: "This user is already in your Alliance"
-        
+
     index:
       title: "Your Alliance"
       empty_set: "You don't have any members in your Alliance"
-      
+
     members:
       title: "Alliance Members"
     friend_relation:

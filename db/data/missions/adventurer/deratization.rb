@@ -6,7 +6,7 @@
         m.tags = [:repeatable]
       
         m.requires do |r|
-          r.item = [:item_521700085]
+          r.item = [:item_169322587]
 
         end
       

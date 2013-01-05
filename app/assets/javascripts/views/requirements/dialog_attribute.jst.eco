@@ -1,0 +1,19 @@
+<h2><%= I18n.t("requirements.dialog.#{ @name }.title") %></h2>
+
+<div class="message">
+  <%=@safe I18n.t("requirements.dialog.#{ @name }.message", value: @value) %>
+</div>
+
+<% if @name == 'vip_money': %>
+  <button class="buy_vip_money">
+    <%= I18n.t("requirements.dialog.#{ @name }.button") %>
+  </button>
+<% else if @name == 'alliance_size': %>
+  <button class="invite_friends">
+    <%= I18n.t("requirements.dialog.#{ @name }.button") %>
+  </button>
+<% end %>
+
+<button class="close">
+  <%= I18n.t('common.close') %>
+</button>

@@ -1,16 +1,14 @@
 
-          GameData::Item.define :item_521700085 do |i|
+          GameData::Item.define :item_278908225 do |i|
             i.group = :weapons
 
-            i.tags = [:shop, :market]
+            i.tags = [:gift]
             
         i.placements = [:left_hand, :right_hand, :additional]
       
         i.basic_price = 40
       
         i.package_size = 1
-      
-        i.sell_price = 20
       
           i.effects = {:attack=>1}
         

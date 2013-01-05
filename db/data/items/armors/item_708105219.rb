@@ -1,5 +1,5 @@
 
-          GameData::Item.define :item_320799325 do |i|
+          GameData::Item.define :item_708105219 do |i|
             i.group = :armors
 
             i.tags = [:shop]

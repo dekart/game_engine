@@ -1,4 +1,5 @@
 #= require ./base_controller
+#= require ./requirement_controller
 
 window.MissionController = class extends BaseController
   @show: ()->
@@ -57,8 +58,8 @@ window.MissionController = class extends BaseController
   onDataMissionPerform: (mission, response)=>
     if response.success?
       MissionResultDialogController.show(response)
-    else if response.error == 'unsatisfied_requirements' and response.requirements[0][1] == 'ep' and response.requirements[0][3] == false
-      EnergyRefillDialogController.show()
+    else if response.error == 'unsatisfied_requirements'
+      RequirementController.show(response.requirements)
 
     @.render()
 

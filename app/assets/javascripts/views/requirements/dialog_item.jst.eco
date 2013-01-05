@@ -1,0 +1,16 @@
+<h2><%= I18n.t('requirements.dialog.item.title') %></h2>
+
+<div class="message">
+  <img src="<%= @item.pictures.medium %>" />
+
+  <p>
+    <%= I18n.t('requirements.dialog.item.message', item: @item.name, value: @value) %>
+    <%= if @current > 0 then I18n.t('requirements.dialog.item.have', value: @current) else '' %>
+  </p>
+
+  <% if _.contains(@item.tags, 'shop'): %>
+    <p>
+      <%= I18n.t('requirements.dialog.item.shop', level: @item.level) %>
+    </p>
+  <% end %>
+</div>

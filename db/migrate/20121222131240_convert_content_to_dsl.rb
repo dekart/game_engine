@@ -134,10 +134,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
       end
 
       item_locale[key] = {
-        'name' => {
-          'one' => item.name,
-          'many' => item.plural_name
-        },
+        'name' => item.name,
         'description' => item.description,
         'use' => {
           'button' => item.use_button_label,

@@ -1,85 +1,49 @@
 
-GameData::Mission.define :thieves do |m|
+          GameData::Mission.define :thieves do |m|
 
-  m.group = :tutorial
+        m.group = :tutorial
 
-  #m.tags = [:repeatable]
+        m.tags = [:repeatable]
 
-  m.level do |l|
-    l.steps = 4
+          m.level do |l|
+            l.steps = 4
 
-    l.requires do |r|
+        l.requires do |r|
 
-      r.ep = 2
+            r.ep = 2
 
-    end
+          r.item(:item_708105219, 10)
+        end
 
-    l.reward_on :success do |r|
+      l.reward_on :success do |r|
 
-      r.take_energy 2
-      r.give_experience 4
-      r.give_basic_money 15..20
+              r.take_energy 2
+              r.give_experience 4
+              r.give_basic_money 15..20
 
-    end
+      end
 
-    l.reward_on :repeat_success do |r|
+      l.reward_on :repeat_success do |r|
 
-      r.take_energy 2
-      r.give_experience 4
-      r.give_basic_money 15..20
+              r.take_energy 2
+              r.give_experience 4
+              r.give_basic_money 15..20
 
-    end
+      end
 
-    l.reward_on :failure do |r|
+      l.reward_on :failure do |r|
 
-      r.take_energy 2
+              r.take_energy 2
 
-    end
+      end
 
-    l.reward_on :repeat_failure do |r|
+      l.reward_on :repeat_failure do |r|
 
-      r.take_energy 2
+              r.take_energy 2
 
-    end
+      end
 
-  end
+          end
 
-  m.level do |l|
-    l.steps = 4
+          end
 
-    l.requires do |r|
-
-      r.ep = 2
-
-    end
-
-    l.reward_on :success do |r|
-
-      r.take_energy 2
-      r.give_experience 4
-      r.give_basic_money 15..20
-
-    end
-
-    l.reward_on :repeat_success do |r|
-
-      r.take_energy 2
-      r.give_experience 4
-      r.give_basic_money 15..20
-
-    end
-
-    l.reward_on :failure do |r|
-
-      r.take_energy 2
-
-    end
-
-    l.reward_on :repeat_failure do |r|
-
-      r.take_energy 2
-
-    end
-
-  end
-end

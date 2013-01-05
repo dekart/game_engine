@@ -1,5 +1,5 @@
 
-          GameData::Item.define :item_552156825 do |i|
+          GameData::Item.define :item_223964461 do |i|
             i.group = :potions
 
             i.tags = [:shop]
@@ -8,18 +8,13 @@
       
         i.basic_price = 50
       
-        i.vip_price = 5
-      
         i.package_size = 1
       
         i.sell_price = 25
       
-        i.max_market_price = 5
+        i.boost = :monster
       
-      i.reward_on :use do |r|
-        r.give_upgrade_points(5)
-
-      end
-    
+          i.effects = {:health=>5}
+        
           end
         

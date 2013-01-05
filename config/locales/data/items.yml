@@ -2,27 +2,15 @@
 en:
   data:
     items:
-      item_521700085:
-        name:
-          one: Knife
-          many: Knives
-      item_44753946:
-        name:
-          one: Dagger
-          many: Daggers
-      item_320799325:
-        name:
-          one: Wooden Shield
-          many: Wooden Shields
-      item_724365491:
-        name:
-          one: Potion of Healing
-          many: Potion of Healings
-      item_552156825:
-        name:
-          one: Potion of Upgrade
-          many: Potion of Upgrades
-      item_208180051:
-        name:
-          one: Set of Antidotes
-          many: Set of Antidotes
+      item_169322587:
+        name: Knife
+      item_278908225:
+        name: Dagger
+      item_708105219:
+        name: Wooden Shield
+      item_170268236:
+        name: Potion of Healing
+      item_624643767:
+        name: Potion of Upgrade
+      item_223964461:
+        name: Set of Antidotes
