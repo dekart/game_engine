@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include ReferenceCode
   include AppRequests
   include Notifications
+  include SplitTesting
 
   before_filter :check_standalone
 
