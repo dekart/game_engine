@@ -1,0 +1,62 @@
+<% if @monster.fighting(): %>
+  <div class='progress' style='background-image: url(<%= @monster.image_url %>)'>
+    <div class='character clearfix'
+        style='background-image: url(<%= @character.image_url() %>)'
+      >
+
+      <div class="damage"></div>
+    </div>
+
+    <div class='fighters'>
+      <% for fighter, index in @fighters: %>
+        <div class='fighter' id='<%= 0 %>'
+          data-index='<%= index %>' data-damage='<%= 0 %>'
+          style='left:<%= @fighter_coords[index][0] %>px; top:<%= @fighter_coords[index][1] %>px; background-image: url(<%= 0 %>)'
+        >
+        </div>
+      <% end %>
+    </div>
+
+    <div class='fighter_attack'></div>
+    <div class='character_attack'></div>
+
+    <h1><%= @monster.name %></h1>
+
+    <div class='monster clearfix'>
+
+      <div class='damage_bar'>
+        <div class="text"><%= Math.max(Math.floor(@monster.hp / @monster.health * 100), 1) %>%</div>
+        <div class='percentage' style='width: <%= @monster.hp / @monster.health * 100 %>%'></div>
+        <div class='casting'></div>
+      </div>
+
+      <div class='damage'></div>
+      <div class='attack_damage'></div>
+    </div>
+
+    <div class='actions clearfix'></div>
+
+    <div class='fight_time'>
+      <div><%= I18n.t('monsters.current.expire_time') %></div>
+      <span class='value'></span>
+    </div>
+  </div>
+<% else: %>
+  <div class='finished' style='background-image: url(<%= @monster.image_url %>)'>
+    <div class='monster clearfix'>
+      <h1><%= @monster.name %></h1>
+
+      <div class='description'><%=@safe @monster.description %></div>
+
+      <% if @monster.hp == 0: %>
+        <div class="controls clearfix">
+          <% unless @fight.reward_collected: %>
+            <%= @button('monsters.fight.buttons.reward', 'reward') %>
+          <% end %>
+
+          <%= @publish_button('monsters.fight.buttons.publish', type: 'monster_defeated', damage: @fight.damage, monster: @monster.name, image: @monster.stream_image_url) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

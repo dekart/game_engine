@@ -154,6 +154,12 @@ class MonsterFight < ActiveRecord::Base
     character == monster.character
   end
 
+  def boosts
+    character.boosts.for(:monster, :attack).
+      sort_by{ |i| i.item.effect(:damage) }.reverse[0..1].
+      map{ |i| [i.item_id, i.amount, i.item.effect(:damage), i.pictures.url(:medium)] }
+  end
+
   def event_data
     {
       :reference_id => self.id,
@@ -172,13 +178,16 @@ class MonsterFight < ActiveRecord::Base
 
   def as_json
     {
-      :monster => monster.as_json,
-      :damage  => damage,
-      :reward  => basic_payouts.as_json,
+      :fight_id => self.id,
+      :boosts   => boosts,
+      :monster  => monster.as_json,
+      :damage   => damage,
+      :reward   => basic_payouts.as_json,
       :reward_collectable => reward_collectable?,
       :reward_collected => reward_collected?,
       :will_get_reward  => will_get_reward?,
-      :time_remaining   => time_remaining
+      :time_remaining   => time_remaining,
+      :power_attack_factor => Setting.i(:monster_fight_power_attack_factor)
     }
   end
 

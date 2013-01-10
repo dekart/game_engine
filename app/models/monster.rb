@@ -88,6 +88,8 @@ class Monster < ActiveRecord::Base
       :description  => description,
       :level        => level,
       :image_url    => pictures.url(:normal),
+      :stream_image_url => pictures.url(:stream),
+      :time_remaining   => time_remaining,
       :hp           => hp,
       :health       => health,
       :state        => state,

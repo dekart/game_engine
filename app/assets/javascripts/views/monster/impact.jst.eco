@@ -1,0 +1,51 @@
+<h2><%= I18n.t('monsters.impact.title') %></h2>
+
+<p><%=@safe I18n.t('monsters.impact.text', amount: "<strong class='damage'>#{ @fight.damage }</strong>") %></p>
+
+<% for damage_rank in @reward_data.by_damage: %>
+  <div class='damage_group clearfix'>
+  <% if @fight.damage > damage_rank.damage[1]: %>
+    <div class='progress done'>
+      <h3><%= damage_rank.name %></h3>
+
+      <div class='damage'>
+        <%= damage_rank.damage[1] %>
+      </div>
+    </div>
+  <% else: %>
+    <% if @fight.damage >= damage_rank.damage[0] && @fight.damage < damage_rank.damage[1]: %>
+      <div class='progress current clearfix'>
+        <h3><%= damage_rank.name %></h3>
+
+        <div class='damage'>
+          <%= @fight.damage %>/<%= damage_rank.damage[1] %>
+
+          <div class='damage_bar'>
+            <div class='percentage' style='width: <%= @fight.damage / damage_rank.damage[1] * 100 %>%'></div>
+          </div>
+        </div>
+      </div>
+    <% else: %>
+      <div class='progress locked clearfix'>
+        <h3><%= damage_rank.name %></h3>
+
+        <div class='damage'>
+          <%= damage_rank.damage[1] %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class='rewards'>
+    <%= @.rewards damage_rank.rewards, (content)=> %>
+      <%= content %>
+    <% end %>
+  </div>
+
+  <% if @fight.damage > damage_rank.damage[1]: %>
+    <div class='controls'>
+      <%= @publish_button('monsters.impact.buttons.publish', type: 'monster_progress', name: damage_rank.name, monster: @monster.name, image: @monster.stream_image_url) %>
+    </div>
+  <% end %>
+  </div>
+<% end %>

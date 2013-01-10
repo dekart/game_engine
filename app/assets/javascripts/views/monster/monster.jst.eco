@@ -1,20 +1,7 @@
-<h1 class="title"><%= @monster.name %></h1>
-
-<div class="buttons clearfix" id="mission_buttons">
-  <a class="missions button" href="/mission_groups">
-    <span><%= I18n.t("missions.buttons.buttons.missions") %></span>
-  </a>
-  <a class="monsters button" onclick="new MonsterListController().show(); return false;" href="#">
-    <span><%= I18n.t("missions.buttons.buttons.monsters") %></span>
-  </a>
-</div>
-
-<div id="monster_boosts" class="clearfix boosts_container">
-  # boosts will be here
-</div>
-
-<div id="monster" class="clearfix">
-  <%= @monster_info(@monster, @fight) %>
-<div>
-
-# chat will be here
+<% if @monster: %>
+  <div id="monster">
+    <div class='fight'></div>
+    <div class='impact'></div>
+    <div class='fighters'></div>
+  </div>
+<% end %>

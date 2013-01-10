@@ -1,17 +1,17 @@
-<%= title(@monster.name) %>
+<% if @monster %>
+  <div id="monster">
+    <div class='fight'></div>
+    <div class='impact'></div>
+    <div class='fighters'></div>
+  </div>
+<% end %>
 
-<%= render("missions/buttons", :current => nil) %>
+<%= javascript_tag do %>
+  Character.update(<%= current_character.to_json_for_overview.html_safe %>);
 
-<%= render("boosts") %>
-
-<div id="monster" class="clearfix">
-  <%= render(@monster.state, :monster => @monster, :fight => @fight) %>
-</div>
-
-<%= chat(@monster.chat_id) %>
-
-<% if @monster.created_at > 5.seconds.ago %>
-  <% dom_ready do %>
-    <%= ga_track_event('Monsters', 'Summoned', @monster.name, current_character.level) %>
-  <% end %>
+  new MonstersController(
+    <%= @monster.as_json.to_json.html_safe %>,
+    <%= @fight.as_json.to_json.html_safe %>,
+    <%= @monster.damage.leaders.to_json.to_json %>
+  );
 <% end %>

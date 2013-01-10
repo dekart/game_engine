@@ -80,3 +80,36 @@ en:
         buttons:
           reward: "Get Reward"
           view: "View"
+    current:
+      start_time: "The battle begins in"
+      expire_time: "Time Left:"
+      won: "The monster was defeated!"
+      expired: "The monster escaped. Army of players did not manage to defeat it in time."
+      health: "%{monster}'s Health"
+      buttons:
+        attack: "Attack"
+        reward: "Get Reward"
+        view: "View Monster"
+    impact:
+      title: 'Battle Ranks'
+      text: "You already hit the monster for %{amount} damage points. The more damage the better your final rank will be."
+      buttons:
+        publish: "Brag!"
+    fight:
+      tutorial: "Attack Monster!"
+      damage: "%{min}-%{max}%{boost} damage"
+      you_received: "You received:"
+      leaders: "Battle Heroes"
+      leader_group:
+        0: "Heroes"
+        1: "Leaders"
+        2: "Generals"
+      rewards: "Rewards:"
+      buttons:
+        publish: "Brag About it!"
+        reward: "Get Reward"
+    level_groups:
+      title:
+        level_from_to: "Level %{from}-%{to}"
+        level_to: "Level %{from}+"
+    help_link: "How to fight?"

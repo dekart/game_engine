@@ -32,8 +32,9 @@ class MonstersController < ApplicationController
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
     render :json => {
-      :monster => @monster.as_json,
-      :fight   => @fight.as_json
+      :monster  => @monster.as_json,
+      :fight    => @fight.as_json,
+      :fighters => @monster.damage.leaders.collect{|char, damage| [char.facebook_id, damage]}.as_json
     }
   end
 
@@ -48,8 +49,12 @@ class MonstersController < ApplicationController
       
       redirect_to monsters_url
     else
+      @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
+
       render :json => {
-        :monster_id => @monster.id
+        :monster  => @monster.as_json,
+        :fight    => @fight.as_json,
+        :fighters => @monster.damage.leaders.collect{|char, damage| [char.facebook_id, damage]}.as_json
       }
     end
   end
@@ -61,12 +66,20 @@ class MonstersController < ApplicationController
     @power_attack = (!params[:power_attack].blank? && @monster.monster_type.power_attack_enabled?)
     @attack_result = @fight.attack!(@power_attack)
 
-    render :json => {
-      :monster => @monster.as_json,
-      :fight   => @fight.as_json,
-      :power_attack  => @power_attack,
-      :attack_result => @attack_result
-    }
+    if @fight.errors.empty?
+      render :json => {
+        :success       => true,
+        :monster       => @monster.as_json,
+        :fight         => @fight.as_json,
+        :power_attack  => @power_attack,
+        :attack_result => @attack_result
+      }
+    else
+      render :json => {
+        :success => false,
+        :refill  => @fight.errors.full_messages.first
+      }
+    end
   end
 
   def reward
@@ -80,6 +93,26 @@ class MonstersController < ApplicationController
       :fight   => @fight.as_json,
       :reward  => result ? @fight.payouts.preview(triggers) : {},
       :reward_collected => result
+    }
+  end
+
+
+  def status
+    @monster = Monster.find(params[:id])
+
+    render :json => {
+      :hp             => @monster.hp,
+      :time_remaining => @monster.time_remaining,
+      :image_url      => @monster.pictures.url(:small),
+      :description    => @monster.description
+    }
+  end
+
+  def fighters
+    @monster = Monster.find(params[:id])
+
+    render :json => {
+      :fighters => @monster.damage.leaders
     }
   end
 end

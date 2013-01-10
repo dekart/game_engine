@@ -3,33 +3,111 @@
 window.MonsterController = class extends BaseController
   el: "#content_wrapper"
 
-  constructor: ->
+  elements:
+    '.fight'    : 'fight_el'
+    '.impact'   : 'impact_el'
+    '.fighters' : 'fighters_el'
+
+  constructor: (monster_data, fight_data, fighters_data)->
     super
 
-    @.setupEventListeners()
-
-  setupEventListeners: ->
-    @el.on('click', '#monster .attack', @.onAttackClick)
-    @el.on('click', '#monster .reward', @.onRewardClick)
-
-  show: (id)->
-    @loading = true
-
-    $.getJSON("/monsters/#{id}", @.onDataLoad)
-
-  onDataLoad: (response)=>
-    @loading = false
-
-    @monster = response.monster
-    @fight   = response.fight
+    @character = Character.first()
+    @monster   = Monster.create(monster_data)
+    @fight     = MonsterFight.create(fight_data)
+    @fighters  = MonsterFighter.populate(fighters_data)
+    @fighter_coords = MonsterFighter.coords()
 
     @.render()
+
+    @.setupEventListeners()
+    @.setupAutoUpdate()
+
+  setupEventListeners: ->
+    Monster.bind('save', @.onMonsterDataUpdate)
+    MonsterFight.bind('save', @.onFightDataUpdate)
+
+  setupAutoUpdate: ->
+    updateFighters = ()=>
+      if @monster.fighting()
+        $.get("/monsters/#{@monster.monster_id}/fighters", (response)=>
+          @fighters = MonsterFighter.update(response.fighters)
+          @.renderFighters() if @fighters.length > 0
+
+          setTimeout(updateFighters, 20000)
+        )
+    setTimeout(updateFighters, 5000)
+
+    updateMonster = ()=>
+      if @monster.fighting()
+        $.getJSON("/monsters/#{@monster.monster_id}/status?rand=" + Math.random(), (response)=>
+          @monster.updateAttributes(response)
+
+          setTimeout(updateMonster, 20000)
+        )
+    setTimeout(updateMonster, 20000)
+
+  #show: (id)->
+  #  @loading = true
+  #  $.getJSON("/monsters/#{id}", @.onDataLoad)
+
+  #onDataLoad: (response)=>
+  #  @loading = false
+  #  @monster = Monster.create(response.monster)
+  #  @fight   = MonsterFight.create(response.fight)
+  #  @fighters = MonsterFighter.populate(response.fighters)
+  #  @.render()
 
   render: ()->
     @html(
       @.renderTemplate("monster/monster", @)
     )
 
+    @.renderFight()
+    #@.renderImpact()
+    #@.renderFighters()
+
+  renderFight: ()=>
+    @fight_el.html(
+      @.renderTemplate('monster/fight', @)
+    )
+    @.renderActions()
+
+    new VisualTimer([@fight_el.find('.fight_time .value')]).start(@monster.time_remaining)
+
+    @fight_el.find('button.reward').click(@.onRewardClick)
+
+
+  renderActions: ()=>
+    @fight_el.find('.actions').html(
+      @.renderTemplate('monster/actions', @)
+    )
+
+    @fight_el.find('.actions a').click(@.onActionClick)
+
+
+  renderImpact: ()=>
+    @impact_el.html(
+      @.renderTemplate('monster/impact', @)
+    )
+
+
+  renderFighters: ()=>
+    @fighters_el.html(
+      @.renderTemplate('monster/fighters', @)
+    )
+
+  ##############################
+  onMonsterDataUpdate: ()=>
+    if @monster.hp == 0
+      @.render()
+    else
+      @.renderMonsterHealthUpdate()
+
+
+  onFightDataUpdate: ()=>
+    @.renderImpact()
+
+  ##############################
   onAttackClick: (e)=>
     id = @monster.id
     power_attack = $(e.currentTarget).data("power")

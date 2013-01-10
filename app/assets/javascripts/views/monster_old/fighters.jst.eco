@@ -1,0 +1,12 @@
+<div class="fighters">
+  <h3>
+    <%= I18n.t("monsters.fighters.title") %> 
+  </h3>
+
+  <% for [character, damage] in @monster.damage: %>
+    <div class="fighter <%= 'current' if character == Character.first() %> clearfix">
+      <div class="damage"><%= damage %></div>
+      <div class="name"><%= character.name %></div>
+    </div>
+  <% end %>
+</div>
