@@ -112,7 +112,7 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
 
     render :json => {
-      :fighters => @monster.damage.leaders
+      :fighters => @monster.damage.leaders.collect{|char, damage| [char.facebook_id, damage]}.as_json
     }
   end
 end

@@ -83,7 +83,7 @@ class Monster < ActiveRecord::Base
     triggers = character.monster_types.payout_triggers(monster_type)
 
     {
-      :id           => id,
+      :id           => self.id,
       :name         => name,
       :description  => description,
       :level        => level,

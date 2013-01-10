@@ -29,7 +29,7 @@ window.MonsterController = class extends BaseController
   setupAutoUpdate: ->
     updateFighters = ()=>
       if @monster.fighting()
-        $.get("/monsters/#{@monster.monster_id}/fighters", (response)=>
+        $.get("/monsters/#{@monster.id}/fighters", (response)=>
           @fighters = MonsterFighter.update(response.fighters)
           @.renderFighters() if @fighters.length > 0
 
@@ -39,23 +39,12 @@ window.MonsterController = class extends BaseController
 
     updateMonster = ()=>
       if @monster.fighting()
-        $.getJSON("/monsters/#{@monster.monster_id}/status?rand=" + Math.random(), (response)=>
+        $.getJSON("/monsters/#{@monster.id}/status?rand=" + Math.random(), (response)=>
           @monster.updateAttributes(response)
 
           setTimeout(updateMonster, 20000)
         )
     setTimeout(updateMonster, 20000)
-
-  #show: (id)->
-  #  @loading = true
-  #  $.getJSON("/monsters/#{id}", @.onDataLoad)
-
-  #onDataLoad: (response)=>
-  #  @loading = false
-  #  @monster = Monster.create(response.monster)
-  #  @fight   = MonsterFight.create(response.fight)
-  #  @fighters = MonsterFighter.populate(response.fighters)
-  #  @.render()
 
   render: ()->
     @html(
@@ -96,7 +85,7 @@ window.MonsterController = class extends BaseController
       @.renderTemplate('monster/fighters', @)
     )
 
-  ##############################
+
   onMonsterDataUpdate: ()=>
     if @monster.hp == 0
       @.render()
@@ -105,40 +94,14 @@ window.MonsterController = class extends BaseController
 
 
   onFightDataUpdate: ()=>
-    @.renderImpact()
+    #@.renderImpact()
 
-  ##############################
-  onAttackClick: (e)=>
-    id = @monster.id
-    power_attack = $(e.currentTarget).data("power")
 
-    $.ajax("/monsters/#{id}?power_attack=#{power_attack}", type: 'put', success: (response)=>
-      result = @.renderTemplate("monster/update", response: response)
-      $('#result').html(result)
-
-      monster_result = @.renderTemplate("monster/#{response.fight.monster.state}", 
-        monster: response.fight.monster, fight: response.fight, percentage: 0, percentage_text: 0
-      )
-      $('#monster').html(monster_result)
-
-      $(document).trigger('result.received')
-
-      Character.updateFromRemote()
+  renderMonsterHealthUpdate: ()=>
+    @fight_el.find('.monster .health_bar .percentage').animate(
+      { width: "#{ @monster.hp / @monster.health * 100 }%" },
+      500
     )
 
-  onRewardClick: (e)=>
-    id = @monster.id
-
-    $.post("/monsters/#{id}/reward", (response)=>
-      result = @.renderTemplate("monster/reward", response: response)
-      $('#result').html(result)
-
-      monster_result = @.renderTemplate("monster/#{response.fight.monster.state}", 
-        monster: response.fight.monster, fight: response.fight, percentage: 0, percentage_text: 0
-      )
-      $('#monster').html(monster_result)
-
-      $(document).trigger('result.received')
-
-      Character.updateFromRemote()
-    )
+    @fight_el.find('.monster .damage_bar .casting')
+      .css({ width: '100%', opacity: 1 }).animate({ width: 0, opacity: 0 }, 800)

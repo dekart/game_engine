@@ -1,49 +1,31 @@
 <div class='tabs'>
-<ul>
-  <% for info, tab_id in @leaders: %>
-    <li data-tab="<%= tab_id %>">
-      <% if info[1]: %>
-        <%= I18n.t('monsters.level_groups.title.level_from_to', { from: info[0], to: info[1] }) %>
-      <% else: %>
-        <%= I18n.t('monsters.level_groups.title.level_to', { from: info[0] }) %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+  <div class="tab_content clearfix">
+    <div class='leader_group clearfix'>
+      <h2><%= I18n.t("monsters.fight.leader_group.0") %></h2>
 
-<% for info, tab_id in @leaders: %>
-  <div id='<%= tab_id %>' class="tab_content clearfix">
-    <% for leader_group, index in info[2]: %>
-      <div class='leader_group clearfix'>
-        <h2><%= I18n.t("monsters.fight.leader_group.#{index}") %></h2>
+      <div class='leaders'>
+        <% for character in @fighters: %>
+          <div class='leader clearfix <%= if character.facebook_id == @character.facebook_id then "current" %>'>
+            <div class='position'><%= character.position %></div>
 
-        <% if leader_group.length > 0: %>
-          <div class='leaders'>
-            <% for character in leader_group: %>
-              <div class='leader clearfix <%= if character.facebook_id == @character.facebook_id then "current" %>'>
-                <div class='position'><%= character.position %></div>
+            <img
+              src='https://graph.facebook.com/<%= character.facebook_id %>/picture?type=square&return_ssl_resources=1'
+              width='30' height='30' alt='<%= character.name %>'
+            />
 
-                <img
-                  src='https://graph.facebook.com/<%= character.facebook_id %>/picture?type=square&return_ssl_resources=1'
-                  width='30' height='30' alt='<%= character.name %>'
-                />
-
-                <div class='name'><%= character.name %></div>
-                <div class='damage'><%= character.damage %></div>
-              </div>
-            <% end %>
+            <div class='name'><%= character.name %></div>
+            <div class='damage'><%= character.damage %></div>
           </div>
         <% end %>
-
-        <div class='rewards'>
-          <h3><%= I18n.t('monsters.fight.rewards') %></h3>
-
-          <%= @.rewards @reward_data.by_position[index], (content)=> %>
-            <%= content %>
-          <% end %>
-        </div>
       </div>
-    <% end %>
+
+      <div class='rewards'>
+        <h3><%= I18n.t('monsters.fight.rewards') %></h3>
+
+        <%= @.rewards @monster.rewards, (content)=> %>
+          <%= content %>
+        <% end %>
+      </div>
+    </div>
   </div>
-<% end %>
 </div>

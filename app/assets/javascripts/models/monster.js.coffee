@@ -1,5 +1,5 @@
 window.Monster = class extends Spine.Model
-  @configure 'Monster', 'monster_id', 'name', 'description', 'health', 'hp',
+  @configure 'Monster', 'id', 'name', 'description', 'health', 'hp',
     'image_url', 'stream_image_url', 'time_remaining'
 
   fighting: ()->

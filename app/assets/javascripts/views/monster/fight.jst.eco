@@ -7,7 +7,7 @@
       <div class="damage"></div>
     </div>
 
-    <div class='fighters'>
+    <div class='fighters_cloud'>
       <% for fighter, index in @fighters: %>
         <div class='fighter' id='<%= 0 %>'
           data-index='<%= index %>' data-damage='<%= 0 %>'
