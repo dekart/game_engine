@@ -281,6 +281,7 @@ GameEngine::Application.routes.draw do
       post 'reward'
       match 'status'  
       match 'fighters'
+      match 'leaders'
     end
 
     get 'finished', :on => :collection

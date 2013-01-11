@@ -6,9 +6,9 @@ window.MonsterController = class extends BaseController
   elements:
     '.fight'    : 'fight_el'
     '.impact'   : 'impact_el'
-    '.fighters' : 'fighters_el'
+    '.leaders'  : 'leaders_el'
 
-  constructor: (monster_data, fight_data, fighters_data)->
+  constructor: (monster_data, fight_data, fighters_data, leaders_data)->
     super
 
     @character = Character.first()
@@ -16,6 +16,8 @@ window.MonsterController = class extends BaseController
     @fight     = MonsterFight.create(fight_data)
     @fighters  = MonsterFighter.populate(fighters_data)
     @fighter_coords = MonsterFighter.coords()
+
+    @leaders = leaders_data
 
     @.render()
 
@@ -27,12 +29,21 @@ window.MonsterController = class extends BaseController
     MonsterFight.bind('save', @.onFightDataUpdate)
 
   setupAutoUpdate: ->
+    updateLeaders = ()=>
+      if @monster.fighting()
+        $.get("/monsters/#{@monster.id}/leaders", (response)=>
+          @leaders = response.leaders
+          @.renderLeaders()
+
+          setTimeout(updateLeaders, 60000)
+        )
+    setTimeout(updateLeaders, 60000)
+
     updateFighters = ()=>
       if @monster.fighting()
         $.get("/monsters/#{@monster.id}/fighters", (response)=>
           @fighters = MonsterFighter.update(response.fighters)
 
-          @.renderFightersCloud() if @fighters.length > 0
           @.renderFighters() if @fighters.length > 0
 
           setTimeout(updateFighters, 20000)
@@ -54,7 +65,7 @@ window.MonsterController = class extends BaseController
     )
     @.renderFight()
     #@.renderImpact()
-    @.renderFighters()
+    @.renderLeaders()
 
   renderFight: ()=>
     @fight_el.html(
@@ -81,9 +92,9 @@ window.MonsterController = class extends BaseController
     )
 
 
-  renderFighters: ()=>
-    @fighters_el.html(
-      @.renderTemplate('monster/fighters', @)
+  renderLeaders: ()=>
+    @leaders_el.html(
+      @.renderTemplate('monster/leaders', @)
     )
 
 
@@ -116,8 +127,8 @@ window.MonsterController = class extends BaseController
       .delay(100).fadeOut()
 
 
-  renderFightersCloud: ()=>
-    el = @fight_el.find('.fighters_cloud')
+  renderFighters: ()=>
+    el = @fight_el.find('.fighters')
 
     selector = @fighters.map((fighter)-> "##{fighter.id}").reduce((left, right)-> left + ',' + right)
     el.find(selector).addClass('old')

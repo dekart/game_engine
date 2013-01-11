@@ -46,12 +46,12 @@ window.MonsterListController = class extends BaseController
     id = $(e.currentTarget).data("id")
 
     $.get("/monsters/#{id}", (response)=>
-      new MonsterController(response.monster, response.fight, response.fighters)
+      new MonsterController(response.monster, response.fight, response.fighters, response.leaders)
     )
 
   onAttackClick: (e)=>
     id = $(e.currentTarget).data("id")
 
     $.get("/monsters/new?monster_type_id=#{id}", (response)=>
-      new MonsterController(response.monster, response.fight, response.fighters)
+      new MonsterController(response.monster, response.fight, response.fighters, response.leaders)
     )

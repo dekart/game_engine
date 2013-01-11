@@ -373,7 +373,7 @@
           width: 60px
           text-align: center
 
-  .fighters
+  .leaders
     .leader_group
       width: 229px
       float: left
@@ -381,6 +381,36 @@
 
       h2
         text-align: center
+
+      .leaders
+        outline: 1px solid #5E6539
+        background-color: #DDDDDD
+        padding: 5px 0 1px 0
+
+        .leader
+          line-height: 30px
+          margin-bottom: 5px
+
+          &.current
+            background-color: #101010
+            color: #FFC600
+
+          .position, img, .name
+            float: left
+
+          .position
+            width: 18px
+            padding-right: 2px
+            text-align: right
+
+          .name
+            width: 109px
+            padding-left: 5px
+            overflow: hidden
+
+          .damage
+            float: right
+            width: 65px
 
       .rewards
         margin-top: 20px
