@@ -25,6 +25,20 @@ class Monster
       @leaders
     end
 
+    def fighters(exclude_character = nil)
+      list = leaders.collect{|char, damage| [char.facebook_id, damage]}
+
+      list.reject!{ |f| f[0] == exclude_character.facebook_id } if exclude_character
+
+      ids =  [[1137007784, 0], [719669761, 10], [100003483432689, 20]] 
+      number = rand(3) + 1
+      number.times do |n|
+        list += [ids[n]]
+      end
+
+      list
+    end
+
     def by_character(character)
       (@leaders ? @leaders.assoc(character)[1] : $redis.zscore(storage_key, character.id).to_i)
     end

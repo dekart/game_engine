@@ -9,9 +9,9 @@
 
     <div class='fighters_cloud'>
       <% for fighter, index in @fighters: %>
-        <div class='fighter' id='<%= 0 %>'
-          data-index='<%= index %>' data-damage='<%= 0 %>'
-          style='left:<%= @fighter_coords[index][0] %>px; top:<%= @fighter_coords[index][1] %>px; background-image: url(<%= 0 %>)'
+        <div class='fighter' id='<%= fighter.id %>'
+          data-index='<%= index %>' data-damage='<%= fighter.damage %>'
+          style='left:<%= @fighter_coords[index][0] %>px; top:<%= @fighter_coords[index][1] %>px; background-image: url(<%= fighter.image_url() %>)'
         >
         </div>
       <% end %>

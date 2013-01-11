@@ -28,8 +28,3 @@ window.MonstersHelper =
     )
 
     @safe result
-
-  fighters: (monster)->
-    result = JST["views/monster/fighters"](_.extend({monster: monster}))
-
-    @safe result
