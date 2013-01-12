@@ -54,9 +54,13 @@ class CharactersController < ApplicationController
     if current_character
       redirect_to root_url
     else
-      @character = current_user.build_character(:name => params[:character][:name])
+      @character = current_user.build_character
 
-      @character.character_type ||= CharacterType.find_by_id(params[:character][:character_type_id])
+      if params[:character]
+        @character.name = params[:character][:name]
+        @character.character_type = CharacterType.find_by_id(params[:character][:character_type_id])
+      end
+
       @character.character_type ||= @character_types.first
 
       if @character.save
@@ -98,7 +102,7 @@ class CharactersController < ApplicationController
   def check_character_existance_or_create
     if current_character
       true
-    elsif params[:character]
+    elsif current_user
       create
     else
       check_character_existance
