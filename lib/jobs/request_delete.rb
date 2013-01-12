@@ -9,7 +9,7 @@ module Jobs
         batch_result = AppRequest::Base.delete_from_facebook!(request_ids)
 
         batch_result.each_with_index do |result, index|
-          $redis.sadd("app_requests_failed_deletion", request_ids[index]) unless result == false
+          $redis.sadd("app_requests_failed_deletion", request_ids[index]) if result == false
         end
       end while request_ids.size > 0
 
