@@ -7,8 +7,9 @@ class CharactersController < ApplicationController
 
   prepend_before_filter :check_character_existance_or_create, :only => :index
 
-  before_filter :fetch_character_types,   :only => [:new, :create, :edit, :update]
   around_filter :check_user_app_requests, :only => :index
+
+  helper_method :character_types
 
   def index
     @news = current_character.news.latest(Setting.i(:dashboard_news_count))
@@ -44,7 +45,7 @@ class CharactersController < ApplicationController
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
-      @character.character_type ||= @character_types.first
+      @character.character_type ||= character_types.first
 
       render :layout => 'unauthorized'
     end
@@ -61,7 +62,7 @@ class CharactersController < ApplicationController
         @character.character_type = CharacterType.find_by_id(params[:character][:character_type_id])
       end
 
-      @character.character_type ||= @character_types.first
+      @character.character_type ||= character_types.first
 
       if @character.save
         # Always redirect newcomers to missions
@@ -91,11 +92,11 @@ class CharactersController < ApplicationController
 
   protected
 
-  def fetch_character_types
-    @character_types = CharacterType.with_state(:visible).all
-
-    if params[:default_type_id] && default_type = @character_types.detect{|t| t.id == params[:default_type_id].to_i }
-      @character_types.unshift(@character_types.delete(default_type))
+  def character_types
+    @character_types ||= CharacterType.with_state(:visible).all.tap do |types|
+      if params[:default_type_id] && default_type = types.detect{|t| t.id == params[:default_type_id].to_i }
+        types.unshift(types.delete(default_type))
+      end
     end
   end
 
