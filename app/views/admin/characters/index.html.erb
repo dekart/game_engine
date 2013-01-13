@@ -32,7 +32,7 @@
               <th><%= User.human_attribute_name("reference") %></th>
             </tr>
             <% @characters.each do |character| %>
-              <tr>
+              <tr class="<%= 'banned' if character.user.banned? %> <%= 'uninstalled' unless character.user.installed %>">
                 <td><%= check_box_tag("ids[]", character.id) %></td>
                 <td><%= link_to(character.id, character_url(character.key, :canvas => true)) %></td>
                 <td>
