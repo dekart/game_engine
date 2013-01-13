@@ -16,6 +16,8 @@ window.DialogController = class extends BaseController
     @overlay = $("<div class='dialog_overlay'></div>")
 
   setupEventListeners: ->
+    @.unbindEventListeners()
+
     @el.on('click', '.close', @.onCloseClick)
 
   unbindEventListeners: ->
@@ -38,7 +40,7 @@ window.DialogController = class extends BaseController
     @.unbindEventListeners()
 
     @overlay.detach()
-    @el.detach()
+    @el.data('positioned', false).detach()
 
     $(document).trigger('close.dialog')
 
@@ -59,8 +61,15 @@ window.DialogController = class extends BaseController
     @.close()
 
   updateOffset: ->
-    left = $('#content').offset().left + ($('#content').width() - @el.outerWidth(true)) / 2
-    top = mouse.y - @el.outerHeight() / 2
+    unless @el.data('positioned')
+      left = $('#content').offset().left + ($('#content').width() - @el.outerWidth(true)) / 2
+
+      existing_offset = $('#content .dialog').not(@el).offset()
+
+      if existing_offset
+        top = existing_offset.top
+      else
+        top = mouse.y - @el.outerHeight() / 2
 
     dialog_height = @el.outerHeight(true)
     content_height = $('#content').outerHeight(true)
@@ -70,4 +79,4 @@ window.DialogController = class extends BaseController
     else if top + dialog_height > content_height - 100
       top = content_height - dialog_height - 100
 
-    @el.css(top: top, left: left)
+    @el.css(top: top, left: left).data('positioned', true)
