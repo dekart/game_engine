@@ -164,7 +164,7 @@ var Equipment = {
     $("#equippables .inventory, #placements .inventory").draggable({
       appendTo: $("#equipment"),
       helper: function() {
-        var clone = $(this).clone();
+        var clone = $(this).find('.inventory_image').clone();
         clone.find("span").remove();
         clone.css('opacity', 0.7);
         return clone;
