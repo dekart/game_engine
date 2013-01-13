@@ -132,8 +132,8 @@
         <tr>
           <td><%= User.human_attribute_name("last_visit_at") %></td>
           <td>
-            <%= l(@character.user.last_visit_at, :format => :long) %>
-            (<%= time_ago_in_words(@character.user.last_visit_at) %>)
+            <%= l(@character.user.last_visit_at || @character.user.created_at, :format => :long) %>
+            (<%= time_ago_in_words(@character.user.last_visit_at || @character.user.created_at) %>)
           </td>
         </tr>
 
