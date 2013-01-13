@@ -27,7 +27,6 @@
               <th><%= check_box_tag("all_ids") %></th>
               <th><%= Character.human_attribute_name("id") %></th>
               <th><%= Character.human_attribute_name("name") %></th>
-              <th><%= User.human_attribute_name("facebook_id") %></th>
               <th><%= Character.human_attribute_name("level") %></th>
               <th><%= Character.human_attribute_name("created_at") %></th>
               <th><%= User.human_attribute_name("reference") %></th>
@@ -38,11 +37,10 @@
                 <td><%= link_to(character.id, character_url(character.key, :canvas => true)) %></td>
                 <td>
                   <%= link_to(admin_character_name(character), admin_character_path(character)) %>
-                </td>
-                <td>
-                  <%= link_to(character.user.facebook_id, fb_profile_url(character.user),
+                  <%= link_to("➚", fb_profile_url(character.user),
                         :target => :_blank
                       ) %>
+                  <%= link_to(character.user.paying ? "$" : "◊", report_admin_vip_money_operation_path(character)) %>
                 </td>
                 <td><%= character.level %></td>
                 <td><%= l(character.created_at, :format => :short) %></td>
