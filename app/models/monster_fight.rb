@@ -104,7 +104,7 @@ class MonsterFight < ActiveRecord::Base
     return false unless reward_collectable?
 
     transaction do
-      @payouts = monster_type.applicable_payouts.apply(character, payout_triggers, monster_type)
+      @payouts = monster_type.applicable_payouts.apply_with_result(character, payout_triggers, monster_type)
 
       character.save!
 

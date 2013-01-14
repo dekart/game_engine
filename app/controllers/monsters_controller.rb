@@ -93,10 +93,7 @@ class MonstersController < ApplicationController
     result = @fight.collect_reward!
 
     render :json => {
-      :monster => @fight.monster.as_json,
-      :fight   => @fight.as_json,
-      :reward  => result ? @fight.payouts.preview(triggers) : {},
-      :reward_collected => result
+      :rewards => @fight.payouts
     }
   end
 

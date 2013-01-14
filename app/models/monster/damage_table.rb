@@ -46,6 +46,8 @@ class Monster
 
       list.reject!{ |f| f[:facebook_id] == exclude_character.facebook_id } if exclude_character
 
+      list.sort_by!{|f| -f[:damage]}
+
       list
     end
 

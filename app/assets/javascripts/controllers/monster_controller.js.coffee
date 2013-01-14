@@ -14,6 +14,8 @@ window.MonsterController = class extends BaseController
     @monster   = Monster.create(monster_data)
     @fight     = MonsterFight.create(fight_data)
 
+    @reward_data = monster_data.reward
+
     @fighters  = MonsterFighter.populate(fighters_data)
     @fighter_coords = MonsterFighter.coords()
     @leaders = leaders_data
@@ -75,7 +77,7 @@ window.MonsterController = class extends BaseController
 
     new VisualTimer([@fight_el.find('.fight_time .value')]).start(@monster.time_remaining)
 
-    @fight_el.find('button.reward').click(@.onRewardClick)
+    @fight_el.find('a.reward').click(@.onRewardClick)
 
 
   renderActions: ()=>
@@ -279,9 +281,9 @@ window.MonsterController = class extends BaseController
     button.addClass('disabled')
 
     unless @fight.reward_collected
-      $.post("/monsters/#{@monster.monster_id}/reward", {}, (response)=>
+      $.post("/monsters/#{@monster.id}/reward", {}, (response)=>
         button.parent().after(
-          @.renderTemplate('monsters/rewards', _.extend(@, { fight_rewards: response.rewards }))
+          @.renderTemplate('monster/rewards', _.extend(@, { fight_rewards: response.rewards }))
         )
 
         button.remove()

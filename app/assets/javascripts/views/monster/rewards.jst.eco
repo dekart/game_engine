@@ -1,4 +1,4 @@
-<div class='rewards'>
+<div class='rewards payouts'>
   <h3><%= I18n.t('monsters.fight.you_received') %></h3>
 
   <%= @.rewards @fight_rewards, (content)=> %>

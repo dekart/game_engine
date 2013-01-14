@@ -1,8 +1,6 @@
 <% if @monster.fighting(): %>
   <div class='progress' style='background-image: url(<%= @monster.image_url %>)'>
-    <div class='character clearfix'
-        style='background-image: url(<%= @character.image_url() %>)'
-      >
+    <div class='character clearfix' style='background-image: url(<%= @character.image_url() %>)'>
 
       <div class="damage"></div>
     </div>
@@ -51,7 +49,9 @@
       <% if @monster.hp == 0: %>
         <div class="controls clearfix">
           <% unless @fight.reward_collected: %>
-            <%= @button('monsters.fight.buttons.reward', 'reward') %>
+            <a href='#' class='reward button'>
+              <span><%= I18n.t('monsters.fight.buttons.reward') %></span>
+            </a>
           <% end %>
 
           <%= @publish_button('monsters.fight.buttons.publish', type: 'monster_defeated', damage: @fight.damage, monster: @monster.name, image: @monster.stream_image_url) %>

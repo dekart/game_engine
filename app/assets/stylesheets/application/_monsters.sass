@@ -312,7 +312,11 @@
         text-shadow: 2px 2px 2px #202020
 
     .finished
-      background-repeat: no-repeat
+      height: 350px
+      margin-bottom: 20px
+      background:
+        repeat: no-repeat
+        position: right
 
       .monster
         width: auto
@@ -328,12 +332,16 @@
           &.reward
             +button($asset_icons_basic_money, 120px)
 
+          &.publish
+            +button($asset_icons_publish, 120px)
+
         .rewards
           @include clearfix
+          width: 550px
           margin-top: 10px
           padding: 5px
           border: 1px solid #5e6539
-          background-color: #2a3124
+          background-color: #DDDDDD
 
   .leaders
     .leader_group
