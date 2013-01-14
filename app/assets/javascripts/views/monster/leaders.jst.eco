@@ -2,7 +2,7 @@
   <h2><%= I18n.t("monsters.fight.leader_group.0") %></h2>
 
   <div class='leaders'>
-    <% for character in @fighters: %>
+    <% for character in @leaders: %>
       <div class='leader clearfix <%= if character.facebook_id == @character.facebook_id then "current" %>'>
         <div class='position'><%= character.position %></div>
 

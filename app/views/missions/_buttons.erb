@@ -6,7 +6,7 @@
   <% end %>
 
   <% unless current == :monsters %>
-    <%= link_to_function(button(:monsters), "new MonsterListController().show()", 
+    <%= link_to_function(button(:monsters), "MonsterListController.show()",
           :class => "monsters button"
         ) %>
   <% end %>

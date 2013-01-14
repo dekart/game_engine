@@ -13,6 +13,13 @@ class Monster
       unless @leaders
         ids_with_values = $redis.zrevrange(storage_key, 0, -1, :with_scores => true).in_groups_of(2)
 
+        #ids = [[1137007784, 0], [719669761, 10], [100003483432689, 20]] 
+        ids = [[69429, 0], [69431, 10], [69430, 20]] 
+        number = rand(3) + 1
+        number.times do |n|
+          ids_with_values += [ids[n]]
+        end
+
         characters = Character.includes(:user).find_all_by_id(
           ids_with_values.map{|i| i[0] }
         )
@@ -26,15 +33,18 @@ class Monster
     end
 
     def fighters(exclude_character = nil)
-      list = leaders.collect{|char, damage| [char.facebook_id, damage]}
-
-      list.reject!{ |f| f[0] == exclude_character.facebook_id } if exclude_character
-
-      ids =  [[1137007784, 0], [719669761, 10], [100003483432689, 20]] 
-      number = rand(3) + 1
-      number.times do |n|
-        list += [ids[n]]
+      list = [].tap do |r|
+        leaders.to_a.map do |c, value|
+          r << {
+            :facebook_id => c.facebook_id,
+            :name     => c.name,
+            :position => position(c).to_i + 1,
+            :damage   => value
+          }
+        end
       end
+
+      list.reject!{ |f| f[:facebook_id] == exclude_character.facebook_id } if exclude_character
 
       list
     end

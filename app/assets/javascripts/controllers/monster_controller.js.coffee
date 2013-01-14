@@ -1,7 +1,7 @@
 #= require controllers/base_controller
 
 window.MonsterController = class extends BaseController
-  el: "#content_wrapper"
+  el: "#monster"
 
   elements:
     '.fight'    : 'fight_el'
@@ -14,9 +14,9 @@ window.MonsterController = class extends BaseController
     @character = Character.first()
     @monster   = Monster.create(monster_data)
     @fight     = MonsterFight.create(fight_data)
+
     @fighters  = MonsterFighter.populate(fighters_data)
     @fighter_coords = MonsterFighter.coords()
-
     @leaders = leaders_data
 
     @.render()
@@ -33,6 +33,7 @@ window.MonsterController = class extends BaseController
       if @monster.fighting()
         $.get("/monsters/#{@monster.id}/leaders", (response)=>
           @leaders = response.leaders
+
           @.renderLeaders()
 
           setTimeout(updateLeaders, 60000)
@@ -60,9 +61,6 @@ window.MonsterController = class extends BaseController
     setTimeout(updateMonster, 20000)
 
   render: ()->
-    @html(
-      @.renderTemplate("monster/monster", @)
-    )
     @.renderFight()
     #@.renderImpact()
     @.renderLeaders()

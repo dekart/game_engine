@@ -98,7 +98,6 @@ class MonstersController < ApplicationController
     }
   end
 
-
   def status
     @monster = Monster.find(params[:id])
 
@@ -122,7 +121,7 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
 
     render :json => {
-      :fighters => @monster.damage.fighters.as_json
+      :leaders => @monster.damage.fighters.as_json
     }
   end
 end

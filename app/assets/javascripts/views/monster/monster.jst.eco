@@ -1,7 +1,5 @@
-<% if @monster: %>
-  <div id="monster">
-    <div class='fight'></div>
-    <div class='impact'></div>
-    <div class='leaders'></div>
-  </div>
-<% end %>
+<div id="monster">
+  <div class='fight'></div>
+  <div class='impact'></div>
+  <div class='leaders'></div>
+</div>
