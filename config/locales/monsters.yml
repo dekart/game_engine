@@ -90,11 +90,6 @@ en:
         attack: "Attack"
         reward: "Get Reward"
         view: "View Monster"
-    impact:
-      title: 'Battle Ranks'
-      text: "You already hit the monster for %{amount} damage points. The more damage the better your final rank will be."
-      buttons:
-        publish: "Brag!"
     fight:
       tutorial: "Attack Monster!"
       damage: "%{min}-%{max}%{boost} damage"

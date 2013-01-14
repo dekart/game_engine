@@ -5,7 +5,6 @@ window.MonsterController = class extends BaseController
 
   elements:
     '.fight'    : 'fight_el'
-    '.impact'   : 'impact_el'
     '.leaders'  : 'leaders_el'
 
   constructor: (monster_data, fight_data, fighters_data, leaders_data)->
@@ -62,7 +61,6 @@ window.MonsterController = class extends BaseController
 
   render: ()->
     @.renderFight()
-    #@.renderImpact()
     @.renderLeaders()
 
   renderFight: ()=>
@@ -82,12 +80,6 @@ window.MonsterController = class extends BaseController
     )
 
     @fight_el.find('.actions a').click(@.onActionClick)
-
-
-  renderImpact: ()=>
-    @impact_el.html(
-      @.renderTemplate('monster/impact', @)
-    )
 
 
   renderLeaders: ()=>
@@ -201,7 +193,7 @@ window.MonsterController = class extends BaseController
 
 
   onFightDataUpdate: ()=>
-    #@.renderImpact()
+    #do nothing here yet
 
 
   onActionClick: (e)=>
