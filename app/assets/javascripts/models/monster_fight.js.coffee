@@ -1,10 +1,10 @@
 window.MonsterFight = class extends Spine.Model
   @configure 'MonsterFight', 'fight_id', 'damage', 'boosts',
-    'power_attack_factor', 'reward_collected'
+    'minimum_damage', 'maximum_damage', 'power_attack_factor', 'reward_collected',
 
   action_tooltip: (boost, power_attack)->
-    min_value = this.damage
-    max_value = this.damage
+    min_value = this.minimum_damage
+    max_value = this.maximum_damage
 
     if power_attack
       min_value *= this.power_attack_factor

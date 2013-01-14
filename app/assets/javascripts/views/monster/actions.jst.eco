@@ -1,16 +1,16 @@
-<a class="attack" data-tooltip-content="<%= @fight.action_tooltip('', 0, false) %>">
+<a class="attack" data-tooltip-content="<%= @fight.action_tooltip(0, false) %>">
   <span>1</span>
 </a>
 
 <a class="attack" data-power="true"
-  data-tooltip-content="<%= @fight.action_tooltip('', 0, true) %>"
+  data-tooltip-content="<%= @fight.action_tooltip(0, true) %>"
 >
   <span><%= @fight.power_attack_factor %></span>
 </a>
 
 <% for boost in @fight.boosts: %>
   <a class='boost' data-boost='<%= boost[0] %>'
-    data-tooltip-content="<%= @fight.action_tooltip('', boost[2], false) %>"
+    data-tooltip-content="<%= @fight.action_tooltip(boost[2], false) %>"
   >
     <img src='<%= boost[3] %>'/>
     <span><%= boost[1] %></span>

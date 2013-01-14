@@ -65,16 +65,18 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
-    @power_attack = (!params[:power_attack].blank? && @monster.monster_type.power_attack_enabled?)
-    @attack_result = @fight.attack!(@power_attack)
+    power_attack = (!params[:power_attack].blank? && @monster.monster_type.power_attack_enabled?)
+    boost = params[:boost].to_i unless params[:boost].blank?
+
+    @attack_result = @fight.attack!(boost, power_attack)
 
     if @fight.errors.empty?
       render :json => {
-        :success       => true,
-        :monster       => @monster.as_json,
-        :fight         => @fight.as_json,
-        :power_attack  => @power_attack,
-        :attack_result => @attack_result
+        :success          => true,
+        :monster_damage   => @fight.monster_damage,
+        :character_damage => @fight.character_damage,
+        :boosts           => @fight.boosts,
+        :character        => @fight.character.as_json_for_overview
       }
     else
       render :json => {

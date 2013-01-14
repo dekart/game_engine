@@ -23,9 +23,11 @@ window.MonsterController = class extends BaseController
     @.setupEventListeners()
     @.setupAutoUpdate()
 
+
   setupEventListeners: ->
     Monster.bind('save', @.onMonsterDataUpdate)
     MonsterFight.bind('save', @.onFightDataUpdate)
+
 
   setupAutoUpdate: ->
     updateLeaders = ()=>
@@ -59,9 +61,11 @@ window.MonsterController = class extends BaseController
         )
     setTimeout(updateMonster, 20000)
 
+
   render: ()->
     @.renderFight()
     @.renderLeaders()
+
 
   renderFight: ()=>
     @fight_el.html(
@@ -204,7 +208,7 @@ window.MonsterController = class extends BaseController
     @fight_el.find('.actions').addClass('locked')
     @fight_el.find('.actions a').unbind('click')
 
-    $.post("/monsters/#{@monster.monster_id}", {
+    $.post("/monsters/#{@monster.id}", {
         '_method': 'put',
         'boost': link.data('boost'),
         'power_attack': link.data('power')
@@ -215,9 +219,11 @@ window.MonsterController = class extends BaseController
           if response.refill
             switch response.refill
               when 'refill_health'
-                HealthRefillDialogController.show()
+                alert "health refill controller"
+                #HealthRefillDialogController.show()
               when 'refill_stamina'
-                StaminaRefillDialogController.show()
+                alert "stamina refill controller"
+                #StaminaRefillDialogController.show()
 
           @fight_el.find('.actions').removeClass('locked')
           @fight_el.find('.actions a').click(@.onActionClick)

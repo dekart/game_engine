@@ -34,13 +34,13 @@ class MonsterFight < ActiveRecord::Base
   after_save    :update_damage_score
 
   # @power_attack - this is usual attack but effects multiplied by special factor
-  def attack!(power_attack = false)
+  def attack!(boost = nil, power_attack = false)
     monster.expire if monster.time_remaining <= 0
 
     if monster.progress? && character.sp >= stamina_limit(power_attack) && !character.weak? && character.hp >= hp_average_response_limit(power_attack)
       @character_damage, @monster_damage = self.class.damage_system.calculate_damage(character, monster)
 
-      @boost = character.boosts.active_for(:monster, :attack)
+      @boost = character.boosts.for(:monster, :attack).detect{ |b| b.item_id == boost }
 
       @experience = monster.experience
       @money      = monster.money
@@ -182,7 +182,9 @@ class MonsterFight < ActiveRecord::Base
       :boosts   => boosts,
       :monster  => monster.as_json,
       :damage   => damage,
-      :reward   => basic_payouts.as_json,
+      :minimum_damage   => minimum_damage,
+      :maximum_damage   => maximum_damage,
+      :reward           => basic_payouts.as_json,
       :reward_collectable => reward_collectable?,
       :reward_collected => reward_collected?,
       :will_get_reward  => will_get_reward?,
@@ -201,6 +203,14 @@ class MonsterFight < ActiveRecord::Base
 
   def add_to_finished_fights
     character.monster_fights.add_to_finished(self)
+  end
+
+  def minimum_damage
+    monster.minimum_damage
+  end
+
+  def maximum_damage
+    monster.maximum_damage
   end
 
   protected
