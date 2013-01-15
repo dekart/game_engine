@@ -54,7 +54,7 @@
             </a>
           <% end %>
 
-          <%= @publish_button('monsters.fight.buttons.publish', type: 'monster_defeated', damage: @fight.damage, monster: @monster.name, image: @monster.stream_image_url) %>
+          <%= @publish_button('monsters.fight.buttons.publish', type: 'monster_defeated', name: @monster.name, image: @monster.stream_image_url) %>
         </div>
       <% end %>
     </div>

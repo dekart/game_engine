@@ -16,3 +16,4 @@ translations:
       - "*.missions.buttons"
       - "*.monsters"
       - "*.payouts"
+      - "*.stories"

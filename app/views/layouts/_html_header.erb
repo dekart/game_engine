@@ -2,6 +2,8 @@
 
 <% if fb_canvas? %>
   <%= javascript_tag do %>
+    var app_location = '<%= facepalm.canvas_page_url('http://') %>';
+
     var signed_request = '<%= escape_javascript(fb_signed_request) %>';
   <% end %>
 <% end %>
