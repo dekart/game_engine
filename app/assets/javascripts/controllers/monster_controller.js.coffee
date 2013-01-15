@@ -239,11 +239,9 @@ window.MonsterController = class extends BaseController
           if response.refill
             switch response.refill
               when 'refill_health'
-                alert "health refill controller"
-                #HealthRefillDialogController.show()
+                HealthRefillDialogController.show()
               when 'refill_stamina'
-                alert "stamina refill controller"
-                #StaminaRefillDialogController.show()
+                StaminaRefillDialogController.show()
 
           @fight_el.find('.actions').removeClass('locked')
           @fight_el.find('.actions a').click(@.onActionClick)

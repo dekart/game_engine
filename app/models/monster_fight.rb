@@ -33,11 +33,29 @@ class MonsterFight < ActiveRecord::Base
   after_create  :create_character_news, :add_to_active_fights
   after_save    :update_damage_score
 
+  def can_attack?(power_attack)
+    if !monster.progress?
+      self.errors.add(:base, :can_not_attack)
+
+      false
+    elsif character.sp < stamina_limit(power_attack)
+      self.errors.add(:base, :not_enough_stamina)
+
+      false
+    elsif character.weak? || character.hp < hp_average_response_limit(power_attack)
+      self.errors.add(:base, :not_enough_health)
+
+      false
+    else
+      true
+    end
+  end
+
   # @power_attack - this is usual attack but effects multiplied by special factor
   def attack!(boost = nil, power_attack = false)
     monster.expire if monster.time_remaining <= 0
 
-    if monster.progress? && character.sp >= stamina_limit(power_attack) && !character.weak? && character.hp >= hp_average_response_limit(power_attack)
+    if can_attack?(power_attack)
       @character_damage, @monster_damage = self.class.damage_system.calculate_damage(character, monster)
 
       @boost = character.boosts.for(:monster, :attack).detect{ |b| b.item_id == boost }
