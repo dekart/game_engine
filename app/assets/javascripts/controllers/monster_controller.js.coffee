@@ -42,7 +42,6 @@ window.MonsterController = class extends BaseController
 
   setupEventListeners: ->
     Monster.bind('save', @.onMonsterDataUpdate)
-    MonsterFight.bind('save', @.onFightDataUpdate)
 
 
   setupAutoUpdate: ->
@@ -214,10 +213,6 @@ window.MonsterController = class extends BaseController
       @.render()
     else
       @.renderMonsterHealthUpdate()
-
-
-  onFightDataUpdate: ()=>
-    #do nothing here yet
 
 
   onActionClick: (e)=>
