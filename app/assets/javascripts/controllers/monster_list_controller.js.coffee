@@ -3,24 +3,31 @@
 window.MonsterListController = class extends BaseController
   el: "#content_wrapper"
 
+  elements:
+    '#finished_fights' : 'finished_fights_el'
+
   @show: ->
     @controller ?= new @()
     @controller.show()
+
 
   constructor: ->
     super
 
     @.setupEventListeners()
 
+
   setupEventListeners: ->
     @el.on('click', '#finished_fights', @.onFinishedFightsClick)
     @el.on('click', '.monster_list .engage, .monster_list .view, .monster_list .reward', @.onEngageClick)
     @el.on('click', '.monster_list .attack', @.onAttackClick)
 
+
   show: ->
     @loading = true
 
     $.getJSON('/monsters', @.onDataLoad)
+
 
   onDataLoad: (response)=>
     @loading = false
@@ -32,6 +39,7 @@ window.MonsterListController = class extends BaseController
 
     @.render()
 
+
   render: ()->
     @html(
       @.renderTemplate("monsters/list", @)
@@ -39,17 +47,20 @@ window.MonsterListController = class extends BaseController
 
     new VisualTimer(["#monster_#{fight.monster.id} .fight_time .value"]).start(fight.time_remaining) for fight in @active
 
+
   onFinishedFightsClick: (e)=>
     $.get("/monsters/finished", (response)=>
-      result = @.renderTemplate("monsters/finished", finished: response.finished)
-    
-      $('#finished_fights').html(result)
+      @finished_fights_el.html(
+        @.renderTemplate("monsters/finished", finished: response.finished)
+      )
     )
+
 
   onEngageClick: (e)=>
     id = $(e.currentTarget).data("id")
 
     MonsterController.show(id)
+
 
   onAttackClick: (e)=>
     id = $(e.currentTarget).data("id")
