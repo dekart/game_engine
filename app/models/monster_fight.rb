@@ -87,6 +87,8 @@ class MonsterFight < ActiveRecord::Base
         character.inventories.take!(@boost.item) if @boost
         character.save!
 
+        monster.add_fighter(character, @monster_damage)
+
         if monster.won?
           monster.killer = character
           monster.save!

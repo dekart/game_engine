@@ -34,8 +34,8 @@ class MonstersController < ApplicationController
     render :json => {
       :monster  => @monster.as_json,
       :fight    => @fight.as_json,
-      :fighters => @monster.damage.fighters(current_character).as_json,
-      :leaders  => @monster.damage.fighters.as_json
+      :fighters => @monster.fighters(current_character).as_json,
+      :leaders  => @monster.damage.leaders_as_json
     }
   end
 
@@ -55,8 +55,8 @@ class MonstersController < ApplicationController
       render :json => {
         :monster  => @monster.as_json,
         :fight    => @fight.as_json,
-        :fighters => @monster.damage.fighters(current_character).as_json,
-        :leaders  => @monster.damage.fighters.as_json
+        :fighters => @monster.fighters(current_character).as_json,
+        :leaders  => @monster.damage.leaders_as_json
       }
     end
   end
@@ -112,7 +112,7 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
 
     render :json => {
-      :fighters => @monster.damage.fighters(current_character).as_json
+      :fighters => @monster.fighters(current_character).as_json
     }
   end
 
@@ -120,7 +120,7 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
 
     render :json => {
-      :leaders => @monster.damage.fighters.as_json
+      :leaders => @monster.damage.leaders_as_json
     }
   end
 end

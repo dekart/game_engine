@@ -13,13 +13,6 @@ class Monster
       unless @leaders
         ids_with_values = $redis.zrevrange(storage_key, 0, -1, :with_scores => true).in_groups_of(2)
 
-        #ids = [[1137007784, 0], [719669761, 10], [100003483432689, 20]] 
-        ids = [[69429, 0], [69431, 10], [69430, 20]] 
-        number = rand(3) + 1
-        number.times do |n|
-          ids_with_values += [ids[n]]
-        end
-
         characters = Character.includes(:user).find_all_by_id(
           ids_with_values.map{|i| i[0] }
         )
@@ -32,7 +25,7 @@ class Monster
       @leaders
     end
 
-    def fighters(exclude_character = nil)
+    def leaders_as_json
       list = [].tap do |r|
         leaders.to_a.map do |c, value|
           r << {
@@ -43,8 +36,6 @@ class Monster
           }
         end
       end
-
-      list.reject!{ |f| f[:facebook_id] == exclude_character.facebook_id } if exclude_character
 
       list.sort_by!{|f| -f[:damage]}
 

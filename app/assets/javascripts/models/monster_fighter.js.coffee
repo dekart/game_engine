@@ -15,8 +15,8 @@ window.MonsterFighter = class extends Spine.Model
         old_fighter.updateAttributes(damage: fighter[1])
       else
         @create(
-          facebook_id: fighter.facebook_id,
-          damage: fighter.damage
+          facebook_id: fighter[0],
+          damage: fighter[1]
         )
 
     for fighter in old_fighters
@@ -33,8 +33,8 @@ window.MonsterFighter = class extends Spine.Model
 
     for fighter in fighters
       @create(
-        facebook_id: fighter.facebook_id,
-        damage: fighter.damage
+        facebook_id: fighter[0],
+        damage: fighter[1]
       )
 
     @all()
