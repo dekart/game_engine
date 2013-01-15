@@ -110,7 +110,7 @@ window.MonsterController = class extends BaseController
 
   renderMonsterHealthUpdate: ()=>
     @fight_el.find('.monster .damage_bar .text').html(
-      "#{Math.max(Math.floor(@monster.hp / @monster.health * 100), 1)}%"
+      "#{@monster.hp} / #{@monster.health}"
     )
 
     @fight_el.find('.monster .damage_bar .percentage').animate(
