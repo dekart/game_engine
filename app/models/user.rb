@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
     return false unless access_token_valid?
 
     me, friends = facebook_client.batch do |api|
-      api.get_object('me', :fields => [:first_name, :last_name, :timezone, :locale, :gender, :third_party_id, :email].join(','))
+      api.get_object('me', :fields => [:first_name, :last_name, :timezone, :locale, :gender, :third_party_id, :email, :verified].join(','))
       api.get_connections('me', 'friends', :fields => 'id')
     end
 
