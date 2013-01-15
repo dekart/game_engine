@@ -49,19 +49,9 @@ window.MonsterListController = class extends BaseController
   onEngageClick: (e)=>
     id = $(e.currentTarget).data("id")
 
-    $.get("/monsters/#{id}", (response)=>
-      @html(
-        @.renderTemplate("monster/monster", @)
-      )
-      new MonsterController(response.monster, response.fight, response.fighters, response.leaders)
-    )
+    MonsterController.show(id)
 
   onAttackClick: (e)=>
     id = $(e.currentTarget).data("id")
 
-    $.get("/monsters/new?monster_type_id=#{id}", (response)=>
-      @html(
-        @.renderTemplate("monster/monster", @)
-      )
-      new MonsterController(response.monster, response.fight, response.fighters, response.leaders)
-    )
+    MonsterController.create(id)

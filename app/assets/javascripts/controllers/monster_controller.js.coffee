@@ -7,6 +7,20 @@ window.MonsterController = class extends BaseController
     '.fight'    : 'fight_el'
     '.leaders'  : 'leaders_el'
 
+  @show: (id)->
+    $.get("/monsters/#{id}", (response)=>
+      $("#content_wrapper").html(JST["views/monster/monster"])
+
+      @controller = new @(response.monster, response.fight, response.fighters, response.leaders)
+    )
+
+  @create: (id)->
+    $.get("/monsters/new?monster_type_id=#{id}", (response)=>
+      $("#content_wrapper").html(JST["views/monster/monster"])
+
+      @controller = new @(response.monster, response.fight, response.fighters, response.leaders)
+    )
+
   constructor: (monster_data, fight_data, fighters_data, leaders_data)->
     super
 
