@@ -56,7 +56,7 @@ class PersonalDiscount < ActiveRecord::Base
   end
   
   def charge_money
-    character.charge!(item.basic_price, price, :personal_discount)
+    character.charge!(item.basic_price, price, [:personal_discount, item.id])
   end
   
   def give_item

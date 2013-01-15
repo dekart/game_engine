@@ -44,6 +44,10 @@ class VipMoneyOperation < ActiveRecord::Base
 
     klass.find_by_id(reference_id)
   rescue NameError
-    reference_type
+    if reference_type == "personal_discount"
+      Item.find_by_id(reference_id)
+    else
+      reference_type
+    end
   end
 end
