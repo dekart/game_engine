@@ -3,20 +3,26 @@ class AppRequestsController < ApplicationController
   skip_before_filter :tracking_requests, :only => :create
 
   def index
-    @app_requests_types = current_character.app_requests.visible.types
+    # @app_requests_types = current_character.app_requests.all.types
 
-    @current_type = AppRequest::Base.find_by_facebook_id(params[:app_request_id]).try(:type_name) if params[:app_request_id]
-    @current_type ||= params[:type]
-    @current_type ||= @app_requests_types.first[:name] if @app_requests_types.present?
+    # @current_type = AppRequest::Base.find_by_facebook_id(params[:app_request_id]).try(:type_name) if params[:app_request_id]
+    # @current_type ||= params[:type]
+    # @current_type ||= @app_requests_types.first[:name] if @app_requests_types.present?
 
-    @app_requests = @current_type ? current_character.app_requests.visible.by_type(@current_type) : []
+    # @app_requests = @current_type ? current_character.app_requests.all.by_type(@current_type) : []
 
-    if request.xhr?
-      render(
-        :partial => "list",
-        :locals => {:app_requests => @app_requests},
-        :layout => false
-      )
+    # if request.xhr?
+    #   render(
+    #     :partial => "list",
+    #     :locals => {:app_requests => @app_requests},
+    #     :layout => false
+    #   )
+    # end
+
+    respond_to do |format|
+      format.json do
+        render :json => current_character.app_requests.as_json
+      end
     end
   end
 
@@ -37,14 +43,20 @@ class AppRequestsController < ApplicationController
   end
 
   def update
-    @app_request = current_character.app_requests.find(params[:id])
+    @app_requests = current_character.app_requests.all.find(params[:id].split(','))
 
-    @app_request.accept
-
-    @next_page = page_for_redirect
+    AppRequest::Base.transaction do
+      @app_requests.each do |r|
+        r.accept
+      end
+    end
 
     respond_to do |format|
-      format.js
+      format.json do
+        render :json => {
+          :next_page => page_for_redirect(@app_requests.first)
+        }
+      end
     end
   end
 
@@ -80,14 +92,14 @@ class AppRequestsController < ApplicationController
 
   protected
 
-  def page_for_redirect
-    case @app_request
+  def page_for_redirect(app_request)
+    case app_request
     when AppRequest::MonsterInvite
-      monster_path(@app_request.monster,
-        :key => encryptor.encrypt(@app_request.monster.id)
+      monster_path(app_request.monster,
+        :key => encryptor.encrypt(app_request.monster.id)
       )
     when AppRequest::ClanInvite
-      clan_path(@app_request.sender.clan)
+      clan_path(app_request.sender.clan)
     else
       false
     end

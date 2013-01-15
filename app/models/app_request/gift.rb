@@ -8,6 +8,10 @@ class AppRequest::Gift < AppRequest::Base
   attr_accessor :item
 
   class << self
+    def stackable?
+      true
+    end
+
     def ids_to_exclude_for(character)
       Rails.cache.fetch(exclude_ids_cache_key(character), :expires_in => 15.minutes) do
         from_character(character).sent_after(repeat_accept_timeframe).receiver_ids
@@ -68,6 +72,10 @@ class AppRequest::Gift < AppRequest::Base
 
   def can_send_back?
     !AppRequest::Gift.ids_to_exclude_for(receiver).include?(sender.facebook_id) && item.visible?
+  end
+
+  def stack_key
+    target.id
   end
 
   protected

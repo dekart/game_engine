@@ -1,0 +1,11 @@
+<div class="invitation request">
+  <%= @fbProfilePic(@request.facebook_id, 'square') %>
+
+  <button data-request-id="<%= @request.request_id %>">
+    <%= I18n.t('app_requests.details.invitation.button') %>
+  </button>
+
+  <div class="text">
+    <%= I18n.t('app_requests.details.invitation.text', user: @request.nickname) %>
+  </div>
+</div>

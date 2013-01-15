@@ -26,31 +26,28 @@ en:
       empty_set: "Your friends haven't sent you any requests yet."
       tabs:
         clan_invite: "Clan Invite (%{count})"
-        gift: "Gift (%{count})"  
+        gift: "Gift (%{count})"
         invitation: "Invitation (%{count})"
         monster_invite: "Monster Invite (%{count})"
         property_worker: "Property Worker (%{count})"
     details:
       gift:
-        text: "%{user} sends you %{item}"
-        buttons:
-          accept: 'Accept'
+        text:
+          one: "You received %{item} from %{count} friend"
+          other: "You received %{item} from %{count} friends"
+        button: 'Accept'
       monster_invite:
         text: "%{user} invites you to join fight against %{monster}"
-        buttons:
-          view: 'View'
+        button: 'View'
       invitation:
         text: "%{user} invites you to join their Alliance"
-        buttons:
-          accept: 'Accept'
+        button: 'Accept'
       clan_invite:
-        text: "%{user} invites you to join their Clan %{clan}"   
-        buttons:
-          view: 'View'
+        text: "%{user} invites you to join their Clan %{clan}"
+        button: 'View'
       property_worker:
         text: "%{user} asks you to help them finish the %{property}"
-        buttons:
-          accept: 'Accept'
+        button: 'Accept'
     update:
       gift:
         accepted: 'Gift accepted!'
@@ -68,4 +65,3 @@ en:
           alliance: 'View Alliance'
       property_worker:
         accepted: 'Thank you for your help!'
-    

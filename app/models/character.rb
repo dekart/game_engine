@@ -260,6 +260,14 @@ class Character < ActiveRecord::Base
     end.as_json
   end
 
+  def as_json_for_app_requests
+    {
+      :facebook_id => facebook_id,
+      :key => key,
+      :nickname => nickname(true)
+    }
+  end
+
   def show_promo_block?
     level >= Setting.i(:promo_block_minimum_level)
   end

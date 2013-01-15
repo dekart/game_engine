@@ -13,3 +13,5 @@ translations:
       - "*.fights.opt_out"
       - "*.premia.refill"
       - "*.premia.buy_vip"
+      - "*.app_requests.index"
+      - "*.app_requests.details"

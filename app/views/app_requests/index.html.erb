@@ -2,21 +2,9 @@
 
 <%= render("relations/buttons", :current => :accept_requests) %>
 
-<% tabs :id => :app_request_tabs do |b| %>
-  <% @app_requests_types.each do |type| %>
-    <% if type[:name] == @current_type %>
-      <% b.tab(type[:name], t(".tabs.#{type[:name]}", :count => type[:count])) do %>
-        <%= render("list", :app_requests => @app_requests ) %>
-      <% end %>
-
-    <% else %>
-      <% b.tab(type[:name], t(".tabs.#{type[:name]}", :count => type[:count]), app_requests_path(:type => type[:name])) do %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>
-
+<div id="app_requests"></div>
 
 <% dom_ready do %>
-  AppRequests.setup();
+  AppRequestController.show(<%= current_character.app_requests.to_json.html_safe %>);
 <% end %>
+
