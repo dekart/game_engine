@@ -1,4 +1,4 @@
-<div id="monster">
+<div id="monster" class="clearfix">
   <div class='fight'></div>
   <div class='leaders'></div>
 </div>

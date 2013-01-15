@@ -1,27 +1,25 @@
-<div class='leader_group clearfix'>
-  <h2><%= I18n.t("monsters.fight.leader_group.0") %></h2>
+<h2><%= I18n.t("monsters.fight.leaders") %></h2>
 
-  <div class='leaders'>
-    <% for character in @leaders: %>
-      <div class='leader clearfix <%= if character.facebook_id == @character.facebook_id then "current" %>'>
-        <div class='position'><%= character.position %></div>
+<div class='leader_list'>
+  <% for character in @leaders: %>
+    <div class='leader clearfix <%= if character.facebook_id == @character.facebook_id then "current" %>'>
+      <div class='position'><%= character.position %></div>
 
-        <img
-          src='https://graph.facebook.com/<%= character.facebook_id %>/picture?type=square&return_ssl_resources=1'
-          width='30' height='30' alt='<%= character.name %>'
-        />
+      <img
+        src='https://graph.facebook.com/<%= character.facebook_id %>/picture?type=square&return_ssl_resources=1'
+        width='30' height='30' alt='<%= character.name %>'
+      />
 
-        <div class='name'><%= character.name %></div>
-        <div class='damage'><%= character.damage %></div>
-      </div>
-    <% end %>
-  </div>
+      <div class='name'><%= character.name %></div>
+      <div class='damage'><%= character.damage %></div>
+    </div>
+  <% end %>
+</div>
 
-  <div class='rewards payouts'>
-    <h3><%= I18n.t('monsters.fight.rewards') %></h3>
+<div class='rewards payouts'>
+  <h3><%= I18n.t('monsters.fight.rewards') %></h3>
 
-    <%= @.rewards @reward_data, (content)=> %>
-      <%= content %>
-    <% end %>
-  </div>
+  <%= @.rewards @reward_data, (content)=> %>
+    <%= content %>
+  <% end %>
 </div>

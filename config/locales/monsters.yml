@@ -95,10 +95,6 @@ en:
       damage: "%{min}-%{max}%{boost} damage"
       you_received: "You received:"
       leaders: "Battle Heroes"
-      leader_group:
-        0: "Heroes"
-        1: "Leaders"
-        2: "Generals"
       rewards: "Rewards:"
       buttons:
         publish: "Brag About it!"
