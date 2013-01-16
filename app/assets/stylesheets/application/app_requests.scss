@@ -1,0 +1,97 @@
+#app_requests_counter {
+  float: right;
+  display: block;
+  font-weight: bold;
+  padding-left: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 12px;
+  background: {
+    image: $asset_icons_app_requests;
+    repeat: no-repeat;
+    position: left;
+  }
+}
+
+.dialog.app_requests .content {
+  @include tabs;
+
+  .request {
+    @include clearfix;
+
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: $splitter_border;
+
+    &>img {
+      float: left;
+    }
+
+    .text {
+      margin-left: 60px;
+      margin-right: 120px;
+    }
+
+    .controls {
+      float: right;
+
+      a.ignore {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+
+        &:hover {
+          background-color: $current_item_bg_color;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .senders {
+      @include clearfix;
+
+      margin: 5px 120px 0 60px;
+
+      a {
+        display: block;
+        float: left;
+        width: 40px;
+        height: 40px;
+        margin: 0 1px 1px 0;
+
+        img {
+          @include scale(0.8, 0.8);
+        }
+      }
+    }
+  }
+}
+/*
+.app_request_list
+  td
+    padding-right: 20px
+    vertical-align: middle
+    border-bottom: $thin_border
+
+  .controls
+    .accept
+      +button($app_requests_accept_icon)
+
+    .send
+      +button($app_requests_send_icon)
+
+    .alliance
+      +button($app_requests_alliance_icon)
+
+    .fight
+      +button($app_requests_fight_icon)
+
+    .use
+      +button($app_requests_use_icon)
+
+    .sending
+      font-style: italic
+
+    .sent
+      color: $label_color
+*/

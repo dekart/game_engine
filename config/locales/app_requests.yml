@@ -35,13 +35,14 @@ en:
         text:
           one: "You received %{item} from %{count} friend"
           other: "You received %{item} from %{count} friends"
-        button: 'Accept'
+        accept: 'Accept'
       monster_invite:
         text: "%{user} invites you to join fight against %{monster}"
         button: 'View'
       invitation:
         text: "%{user} invites you to join their Alliance"
-        button: 'Accept'
+        accept: 'Accept'
+        ignore: 'Ignore'
       clan_invite:
         text: "%{user} invites you to join their Clan %{clan}"
         button: 'View'

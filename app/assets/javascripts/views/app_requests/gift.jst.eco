@@ -1,9 +1,11 @@
 <div class="gift request">
   <img src="<%= @request.target.pictures.icon %>" />
 
-  <button data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>">
-    <%= I18n.t('app_requests.details.invitation.button') %>
-  </button>
+  <div class="controls">
+    <button data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>">
+      <%= I18n.t('app_requests.details.gift.accept') %>
+    </button>
+  </div>
 
   <div class="text">
     <%= I18n.t('app_requests.details.gift.text', item: @request.target.name, count: @request.senders.length) %>

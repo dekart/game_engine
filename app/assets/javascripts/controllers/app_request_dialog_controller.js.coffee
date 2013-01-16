@@ -17,8 +17,10 @@ window.AppRequestDialogController = class extends DialogController
   setupEventListeners: ->
     super
 
-    @el.on('click', '.invitation button', @.onInvitationButtonClick)
-    @el.on('click', '.gift button', @.onInvitationButtonClick)
+    @el.on('click', '.invitation button', @.onAcceptClick)
+    @el.on('click', '.gift button', @.onAcceptClick)
+
+    @el.on('click', '.ignore', @.onIgnoreClick)
 
   unbindEventListeners: ->
     super
@@ -42,31 +44,33 @@ window.AppRequestDialogController = class extends DialogController
 
     @.render()
 
-  onInvitationButtonClick: (e)=>
+  onAcceptClick: (e)=>
+    e.preventDefault()
+
     button = $(e.currentTarget)
 
     button.addClass('disabled')
 
     $.ajax(
-      url: "/app_requests/#{ button.data('request-id') }"
+      url: "/app_requests/#{ button.data('request-id') }.json"
       type: 'PUT'
       success: (r)=>
-        console.log(r)
-        @.hideRequestByButton(button)
+        @.hideRequestByControl(button)
     )
 
-  onGiftButtonClick: (e)=>
-    button = $(e.currentTarget)
+  onIgnoreClick: (e)=>
+    e.preventDefault()
 
-    button.addClass('disabled')
+    link = $(e.currentTarget)
+
+    link.addClass('disabled')
 
     $.ajax(
-      url: "/app_requests/#{ button.data('request-id') }"
+      url: "/app_requests/#{ link.data('request-id') }/ignore.json"
       type: 'PUT'
       success: (r)=>
-        console.log(r)
-        @.hideRequestByButton(button)
+        @.hideRequestByControl(link)
     )
 
-  hideRequestByButton: (b)->
+  hideRequestByControl: (b)->
     b.parents('.request').fadeOut()

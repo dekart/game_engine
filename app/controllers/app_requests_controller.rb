@@ -61,12 +61,16 @@ class AppRequestsController < ApplicationController
   end
 
   def ignore
-    @app_request = current_character.app_requests.find(params[:id])
+    @app_request = current_character.app_requests.all.find(params[:id])
 
     @app_request.ignore
 
     respond_to do |format|
-      format.js
+      format.json do
+        render :json => {
+          :success => true
+        }
+      end
     end
   end
 
