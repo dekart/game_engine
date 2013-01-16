@@ -83,6 +83,8 @@ class MarketItem < ActiveRecord::Base
           :basic_money  => basic_money,
           :vip_money    => vip_money
         )
+
+        $redis.zadd("market_transactions", Time.now.to_i, Marshal.dump([item_id, character.id, target_character.id]))
       end
     end
   end
