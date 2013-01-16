@@ -50,8 +50,10 @@ window.AppRequestDialogController = class extends DialogController
     button.addClass('disabled')
 
     $.ajax(
-      url: "/app_requests/#{ button.data('request-id') }.json"
+      url: "/app_requests/accept.json"
       type: 'PUT'
+      data:
+        ids: button.data('request-id')
       success: (r)=>
         @.processAcceptResponse(r)
         @.hideRequestByControl(button)
@@ -65,8 +67,10 @@ window.AppRequestDialogController = class extends DialogController
     link.addClass('disabled')
 
     $.ajax(
-      url: "/app_requests/#{ link.data('request-id') }/ignore.json"
+      url: "/app_requests/ignore.json"
       type: 'PUT'
+      data:
+        ids: link.data('request-id')
       success: (r)=>
         @.hideRequestByControl(link)
     )

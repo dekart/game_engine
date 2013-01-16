@@ -32,8 +32,8 @@ class AppRequestsController < ApplicationController
     end
   end
 
-  def update
-    @app_requests = current_character.app_requests.all.find(params[:id].split(','))
+  def accept
+    @app_requests = current_character.app_requests.all.find(params[:ids].split(','))
 
     AppRequest::Base.transaction do
       @app_requests.each do |r|
@@ -54,7 +54,7 @@ class AppRequestsController < ApplicationController
   end
 
   def ignore
-    @app_requests = current_character.app_requests.all.find(params[:id].split(','))
+    @app_requests = current_character.app_requests.all.find(params[:ids].split(','))
 
     AppRequest::Base.transaction do
       @app_requests.each do |r|
