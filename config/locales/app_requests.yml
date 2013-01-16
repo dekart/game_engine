@@ -47,8 +47,9 @@ en:
         accept: 'Accept'
         ignore: 'Ignore'
       clan_invite:
-        text: "%{user} invites you to join their Clan %{clan}"
-        button: 'View'
+        text: "%{nickname} invites you to join their clan %{clan}"
+        view: 'View'
+        ignore: 'Ignore'
       property_worker:
         text: "%{user} asks you to help them finish the %{property}"
         button: 'Accept'

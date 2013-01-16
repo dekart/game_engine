@@ -20,6 +20,7 @@ window.AppRequestDialogController = class extends DialogController
     @el.on('click', '.invitation button', @.onAcceptClick)
     @el.on('click', '.gift button', @.onAcceptClick)
     @el.on('click', '.monster_invite button', @.onAcceptClick)
+    @el.on('click', '.clan_invite button', @.onAcceptClick)
 
     @el.on('click', '.ignore', @.onIgnoreClick)
 

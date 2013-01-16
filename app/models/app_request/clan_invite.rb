@@ -24,18 +24,4 @@ class AppRequest::ClanInvite < AppRequest::Base
       sender.clan.clan_membership_invitations.create(:character => receiver)
     end
   end
-
-  def after_accept
-    super
-
-    if receiver.clan_membership_applications.asked_to_join?(clan)
-      receiver.clan_membership_invitations.invitation_to_join(clan).try(:accept!)
-    end
-  end
-
-  def after_ignore
-    super
-
-    receiver.clan_membership_invitations.invitation_to_join(clan).try(:destroy) if receiver && clan
-  end
 end
