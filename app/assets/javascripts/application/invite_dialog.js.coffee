@@ -40,8 +40,12 @@ this.InviteDialog = class
     FB.ui(dialog_options, (response)=>
       if response
         $.post(
-          '/app_requests', $.extend({request_id: response.request, to: response.to}, @options.request)
-        ).success(@callback)
+          '/app_requests.json', $.extend({request_id: response.request, to: response.to}, @options.request)
+        ).success((response)=>
+          GA.appRequestSent(response.type, response.target, response.count)
+
+          @callback?()
+        )
     )
 
   selectRecipientsAndSendRequest: ()->

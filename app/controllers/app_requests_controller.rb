@@ -22,7 +22,13 @@ class AppRequestsController < ApplicationController
     Delayed::Job.enqueue Jobs::RequestDataUpdate.new(params[:request_id], @recipients)
 
     respond_to do |format|
-      format.js
+      format.json do
+        render :json => {
+          :type   => @request_type.titleize,
+          :target => @target.try(:name),
+          :count  => @recipients.size
+        }
+      end
     end
   end
 
@@ -39,8 +45,8 @@ class AppRequestsController < ApplicationController
       format.json do
         render :json => {
           :type => @app_requests.first.type_name.titleize,
-          :count => @app_requests.size,
           :target => @app_requests.first.target.try(:name),
+          :count => @app_requests.size,
           :next_page => page_for_redirect(@app_requests.first)
         }
       end
