@@ -5,7 +5,7 @@ module GiftsHelper
     options = options.deep_merge(
       :dialog => {
         :title    => t("app_requests.invites.gift.title", :item => item.name),
-        :message  => t("app_requests.invites.gift.text", :item => item.name, :app => t('app_name')),
+        :message  => t("app_requests.invites.gift.message", :item => item.name, :app => t('app_name')),
         :data     => {
           :target_id => item.id,
           :target_type => Item.name

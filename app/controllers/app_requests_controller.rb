@@ -25,7 +25,7 @@ class AppRequestsController < ApplicationController
       format.json do
         render :json => {
           :type   => @request_type.titleize,
-          :target => @target.try(:name),
+          :target => @target,
           :count  => @recipients.size
         }
       end
@@ -45,7 +45,7 @@ class AppRequestsController < ApplicationController
       format.json do
         render :json => {
           :type => @app_requests.first.type_name.titleize,
-          :target => @app_requests.first.target.try(:name),
+          :target => @app_requests.first.target,
           :count => @app_requests.size,
           :next_page => page_for_redirect(@app_requests.first)
         }

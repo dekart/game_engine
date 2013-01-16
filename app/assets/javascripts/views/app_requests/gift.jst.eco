@@ -1,4 +1,4 @@
-<div class="gift request">
+<div class="gift request" data-sender-id="<%= _.map(@request.senders, (s)-> s.facebook_id ).join(',') %>">
   <img src="<%= @request.target.pictures.icon %>" />
 
   <div class="controls">

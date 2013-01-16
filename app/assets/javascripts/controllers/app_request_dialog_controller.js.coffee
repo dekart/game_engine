@@ -17,7 +17,8 @@ window.AppRequestDialogController = class extends DialogController
   setupEventListeners: ->
     super
 
-    @el.on('click', '.request button', @.onAcceptClick)
+    @el.on('click', '.request:not(.gift) button', @.onAcceptClick)
+    @el.on('click', '.request.gift button', @.onGiftAcceptClick)
     @el.on('click', '.request .ignore', @.onIgnoreClick)
 
   unbindEventListeners: ->
@@ -47,7 +48,6 @@ window.AppRequestDialogController = class extends DialogController
     e.preventDefault()
 
     button = $(e.currentTarget)
-
     button.addClass('disabled')
 
     $.ajax(
@@ -56,6 +56,26 @@ window.AppRequestDialogController = class extends DialogController
       data:
         ids: button.data('request-id')
       success: (r)=>
+        @.processAcceptResponse(r)
+        @.hideRequestByControl(button)
+    )
+
+  onGiftAcceptClick: (e)=>
+    e.preventDefault()
+
+    button = $(e.currentTarget)
+    button.addClass('disabled')
+
+    $.ajax(
+      url: "/app_requests/accept.json"
+      type: 'PUT'
+      data:
+        ids: button.data('request-id')
+      success: (r)=>
+        @.sendGiftBack(
+          r.target
+          parseInt(i) for i in button.parents('.request').data('sender-id').split(',')
+        )
         @.processAcceptResponse(r)
         @.hideRequestByControl(button)
     )
@@ -80,7 +100,7 @@ window.AppRequestDialogController = class extends DialogController
     if response.next_page
       redirectTo(response.next_page)
 
-    GA.appRequestAccepted(response.type, response.target, response.count)
+    GA.appRequestAccepted(response.type, response.target?.name, response.count)
 
   hideRequestByControl: (b)->
     text = b.data('accepted')
@@ -88,3 +108,17 @@ window.AppRequestDialogController = class extends DialogController
 
     request.find('.controls').html(text) if text
     request.fadeOut('slow')
+
+  sendGiftBack: (target, ids)->
+    new InviteDialog('gift',
+      dialog:
+        to: ids
+        title: I18n.t('app_requests.invites.gift.title', item: target.name)
+        message: I18n.t('app_requests.invites.gift.message', item: target.name, app: I18n.t('app_name'))
+        data:
+          target_id: target.id
+          target_type: 'Item'
+      request:
+        target_id: target.id
+        target_type: 'Item'
+    )

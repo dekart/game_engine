@@ -30,7 +30,7 @@ en:
         text:
           one: "%{nickname} sends you %{item}"
           other: "%{count} friends send you %{item}"
-        accept: 'Accept'
+        accept: 'Accept & Send'
         accepted: 'Accepted!'
       monster_invite:
         text:
@@ -57,4 +57,4 @@ en:
     invites:
       gift:
         title: "Send %{item} to Your Friends"
-        text: "Please accept this %{app} gift: %{item}!"
+        message: "Please accept this %{app} gift: %{item}! Could you please send one back?"
