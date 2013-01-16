@@ -76,13 +76,15 @@ class MarketItem < ActiveRecord::Base
         character.charge!(- basic_money, - vip_money, :market)
         character.inventories.take!(item, amount)
 
-        destroy unless character.market_items.find_by_item_id(item).destroyed?
+        destroy unless character.market_items.find_by_item_id(item).nil?
 
         character.notifications.schedule(:market_item_sold,
           :item_id      => item_id,
           :basic_money  => basic_money,
           :vip_money    => vip_money
         )
+
+        $redis.zincrby("market_transactions_#{target_character.id}", 1, character.id)
       end
     end
   end

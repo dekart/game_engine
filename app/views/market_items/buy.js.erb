@@ -1,7 +1,7 @@
 <%= render_to_result :market do |builder| %>
   <% if @market_item.errors.empty? %>
     <% builder.buttons do %>
-      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @market_item.inventory.item),
+      <%= link_to_function(button(:publish), stream_dialog(:item_purchased, @market_item.item),
             :class => "publish button"
           ) if Setting.b(:stream_dialog_enabled) %>
 
