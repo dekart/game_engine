@@ -51,8 +51,9 @@ en:
         view: 'View'
         ignore: 'Ignore'
       property_worker:
-        text: "%{user} asks you to help them finish the %{property}"
-        button: 'Accept'
+        text: "%{nickname} asks you to help them finish the %{property}"
+        accept: 'Accept'
+        ignore: 'Ignore'
     update:
       gift:
         accepted: 'Gift accepted!'

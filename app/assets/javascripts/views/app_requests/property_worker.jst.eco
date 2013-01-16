@@ -1,0 +1,17 @@
+<div class="property_worker request">
+  <%= @fbProfilePic(@request.facebook_id, 'square') %>
+
+  <div class="controls">
+    <button data-request-id="<%= @request.request_id %>">
+      <%= I18n.t('app_requests.details.property_worker.accept') %>
+    </button>
+
+    <a class="ignore" data-request-id="<%= @request.request_id %>">
+      <%= I18n.t('app_requests.details.property_worker.ignore') %>
+    </a>
+  </div>
+
+  <div class="text">
+    <%= I18n.t('app_requests.details.property_worker.text', nickname: @request.nickname, property: @request.target.name) %>
+  </div>
+</div>
