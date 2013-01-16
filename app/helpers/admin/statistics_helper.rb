@@ -22,7 +22,7 @@ module Admin::StatisticsHelper
     if reference.is_a?(ActiveRecord::Base)
       result = "(%s) %s" % [
         reference.class.model_name.human,
-        link_to(reference.name, [:edit, :admin, reference])
+        reference.is_a?(PersonalDiscount) ? link_to(reference.item.name, [:edit, :admin, reference.item]) : link_to(reference.name, [:edit, :admin, reference])
       ]
     else
       result = reference.to_s.humanize
