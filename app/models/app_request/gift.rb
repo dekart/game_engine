@@ -74,10 +74,6 @@ class AppRequest::Gift < AppRequest::Base
     !AppRequest::Gift.ids_to_exclude_for(receiver).include?(sender.facebook_id) && item.visible?
   end
 
-  def stack_key
-    target.id
-  end
-
   protected
 
   def after_accept

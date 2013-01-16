@@ -1,14 +1,18 @@
-<div class="gift request">
+<div class="monster_invite request">
   <img src="<%= @request.target.pictures.icon %>" />
 
   <div class="controls">
     <button data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>">
-      <%= I18n.t('app_requests.details.gift.accept') %>
+      <%= I18n.t('app_requests.details.monster_invite.view') %>
     </button>
+
+    <a class="ignore" data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>">
+      <%= I18n.t('app_requests.details.monster_invite.ignore') %>
+    </a>
   </div>
 
   <div class="text">
-    <%= I18n.t('app_requests.details.gift.text', item: @request.target.name, count: @request.senders.length, nickname: @request.senders[0].nickname) %>
+    <%= I18n.t('app_requests.details.monster_invite.text', monster: @request.target.name, count: @request.senders.length, nickname: @request.senders[0].nickname) %>
   </div>
 
   <div class="senders">

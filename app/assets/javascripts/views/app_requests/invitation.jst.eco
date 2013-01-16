@@ -12,6 +12,6 @@
   </div>
 
   <div class="text">
-    <%= I18n.t('app_requests.details.invitation.text', user: @request.nickname) %>
+    <%= I18n.t('app_requests.details.invitation.text', nickname: @request.nickname) %>
   </div>
 </div>

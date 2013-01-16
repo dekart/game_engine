@@ -19,6 +19,7 @@ window.AppRequestDialogController = class extends DialogController
 
     @el.on('click', '.invitation button', @.onAcceptClick)
     @el.on('click', '.gift button', @.onAcceptClick)
+    @el.on('click', '.monster_invite button', @.onAcceptClick)
 
     @el.on('click', '.ignore', @.onIgnoreClick)
 
@@ -55,6 +56,7 @@ window.AppRequestDialogController = class extends DialogController
       url: "/app_requests/#{ button.data('request-id') }.json"
       type: 'PUT'
       success: (r)=>
+        @.processAcceptResponse(r)
         @.hideRequestByControl(button)
     )
 
@@ -71,6 +73,10 @@ window.AppRequestDialogController = class extends DialogController
       success: (r)=>
         @.hideRequestByControl(link)
     )
+
+  processAcceptResponse: (response)->
+    if response.next_page
+      redirectTo(response.next_page)
 
   hideRequestByControl: (b)->
     b.parents('.request').fadeOut()

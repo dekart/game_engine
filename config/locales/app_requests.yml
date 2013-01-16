@@ -33,14 +33,17 @@ en:
     details:
       gift:
         text:
-          one: "You received %{item} from %{count} friend"
-          other: "You received %{item} from %{count} friends"
+          one: "%{nickname} sends you %{item}"
+          other: "%{count} friends send you %{item}"
         accept: 'Accept'
       monster_invite:
-        text: "%{user} invites you to join fight against %{monster}"
-        button: 'View'
+        text:
+          one: "%{nickname} invites you to join the fight against %{monster}"
+          other: "%{count} friends invite you to join the fight against %{monster}"
+        view: 'View'
+        ignore: 'Ignore'
       invitation:
-        text: "%{user} invites you to join their Alliance"
+        text: "%{nickname} invites you to join their Alliance"
         accept: 'Accept'
         ignore: 'Ignore'
       clan_invite:

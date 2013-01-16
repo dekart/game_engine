@@ -47,7 +47,7 @@ class AppRequestsController < ApplicationController
 
     AppRequest::Base.transaction do
       @app_requests.each do |r|
-        r.accept
+        r.accept!
       end
     end
 
@@ -61,9 +61,13 @@ class AppRequestsController < ApplicationController
   end
 
   def ignore
-    @app_request = current_character.app_requests.all.find(params[:id])
+    @app_requests = current_character.app_requests.all.find(params[:id].split(','))
 
-    @app_request.ignore
+    AppRequest::Base.transaction do
+      @app_requests.each do |r|
+        r.ignore!
+      end
+    end
 
     respond_to do |format|
       format.json do
