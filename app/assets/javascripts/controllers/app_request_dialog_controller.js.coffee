@@ -23,7 +23,8 @@ window.AppRequestDialogController = class extends DialogController
   unbindEventListeners: ->
     super
 
-#    @el.off('click', '.relation', @.onRelationClick)
+    @el.off('click', '.request button', @.onAcceptClick)
+    @el.off('click', '.request .ignore', @.onIgnoreClick)
 
   render: ->
     @.updateContent(
