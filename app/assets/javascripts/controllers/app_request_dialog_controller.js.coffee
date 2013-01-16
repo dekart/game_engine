@@ -75,6 +75,8 @@ window.AppRequestDialogController = class extends DialogController
     if response.next_page
       redirectTo(response.next_page)
 
+    GA.appRequestAccepted(response.type, response.target, response.count)
+
   hideRequestByControl: (b)->
     text = b.data('accepted')
     request = b.parents('.request')

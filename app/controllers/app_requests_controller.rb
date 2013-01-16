@@ -31,13 +31,16 @@ class AppRequestsController < ApplicationController
 
     AppRequest::Base.transaction do
       @app_requests.each do |r|
-        r.accept!
+        r.accept
       end
     end
 
     respond_to do |format|
       format.json do
         render :json => {
+          :type => @app_requests.first.type_name.titleize,
+          :count => @app_requests.size,
+          :target => @app_requests.first.target.try(:name),
           :next_page => page_for_redirect(@app_requests.first)
         }
       end
@@ -49,7 +52,7 @@ class AppRequestsController < ApplicationController
 
     AppRequest::Base.transaction do
       @app_requests.each do |r|
-        r.ignore!
+        r.ignore
       end
     end
 

@@ -13,6 +13,7 @@
 //= require ./libs/list
 //= require ./libs/page_list
 //= require ./libs/mouse_tracker
+//= require ./libs/google_analytics
 //= require ./application/signed_request
 //= require ./application/link_lock
 //= require ./application/spinner
