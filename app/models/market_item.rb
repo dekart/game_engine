@@ -83,6 +83,8 @@ class MarketItem < ActiveRecord::Base
           :basic_money  => basic_money,
           :vip_money    => vip_money
         )
+
+        $redis.zincrby("market_transactions_#{target_character.id}", 1, character.id)
       end
     end
   end
