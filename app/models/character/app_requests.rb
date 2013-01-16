@@ -15,12 +15,12 @@ class Character
         all.each do |request|
           if request.class.stackable?
             result[request.class.type_name] ||= {}
-            result[request.class.type_name][request.target.id] ||= {
+            result[request.class.type_name][request.target] ||= {
               :target => request.target.as_json,
               :senders => []
             }
 
-            result[request.class.type_name][request.target.id][:senders] << request.sender.as_json_for_app_requests.merge(
+            result[request.class.type_name][request.target][:senders] << request.sender.as_json_for_app_requests.merge(
               :request_id => request.id
             )
           else
