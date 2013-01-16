@@ -3,22 +3,6 @@ class AppRequestsController < ApplicationController
   skip_before_filter :tracking_requests, :only => :create
 
   def index
-    # @app_requests_types = current_character.app_requests.all.types
-
-    # @current_type = AppRequest::Base.find_by_facebook_id(params[:app_request_id]).try(:type_name) if params[:app_request_id]
-    # @current_type ||= params[:type]
-    # @current_type ||= @app_requests_types.first[:name] if @app_requests_types.present?
-
-    # @app_requests = @current_type ? current_character.app_requests.all.by_type(@current_type) : []
-
-    # if request.xhr?
-    #   render(
-    #     :partial => "list",
-    #     :locals => {:app_requests => @app_requests},
-    #     :layout => false
-    #   )
-    # end
-
     respond_to do |format|
       format.json do
         render :json => current_character.app_requests.as_json
@@ -80,18 +64,19 @@ class AppRequestsController < ApplicationController
 
   def invite
     invite_type = params[:type]
-    ids = []
 
-    case invite_type
-    when "clan_invite"
-      ids = AppRequest::ClanInvite.ids_to_exclude_for(current_character)
-    when "invitation"
-      ids = AppRequest::Invitation.ids_to_exclude_for(current_character)
-    when "gift"
-      ids = AppRequest::Gift.ids_to_exclude_for(current_character)
-    when "property_worker"
-      ids = AppRequest::PropertyWorker.ids_to_exclude_for(current_character)
-    end
+    ids = case invite_type
+      when "clan_invite"
+        AppRequest::ClanInvite.ids_to_exclude_for(current_character)
+      when "invitation"
+        AppRequest::Invitation.ids_to_exclude_for(current_character)
+      when "gift"
+        AppRequest::Gift.ids_to_exclude_for(current_character)
+      when "property_worker"
+        AppRequest::PropertyWorker.ids_to_exclude_for(current_character)
+      else
+        []
+      end
 
     render :json => {
       :exclude_ids  => ids
