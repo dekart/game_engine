@@ -73,8 +73,19 @@ function show_result(){
 }
 
 function updateCanvasSize() {
+  var body_height = $('body').height();
+  var dialog = $('.dialog');
+
+  if(dialog.length > 0) {
+    var dialog_heigth = dialog.offset().top + dialog.outerHeight(true);
+
+    if(dialog_heigth > body_height){
+      body_height = dialog_heigth;
+    }
+  }
+
   FB.Canvas.setSize({
-    height: $('body').height() + 100 // Additional number compensates admin menu margin that is not included into the body height
+    height: body_height + 100 // Additional number compensates admin menu margin that is not included into the body height
   });
 }
 
