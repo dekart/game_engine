@@ -84,7 +84,7 @@ class MarketItem < ActiveRecord::Base
           :vip_money    => vip_money
         )
 
-        $redis.zadd("market_transactions", Time.now.to_i, Marshal.dump([item_id, character.id, target_character.id]))
+        $redis.zincrby("market_transactions_#{target_character.id}", 1, character.id)
       end
     end
   end
