@@ -54,3 +54,7 @@ en:
         accept: 'Accept'
         ignore: 'Ignore'
         accepted: 'Accepted!'
+    invites:
+      gift:
+        title: "Send %{item} to Your Friends"
+        text: "Please accept this %{app} gift: %{item}!"
