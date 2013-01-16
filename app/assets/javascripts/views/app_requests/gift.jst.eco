@@ -2,7 +2,10 @@
   <img src="<%= @request.target.pictures.icon %>" />
 
   <div class="controls">
-    <button data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>">
+    <button
+      data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>"
+      data-accepted="<%= I18n.t('app_requests.details.gift.accepted') %>"
+    >
       <%= I18n.t('app_requests.details.gift.accept') %>
     </button>
   </div>

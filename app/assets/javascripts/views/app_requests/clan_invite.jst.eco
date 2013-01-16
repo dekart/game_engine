@@ -2,7 +2,10 @@
   <%= @fbProfilePic(@request.facebook_id, 'square') %>
 
   <div class="controls">
-    <button data-request-id="<%= @request.request_id %>">
+    <button
+      data-request-id="<%= @request.request_id %>"
+      data-accepted="<%= I18n.t('app_requests.details.clan_invite.accepted') %>"
+    >
       <%= I18n.t('app_requests.details.clan_invite.view') %>
     </button>
 

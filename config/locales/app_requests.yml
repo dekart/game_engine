@@ -17,57 +17,40 @@ en:
       buttons:
         send: 'Send'
       sent: 'Sent:'
-    list:
-      buttons:
-        ignore: 'Ignore this request'
     index:
       title: 'Friend Requests'
-      note: "Here you can accept requests from your friends. You can only accept one gift per person every %{hours} hours."
-      empty_set: "Your friends haven't sent you any requests yet."
       tabs:
-        clan_invite: "Clan Invite (%{count})"
-        gift: "Gift (%{count})"
-        invitation: "Invitation (%{count})"
-        monster_invite: "Monster Invite (%{count})"
-        property_worker: "Property Worker (%{count})"
+        clan_invite: "Clan Invites (%{count})"
+        gift: "Gifts (%{count})"
+        invitation: "Invitations (%{count})"
+        monster_invite: "Monster Invites (%{count})"
+        property_worker: "Buildings (%{count})"
     details:
       gift:
         text:
           one: "%{nickname} sends you %{item}"
           other: "%{count} friends send you %{item}"
         accept: 'Accept'
+        accepted: 'Accepted!'
       monster_invite:
         text:
           one: "%{nickname} invites you to join the fight against %{monster}"
           other: "%{count} friends invite you to join the fight against %{monster}"
         view: 'View'
         ignore: 'Ignore'
+        accepted: 'Loading monster…'
       invitation:
         text: "%{nickname} invites you to join their Alliance"
         accept: 'Accept'
         ignore: 'Ignore'
+        accepted: 'Accepted!'
       clan_invite:
         text: "%{nickname} invites you to join their clan %{clan}"
         view: 'View'
         ignore: 'Ignore'
+        accepted: 'Loading clan…'
       property_worker:
         text: "%{nickname} asks you to help them finish the %{property}"
         accept: 'Accept'
         ignore: 'Ignore'
-    update:
-      gift:
-        accepted: 'Gift accepted!'
-        sending: 'Sending...'
-        sent: 'Sent!'
-        buttons:
-          send: "Send Back"
-      monster_invite:
-        accepted: 'Invitation accepted!'
-        buttons:
-          fight: "Fight Now"
-      invitation:
-        accepted: 'Invitation accepted!'
-        buttons:
-          alliance: 'View Alliance'
-      property_worker:
-        accepted: 'Thank you for your help!'
+        accepted: 'Accepted!'

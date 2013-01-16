@@ -17,13 +17,8 @@ window.AppRequestDialogController = class extends DialogController
   setupEventListeners: ->
     super
 
-    @el.on('click', '.invitation button', @.onAcceptClick)
-    @el.on('click', '.gift button', @.onAcceptClick)
-    @el.on('click', '.monster_invite button', @.onAcceptClick)
-    @el.on('click', '.clan_invite button', @.onAcceptClick)
-    @el.on('click', '.property_worker button', @.onAcceptClick)
-
-    @el.on('click', '.ignore', @.onIgnoreClick)
+    @el.on('click', '.request button', @.onAcceptClick)
+    @el.on('click', '.request .ignore', @.onIgnoreClick)
 
   unbindEventListeners: ->
     super
@@ -81,4 +76,8 @@ window.AppRequestDialogController = class extends DialogController
       redirectTo(response.next_page)
 
   hideRequestByControl: (b)->
-    b.parents('.request').fadeOut()
+    text = b.data('accepted')
+    request = b.parents('.request')
+
+    request.find('.controls').html(text) if text
+    request.fadeOut('slow')

@@ -34,11 +34,11 @@
 
     .controls {
       float: right;
+      text-align: center;
 
       a.ignore {
         display: block;
         margin-top: 10px;
-        text-align: center;
 
         &:hover {
           background-color: $current_item_bg_color;
