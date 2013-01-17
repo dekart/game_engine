@@ -8,6 +8,10 @@ class AppRequest::Gift < AppRequest::Base
   attr_accessor :item
 
   class << self
+    def stackable?
+      true
+    end
+
     def ids_to_exclude_for(character)
       Rails.cache.fetch(exclude_ids_cache_key(character), :expires_in => 15.minutes) do
         from_character(character).sent_after(repeat_accept_timeframe).receiver_ids
@@ -22,12 +26,12 @@ class AppRequest::Gift < AppRequest::Base
       Setting.i(:gifting_repeat_accept_delay).hours.ago
     end
 
+    def recent_accepts(receiver)
+      $redis.zrangebyscore(receiver_cache_key(receiver), repeat_accept_timeframe.to_i, "+inf").map{|i| i.to_i }
+    end
+
     def accepted_recently?(sender, receiver)
-      if time = $redis.zscore(receiver_cache_key(receiver), sender.id)
-        repeat_accept_timeframe.to_i < time.to_i
-      else
-        false
-      end
+      recent_accepts(receiver).include?(sender.id)
     end
 
     def store_accept_time(sender, receiver)
@@ -36,26 +40,6 @@ class AppRequest::Gift < AppRequest::Base
 
       $redis.zadd(receiver_cache_key(receiver), Time.now.to_i, sender.id)
     end
-  end
-
-  #FIXME Checking gift item hack should be done on processing rather than when checking acceptability
-  def acceptable?
-    !(accepted? || self.class.accepted_recently?(sender, receiver)) &&
-      item_gift? && !gift_for_yourself?
-  end
-
-  #prevent hacking
-  def item_gift?
-    item && item.availability == :gift
-  end
-
-  #prevent hacking
-  def gift_for_yourself?
-    sender == receiver
-  end
-
-  def correct?
-    item_gift? && !gift_for_yourself?
   end
 
   def acceptance_error
@@ -72,6 +56,12 @@ class AppRequest::Gift < AppRequest::Base
 
   protected
 
+  def after_process
+    super
+
+    mark_incorrect if !item_gift? or gift_for_yourself?
+  end
+
   def after_accept
     super
 
@@ -86,5 +76,15 @@ class AppRequest::Gift < AppRequest::Base
     if state_changed? and self.class.accepted_recently?(sender, receiver)
       errors.add(:base, :accepted_recently, :hours => Setting.i(:gifting_repeat_accept_delay))
     end
+  end
+
+  #prevent hacking
+  def item_gift?
+    item && item.availability == :gift
+  end
+
+  #prevent hacking
+  def gift_for_yourself?
+    sender == receiver
   end
 end

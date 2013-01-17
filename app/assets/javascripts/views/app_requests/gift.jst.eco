@@ -1,0 +1,24 @@
+<div class="gift request" data-sender-id="<%= @senderIds(@request) %>">
+  <img src="<%= @request.target.pictures.icon %>" />
+
+  <div class="controls">
+    <button
+      data-request-id="<%= @requestIds(@request) %>"
+      data-accepted="<%= I18n.t('app_requests.details.gift.accepted') %>"
+    >
+      <%= I18n.t('app_requests.details.gift.accept') %>
+    </button>
+  </div>
+
+  <div class="text">
+    <%= I18n.t('app_requests.details.gift.text', item: @request.target.name, count: @request.senders.length, nickname: @request.senders[0].nickname) %>
+  </div>
+
+  <div class="senders">
+    <% for sender in @request.senders: %>
+      <a href="/characters/<%= sender.key %>" data-tooltip-content="<%= sender.nickname %>">
+        <%= @fbProfilePic(sender.facebook_id, 'square') %>
+      </a>
+    <% end %>
+  </div>
+</div>

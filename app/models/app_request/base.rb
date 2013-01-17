@@ -139,6 +139,14 @@ class AppRequest::Base < ActiveRecord::Base
   after_save    :clear_exclude_ids_cache, :if => :sender
 
   class << self
+    def type_name
+      @type_name ||= name.split('::')[1].underscore
+    end
+
+    def stackable?
+      false
+    end
+
     def find_by_graph_id(id)
       facebook_id, receiver = id.split('_')
 
@@ -270,11 +278,7 @@ class AppRequest::Base < ActiveRecord::Base
   end
 
   def type_name
-    self.class.name.split('::')[1].underscore
-  end
-
-  def acceptable?
-    true
+    self.class.type_name
   end
 
   def correct?

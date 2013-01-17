@@ -1,0 +1,28 @@
+<div class="monster_invite request">
+  <img src="<%= @request.target.pictures.icon %>" />
+
+  <div class="controls">
+    <button
+      data-request-id="<%= @requestIds(@request) %>"
+      data-accepted="<%= I18n.t('app_requests.details.monster_invite.accepted') %>"
+    >
+      <%= I18n.t('app_requests.details.monster_invite.view') %>
+    </button>
+
+    <a class="ignore" data-request-id="<%= @requestIds(@request) %>">
+      <%= I18n.t('app_requests.details.monster_invite.ignore') %>
+    </a>
+  </div>
+
+  <div class="text">
+    <%= I18n.t('app_requests.details.monster_invite.text', monster: @request.target.name, count: @request.senders.length, nickname: @request.senders[0].nickname) %>
+  </div>
+
+  <div class="senders">
+    <% for sender in @request.senders: %>
+      <a href="/characters/<%= sender.key %>" data-tooltip-content="<%= sender.nickname %>">
+        <%= @fbProfilePic(sender.facebook_id, 'square') %>
+      </a>
+    <% end %>
+  </div>
+</div>

@@ -20,10 +20,8 @@
           :class => "send_gifts button"
         ) %>
   <% end %>
-  
-  <% unless current == :accept_requests %>
-    <%= link_to(button(:accept_requests), app_requests_path,
-          :class => "accept_requests button"
-        ) %>
-  <% end %>
+
+  <%= link_to_function(button(:accept_requests), "AppRequestDialogController.show()",
+        :class => "accept_requests button"
+      ) %>
 </div>

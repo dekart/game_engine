@@ -26,10 +26,7 @@ this.InviteDialog = class
     )
 
     if_fb_initialized ()=>
-      if options.dialog.to
-        @.sendRequest()
-      else
-        @.selectRecipientsAndSendRequest()
+      @.selectRecipientsAndSendRequest()
 
   sendRequest: (to)->
     dialog_options = @options.dialog
@@ -40,11 +37,15 @@ this.InviteDialog = class
     FB.ui(dialog_options, (response)=>
       if response
         $.post(
-          '/app_requests', $.extend({request_id: response.request, to: response.to}, @options.request)
-        ).success(@callback)
+          '/app_requests.json', $.extend({request_id: response.request, to: response.to}, @options.request)
+        ).success((response)=>
+          GA.appRequestSent(response.type, response.target?.name, response.count)
+
+          @callback?()
+        )
     )
 
-  selectRecipientsAndSendRequest: ()->
+  selectRecipientsAndSendRequest: (to)->
     unless @.launchWhenPopulated()
       Spinner.show(200, I18n.t('app_requests.invite_dialog.spinner_text'))
 
@@ -69,20 +70,22 @@ this.InviteDialog = class
     return false unless @.fb_friends and @.exclude_ids[@type]
 
     @users = $.map(@.fb_friends, (user)=>
-      if $.inArray(user.uid, @.exclude_ids[@type]) > -1 then null else user
+      if _.contains(@.exclude_ids[@type], user.uid) or @options.dialog.to? and not _.contains(@options.dialog.to, user.uid)
+        null
+      else
+        user
     )
 
-    @.renderDialog()
-    @.setupEventListeners()
+    Spinner.hide()
+
+    if @users.length > 0
+      @.renderDialog()
+      @.setupEventListeners()
 
     true # Should return true if all data was successfully populated and dialog rendered
 
   renderDialog: ()->
-    content = JST['views/invite_dialog'](@)
-
-    Spinner.hide()
-
-    DialogController.show(content)
+    DialogController.show(JST['views/invite_dialog'](@))
 
     @dialog_el = $('#invite_dialog')
 
@@ -98,7 +101,7 @@ this.InviteDialog = class
     @dialog_el.on('click', '.user:not(.sent)', @.onUserClick)
     @dialog_el.on('click', '.stats .select_all', @.onSelectAllClick)
     @dialog_el.on('click', '.stats .deselect_all', @.onDeselectAllClick)
-    @dialog_el.on('click', '.send .button:not(.disabled)', @.onSendButtonClick)
+    @dialog_el.on('click', '.send button:not(.disabled)', @.onSendButtonClick)
     @dialog_el.find('.users').on('scroll', @.onUserListScroll)
 
     Visibility.every(500, ()=>
@@ -212,7 +215,7 @@ this.InviteDialog = class
     selected_users  = all_users.filter('.selected')
     sent_users      = all_users.filter('.sent')
 
-    @dialog_el.find('.send .button')
+    @dialog_el.find('.send button')
       .toggleClass('disabled', selected_users.length == 0)
 
     @dialog_el.find('.progress_bar .percentage')
@@ -221,14 +224,6 @@ this.InviteDialog = class
         500
       )
 
-
   updateBars: ()->
     @.updateStatsBar()
     @.updateSendBar()
-###
-
-                .inviteDialog(users, data.templates.user, function(ids){
-                  callback(ids);
-                  invite_dialog.excludeIds(invite_type, ids);
-                });
-###

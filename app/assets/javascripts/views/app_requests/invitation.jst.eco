@@ -1,0 +1,20 @@
+<div class="invitation request">
+  <%= @fbProfilePic(@request.facebook_id, 'square') %>
+
+  <div class="controls">
+    <button
+      data-request-id="<%= @request.request_id %>"
+      data-accepted="<%= I18n.t('app_requests.details.invitation.accepted') %>"
+    >
+      <%= I18n.t('app_requests.details.invitation.accept') %>
+    </button>
+
+    <a class="ignore" data-request-id="<%= @request.request_id %>">
+      <%= I18n.t('app_requests.details.invitation.ignore') %>
+    </a>
+  </div>
+
+  <div class="text">
+    <%= I18n.t('app_requests.details.invitation.text', nickname: @request.nickname) %>
+  </div>
+</div>

@@ -1,1 +1,1 @@
-$redis = Redis.new(Rails::Config.redis)
+$redis = Redis.new(Rails::Config.redis.merge('logger' => Rails.logger))

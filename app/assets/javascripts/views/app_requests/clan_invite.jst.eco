@@ -1,0 +1,20 @@
+<div class="clan_invite request">
+  <%= @fbProfilePic(@request.facebook_id, 'square') %>
+
+  <div class="controls">
+    <button
+      data-request-id="<%= @request.request_id %>"
+      data-accepted="<%= I18n.t('app_requests.details.clan_invite.accepted') %>"
+    >
+      <%= I18n.t('app_requests.details.clan_invite.view') %>
+    </button>
+
+    <a class="ignore" data-request-id="<%= @request.request_id %>">
+      <%= I18n.t('app_requests.details.clan_invite.ignore') %>
+    </a>
+  </div>
+
+  <div class="text">
+    <%= I18n.t('app_requests.details.clan_invite.text', nickname: @request.nickname, clan: @request.target.name) %>
+  </div>
+</div>

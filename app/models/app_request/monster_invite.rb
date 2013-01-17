@@ -1,4 +1,10 @@
 class AppRequest::MonsterInvite < AppRequest::Base
+  class << self
+    def stackable?
+      true
+    end
+  end
+
   def monster
     target
   end
