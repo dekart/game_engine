@@ -114,6 +114,7 @@ class Monster < ActiveRecord::Base
       :health       => health,
       :state        => state,
       :reward       => monster_type.applicable_payouts.preview(triggers),
+      :requirements => requirements.as_json,
       :damage       => damage.leaders.as_json,
       :power_attack => monster_type.power_attack_enabled?,
       :friends_invite => monster_type.available_for_friends_invite

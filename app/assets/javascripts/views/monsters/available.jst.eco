@@ -26,7 +26,12 @@
     </div>
   <% end %>
 
-  # requirements will be here
+  <%= @requirements @type.requirements, (content)=> %>
+    <div class="requirements">
+      <h3><%= I18n.t('monsters.preview.requirements') %></h3>
+      <%= content %>
+    </div>
+  <% end %>
 
   <% if !@locked: %>
     <div class='controls'>

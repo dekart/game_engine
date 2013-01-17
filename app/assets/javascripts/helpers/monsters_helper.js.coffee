@@ -15,7 +15,7 @@ window.MonstersHelper =
     @safe result
 
   available: (type, locked)->
-    result = JST["views/monsters/available"](_.extend({type: type, locked: locked}, RewardHelper))
+    result = JST["views/monsters/available"](_.extend({type: type, locked: locked}, RewardHelper, RequirementHelper))
 
     @safe result
 

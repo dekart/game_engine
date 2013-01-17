@@ -192,10 +192,6 @@ class MonsterFight < ActiveRecord::Base
     }
   end
 
-  def basic_payouts
-    monster_type.applicable_payouts.preview(payout_triggers)
-  end
-
   def as_json
     {
       :fight_id => self.id,
@@ -204,7 +200,7 @@ class MonsterFight < ActiveRecord::Base
       :damage   => damage,
       :minimum_damage   => minimum_damage,
       :maximum_damage   => maximum_damage,
-      :reward           => basic_payouts.as_json,
+      :reward           => monster_type.applicable_payouts.preview(payout_triggers).as_json,
       :reward_collectable => reward_collectable?,
       :reward_collected => reward_collected?,
       :will_get_reward  => will_get_reward?,

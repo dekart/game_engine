@@ -76,7 +76,8 @@ class Requirement
       end
 
       @items.each do |key, amount|
-        result << [:item, GameData::Item[key], amount, @character.inventories.count(key) >= amount, @character.inventories.count(key)]
+        item = GameData::Item.collection[key]
+        result << [:item, item, amount, @character.inventories.count(item) >= amount, @character.inventories.count(item)]
       end
     end.as_json
   end
