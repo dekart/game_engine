@@ -25,6 +25,10 @@ en:
         invitation: "Invitations (%{count})"
         monster_invite: "Monster Invites (%{count})"
         property_worker: "Buildings (%{count})"
+      hidden_requests: |
+        Some of the requests are not displayed in the list because you already accepted same kind of
+        requests (for example, gifts) from the same players earlier. They'll appear in the list as soon as
+        you'll be able to accept them.
     details:
       gift:
         text:

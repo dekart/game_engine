@@ -40,7 +40,8 @@ window.AppRequestDialogController = class extends DialogController
   onDataLoad: (response)=>
     @loading = false
 
-    @requests = response
+    @count = response.count
+    @requests = response.requests
 
     @.render()
 
@@ -124,3 +125,20 @@ window.AppRequestDialogController = class extends DialogController
         target_id: target.id
         target_type: 'Item'
     )
+
+  countAll: ->
+    total = 0
+
+    for type, requests of @requests
+      total += _.reduce(requests, ((sum, r)-> sum + (r.senders?.length || 1)), 0)
+
+    total
+
+  countByType: (type)->
+    _.reduce(@requests[type], ((sum, r)-> sum + (r.senders?.length || 1)), 0)
+
+  senderIds: (request)->
+    _.map(request.senders, (s)-> s.facebook_id ).join(',')
+
+  requestIds: (request)->
+    _.map(request.senders, (s)-> s.request_id ).join(',')

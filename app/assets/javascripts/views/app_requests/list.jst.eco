@@ -3,7 +3,7 @@
 <ul>
   <% for type, requests of @requests: %>
     <li data-tab="<%= type %>">
-      <%= I18n.t("app_requests.index.tabs.#{type}", count: _.reduce(requests, ((sum, r)-> sum + (r.senders?.length || 1)), 0)) %>
+      <%= I18n.t("app_requests.index.tabs.#{type}", count: @countByType(type)) %>
     </li>
   <% end %>
 </ul>
@@ -13,5 +13,11 @@
     <% for request in requests: %>
       <%=@safe @renderTemplate("app_requests/#{ type }", _.extend({request: request}, @)) %>
     <% end %>
+  </div>
+<% end %>
+
+<% if @count != @countAll(): %>
+  <div class="note">
+    <%= I18n.t('app_requests.index.hidden_requests') %>
   </div>
 <% end %>

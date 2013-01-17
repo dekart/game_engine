@@ -1,9 +1,9 @@
-<div class="gift request" data-sender-id="<%= _.map(@request.senders, (s)-> s.facebook_id ).join(',') %>">
+<div class="gift request" data-sender-id="<%= @senderIds(@request) %>">
   <img src="<%= @request.target.pictures.icon %>" />
 
   <div class="controls">
     <button
-      data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>"
+      data-request-id="<%= @requestIds(@request) %>"
       data-accepted="<%= I18n.t('app_requests.details.gift.accepted') %>"
     >
       <%= I18n.t('app_requests.details.gift.accept') %>

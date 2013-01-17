@@ -3,13 +3,13 @@
 
   <div class="controls">
     <button
-      data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>"
+      data-request-id="<%= @requestIds(@request) %>"
       data-accepted="<%= I18n.t('app_requests.details.monster_invite.accepted') %>"
     >
       <%= I18n.t('app_requests.details.monster_invite.view') %>
     </button>
 
-    <a class="ignore" data-request-id="<%= _.map(@request.senders, (s)-> s.request_id ).join(',') %>">
+    <a class="ignore" data-request-id="<%= @requestIds(@request) %>">
       <%= I18n.t('app_requests.details.monster_invite.ignore') %>
     </a>
   </div>
