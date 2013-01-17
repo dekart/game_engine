@@ -27,7 +27,7 @@
   <% end %>
 
   <%= @requirements @type.requirements, (content)=> %>
-    <div class="requirements">
+    <div class="requirements info">
       <h3><%= I18n.t('monsters.preview.requirements') %></h3>
       <%= content %>
     </div>
