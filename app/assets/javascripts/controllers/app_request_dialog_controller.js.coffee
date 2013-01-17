@@ -72,9 +72,11 @@ window.AppRequestDialogController = class extends DialogController
       data:
         ids: button.data('request-id')
       success: (r)=>
+        sender_ids = button.parents('.request').data('sender-id')
+
         @.sendGiftBack(
           r.target
-          parseInt(i) for i in button.parents('.request').data('sender-id').split(',')
+          if _.isNumber(sender_ids) then [sender_ids] else parseInt(i) for i in sender_ids.split(',')
         )
         @.processAcceptResponse(r)
         @.hideRequestByControl(button)
