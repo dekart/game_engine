@@ -13,6 +13,8 @@ class Character
         result = {}
 
         all.each do |request|
+          next unless acceptable?(request)
+
           if request.class.stackable?
             result[request.class.type_name] ||= {}
             result[request.class.type_name][request.target] ||= {
@@ -38,6 +40,16 @@ class Character
         end
 
         result
+      end
+
+      def acceptable?(request)
+        if request.is_a?(AppRequest::Gift)
+          @gift_recent_accepts ||= AppRequest::Gift.recent_accepts(@character)
+
+          !@gift_recent_accepts.include?(request.sender.id)
+        else
+          true
+        end
       end
     end
 

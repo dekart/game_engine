@@ -281,10 +281,6 @@ class AppRequest::Base < ActiveRecord::Base
     self.class.type_name
   end
 
-  def acceptable?
-    true
-  end
-
   def correct?
     true
   end

@@ -11,17 +11,4 @@ module AppRequestsHelper
       )
     end
   end
-
-  def accept_request_button(app_request, name)
-    if app_request.acceptable?
-      link_to(button(name), app_request_path(app_request),
-        :remote => true,
-        :method => :put,
-        :'data-click-once' => true,
-        :class => 'accept button'
-      )
-    else
-      app_request.acceptance_error
-    end
-  end
 end
