@@ -7,6 +7,10 @@ class AppRequestsController < ApplicationController
       format.json do
         render :json => current_character.app_requests.as_json
       end
+
+      format.html do
+        redirect_to root_url
+      end
     end
   end
 
