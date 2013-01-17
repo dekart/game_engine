@@ -1,4 +1,4 @@
-<% for attribute in ['basic_money', 'vip_money', 'experience', 'points', 'ep', 'sp', 'hp']: %>
+<% for attribute in ['basic_money', 'vip_money', 'experience', 'points', 'ep', 'sp', 'hp', 'attack', 'defence', 'energy', 'health', 'stamina', 'mercenaries']: %>
   <% if @reward[attribute]? and (@mode == 'rewards' and (_.isArray(@reward[attribute]) and @reward[attribute][1] > 0 or @reward[attribute] > 0) or @mode == 'spendings' and (_.isArray(@reward[attribute]) and @reward[attribute][1] < 0 or @reward[attribute] < 0)): %>
     <div class="payout <%= attribute %>"
       data-tooltip-content="<%= I18n.t("activerecord.attributes.character.#{ attribute }") %>"
@@ -24,5 +24,27 @@
         <span class="value"><%= '+' if amount > 0 %><%= amount %></span>
       </div>
     <% end %>
+  <% end %>
+<% end %>
+
+<% if @reward.properties?: %>
+  <% for key, [property, amount] of @reward.properties: %>
+    <% if @mode == 'rewards' and amount > 0 or @mode == 'spendings' and amount < 0: %>
+      <div class="payout property"
+        data-tooltip-content="<%= property.name %>"
+        style="background-image: url(<%= property.pictures.icon %>)"
+      >
+        <span class="value"><%= '+' if amount > 0 %><%= amount %></span>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if @reward.random_item?: %>
+  <% if @mode == 'rewards' and @reward.random_item > 0 or @mode == 'spendings' and @reward.random_item < 0: %>
+    <div class="payout item">
+      <span class="value"><img src="/assets/random_item.gif" alt="<%= I18n.t('payouts.random_item.name') %>"/></span>
+      <span class="label"><%= I18n.t("payouts.random_item.name") %></span>
+    </div>
   <% end %>
 <% end %>

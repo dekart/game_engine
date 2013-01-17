@@ -16,7 +16,6 @@
 </div>
 
 <div class="controls">
-  <%= link_to(button(:reward), monster_path(news.monster), :class => 'reward button') if news.monster_fight.reward_collectable? %>
+  <%= link_to_function(button(:reward), "MonsterController.show(#{news.monster.id})", :class => "reward button") if news.monster_fight.reward_collectable? %>
 </div>
-
 

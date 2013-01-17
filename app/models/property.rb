@@ -165,7 +165,7 @@ class Property < ActiveRecord::Base
       :basic_money => -self.total_income
     }
   end
-  
+
   def upgrade_requirements
     @upgrade_requirements ||= Requirements::Collection.new.tap do |r|
       r << Requirements::BasicMoney.new(:value => upgrade_price) if upgrade_price > 0

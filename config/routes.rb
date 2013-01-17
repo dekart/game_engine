@@ -281,7 +281,13 @@ GameEngine::Application.routes.draw do
   resources :item_collections, :only => [:index, :update]
 
   resources :monsters do
-    post 'reward', :on => :member
+    member do
+      post 'reward'
+      match 'status'  
+      match 'fighters'
+      match 'leaders'
+    end
+
     get 'finished', :on => :collection
   end
 

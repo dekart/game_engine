@@ -1,0 +1,39 @@
+<div class='monster clearfix'>
+  <div class='image'>
+    <img src='<%= @type.image_url %>' alt='<%= @type.name %>' title='<%= @type.name %>' />
+  </div>
+
+  <div class='info'>
+    <div class='name'><%= @type.name %></div>
+    <div class='description'><%= @type.description %></div>
+  </div>
+
+  <div class='info'>
+    <div class='fight_time'>
+      <span class='label'><%= I18n.t('monsters.preview.available.fight_time_title') %>:</span>
+      <span class='value'><%= I18n.t('monsters.preview.available.fight_time', {'amount' : @type.fight_time}) %></span>
+    </div>
+    <div class='health'>
+      <span class='label'><%= I18n.t('monsters.preview.available.health_title') %>:</span>
+      <span class='value'><%= @type.health %></span>
+    </div>
+  </div>
+
+  <%= @rewards @type.reward, (content)=> %>
+    <div class="payouts info">
+      <h3><%= I18n.t('monsters.preview.payouts') %></h3>
+      <%= content %>
+    </div>
+  <% end %>
+
+  # requirements will be here
+
+  <% if !@locked: %>
+    <div class='controls'>
+      <a href='#' class='attack button' data-id="<%= @type.id %>">
+        <span><%= I18n.t('monsters.preview.available.buttons.attack') %></span>
+      </a>
+    </div>
+  <% end %>
+</div>
+        

@@ -2,7 +2,7 @@
   <tr>
     <td>
       <%= link_to_function(t(".missions"), 'MissionController.show()', :class => :missions) %>
-      <%= link_to(t(".monsters"), monsters_path, :class => :monsters) %>
+      <%= link_to_function(t(".monsters"), "MonsterListController.show()", :class => :monsters) %>
     </td>
     <td>
       <%= link_to(t(".fights"), new_fight_path, :class => :fights) %>

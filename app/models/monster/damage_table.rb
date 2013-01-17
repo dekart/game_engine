@@ -25,6 +25,23 @@ class Monster
       @leaders
     end
 
+    def leaders_as_json
+      list = [].tap do |r|
+        leaders.to_a.map do |c, value|
+          r << {
+            :facebook_id => c.facebook_id,
+            :name     => c.name,
+            :position => position(c).to_i + 1,
+            :damage   => value
+          }
+        end
+      end
+
+      list.sort_by!{|f| -f[:damage]}
+
+      list
+    end
+
     def by_character(character)
       (@leaders ? @leaders.assoc(character)[1] : $redis.zscore(storage_key, character.id).to_i)
     end

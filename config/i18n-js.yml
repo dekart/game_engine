@@ -14,5 +14,8 @@ translations:
       - "*.premia.refill"
       - "*.premia.buy_vip"
       - "*.missions"
+      - "*.monsters"
       - "*.requirements"
       - "*.relations.invitation"
+      - "*.payouts"
+      - "*.stories"

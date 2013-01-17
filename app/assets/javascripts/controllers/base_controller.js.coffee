@@ -1,6 +1,6 @@
 window.BaseController = class extends Spine.Controller
   prepareHelpers: ()->
-    @helpers = _.extend({}, FacebookHelper, RewardHelper, RequirementHelper, DesignHelper)
+    @helpers = _.extend({}, FacebookHelper, RewardHelper, RequirementHelper, DesignHelper, MonstersHelper)
 
   renderTemplate: (path, attributes)->
     @.prepareHelpers() unless @helpers?

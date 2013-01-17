@@ -78,8 +78,53 @@ class Monster < ActiveRecord::Base
   def chat_id
     "monster_%09d" % id 
   end
-  
+
+  def fighters(exclude_character = nil)
+    result = []
+
+    $redis.zrevrangebyscore(fighters_key, Time.zone.now.to_i, 5.minutes.ago.to_i).each do |f|
+      record = Marshal.load(f)
+
+      result << record if exclude_character.nil? or record[0] != exclude_character.facebook_id
+
+      break if result.size == 12
+    end
+
+    result
+  end
+
+  def add_fighter(character, damage)
+    fighters.select{ |f| f[0] == character.facebook_id }.each{ |f| $redis.zrem(fighters_key, Marshal.dump(f)) }
+
+    $redis.zadd(fighters_key, Time.zone.now.to_i, Marshal.dump([character.facebook_id, damage]))
+  end
+
+  def as_json
+    triggers = character.monster_types.payout_triggers(monster_type)
+
+    {
+      :id           => self.id,
+      :name         => name,
+      :description  => description,
+      :level        => level,
+      :image_url    => pictures.url(:normal),
+      :stream_image_url => pictures.url(:stream),
+      :time_remaining   => time_remaining,
+      :hp           => hp,
+      :health       => health,
+      :state        => state,
+      :reward       => monster_type.applicable_payouts.preview(triggers),
+      :damage       => damage.leaders.as_json,
+      :power_attack => monster_type.power_attack_enabled?,
+      :friends_invite => monster_type.available_for_friends_invite
+    }
+  end
+
   protected
+
+  def fighters_key
+    "monster_#{ id }_fighters_key"
+  end
 
   def assign_initial_attributes
     self.hp = health

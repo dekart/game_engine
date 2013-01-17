@@ -16,7 +16,7 @@
 </div>
 
 <div class="controls">
-  <%= link_to(button(:attack), monster_path(news.monster), :class => 'attack button') if news.monster.progress? %>
+  <%= link_to_function(button(:attack), "MonsterController.show(#{news.monster.id})", :class => 'attack button') if news.monster.progress? %>
 </div>
 
 

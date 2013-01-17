@@ -10,6 +10,14 @@ module Payouts
       end
     end
 
+    def preview(reward)
+      if action == :remove
+        reward.values[:mercenaries] -= @value
+      else
+        reward.values[:mercenaries] += @value
+      end
+    end
+
     def to_s
       "%s: %d %s (%d%% %s)" % [
         apply_on_label,

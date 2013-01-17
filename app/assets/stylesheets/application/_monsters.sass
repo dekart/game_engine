@@ -130,26 +130,260 @@
     .name
       font-weight: bold
 
-#monster_result
-  background-image: $mission_result_icon
+#monster
+  .damage_bar
+    position: relative
+    width: 180px
+    height: 10px
+    border: 1px solid #333
+    background-color: #394A38
+    +border-radius(5px)
 
-  .attack
-    +button($monster_result_attack_icon)
+    .percentage, .casting
+      height: 10px
+      +border-radius(5px)
 
+    .percentage
+      background:
+        image: image-url('progress.png')
+        color: #ff2222
+        repeat: repeat-x
 
-#monster_dialog
-  .image
-    float: right
-    margin-left: 15px
+    .casting
+      position: absolute
+      top: 0
+      left: 0
+      width: 0
+      background-color: #ffae00
 
-  .button
+    .text
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      font-size: 11px
+      line-height: 10px
+      text-shadow: 1px 1px 1px #202020
+      text-align: center
+
+  .fight
+    .progress
+      position: relative
+      width: 100%
+      height: 350px
+      margin-bottom: 20px
+      background:
+        repeat: no-repeat
+        position: right
+
+      .fighter
+        position: absolute
+        width: 50px
+        height: 50px
+        border: 1px solid #222
+
+      .character
+        position: absolute
+        top: 80px
+        left: 65px
+        width: 100px
+        height: 100px
+        border: 2px solid #FEF0B3
+
+        .damage
+          position: absolute
+          top: 15px
+          right: 5px
+          font-weight: bold
+          font-size: 16px
+          color: #ff2222
+          text-shadow: 2px 2px 2px #202020
+
+      h1
+        position: absolute
+        top: 0
+        right: 314px
+        margin: 0
+        line-height: 30px
+
+      .monster
+        position: absolute
+        top: 2px
+        right: 0
+        height: 300px
+        width: 300px
+
+        .damage_bar
+          position: absolute
+          width: 300px
+          top: 4px
+          right: 6px
+          border: none
+          background-color: transparent
+
+        .damage, .attack_damage
+          position: absolute
+          top: 80px
+          left: 160px
+          font-weight: bold
+          color: #ff2222
+          text-shadow: 2px 2px 2px #202020
+
+        .attack_damage
+          font-size: 18px
+
+      .fighter_attack
+        display: none
+        position: absolute
+        width: 72px
+        height: 72px
+
+        &.attack
+          background: image-url("attack_medium.png")
+
+      .character_attack
+        display: none
+        position: absolute
+        width: 128px
+        height: 128px
+        top: 70px
+        left: 200px
+
+        a
+          display: block
+          width: 128px
+          height: 128px
+
+          &.boost
+            width: 120px
+            height: 120px
+
+          &.attack
+            background: image-url("attack.png")
+
+      .actions
+        position: absolute
+        top: 266px
+        left: 15px
+
+        &.locked
+          -moz-opacity: 0.5
+          opacity: 0.5
+
+        a, img
+          display: block
+          width: 72px
+          height: 72px
+
+        a
+          float: left
+          position: relative
+          cursor: pointer
+          margin-right: 8px
+
+          &:hover
+            outline: 2px solid rgba(255, 174, 0, 0.6)
+
+          &.attack
+            span
+              padding-left: 16px
+              background:
+                image: image-url('icons/stamina.png')
+                position: 0 -2px
+                repeat: no-repeat
+
+          &.attack
+            background: image-url("attack_medium.png")
+
+          span
+            position: absolute
+            bottom: 2px
+            right: 2px
+            color: #FFC600
+            padding: 0 4px
+            text-shadow: 1px 1px 1px black
+
+      .fight_time
+        position: absolute
+        bottom: 10px
+        right: 4px
+        width: 106px
+        text-align: center
+        text-shadow: 2px 2px 2px #202020
+
+    .finished
+      height: 350px
+      margin-bottom: 20px
+      background:
+        repeat: no-repeat
+        position: right
+
+      .monster
+        width: auto
+        margin: 10px 20px
+
+        .description
+          font-size: 14px
+
+        .controls .button
+          float: left
+          margin: 20px 30px 20px 0
+
+          &.reward
+            +button($asset_icons_basic_money, 120px)
+
+          &.publish
+            +button($asset_icons_publish, 120px)
+
+        .rewards
+          @include clearfix
+          width: 550px
+          margin-top: 10px
+          padding: 5px
+          border: 1px solid #5e6539
+          background-color: #DDDDDD
+
+  .leaders
+    width: 229px
     float: left
-    margin-right: 15px
-    
-  .publish
-    +button($result_publish_icon)
-  .reward
-    +button($monster_reward_icon)
+    padding: 5px 2px
 
-#monster_boosts
-  .boosts.monster.attack
+    h2
+      text-align: center
+
+    .leader_list
+      outline: 1px solid #5E6539
+      background-color: #DDDDDD
+      padding: 5px 0 1px 0
+
+      .leader
+        line-height: 30px
+        margin-bottom: 5px
+
+        &.current
+          background-color: #888888
+          color: #FFC600
+          font-weight: bold
+
+        .position, img, .name
+          float: left
+
+        .position
+          width: 18px
+          padding-right: 2px
+          text-align: right
+
+        .name
+          width: 109px
+          padding-left: 5px
+          overflow: hidden
+
+        .damage
+          float: right
+          width: 65px
+
+    .rewards
+      margin-top: 20px
+
+      .payout
+        float: none

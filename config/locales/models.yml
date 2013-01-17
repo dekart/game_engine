@@ -173,6 +173,13 @@ en:
               recently_attacked: 'You already attacked this monster recently'
             character:
               requirements_not_satisfied: "Some monster requirements are not satisfied"
+              
+        monster_fight:
+          attributes:
+            base:
+              not_enough_health: "refill_health"
+              not_enough_stamina: "refill_stamina"
+              can_not_attack: "can not attack"
 
         exchange:
           attributes:

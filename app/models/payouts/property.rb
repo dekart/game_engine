@@ -16,6 +16,12 @@ module Payouts
       end
     end
 
+    def preview(reward)
+      if action != :remove
+        reward.values[:properties][property_type.id] ||= [property_type, 1]
+      end
+    end
+
     def to_s
       "%s: %s (%d%% %s)" % [
         apply_on_label,

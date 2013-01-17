@@ -62,4 +62,19 @@ class MonsterType < ActiveRecord::Base
       payouts
     end
   end
+
+  def as_json(character)
+    triggers = character.monster_types.payout_triggers(self)
+
+    {
+      :id          => id,
+      :name        => name,
+      :description => description,
+      :level       => level,
+      :image_url   => pictures.url(:normal),
+      :fight_time  => fight_time,
+      :health      => health,
+      :reward      => applicable_payouts.preview(triggers)
+    }
+  end
 end
