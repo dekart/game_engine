@@ -101,7 +101,7 @@ this.InviteDialog = class
     @dialog_el.on('click', '.user:not(.sent)', @.onUserClick)
     @dialog_el.on('click', '.stats .select_all', @.onSelectAllClick)
     @dialog_el.on('click', '.stats .deselect_all', @.onDeselectAllClick)
-    @dialog_el.on('click', '.send .button:not(.disabled)', @.onSendButtonClick)
+    @dialog_el.on('click', '.send button:not(.disabled)', @.onSendButtonClick)
     @dialog_el.find('.users').on('scroll', @.onUserListScroll)
 
     Visibility.every(500, ()=>
@@ -215,7 +215,7 @@ this.InviteDialog = class
     selected_users  = all_users.filter('.selected')
     sent_users      = all_users.filter('.sent')
 
-    @dialog_el.find('.send .button')
+    @dialog_el.find('.send button')
       .toggleClass('disabled', selected_users.length == 0)
 
     @dialog_el.find('.progress_bar .percentage')

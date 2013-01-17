@@ -54,6 +54,6 @@
       </div>
     </div>
 
-    <span class="button"><span><%= I18n.t("app_requests.invite_dialog.buttons.send") %></span></span>
+    <button><%= I18n.t("app_requests.invite_dialog.buttons.send") %></button>
   </div>
 </div>
