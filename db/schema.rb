@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130115120015) do
+ActiveRecord::Schema.define(:version => 20130122193422) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -396,14 +396,15 @@ ActiveRecord::Schema.define(:version => 20130115120015) do
   add_index "item_collection_ranks", ["character_id", "collection_id"], :name => "index_collection_ranks_on_character_id_and_collection_id"
 
   create_table "item_collections", :force => true do |t|
-    t.string   "name",         :limit => 100, :default => "", :null => false
-    t.string   "item_ids",                    :default => "", :null => false
+    t.string   "name",         :limit => 100, :default => "",   :null => false
+    t.string   "item_ids",                    :default => "",   :null => false
     t.text     "payouts"
-    t.string   "state",        :limit => 50,  :default => "", :null => false
+    t.string   "state",        :limit => 50,  :default => "",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level",                       :default => 1
-    t.string   "amount_items",                :default => "", :null => false
+    t.string   "amount_items",                :default => "",   :null => false
+    t.boolean  "exchangeable",                :default => true
   end
 
   create_table "item_groups", :force => true do |t|
