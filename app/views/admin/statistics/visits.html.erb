@@ -26,7 +26,7 @@
           <th><%= t(@hour ? ".average_per_minute" : ".average_per_hour") %></th>
         </tr>
         <% @users.each_with_index do |user, index| %>
-          <tr>
+          <tr class="<%= :cheater if @requests[index] > Statistics::Visits::MAX_NUMBER_REQUEST_PER_DAY %>">
             <td><%= index + 1 %></td>
             <td><%= link_to(user.character.id, character_url(user.character.key, :canvas => true)) if user.try(:character) %></td>
             <td>
