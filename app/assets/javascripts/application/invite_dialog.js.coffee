@@ -1,7 +1,5 @@
 this.InviteDialog = class
   send_limit: 25
-  users_per_page: 18
-  users_per_row: 3
 
   storageLifespan: 3600000 # 1 hour
 
@@ -110,6 +108,8 @@ this.InviteDialog = class
 
     # Caching user element height for image load calculations
     @user_height = @dialog_el.find('.user').eq(0).outerHeight(true)
+    @users_per_row = Math.floor(@dialog_el.find('.users').eq(0).width() / @dialog_el.find('.user').eq(0).outerWidth(true))
+    @users_per_page = Math.ceil(@dialog_el.find('.users').eq(0).height() / @user_height) * @users_per_row
 
     @.updateBars()
     @.loadUserImages()
@@ -136,8 +136,8 @@ this.InviteDialog = class
     user_el = el.find('.user:not(.hidden)')
     scroll = el.scrollTop()
 
-    first_user = Math.floor(scroll / @user_height) *  @.users_per_row
-    last_user = first_user + @.users_per_page + @.users_per_row
+    first_user = Math.floor(scroll / @user_height) *  @users_per_row
+    last_user = first_user + @.users_per_page + @users_per_row
 
     user_el.slice(first_user, last_user).find('img:not([src])').each (i,e)->
       i = $(e)
