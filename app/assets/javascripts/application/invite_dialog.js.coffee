@@ -3,12 +3,14 @@ this.InviteDialog = class
   users_per_page: 18
   users_per_row: 3
 
-  fb_friends: null
-  exclude_ids: {}
+  storageLifespan: 3600000 # 1 hour
 
   constructor: (@type, options, @callback)->
     @page = 0
     @filter = 'all'
+    @exclude_ids = {}
+    @fb_friends = null
+
     @options = $.extend(true,
       {
         dialog:
@@ -21,7 +23,7 @@ this.InviteDialog = class
       options,
       {
         dialog:
-          exclude_ids: $.merge(options.dialog.exclude_ids || [], @.exclude_ids[@type] || [])
+          exclude_ids: $.merge(options.dialog.exclude_ids || [], @exclude_ids[@type] || [])
       }
     )
 
@@ -46,31 +48,48 @@ this.InviteDialog = class
     )
 
   selectRecipientsAndSendRequest: (to)->
-    unless @.launchWhenPopulated()
-      Spinner.show(200, I18n.t('app_requests.invite_dialog.spinner_text'))
+    return if @.launchWhenPopulated()
 
+    Spinner.show(200, I18n.t('app_requests.invite_dialog.spinner_text'))
+
+    @.fetchRecipients()
+    @.loadExcludeIds()
+
+  fetchRecipients: ->
+    stored_data = JSON.parse(sessionStorage.getItem('fb_friends'))
+
+
+    if stored_data and stored_data.savedAt > Date.now() - @.storageLifespan
+      @fb_friends = stored_data.data
+
+      @.launchWhenPopulated()
+    else
       FB.getLoginStatus((response)=>
         if response.authResponse
           FB.api('/fql',
             q: 'SELECT uid, name, is_app_user FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY name',
             (r)=>
-              @.fb_friends = r.data
+              @fb_friends = r.data
+
+              sessionStorage.setItem('fb_friends', JSON.stringify(savedAt: Date.now(), data: @fb_friends))
 
               @.launchWhenPopulated()
           )
       )
 
-      $.getJSON('/app_requests/invite', type: @type, (data)=>
-        @.exclude_ids[@type] = data.exclude_ids
+  loadExcludeIds: ->
+    $.getJSON('/app_requests/invite', type: @type, (data)=>
+      @exclude_ids[@type] = data.exclude_ids
 
-        @.launchWhenPopulated()
-      )
+      @.launchWhenPopulated()
+    )
+
 
   launchWhenPopulated: ()->
-    return false unless @.fb_friends and @.exclude_ids[@type]
+    return false unless @fb_friends and @exclude_ids[@type]
 
-    @users = $.map(@.fb_friends, (user)=>
-      if _.contains(@.exclude_ids[@type], user.uid) or @options.dialog.to? and not _.contains(@options.dialog.to, user.uid)
+    @users = $.map(@fb_friends, (user)=>
+      if _.contains(@exclude_ids[@type], user.uid) or @options.dialog.to? and not _.contains(@options.dialog.to, user.uid)
         null
       else
         user
