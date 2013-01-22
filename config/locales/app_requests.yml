@@ -35,7 +35,7 @@ en:
           one: "%{nickname} sends you %{item}"
           other: "%{count} friends send you %{item}"
         accept: 'Accept & Send'
-        accepted: 'Accepted!'
+        accepted: 'Accepted! Sending back…'
       monster_invite:
         text:
           one: "%{nickname} invites you to join the fight against %{monster}"
