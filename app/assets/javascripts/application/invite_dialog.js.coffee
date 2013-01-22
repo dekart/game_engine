@@ -133,7 +133,7 @@ this.InviteDialog = class
   loadUserImages: ()=>
     el = @dialog_el.find('.users')
 
-    user_el = el.find('.user:not(.hidden)')
+    user_el = el.find('.user:not(.hidden, .sent)')
     scroll = el.scrollTop()
 
     first_user = Math.floor(scroll / @user_height) *  @users_per_row
@@ -179,9 +179,10 @@ this.InviteDialog = class
 
     @.sendRequest(ids)
 
-    users_to_send.removeClass('selected').addClass('sent')
-
-    @.updateBars()
+    users_to_send.removeClass('selected').addClass('sent').fadeOut(1500, ()=>
+      @.loadUserImages()
+      @.updateBars()
+    )
 
   onUserListScroll: ()=>
     new_scroll = @dialog_el.find('.users').scrollTop()
