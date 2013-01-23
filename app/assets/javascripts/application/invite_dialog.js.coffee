@@ -62,7 +62,6 @@ this.InviteDialog = class
 
       @.launchWhenPopulated()
     else
-      console.log('load')
       FB.getLoginStatus((response)=>
         if response.authResponse
           FB.api('/fql',
