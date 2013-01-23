@@ -17,15 +17,16 @@ window.AppRequestDialogController = class extends DialogController
   setupEventListeners: ->
     super
 
-    @el.on('click', '.request:not(.gift) button', @.onAcceptClick)
-    @el.on('click', '.request.gift button', @.onGiftAcceptClick)
-    @el.on('click', '.request .ignore', @.onIgnoreClick)
+    @el.on('click', '.request:not(.gift) button:not(.disabled)', @.onAcceptClick)
+    @el.on('click', '.request.gift button:not(.disabled)', @.onGiftAcceptClick)
+    @el.on('click', '.request .ignore:not(.disabled)', @.onIgnoreClick)
 
   unbindEventListeners: ->
     super
 
-    @el.off('click', '.request button', @.onAcceptClick)
-    @el.off('click', '.request .ignore', @.onIgnoreClick)
+    @el.off('click', '.request:not(.gift) button:not(.disabled)', @.onAcceptClick)
+    @el.off('click', '.request.gift button:not(.disabled)', @.onGiftAcceptClick)
+    @el.off('click', '.request .ignore:not(.disabled)', @.onIgnoreClick)
 
   render: ->
     @.updateContent(
@@ -90,13 +91,13 @@ window.AppRequestDialogController = class extends DialogController
 
     link.addClass('disabled')
 
+    @.hideRequestByControl(link)
+
     $.ajax(
       url: "/app_requests/ignore.json"
       type: 'PUT'
       data:
         ids: link.data('request-id')
-      success: (r)=>
-        @.hideRequestByControl(link)
     )
 
   processAcceptResponse: (response)->
