@@ -209,7 +209,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def check_user_requests(user)
-      user.facebook_client.get_connections('me', 'apprequests').each do |graph_data|
+      user.facebook_client.get_connections('me', 'apprequests', :limit => 1000).each do |graph_data|
         request_from_graph_data(graph_data)
       end
     rescue Koala::Facebook::APIError => e
