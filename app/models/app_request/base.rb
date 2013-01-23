@@ -221,7 +221,11 @@ class AppRequest::Base < ActiveRecord::Base
 
       request = class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*graph_data['id'].split('_'))
 
-      request.update_from_facebook_request(graph_data, data) if request.pending?
+      if request.pending?
+        request.update_from_facebook_request(graph_data, data)
+      elsif not (request.processed? or request.visited?)
+        schedule_deletion(request)
+      end
     end
 
     def types
