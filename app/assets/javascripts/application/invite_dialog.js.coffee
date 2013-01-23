@@ -57,11 +57,12 @@ this.InviteDialog = class
     stored_data = JSON.parse(sessionStorage.getItem('fb_friends'))
 
 
-    if stored_data and stored_data.savedAt > Date.now() - @.storageLifespan
+    if stored_data and stored_data.characterId == Character.first().id and stored_data.savedAt > Date.now() - @.storageLifespan
       @fb_friends = stored_data.data
 
       @.launchWhenPopulated()
     else
+      console.log('load')
       FB.getLoginStatus((response)=>
         if response.authResponse
           FB.api('/fql',
@@ -69,7 +70,13 @@ this.InviteDialog = class
             (r)=>
               @fb_friends = r.data
 
-              sessionStorage.setItem('fb_friends', JSON.stringify(savedAt: Date.now(), data: @fb_friends))
+              sessionStorage.setItem('fb_friends',
+                JSON.stringify(
+                  characterId: Character.first().id
+                  savedAt: Date.now()
+                  data: @fb_friends
+                )
+              )
 
               @.launchWhenPopulated()
           )

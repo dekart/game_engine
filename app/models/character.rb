@@ -223,6 +223,7 @@ class Character < ActiveRecord::Base
   def as_json_for_overview
     as_json(
       :only => [
+        :id,
         :basic_money,
         :vip_money,
         :experience,
