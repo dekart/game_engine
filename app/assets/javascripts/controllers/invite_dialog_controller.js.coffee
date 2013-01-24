@@ -95,7 +95,7 @@ this.InviteDialogController = class extends DialogController
   render: ->
     if @loading
       @.updateContent(I18n.t('common.loading'))
-    else
+    else if @users.length > 0
       @.updateContent(
         @.renderTemplate('invite_dialog/dialog', @)
       )
