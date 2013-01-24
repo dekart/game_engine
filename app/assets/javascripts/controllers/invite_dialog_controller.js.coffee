@@ -43,10 +43,10 @@ this.InviteDialogController = class extends DialogController
     super
 
   fetchRecipients: ->
-    stored_data = JSON.parse(sessionStorage.getItem('fb_friends'))
+    stored_data = JSON.parse(localStorage.getItem('invite_dialog'))
 
     if stored_data and stored_data.characterId == Character.first().id and stored_data.savedAt > Date.now() - @.storageLifespan
-      @friends = stored_data.data
+      @friends = stored_data.friends
 
       @.launchWhenPopulated()
     else
@@ -57,11 +57,11 @@ this.InviteDialogController = class extends DialogController
             (r)=>
               @friends = r.data
 
-              sessionStorage.setItem('fb_friends',
+              localStorage.setItem('invite_dialog',
                 JSON.stringify(
                   characterId: Character.first().id
                   savedAt: Date.now()
-                  data: @friends
+                  friends: @friends
                 )
               )
 
