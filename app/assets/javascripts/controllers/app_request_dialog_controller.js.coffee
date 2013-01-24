@@ -114,7 +114,7 @@ window.AppRequestDialogController = class extends DialogController
     request.fadeOut('slow')
 
   sendGiftBack: (target, ids)->
-    new InviteDialog('gift',
+    InviteDialogController.show('gift',
       dialog:
         to: ids
         title: I18n.t('app_requests.invites.gift.title', item: target.name)

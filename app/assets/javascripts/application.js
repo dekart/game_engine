@@ -19,7 +19,6 @@
 //= require ./application/spinner
 //= require ./application/app_requests
 //= require ./application/promo_block
-//= require ./application/invite_dialog
 //= require ./application/stream_dialog
 //= require ./application/timer
 //= require ./application/visual_timer
