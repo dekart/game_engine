@@ -111,6 +111,8 @@ this.InviteDialogController = class extends DialogController
       @.updateBars()
 
       $.scrollTo(@el)
+    else
+      @el.fadeOut(=> @.close())
 
   renderUserList: (force)->
     users_to_skip = @scroll * @users_per_row
