@@ -87,8 +87,6 @@ this.InviteDialogController = class extends DialogController
         user
     )
 
-    @visible_users = @users
-
     @loading = false
 
     @.render()
@@ -107,23 +105,39 @@ this.InviteDialogController = class extends DialogController
       @el.find('.friend_selector').on('select.tab', @.onTabSelect)
       @el.find('.tab_content').on('scroll', @.onUserListScroll)
 
+      @.calculateUserCellSize()
+      @.filterUsers()
       @.renderUserList()
       @.updateBars()
 
-
-  renderUserList: ->
-    unless @cell_size
-      @.calculateUserCellSize()
-
-    @tabs.current_container.find('.users').css(
-      height: Math.ceil(@visible_users.length / @users_per_row) * @cell_size.height
-    )
-
+  renderUserList: (force)->
     users_to_skip = @scroll * @users_per_row
+
+    force_render = []
+
+    if force == true
+      @tabs.current_container.find('.users').empty()
+    else if _.isArray(force)
+      force_render = (u.uid for u in force)
+
+    users_to_render = @visible_users.slice(users_to_skip, users_to_skip + @users_per_page)
+    ids_to_render = (u.uid for u in users_to_render)
+
+    $(
+      _.reject(@tabs.current_container.find('.user').toArray(), (u)=>
+        uid = parseInt(u.getAttribute('data-uid'), 10)
+
+        ids_to_render.indexOf(uid) != -1 and force_render.indexOf(uid) == -1
+      )
+    ).remove()
+
+    rendered_ids = (parseInt(u.getAttribute('data-uid'), 10) for u in @tabs.current_container.find('.user').toArray())
 
     code = []
 
-    for user in @visible_users.slice(users_to_skip, users_to_skip + @users_per_page)
+    for user in users_to_render
+      continue if rendered_ids.indexOf(user.uid) != -1
+
       i = @visible_users.indexOf(user)
 
       code.push(
@@ -135,10 +149,10 @@ this.InviteDialogController = class extends DialogController
         )
       )
 
-    @tabs.current_container.find('.users').html(code.join(''))
+    @tabs.current_container.find('.users').append(code.join(''))
 
   calculateUserCellSize: ->
-    @tabs.current_container.find('.users').append(JST['views/invite_dialog/user'](user: @friends[0], position: {x: 0, y: 0}))
+    @tabs.current_container.find('.users').append(JST['views/invite_dialog/user'](user: @users[0], position: {x: 0, y: 0}))
 
     cell = @tabs.current_container.find('.user').eq(0)
 
@@ -157,8 +171,11 @@ this.InviteDialogController = class extends DialogController
     for user in @.usersByCurrentFilter()
       @visible_users.push(user) unless user.sent
 
-    @tabs.current_container.scrollTop(0)
     @scroll = 0
+
+    @tabs.current_container.scrollTop(0).find('.users').css(
+      height: Math.ceil(@visible_users.length / @users_per_row) * @cell_size.height
+    )
 
     @.renderUserList()
     @.updateBars()
@@ -185,7 +202,7 @@ this.InviteDialogController = class extends DialogController
 
     user.selected = not user.selected
 
-    @.renderUserList()
+    @.renderUserList([user])
     @.updateBars()
 
   updateBars: ()->
@@ -257,7 +274,7 @@ this.InviteDialogController = class extends DialogController
       user.selected = false
       user.sent = true
 
-    @.renderUserList()
+    @.renderUserList(users_to_send)
 
     @el.find('.user.sent').fadeOut(1500).promise().done(=>
       @.filterUsers()
@@ -267,12 +284,12 @@ this.InviteDialogController = class extends DialogController
     for user in @.usersByCurrentFilter()
       user.selected = true unless user.sent
 
-    @.renderUserList()
+    @.renderUserList(true)
     @.updateBars()
 
   onDeselectAllClick: ()=>
     for user in @.usersByCurrentFilter()
       user.selected = false unless user.sent
 
-    @.renderUserList()
+    @.renderUserList(true)
     @.updateBars()
