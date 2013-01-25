@@ -36,7 +36,7 @@ window.AppRequestDialogController = class extends DialogController
         I18n.t('common.loading')
     )
 
-    @el.find('.content').tabs()
+    @el.find('.content').on('select.tab', @.onTabSelected).tabs()
 
   onDataLoad: (response)=>
     @loading = false
@@ -99,6 +99,11 @@ window.AppRequestDialogController = class extends DialogController
       data:
         ids: link.data('request-id')
     )
+
+  onTabSelected: (e, tabs)=>
+    tabs.current_container.find('img[data-src]').each ()->
+      this.setAttribute('src', this.getAttribute('data-src'))
+      this.removeAttribute('data-src')
 
   processAcceptResponse: (response)->
     if response.next_page

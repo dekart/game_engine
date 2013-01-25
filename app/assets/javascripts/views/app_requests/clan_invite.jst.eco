@@ -1,5 +1,5 @@
 <div class="clan_invite request">
-  <%= @fbProfilePic(@request.facebook_id, 'square') %>
+  <%= @fbProfilePicSlot(@request.facebook_id, 'square') %>
 
   <div class="controls">
     <button

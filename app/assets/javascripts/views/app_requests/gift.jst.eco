@@ -17,7 +17,7 @@
   <div class="senders">
     <% for sender in @request.senders: %>
       <a href="/characters/<%= sender.key %>" data-tooltip-content="<%= sender.nickname %>">
-        <%= @fbProfilePic(sender.facebook_id, 'square') %>
+        <%= @fbProfilePicSlot(sender.facebook_id, 'square') %>
       </a>
     <% end %>
   </div>
