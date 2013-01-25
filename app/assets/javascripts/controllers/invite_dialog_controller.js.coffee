@@ -260,6 +260,9 @@ this.InviteDialogController = class extends DialogController
           GA.appRequestSent(response.type, response.target?.name, response.count)
 
           @callback?()
+
+          if _.select(@users, (u)-> not u.sent ).length == 0
+            @.close()
         )
     )
 
