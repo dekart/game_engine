@@ -115,30 +115,6 @@ class Fight < ActiveRecord::Base
     Requirements::StaminaPoint.new(:value => Setting.i(:fight_stamina_required))
   end
 
-  def attacker_event_data
-    {
-      :reference_id => self.victim.id,
-      :reference_type => "Character",
-      :reference_level => self.victim.level,
-      :reference_damage => -self.victim_hp_loss,
-      :health => -self.attacker_hp_loss,
-      :basic_money => self.attacker_won? ? self.winner_money : -self.loser_money,
-      :experience => self.experience
-    }
-  end
-
-  def victim_event_data
-    {
-      :reference_id => self.attacker.id,
-      :reference_type => "Character",
-      :reference_level => self.attacker.level,
-      :reference_damage => -self.attacker_hp_loss,
-      :health => -self.victim_hp_loss,
-      :basic_money => self.attacker_won? ? -self.loser_money : self.winner_money,
-      :experience => 0
-    }
-  end
-
   def attacker_used_items
     used_items(attacker)
   end

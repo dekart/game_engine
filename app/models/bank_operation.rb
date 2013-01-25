@@ -5,10 +5,4 @@ class BankOperation < ActiveRecord::Base
 
   validates_presence_of :amount
   validates_numericality_of :amount, :greater_than => 0, :only_integer => true
-
-  def event_data
-    {
-      :basic_money => self.amount
-    }
-  end
 end

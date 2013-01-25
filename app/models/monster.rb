@@ -53,13 +53,6 @@ class Monster < ActiveRecord::Base
     (expire_at - Time.now).to_i
   end
 
-  def event_data
-    {
-      :reference_id => self.id,
-      :reference_type => "Monster"
-    }
-  end
-
   validate :validate_monster, :on => :create
 
   def will_get_reward?(character)

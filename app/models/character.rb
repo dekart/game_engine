@@ -373,13 +373,6 @@ class Character < ActiveRecord::Base
     @friend_filter ||= FriendFilter.new(self)
   end
 
-  def event_data
-    {
-      :character_id => self.id,
-      :level => self.level
-    }
-  end
-
   def notifications_count
     self.notifications.count
   end

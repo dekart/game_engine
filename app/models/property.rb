@@ -157,15 +157,6 @@ class Property < ActiveRecord::Base
     end
   end
 
-  def event_data
-    {
-      :reference_id => self.id,
-      :reference_type => "Property",
-      :reference_level => self.level,
-      :basic_money => -self.total_income
-    }
-  end
-
   def upgrade_requirements
     @upgrade_requirements ||= Requirements::Collection.new.tap do |r|
       r << Requirements::BasicMoney.new(:value => upgrade_price) if upgrade_price > 0
