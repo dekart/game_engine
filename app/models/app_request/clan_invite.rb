@@ -9,6 +9,12 @@ class AppRequest::ClanInvite < AppRequest::Base
         (character.clan ? character.clan.members_facebook_ids : [])
       end
     end
+
+    def target_from_data(data)
+      if data['target_type'] and data['target_id']
+        Clan.find(data['target_id'])
+      end
+    end
   end
 
   def clan

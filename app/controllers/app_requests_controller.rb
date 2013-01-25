@@ -17,9 +17,7 @@ class AppRequestsController < ApplicationController
   def create
     @request_type = params[:type]
 
-    if params[:target_id] && params[:target_type]
-      @target = params[:target_type].constantize.find(params[:target_id])
-    end
+    @target = AppRequest::Base.class_from_type(@request_type).target_from_data(params[:data])
 
     @recipients = Array.wrap(params[:to])
 

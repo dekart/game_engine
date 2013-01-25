@@ -120,11 +120,7 @@ window.AppRequestDialogController = class extends DialogController
         title: I18n.t('app_requests.invites.gift.title', item: target.name)
         message: I18n.t('app_requests.invites.gift.message', item: target.name, app: I18n.t('app_name'))
         data:
-          target_id: target.id
-          target_type: 'Item'
-      request:
-        target_id: target.id
-        target_type: 'Item'
+          item: target.alias
     )
 
   countAll: ->

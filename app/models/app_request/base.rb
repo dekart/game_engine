@@ -239,12 +239,23 @@ class AppRequest::Base < ActiveRecord::Base
       "AppRequest::#{ type.camelize }"
     end
 
-    def class_from_data(data)
-      if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
-        "AppRequest::#{ data['type'].camelize }"
+    def class_from_type(type)
+      if %w{gift invitation monster_invite property_worker clan_invite}.include?(type)
+        "AppRequest::#{ type.camelize }".constantize
       else
-        'AppRequest::Invitation'
-      end.constantize
+        AppRequest::Invitation
+      end
+    end
+
+    def class_from_data(data)
+      if data.is_a?(Hash)
+        class_from_type(data['type'])
+      else
+        AppRequest::Invitation
+      end
+    end
+
+    def target_from_data(data)
     end
   end
 
@@ -267,10 +278,7 @@ class AppRequest::Base < ActiveRecord::Base
       transaction do
         save!
 
-        # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
-        if data && data['target_id'] && data['target_type']
-          self.target = data['target_type'].constantize.find(data['target_id'])
-        end
+        self.target = self.class.target_from_data(data)
 
         self.process
       end

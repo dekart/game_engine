@@ -28,7 +28,7 @@
                 :class => "power_attack button"
               ) %>
         <% end %>
-        
+
         <% if Setting.b(:friends_invite_enabled) && monster.monster_type.available_for_friends_invite %>
           <%= link_to_function(button(:invite_request),
                 invite_dialog(:monster_invite,
@@ -39,15 +39,11 @@
                       :target_id    => monster.id,
                       :target_type  => Monster.name
                     }
-                  },
-                  :request => {
-                    :target_id    => monster.id,
-                    :target_type  => Monster.name
                   }
                 ),
                 :class => "invite button"
               ) %>
-  
+
           <%= link_to_function(button(:invite), stream_dialog(:monster_invite, monster),
                 :class => "invite button"
               ) if Setting.b(:stream_dialog_enabled) %>

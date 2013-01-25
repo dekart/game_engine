@@ -40,6 +40,14 @@ class AppRequest::Gift < AppRequest::Base
 
       $redis.zadd(receiver_cache_key(receiver), Time.now.to_i, sender.id)
     end
+
+    def target_from_data(data)
+      if data['target_type'] and data['target_id']
+        data['target_type'].constantize.find(data['target_id'])
+      elsif data['item']
+        Item[data['item']]
+      end
+    end
   end
 
   def acceptance_error

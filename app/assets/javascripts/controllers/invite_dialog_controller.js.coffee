@@ -23,8 +23,6 @@ this.InviteDialogController = class extends DialogController
           method: 'apprequests'
           data:
             type: @type
-        request:
-          type: @type
       },
       options
     )
@@ -245,7 +243,11 @@ this.InviteDialogController = class extends DialogController
     FB.ui(dialog_options, (response)=>
       if response
         $.post(
-          '/app_requests.json', $.extend({request_id: response.request, to: response.to}, @options.request)
+          '/app_requests.json',
+          request_id: response.request,
+          to: response.to
+          type: @type
+          data: @options.dialog.data
         ).success((response)=>
           GA.appRequestSent(response.type, response.target?.name, response.count)
 
