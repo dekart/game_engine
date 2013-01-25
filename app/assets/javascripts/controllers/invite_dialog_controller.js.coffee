@@ -16,6 +16,14 @@ this.InviteDialogController = class extends DialogController
     @el.on('click', '.stats .select_all', @.onSelectAllClick)
     @el.on('click', '.stats .deselect_all', @.onDeselectAllClick)
 
+  unbindEventListeners: ->
+    super
+
+    @el.off('click', '.user:not(.sent)', @.onUserClick)
+    @el.off('click', '.send button:not(.disabled)', @.onSendButtonClick)
+    @el.off('click', '.stats .select_all', @.onSelectAllClick)
+    @el.off('click', '.stats .deselect_all', @.onDeselectAllClick)
+
   show: (@type, options, @callback)->
     @options = $.extend(true,
       {
