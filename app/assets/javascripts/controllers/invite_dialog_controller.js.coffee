@@ -249,6 +249,9 @@ this.InviteDialogController = class extends DialogController
       dialog_options.to = to.join(',')
 
     FB.ui(dialog_options, (response)=>
+      if _.select(@users, (u)-> not u.sent ).length == 0
+        @.close()
+
       if response
         $.post(
           '/app_requests.json',
@@ -260,9 +263,6 @@ this.InviteDialogController = class extends DialogController
           GA.appRequestSent(response.type, response.target?.name, response.count)
 
           @callback?()
-
-          if _.select(@users, (u)-> not u.sent ).length == 0
-            @.close()
         )
     )
 
