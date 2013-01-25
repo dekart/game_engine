@@ -21,17 +21,33 @@ class Character
           :requests => {}
         }
 
-        all.each do |request|
+        stack_id = 0
+
+        all.sort_by{|r| r.class.name }.each do |request|
           next unless acceptable?(request)
 
           if request.class.stackable?
             result[:requests][request.class.type_name] ||= {}
-            result[:requests][request.class.type_name][request.target] ||= {
+
+            if request.target
+              stack_key = request.target
+            else
+              stack_key = request.class.name.hash + stack_id
+
+              # Group requests by 10
+              if result[:requests][request.class.type_name][stack_key] and
+                  result[:requests][request.class.type_name][stack_key][:senders].size == 10
+                stack_key += 1
+                stack_id += 1
+              end
+            end
+
+            result[:requests][request.class.type_name][stack_key] ||= {
               :target => request.target.as_json,
               :senders => []
             }
 
-            result[:requests][request.class.type_name][request.target][:senders] << request.sender.as_json_for_app_requests.merge(
+            result[:requests][request.class.type_name][stack_key][:senders] << request.sender.as_json_for_app_requests.merge(
               :request_id => request.id
             )
           else
