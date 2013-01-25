@@ -39,10 +39,10 @@ en:
           failed: 'failed'
           processing: 'Processing...'
         app_requests:
-          title: "App Requests for deletion"
-          total: "Total"
+          title: "App Requests"
+          for_deletion: "Scheduled Deletion"
           failed: "Failed"
-          last_failed: "Last Failed ID"
+          random_failed: "Random Failed ID"
           last_processed_at: "Last Processed At"
       user:
         title: "Statistics: New Users"
