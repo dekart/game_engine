@@ -1,6 +1,8 @@
 module Jobs
   class RequestDelete
     def perform
+      return if $redis.get('app_requests_last_processed_at').to_i > 10.seconds.ago
+
       begin
         request_ids = $redis.smembers("app_requests_for_deletion")[0..40]
 
