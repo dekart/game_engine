@@ -12,7 +12,17 @@ class Admin::VipMoneyOperationsController < Admin::BaseController
   def report
     @character = Character.find(params[:id])
 
-    @operations = VipMoneyOperation.where(:character_id => @character.id).order("id desc")
+    @operations = VipMoneyOperation.where(:character_id => @character.id).order("id desc").all
+
+    @summary = {
+      :total => @operations.size,
+      :deposits => @operations.count{|o| o.is_a?(VipMoneyDeposit) },
+      :withdrawals => @operations.count{|o| o.is_a?(VipMoneyWithdrawal) },
+      :payments => @operations.count{|o| VipMoneyDeposit::PAYMENT_PROVIDERS.include?(o.reference) },
+      :purchased => @operations.sum{|o|
+        VipMoneyDeposit::PAYMENT_PROVIDERS.include?(o.reference) ? o.amount : 0
+      }
+    }
   end
 
   protected
