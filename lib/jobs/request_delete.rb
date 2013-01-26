@@ -11,9 +11,9 @@ module Jobs
         batch_result.each_with_index do |result, index|
           $redis.sadd("app_requests_failed_deletion", request_ids[index]) if result == false
         end
-      end while request_ids.size > 0
 
-      $redis.set("app_requests_last_processed_at", Time.now.to_i)
+        $redis.set("app_requests_last_processed_at", Time.now.to_i)
+      end while request_ids.size > 0
     end
   end
 end
