@@ -1,25 +1,7 @@
 #= require application/timer
 
 class VisualTimer extends window.Timer
-  constructor: (args...)->
-    [@selector, @finish_callback, @tick_callback] = args
-
-  onTick: ->
-    @.render()
-
-    super
-
-  onStop: ->
-    @.render()
-
-    super
-
-  render: ->
-    $(@selector...).text(
-      @.formatTime(@.secondsToFinish())
-    )
-
-  formatTime: (value)->
+  @formatTime: (value)->
     result = ""
 
     return result unless value > 0
@@ -46,5 +28,25 @@ class VisualTimer extends window.Timer
       result = "#{ result }:#{ seconds }"
 
     result
+
+
+  constructor: (args...)->
+    [@selector, @finish_callback, @tick_callback] = args
+
+  onTick: ->
+    @.render()
+
+    super
+
+  onStop: ->
+    @.render()
+
+    super
+
+  render: ->
+    $(@selector...).text(
+      @.constructor.formatTime(@.secondsToFinish())
+    )
+
 
 window.VisualTimer = VisualTimer

@@ -1,44 +1,41 @@
 <div class='monster clearfix'>
-  <div class='image'>
-    <img src='<%= @type.image_url %>' alt='<%= @type.name %>' title='<%= @type.name %>' />
-  </div>
+  <img src='<%= @type.pictures.small %>' alt='<%= @type.name %>' title='<%= @type.name %>' />
 
   <div class='info'>
     <div class='name'><%= @type.name %></div>
     <div class='description'><%= @type.description %></div>
-  </div>
 
-  <div class='info'>
     <div class='fight_time'>
-      <span class='label'><%= I18n.t('monsters.preview.available.fight_time_title') %>:</span>
-      <span class='value'><%= I18n.t('monsters.preview.available.fight_time', {'amount' : @type.fight_time}) %></span>
+      <span class='label'><%= I18n.t('monsters.preview.available.fight_time') %>:</span>
+      <span class='value'>
+        <%= VisualTimer.formatTime(@type.fight_time) %>
+      </span>
     </div>
+
     <div class='health'>
-      <span class='label'><%= I18n.t('monsters.preview.available.health_title') %>:</span>
+      <span class='label'><%= I18n.t('monsters.preview.available.health') %>:</span>
       <span class='value'><%= @type.health %></span>
     </div>
+
+    <%= @rewards @type.rewards, (content)=> %>
+      <div class="rewards">
+        <h3><%= I18n.t('monsters.preview.rewards') %></h3>
+
+        <%= content %>
+      </div>
+    <% end %>
+
+    <%= @requirements @type.requirements, (content)=> %>
+      <div class="requires">
+        <h3><%= I18n.t('monsters.preview.requirements') %></h3>
+        <%= content %>
+      </div>
+    <% end %>
   </div>
 
-  <%= @rewards @type.reward, (content)=> %>
-    <div class="payouts info">
-      <h3><%= I18n.t('monsters.preview.payouts') %></h3>
-      <%= content %>
-    </div>
-  <% end %>
-
-  <%= @requirements @type.requirements, (content)=> %>
-    <div class="requirements info">
-      <h3><%= I18n.t('monsters.preview.requirements') %></h3>
-      <%= content %>
-    </div>
-  <% end %>
-
-  <% if !@locked: %>
-    <div class='controls'>
-      <a href='#' class='attack button' data-id="<%= @type.id %>">
-        <span><%= I18n.t('monsters.preview.available.buttons.attack') %></span>
-      </a>
-    </div>
+  <% unless @locked: %>
+    <button class='attack' data-id="<%= @type.id %>">
+      <%= I18n.t('monsters.preview.available.attack') %>
+    </button>
   <% end %>
 </div>
-        

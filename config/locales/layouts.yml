@@ -29,10 +29,8 @@ en:
       upgrade: "Upgrade!"
       hospital: "Hospital"
       refill: "Refill"
-    tip:
-      label: "Tip:"
     footer:
       notification_settings: "Notifications Settings"
       privacy_policy: "Privacy Policy"
     footer_unauthorised:
-      privacy_policy: "Privacy Policy"  
+      privacy_policy: "Privacy Policy"

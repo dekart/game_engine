@@ -195,12 +195,8 @@ class MonsterFight < ActiveRecord::Base
   def as_json
     {
       :fight_id => self.id,
-      :boosts   => boosts,
-      :monster  => monster.as_json,
+      :monster  => monster.as_json_for(character),
       :damage   => damage,
-      :minimum_damage   => minimum_damage,
-      :maximum_damage   => maximum_damage,
-      :reward           => monster_type.applicable_payouts.preview(payout_triggers).as_json,
       :reward_collectable => reward_collectable?,
       :reward_collected => reward_collected?,
       :will_get_reward  => will_get_reward?,
@@ -219,14 +215,6 @@ class MonsterFight < ActiveRecord::Base
 
   def add_to_finished_fights
     character.monster_fights.add_to_finished(self)
-  end
-
-  def minimum_damage
-    monster.minimum_damage
-  end
-
-  def maximum_damage
-    monster.maximum_damage
   end
 
   protected

@@ -2,18 +2,18 @@ class MonstersController < ApplicationController
   def index
     @defeated_monster_fights = current_character.monster_fights.defeated
     @active_monster_fights   = current_character.monster_fights.active
-    
-    @locked_monster = current_character.monster_types.available_in_future.first
-    @monster_types  = current_character.monster_types.available_for_fight
+
+    @locked_monster = GameData::MonsterType.select{|t| t.locked_for?(current_character) }.sort_by{|t| t.level.to_i }.first
+    @monster_types  = GameData::MonsterType.select{|t| t.visible?(current_character) }
 
     render :json => {
       :defeated => @defeated_monster_fights.as_json,
       :active   => @active_monster_fights.as_json,
       :locked   => @locked_monster.as_json(current_character),
-      :monster_types => @monster_types.as_json(current_character)
+      :monster_types => @monster_types.map{|t| t.as_json_for(current_character) }
     }
   end
-  
+
   def finished
     @finished_monster_fights = current_character.monster_fights.finished
 
@@ -40,14 +40,14 @@ class MonstersController < ApplicationController
   end
 
   def new
-    @monster_type = current_character.monster_types.available_for_fight.find(params[:monster_type_id])
+    @monster_type = GameData::MonsterType[params[:monster_type_id]]
 
     @monster = current_character.monster_fights.own.current.by_type(@monster_type).first
-    @monster ||= @monster_type.monsters.create(:character => current_character)
-  
+    @monster ||= Monster.create(:monster_type => @monster_type, :character => current_character)
+
     if @monster.new_record?
       flash[:error] = @monster.errors.full_messages
-      
+
       redirect_to monsters_url
     else
       @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
@@ -65,7 +65,7 @@ class MonstersController < ApplicationController
     @monster = Monster.find(params[:id])
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
-    power_attack = (!params[:power_attack].blank? && @monster.monster_type.power_attack_enabled?)
+    power_attack = params[:power_attack].present?
     boost = params[:boost].to_i unless params[:boost].blank?
 
     @attack_result = @fight.attack!(boost, power_attack)

@@ -681,7 +681,6 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
     #setting
     #story
-    ##tip
     #translation
     #contest
     #help_page

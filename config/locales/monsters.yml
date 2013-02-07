@@ -16,7 +16,7 @@ en:
     finished:
       previous: "Recently Defeated Monsters"
     show:
-      health: "%{monster}'s Health"
+      health: "Health"
     progress:
       timer: "Time Remaining:"
       invitation:
@@ -61,15 +61,14 @@ en:
     fighters:
       title: "Top Hitters"
     preview:
-      payouts: "Payouts"
-      requirements: "Requirements"
+      rewards: "Reward:"
+      requirements: "Requires:"
       available:
-        fight_time_title: "Fight Time"
-        health_title: "Health"
-        fight_time: "%{amount} Hours"
-        buttons:
-          attack: "Attack!"
+        fight_time: "Fight Time"
+        health: "Health"
+        attack: "Attack!"
       current:
+        health: "Health:"
         time_remaining: "Time Left:"
         buttons:
           engage: "Engage"
@@ -85,7 +84,7 @@ en:
       expire_time: "Time Left:"
       won: "The monster was defeated!"
       expired: "The monster escaped. Army of players did not manage to defeat it in time."
-      health: "%{monster}'s Health"
+      health: "Health:"
       buttons:
         attack: "Attack"
         reward: "Get Reward"

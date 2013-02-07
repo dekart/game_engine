@@ -5,7 +5,7 @@ module FightingSystem
         def calculate_damage(character, monster)
           [
             calculate_damage_for(monster.effect(:attack), character.defence_points, monster.minimum_response, monster.maximum_response),
-            calculate_damage_for(character.attack_points, monster.effect(:defence), monster.minimum_damage, monster.maximum_damage)
+            calculate_damage_for(character.attack_points, monster.effect(:defence), monster.monster_type.damage.begin, monster.monster_type.damage.end)
           ]
         end
 

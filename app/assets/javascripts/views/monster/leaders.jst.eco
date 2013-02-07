@@ -19,7 +19,7 @@
 <div class='payouts'>
   <h3><%= I18n.t('monsters.fight.rewards') %></h3>
 
-  <%= @.rewards @reward_data, (content)=> %>
+  <%= @.rewards @monster.monster_type.rewards, (content)=> %>
     <%= content %>
   <% end %>
 </div>

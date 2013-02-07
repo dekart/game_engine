@@ -28,7 +28,6 @@ en:
         characters: "Characters"
         promotions: "Promotions"
         item_collections: "Collections"
-        tips: "Tips"
         stories: "Feed Stories"
         translations: "Translations"
         help_pages: "Help Pages"
@@ -153,23 +152,6 @@ en:
       update:
         success: "Mission level has been updated successfully!"
 
-    tips:
-      index:
-        title: "Tips"
-        empty_set: "No tips"
-        controls:
-          new: "Add Tip"
-          edit: "Edit"
-      new:
-        title: "New Tip"
-        submit: "Create"
-      create:
-        success: "Tip has been created successfully!"
-      edit:
-        title: "Edit Tip"
-        submit: "Update"
-      update:
-        success: "Tip has been updated successfully!"
     promotions:
       index:
         title: "Promotions"

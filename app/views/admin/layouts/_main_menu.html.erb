@@ -15,7 +15,7 @@
         ]
       ],
       [
-        :content, 
+        :content,
         [
           [:character_types,    admin_character_types_path],
           [:missions,           admin_missions_path, %w{missions mission_groups mission_levels}],
@@ -32,7 +32,6 @@
       [
         :support,
         [
-          [:tips,             admin_tips_path],
           [:help_pages,       admin_help_pages_path],
           [:promotions,       admin_promotions_path],
           [:messages,         admin_messages_path],
@@ -51,7 +50,7 @@
     ].each do |group, links| %>
       <div class="item_group">
         <h3><%= t(".#{group}") %></h3>
-        
+
         <% links.each do |link| %>
           <%= admin_menu_link(*link) %>
         <% end %>

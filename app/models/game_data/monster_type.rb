@@ -8,12 +8,49 @@ module GameData
       end
     end
 
+    PICTURE_FORMATS = %w{small stream}
+
     attr_accessor :level, :fight_time, :respawn_time, :health, :damage, :response, :reward_collectors, :effects
 
     def initialize(key)
       super
 
       @effects = {}
+    end
+
+    def name
+      I18n.t("data.monsters.#{ @key }.name")
+    end
+
+    def description
+      I18n.t("data.monsters.#{ @key }.description", :default => '')
+    end
+
+    def visible?(character)
+      super and (level.nil? or character.level > level)
+    end
+
+    def locked_for?(character)
+      level and character.level < level
+    end
+
+    def as_json(*args)
+      super.merge!(
+        :name => name,
+        :description => description,
+        :pictures => pictures,
+        :fight_time => fight_time,
+        :health => health,
+        :damage => [damage.begin, damage.end],
+        :multiplayer    => tags.include?(:multiplayer)
+      )
+    end
+
+    def as_json_for(character)
+      as_json.merge!(
+        :requirements => requirements(character),
+        :rewards => preview_reward_on(:victory, character) # FIXME: detect which trigger we should use
+      )
     end
   end
 end

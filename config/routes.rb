@@ -62,10 +62,6 @@ GameEngine::Application.routes.draw do
       end
     end
 
-    resources :tips do
-      put 'change_state', :on => :member
-    end
-
     resources :translations
 
     resources :character_types do
@@ -283,7 +279,7 @@ GameEngine::Application.routes.draw do
   resources :monsters do
     member do
       post 'reward'
-      match 'status'  
+      match 'status'
       match 'fighters'
       match 'leaders'
     end

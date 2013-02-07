@@ -1,44 +1,50 @@
-<div class='monster clearfix' id='monster_<%= @monster.id %>'>
-  <div class='image'>
-    <img src='<%= @monster.image_url %>' alt='<%= @monster.name %>' title='<%= @monster.name %>' />
-  </div>
+<div class='monster clearfix' id='monster_<%= @fight.id %>'>
+  <img
+    src='<%= @fight.monster.monster_type.pictures.large %>'
+    alt='<%= @fight.monster.monster_type.name %>'
+    title='<%= @fight.monster.monster_type.name %>'
+  />
 
   <div class='info'>
-    <div class='name'><%= @monster.name %></div>
-    <div class='description'><%= @monster.description %></div>
-  </div>
+    <div class='name'><%= @fight.monster.monster_type.name %></div>
+    <div class='description'><%= @fight.monster.monster_type.description %></div>
 
-  <%= @rewards @monster.reward, (content)=> %>
-    <div class="payouts info">
-      <h3><%= I18n.t('monsters.preview.payouts') %></h3>
-      <%= content %>
-    </div>
-  <% end %>
+    <%= @rewards @fight.monster.monster_type.reward, (content)=> %>
+      <div class="rewards">
+        <h3><%= I18n.t('monsters.preview.payouts') %></h3>
+        <%= content %>
+      </div>
+    <% end %>
 
-  <div class='info'>
     <div class='fight_time'>
       <span class='label'><%= I18n.t('monsters.preview.current.time_remaining')%></span>
       <span class='value'></span>
     </div>
 
     <div class='health'>
-      <div class='text'><%= I18n.t('monsters.show.health', {'monster' : @monster.name}) %>
-        : <span class='value'><%= @monster.hp %>/<%= @monster.health %></span>
+      <div class='text'>
+        <%= I18n.t('monsters.preview.current.health') %>
+
+        <span class='value'>
+          <%= @fight.hp %>/<%= @fight.monster.monster_type.health %>
+        </span>
       </div>
 
-      <div class='progress_bar'>
-        <div class='percentage <%= 'complete' if @percentage >= 100 %>' style='width:<%= @percentage_text %>%'></div>
-      </div>
+      <%= @progressBar(@fight.hp / @fight.monster.monster_type.health * 100) %>
     </div>
   </div>
 
-  <div class='controls'>
-    <% if @monster.state == 'progress':%>
-      <a href='#' class='engage button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.current.buttons.engage') %></span></a>
-    <% else if monster.state == 'expired' || fight.reward_collectable == false: %>
-      <a href='#' class='view button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.current.buttons.view') %></span></a>
-    <% else: %>
-      <a href='#' class='reward button' data-id="<%= @monster.id %>"><span><%= I18n.t('monsters.preview.completed.buttons.reward') %></span></a>
-    <% end %>
-  </div>
+  <% if @fight.monster.state == 'progress': %>
+    <button class='engage' data-id="<%= @fight.id %>">
+      <%= I18n.t('monsters.preview.current.buttons.engage') %>
+    </button>
+  <% else if @fight.monster.state == 'expired' || @fight.reward_collectable == false: %>
+    <button class='view' data-id="<%= @fight.id %>">
+      <%= I18n.t('monsters.preview.current.buttons.view') %>
+    </button>
+  <% else: %>
+    <button class='reward' data-id="<%= @fight.id %>">
+      <%= I18n.t('monsters.preview.completed.buttons.reward') %>
+    </button>
+  <% end %>
 </div>

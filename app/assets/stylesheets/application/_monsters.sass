@@ -5,13 +5,16 @@
     border: $main_border
     padding: 15px
 
-    .image
+    & > img
+      display: block
       float: left
 
     .info
+      @include clearfix
+
       margin-left: 220px
       margin-bottom: 15px
-      
+
       .name
         font-size: 16px
         font-weight: bold
@@ -19,10 +22,10 @@
 
       .description
         font-size: 14px
-        
+
       .health, .fight_time
         line-height: 25px
-        
+
         .label
           font-weight: bold
         .value
@@ -37,33 +40,15 @@
 
       .fight_time
         float: right
-        
+
         .value
           background-image: $asset_icons_time
-
-    .payouts
-      .payout
-        clear: none
-
-    .requirements
-      .requirement
-        clear: none
 
     .status
       font-weight: bold
 
-    .button
-      &.attack
-        +button($monster_list_attack_icon, $monster_list_attack_width)
-
-      &.engage
-        +button($monster_list_engage_icon, $monster_list_engage_width)
-
-      &.reward
-        +button($monster_list_reward_icon, $monster_list_reward_width)
-
-      &.view
-        +button($monster_list_view_icon, $monster_list_view_width)
+    button
+      margin-left: 220px
 
 #monster
   table
@@ -84,7 +69,7 @@
 
   .health
     margin-bottom: 10px
-    
+
     .progress_bar
       margin-top: 5px
 
@@ -96,7 +81,7 @@
 
     .attack
       +button($monster_attack_icon)
-    
+
     .power_attack
       +button($monster_attack_icon)
 
@@ -119,7 +104,7 @@
 
     .current
       background-color: $current_item_bg_color
-      
+
     .collectors_border
       border-top: $monster_collectors_border
 

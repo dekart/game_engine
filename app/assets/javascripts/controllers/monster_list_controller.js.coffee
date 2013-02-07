@@ -8,6 +8,8 @@ window.MonsterListController = class extends BaseController
     @controller ?= new @()
     @controller.show()
 
+  prepareHelpers: ->
+    super(MonstersHelper)
 
   setupEventListeners: ->
     @.unbindEventListeners()
@@ -36,6 +38,8 @@ window.MonsterListController = class extends BaseController
     @active   = response.active
     @locked   = response.locked
     @monster_types = response.monster_types
+
+    console.log(response)
 
     @.render()
 

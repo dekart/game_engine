@@ -28,8 +28,6 @@ window.MonsterController = class extends BaseController
     @monster   = Monster.create(monster_data)
     @fight     = MonsterFight.create(fight_data)
 
-    @reward_data = monster_data.reward
-
     @fighters  = MonsterFighter.populate(fighters_data)
     @fighter_coords = MonsterFighter.coords()
     @leaders = leaders_data

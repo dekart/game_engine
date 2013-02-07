@@ -8,10 +8,6 @@ class Character
 
         has_many :monsters,
           :through  => :monster_fights
-
-        has_many :monster_types,
-          :through  => :monsters,
-          :extend   => MonsterTypeAssociationExtension
       end
     end
 

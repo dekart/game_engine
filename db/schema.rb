@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121220113614) do
+ActiveRecord::Schema.define(:version => 20130207092611) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -135,17 +135,17 @@ ActiveRecord::Schema.define(:version => 20121220113614) do
   create_table "characters", :force => true do |t|
     t.integer  "user_id",                                                                           :null => false
     t.string   "name",                     :limit => 100,        :default => ""
-    t.integer  "basic_money"
-    t.integer  "vip_money"
+    t.integer  "basic_money",                                    :default => 0
+    t.integer  "vip_money",                                      :default => 0
     t.integer  "level",                                          :default => 1
     t.integer  "experience",                                     :default => 0
-    t.integer  "points"
-    t.integer  "attack"
-    t.integer  "defence"
+    t.integer  "points",                                         :default => 0
+    t.integer  "attack",                                         :default => 0
+    t.integer  "defence",                                        :default => 0
     t.integer  "hp",                                             :default => 100
-    t.integer  "health"
+    t.integer  "health",                                         :default => 0
     t.integer  "ep",                                             :default => 10
-    t.integer  "energy"
+    t.integer  "energy",                                         :default => 0
     t.text     "inventory_effects"
     t.datetime "hp_updated_at"
     t.datetime "ep_updated_at"
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(:version => 20121220113614) do
     t.text     "relation_effects"
     t.integer  "current_mission_group_id"
     t.integer  "character_type_id"
-    t.integer  "stamina"
+    t.integer  "stamina",                                        :default => 0
     t.integer  "sp",                                             :default => 10
     t.datetime "sp_updated_at"
     t.text     "placements_old",           :limit => 2147483647
@@ -555,6 +555,12 @@ ActiveRecord::Schema.define(:version => 20121220113614) do
 
   add_index "mission_ranks", ["character_id", "mission_id"], :name => "index_mission_ranks_on_character_id_and_mission_id", :unique => true
 
+  create_table "mission_states", :force => true do |t|
+    t.integer "character_id"
+    t.integer "current_group_id"
+    t.binary  "progress",         :limit => 16777215
+  end
+
   create_table "missions", :force => true do |t|
     t.string   "name",                              :default => "", :null => false
     t.text     "description"
@@ -787,13 +793,6 @@ ActiveRecord::Schema.define(:version => 20121220113614) do
 
   add_index "story_visits", ["character_id", "publisher_id", "reference_id"], :name => "index_on_character_publisher_reference"
 
-  create_table "tips", :force => true do |t|
-    t.text     "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "state",      :limit => 50
-  end
-
   create_table "translations", :force => true do |t|
     t.string   "key",        :default => "", :null => false
     t.text     "value"
@@ -806,7 +805,6 @@ ActiveRecord::Schema.define(:version => 20121220113614) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "show_fan_specials",                     :default => true
-    t.boolean  "show_tips",                             :default => true
     t.string   "reference",              :limit => 100, :default => "",      :null => false
     t.integer  "referrer_id"
     t.string   "access_token",                          :default => "",      :null => false
