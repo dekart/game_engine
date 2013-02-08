@@ -701,11 +701,30 @@ class ConvertContentToDsl < ActiveRecord::Migration
       t.binary :progress, :limit => 64.kilobytes
     end
 
-    announce 'Updating IDs...'
+    announce 'Updating character data...'
 
     GameData::CharacterType.collection.clear
     GameData::CharacterType.collection.each do |key, type|
-      Character.where(:character_type_id => ids_to_keys[:character_types].key(key.to_s)).update_all :character_type_id => type.id
+      Character.where(:character_type_id => ids_to_keys[:character_types].key(key.to_s)).update_all(
+        :character_type_id => type.id
+      )
+    end
+
+    ActiveRecord::Base.connection.select_all(
+      %{
+        SELECT monster_fights.character_id, monster_type_id, count(reward_collected) as rewards
+        FROM monster_fights
+          LEFT JOIN monsters ON monster_fights.monster_id = monsters.id
+        WHERE reward_collected = true
+        GROUP BY character_id, monster_type_id
+        ORDER BY character_id
+      }
+    ).each do |record|
+      $redis.hincrby(
+        "character_#{ record['character_id'] }_monster_rewards",
+        ids_to_keys[:monster_types][record['monster_type_id']],
+        record['rewards']
+      )
     end
 
     # GameData::MissionGroup.collection.clear
@@ -723,6 +742,10 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
     drop_table :mission_states
   end
+
+
+
+
 
   def payouts_to_dsl(variable, payouts, trigger, &block)
     code = ''
