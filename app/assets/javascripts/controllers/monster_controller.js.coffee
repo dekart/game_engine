@@ -6,14 +6,17 @@ window.MonsterController = class extends BaseController
     '.leaders'  : 'leaders_el'
 
   @load: (id)->
-    $.get("/monsters/#{id}", (response)=>
+    transport.one('monster_loaded', (response)=>
+      new @(response)
+    )
+    transport.send('load_monster', id)
+
+  @create: (id)->
+    transport.one('monster_loaded',
       new @(response)
     )
 
-  @create: (id)->
-    $.post("/monsters", {monster_type_id: id}, (response)=>
-      new @(response)
-    )
+    transport.send('create_monster', id)
 
   constructor: (data)->
     super

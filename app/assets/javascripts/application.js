@@ -7,6 +7,7 @@
 //= require i18n/translations
 //= require browser_detect
 //= require visibility
+//= require spine/spine
 
 //= require ./settings
 //= require_tree ./libs
@@ -24,7 +25,6 @@
 //= require ./application/chat
 
 // Spine-based part of the application
-//= require spine/spine
 //= require_tree ./models
 //= require_tree ./helpers
 //= require_tree ./controllers

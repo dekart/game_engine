@@ -28,7 +28,9 @@ window.MonsterListController = class extends BaseController
   show: ->
     @loading = true
 
-    $.getJSON('/monsters', @.onDataLoad)
+    transport.one('monsters_loaded', @.onDataLoad)
+
+    transport.send('load_monsters')
 
 
   onDataLoad: (response)=>
@@ -55,11 +57,12 @@ window.MonsterListController = class extends BaseController
 
 
   onFinishedFightsClick: (e)=>
-    $.get("/monsters/finished", (response)=>
+    transport.one('finished_monsters_loaded', (response)=>
       @finished_fights_el.html(
         @.renderTemplate("monsters/preview/finished", _.extend({finished: response.finished}, @))
       )
     )
+    transport.send('load_finished_monsters')
 
 
   onEngageClick: (e)=>
