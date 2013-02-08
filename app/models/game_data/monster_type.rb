@@ -40,13 +40,14 @@ module GameData
 
     def as_json(*args)
       super.merge!(
-        :name => name,
-        :description => description,
-        :pictures => pictures,
-        :fight_time => fight_time,
-        :health => health,
-        :damage => [damage.begin, damage.end],
-        :multiplayer    => tags.include?(:multiplayer)
+        :name         => name,
+        :description  => description,
+        :pictures     => pictures,
+        :level        => level,
+        :fight_time   => fight_time,
+        :health       => health,
+        :damage       => [damage.begin, damage.end],
+        :multiplayer  => tags.include?(:multiplayer)
       )
     end
 
