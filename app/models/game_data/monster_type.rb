@@ -34,6 +34,10 @@ module GameData
       level and character.level < level
     end
 
+    def average_damage
+      (damage.end - damage.begin) / 2
+    end
+
     def as_json(*args)
       super.merge!(
         :name => name,
@@ -49,7 +53,10 @@ module GameData
     def as_json_for(character)
       as_json.merge!(
         :requirements => requirements(character),
-        :rewards => preview_reward_on(:victory, character) # FIXME: detect which trigger we should use
+        :rewards => preview_reward_on(
+          character.monsters.rewarded_monster_types.include?(self) ? :repeat_victory : :victory,
+          character
+        )
       )
     end
   end

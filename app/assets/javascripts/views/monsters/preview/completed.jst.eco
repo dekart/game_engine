@@ -1,0 +1,25 @@
+<div class='monster clearfix' id='monster_<%= @fight.id %>'>
+  <img
+    src='<%= @fight.monster.monster_type.pictures.small %>'
+    alt='<%= @fight.monster.monster_type.name %>'
+    title='<%= @fight.monster.monster_type.name %>'
+  />
+
+  <div class='info'>
+    <div class='name'><%= @fight.monster.monster_type.name %></div>
+    <div class='description'><%= @fight.monster.monster_type.description %></div>
+    <div class='status'>
+      <%= I18n.t("monsters.preview.completed.#{ @fight.monster.state }") %>
+    </div>
+  </div>
+
+  <% if @fight.reward_collectable: %>
+    <button class='reward' data-id="<%= @fight.monster.id %>">
+      <%= I18n.t('monsters.preview.completed.buttons.reward') %>
+    </button>
+  <% else: %>
+    <button class='view' data-id="<%= @fight.monster.id %>">
+      <%= I18n.t('monsters.preview.completed.buttons.view') %>
+    </button>
+  <% end %>
+</div>

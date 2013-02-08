@@ -25,7 +25,7 @@ class Monster
       @leaders
     end
 
-    def leaders_as_json
+    def as_json(*args)
       list = [].tap do |r|
         leaders.to_a.map do |c, value|
           r << {

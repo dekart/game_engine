@@ -5,7 +5,7 @@
     <h2><%= I18n.t("monsters.index.previous") %></h2>
 
     <% for fight in @defeated: %>
-      <%= @completed(fight) %>
+      <%= @completedMonster(fight) %>
     <% end %>
   </div>
 <% end %>
@@ -16,9 +16,9 @@
 
     <% for fight in @active: %>
       <% if fight.monster.state == "progress": %>
-        <%= @current(fight) %>
+        <%= @currentMonster(fight) %>
       <% else: %>
-        <%= @completed(fight) %>
+        <%= @completedMonster(fight) %>
       <% end %>
     <% end %>
   </div>
@@ -29,7 +29,7 @@
     <h2><%= I18n.t("monsters.index.available") %></h2>
 
     <% for type in @monster_types: %>
-      <%= @available(type, false) %>
+      <%= @availableMonster(type, false) %>
     <% end %>
   </div>
 <% end %>
@@ -38,10 +38,10 @@
   <div id="locked_monster" class="monster_list clearfix">
     <h2><%= I18n.t("monsters.index.locked", {"level" : @locked.level}) %></h2>
 
-    <%= @available(@locked, true) %>
+    <%= @availableMonster(@locked, true) %>
   </div>
 <% end %>
 
 <div id='finished_fights'>
-  <a href='#'><%= I18n.t("monsters.index.finished") %></a>
+  <button><%= I18n.t("monsters.index.finished") %></button>
 </div>

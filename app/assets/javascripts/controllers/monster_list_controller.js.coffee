@@ -39,8 +39,6 @@ window.MonsterListController = class extends BaseController
     @locked   = response.locked
     @monster_types = response.monster_types
 
-    console.log(response)
-
     @.render()
 
 
@@ -59,7 +57,7 @@ window.MonsterListController = class extends BaseController
   onFinishedFightsClick: (e)=>
     $.get("/monsters/finished", (response)=>
       @finished_fights_el.html(
-        @.renderTemplate("monsters/finished", finished: response.finished)
+        @.renderTemplate("monsters/preview/finished", _.extend({finished: response.finished}, @))
       )
     )
 
@@ -67,7 +65,7 @@ window.MonsterListController = class extends BaseController
   onEngageClick: (e)=>
     id = $(e.currentTarget).data("id")
 
-    MonsterController.show(id)
+    MonsterController.load(id)
 
 
   onAttackClick: (e)=>

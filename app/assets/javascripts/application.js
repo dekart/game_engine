@@ -8,6 +8,7 @@
 //= require browser_detect
 //= require visibility
 
+//= require ./settings
 //= require_tree ./libs
 //= require ./application/signed_request
 //= require ./application/link_lock

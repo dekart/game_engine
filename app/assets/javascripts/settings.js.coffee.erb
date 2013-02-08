@@ -1,0 +1,7 @@
+window.Settings = {
+  character:
+    upgradeableAttributes: <%= Character::UPGRADABLE_ATTRIBUTES.to_json.html_safe %>
+
+  monsters:
+    powerAttack: <%= MonsterFight::POWER_ATTACK %>
+}

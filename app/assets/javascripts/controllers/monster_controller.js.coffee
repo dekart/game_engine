@@ -1,36 +1,32 @@
 #= require controllers/base_controller
 
 window.MonsterController = class extends BaseController
-  el: "#monster"
-
   elements:
     '.fight'    : 'fight_el'
     '.leaders'  : 'leaders_el'
 
-  @show: (id)->
+  @load: (id)->
     $.get("/monsters/#{id}", (response)=>
-      $("#page").html(JST["views/monster/monster"])
-
-      @controller = new @(response.monster, response.fight, response.fighters, response.leaders)
+      new @(response)
     )
 
   @create: (id)->
-    $.get("/monsters/new?monster_type_id=#{id}", (response)=>
-      $("#page").html(JST["views/monster/monster"])
-
-      @controller = new @(response.monster, response.fight, response.fighters, response.leaders)
+    $.post("/monsters", {monster_type_id: id}, (response)=>
+      new @(response)
     )
 
-  constructor: (monster_data, fight_data, fighters_data, leaders_data)->
+  constructor: (data)->
     super
 
     @character = Character.first()
-    @monster   = Monster.create(monster_data)
-    @fight     = MonsterFight.create(fight_data)
+    @monster   = Monster.create(data.fight.monster)
+    @fight     = MonsterFight.create(data.fight)
 
-    @fighters  = MonsterFighter.populate(fighters_data)
+    @fighters  = MonsterFighter.populate(data.fighters)
     @fighter_coords = MonsterFighter.coords()
-    @leaders = leaders_data
+    @leaders = data.leaders
+
+    @boosts = data.boosts
 
     @.render()
 
@@ -43,10 +39,12 @@ window.MonsterController = class extends BaseController
 
     Monster.bind('save', @.onMonsterDataUpdate)
 
+    @el.on('click', 'button.reward:not(.disabled)', @.onRewardClick)
 
   unbindEventListeners: ->
     Monster.unbind('save', @.onMonsterDataUpdate)
 
+    @el.off('click', 'button.reward:not(.disabled)', @.onRewardClick)
 
   setupAutoUpdate: ->
     updateLeaders = ()=>
@@ -82,24 +80,26 @@ window.MonsterController = class extends BaseController
 
 
   render: ()->
+    @html(@.renderTemplate("monsters/monster", @))
+
+    $('#page').html(@el)
+
     @.renderFight()
     @.renderLeaders()
 
 
   renderFight: ()=>
     @fight_el.html(
-      @.renderTemplate('monster/fight', @)
+      @.renderTemplate('monsters/monster/fight', @)
     )
     @.renderActions()
 
     new VisualTimer([@fight_el.find('.fight_time .value')]).start(@monster.time_remaining)
 
-    @fight_el.find('a.reward').click(@.onRewardClick)
-
 
   renderActions: ()=>
     @fight_el.find('.actions').html(
-      @.renderTemplate('monster/actions', @)
+      @.renderTemplate('monsters/monster/actions', @)
     )
 
     @fight_el.find('.actions a').click(@.onActionClick)
@@ -107,17 +107,17 @@ window.MonsterController = class extends BaseController
 
   renderLeaders: ()=>
     @leaders_el.html(
-      @.renderTemplate('monster/leaders', @)
+      @.renderTemplate('monsters/monster/leaders', @)
     )
 
 
   renderMonsterHealthUpdate: ()=>
     @fight_el.find('.monster .damage_bar .text').html(
-      "#{@monster.hp} / #{@monster.health}"
+      "#{@monster.hp} / #{@monster.monster_type.health}"
     )
 
     @fight_el.find('.monster .damage_bar .percentage').animate(
-      { width: "#{ @monster.hp / @monster.health * 100 }%" },
+      { width: "#{ @monster.healthPercentage() }%" },
       500
     )
 
@@ -224,8 +224,8 @@ window.MonsterController = class extends BaseController
 
     link = if e.target.nodeName == "A" then $(e.target) else $(e.target).parent('a')
 
-    @fight_el.find('.actions').addClass('locked')
-    @fight_el.find('.actions a').unbind('click')
+    #@fight_el.find('.actions').addClass('locked')
+    #@fight_el.find('.actions a').unbind('click')
 
     $.post("/monsters/#{@monster.id}", {
         '_method': 'put',
@@ -253,14 +253,14 @@ window.MonsterController = class extends BaseController
     $(document).trigger('attack_success')
 
     $(document).queue('monster_fight', (next)=>
-      @.renderDamage(data.character_damage, data.monster_damage)
+      @.renderDamage(data.result.character_damage, data.result.monster_damage)
 
       @.animateAction(action_link)
 
-      @monster.updateAttributes(hp: Math.max(@monster.hp - data.monster_damage, 0))
+      @monster.updateAttributes(hp: Math.max(@monster.hp - data.result.monster_damage, 0))
 
       @fight.updateAttributes(
-        damage: @fight.damage + data.monster_damage,
+        damage: @fight.damage + data.result.monster_damage,
       )
 
       next()
@@ -290,15 +290,13 @@ window.MonsterController = class extends BaseController
 
 
   onRewardClick: (e)=>
-    e.preventDefault()
-
     button = $(e.currentTarget)
     button.addClass('disabled')
 
     unless @fight.reward_collected
       $.post("/monsters/#{@monster.id}/reward", {}, (response)=>
         button.parent().after(
-          @.renderTemplate('monster/rewards', _.extend(@, { fight_rewards: response.rewards }))
+          @.renderTemplate('monsters/monster/rewards', _.extend(@, { fight_rewards: response.rewards }))
         )
 
         button.remove()

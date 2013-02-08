@@ -6,8 +6,6 @@ window.Character = class extends Spine.Model
     'health_points', 'hp', 'time_to_hp_restore',
     'notifications_count', 'facebook_id'
 
-  @upgradeableAttributes: <%= Character::UPGRADABLE_ATTRIBUTES.to_json.html_safe %>
-
   @update: (values)->
     character = @first() || @create()
 

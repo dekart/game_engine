@@ -70,15 +70,15 @@ class Character < ActiveRecord::Base
 
   restorable_attribute :hp,
     :limit          => :health_points,
-    :restore_period => Setting.i(:character_health_restore_period),
+    :restore_period => 45.seconds,
     :restore_bonus  => :health_restore_bonus
   restorable_attribute :ep,
     :limit          => :energy_points,
-    :restore_period => Setting.i(:character_energy_restore_period),
+    :restore_period => 45.seconds,
     :restore_bonus  => :energy_restore_bonus
   restorable_attribute :sp,
     :limit          => :stamina_points,
-    :restore_period => Setting.i(:character_stamina_restore_period),
+    :restore_period => 45.seconds,
     :restore_bonus  => :stamina_restore_bonus
 
   after_validation :apply_character_type_defaults, :on => :create

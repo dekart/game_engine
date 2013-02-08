@@ -1,4 +1,6 @@
 class Monster < ActiveRecord::Base
+  REMOVE_AFTER = 72.hours
+
   belongs_to  :character
 
   belongs_to :killer, :class_name => "Character"
@@ -30,9 +32,6 @@ class Monster < ActiveRecord::Base
 
     after_transition :on => [:win, :expire], :do => [:expire_app_requests, :update_fight_lists]
   end
-
-  delegate :name, :pictures, :pictures?, :health, :level, :experience, :money, :requirements, :effects, :effects?, :effect, :description,
-    :average_response, :to => :monster_type
 
   validates_presence_of :character, :monster_type
 
@@ -75,11 +74,7 @@ class Monster < ActiveRecord::Base
   end
 
   def remove_at
-    if defeated_at
-      defeated_at + monster_type.reward_time.hours
-    else
-      expire_at + monster_type.respawn_time.hours
-    end
+    (defeated_at || expire_at) + REMOVE_AFTER
   end
 
   def chat_id

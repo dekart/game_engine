@@ -1,10 +1,10 @@
 class MonstersController < ApplicationController
   def index
-    @defeated_monster_fights = current_character.monster_fights.defeated
-    @active_monster_fights   = current_character.monster_fights.active
+    @defeated_monster_fights = current_character.monsters.defeated_fights
+    @active_monster_fights   = current_character.monsters.active_fights
 
-    @locked_monster = GameData::MonsterType.select{|t| t.locked_for?(current_character) }.sort_by{|t| t.level.to_i }.first
-    @monster_types  = GameData::MonsterType.select{|t| t.visible?(current_character) }
+    @locked_monster = current_character.monsters.locked_monster_types.first
+    @monster_types  = current_character.monsters.available_monster_types
 
     render :json => {
       :defeated => @defeated_monster_fights.as_json,
@@ -15,7 +15,7 @@ class MonstersController < ApplicationController
   end
 
   def finished
-    @finished_monster_fights = current_character.monster_fights.finished
+    @finished_monster_fights = current_character.monsters.finished_fights
 
     render :json => {
       :finished => @finished_monster_fights.as_json
@@ -26,20 +26,20 @@ class MonstersController < ApplicationController
     if params[:key].present?
       @monster = Monster.find(encryptor.decrypt(params[:key].to_s))
     else
-      @monster = current_character.monsters.find(params[:id])
+      @monster = current_character.monsters[params[:id]]
     end
 
     @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
     render :json => {
-      :monster  => @monster.as_json,
       :fight    => @fight.as_json,
       :fighters => @monster.fighters(current_character).as_json,
-      :leaders  => @monster.damage.leaders_as_json
+      :leaders  => @monster.damage.as_json,
+      :boosts   => boosts
     }
   end
 
-  def new
+  def create
     @monster_type = GameData::MonsterType[params[:monster_type_id]]
 
     @monster = current_character.monster_fights.own.current.by_type(@monster_type).first
@@ -53,10 +53,10 @@ class MonstersController < ApplicationController
       @fight = @monster.monster_fights.find_or_initialize_by_character_id(current_character.id)
 
       render :json => {
-        :monster  => @monster.as_json,
         :fight    => @fight.as_json,
         :fighters => @monster.fighters(current_character).as_json,
-        :leaders  => @monster.damage.leaders_as_json
+        :leaders  => @monster.damage.as_json,
+        :boosts   => boosts
       }
     end
   end
@@ -72,11 +72,10 @@ class MonstersController < ApplicationController
 
     if @fight.errors.empty?
       render :json => {
-        :success          => true,
-        :monster_damage   => @fight.monster_damage,
-        :character_damage => @fight.character_damage,
-        :boosts           => @fight.boosts,
-        :character        => @fight.character.as_json_for_overview
+        :success    => true,
+        :result     => @fight.as_json_for_attack,
+        :boosts     => boosts,
+        :character  => @fight.character.as_json_for_overview
       }
     else
       render :json => {
@@ -88,12 +87,11 @@ class MonstersController < ApplicationController
 
   def reward
     @fight = current_character.monster_fights.find_by_monster_id(params[:id])
-    triggers = @fight.payout_triggers
 
     result = @fight.collect_reward!
 
     render :json => {
-      :rewards => @fight.payouts
+      :rewards => result
     }
   end
 
@@ -102,9 +100,7 @@ class MonstersController < ApplicationController
 
     render :json => {
       :hp             => @monster.hp,
-      :time_remaining => @monster.time_remaining,
-      :image_url      => @monster.pictures.url(:small),
-      :description    => @monster.description
+      :time_remaining => @monster.time_remaining
     }
   end
 
@@ -122,5 +118,14 @@ class MonstersController < ApplicationController
     render :json => {
       :leaders => @monster.damage.leaders_as_json
     }
+  end
+
+  private
+
+  # FIXME: improper place for this
+  def boosts
+    current_character.boosts.for(:monster, :attack).
+    sort_by{ |i| i.item.effect(:damage) }.reverse[0..1].
+    map{ |i| [i.item_id, i.amount, i.item.effect(:damage), i.pictures.url(:medium)] }
   end
 end

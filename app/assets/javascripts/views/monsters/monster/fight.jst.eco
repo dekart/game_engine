@@ -1,7 +1,9 @@
 <% if @monster.fighting(): %>
-  <div class='progress' style='background-image: url(<%= @monster.image_url %>)'>
-    <div class='character clearfix' style='background-image: url(<%= @character.image_url() %>)'>
-
+  <div class='progress' style="background-image: url('<%= @monster.monster_type.pictures.large %>');">
+    <div
+      class='character clearfix'
+      style='background-image: url(<%= @fbProfilePicPath(@character.facebook_id, 'normal') %>)'
+    >
       <div class="damage"></div>
     </div>
 
@@ -18,13 +20,13 @@
     <div class='fighter_attack'></div>
     <div class='character_attack'></div>
 
-    <h1><%= @monster.name %></h1>
+    <h1><%= @monster.monster_type.name %></h1>
 
     <div class='monster clearfix'>
 
       <div class='damage_bar'>
-        <div class="text"><%= "#{@monster.hp} / #{@monster.health}" %></div>
-        <div class='percentage' style='width: <%= @monster.hp / @monster.health * 100 %>%'></div>
+        <div class="text"><%= "#{@monster.hp} / #{@monster.monster_type.health}" %></div>
+        <div class='percentage' style='width: <%= @monster.healthPercentage() %>%'></div>
         <div class='casting'></div>
       </div>
 
@@ -40,18 +42,18 @@
     </div>
   </div>
 <% else: %>
-  <div class='finished' style='background-image: url(<%= @monster.image_url %>)'>
+  <div class='finished' style='background-image: url(<%= @monster.monster_type.pictures.large %>)'>
     <div class='monster clearfix'>
-      <h1><%= @monster.name %></h1>
+      <h1><%= @monster.monster_type.name %></h1>
 
-      <div class='description'><%=@safe @monster.description %></div>
+      <div class='description'><%=@safe @monster.monster_type.description %></div>
 
       <% if @monster.hp == 0: %>
-        <div class="controls clearfix">
+        <div class="buttons">
           <% unless @fight.reward_collected: %>
-            <a href='#' class='reward button'>
-              <span><%= I18n.t('monsters.fight.buttons.reward') %></span>
-            </a>
+            <button class='reward'>
+              <%= I18n.t('monsters.fight.buttons.reward') %>
+            </button>
           <% end %>
 
           <%= @publish_button('monsters.fight.buttons.publish', type: 'monster_defeated', name: @monster.name, image: @monster.stream_image_url) %>

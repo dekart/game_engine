@@ -8,7 +8,7 @@
   </div>
 
   <div class="attributes">
-    <% for attribute in Character.upgradeableAttributes: %>
+    <% for attribute in Settings.character.upgradeableAttributes: %>
       <div class="attribute <%= attribute %>" data-attribute="<%= attribute %>">
         <div class="name"><%= I18n.t("activerecord.attributes.character.#{ attribute }") %></div>
         <% if @changes[attribute] and @changes[attribute] > 0: %>

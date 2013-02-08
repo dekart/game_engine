@@ -5,10 +5,10 @@
 <a class="attack" data-power="true"
   data-tooltip-content="<%= @fight.action_tooltip(0, true) %>"
 >
-  <span><%= @fight.power_attack_factor %></span>
+  <span><%= Settings.monsters.powerAttack %></span>
 </a>
 
-<% for boost in @fight.boosts: %>
+<% for boost in @boosts: %>
   <a class='boost' data-boost='<%= boost[0] %>'
     data-tooltip-content="<%= @fight.action_tooltip(boost[2], false) %>"
   >

@@ -27,6 +27,8 @@ module GameData
           else
             collection[key.to_sym]
           end
+        when Array
+          key.map{|k| self[k] }
         end
       end
 

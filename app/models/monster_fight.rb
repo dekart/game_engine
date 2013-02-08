@@ -1,4 +1,6 @@
 class MonsterFight < ActiveRecord::Base
+  POWER_ATTACK = 5
+
   belongs_to :character
   belongs_to :monster
 
@@ -24,7 +26,7 @@ class MonsterFight < ActiveRecord::Base
   cattr_reader :damage_system
   @@damage_system = FightingSystem::PlayerVsMonster::Simple
 
-  attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :payouts, :boost
+  attr_reader :experience, :money, :character_damage, :monster_damage, :stamina, :reward, :boost
 
   delegate :monster_type, :time_remaining, :to => :monster
 
@@ -60,16 +62,26 @@ class MonsterFight < ActiveRecord::Base
 
       @boost = character.boosts.for(:monster, :attack).detect{ |b| b.item_id == boost }
 
-      @experience = monster.experience
-      @money      = monster.money
+      if power_attack
+        @stamina = POWER_ATTACK
 
-      @stamina = 1
+        @character_damage *= POWER_ATTACK
+        @monster_damage *= POWER_ATTACK
 
-      @payouts = monster_type.applicable_payouts.apply(character, power_attack ? :repeat_success : :success)
+        @reward = monster_type.apply_reward_on(:power_attack, character)
+      else
+        @stamina = 1
 
-      power_attack_effect if power_attack
+        @reward = monster_type.apply_reward_on(:attack, character)
+      end
 
-      attack_actions
+      character.sp  -= @stamina
+      character.hp  -= @character_damage
+
+      @monster_damage += @boost.effect(:damage) if @boost
+      monster.hp    -= @monster_damage
+
+      self.damage   += @monster_damage
 
       character.total_monsters_damage += @monster_damage
 
@@ -113,31 +125,34 @@ class MonsterFight < ActiveRecord::Base
   end
 
   def stamina_limit(power_attack = false)
-    power_attack ? Setting.i(:monster_fight_power_attack_factor) : 1
+    power_attack ? POWER_ATTACK : 1
   end
 
   def hp_average_response_limit(power_attack = false)
-    monster.average_response * (power_attack ? Setting.i(:monster_fight_power_attack_factor) : 1)
+    monster.monster_type.average_damage * (power_attack ? POWER_ATTACK : 1)
   end
 
   def collect_reward!
     return false unless reward_collectable?
 
     transaction do
-      @payouts = monster_type.applicable_payouts.apply_with_result(character, payout_triggers, monster_type)
+      @reward = monster_type.apply_reward_on(
+        character.monsters.rewarded_monster_types.include?(self) ? :repeat_victory : :victory,
+        character
+      )
 
       character.save!
 
       self.reward_collected = true
 
-      character.monster_types.collected.clear_cache!
-
       save!
+
+      character.monsters.reward_collected!(self)
 
       add_to_finished_fights
     end
 
-    true
+    @reward
   end
 
   def reward_collectable?
@@ -174,12 +189,6 @@ class MonsterFight < ActiveRecord::Base
     character == monster.character
   end
 
-  def boosts
-    character.boosts.for(:monster, :attack).
-      sort_by{ |i| i.item.effect(:damage) }.reverse[0..1].
-      map{ |i| [i.item_id, i.amount, i.item.effect(:damage), i.pictures.url(:medium)] }
-  end
-
   def event_data
     {
       :reference_id => self.id,
@@ -194,55 +203,37 @@ class MonsterFight < ActiveRecord::Base
 
   def as_json
     {
-      :fight_id => self.id,
+      :id => id,
       :monster  => monster.as_json_for(character),
       :damage   => damage,
       :reward_collectable => reward_collectable?,
       :reward_collected => reward_collected?,
       :will_get_reward  => will_get_reward?,
       :time_remaining   => time_remaining,
-      :power_attack_factor => Setting.i(:monster_fight_power_attack_factor)
+    }
+  end
+
+  def as_json_for_attack
+    {
+      :monster_damage   => @monster_damage,
+      :character_damage => @character_damage,
+      :reward => @reward
     }
   end
 
   def add_to_active_fights
-    character.monster_fights.add_to_active(self)
+    character.monsters.add_to_active_fights(self)
   end
 
   def add_to_defeated_fights
-    character.monster_fights.add_to_defeated(self)
+    character.monsters.add_to_defeated_fights(self)
   end
 
   def add_to_finished_fights
-    character.monster_fights.add_to_finished(self)
+    character.monsters.add_to_finished_fights(self)
   end
 
   protected
-
-    def attack_actions
-      character.sp  -= @stamina
-
-      character.hp  -= @character_damage
-
-      @monster_damage += @boost.effect(:damage) if @boost
-      monster.hp    -= @monster_damage
-
-      self.damage   += @monster_damage
-
-      character.experience += @experience
-
-      character.charge(- @money, 0, :monster_attack)
-    end
-
-    def power_attack_effect
-      power_factor = Setting.i(:monster_fight_power_attack_factor)
-
-      @character_damage *= power_factor
-      @monster_damage *= power_factor
-      @experience *= power_factor
-      @money *= power_factor
-      @stamina *= power_factor
-    end
 
     def create_character_news
       character.news.add(:monster_fight_start, :monster_fight_id => id)

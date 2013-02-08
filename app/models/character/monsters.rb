@@ -3,119 +3,103 @@ class Character
     def self.included(base)
       base.class_eval do
         has_many :monster_fights,
-          :extend     => MonsterFightsAssociationExtension,
           :dependent  => :delete_all
-
-        has_many :monsters,
-          :through  => :monster_fights
       end
     end
 
-    module MonsterFightsAssociationExtension
-      def redis_key(name)
-        "character_#{proxy_association.owner.id}_#{name}_monster_fight_ids"
+    class State
+      def initialize(character)
+        @character = character
       end
 
-      def add_to_active(fight)
-        $redis.sadd(redis_key(:active), fight.id)
+      def locked_monster_types
+        GameData::MonsterType.select{|t| t.locked_for?(@character) }.sort_by{|t| t.level.to_i }
       end
 
-      def add_to_defeated(fight)
-        $redis.srem(redis_key(:active), fight.id)
-
-        $redis.zadd(redis_key(:defeated), fight.monster.remove_at.to_i, fight.id)
+      def available_monster_types
+        GameData::MonsterType.select{|t| t.visible?(@character) } -
+        GameData::MonsterType[recent_fights.own.pluck("monsters.monster_type_id")]
       end
 
-      def add_to_finished(fight)
-        $redis.srem(redis_key(:active), fight.id)
-        $redis.zrem(redis_key(:defeated), fight.id)
-
-        $redis.zadd(redis_key(:finished), fight.monster.remove_at.to_i, fight.id)
+      def active_fights
+        fights_by_ids(
+          $redis.smembers(fight_storage_key(:active))
+        )
       end
 
-      def active
-        where(:id => $redis.smembers(redis_key(:active))).joins(:monster).order('monsters.expire_at ASC')
+      def defeated_fights
+        fights_by_ids(
+          $redis.zrangebyscore(fight_storage_key(:defeated), Time.now.to_i, '+inf')
+        )
       end
 
-      def defeated
-        $redis.zremrangebyscore(redis_key(:defeated), 0, Time.now.to_i)
-
-        where(:id => $redis.zrange(redis_key(:defeated), 0, -1))
+      def finished_fights
+        fights_by_ids(
+          $redis.zrangebyscore(fight_storage_key(:finished), Time.now.to_i, '+inf')
+        )
       end
 
-      def finished
-        $redis.zremrangebyscore(redis_key(:finished), 0, Time.now.to_i)
+      def recent_fights
+        $redis.zremrangebyscore(fight_storage_key(:defeated), 0, Time.now.to_i)
+        $redis.zremrangebyscore(fight_storage_key(:finished), 0, Time.now.to_i)
 
-        where(:id => $redis.zrange(redis_key(:finished), 0, -1))
+        fights_by_ids(
+          $redis.smembers(fight_storage_key(:active)) +
+          $redis.zrange(fight_storage_key(:defeated), 0, -1) +
+          $redis.zrange(fight_storage_key(:finished), 0, -1)
+        )
       end
 
-      def current
-        $redis.zremrangebyscore(redis_key(:defeated), 0, Time.now.to_i)
-        $redis.zremrangebyscore(redis_key(:finished), 0, Time.now.to_i)
+      def add_to_active_fights(fight)
+        $redis.sadd(fight_storage_key(:active), fight.id)
+      end
 
-        ids = $redis.smembers(redis_key(:active)) +
-          $redis.zrange(redis_key(:defeated), 0, -1) +
-          $redis.zrange(redis_key(:finished), 0, -1)
+      def add_to_defeated_fights(fight)
+        $redis.srem(fight_storage_key(:active), fight.id)
 
-        where(:id => ids)
+        $redis.zadd(fight_storage_key(:defeated), fight.monster.remove_at.to_i, fight.id)
+      end
+
+      def add_to_finished_fights(fight)
+        $redis.srem(fight_storage_key(:active), fight.id)
+        $redis.zrem(fight_storage_key(:defeated), fight.id)
+
+        $redis.zadd(fight_storage_key(:finished), fight.monster.remove_at.to_i, fight.id)
+      end
+
+      def recent_monster_types
+        GameData::MonsterType[recent_fights.pluck('monsters.monster_type_id')]
+      end
+
+      def reward_collected!(fight)
+        $redis.hincrby(reward_storage_key, fight.monster_type.key, 1)
+      end
+
+      def rewarded_monster_types
+        GameData::MonsterType[$redis.hkeys(reward_storage_key)]
+      end
+
+      def [](monster_id)
+        ::Monster.joins(:monster_fights).where("monsters.id = ? AND monster_fights.character_id = ?", monster_id, @character.id).first
+      end
+
+      private
+
+      def fights_by_ids(ids)
+        @character.monster_fights.joins(:monster).order('monsters.expire_at ASC').where("monster_fights.id IN (?)", ids)
+      end
+
+      def fight_storage_key(state)
+        "character_#{ @character.id }_#{ state }_monster_fight_ids"
+      end
+
+      def reward_storage_key
+        "character_#{ @character.id }_monster_rewards"
       end
     end
 
-    module MonsterTypeAssociationExtension
-      class CollectedMonsterTypes
-        def initialize(character)
-          @character = character
-        end
-
-        def cache_key
-          "character_#{ @character.id }_collected_monster_types"
-        end
-
-        def ids
-          @ids ||= Rails.cache.fetch(cache_key) do
-            @character.class.connection.select_values(
-              @character.class.send(:sanitize_sql,
-                [
-                  %{
-                    SELECT DISTINCT monsters.monster_type_id
-                    FROM monsters
-                    INNER JOIN monster_fights ON (monster_fights.monster_id = monsters.id)
-                    WHERE monster_fights.character_id = ? AND monster_fights.reward_collected = ?
-                  },
-                  @character.id, true
-                ]
-              )
-            ).map{|id| id.to_i }
-          end
-        end
-
-        def clear_cache!
-          Rails.cache.delete(cache_key)
-        end
-      end
-
-      def available_for_fight
-        scope = MonsterType.with_state(:visible).where(["level <= ?", proxy_association.owner.level])
-
-        if exclude_ids = proxy_association.owner.monster_fights.own.current.collect{|m| m.monster.monster_type_id }.uniq and exclude_ids.any?
-          scope = scope.where(["id NOT IN (?)", exclude_ids])
-        end
-
-        scope
-      end
-
-      def available_in_future
-        MonsterType.with_state(:visible).where(["level > ?", proxy_association.owner.level]).order(:level)
-      end
-
-
-      def collected
-        @collected ||= CollectedMonsterTypes.new(proxy_association.owner)
-      end
-
-      def payout_triggers(type)
-        collected.ids.include?(type.id) ? [:repeat_victory] : [:victory]
-      end
+    def monsters
+      @monters ||= State.new(self)
     end
   end
 end

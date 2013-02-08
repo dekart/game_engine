@@ -24,7 +24,7 @@ class MonsterType < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
-    
+
   has_pictures :styles => [
     [:large,  "350x350>"],
     [:normal, "200x200>"],
@@ -46,15 +46,11 @@ class MonsterType < ActiveRecord::Base
     :minimum_damage, :maximum_damage, :minimum_response, :maximum_response, :maximum_reward_collectors,
     :allow_nil    => true,
     :greater_than => 0
-    
+
   def number_of_maximum_reward_collectors
     maximum_reward_collectors || Setting.i(:monsters_maximum_reward_collectors)
   end
-  
-  def average_response
-    (minimum_response + maximum_response) / 2
-  end
-  
+
   def applicable_payouts
     if global_payout = GlobalPayout.by_alias('monsters')
       payouts + global_payout.payouts
