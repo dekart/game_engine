@@ -2,8 +2,8 @@ module MissionsHelper
   def mission_list(missions)
     missions.each do |mission|
       if mission.visible?(current_character)
-        level = current_character.mission_state.level_for(mission)
-        progress = current_character.mission_state.progress_for(level)
+        level = current_character.missions.level_for(mission)
+        progress = current_character.missions.progress_for(level)
 
         yield(mission, level, progress) if !mission.tags.include?(:hide_unsatisfied) or level.requirements(current_character).satisfied?
       end

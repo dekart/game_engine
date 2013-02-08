@@ -2,7 +2,7 @@ class MissionGroupsController < ApplicationController
   def index
     @groups = GameData::MissionGroup.select{|g| g.visible?(current_character) }
 
-    @current_group = current_character.mission_state.current_group || @groups.first
+    @current_group = current_character.missions.current_group || @groups.first
 
     @missions = @current_group.missions.select{|m| m.visible?(current_character) }
 
@@ -20,7 +20,7 @@ class MissionGroupsController < ApplicationController
   def update
     group = GameData::MissionGroup[params[:id]]
 
-    current_character.mission_state.set_current_group(group)
+    current_character.missions.set_current_group(group)
 
     index
   end

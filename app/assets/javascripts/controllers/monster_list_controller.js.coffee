@@ -29,8 +29,9 @@ window.MonsterListController = class extends BaseController
     @loading = true
 
     transport.one('monsters_loaded', @.onDataLoad)
-
     transport.send('load_monsters')
+
+    @.render()
 
 
   onDataLoad: (response)=>
@@ -45,15 +46,20 @@ window.MonsterListController = class extends BaseController
 
 
   render: ()->
-    @html(
-      @.renderTemplate("monsters/list", @)
-    )
-
     $('#page').empty().append(@el)
 
-    new VisualTimer(["#monster_#{fight.monster.id} .fight_time .value"]).start(fight.time_remaining) for fight in @active
+    if @loading
+      @html(
+        I18n.t('common.loading')
+      )
+    else
+      @html(
+        @.renderTemplate("monsters/list", @)
+      )
 
-    @.setupEventListeners()
+      new VisualTimer(["#monster_#{fight.monster.id} .fight_time .value"]).start(fight.time_remaining) for fight in @active
+
+      @.setupEventListeners()
 
 
   onFinishedFightsClick: (e)=>

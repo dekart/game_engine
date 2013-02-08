@@ -68,11 +68,11 @@ module GameData
     end
 
     def as_json_for(character)
-      level = character.mission_state.level_for(self)
+      level = character.missions.level_for(self)
 
       as_json.merge!(
         :level => level.as_json.merge!(
-          :progress => character.mission_state.progress_for(level),
+          :progress => character.missions.progress_for(level),
           :requirements => level.requirements(character),
           :rewards => {
             :success => level.preview_reward_on(:success, character),

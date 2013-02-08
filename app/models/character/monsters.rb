@@ -7,7 +7,11 @@ class Character
       end
     end
 
-    class State
+    def monsters
+      @monters ||= MonsterState.new(self)
+    end
+
+    class MonsterState
       def initialize(character)
         @character = character
       end
@@ -96,10 +100,6 @@ class Character
       def reward_storage_key
         "character_#{ @character.id }_monster_rewards"
       end
-    end
-
-    def monsters
-      @monters ||= State.new(self)
     end
   end
 end

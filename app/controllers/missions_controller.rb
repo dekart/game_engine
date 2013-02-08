@@ -2,7 +2,7 @@ class MissionsController < ApplicationController
   def update
     @mission = GameData::Mission[params[:id]]
 
-    @result = current_character.mission_state.perform!(@mission)
+    @result = current_character.missions.perform!(@mission)
 
     case @result.first
     when :success
