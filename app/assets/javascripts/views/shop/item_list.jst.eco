@@ -1,5 +1,5 @@
 <% for item in Item.all(): %>
-  <div class="item" id="item_<%= item.key %>">
+  <div class="item" id="item_<%= item.key %>" data-item-id="<%= item.id %>">
     <img
       src="<%= item.pictures.medium %>"
       alt="<%= item.name %>"
@@ -22,10 +22,10 @@
       <div class="controls">
         <%= @itemAmountSelector(item) %>
 
-        <button><%= I18n.t('shop.buy') %></button>
+        <button class="buy"><%= I18n.t('shop.buy') %></button>
       </div>
 
-      <div class="requirements">
+      <div class="requires">
         <h3>
           <%= I18n.t('shop.price') %>
           <%= @itemPackage(item) %>

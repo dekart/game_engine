@@ -1,6 +1,6 @@
 window.ItemHelper =
   itemAmountSelector: (item)->
-    result = '<select>'
+    result = '<select class="amount">'
 
     for amount in [1, 5, 10, 25, 50, 100]
       result += "<option value='#{ amount }'>#{ amount }</option>"

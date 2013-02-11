@@ -14,6 +14,8 @@ window.ShopController = class extends BaseController
   setupEventListeners: ->
     @.unbindEventListeners()
 
+    @el.on('change', 'select.amount', @.onAmountSelectorChange)
+
     # @el.on('click', '#mission_group_list .mission_group', @.onClientMissionGroupClick)
     # @el.on('click', '.mission button:not(.disabled)', @.onClientMissionButtonClick)
 
@@ -21,6 +23,8 @@ window.ShopController = class extends BaseController
     # Mission.bind('performed', @.onDataMissionPerform)
 
   unbindEventListeners: ->
+    @el.off('change', 'select.amount', @.onAmountSelectorChange)
+
     # @el.off('click', '#mission_group_list .mission_group', @.onClientMissionGroupClick)
     # @el.off('click', '.mission button:not(.disabled)', @.onClientMissionButtonClick)
 
@@ -28,8 +32,6 @@ window.ShopController = class extends BaseController
     # Mission.unbind('performed', @.onDataMissionPerform)
 
   show: ()->
-    @.setupEventListeners()
-
     @loading = true
 
     transport.one('shop_loaded', @.onDataLoad).send('load_shop')
@@ -51,7 +53,7 @@ window.ShopController = class extends BaseController
 
       # @el.find('#mission_group_list').pageList()
 
-      # @.setupEventListeners()
+    @.setupEventListeners()
 
 
   onDataLoad: (response)=>
@@ -76,6 +78,32 @@ window.ShopController = class extends BaseController
     @el.find("#item_group_#{ current_group.key }").html(
       @.renderTemplate('shop/item_list', @)
     )
+
+  onAmountSelectorChange: (e)=>
+    select_el = $(e.currentTarget)
+    amount = select_el.val()
+    item_el = select_el.parents('.item')
+    item = Item.find(item_el.data('item-id'))
+
+    if item.basic_price
+      enough_basic_money = (Character.first().basic_money < item.basic_price * amount)
+
+      item_el.find('.requires .basic_money')
+        .text(item.basic_price * amount)
+        .toggleClass('unsatisfied', enough_basic_money)
+    else
+      enough_basic_money = true
+
+    if item.vip_price
+      enough_vip_money = (Character.first().vip_money < item.vip_price * amount)
+
+      item_el.find('.requires .vip_money')
+        .text(item.vip_price * amount)
+        .toggleClass('unsatisfied', enough_vip_money)
+    else
+      enough_vip_money = true
+
+    item_el.find('button.buy').toggleClass('disabled', enough_basic_money and enough_vip_money)
 
   populateData: (response)->
     ItemGroup.set(response.groups)
