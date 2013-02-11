@@ -57,11 +57,6 @@ en:
         requirements: "Requirements"
         payouts: "Reward"
         hide_unsatisfied: "Hide if requirements are not satisfied"
-      item:
-        price: "Price"
-        effects: "Item Effects"
-        payouts: "On Use"
-        use_button_label: "Custom label for 'Use' button"
       help_page:
         alias: "Page URL"
       hit_listing:
@@ -173,7 +168,7 @@ en:
               recently_attacked: 'You already attacked this monster recently'
             character:
               requirements_not_satisfied: "Some monster requirements are not satisfied"
-              
+
         monster_fight:
           attributes:
             base:

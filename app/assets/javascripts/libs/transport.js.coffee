@@ -12,7 +12,7 @@ class Transport extends Spine.Module
       when 'create_monster'
         @.createMonster(data)
       when 'load_shop'
-        @.loadShop()
+        @.loadShop(data)
       else
         console?.log('Unknown event type:', event, data)
 

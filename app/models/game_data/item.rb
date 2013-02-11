@@ -62,16 +62,22 @@ module GameData
       super.merge!(
         :name => name,
         :description => description,
+        :level => level,
         :pictures => pictures,
         :purchaseable => tags.include?(:shop),
-        :level => level,
+        :package_size => package_size,
         :basic_price => basic_price,
         :vip_price => vip_price,
         :effects => effects,
-        :package_size => package_size
       ).tap{|r|
         r.reject!{|k, v| v.blank? }
       }
+    end
+
+    def as_json_for(character)
+      as_json.merge!(
+        :reward_on_use => preview_reward_on(:use, character)
+      )
     end
   end
 end

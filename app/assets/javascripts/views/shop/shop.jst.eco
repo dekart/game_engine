@@ -1,0 +1,23 @@
+<div id="shop">
+  <h1><%= I18n.t('shop.title') %></h1>
+
+  <ul>
+    <% for group in ItemGroup.all(): %>
+      <li
+        class="<%= 'selected' if group.current %>"
+        data-tab="item_group_<%= group.key %>"
+        data-group-id="<%= group.id %>"
+      >
+        <%= group.name %>
+      </li>
+    <% end %>
+  </ul>
+
+  <% for group in ItemGroup.all(): %>
+    <div class="tab_content" id="item_group_<%= group.key %>">
+      <% if group.current: %>
+        <%=@safe @renderTemplate('shop/item_list', @) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

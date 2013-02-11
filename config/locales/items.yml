@@ -14,7 +14,10 @@ en:
   shop:
     title: "shop"
     buy: "Buy"
+    price: "Price"
     package_size: "(per %{amount})"
+    effects: "Item Effects"
+    on_use: "On Use"
 
     # index:
     #   title: "Shop"

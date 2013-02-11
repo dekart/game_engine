@@ -1,0 +1,40 @@
+<% for item in Item.all(): %>
+  <div class="item" id="item_<%= item.key %>">
+    <img
+      src="<%= item.pictures.medium %>"
+      alt="<%= item.name %>"
+      title="<%= item.name %>"
+    />
+
+    <div class="info">
+      <div class="name"><%= item.name %></div>
+
+      <% if item.description?: %>
+        <div class="description"><%= item.description %></div>
+      <% end %>
+
+      <div class="effects">
+        <%= @safe @renderTemplate('shop/item_effects', item: item) %>
+      </div>
+    </div>
+
+    <div class="purchase_options clearfix">
+      <div class="controls">
+        <%= @itemAmountSelector(item) %>
+
+        <button><%= I18n.t('shop.buy') %></button>
+      </div>
+
+      <div class="requirements">
+        <h3>
+          <%= I18n.t('shop.price') %>
+          <%= @itemPackage(item) %>
+        </h3>
+
+        <%= @requirements item.requirements(), (content)=> %>
+          <%= content %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -91,6 +91,10 @@ module GameData
       @rewards[key] = block
     end
 
+    def reward_on?(key)
+      @rewards[key].respond_to?(:call)
+    end
+
     def reward_preview_on(key, &block)
       @reward_previews[key] = block
     end

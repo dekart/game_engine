@@ -1,8 +1,8 @@
 window.Item = class extends Spine.Model
-  @configure 'Item', 'key', 'name', 'description', 'pictures', 'level', 'purchaseable', 'basic_price', 'vip_price'
+  @configure 'Item', 'key', 'group_id', 'name', 'description', 'pictures', 'level', 'purchaseable', 'basic_price', 'vip_price'
 
-  @set: (items)->
-    @refresh(items, clear: true)
+  @set: (group, items)->
+    @refresh(_.map(items, (i)-> i.group_id = group.id; i ), clear: true)
 
   requirements: ->
     [

@@ -16,7 +16,9 @@ class ItemsController < ApplicationController
               r[:current] = true if g == @current_group
             end
           },
-          :items => @items + @locked_items.map{|i| i.as_json.merge!(:locked => true) }
+          :items => @items.map{|i|
+            i.as_json_for(current_character)
+          } + @locked_items.map{|i| i.as_json_for(current_character).merge!(:locked => true) }
         }
       end
     end

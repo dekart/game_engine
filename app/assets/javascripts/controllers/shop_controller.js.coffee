@@ -28,6 +28,8 @@ window.ShopController = class extends BaseController
     # Mission.unbind('performed', @.onDataMissionPerform)
 
   show: ()->
+    @.setupEventListeners()
+
     @loading = true
 
     transport.one('shop_loaded', @.onDataLoad).send('load_shop')
@@ -41,10 +43,11 @@ window.ShopController = class extends BaseController
       @.renderPreloader()
     else
       @html(
-        @.renderTemplate('shop/list', @)
+        @.renderTemplate('shop/shop', @)
       )
 
-      @el.find('#shop').on('select.tab', @.onTabSelected).tabs()
+      @el.find('#shop').tabs()
+      @el.find('#shop').on('select.tab', @.onTabSelected)
 
       # @el.find('#mission_group_list').pageList()
 
@@ -54,14 +57,26 @@ window.ShopController = class extends BaseController
   onDataLoad: (response)=>
     @loading = false
 
-    ItemGroup.set(response.groups)
-    Item.set(response.items)
+    @.populateData(response)
 
     @.render()
 
   onTabSelected: (e, tabs)=>
-    tab.current_container.html(
-      I18n.js('common.loading')
+    tabs.current_container.html(
+      I18n.t('common.loading')
     )
 
-    tabs.current_tab.data('group-id')
+    transport.one('shop_loaded', @.onTabLoad).send('load_shop', tabs.current_tab.data('group-id'))
+
+  onTabLoad: (response)=>
+    @.populateData(response)
+
+    current_group = ItemGroup.current()
+
+    @el.find("#item_group_#{ current_group.key }").html(
+      @.renderTemplate('shop/item_list', @)
+    )
+
+  populateData: (response)->
+    ItemGroup.set(response.groups)
+    Item.set(_.find(response.groups, (g)-> g.current ), response.items)
