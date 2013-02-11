@@ -94,11 +94,12 @@ class CharactersController < ApplicationController
   protected
 
   def character_types
-    @character_types ||= if params[:default_type_id] and default_type = GameData::CharacterType[params[:default_type_id]] }
-      [default_type] + (GameData::CharacterType.all - [default_type])
-    else
-      GameData::CharacterType.all
-    end
+    @character_types ||=
+      if params[:default_type_id] and default_type = GameData::CharacterType[params[:default_type_id]]
+        [default_type] + (GameData::CharacterType.all - [default_type])
+      else
+        GameData::CharacterType.all
+      end
   end
 
   def check_character_existance_or_create
