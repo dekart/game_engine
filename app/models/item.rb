@@ -129,8 +129,7 @@ class Item < ActiveRecord::Base
     end
 
     def available_for(character)
-      #with_state(:visible).available.visible_for(character).available_by_level(character)
-      with_state(:visible).available.available_by_level(character)
+      with_state(:visible).available.visible_for(character).available_by_level(character)
     end
 
     def in_shop_for(character)
