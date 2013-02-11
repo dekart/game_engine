@@ -45,10 +45,10 @@ module FacebookHelper
 
   def if_fb_connect_initialized(command = nil, &block)
     command = capture(&block) if block_given?
-    
+
     result = "if(typeof FB !== 'undefined'){ #{command}; }else{ alert('The page failed to initialize properly. Please reload it and try again.'); }"
     result = result.html_safe
-    
+
     block_given? ? concat(result) : result
   end
 
@@ -56,12 +56,12 @@ module FacebookHelper
     callback = options.delete(:callback)
     before = options.delete(:before)
     options["modern"] = Setting.b(:invitation_dialog_custom)
-    
+
     "".tap do |result|
       result << ga_track_event('Requests', "#{ type.to_s.titleize } - Dialog").to_s
       result << before.to_s
-      result << "new InviteDialog('#{ type }', #{ options.to_json }, function(){ #{ callback } });"
-      
+      result << "InviteDialogController.show('#{ type }', #{ options.to_json }, function(){ #{ callback } });"
+
       result.gsub!(/\n\s+/, ' ')
     end.html_safe
   end

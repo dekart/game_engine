@@ -76,15 +76,33 @@
 
 <table class="data">
   <tr>
-    <td><%= t(".app_requests.total") %></td>
-    <td><%= $redis.scard("app_requests_for_deletion") %></td>
+    <td><%= t(".app_requests.sent") %></td>
+    <td><%= @app_requests[:sent_all] %></td>
+    <td><%= @app_requests[:sent_today] %></td>
+  </tr>
+  <% @app_requests[:by_state_all].each do |state, count| %>
+    <tr>
+      <td><%= state.titleize %></td>
+      <td><%= count%></td>
+      <td><%= @app_requests[:by_state_today][state] %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td><%= t(".app_requests.for_deletion") %></td>
+    <td><%= @app_requests[:for_deletion] %></td>
   </tr>
   <tr>
     <td><%= t(".app_requests.failed") %></td>
-    <td><%= $redis.scard("app_requests_failed_deletion") %></td>
+    <td><%= @app_requests[:failed] %></td>
   </tr>
   <tr>
-    <td><%= t(".app_requests.last_failed") %></td>
-    <td><%= $redis.smembers("app_requests_failed_deletion").last %></td>
+    <td><%= t(".app_requests.random_failed") %></td>
+    <td><%= @app_requests[:random_failed] %></td>
+  </tr>
+  <tr>
+    <td><%= t(".app_requests.last_processed_at") %></td>
+    <td <%= "style='color:red'" if time = (Time.now.to_i - @app_requests[:last_processed_at]) and time > 120 %>>
+      <%= time %>
+    </td>
   </tr>
 </table>

@@ -139,6 +139,14 @@ class AppRequest::Base < ActiveRecord::Base
   after_save    :clear_exclude_ids_cache, :if => :sender
 
   class << self
+    def type_name
+      @type_name ||= name.split('::')[1].underscore
+    end
+
+    def stackable?
+      false
+    end
+
     def find_by_graph_id(id)
       facebook_id, receiver = id.split('_')
 
@@ -169,7 +177,7 @@ class AppRequest::Base < ActiveRecord::Base
       result.each_with_index do |r, i|
         next unless r.is_a?(Koala::Facebook::APIError)
 
-        result[i] = r.message.include?('Specified object cannot be found')
+        result[i] = r.message.include?('Specified object cannot be found') || r.message.include?('Permissions error')
       end
     end
 
@@ -201,7 +209,7 @@ class AppRequest::Base < ActiveRecord::Base
     end
 
     def check_user_requests(user)
-      user.facebook_client.get_connections('me', 'apprequests').each do |graph_data|
+      user.facebook_client.get_connections('me', 'apprequests', :limit => 1000).each do |graph_data|
         request_from_graph_data(graph_data)
       end
     rescue Koala::Facebook::APIError => e
@@ -213,7 +221,11 @@ class AppRequest::Base < ActiveRecord::Base
 
       request = class_from_data(data).find_or_initialize_by_facebook_id_and_receiver_id(*graph_data['id'].split('_'))
 
-      request.update_from_facebook_request(graph_data, data) if request.pending?
+      if request.pending?
+        request.update_from_facebook_request(graph_data, data)
+      elsif not (request.processed? or request.visited?)
+        schedule_deletion(request)
+      end
     end
 
     def types
@@ -227,12 +239,23 @@ class AppRequest::Base < ActiveRecord::Base
       "AppRequest::#{ type.camelize }"
     end
 
-    def class_from_data(data)
-      if data.is_a?(Hash) && %w{gift invitation monster_invite property_worker clan_invite}.include?(data['type'])
-        "AppRequest::#{ data['type'].camelize }"
+    def class_from_type(type)
+      if %w{gift invitation monster_invite property_worker clan_invite}.include?(type)
+        "AppRequest::#{ type.camelize }".constantize
       else
-        'AppRequest::Invitation'
-      end.constantize
+        AppRequest::Invitation
+      end
+    end
+
+    def class_from_data(data)
+      if data.is_a?(Hash)
+        class_from_type(data['type'])
+      else
+        AppRequest::Invitation
+      end
+    end
+
+    def target_from_data(data)
     end
   end
 
@@ -255,10 +278,7 @@ class AppRequest::Base < ActiveRecord::Base
       transaction do
         save!
 
-        # TODO: hack. Rails 2.3.11 dont save target in usual way (self.target = ... or request.target = )
-        if data && data['target_id'] && data['target_type']
-          self.target = data['target_type'].constantize.find(data['target_id'])
-        end
+        self.target = self.class.target_from_data(data)
 
         self.process
       end
@@ -270,11 +290,7 @@ class AppRequest::Base < ActiveRecord::Base
   end
 
   def type_name
-    self.class.name.split('::')[1].underscore
-  end
-
-  def acceptable?
-    true
+    self.class.type_name
   end
 
   def correct?

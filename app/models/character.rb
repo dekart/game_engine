@@ -287,6 +287,7 @@ class Character < ActiveRecord::Base
   def as_json_for_overview
     as_json(
       :only => [
+        :id,
         :basic_money,
         :vip_money,
         :experience,
@@ -325,11 +326,11 @@ class Character < ActiveRecord::Base
     end.as_json
   end
 
-  def as_json_for(character)
+  def as_json_for_app_requests
     {
+      :facebook_id => facebook_id,
       :key => key,
-      :nickname => nickname(character),
-      :user => user.as_json_for(character.user)
+      :nickname => nickname(true)
     }
   end
 
@@ -435,13 +436,6 @@ class Character < ActiveRecord::Base
 
   def friend_filter
     @friend_filter ||= FriendFilter.new(self)
-  end
-
-  def event_data
-    {
-      :character_id => self.id,
-      :level => self.level
-    }
   end
 
   def notifications_count

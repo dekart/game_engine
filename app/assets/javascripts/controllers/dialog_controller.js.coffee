@@ -74,9 +74,12 @@ window.DialogController = class extends BaseController
     dialog_height = @el.outerHeight(true)
     content_height = $('#content').outerHeight(true)
 
+    # Don't let it go lower bottom border
+    if top + dialog_height > content_height - 100
+      top = content_height - dialog_height - 100
+
+    # But also don't put it above the top
     if top < 0
       top = $('#content').offset().top + 100
-    else if top + dialog_height > content_height - 100
-      top = content_height - dialog_height - 100
 
     @el.css(top: top, left: left).data('positioned', true)

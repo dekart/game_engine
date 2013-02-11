@@ -32,7 +32,7 @@
         ) %>
 
     <div class="controls">
-      <% if Setting.b(:stream_dialog_enabled) %>
+      <% if Setting.b(:stream_dialog_enabled) and collection.exchangeable? %>
         <%= link_to_function(button(:request), stream_dialog(:collection_missing_items, collection),
               :class => 'publish button'
             ) unless collection.missing_items(current_character).empty? %>

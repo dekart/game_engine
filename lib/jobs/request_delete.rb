@@ -1,17 +1,19 @@
 module Jobs
   class RequestDelete
     def perform
-      request_ids = $redis.smembers("app_requests_for_deletion")
+      return if $redis.get('app_requests_last_processed_at').to_i > 10.seconds.ago.to_i
 
-      request_ids.each_slice(50) do |ids|
-        batch_result = AppRequest::Base.delete_from_facebook!(ids)
+      begin
+        $redis.set("app_requests_last_processed_at", Time.now.to_i)
 
-        batch_result.each_with_index do |result, index|
-          $redis.srem("app_requests_for_deletion", ids[index])
+        request_ids = $redis.smembers("app_requests_for_deletion")[0..40]
 
-          $redis.sadd("app_requests_failed_deletion", ids[index]) unless result
+        request_ids.each{|id| $redis.srem("app_requests_for_deletion", id) }
+
+        AppRequest::Base.delete_from_facebook!(request_ids).each_with_index do |result, index|
+          $redis.sadd("app_requests_failed_deletion", request_ids[index]) if result == false
         end
-      end
+      end while request_ids.size > 0
     end
   end
 end

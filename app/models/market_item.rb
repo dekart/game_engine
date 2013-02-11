@@ -1,6 +1,6 @@
 class MarketItem < ActiveRecord::Base
   extend HasRequirements
-  
+
   belongs_to :character
   belongs_to :item
 
@@ -18,8 +18,8 @@ class MarketItem < ActiveRecord::Base
   validates_presence_of :amount
   validates_numericality_of :amount, :allow_nil => true, :greater_than => 0
   validates_numericality_of :basic_price, :vip_price, :allow_nil => true, :greater_than => -1
-  
-  validate :vip_price_dont_more_than_max, :check_amount, :item_allowed_to_sell, 
+
+  validate :vip_price_dont_more_than_max, :check_amount, :item_allowed_to_sell,
     :on => :create
 
   before_create :destroy_previous_items
@@ -76,28 +76,19 @@ class MarketItem < ActiveRecord::Base
         character.charge!(- basic_money, - vip_money, :market)
         character.inventories.take!(item, amount)
 
-        destroy unless character.market_items.find_by_item_id(item).destroyed?
+        destroy unless character.market_items.find_by_item_id(item).nil?
 
         character.notifications.schedule(:market_item_sold,
           :item_id      => item_id,
           :basic_money  => basic_money,
           :vip_money    => vip_money
         )
+
+        $redis.zincrby("market_transactions_#{target_character.id}", 1, character.id)
       end
     end
   end
 
-  def event_data(bought)
-    {
-      :reference_id   => id,
-      :reference_type => "MarketItem",
-      :string_value   => name,
-      :basic_money    => (bought ? -1 : 1) * basic_price,
-      :vip_money      => (bought ? -1 : 1) * vip_price,
-      :amount         => amount
-    }
-  end
-  
   def requirements
     @requirements ||= Requirements::Collection.new(
       Requirements::BasicMoney.new(:value => basic_price),
@@ -110,7 +101,7 @@ class MarketItem < ActiveRecord::Base
   def vip_price_dont_more_than_max
     if vip_price
       max_vip_price = item.max_vip_price_in_market || 0
-       
+
       if vip_price > max_vip_price
         errors.add(:vip_price, :less_than_or_equal_to, :count => max_vip_price)
       end
@@ -122,7 +113,7 @@ class MarketItem < ActiveRecord::Base
       errors.add(:amount, :less_than_or_equal_to, :count => inventory.amount)
     end
   end
-  
+
   def item_allowed_to_sell
     errors.add(:item, :not_allowed_to_sell) unless item.can_be_sold_on_market?
   end

@@ -393,6 +393,13 @@ en:
         title: "Operation History"
         player: "Player:"
         total: "Total Amount:"
+        summary:
+          title: "Summary"
+          total: "Total Transactions"
+          deposits: "Deposits"
+          withdrawals: "Withdrawals"
+          payments: "Payments"
+          purchased: "Total Purchased"
 
     item_collections:
       index:

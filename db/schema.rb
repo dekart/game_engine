@@ -401,14 +401,15 @@ ActiveRecord::Schema.define(:version => 20130207092611) do
   add_index "item_collection_ranks", ["character_id", "collection_id"], :name => "index_collection_ranks_on_character_id_and_collection_id"
 
   create_table "item_collections", :force => true do |t|
-    t.string   "name",         :limit => 100, :default => "", :null => false
-    t.string   "item_ids",                    :default => "", :null => false
+    t.string   "name",         :limit => 100, :default => "",   :null => false
+    t.string   "item_ids",                    :default => "",   :null => false
     t.text     "payouts"
-    t.string   "state",        :limit => 50,  :default => "", :null => false
+    t.string   "state",        :limit => 50,  :default => "",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level",                       :default => 1
-    t.string   "amount_items",                :default => "", :null => false
+    t.string   "amount_items",                :default => "",   :null => false
+    t.boolean  "exchangeable",                :default => true
   end
 
   create_table "item_groups", :force => true do |t|
@@ -831,6 +832,7 @@ ActiveRecord::Schema.define(:version => 20130207092611) do
     t.binary   "friend_ids"
     t.boolean  "installed",                             :default => true
     t.string   "last_visit_user_agent",  :limit => 250, :default => "",      :null => false
+    t.boolean  "verified"
   end
 
   add_index "users", ["created_at"], :name => "index_users_on_created_at"

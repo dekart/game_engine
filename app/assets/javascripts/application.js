@@ -16,7 +16,6 @@
 //= require ./application/spinner
 //= require ./application/app_requests
 //= require ./application/promo_block
-//= require ./application/invite_dialog
 //= require ./application/timer
 //= require ./application/visual_timer
 //= require ./application/boost
@@ -69,8 +68,19 @@ function show_result(){
 }
 
 function updateCanvasSize() {
+  var body_height = $('body').height();
+  var dialog = $('.dialog');
+
+  if(dialog.length > 0) {
+    var dialog_heigth = dialog.offset().top + dialog.outerHeight(true);
+
+    if(dialog_heigth > body_height){
+      body_height = dialog_heigth;
+    }
+  }
+
   FB.Canvas.setSize({
-    height: $('body').height() + 100 // Additional number compensates admin menu margin that is not included into the body height
+    height: body_height + 100 // Additional number compensates admin menu margin that is not included into the body height
   });
 }
 
@@ -160,7 +170,7 @@ var Equipment = {
     $("#equippables .inventory, #placements .inventory").draggable({
       appendTo: $("#equipment"),
       helper: function() {
-        var clone = $(this).clone();
+        var clone = $(this).find('.inventory_image').clone();
         clone.find("span").remove();
         clone.css('opacity', 0.7);
         return clone;

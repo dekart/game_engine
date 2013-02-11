@@ -25,7 +25,7 @@ en:
       text: "Please wait for a few seconds..."
     character_overview:
       bank: "Treasury"
-      premium: "Get More"
+      buy_vip: "Get More"
       upgrade: "Upgrade!"
       hospital: "Hospital"
       refill: "Refill"

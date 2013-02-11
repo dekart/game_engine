@@ -6,14 +6,14 @@ class AppRequest::Invitation < AppRequest::Base
       end
     end
   end
-  
+
   protected
-  
+
   def after_accept
     super
 
     receiver.friend_relations.establish!(sender)
-    
+
     AppRequest::Invitation.between(sender, receiver_id).each do |invitation|
       invitation.ignore
     end

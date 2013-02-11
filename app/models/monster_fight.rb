@@ -189,18 +189,6 @@ class MonsterFight < ActiveRecord::Base
     character == monster.character
   end
 
-  def event_data
-    {
-      :reference_id => self.id,
-      :reference_type => "Monster",
-      :reference_damage => -self.monster_damage.to_i,
-      :health => -self.character_damage.to_i,
-      :basic_money => self.money.to_i,
-      :stamina => -self.stamina.to_i,
-      :experience => self.experience.to_i
-    }
-  end
-
   def as_json
     {
       :id => id,

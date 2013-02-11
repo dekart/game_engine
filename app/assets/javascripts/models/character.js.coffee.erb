@@ -7,9 +7,12 @@ window.Character = class extends Spine.Model
     'notifications_count', 'facebook_id'
 
   @update: (values)->
-    character = @first() || @create()
+    character = @first()
 
-    character.updateAttributes(values)
+    if character
+      character.updateAttributes(values)
+    else
+      @create(values)
 
   @updateFromRemote: ()->
     $.getJSON('/character_status/?rand=' + Math.random(), (response)=>

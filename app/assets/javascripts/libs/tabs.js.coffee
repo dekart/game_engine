@@ -48,12 +48,16 @@ class window.TabController
 
   setCurrentTab: (tab)->
     @tabs.removeClass('selected')
-
-    tab.addClass('selected')
-
     @containers.hide()
 
-    @.containerFor(tab).show()
+    @current_tab = tab
+    @current_container = @.containerFor(tab)
+
+    @current_tab.addClass('selected')
+
+    @current_container.show()
+
+    @element.trigger('select.tab', @)
 
   containerFor: (tab)->
     @containers.filter("##{ tab.data('tab') }")

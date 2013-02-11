@@ -1,0 +1,51 @@
+<div id="invite_dialog">
+  <h3><%= @options.dialog.title %></h3>
+
+  <div class="note"><%= I18n.t("app_requests.invite_dialog.note") %></div>
+
+  <div class="friend_selector">
+    <ul class="filters">
+      <li data-tab="invite_dialog_all" data-filter="all" class="filter selected">
+        <%= I18n.t("app_requests.invite_dialog.filters.all") %>
+      </li>
+
+      <li data-tab="invite_dialog_app_users" data-filter="app_users" class="filter">
+        <%= I18n.t("app_requests.invite_dialog.filters.app_users") %>
+      </li>
+
+      <li data-tab="invite_dialog_non_app_users" data-filter="non_app_users" class="filter">
+        <%= I18n.t("app_requests.invite_dialog.filters.non_app_users") %>
+      </li>
+    </ul>
+
+    <div id="invite_dialog_all" class="tab_content">
+      <div class="users"><!-- User list goes here --></div>
+    </div>
+    <div id="invite_dialog_app_users" class="tab_content">
+      <div class="users"><!-- User list goes here --></div>
+    </div>
+    <div id="invite_dialog_non_app_users" class="tab_content">
+      <div class="users"><!-- User list goes here --></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <span class="control deselect_all"><%= I18n.t("app_requests.invite_dialog.stats.deselect_all") %></span>
+    <span class="control select_all"><%= I18n.t("app_requests.invite_dialog.stats.select_all") %></span>
+
+    <span class="value"></span> / <span class="total"></span>
+    <%= I18n.t("app_requests.invite_dialog.stats.text") %>
+  </div>
+
+  <div class="send">
+    <div class="progress">
+      <strong><%= I18n.t("app_requests.invite_dialog.sent") %></strong>
+
+      <div class="progress_bar">
+        <div class="percentage" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <button><%= I18n.t("app_requests.invite_dialog.buttons.send") %></button>
+  </div>
+</div>

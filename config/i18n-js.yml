@@ -3,7 +3,7 @@ translations:
     only:
       - "*.app_name"
       - "*.common"
-      - "*.app_requests.invite_dialog"
+      - "*.app_requests"
       - "*.activerecord.attributes"
       - "*.client"
       - "*.items.buy_button"

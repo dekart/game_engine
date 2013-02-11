@@ -17,55 +17,48 @@ en:
       buttons:
         send: 'Send'
       sent: 'Sent:'
-    list:
-      buttons:
-        ignore: 'Ignore this request'
     index:
       title: 'Friend Requests'
-      note: "Here you can accept requests from your friends. You can only accept one gift per person every %{hours} hours."
-      empty_set: "Your friends haven't sent you any requests yet."
       tabs:
-        clan_invite: "Clan Invite (%{count})"
-        gift: "Gift (%{count})"  
-        invitation: "Invitation (%{count})"
-        monster_invite: "Monster Invite (%{count})"
-        property_worker: "Property Worker (%{count})"
+        clan_invite: "Clan Invites (%{count})"
+        gift: "Gifts (%{count})"
+        invitation: "Invitations (%{count})"
+        monster_invite: "Monster Invites (%{count})"
+        property_worker: "Buildings (%{count})"
+      hidden_requests: |
+        Some of the requests are not displayed in the list because you already accepted same kind of
+        requests (for example, gifts) from the same players earlier. They'll appear in the list as soon as
+        you'll be able to accept them.
     details:
       gift:
-        text: "%{user} sends you %{item}"
-        buttons:
-          accept: 'Accept'
+        text:
+          one: "%{nickname} sends you %{item}"
+          other: "%{count} friends send you %{item}"
+        accept: 'Accept & Send'
+        accepted: 'Accepted! Sending back…'
       monster_invite:
-        text: "%{user} invites you to join fight against %{monster}"
-        buttons:
-          view: 'View'
+        text:
+          one: "%{nickname} invites you to join the fight against %{monster}"
+          other: "%{count} friends invite you to join the fight against %{monster}"
+        view: 'View'
+        ignore: 'Ignore'
+        accepted: 'Loading monster…'
       invitation:
-        text: "%{user} invites you to join their Alliance"
-        buttons:
-          accept: 'Accept'
+        text: "%{nickname} invites you to join their Alliance"
+        accept: 'Accept'
+        ignore: 'Ignore'
+        accepted: 'Accepted!'
       clan_invite:
-        text: "%{user} invites you to join their Clan %{clan}"   
-        buttons:
-          view: 'View'
+        text: "%{nickname} invites you to join their clan %{clan}"
+        view: 'View'
+        ignore: 'Ignore'
+        accepted: 'Loading clan…'
       property_worker:
-        text: "%{user} asks you to help them finish the %{property}"
-        buttons:
-          accept: 'Accept'
-    update:
+        text: "%{nickname} asks you to help them finish the %{property}"
+        accept: 'Accept'
+        ignore: 'Ignore'
+        accepted: 'Accepted!'
+    invites:
       gift:
-        accepted: 'Gift accepted!'
-        sending: 'Sending...'
-        sent: 'Sent!'
-        buttons:
-          send: "Send Back"
-      monster_invite:
-        accepted: 'Invitation accepted!'
-        buttons:
-          fight: "Fight Now"
-      invitation:
-        accepted: 'Invitation accepted!'
-        buttons:
-          alliance: 'View Alliance'
-      property_worker:
-        accepted: 'Thank you for your help!'
-    
+        title: "Send %{item} to Your Friends"
+        message: "Please accept this %{app} gift: %{item}! Could you please send one back?"

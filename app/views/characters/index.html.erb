@@ -19,8 +19,12 @@
   </tr>
 </table>
 
-<% if @newcomer %>
-  <% dom_ready do %>
+<% dom_ready do %>
+  <% if @newcomer %>
     MissionController.show();
+  <% end %>
+
+  <% if visit_from_app_request? %>
+    AppRequestDialogController.show();
   <% end %>
 <% end %>

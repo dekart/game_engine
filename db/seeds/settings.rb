@@ -107,7 +107,6 @@ Setting[:app_standalone_enabled] ||= false
 Setting[:gifting_enabled] ||= true
 Setting[:gifting_item_show_limit] ||= 10
 Setting[:gifting_repeat_accept_delay] ||= 24
-Setting[:gifting_accept_all] ||= false
 
 Setting[:wall_enabled] ||= true
 Setting[:wall_posts_show_limit] ||= 10

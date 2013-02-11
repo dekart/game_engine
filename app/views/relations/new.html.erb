@@ -18,7 +18,7 @@
             <%= link_to_function(button(:invite),
                   invite_dialog(:invitation,
                     :dialog => {
-                      :to       => facebook_id,
+                      :to       => [facebook_id],
                       :title    => t('relations.invitation.title'),
                       :message  => t('relations.invitation.message', :app_name => t('app_name'))
                     },

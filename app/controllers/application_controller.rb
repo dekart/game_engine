@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include ReferenceCode
   include AppRequests
   include Notifications
+  include SplitTesting
 
   SPECIAL_ITEMS = 3
 
@@ -88,13 +89,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # check simulation mode
-    if user.admin? && user.simulation
-      @real_user = user
-
-      user = user.simulation.user
-    end
-
     # Updating API access credentials
     user.access_token = current_facebook_user.access_token
     user.access_token_expire_at = current_facebook_user.access_token_expires_at
@@ -108,6 +102,13 @@ class ApplicationController < ActionController::Base
     user.installed = true
 
     user.save! if user.changed?
+
+    # check simulation mode
+    if user.admin? && user.simulation
+      @real_user = user
+
+      user = user.simulation.user
+    end
 
     user
   end

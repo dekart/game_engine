@@ -293,9 +293,13 @@ GameEngine::Application.routes.draw do
     end
   end
 
-  resources :app_requests do
-    put 'ignore', :on => :member
-    get 'invite', :on => :collection
+  resources :app_requests, :only => [:index, :create] do
+    collection do
+      put 'ignore'
+      put 'accept'
+
+      get 'invite'
+    end
   end
 
   resources :contests, :only => :show do

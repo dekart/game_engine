@@ -7,8 +7,9 @@ class CharactersController < ApplicationController
 
   prepend_before_filter :check_character_existance_or_create, :only => :index
 
-  before_filter :fetch_character_types,   :only => [:new, :create, :edit, :update]
   around_filter :check_user_app_requests, :only => :index
+
+  helper_method :character_types
 
   def index
     @news = current_character.news.latest(Setting.i(:dashboard_news_count))
@@ -45,7 +46,7 @@ class CharactersController < ApplicationController
     else
       @character = Character.new
       @character.name ||= Setting.s(:character_default_name)
-      @character.character_type ||= @character_types.first
+      @character.character_type ||= character_types.first
 
       render :layout => 'unauthorized'
     end
@@ -55,9 +56,14 @@ class CharactersController < ApplicationController
     if current_character
       redirect_to root_url
     else
-      @character = current_user.build_character(:name => params[:character][:name])
+      @character = current_user.build_character
 
-      @character.character_type ||= GameData::CharacterType[params[:character][:character_type_id]] #.find_by_id(params[:character][:character_type_id])
+      if params[:character]
+        @character.name = params[:character][:name]
+        @character.character_type = GameData::CharacterType[params[:character][:character_type_id]]
+      end
+
+      @character.character_type ||= character_types.first
 
       if @character.save
         # Always redirect newcomers to missions
@@ -87,18 +93,18 @@ class CharactersController < ApplicationController
 
   protected
 
-  def fetch_character_types
-    @character_types = GameData::CharacterType.all
-
-    if params[:default_type_id] and default_type = @character_types.detect{|t| t.key == params[:default_type_id].to_sym }
-      @character_types = [default_type] + (@character_types - [default_type])
+  def character_types
+    @character_types ||= if params[:default_type_id] and default_type = GameData::CharacterType[params[:default_type_id]] }
+      [default_type] + (GameData::CharacterType.all - [default_type])
+    else
+      GameData::CharacterType.all
     end
   end
 
   def check_character_existance_or_create
     if current_character
       true
-    elsif params[:character]
+    elsif current_user
       create
     else
       check_character_existance
