@@ -32,6 +32,16 @@ class User < ActiveRecord::Base
   after_save :schedule_social_data_update,  :if => :access_token_changed?
   after_save :generate_personal_discount,   :if => :last_visit_at_changed?
 
+  class << self
+    def admin_authenticate(id, key)
+      user = User.find(id)
+
+      return user if user.admin? && user.admin_login_key == key
+
+      nil
+    end
+  end
+
   def customized?
     true
   end
@@ -42,6 +52,12 @@ class User < ActiveRecord::Base
 
   def admin?
     Setting.a(:user_admins).include?(facebook_id.to_s)
+  end
+
+  def admin_login_key
+    digest = Digest::MD5.hexdigest("%s" % [id, "secret_word_from_settings_here"])
+
+    digest[0, 10]
   end
 
   def simulated?

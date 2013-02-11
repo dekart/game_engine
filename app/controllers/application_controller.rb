@@ -60,6 +60,22 @@ class ApplicationController < ActionController::Base
     @current_character
   end
 
+  def check_user_existance
+    if !current_facebook_user
+      if session[:admin_user_id].nil?
+        if user = authenticate_with_http_basic { |u, p| User.admin_authenticate(u, p) }
+          session[:admin_user_id] = user.id
+    
+          @current_user = user
+        else
+          request_http_basic_authentication
+        end
+      else
+        @current_user = User.find(session[:admin_user_id])
+      end
+    end
+  end
+
   def current_user
     return unless current_facebook_user
 
