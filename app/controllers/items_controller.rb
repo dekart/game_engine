@@ -1,19 +1,24 @@
 class ItemsController < ApplicationController
   def index
-    @item_groups = ItemGroup.visible_in_shop
-    
-    @current_group = parents.item_group || @item_groups.first
+    @groups = GameData::ItemGroup.select{|g| g.tags.include?(:shop) }
 
-    @items = @current_group.items.in_shop_for(current_character)
+    @current_group = GameData::ItemGroup[params[:item_group_id]] || @groups.first
 
-    @next_items = @current_group.items.next_for(current_character).all(:limit => 3)
+    @items = @current_group.items.select{|i| i.in_shop_for?(current_character) }.sort{|i| [i.level, i.vip_price] }.reverse
 
-    if request.xhr?
-      render(
-        :partial => "list",
-        :locals => {:items => @items, :next_items => @next_items},
-        :layout => false
-      )
+    @locked_items = @current_group.items.select{|i| i.in_shop_and_locked_for?(current_character) }.sort{|i| i.level }[0..2]
+
+    respond_to do |format|
+      format.json do
+        render :json => {
+          :groups => @groups.map{|g|
+            g.as_json.tap do |r|
+              r[:current] = true if g == @current_group
+            end
+          },
+          :items => @items + @locked_items.map{|i| i.as_json.merge!(:locked => true) }
+        }
+      end
     end
   end
 

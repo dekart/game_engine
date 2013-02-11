@@ -132,41 +132,6 @@ class Character
           inventory
         end
 
-        def buy!(item, amount = 1)
-          errors = []
-          errors.push(:not_enough_basic_money) if character.basic_money < item.basic_price * amount
-          errors.push(:not_enough_vip_money)   if character.vip_money < item.vip_price * amount
-
-          return errors unless errors.empty?
-
-          effective_amount = amount * item.package_size
-
-          inventory = give(item, effective_amount)
-
-          character.charge(item.basic_price * amount, item.vip_price * amount, item)
-
-          ActiveSupport::Notifications.instrument(:buy_item,
-            :item         => item,
-            :basic_money  => item.basic_price * amount,
-            :vip_money    => item.vip_price * amount
-          )
-
-          Character::Equipment.transaction do
-            if save and character.save
-              item.increment_owned(effective_amount)
-
-              equip!(item)
-
-              character.news.add(:item_purchase, :item_id => item.id, :amount => effective_amount)
-
-              inventory = find_by_item(item)
-              check_item_collections(inventory)
-            end
-          end
-
-          inventory
-        end
-
         def take!(item, amount = 1)
           inventory = take(item, amount)
 

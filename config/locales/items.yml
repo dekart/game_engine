@@ -1,31 +1,47 @@
 en:
   items:
-    index:
-      title: "Shop"
-      next_item: "Reach level %{level} to unlock new items"
-      buttons:
-        inventory: "Go to Inventory"
-        buy_vip_money: "Buy Gems"
-      tabs:
-        services: "Services"
-        buy_vip_money: "Buy Gems"
-    list:
-      empty_set: "No items available for now"
-      locked: "Locked Items"
-    item:
-      package_size: "(per %{amount} %{help_link})"
-    item_locked:
-      badge: "Locked"
-    specials:
-      header: "Limited Time Offers"
-      buttons:
-        buy: "Buy"
-    limit:
-      amount_limit: "Only %{amount} left!"
-      time_limit: "Time Left:"
-    requirements:
-      free: "FREE"
-    buy_button:
-      buttons:
-        buy: "Buy"
-      confirm: "Are you sure you want to purchase %{count} of %{name} for %{price}"
+    effects:
+      attack: "Attack"
+      defence: "Defence"
+      energy: "Energy"
+      health: "Health"
+      stamina: "Stamina"
+      hp_restore_rate: "Health Restore Speed"
+      ep_restore_rate: "Energy Restore Speed"
+      sp_restore_rate: "Stamina Restore Speed"
+      damage: "Damage"
+
+  shop:
+    title: "shop"
+    buy: "Buy"
+    package_size: "(per %{amount})"
+
+    # index:
+    #   title: "Shop"
+    #   next_item: "Reach level %{level} to unlock new items"
+    #   buttons:
+    #     inventory: "Go to Inventory"
+    #     buy_vip_money: "Buy Gems"
+    #   tabs:
+    #     services: "Services"
+    #     buy_vip_money: "Buy Gems"
+    # list:
+    #   empty_set: "No items available for now"
+    #   locked: "Locked Items"
+    # item:
+    #   package_size: "(per %{amount} %{help_link})"
+    # item_locked:
+    #   badge: "Locked"
+    # specials:
+    #   header: "Limited Time Offers"
+    #   buttons:
+    #     buy: "Buy"
+    # limit:
+    #   amount_limit: "Only %{amount} left!"
+    #   time_limit: "Time Left:"
+    # requirements:
+    #   free: "FREE"
+    # buy_button:
+    #   buttons:
+    #     buy: "Buy"
+    #   confirm: "Are you sure you want to purchase %{count} of %{name} for %{price}"

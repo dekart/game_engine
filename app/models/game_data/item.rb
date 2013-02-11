@@ -24,19 +24,38 @@ module GameData
     end
 
     def group
-      Data::ItemGroup.groups[@group_id]
+      GameData::ItemGroup[@group_id]
     end
 
     def level
       @level || 1
     end
 
+    def package_size
+      @package_size || 1
+    end
+
     def name
-      I18n.t("data.items.#{@key}.name")
+      I18n.t("data.items.#{ @key }.name")
     end
 
     def description
-      I18n.t("data.missions.#{@key}.description", :default => '')
+      I18n.t("data.items.#{ @key }.description", :default => '')
+    end
+
+    def in_shop_for?(character)
+      tags.include?(:shop) and
+      character.level >= level
+    end
+
+    def in_shop_and_locked_for?(character)
+      tags.include?(:shop) and
+      level > character.level
+    end
+
+    def special_for?(character)
+      tags.include?(:special) and
+      character.level >= level
     end
 
     def as_json(*options)
@@ -44,9 +63,15 @@ module GameData
         :name => name,
         :description => description,
         :pictures => pictures,
-        :tags => tags,
-        :level => level
-      ).reject!{|k, v| v.blank? }
+        :purchaseable => tags.include?(:shop),
+        :level => level,
+        :basic_price => basic_price,
+        :vip_price => vip_price,
+        :effects => effects,
+        :package_size => package_size
+      ).tap{|r|
+        r.reject!{|k, v| v.blank? }
+      }
     end
   end
 end

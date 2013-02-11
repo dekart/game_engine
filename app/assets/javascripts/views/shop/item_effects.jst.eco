@@ -1,0 +1,22 @@
+<% if @item.effects?: %>
+  <h3><%= I18n.t('shop.item_effects.effects') %></h3>
+
+  <% for effect, value of @item.effects: %>
+    <div class="effect <%= effect %>"
+      data-tooltip-content="<%= I18n.t("items.effects.#{ effect }") %>"
+    >
+      <span class="value">
+        <%= if value > 0 then '+' else '' %>
+        <%= value %>
+      </span>
+    </div>
+  <% end %>
+<% end %>
+
+<%= @rewards @item.rewards, (content)=> %>
+  <div class="rewards clearfix">
+    <h3><%= I18n.t('shop.item_effects.reward') %></h3>
+
+    <%= content %>
+  </div>
+<% end %>

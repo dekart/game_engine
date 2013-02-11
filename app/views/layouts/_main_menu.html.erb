@@ -9,7 +9,7 @@
       <%= link_to(t(".relations") + " (%d)" % current_character.relations.effective_size, relations_path, :class => :alliance) %>
     </td>
     <td>
-      <%= link_to(t(".items"), items_path, :class => :shop) %>
+      <%= link_to_function(t(".shop"), 'ShopController.show()', :class => :shop) %>
       <%= link_to(t(".inventories"), inventories_path, :class => :inventory) %>
     </td>
     <td>

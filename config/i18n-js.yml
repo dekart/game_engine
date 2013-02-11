@@ -19,3 +19,5 @@ translations:
       - "*.relations.invitation"
       - "*.payouts"
       - "*.stories"
+      - "*.items.effects"
+      - "*.shop"

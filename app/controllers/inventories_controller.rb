@@ -6,7 +6,7 @@ class InventoriesController < ApplicationController
     @purchase_amount = params[:amount].to_i
     @amount = @purchase_amount * @item.package_size
 
-    @result = current_character.inventories.buy!(@item, @purchase_amount)
+    @result = current_character.buy_item!(@item, @purchase_amount)
   end
 
   def destroy

@@ -385,6 +385,11 @@ ActiveRecord::Schema.define(:version => 20130207092611) do
 
   add_index "inventories", ["character_id"], :name => "index_inventories_on_character_id_and_placement"
 
+  create_table "inventory_states", :force => true do |t|
+    t.integer "character_id"
+    t.binary  "inventory",    :limit => 16777215
+  end
+
   create_table "item_collection_ranks", :force => true do |t|
     t.integer  "character_id",                    :null => false
     t.integer  "collection_id",                   :null => false

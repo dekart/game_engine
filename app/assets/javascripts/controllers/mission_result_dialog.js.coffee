@@ -18,9 +18,7 @@ window.MissionResultDialogController = class extends DialogController
     @.updateContent(@.renderTemplate('missions/result', @))
 
   prepareHelpers: ->
-    super
-
-    _.extend(@helpers, MissionHelper)
+    super(MissionHelper)
 
   setupEventListeners: ->
     super

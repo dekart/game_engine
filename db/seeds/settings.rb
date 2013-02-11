@@ -76,7 +76,6 @@ Setting[:rating_show_limit] ||= 20
 Setting[:inventory_sell_price] ||= 50
 Setting[:inventory_exchange_enabled] ||= true
 
-Setting[:item_show_special] ||= 3
 Setting[:promo_block_minimum_level] ||= 3
 
 Setting[:property_sell_price] ||= 50
@@ -114,9 +113,7 @@ Setting[:wall_enabled] ||= true
 Setting[:wall_posts_show_limit] ||= 10
 
 Setting[:character_default_name] ||= ""
-Setting[:character_equipment_slots] ||= 5
 Setting[:character_auto_equipment] ||= false
-Setting[:character_relations_per_equipment_slot] ||= 3
 
 Setting[:hit_list_enabled] ||= true
 Setting[:hit_list_minimum_reward] ||= 10_000

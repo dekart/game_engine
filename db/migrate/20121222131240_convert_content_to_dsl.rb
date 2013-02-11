@@ -94,7 +94,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
 
       code << %{
         i.package_size = #{item.package_size}
-      } if item.package_size
+      } if item[:package_size]
 
       code << %{
         i.sell_price = #{item.sell_price}
@@ -685,13 +685,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
     #contest
     #help_page
 
-    announce 'Updating table fields'
-
-    change_column :characters, :character_type_id, 'integer unsigned'
-
-    %w{basic_money vip_money attack defence health energy stamina points}.each do |column|
-      change_column :characters, column, :integer, :default => 0
-    end
+    announce 'Creating new tables...'
 
     create_table :mission_states do |t|
       t.belongs_to :character
@@ -701,7 +695,27 @@ class ConvertContentToDsl < ActiveRecord::Migration
       t.binary :progress, :limit => 64.kilobytes
     end
 
-    announce 'Updating character data...'
+    create_table :inventory_states do |t|
+      t.belongs_to :character
+
+      t.binary :inventory, :limit => 64.kilobytes
+    end
+
+
+
+    announce 'Modifying table fields...'
+
+    change_column :characters, :character_type_id, 'integer unsigned'
+
+    %w{basic_money vip_money attack defence health energy stamina points}.each do |column|
+      change_column :characters, column, :integer, :default => 0
+    end
+
+    change_column :monsters, :monster_type_id, 'integer unsigned'
+
+
+
+    announce 'Updating characters...'
 
     GameData::CharacterType.collection.clear
     GameData::CharacterType.collection.each do |key, type|
@@ -709,6 +723,10 @@ class ConvertContentToDsl < ActiveRecord::Migration
         :character_type_id => type.id
       )
     end
+
+
+
+    announce "Updating monsters..."
 
     ActiveRecord::Base.connection.select_all(
       %{
@@ -727,6 +745,14 @@ class ConvertContentToDsl < ActiveRecord::Migration
       )
     end
 
+    GameData::MonsterType.collection.clear
+
+    ids_to_keys[:monster_types].each do |id, key|
+      MonsterFight.where(:monster_type_id => id).update_all(
+        :monster_type_id => GameData::MonsterType[key].id
+      )
+    end
+
     # GameData::MissionGroup.collection.clear
 
     # Character.find_each do |c|
@@ -741,6 +767,7 @@ class ConvertContentToDsl < ActiveRecord::Migration
     end
 
     drop_table :mission_states
+    drop_table :inventory_states
   end
 
 

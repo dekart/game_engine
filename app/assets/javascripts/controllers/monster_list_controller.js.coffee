@@ -49,9 +49,7 @@ window.MonsterListController = class extends BaseController
     $('#page').empty().append(@el)
 
     if @loading
-      @html(
-        I18n.t('common.loading')
-      )
+      @.renderPreloader()
     else
       @html(
         @.renderTemplate("monsters/list", @)

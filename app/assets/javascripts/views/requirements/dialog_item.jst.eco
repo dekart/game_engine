@@ -8,7 +8,7 @@
     <%= if @current > 0 then I18n.t('requirements.dialog.item.have', value: @current) else '' %>
   </p>
 
-  <% if _.contains(@item.tags, 'shop'): %>
+  <% if @item.purchaseable: %>
     <p>
       <%= I18n.t('requirements.dialog.item.shop', level: @item.level) %>
     </p>

@@ -62,7 +62,7 @@ class Requirement
     end
 
     @items.each do |key, amount|
-      return false if @character.inventories.count(GameData::Item[key]) < amount
+      return false if @character.inventory.amount(key) < amount
     end
 
     # TODO: Implement property requirement check
@@ -77,7 +77,7 @@ class Requirement
 
       @items.each do |key, amount|
         item = GameData::Item.collection[key]
-        result << [:item, item, amount, @character.inventories.count(item) >= amount, @character.inventories.count(item)]
+        result << [:item, item, amount, @character.inventory.amount(item) >= amount, @character.inventory.amount(item)]
       end
     end.as_json
   end

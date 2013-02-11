@@ -11,7 +11,6 @@ class Character < ActiveRecord::Base
   include Character::Assignments
   include Character::Properties
   include Character::Notifications
-  include Character::Missions
   include Character::Collections
   include Character::Newsfeed
   include Character::Hospital
@@ -23,7 +22,6 @@ class Character < ActiveRecord::Base
   include Character::Ratings
   include Character::Exchanges
   include Character::Achievements
-  include Character::EquipmentExtension
   include Character::Clans
   include Character::Complaints
   include Character::Messages
@@ -52,6 +50,9 @@ class Character < ActiveRecord::Base
 
   has_many :wall_posts,
     :dependent => :destroy
+
+  has_one :mission_state
+  has_one :inventory_state
 
   scope :by_profile_ids, Proc.new{|ids|
     user_ids = User.where(:facebook_id => ids).pluck(:id)
@@ -107,6 +108,54 @@ class Character < ActiveRecord::Base
   def character_type=(value)
     self.character_type_id = value.is_a?(GameData::CharacterType) ? value.id : GameData::CharacterType[value].id
   end
+
+  def missions
+    (mission_state || create_mission_state).tap do |s|
+      s.character = self
+    end
+  end
+
+  def inventory
+    (inventory_state || create_inventory_state).tap do |s|
+      s.character = self
+    end
+  end
+
+  # def buy_item!(key, amount = 1)
+  #   item = GameData::Item[key]
+
+  #   basic_price = item.basic_price * amount
+  #   vip_price = item.vip_price * amount
+
+  #   errors = []
+  #   errors.push(:not_enough_basic_money) if basic_money < basic_price
+  #   errors.push(:not_enough_vip_money)   if vip_money < vip_price
+
+  #   return errors unless errors.empty?
+
+  #   effective_amount = amount * item.package_size
+
+  #   ActiveSupport::Notifications.instrument(:buy_item,
+  #     :item         => item,
+  #     :basic_money  => basic_price,
+  #     :vip_money    => vip_price
+  #   )
+
+  #   transaction do
+  #     inventory.give(item, effective_amount)
+  #     charge(basic_price, vip_price, item)
+
+  #     if save
+  #       item.increment_owned(effective_amount)
+
+  #       inventory.equip!(item)
+
+  #       character.news.add(:item_purchase, :item_id => item.id, :amount => effective_amount)
+
+  #       check_item_collections(item)
+  #     end
+  #   end
+  # end
 
   def nickname(friend = false)
     friend = friend.user.friends_with?(self) if friend.is_a?(Character)
@@ -180,7 +229,7 @@ class Character < ActiveRecord::Base
   def attack_points
     attack +
       character_type.attributes[:attack] +
-      equipment.effect(:attack) +
+      inventory.effects[:attack] +
       assignments.attack_effect +
       boosts.active_for(:fight, :attack).try(:effect, :attack).to_i
   end
@@ -188,7 +237,7 @@ class Character < ActiveRecord::Base
   def defence_points
     defence +
       character_type.attributes[:defence] +
-      equipment.effect(:defence) +
+      inventory.effects[:defence] +
       assignments.defence_effect +
       boosts.active_for(:fight, :defence).try(:effect, :defence).to_i
   end
@@ -196,19 +245,19 @@ class Character < ActiveRecord::Base
   def health_points
     health +
       character_type.attributes[:health] +
-      equipment.effect(:health)
+      inventory.effects[:health]
   end
 
   def energy_points
     energy +
       character_type.attributes[:energy] +
-      equipment.effect(:energy)
+      inventory.effects[:energy]
   end
 
   def stamina_points
     stamina +
       character_type.attributes[:stamina] +
-      equipment.effect(:stamina)
+      inventory.effects[:stamina]
   end
 
   def fight_damage_reduce
@@ -373,15 +422,15 @@ class Character < ActiveRecord::Base
   end
 
   def health_restore_bonus
-    character_type.attributes[:hp_restore_rate] + equipment.effect(:hp_restore_rate)
+    character_type.attributes[:hp_restore_rate] + inventory.effects[:hp_restore_rate]
   end
 
   def energy_restore_bonus
-    character_type.attributes[:ep_restore_rate] + equipment.effect(:ep_restore_rate)
+    character_type.attributes[:ep_restore_rate] + inventory.effects[:ep_restore_rate]
   end
 
   def stamina_restore_bonus
-    character_type.attributes[:sp_restore_rate] + equipment.effect(:sp_restore_rate)
+    character_type.attributes[:sp_restore_rate] + inventory.effects[:sp_restore_rate]
   end
 
   def friend_filter

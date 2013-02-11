@@ -1,11 +1,5 @@
 class Character
   class Equipment < ActiveRecord::Base
-    MAIN_PLACEMENTS = [:right_hand, :left_hand, :head, :body, :legs]
-    PLACEMENTS = MAIN_PLACEMENTS + [:additional]
-
-    # A set of placements to be enabled by default
-    DEFAULT_PLACEMENTS = []
-
     IMAGE_SIZES = {
       :left_hand  => :medium,
       :right_hand => :medium,
@@ -31,7 +25,7 @@ class Character
         inventories.character ||= character
       end
     end
-    
+
     delegate(:items, :equipped_items, :to => :inventories)
 
     def main_placements
@@ -51,43 +45,7 @@ class Character
         inventories.find_by_item_id(id)
       end
     end
-    
-    def equip(item, placement)
-      placement = placement.to_sym
-      inventory = inventories.find_by_item(item)
-      
-      return unless item.placements.include?(placement) && inventory && inventory.equippable?
-      
-      previous = nil
-      
-      if available_capacity(placement) > 0
-        placements[placement] ||= []
-        placements[placement] << item.id
 
-        inventory.equipped = equipped_amount(item)
-      elsif main_placements.include?(placement) # Main placements can be replaced
-        previous = inventories.find_by_item_id(placements[placement].last)
-
-        unless previous == inventory # Do not re-equip the same inventory
-          unequip(previous.item, placement)
-          equip(inventory.item,  placement)
-        end
-      end
-
-      previous
-    end
-
-    def unequip(item, placement)
-      placement = placement.to_sym
-
-      if placements[placement] and index = placements[placement].index(item.id)
-        placements[placement].delete_at(index)
-
-        if inventory = inventories.find_by_item(item)
-          inventory.equipped = equipped_amount(item)
-        end
-      end
-    end
 
     def equip!(item, placement)
       Character.transaction do
@@ -121,7 +79,7 @@ class Character
           break
         end
       end
-      
+
     end
 
     def auto_equip!(item, amount = nil)
@@ -170,11 +128,11 @@ class Character
 
           Effects::Base::BASIC_TYPES.each do |effect|
             candidates = equippables.select{|i| i.equippable? && i.effect(effect) != 0}.sort_by{|i| [i.effect(effect), i.effects.metric]}.reverse
-            
+
             candidates.each do |inventory|
               if auto_equip(inventory.item, 1)
                 equipped = inventory
-                
+
                 break
               end
             end
@@ -199,7 +157,7 @@ class Character
           inventory.equipped = 0
         end
         self.placements = {}
-        
+
         save
 
         clear_effect_cache!
@@ -208,10 +166,6 @@ class Character
 
     def free_slots
       PLACEMENTS.sum{|placement| available_capacity(placement) }
-    end
-
-    def available_capacity(placement)
-      placement_capacity(placement) - used_capacity(placement)
     end
 
     def best_offence
@@ -226,35 +180,6 @@ class Character
       }[0, 3]
     end
 
-    def effects
-      equipped = equipped_items
-
-      @effects ||= Rails.cache.fetch(effect_cache_key, :expires_in => 15.minutes) do
-        [
-          {}.tap do |result|
-            Effects::Base::BASIC_TYPES.each do |effect|
-              result[effect] = equipped.sum{|i| i.effect(effect) * inventories.find_by_item(i).equipped }
-            end
-          end,
-
-          [].tap do |result|
-            equipped.each do |item|
-              item.effects.each do |effect|
-                if Effects::Base::COMPLEX_TYPES.include?(effect.name.to_sym)
-                  inventories.find_by_item(item).equipped.times do
-                    result << effect
-                  end
-                end
-              end
-            end
-          end
-        ]
-      end
-    end
-
-    def effect(name)
-      effects[0][name.to_sym]
-    end
 
     protected
 
@@ -266,39 +191,9 @@ class Character
       PLACEMENTS.select{|placement| available_capacity(placement) > 0 }
     end
 
-    def placement_capacity(placement)
-      case placement
-      when :additional
-        result = character.character_type.attributes[:equipment_slots] || Setting.i(:character_equipment_slots)
-
-        if Setting.i(:character_relations_per_equipment_slot) > 0
-          result += character.relations.effective_size / Setting.i(:character_relations_per_equipment_slot)
-        end
-
-        result
-      else
-        1
-      end
-    end
-
     def equipped_slots(item)
       PLACEMENTS.select{|placement| placements[placement].try(:include?, item.id) }
     end
 
-    def used_capacity(placement)
-      placements[placement].try(:size).to_i
-    end
-
-    def effect_cache_key
-      "character_#{ character.id }_equipment_effects"
-    end
-
-    def clear_effect_cache!
-      Rails.cache.delete(effect_cache_key)
-
-      @effects = nil
-
-      true
-    end
   end
 end

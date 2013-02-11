@@ -6,3 +6,8 @@ window.BaseController = class extends Spine.Controller
     @.prepareHelpers() unless @helpers?
 
     JST["views/#{ path }"]( _.extend({}, attributes, @helpers) )
+
+  renderPreloader: ->
+    @html(
+      I18n.t('common.loading')
+    )

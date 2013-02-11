@@ -9,9 +9,7 @@ window.MissionController = class extends BaseController
   className: 'missions'
 
   prepareHelpers: ->
-    super
-
-    _.extend(@helpers, MissionHelper)
+    super(MissionHelper)
 
   setupEventListeners: ->
     @.unbindEventListeners()

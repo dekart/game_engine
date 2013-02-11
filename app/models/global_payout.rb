@@ -2,8 +2,8 @@ class GlobalPayout < ActiveRecord::Base
   extend HasPayouts
 
   validates_presence_of :name, :alias
-  
-  has_payouts(*[MissionGroup, Item, ItemCollection, MonsterType, PropertyType, Story, Promotion].collect{|c| c.payout_events }.flatten.uniq)
+
+  has_payouts(*[Item, ItemCollection, PropertyType, Story, Promotion].collect{|c| c.payout_events }.flatten.uniq)
 
   state_machine :initial => :hidden do
     state :hidden
@@ -22,7 +22,7 @@ class GlobalPayout < ActiveRecord::Base
       transition(any - [:deleted] => :deleted)
     end
   end
-  
+
   def self.by_alias(value)
     with_state(:visible).find_by_alias(value.to_s)
   end

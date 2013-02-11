@@ -28,22 +28,6 @@ class Item < ActiveRecord::Base
       find_all_by_alias(Array.wrap(keys))
     end
 
-    def available
-      where(
-        [%{
-            (
-              items.available_till IS NULL OR
-              items.available_till > ?
-            )
-          },
-          Time.now
-        ]
-      )
-    end
-
-    def available_by_level(character)
-      where(["items.level <= ?", character.level])
-    end
 
     def available_in(*keys)
       valid_keys = keys.collect{|k| k.try(:to_sym) } & AVAILABILITIES # Find intersections between passed key list and available keys
@@ -55,11 +39,6 @@ class Item < ActiveRecord::Base
       else
         scoped
       end
-    end
-
-    def next_for(character)
-      where(["items.level > ? AND items.availability = 'shop' AND items.state = 'visible'", character.level]).
-      order("items.level")
     end
 
     def boosts(type = nil)
@@ -126,14 +105,6 @@ class Item < ActiveRecord::Base
           }.sort
         end
       end
-    end
-
-    def available_for(character)
-      with_state(:visible).available.visible_for(character).available_by_level(character)
-    end
-
-    def in_shop_for(character)
-      available_in(:shop).available_for(character).order('items.level DESC, vip_price DESC')
     end
 
     def discountable_for(character)

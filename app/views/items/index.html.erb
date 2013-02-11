@@ -12,11 +12,11 @@
   <% @item_groups.each do |group| %>
 
     <% if group == @current_group %>
-      <% t.tab(dom_id(group), group.name) do %>
+      <% t.tab(group.key, group.name) do %>
         <%= render("list", :items => @items, :next_items => @next_items) %>
       <% end %>
     <% else %>
-      <% t.tab(dom_id(group), group.name, item_group_items_path(group)) do %>
+      <% t.tab(group.key, group.name, item_group_items_path(group.key)) do %>
       <% end %>
     <% end %>
 

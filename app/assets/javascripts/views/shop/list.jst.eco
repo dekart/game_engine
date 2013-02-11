@@ -1,0 +1,62 @@
+<div id="shop">
+  <h1><%= I18n.t('shop.title') %></h1>
+
+  <ul>
+    <% for group in ItemGroup.all(): %>
+      <li
+        class="<%= 'selected' if group.current %>"
+        data-tab="item_group_<%= group.key %>"
+        data-group-id="<%= group.id %>"
+      >
+        <%= group.name %>
+      </li>
+    <% end %>
+  </ul>
+
+  <% for group in ItemGroup.all(): %>
+    <div class="tab_content" id="item_group_<%= group.key %>">
+      <% if group.current: %>
+        <% for item in Item.all(): %>
+          <div class="item" id="item_<%= item.key %>">
+            <img
+              src="<%= item.pictures.medium %>"
+              alt="<%= item.name %>"
+              title="<%= item.name %>"
+            />
+
+            <div class="info">
+              <div class="name"><%= item.name %></div>
+
+              <% if item.description?: %>
+                <div class="description"><%= item.description %></div>
+              <% end %>
+
+              <div class="payouts">
+                <%= @safe @renderTemplate('shop/item_effects', item: item) %>
+              </div>
+            </div>
+
+            <div class="purchase_options clearfix">
+              <div class="controls">
+                <%= @itemAmountSelector(item) %>
+
+                <button><%= I18n.t('shop.buy') %></button>
+              </div>
+
+              <div class="requirements">
+                <h3>
+                  <%= I18n.t('shop.price') %>
+                  <%= @itemPackage(item) %>
+                </h3>
+
+                <%= @requirements item.requirements(), (content)=> %>
+                  <%= content %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

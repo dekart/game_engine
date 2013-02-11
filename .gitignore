@@ -15,7 +15,6 @@ nbproject
 log/*
 tmp/*
 db/*.sqlite3
-test
 
 # Auto-generated files
 

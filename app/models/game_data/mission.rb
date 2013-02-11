@@ -64,7 +64,9 @@ module GameData
         :complete_text => complete_text,
         :pictures => pictures,
         :repeatable => tags.include?(:repeatable)
-      ).reject!{|k, v| v.blank? }
+      ).tap{|r|
+        r.reject!{|k, v| v.blank? }
+      }
     end
 
     def as_json_for(character)

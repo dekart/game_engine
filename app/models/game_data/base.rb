@@ -17,6 +17,8 @@ module GameData
 
       def [](key)
         case key
+        when self # key is an object of the same class as collection item
+          key
         when Symbol
           collection[key]
         when Numeric
@@ -46,6 +48,10 @@ module GameData
 
       def select(&block)
         collection.values.select(&block)
+      end
+
+      def detect(&block)
+        collection.values.find(&block)
       end
     end
 

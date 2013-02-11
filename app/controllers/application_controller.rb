@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   include AppRequests
   include Notifications
 
+  SPECIAL_ITEMS = 3
+
   before_filter :check_standalone
 
   before_filter :check_character_existance
@@ -23,10 +25,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def special_items
-    @special_items ||= Item.special_for(current_character).all(
-      :limit => Setting.i(:item_show_special),
-      :order => 'RAND()'
-    )
+    @special_items ||= GameData::Item.select{|i| i.special_for?(current_character) }[0 .. SPECIAL_ITEMS]
   end
 
   def self.skip_authentication_filters(options = {})

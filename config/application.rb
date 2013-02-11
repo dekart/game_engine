@@ -58,7 +58,8 @@ module GameEngine
     config.assets.version = '1.0'
 
     config.generators do |g|
-      g.test_framework :rspec, :fixture => false, :views => false
+      g.test_framework :mini_test, :spec => true
+      g.integration_tool :mini_test
       g.fixture_replacement :factory_girl, :dir => "spec/factories"
     end
 

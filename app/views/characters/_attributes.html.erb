@@ -7,7 +7,7 @@
 
         <span class="bonus">
           <%= t(".bonus",
-                :amount => span_tag(character.equipment.effect(:attack))
+                :amount => span_tag(character.inventory.effects[:attack])
               ).html_safe %>
         </span>
       </td>
@@ -19,7 +19,7 @@
 
         <span class="bonus">
           <%= t(".bonus",
-                :amount => span_tag(character.equipment.effect(:defence))
+                :amount => span_tag(character.inventory.effects[:defence])
               ).html_safe %>
         </span>
       </td>

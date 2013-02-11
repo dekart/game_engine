@@ -57,13 +57,15 @@ group :assets do
 end
 
 group :test do
-  gem 'turn', :require => false
+#  gem 'turn', :require => false
 
-  gem "rspec-rails",        "~> 2.8.1"
-  gem "autotest-rails",     "~> 4.1.1"
-  gem "shoulda-matchers",   "~> 1.0.0"
-  gem "factory_girl_rails", "~> 1.5.0"
-  gem "timecop",            "0.3.5"
-  gem "spork",              "~> 0.8.5"
-  gem "database_cleaner",   "~> 0.7.1"
+  gem "timecop"
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'factory_girl'
+  gem 'guard-minitest'
+
+  gem 'guard'
+  gem 'rb-fsevent', '~> 0.9.1'
+  gem 'growl'
 end
