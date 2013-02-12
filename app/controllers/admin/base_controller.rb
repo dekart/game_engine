@@ -14,8 +14,12 @@ class Admin::BaseController < ApplicationController
   end
 
   def http_authentication
-    unless @current_user = authenticate_with_http_basic { |login, password| admin_authenticate(login, password) }
-      request_http_basic_authentication
+    if session[:admin_user_id]
+      @current_user = User.find(session[:admin_user_id])
+    else
+      unless @current_user = authenticate_with_http_basic { |login, password| admin_authenticate(login, password) }
+        request_http_basic_authentication
+      end
     end
   end
 
