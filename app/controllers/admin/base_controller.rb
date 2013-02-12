@@ -1,8 +1,9 @@
 class Admin::BaseController < ApplicationController
-  skip_before_filter :check_character_existance
+  skip_authentication_filters
   skip_before_filter :tracking_requests
+  skip_before_filter :check_standalone
 
-  before_filter :admin_required
+  before_filter :check_user_existance
 
   layout "admin/layouts/application"
 

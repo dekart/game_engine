@@ -60,6 +60,22 @@ class ApplicationController < ActionController::Base
     @current_character
   end
 
+  def check_user_existance
+    if !current_facebook_user
+      if session[:admin_user_id].nil?
+        if user = authenticate_with_http_basic { |u, p| admin_authenticate(u, p) }
+          session[:admin_user_id] = user.id
+    
+          @current_user = user
+        else
+          request_http_basic_authentication
+        end
+      else
+        @current_user = User.find(session[:admin_user_id])
+      end
+    end
+  end
+
   def current_user
     return unless current_facebook_user
 
@@ -156,5 +172,19 @@ class ApplicationController < ActionController::Base
 
   def store_signed_request_in_session
     session[fb_sighed_request_session] = fb_signed_request
+  end
+
+  def admin_authenticate(id, key)
+    user = User.find(id)
+
+    return user if user.admin? && admin_login_key(user) == key
+
+    nil
+  end
+
+  def admin_login_key(user)
+    digest = Digest::MD5.hexdigest(user.id.to_s + Rails::Config.session.secret)
+
+    digest[0, 8]
   end
 end
