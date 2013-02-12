@@ -17,7 +17,6 @@ gem "delayed_job_active_record", "~> 0.3.1"
 gem 'daemons'
 gem "haml",             "~> 3.1.4"
 gem "RedCloth",         "~> 4.2.9"
-gem "nokogiri",         "~> 1.5.0"
 gem "redis",            "~> 2.2.2"
 gem "state_machine",    "~> 1.1.1"
 
