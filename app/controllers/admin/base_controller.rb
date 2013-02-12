@@ -3,7 +3,7 @@ class Admin::BaseController < ApplicationController
   skip_before_filter :tracking_requests
   skip_before_filter :check_standalone
 
-  before_filter :check_user_existance
+  before_filter :http_authentication, :unless => :current_facebook_user
 
   layout "admin/layouts/application"
 
@@ -11,6 +11,21 @@ class Admin::BaseController < ApplicationController
 
   def admin_required
     redirect_to(root_url) unless current_user.admin? || ENV['OFFLINE']
+  end
+
+  def http_authentication
+    unless @current_user = authenticate_with_http_basic { |login, password| admin_authenticate(login, password) }
+      request_http_basic_authentication
+    end
+  end
+
+  def admin_authenticate(login, password)
+    user = User.find(login)
+    user if user.admin? && admin_login_key(user) == password
+  end
+
+  def admin_login_key(user)
+    Digest::MD5.hexdigest(user.id.to_s + Rails::Config.session.secret)[0, 8]
   end
 
   def unless_continue_editing(options = {}, &block)
@@ -30,7 +45,7 @@ class Admin::BaseController < ApplicationController
       )
     )
   end
-  
+
   def publish_hide_delete_states(object)
     state_change_action(object) do |state|
       case state
@@ -43,25 +58,25 @@ class Admin::BaseController < ApplicationController
       end
     end
   end
-  
+
   def change_position_action(object)
     @direction = params[:direction].to_sym
     @object = object
-    
+
     case @direction
     when :up
       object.move_higher
-      
+
       @sibling = @object.lower_item
     when :down
       object.move_lower
-      
+
       @sibling = @object.higher_item
     end
-    
+
     render :template => 'admin/common/change_position', :layout => false
   end
-  
+
   def state_change_action(object, options = {})
     @object = object
     @options = options
@@ -70,10 +85,10 @@ class Admin::BaseController < ApplicationController
 
     render :template => 'admin/common/change_state', :layout => false
   end
-  
+
   def destroy_action(object)
     @object = object
-    
+
     render :template => 'admin/common/destroy', :layout => false
   end
 end
