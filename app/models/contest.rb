@@ -16,7 +16,7 @@ class Contest < ActiveRecord::Base
     state :deleted
 
     event :publish do
-      transition :hidden => :visible, :if => :started_at_set?
+      transition :hidden => :visible, :if => :time_frame_set?
     end
 
     event :hide do
@@ -50,11 +50,6 @@ class Contest < ActiveRecord::Base
   ]
 
   validates_presence_of :name, :points_type, :description_before_started, :description_when_started, :description_when_finished
-
-  validates_numericality_of :duration_time,
-    :greater_than => 0
-
-  before_save :set_finish_time
 
   after_create :create_initial_group!
 
@@ -158,16 +153,12 @@ class Contest < ActiveRecord::Base
 
   protected
 
-    def started_at_set?
-      !self.started_at.nil?
+    def time_frame_set?
+      !self.started_at.nil? && !self.finished_at.nil? and self.started_at < self.finished_at
     end
 
     def create_initial_group!
       groups.create!
-    end
-
-    def set_finish_time
-      self.finished_at = duration_time.days.since(started_at)
     end
 
 end

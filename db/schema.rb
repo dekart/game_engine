@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130122193422) do
+ActiveRecord::Schema.define(:version => 20130214092759) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -243,7 +243,6 @@ ActiveRecord::Schema.define(:version => 20130122193422) do
     t.text     "description_when_finished",                                    :null => false
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.integer  "duration_time",                             :default => 7
     t.string   "state",                      :limit => 50,  :default => "",    :null => false
     t.string   "image_file_name",                           :default => "",    :null => false
     t.string   "image_content_type",         :limit => 100, :default => "",    :null => false
