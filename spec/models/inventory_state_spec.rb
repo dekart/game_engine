@@ -3,8 +3,9 @@ require "spec_helper"
 describe InventoryState do
   let :inventory do
     InventoryState.new do |i|
-      i.character = Factory(:character)
+      i.character = FactoryGirl.create(:character)
       i.give(item)
+      i.save
     end
   end
 
@@ -19,6 +20,15 @@ describe InventoryState do
     GameData::Item.define :another_item do |i|
       i.placements = [:left_hand, :additional]
       i.effects = {:attack => 3, :defence => 4}
+    end
+  end
+
+  let :purchaseable_item do
+    GameData::Item.define :purchaseable_item do |i|
+      i.tags = [:shop]
+
+      i.basic_price = 5
+      i.vip_price = 3
     end
   end
 
@@ -50,27 +60,75 @@ describe InventoryState do
   end
 
   describe '#amount' do
-    it 'should return amount of item in inventory'
-    it 'should return zero if there is no such item in inventory'
+    it 'should return zero if there is no such item in inventory' do
+      inventory.take(item)
+      inventory.amount(item).must_equal 0
+    end
+
+    it 'should return amount of item in inventory' do
+      inventory.amount(item).must_equal 1
+      inventory.give(item)
+      inventory.amount(item).must_equal 2
+    end
   end
 
   describe '#equipped_amount' do
-    it 'should return amount of item equipped to slots'
-    it 'should return zero if item is not equipped'
+    it 'should return amount of item equipped to slots' do
+      inventory.equipped_amount(item).must_equal 0
+      inventory.equip(item, :left_hand)
+      inventory.equipped_amount(item).must_equal 1
+    end
+
+    it 'should return zero if item is not equipped' do
+      inventory.equipped_amount(item).must_equal 0
+    end
   end
 
   describe '#equippable_amount' do
-    it 'should return amount of item available for equipment'
-    it 'should return zero if all items of this kind are equipped'
+    it 'should return amount of item available for equipment' do
+      inventory.equippable_amount(item).must_equal 1
+    end
+
+    it 'should return zero if all items of this kind are equipped' do
+      inventory.equippable_amount(item).must_equal 1
+      inventory.equip(item, :left_hand)
+      inventory.equippable_amount(item).must_equal 0
+    end
   end
 
   describe '#give' do
-    it 'should increase amount of item in inventory by passed value'
+    it 'should increase amount of item in inventory by passed value' do
+      inventory.amount(item).must_equal 1
+      inventory.give(item, 2)
+      inventory.amount(item).must_equal 3
+    end
+
+    it 'should increase amount of item in inventory by 1 if no amount value passed' do
+      inventory.amount(item).must_equal 1
+      inventory.give(item)
+      inventory.amount(item).must_equal 2
+    end
   end
 
   describe '#take' do
-    it 'should decrease amount of item in inventory by passed value'
-    it 'should not allow item amount to become negative'
+    it 'should decrease amount of item in inventory by passed value' do
+      inventory.give(item, 2)
+      inventory.amount(item).must_equal 3
+      inventory.take(item, 2)
+      inventory.amount(item).must_equal 1
+    end
+
+    it 'should decrease amount of item in inventory by 1 if no amount value passed' do
+      inventory.amount(item).must_equal 1
+      inventory.take(item)
+      inventory.amount(item).must_equal 0
+    end
+
+    it 'should not allow item amount to become negative' do
+      inventory.amount(item).must_equal 1
+      inventory.take(item, 5)
+      inventory.amount(item).must_equal 0
+    end
   end
 
   describe '#equip' do
@@ -239,6 +297,98 @@ describe InventoryState do
       another_item.effects[:some_effect] = 2
 
       inventory.effects[:some_effect].must_equal 0
+    end
+  end
+
+
+  describe '#buy' do
+    before do
+      inventory.character.basic_money = 100
+      inventory.character.vip_money = 100
+    end
+
+    describe 'when item is not for sale for this character' do
+      it 'should return false' do
+        purchaseable_item.stub(:purchaseable_for?, false) do
+          inventory.buy!(purchaseable_item).must_equal false
+        end
+      end
+    end
+
+    describe 'when character does not have enough money' do
+      before do
+        inventory.character.basic_money = 0
+        inventory.character.vip_money = 0
+      end
+
+      it 'should return a requirement' do
+        result = inventory.buy!(purchaseable_item)
+        result.must_be_kind_of Requirement
+      end
+
+      it 'should return a requirement with basic_money value set' do
+        inventory.buy!(purchaseable_item).basic_money.must_equal 5
+      end
+
+      it 'should return a requirement with vip_money value set' do
+        inventory.buy!(purchaseable_item).vip_money.must_equal 3
+      end
+    end
+
+    describe 'when all things clear for purchase' do
+      it 'should return true' do
+        inventory.buy!(purchaseable_item).must_equal true
+      end
+
+      it 'should allow to pass item by id, key, or item itself' do
+        inventory.buy!(purchaseable_item).must_equal true
+        inventory.buy!(purchaseable_item.key).must_equal true
+        inventory.buy!(purchaseable_item.id).must_equal true
+      end
+
+      it 'should charge basic money' do
+        inventory.character.basic_money.must_equal 100
+        inventory.buy!(purchaseable_item)
+        inventory.character.basic_money.must_equal 95
+      end
+
+      it 'should charge vip money' do
+        inventory.character.vip_money.must_equal 100
+        inventory.buy!(purchaseable_item)
+        inventory.character.vip_money.must_equal 97
+      end
+
+      it 'should increment amount of items owned by character by a purchased value' do
+        inventory.amount(purchaseable_item).must_equal 0
+        inventory.buy!(purchaseable_item)
+        inventory.amount(purchaseable_item).must_equal 1
+      end
+
+      describe 'when purchasing item in packages' do
+        before do
+          purchaseable_item.package_size = 10
+        end
+
+        it 'should increment amount of owned items by a total amount of items' do
+          inventory.amount(purchaseable_item).must_equal 0
+          inventory.buy!(purchaseable_item)
+          inventory.amount(purchaseable_item).must_equal 10
+        end
+      end
+
+      it 'must persist character and inventory changes' do
+        inventory.buy!(purchaseable_item)
+
+        inventory.amount(purchaseable_item).must_equal 1
+        inventory.character.basic_money.must_equal 95
+
+        InventoryState.find(inventory.id).amount(purchaseable_item).must_equal 1
+        InventoryState.find(inventory.id).character.basic_money.must_equal 95
+      end
+
+      it 'should add a record to character news'
+
+      it 'should increment global owned item counter'
     end
   end
 end

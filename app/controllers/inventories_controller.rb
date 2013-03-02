@@ -2,11 +2,10 @@ class InventoriesController < ApplicationController
   before_filter :check_auto_equipment, :only => [:equipment, :equip, :unequip]
 
   def create
-    @item = Item.purchaseable_for(current_character).find(params[:item_id])
-    @purchase_amount = params[:amount].to_i
-    @amount = @purchase_amount * @item.package_size
+    @item = GameData::Item[params[:item_id]]
+    @amount = params[:amount].to_i
 
-    @result = current_character.buy_item!(@item, @purchase_amount)
+    @result = current_character.buy_item!(@item, @amount)
   end
 
   def destroy

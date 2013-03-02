@@ -13,6 +13,8 @@ class Transport extends Spine.Module
         @.createMonster(data)
       when 'load_shop'
         @.loadShop(data)
+      when 'buy_item'
+        @.buyItem(data)
       else
         console?.log('Unknown event type:', event, data)
 
@@ -39,6 +41,11 @@ class Transport extends Spine.Module
   loadShop: (group_id)->
     $.get((if group_id? then "/item_groups/#{group_id}/items.json" else "/items.json"), (response)=>
       @.trigger('shop_loaded', response)
+    )
+
+  buyItem: (data)->
+    $.post('/inventories', data, (response)=>
+      @.trigger('item_purchased', response)
     )
 
 

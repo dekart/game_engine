@@ -14,15 +14,18 @@ window.ShopController = class extends BaseController
   setupEventListeners: ->
     @.unbindEventListeners()
 
-    @el.on('change', 'select.amount', @.onAmountSelectorChange)
+    transport.bind('item_purchased', @.onItemPurchase)
 
-    # @el.on('click', '#mission_group_list .mission_group', @.onClientMissionGroupClick)
+    @el.on('change', 'select.amount', @.onAmountSelectorChange)
+    @el.on('click', 'button.buy:not(.disabled)', @.onBuyButtonClick)
     # @el.on('click', '.mission button:not(.disabled)', @.onClientMissionButtonClick)
 
     # MissionGroup.bind('activated', @.onDataMissionGroupActivate)
     # Mission.bind('performed', @.onDataMissionPerform)
 
   unbindEventListeners: ->
+    transport.unbind('item_purchased', @.onItemPurchase)
+
     @el.off('change', 'select.amount', @.onAmountSelectorChange)
 
     # @el.off('click', '#mission_group_list .mission_group', @.onClientMissionGroupClick)
@@ -104,6 +107,16 @@ window.ShopController = class extends BaseController
       enough_vip_money = true
 
     item_el.find('button.buy').toggleClass('disabled', enough_basic_money and enough_vip_money)
+
+  onBuyButtonClick: (e)=>
+    element = $(e.currentTarget).parents('.item')
+
+    amount = element.find('select.amount').val()
+
+    transport.send('buy_item', item_id: element.data('item-id'), amount: amount)
+
+  onItemPurchase: (response)=>
+    console.log(response)
 
   populateData: (response)->
     ItemGroup.set(response.groups)

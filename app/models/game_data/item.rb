@@ -43,6 +43,10 @@ module GameData
       I18n.t("data.items.#{ @key }.description", :default => '')
     end
 
+    def purchaseable_for?(character)
+      character.level >= level and not ([:shop, :special] & tags).empty?
+    end
+
     def in_shop_for?(character)
       tags.include?(:shop) and
       character.level >= level

@@ -81,6 +81,32 @@ class InventoryState < ActiveRecord::Base
     end
   end
 
+  def buy!(key, amount = 1)
+    item = GameData::Item[key]
+
+    return false unless item.purchaseable_for?(character)
+
+    basic_price = item.basic_price.to_i * amount
+    vip_price   = item.vip_price.to_i * amount
+
+    if character.basic_money < basic_price or character.vip_money < vip_price
+      return Requirement.new(character) do |r|
+        r.basic_money = basic_price if basic_price > 0
+        r.vip_money   = vip_price if vip_price > 0
+      end
+    end
+
+    character.transaction do
+      character.charge(basic_price, vip_price, item)
+
+      give(item, amount * item.package_size)
+
+      save
+    end
+
+    true
+  end
+
   protected
 
   def deserialize_inventory_data

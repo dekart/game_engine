@@ -122,10 +122,6 @@ class Character < ActiveRecord::Base
   end
 
   # def buy_item!(key, amount = 1)
-  #   item = GameData::Item[key]
-
-  #   basic_price = item.basic_price * amount
-  #   vip_price = item.vip_price * amount
 
   #   errors = []
   #   errors.push(:not_enough_basic_money) if basic_money < basic_price
@@ -134,12 +130,6 @@ class Character < ActiveRecord::Base
   #   return errors unless errors.empty?
 
   #   effective_amount = amount * item.package_size
-
-  #   ActiveSupport::Notifications.instrument(:buy_item,
-  #     :item         => item,
-  #     :basic_money  => basic_price,
-  #     :vip_money    => vip_price
-  #   )
 
   #   transaction do
   #     inventory.give(item, effective_amount)
