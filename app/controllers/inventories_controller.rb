@@ -5,7 +5,24 @@ class InventoriesController < ApplicationController
     @item = GameData::Item[params[:item_id]]
     @amount = params[:amount].to_i
 
-    @result = current_character.buy_item!(@item, @amount)
+    result = current_character.inventory.buy!(@item, @amount)
+
+    case result
+    when RewardPreview
+      render :json => {
+        :success  => true,
+        :reward   => result
+      }
+    when Requirement
+      render :json => {
+        :error => :unsatisfied_requirements,
+        :requirements => result
+      }
+    else
+      render :json => {
+        :error => :not_for_sale
+      }
+    end
   end
 
   def destroy

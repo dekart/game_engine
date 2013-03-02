@@ -121,32 +121,6 @@ class Character < ActiveRecord::Base
     end
   end
 
-  # def buy_item!(key, amount = 1)
-
-  #   errors = []
-  #   errors.push(:not_enough_basic_money) if basic_money < basic_price
-  #   errors.push(:not_enough_vip_money)   if vip_money < vip_price
-
-  #   return errors unless errors.empty?
-
-  #   effective_amount = amount * item.package_size
-
-  #   transaction do
-  #     inventory.give(item, effective_amount)
-  #     charge(basic_price, vip_price, item)
-
-  #     if save
-  #       item.increment_owned(effective_amount)
-
-  #       inventory.equip!(item)
-
-  #       character.news.add(:item_purchase, :item_id => item.id, :amount => effective_amount)
-
-  #       check_item_collections(item)
-  #     end
-  #   end
-  # end
-
   def nickname(friend = false)
     friend = friend.user.friends_with?(self) if friend.is_a?(Character)
 

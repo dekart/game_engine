@@ -110,7 +110,12 @@ class InventoryState < ActiveRecord::Base
 
     item.owned.increment!(purchased_amount)
 
-    true
+    RewardPreview.new(character) do |r|
+      r.give_item(item, purchased_amount)
+
+      r.take_basic_money(basic_price)
+      r.take_vip_money(vip_price)
+    end
   end
 
   protected

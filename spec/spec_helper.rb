@@ -25,6 +25,8 @@ Spork.each_run do
   MiniTest::Spec.before do
     $redis.flushdb
   end
+
+  require File.expand_path('.', __FILE__)
 end
 
 # --- Instructions ---

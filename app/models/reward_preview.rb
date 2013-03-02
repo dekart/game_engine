@@ -16,12 +16,15 @@ class RewardPreview
   def as_json(*args)
     {}.tap do |result|
       @values.each do |key, value|
-        if value.is_a?(Range)
+        case value
+        when Range
           result[key] = [:range, value.begin, value.end]
-        elsif value.is_a?(Array) and not value.empty?
-          result[key] = value
-        elsif value.is_a?(Numeric) and value != 0
-          result[key] = value
+        # when Array
+        #   result[key] = value unless value.empty?
+        when Numeric
+          result[key] = value unless value == 0
+        when Hash
+          result[key] = value.values unless value.empty?
         end
       end
     end.as_json(*args)
@@ -48,7 +51,7 @@ class RewardPreview
   end
 
   def take_basic_attribute(name, amount)
-    give_basic_attribute(name, - amount)
+    give_basic_attribute(name, amount.is_a?(Range) ? (-amount.end .. -amount.begin) : -amount)
   end
 
   def give_energy(amount, exceed_maximum = false)
@@ -112,13 +115,13 @@ class RewardPreview
   end
 
   def give_item(item, amount = 1)
-    @values[:items][item.alias] ||= [item, 0]
-    @values[:items][item.alias][1] += amount
+    @values[:items][item.key] ||= [item, 0]
+    @values[:items][item.key][1] += amount
   end
 
   def take_item(item, amount = 1)
-    @values[:items][item.alias] ||= [item, 0]
-    @values[:items][item.alias][1] -= amount
+    @values[:items][item.key] ||= [item, 0]
+    @values[:items][item.key][1] -= amount
   end
 
   def give_random_item(item_set, shift_set = false)

@@ -1,5 +1,3 @@
-require File.expand_path("../../spec_helper", __FILE__)
-
 describe InventoryState do
   let :inventory do
     InventoryState.new do |i|
@@ -336,14 +334,26 @@ describe InventoryState do
     end
 
     describe 'when all things clear for purchase' do
-      it 'should return true' do
-        inventory.buy!(purchaseable_item).must_equal true
+      it 'should return a reward preview' do
+        inventory.buy!(purchaseable_item).must_be_kind_of RewardPreview
+      end
+
+      it 'should return reward preview with number of items set' do
+        inventory.buy!(purchaseable_item, 3)[:items][:purchaseable_item][1].must_equal 3
+      end
+
+      it 'should return reward preview with basic money set' do
+        inventory.buy!(purchaseable_item, 3)[:basic_money].must_equal -15
+      end
+
+      it 'should return reward preview with vip money set' do
+        inventory.buy!(purchaseable_item, 3)[:vip_money].must_equal -9
       end
 
       it 'should allow to pass item by id, key, or item itself' do
-        inventory.buy!(purchaseable_item).must_equal true
-        inventory.buy!(purchaseable_item.key).must_equal true
-        inventory.buy!(purchaseable_item.id).must_equal true
+        inventory.buy!(purchaseable_item).must_be_kind_of RewardPreview
+        inventory.buy!(purchaseable_item.key).must_be_kind_of RewardPreview
+        inventory.buy!(purchaseable_item.id).must_be_kind_of RewardPreview
       end
 
       it 'should charge basic money' do
