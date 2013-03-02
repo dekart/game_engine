@@ -3,7 +3,7 @@
 <%= form.text_field :name, :size => 50 %>
 
 <%= form.datetime_select :started_at %>
-<%= form.text_field :duration_time, :size => 6, :autocomplete => :off %>
+<%= form.datetime_select :finished_at %>
 
 <%= form.select :points_type, Contest.points_type_to_dropdown %>
 
