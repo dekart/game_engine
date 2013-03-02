@@ -61,9 +61,13 @@ group :test do
   gem 'minitest'
   gem 'minitest-rails'
   gem 'factory_girl'
-  gem 'guard-minitest'
+  gem 'guard-minitest', :git => 'https://github.com/guard/guard-minitest'
 
   gem 'guard'
   gem 'rb-fsevent', '~> 0.9.1'
   gem 'growl'
+  gem 'guard-spork'
+  gem "spork-minitest", :git => 'git://github.com/dekart/spork-minitest.git'
+
+  gem 'spork'
 end

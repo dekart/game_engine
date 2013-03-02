@@ -11,7 +11,7 @@ module News
     protected
 
     def find_item
-      @item = Item.find(data[:item_id])
+      @item = GameData::Item[data[:item_id]]
     end
   end
 end

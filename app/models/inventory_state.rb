@@ -96,13 +96,19 @@ class InventoryState < ActiveRecord::Base
       end
     end
 
+    purchased_amount = amount * item.package_size
+
     character.transaction do
       character.charge(basic_price, vip_price, item)
 
-      give(item, amount * item.package_size)
+      give(item, purchased_amount)
 
-      save
+      save!
+
+      character.news.add(:item_purchase, :item_id => item.id, :amount => purchased_amount)
     end
+
+    item.owned.increment!(purchased_amount)
 
     true
   end

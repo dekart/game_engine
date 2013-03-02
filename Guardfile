@@ -1,6 +1,18 @@
 notification :growl
 
-guard 'minitest' do
+guard 'spork', :test_unit => false, :minitest => true, :bundler => true do
+  watch('config/application.rb')
+  watch('config/environment.rb')
+  watch(%r{^config/environments/.*\.rb$})
+  watch(%r{^config/initializers/.*\.rb$})
+  watch('Gemfile')
+  watch('Gemfile.lock')
+  watch('spec/spec_helper.rb') { :minitest }
+  watch('test/test_helper.rb') { :test_unit }
+  watch(%r{features/support/}) { :cucumber }
+end
+
+guard 'minitest', :drb => true do
   watch(%r|^Gemfile|)    { "spec" }
 
   # with Minitest::Unit

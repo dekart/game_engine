@@ -12,6 +12,8 @@ module GameData
 
     attr_accessor :level, :placements, :basic_price, :vip_price, :package_size, :sell_price, :max_market_price, :boost, :effects
 
+    usage_counter :owned
+
     def initialize(key)
       super
 

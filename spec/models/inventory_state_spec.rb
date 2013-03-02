@@ -1,4 +1,4 @@
-require "spec_helper"
+require File.expand_path("../../spec_helper", __FILE__)
 
 describe InventoryState do
   let :inventory do
@@ -386,9 +386,24 @@ describe InventoryState do
         InventoryState.find(inventory.id).character.basic_money.must_equal 95
       end
 
-      it 'should add a record to character news'
+      it 'should add a record to character news' do
+        inventory.character.news.count.must_equal 0
 
-      it 'should increment global owned item counter'
+        inventory.buy!(purchaseable_item, 3)
+
+        inventory.character.news.count.must_equal 1
+
+        entry = inventory.character.news.last
+        entry.must_be_kind_of News::ItemPurchase
+        entry.item.must_equal purchaseable_item
+        entry.amount.must_equal 3
+      end
+
+      it 'should increment global owned item counter' do
+        purchaseable_item.owned.count.must_equal 0
+        inventory.buy!(purchaseable_item, 3)
+        purchaseable_item.owned.count.must_equal 3
+      end
     end
   end
 end

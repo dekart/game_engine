@@ -53,6 +53,14 @@ module GameData
       def detect(&block)
         collection.values.find(&block)
       end
+
+      def usage_counter(name)
+        class_eval %{
+          def #{name}
+            @#{name}_counter ||= UsageCounter.new(self, :#{name})
+          end
+        }
+      end
     end
 
     attr_reader :key
