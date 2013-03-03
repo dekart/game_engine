@@ -8,7 +8,7 @@ window.MonsterListController = class extends BaseController
     @controller ?= new @()
     @controller.show()
 
-  prepareHelpers: ->
+  helpers: ->
     super(MonstersHelper)
 
   setupEventListeners: ->

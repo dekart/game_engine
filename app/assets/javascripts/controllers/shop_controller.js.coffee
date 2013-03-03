@@ -8,7 +8,7 @@ window.ShopController = class extends BaseController
 
   className: 'shop'
 
-  prepareHelpers: ->
+  helpers: ->
     super(ItemHelper)
 
   setupEventListeners: ->
@@ -58,6 +58,11 @@ window.ShopController = class extends BaseController
 
     @.setupEventListeners()
 
+  renderTab: (key)->
+    @el.find("#item_group_#{ key }").html(
+      @.renderTemplate('shop/item_list', @)
+    )
+
 
   onDataLoad: (response)=>
     @loading = false
@@ -78,9 +83,7 @@ window.ShopController = class extends BaseController
 
     current_group = ItemGroup.current()
 
-    @el.find("#item_group_#{ current_group.key }").html(
-      @.renderTemplate('shop/item_list', @)
-    )
+    @.renderTab(current_group.key)
 
   onAmountSelectorChange: (e)=>
     select_el = $(e.currentTarget)
@@ -89,24 +92,16 @@ window.ShopController = class extends BaseController
     item = Item.find(item_el.data('item-id'))
 
     if item.basic_price
-      enough_basic_money = (Character.first().basic_money < item.basic_price * amount)
-
       item_el.find('.requires .basic_money')
         .text(item.basic_price * amount)
-        .toggleClass('unsatisfied', enough_basic_money)
-    else
-      enough_basic_money = true
+        .toggleClass('unsatisfied', not item.isEnoughBasicMoney(amount))
 
     if item.vip_price
-      enough_vip_money = (Character.first().vip_money < item.vip_price * amount)
-
       item_el.find('.requires .vip_money')
         .text(item.vip_price * amount)
-        .toggleClass('unsatisfied', enough_vip_money)
-    else
-      enough_vip_money = true
+        .toggleClass('unsatisfied', not item.isEnoughVipMoney(amount))
 
-    item_el.find('button.buy').toggleClass('disabled', enough_basic_money and enough_vip_money)
+    item_el.find('button.buy').toggleClass('disabled', not item.isEnoughMoney(amount))
 
   onBuyButtonClick: (e)=>
     element = $(e.currentTarget).parents('.item')
@@ -116,7 +111,25 @@ window.ShopController = class extends BaseController
     transport.send('buy_item', item_id: element.data('item-id'), amount: amount)
 
   onItemPurchase: (response)=>
-    console.log(response)
+    if response.success
+      Character.update(response.character)
+
+      item = Item.find(response.item.id)
+      item.updateAttributes(response.item)
+
+      @.renderTab(item.group().key)
+
+      item_el = @el.find("#item_#{ response.item.key }")
+
+      result_el = $(@.renderTemplate('shop/purchase_result', @, result: response)).appendTo('body')
+
+      result_el.css(
+        top: item_el.offset().top + (item_el.height() - result_el.height()) / 2
+        left: ($('body').width() - result_el.width()) / 2
+      )
+        .animate(top: '-=100px', 700)
+        .delay(700)
+        .fadeOut(500, ()=> result_el.remove())
 
   populateData: (response)->
     ItemGroup.set(response.groups)

@@ -22,7 +22,9 @@
       <div class="controls">
         <%= @itemAmountSelector(item) %>
 
-        <button class="buy"><%= I18n.t('shop.buy') %></button>
+        <button class="buy <%= if item.isEnoughMoney() then '' else 'disabled' %>">
+          <%= I18n.t('shop.buy') %>
+        </button>
       </div>
 
       <div class="requires">

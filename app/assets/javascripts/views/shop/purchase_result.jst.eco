@@ -1,0 +1,18 @@
+<div class="rewards item_purchase_result">
+  <div class="message success">
+    <%= I18n.t('shop.purchase_result.success', item: @result.item.name) %>
+  </div>
+
+  <%= @rewards @result.rewards, (content)=> %>
+    <div class="received">
+      <%= content %>
+    </div>
+  <% end %>
+
+  <%= @spendings @result.rewards, (content)=> %>
+    <div class="spent">
+      <%= content %>
+    </div>
+  <% end %>
+</div>
+

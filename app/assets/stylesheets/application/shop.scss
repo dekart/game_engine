@@ -1,3 +1,36 @@
 #shop{
   @include tabs;
+
+  .item {
+    & > img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+}
+
+.item_purchase_result {
+  @include clearfix;
+
+  position: absolute;
+  width: 300px;
+  padding: 10px;
+  background-color: $content_bg_color;
+  border: $thin_border;
+
+  .message {
+    margin-bottom: 10px;
+
+    &.success {
+      color: green;
+    }
+  }
+
+  .received {
+    float: left;
+    margin-right: 20px;
+  }
+  .spent {
+    float: right;
+  }
 }

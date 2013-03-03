@@ -11,7 +11,9 @@ class InventoriesController < ApplicationController
     when RewardPreview
       render :json => {
         :success  => true,
-        :reward   => result
+        :item     => @item.as_json_for(current_character),
+        :rewards  => result,
+        :character => current_character.as_json_for_overview
       }
     when Requirement
       render :json => {

@@ -19,6 +19,9 @@ en:
     effects: "Item Effects"
     on_use: "On Use"
 
+    purchase_result:
+      success: "You've successfully purchased %{item}!"
+
     # index:
     #   title: "Shop"
     #   next_item: "Reach level %{level} to unlock new items"

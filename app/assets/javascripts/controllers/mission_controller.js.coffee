@@ -8,7 +8,7 @@ window.MissionController = class extends BaseController
 
   className: 'missions'
 
-  prepareHelpers: ->
+  helpers: ->
     super(MissionHelper)
 
   setupEventListeners: ->
