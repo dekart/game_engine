@@ -4,15 +4,17 @@ class Setting < ActiveRecord::Base
 
   class << self
     def cache
-        $memory_store.fetch('settings', :expires_in => 1.minute) do
-          {}.tap do |result|
-            all.each do |setting|
-              result[setting.alias.to_sym] = setting.value
-            end
+      return {} unless table_exists?
+
+      $memory_store.fetch('settings', :expires_in => 1.minute) do
+        {}.tap do |result|
+          all.each do |setting|
+            result[setting.alias.to_sym] = setting.value
           end
         end
+      end
     end
-    
+
     # Returns value casted to integer
     def i(key)
       cache[key.to_sym].to_i
