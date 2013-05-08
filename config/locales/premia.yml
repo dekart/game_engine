@@ -42,9 +42,8 @@ en:
       vip_money: "Gems"
       credits: "Facebook Credits"
       discount: "%{discount}% off!"
-      earn_credits: "Earn More Credits"
-      buttons:
-        purchase: "Continue"
+      earn_credits: "Earn Facebook Credits"
+      purchase: "Purchase"
 
     change_name:
       title: "Change Your Nickname"

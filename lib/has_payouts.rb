@@ -7,7 +7,7 @@ module HasPayouts
     options.reverse_merge!(
       :apply_on => args.first
     )
-    
+
     args.flatten!
 
     cattr_accessor :payout_events
@@ -16,7 +16,7 @@ module HasPayouts
     cattr_accessor :payout_options
     self.payout_options = options
 
-    if respond_to?(:serialize) and column_names.include?("payouts")
+    if respond_to?(:serialize) and table_exists? and column_names.include?("payouts")
       serialize :payouts, Payouts::Collection
 
       send(:include, ActiveRecordMethods)

@@ -12,7 +12,7 @@ module ChatsHelper
   end
 
   def global_chat
-    if Setting[:global_chat_enabled] && !current_character.restrict_talking?
+    if Setting.b(:global_chat_enabled) && !current_character.restrict_talking?
       online_count = Chat.online_count(global_chat_key)
 
       if online_count == 0

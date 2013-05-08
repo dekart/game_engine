@@ -43,7 +43,7 @@ module InventoriesHelper
   def inventory_item_image(inventory, format, options = {})
     result = ""
 
-    if count = options.delete(:count)
+    if count = options.delete(:count) and (count.is_a?(TrueClass) or count > 1)
       result << span_tag(count.is_a?(TrueClass) ? inventory.amount : count, "count #{format}")
     end
 

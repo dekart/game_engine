@@ -1,0 +1,23 @@
+<h2><%= I18n.t("app_requests.index.title") %></h2>
+
+<ul>
+  <% for type, requests of @requests: %>
+    <li data-tab="<%= type %>">
+      <%= I18n.t("app_requests.index.tabs.#{type}", count: @countByType(type)) %>
+    </li>
+  <% end %>
+</ul>
+
+<% for type, requests of @requests: %>
+  <div class="tab_content" id="<%= type %>">
+    <% for request in requests: %>
+      <%=@safe @renderTemplate("app_requests/#{ type }", _.extend({request: request}, @)) %>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @count != @countAll(): %>
+  <div class="note">
+    <%= I18n.t('app_requests.index.hidden_requests') %>
+  </div>
+<% end %>

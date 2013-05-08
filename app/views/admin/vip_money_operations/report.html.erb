@@ -5,6 +5,30 @@
   <%= link_to(admin_character_name(@character), admin_character_url(@character.key)) %>
 </div>
 
+<table id="vip_operation_summary" class="data">
+  <tr><th colspan="2"><%= t('.summary.title') %></th></tr>
+  <tr>
+    <td><%= t('.summary.total') %></td>
+    <td><%= @summary[:total] %></td>
+  </tr>
+  <tr>
+    <td><%= t('.summary.deposits') %></td>
+    <td><%= @summary[:deposits] %></td>
+  </tr>
+  <tr>
+    <td><%= t('.summary.withdrawals') %></td>
+    <td><%= @summary[:withdrawals] %></td>
+  </tr>
+  <tr>
+    <td><%= t('.summary.payments') %></td>
+    <td><%= @summary[:payments] %></td>
+  </tr>
+  <tr class="payment">
+    <td><%= t('.summary.purchased') %></td>
+    <td><%= @summary[:purchased] %></td>
+  </tr>
+</table>
+
 <table class="data">
   <tr>
     <th>#</th>

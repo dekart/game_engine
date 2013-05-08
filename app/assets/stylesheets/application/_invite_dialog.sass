@@ -9,21 +9,23 @@ $icons: sprite-map('invite_dialog/*.png')
 
     margin-bottom: 10px
 
-  .users
+  .tab_content
     margin-bottom: 10px
     overflow-y: auto
     overflow-x: hidden
     padding: 5px
     height: $user_list_height
 
+  .users
+    position: relative
+
     .user
-      width: 150px
+      width: 220px
       height: $user_height
-      float: left
       cursor: pointer
-      position: relative
+      position: absolute
       margin: 0 3px 3px 0
-      border: 1px solid transparent
+      border: 1px solid #e0e0e0
       overflow: hidden
       +border-radius(3px)
 
@@ -69,6 +71,7 @@ $icons: sprite-map('invite_dialog/*.png')
 
   .stats
     padding: 5px
+    margin-bottom: 10px
     line-height: 20px
     background-color: $current_item_bg_color
 

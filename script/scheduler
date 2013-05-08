@@ -83,6 +83,9 @@ task(:publish_scores_in_facebook, 10.minutes) do
   Jobs::Characters::PublishScoreInFacebook.new.perform
 end
 
+task(:delete_requests, 1.minute) do
+  Delayed::Job.enqueue Jobs::RequestDelete.new
+end
 
 puts "Launching scheduler (%s)..." % Time.now.to_s(:db)
 

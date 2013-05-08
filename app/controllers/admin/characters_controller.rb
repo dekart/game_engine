@@ -1,4 +1,6 @@
 class Admin::CharactersController < Admin::BaseController
+  skip_before_filter :admin_required, :only => [:stop_simulate]
+
   def index
     @characters = Character.paginate(:page => params[:page])
   end
@@ -68,5 +70,29 @@ class Admin::CharactersController < Admin::BaseController
         redirect_to admin_characters_path
       end
     end
+  end
+
+  def simulate
+    if current_user.admin? && current_user.simulation.nil?
+      Character.find(params[:id]).user.tap do |user|
+        current_user.create_simulation(:user => user)
+
+        flash[:success] = t(".success",
+            :name => user.character.name.blank? ? user.first_name : user.character.name
+          ).html_safe
+      end
+    end
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def stop_simulate
+    if current_user.simulated? && @real_user && @real_user.admin?
+      @real_user.simulation.destroy
+    end
+
+    redirect_to root_url
   end
 end

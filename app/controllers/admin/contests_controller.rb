@@ -1,6 +1,6 @@
 class Admin::ContestsController < Admin::BaseController
   def index
-    @contests = Contest.without_state(:deleted)
+    @contests = Contest.without_state(:deleted).order("started_at DESC")
   end
 
   def new
@@ -41,7 +41,7 @@ class Admin::ContestsController < Admin::BaseController
 
   def change_state
     @contest = Contest.find(params[:id])
-    
+
     state_change_action(@contest) do |state|
       case state
       when :visible

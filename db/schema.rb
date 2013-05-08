@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119115732) do
+ActiveRecord::Schema.define(:version => 20130214092759) do
 
   create_table "achievement_types", :force => true do |t|
     t.string   "name",               :limit => 250,  :default => "", :null => false
@@ -174,14 +174,14 @@ ActiveRecord::Schema.define(:version => 20121119115732) do
     t.integer  "total_monsters_damage",                          :default => 0
     t.text     "active_boosts"
     t.integer  "achievement_points",                             :default => 0
+    t.boolean  "exclude_from_fights",                            :default => false
     t.boolean  "restrict_fighting",                              :default => false
     t.boolean  "restrict_market",                                :default => false
     t.boolean  "restrict_talking",                               :default => false
-    t.boolean  "exclude_from_fights"
     t.datetime "excluded_from_fights_at",                        :default => '1970-01-01 00:00:00', :null => false
   end
 
-  add_index "characters", ["level", "fighting_available_at", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"
+  add_index "characters", ["level", "fighting_available_at", "exclude_from_fights", "restrict_fighting"], :name => "by_level_and_fighting_time_and_flags"
   add_index "characters", ["user_id"], :name => "index_characters_on_user_id"
 
   create_table "clan_members", :force => true do |t|
@@ -243,7 +243,6 @@ ActiveRecord::Schema.define(:version => 20121119115732) do
     t.text     "description_when_finished",                                    :null => false
     t.datetime "started_at"
     t.datetime "finished_at"
-    t.integer  "duration_time",                             :default => 7
     t.string   "state",                      :limit => 50,  :default => "",    :null => false
     t.string   "image_file_name",                           :default => "",    :null => false
     t.string   "image_content_type",         :limit => 100, :default => "",    :null => false
@@ -396,14 +395,15 @@ ActiveRecord::Schema.define(:version => 20121119115732) do
   add_index "item_collection_ranks", ["character_id", "collection_id"], :name => "index_collection_ranks_on_character_id_and_collection_id"
 
   create_table "item_collections", :force => true do |t|
-    t.string   "name",         :limit => 100, :default => "", :null => false
-    t.string   "item_ids",                    :default => "", :null => false
+    t.string   "name",         :limit => 100, :default => "",   :null => false
+    t.string   "item_ids",                    :default => "",   :null => false
     t.text     "payouts"
-    t.string   "state",        :limit => 50,  :default => "", :null => false
+    t.string   "state",        :limit => 50,  :default => "",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level",                       :default => 1
-    t.string   "amount_items",                :default => "", :null => false
+    t.string   "amount_items",                :default => "",   :null => false
+    t.boolean  "exchangeable",                :default => true
   end
 
   create_table "item_groups", :force => true do |t|
@@ -754,6 +754,11 @@ ActiveRecord::Schema.define(:version => 20121119115732) do
     t.datetime "updated_at"
   end
 
+  create_table "simulations", :force => true do |t|
+    t.integer "admin_id"
+    t.integer "user_id"
+  end
+
   create_table "stories", :force => true do |t|
     t.string   "alias",              :limit => 70,  :default => "", :null => false
     t.string   "title",              :limit => 200, :default => "", :null => false
@@ -823,6 +828,7 @@ ActiveRecord::Schema.define(:version => 20121119115732) do
     t.binary   "friend_ids"
     t.boolean  "installed",                             :default => true
     t.string   "last_visit_user_agent",  :limit => 250, :default => "",      :null => false
+    t.boolean  "verified"
   end
 
   add_index "users", ["created_at"], :name => "index_users_on_created_at"

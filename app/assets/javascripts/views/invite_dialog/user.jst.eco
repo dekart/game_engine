@@ -1,0 +1,15 @@
+<div
+  class="user <%= 'selected' if @user.selected %> <%= 'sent' if @user.sent %>"
+  data-uid="<%= @user.uid %>"
+  style="top: <%= @position.y %>px; left: <%= @position.x %>px;"
+>
+  <img
+    src="https://graph.facebook.com/<%= @user.uid %>/picture?type=square&return_ssl_resources=1"
+    alt="<%= @user.name %>"
+    width="50"
+    height="50" />
+
+  <div class="name"><%= @user.name %></div>
+
+  <div class="icon"></div>
+</div>

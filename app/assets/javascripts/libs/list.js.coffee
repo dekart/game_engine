@@ -107,13 +107,7 @@ class HorizontalList extends List
     }
 
   totalListWidth: ->
-    @total_list_width ?= _.reduce(
-      @items
-      (sum, i)->
-        element = $(i)
-        sum + element.outerWidth(true)
-      0
-    )
+    @total_list_width ?= @.maxItemWidth() * @items.length
 
   sliderRange: ->
     @.totalListWidth() - @element.innerWidth()
@@ -164,13 +158,7 @@ class VerticalList extends List
     }
 
   totalListHeight: ->
-    @total_list_height ?= _.reduce(
-      @items
-      (sum, i)->
-        element = $(i)
-        sum + element.outerHeight(true)
-      0
-    )
+    @total_list_height ?= @.maxItemHeight() * @items.length
 
   sliderRange: ->
     @.totalListHeight() - @element.innerHeight()

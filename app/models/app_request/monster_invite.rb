@@ -1,4 +1,16 @@
 class AppRequest::MonsterInvite < AppRequest::Base
+  class << self
+    def stackable?
+      true
+    end
+
+    def target_from_data(data)
+      if data['target_type'] and data['target_id']
+        Monster.find(data['target_id'])
+      end
+    end
+  end
+
   def monster
     target
   end

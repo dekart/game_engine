@@ -11,10 +11,17 @@
     </td>
 
     <td class="wall">
-      <%= render("news/feed", 
-            :news => @news, 
+      <%= render("news/feed",
+            :news => @news,
             :character => current_character
           ) %>
     </td>
   </tr>
 </table>
+
+
+<% dom_ready do %>
+  <% if visit_from_app_request? %>
+    AppRequestDialogController.show();
+  <% end %>
+<% end %>

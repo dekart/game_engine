@@ -362,6 +362,7 @@ en:
           edit: "Edit"
           edit_user: "Edit User"
           payout: "Apply Payout"
+          simulate: "Simulate Character"
         batch:
           title: "Batch Operations"
           note: "These operations can be applied to all selected characters:"
@@ -406,6 +407,8 @@ en:
           total_amount: "Purchased VIP Money"
           total_transactions: "Purchase Transactions"
           last_payment: "Last Payment At"
+      simulate:
+        success: "You are temporarily simulating %{name}"
     vip_money_operations:
       controls:
         statistics: "Back to Statistics"
@@ -424,6 +427,13 @@ en:
         title: "Operation History"
         player: "Player:"
         total: "Total Amount:"
+        summary:
+          title: "Summary"
+          total: "Total Transactions"
+          deposits: "Deposits"
+          withdrawals: "Withdrawals"
+          payments: "Payments"
+          purchased: "Total Purchased"
 
     item_collections:
       index:

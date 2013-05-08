@@ -2,14 +2,14 @@
   <%
     {
       'og:type'         => 'game.achievement',
-      
+
       'og:url'          => @achievement_type.url,
-      
+
       'og:title'        => @achievement_type.name,
       'og:description'  => @achievement_type.description,
       'og:image'        => @achievement_type.pictures? ? image_path(@achievement_type.pictures.url(:stream)) : image_path("achievement.png"),
-      
-      'og:points'       => 1
+
+      'game:points'       => 1
     }.each do |key, value|
   %>
     <%= tag(:meta, :property => key, :content => value) %>
@@ -23,10 +23,10 @@
     <td class="image"><%= image_tag(@achievement_type.pictures.url(:medium)) if @achievement_type.pictures? %></td>
     <td>
       <h2><%= @achievement_type.name %></h2>
-      
+
       <div class="description"><%= @achievement_type.description %></div>
 
-      <%= link_to(button(t('.play_now', :app => t('app_name'))), root_url(:reference => :achievement, :canvas => true), 
+      <%= link_to(button(t('.play_now', :app => t('app_name'))), root_url(:reference => :achievement, :canvas => true),
             :class => 'play_now button'
           ) %>
     </td>

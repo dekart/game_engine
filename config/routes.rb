@@ -90,6 +90,11 @@ GameEngine::Application.routes.draw do
       collection do
         match 'search'
         match 'payout'
+        match 'stop_simulate'
+      end
+
+      member do
+        match 'simulate'
       end
     end
 
@@ -289,9 +294,13 @@ GameEngine::Application.routes.draw do
 
   resources :stories, :only => :show
 
-  resources :app_requests do
-    put 'ignore', :on => :member
-    get 'invite', :on => :collection
+  resources :app_requests, :only => [:index, :create] do
+    collection do
+      put 'ignore'
+      put 'accept'
+
+      get 'invite'
+    end
   end
 
   resources :contests, :only => :show do

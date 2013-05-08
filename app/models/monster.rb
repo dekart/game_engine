@@ -1,14 +1,14 @@
 class Monster < ActiveRecord::Base
   belongs_to  :monster_type
   belongs_to  :character
-  
+
   belongs_to :killer, :class_name => "Character"
-  
+
   has_many    :monster_fights,
     :dependent => :delete_all
-  
-  has_many    :app_requests, 
-    :as => :target, 
+
+  has_many    :app_requests,
+    :as => :target,
     :class_name => 'AppRequest::Base',
     :dependent => :delete_all
 
@@ -24,11 +24,11 @@ class Monster < ActiveRecord::Base
     event :expire do
       transition :progress => :expired
     end
-    
+
     before_transition :on => :win do |monster|
       monster.defeated_at = Time.now
     end
-    
+
     after_transition :on => [:win, :expire], :do => [:expire_app_requests, :update_fight_lists]
   end
 
@@ -53,20 +53,13 @@ class Monster < ActiveRecord::Base
     (expire_at - Time.now).to_i
   end
 
-  def event_data
-    {
-      :reference_id => self.id,
-      :reference_type => "Monster"
-    }
-  end
-
   validate :validate_monster, :on => :create
-  
+
   def will_get_reward?(character)
     damage.reached_reward_minimum?(character) &&
       damage.position(character) < monster_type.number_of_maximum_reward_collectors
   end
-  
+
   def remove_at
     if defeated_at
       defeated_at + monster_type.reward_time.hours
@@ -74,9 +67,9 @@ class Monster < ActiveRecord::Base
       expire_at + monster_type.respawn_time.hours
     end
   end
-  
+
   def chat_id
-    "monster_%09d" % id 
+    "monster_%09d" % id
   end
 
   def fighters(exclude_character = nil)
@@ -99,7 +92,7 @@ class Monster < ActiveRecord::Base
     $redis.zadd(fighters_key, Time.zone.now.to_i, Marshal.dump([character.facebook_id, damage]))
   end
 
-  def as_json
+  def as_json(*args)
     triggers = character.monster_types.payout_triggers(monster_type)
 
     {
@@ -157,7 +150,7 @@ class Monster < ActiveRecord::Base
   def check_winning_status
     win! if progress? and hp == 0
   end
-  
+
   def expire_app_requests
     app_requests.for_expire.each do |app_request|
       app_request.expire!

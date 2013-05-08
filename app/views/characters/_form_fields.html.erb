@@ -1,10 +1,10 @@
 <% if form.object.new_record? or form.object.character_type.nil? %>
   <%= form.hidden_field :character_type_id %>
 
-  <% if @character_types.size > 1 %>
+  <% if character_types.size > 1 %>
     <% types = capture do %>
       <div id="character_types" class="clearfix">
-        <% @character_types.each do |type| %>
+        <% character_types.each do |type| %>
           <% description = capture do %>
             <div class="description">
               <h3><%= type.name %></h3>
@@ -28,7 +28,7 @@
 
     <%= form.field :character_type, types, :label => t(".labels.character_type") %>
 
-    <% if type = form.object.character_type || @character_types.first %>
+    <% if type = form.object.character_type || character_types.first %>
       <% dom_ready do %>
         CharacterForm.set_character_type('#<%= dom_id(type) %>');
       <% end %>

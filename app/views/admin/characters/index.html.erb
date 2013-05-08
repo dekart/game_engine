@@ -27,22 +27,20 @@
               <th><%= check_box_tag("all_ids") %></th>
               <th><%= Character.human_attribute_name("id") %></th>
               <th><%= Character.human_attribute_name("name") %></th>
-              <th><%= User.human_attribute_name("facebook_id") %></th>
               <th><%= Character.human_attribute_name("level") %></th>
               <th><%= Character.human_attribute_name("created_at") %></th>
               <th><%= User.human_attribute_name("reference") %></th>
             </tr>
             <% @characters.each do |character| %>
-              <tr>
+              <tr class="<%= 'banned' if character.user.banned? %> <%= 'uninstalled' unless character.user.installed %>">
                 <td><%= check_box_tag("ids[]", character.id) %></td>
                 <td><%= link_to(character.id, character_url(character.key, :canvas => true)) %></td>
                 <td>
                   <%= link_to(admin_character_name(character), admin_character_path(character)) %>
-                </td>
-                <td>
-                  <%= link_to(character.user.facebook_id, fb_profile_url(character.user),
+                  <%= link_to("➚", fb_profile_url(character.user),
                         :target => :_blank
                       ) %>
+                  <%= link_to(character.user.paying ? "$" : "◊", report_admin_vip_money_operation_path(character)) %>
                 </td>
                 <td><%= character.level %></td>
                 <td><%= l(character.created_at, :format => :short) %></td>
@@ -51,6 +49,10 @@
                   <%= link_to(t(".controls.edit"), edit_admin_character_path(character)) %>
                   <%= link_to(t(".controls.payout"), payout_admin_characters_path(:ids => character)) %>
                   <%= link_to(t(".controls.edit_user"), edit_admin_user_path(character.user)) %>
+                  <%= link_to(t(".controls.simulate"), simulate_admin_character_path(character),
+                        :method => :put,
+                        :remote => true
+                      ) %>
                 </td>
               </tr>
             <% end %>

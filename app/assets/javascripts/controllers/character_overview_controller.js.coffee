@@ -28,6 +28,7 @@ window.CharacterOverviewController = class extends Spine.Controller
     @upgrade.click(@.onUpgradeClick)
 
     @el.on('click', 'a.refill', @.onRefillClick)
+    @el.on('click', '.vip_money a.buy', @.onBuyVipClick)
 
   setupTimers: ->
     @hp_timer = new VisualTimer(['#co .health .timer'], @.onTimerFinish)
@@ -77,3 +78,8 @@ window.CharacterOverviewController = class extends Spine.Controller
         EnergyRefillDialogController.show()
       when 'stamina'
         StaminaRefillDialogController.show()
+
+  onBuyVipClick: (e)=>
+    e.preventDefault()
+
+    BuyVipDialogController.show()

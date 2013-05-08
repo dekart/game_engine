@@ -72,15 +72,15 @@ class Character < ActiveRecord::Base
 
   restorable_attribute :hp,
     :limit          => :health_points,
-    :restore_period => :health_restore_period,
+    :restore_period => Setting.i(:character_health_restore_period),
     :restore_bonus  => :health_restore_bonus
   restorable_attribute :ep,
     :limit          => :energy_points,
-    :restore_period => :energy_restore_period,
+    :restore_period => Setting.i(:character_energy_restore_period),
     :restore_bonus  => :energy_restore_bonus
   restorable_attribute :sp,
     :limit          => :stamina_points,
-    :restore_period => :stamina_restore_period,
+    :restore_period => Setting.i(:character_stamina_restore_period),
     :restore_bonus  => :stamina_restore_bonus
 
   after_validation :apply_character_type_defaults, :on => :create
@@ -90,7 +90,6 @@ class Character < ActiveRecord::Base
 
   validates_presence_of :character_type, :on => :create
 
-  delegate(*(CharacterType::BONUSES + [:to => :character_type]))
   delegate(:facebook_id, :to => :user)
 
   attr_accessor :level_up_applied
@@ -223,6 +222,7 @@ class Character < ActiveRecord::Base
   def as_json_for_overview
     as_json(
       :only => [
+        :id,
         :basic_money,
         :vip_money,
         :experience,
@@ -259,6 +259,14 @@ class Character < ActiveRecord::Base
         result[:upgrade_increase][attribute] = Setting.i("character_#{attribute}_upgrade")
       end
     end.as_json
+  end
+
+  def as_json_for_app_requests
+    {
+      :facebook_id => facebook_id,
+      :key => key,
+      :nickname => nickname(true)
+    }
   end
 
   def show_promo_block?
@@ -349,27 +357,20 @@ class Character < ActiveRecord::Base
     save!
   end
 
-  def health_restore_period
-    (Setting.i(:character_health_restore_period) * (1 - equipment.effect(:hp_restore_rate).to_f / 100)).seconds
+  def health_restore_bonus
+    character_type.health_restore_bonus + equipment.effect(:hp_restore_rate)
   end
 
-  def energy_restore_period
-    (Setting.i(:character_energy_restore_period) * (1 - equipment.effect(:ep_restore_rate).to_f / 100)).seconds
+  def energy_restore_bonus
+    character_type.energy_restore_bonus + equipment.effect(:ep_restore_rate)
   end
 
-  def stamina_restore_period
-    (Setting.i(:character_stamina_restore_period) * (1 - equipment.effect(:sp_restore_rate).to_f / 100)).seconds
+  def stamina_restore_bonus
+    character_type.stamina_restore_bonus + equipment.effect(:sp_restore_rate)
   end
 
   def friend_filter
     @friend_filter ||= FriendFilter.new(self)
-  end
-
-  def event_data
-    {
-      :character_id => self.id,
-      :level => self.level
-    }
   end
 
   def notifications_count

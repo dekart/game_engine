@@ -16,6 +16,19 @@ class Admin::StatisticsController < Admin::BaseController
       s[:started_at] = Time.at(s[:started_at].to_i) unless s[:started_at].blank?
       s[:finished_at] = Time.at(s[:finished_at].to_i) unless s[:finished_at].blank?
     end
+
+    @app_requests = {
+      :sent_all => AppRequest::Base.count,
+      :sent_today => AppRequest::Base.sent_after(24.hours.ago).count,
+
+      :by_state_all => AppRequest::Base.group(:state).count,
+      :by_state_today => AppRequest::Base.sent_after(24.hours.ago).group(:state).count,
+
+      :for_deletion => $redis.scard("app_requests_for_deletion"),
+      :failed => $redis.scard("app_requests_failed_deletion"),
+      :random_failed => $redis.srandmember("app_requests_failed_deletion"),
+      :last_processed_at => $redis.get("app_requests_last_processed_at").to_i,
+    }
   end
 
   def user
@@ -72,7 +85,7 @@ class Admin::StatisticsController < Admin::BaseController
 
     @result
   end
-  
+
   def sociality
     @keys = $redis.keys("sociality_by_reference_*")
 

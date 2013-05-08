@@ -3,6 +3,8 @@ en:
     application:
       admin_interface: "Go to Admin Interface »"
       maintenance_warning: "The game will be down for a scheduled server maintenance in next %{start_time}. Downtime shouldn't exceed %{length}."
+      simulating: "You are simulating %{name}"
+      stop_simulate: "Stop!"
     fan_specials:
       title: "Fan Specials"
       text: "%{app} fans periodically receive free Gold, Gems, weapons, and other useful game items!"
@@ -23,7 +25,7 @@ en:
       text: "Please wait for a few seconds..."
     character_overview:
       bank: "Treasury"
-      premium: "Get More"
+      buy_vip: "Get More"
       upgrade: "Upgrade!"
       hospital: "Hospital"
       refill: "Refill"
@@ -33,4 +35,4 @@ en:
       notification_settings: "Notifications Settings"
       privacy_policy: "Privacy Policy"
     footer_unauthorised:
-      privacy_policy: "Privacy Policy"  
+      privacy_policy: "Privacy Policy"

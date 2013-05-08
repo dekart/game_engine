@@ -21,6 +21,14 @@
     </div>
   <% end %>
 
+  <% if current_user.simulated? && @real_user && @real_user.admin? %>
+    <div id="simulation">
+      <%= t(".simulating", :name => character_name(current_user.character)).html_safe %>
+
+      <%= link_to(t(".stop_simulate"), stop_simulate_admin_characters_path) %>
+    </div>
+  <% end %>
+
   <%= app_toolbar %>
 
   <% if message = current_character.message %>

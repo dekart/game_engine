@@ -102,8 +102,7 @@ class PageList
     @total_list_width ?= _.reduce(
       @items
       (sum, i)->
-        element = $(i)
-        sum + element.outerWidth(true)
+        sum + $(i).outerWidth(true)
       0
     )
 

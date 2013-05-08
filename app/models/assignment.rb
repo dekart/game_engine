@@ -6,7 +6,7 @@ class Assignment < ActiveRecord::Base
 
   validates_presence_of :context_id, :context_type, :relation_id
   validates_uniqueness_of :role, :scope => [:context_id, :context_type]
-  
+
   validate :validate_relation_ownership, :on => :create
 
   before_create :destroy_current_assignments
@@ -47,7 +47,7 @@ class Assignment < ActiveRecord::Base
       chance <= 0 ? 1 : chance.ceil
     end
   end
-  
+
   def character
     context.is_a?(Character) ? context : context.character
   end
@@ -56,17 +56,8 @@ class Assignment < ActiveRecord::Base
     self.class.effect_value(context, relation, role)
   end
 
-  def event_data
-    {
-      :reference_id     => relation.character.id,
-      :reference_type   => "Character",
-      :reference_level  => relation.level,
-      :string_value     => role
-    }
-  end
-
   protected
-  
+
   def validate_relation_ownership
     errors.add(:relation, :incorrect_owner) if relation && relation.owner != character
   end

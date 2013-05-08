@@ -9,6 +9,12 @@ class AppRequest::ClanInvite < AppRequest::Base
         (character.clan ? character.clan.members_facebook_ids : [])
       end
     end
+
+    def target_from_data(data)
+      if data['target_type'] and data['target_id']
+        Clan.find(data['target_id'])
+      end
+    end
   end
 
   def clan
@@ -23,19 +29,5 @@ class AppRequest::ClanInvite < AppRequest::Base
     if receiver && receiver.clan != clan && sender.clan_member.creator?
       sender.clan.clan_membership_invitations.create(:character => receiver)
     end
-  end
-
-  def after_accept
-    super
-
-    if receiver.clan_membership_applications.asked_to_join?(clan)
-      receiver.clan_membership_invitations.invitation_to_join(clan).try(:accept!)
-    end
-  end
-
-  def after_ignore
-    super
-
-    receiver.clan_membership_invitations.invitation_to_join(clan).try(:destroy) if receiver && clan
   end
 end

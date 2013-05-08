@@ -17,7 +17,7 @@ window.RefillDialogController = class extends DialogController
   unbindEventListeners: ->
     super
 
-    @el.off('click', '.options .option.vip_money button', @.onVipMoneyRefillClick)
+    @el.off('click', '.options .option.vip_money button:not(.disabled)', @.onVipMoneyRefillClick)
     @el.off('click', '.options .option.item button:not(.disabled)', @.onItemRefillClick)
 
   onDataLoad: (response)=>

@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include ReferenceCode
   include AppRequests
   include Notifications
+  include SplitTesting
 
   before_filter :check_standalone
 
@@ -102,6 +103,13 @@ class ApplicationController < ActionController::Base
     user.installed = true
 
     user.save! if user.changed?
+
+    # check simulation mode
+    if user.admin? && user.simulation
+      @real_user = user
+
+      user = user.simulation.user
+    end
 
     user
   end

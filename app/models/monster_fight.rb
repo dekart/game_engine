@@ -180,18 +180,6 @@ class MonsterFight < ActiveRecord::Base
       map{ |i| [i.item_id, i.amount, i.item.effect(:damage), i.pictures.url(:medium)] }
   end
 
-  def event_data
-    {
-      :reference_id => self.id,
-      :reference_type => "Monster",
-      :reference_damage => -self.monster_damage.to_i,
-      :health => -self.character_damage.to_i,
-      :basic_money => self.money.to_i,
-      :stamina => -self.stamina.to_i,
-      :experience => self.experience.to_i
-    }
-  end
-
   def basic_payouts
     monster_type.applicable_payouts.preview(payout_triggers)
   end
