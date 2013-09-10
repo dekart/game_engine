@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head prefix=
+    "og: http://ogp.me/ns#
+     fb: http://ogp.me/ns/fb#
+     product: http://ogp.me/ns/product#">
+    <meta
+      property="og:type"
+      content="og:product" />
+
+    <meta
+      property="og:title"
+      content="<%= t('credit_orders.package_info.title',
+            :amount => @package.vip_money,
+            :app    => t('app_name')
+          ) %>" />
+    <meta
+      property="og:description"
+      content="<%= t('credit_orders.package_info.description',
+            :amount => @package.vip_money,
+            :app    => t('app_name')
+          ) %>" />
+    <meta
+      property="og:image"
+      content="<%= image_path("credit_package.jpg") %>" />
+    <meta
+      property="og:url"
+      content="<%= credit_order_url(@package) %>" />
+    <meta property="product:price:amount"      content="<%= @package.price * 0.01 %>"/>
+    <meta property="product:price:currency"    content="USD"/>
+  </head>
+</html>

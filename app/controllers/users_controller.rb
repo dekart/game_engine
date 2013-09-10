@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_authentication_filters :only => [:subscribe, :uninstall]
-  skip_before_filter :tracking_requests, :only => [:subscribe, :uninstall]
-  
+  skip_before_filter :tracking_requests, :check_standalone, :only => [:subscribe, :uninstall]
+
   def toggle_block
     @user = current_user
 
@@ -30,17 +30,17 @@ class UsersController < ApplicationController
     end
   end
 
-  
+
   def subscribe
     if request.get?
       render :text => Koala::Facebook::RealtimeUpdates.meet_challenge(params, facepalm.subscription_token)
     elsif request.post?
       facebook_ids = params[:entry].collect{|e| e['id'] }
-      
+
       ids = User.all(:select => 'id', :conditions => {:facebook_id => facebook_ids}).collect{|u| u.id }
-      
+
       Delayed::Job.enqueue Jobs::UserDataUpdate.new(ids)
-      
+
       render :text => 'OK'
     end
   end

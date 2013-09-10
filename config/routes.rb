@@ -336,7 +336,11 @@ GameEngine::Application.routes.draw do
 
   resources :complaints, :only => [:new, :create]
 
-  resources :credit_orders
+  resources :credit_orders, :only => [:show, :create] do
+    collection do
+      match 'subscribe'
+    end
+  end
 
   match "/character_status" => "character_status#show"
   match "/chats/:chat_id" => "chat_messages#index"

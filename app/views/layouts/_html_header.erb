@@ -3,6 +3,7 @@
 <% if fb_canvas? %>
   <%= javascript_tag do %>
     var signed_request = '<%= escape_javascript(fb_signed_request) %>';
+    var callback_location = '<%= facepalm.callback_url('http://') %>';
   <% end %>
 <% end %>
 

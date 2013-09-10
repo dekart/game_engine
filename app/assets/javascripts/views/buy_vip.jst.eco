@@ -22,8 +22,7 @@
           </td>
 
           <td class="credits">
-            <span class="value"><%= credit_package.price %></span>
-            <%= I18n.t('premia.buy_vip.credits') %>
+            $<%= credit_package.price / 100 %>
           </td>
 
           <td class="discount">

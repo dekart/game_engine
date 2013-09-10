@@ -40,15 +40,28 @@ window.BuyVipDialogController = class extends DialogController
   onPurchaseClick: (e)=>
     $(e.currentTarget).addClass('disabled')
 
+    package_id = parseInt(@el.find('input:checked').val())
+
     FB.ui(
       {
         method: 'pay',
-        purchase_type: 'item',
-        order_info: parseInt(@el.find('input:checked').val())
+        action: 'purchaseitem',
+        product: callback_location + '/credit_orders/' + package_id,
+        request_id: Date.now() + ':' + Character.first().id + ':' + package_id
       },
-      (response)=>
-        @.close()
+      @.onPurchaseProcessed
     )
+
+  onPurchaseProcessed: (response)=>
+    if response.payment_id?
+      $.post("/credit_orders?_method=post", response, @.onPurchaseResult)
+
+  onPurchaseResult: (response)=>
+    alert(I18n.t("premia.buy_vip.success", amount: response.vip_money))
+
+    Character.updateFromRemote()
+
+    @.close()
 
   onEarnCreditsClick: (e)=>
     FB.ui(
